@@ -61,6 +61,18 @@
             "path" : "pages/title/title",
             "style" : {}
         }
+        ,{
+            "path" : "pages/bottom/bottom",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/order/order",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/refund/refund",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

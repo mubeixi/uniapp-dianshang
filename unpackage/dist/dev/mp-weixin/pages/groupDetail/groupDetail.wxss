@@ -487,4 +487,61 @@
       font-size: 26rpx;
       margin-left: auto;
 }
+.fixed.data-v-7e0dd5a4 {
+  height: 98rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #F8F8F8;
+  z-index: 9999;
+}
+.fixed .leftss.data-v-7e0dd5a4, .fixed .rightss.data-v-7e0dd5a4 {
+    width: 50%;
+    height: 98rpx;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+}
+.fixed .leftss ._div.first.data-v-7e0dd5a4 {
+    width: 33.3%;
+    height: 98rpx;
+    text-align: center;
+    padding-top: 15rpx;
+}
+.fixed .leftss ._div.first ._img.data-v-7e0dd5a4 {
+      width: 38rpx;
+      height: 38rpx;
+      display: block;
+      margin: 0 auto;
+}
+.fixed .leftss ._div.first .txt.data-v-7e0dd5a4 {
+      font-size: 22rpx;
+      margin-top: 10rpx;
+}
+.fixed .rightss .dan.data-v-7e0dd5a4 {
+    width: 50%;
+    background-color: #FA6B27;
+}
+.fixed .rightss .tuan.data-v-7e0dd5a4 {
+    width: 50%;
+    background-color: #F43131;
+}
+.fixed .rightss .bTitle.data-v-7e0dd5a4 {
+    color: #fff;
+    text-align: center;
+}
+.fixed .rightss .bTitle .bF.data-v-7e0dd5a4 {
+      font-size: 24rpx;
+}
+.fixed .rightss .bTitle .bS.data-v-7e0dd5a4 {
+      font-size: 32rpx;
+}
+.fixed .rightss .bTitle .danRight.data-v-7e0dd5a4 {
+      font-size: 26rpx;
+}
 

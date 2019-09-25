@@ -2,7 +2,7 @@
     <div>
        <page-title title="付款" rightHidden="true"></page-title>
         <div class="state">
-            <img src="/static/wait.png" height="30" width="30" alt="">
+            <img src="/static/wait.png">
             <span class="state-desc">等待买家付款</span>
         </div>
         <div class="address">
@@ -19,23 +19,28 @@
                 <span class="biz_name">张小凡时尚衣橱</span>
             </div>
             <div class="pro">
-                <img class="pro-img" src="/static/check/pro1.png" alt="">
+                <div class="pro-div">
+					<img class="pro-img" src="/static/check/pro1.png" alt="">
+				</div>
                 <div class="pro-msg">
                     <div class="pro-name">2018夏装新款短袖蕾丝拼接荷叶边波点雪纺连衣裙女时尚名媛...</div>
                     <div class="attr"><span>白色;S码</span></div>
-                    <div class="pro-price"><i>￥</i>169.00 <span class="amount">x1</span></div>
+                    <div class="pro-price"><span>￥</span>169.00 <span class="amount">x1</span></div>
                 </div>
             </div>
             <div class="pro">
-                <img class="pro-img" src="/static/check/pro1.png" alt="">
+                <div class="pro-div">
+                	<img class="pro-img" src="/static/check/pro1.png" alt="">
+                </div>
                 <div class="pro-msg">
                     <div class="pro-name">2018夏装新款短袖蕾丝拼接荷叶边波点雪纺连衣裙女时尚名媛...</div>
                     <div class="attr"><span>白色;S码</span></div>
-                    <div class="pro-price"><i>￥</i>169.00 <span class="amount">x1</span></div>
+                    <div class="pro-price"><span>￥</span>169.00<span class="amount">x1</span></div>
                 </div>
             </div>
         </div>
-        <div class="other">
+        
+		<div class="other">
             <div class="bd">
                 <div class="o_title">
                     <span>运费选择</span>
@@ -79,10 +84,10 @@
             <div class="bd">
                 <div class="o_title">
                     <span>是否使用余额</span>
-                    <van-switch
-                        v-model="checked"
+                    <switch
+                        checked="checked"
                         size='25px'
-                        active-color="#04B600"
+                        color="#04B600"
                     />
                 </div>
                 <div class="o_desc c8">23.50元</div>
@@ -92,10 +97,10 @@
             <div class="bd">
                 <div class="o_title">
                     <span>是否开具发票</span>
-                    <van-switch
-                        v-model="checked"
+                    <switch
+                        checked="checked"
                         size='25px'
-                        active-color="#04B600"
+                        color="#04B600"
                     />
                 </div>
                 <div class="o_desc c8">张小凡 5454545454745</div>
@@ -111,22 +116,17 @@
         </div>
         <div class="total">
             <span>共<span>2</span>件商品</span>
-            <span>小计：<i>￥</i><span class="money">388.00</span></span>
+            <span class="mbx">小计：<span class="money moneys">￥</span><span class="money">388.00</span></span>
         </div>
         <div style="height:100px;background:#efefef;"></div>
         <div class="order_total">
             <div class="totalinfo">
-                <div class="info">共3件商品 总计：￥507.00</div>
+                <div class="info">共3件商品 总计：<span class="mbxa">￥<span>507.00</span></span></div>
                 <div class="tips">*本次购物一共可获得107积分</div>
             </div>
             <div class="submit">去支付</div>
         </div>
-        <van-overlay
-            :show="show"
-            @click="showOverlay"
-            z-index=1000
-        />
-        
+    
     </div>
 </template>
 
@@ -156,42 +156,46 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
     .wrap {
         background: #fff;
     }
     .state {
-        padding: 10px 15px;
-        font-size: 14px;
+        padding: 10px 30rpx;
+        font-size: 28rpx;
         display: flex;
         align-items: center;
         border-top: 15px solid #FFF3F3F3;
+		img{
+			width: 60rpx;
+			height: 60rpx;
+		}
     }
     .state-desc {
         margin-left: 12px;
     }
     .c8 {
         color: #888;
-        font-size: 13px;
+        font-size: 26rpx;
     }
     /* 收货地址 start */
     .address {
         /* margin: 15px 0 10px; */
         display: flex;
         align-items: center;
-        padding: 20px;
+        padding: 40rpx 38rpx 40rpx 28rpx;
         border-top: 15px solid #FFF3F3F3;
         border-bottom: 10px solid #FFF3F3F3;
     }
     .loc_icon {
-        width: 20px;
-        height: 25px;
-        margin-right: 15px;
+        width: 41rpx;
+        height: 51rpx;
+        margin-right: 30rpx;
     }
     .right {
-        width: 10px;
-        height: 15px;
-        margin-left: 15px;
+        width: 18rpx;
+        height: 27rpx;
+        margin-left: 28rpx;
     }
     .name {
         margin-bottom: 15px;
@@ -207,7 +211,7 @@ export default {
     /* 收货地址 end */
     /* 订单信息 start */
     .order_msg {
-        padding: 10px 15px 0px;
+        padding: 20rpx 30rpx 0px;
     }
     .biz_msg {
         display: flex;
@@ -215,53 +219,61 @@ export default {
         margin-bottom: 15px;
     }
     .biz_logo {
-        width: 35px;
-        height: 35px;
-        margin-right: 10px;
+        width: 70rpx;
+        height: 70rpx;
+        margin-right: 20rpx;
     }
     .biz_name {
-        font-size: 14px;
+        font-size: 28rpx;
     }
     .pro {
         display: flex;
-        margin-bottom: 25px;
+        margin-bottom: 50rpx;
     }
+	.pro-msg{
+		 margin-left: 27rpx;
+		 width: 451rpx;
+	}
+	.pro-div{
+		width: 200rpx;
+		height: 200rpx;
+	}
     .pro-img {
-        width: 100px;
-        height: 100px;
-        margin-right: 14px;
+        width: 100%;
+        height: 100%;
     }
     .pro-name {
-        font-size: 13px;
-        margin-bottom: 10px;
+        font-size: 26rpx;
+        margin-bottom: 20rpx;
     }
     .attr {
         display: inline-block;
-        height: 25px;
-        line-height: 25px;
+        height: 50rpx;
+        line-height: 50rpx;
         background: #FFF5F5;
         color: #666;
-        font-size: 12px;
-        padding: 0 10px;
-        margin-bottom: 12px;
+        font-size: 24rpx;
+        padding: 0 20rpx;
+        margin-bottom: 20rpx;
     }
     .pro-price {
         color: #F43131;
-        font-size: 18px;
+		font-size: 36rpx;
     }
-    .pro-price i {
-        font-size: 12px;
+    .pro-price span {
+        font-size: 24rpx;
         font-style: normal;
     }
     .amount {
+		font-size: 30rpx;
         float: right;
         color: #333;
     }
     /* 订单信息 end */
     /* 订单其他信息 start */
     .other {
-        padding: 15px 15px 0;
-        font-size: 11px;
+        padding: 34rpx 45rpx 0rpx 31rpx;
+        font-size: 28rpx;
     }
     .other .bd {
         padding-bottom: 15px;
@@ -278,9 +290,11 @@ export default {
     }
     .o_desc {
         margin-top: 5px;
+		font-size: 24rpx;
     }
     .msg {
         margin-left: 10px;
+		font-size: 24rpx;
     }
     .words {
         justify-content: flex-start;
@@ -293,21 +307,21 @@ export default {
         display: flex;
         justify-content: flex-end;
         align-items: center;
-        margin: 20px 0;
-        font-size: 12px;
-        padding-right: 15px;
+        margin: 40rpx 0;
+        font-size: 24rpx;
+        padding-right: 44rpx;
     }
     i{
         font-style: normal;
     }
     .total .money {
-        font-size: 15px;
+        font-size: 30rpx;
         color: #F43131;
     }
     /* 订单其他信息 end */
     /* 提交订单 */
     .order_total {
-        height: 50px;
+        height: 100rpx;
         position: fixed;
         bottom: 0;
         width: 100%;
@@ -317,21 +331,21 @@ export default {
         z-index: 100;
     }
     .submit {
-        width: 135px;
+        width: 230rpx;
         background: #F43131;
         text-align: center;
         color: #fff;
-        line-height: 50px;
+        line-height: 100rpx;
     }
     .totalinfo {
         flex: 1;
         text-align: center;
     }
     .info {
-        font-size: 12px;
+        font-size: 24rpx;
     }
     .tips {
-        font-size: 10px;
+        font-size: 20rpx;
         color: #979797;
     }
     /* 物流选择 */
@@ -359,4 +373,17 @@ export default {
         margin-left: -10px;
         margin-top: 30px;
     }
+	.mbx{
+		margin-left: 20rpx;
+	}
+	.moneys{
+		font-size: 24rpx;
+	}
+	.mbxa{
+		color: #F43131;
+		font-size: 24rpx;
+		span{
+			font-size: 30rpx;
+		}
+	}
 </style>

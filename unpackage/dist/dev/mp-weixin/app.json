@@ -13,7 +13,10 @@
     "pages/result/result",
     "pages/search/search",
     "pages/searchhistory/searchhistory",
-    "pages/title/title"
+    "pages/title/title",
+    "pages/bottom/bottom",
+    "pages/order/order",
+    "pages/refund/refund"
   ],
   "subPackages": [],
   "window": {
