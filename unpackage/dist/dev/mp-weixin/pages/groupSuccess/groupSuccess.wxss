@@ -32,7 +32,7 @@
     background: #fafafa !important;
 }
 .start .first.data-v-ca09ef7c {
-    padding: 0.1rem 0rem;
+    padding: 10px 0px;
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
@@ -46,15 +46,15 @@
 }
 .start .first .right.data-v-ca09ef7c {
       width: 56%;
-      margin-left: 0.2rem;
-      padding-top: 0.1rem;
-      padding-bottom: 0.1rem;
-      padding-right: 0.12rem;
+      margin-left: 20px;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      padding-right: 12px;
       position: relative;
 }
 .start .first .right ._div.top.data-v-ca09ef7c {
         width: 100%;
-        font-size: 0.14rem;
+        font-size: 14px;
         font-family: PingFang SC;
         font-weight: 500;
         color: #333333;
@@ -69,21 +69,21 @@
 }
 }
 .start .first .right ._div.bottom .price.data-v-ca09ef7c {
-          font-size: 0.13rem;
+          font-size: 13px;
           color: #F43131;
 }
 .start .first .right ._div.bottom .price ._span.data-v-ca09ef7c {
-            margin-left: 0.14rem;
+            margin-left: 14px;
             color: #999999;
 }
 .start .first .right ._div.bottom .price .prices.data-v-ca09ef7c {
             color: #F43131;
-            font-size: 0.23rem;
-            margin-left: 0.05rem;
+            font-size: 23px;
+            margin-left: 5px;
 }
 .start .first .right ._div.bottom .tuan.data-v-ca09ef7c {
-          margin-top: 0.03rem;
-          font-size: 0.13rem;
+          margin-top: 3px;
+          font-size: 13px;
           font-family: PingFang SC;
           font-weight: 500;
           color: #999999;
@@ -94,28 +94,28 @@
     display: -ms-flexbox;
     display: flex;
     width: 100%;
-    height: 0.4rem;
-    padding: 0.14rem 0rem;
+    height: 40px;
+    padding: 14px 0px;
     background-color: #FAFAFA;
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
-    font-size: 0.12rem;
+    font-size: 12px;
     color: #333;
     -webkit-justify-content: space-around;
         -ms-flex-pack: distribute;
             justify-content: space-around;
-    padding-left: 0.16rem;
-    padding-right: 0.16rem;
+    padding-left: 16px;
+    padding-right: 16px;
 }
 @media screen and (max-width: 371px) {
 .start .second.data-v-ca09ef7c {
-        padding: 0.14rem 0rem;
+        padding: 14px 0px;
 }
 }
 .start .second ._img.data-v-ca09ef7c {
-      width: 0.16rem;
-      height: 0.16rem;
-      margin-right: 0.04rem;
+      width: 16px;
+      height: 16px;
+      margin-right: 4px;
 }
 .start .second ._li.data-v-ca09ef7c {
       display: -webkit-box;
@@ -128,7 +128,7 @@
               align-items: center;
 }
 .start .three .paySuc.data-v-ca09ef7c {
-    padding: 0.44rem 25%;
+    padding: 44px 25%;
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
@@ -137,7 +137,7 @@
     -webkit-align-items: center;
         -ms-flex-align: center;
             align-items: center;
-    font-size: 0.25rem;
+    font-size: 25px;
     font-family: PingFang SC;
     font-weight: 500;
     color: #f43131;
@@ -145,8 +145,8 @@
     padding-left: 30%;
 }
 .start .three .paySuc ._img.data-v-ca09ef7c {
-      width: 0.34rem;
-      height: 0.31rem;
+      width: 34px;
+      height: 31px;
 }
 .start .three .lyl.data-v-ca09ef7c {
     display: -webkit-box;
@@ -163,8 +163,8 @@
 }
 .start .three .lyl ._li.data-v-ca09ef7c {
       margin-right: 11px;
-      width: 0.52rem;
-      height: 0.52rem;
+      width: 52px;
+      height: 52px;
       border-radius: 50%;
       position: relative;
 }
@@ -173,7 +173,7 @@
         height: 19px;
         border-radius: 0;
         position: absolute;
-        left: -0.11rem;
+        left: -11px;
 }
 .start .three .lyl ._li ._span.tuanzhang.data-v-ca09ef7c {
         width: 26px;
@@ -181,13 +181,13 @@
         font-family: PingFang SC;
         font-weight: 500;
         color: white;
-        left: -0.09rem;
+        left: -9px;
 }
 .start .how.data-v-ca09ef7c {
     margin: 0 auto;
     width: 167px;
-    margin-top: 0.28rem;
-    margin-bottom: 0.13rem;
+    margin-top: 28px;
+    margin-bottom: 13px;
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
@@ -198,17 +198,17 @@
             align-items: center;
 }
 .start .how ._img.data-v-ca09ef7c {
-      width: 0.18rem;
-      height: 0.18rem;
+      width: 18px;
+      height: 18px;
 }
 .start .how .my.data-v-ca09ef7c {
-      font-size: 0.17rem;
+      font-size: 17px;
       color: #333;
       margin-left: 8px;
 }
 .start .how .my ._span.data-v-ca09ef7c {
         color: #F43131;
-        margin: 0 0.05rem;
+        margin: 0 5px;
 }
 .start .times.data-v-ca09ef7c {
     display: -webkit-box;
@@ -223,12 +223,12 @@
             align-items: center;
 }
 .start .times .line.data-v-ca09ef7c {
-      width: 0.68rem;
-      height: 0.01rem;
+      width: 68px;
+      height: 1px;
       background-color: #DEDDDD;
 }
 .start .times .text.data-v-ca09ef7c {
-      margin: 0 0.06rem;
+      margin: 0 6px;
       display: -webkit-box;
       display: -webkit-flex;
       display: -ms-flexbox;
@@ -239,7 +239,7 @@
               align-items: center;
 }
 .start .times .text .myTime.data-v-ca09ef7c {
-        margin: 0 0.14rem;
+        margin: 0 14px;
 }
 .start .times .text ._span.num.data-v-ca09ef7c {
         background-color: #484848;
@@ -260,41 +260,41 @@
         text-align: center;
 }
 .start .dingdan.data-v-ca09ef7c {
-    margin: 0 0.6rem;
-    margin-top: 0.18rem;
+    margin: 0 6px;
+    margin-top: 18px;
     font-size: 0;
-    margin-bottom: 0.15rem;
+    margin-bottom: 15px;
 }
 @media screen and (max-width: 370px) {
 .start .dingdan.data-v-ca09ef7c {
         margin-left: 15px;
         margin-right: 0;
-        margin-top: 0.18rem;
+        margin-top: 18px;
         font-size: 0;
-        margin-bottom: 0.15rem;
+        margin-bottom: 15px;
 }
 }
 @media screen and (min-width: 371px) and (max-width: 380px) {
 .start .dingdan.data-v-ca09ef7c {
-        margin: 0 0.4rem;
-        margin-top: 0.18rem;
+        margin: 0 4px;
+        margin-top: 18px;
         font-size: 0;
-        margin-bottom: 0.15rem;
+        margin-bottom: 15px;
 }
 }
 .start .dingdan .vanButton.data-v-ca09ef7c {
-      width: 1.38rem;
-      height: 0.41rem;
+      width: 138px;
+      height: 41px;
       background: #fa6b27;
       border-radius: 6px;
-      font-size: 0.18rem;
+      font-size: 18px;
       color: #fff;
       display: inline-block;
-      line-height: 0.41rem;
+      line-height: 41px;
       text-align: center;
 }
 .start .dingdan .invi.data-v-ca09ef7c {
-      margin-left: 0.17rem;
+      margin-left: 17px;
       background-color: #F43131;
 }
 .start .liji.data-v-ca09ef7c {
@@ -303,7 +303,7 @@
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
-    margin-bottom: 0.15rem;
+    margin-bottom: 15px;
 }
 .start .liji .vanButton.data-v-ca09ef7c {
       width: 90%;
@@ -312,15 +312,15 @@
 }
 .start .mbxline.data-v-ca09ef7c {
     width: 100%;
-    height: 0.11rem;
+    height: 11px;
     background-color: #f2f2f2;
 }
 .start .guize .top.data-v-ca09ef7c {
-    font-size: 0.17rem;
+    font-size: 17px;
     color: #333333;
-    margin-top: 0.17rem;
-    margin-left: 0.18rem;
-    margin-bottom: 0.17rem;
+    margin-top: 17px;
+    margin-left: 18px;
+    margin-bottom: 17px;
 }
 .start .guize .xiang.data-v-ca09ef7c {
     margin-left: 30px;
@@ -342,11 +342,11 @@
 }
 .start .guize .xiang .hang ._span.data-v-ca09ef7c {
         margin-left: 8px;
-        font-size: 0.13rem;
+        font-size: 13px;
         color: #333333;
 }
 .start .dianzhang.data-v-ca09ef7c {
-    font-size: 0.17rem;
+    font-size: 17px;
     color: #333333;
     background-color: #f2f2f2;
     padding: 17px;

@@ -134,7 +134,7 @@
 // import pagetitle from '@/components/title'
 export default {
     components: {
-        pagetitle
+        // pagetitle
     },
     data(){
         return {

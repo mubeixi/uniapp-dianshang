@@ -4,7 +4,7 @@
         <!-- 商品详情部分 -->
         <div class="first">
             <div class="left">
-                <img src="../assets/result/pro1.png">
+                <img src="/static/result/pro1.png">
             </div>
             <div class="right">
                    <div class="top">
@@ -22,23 +22,23 @@
         </div>
         <!-- 商品保证 -->
         <ul class="second">
-            <li><img src="../assets/tuan/check.png">全场包邮</li>
-            <li><img src="../assets/tuan/check.png">7天退换</li>
-            <li><img src="../assets/tuan/check.png">48小时发货</li>
-            <li><img src="../assets/tuan/check.png">假一赔十</li>
+            <li><img src="/static/tuan/check.png">全场包邮</li>
+            <li><img src="/static/tuan/check.png">7天退换</li>
+            <li><img src="/static/tuan/check.png">48小时发货</li>
+            <li><img src="/static/tuan/check.png">假一赔十</li>
         </ul>
         <!-- 团长 -->
         <div class="three">
-            <div class="paySuc"><img src="../assets/tuan/paySuc.png" >支付成功</div>
+            <div class="paySuc"><img src="/static/tuan/paySuc.png" >支付成功</div>
             <ul class="lyl">
-                <li><img src="../assets/tuan/lyl.png"><img src="../assets/tuan/tuanzhang.png" class="tuanzhang"><span class="tuanzhang">团长</span></li>  
-                <li><img src="../assets/tuan/lyl.png"></li>  
-                <li><img src="../assets/tuan/lyl.png"></li>  
+                <li><img src="/static/tuan/lyl.png"><img src="/static/tuan/tuanzhang.png" class="tuanzhang"><span class="tuanzhang">团长</span></li>  
+                <li><img src="/static/tuan/lyl.png"></li>  
+                <li><img src="/static/tuan/lyl.png"></li>  
             </ul>
         </div>
         <!-- 倒计时 -->
         <div class="how">
-            <img src="../assets/tuan/time.png" >
+            <img src="/static/tuan/time.png" >
             <span class="my">拼团中，还差<span>1</span>人</span>
         </div>
         <div class="times">
@@ -72,16 +72,16 @@
             <div class="top">拼团规则</div>
             <div class="xiang">
                 <div class="hang">
-                    <img src="../assets/tuan/ju.png"><span>开团或者参加别人的团</span>
+                    <img src="/static/tuan/ju.png"><span>开团或者参加别人的团</span>
                 </div>
                 <div class="hang">
-                    <img src="../assets/tuan/ju.png"><span>在规定的时间内，邀请好友参团</span>
+                    <img src="/static/tuan/ju.png"><span>在规定的时间内，邀请好友参团</span>
                 </div>
                 <div class="hang">
-                    <img src="../assets/tuan/ju.png"><span>达到拼团人数，分别给团长和团员发货</span>
+                    <img src="/static/tuan/ju.png"><span>达到拼团人数，分别给团长和团员发货</span>
                 </div>
                 <div class="hang">
-                    <img src="../assets/tuan/ju.png"><span>未达到拼团人数，货款将自动原路返还</span>
+                    <img src="/static/tuan/ju.png"><span>未达到拼团人数，货款将自动原路返还</span>
                 </div>
             </div>
         </div>
@@ -105,7 +105,7 @@
 export default {
   name: 'App',
   components: {
-    pagetitle
+    // pagetitle
   },
   data(){
       return{
@@ -123,7 +123,7 @@ export default {
         background: #fafafa !important;
     }
     .first{
-        padding: 0.1rem 0rem;
+        padding:10px 0px;
         display: flex;
         .left{
             width: 44%;
@@ -133,14 +133,14 @@ export default {
         }
         .right{
             width: 56%;
-            margin-left: 0.2rem;
-            padding-top: 0.1rem;
-            padding-bottom: 0.1rem;
-            padding-right: 0.12rem;
+            margin-left: 20px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-right: 12px;
             position: relative;
             div.top{
                 width: 100%;
-                font-size:0.14rem;
+                font-size:14px;
                 font-family:PingFang SC;
                 font-weight:500;
                 color:rgba(51,51,51,1);
@@ -152,21 +152,21 @@ export default {
                     margin-top: 0;
                 }
                 .price{
-                    font-size: 0.13rem;
+                    font-size: 13px;
                     color: #F43131;
                     span{
-                        margin-left: 0.14rem;
+                        margin-left: 14px;
                         color: #999999;
                     }
                     .prices{
                         color: #F43131;
-                        font-size: 0.23rem;
-                        margin-left: 0.05rem;
+                        font-size: 23px;
+                        margin-left: 5px;
                     }
                 }
                 .tuan{
-                    margin-top: 0.03rem;
-                    font-size:0.13rem;
+                    margin-top: 3px;
+                    font-size:13px;
                     font-family:PingFang SC;
                     font-weight:500;
                     color:rgba(153,153,153,1);
@@ -177,22 +177,22 @@ export default {
     .second{
         display: flex;
         width: 100%;
-        height: 0.4rem;
-        padding:0.14rem 0rem;
+        height: 40px;
+        padding:14px 0px ;
         background-color: #FAFAFA;
         box-sizing: border-box;
-        font-size: 0.12rem;
+        font-size: 12px;
         color: #333;
         justify-content: space-around;
-        padding-left: 0.16rem;
-        padding-right: 0.16rem;
+        padding-left: 16px;
+        padding-right: 16px;
         @media screen and (max-width: 371px) {
-            padding:0.14rem 0rem;
+            padding:14px 0px;
         }
         img{
-            width: 0.16rem;
-            height: 0.16rem;
-            margin-right: 0.04rem;
+            width: 16px;
+            height: 16px;
+            margin-right: 4px;
         }
         li{
             display: flex;
@@ -201,18 +201,18 @@ export default {
     }
     .three{
         .paySuc{
-            padding: 0.44rem 25%;
+            padding: 44px 25%;
             display: flex;
             align-items: center;
-            font-size:0.25rem;
+            font-size:25px;
             font-family:PingFang SC;
             font-weight:500;
             color:rgba(244,49,49,1);
             line-height:38px;
             padding-left: 30%;
             img{
-                width: 0.34rem;
-                height: 0.31rem;
+                width: 34px;
+                height: 31px;
             }
         }
         .lyl{
@@ -226,8 +226,8 @@ export default {
             }
             li{
                 margin-right: 11px;
-                width: 0.52rem;
-                height: 0.52rem;
+                width: 52px;
+                height: 52px;
                 border-radius: 50%;
                 position: relative;
                 .tuanzhang{
@@ -235,7 +235,7 @@ export default {
                     height: 19px;
                     border-radius: 0;
                     position: absolute;
-                    left: -0.11rem;
+                    left: -11px;
                 }
                 span.tuanzhang{
                     width: 26px;
@@ -243,7 +243,7 @@ export default {
                     font-family: PingFang SC;
                     font-weight: 500;
                     color: rgba(255,255,255,1);
-                    left: -0.09rem;
+                    left: -9px;
                 }
             }
         }
@@ -251,21 +251,21 @@ export default {
     .how{
         margin: 0 auto;
         width: 167px;
-        margin-top: 0.28rem;
-        margin-bottom: 0.13rem;
+        margin-top: 28px;
+        margin-bottom: 13px;
         display: flex;
         align-items: center;
         img{
-            width: 0.18rem;
-            height: 0.18rem;
+            width: 18px;
+            height: 18px;
         }
         .my{
-            font-size: 0.17rem;
+            font-size: 17px;
             color: #333;
             margin-left: 8px;
             span{
                 color: #F43131;
-                margin: 0 0.05rem;
+                margin: 0 5px;
             }
         }
     }
@@ -275,16 +275,16 @@ export default {
         margin: 0 auto;
         align-items: center;
         .line{
-            width: 0.68rem;
-            height: 0.01rem;
+            width: 68px;
+            height: 1px;
             background-color: #DEDDDD;
         }
         .text{
-            margin: 0 0.06rem;
+            margin: 0 6px;
             display: flex;
             align-items: center;
             .myTime{
-                margin: 0 0.14rem;
+                margin: 0 14px;
             }
             span.num{
                 background-color: #484848;
@@ -307,43 +307,43 @@ export default {
         }
     }
     .dingdan{
-        margin: 0 0.6rem;
-        margin-top: 0.18rem;
+        margin: 0 6px;
+        margin-top: 18px;
         font-size: 0;
-        margin-bottom: 0.15rem;
+        margin-bottom: 15px;
         @media screen and (max-width: 370px) {
             margin-left: 15px;
             margin-right: 0;
-            margin-top: 0.18rem;
+            margin-top:18px;
             font-size: 0;
-            margin-bottom: 0.15rem;
+            margin-bottom: 15px;
         }
         @media screen and (min-width: 371px) and (max-width: 380px) {
-            margin: 0 0.4rem;
-            margin-top: 0.18rem;
+            margin: 0 4px;
+            margin-top: 18px;
             font-size: 0;
-            margin-bottom: 0.15rem;
+            margin-bottom: 15px;
         }
         .vanButton{
-            width: 1.38rem;
-            height: 0.41rem;
+            width: 138px;
+            height: 41px;
             background:rgba(250,107,39,1);
             border-radius:6px;
-            font-size: 0.18rem;
+            font-size: 18px;
             color: #fff;
             display: inline-block;
-            line-height: 0.41rem;
+            line-height: 41px;
             text-align: center;
         }
         .invi{
-            margin-left: 0.17rem;
+            margin-left: 17px;
             background-color: #F43131;
         }
     }
     .liji{
         margin: 0 auto;
         display: flex;
-        margin-bottom: 0.15rem;
+        margin-bottom: 15px;
         .vanButton{
             width: 90%;
             margin: 0 auto;
@@ -352,16 +352,16 @@ export default {
     }
     .mbxline{
         width: 100%;
-        height: 0.11rem;
+        height: 11px;
         background-color: #f2f2f2;
     }
     .guize{
         .top{
-            font-size: 0.17rem;
+            font-size: 17px;
             color: #333333;
-            margin-top: 0.17rem;
-            margin-left: 0.18rem;
-            margin-bottom: 0.17rem;
+            margin-top: 17px;
+            margin-left: 18px;
+            margin-bottom: 17px;
         }
         .xiang{
             margin-left: 30px;
@@ -375,14 +375,14 @@ export default {
                 }
                 span{
                     margin-left: 8px;
-                    font-size: 0.13rem;
+                    font-size: 13px;
                     color: #333333;
                 }
             }
         }
     }
     .dianzhang{
-        font-size: 0.17rem;
+        font-size: 17px;
         color: #333333;
         background-color: #f2f2f2;
         padding: 17px;       

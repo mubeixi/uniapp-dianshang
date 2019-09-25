@@ -34,8 +34,8 @@
 export default {
   name: 'App',
   components: {
-    tabs,
-    search
+    // tabs,
+    // search
   },
   data() {
     return {

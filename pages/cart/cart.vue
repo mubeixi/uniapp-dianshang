@@ -5,12 +5,12 @@
       <div v-if="list.length>0">
         <div class="order_msg" v-for="i in list" :key="i">
           <div class="biz_msg">
-            <van-checkbox v-if="handleShow" v-model="checked" checked-color="#F43131"></van-checkbox>
+          <!--  <van-checkbox v-if="handleShow" v-model="checked" checked-color="#F43131"></van-checkbox> -->
             <img src="/static/detail/user1.png" class="biz_logo" alt />
             <text class="biz_name">张小凡时尚衣橱</text>
           </div>
           <div class="pro">
-            <van-checkbox v-if="handleShow" v-model="checked" checked-color="#F43131"></van-checkbox>
+          <!--  <van-checkbox v-if="handleShow" v-model="checked" checked-color="#F43131"></van-checkbox> -->
             <img class="pro-img" src="/static/check/pro1.png" alt />
             <div class="pro-msg">
               <div class="pro-name">2018夏装新款短袖蕾丝拼接荷叶边波点雪纺连衣裙女时尚名媛...</div>
@@ -28,7 +28,7 @@
             </div>
           </div>
           <div class="pro">
-            <van-checkbox v-if="handleShow" v-model="checked" checked-color="#F43131"></van-checkbox>
+       <!--     <van-checkbox v-if="handleShow" v-model="checked" checked-color="#F43131"></van-checkbox> -->
             <img class="pro-img" src="/static/check/pro1.png" alt />
             <div class="pro-msg">
               <div class="pro-name">2018夏装新款短袖蕾丝拼接荷叶边波点雪纺连衣裙女时尚名媛...</div>

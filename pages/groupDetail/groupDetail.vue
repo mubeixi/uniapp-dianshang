@@ -63,7 +63,7 @@
         </div>
         <div class="pinCenter">
             <div class="image">
-                <img src="../assets/tuan/info.png">
+                <img src="/static/tuan/info.png">
             </div>
             <div class="info">
                 <div class="nick">
@@ -115,11 +115,11 @@
     <!-- goodsaction -->
     <!-- <goodsaction></goodsaction> -->
     <!-- 优惠券活分享弹出层 -->
-    <van-overlay
+  <!--  <van-overlay
         :show="show"
         @click="close"
         z-index="100"
-    />
+    /> -->
     <div class="ticks" v-if="ticksShow">
         <div class="t_title">
             领券
@@ -239,7 +239,7 @@ export default {
         position: relative;
         width: 355px;
         height: 80px;
-        background: url('../assets/detail/yhq.png') no-repeat ;
+        background: url('/static/detail/yhq.png') no-repeat ;
         background-size: cover;
         margin: 0 auto 15px;
         padding: 10px 0 14px 20px;
@@ -315,7 +315,7 @@ export default {
     }
     /* 产品描述部分 start */
     .section1 {
-       height: 0.55rem;
+       height: 55px;
        background-color: #fff;
     }
     .price {
@@ -403,6 +403,7 @@ export default {
     }
     .section3 img {
         width: 14px;
+		height: 14px;
         margin-right: 5px;
     }
     /* 包邮信息等 end */
