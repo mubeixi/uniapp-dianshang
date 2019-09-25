@@ -36,10 +36,6 @@
             "style" : {}
         }
         ,{
-            "path" : "pages/groupDetail/groupDetail",
-            "style" : {}
-        }
-        ,{
             "path" : "pages/groupSuccess/groupSuccess",
             "style" : {}
         }

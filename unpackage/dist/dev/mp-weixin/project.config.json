@@ -10,6 +10,8 @@
 	"libVersion": "2.7.0",
 	"appid": "touristappid",
 	"projectname": "uni-ds",
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
 	"condition": {
 		"search": {
 			"current": -1,
@@ -28,8 +30,22 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 0,
+			"current": 2,
 			"list": [
+				{
+					"id": -1,
+					"name": "pages/groupDetail/groupDetail",
+					"pathName": "pages/groupDetail/groupDetail",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/groupSuccess/groupSuccess",
+					"pathName": "pages/groupSuccess/groupSuccess",
+					"query": "",
+					"scene": null
+				},
 				{
 					"id": -1,
 					"name": "pages/cart/cart",

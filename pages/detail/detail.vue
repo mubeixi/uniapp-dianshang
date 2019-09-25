@@ -86,11 +86,11 @@
     <!-- goodsaction -->
    <!-- <goodsaction></goodsaction> -->
     <!-- 优惠券活分享弹出层 -->
-    <van-overlay
+  <!--  <van-overlay
         :show="show"
         @click="close"
         z-index="100"
-    />
+    /> -->
     <div class="ticks" v-if="ticksShow">
         <div class="t_title">
             领券
@@ -210,7 +210,7 @@ export default {
         position: relative;
         width: 355px;
         height: 80px;
-        background: url('../assets/detail/yhq.png') no-repeat ;
+        background: url('/static/detail/yhq.png') no-repeat ;
         background-size: cover;
         margin: 0 auto 15px;
         padding: 10px 0 14px 20px;
