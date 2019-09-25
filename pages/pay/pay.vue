@@ -1,6 +1,6 @@
 <template>
     <div>
-       <!-- <pagetitle title="支付"></pagetitle> -->
+       <page-title title="付款" rightHidden="true"></page-title>
         <div class="state">
             <img src="/static/wait.png" height="30" width="30" alt="">
             <span class="state-desc">等待买家付款</span>

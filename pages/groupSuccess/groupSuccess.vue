@@ -1,6 +1,6 @@
 <template>
   <div class="start">
-       <!-- <pagetitle class="nav-title" :title="msg"  @handle="handle" rightHidden="true"></pagetitle> -->
+       <page-title class="nav-title" :title="msg"  @handle="handle" rightHidden="true"></page-title>
         <!-- 商品详情部分 -->
         <div class="first">
             <div class="left">
@@ -61,7 +61,7 @@
              <span  class="vanButton">查看订单</span>
              <span  class="vanButton invi">邀请好友</span>
         </div>
-        <div class="dingdan liji">
+        <div class="liji">
              <div class="vanButton">立即参团</div>
         </div>
          
@@ -92,7 +92,7 @@
                 <img src="/static/check/pro1.png" alt="">
                 <div class="item-name">2018夏装新款短袖蕾丝拼接荷叶边波点雪纺连衣裙女时尚名媛...</div>
                 <div class="price">
-                    <span class="n_price"><i>￥</i>169.00</span>
+                    <span class="n_price"><span class="pricem">￥</span>169.00</span>
                     <span class="o_price">已团555件</span>
                 </div>
              </div>  
@@ -126,13 +126,15 @@ export default {
         padding:10px 0px;
         display: flex;
         .left{
-            width: 44%;
+            width: 290rpx;
+			height: 290rpx;
             img{
                 width: 100%;
+				height: 100%;
             }
         }
         .right{
-            width: 56%;
+            width: 460rpx;
             margin-left: 20px;
             padding-top: 10px;
             padding-bottom: 10px;
@@ -140,19 +142,19 @@ export default {
             position: relative;
             div.top{
                 width: 100%;
-                font-size:14px;
+                font-size:26rpx;
                 font-family:PingFang SC;
                 font-weight:500;
                 color:rgba(51,51,51,1);
                 line-height:21px;
             }
             div.bottom{
-                margin-top: 18%;
+                margin-top: 40rpx;
                 @media screen and (max-width: 371px) {
                     margin-top: 0;
                 }
                 .price{
-                    font-size: 13px;
+                    font-size: 24rpx;
                     color: #F43131;
                     span{
                         margin-left: 14px;
@@ -160,13 +162,13 @@ export default {
                     }
                     .prices{
                         color: #F43131;
-                        font-size: 23px;
+                        font-size: 40rpx;
                         margin-left: 5px;
                     }
                 }
                 .tuan{
                     margin-top: 3px;
-                    font-size:13px;
+                    font-size:24rpx;
                     font-family:PingFang SC;
                     font-weight:500;
                     color:rgba(153,153,153,1);
@@ -181,7 +183,7 @@ export default {
         padding:14px 0px ;
         background-color: #FAFAFA;
         box-sizing: border-box;
-        font-size: 12px;
+        font-size: 22rpx;
         color: #333;
         justify-content: space-around;
         padding-left: 16px;
@@ -201,15 +203,15 @@ export default {
     }
     .three{
         .paySuc{
-            padding: 44px 25%;
+            padding: 82rpx 241rpx;
+			padding-bottom: 75rpx;
             display: flex;
             align-items: center;
-            font-size:25px;
+            font-size:46rpx;
             font-family:PingFang SC;
             font-weight:500;
             color:rgba(244,49,49,1);
             line-height:38px;
-            padding-left: 30%;
             img{
                 width: 34px;
                 height: 31px;
@@ -218,7 +220,9 @@ export default {
         .lyl{
             display: flex;
             margin: 0 auto;
-            width: 189px;
+            padding-left: 220rpx;
+			padding-right: 205rpx;
+			list-style: none;
             img{
                 width: 100%;
                 height: 100%;
@@ -226,8 +230,8 @@ export default {
             }
             li{
                 margin-right: 11px;
-                width: 52px;
-                height: 52px;
+                width: 95rpx;
+                height: 95rpx;
                 border-radius: 50%;
                 position: relative;
                 .tuanzhang{
@@ -249,10 +253,10 @@ export default {
         }
     }
     .how{
-        margin: 0 auto;
         width: 167px;
         margin-top: 28px;
         margin-bottom: 13px;
+		padding-left: 231rpx;
         display: flex;
         align-items: center;
         img{
@@ -260,7 +264,7 @@ export default {
             height: 18px;
         }
         .my{
-            font-size: 17px;
+            font-size: 30rpx;
             color: #333;
             margin-left: 8px;
             span{
@@ -271,20 +275,26 @@ export default {
     }
     .times{
         display: flex;
-        width: 344px;
+        // width: 344px;
+		padding-left: 77rpx;
+		padding-right: 76rpx;
         margin: 0 auto;
         align-items: center;
+		justify-content: center;
         .line{
-            width: 68px;
+            width: 123rpx;
             height: 1px;
             background-color: #DEDDDD;
         }
         .text{
+			width: 350rpx;
             margin: 0 6px;
             display: flex;
             align-items: center;
+			font-size: 24rpx;
             .myTime{
                 margin: 0 14px;
+				font-size: 30rpx;
             }
             span.num{
                 background-color: #484848;
@@ -307,46 +317,55 @@ export default {
         }
     }
     .dingdan{
-        margin: 0 6px;
         margin-top: 18px;
         font-size: 0;
         margin-bottom: 15px;
-        @media screen and (max-width: 370px) {
-            margin-left: 15px;
-            margin-right: 0;
-            margin-top:18px;
-            font-size: 0;
-            margin-bottom: 15px;
-        }
-        @media screen and (min-width: 371px) and (max-width: 380px) {
-            margin: 0 4px;
-            margin-top: 18px;
-            font-size: 0;
-            margin-bottom: 15px;
-        }
+		padding: 0rpx 110rpx;
+        // @media screen and (max-width: 370px) {
+        //     margin-left: 15px;
+        //     margin-right: 0;
+        //     margin-top:18px;
+        //     font-size: 0;
+        //     margin-bottom: 15px;
+        // }
+        // @media screen and (min-width: 371px) and (max-width: 380px) {
+        //     margin: 0 4px;
+        //     margin-top: 18px;
+        //     font-size: 0;
+        //     margin-bottom: 15px;
+        // }
         .vanButton{
-            width: 138px;
-            height: 41px;
+            width: 250rpx;
+            height: 74rpx;
             background:rgba(250,107,39,1);
             border-radius:6px;
-            font-size: 18px;
+            font-size: 32rpx;
             color: #fff;
             display: inline-block;
-            line-height: 41px;
+            line-height: 74rpx;
             text-align: center;
         }
         .invi{
-            margin-left: 17px;
+            margin-left: 30rpx;
+			font-size: 34rpx;
             background-color: #F43131;
         }
     }
     .liji{
+		margin-top: 18px;
+		font-size: 0;
         margin: 0 auto;
         display: flex;
         margin-bottom: 15px;
+		height: 74rpx;
+		line-height: 74rpx;
         .vanButton{
-            width: 90%;
+			font-size: 34rpx;
+            width: 690rpx;
             margin: 0 auto;
+			border-radius:10px;
+			color: #fff;
+			text-align: center;
             background-color: #F43131;
         }
     }
@@ -357,7 +376,7 @@ export default {
     }
     .guize{
         .top{
-            font-size: 17px;
+            font-size: 30rpx;
             color: #333333;
             margin-top: 17px;
             margin-left: 18px;
@@ -375,14 +394,14 @@ export default {
                 }
                 span{
                     margin-left: 8px;
-                    font-size: 13px;
+                    font-size: 24rpx;
                     color: #333333;
                 }
             }
         }
     }
     .dianzhang{
-        font-size: 17px;
+        font-size: 30rpx;
         color: #333333;
         background-color: #f2f2f2;
         padding: 17px;       
@@ -397,17 +416,18 @@ export default {
         background-color: #f2f2f2;
     }
     .pro-item {
-      width: 48%;
+      width: 345rpx;
       margin-bottom: 15px;
       background: #fff;
     }
     .pro-item img {
       width: 100%;
-      height: 172px;
+      height: 345rpx;
     }
     .item-name {
-      font-size: 12px;
-      padding: 0 5px;
+      font-size: 24rpx;
+      padding-left: 11rpx;
+	  padding-right: 15rpx;
       color: #333;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -423,17 +443,17 @@ export default {
         margin-top: 10px;
         padding: 0 5px 10px;
     }
-    .price i {
-        font-size: 13px;
+    .pricem{
+        font-size: 24rpx;
         font-style: normal;
     }
     .n_price {
         color: #ff0000;
-        font-size: 19px;
+        font-size: 34rpx;
     }
     .o_price {
         color: #afafaf;
         font-size: 12px;
-        margin-left: 10px;
+        margin-left: 22rpx;
     } 
 </style>

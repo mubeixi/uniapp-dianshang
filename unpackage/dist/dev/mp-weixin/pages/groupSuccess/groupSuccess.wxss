@@ -39,13 +39,15 @@
     display: flex;
 }
 .start .first .left.data-v-ca09ef7c {
-      width: 44%;
+      width: 290rpx;
+      height: 290rpx;
 }
 .start .first .left ._img.data-v-ca09ef7c {
         width: 100%;
+        height: 100%;
 }
 .start .first .right.data-v-ca09ef7c {
-      width: 56%;
+      width: 460rpx;
       margin-left: 20px;
       padding-top: 10px;
       padding-bottom: 10px;
@@ -54,14 +56,14 @@
 }
 .start .first .right ._div.top.data-v-ca09ef7c {
         width: 100%;
-        font-size: 14px;
+        font-size: 26rpx;
         font-family: PingFang SC;
         font-weight: 500;
         color: #333333;
         line-height: 21px;
 }
 .start .first .right ._div.bottom.data-v-ca09ef7c {
-        margin-top: 18%;
+        margin-top: 40rpx;
 }
 @media screen and (max-width: 371px) {
 .start .first .right ._div.bottom.data-v-ca09ef7c {
@@ -69,7 +71,7 @@
 }
 }
 .start .first .right ._div.bottom .price.data-v-ca09ef7c {
-          font-size: 13px;
+          font-size: 24rpx;
           color: #F43131;
 }
 .start .first .right ._div.bottom .price ._span.data-v-ca09ef7c {
@@ -78,12 +80,12 @@
 }
 .start .first .right ._div.bottom .price .prices.data-v-ca09ef7c {
             color: #F43131;
-            font-size: 23px;
+            font-size: 40rpx;
             margin-left: 5px;
 }
 .start .first .right ._div.bottom .tuan.data-v-ca09ef7c {
           margin-top: 3px;
-          font-size: 13px;
+          font-size: 24rpx;
           font-family: PingFang SC;
           font-weight: 500;
           color: #999999;
@@ -99,7 +101,7 @@
     background-color: #FAFAFA;
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
-    font-size: 12px;
+    font-size: 22rpx;
     color: #333;
     -webkit-justify-content: space-around;
         -ms-flex-pack: distribute;
@@ -128,7 +130,8 @@
               align-items: center;
 }
 .start .three .paySuc.data-v-ca09ef7c {
-    padding: 44px 25%;
+    padding: 82rpx 241rpx;
+    padding-bottom: 75rpx;
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
@@ -137,12 +140,11 @@
     -webkit-align-items: center;
         -ms-flex-align: center;
             align-items: center;
-    font-size: 25px;
+    font-size: 46rpx;
     font-family: PingFang SC;
     font-weight: 500;
     color: #f43131;
     line-height: 38px;
-    padding-left: 30%;
 }
 .start .three .paySuc ._img.data-v-ca09ef7c {
       width: 34px;
@@ -154,7 +156,9 @@
     display: -ms-flexbox;
     display: flex;
     margin: 0 auto;
-    width: 189px;
+    padding-left: 220rpx;
+    padding-right: 205rpx;
+    list-style: none;
 }
 .start .three .lyl ._img.data-v-ca09ef7c {
       width: 100%;
@@ -163,8 +167,8 @@
 }
 .start .three .lyl ._li.data-v-ca09ef7c {
       margin-right: 11px;
-      width: 52px;
-      height: 52px;
+      width: 95rpx;
+      height: 95rpx;
       border-radius: 50%;
       position: relative;
 }
@@ -184,10 +188,10 @@
         left: -9px;
 }
 .start .how.data-v-ca09ef7c {
-    margin: 0 auto;
     width: 167px;
     margin-top: 28px;
     margin-bottom: 13px;
+    padding-left: 231rpx;
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
@@ -202,7 +206,7 @@
       height: 18px;
 }
 .start .how .my.data-v-ca09ef7c {
-      font-size: 17px;
+      font-size: 30rpx;
       color: #333;
       margin-left: 8px;
 }
@@ -215,19 +219,25 @@
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
-    width: 344px;
+    padding-left: 77rpx;
+    padding-right: 76rpx;
     margin: 0 auto;
     -webkit-box-align: center;
     -webkit-align-items: center;
         -ms-flex-align: center;
             align-items: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+        -ms-flex-pack: center;
+            justify-content: center;
 }
 .start .times .line.data-v-ca09ef7c {
-      width: 68px;
+      width: 123rpx;
       height: 1px;
       background-color: #DEDDDD;
 }
 .start .times .text.data-v-ca09ef7c {
+      width: 350rpx;
       margin: 0 6px;
       display: -webkit-box;
       display: -webkit-flex;
@@ -237,9 +247,11 @@
       -webkit-align-items: center;
           -ms-flex-align: center;
               align-items: center;
+      font-size: 24rpx;
 }
 .start .times .text .myTime.data-v-ca09ef7c {
         margin: 0 14px;
+        font-size: 30rpx;
 }
 .start .times .text ._span.num.data-v-ca09ef7c {
         background-color: #484848;
@@ -260,54 +272,46 @@
         text-align: center;
 }
 .start .dingdan.data-v-ca09ef7c {
-    margin: 0 6px;
     margin-top: 18px;
     font-size: 0;
     margin-bottom: 15px;
-}
-@media screen and (max-width: 370px) {
-.start .dingdan.data-v-ca09ef7c {
-        margin-left: 15px;
-        margin-right: 0;
-        margin-top: 18px;
-        font-size: 0;
-        margin-bottom: 15px;
-}
-}
-@media screen and (min-width: 371px) and (max-width: 380px) {
-.start .dingdan.data-v-ca09ef7c {
-        margin: 0 4px;
-        margin-top: 18px;
-        font-size: 0;
-        margin-bottom: 15px;
-}
+    padding: 0rpx 110rpx;
 }
 .start .dingdan .vanButton.data-v-ca09ef7c {
-      width: 138px;
-      height: 41px;
+      width: 250rpx;
+      height: 74rpx;
       background: #fa6b27;
       border-radius: 6px;
-      font-size: 18px;
+      font-size: 32rpx;
       color: #fff;
       display: inline-block;
-      line-height: 41px;
+      line-height: 74rpx;
       text-align: center;
 }
 .start .dingdan .invi.data-v-ca09ef7c {
-      margin-left: 17px;
+      margin-left: 30rpx;
+      font-size: 34rpx;
       background-color: #F43131;
 }
 .start .liji.data-v-ca09ef7c {
+    margin-top: 18px;
+    font-size: 0;
     margin: 0 auto;
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
     margin-bottom: 15px;
+    height: 74rpx;
+    line-height: 74rpx;
 }
 .start .liji .vanButton.data-v-ca09ef7c {
-      width: 90%;
+      font-size: 34rpx;
+      width: 690rpx;
       margin: 0 auto;
+      border-radius: 10px;
+      color: #fff;
+      text-align: center;
       background-color: #F43131;
 }
 .start .mbxline.data-v-ca09ef7c {
@@ -316,7 +320,7 @@
     background-color: #f2f2f2;
 }
 .start .guize .top.data-v-ca09ef7c {
-    font-size: 17px;
+    font-size: 30rpx;
     color: #333333;
     margin-top: 17px;
     margin-left: 18px;
@@ -342,11 +346,11 @@
 }
 .start .guize .xiang .hang ._span.data-v-ca09ef7c {
         margin-left: 8px;
-        font-size: 13px;
+        font-size: 24rpx;
         color: #333333;
 }
 .start .dianzhang.data-v-ca09ef7c {
-    font-size: 17px;
+    font-size: 30rpx;
     color: #333333;
     background-color: #f2f2f2;
     padding: 17px;
@@ -367,17 +371,18 @@
   background-color: #f2f2f2;
 }
 .pro-item.data-v-ca09ef7c {
-  width: 48%;
+  width: 345rpx;
   margin-bottom: 15px;
   background: #fff;
 }
 .pro-item ._img.data-v-ca09ef7c {
   width: 100%;
-  height: 172px;
+  height: 345rpx;
 }
 .item-name.data-v-ca09ef7c {
-  font-size: 12px;
-  padding: 0 5px;
+  font-size: 24rpx;
+  padding-left: 11rpx;
+  padding-right: 15rpx;
   color: #333;
   overflow: hidden;
   -o-text-overflow: ellipsis;
@@ -394,17 +399,17 @@
   margin-top: 10px;
   padding: 0 5px 10px;
 }
-.price ._i.data-v-ca09ef7c {
-  font-size: 13px;
+.pricem.data-v-ca09ef7c {
+  font-size: 24rpx;
   font-style: normal;
 }
 .n_price.data-v-ca09ef7c {
   color: #ff0000;
-  font-size: 19px;
+  font-size: 34rpx;
 }
 .o_price.data-v-ca09ef7c {
   color: #afafaf;
   font-size: 12px;
-  margin-left: 10px;
+  margin-left: 22rpx;
 }
 
