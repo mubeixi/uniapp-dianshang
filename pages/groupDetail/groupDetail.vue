@@ -542,7 +542,7 @@ export default {
         justify-content: space-between;
         background-color: #F43131;
         color: #fff;
-        .lefts{
+        .leftss{
             font-size: 0;
             span.pricef{
                 font-size: 36rpx;
@@ -559,7 +559,7 @@ export default {
                 text-decoration:line-through;
             }
         }
-        .rights{
+        .rightss{
             div{
                     color:#ddd;
                     font-size: 22rpx;
