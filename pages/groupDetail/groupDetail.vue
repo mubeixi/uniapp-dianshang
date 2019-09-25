@@ -4,14 +4,24 @@
         <img src="/static/detail/back.png" @click="goBack" alt="">
         <img src="/static/detail/cart.png" class="cart" alt="">
     </div>
-    <van-swipe :autoplay="3000">
-        <van-swipe-item style="height: 375px;" vertical>
-            <img src="/static/detail/banner3.png" alt="">
-        </van-swipe-item>
-        <van-swipe-item style="height: 375px;" vertical>
-            <img src="/static/detail/banner3.png" alt="">
-        </van-swipe-item>
-    </van-swipe>
+	<!-- 轮播 -->
+	<view class="uni-padding-wrap">
+	            <view class="page-section swiper">
+	                <view class="page-section-spacing">
+	                    <swiper class="swiper" circular="true" indicator-dots="indicatorDots" autoplay="autoplay" interval="4000" duration="500" indicator-color="#fff" indicator-active-color="#ff5000">
+	                        <swiper-item>
+	                             <img src="/static/detail/banner3.png" alt="">
+	                        </swiper-item>
+	                        <swiper-item>
+	                             <img src="/static/detail/banner3.png" alt="">
+	                        </swiper-item>
+	                        <swiper-item>
+	                             <img src="/static/detail/banner3.png" alt="">
+	                        </swiper-item>
+	                    </swiper>
+	                </view>
+	            </view>
+	</view>
     <!-- 产品信息描述 -->
     <div class="section1">
         <div class="lefts">
@@ -200,7 +210,19 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
+// 轮播样式
+.uni-padding-wrap{
+	width: 750rpx;
+	height: 750rpx;
+	.page-section,.page-section-spacing,.swiper,.uni-swiper-wrapper,.uni-swiper-slides{
+			width: 750rpx;
+			height: 750rpx;
+			img{
+				width: 100%;
+				height: 100%;
+			}
+	}
+}
     /* 返回按钮和购物车按钮 */
     .top {
         position: absolute;
@@ -315,7 +337,7 @@ export default {
     }
     /* 产品描述部分 start */
     .section1 {
-       height: 55px;
+       height: 100rpx;
        background-color: #fff;
     }
     .price {
@@ -362,8 +384,11 @@ export default {
     /* 产品描述部分 end */
     /* 领券start */
     .section2 {
-        padding: 15px 10px;
-        font-size: 12px;
+        padding-left: 26rpx;
+		padding-top: 20rpx;
+		padding-right: 37rpx;
+		padding-bottom: 20rpx;
+        font-size: 22rpx;
         // display: flex;
         // align-items: center;
         // justify-content: space-between;
@@ -378,19 +403,20 @@ export default {
     .right {
         display: flex;
         align-items: center;
-        font-size: 12px;
+        font-size: 24rpx;
+		color: #666666;
     }
     .right img{
-        width: 10px;
-        height: 13px;
-        margin-left: 10px;
+        width: 19rpx;
+        height: 30rpx;
+        margin-left: 20rpx;
     }
     /* 领券 end */
     /* 包邮信息等 start */
     .section3 {
         display: flex;
         flex-wrap: wrap;
-        font-size: 12px;
+        font-size: 22rpx;
         padding: 15px 10px;
         border-bottom: 17px solid #f8f8f8;
         justify-content: space-around;
@@ -402,14 +428,14 @@ export default {
         margin-right: 10px;
     }
     .section3 img {
-        width: 14px;
-		height: 14px;
+        width: 30rpx;
+		height: 30rpx;
         margin-right: 5px;
     }
     /* 包邮信息等 end */
     /* 评价 start */
     .comment {
-        padding: 15px 10px;
+        padding: 30rpx 26rpx;
         border-bottom: 10px solid #f8f8f8;
         background-color: #fff;
     }
@@ -418,7 +444,7 @@ export default {
         justify-content: space-between;
     }
     .c_title>span {
-        font-size: 15px;
+        font-size: 30rpx;
         color: #333;
     }
     .c_content {
@@ -431,38 +457,39 @@ export default {
         color: #333;
     }
     .c_content_title>img {
-        width: 35px;
-        height: 35px;
-        margin-right: 10px;
+        width: 70rpx;
+        height: 70rpx;
+        margin-right: 20rpx;
     }
     .user_name {
         flex: 1;
+		font-size: 30rpx;
     }
     .c_time {
-        font-size: 13px;
+        font-size: 26rpx;
         color: #777;
     }
     .c_content_msg {
-        font-size: 12px;
+        font-size: 24rpx;
         color: #333;
         line-height: 18px;
         padding: 9px 0;
         border-bottom: 1px solid #f8f8f8;
     }
     .c_content_img img {
-        width: 70px;
-        height: 70px;
-        margin-right: 10px;
+        width: 142rpx;
+        height: 142rpx;
+        margin-right: 20rpx;
     }
     /* 评价 end */
     /* 商品详情 start */
     .pro_detail {
-        padding: 15px 10px;
-            background-color: #fff;
+        padding: 26rpx 26rpx;
+        background-color: #fff;
     }
     .p_detail_title {
         color: #333;
-        font-size: 15px;
+        font-size: 30rpx;
     }
     /* 商品详情 end */
     /* 遮罩层 */
@@ -475,7 +502,8 @@ export default {
     }
     .section1{
         display: flex;
-        padding: 0 10px;
+        padding-left: 27rpx;
+		padding-right: 31rpx;
         align-items: center;
         justify-content: space-between;
         background-color: #F43131;
@@ -483,15 +511,15 @@ export default {
         .lefts{
             font-size: 0;
             span.pricef{
-                font-size: 16px;
+                font-size: 36rpx;
             }
             span.prices{
-                font-size: 21px;
+                font-size: 50rpx;
                 margin-left: 4px;
                 font-weight: 500;
             }
             span.pricet{
-                font-size: 12px;
+                font-size: 28rpx;
                 margin-left: 6px;
                 color: #ddd;
                 text-decoration:line-through;
@@ -500,7 +528,7 @@ export default {
         .rights{
             div{
                     color:#ddd;
-                    font-size: 12px;
+                    font-size: 22rpx;
                     .haha{
 
                     }
@@ -508,7 +536,7 @@ export default {
                         margin: 0 4px;
                         padding: 0 5px;
                         //width:23px;
-                        height:20px;
+                        height:37rpx;
                         text-align: center;
                         background:linear-gradient(0deg,rgba(12,12,12,1) 0%,rgba(197,195,195,1) 100%);
                         box-shadow:0px 1px 1px 0px rgba(4,0,0,0.5), 0px 1px 1px 0px rgba(255,255,255,0.65);
@@ -519,7 +547,7 @@ export default {
         }
     }
     .titles{
-        font-size:15px;
+        font-size:28rpx;
         font-family:PingFang SC;
         font-weight:bold;
         color:rgba(51,51,51,1);
@@ -537,20 +565,20 @@ export default {
         margin-bottom: 17px;
         background-color: #fff;
         .pinTitle{
-            font-size:17px;
+            font-size:30rpx;
             font-family:PingFang SC;
             font-weight:500;
             color:rgba(51,51,51,1);
             line-height:20px;
-            padding: 15px 14px;
+            padding:26rpx;
         }
         .pinCenter{
-                padding: 7px 14px;
+                padding: 15rpx 25rpx;
                 display: flex;
                 align-items: center;
                 .image{
-                    width: 55px;
-                    height: 55px;
+                    width: 100rpx;
+                    height: 100rpx;
                     border-radius: 50%;
                     overflow: hidden;
                     img{
@@ -559,15 +587,16 @@ export default {
                     }
                 }
                 .info{
+					margin-left: 21rpx;
                     .nick{
-                        font-size:14px;
+                        font-size:26rpx;
                         font-family:PingFang SC;
                         font-weight:500;
                         color:rgba(51,51,51,1);
                         line-height:20px;
                     }
                     .message{
-                        font-size:13px;
+                        font-size:24rpx;
                         font-family:PingFang SC;
                         font-weight:500;
                         color:rgba(110,110,110,1);
@@ -575,14 +604,14 @@ export default {
                     }
                 }
                 .cantuan{
-                    width:66px;
-                    height:26px;
+                    width:119rpx;
+                    height:48rpx;
                     border:1px solid rgba(244,49,49,1);
                     border-radius:3px;
                     color:  rgba(244,49,49,1);
                     text-align: center;
-                    line-height: 26px;
-                    font-size: 14px;
+                    line-height: 48rpx;
+                    font-size: 26rpx;
                     margin-left: auto;
                 }
         }

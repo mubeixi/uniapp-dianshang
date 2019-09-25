@@ -24,6 +24,18 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
+.uni-padding-wrap.data-v-7e0dd5a4 {
+  width: 750rpx;
+  height: 750rpx;
+}
+.uni-padding-wrap .page-section.data-v-7e0dd5a4, .uni-padding-wrap .page-section-spacing.data-v-7e0dd5a4, .uni-padding-wrap .swiper.data-v-7e0dd5a4, .uni-padding-wrap .uni-swiper-wrapper.data-v-7e0dd5a4, .uni-padding-wrap .uni-swiper-slides.data-v-7e0dd5a4 {
+    width: 750rpx;
+    height: 750rpx;
+}
+.uni-padding-wrap .page-section ._img.data-v-7e0dd5a4, .uni-padding-wrap .page-section-spacing ._img.data-v-7e0dd5a4, .uni-padding-wrap .swiper ._img.data-v-7e0dd5a4, .uni-padding-wrap .uni-swiper-wrapper ._img.data-v-7e0dd5a4, .uni-padding-wrap .uni-swiper-slides ._img.data-v-7e0dd5a4 {
+      width: 100%;
+      height: 100%;
+}
 /* 返回按钮和购物车按钮 */
 .top.data-v-7e0dd5a4 {
   position: absolute;
@@ -154,7 +166,7 @@
 }
 /* 产品描述部分 start */
 .section1.data-v-7e0dd5a4 {
-  height: 55px;
+  height: 100rpx;
   background-color: #fff;
 }
 .price.data-v-7e0dd5a4 {
@@ -201,8 +213,11 @@
 /* 产品描述部分 end */
 /* 领券start */
 .section2.data-v-7e0dd5a4 {
-  padding: 15px 10px;
-  font-size: 12px;
+  padding-left: 26rpx;
+  padding-top: 20rpx;
+  padding-right: 37rpx;
+  padding-bottom: 20rpx;
+  font-size: 22rpx;
   border-bottom: 1px solid #ece8e8;
   background-color: #fff;
 }
@@ -220,12 +235,13 @@
   -webkit-align-items: center;
       -ms-flex-align: center;
           align-items: center;
-  font-size: 12px;
+  font-size: 24rpx;
+  color: #666666;
 }
 .right ._img.data-v-7e0dd5a4 {
-  width: 10px;
-  height: 13px;
-  margin-left: 10px;
+  width: 19rpx;
+  height: 30rpx;
+  margin-left: 20rpx;
 }
 /* 领券 end */
 /* 包邮信息等 start */
@@ -237,7 +253,7 @@
   -webkit-flex-wrap: wrap;
       -ms-flex-wrap: wrap;
           flex-wrap: wrap;
-  font-size: 12px;
+  font-size: 22rpx;
   padding: 15px 10px;
   border-bottom: 17px solid #f8f8f8;
   -webkit-justify-content: space-around;
@@ -257,14 +273,14 @@
   margin-right: 10px;
 }
 .section3 ._img.data-v-7e0dd5a4 {
-  width: 14px;
-  height: 14px;
+  width: 30rpx;
+  height: 30rpx;
   margin-right: 5px;
 }
 /* 包邮信息等 end */
 /* 评价 start */
 .comment.data-v-7e0dd5a4 {
-  padding: 15px 10px;
+  padding: 30rpx 26rpx;
   border-bottom: 10px solid #f8f8f8;
   background-color: #fff;
 }
@@ -279,7 +295,7 @@
           justify-content: space-between;
 }
 .c_title > ._span.data-v-7e0dd5a4 {
-  font-size: 15px;
+  font-size: 30rpx;
   color: #333;
 }
 .c_content.data-v-7e0dd5a4 {
@@ -298,41 +314,42 @@
   color: #333;
 }
 .c_content_title > ._img.data-v-7e0dd5a4 {
-  width: 35px;
-  height: 35px;
-  margin-right: 10px;
+  width: 70rpx;
+  height: 70rpx;
+  margin-right: 20rpx;
 }
 .user_name.data-v-7e0dd5a4 {
   -webkit-box-flex: 1;
   -webkit-flex: 1;
       -ms-flex: 1;
           flex: 1;
+  font-size: 30rpx;
 }
 .c_time.data-v-7e0dd5a4 {
-  font-size: 13px;
+  font-size: 26rpx;
   color: #777;
 }
 .c_content_msg.data-v-7e0dd5a4 {
-  font-size: 12px;
+  font-size: 24rpx;
   color: #333;
   line-height: 18px;
   padding: 9px 0;
   border-bottom: 1px solid #f8f8f8;
 }
 .c_content_img ._img.data-v-7e0dd5a4 {
-  width: 70px;
-  height: 70px;
-  margin-right: 10px;
+  width: 142rpx;
+  height: 142rpx;
+  margin-right: 20rpx;
 }
 /* 评价 end */
 /* 商品详情 start */
 .pro_detail.data-v-7e0dd5a4 {
-  padding: 15px 10px;
+  padding: 26rpx 26rpx;
   background-color: #fff;
 }
 .p_detail_title.data-v-7e0dd5a4 {
   color: #333;
-  font-size: 15px;
+  font-size: 30rpx;
 }
 /* 商品详情 end */
 /* 遮罩层 */
@@ -348,7 +365,8 @@
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  padding: 0 10px;
+  padding-left: 27rpx;
+  padding-right: 31rpx;
   -webkit-box-align: center;
   -webkit-align-items: center;
       -ms-flex-align: center;
@@ -364,27 +382,27 @@
     font-size: 0;
 }
 .section1 .lefts ._span.pricef.data-v-7e0dd5a4 {
-      font-size: 16px;
+      font-size: 36rpx;
 }
 .section1 .lefts ._span.prices.data-v-7e0dd5a4 {
-      font-size: 21px;
+      font-size: 50rpx;
       margin-left: 4px;
       font-weight: 500;
 }
 .section1 .lefts ._span.pricet.data-v-7e0dd5a4 {
-      font-size: 12px;
+      font-size: 28rpx;
       margin-left: 6px;
       color: #ddd;
       text-decoration: line-through;
 }
 .section1 .rights ._div.data-v-7e0dd5a4 {
     color: #ddd;
-    font-size: 12px;
+    font-size: 22rpx;
 }
 .section1 .rights ._div ._span.data-v-7e0dd5a4 {
       margin: 0 4px;
       padding: 0 5px;
-      height: 20px;
+      height: 37rpx;
       text-align: center;
       background: -webkit-gradient(linear, left bottom, left top, from(#0c0c0c), to(#c5c3c3));
       background: -o-linear-gradient(bottom, #0c0c0c 0%, #c5c3c3 100%);
@@ -394,7 +412,7 @@
       display: inline-block;
 }
 .titles.data-v-7e0dd5a4 {
-  font-size: 15px;
+  font-size: 28rpx;
   font-family: PingFang SC;
   font-weight: bold;
   color: #333333;
@@ -413,15 +431,15 @@
   background-color: #fff;
 }
 .pintuan .pinTitle.data-v-7e0dd5a4 {
-    font-size: 17px;
+    font-size: 30rpx;
     font-family: PingFang SC;
     font-weight: 500;
     color: #333333;
     line-height: 20px;
-    padding: 15px 14px;
+    padding: 26rpx;
 }
 .pintuan .pinCenter.data-v-7e0dd5a4 {
-    padding: 7px 14px;
+    padding: 15rpx 25rpx;
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
@@ -432,8 +450,8 @@
             align-items: center;
 }
 .pintuan .pinCenter .image.data-v-7e0dd5a4 {
-      width: 55px;
-      height: 55px;
+      width: 100rpx;
+      height: 100rpx;
       border-radius: 50%;
       overflow: hidden;
 }
@@ -441,29 +459,32 @@
         width: 100%;
         height: 100%;
 }
+.pintuan .pinCenter .info.data-v-7e0dd5a4 {
+      margin-left: 21rpx;
+}
 .pintuan .pinCenter .info .nick.data-v-7e0dd5a4 {
-      font-size: 14px;
-      font-family: PingFang SC;
-      font-weight: 500;
-      color: #333333;
-      line-height: 20px;
+        font-size: 26rpx;
+        font-family: PingFang SC;
+        font-weight: 500;
+        color: #333333;
+        line-height: 20px;
 }
 .pintuan .pinCenter .info .message.data-v-7e0dd5a4 {
-      font-size: 13px;
-      font-family: PingFang SC;
-      font-weight: 500;
-      color: #6e6e6e;
-      line-height: 20px;
+        font-size: 24rpx;
+        font-family: PingFang SC;
+        font-weight: 500;
+        color: #6e6e6e;
+        line-height: 20px;
 }
 .pintuan .pinCenter .cantuan.data-v-7e0dd5a4 {
-      width: 66px;
-      height: 26px;
+      width: 119rpx;
+      height: 48rpx;
       border: 1px solid #f43131;
       border-radius: 3px;
       color: #f43131;
       text-align: center;
-      line-height: 26px;
-      font-size: 14px;
+      line-height: 48rpx;
+      font-size: 26rpx;
       margin-left: auto;
 }
 

@@ -41,7 +41,9 @@
         }
         ,{
             "path" : "pages/pay/pay",
-            "style" : {}
+            "style": {
+            	"navigationBarTitleText": "付款"
+            }
         }
         ,{
             "path" : "pages/result/result",
@@ -53,6 +55,10 @@
         }
         ,{
             "path" : "pages/searchhistory/searchhistory",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/title/title",
             "style" : {}
         }
     ],
