@@ -24,12 +24,12 @@
 	</view>
     <!-- 产品信息描述 -->
     <div class="section1">
-        <div class="lefts">
+        <div class="leftss">
             <span class="pricef">¥</span>
             <span class="prices">13.9</span>
             <span class="pricet">¥ 15.5</span>
         </div>
-        <div class="rights">
+        <div class="rightss">
             <div>
                还有<span>5</span>天<span>522</span>小时<span>25</span>分5秒结束
             </div>
@@ -165,6 +165,40 @@
         </div>
         <div class="s_bottom" @click="cancel">取消</div>
     </div>
+	<div class="fixed">
+		<div class="leftss">
+			<div class="first">
+				<div><img src="/static/tuan/home.png" ></div>
+				<div class="txt">首页</div>
+			</div>
+			<div class="first">
+				<div><img  src="/static/tuan/shou.png" ></div>
+				<div class="txt">收藏</div>
+			</div>
+			<div class="first">
+				<div><img src="/static/tuan/ke.png" ></div>
+				<div class="txt">客服</div>
+			</div>
+		</div>
+		<div class="rightss">
+			<div class="dan bTitle">
+				<div class="danLeft">
+					<span class="bF">¥</span><span class="bS">15.1</span>
+				</div>
+				<div class="danRight">
+					单独购买
+				</div>
+			</div>
+			<div class="tuan bTitle">
+				<div>
+					<span class="bF">¥</span><span class="bS">15.1</span>
+				</div>
+				<div class="danRight">
+					一键开团
+				</div>
+			</div>
+		</div>
+	</div>
   </div>
 </template>
 
@@ -616,4 +650,59 @@ export default {
                 }
         }
     }
+	.fixed{
+		height: 98rpx;
+		display: flex;
+		position: fixed;
+		bottom: 0;
+		width: 100%;
+		background-color: #F8F8F8;
+		z-index: 9999;
+		.leftss,.rightss{
+			width: 50%;
+			height: 98rpx;
+			display: flex;
+		}
+		.leftss{
+			div.first{
+				width: 33.3%;
+				height: 98rpx;
+				text-align: center;
+				padding-top: 15rpx;
+				img{
+					width: 38rpx;
+					height: 38rpx;
+					display: block;
+					margin: 0 auto;
+				}
+				.txt{
+					font-size: 22rpx;
+					margin-top: 10rpx;
+				}
+			}
+		}
+		.rightss{
+			.dan{
+				width: 50%;
+				background-color: #FA6B27;
+			}
+			.tuan{
+				width: 50%;
+				background-color: #F43131;
+			}
+			.bTitle{
+				color: #fff;
+				text-align: center;
+				.bF{
+					font-size: 24rpx;
+				}
+				.bS{
+					font-size: 32rpx;
+				}
+				.danRight{
+					font-size: 26rpx;
+				}
+			}
+		}
+	}
 </style>
