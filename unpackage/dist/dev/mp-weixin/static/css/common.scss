@@ -1,0 +1,135 @@
+@import "./scssConfig.scss";
+
+// 初始化标签默认行为
+* {
+  font-family:"微软雅黑";
+}
+body { background-color:#f5f5f5; color:#333; font-size:16px; height:100vh; overflow-y: auto;
+}
+html { background-color:#FFF; font-size:100px; -webkit-text-size-adjust:none;
+}
+input { -webkit-appearance:none; background-color:transparent; border:none; border-radius:0;// display:block;
+}
+input[disabled] ,.disabled { opacity:0.5;
+}
+ul ,p ,body ,dd ,h1 ,h2 ,h3 ,h4 ,h5 ,h6 ,dl ,figure { margin:0; padding:0;
+}
+li { display:block; list-style:none;
+}
+a { text-decoration:none;
+}
+
+// 下面是自定义的 class
+#app {
+}
+.swiper-pagination{bottom: 2px !important;
+    span{width:10px;height: 2px;border-radius: 0;background-color: white;}
+}
+.tabbarPadding { padding-bottom:0.53rem;
+}
+
+.overscroll { -webkit-overflow-scrolling:touch; -moz-overflow-scrolling:touch; -o-overflow-scrolling:touch;
+}
+
+.screen { position:fixed; background-color:#F5F5F5; box-sizing:border-box; bottom: 0; left:0; -webkit-overflow-scrolling:touch; -moz-overflow-scrolling:touch; -o-overflow-scrolling:touch; overflow-y:auto; right:0; top:0; z-index:50;
+}
+.eleHidden{display: none;}
+
+.head { position:relative; background-color:#F8F8F8; font-size:0.15rem; line-height:0.45rem; text-align:center;
+    >i.iconfont { position:absolute; display:block; left:0; line-height:0.42rem; text-align:center; top:0; width:40px; z-index:10;
+    }
+}
+
+.propmtTextCommon { color:#999; display:block; font-size:14px; line-height:0.6rem; text-align:center; width:100%;
+    &::after { content:"暂无数据";
+    }
+}
+
+.propmtImg { display:block; margin:auto; padding-top:1rem ; width:2rem;
+}
+
+.page { text-align:center;
+}
+
+input ,textarea { outline:none;
+}
+
+.fl { float:left;
+}
+
+.fr { float:right;
+}
+
+.nowrap { white-space:nowrap;}
+
+.clearfix { overflow:hidden;
+}
+
+.inputLable { position:relative; display:block;
+    span { position:absolute; font-size:0.16rem; left:0; top:50%; transform:translateY(-50%);
+    }
+    input { border-bottom:1px solid #E6E6E6; box-sizing:content-box; font-size:0.16rem; height:0.2rem; line-height:0.2rem; padding:0.15rem 0; padding-left:15%; width:85%;
+    }
+    .right { position:absolute; height:0.3rem; line-height:0.3rem; min-width:0.3rem; right:0; text-align:center; top:50%; transform:translateY(-50%);
+    }
+}
+
+.submitBtn { background-color:$mainColor; border-radius:0.05rem; color:white; font-size:0.14rem; height:0.4rem; margin:0.2rem auto 0; width:100%;
+}
+
+
+.weui-toast.weui-toast_text { padding:0 10px; white-space:nowrap;
+}
+html ,body { -webkit-box-sizing:border-box; box-sizing:border-box; margin:0;
+}
+
+
+$space-base:16px; $space-x-base:$space-base; $space-y-base:$space-base; $spaces:(
+        none: 0,
+        xs: ($space-x-base * 0.25),
+        sm: ($space-x-base * 0.5),
+        md: $space-x-base,
+        lg: ($space-x-base * 1.5),
+        xl: ($space-x-base * 3),
+        nxs: -($space-x-base * 0.25),
+        nsm: -($space-x-base * 0.5),
+        nmd: -($space-x-base * 1),
+        nlg: -($space-x-base * 1.5),
+        nxl: -($space-x-base * 3)
+);
+
+@each $space, $value in $spaces { .q-pa-#{$space} { padding:$value $value;
+    }
+    .q-pl-#{$space} { padding-left:$value;
+    }
+    .q-pr-#{$space} { padding-right:$value;
+    }
+    .q-pt-#{$space} { padding-top:$value;
+    }
+    .q-pb-#{$space} { padding-bottom:$value;
+    }
+    .q-px-#{$space} { @extend .q-pl-#{$space}; @extend .q-pr-#{$space};
+    }
+    .q-py-#{$space} { @extend .q-pt-#{$space}; @extend .q-pb-#{$space};
+    }
+    .q-ma-#{$space} { margin:$value $value;
+    }
+    .q-ml-#{$space} { margin-left:$value;
+    }
+    .q-mr-#{$space} { margin-right:$value;
+    }
+    .q-mt-#{$space} { margin-top:$value;
+    }
+    .q-mb-#{$space} { margin-bottom:$value;
+    }
+    .q-mx-#{$space} { @extend .q-ml-#{$space}; @extend .q-mr-#{$space};
+    }
+    .q-my-#{$space} { @extend .q-mt-#{$space}; @extend .q-mb-#{$space};
+    }
+    .q-ml-auto { margin-left:auto;
+    }
+    .q-mr-auto { margin-right:auto;
+    }
+    .q-mx-auto { @extend .q-ml-auto; @extend .q-mr-auto;
+    }
+}
