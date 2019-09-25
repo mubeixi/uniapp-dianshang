@@ -69,11 +69,7 @@
             <div class="bd">
                 <div class="o_title">
                     <span>是否使用余额</span>
-                    <van-switch
-                        v-model="checked"
-                        size='25px'
-                        active-color="#04B600"
-                    />
+                    <switch checked @change="switch1Change" />
                 </div>
                 <div class="o_desc">请输入金额</div>
             </div>
@@ -82,11 +78,7 @@
             <div class="bd">
                 <div class="o_title">
                     <span>是否开具发票</span>
-                    <van-switch
-                        v-model="checked"
-                        size='25px'
-                        active-color="#04B600"
-                    />
+					<switch checked @change="switch2Change" />
                 </div>
                 <div class="o_desc">请输入发票抬头和纳税人识别号</div>
             </div>
@@ -111,11 +103,11 @@
             </div>
             <div class="submit">提交订单</div>
         </div>
-        <van-overlay
+        <!-- <van-overlay
             :show="show"
             @click="showOverlay"
             z-index=1000
-        />
+        /> -->
         <!-- 运费选择 -->
         <div class="wl" v-if="wl_show">
             <div class="wl_title">运费选择</div>
@@ -176,7 +168,13 @@ export default {
         },
         toggle(index) {
             this.$refs.checkboxes[index].toggle();
-        }
+        },
+		switch2Change(){
+			
+		},
+		switch1Change(){
+			
+		}
     }
 }
 </script>
