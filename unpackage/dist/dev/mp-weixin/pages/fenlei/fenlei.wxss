@@ -1,0 +1,52 @@
+
+.van-sidebar.data-v-6d5ecb3c {
+    width: 100px;
+    -webkit-flex-shrink: 0;
+        -ms-flex-negative: 0;
+            flex-shrink: 0;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+}
+.van-tree-select__nav.data-v-6d5ecb3c {
+    -webkit-box-flex: 0;
+    -webkit-flex: none;
+        -ms-flex: none;
+            flex: none;
+}
+.van-sidebar-item.data-v-6d5ecb3c {
+    background: #f6f6f6;
+}
+.van-sidebar-item--select.data-v-6d5ecb3c {
+    background: #fff;
+    color: #ff0000;
+}
+.van-sidebar.data-v-6d5ecb3c {
+    float: left;
+}
+.s_title.data-v-6d5ecb3c {
+    width: 100%;
+    height: 44px;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    padding: 12px 8px 12px 12px;
+}
+.fr.data-v-6d5ecb3c {
+    float: right;
+}
+.name.data-v-6d5ecb3c {
+    font-size: 13px;
+    color: #333;
+    float: left;
+}
+.all.data-v-6d5ecb3c {
+    font-size: 11px;
+    height: 20px;
+    width: 40px;
+    color: #888;
+}
+.right.data-v-6d5ecb3c {
+    width: 6px;
+    height: 10px;
+    margin-left: 7px;
+}
+

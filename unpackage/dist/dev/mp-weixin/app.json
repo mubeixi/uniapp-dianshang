@@ -1,0 +1,26 @@
+{
+  "pages": [
+    "pages/check/check",
+    "pages/cart/cart",
+    "pages/index/index",
+    "pages/collection/collection",
+    "pages/comments/comments",
+    "pages/detail/detail",
+    "pages/fenlei/fenlei",
+    "pages/groupDetail/groupDetail",
+    "pages/groupDetail/groupDetail",
+    "pages/groupSuccess/groupSuccess",
+    "pages/pay/pay",
+    "pages/result/result",
+    "pages/search/search",
+    "pages/searchhistory/searchhistory"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "usingComponents": {}
+}
