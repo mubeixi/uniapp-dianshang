@@ -4,14 +4,24 @@
         <img src="/static/detail/back.png" @click="goBack" alt="">
         <img src="/static/detail/cart.png" class="cart" alt="">
     </div>
-    <van-swipe :autoplay="3000">
-        <van-swipe-item style="height: 375px;" vertical>
-            <img src="/static/detail/banner3.png" alt="">
-        </van-swipe-item>
-        <van-swipe-item style="height: 375px;" vertical>
-            <img src="/static/detail/banner3.png" alt="">
-        </van-swipe-item>
-    </van-swipe>
+	<!-- 轮播 -->
+	<view class="uni-padding-wrap">
+	            <view class="page-section swiper">
+	                <view class="page-section-spacing">
+	                    <swiper class="swiper" circular="true" indicator-dots="indicatorDots" autoplay="autoplay" interval="4000" duration="500" indicator-color="#fff" indicator-active-color="#ff5000">
+	                        <swiper-item>
+	                             <img src="/static/detail/banner3.png" alt="">
+	                        </swiper-item>
+	                        <swiper-item>
+	                             <img src="/static/detail/banner3.png" alt="">
+	                        </swiper-item>
+	                        <swiper-item>
+	                             <img src="/static/detail/banner3.png" alt="">
+	                        </swiper-item>
+	                    </swiper>
+	                </view>
+	            </view>
+	</view>
     <!-- 产品信息描述 -->
     <div class="section1">
         <div class="price">
@@ -94,7 +104,7 @@
     <div class="ticks" v-if="ticksShow">
         <div class="t_title">
             领券
-            <img src="/static/detail/x.png" height="12" width="12" @click="close" alt="">
+            <image"/static/detail/x.png" class="x" @click="close" alt=""></image>
         </div>
         <div class="t_content">
             <div class="t_left">
@@ -170,8 +180,20 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style scoped lang="scss" >
+	/* 轮播图样式 */
+	.uni-padding-wrap{
+		width: 750rpx;
+		height: 750rpx;
+		.page-section,.page-section-spacing,.swiper,.uni-swiper-wrapper,.uni-swiper-slides{
+				width: 750rpx;
+				height: 750rpx;
+				img{
+					width: 100%;
+					height: 100%;
+				}
+		}
+	}
     /* 返回按钮和购物车按钮 */
     .top {
         position: absolute;
@@ -192,55 +214,59 @@ export default {
         left: 0;
         background: #fff;
         width: 100%;
-        padding: 15px 0 45px;
+        padding: 30rpx 0 90rpx;
         color: #333;
         z-index: 100;
-        border-top-left-radius: 5px;
-        border-top-right-radius: 5px;
+        border-top-left-radius: 10rpx;
+        border-top-right-radius: 10rpx;
     }
     .t_title {
+		font-size: 30rpx;
+		color: #333;
         text-align:center;
-        margin-bottom: 20px;
+        margin-bottom: 40rpx;
     }
-    .t_title img {
-        float: right;
-        margin-right: 10px;
+    .t_title {
+		image {
+			float: right;
+			margin-right: 20rpx;
+		}
     }
     .t_content {
         position: relative;
-        width: 355px;
-        height: 80px;
+        width: 720rpx;
+        height: 160rpx;
         background: url('/static/detail/yhq.png') no-repeat ;
         background-size: cover;
-        margin: 0 auto 15px;
-        padding: 10px 0 14px 20px;
+        margin: 0 auto 30rpx;
+        padding: 20rpx 0 28rpx 40rpx;
         box-sizing: border-box;
-        font-size: 11px;
+        font-size: 22rpx;
         color:  #F43131 ;
     }
     .t_left {
         float: left;
     }
     .t_left .t_left_t .money {
-        font-size: 18px;
-        margin-right: 5px;
+        font-size: 36rpx;
+        margin-right: 10rpx;
     }
     .t_left .t_left_t {
-        font-size: 13px;
-        margin-bottom: 5px;
+        font-size: 26rpx;
+        margin-bottom: 10rpx;
     }
     .t_left .t_left_t i {
-        font-size: 11px;
+        font-size: 22rpx;
         font-style: normal;
     }
     .t_right {
         float: right;
-        height: 58px;
-        line-height: 58px;
-        padding: 0 18px;
-        font-size: 15px;
-        border-left: 1px dotted #999;
-        width: 62px;
+        height: 116rpx;
+        line-height: 116rpx;
+        padding: 0 36rpx;
+        font-size: 30rpx;
+        border-left: 2rpx dotted #999;
+        width: 124rpx;
         text-align: center; 
     }
     .aleady {
@@ -249,7 +275,7 @@ export default {
     .shareinfo{
         padding-bottom: 0;
         color: #333;
-        font-size: 12px;
+        font-size: 24rpx;
     }
     .shareinfo>div {
         text-align: center;
@@ -260,13 +286,13 @@ export default {
         align-items: center;
     }
     .s_top img {
-        width: 38px;
-        height: 38px;
+        width: 76rpx;
+        height: 76rpx;
         display: block;
-        margin: 0 auto 5px;
+        margin: 0 auto 10rpx;
     }
     .s_top>div:nth-child(1) {
-        margin-right: 60px;
+        margin-right: 120rpx;
     }
     .s_bottom {
         position: relative;
@@ -274,26 +300,21 @@ export default {
         width: 100%;
         background: #e8e8e8;
         color: #666;
-        font-size: 13px;
+        font-size: 26rpx;
         text-align: center;
-        line-height: 30px;
-        margin-top: 25px;
-    }
-    /* 轮播图 */
-    .van-swipe-item img {
-        width: 100%;
-        height: 100%;
+        line-height: 6r0px;
+        margin-top: 50rpx;
     }
     /* 产品描述部分 start */
     .section1 {
-        padding: 0 10px 10px;
-        border-bottom: 10px solid #f8f8f8;
+        padding: 0 20rpx 20rpx;
+        border-bottom: 20rpx solid #f8f8f8;
     }
     .price {
-        margin-top: 22px;
+        margin-top: 44rpx;
     }
     .price i {
-        font-size: 10px;
+        font-size: 20rpx;
         font-style: normal;
     }
     .price .share {
@@ -301,31 +322,31 @@ export default {
         background: red;
         color: #fff;
         text-align: center;
-        margin-right: -10px;
-        margin-top: -10px;
-        font-size: 13px;
-        padding: 5px;
-        border-top-left-radius: 20px;
-        border-bottom-left-radius: 20px;
+        margin-right: -20rpx;
+        margin-top: -20rpx;
+        font-size: 26rpx;
+        padding: 10rpx;
+        border-top-left-radius: 40rpx;
+        border-bottom-left-radius: 40rpx;
     }
     .n_price {
         color: #ff0000;
-        font-size: 18px;
+        font-size: 36rpx;
     }
     .o_price {
         color: #afafaf;
-        font-size: 14px;
+        font-size: 28rpx;
         text-decoration: line-through;
     }
     .name {
         color: #333;
-        font-size: 14px;
+        font-size: 28rpx;
         font-weight: 700;
-        margin: 5px 0;
+        margin: 10rpx 0;
     }
     .sold span {
         color: #999;
-        font-size: 13px;
+        font-size: 26rpx;
     }
     .sold span:nth-child(2) {
         float: right;
@@ -333,101 +354,101 @@ export default {
     /* 产品描述部分 end */
     /* 领券start */
     .section2 {
-        padding: 15px 10px;
-        font-size: 12px;
+        padding: 30rpx 20rpx;
+        font-size: 24rpx;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        border-bottom: 10px solid #f8f8f8;
+        border-bottom: 20rpx solid #f8f8f8;
     }
     .section2 .btn {
-        padding: 0 5px;
+        padding: 0 10rpx;
         color: #f43131;
-        border: 1px solid #f43131;
+        border: 2rpx solid #f43131;
     }
     .right {
         display: flex;
         align-items: center;
-        font-size: 12px;
+        font-size: 24rpx;
     }
     .right img{
-        width: 10px;
-        height: 13px;
-        margin-left: 10px;
+        width: 20rpx;
+        height: 26rpx;
+        margin-left: 20rpx;
     }
     /* 领券 end */
     /* 包邮信息等 start */
     .section3 {
         display: flex;
         flex-wrap: wrap;
-        font-size: 12px;
-        padding: 15px 10px;
-        border-bottom: 10px solid #f8f8f8;
+        font-size: 24rpx;
+        padding: 30rpx 20rpx;
+        border-bottom: 20rpx solid #f8f8f8;
     }
     .section3>span {
         display: flex;
         align-items: center;
-        margin-right: 10px;
+        margin-right: 20rpx;
     }
     .section3 img {
-        width: 14px;
-        margin-right: 5px;
+        width: 28rpx;
+        margin-right: 10rpx;
     }
     /* 包邮信息等 end */
     /* 评价 start */
     .comment {
-        padding: 15px 10px;
-        border-bottom: 10px solid #f8f8f8;
+        padding: 30rpx 20rpx;
+        border-bottom: 20rpx solid #f8f8f8;
     }
     .c_title {
         display: flex;
         justify-content: space-between;
     }
     .c_title>span {
-        font-size: 15px;
+        font-size: 30rpx;
         color: #333;
     }
     .c_content {
-        margin-top: 15px;
+        margin-top: 30rpx;
     }
     .c_content_title {
         display: flex;
         align-items: center;
-        font-size: 15px;
+        font-size: 30rpx;
         color: #333;
     }
     .c_content_title>img {
-        width: 35px;
-        height: 35px;
-        margin-right: 10px;
+        width: 70rpx;
+        height: 70rpx;
+        margin-right: 20rpx;
     }
     .user_name {
         flex: 1;
     }
     .c_time {
-        font-size: 13px;
+        font-size: 26rpx;
         color: #777;
     }
     .c_content_msg {
-        font-size: 12px;
+        font-size: 24rpx;
         color: #333;
-        line-height: 18px;
-        padding: 9px 0;
-        border-bottom: 1px solid #f8f8f8;
+        line-height: 36rpx;
+        padding: 18rpx 0;
+        border-bottom: 2rpx solid #f8f8f8;
     }
     .c_content_img img {
-        width: 70px;
-        height: 70px;
-        margin-right: 10px;
+        width: 140rpx;
+        height: 140rpx;
+        margin-right: 20rpx;
     }
     /* 评价 end */
     /* 商品详情 start */
     .pro_detail {
-        padding: 15px 10px;
+        padding: 30rpx 20rpx;
     }
     .p_detail_title {
         color: #333;
-        font-size: 15px;
+        font-size: 30rpx;
     }
     /* 商品详情 end */
     /* 遮罩层 */

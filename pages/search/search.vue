@@ -1,13 +1,11 @@
 <template>
   <div >
     <form action="/">
-    <van-search
-        v-model="value"
-        placeholder="请输入搜索关键词"
-        show-action
-        @search="onSearch"
-        @cancel="onCancel"
-    />
+		<div class="search-wrap">
+			<icon type="search" size="17" class="search_icon"/>
+			<input type="text" class="search-input" name="search"> 
+			<span>取消</span>
+		</div>	
     </form>
     <div class="history">
         <div class="title">搜索历史</div>
@@ -49,25 +47,51 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+	.search-wrap {
+		position: relative;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		font-size: 30rpx;
+		padding: 30rpx 22rpx 46rpx 20rpx;
+		box-sizing: border-box;
+		.search-input {
+			float: left;
+			width: 600rpx;
+			height: 65rpx;
+			line-height: 65rpx;
+			border-radius: 10rpx;
+			background: #F4F4F4;
+			font-size: 26rpx;
+			color: #ADADAD;
+			padding-left: 91rpx;
+			box-sizing: border-box;
+		}
+		.search_icon {
+			position: absolute;
+			top: 46rpx;
+			left: 61rpx;
+		}
+	}
     .history {
-        padding: 0 10px;
+        padding: 0 20rpx;
     }
     .title {
-        font-size: 14px;
+        font-size: 28rpx;
         color: #333;
         font-weight: 500;
-        line-height: 26px;
+        line-height: 26rpx;
         text-align: left;
     }
     .h_content span {
         float:left;
-        margin: 5px;
         background: rgba(245, 245, 245, 1);
         border-radius: 10px;
         color: #777;
         font-size: 12px;
         text-align: center;
-        padding: 5px 8px;
+		padding: 16rpx 24rpx;
+		margin: 30rpx 20rpx 0 0;
     }
 </style>
