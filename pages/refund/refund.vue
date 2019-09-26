@@ -2,13 +2,18 @@
   <div class="wrap">
         <page-title title="申请退款" rightHidden="true"></page-title>
         <div class="pro">
-            <img class="pro-img" src="/static/check/pro1.png" alt="">
+            <div class="pro-div">
+        		<img class="pro-img" src="/static/check/pro1.png" alt="">
+        	</div>
             <div class="pro-msg">
                 <div class="pro-name">2018夏装新款短袖蕾丝拼接荷叶边波点雪纺连衣裙女时尚名媛...</div>
                 <div class="attr"><span>白色;S码</span></div>
-                <div class="pro-price"><i>￥</i>169.00 <span class="amount">x1</span></div>
+                <div class="pro-price"><span>￥</span>169.00 <span class="amount">x1</span></div>
             </div>
         </div>
+		<div style="height: 20rpx;width: 100%;background-color: #F3F3F3;">
+			
+		</div>
         <div class="item">
             <div class="item-left">退款方式</div>
             <div class="item-right" @click="showMethod">
@@ -19,62 +24,92 @@
         <div class="item">
             <div class="item-left">退款原因</div>
             <div class="item-right" @click="showReason">
+				<span>质量问题</span>
                 <img src="/static/right.png" alt="">
             </div>
         </div>
         <div class="item spe">
             <div class="item-left">退款金额</div>
-            <input type="text" placeholder="请输入退款金额">
+            <input type="text" placeholder="请输入退款金额" placeholder-style="font-size:24rpx;color:#B8B8B8">
         </div>
         <div class="item spe">
             <div class="item-left">退款说明</div>
-            <input type="text" placeholder="请输入退款说明">
+            <input type="text" placeholder="请输入退款说明" placeholder-style="font-size:24rpx;color:#B8B8B8">
         </div>
         <div class="item noborder">上传凭证</div>
         <div class="imgs">
-            <van-uploader v-model="fileList" multiple />
+            <input type="file">
         </div>
         <div style="height: 50px;"></div>
         <div class="bottom">提交</div>
         <!-- 弹出层 -->
-      <!--  <van-overlay
-            :show="show"
-            @click="close"
-            z-index="100"
-        /> -->
         <!-- 退款方式 -->
-        <div class="methods" v-if="ischangemethod">
-            <div class="m-title tac">退款方式</div>
-            <!-- <van-cell-group v-model="radio">
-                <van-cell title="仅退货" clickable @click="radio = 1">
-                <van-radio shape="square" slot="right-icon" name="1" />
-                </van-cell>
-                <van-cell title="退款退货" clickable @click="radio = 2">
-                <van-radio shape="square" slot="right-icon" name="2" />
-                </van-cell>
-            </van-cell-group> -->
-            <div class="confirm-method">确定</div>
-        </div>
+        <popup-layer ref="popupRef" :direction="'top'">
+        	<div class="bMbx">
+				<div class="fMbx">退款方式</div>
+				<div class="iMbx">
+					<div>
+						仅退货
+					</div>
+					<div>
+						 <checkbox  :checked="onlyRefund"  color="#F43131"/>
+					</div>
+				</div>
+				<div class="iMbx">
+					<div>
+						退款退货
+					</div>
+					<div>
+						 <checkbox  :checked="onlyRefund"  color="#F43131"/>
+					</div>
+				</div>
+			</div>
+			<div class="sure" @click="closeMethod">
+					确定
+			</div>
+        </popup-layer>
         <!-- 退款原因 -->
-        <div class="methods" v-if="ischangereason">
-            <div class="m-title tac">退款原因</div>
-            <!-- <van-cell-group v-model="radio1">
-                <van-cell title="不想要了" clickable @click="radio1 = 1">
-                <van-radio shape="square" slot="right-icon" name="1" />
-                </van-cell>
-                <van-cell title="与实物不符" clickable @click="radio1 = 2">
-                <van-radio shape="square" slot="right-icon" name="2" />
-                </van-cell>
-            </van-cell-group> -->
-            <div class="confirm-method">确定</div>
-        </div>
+		<popup-layer ref="popup" :direction="'top'">
+			<div class="bMbx">
+				<div class="fMbx">退款原因</div>
+				<div class="iMbx">
+					<div>
+						颜色/尺寸/参数不符
+					</div>
+					<div>
+						 <checkbox  :checked="onlyRefund"  color="#F43131"/>
+					</div>
+				</div>
+				<div class="iMbx">
+					<div>
+						质量问题
+					</div>
+					<div>
+						 <checkbox  :checked="onlyRefund"  color="#F43131"/>
+					</div>
+				</div>
+				<div class="iMbx">
+					<div>
+						少件/漏发
+					</div>
+					<div>
+						 <checkbox  :checked="onlyRefund"  color="#F43131"/>
+					</div>
+				</div>
+			</div>
+			<div class="sure" @click="closeReason">
+					确定
+			</div>
+		</popup-layer>
+		
   </div>
 </template>
 
 <script>
+import popupLayer from '../../components/popup-layer/popup-layer.vue';
 export default {
     components: {
- 
+		popupLayer
     },
     data() {
         return {
@@ -84,73 +119,77 @@ export default {
                 // 如果图片 URL 中不包含类型信息，可以添加 isImage 标记来声明
                 { url: 'https://cloud-image', isImage: true }
             ],
-            show: false,
-            radio: '1',
-            radio1: '1',
-            ischangemethod: false,
-            ischangereason: false
+			onlyRefund:true,
+			
         }
     },
+	created() {
+		
+	},
     methods: {
-        // 退款方式
-        showMethod(){
-            this.show = true;
-            this.ischangemethod = true;
-        },
-        // 退款原因
-        showReason(){
-            this.show = true;
-            this.ischangereason = true;
-        },
-        // 关闭遮罩
-        close(){
-            this.show = false;
-            this.ischangemethod = false;
-            this.ischangereason = false;
-        }
+		showMethod(){
+			this.$refs.popupRef.show();
+		},
+		showReason(){
+			this.$refs.popup.show();
+		},
+		closeMethod(){
+			this.$refs.popupRef.close();
+		},
+		closeReason(){
+			this.$refs.popup.close();
+		}
     }
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
     .wrap {
      /*   height: 100vh; */
         background: #fff;
     }
     .pro {
         display: flex;
-        padding: 20px 10px 10px;
-        background: #fff;
-        border-bottom: 10px solid #F3F3F3;
+        margin-bottom: 30rpx;
+        margin-top: 30rpx;
+    }
+    .pro-msg{
+    	 margin-left: 27rpx;
+    	 width: 476rpx;
+    }
+    .pro-div{
+    	width: 200rpx;
+    	height: 200rpx;
+		margin-left: 20rpx;
     }
     .pro-img {
-        width: 100px;
-        height: 100px;
-        margin-right: 14px;
+        width: 100%;
+        height: 100%;
     }
     .pro-name {
-        font-size: 13px;
-        margin-bottom: 10px;
+        font-size: 26rpx;
+        margin-bottom: 20rpx;
     }
     .attr {
         display: inline-block;
-        height: 25px;
-        line-height: 25px;
+        height: 50rpx;
+        line-height: 50rpx;
         background: #FFF5F5;
         color: #666;
-        font-size: 12px;
-        padding: 0 10px;
-        margin-bottom: 12px;
+        font-size: 24rpx;
+        padding: 0 20rpx;
+        margin-bottom: 20rpx;
     }
     .pro-price {
         color: #F43131;
-        font-size: 18px;
+    	font-size: 36rpx;
     }
-    .pro-price i {
-        font-size: 12px;
+    .pro-price span {
+        font-size: 24rpx;
         font-style: normal;
     }
     .amount {
+    	font-size: 30rpx;
         float: right;
         color: #333;
     }
@@ -170,17 +209,19 @@ export default {
     }
     .item-left {
         margin-right: 10px;
+		font-size: 28rpx;
     }
     .item-right {
         color: #888;
+		font-size: 24rpx;
     }
     .noborder {
         border: none;
     }
     .item-right img {
-        width: 8px;
-        height: 13px;
-        margin-left: 10px;
+        width: 15rpx;
+        height: 23rpx;
+        margin-left: 25rpx;
     }
     /* 上传图像 */
     .imgs {
@@ -193,8 +234,9 @@ export default {
         bottom: 0;
         left: 0;
         width: 100%;
-        height: 50px;
-        line-height: 50px;
+        height: 86rpx;
+        line-height: 86rpx;
+		font-size: 32rpx;
         color: #fff;
         text-align: center;
         background: #F43131;
@@ -222,4 +264,32 @@ export default {
         width: 100%;
         margin-top: 20px;
     }
+	.bMbx{
+		padding: 0rpx 20rpx;
+		.fMbx{
+			font-size: 32rpx;
+			height: 30rpx;
+			line-height: 30rpx;
+			text-align: center;
+			padding: 36rpx 0rpx;
+		}
+		.iMbx{
+			display: flex;
+			justify-content: space-between;
+			height: 104rpx;
+			border-bottom:1px solid rgba(230,230,230,1); 
+			align-items: center;
+			font-size: 28rpx;
+		}
+	}
+	.sure{
+		height: 90rpx;
+		width: 100%;
+		background-color: #F43131;
+		color: #fff;
+		font-size: 32rpx;
+		margin-top: 96rpx;
+		line-height: 90rpx;
+		text-align: center;
+	}
 </style>

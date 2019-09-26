@@ -34,30 +34,29 @@
 			"list": [
 				{
 					"id": -1,
-					"name": "pages/groupSuccess/groupSuccess",
-					"pathName": "pages/groupSuccess/groupSuccess",
+					"name": "pages/refund/refund",
+					"pathName": "pages/refund/refund",
 					"query": "",
 					"scene": null
 				},
 				{
 					"id": -1,
-					"name": "pages/groupDetail/groupDetail",
-					"pathName": "pages/groupDetail/groupDetail",
+					"name": "pages/refund/refund",
+					"pathName": "pages/refund/refund",
 					"query": "",
 					"scene": null
 				},
 				{
 					"id": -1,
-					"name": "pages/pay/pay",
-					"pathName": "pages/pay/pay",
+					"name": "pages/collection/collection",
+					"pathName": "pages/collection/collection",
 					"query": "",
 					"scene": null
 				},
 				{
 					"id": -1,
-					"name": "pages/order/order",
-					"pathName": "pages/order/order",
-					"query": "",
+					"name": "pages/cart/cart",
+					"pathName": "pages/cart/cart",
 					"scene": null
 				}
 			]

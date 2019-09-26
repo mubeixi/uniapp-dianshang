@@ -27,5 +27,6 @@
   },
   "usingComponents": {
     "page-title": "/pages/title/title"
-  }
+  },
+  "sitemapLocation": "sitemap0.json"
 }

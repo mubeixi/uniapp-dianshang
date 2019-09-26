@@ -365,8 +365,8 @@
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  padding-left: 27rpx;
-  padding-right: 31rpx;
+  padding-left: 15rpx;
+  padding-right: 15rpx;
   -webkit-box-align: center;
   -webkit-align-items: center;
       -ms-flex-align: center;
@@ -378,28 +378,28 @@
   background-color: #F43131;
   color: #fff;
 }
-.section1 .lefts.data-v-7e0dd5a4 {
+.section1 .leftss.data-v-7e0dd5a4 {
     font-size: 0;
 }
-.section1 .lefts ._span.pricef.data-v-7e0dd5a4 {
+.section1 .leftss ._span.pricef.data-v-7e0dd5a4 {
       font-size: 36rpx;
 }
-.section1 .lefts ._span.prices.data-v-7e0dd5a4 {
+.section1 .leftss ._span.prices.data-v-7e0dd5a4 {
       font-size: 50rpx;
       margin-left: 4px;
       font-weight: 500;
 }
-.section1 .lefts ._span.pricet.data-v-7e0dd5a4 {
+.section1 .leftss ._span.pricet.data-v-7e0dd5a4 {
       font-size: 28rpx;
       margin-left: 6px;
       color: #ddd;
       text-decoration: line-through;
 }
-.section1 .rights ._div.data-v-7e0dd5a4 {
+.section1 .rightss ._div.data-v-7e0dd5a4 {
     color: #ddd;
     font-size: 22rpx;
 }
-.section1 .rights ._div ._span.data-v-7e0dd5a4 {
+.section1 .rightss ._div ._span.data-v-7e0dd5a4 {
       margin: 0 4px;
       padding: 0 5px;
       height: 37rpx;

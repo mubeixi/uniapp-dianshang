@@ -1,34 +1,22 @@
 <template>
   <div>
-    <!-- <pagetitle class="nav-title" title="购物车" right="管理" @handle="handle" hiddenBack="true" :rightHidden="manage"></pagetitle> -->
+    <page-title class="nav-title" title="购物车" :right="handleShow ? '管理' : '取消'" @handle="handle" hiddenBack="true" :rightHidden="manage"></page-title>
     <div class="content">
       <div v-if="list.length>0">
         <div class="order_msg" v-for="i in list" :key="i">
           <div class="biz_msg">
-          <!--  <van-checkbox v-if="handleShow" v-model="checked" checked-color="#F43131"></van-checkbox> -->
+           <div class="mbxa"  v-if="!handleShow" @click="checked=!checked">
+				<img v-if="checked" src="/static/checked.png" >
+				<img v-else src="/static/uncheck.png" >
+           </div>
             <img src="/static/detail/user1.png" class="biz_logo" alt />
             <text class="biz_name">张小凡时尚衣橱</text>
           </div>
           <div class="pro">
-          <!--  <van-checkbox v-if="handleShow" v-model="checked" checked-color="#F43131"></van-checkbox> -->
-            <img class="pro-img" src="/static/check/pro1.png" alt />
-            <div class="pro-msg">
-              <div class="pro-name">2018夏装新款短袖蕾丝拼接荷叶边波点雪纺连衣裙女时尚名媛...</div>
-              <div class="attr">
-                <span>白色;S码</span>
-              </div>
-              <div class="pro-price">
-                <i>￥</i>169.00
-                <span class="amount">
-                  <span class="plus">-</span>
-                  <input type="text" value="1">
-                  <span class="plus">+</span>
-                </span>
-              </div>
-            </div>
+          <div class="mbxa"  v-if="!handleShow" @click="checked=!checked">
+          			  <img v-if="checked" src="/static/checked.png" >
+          			  <img v-else src="/static/uncheck.png" >
           </div>
-          <div class="pro">
-       <!--     <van-checkbox v-if="handleShow" v-model="checked" checked-color="#F43131"></van-checkbox> -->
             <img class="pro-img" src="/static/check/pro1.png" alt />
             <div class="pro-msg">
               <div class="pro-name">2018夏装新款短袖蕾丝拼接荷叶边波点雪纺连衣裙女时尚名媛...</div>
@@ -36,7 +24,7 @@
                 <span>白色;S码</span>
               </div>
               <div class="pro-price">
-                <i>￥</i>169.00
+                <span class="span">￥</span>169.00
                 <span class="amount">
                   <span class="plus">-</span>
                   <input type="text" value="1">
@@ -52,22 +40,26 @@
         <div><span>购物车空空如也</span><span class="tobuy">去逛逛</span></div>
       </div>
       <!-- 猜你喜欢 -->
-      <div class="fenge"><span class="red">——</span> 猜你喜欢 <span class="red">——</span></div>
+      <div class="fenge"><span class="red"></span><span class="caini">猜你喜欢</span><span class="red"></span></div>
       <div class="prolist">
         <div class="pro-item" v-for="i in 4" :key="i">
           <img src="/static/check/pro1.png" alt="">
           <div class="item-name">2018夏装新款短袖蕾丝拼接荷叶边波点雪纺连衣裙女时尚名媛...</div>
           <div class="price">
-            <span class="n_price"><i>￥</i>169.00</span>
-            <span class="o_price"><i>￥</i>189.00</span>
+            <span class="n_price"><span>￥</span>169.00</span>
+            <span class="o_price"><span>￥</span>189.00</span>
           </div>
         </div>
       </div>
     </div>
     <!-- 购物车结算 -->
     <div class="checkout">
-      <van-checkbox v-if="handleShow" v-model="checked" checked-color="#F43131">全选</van-checkbox>
-      <div class="total">合计：<span>￥<i>338.00</i></span></div>
+      <div class="mbxa"  v-if="!handleShow" @click="checked=!checked">
+      				<img v-if="checked" src="/static/checked.png"  style="margin-right: 17rpx;">
+      				<img v-else src="/static/uncheck.png"  style="margin-right: 17rpx;">
+					全选
+      </div>
+      <div class="total">合计：<span>￥<span>338.00</span></span></div>
       <div class="checkbtn">结算</div>
     </div>
    <!-- <tabs style="background:#F3F3F3;"></tabs> -->
@@ -86,7 +78,7 @@ export default {
   data(){
     return {
       list:[2],
-      handleShow: false,
+      handleShow: true,
       checked: false
     }
   },
@@ -103,14 +95,14 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 
 .nav-title {
   background: #fff !important;
 }
 .content {
   background: #f3f3f3;
-  padding: 15px 10px 50px;
+  padding: 30rpx 20rpx 160rpx;
 }
 .van-checkbox {
   margin-right: 5px;
@@ -128,12 +120,12 @@ export default {
         margin-bottom: 15px;
     }
     .biz_logo {
-        width: 35px;
-        height: 35px;
-        margin-right: 10px;
+        width: 70rpx;
+        height: 70rpx;
+        margin-right: 20rpx;
     }
     .biz_name {
-        font-size: 14px;
+        font-size: 28rpx;
     }
     .pro {
         display: flex;
@@ -143,59 +135,78 @@ export default {
       flex: 1;
     }
     .pro-img {
-        width: 100px;
-        height: 100px;
-        margin-right: 14px;
+        width: 200rpx;
+        height: 200rpx;
+        margin-right: 32rpx;
     }
     .pro-name {
-        font-size: 13px;
-        margin-bottom: 10px;
+        font-size: 26rpx;
+        margin-bottom: 25rpx;
+		width: 390rpx;
+		display: -webkit-box;
+		    -webkit-line-clamp:2;
+		    overflow: hidden;
+		    text-overflow: ellipsis;
+		    -webkit-box-orient: vertical;
     }
     .attr {
         display: inline-block;
-        height: 25px;
-        line-height: 25px;
+        height: 50rpx;
+		width: 150rpx;
+        line-height: 50rpx;
         background: #FFF5F5;
         color: #666;
-        font-size: 12px;
-        padding: 0 10px;
-        margin-bottom: 12px;
+        font-size: 24rpx;
+        margin-bottom: 12rpx;
+		text-align: center;
     }
     .pro-price {
         color: #F43131;
-        font-size: 18px;
+		font-size: 36rpx;
     }
-    .pro-price i {
-        font-size: 12px;
+    .pro-price .span {
+        font-size: 24rpx;
         font-style: normal;
     }
     .amount {
         float: right;
         display: flex;
         color: #666;
+		height: 50rpx;
+		width: 168rpx;
     }
     .amount input {
-        width: 40px;
-        height: 20px;
-        line-height: 20px;
-        padding: 0 2px;
-        font-size: 14px;
+        width: 72rpx;
+        height: 50rpx;
+        line-height: 50rpx;
+        font-size: 28rpx;
         text-align: center;
         border: 1px solid #D1D1D1;
+		box-sizing: border-box;
     }
     .plus {
-        width: 22px;
-        height: 20px;
+        width: 48rpx;
+        height: 50rpx;
         border: 1px solid #D1D1D1;
         text-align: center;
-        line-height: 20px;
+        line-height: 50rpx;
+		box-sizing: border-box;
     }
     /* 订单信息 end */
     /* 猜你喜欢 */
     .fenge {
       text-align: center;
       margin-bottom: 10px;
+	  font-size: 0rpx;
+	  display: flex;
+	  justify-content: center;
+	  align-items: center;
     }
+	.caini{
+		font-size: 30rpx;
+		margin-left: 13rpx;
+		margin-right: 13rpx;
+	}
     .prolist {
       display: flex;
       flex-wrap: wrap;
@@ -207,12 +218,12 @@ export default {
       background: #fff;
     }
     .pro-item img {
-      width: 100%;
-      height: 172px;
+      width: 345rpx;
+      height: 345rpx;
     }
     .item-name {
-      font-size: 12px;
-      padding: 0 5px;
+      font-size: 24rpx;
+      padding: 0 10rpx;
       color: #333;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -221,24 +232,26 @@ export default {
       -webkit-box-orient: vertical;
     }
     .red {
-      color: #F43131;
-      font-weight: 700;
+      background-color: #F43131;
+	  display: inline-block;
+	  height: 3rpx;
+	  width: 44rpx;
     }
     .price {
-        margin-top: 10px;
-        padding: 0 5px 10px;
-    }
-    .price i {
-        font-size: 10px;
-        font-style: normal;
+        margin-top: 20rpx;
+        padding: 0 10rpx 20rpx;
     }
     .n_price {
         color: #ff0000;
-        font-size: 18px;
+        font-size: 34rpx;
+		span{
+			font-size: 24rpx;
+		}
     }
     .o_price {
+		margin-left: 15rpx;
         color: #afafaf;
-        font-size: 14px;
+        font-size: 24rpx;
         text-decoration: line-through;
     }
     /* 购物车为空 */
@@ -276,22 +289,35 @@ export default {
     .checkbtn {
       background: #F43131;
       color: #fff;
-      height: 27px;
-      line-height: 27px;
-      padding: 2px 15px;
-      font-size: 14px;
+	  width: 126rpx;
+	  text-align: center;
+      height: 54rpx;
+      line-height: 54rpx;
+      font-size: 28rpx;
       border-radius: 8px;
     }
     .total {
       flex: 1;
       text-align: right;
-      margin-right: 20px;
+      margin-right: 40rpx;
+	  font-size: 26rpx;
     }
     .total>span {
       color: #F43131;
+	  font-size: 26rpx;
     }
-    .total>span>i {
+    .total>span>span {
       font-style: normal;
-      font-size: 18px;
+      font-size: 32rpx;
     }
+	.mbxa{
+		display: flex;
+		align-items: center;
+		margin-right: 17rpx;
+		font-size: 28rpx;
+		img{
+			width: 34rpx;
+			height: 34rpx;
+		}
+	}
 </style>
