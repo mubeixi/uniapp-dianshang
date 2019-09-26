@@ -1,15 +1,15 @@
 import Vue from 'vue';
-import { baseApiUrl,apiKey } from './env';
+import { baseApiUrl,apiKey } from './env.js';
 import {hexMD5} from "./tool/md5";
-require('./tool/base64');
+// require('./tool/base64');
+import Base64 from './tool/base64.js'
 
 import {ls} from "./tool.js";
 import {post,get,ajax} from './interceptors.js';
 
 
 
-const fetch = function (act:String, param:Object={},options = false,url:String='/api/little_program/shopconfig.php',  method:String = 'post') {
-
+const fetch = function (act, param,options = false,url='/api/little_program/shopconfig.php',  method = 'post') {
   if(!act){
 	  uni.showToast({
 	      title: 'act参数必传',
@@ -21,14 +21,14 @@ const fetch = function (act:String, param:Object={},options = false,url:String='
 
   param.act = act;
   // param.Users_Account = get_Users_Account();
-  param.Users_ID = get_Users_ID();
+  // param.Users_ID = get_Users_ID();  Users_ID  写死
   // param.appid = get_Appid();
 
   // 数据加密
   let data = createToken(param);
 
-  url = (process.env.NODE_ENV === 'production'?baseApiUrl:'') + url;
-  console.log(url,param);
+  
+  // console.log(url,param);
 
   
   return ajax(url,method,data, options).then(res => res.data, e => e);
@@ -36,7 +36,7 @@ const fetch = function (act:String, param:Object={},options = false,url:String='
 };
 
 
-export const login = (data:Object,options) => fetch('users_login', data,options)
+export const login = (data,options) => fetch('users_login', data,options)
 
 export const getCouponList = (data,options) => fetch('get_unaccalimed_coupon',data,options)
 
@@ -51,8 +51,11 @@ export const getSkinConfig = (data,options) => fetch('get_shophome',data,options
 
 //更新商城的配置
 export const setSkinConfig = (data,options) => fetch('update_shophome',data,options)
-
+//获取商品列表
 export const getProductCategory = (data,options) => fetch('pro_cate',data,options)
+
+
+
 
 
 
@@ -80,8 +83,8 @@ export const createToken = function(object) {
   var timestamp = parseInt(new Date().getTime() / 1000).toString();
   var key = '458f_$#@$*!fdjisdJDFHUk4%%653154%^@#(FSD#$@0-T';
   var dataStr = signString + key + timestamp;
-
-  var sign = hexMD5(window.Base64.toBase64(dataStr)).toUpperCase();
+  // console.log(Base64)
+  var sign = hexMD5(Base64.toBase64(dataStr)).toUpperCase();
   object['timestamp'] = timestamp;
   object['sign'] = sign;
   object['sortToken'] = 1;

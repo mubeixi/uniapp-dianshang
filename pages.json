@@ -72,7 +72,11 @@
         ,{
             "path" : "pages/refund/refund",
             "style" : {}
-        }
+        },
+		{
+		    "path" : "pages/classify/classify",
+		    "style" : {}
+		}
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
@@ -91,7 +95,7 @@
 	        "selectedIconPath": "static/homeCheck.png",
 	        "text": "首页"
 	    }, {
-	        "pagePath": "pages/fenlei/fenlei",
+	        "pagePath": "pages/classify/classify",
 	        "iconPath": "static/fenlei.png",
 	        "selectedIconPath": "static/fenleiCheck.png",
 	        "text": "分类"

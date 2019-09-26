@@ -1,5 +1,5 @@
 
-import {baseApiUrl} from '/env';
+import {baseApiUrl} from './env.js';
 
 export default [
   {

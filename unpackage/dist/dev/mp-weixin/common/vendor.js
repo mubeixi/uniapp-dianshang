@@ -1,6 +1,6 @@
-(global["webpackJsonp"] = global["webpackJsonp"] || []).push([["common/vendor"],[
-/* 0 */,
-/* 1 */
+(global["webpackJsonp"] = global["webpackJsonp"] || []).push([["common/vendor"],{
+
+/***/ 1:
 /*!************************************************************!*\
   !*** ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js ***!
   \************************************************************/
@@ -1496,7 +1496,4157 @@ var uni$1 = uni;var _default =
 uni$1;exports.default = _default;
 
 /***/ }),
-/* 2 */
+
+/***/ 14:
+/*!********************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/runtime/componentNormalizer.js ***!
+  \********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return normalizeComponent; });
+/* globals __VUE_SSR_CONTEXT__ */
+
+// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
+// This module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle.
+
+function normalizeComponent (
+  scriptExports,
+  render,
+  staticRenderFns,
+  functionalTemplate,
+  injectStyles,
+  scopeId,
+  moduleIdentifier, /* server only */
+  shadowMode /* vue-cli only */
+) {
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // render functions
+  if (render) {
+    options.render = render
+    options.staticRenderFns = staticRenderFns
+    options._compiled = true
+  }
+
+  // functional template
+  if (functionalTemplate) {
+    options.functional = true
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = 'data-v-' + scopeId
+  }
+
+  var hook
+  if (moduleIdentifier) { // server build
+    hook = function (context) {
+      // 2.3 injection
+      context =
+        context || // cached call
+        (this.$vnode && this.$vnode.ssrContext) || // stateful
+        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
+      // 2.2 with runInNewContext: true
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__
+      }
+      // inject component styles
+      if (injectStyles) {
+        injectStyles.call(this, context)
+      }
+      // register component module identifier for async chunk inferrence
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier)
+      }
+    }
+    // used by ssr in case component is cached and beforeCreate
+    // never gets called
+    options._ssrRegister = hook
+  } else if (injectStyles) {
+    hook = shadowMode
+      ? function () { injectStyles.call(this, this.$root.$options.shadowRoot) }
+      : injectStyles
+  }
+
+  if (hook) {
+    if (options.functional) {
+      // for template-only hot-reload because in that case the render fn doesn't
+      // go through the normalizer
+      options._injectStyles = hook
+      // register for functioal component in vue file
+      var originalRender = options.render
+      options.render = function renderWithStyleInjection (h, context) {
+        hook.call(context)
+        return originalRender(h, context)
+      }
+    } else {
+      // inject component registration as beforeCreate hook
+      var existing = options.beforeCreate
+      options.beforeCreate = existing
+        ? [].concat(existing, hook)
+        : [hook]
+    }
+  }
+
+  return {
+    exports: scriptExports,
+    options: options
+  }
+}
+
+
+/***/ }),
+
+/***/ 157:
+/*!****************************************************!*\
+  !*** D:/lst/uni-dsproject/common/classify.data.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = [
+{
+  "name": "女装",
+  "foods": [
+  {
+    "name": "A字裙",
+    "key": "A字裙",
+    "icon": "http://img.kiwifruits.cn/classify/1/1.jpg",
+    "cat": 10 },
+
+  {
+    "name": "T恤",
+    "key": "T恤",
+    "icon": "http://img.kiwifruits.cn/classify/1/2.jpg",
+    "cat": 10 },
+
+  {
+    "name": "半身裙",
+    "key": "半身裙",
+    "icon": "http://img.kiwifruits.cn/classify/1/3.jpg",
+    "cat": 10 },
+
+  {
+    "name": "衬衫",
+    "key": "衬衫",
+    "icon": "http://img.kiwifruits.cn/classify/1/4.jpg",
+    "cat": 10 },
+
+  {
+    "name": "短裙",
+    "key": "短裙",
+    "icon": "http://img.kiwifruits.cn/classify/1/5.jpg",
+    "cat": 10 },
+
+  {
+    "name": "阔腿裤",
+    "key": "阔腿裤",
+    "icon": "http://img.kiwifruits.cn/classify/1/6.jpg",
+    "cat": 10 },
+
+  {
+    "name": "连衣裙",
+    "key": "连衣裙",
+    "icon": "http://img.kiwifruits.cn/classify/1/7.jpg",
+    "cat": 10 },
+
+  {
+    "name": "妈妈装",
+    "key": "妈妈装",
+    "icon": "http://img.kiwifruits.cn/classify/1/8.jpg",
+    "cat": 10 },
+
+  {
+    "name": "牛仔裤",
+    "key": "牛仔裤",
+    "icon": "http://img.kiwifruits.cn/classify/1/9.jpg",
+    "cat": 10 },
+
+  {
+    "name": "情侣装",
+    "key": "情侣装",
+    "icon": "http://img.kiwifruits.cn/classify/1/10.jpg",
+    "cat": 10 },
+
+  {
+    "name": "休闲裤",
+    "key": "休闲裤",
+    "icon": "http://img.kiwifruits.cn/classify/1/11.jpg",
+    "cat": 10 },
+
+  {
+    "name": "雪纺衫",
+    "key": "雪纺衫",
+    "icon": "http://img.kiwifruits.cn/classify/1/12.jpg",
+    "cat": 10 },
+
+  {
+    "name": "防晒衣",
+    "key": "防晒衣",
+    "icon": "http://img.kiwifruits.cn/classify/1/13.jpg",
+    "cat": 10 },
+
+  {
+    "name": "礼服/婚纱",
+    "key": "礼服婚纱",
+    "icon": "http://img.kiwifruits.cn/classify/1/14.jpg",
+    "cat": 10 }] },
+
+
+
+{
+  "name": "美食",
+  "foods": [
+  {
+    "name": "火锅",
+    "key": "火锅",
+    "icon": "http://img.kiwifruits.cn/classify/2/1.jpg",
+    "cat": 6 },
+
+  {
+    "name": "糕点饼干",
+    "key": "糕点饼干",
+    "icon": "http://img.kiwifruits.cn/classify/2/2.jpg",
+    "cat": 6 },
+
+  {
+    "name": "坚果果干",
+    "key": "坚果果干",
+    "icon": "http://img.kiwifruits.cn/classify/2/3.jpg",
+    "cat": 6 },
+
+  {
+    "name": "酒类",
+    "key": "酒类",
+    "icon": "http://img.kiwifruits.cn/classify/2/4.jpg",
+    "cat": 6 },
+
+  {
+    "name": "辣条",
+    "key": "辣条",
+    "icon": "http://img.kiwifruits.cn/classify/2/5.jpg",
+    "cat": 6 },
+
+  {
+    "name": "大礼包",
+    "key": "大礼包",
+    "icon": "http://img.kiwifruits.cn/classify/2/6.jpg",
+    "cat": 6 },
+
+  {
+    "name": "精品茗茶",
+    "key": "茶",
+    "icon": "http://img.kiwifruits.cn/classify/2/7.jpg",
+    "cat": 6 },
+
+  {
+    "name": "休闲食品",
+    "key": "休闲食品",
+    "icon": "http://img.kiwifruits.cn/classify/2/8.jpg",
+    "cat": 6 },
+
+  {
+    "name": "糖果巧克力",
+    "key": "糖果巧克力",
+    "icon": "http://img.kiwifruits.cn/classify/2/9.jpg",
+    "cat": 6 },
+
+  {
+    "name": "方便速食",
+    "key": "方便速食",
+    "icon": "http://img.kiwifruits.cn/classify/2/10.jpg",
+    "cat": 6 },
+
+  {
+    "name": "营养代餐",
+    "key": "营养代餐",
+    "icon": "http://img.kiwifruits.cn/classify/2/11.jpg",
+    "cat": 6 },
+
+  {
+    "name": "粮油副食",
+    "key": "粮油",
+    "icon": "http://img.kiwifruits.cn/classify/2/12.jpg",
+    "cat": 6 },
+
+  {
+    "name": "生鲜水果",
+    "key": "水果",
+    "icon": "http://img.kiwifruits.cn/classify/2/13.jpg",
+    "cat": 6 },
+
+  {
+    "name": "饮品",
+    "key": "饮品",
+    "icon": "http://img.kiwifruits.cn/classify/2/14.jpg",
+    "cat": 6 }] },
+
+
+
+{
+  "name": "美妆",
+  "foods": [
+  {
+    "name": "化妆刷",
+    "key": "化妆刷",
+    "icon": "http://img.kiwifruits.cn/classify/3/1.jpg",
+    "cat": 3 },
+
+  {
+    "name": "粉底",
+    "key": "粉底",
+    "icon": "http://img.kiwifruits.cn/classify/3/2.jpg",
+    "cat": 3 },
+
+  {
+    "name": "洗发护发",
+    "key": "洗发护发",
+    "icon": "http://img.kiwifruits.cn/classify/3/3.jpg",
+    "cat": 3 },
+
+  {
+    "name": "美容工具",
+    "key": "美容工具",
+    "icon": "http://img.kiwifruits.cn/classify/3/4.jpg",
+    "cat": 3 },
+
+  {
+    "name": "眼部护理",
+    "key": "眼部护理",
+    "icon": "http://img.kiwifruits.cn/classify/3/5.jpg",
+    "cat": 3 },
+
+  {
+    "name": "眉妆",
+    "key": "眉妆",
+    "icon": "http://img.kiwifruits.cn/classify/3/6.jpg",
+    "cat": 3 },
+
+  {
+    "name": "卸妆品",
+    "key": "卸妆品",
+    "icon": "http://img.kiwifruits.cn/classify/3/7.jpg",
+    "cat": 3 },
+
+  {
+    "name": "基础护肤",
+    "key": "基础护肤",
+    "icon": "http://img.kiwifruits.cn/classify/3/8.jpg",
+    "cat": 3 },
+
+  {
+    "name": "眼妆",
+    "key": "眼妆",
+    "icon": "http://img.kiwifruits.cn/classify/3/9.jpg",
+    "cat": 3 },
+
+  {
+    "name": "唇妆",
+    "key": "唇妆",
+    "icon": "http://img.kiwifruits.cn/classify/3/10.jpg",
+    "cat": 3 },
+
+  {
+    "name": "面膜",
+    "key": "面膜",
+    "icon": "http://img.kiwifruits.cn/classify/3/11.jpg",
+    "cat": 3 },
+
+  {
+    "name": "沐浴用品",
+    "key": "沐浴用品",
+    "icon": "http://img.kiwifruits.cn/classify/3/12.jpg",
+    "cat": 3 },
+
+  {
+    "name": "护肤套装",
+    "key": "护肤套装",
+    "icon": "http://img.kiwifruits.cn/classify/3/13.jpg",
+    "cat": 3 },
+
+  {
+    "name": "防晒品",
+    "key": "防晒品",
+    "icon": "http://img.kiwifruits.cn/classify/3/14.jpg",
+    "cat": 3 },
+
+  {
+    "name": "美甲",
+    "key": "美甲",
+    "icon": "http://img.kiwifruits.cn/classify/3/15.jpg",
+    "cat": 3 }] },
+
+
+
+
+{
+  "name": "居家日用",
+  "foods": [
+  {
+    "name": "垃圾袋",
+    "key": "垃圾袋",
+    "icon": "http://img.kiwifruits.cn/classify/4/1.jpg",
+    "cat": 4 },
+
+  {
+    "name": "纸巾",
+    "key": "纸巾",
+    "icon": "http://img.kiwifruits.cn/classify/4/2.jpg",
+    "cat": 4 },
+
+  {
+    "name": "驱蚊用品",
+    "key": "驱蚊用品",
+    "icon": "http://img.kiwifruits.cn/classify/4/3.jpg",
+    "cat": 4 },
+
+  {
+    "name": "收纳神器",
+    "key": "收纳神器",
+    "icon": "http://img.kiwifruits.cn/classify/4/4.jpg",
+    "cat": 4 },
+
+  {
+    "name": "厨房用品",
+    "key": "厨房用品",
+    "icon": "http://img.kiwifruits.cn/classify/4/5.jpg",
+    "cat": 4 },
+
+  {
+    "name": "厨房烹饪",
+    "key": "烹饪",
+    "icon": "http://img.kiwifruits.cn/classify/4/6.jpg",
+    "cat": 4 },
+
+  {
+    "name": "衣物晾晒",
+    "key": "衣物晾晒",
+    "icon": "http://img.kiwifruits.cn/classify/4/7.jpg",
+    "cat": 4 },
+
+  {
+    "name": "衣物护理",
+    "key": "衣物护理",
+    "icon": "http://img.kiwifruits.cn/classify/4/8.jpg",
+    "cat": 4 },
+
+  {
+    "name": "宠物用品",
+    "key": "宠物用品",
+    "icon": "http://img.kiwifruits.cn/classify/4/9.jpg",
+    "cat": 4 },
+
+  {
+    "name": "医药保健",
+    "key": "医药",
+    "icon": "http://img.kiwifruits.cn/classify/4/10.jpg",
+    "cat": 4 },
+
+  {
+    "name": "日用百货",
+    "key": "百货",
+    "icon": "http://img.kiwifruits.cn/classify/4/11.jpg",
+    "cat": 4 },
+
+  {
+    "name": "清洁用品",
+    "key": "清洁",
+    "icon": "http://img.kiwifruits.cn/classify/4/12.jpg",
+    "cat": 4 },
+
+  {
+    "name": "绿植园艺",
+    "key": "绿植",
+    "icon": "http://img.kiwifruits.cn/classify/4/13.jpg",
+    "cat": 4 }] },
+
+
+
+{
+  "name": "男装",
+  "foods": [
+  {
+    "name": "爸爸装",
+    "key": "爸爸装",
+    "icon": "http://img.kiwifruits.cn/classify/5/1.jpg",
+    "cat": 12 },
+
+  {
+    "name": "牛仔裤",
+    "key": "牛仔裤",
+    "icon": "http://img.kiwifruits.cn/classify/5/2.jpg",
+    "cat": 12 },
+
+  {
+    "name": "衬衫",
+    "key": "衬衫",
+    "icon": "http://img.kiwifruits.cn/classify/5/3.jpg",
+    "cat": 12 },
+
+  {
+    "name": "休闲裤",
+    "key": "休闲裤",
+    "icon": "http://img.kiwifruits.cn/classify/5/4.jpg",
+    "cat": 12 },
+
+  {
+    "name": "外套",
+    "key": "外套",
+    "icon": "http://img.kiwifruits.cn/classify/5/5.jpg",
+    "cat": 12 },
+
+  {
+    "name": "T恤",
+    "key": "T恤",
+    "icon": "http://img.kiwifruits.cn/classify/5/6.jpg",
+    "cat": 12 },
+
+  {
+    "name": "套装",
+    "key": "套装",
+    "icon": "http://img.kiwifruits.cn/classify/5/7.jpg",
+    "cat": 12 },
+
+  {
+    "name": "运动裤",
+    "key": "运动裤",
+    "icon": "http://img.kiwifruits.cn/classify/5/8.jpg",
+    "cat": 12 },
+
+  {
+    "name": "马甲/背心",
+    "key": "马甲背心",
+    "icon": "http://img.kiwifruits.cn/classify/5/9.jpg",
+    "cat": 12 },
+
+  {
+    "name": "POLO衫",
+    "key": "POLO衫",
+    "icon": "http://img.kiwifruits.cn/classify/5/10.jpg",
+    "cat": 12 },
+
+  {
+    "name": "商务装",
+    "key": "商务装",
+    "icon": "http://img.kiwifruits.cn/classify/5/11.jpg",
+    "cat": 12 }] },
+
+
+
+{
+  "name": "鞋品",
+  "foods": [
+  {
+    "name": "单鞋",
+    "key": "单鞋",
+    "icon": "http://img.kiwifruits.cn/classify/6/1.jpg",
+    "cat": 5 },
+
+  {
+    "name": "皮鞋",
+    "key": "皮鞋",
+    "icon": "http://img.kiwifruits.cn/classify/6/2.jpg",
+    "cat": 5 },
+
+  {
+    "name": "帆布鞋",
+    "key": "帆布鞋",
+    "icon": "http://img.kiwifruits.cn/classify/6/3.jpg",
+    "cat": 5 },
+
+  {
+    "name": "北京老布鞋",
+    "key": "北京老布鞋",
+    "icon": "http://img.kiwifruits.cn/classify/6/4.jpg",
+    "cat": 5 },
+
+  {
+    "name": "运动鞋",
+    "key": "运动鞋",
+    "icon": "http://img.kiwifruits.cn/classify/6/5.jpg",
+    "cat": 5 },
+
+  {
+    "name": "拖鞋",
+    "key": "拖鞋",
+    "icon": "http://img.kiwifruits.cn/classify/6/6.jpg",
+    "cat": 5 },
+
+  {
+    "name": "凉鞋",
+    "key": "凉鞋",
+    "icon": "http://img.kiwifruits.cn/classify/6/7.jpg",
+    "cat": 5 },
+
+  {
+    "name": "休闲鞋",
+    "key": "休闲鞋",
+    "icon": "http://img.kiwifruits.cn/classify/6/8.jpg",
+    "cat": 5 },
+
+  {
+    "name": "高跟鞋",
+    "key": "高跟鞋",
+    "icon": "http://img.kiwifruits.cn/classify/6/9.jpg",
+    "cat": 5 },
+
+  {
+    "name": "老人鞋",
+    "key": "老人鞋",
+    "icon": "http://img.kiwifruits.cn/classify/6/10.jpg",
+    "cat": 5 },
+
+  {
+    "name": "懒人鞋",
+    "key": "懒人鞋",
+    "icon": "http://img.kiwifruits.cn/classify/6/11.jpg",
+    "cat": 5 }] },
+
+
+
+{
+  "name": "数码家电",
+  "foods": [
+  {
+    "name": "数据线",
+    "key": "数据线",
+    "icon": "http://img.kiwifruits.cn/classify/7/1.jpg",
+    "cat": 8 },
+
+  {
+    "name": "耳机",
+    "key": "耳机",
+    "icon": "http://img.kiwifruits.cn/classify/7/2.jpg",
+    "cat": 8 },
+
+  {
+    "name": "生活家电",
+    "key": "家电",
+    "icon": "http://img.kiwifruits.cn/classify/7/3.jpg",
+    "cat": 8 },
+
+  {
+    "name": "电风扇",
+    "key": "电风扇",
+    "icon": "http://img.kiwifruits.cn/classify/7/4.jpg",
+    "cat": 8 },
+
+  {
+    "name": "电吹风",
+    "key": "电吹风",
+    "icon": "http://img.kiwifruits.cn/classify/7/5.jpg",
+    "cat": 8 },
+
+  {
+    "name": "手机壳",
+    "key": "手机壳",
+    "icon": "http://img.kiwifruits.cn/classify/7/6.jpg",
+    "cat": 8 },
+
+  {
+    "name": "榨汁机",
+    "key": "榨汁机",
+    "icon": "http://img.kiwifruits.cn/classify/7/7.jpg",
+    "cat": 8 },
+
+  {
+    "name": "小家电",
+    "key": "小家电",
+    "icon": "http://img.kiwifruits.cn/classify/7/8.jpg",
+    "cat": 8 },
+
+  {
+    "name": "数码电子",
+    "key": "数码",
+    "icon": "http://img.kiwifruits.cn/classify/7/9.jpg",
+    "cat": 8 },
+
+  {
+    "name": "电饭锅",
+    "key": "电饭锅",
+    "icon": "http://img.kiwifruits.cn/classify/7/10.jpg",
+    "cat": 8 },
+
+  {
+    "name": "手机支架",
+    "key": "手机支架",
+    "icon": "http://img.kiwifruits.cn/classify/7/11.jpg",
+    "cat": 8 },
+
+  {
+    "name": "剃须刀",
+    "key": "剃须刀",
+    "icon": "http://img.kiwifruits.cn/classify/7/12.jpg",
+    "cat": 8 },
+
+  {
+    "name": "充电宝",
+    "key": "充电宝",
+    "icon": "http://img.kiwifruits.cn/classify/7/13.jpg",
+    "cat": 8 },
+
+  {
+    "name": "手机配件",
+    "key": "手机配件",
+    "icon": "http://img.kiwifruits.cn/classify/7/14.jpg",
+    "cat": 8 }] },
+
+
+
+{
+  "name": "母婴",
+  "foods": [
+  {
+    "name": "婴童服饰",
+    "key": "衣服",
+    "icon": "http://img.kiwifruits.cn/classify/8/1.jpg",
+    "cat": 2 },
+
+  {
+    "name": "玩具乐器",
+    "key": "玩具乐器",
+    "icon": "http://img.kiwifruits.cn/classify/8/2.jpg",
+    "cat": 2 },
+
+  {
+    "name": "尿不湿",
+    "key": "尿不湿",
+    "icon": "http://img.kiwifruits.cn/classify/8/3.jpg",
+    "cat": 2 },
+
+  {
+    "name": "安抚牙胶",
+    "key": "安抚牙胶",
+    "icon": "http://img.kiwifruits.cn/classify/8/4.jpg",
+    "cat": 2 },
+
+  {
+    "name": "奶瓶奶嘴",
+    "key": "奶瓶奶嘴",
+    "icon": "http://img.kiwifruits.cn/classify/8/5.jpg",
+    "cat": 2 },
+
+  {
+    "name": "孕妈用品",
+    "key": "孕妈用品",
+    "icon": "http://img.kiwifruits.cn/classify/8/6.jpg",
+    "cat": 2 },
+
+  {
+    "name": "宝宝用品",
+    "key": "宝宝用品",
+    "icon": "http://img.kiwifruits.cn/classify/8/7.jpg",
+    "cat": 2 },
+
+  {
+    "name": "婴童湿巾",
+    "key": "湿巾",
+    "icon": "http://img.kiwifruits.cn/classify/8/8.jpg",
+    "cat": 2 },
+
+  {
+    "name": "喂养洗护",
+    "key": "洗护",
+    "icon": "http://img.kiwifruits.cn/classify/8/9.jpg",
+    "cat": 2 },
+
+  {
+    "name": "婴童鞋靴",
+    "key": "童鞋",
+    "icon": "http://img.kiwifruits.cn/classify/8/10.jpg",
+    "cat": 2 },
+
+  {
+    "name": "口水巾",
+    "key": "口水巾",
+    "icon": "http://img.kiwifruits.cn/classify/8/11.jpg",
+    "cat": 2 },
+
+  {
+    "name": "营养辅食",
+    "key": "营养",
+    "icon": "http://img.kiwifruits.cn/classify/8/12.jpg",
+    "cat": 2 },
+
+  {
+    "name": "婴幼书籍",
+    "key": "书籍",
+    "icon": "http://img.kiwifruits.cn/classify/8/13.jpg",
+    "cat": 2 },
+
+  {
+    "name": "婴儿车",
+    "key": "婴儿车",
+    "icon": "http://img.kiwifruits.cn/classify/8/14.jpg",
+    "cat": 2 }] },
+
+
+
+{
+  "name": "箱包",
+  "foods": [
+  {
+    "name": "单肩包",
+    "key": "单肩包",
+    "icon": "http://img.kiwifruits.cn/classify/9/1.jpg",
+    "cat": 0 },
+
+  {
+    "name": "斜挎包",
+    "key": "斜挎包",
+    "icon": "http://img.kiwifruits.cn/classify/9/2.jpg",
+    "cat": 0 },
+
+  {
+    "name": "女包",
+    "key": "女包",
+    "icon": "http://img.kiwifruits.cn/classify/9/3.jpg",
+    "cat": 0 },
+
+  {
+    "name": "男包",
+    "key": "男包",
+    "icon": "http://img.kiwifruits.cn/classify/9/4.jpg",
+    "cat": 0 },
+
+  {
+    "name": "双肩包",
+    "key": "双肩包",
+    "icon": "http://img.kiwifruits.cn/classify/9/5.jpg",
+    "cat": 0 },
+
+  {
+    "name": "小方包",
+    "key": "小方包",
+    "icon": "http://img.kiwifruits.cn/classify/9/6.jpg",
+    "cat": 0 },
+
+  {
+    "name": "钱包",
+    "key": "钱包",
+    "icon": "http://img.kiwifruits.cn/classify/9/7.jpg",
+    "cat": 0 },
+
+  {
+    "name": "旅行箱包",
+    "key": "旅行箱包",
+    "icon": "http://img.kiwifruits.cn/classify/9/8.jpg",
+    "cat": 0 },
+
+  {
+    "name": "零钱包",
+    "key": "零钱包",
+    "icon": "http://img.kiwifruits.cn/classify/9/9.jpg",
+    "cat": 0 },
+
+  {
+    "name": "手提包",
+    "key": "手提包",
+    "icon": "http://img.kiwifruits.cn/classify/9/10.jpg",
+    "cat": 0 },
+
+  {
+    "name": "胸包",
+    "key": "胸包",
+    "icon": "http://img.kiwifruits.cn/classify/9/11.jpg",
+    "cat": 0 }] },
+
+
+
+{
+  "name": "内衣",
+  "foods": [
+  {
+    "name": "袜子",
+    "key": "袜子",
+    "icon": "http://img.kiwifruits.cn/classify/10/1.jpg",
+    "cat": 11 },
+
+  {
+    "name": "吊带背心",
+    "key": "吊带背心",
+    "icon": "http://img.kiwifruits.cn/classify/10/2.jpg",
+    "cat": 11 },
+
+  {
+    "name": "抹胸",
+    "key": "抹胸",
+    "icon": "http://img.kiwifruits.cn/classify/10/3.jpg",
+    "cat": 11 },
+
+  {
+    "name": "内裤",
+    "key": "内裤",
+    "icon": "http://img.kiwifruits.cn/classify/10/4.jpg",
+    "cat": 11 },
+
+  {
+    "name": "文胸",
+    "key": "文胸",
+    "icon": "http://img.kiwifruits.cn/classify/10/5.jpg",
+    "cat": 11 },
+
+  {
+    "name": "文胸套装",
+    "key": "文胸套装",
+    "icon": "http://img.kiwifruits.cn/classify/10/6.jpg",
+    "cat": 11 },
+
+  {
+    "name": "打底塑身",
+    "key": "打底塑身",
+    "icon": "http://img.kiwifruits.cn/classify/10/7.jpg",
+    "cat": 11 },
+
+  {
+    "name": "家居服",
+    "key": "家居服",
+    "icon": "http://img.kiwifruits.cn/classify/10/8.jpg",
+    "cat": 11 },
+
+  {
+    "name": "船袜",
+    "key": "船袜",
+    "icon": "http://img.kiwifruits.cn/classify/10/9.jpg",
+    "cat": 11 },
+
+  {
+    "name": "情侣睡衣",
+    "key": "情侣睡衣",
+    "icon": "http://img.kiwifruits.cn/classify/10/10.jpg",
+    "cat": 11 },
+
+  {
+    "name": "丝袜",
+    "key": "丝袜",
+    "icon": "http://img.kiwifruits.cn/classify/10/11.jpg",
+    "cat": 11 }] },
+
+
+
+{
+  "name": "文娱车品",
+  "foods": [
+  {
+    "name": "车市车品",
+    "key": "车市车品",
+    "icon": "http://img.kiwifruits.cn/classify/11/1.jpg",
+    "cat": 7 },
+
+  {
+    "name": "办公文具",
+    "key": "办公文具",
+    "icon": "http://img.kiwifruits.cn/classify/11/2.jpg",
+    "cat": 7 },
+
+  {
+    "name": "考试必备",
+    "key": "考试必备",
+    "icon": "http://img.kiwifruits.cn/classify/11/3.jpg",
+    "cat": 7 },
+
+  {
+    "name": "笔记本",
+    "key": "笔记本",
+    "icon": "http://img.kiwifruits.cn/classify/11/4.jpg",
+    "cat": 7 },
+
+  {
+    "name": "艺术礼品",
+    "key": "礼品",
+    "icon": "http://img.kiwifruits.cn/classify/11/5.jpg",
+    "cat": 7 },
+
+  {
+    "name": "书写工具",
+    "key": "书写工具",
+    "icon": "http://img.kiwifruits.cn/classify/11/6.jpg",
+    "cat": 7 },
+
+  {
+    "name": "车载电器",
+    "key": "车载电器",
+    "icon": "http://img.kiwifruits.cn/classify/11/7.jpg",
+    "cat": 7 },
+
+  {
+    "name": "图书音像",
+    "key": "图书音像",
+    "icon": "http://img.kiwifruits.cn/classify/11/8.jpg",
+    "cat": 7 },
+
+  {
+    "name": "画具画材",
+    "key": "画具画材",
+    "icon": "http://img.kiwifruits.cn/classify/11/9.jpg",
+    "cat": 7 }] },
+
+
+
+{
+  "name": "配饰",
+  "foods": [
+  {
+    "name": "太阳镜",
+    "key": "太阳镜",
+    "icon": "http://img.kiwifruits.cn/classify/12/1.jpg",
+    "cat": 0 },
+
+  {
+    "name": "皮带",
+    "key": "皮带",
+    "icon": "http://img.kiwifruits.cn/classify/12/2.jpg",
+    "cat": 0 },
+
+  {
+    "name": "棒球帽",
+    "key": "棒球帽",
+    "icon": "http://img.kiwifruits.cn/classify/12/3.jpg",
+    "cat": 0 },
+
+  {
+    "name": "手表",
+    "key": "手表",
+    "icon": "http://img.kiwifruits.cn/classify/12/4.jpg",
+    "cat": 0 },
+
+  {
+    "name": "发饰",
+    "key": "发饰",
+    "icon": "http://img.kiwifruits.cn/classify/12/5.jpg",
+    "cat": 0 },
+
+  {
+    "name": "项链",
+    "key": "项链",
+    "icon": "http://img.kiwifruits.cn/classify/12/6.jpg",
+    "cat": 0 },
+
+  {
+    "name": "手饰",
+    "key": "手饰",
+    "icon": "http://img.kiwifruits.cn/classify/12/7.jpg",
+    "cat": 0 },
+
+  {
+    "name": "耳环",
+    "key": "耳环",
+    "icon": "http://img.kiwifruits.cn/classify/12/8.jpg",
+    "cat": 0 },
+
+  {
+    "name": "帽子丝巾",
+    "key": "帽子丝巾",
+    "icon": "http://img.kiwifruits.cn/classify/12/9.jpg",
+    "cat": 0 },
+
+  {
+    "name": "眼镜墨镜",
+    "key": "眼镜墨镜",
+    "icon": "http://img.kiwifruits.cn/classify/12/10.jpg",
+    "cat": 0 },
+
+  {
+    "name": "发带发箍",
+    "key": "发带发箍",
+    "icon": "http://img.kiwifruits.cn/classify/12/11.jpg",
+    "cat": 0 }] },
+
+
+
+{
+  "name": "家装家纺",
+  "foods": [
+  {
+    "name": "家居饰品",
+    "key": "家居饰品",
+    "icon": "http://img.kiwifruits.cn/classify/13/1.jpg",
+    "cat": 0 },
+
+  {
+    "name": "凉席",
+    "key": "凉席",
+    "icon": "http://img.kiwifruits.cn/classify/13/2.jpg",
+    "cat": 0 },
+
+  {
+    "name": "背枕靠枕",
+    "key": "靠枕",
+    "icon": "http://img.kiwifruits.cn/classify/13/3.jpg",
+    "cat": 0 },
+
+  {
+    "name": "床上用品",
+    "key": "床上用品",
+    "icon": "http://img.kiwifruits.cn/classify/13/4.jpg",
+    "cat": 0 },
+
+  {
+    "name": "摆件",
+    "key": "摆件",
+    "icon": "http://img.kiwifruits.cn/classify/13/5.jpg",
+    "cat": 0 },
+
+  {
+    "name": "四件套",
+    "key": "四件套",
+    "icon": "http://img.kiwifruits.cn/classify/13/6.jpg",
+    "cat": 0 },
+
+  {
+    "name": "装饰品",
+    "key": "装饰品",
+    "icon": "http://img.kiwifruits.cn/classify/13/7.jpg",
+    "cat": 0 },
+
+  {
+    "name": "卫浴用品",
+    "key": "卫浴",
+    "icon": "http://img.kiwifruits.cn/classify/13/8.jpg",
+    "cat": 0 },
+
+  {
+    "name": "家居家装",
+    "key": "家具",
+    "icon": "http://img.kiwifruits.cn/classify/13/9.jpg",
+    "cat": 0 },
+
+  {
+    "name": "蚊帐",
+    "key": "蚊帐",
+    "icon": "http://img.kiwifruits.cn/classify/13/10.jpg",
+    "cat": 0 },
+
+  {
+    "name": "墙纸贴纸",
+    "key": "墙纸",
+    "icon": "http://img.kiwifruits.cn/classify/13/11.jpg",
+    "cat": 0 },
+
+  {
+    "name": "空调被",
+    "key": "空调被",
+    "icon": "http://img.kiwifruits.cn/classify/13/12.jpg",
+    "cat": 0 }] },
+
+
+
+{
+  "name": "户外运动",
+  "foods": [
+  {
+    "name": "游泳装备",
+    "key": "游泳",
+    "icon": "http://img.kiwifruits.cn/classify/14/1.jpg",
+    "cat": 0 },
+
+  {
+    "name": "泳镜",
+    "key": "泳镜",
+    "icon": "http://img.kiwifruits.cn/classify/14/2.jpg",
+    "cat": 0 },
+
+  {
+    "name": "户外装备",
+    "key": "户外",
+    "icon": "http://img.kiwifruits.cn/classify/14/3.jpg",
+    "cat": 0 },
+
+  {
+    "name": "健身服饰",
+    "key": "健身",
+    "icon": "http://img.kiwifruits.cn/classify/14/4.jpg",
+    "cat": 0 },
+
+  {
+    "name": "泳衣",
+    "key": "泳衣",
+    "icon": "http://img.kiwifruits.cn/classify/14/5.jpg",
+    "cat": 0 },
+
+  {
+    "name": "瑜伽垫",
+    "key": "瑜伽垫",
+    "icon": "http://img.kiwifruits.cn/classify/14/6.jpg",
+    "cat": 0 },
+
+  {
+    "name": "瑜伽用品",
+    "key": "瑜伽",
+    "icon": "http://img.kiwifruits.cn/classify/14/7.jpg",
+    "cat": 0 },
+
+  {
+    "name": "健身装备",
+    "key": "健身",
+    "icon": "http://img.kiwifruits.cn/classify/14/8.jpg",
+    "cat": 0 },
+
+  {
+    "name": "球迷用品",
+    "key": "球迷",
+    "icon": "http://img.kiwifruits.cn/classify/14/9.jpg",
+    "cat": 0 }] }];exports.default = _default;
+
+/***/ }),
+
+/***/ 185:
+/*!********************************************!*\
+  !*** D:/lst/uni-dsproject/common/fetch.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.createToken = exports.get_Users_Account = exports.get_Users_ID = exports.getProductCategory = exports.setSkinConfig = exports.getSkinConfig = exports.chooseShopSkin = exports.getShopSkinList = exports.getProductList = exports.getCouponList = exports.login = void 0;var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
+var _env = __webpack_require__(/*! ./env.js */ 188);
+var _md = __webpack_require__(/*! ./tool/md5 */ 189);
+
+var _base = _interopRequireDefault(__webpack_require__(/*! ./tool/base64.js */ 192));
+
+var _tool = __webpack_require__(/*! ./tool.js */ 190);
+var _interceptors = __webpack_require__(/*! ./interceptors.js */ 191);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} // require('./tool/base64');
+
+
+
+var fetch = function fetch(act, param) {var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;var url = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '/api/little_program/shopconfig.php';var method = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 'post';
+  if (!act) {
+    uni.showToast({
+      title: 'act参数必传',
+      mask: true,
+      duration: 2000 });
+
+    return;
+  };
+
+  param.act = act;
+  // param.Users_Account = get_Users_Account();
+  // param.Users_ID = get_Users_ID();  Users_ID  写死
+  // param.appid = get_Appid();
+
+  // 数据加密
+  var data = createToken(param);
+
+
+  // console.log(url,param);
+
+
+  return (0, _interceptors.ajax)(url, method, data, options).then(function (res) {return res.data;}, function (e) {return e;});
+
+};
+
+
+var login = function login(data, options) {return fetch('users_login', data, options);};exports.login = login;
+
+var getCouponList = function getCouponList(data, options) {return fetch('get_unaccalimed_coupon', data, options);};exports.getCouponList = getCouponList;
+
+var getProductList = function getProductList(data, options) {return fetch('get_prod', data, options);};exports.getProductList = getProductList;
+
+var getShopSkinList = function getShopSkinList(data, options) {return fetch('get_shopskin', data, options);};exports.getShopSkinList = getShopSkinList;
+
+var chooseShopSkin = function chooseShopSkin(data, options) {return fetch('choose_shopskin', data, options);};
+
+//获取商城的配置
+exports.chooseShopSkin = chooseShopSkin;var getSkinConfig = function getSkinConfig(data, options) {return fetch('get_shophome', data, options);};
+
+//更新商城的配置
+exports.getSkinConfig = getSkinConfig;var setSkinConfig = function setSkinConfig(data, options) {return fetch('update_shophome', data, options);};
+//获取商品列表
+exports.setSkinConfig = setSkinConfig;var getProductCategory = function getProductCategory(data, options) {return fetch('pro_cate', data, options);};exports.getProductCategory = getProductCategory;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function get_Appid() {
+  return 'xhh';
+}
+
+var get_Users_ID = function get_Users_ID() {return _tool.ls.get('Users_ID');};exports.get_Users_ID = get_Users_ID;
+
+var get_Users_Account = function get_Users_Account() {return _tool.ls.get('Users_Account');};exports.get_Users_Account = get_Users_Account;
+
+var createToken = function createToken(object) {
+  object = ObjectToArr(object);
+  var signString = ObjectToString(object);
+  signString = signString.slice(0, -1);
+  var timestamp = parseInt(new Date().getTime() / 1000).toString();
+  var key = '458f_$#@$*!fdjisdJDFHUk4%%653154%^@#(FSD#$@0-T';
+  var dataStr = signString + key + timestamp;
+  // console.log(Base64)
+  var sign = (0, _md.hexMD5)(_base.default.toBase64(dataStr)).toUpperCase();
+  object['timestamp'] = timestamp;
+  object['sign'] = sign;
+  object['sortToken'] = 1;
+  return object;
+};
+
+//对象转数组，并排序
+exports.createToken = createToken;function ObjectToArr(object, addkey) {
+  addkey = addkey || '';
+  var arrs = {};
+  for (var i in object) {
+    var newkey = addkey + (addkey === '' ? i : '[' + i + ']');
+    if (typeof object[i] !== 'object') {
+      if (object[i] !== '') {
+        if (i !== 'timestamp' && i !== 'sign' && i !== 'sortToken') {
+          arrs[newkey] = object[i];
+        }
+      }
+    } else {
+      this.ObjectToArr(object[i], newkey);
+    }
+  }
+  var newkey_1 = Object.keys(arrs).sort();
+  var newObj = {}; //创建一个新的对象，用于存放排好序的键值对
+
+  // 此处不能使用for..in
+  newkey_1.forEach(function (val) {
+    newObj[val] = arrs[val]; //向新创建的对象中按照排好的顺序依次增加键值对
+  });
+  return newObj;
+}
+
+//对象转字符串
+function ObjectToString(object, arrs) {
+  arrs = arrs || '';
+  for (var i in object) {
+    if (typeof object[i] !== 'object') {
+      if (object[i] !== '') {
+        if (i !== 'timestamp' && i !== 'sign') {
+          arrs += object[i] + ',';
+        }
+      }
+    } else {
+      arrs += this.ObjectToString(object[i], arrs);
+    }
+  }
+  return arrs;
+}
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+
+/***/ 188:
+/*!******************************************!*\
+  !*** D:/lst/uni-dsproject/common/env.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = exports.apiKey = exports.apiBaseUrl = void 0;var apiBaseUrl = 'http://www.qiyeban.com';exports.apiBaseUrl = apiBaseUrl;
+var apiKey = '458f_$#@$*!fdjisdJDFHUk4%%653154%^@#(FSD#$@0-T';exports.apiKey = apiKey;var _default =
+
+
+{
+  apiBaseUrl: apiBaseUrl, apiKey: apiKey };exports.default = _default;
+
+/***/ }),
+
+/***/ 189:
+/*!***********************************************!*\
+  !*** D:/lst/uni-dsproject/common/tool/md5.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.hexMD5 = void 0;var rotateLeft = function rotateLeft(lValue, iShiftBits) {
+  return lValue << iShiftBits | lValue >>> 32 - iShiftBits;
+};
+
+var addUnsigned = function addUnsigned(lX, lY) {
+  var lX4, lY4, lX8, lY8, lResult;
+  lX8 = lX & 0x80000000;
+  lY8 = lY & 0x80000000;
+  lX4 = lX & 0x40000000;
+  lY4 = lY & 0x40000000;
+  lResult = (lX & 0x3FFFFFFF) + (lY & 0x3FFFFFFF);
+  if (lX4 & lY4) return lResult ^ 0x80000000 ^ lX8 ^ lY8;
+  if (lX4 | lY4) {
+    if (lResult & 0x40000000) return lResult ^ 0xC0000000 ^ lX8 ^ lY8;else
+    return lResult ^ 0x40000000 ^ lX8 ^ lY8;
+  } else {
+    return lResult ^ lX8 ^ lY8;
+  }
+};
+
+var F = function F(x, y, z) {
+  return x & y | ~x & z;
+};
+
+var G = function G(x, y, z) {
+  return x & z | y & ~z;
+};
+
+var H = function H(x, y, z) {
+  return x ^ y ^ z;
+};
+
+var I = function I(x, y, z) {
+  return y ^ (x | ~z);
+};
+
+var FF = function FF(a, b, c, d, x, s, ac) {
+  a = addUnsigned(a, addUnsigned(addUnsigned(F(b, c, d), x), ac));
+  return addUnsigned(rotateLeft(a, s), b);
+};
+
+var GG = function GG(a, b, c, d, x, s, ac) {
+  a = addUnsigned(a, addUnsigned(addUnsigned(G(b, c, d), x), ac));
+  return addUnsigned(rotateLeft(a, s), b);
+};
+
+var HH = function HH(a, b, c, d, x, s, ac) {
+  a = addUnsigned(a, addUnsigned(addUnsigned(H(b, c, d), x), ac));
+  return addUnsigned(rotateLeft(a, s), b);
+};
+
+var II = function II(a, b, c, d, x, s, ac) {
+  a = addUnsigned(a, addUnsigned(addUnsigned(I(b, c, d), x), ac));
+  return addUnsigned(rotateLeft(a, s), b);
+};
+
+var convertToWordArray = function convertToWordArray(string) {
+  var lWordCount;
+  var lMessageLength = string.length;
+  var lNumberOfWordsTempOne = lMessageLength + 8;
+  var lNumberOfWordsTempTwo = (lNumberOfWordsTempOne - lNumberOfWordsTempOne % 64) / 64;
+  var lNumberOfWords = (lNumberOfWordsTempTwo + 1) * 16;
+  var lWordArray = Array(lNumberOfWords - 1);
+  var lBytePosition = 0;
+  var lByteCount = 0;
+  while (lByteCount < lMessageLength) {
+    lWordCount = (lByteCount - lByteCount % 4) / 4;
+    lBytePosition = lByteCount % 4 * 8;
+    lWordArray[lWordCount] = lWordArray[lWordCount] | string.charCodeAt(lByteCount) << lBytePosition;
+    lByteCount++;
+  }
+  lWordCount = (lByteCount - lByteCount % 4) / 4;
+  lBytePosition = lByteCount % 4 * 8;
+  lWordArray[lWordCount] = lWordArray[lWordCount] | 0x80 << lBytePosition;
+  lWordArray[lNumberOfWords - 2] = lMessageLength << 3;
+  lWordArray[lNumberOfWords - 1] = lMessageLength >>> 29;
+  return lWordArray;
+};
+
+var wordToHex = function wordToHex(lValue) {
+  var WordToHexValue = "",
+  WordToHexValueTemp = "",
+  lByte,lCount;
+  for (lCount = 0; lCount <= 3; lCount++) {
+    lByte = lValue >>> lCount * 8 & 255;
+    WordToHexValueTemp = "0" + lByte.toString(16);
+    WordToHexValue = WordToHexValue + WordToHexValueTemp.substr(WordToHexValueTemp.length - 2, 2);
+  }
+  return WordToHexValue;
+};
+
+var uTF8Encode = function uTF8Encode(string) {
+  string = string.replace(/\x0d\x0a/g, "\x0a");
+  var output = "";
+  for (var n = 0; n < string.length; n++) {
+    var c = string.charCodeAt(n);
+    if (c < 128) {
+      output += String.fromCharCode(c);
+    } else if (c > 127 && c < 2048) {
+      output += String.fromCharCode(c >> 6 | 192);
+      output += String.fromCharCode(c & 63 | 128);
+    } else {
+      output += String.fromCharCode(c >> 12 | 224);
+      output += String.fromCharCode(c >> 6 & 63 | 128);
+      output += String.fromCharCode(c & 63 | 128);
+    }
+  }
+  return output;
+};
+
+var hexMD5 = function hexMD5(string) {
+  var x = Array();
+  var k, AA, BB, CC, DD, a, b, c, d;
+  var S11 = 7,
+  S12 = 12,
+  S13 = 17,
+  S14 = 22;
+  var S21 = 5,
+  S22 = 9,
+  S23 = 14,
+  S24 = 20;
+  var S31 = 4,
+  S32 = 11,
+  S33 = 16,
+  S34 = 23;
+  var S41 = 6,
+  S42 = 10,
+  S43 = 15,
+  S44 = 21;
+  string = uTF8Encode(string);
+  x = convertToWordArray(string);
+  a = 0x67452301;
+  b = 0xEFCDAB89;
+  c = 0x98BADCFE;
+  d = 0x10325476;
+  for (k = 0; k < x.length; k += 16) {
+    AA = a;
+    BB = b;
+    CC = c;
+    DD = d;
+    a = FF(a, b, c, d, x[k + 0], S11, 0xD76AA478);
+    d = FF(d, a, b, c, x[k + 1], S12, 0xE8C7B756);
+    c = FF(c, d, a, b, x[k + 2], S13, 0x242070DB);
+    b = FF(b, c, d, a, x[k + 3], S14, 0xC1BDCEEE);
+    a = FF(a, b, c, d, x[k + 4], S11, 0xF57C0FAF);
+    d = FF(d, a, b, c, x[k + 5], S12, 0x4787C62A);
+    c = FF(c, d, a, b, x[k + 6], S13, 0xA8304613);
+    b = FF(b, c, d, a, x[k + 7], S14, 0xFD469501);
+    a = FF(a, b, c, d, x[k + 8], S11, 0x698098D8);
+    d = FF(d, a, b, c, x[k + 9], S12, 0x8B44F7AF);
+    c = FF(c, d, a, b, x[k + 10], S13, 0xFFFF5BB1);
+    b = FF(b, c, d, a, x[k + 11], S14, 0x895CD7BE);
+    a = FF(a, b, c, d, x[k + 12], S11, 0x6B901122);
+    d = FF(d, a, b, c, x[k + 13], S12, 0xFD987193);
+    c = FF(c, d, a, b, x[k + 14], S13, 0xA679438E);
+    b = FF(b, c, d, a, x[k + 15], S14, 0x49B40821);
+    a = GG(a, b, c, d, x[k + 1], S21, 0xF61E2562);
+    d = GG(d, a, b, c, x[k + 6], S22, 0xC040B340);
+    c = GG(c, d, a, b, x[k + 11], S23, 0x265E5A51);
+    b = GG(b, c, d, a, x[k + 0], S24, 0xE9B6C7AA);
+    a = GG(a, b, c, d, x[k + 5], S21, 0xD62F105D);
+    d = GG(d, a, b, c, x[k + 10], S22, 0x2441453);
+    c = GG(c, d, a, b, x[k + 15], S23, 0xD8A1E681);
+    b = GG(b, c, d, a, x[k + 4], S24, 0xE7D3FBC8);
+    a = GG(a, b, c, d, x[k + 9], S21, 0x21E1CDE6);
+    d = GG(d, a, b, c, x[k + 14], S22, 0xC33707D6);
+    c = GG(c, d, a, b, x[k + 3], S23, 0xF4D50D87);
+    b = GG(b, c, d, a, x[k + 8], S24, 0x455A14ED);
+    a = GG(a, b, c, d, x[k + 13], S21, 0xA9E3E905);
+    d = GG(d, a, b, c, x[k + 2], S22, 0xFCEFA3F8);
+    c = GG(c, d, a, b, x[k + 7], S23, 0x676F02D9);
+    b = GG(b, c, d, a, x[k + 12], S24, 0x8D2A4C8A);
+    a = HH(a, b, c, d, x[k + 5], S31, 0xFFFA3942);
+    d = HH(d, a, b, c, x[k + 8], S32, 0x8771F681);
+    c = HH(c, d, a, b, x[k + 11], S33, 0x6D9D6122);
+    b = HH(b, c, d, a, x[k + 14], S34, 0xFDE5380C);
+    a = HH(a, b, c, d, x[k + 1], S31, 0xA4BEEA44);
+    d = HH(d, a, b, c, x[k + 4], S32, 0x4BDECFA9);
+    c = HH(c, d, a, b, x[k + 7], S33, 0xF6BB4B60);
+    b = HH(b, c, d, a, x[k + 10], S34, 0xBEBFBC70);
+    a = HH(a, b, c, d, x[k + 13], S31, 0x289B7EC6);
+    d = HH(d, a, b, c, x[k + 0], S32, 0xEAA127FA);
+    c = HH(c, d, a, b, x[k + 3], S33, 0xD4EF3085);
+    b = HH(b, c, d, a, x[k + 6], S34, 0x4881D05);
+    a = HH(a, b, c, d, x[k + 9], S31, 0xD9D4D039);
+    d = HH(d, a, b, c, x[k + 12], S32, 0xE6DB99E5);
+    c = HH(c, d, a, b, x[k + 15], S33, 0x1FA27CF8);
+    b = HH(b, c, d, a, x[k + 2], S34, 0xC4AC5665);
+    a = II(a, b, c, d, x[k + 0], S41, 0xF4292244);
+    d = II(d, a, b, c, x[k + 7], S42, 0x432AFF97);
+    c = II(c, d, a, b, x[k + 14], S43, 0xAB9423A7);
+    b = II(b, c, d, a, x[k + 5], S44, 0xFC93A039);
+    a = II(a, b, c, d, x[k + 12], S41, 0x655B59C3);
+    d = II(d, a, b, c, x[k + 3], S42, 0x8F0CCC92);
+    c = II(c, d, a, b, x[k + 10], S43, 0xFFEFF47D);
+    b = II(b, c, d, a, x[k + 1], S44, 0x85845DD1);
+    a = II(a, b, c, d, x[k + 8], S41, 0x6FA87E4F);
+    d = II(d, a, b, c, x[k + 15], S42, 0xFE2CE6E0);
+    c = II(c, d, a, b, x[k + 6], S43, 0xA3014314);
+    b = II(b, c, d, a, x[k + 13], S44, 0x4E0811A1);
+    a = II(a, b, c, d, x[k + 4], S41, 0xF7537E82);
+    d = II(d, a, b, c, x[k + 11], S42, 0xBD3AF235);
+    c = II(c, d, a, b, x[k + 2], S43, 0x2AD7D2BB);
+    b = II(b, c, d, a, x[k + 9], S44, 0xEB86D391);
+    a = addUnsigned(a, AA);
+    b = addUnsigned(b, BB);
+    c = addUnsigned(c, CC);
+    d = addUnsigned(d, DD);
+  }
+  var tempValue = wordToHex(a) + wordToHex(b) + wordToHex(c) + wordToHex(d);
+  return tempValue.toLowerCase();
+};exports.hexMD5 = hexMD5;
+
+/***/ }),
+
+/***/ 190:
+/*!*******************************************!*\
+  !*** D:/lst/uni-dsproject/common/tool.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.ls = exports.GetQueryByString = exports.formatNumber = exports.formatTime = void 0;var formatTime = function formatTime(date) {
+  var year = date.getFullYear();
+  var month = date.getMonth() + 1;
+  var day = date.getDate();
+  var hour = date.getHours();
+  var minute = date.getMinutes();
+  var second = date.getSeconds();
+
+  return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':');
+};exports.formatTime = formatTime;
+
+var formatNumber = function formatNumber(n) {
+  n = n.toString();
+  return n[1] ? n : '0' + n;
+};
+
+/**
+    *
+    * @param {*} str
+    * @param {*} name
+    */exports.formatNumber = formatNumber;
+var GetQueryByString = function GetQueryByString(str, name) {
+
+  //获取？号出现几次
+  var tempArr = str.split('?');
+  console.log(tempArr);
+  // //如果大于1
+  if (tempArr.length - 1 > 1) {
+    var rt = null;
+    for (var i in tempArr) {
+      var s = tempArr[i];
+      var reg1 = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+      var r1 = s.match(reg1); //匹配目标参数
+      if (r1 != null) {
+        rt = decodeURIComponent(r1[2]); //一直覆盖，要最后的就行了
+      }
+    }
+
+    return rt;
+  }
+
+  var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+  if (!str.split("?")[1]) return null;
+  var r = str.split("?")[1].match(reg); //匹配目标参数
+  console.log(r);
+  if (r != null) {
+    return decodeURIComponent(r[2]);
+
+  }
+  return null; //返回参数值
+
+};exports.GetQueryByString = GetQueryByString;
+
+
+var ls = {
+  set: function set(key, val) {
+    //Null undefined '' 这些不让传进来了
+    if (!val && (val != 0 || val != false)) return false;
+    return uni.setStorageSync(key, JSON.stringify(val));
+  },
+
+  get: function get(key) {
+    var val = uni.getStorageSync(key);
+    if (!val) return false;
+    try {
+      return JSON.parse(val);
+    } catch (e) {
+      return false;
+    }
+
+  },
+  remove: function remove(key) {
+    return uni.removeStorageSync(key);
+  },
+  clear: function clear() {
+    return uni.clearStorageSync();
+  } };exports.ls = ls;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+
+/***/ 191:
+/*!***************************************************!*\
+  !*** D:/lst/uni-dsproject/common/interceptors.js ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.get = exports.post = exports.ajax = void 0;var ENV = _interopRequireWildcard(__webpack_require__(/*! ./env.js */ 188));function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) {var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {};if (desc.get || desc.set) {Object.defineProperty(newObj, key, desc);} else {newObj[key] = obj[key];}}}}newObj.default = obj;return newObj;}}
+// console.log(ENV.apiBaseUrl)
+
+var ajax = function ajax(url, method, data, options) {
+
+  if (!options) options = {};
+  if (!data) data = {};var _options =
+  options,_options$tip = _options.tip,tip = _options$tip === void 0 ? '' : _options$tip,_options$mask = _options.mask,mask = _options$mask === void 0 ? false : _options$mask,_options$timelen = _options.timelen,timelen = _options$timelen === void 0 ? 2000 : _options$timelen;
+
+  uni.showLoading({
+    title: tip || 'loading',
+    mask: mask });
+
+
+  //if(!data._ajax)data._ajax=2;
+  //if (!data.aid && aid)data.aid=aid;
+
+  var token;
+
+  var header = {
+    // 'Cookie': '',
+    'Authorization': 'Bearer ' + token,
+    "content-type": "application/x-www-form-urlencoded" };
+
+  // if (wx.getStorageSync('cookie')) {
+  //   header.Cookie = wx.getStorageSync('cookie')
+  // }
+
+  var URL = ENV.apiBaseUrl + url;
+  // console.log(URL)
+
+  return new Promise(function (resolve, reject) {
+    uni.request({
+      header: header,
+      url: URL,
+      method: method,
+      data: data,
+      success: function success(res) {
+        resolve(res.data);
+      },
+      fail: function fail(e) {
+        reject(e);
+      },
+      complete: function complete(rt) {
+        console.log(rt);
+        setTimeout(function () {
+          uni.hideLoading();
+        }, 500);
+      } });
+
+  });
+
+};exports.ajax = ajax;
+
+var post = function post(url, data, options) {
+  return ajax(url, 'post', data, options);
+};exports.post = post;
+
+
+var get = function get(url, data, options) {
+  return ajax(url, 'get', data, options);
+};exports.get = get;
+
+
+module.exports = {
+  post: post, get: get, ajax: ajax };
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+
+/***/ 192:
+/*!**************************************************!*\
+  !*** D:/lst/uni-dsproject/common/tool/base64.js ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+
+var version = "2.1.9";
+// if node.js, we use Buffer
+var buffer;
+if ( true && module.exports) {
+  try {
+    buffer = __webpack_require__(/*! buffer */ 193).Buffer;
+  } catch (err) {}
+}
+// constants
+var b64chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+var b64tab = function (bin) {
+  var t = {};
+  for (var i = 0, l = bin.length; i < l; i++) {t[bin.charAt(i)] = i;}
+  return t;
+}(b64chars);
+var fromCharCode = String.fromCharCode;
+// encoder stuff
+var cb_utob = function cb_utob(c) {
+  if (c.length < 2) {
+    var cc = c.charCodeAt(0);
+    return cc < 0x80 ? c :
+    cc < 0x800 ? fromCharCode(0xc0 | cc >>> 6) +
+    fromCharCode(0x80 | cc & 0x3f) :
+    fromCharCode(0xe0 | cc >>> 12 & 0x0f) +
+    fromCharCode(0x80 | cc >>> 6 & 0x3f) +
+    fromCharCode(0x80 | cc & 0x3f);
+  } else {
+    var cc = 0x10000 +
+    (c.charCodeAt(0) - 0xD800) * 0x400 + (
+    c.charCodeAt(1) - 0xDC00);
+    return fromCharCode(0xf0 | cc >>> 18 & 0x07) +
+    fromCharCode(0x80 | cc >>> 12 & 0x3f) +
+    fromCharCode(0x80 | cc >>> 6 & 0x3f) +
+    fromCharCode(0x80 | cc & 0x3f);
+  }
+};
+var re_utob = /[\uD800-\uDBFF][\uDC00-\uDFFFF]|[^\x00-\x7F]/g;
+var utob = function utob(u) {
+  return u.replace(re_utob, cb_utob);
+};
+var cb_encode = function cb_encode(ccc) {
+  var padlen = [0, 2, 1][ccc.length % 3],
+  ord = ccc.charCodeAt(0) << 16 |
+  (ccc.length > 1 ? ccc.charCodeAt(1) : 0) << 8 | (
+  ccc.length > 2 ? ccc.charCodeAt(2) : 0),
+  chars = [
+  b64chars.charAt(ord >>> 18),
+  b64chars.charAt(ord >>> 12 & 63),
+  padlen >= 2 ? '=' : b64chars.charAt(ord >>> 6 & 63),
+  padlen >= 1 ? '=' : b64chars.charAt(ord & 63)];
+
+  return chars.join('');
+};
+var btoa = btoa ? function (b) {
+  return btoa(b);
+} : function (b) {
+  return b.replace(/[\s\S]{1,3}/g, cb_encode);
+};
+var _encode = buffer ? function (u) {
+  return (u.constructor === buffer.constructor ? u : new buffer(u)).
+  toString('base64');
+} :
+function (u) {
+  return btoa(utob(u));
+};
+var encode = function encode(u, urisafe) {
+  return !urisafe ?
+  _encode(String(u)) :
+  _encode(String(u)).replace(/[+\/]/g, function (m0) {
+    return m0 == '+' ? '-' : '_';
+  }).replace(/=/g, '');
+};
+var encodeURI = function encodeURI(u) {
+  return encode(u, true);
+};
+// decoder stuff
+var re_btou = new RegExp([
+'[\xC0-\xDF][\x80-\xBF]',
+'[\xE0-\xEF][\x80-\xBF]{2}',
+'[\xF0-\xF7][\x80-\xBF]{3}'].
+join('|'), 'g');
+var cb_btou = function cb_btou(cccc) {
+  switch (cccc.length) {
+    case 4:
+      var cp = (0x07 & cccc.charCodeAt(0)) << 18 |
+      (0x3f & cccc.charCodeAt(1)) << 12 |
+      (0x3f & cccc.charCodeAt(2)) << 6 |
+      0x3f & cccc.charCodeAt(3),
+      offset = cp - 0x10000;
+      return fromCharCode((offset >>> 10) + 0xD800) +
+      fromCharCode((offset & 0x3FF) + 0xDC00);
+    case 3:
+      return fromCharCode(
+      (0x0f & cccc.charCodeAt(0)) << 12 |
+      (0x3f & cccc.charCodeAt(1)) << 6 |
+      0x3f & cccc.charCodeAt(2));
+
+    default:
+      return fromCharCode(
+      (0x1f & cccc.charCodeAt(0)) << 6 |
+      0x3f & cccc.charCodeAt(1));}
+
+
+};
+var btou = function btou(b) {
+  return b.replace(re_btou, cb_btou);
+};
+var cb_decode = function cb_decode(cccc) {
+  var len = cccc.length,
+  padlen = len % 4,
+  n = (len > 0 ? b64tab[cccc.charAt(0)] << 18 : 0) | (
+  len > 1 ? b64tab[cccc.charAt(1)] << 12 : 0) | (
+  len > 2 ? b64tab[cccc.charAt(2)] << 6 : 0) | (
+  len > 3 ? b64tab[cccc.charAt(3)] : 0),
+  chars = [
+  fromCharCode(n >>> 16),
+  fromCharCode(n >>> 8 & 0xff),
+  fromCharCode(n & 0xff)];
+
+  chars.length -= [0, 0, 2, 1][padlen];
+  return chars.join('');
+};
+var atob = atob ? function (a) {
+  return atob(a);
+} : function (a) {
+  return a.replace(/[\s\S]{1,4}/g, cb_decode);
+};
+var _decode = buffer ? function (a) {
+  return (a.constructor === buffer.constructor ?
+  a : new buffer(a, 'base64')).toString();
+} :
+function (a) {
+  return btou(atob(a));
+};
+var decode = function decode(a) {
+  return _decode(
+  String(a).replace(/[-_]/g, function (m0) {
+    return m0 == '-' ? '+' : '/';
+  }).
+  replace(/[^A-Za-z0-9\+\/]/g, ''));
+
+};
+// export Base64
+var Base64 = {
+  VERSION: version,
+  atob: atob,
+  btoa: btoa,
+  fromBase64: decode,
+  toBase64: encode,
+  utob: utob,
+  encode: encode,
+  encodeURI: encodeURI,
+  btou: btou,
+  decode: decode };
+
+// if ES5 is available, make Base64.extendString() available
+if (typeof Object.defineProperty === 'function') {
+  var noEnum = function noEnum(v) {
+    return {
+      value: v,
+      enumerable: false,
+      writable: true,
+      configurable: true };
+
+  };
+  Base64.extendString = function () {
+    Object.defineProperty(
+    String.prototype, 'fromBase64', noEnum(function () {
+      return decode(this);
+    }));
+    Object.defineProperty(
+    String.prototype, 'toBase64', noEnum(function (urisafe) {
+      return encode(this, urisafe);
+    }));
+    Object.defineProperty(
+    String.prototype, 'toBase64URI', noEnum(function () {
+      return encode(this, true);
+    }));
+  };
+}
+
+// that's it!
+/*if (typeof define === 'function' && define.amd) {
+    define(function() {
+        return global.Base64;
+    });
+} else if (typeof module === 'object') {
+    module.exports = global.Base64;
+} else {
+    window.Base64 = Base64;
+}*/
+
+module.exports = Base64;
+
+/***/ }),
+
+/***/ 193:
+/*!**************************************!*\
+  !*** ./node_modules/buffer/index.js ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(global) {/*!
+ * The buffer module from node.js, for the browser.
+ *
+ * @author   Feross Aboukhadijeh <feross@feross.org> <http://feross.org>
+ * @license  MIT
+ */
+/* eslint-disable no-proto */
+
+
+
+var base64 = __webpack_require__(/*! base64-js */ 194)
+var ieee754 = __webpack_require__(/*! ieee754 */ 195)
+var isArray = __webpack_require__(/*! isarray */ 196)
+
+exports.Buffer = Buffer
+exports.SlowBuffer = SlowBuffer
+exports.INSPECT_MAX_BYTES = 50
+
+/**
+ * If `Buffer.TYPED_ARRAY_SUPPORT`:
+ *   === true    Use Uint8Array implementation (fastest)
+ *   === false   Use Object implementation (most compatible, even IE6)
+ *
+ * Browsers that support typed arrays are IE 10+, Firefox 4+, Chrome 7+, Safari 5.1+,
+ * Opera 11.6+, iOS 4.2+.
+ *
+ * Due to various browser bugs, sometimes the Object implementation will be used even
+ * when the browser supports typed arrays.
+ *
+ * Note:
+ *
+ *   - Firefox 4-29 lacks support for adding new properties to `Uint8Array` instances,
+ *     See: https://bugzilla.mozilla.org/show_bug.cgi?id=695438.
+ *
+ *   - Chrome 9-10 is missing the `TypedArray.prototype.subarray` function.
+ *
+ *   - IE10 has a broken `TypedArray.prototype.subarray` function which returns arrays of
+ *     incorrect length in some situations.
+
+ * We detect these buggy browsers and set `Buffer.TYPED_ARRAY_SUPPORT` to `false` so they
+ * get the Object implementation, which is slower but behaves correctly.
+ */
+Buffer.TYPED_ARRAY_SUPPORT = global.TYPED_ARRAY_SUPPORT !== undefined
+  ? global.TYPED_ARRAY_SUPPORT
+  : typedArraySupport()
+
+/*
+ * Export kMaxLength after typed array support is determined.
+ */
+exports.kMaxLength = kMaxLength()
+
+function typedArraySupport () {
+  try {
+    var arr = new Uint8Array(1)
+    arr.__proto__ = {__proto__: Uint8Array.prototype, foo: function () { return 42 }}
+    return arr.foo() === 42 && // typed array instances can be augmented
+        typeof arr.subarray === 'function' && // chrome 9-10 lack `subarray`
+        arr.subarray(1, 1).byteLength === 0 // ie10 has broken `subarray`
+  } catch (e) {
+    return false
+  }
+}
+
+function kMaxLength () {
+  return Buffer.TYPED_ARRAY_SUPPORT
+    ? 0x7fffffff
+    : 0x3fffffff
+}
+
+function createBuffer (that, length) {
+  if (kMaxLength() < length) {
+    throw new RangeError('Invalid typed array length')
+  }
+  if (Buffer.TYPED_ARRAY_SUPPORT) {
+    // Return an augmented `Uint8Array` instance, for best performance
+    that = new Uint8Array(length)
+    that.__proto__ = Buffer.prototype
+  } else {
+    // Fallback: Return an object instance of the Buffer class
+    if (that === null) {
+      that = new Buffer(length)
+    }
+    that.length = length
+  }
+
+  return that
+}
+
+/**
+ * The Buffer constructor returns instances of `Uint8Array` that have their
+ * prototype changed to `Buffer.prototype`. Furthermore, `Buffer` is a subclass of
+ * `Uint8Array`, so the returned instances will have all the node `Buffer` methods
+ * and the `Uint8Array` methods. Square bracket notation works as expected -- it
+ * returns a single octet.
+ *
+ * The `Uint8Array` prototype remains unmodified.
+ */
+
+function Buffer (arg, encodingOrOffset, length) {
+  if (!Buffer.TYPED_ARRAY_SUPPORT && !(this instanceof Buffer)) {
+    return new Buffer(arg, encodingOrOffset, length)
+  }
+
+  // Common case.
+  if (typeof arg === 'number') {
+    if (typeof encodingOrOffset === 'string') {
+      throw new Error(
+        'If encoding is specified then the first argument must be a string'
+      )
+    }
+    return allocUnsafe(this, arg)
+  }
+  return from(this, arg, encodingOrOffset, length)
+}
+
+Buffer.poolSize = 8192 // not used by this implementation
+
+// TODO: Legacy, not needed anymore. Remove in next major version.
+Buffer._augment = function (arr) {
+  arr.__proto__ = Buffer.prototype
+  return arr
+}
+
+function from (that, value, encodingOrOffset, length) {
+  if (typeof value === 'number') {
+    throw new TypeError('"value" argument must not be a number')
+  }
+
+  if (typeof ArrayBuffer !== 'undefined' && value instanceof ArrayBuffer) {
+    return fromArrayBuffer(that, value, encodingOrOffset, length)
+  }
+
+  if (typeof value === 'string') {
+    return fromString(that, value, encodingOrOffset)
+  }
+
+  return fromObject(that, value)
+}
+
+/**
+ * Functionally equivalent to Buffer(arg, encoding) but throws a TypeError
+ * if value is a number.
+ * Buffer.from(str[, encoding])
+ * Buffer.from(array)
+ * Buffer.from(buffer)
+ * Buffer.from(arrayBuffer[, byteOffset[, length]])
+ **/
+Buffer.from = function (value, encodingOrOffset, length) {
+  return from(null, value, encodingOrOffset, length)
+}
+
+if (Buffer.TYPED_ARRAY_SUPPORT) {
+  Buffer.prototype.__proto__ = Uint8Array.prototype
+  Buffer.__proto__ = Uint8Array
+  if (typeof Symbol !== 'undefined' && Symbol.species &&
+      Buffer[Symbol.species] === Buffer) {
+    // Fix subarray() in ES2016. See: https://github.com/feross/buffer/pull/97
+    Object.defineProperty(Buffer, Symbol.species, {
+      value: null,
+      configurable: true
+    })
+  }
+}
+
+function assertSize (size) {
+  if (typeof size !== 'number') {
+    throw new TypeError('"size" argument must be a number')
+  } else if (size < 0) {
+    throw new RangeError('"size" argument must not be negative')
+  }
+}
+
+function alloc (that, size, fill, encoding) {
+  assertSize(size)
+  if (size <= 0) {
+    return createBuffer(that, size)
+  }
+  if (fill !== undefined) {
+    // Only pay attention to encoding if it's a string. This
+    // prevents accidentally sending in a number that would
+    // be interpretted as a start offset.
+    return typeof encoding === 'string'
+      ? createBuffer(that, size).fill(fill, encoding)
+      : createBuffer(that, size).fill(fill)
+  }
+  return createBuffer(that, size)
+}
+
+/**
+ * Creates a new filled Buffer instance.
+ * alloc(size[, fill[, encoding]])
+ **/
+Buffer.alloc = function (size, fill, encoding) {
+  return alloc(null, size, fill, encoding)
+}
+
+function allocUnsafe (that, size) {
+  assertSize(size)
+  that = createBuffer(that, size < 0 ? 0 : checked(size) | 0)
+  if (!Buffer.TYPED_ARRAY_SUPPORT) {
+    for (var i = 0; i < size; ++i) {
+      that[i] = 0
+    }
+  }
+  return that
+}
+
+/**
+ * Equivalent to Buffer(num), by default creates a non-zero-filled Buffer instance.
+ * */
+Buffer.allocUnsafe = function (size) {
+  return allocUnsafe(null, size)
+}
+/**
+ * Equivalent to SlowBuffer(num), by default creates a non-zero-filled Buffer instance.
+ */
+Buffer.allocUnsafeSlow = function (size) {
+  return allocUnsafe(null, size)
+}
+
+function fromString (that, string, encoding) {
+  if (typeof encoding !== 'string' || encoding === '') {
+    encoding = 'utf8'
+  }
+
+  if (!Buffer.isEncoding(encoding)) {
+    throw new TypeError('"encoding" must be a valid string encoding')
+  }
+
+  var length = byteLength(string, encoding) | 0
+  that = createBuffer(that, length)
+
+  var actual = that.write(string, encoding)
+
+  if (actual !== length) {
+    // Writing a hex string, for example, that contains invalid characters will
+    // cause everything after the first invalid character to be ignored. (e.g.
+    // 'abxxcd' will be treated as 'ab')
+    that = that.slice(0, actual)
+  }
+
+  return that
+}
+
+function fromArrayLike (that, array) {
+  var length = array.length < 0 ? 0 : checked(array.length) | 0
+  that = createBuffer(that, length)
+  for (var i = 0; i < length; i += 1) {
+    that[i] = array[i] & 255
+  }
+  return that
+}
+
+function fromArrayBuffer (that, array, byteOffset, length) {
+  array.byteLength // this throws if `array` is not a valid ArrayBuffer
+
+  if (byteOffset < 0 || array.byteLength < byteOffset) {
+    throw new RangeError('\'offset\' is out of bounds')
+  }
+
+  if (array.byteLength < byteOffset + (length || 0)) {
+    throw new RangeError('\'length\' is out of bounds')
+  }
+
+  if (byteOffset === undefined && length === undefined) {
+    array = new Uint8Array(array)
+  } else if (length === undefined) {
+    array = new Uint8Array(array, byteOffset)
+  } else {
+    array = new Uint8Array(array, byteOffset, length)
+  }
+
+  if (Buffer.TYPED_ARRAY_SUPPORT) {
+    // Return an augmented `Uint8Array` instance, for best performance
+    that = array
+    that.__proto__ = Buffer.prototype
+  } else {
+    // Fallback: Return an object instance of the Buffer class
+    that = fromArrayLike(that, array)
+  }
+  return that
+}
+
+function fromObject (that, obj) {
+  if (Buffer.isBuffer(obj)) {
+    var len = checked(obj.length) | 0
+    that = createBuffer(that, len)
+
+    if (that.length === 0) {
+      return that
+    }
+
+    obj.copy(that, 0, 0, len)
+    return that
+  }
+
+  if (obj) {
+    if ((typeof ArrayBuffer !== 'undefined' &&
+        obj.buffer instanceof ArrayBuffer) || 'length' in obj) {
+      if (typeof obj.length !== 'number' || isnan(obj.length)) {
+        return createBuffer(that, 0)
+      }
+      return fromArrayLike(that, obj)
+    }
+
+    if (obj.type === 'Buffer' && isArray(obj.data)) {
+      return fromArrayLike(that, obj.data)
+    }
+  }
+
+  throw new TypeError('First argument must be a string, Buffer, ArrayBuffer, Array, or array-like object.')
+}
+
+function checked (length) {
+  // Note: cannot use `length < kMaxLength()` here because that fails when
+  // length is NaN (which is otherwise coerced to zero.)
+  if (length >= kMaxLength()) {
+    throw new RangeError('Attempt to allocate Buffer larger than maximum ' +
+                         'size: 0x' + kMaxLength().toString(16) + ' bytes')
+  }
+  return length | 0
+}
+
+function SlowBuffer (length) {
+  if (+length != length) { // eslint-disable-line eqeqeq
+    length = 0
+  }
+  return Buffer.alloc(+length)
+}
+
+Buffer.isBuffer = function isBuffer (b) {
+  return !!(b != null && b._isBuffer)
+}
+
+Buffer.compare = function compare (a, b) {
+  if (!Buffer.isBuffer(a) || !Buffer.isBuffer(b)) {
+    throw new TypeError('Arguments must be Buffers')
+  }
+
+  if (a === b) return 0
+
+  var x = a.length
+  var y = b.length
+
+  for (var i = 0, len = Math.min(x, y); i < len; ++i) {
+    if (a[i] !== b[i]) {
+      x = a[i]
+      y = b[i]
+      break
+    }
+  }
+
+  if (x < y) return -1
+  if (y < x) return 1
+  return 0
+}
+
+Buffer.isEncoding = function isEncoding (encoding) {
+  switch (String(encoding).toLowerCase()) {
+    case 'hex':
+    case 'utf8':
+    case 'utf-8':
+    case 'ascii':
+    case 'latin1':
+    case 'binary':
+    case 'base64':
+    case 'ucs2':
+    case 'ucs-2':
+    case 'utf16le':
+    case 'utf-16le':
+      return true
+    default:
+      return false
+  }
+}
+
+Buffer.concat = function concat (list, length) {
+  if (!isArray(list)) {
+    throw new TypeError('"list" argument must be an Array of Buffers')
+  }
+
+  if (list.length === 0) {
+    return Buffer.alloc(0)
+  }
+
+  var i
+  if (length === undefined) {
+    length = 0
+    for (i = 0; i < list.length; ++i) {
+      length += list[i].length
+    }
+  }
+
+  var buffer = Buffer.allocUnsafe(length)
+  var pos = 0
+  for (i = 0; i < list.length; ++i) {
+    var buf = list[i]
+    if (!Buffer.isBuffer(buf)) {
+      throw new TypeError('"list" argument must be an Array of Buffers')
+    }
+    buf.copy(buffer, pos)
+    pos += buf.length
+  }
+  return buffer
+}
+
+function byteLength (string, encoding) {
+  if (Buffer.isBuffer(string)) {
+    return string.length
+  }
+  if (typeof ArrayBuffer !== 'undefined' && typeof ArrayBuffer.isView === 'function' &&
+      (ArrayBuffer.isView(string) || string instanceof ArrayBuffer)) {
+    return string.byteLength
+  }
+  if (typeof string !== 'string') {
+    string = '' + string
+  }
+
+  var len = string.length
+  if (len === 0) return 0
+
+  // Use a for loop to avoid recursion
+  var loweredCase = false
+  for (;;) {
+    switch (encoding) {
+      case 'ascii':
+      case 'latin1':
+      case 'binary':
+        return len
+      case 'utf8':
+      case 'utf-8':
+      case undefined:
+        return utf8ToBytes(string).length
+      case 'ucs2':
+      case 'ucs-2':
+      case 'utf16le':
+      case 'utf-16le':
+        return len * 2
+      case 'hex':
+        return len >>> 1
+      case 'base64':
+        return base64ToBytes(string).length
+      default:
+        if (loweredCase) return utf8ToBytes(string).length // assume utf8
+        encoding = ('' + encoding).toLowerCase()
+        loweredCase = true
+    }
+  }
+}
+Buffer.byteLength = byteLength
+
+function slowToString (encoding, start, end) {
+  var loweredCase = false
+
+  // No need to verify that "this.length <= MAX_UINT32" since it's a read-only
+  // property of a typed array.
+
+  // This behaves neither like String nor Uint8Array in that we set start/end
+  // to their upper/lower bounds if the value passed is out of range.
+  // undefined is handled specially as per ECMA-262 6th Edition,
+  // Section 13.3.3.7 Runtime Semantics: KeyedBindingInitialization.
+  if (start === undefined || start < 0) {
+    start = 0
+  }
+  // Return early if start > this.length. Done here to prevent potential uint32
+  // coercion fail below.
+  if (start > this.length) {
+    return ''
+  }
+
+  if (end === undefined || end > this.length) {
+    end = this.length
+  }
+
+  if (end <= 0) {
+    return ''
+  }
+
+  // Force coersion to uint32. This will also coerce falsey/NaN values to 0.
+  end >>>= 0
+  start >>>= 0
+
+  if (end <= start) {
+    return ''
+  }
+
+  if (!encoding) encoding = 'utf8'
+
+  while (true) {
+    switch (encoding) {
+      case 'hex':
+        return hexSlice(this, start, end)
+
+      case 'utf8':
+      case 'utf-8':
+        return utf8Slice(this, start, end)
+
+      case 'ascii':
+        return asciiSlice(this, start, end)
+
+      case 'latin1':
+      case 'binary':
+        return latin1Slice(this, start, end)
+
+      case 'base64':
+        return base64Slice(this, start, end)
+
+      case 'ucs2':
+      case 'ucs-2':
+      case 'utf16le':
+      case 'utf-16le':
+        return utf16leSlice(this, start, end)
+
+      default:
+        if (loweredCase) throw new TypeError('Unknown encoding: ' + encoding)
+        encoding = (encoding + '').toLowerCase()
+        loweredCase = true
+    }
+  }
+}
+
+// The property is used by `Buffer.isBuffer` and `is-buffer` (in Safari 5-7) to detect
+// Buffer instances.
+Buffer.prototype._isBuffer = true
+
+function swap (b, n, m) {
+  var i = b[n]
+  b[n] = b[m]
+  b[m] = i
+}
+
+Buffer.prototype.swap16 = function swap16 () {
+  var len = this.length
+  if (len % 2 !== 0) {
+    throw new RangeError('Buffer size must be a multiple of 16-bits')
+  }
+  for (var i = 0; i < len; i += 2) {
+    swap(this, i, i + 1)
+  }
+  return this
+}
+
+Buffer.prototype.swap32 = function swap32 () {
+  var len = this.length
+  if (len % 4 !== 0) {
+    throw new RangeError('Buffer size must be a multiple of 32-bits')
+  }
+  for (var i = 0; i < len; i += 4) {
+    swap(this, i, i + 3)
+    swap(this, i + 1, i + 2)
+  }
+  return this
+}
+
+Buffer.prototype.swap64 = function swap64 () {
+  var len = this.length
+  if (len % 8 !== 0) {
+    throw new RangeError('Buffer size must be a multiple of 64-bits')
+  }
+  for (var i = 0; i < len; i += 8) {
+    swap(this, i, i + 7)
+    swap(this, i + 1, i + 6)
+    swap(this, i + 2, i + 5)
+    swap(this, i + 3, i + 4)
+  }
+  return this
+}
+
+Buffer.prototype.toString = function toString () {
+  var length = this.length | 0
+  if (length === 0) return ''
+  if (arguments.length === 0) return utf8Slice(this, 0, length)
+  return slowToString.apply(this, arguments)
+}
+
+Buffer.prototype.equals = function equals (b) {
+  if (!Buffer.isBuffer(b)) throw new TypeError('Argument must be a Buffer')
+  if (this === b) return true
+  return Buffer.compare(this, b) === 0
+}
+
+Buffer.prototype.inspect = function inspect () {
+  var str = ''
+  var max = exports.INSPECT_MAX_BYTES
+  if (this.length > 0) {
+    str = this.toString('hex', 0, max).match(/.{2}/g).join(' ')
+    if (this.length > max) str += ' ... '
+  }
+  return '<Buffer ' + str + '>'
+}
+
+Buffer.prototype.compare = function compare (target, start, end, thisStart, thisEnd) {
+  if (!Buffer.isBuffer(target)) {
+    throw new TypeError('Argument must be a Buffer')
+  }
+
+  if (start === undefined) {
+    start = 0
+  }
+  if (end === undefined) {
+    end = target ? target.length : 0
+  }
+  if (thisStart === undefined) {
+    thisStart = 0
+  }
+  if (thisEnd === undefined) {
+    thisEnd = this.length
+  }
+
+  if (start < 0 || end > target.length || thisStart < 0 || thisEnd > this.length) {
+    throw new RangeError('out of range index')
+  }
+
+  if (thisStart >= thisEnd && start >= end) {
+    return 0
+  }
+  if (thisStart >= thisEnd) {
+    return -1
+  }
+  if (start >= end) {
+    return 1
+  }
+
+  start >>>= 0
+  end >>>= 0
+  thisStart >>>= 0
+  thisEnd >>>= 0
+
+  if (this === target) return 0
+
+  var x = thisEnd - thisStart
+  var y = end - start
+  var len = Math.min(x, y)
+
+  var thisCopy = this.slice(thisStart, thisEnd)
+  var targetCopy = target.slice(start, end)
+
+  for (var i = 0; i < len; ++i) {
+    if (thisCopy[i] !== targetCopy[i]) {
+      x = thisCopy[i]
+      y = targetCopy[i]
+      break
+    }
+  }
+
+  if (x < y) return -1
+  if (y < x) return 1
+  return 0
+}
+
+// Finds either the first index of `val` in `buffer` at offset >= `byteOffset`,
+// OR the last index of `val` in `buffer` at offset <= `byteOffset`.
+//
+// Arguments:
+// - buffer - a Buffer to search
+// - val - a string, Buffer, or number
+// - byteOffset - an index into `buffer`; will be clamped to an int32
+// - encoding - an optional encoding, relevant is val is a string
+// - dir - true for indexOf, false for lastIndexOf
+function bidirectionalIndexOf (buffer, val, byteOffset, encoding, dir) {
+  // Empty buffer means no match
+  if (buffer.length === 0) return -1
+
+  // Normalize byteOffset
+  if (typeof byteOffset === 'string') {
+    encoding = byteOffset
+    byteOffset = 0
+  } else if (byteOffset > 0x7fffffff) {
+    byteOffset = 0x7fffffff
+  } else if (byteOffset < -0x80000000) {
+    byteOffset = -0x80000000
+  }
+  byteOffset = +byteOffset  // Coerce to Number.
+  if (isNaN(byteOffset)) {
+    // byteOffset: it it's undefined, null, NaN, "foo", etc, search whole buffer
+    byteOffset = dir ? 0 : (buffer.length - 1)
+  }
+
+  // Normalize byteOffset: negative offsets start from the end of the buffer
+  if (byteOffset < 0) byteOffset = buffer.length + byteOffset
+  if (byteOffset >= buffer.length) {
+    if (dir) return -1
+    else byteOffset = buffer.length - 1
+  } else if (byteOffset < 0) {
+    if (dir) byteOffset = 0
+    else return -1
+  }
+
+  // Normalize val
+  if (typeof val === 'string') {
+    val = Buffer.from(val, encoding)
+  }
+
+  // Finally, search either indexOf (if dir is true) or lastIndexOf
+  if (Buffer.isBuffer(val)) {
+    // Special case: looking for empty string/buffer always fails
+    if (val.length === 0) {
+      return -1
+    }
+    return arrayIndexOf(buffer, val, byteOffset, encoding, dir)
+  } else if (typeof val === 'number') {
+    val = val & 0xFF // Search for a byte value [0-255]
+    if (Buffer.TYPED_ARRAY_SUPPORT &&
+        typeof Uint8Array.prototype.indexOf === 'function') {
+      if (dir) {
+        return Uint8Array.prototype.indexOf.call(buffer, val, byteOffset)
+      } else {
+        return Uint8Array.prototype.lastIndexOf.call(buffer, val, byteOffset)
+      }
+    }
+    return arrayIndexOf(buffer, [ val ], byteOffset, encoding, dir)
+  }
+
+  throw new TypeError('val must be string, number or Buffer')
+}
+
+function arrayIndexOf (arr, val, byteOffset, encoding, dir) {
+  var indexSize = 1
+  var arrLength = arr.length
+  var valLength = val.length
+
+  if (encoding !== undefined) {
+    encoding = String(encoding).toLowerCase()
+    if (encoding === 'ucs2' || encoding === 'ucs-2' ||
+        encoding === 'utf16le' || encoding === 'utf-16le') {
+      if (arr.length < 2 || val.length < 2) {
+        return -1
+      }
+      indexSize = 2
+      arrLength /= 2
+      valLength /= 2
+      byteOffset /= 2
+    }
+  }
+
+  function read (buf, i) {
+    if (indexSize === 1) {
+      return buf[i]
+    } else {
+      return buf.readUInt16BE(i * indexSize)
+    }
+  }
+
+  var i
+  if (dir) {
+    var foundIndex = -1
+    for (i = byteOffset; i < arrLength; i++) {
+      if (read(arr, i) === read(val, foundIndex === -1 ? 0 : i - foundIndex)) {
+        if (foundIndex === -1) foundIndex = i
+        if (i - foundIndex + 1 === valLength) return foundIndex * indexSize
+      } else {
+        if (foundIndex !== -1) i -= i - foundIndex
+        foundIndex = -1
+      }
+    }
+  } else {
+    if (byteOffset + valLength > arrLength) byteOffset = arrLength - valLength
+    for (i = byteOffset; i >= 0; i--) {
+      var found = true
+      for (var j = 0; j < valLength; j++) {
+        if (read(arr, i + j) !== read(val, j)) {
+          found = false
+          break
+        }
+      }
+      if (found) return i
+    }
+  }
+
+  return -1
+}
+
+Buffer.prototype.includes = function includes (val, byteOffset, encoding) {
+  return this.indexOf(val, byteOffset, encoding) !== -1
+}
+
+Buffer.prototype.indexOf = function indexOf (val, byteOffset, encoding) {
+  return bidirectionalIndexOf(this, val, byteOffset, encoding, true)
+}
+
+Buffer.prototype.lastIndexOf = function lastIndexOf (val, byteOffset, encoding) {
+  return bidirectionalIndexOf(this, val, byteOffset, encoding, false)
+}
+
+function hexWrite (buf, string, offset, length) {
+  offset = Number(offset) || 0
+  var remaining = buf.length - offset
+  if (!length) {
+    length = remaining
+  } else {
+    length = Number(length)
+    if (length > remaining) {
+      length = remaining
+    }
+  }
+
+  // must be an even number of digits
+  var strLen = string.length
+  if (strLen % 2 !== 0) throw new TypeError('Invalid hex string')
+
+  if (length > strLen / 2) {
+    length = strLen / 2
+  }
+  for (var i = 0; i < length; ++i) {
+    var parsed = parseInt(string.substr(i * 2, 2), 16)
+    if (isNaN(parsed)) return i
+    buf[offset + i] = parsed
+  }
+  return i
+}
+
+function utf8Write (buf, string, offset, length) {
+  return blitBuffer(utf8ToBytes(string, buf.length - offset), buf, offset, length)
+}
+
+function asciiWrite (buf, string, offset, length) {
+  return blitBuffer(asciiToBytes(string), buf, offset, length)
+}
+
+function latin1Write (buf, string, offset, length) {
+  return asciiWrite(buf, string, offset, length)
+}
+
+function base64Write (buf, string, offset, length) {
+  return blitBuffer(base64ToBytes(string), buf, offset, length)
+}
+
+function ucs2Write (buf, string, offset, length) {
+  return blitBuffer(utf16leToBytes(string, buf.length - offset), buf, offset, length)
+}
+
+Buffer.prototype.write = function write (string, offset, length, encoding) {
+  // Buffer#write(string)
+  if (offset === undefined) {
+    encoding = 'utf8'
+    length = this.length
+    offset = 0
+  // Buffer#write(string, encoding)
+  } else if (length === undefined && typeof offset === 'string') {
+    encoding = offset
+    length = this.length
+    offset = 0
+  // Buffer#write(string, offset[, length][, encoding])
+  } else if (isFinite(offset)) {
+    offset = offset | 0
+    if (isFinite(length)) {
+      length = length | 0
+      if (encoding === undefined) encoding = 'utf8'
+    } else {
+      encoding = length
+      length = undefined
+    }
+  // legacy write(string, encoding, offset, length) - remove in v0.13
+  } else {
+    throw new Error(
+      'Buffer.write(string, encoding, offset[, length]) is no longer supported'
+    )
+  }
+
+  var remaining = this.length - offset
+  if (length === undefined || length > remaining) length = remaining
+
+  if ((string.length > 0 && (length < 0 || offset < 0)) || offset > this.length) {
+    throw new RangeError('Attempt to write outside buffer bounds')
+  }
+
+  if (!encoding) encoding = 'utf8'
+
+  var loweredCase = false
+  for (;;) {
+    switch (encoding) {
+      case 'hex':
+        return hexWrite(this, string, offset, length)
+
+      case 'utf8':
+      case 'utf-8':
+        return utf8Write(this, string, offset, length)
+
+      case 'ascii':
+        return asciiWrite(this, string, offset, length)
+
+      case 'latin1':
+      case 'binary':
+        return latin1Write(this, string, offset, length)
+
+      case 'base64':
+        // Warning: maxLength not taken into account in base64Write
+        return base64Write(this, string, offset, length)
+
+      case 'ucs2':
+      case 'ucs-2':
+      case 'utf16le':
+      case 'utf-16le':
+        return ucs2Write(this, string, offset, length)
+
+      default:
+        if (loweredCase) throw new TypeError('Unknown encoding: ' + encoding)
+        encoding = ('' + encoding).toLowerCase()
+        loweredCase = true
+    }
+  }
+}
+
+Buffer.prototype.toJSON = function toJSON () {
+  return {
+    type: 'Buffer',
+    data: Array.prototype.slice.call(this._arr || this, 0)
+  }
+}
+
+function base64Slice (buf, start, end) {
+  if (start === 0 && end === buf.length) {
+    return base64.fromByteArray(buf)
+  } else {
+    return base64.fromByteArray(buf.slice(start, end))
+  }
+}
+
+function utf8Slice (buf, start, end) {
+  end = Math.min(buf.length, end)
+  var res = []
+
+  var i = start
+  while (i < end) {
+    var firstByte = buf[i]
+    var codePoint = null
+    var bytesPerSequence = (firstByte > 0xEF) ? 4
+      : (firstByte > 0xDF) ? 3
+      : (firstByte > 0xBF) ? 2
+      : 1
+
+    if (i + bytesPerSequence <= end) {
+      var secondByte, thirdByte, fourthByte, tempCodePoint
+
+      switch (bytesPerSequence) {
+        case 1:
+          if (firstByte < 0x80) {
+            codePoint = firstByte
+          }
+          break
+        case 2:
+          secondByte = buf[i + 1]
+          if ((secondByte & 0xC0) === 0x80) {
+            tempCodePoint = (firstByte & 0x1F) << 0x6 | (secondByte & 0x3F)
+            if (tempCodePoint > 0x7F) {
+              codePoint = tempCodePoint
+            }
+          }
+          break
+        case 3:
+          secondByte = buf[i + 1]
+          thirdByte = buf[i + 2]
+          if ((secondByte & 0xC0) === 0x80 && (thirdByte & 0xC0) === 0x80) {
+            tempCodePoint = (firstByte & 0xF) << 0xC | (secondByte & 0x3F) << 0x6 | (thirdByte & 0x3F)
+            if (tempCodePoint > 0x7FF && (tempCodePoint < 0xD800 || tempCodePoint > 0xDFFF)) {
+              codePoint = tempCodePoint
+            }
+          }
+          break
+        case 4:
+          secondByte = buf[i + 1]
+          thirdByte = buf[i + 2]
+          fourthByte = buf[i + 3]
+          if ((secondByte & 0xC0) === 0x80 && (thirdByte & 0xC0) === 0x80 && (fourthByte & 0xC0) === 0x80) {
+            tempCodePoint = (firstByte & 0xF) << 0x12 | (secondByte & 0x3F) << 0xC | (thirdByte & 0x3F) << 0x6 | (fourthByte & 0x3F)
+            if (tempCodePoint > 0xFFFF && tempCodePoint < 0x110000) {
+              codePoint = tempCodePoint
+            }
+          }
+      }
+    }
+
+    if (codePoint === null) {
+      // we did not generate a valid codePoint so insert a
+      // replacement char (U+FFFD) and advance only 1 byte
+      codePoint = 0xFFFD
+      bytesPerSequence = 1
+    } else if (codePoint > 0xFFFF) {
+      // encode to utf16 (surrogate pair dance)
+      codePoint -= 0x10000
+      res.push(codePoint >>> 10 & 0x3FF | 0xD800)
+      codePoint = 0xDC00 | codePoint & 0x3FF
+    }
+
+    res.push(codePoint)
+    i += bytesPerSequence
+  }
+
+  return decodeCodePointsArray(res)
+}
+
+// Based on http://stackoverflow.com/a/22747272/680742, the browser with
+// the lowest limit is Chrome, with 0x10000 args.
+// We go 1 magnitude less, for safety
+var MAX_ARGUMENTS_LENGTH = 0x1000
+
+function decodeCodePointsArray (codePoints) {
+  var len = codePoints.length
+  if (len <= MAX_ARGUMENTS_LENGTH) {
+    return String.fromCharCode.apply(String, codePoints) // avoid extra slice()
+  }
+
+  // Decode in chunks to avoid "call stack size exceeded".
+  var res = ''
+  var i = 0
+  while (i < len) {
+    res += String.fromCharCode.apply(
+      String,
+      codePoints.slice(i, i += MAX_ARGUMENTS_LENGTH)
+    )
+  }
+  return res
+}
+
+function asciiSlice (buf, start, end) {
+  var ret = ''
+  end = Math.min(buf.length, end)
+
+  for (var i = start; i < end; ++i) {
+    ret += String.fromCharCode(buf[i] & 0x7F)
+  }
+  return ret
+}
+
+function latin1Slice (buf, start, end) {
+  var ret = ''
+  end = Math.min(buf.length, end)
+
+  for (var i = start; i < end; ++i) {
+    ret += String.fromCharCode(buf[i])
+  }
+  return ret
+}
+
+function hexSlice (buf, start, end) {
+  var len = buf.length
+
+  if (!start || start < 0) start = 0
+  if (!end || end < 0 || end > len) end = len
+
+  var out = ''
+  for (var i = start; i < end; ++i) {
+    out += toHex(buf[i])
+  }
+  return out
+}
+
+function utf16leSlice (buf, start, end) {
+  var bytes = buf.slice(start, end)
+  var res = ''
+  for (var i = 0; i < bytes.length; i += 2) {
+    res += String.fromCharCode(bytes[i] + bytes[i + 1] * 256)
+  }
+  return res
+}
+
+Buffer.prototype.slice = function slice (start, end) {
+  var len = this.length
+  start = ~~start
+  end = end === undefined ? len : ~~end
+
+  if (start < 0) {
+    start += len
+    if (start < 0) start = 0
+  } else if (start > len) {
+    start = len
+  }
+
+  if (end < 0) {
+    end += len
+    if (end < 0) end = 0
+  } else if (end > len) {
+    end = len
+  }
+
+  if (end < start) end = start
+
+  var newBuf
+  if (Buffer.TYPED_ARRAY_SUPPORT) {
+    newBuf = this.subarray(start, end)
+    newBuf.__proto__ = Buffer.prototype
+  } else {
+    var sliceLen = end - start
+    newBuf = new Buffer(sliceLen, undefined)
+    for (var i = 0; i < sliceLen; ++i) {
+      newBuf[i] = this[i + start]
+    }
+  }
+
+  return newBuf
+}
+
+/*
+ * Need to make sure that buffer isn't trying to write out of bounds.
+ */
+function checkOffset (offset, ext, length) {
+  if ((offset % 1) !== 0 || offset < 0) throw new RangeError('offset is not uint')
+  if (offset + ext > length) throw new RangeError('Trying to access beyond buffer length')
+}
+
+Buffer.prototype.readUIntLE = function readUIntLE (offset, byteLength, noAssert) {
+  offset = offset | 0
+  byteLength = byteLength | 0
+  if (!noAssert) checkOffset(offset, byteLength, this.length)
+
+  var val = this[offset]
+  var mul = 1
+  var i = 0
+  while (++i < byteLength && (mul *= 0x100)) {
+    val += this[offset + i] * mul
+  }
+
+  return val
+}
+
+Buffer.prototype.readUIntBE = function readUIntBE (offset, byteLength, noAssert) {
+  offset = offset | 0
+  byteLength = byteLength | 0
+  if (!noAssert) {
+    checkOffset(offset, byteLength, this.length)
+  }
+
+  var val = this[offset + --byteLength]
+  var mul = 1
+  while (byteLength > 0 && (mul *= 0x100)) {
+    val += this[offset + --byteLength] * mul
+  }
+
+  return val
+}
+
+Buffer.prototype.readUInt8 = function readUInt8 (offset, noAssert) {
+  if (!noAssert) checkOffset(offset, 1, this.length)
+  return this[offset]
+}
+
+Buffer.prototype.readUInt16LE = function readUInt16LE (offset, noAssert) {
+  if (!noAssert) checkOffset(offset, 2, this.length)
+  return this[offset] | (this[offset + 1] << 8)
+}
+
+Buffer.prototype.readUInt16BE = function readUInt16BE (offset, noAssert) {
+  if (!noAssert) checkOffset(offset, 2, this.length)
+  return (this[offset] << 8) | this[offset + 1]
+}
+
+Buffer.prototype.readUInt32LE = function readUInt32LE (offset, noAssert) {
+  if (!noAssert) checkOffset(offset, 4, this.length)
+
+  return ((this[offset]) |
+      (this[offset + 1] << 8) |
+      (this[offset + 2] << 16)) +
+      (this[offset + 3] * 0x1000000)
+}
+
+Buffer.prototype.readUInt32BE = function readUInt32BE (offset, noAssert) {
+  if (!noAssert) checkOffset(offset, 4, this.length)
+
+  return (this[offset] * 0x1000000) +
+    ((this[offset + 1] << 16) |
+    (this[offset + 2] << 8) |
+    this[offset + 3])
+}
+
+Buffer.prototype.readIntLE = function readIntLE (offset, byteLength, noAssert) {
+  offset = offset | 0
+  byteLength = byteLength | 0
+  if (!noAssert) checkOffset(offset, byteLength, this.length)
+
+  var val = this[offset]
+  var mul = 1
+  var i = 0
+  while (++i < byteLength && (mul *= 0x100)) {
+    val += this[offset + i] * mul
+  }
+  mul *= 0x80
+
+  if (val >= mul) val -= Math.pow(2, 8 * byteLength)
+
+  return val
+}
+
+Buffer.prototype.readIntBE = function readIntBE (offset, byteLength, noAssert) {
+  offset = offset | 0
+  byteLength = byteLength | 0
+  if (!noAssert) checkOffset(offset, byteLength, this.length)
+
+  var i = byteLength
+  var mul = 1
+  var val = this[offset + --i]
+  while (i > 0 && (mul *= 0x100)) {
+    val += this[offset + --i] * mul
+  }
+  mul *= 0x80
+
+  if (val >= mul) val -= Math.pow(2, 8 * byteLength)
+
+  return val
+}
+
+Buffer.prototype.readInt8 = function readInt8 (offset, noAssert) {
+  if (!noAssert) checkOffset(offset, 1, this.length)
+  if (!(this[offset] & 0x80)) return (this[offset])
+  return ((0xff - this[offset] + 1) * -1)
+}
+
+Buffer.prototype.readInt16LE = function readInt16LE (offset, noAssert) {
+  if (!noAssert) checkOffset(offset, 2, this.length)
+  var val = this[offset] | (this[offset + 1] << 8)
+  return (val & 0x8000) ? val | 0xFFFF0000 : val
+}
+
+Buffer.prototype.readInt16BE = function readInt16BE (offset, noAssert) {
+  if (!noAssert) checkOffset(offset, 2, this.length)
+  var val = this[offset + 1] | (this[offset] << 8)
+  return (val & 0x8000) ? val | 0xFFFF0000 : val
+}
+
+Buffer.prototype.readInt32LE = function readInt32LE (offset, noAssert) {
+  if (!noAssert) checkOffset(offset, 4, this.length)
+
+  return (this[offset]) |
+    (this[offset + 1] << 8) |
+    (this[offset + 2] << 16) |
+    (this[offset + 3] << 24)
+}
+
+Buffer.prototype.readInt32BE = function readInt32BE (offset, noAssert) {
+  if (!noAssert) checkOffset(offset, 4, this.length)
+
+  return (this[offset] << 24) |
+    (this[offset + 1] << 16) |
+    (this[offset + 2] << 8) |
+    (this[offset + 3])
+}
+
+Buffer.prototype.readFloatLE = function readFloatLE (offset, noAssert) {
+  if (!noAssert) checkOffset(offset, 4, this.length)
+  return ieee754.read(this, offset, true, 23, 4)
+}
+
+Buffer.prototype.readFloatBE = function readFloatBE (offset, noAssert) {
+  if (!noAssert) checkOffset(offset, 4, this.length)
+  return ieee754.read(this, offset, false, 23, 4)
+}
+
+Buffer.prototype.readDoubleLE = function readDoubleLE (offset, noAssert) {
+  if (!noAssert) checkOffset(offset, 8, this.length)
+  return ieee754.read(this, offset, true, 52, 8)
+}
+
+Buffer.prototype.readDoubleBE = function readDoubleBE (offset, noAssert) {
+  if (!noAssert) checkOffset(offset, 8, this.length)
+  return ieee754.read(this, offset, false, 52, 8)
+}
+
+function checkInt (buf, value, offset, ext, max, min) {
+  if (!Buffer.isBuffer(buf)) throw new TypeError('"buffer" argument must be a Buffer instance')
+  if (value > max || value < min) throw new RangeError('"value" argument is out of bounds')
+  if (offset + ext > buf.length) throw new RangeError('Index out of range')
+}
+
+Buffer.prototype.writeUIntLE = function writeUIntLE (value, offset, byteLength, noAssert) {
+  value = +value
+  offset = offset | 0
+  byteLength = byteLength | 0
+  if (!noAssert) {
+    var maxBytes = Math.pow(2, 8 * byteLength) - 1
+    checkInt(this, value, offset, byteLength, maxBytes, 0)
+  }
+
+  var mul = 1
+  var i = 0
+  this[offset] = value & 0xFF
+  while (++i < byteLength && (mul *= 0x100)) {
+    this[offset + i] = (value / mul) & 0xFF
+  }
+
+  return offset + byteLength
+}
+
+Buffer.prototype.writeUIntBE = function writeUIntBE (value, offset, byteLength, noAssert) {
+  value = +value
+  offset = offset | 0
+  byteLength = byteLength | 0
+  if (!noAssert) {
+    var maxBytes = Math.pow(2, 8 * byteLength) - 1
+    checkInt(this, value, offset, byteLength, maxBytes, 0)
+  }
+
+  var i = byteLength - 1
+  var mul = 1
+  this[offset + i] = value & 0xFF
+  while (--i >= 0 && (mul *= 0x100)) {
+    this[offset + i] = (value / mul) & 0xFF
+  }
+
+  return offset + byteLength
+}
+
+Buffer.prototype.writeUInt8 = function writeUInt8 (value, offset, noAssert) {
+  value = +value
+  offset = offset | 0
+  if (!noAssert) checkInt(this, value, offset, 1, 0xff, 0)
+  if (!Buffer.TYPED_ARRAY_SUPPORT) value = Math.floor(value)
+  this[offset] = (value & 0xff)
+  return offset + 1
+}
+
+function objectWriteUInt16 (buf, value, offset, littleEndian) {
+  if (value < 0) value = 0xffff + value + 1
+  for (var i = 0, j = Math.min(buf.length - offset, 2); i < j; ++i) {
+    buf[offset + i] = (value & (0xff << (8 * (littleEndian ? i : 1 - i)))) >>>
+      (littleEndian ? i : 1 - i) * 8
+  }
+}
+
+Buffer.prototype.writeUInt16LE = function writeUInt16LE (value, offset, noAssert) {
+  value = +value
+  offset = offset | 0
+  if (!noAssert) checkInt(this, value, offset, 2, 0xffff, 0)
+  if (Buffer.TYPED_ARRAY_SUPPORT) {
+    this[offset] = (value & 0xff)
+    this[offset + 1] = (value >>> 8)
+  } else {
+    objectWriteUInt16(this, value, offset, true)
+  }
+  return offset + 2
+}
+
+Buffer.prototype.writeUInt16BE = function writeUInt16BE (value, offset, noAssert) {
+  value = +value
+  offset = offset | 0
+  if (!noAssert) checkInt(this, value, offset, 2, 0xffff, 0)
+  if (Buffer.TYPED_ARRAY_SUPPORT) {
+    this[offset] = (value >>> 8)
+    this[offset + 1] = (value & 0xff)
+  } else {
+    objectWriteUInt16(this, value, offset, false)
+  }
+  return offset + 2
+}
+
+function objectWriteUInt32 (buf, value, offset, littleEndian) {
+  if (value < 0) value = 0xffffffff + value + 1
+  for (var i = 0, j = Math.min(buf.length - offset, 4); i < j; ++i) {
+    buf[offset + i] = (value >>> (littleEndian ? i : 3 - i) * 8) & 0xff
+  }
+}
+
+Buffer.prototype.writeUInt32LE = function writeUInt32LE (value, offset, noAssert) {
+  value = +value
+  offset = offset | 0
+  if (!noAssert) checkInt(this, value, offset, 4, 0xffffffff, 0)
+  if (Buffer.TYPED_ARRAY_SUPPORT) {
+    this[offset + 3] = (value >>> 24)
+    this[offset + 2] = (value >>> 16)
+    this[offset + 1] = (value >>> 8)
+    this[offset] = (value & 0xff)
+  } else {
+    objectWriteUInt32(this, value, offset, true)
+  }
+  return offset + 4
+}
+
+Buffer.prototype.writeUInt32BE = function writeUInt32BE (value, offset, noAssert) {
+  value = +value
+  offset = offset | 0
+  if (!noAssert) checkInt(this, value, offset, 4, 0xffffffff, 0)
+  if (Buffer.TYPED_ARRAY_SUPPORT) {
+    this[offset] = (value >>> 24)
+    this[offset + 1] = (value >>> 16)
+    this[offset + 2] = (value >>> 8)
+    this[offset + 3] = (value & 0xff)
+  } else {
+    objectWriteUInt32(this, value, offset, false)
+  }
+  return offset + 4
+}
+
+Buffer.prototype.writeIntLE = function writeIntLE (value, offset, byteLength, noAssert) {
+  value = +value
+  offset = offset | 0
+  if (!noAssert) {
+    var limit = Math.pow(2, 8 * byteLength - 1)
+
+    checkInt(this, value, offset, byteLength, limit - 1, -limit)
+  }
+
+  var i = 0
+  var mul = 1
+  var sub = 0
+  this[offset] = value & 0xFF
+  while (++i < byteLength && (mul *= 0x100)) {
+    if (value < 0 && sub === 0 && this[offset + i - 1] !== 0) {
+      sub = 1
+    }
+    this[offset + i] = ((value / mul) >> 0) - sub & 0xFF
+  }
+
+  return offset + byteLength
+}
+
+Buffer.prototype.writeIntBE = function writeIntBE (value, offset, byteLength, noAssert) {
+  value = +value
+  offset = offset | 0
+  if (!noAssert) {
+    var limit = Math.pow(2, 8 * byteLength - 1)
+
+    checkInt(this, value, offset, byteLength, limit - 1, -limit)
+  }
+
+  var i = byteLength - 1
+  var mul = 1
+  var sub = 0
+  this[offset + i] = value & 0xFF
+  while (--i >= 0 && (mul *= 0x100)) {
+    if (value < 0 && sub === 0 && this[offset + i + 1] !== 0) {
+      sub = 1
+    }
+    this[offset + i] = ((value / mul) >> 0) - sub & 0xFF
+  }
+
+  return offset + byteLength
+}
+
+Buffer.prototype.writeInt8 = function writeInt8 (value, offset, noAssert) {
+  value = +value
+  offset = offset | 0
+  if (!noAssert) checkInt(this, value, offset, 1, 0x7f, -0x80)
+  if (!Buffer.TYPED_ARRAY_SUPPORT) value = Math.floor(value)
+  if (value < 0) value = 0xff + value + 1
+  this[offset] = (value & 0xff)
+  return offset + 1
+}
+
+Buffer.prototype.writeInt16LE = function writeInt16LE (value, offset, noAssert) {
+  value = +value
+  offset = offset | 0
+  if (!noAssert) checkInt(this, value, offset, 2, 0x7fff, -0x8000)
+  if (Buffer.TYPED_ARRAY_SUPPORT) {
+    this[offset] = (value & 0xff)
+    this[offset + 1] = (value >>> 8)
+  } else {
+    objectWriteUInt16(this, value, offset, true)
+  }
+  return offset + 2
+}
+
+Buffer.prototype.writeInt16BE = function writeInt16BE (value, offset, noAssert) {
+  value = +value
+  offset = offset | 0
+  if (!noAssert) checkInt(this, value, offset, 2, 0x7fff, -0x8000)
+  if (Buffer.TYPED_ARRAY_SUPPORT) {
+    this[offset] = (value >>> 8)
+    this[offset + 1] = (value & 0xff)
+  } else {
+    objectWriteUInt16(this, value, offset, false)
+  }
+  return offset + 2
+}
+
+Buffer.prototype.writeInt32LE = function writeInt32LE (value, offset, noAssert) {
+  value = +value
+  offset = offset | 0
+  if (!noAssert) checkInt(this, value, offset, 4, 0x7fffffff, -0x80000000)
+  if (Buffer.TYPED_ARRAY_SUPPORT) {
+    this[offset] = (value & 0xff)
+    this[offset + 1] = (value >>> 8)
+    this[offset + 2] = (value >>> 16)
+    this[offset + 3] = (value >>> 24)
+  } else {
+    objectWriteUInt32(this, value, offset, true)
+  }
+  return offset + 4
+}
+
+Buffer.prototype.writeInt32BE = function writeInt32BE (value, offset, noAssert) {
+  value = +value
+  offset = offset | 0
+  if (!noAssert) checkInt(this, value, offset, 4, 0x7fffffff, -0x80000000)
+  if (value < 0) value = 0xffffffff + value + 1
+  if (Buffer.TYPED_ARRAY_SUPPORT) {
+    this[offset] = (value >>> 24)
+    this[offset + 1] = (value >>> 16)
+    this[offset + 2] = (value >>> 8)
+    this[offset + 3] = (value & 0xff)
+  } else {
+    objectWriteUInt32(this, value, offset, false)
+  }
+  return offset + 4
+}
+
+function checkIEEE754 (buf, value, offset, ext, max, min) {
+  if (offset + ext > buf.length) throw new RangeError('Index out of range')
+  if (offset < 0) throw new RangeError('Index out of range')
+}
+
+function writeFloat (buf, value, offset, littleEndian, noAssert) {
+  if (!noAssert) {
+    checkIEEE754(buf, value, offset, 4, 3.4028234663852886e+38, -3.4028234663852886e+38)
+  }
+  ieee754.write(buf, value, offset, littleEndian, 23, 4)
+  return offset + 4
+}
+
+Buffer.prototype.writeFloatLE = function writeFloatLE (value, offset, noAssert) {
+  return writeFloat(this, value, offset, true, noAssert)
+}
+
+Buffer.prototype.writeFloatBE = function writeFloatBE (value, offset, noAssert) {
+  return writeFloat(this, value, offset, false, noAssert)
+}
+
+function writeDouble (buf, value, offset, littleEndian, noAssert) {
+  if (!noAssert) {
+    checkIEEE754(buf, value, offset, 8, 1.7976931348623157E+308, -1.7976931348623157E+308)
+  }
+  ieee754.write(buf, value, offset, littleEndian, 52, 8)
+  return offset + 8
+}
+
+Buffer.prototype.writeDoubleLE = function writeDoubleLE (value, offset, noAssert) {
+  return writeDouble(this, value, offset, true, noAssert)
+}
+
+Buffer.prototype.writeDoubleBE = function writeDoubleBE (value, offset, noAssert) {
+  return writeDouble(this, value, offset, false, noAssert)
+}
+
+// copy(targetBuffer, targetStart=0, sourceStart=0, sourceEnd=buffer.length)
+Buffer.prototype.copy = function copy (target, targetStart, start, end) {
+  if (!start) start = 0
+  if (!end && end !== 0) end = this.length
+  if (targetStart >= target.length) targetStart = target.length
+  if (!targetStart) targetStart = 0
+  if (end > 0 && end < start) end = start
+
+  // Copy 0 bytes; we're done
+  if (end === start) return 0
+  if (target.length === 0 || this.length === 0) return 0
+
+  // Fatal error conditions
+  if (targetStart < 0) {
+    throw new RangeError('targetStart out of bounds')
+  }
+  if (start < 0 || start >= this.length) throw new RangeError('sourceStart out of bounds')
+  if (end < 0) throw new RangeError('sourceEnd out of bounds')
+
+  // Are we oob?
+  if (end > this.length) end = this.length
+  if (target.length - targetStart < end - start) {
+    end = target.length - targetStart + start
+  }
+
+  var len = end - start
+  var i
+
+  if (this === target && start < targetStart && targetStart < end) {
+    // descending copy from end
+    for (i = len - 1; i >= 0; --i) {
+      target[i + targetStart] = this[i + start]
+    }
+  } else if (len < 1000 || !Buffer.TYPED_ARRAY_SUPPORT) {
+    // ascending copy from start
+    for (i = 0; i < len; ++i) {
+      target[i + targetStart] = this[i + start]
+    }
+  } else {
+    Uint8Array.prototype.set.call(
+      target,
+      this.subarray(start, start + len),
+      targetStart
+    )
+  }
+
+  return len
+}
+
+// Usage:
+//    buffer.fill(number[, offset[, end]])
+//    buffer.fill(buffer[, offset[, end]])
+//    buffer.fill(string[, offset[, end]][, encoding])
+Buffer.prototype.fill = function fill (val, start, end, encoding) {
+  // Handle string cases:
+  if (typeof val === 'string') {
+    if (typeof start === 'string') {
+      encoding = start
+      start = 0
+      end = this.length
+    } else if (typeof end === 'string') {
+      encoding = end
+      end = this.length
+    }
+    if (val.length === 1) {
+      var code = val.charCodeAt(0)
+      if (code < 256) {
+        val = code
+      }
+    }
+    if (encoding !== undefined && typeof encoding !== 'string') {
+      throw new TypeError('encoding must be a string')
+    }
+    if (typeof encoding === 'string' && !Buffer.isEncoding(encoding)) {
+      throw new TypeError('Unknown encoding: ' + encoding)
+    }
+  } else if (typeof val === 'number') {
+    val = val & 255
+  }
+
+  // Invalid ranges are not set to a default, so can range check early.
+  if (start < 0 || this.length < start || this.length < end) {
+    throw new RangeError('Out of range index')
+  }
+
+  if (end <= start) {
+    return this
+  }
+
+  start = start >>> 0
+  end = end === undefined ? this.length : end >>> 0
+
+  if (!val) val = 0
+
+  var i
+  if (typeof val === 'number') {
+    for (i = start; i < end; ++i) {
+      this[i] = val
+    }
+  } else {
+    var bytes = Buffer.isBuffer(val)
+      ? val
+      : utf8ToBytes(new Buffer(val, encoding).toString())
+    var len = bytes.length
+    for (i = 0; i < end - start; ++i) {
+      this[i + start] = bytes[i % len]
+    }
+  }
+
+  return this
+}
+
+// HELPER FUNCTIONS
+// ================
+
+var INVALID_BASE64_RE = /[^+\/0-9A-Za-z-_]/g
+
+function base64clean (str) {
+  // Node strips out invalid characters like \n and \t from the string, base64-js does not
+  str = stringtrim(str).replace(INVALID_BASE64_RE, '')
+  // Node converts strings with length < 2 to ''
+  if (str.length < 2) return ''
+  // Node allows for non-padded base64 strings (missing trailing ===), base64-js does not
+  while (str.length % 4 !== 0) {
+    str = str + '='
+  }
+  return str
+}
+
+function stringtrim (str) {
+  if (str.trim) return str.trim()
+  return str.replace(/^\s+|\s+$/g, '')
+}
+
+function toHex (n) {
+  if (n < 16) return '0' + n.toString(16)
+  return n.toString(16)
+}
+
+function utf8ToBytes (string, units) {
+  units = units || Infinity
+  var codePoint
+  var length = string.length
+  var leadSurrogate = null
+  var bytes = []
+
+  for (var i = 0; i < length; ++i) {
+    codePoint = string.charCodeAt(i)
+
+    // is surrogate component
+    if (codePoint > 0xD7FF && codePoint < 0xE000) {
+      // last char was a lead
+      if (!leadSurrogate) {
+        // no lead yet
+        if (codePoint > 0xDBFF) {
+          // unexpected trail
+          if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD)
+          continue
+        } else if (i + 1 === length) {
+          // unpaired lead
+          if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD)
+          continue
+        }
+
+        // valid lead
+        leadSurrogate = codePoint
+
+        continue
+      }
+
+      // 2 leads in a row
+      if (codePoint < 0xDC00) {
+        if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD)
+        leadSurrogate = codePoint
+        continue
+      }
+
+      // valid surrogate pair
+      codePoint = (leadSurrogate - 0xD800 << 10 | codePoint - 0xDC00) + 0x10000
+    } else if (leadSurrogate) {
+      // valid bmp char, but last char was a lead
+      if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD)
+    }
+
+    leadSurrogate = null
+
+    // encode utf8
+    if (codePoint < 0x80) {
+      if ((units -= 1) < 0) break
+      bytes.push(codePoint)
+    } else if (codePoint < 0x800) {
+      if ((units -= 2) < 0) break
+      bytes.push(
+        codePoint >> 0x6 | 0xC0,
+        codePoint & 0x3F | 0x80
+      )
+    } else if (codePoint < 0x10000) {
+      if ((units -= 3) < 0) break
+      bytes.push(
+        codePoint >> 0xC | 0xE0,
+        codePoint >> 0x6 & 0x3F | 0x80,
+        codePoint & 0x3F | 0x80
+      )
+    } else if (codePoint < 0x110000) {
+      if ((units -= 4) < 0) break
+      bytes.push(
+        codePoint >> 0x12 | 0xF0,
+        codePoint >> 0xC & 0x3F | 0x80,
+        codePoint >> 0x6 & 0x3F | 0x80,
+        codePoint & 0x3F | 0x80
+      )
+    } else {
+      throw new Error('Invalid code point')
+    }
+  }
+
+  return bytes
+}
+
+function asciiToBytes (str) {
+  var byteArray = []
+  for (var i = 0; i < str.length; ++i) {
+    // Node's code seems to be doing this and not & 0x7F..
+    byteArray.push(str.charCodeAt(i) & 0xFF)
+  }
+  return byteArray
+}
+
+function utf16leToBytes (str, units) {
+  var c, hi, lo
+  var byteArray = []
+  for (var i = 0; i < str.length; ++i) {
+    if ((units -= 2) < 0) break
+
+    c = str.charCodeAt(i)
+    hi = c >> 8
+    lo = c % 256
+    byteArray.push(lo)
+    byteArray.push(hi)
+  }
+
+  return byteArray
+}
+
+function base64ToBytes (str) {
+  return base64.toByteArray(base64clean(str))
+}
+
+function blitBuffer (src, dst, offset, length) {
+  for (var i = 0; i < length; ++i) {
+    if ((i + offset >= dst.length) || (i >= src.length)) break
+    dst[i + offset] = src[i]
+  }
+  return i
+}
+
+function isnan (val) {
+  return val !== val // eslint-disable-line no-self-compare
+}
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/global.js */ 3)))
+
+/***/ }),
+
+/***/ 194:
+/*!*****************************************!*\
+  !*** ./node_modules/base64-js/index.js ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.byteLength = byteLength
+exports.toByteArray = toByteArray
+exports.fromByteArray = fromByteArray
+
+var lookup = []
+var revLookup = []
+var Arr = typeof Uint8Array !== 'undefined' ? Uint8Array : Array
+
+var code = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
+for (var i = 0, len = code.length; i < len; ++i) {
+  lookup[i] = code[i]
+  revLookup[code.charCodeAt(i)] = i
+}
+
+// Support decoding URL-safe base64 strings, as Node.js does.
+// See: https://en.wikipedia.org/wiki/Base64#URL_applications
+revLookup['-'.charCodeAt(0)] = 62
+revLookup['_'.charCodeAt(0)] = 63
+
+function getLens (b64) {
+  var len = b64.length
+
+  if (len % 4 > 0) {
+    throw new Error('Invalid string. Length must be a multiple of 4')
+  }
+
+  // Trim off extra bytes after placeholder bytes are found
+  // See: https://github.com/beatgammit/base64-js/issues/42
+  var validLen = b64.indexOf('=')
+  if (validLen === -1) validLen = len
+
+  var placeHoldersLen = validLen === len
+    ? 0
+    : 4 - (validLen % 4)
+
+  return [validLen, placeHoldersLen]
+}
+
+// base64 is 4/3 + up to two characters of the original data
+function byteLength (b64) {
+  var lens = getLens(b64)
+  var validLen = lens[0]
+  var placeHoldersLen = lens[1]
+  return ((validLen + placeHoldersLen) * 3 / 4) - placeHoldersLen
+}
+
+function _byteLength (b64, validLen, placeHoldersLen) {
+  return ((validLen + placeHoldersLen) * 3 / 4) - placeHoldersLen
+}
+
+function toByteArray (b64) {
+  var tmp
+  var lens = getLens(b64)
+  var validLen = lens[0]
+  var placeHoldersLen = lens[1]
+
+  var arr = new Arr(_byteLength(b64, validLen, placeHoldersLen))
+
+  var curByte = 0
+
+  // if there are placeholders, only get up to the last complete 4 chars
+  var len = placeHoldersLen > 0
+    ? validLen - 4
+    : validLen
+
+  for (var i = 0; i < len; i += 4) {
+    tmp =
+      (revLookup[b64.charCodeAt(i)] << 18) |
+      (revLookup[b64.charCodeAt(i + 1)] << 12) |
+      (revLookup[b64.charCodeAt(i + 2)] << 6) |
+      revLookup[b64.charCodeAt(i + 3)]
+    arr[curByte++] = (tmp >> 16) & 0xFF
+    arr[curByte++] = (tmp >> 8) & 0xFF
+    arr[curByte++] = tmp & 0xFF
+  }
+
+  if (placeHoldersLen === 2) {
+    tmp =
+      (revLookup[b64.charCodeAt(i)] << 2) |
+      (revLookup[b64.charCodeAt(i + 1)] >> 4)
+    arr[curByte++] = tmp & 0xFF
+  }
+
+  if (placeHoldersLen === 1) {
+    tmp =
+      (revLookup[b64.charCodeAt(i)] << 10) |
+      (revLookup[b64.charCodeAt(i + 1)] << 4) |
+      (revLookup[b64.charCodeAt(i + 2)] >> 2)
+    arr[curByte++] = (tmp >> 8) & 0xFF
+    arr[curByte++] = tmp & 0xFF
+  }
+
+  return arr
+}
+
+function tripletToBase64 (num) {
+  return lookup[num >> 18 & 0x3F] +
+    lookup[num >> 12 & 0x3F] +
+    lookup[num >> 6 & 0x3F] +
+    lookup[num & 0x3F]
+}
+
+function encodeChunk (uint8, start, end) {
+  var tmp
+  var output = []
+  for (var i = start; i < end; i += 3) {
+    tmp =
+      ((uint8[i] << 16) & 0xFF0000) +
+      ((uint8[i + 1] << 8) & 0xFF00) +
+      (uint8[i + 2] & 0xFF)
+    output.push(tripletToBase64(tmp))
+  }
+  return output.join('')
+}
+
+function fromByteArray (uint8) {
+  var tmp
+  var len = uint8.length
+  var extraBytes = len % 3 // if we have 1 byte left, pad 2 bytes
+  var parts = []
+  var maxChunkLength = 16383 // must be multiple of 3
+
+  // go through the array every three bytes, we'll deal with trailing stuff later
+  for (var i = 0, len2 = len - extraBytes; i < len2; i += maxChunkLength) {
+    parts.push(encodeChunk(
+      uint8, i, (i + maxChunkLength) > len2 ? len2 : (i + maxChunkLength)
+    ))
+  }
+
+  // pad the end with zeros, but make sure to not forget the extra bytes
+  if (extraBytes === 1) {
+    tmp = uint8[len - 1]
+    parts.push(
+      lookup[tmp >> 2] +
+      lookup[(tmp << 4) & 0x3F] +
+      '=='
+    )
+  } else if (extraBytes === 2) {
+    tmp = (uint8[len - 2] << 8) + uint8[len - 1]
+    parts.push(
+      lookup[tmp >> 10] +
+      lookup[(tmp >> 4) & 0x3F] +
+      lookup[(tmp << 2) & 0x3F] +
+      '='
+    )
+  }
+
+  return parts.join('')
+}
+
+
+/***/ }),
+
+/***/ 195:
+/*!***************************************!*\
+  !*** ./node_modules/ieee754/index.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+exports.read = function (buffer, offset, isLE, mLen, nBytes) {
+  var e, m
+  var eLen = (nBytes * 8) - mLen - 1
+  var eMax = (1 << eLen) - 1
+  var eBias = eMax >> 1
+  var nBits = -7
+  var i = isLE ? (nBytes - 1) : 0
+  var d = isLE ? -1 : 1
+  var s = buffer[offset + i]
+
+  i += d
+
+  e = s & ((1 << (-nBits)) - 1)
+  s >>= (-nBits)
+  nBits += eLen
+  for (; nBits > 0; e = (e * 256) + buffer[offset + i], i += d, nBits -= 8) {}
+
+  m = e & ((1 << (-nBits)) - 1)
+  e >>= (-nBits)
+  nBits += mLen
+  for (; nBits > 0; m = (m * 256) + buffer[offset + i], i += d, nBits -= 8) {}
+
+  if (e === 0) {
+    e = 1 - eBias
+  } else if (e === eMax) {
+    return m ? NaN : ((s ? -1 : 1) * Infinity)
+  } else {
+    m = m + Math.pow(2, mLen)
+    e = e - eBias
+  }
+  return (s ? -1 : 1) * m * Math.pow(2, e - mLen)
+}
+
+exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
+  var e, m, c
+  var eLen = (nBytes * 8) - mLen - 1
+  var eMax = (1 << eLen) - 1
+  var eBias = eMax >> 1
+  var rt = (mLen === 23 ? Math.pow(2, -24) - Math.pow(2, -77) : 0)
+  var i = isLE ? 0 : (nBytes - 1)
+  var d = isLE ? 1 : -1
+  var s = value < 0 || (value === 0 && 1 / value < 0) ? 1 : 0
+
+  value = Math.abs(value)
+
+  if (isNaN(value) || value === Infinity) {
+    m = isNaN(value) ? 1 : 0
+    e = eMax
+  } else {
+    e = Math.floor(Math.log(value) / Math.LN2)
+    if (value * (c = Math.pow(2, -e)) < 1) {
+      e--
+      c *= 2
+    }
+    if (e + eBias >= 1) {
+      value += rt / c
+    } else {
+      value += rt * Math.pow(2, 1 - eBias)
+    }
+    if (value * c >= 2) {
+      e++
+      c /= 2
+    }
+
+    if (e + eBias >= eMax) {
+      m = 0
+      e = eMax
+    } else if (e + eBias >= 1) {
+      m = ((value * c) - 1) * Math.pow(2, mLen)
+      e = e + eBias
+    } else {
+      m = value * Math.pow(2, eBias - 1) * Math.pow(2, mLen)
+      e = 0
+    }
+  }
+
+  for (; mLen >= 8; buffer[offset + i] = m & 0xff, i += d, m /= 256, mLen -= 8) {}
+
+  e = (e << mLen) | m
+  eLen += mLen
+  for (; eLen > 0; buffer[offset + i] = e & 0xff, i += d, e /= 256, eLen -= 8) {}
+
+  buffer[offset + i - d] |= s * 128
+}
+
+
+/***/ }),
+
+/***/ 196:
+/*!***************************************!*\
+  !*** ./node_modules/isarray/index.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var toString = {}.toString;
+
+module.exports = Array.isArray || function (arr) {
+  return toString.call(arr) == '[object Array]';
+};
+
+
+/***/ }),
+
+/***/ 197:
+/*!********************************************!*\
+  !*** D:/lst/uni-dsproject/common/index.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = exports.fun = void 0;var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
+
+
+
+
+var _filter = _interopRequireDefault(__webpack_require__(/*! ./filter.js */ 198));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _interceptors = __webpack_require__(/*! ./interceptors.js */ 191);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} // const i18n = require('i18n');
+var fun = {// success: ({ msg = '操作成功', title = '成功' }) => Notification({
+  //   title,
+  //   message: msg,
+  //   type: 'success',
+  // }),
+  // warning: ({ msg = '', title = '警告' }) => Notification({
+  //   title,
+  //   message: msg,
+  //   type: 'warning',
+  // }),
+  // info: ({ msg = '', title = '消息' }) => Notification({
+  //   title,
+  //   message: msg,
+  //   type: 'info',
+  // }),
+  // error: ({ msg = '错误', title = '错误' }) => Notification({
+  //   title,
+  //   message: msg,
+  //   type: 'error',
+  // }),
+  // Loading:({text = 'loading',fullscreen = false,lock = true,spinner = 'el-icon-loading',mask = false}) =>{
+  //   window.funLoading = Loading.service({text,fullscreen,lock,spinner,background:mask?'rgba(0, 0, 0, 0.1)':null})
+  //
+  // },
+  // close:()=>{window.funLoading.close()}
+}; // console.log(filter)
+exports.fun = fun;var _default = { install: function install() {_vue.default.prototype.$post = _interceptors.post;_vue.default.prototype.$get = _interceptors.get;_vue.default.prototype.$http = _interceptors.ajax; // Vue.prototype.$loading = Loading.service;
+    // Vue.prototype.$notify = Notification;
+    // Vue.prototype.$message = Message;
+    // Vue.prototype.$alert = MessageBox.alert;
+    // Vue.prototype.$confirm = MessageBox.confirm;
+    _vue.default.prototype.$fun = fun;_filter.default.map(function (value) {_vue.default.filter(value.name, value.methods);});} };exports.default = _default;
+
+/***/ }),
+
+/***/ 198:
+/*!*********************************************!*\
+  !*** D:/lst/uni-dsproject/common/filter.js ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+var _env = __webpack_require__(/*! ./env.js */ 188);var _default =
+
+[
+{
+  name: 'num2px',
+  methods: function methods(val) {
+    if (val.indexOf('px') == -1) return "".concat(val, "px");
+    return val;
+  } },
+
+{
+  name: 'domain',
+  methods: function methods(url) {
+    if (!url) return '';
+    if (url.indexOf('http') == -1) return _env.baseApiUrl + url;
+    return url;
+  } }];exports.default = _default;
+
+/***/ }),
+
+/***/ 2:
 /*!******************************************************************************************!*\
   !*** ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js ***!
   \******************************************************************************************/
@@ -7458,7 +11608,8 @@ internalMixin(Vue);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../../webpack/buildin/global.js */ 3)))
 
 /***/ }),
-/* 3 */
+
+/***/ 3:
 /*!***********************************!*\
   !*** (webpack)/buildin/global.js ***!
   \***********************************/
@@ -7488,7 +11639,8 @@ module.exports = g;
 
 
 /***/ }),
-/* 4 */
+
+/***/ 4:
 /*!***************************************!*\
   !*** D:/lst/uni-dsproject/pages.json ***!
   \***************************************/
@@ -7499,7 +11651,8 @@ module.exports = g;
 
 
 /***/ }),
-/* 5 */
+
+/***/ 5:
 /*!*******************************************************!*\
   !*** ./node_modules/@dcloudio/uni-stat/dist/index.js ***!
   \*******************************************************/
@@ -8382,7 +12535,8 @@ main();
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 6 */
+
+/***/ 6:
 /*!******************************************************!*\
   !*** ./node_modules/@dcloudio/uni-stat/package.json ***!
   \******************************************************/
@@ -8392,7 +12546,8 @@ main();
 module.exports = {"_from":"@dcloudio/uni-stat@next","_id":"@dcloudio/uni-stat@2.0.0-23320190923002","_inBundle":false,"_integrity":"sha512-MnftsvgOac3q1FCOBPzivbFn8GNQFo7D2DY325HeEZyFCWgx5GEwHpGYjT1PQU6v7DaDn0ruxa3ObdpUIYbmZw==","_location":"/@dcloudio/uni-stat","_phantomChildren":{},"_requested":{"type":"tag","registry":true,"raw":"@dcloudio/uni-stat@next","name":"@dcloudio/uni-stat","escapedName":"@dcloudio%2funi-stat","scope":"@dcloudio","rawSpec":"next","saveSpec":null,"fetchSpec":"next"},"_requiredBy":["#USER","/","/@dcloudio/vue-cli-plugin-uni"],"_resolved":"https://registry.npmjs.org/@dcloudio/uni-stat/-/uni-stat-2.0.0-23320190923002.tgz","_shasum":"0c400c140ca0b3c05f52d25f11583cf05a0c4e9a","_spec":"@dcloudio/uni-stat@next","_where":"/Users/fxy/Documents/DCloud/HbuilderX-plugins/release/uniapp-cli","author":"","bugs":{"url":"https://github.com/dcloudio/uni-app/issues"},"bundleDependencies":false,"deprecated":false,"description":"","devDependencies":{"@babel/core":"^7.5.5","@babel/preset-env":"^7.5.5","eslint":"^6.1.0","rollup":"^1.19.3","rollup-plugin-babel":"^4.3.3","rollup-plugin-clear":"^2.0.7","rollup-plugin-commonjs":"^10.0.2","rollup-plugin-copy":"^3.1.0","rollup-plugin-eslint":"^7.0.0","rollup-plugin-json":"^4.0.0","rollup-plugin-node-resolve":"^5.2.0","rollup-plugin-replace":"^2.2.0","rollup-plugin-uglify":"^6.0.2"},"files":["dist","package.json","LICENSE"],"gitHead":"fed4c73fb9142a1b277dd79313939cad90693d3e","homepage":"https://github.com/dcloudio/uni-app#readme","license":"Apache-2.0","main":"dist/index.js","name":"@dcloudio/uni-stat","repository":{"type":"git","url":"git+https://github.com/dcloudio/uni-app.git","directory":"packages/uni-stat"},"scripts":{"build":"NODE_ENV=production rollup -c rollup.config.js","dev":"NODE_ENV=development rollup -w -c rollup.config.js"},"version":"2.0.0-23320190923002"};
 
 /***/ }),
-/* 7 */
+
+/***/ 7:
 /*!********************************************************!*\
   !*** D:/lst/uni-dsproject/pages.json?{"type":"style"} ***!
   \********************************************************/
@@ -8400,10 +12555,11 @@ module.exports = {"_from":"@dcloudio/uni-stat@next","_id":"@dcloudio/uni-stat@2.
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/check/check": { "usingComponents": {} }, "pages/cart/cart": { "usingComponents": {} }, "pages/index/index": { "navigationBarTitleText": "uni-app", "usingComponents": {} }, "pages/collection/collection": { "usingComponents": {} }, "pages/comments/comments": { "usingComponents": {} }, "pages/detail/detail": { "usingComponents": {} }, "pages/fenlei/fenlei": { "usingComponents": {} }, "pages/groupDetail/groupDetail": { "usingComponents": {} }, "pages/groupSuccess/groupSuccess": { "usingComponents": {} }, "pages/pay/pay": { "navigationBarTitleText": "付款", "usingComponents": {} }, "pages/result/result": { "usingComponents": {} }, "pages/search/search": { "usingComponents": {} }, "pages/searchhistory/searchhistory": { "usingComponents": {} }, "pages/title/title": { "usingComponents": {} }, "pages/bottom/bottom": { "usingComponents": {} }, "pages/order/order": { "usingComponents": {} }, "pages/refund/refund": { "usingComponents": { "popup-layer": "/components/popup-layer/popup-layer" } } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "uni-app", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8" } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/check/check": {}, "pages/cart/cart": {}, "pages/index/index": { "navigationBarTitleText": "uni-app" }, "pages/collection/collection": {}, "pages/comments/comments": {}, "pages/detail/detail": {}, "pages/fenlei/fenlei": {}, "pages/groupDetail/groupDetail": {}, "pages/groupSuccess/groupSuccess": {}, "pages/pay/pay": { "navigationBarTitleText": "付款" }, "pages/result/result": {}, "pages/search/search": {}, "pages/searchhistory/searchhistory": {}, "pages/title/title": {}, "pages/bottom/bottom": {}, "pages/order/order": {}, "pages/refund/refund": {}, "pages/classify/classify": {} }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "uni-app", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8" } };exports.default = _default;
 
 /***/ }),
-/* 8 */
+
+/***/ 8:
 /*!*******************************************************!*\
   !*** D:/lst/uni-dsproject/pages.json?{"type":"stat"} ***!
   \*******************************************************/
@@ -8413,117 +12569,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "appid": "" };exports.default = _default;
 
-/***/ }),
-/* 9 */,
-/* 10 */,
-/* 11 */,
-/* 12 */,
-/* 13 */,
-/* 14 */
-/*!********************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/runtime/componentNormalizer.js ***!
-  \********************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return normalizeComponent; });
-/* globals __VUE_SSR_CONTEXT__ */
-
-// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
-// This module is a runtime utility for cleaner component module output and will
-// be included in the final webpack user bundle.
-
-function normalizeComponent (
-  scriptExports,
-  render,
-  staticRenderFns,
-  functionalTemplate,
-  injectStyles,
-  scopeId,
-  moduleIdentifier, /* server only */
-  shadowMode /* vue-cli only */
-) {
-  // Vue.extend constructor export interop
-  var options = typeof scriptExports === 'function'
-    ? scriptExports.options
-    : scriptExports
-
-  // render functions
-  if (render) {
-    options.render = render
-    options.staticRenderFns = staticRenderFns
-    options._compiled = true
-  }
-
-  // functional template
-  if (functionalTemplate) {
-    options.functional = true
-  }
-
-  // scopedId
-  if (scopeId) {
-    options._scopeId = 'data-v-' + scopeId
-  }
-
-  var hook
-  if (moduleIdentifier) { // server build
-    hook = function (context) {
-      // 2.3 injection
-      context =
-        context || // cached call
-        (this.$vnode && this.$vnode.ssrContext) || // stateful
-        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
-      // 2.2 with runInNewContext: true
-      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
-        context = __VUE_SSR_CONTEXT__
-      }
-      // inject component styles
-      if (injectStyles) {
-        injectStyles.call(this, context)
-      }
-      // register component module identifier for async chunk inferrence
-      if (context && context._registeredComponents) {
-        context._registeredComponents.add(moduleIdentifier)
-      }
-    }
-    // used by ssr in case component is cached and beforeCreate
-    // never gets called
-    options._ssrRegister = hook
-  } else if (injectStyles) {
-    hook = shadowMode
-      ? function () { injectStyles.call(this, this.$root.$options.shadowRoot) }
-      : injectStyles
-  }
-
-  if (hook) {
-    if (options.functional) {
-      // for template-only hot-reload because in that case the render fn doesn't
-      // go through the normalizer
-      options._injectStyles = hook
-      // register for functioal component in vue file
-      var originalRender = options.render
-      options.render = function renderWithStyleInjection (h, context) {
-        hook.call(context)
-        return originalRender(h, context)
-      }
-    } else {
-      // inject component registration as beforeCreate hook
-      var existing = options.beforeCreate
-      options.beforeCreate = existing
-        ? [].concat(existing, hook)
-        : [hook]
-    }
-  }
-
-  return {
-    exports: scriptExports,
-    options: options
-  }
-}
-
-
 /***/ })
-]]);
+
+}]);
 //# sourceMappingURL=../../.sourcemap/mp-weixin/common/vendor.js.map

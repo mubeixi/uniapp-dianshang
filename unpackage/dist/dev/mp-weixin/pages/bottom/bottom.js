@@ -156,7 +156,14 @@ var _default =
 
 
   },
-  props: ['first', 'second'] };exports.default = _default;
+  props: {
+    first: {
+      type: String,
+      default: '加入购物车' },
+
+    second: {
+      type: String,
+      default: '购买' } } };exports.default = _default;
 
 /***/ }),
 

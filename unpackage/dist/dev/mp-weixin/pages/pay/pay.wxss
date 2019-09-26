@@ -28,7 +28,7 @@
   background: #fff;
 }
 .state.data-v-32b4ca94 {
-  padding: 10px 30rpx;
+  padding: 20rpx 60rpx;
   font-size: 28rpx;
   display: -webkit-box;
   display: -webkit-flex;
@@ -38,14 +38,14 @@
   -webkit-align-items: center;
       -ms-flex-align: center;
           align-items: center;
-  border-top: 15px solid #FFF3F3F3;
+  border-top: 30rpx solid #FFF3F3F3;
 }
 .state ._img.data-v-32b4ca94 {
     width: 60rpx;
     height: 60rpx;
 }
 .state-desc.data-v-32b4ca94 {
-  margin-left: 12px;
+  margin-left: 24rpx;
 }
 .c8.data-v-32b4ca94 {
   color: #888;
@@ -63,8 +63,8 @@
       -ms-flex-align: center;
           align-items: center;
   padding: 40rpx 38rpx 40rpx 28rpx;
-  border-top: 15px solid #FFF3F3F3;
-  border-bottom: 10px solid #FFF3F3F3;
+  border-top: 30rpx solid #FFF3F3F3;
+  border-bottom: 20rpx solid #FFF3F3F3;
 }
 .loc_icon.data-v-32b4ca94 {
   width: 41rpx;
@@ -77,14 +77,14 @@
   margin-left: 28rpx;
 }
 .name.data-v-32b4ca94 {
-  margin-bottom: 15px;
-  font-size: 13px;
+  margin-bottom: 30rpx;
+  font-size: 26rpx;
 }
 .name > ._span.data-v-32b4ca94 {
-  margin-left: 5px;
+  margin-left: 10rpx;
 }
 .location.data-v-32b4ca94 {
-  font-size: 12px;
+  font-size: 24rpx;
   color: #444;
 }
 /* 收货地址 end */
@@ -101,7 +101,7 @@
   -webkit-align-items: center;
       -ms-flex-align: center;
           align-items: center;
-  margin-bottom: 15px;
+  margin-bottom: 30rpx;
 }
 .biz_logo.data-v-32b4ca94 {
   width: 70rpx;
@@ -164,8 +164,8 @@
   font-size: 28rpx;
 }
 .other .bd.data-v-32b4ca94 {
-  padding-bottom: 15px;
-  border-bottom: 1px solid #efefef;
+  padding-bottom: 30rpx;
+  border-bottom: 2rpx solid #efefef;
 }
 .o_title.data-v-32b4ca94 {
   display: -webkit-box;
@@ -180,17 +180,17 @@
   -webkit-justify-content: space-between;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  font-size: 14px;
+  font-size: 28rpx;
 }
 .o_title .van-switch.data-v-32b4ca94 {
   float: right;
 }
 .o_desc.data-v-32b4ca94 {
-  margin-top: 5px;
+  margin-top: 10rpx;
   font-size: 24rpx;
 }
 .msg.data-v-32b4ca94 {
-  margin-left: 10px;
+  margin-left: 20rpx;
   font-size: 24rpx;
 }
 .words.data-v-32b4ca94 {
@@ -201,7 +201,7 @@
 }
 .words input.data-v-32b4ca94 {
   border: 0;
-  margin-left: 10px;
+  margin-left: 20rpx;
 }
 .total.data-v-32b4ca94 {
   display: -webkit-box;
@@ -266,42 +266,20 @@
   font-size: 20rpx;
   color: #979797;
 }
-/* 物流选择 */
-.wl.data-v-32b4ca94 {
-  position: fixed;
-  bottom: 0;
-  padding: 0 10px;
-  z-index: 1001;
-  width: 100%;
-  background: #fff;
-}
-.wl_title.data-v-32b4ca94 {
-  padding-top: 18px;
+.iMbx.data-v-32b4ca94 {
   text-align: center;
-  margin-bottom: 10px;
+  padding: 0 20rpx;
+  font-size: 28rpx;
+  color: #333;
 }
-.wl .btn.data-v-32b4ca94 {
-  height: 45px;
-  line-height: 45px;
-  color: #fff;
-  font-size: 16px;
-  text-align: center;
-  background: #F43131;
-  width: 100%;
-  margin-left: -10px;
-  margin-top: 30px;
+.iMbx .c_method.data-v-32b4ca94 {
+    padding: 37rpx 0;
+    border-bottom: 2rpx solid #E6E6E6;
 }
-.mbx.data-v-32b4ca94 {
-  margin-left: 20rpx;
+.iMbx .c_method.data-v-32b4ca94:first-child {
+    color: #F43131;
 }
-.moneys.data-v-32b4ca94 {
-  font-size: 24rpx;
-}
-.mbxa.data-v-32b4ca94 {
-  color: #F43131;
-  font-size: 24rpx;
-}
-.mbxa ._span.data-v-32b4ca94 {
-    font-size: 30rpx;
+.iMbx .c_method.data-v-32b4ca94:nth-last-child(1) {
+    border: none;
 }
 

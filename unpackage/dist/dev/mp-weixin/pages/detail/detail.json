@@ -1,3 +1,6 @@
 {
-  "usingComponents": {}
+  "usingComponents": {
+    "bottom": "/pages/bottom/bottom",
+    "popup-layer": "/components/popup-layer/popup-layer"
+  }
 }
