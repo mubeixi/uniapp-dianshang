@@ -35,7 +35,7 @@
             <van-uploader v-model="fileList" multiple />
         </div>
         <div style="height: 50px;"></div>
-        <div class="bottom">提交</div>
+        <div class="bottom" @click="shows">提交</div>
         <!-- 弹出层 -->
       <!--  <van-overlay
             :show="show"
@@ -68,13 +68,17 @@
             </van-cell-group> -->
             <div class="confirm-method">确定</div>
         </div>
+		<popup-layer ref="popupRef" :direction="'top'">
+				
+		</popup-layer>
   </div>
 </template>
 
 <script>
+import popupLayer from '../../components/popup-layer/popup-layer.vue';
 export default {
     components: {
- 
+		popupLayer
     },
     data() {
         return {
@@ -91,7 +95,13 @@ export default {
             ischangereason: false
         }
     },
+	created() {
+		
+	},
     methods: {
+		shows(){
+			this.$refs.popupRef.show();
+		},
         // 退款方式
         showMethod(){
             this.show = true;
