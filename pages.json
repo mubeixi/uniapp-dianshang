@@ -79,6 +79,38 @@
 		"navigationBarTitleText": "uni-app",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
+	},
+	"tabBar": {
+	    "color": "#7A7E83",
+	    "selectedColor": "#F43131",
+	    "borderStyle": "black",
+	    "backgroundColor": "#ffffff",
+	    "list": [{
+	        "pagePath": "pages/check/check",
+	        "iconPath": "static/home.png",
+	        "selectedIconPath": "static/homeCheck.png",
+	        "text": "首页"
+	    }, {
+	        "pagePath": "pages/fenlei/fenlei",
+	        "iconPath": "static/fenlei.png",
+	        "selectedIconPath": "static/fenleiCheck.png",
+	        "text": "分类"
+	    }, {
+	        "pagePath": "pages/order/order",
+	        "iconPath": "static/fenxiao.png",
+	        "selectedIconPath": "static/fenxiaoCheck.png",
+	        "text": "分销"
+	    }, {
+	        "pagePath": "pages/cart/cart",
+	        "iconPath": "static/cart.png",
+	        "selectedIconPath": "static/cartCheck.png",
+	        "text": "购物车"
+	    }, {
+	        "pagePath": "pages/pay/pay",
+	        "iconPath": "static/person.png",
+	        "selectedIconPath": "static/personCheck.png",
+	        "text": "我的"
+	    }]
 	}
 
 }
