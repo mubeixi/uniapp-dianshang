@@ -50,22 +50,22 @@ export default {
 
 <style scoped>
     .navs {
-        margin: 20px 0 18px;
-        padding-left: 10px;
+        margin: 40rpx 0 36rpx;
+        padding-left: 20rpx;
         display: flex;
     }
     .nav {
-        width: 55px;
-        height: 25px;
-        line-height: 25px;
+        width: 110rpx;
+        height: 50rpx;
+        line-height: 50rpx;
         text-align: center;
-        font-size: 14px;
-        border: 1px solid #999;
-        border-radius: 20px;
+        font-size: 28rpx;
+        border: 2rpx solid #999;
+        border-radius: 40rpx;
         color: #999;
     }
     .navs .nav:nth-child(1) {
-        margin-right: 15px;
+        margin-right: 30rpx;
     }
     .nav.active {
         background: #F43131;
@@ -75,39 +75,39 @@ export default {
     /* 内容 */
     /* 评价 start */
     .c_content {
-        margin-top: 15px;
-        padding: 0 10px 0;
-        border-bottom: 1px solid #FFECE8E8;
+        margin-top: 30rpx;
+        padding: 0 20rpx 0;
+        border-bottom: 2rpx solid #FFECE8E8;
     }
     .c_content_title {
         display: flex;
         align-items: center;
-        font-size: 15px;
+        font-size: 30rpx;
         color: #333;
     }
     .c_content_title>img {
-        width: 35px;
-        height: 35px;
-        margin-right: 10px;
+        width: 70rpx;
+        height: 70rpx;
+        margin-right: 20rpx;
     }
     .user_name {
         flex: 1;
     }
     .c_time {
-        font-size: 13px;
+        font-size: 26rpx;
         color: #777;
     }
     .c_content_msg {
-        font-size: 12px;
+        font-size: 24rpx;
         color: #333;
-        line-height: 18px;
-        padding: 9px 0;
+        line-height: 36rpx;
+        padding: 18rpx 0;
     }
     .c_content_img img {
-        width: 70px;
-        height: 70px;
-        margin-right: 10px;
-        margin-bottom: 10px;
+        width: 140rpx;
+        height: 140rpx;
+        margin-right: 20rpx;
+        margin-bottom: 20rpx;
     }
     /* 内容 end */
 </style>

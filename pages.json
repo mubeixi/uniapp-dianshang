@@ -48,8 +48,8 @@
         ,{
             "path" : "pages/result/result",
             "style" : {}
-        }
-        ,{
+        },
+        {
             "path" : "pages/search/search",
             "style" : {}
         }
