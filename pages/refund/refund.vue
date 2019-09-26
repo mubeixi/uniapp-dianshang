@@ -240,6 +240,7 @@ export default {
         color: #fff;
         text-align: center;
         background: #F43131;
+		z-index: 9999;
     }
     /* 退款 */
     .methods,
