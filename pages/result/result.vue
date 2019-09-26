@@ -9,7 +9,7 @@
         <div :class="[active == 0 ? 'checked' : '','tab']" @click="active=0">默认<div class="line"></div></div>
         <div :class="[active == 1 ? 'checked' : '','tab']" @click="active=1">销量<div class="line"></div></div>
         <div :class="[active == 2 ? 'checked' : '','tab']" @click="active=2">价格<div class="line"></div></div>
-        <div :class="[active == 3 ? 'checked' : '','tab']" @click="active=3">筛选<image src="/static/result/jx.png" @click="changeCate" alt=""></image> <div class="line"></div></div>
+        <div :class="[active == 3 ? 'checked' : '','tab']" @click="change">筛选<image src="/static/result/jx.png" @click="changeCate" alt=""></image> <div class="line"></div></div>
     </div>
 	<div v-if="cate==1">
 		<div class="cate1">
@@ -81,11 +81,14 @@
 			</div>
 		</div>
 	</div>
+	<popup-layer ref="popupLayer"  :direction="'bottom'">
+		
+	</popup-layer>
   </div>
 </template>
 
 <script>
-
+import popupLayer from '../../components/popup-layer/popup-layer.vue'
 export default {
   name: 'App',
   props: {value:'',},
@@ -96,7 +99,7 @@ export default {
     }
   },
   components: {
-    
+    popupLayer
   },
   methods: {
       gotoDetail(){
@@ -104,6 +107,10 @@ export default {
       },
 	  changeCate(){
 		  this.cate = this.cate == 1 ? 2 : 1
+	  },
+	  change(){
+		  this.active = 3;
+		  this.$refs.popupLayer.show();
 	  }
   }
 }

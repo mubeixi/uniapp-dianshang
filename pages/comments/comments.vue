@@ -27,18 +27,16 @@
                 <img src="/static/detail/coment3.png" alt="">
             </div>
         </div>
-     <!-- <goodsaction></goodsaction> -->
+		<bottom></bottom>
   </div>
 </template>
 
 <script>
-// import comments from '@/components/title'
-// import goodsaction from '@/components/goodsaction'
+import bottom from '../bottom/bottom'
 export default {
     name: 'app',
     components: {
-        // comments,
-        // goodsaction
+        bottom
     },
     data(){
         return {

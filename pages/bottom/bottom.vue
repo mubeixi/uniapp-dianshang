@@ -32,7 +32,16 @@
 				
 			};
 		},
-		props: ['first','second'],
+		props: {
+			first: {
+				type: String,
+				default: '加入购物车'
+			},
+			second: {
+				type: String,
+				default: '购买'
+			}
+		}
 	}
 </script>
 
