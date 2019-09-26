@@ -3,6 +3,8 @@ import App from './App'
 import pagetitle from './pages/title/title.vue'
 Vue.config.productionTip = false
 
+import Common from './common/index.js';
+Vue.use(Common);
 
 
 

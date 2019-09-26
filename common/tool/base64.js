@@ -1,4 +1,4 @@
-(function(window) {
+
 
   'use strict';
   var version = "2.1.9";
@@ -193,10 +193,5 @@
       window.Base64 = Base64;
   }*/
 
-  if ( typeof module != 'undefined' && module.exports ) {
-    module.exports = Base64;
-  } else {
-    window.Base64 = Base64;
-  }
+ module.exports = Base64;
 
-})(window);

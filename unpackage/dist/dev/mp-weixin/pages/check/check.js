@@ -254,10 +254,6 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 //
 //
 //
-//
-//
-//
-//
 
 // import pagetitle from '@/components/title'
 var _default = {
@@ -297,6 +293,9 @@ var _default = {
 
     },
     switch1Change: function switch1Change() {
+
+    },
+    switchChange: function switchChange() {
 
     } } };exports.default = _default;
 

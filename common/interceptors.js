@@ -1,5 +1,5 @@
-import { apiBaseUrl} from './env.js';
-
+import * as ENV from './env.js';
+// console.log(ENV.apiBaseUrl)
 
 export const ajax = (url,method,data,options)=>{
 	
@@ -26,18 +26,19 @@ export const ajax = (url,method,data,options)=>{
   //   header.Cookie = wx.getStorageSync('cookie')
   // }
 
-
+let URL = ENV.apiBaseUrl+url;
+// console.log(URL)
+	
   return new Promise(function(resolve, reject){
     uni.request({
       header,
-      url: apiBaseUrl+url,
+      url: URL,
       method,
       data,
       success:(res)=>{
         resolve(res.data)
       },
       fail:(e)=>{
-      
         reject(e)
       },
       complete:(rt)=>{
