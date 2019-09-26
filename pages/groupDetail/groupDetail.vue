@@ -536,8 +536,8 @@ export default {
     }
     .section1{
         display: flex;
-        padding-left: 27rpx;
-		padding-right: 31rpx;
+        padding-left: 15rpx;
+		padding-right: 15rpx;
         align-items: center;
         justify-content: space-between;
         background-color: #F43131;
