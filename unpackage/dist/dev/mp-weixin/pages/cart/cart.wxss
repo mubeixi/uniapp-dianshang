@@ -1,228 +1,305 @@
-
+@charset "UTF-8";
+/**
+ * 这里是uni-app内置的常用样式变量
+ *
+ * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量
+ * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App
+ *
+ */
+/**
+ * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能
+ *
+ * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件
+ */
+/* 颜色变量 */
+/* 行为相关颜色 */
+/* 文字基本颜色 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 尺寸变量 */
+/* 文字尺寸 */
+/* 图片尺寸 */
+/* Border Radius */
+/* 水平间距 */
+/* 垂直间距 */
+/* 透明度 */
+/* 文章场景相关 */
 .nav-title.data-v-abac8a7c {
   background: #fff !important;
 }
 .content.data-v-abac8a7c {
   background: #f3f3f3;
-  padding: 15px 10px 50px;
+  padding: 30rpx 20rpx 160rpx;
 }
 .van-checkbox.data-v-abac8a7c {
   margin-right: 5px;
 }
 /* 订单信息 start */
 .order_msg.data-v-abac8a7c {
-        padding: 10px 15px 0px;
-        background: #fff;
-        overflow: hidden;
-        margin-bottom: 20px;
+  padding: 10px 15px 0px;
+  background: #fff;
+  overflow: hidden;
+  margin-bottom: 20px;
 }
 .biz_msg.data-v-abac8a7c {
-        display: -webkit-box;
-        display: -webkit-flex;
-        display: -ms-flexbox;
-        display: flex;
-        -webkit-box-align: center;
-        -webkit-align-items: center;
-            -ms-flex-align: center;
-                align-items: center;
-        margin-bottom: 15px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-bottom: 15px;
 }
 .biz_logo.data-v-abac8a7c {
-        width: 35px;
-        height: 35px;
-        margin-right: 10px;
+  width: 70rpx;
+  height: 70rpx;
+  margin-right: 20rpx;
 }
 .biz_name.data-v-abac8a7c {
-        font-size: 14px;
+  font-size: 28rpx;
 }
 .pro.data-v-abac8a7c {
-        display: -webkit-box;
-        display: -webkit-flex;
-        display: -ms-flexbox;
-        display: flex;
-        margin-bottom: 25px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-bottom: 25px;
 }
 .pro-msg.data-v-abac8a7c {
-      -webkit-box-flex: 1;
-      -webkit-flex: 1;
-          -ms-flex: 1;
-              flex: 1;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
 }
 .pro-img.data-v-abac8a7c {
-        width: 100px;
-        height: 100px;
-        margin-right: 14px;
+  width: 200rpx;
+  height: 200rpx;
+  margin-right: 32rpx;
 }
 .pro-name.data-v-abac8a7c {
-        font-size: 13px;
-        margin-bottom: 10px;
+  font-size: 26rpx;
+  margin-bottom: 25rpx;
+  width: 390rpx;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+     text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
 }
 .attr.data-v-abac8a7c {
-        display: inline-block;
-        height: 25px;
-        line-height: 25px;
-        background: #FFF5F5;
-        color: #666;
-        font-size: 12px;
-        padding: 0 10px;
-        margin-bottom: 12px;
+  display: inline-block;
+  height: 50rpx;
+  width: 150rpx;
+  line-height: 50rpx;
+  background: #FFF5F5;
+  color: #666;
+  font-size: 24rpx;
+  margin-bottom: 12rpx;
+  text-align: center;
 }
 .pro-price.data-v-abac8a7c {
-        color: #F43131;
-        font-size: 18px;
+  color: #F43131;
+  font-size: 36rpx;
 }
-.pro-price ._i.data-v-abac8a7c {
-        font-size: 12px;
-        font-style: normal;
+.pro-price .span.data-v-abac8a7c {
+  font-size: 24rpx;
+  font-style: normal;
 }
 .amount.data-v-abac8a7c {
-        float: right;
-        display: -webkit-box;
-        display: -webkit-flex;
-        display: -ms-flexbox;
-        display: flex;
-        color: #666;
+  float: right;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  color: #666;
+  height: 50rpx;
+  width: 168rpx;
 }
 .amount input.data-v-abac8a7c {
-        width: 40px;
-        height: 20px;
-        line-height: 20px;
-        padding: 0 2px;
-        font-size: 14px;
-        text-align: center;
-        border: 1px solid #D1D1D1;
+  width: 72rpx;
+  height: 50rpx;
+  line-height: 50rpx;
+  font-size: 28rpx;
+  text-align: center;
+  border: 1px solid #D1D1D1;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 .plus.data-v-abac8a7c {
-        width: 22px;
-        height: 20px;
-        border: 1px solid #D1D1D1;
-        text-align: center;
-        line-height: 20px;
+  width: 48rpx;
+  height: 50rpx;
+  border: 1px solid #D1D1D1;
+  text-align: center;
+  line-height: 50rpx;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 /* 订单信息 end */
 /* 猜你喜欢 */
 .fenge.data-v-abac8a7c {
-      text-align: center;
-      margin-bottom: 10px;
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 0rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.caini.data-v-abac8a7c {
+  font-size: 30rpx;
+  margin-left: 13rpx;
+  margin-right: 13rpx;
 }
 .prolist.data-v-abac8a7c {
-      display: -webkit-box;
-      display: -webkit-flex;
-      display: -ms-flexbox;
-      display: flex;
-      -webkit-flex-wrap: wrap;
-          -ms-flex-wrap: wrap;
-              flex-wrap: wrap;
-      -webkit-box-pack: justify;
-      -webkit-justify-content: space-between;
-          -ms-flex-pack: justify;
-              justify-content: space-between;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 .pro-item.data-v-abac8a7c {
-      width: 48%;
-      margin-bottom: 15px;
-      background: #fff;
+  width: 48%;
+  margin-bottom: 15px;
+  background: #fff;
 }
 .pro-item ._img.data-v-abac8a7c {
-      width: 100%;
-      height: 172px;
+  width: 345rpx;
+  height: 345rpx;
 }
 .item-name.data-v-abac8a7c {
-      font-size: 12px;
-      padding: 0 5px;
-      color: #333;
-      overflow: hidden;
-      -o-text-overflow: ellipsis;
-         text-overflow: ellipsis;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
+  font-size: 24rpx;
+  padding: 0 10rpx;
+  color: #333;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+     text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 .red.data-v-abac8a7c {
-      color: #F43131;
-      font-weight: 700;
+  background-color: #F43131;
+  display: inline-block;
+  height: 3rpx;
+  width: 44rpx;
 }
 .price.data-v-abac8a7c {
-        margin-top: 10px;
-        padding: 0 5px 10px;
-}
-.price ._i.data-v-abac8a7c {
-        font-size: 10px;
-        font-style: normal;
+  margin-top: 20rpx;
+  padding: 0 10rpx 20rpx;
 }
 .n_price.data-v-abac8a7c {
-        color: #ff0000;
-        font-size: 18px;
+  color: #ff0000;
+  font-size: 34rpx;
+}
+.n_price ._span.data-v-abac8a7c {
+    font-size: 24rpx;
 }
 .o_price.data-v-abac8a7c {
-        color: #afafaf;
-        font-size: 14px;
-        text-decoration: line-through;
+  margin-left: 15rpx;
+  color: #afafaf;
+  font-size: 24rpx;
+  text-decoration: line-through;
 }
 /* 购物车为空 */
 .none.data-v-abac8a7c {
-      text-align: center;
-      margin-bottom: 20px;
-      color: #B0B0B0;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #B0B0B0;
 }
 .none ._img.data-v-abac8a7c {
-      height: 110px;
-      width: 100px;
+  height: 110px;
+  width: 100px;
 }
 .tobuy.data-v-abac8a7c {
-      color: #F43131;
-      border: 1px solid #F43131;
-      height: 25px;
-      line-height: 25px;
-      padding: 2px 10px;
-      border-radius: 10px;
-      margin-left: 10px;
+  color: #F43131;
+  border: 1px solid #F43131;
+  height: 25px;
+  line-height: 25px;
+  padding: 2px 10px;
+  border-radius: 10px;
+  margin-left: 10px;
 }
 /* 结算 */
 .checkout.data-v-abac8a7c {
-      position: fixed;
-      bottom: 50px;
-      width: 100%;
-      height: 50px;
-      padding: 0 10px;
-      display: -webkit-box;
-      display: -webkit-flex;
-      display: -ms-flexbox;
-      display: flex;
-      -webkit-box-pack: justify;
-      -webkit-justify-content: space-between;
-          -ms-flex-pack: justify;
-              justify-content: space-between;
-      -webkit-box-align: center;
-      -webkit-align-items: center;
-          -ms-flex-align: center;
-              align-items: center;
-      background: #fff;
-      -webkit-box-sizing: border-box;
-              box-sizing: border-box;
+  position: fixed;
+  bottom: 50px;
+  width: 100%;
+  height: 50px;
+  padding: 0 10px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background: #fff;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 .checkbtn.data-v-abac8a7c {
-      background: #F43131;
-      color: #fff;
-      height: 27px;
-      line-height: 27px;
-      padding: 2px 15px;
-      font-size: 14px;
-      border-radius: 8px;
+  background: #F43131;
+  color: #fff;
+  width: 126rpx;
+  text-align: center;
+  height: 54rpx;
+  line-height: 54rpx;
+  font-size: 28rpx;
+  border-radius: 8px;
 }
 .total.data-v-abac8a7c {
-      -webkit-box-flex: 1;
-      -webkit-flex: 1;
-          -ms-flex: 1;
-              flex: 1;
-      text-align: right;
-      margin-right: 20px;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  text-align: right;
+  margin-right: 40rpx;
+  font-size: 26rpx;
 }
-.total>._span.data-v-abac8a7c {
-      color: #F43131;
+.total > ._span.data-v-abac8a7c {
+  color: #F43131;
+  font-size: 26rpx;
 }
-.total>._span>._i.data-v-abac8a7c {
-      font-style: normal;
-      font-size: 18px;
+.total > ._span > ._span.data-v-abac8a7c {
+  font-style: normal;
+  font-size: 32rpx;
+}
+.mbxa.data-v-abac8a7c {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-right: 17rpx;
+  font-size: 28rpx;
+}
+.mbxa ._img.data-v-abac8a7c {
+    width: 34rpx;
+    height: 34rpx;
 }
 
