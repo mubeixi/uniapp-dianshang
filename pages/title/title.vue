@@ -46,6 +46,6 @@ export default {
         position: absolute;
         top: 0;
         right: 20rpx;
-        line-height: 43px;
+        line-height: 86rpx;
     }
 </style>

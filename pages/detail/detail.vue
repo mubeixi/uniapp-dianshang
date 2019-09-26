@@ -27,7 +27,7 @@
         <div class="price">
             <span class="n_price"><i>￥</i>169.00</span>
             <span class="o_price"><i>￥</i>189.00</span>
-            <span class="share" @click="share">分享此产品</span>
+            <span class="share" @click="showTick" data-type="share">分享此产品</span>
         </div>
         <div class="name">女装2019秋季新款撞色丝绒织带钉珠蕾丝网纱连衣裙丝绒织带钉珠蕾丝网纱</div>
         <div class="sold">
@@ -38,7 +38,7 @@
     <!-- 领券 -->
     <div class="section2" >
         <div class="btn">领券</div>
-        <div class="right" @click="showTick">店铺优惠券 <img src="/static/detail/right.png" alt=""></div>
+        <div class="right" @click="showTick" data-type="ticks">店铺优惠券 <img src="/static/detail/right.png" alt=""></div>
     </div>
     <!-- 包邮等信息 -->
     <div class="section3">
@@ -93,88 +93,79 @@
         <div class="p_detail_title">商品详情</div>
     </div>
     <div style="height:50px;"></div>
-    <!-- goodsaction -->
-   <!-- <goodsaction></goodsaction> -->
-    <!-- 优惠券活分享弹出层 -->
-  <!--  <van-overlay
-        :show="show"
-        @click="close"
-        z-index="100"
-    /> -->
-    <div class="ticks" v-if="ticksShow">
-        <div class="t_title">
-            领券
-            <image"/static/detail/x.png" class="x" @click="close" alt=""></image>
-        </div>
-        <div class="t_content">
-            <div class="t_left">
-                <div class="t_left_t"><i>￥</i><span class="money">10</span><span>店铺优惠券</span></div>
-                <div class="t_left_c">满199使用</div>
-                <div class="t_left_b">有效期2019.09.10-2019.09.30</div>
-            </div>
-            <div class="t_right">立即领取</div>
-        </div>
-        <div class="t_content">
-            <div class="t_left">
-                <div class="t_left_t"><i>￥</i><span class="money">10</span><span>店铺优惠券</span></div>
-                <div class="t_left_c">满199使用</div>
-                <div class="t_left_b">有效期2019.09.10-2019.09.30</div>
-            </div>
-            <div class="t_right aleady">已领取</div>
-        </div>
-    </div>
-    <div class="shareinfo" v-if="shareShow">
-        <div class="s_top">
-            <div>
-                <img src="/static/detail/share1.png" alt="">
-                <div>发送好友</div>
-            </div>
-            <div>
-                <img src="/static/detail/share2.png" alt="">
-                <div>分享海报</div>
-            </div>
-        </div>
-        <div class="s_bottom" @click="cancel">取消</div>
-    </div>
+	<bottom></bottom>
+	<popupLayer ref="popupLayer" :direction="'top'">
+		<div class="shareinfo" v-if="type=='share'">
+			<div class="s_top">
+				<div>
+					<img src="/static/detail/share1.png" alt="">
+					<div>发送好友</div>
+				</div>
+				<div>
+					<img src="/static/detail/share2.png" alt="">
+					<div>分享海报</div>
+				</div>
+			</div>
+			<div class="s_bottom" @click="cancel">取消</div>
+		</div>		
+		<div class="ticks" v-if="type=='ticks'">
+		    <div class="t_title">
+		        领券
+		        <img src="/static/detail/x.png" height="12" width="12" @click="close" alt="">
+		    </div>
+		    <div class="t_content">
+		        <div class="t_left">
+		            <div class="t_left_t"><i>￥</i><span class="money">10</span><span>店铺优惠券</span></div>
+		            <div class="t_left_c">满199使用</div>
+		            <div class="t_left_b">有效期2019.09.10-2019.09.30</div>
+		        </div>
+		        <div class="t_right">立即领取</div>
+		    </div>
+		    <div class="t_content">
+		        <div class="t_left">
+		            <div class="t_left_t"><i>￥</i><span class="money">10</span><span>店铺优惠券</span></div>
+		            <div class="t_left_c">满199使用</div>
+		            <div class="t_left_b">有效期2019.09.10-2019.09.30</div>
+		        </div>
+		        <div class="t_right aleady">已领取</div>
+		    </div>
+		</div>
+	</popupLayer>
   </div>
 </template>
 
 <script>
-// import goodsaction from '@/components/goodsaction'
+import bottom from '../bottom/bottom'
+import popupLayer from '../../components/popup-layer/popup-layer.vue'
 export default {
     data(){
         return {
-            show: false,
+            type: '', // 优惠券内容， 分享内容
             shareShow: false,
             ticksShow: false
         }
     },
     components: {
-        // goodsaction,
+        bottom,
+		popupLayer
     },
     methods: {
         goBack(){
             this.$router.go(-1);
         },
         gotoComments(){
-            this.$router.push({name:'comments'})
+            
         },
-        showTick(){
-            this.show = true;
-            this.ticksShow = true;
+        showTick(e){
+			console.log(e)
+			this.type = e.currentTarget.dataset.type
+            this.$refs.popupLayer.show();
         },
         close(){
-            this.show = false;
-            this.ticksShow = false;
-            this.shareShow = false;
-        },
-        share(){
-            this.show = true;
-            this.shareShow = true;
+			this.$refs.popupLayer.close();
         },
         cancel(){
-            this.show = false;
-            this.shareShow = false;
+            this.$refs.popupLayer.close();
         }
     }
 }
@@ -209,12 +200,9 @@ export default {
         height: 30px;
     }
     .ticks,.shareinfo {
-        position: fixed;
-        bottom: 0;
-        left: 0;
         background: #fff;
         width: 100%;
-        padding: 30rpx 0 90rpx;
+        padding: 30rpx 0 60rpx;
         color: #333;
         z-index: 100;
         border-top-left-radius: 10rpx;
@@ -226,11 +214,9 @@ export default {
         text-align:center;
         margin-bottom: 40rpx;
     }
-    .t_title {
-		image {
-			float: right;
-			margin-right: 20rpx;
-		}
+    .t_title img {
+        float: right;
+        margin-right: 20rpx;
     }
     .t_content {
         position: relative;
@@ -302,7 +288,7 @@ export default {
         color: #666;
         font-size: 26rpx;
         text-align: center;
-        line-height: 6r0px;
+        line-height: 60rpx;
         margin-top: 50rpx;
     }
     /* 产品描述部分 start */
