@@ -175,12 +175,12 @@ var _default = { data: function data() {return { name: "wkiwi", height: 0, categ
     this.getList();}, onLoad: function onLoad() {this.height = uni.getSystemInfoSync().windowHeight - this.tabBarHeight;}, onReady: function onReady() {this.getHeightList();
   },
   methods: {
-    getList: function getList() {
-      var data = {
-        Users_ID: 'wkbq6nc2kc' };
-
-      (0, _fetch.getProductCategory)(data).then(function (res) {
-        console.log(res);
+    getList: function getList() {var _this2 = this;
+      (0, _fetch.getProductCategory)({ Users_ID: 'wkbq6nc2kc' }).then(function (res) {
+        _this2.classifyData = res;
+        _this2.$nextTick(function () {
+          _this2.getHeightList();
+        });
       }).catch(function (e) {});
     },
     getHeightList: function getHeightList() {
@@ -216,7 +216,7 @@ var _default = { data: function data() {return { name: "wkiwi", height: 0, categ
         clearTimeout(this.timeoutId);
       }
       this.timeoutId = setTimeout(function () {//节流
-        _this.scrollHeight = e.detail.scrollTop + 1 + _this.height / 2;
+        _this.scrollHeight = e.detail.scrollTop + 1; //+ _this.height/2;
         //+1不要删除，解决最后一项某种情况下翻到底部，左边按钮并不会切换至最后一个
         //若想使切换参考线为屏幕顶部请删除 _this.height/2
         for (var i = 0; i < _this.arr.length; i++) {
@@ -238,7 +238,7 @@ var _default = { data: function data() {return { name: "wkiwi", height: 0, categ
     },
     cart: function cart(text) {
       uni.showToast({
-        title: text,
+        title: 'haha',
         icon: "none" });
 
     } },

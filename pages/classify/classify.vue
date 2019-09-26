@@ -3,14 +3,14 @@
 		<scroll-view class="nav-left" scroll-y :style="'height:'+height+'px'" :scroll-top="scrollLeftTop" scroll-with-animation>
 			<view class="nav-left-item" @click="categoryClickMain(index)" :key="index" :class="index==categoryActive?'active':''"
 				v-for="(item,index) in classifyData">
-				{{item.name}}
+				{{item.Category_Name}}
 			</view>
 		</scroll-view>
 		<scroll-view class="nav-right" scroll-y :scroll-top="scrollTop" @scroll="scroll" :style="'height:'+height+'px'" scroll-with-animation>
 			<view v-for="(foods,index) in classifyData" :key="index" class="box">
-				<view :id="i==0?'first':''" class="nav-right-item" v-for="(item,i) in foods.foods" :key="i" @click="cart(item.name)">
-					<image :src="item.icon" />
-					<view>{{item.name}}</view>
+				<view :id="i==0?'first':''" class="nav-right-item" v-for="(item,i) in foods.child" :key="i" @click="cart(item.name)">
+					<image :src="item.Category_Img" />
+					<view>{{item.Category_Name}}</view>
 				</view>
 			</view>
 		</scroll-view>
@@ -52,11 +52,11 @@
 		},
 		methods: {
 			getList(){
-				let data={
-					Users_ID:'wkbq6nc2kc'
-				}
-				getProductCategory(data).then(res=>{
-					console.log(res)
+				getProductCategory({Users_ID:'wkbq6nc2kc'}).then(res=>{
+					this.classifyData=res;
+					this.$nextTick(()=>{
+						this.getHeightList();
+					})
 				}).catch(e=>{})
 			},
 			getHeightList(){
@@ -92,7 +92,7 @@
 					clearTimeout(this.timeoutId);
 				}
 				this.timeoutId = setTimeout(function(){ //节流
-					_this.scrollHeight = e.detail.scrollTop + 1 + _this.height/2;
+					_this.scrollHeight = e.detail.scrollTop + 1; //+ _this.height/2;
 					//+1不要删除，解决最后一项某种情况下翻到底部，左边按钮并不会切换至最后一个
 					//若想使切换参考线为屏幕顶部请删除 _this.height/2
 					for (let i = 0; i < _this.arr.length;i++) {
@@ -114,7 +114,7 @@
 			},
 			cart: function (text) {
 				uni.showToast({
-					title: text,
+					title: 'haha',
 					icon: "none",
 				})
 			}

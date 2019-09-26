@@ -2729,7 +2729,7 @@ var fetch = function fetch(act, param) {var options = arguments.length > 2 && ar
 
   param.act = act;
   // param.Users_Account = get_Users_Account();
-  param.Users_ID = get_Users_ID();
+  // param.Users_ID = get_Users_ID();  Users_ID  写死
   // param.appid = get_Appid();
 
   // 数据加密

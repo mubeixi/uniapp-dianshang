@@ -102,10 +102,6 @@ var render = function() {
     _vm.e2 = function($event) {
       _vm.active = 2
     }
-
-    _vm.e3 = function($event) {
-      _vm.active = 3
-    }
   }
 }
 var staticRenderFns = []
@@ -139,93 +135,96 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var _default =
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var popupLayer = function popupLayer() {return __webpack_require__.e(/*! import() | components/popup-layer/popup-layer */ "components/popup-layer/popup-layer").then(__webpack_require__.bind(null, /*! ../../components/popup-layer/popup-layer.vue */ 160));};var _default =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 {
   name: 'App',
@@ -236,8 +235,8 @@ var _default =
       cate: 2 };
 
   },
-  components: {},
-
+  components: {
+    popupLayer: popupLayer },
 
   methods: {
     gotoDetail: function gotoDetail() {
@@ -245,6 +244,10 @@ var _default =
     },
     changeCate: function changeCate() {
       this.cate = this.cate == 1 ? 2 : 1;
+    },
+    change: function change() {
+      this.active = 3;
+      this.$refs.popupLayer.show();
     } } };exports.default = _default;
 
 /***/ }),

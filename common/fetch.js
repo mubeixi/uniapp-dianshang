@@ -21,7 +21,7 @@ const fetch = function (act, param,options = false,url='/api/little_program/shop
 
   param.act = act;
   // param.Users_Account = get_Users_Account();
-  param.Users_ID = get_Users_ID();
+  // param.Users_ID = get_Users_ID();  Users_ID  写死
   // param.appid = get_Appid();
 
   // 数据加密
