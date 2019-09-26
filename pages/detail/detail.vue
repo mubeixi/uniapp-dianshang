@@ -104,7 +104,7 @@
     <div class="ticks" v-if="ticksShow">
         <div class="t_title">
             领券
-            <image"/static/detail/x.png" class="x" @click="close" alt=""></image>
+            <img src="/static/detail/x.png" height="12" width="12" @click="close" alt="">
         </div>
         <div class="t_content">
             <div class="t_left">
@@ -226,11 +226,9 @@ export default {
         text-align:center;
         margin-bottom: 40rpx;
     }
-    .t_title {
-		image {
-			float: right;
-			margin-right: 20rpx;
-		}
+    .t_title img {
+        float: right;
+        margin-right: 20rpx;
     }
     .t_content {
         position: relative;

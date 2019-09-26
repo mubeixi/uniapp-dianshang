@@ -58,7 +58,7 @@
                     <span>是否参与积分抵扣</span>
                     <switch checked color="#04B600" @change="switchChange" />
                 </div>
-                <div class="o_desc">您当前共有1000积分，每1000积分可以抵扣1元，总共可抵0.4元</div>
+                <div class="o_de">您当前共有 <text>1000</text>积分，每<text>1000</text>积分可以抵扣<text>1</text>元，总共可抵<text>0.4</text>元</div>
             </div>
         </div>
         <div class="other">
@@ -67,7 +67,7 @@
                     <span>是否使用余额</span>
                     <switch checked color="#04B600" @change="switch1Change" />
                 </div>
-                <div class="o_desc">请输入金额</div>
+                <input class="o_desc" placeholder="请输入金额">
             </div>
         </div>
         <div class="other">
@@ -76,7 +76,7 @@
                     <span>是否开具发票</span>
 					<switch checked color="#04B600" @change="switch2Change" />
                 </div>
-                <div class="o_desc">请输入发票抬头和纳税人识别号</div>
+				<input type="text" class="o_desc" placeholder="请输入发票抬头和纳税人识别号" />
             </div>
         </div>
         <div class="other">
@@ -99,43 +99,47 @@
             </div>
             <div class="submit">提交订单</div>
         </div>
-        <!-- <van-overlay
-            :show="show"
-            @click="showOverlay"
-            z-index=1000
-        /> -->
-        <!-- 运费选择 -->
-        <div class="wl" v-if="wl_show">
-            <div class="wl_title">运费选择</div>
-           <!-- <van-checkbox-group v-model="result" style="width:95%;">
-                <van-cell-group max=1>
-                    <van-cell
-                    v-for="(item, index) in wl_list"
-                    clickable
-                    :key="item"
-                    :title="`${item.name} ${item.price}`"
-                    @click="toggle(index)"
-                    >
-                    <van-checkbox
-                        :name="item"
-                        ref="checkboxes"
-                        slot="right-icon"
-                        shape="square"
-                    />
-                    </van-cell>
-                </van-cell-group>
-            </van-checkbox-group> -->
-            <div class="btn">确定</div>
-        </div>
+        <popup-layer ref="popupRef" :direction="'top'">
+        	<div class="bMbx">
+        		<div class="fMbx">运费选择</div>
+        		<div class="iMbx">
+        			<div>
+        				顺丰 免邮
+        			</div>
+        			<div>
+        				 <checkbox  checked=""  color="#F43131"/>
+        			</div>
+        		</div>
+        		<div class="iMbx">
+        			<div>
+        				中通 免邮
+        			</div>
+        			<div>
+        				 <checkbox  checked=""  color="#F43131"/>
+        			</div>
+        		</div>
+				<div class="iMbx">
+					<div>
+						EMS ￥15.00
+					</div>
+					<div>
+						 <checkbox  checked=""  color="#F43131"/>
+					</div>
+				</div>
+        	</div>
+        	<div class="sure" @click="closeMethod">
+        			确定
+        	</div>
+        </popup-layer>
     </div>
 </template>
 
 <script>
-// import pagetitle from '@/components/title'
+import popupLayer from '../../components/popup-layer/popup-layer.vue';
 export default {
-    // components: {
-    //     pagetitle
-    // },
+    components: {
+        popupLayer
+    },
     data(){
         return {
             show: false, // 遮罩层
@@ -154,31 +158,16 @@ export default {
     methods: {
         // 选择运费
         changeShip(){
-            this.show = true;
-            this.wl_show = true;
+            this.$refs.popupRef.show();
         },
-        // 点击遮罩
-        showOverlay(){
-            this.show = false;
-            this.wl_show = false;
-        },
-        toggle(index) {
-            this.$refs.checkboxes[index].toggle();
-        },
-		switch2Change(){
-			
+		closeMethod(){
+			this.$refs.popupRef.close();
 		},
-		switch1Change(){
-			
-		},
-		switchChange(){
-			
-		}
     }
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
     .wrap {
         background: #fff;
     }
@@ -282,13 +271,24 @@ export default {
         align-items: center;
         justify-content: space-between;
         font-size: 28rpx;
+		input {
+			font-size: 24rpx;
+		}
     }
     .o_title .van-switch {
         float: right;
     }
-    .o_desc {
+    .o_desc,
+	.o_de {
+		font-size: 22rpx;
         margin-top: 10rpx;
+		text {
+			color: #F43131;
+		}
     }
+	.o_de {
+		color: #999;
+	}
     .words {
         justify-content: flex-start;
     }
@@ -341,29 +341,33 @@ export default {
         font-size: 20rpx;
         color: #979797;
     }
-    /* 物流选择 */
-    .wl {
-        position: fixed;
-        bottom: 0;
-        padding: 0 20rpx;
-        z-index: 1001;
-        width: 100%;
-        background: #fff;
-    }
-    .wl_title {
-        padding-top: 36rpx; 
-        text-align: center;
-        margin-bottom: 20rpx;
-    }
-    .wl .btn {
-        height:90rpx;
-        line-height: 90rpx;
-        color: #fff;
-        font-size: 32rpx;
-        text-align: center;
-        background: #F43131;
-        width: 100%;
-        margin-left: -20rpx;
-        margin-top: 60rpx;
-    }
+	.bMbx{
+		padding: 0rpx 20rpx;
+		.fMbx{
+			font-size: 32rpx;
+			height: 30rpx;
+			line-height: 30rpx;
+			text-align: center;
+			padding: 36rpx 0rpx;
+		}
+		.iMbx{
+			display: flex;
+			justify-content: space-between;
+			height: 104rpx;
+			border-bottom:1px solid rgba(230,230,230,1); 
+			align-items: center;
+			font-size: 28rpx;
+		}
+	}
+	
+	.sure{
+		height: 90rpx;
+		width: 100%;
+		background-color: #F43131;
+		color: #fff;
+		font-size: 32rpx;
+		margin-top: 96rpx;
+		line-height: 90rpx;
+		text-align: center;
+	}
 </style>

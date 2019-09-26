@@ -67,19 +67,6 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="other">
-            <div class="bd">
-                <div class="o_title">
-                    <span>是否参与积分抵扣</span>
-                    <van-switch
-                        v-model="checked"
-                        size='25px'
-                        active-color="#04B600"
-                    />
-                </div>
-                <div class="o_desc">您当前共有1000积分，每1000积分可以抵扣1元，总共可抵0.4元</div>
-            </div>
-        </div> -->
         <div class="other">
             <div class="bd">
                 <div class="o_title">
@@ -124,17 +111,26 @@
                 <div class="info">共3件商品 总计：<span class="mbxa">￥<span>507.00</span></span></div>
                 <div class="tips">*本次购物一共可获得107积分</div>
             </div>
-            <div class="submit">去支付</div>
+            <div class="submit" @click="submit">去支付</div>
         </div>
-    
+		<popup-layer ref="popupLayer" :direction="'top'">
+			<div class="iMbx">
+				<div class="c_method">
+					微信支付 <text>￥577.00</text>
+				</div>
+				<div class="c_method">
+					银联支付 <text>￥577.00</text>
+				</div>
+			</div>
+		</popup-layer>
     </div>
 </template>
 
 <script>
-// import pagetitle from '@/components/title'
+import popupLayer from '../../components/popup-layer/popup-layer.vue'
 export default {
     components: {
-        // pagetitle
+       popupLayer
     },
     data(){
         return {
@@ -152,6 +148,9 @@ export default {
             this.show = false;
             this.wl_show = false;
         },
+		submit(){
+			this.$refs.popupLayer.show();
+		}
     }
 }
 </script>
@@ -161,18 +160,18 @@ export default {
         background: #fff;
     }
     .state {
-        padding: 10px 30rpx;
+        padding: 20rpx 60rpx;
         font-size: 28rpx;
         display: flex;
         align-items: center;
-        border-top: 15px solid #FFF3F3F3;
+        border-top: 30rpx solid #FFF3F3F3;
 		img{
 			width: 60rpx;
 			height: 60rpx;
 		}
     }
     .state-desc {
-        margin-left: 12px;
+        margin-left: 24rpx;
     }
     .c8 {
         color: #888;
@@ -184,8 +183,8 @@ export default {
         display: flex;
         align-items: center;
         padding: 40rpx 38rpx 40rpx 28rpx;
-        border-top: 15px solid #FFF3F3F3;
-        border-bottom: 10px solid #FFF3F3F3;
+        border-top: 30rpx solid #FFF3F3F3;
+        border-bottom: 20rpx solid #FFF3F3F3;
     }
     .loc_icon {
         width: 41rpx;
@@ -198,14 +197,14 @@ export default {
         margin-left: 28rpx;
     }
     .name {
-        margin-bottom: 15px;
-        font-size: 13px;
+        margin-bottom: 30rpx;
+        font-size: 26rpx;
     }
     .name>span {
-        margin-left: 5px;
+        margin-left: 10rpx;
     }
     .location {
-        font-size: 12px;
+        font-size: 24rpx;
         color: #444;
     }
     /* 收货地址 end */
@@ -216,7 +215,7 @@ export default {
     .biz_msg {
         display: flex;
         align-items: center;
-        margin-bottom: 15px;
+        margin-bottom: 30rpx;
     }
     .biz_logo {
         width: 70rpx;
@@ -276,24 +275,24 @@ export default {
         font-size: 28rpx;
     }
     .other .bd {
-        padding-bottom: 15px;
-        border-bottom: 1px solid #efefef;
+        padding-bottom: 30rpx;
+        border-bottom: 2rpx solid #efefef;
     }
     .o_title {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        font-size: 14px;
+        font-size: 28rpx;
     }
     .o_title .van-switch {
         float: right;
     }
     .o_desc {
-        margin-top: 5px;
+        margin-top: 10rpx;
 		font-size: 24rpx;
     }
     .msg {
-        margin-left: 10px;
+        margin-left: 20rpx;
 		font-size: 24rpx;
     }
     .words {
@@ -301,7 +300,7 @@ export default {
     }
     .words input {
         border: 0;
-        margin-left: 10px;
+        margin-left: 20rpx;
     }
     .total {
         display: flex;
@@ -348,42 +347,20 @@ export default {
         font-size: 20rpx;
         color: #979797;
     }
-    /* 物流选择 */
-    .wl {
-        position: fixed;
-        bottom: 0;
-        padding: 0 10px;
-        z-index: 1001;
-        width: 100%;
-        background: #fff;
-    }
-    .wl_title {
-        padding-top: 18px; 
-        text-align: center;
-        margin-bottom: 10px;
-    }
-    .wl .btn {
-        height:45px;
-        line-height: 45px;
-        color: #fff;
-        font-size: 16px;
-        text-align: center;
-        background: #F43131;
-        width: 100%;
-        margin-left: -10px;
-        margin-top: 30px;
-    }
-	.mbx{
-		margin-left: 20rpx;
-	}
-	.moneys{
-		font-size: 24rpx;
-	}
-	.mbxa{
-		color: #F43131;
-		font-size: 24rpx;
-		span{
-			font-size: 30rpx;
+	.iMbx {
+		text-align: center;
+		padding: 0 20rpx;
+		font-size: 28rpx;
+		color: #333;
+		.c_method {
+			padding: 37rpx 0;
+			border-bottom: 2rpx solid #E6E6E6;
+		}
+		& .c_method:first-child {
+			color: #F43131;
+		}
+		& .c_method:nth-last-child(1) {
+			border:none;
 		}
 	}
 </style>
