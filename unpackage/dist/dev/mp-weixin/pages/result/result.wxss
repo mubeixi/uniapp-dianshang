@@ -37,6 +37,7 @@
   padding: 30rpx 20rpx 0;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
+  position: relative;
 }
 .top .back.data-v-fde0b23c {
     width: 23rpx;
@@ -58,6 +59,11 @@
     position: absolute;
     top: 43rpx;
     right: 48rpx;
+    width: 37rpx;
+    height: 37rpx;
+    z-index: 9999;
+}
+.top .clears.data-v-fde0b23c {
     width: 37rpx;
     height: 37rpx;
 }
@@ -212,5 +218,9 @@
         color: #666;
         font-size: 18rpx;
         margin-top: 40rpx;
+}
+.imgm.data-v-fde0b23c {
+  width: 36rpx;
+  height: 34rpx;
 }
 

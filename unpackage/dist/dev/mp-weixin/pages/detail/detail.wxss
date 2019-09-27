@@ -158,7 +158,9 @@
   text-align: center;
   margin-bottom: 40rpx;
 }
-.t_title ._img.data-v-b0eff73c {
+.t_title image.data-v-b0eff73c {
+  height: 24rpx;
+  width: 24rpx;
   float: right;
   margin-right: 20rpx;
 }
@@ -166,7 +168,7 @@
   position: relative;
   width: 720rpx;
   height: 160rpx;
-  background: url("/static/detail/yhq.png") no-repeat;
+  background-color: #FDF1E5;
   background-size: cover;
   margin: 0 auto 30rpx;
   padding: 20rpx 0 28rpx 40rpx;
@@ -253,7 +255,7 @@
 .price.data-v-b0eff73c {
   margin-top: 44rpx;
 }
-.price ._i.data-v-b0eff73c {
+.price .mm.data-v-b0eff73c {
   font-size: 20rpx;
   font-style: normal;
 }
@@ -274,6 +276,7 @@
   font-size: 36rpx;
 }
 .o_price.data-v-b0eff73c {
+  margin-left: 10rpx;
   color: #afafaf;
   font-size: 28rpx;
   text-decoration: line-through;
@@ -358,6 +361,7 @@
 }
 .section3 ._img.data-v-b0eff73c {
   width: 28rpx;
+  height: 28rpx;
   margin-right: 10rpx;
 }
 /* 包邮信息等 end */

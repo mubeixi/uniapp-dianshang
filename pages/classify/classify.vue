@@ -53,7 +53,7 @@
 		methods: {
 			getList(){
 				getProductCategory({Users_ID:'wkbq6nc2kc'}).then(res=>{
-					this.classifyData=res;
+					this.classifyData=res.data;
 					this.$nextTick(()=>{
 						this.getHeightList();
 					})
