@@ -19,7 +19,7 @@
                 <div class="pro-msg">
                     <div class="pro-name">2018夏装新款短袖蕾丝拼接荷叶边波点雪纺连衣裙女时尚名媛...</div>
                     <div class="attr"><span>白色;S码</span></div>
-                    <div class="pro-price"><i>￥</i>169.00 <span class="amount">x1</span></div>
+                    <div class="pro-price"><span>￥</span>169.00 <span class="amount">x<span class="num">1</span></span></div>
                 </div>
             </div>
             <div class="pro">
@@ -27,7 +27,7 @@
                 <div class="pro-msg">
                     <div class="pro-name">2018夏装新款短袖蕾丝拼接荷叶边波点雪纺连衣裙女时尚名媛...</div>
                     <div class="attr"><span>白色;S码</span></div>
-                    <div class="pro-price"><text>￥</text>169.00 <span class="amount">x1</span></div>
+                    <div class="pro-price"><span>￥</span>169.00 <span class="amount">x<span class="num">1</span></span></div>
                 </div>
             </div>
         </div>
@@ -38,7 +38,7 @@
                     <span style="text-align:right;" @click="changeShip">
                         <span>顺丰</span>
                         <span>免邮费</span>
-                        <img height="10" width="8" style="margin-left:10px;" src="/static/right.png" alt="">
+                        <image  class="right" src="/static/right.png" alt=""></image>
                     </span>
                 </div>
             </div>
@@ -48,7 +48,7 @@
                 <div class="o_title">
                     <span>优惠券选择</span>
                     <span></span>
-                    <img height="10" width="8" src="/static/right.png" alt="">
+                    <image  src="/static/right.png" class="right" alt=""></image>
                 </div>
             </div>
         </div>
@@ -88,8 +88,8 @@
             </div>
         </div>
         <div class="total">
-            <span>共<span>2</span>件商品</span>
-            <span>小计：<i>￥</i><span class="money">388.00</span></span>
+            <span style="margin-right:20rpx;">共<span>2</span>件商品</span>
+            <span>小计：<span>￥</span><span class="money">388.00</span></span>
         </div>
         <div style="height:100px;background:#efefef;"></div>
         <div class="order_total">
@@ -247,15 +247,19 @@ export default {
     .pro-price {
         color: #F43131;
         font-size: 36rpx;
+		span {
+			font-size: 24rpx;
+			font-style: normal;
+		}
+		.amount {
+		    float: right;
+		    color: #333;
+			.num {
+				font-size: 30rpx;
+			}
+		}
     }
-    .pro-price text {
-        font-size: 24rpx;
-        font-style: normal;
-    }
-    .amount {
-        float: right;
-        color: #333;
-    }
+    
     /* 订单信息 end */
     /* 订单其他信息 start */
     .other {
@@ -303,9 +307,6 @@ export default {
         margin: 40rpx 0;
         font-size: 24rpx;
         padding-right: 30rpx;
-    }
-    i{
-        font-style: normal;
     }
     .total .money {
         font-size: 30rpx;

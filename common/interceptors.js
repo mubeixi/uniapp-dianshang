@@ -36,7 +36,7 @@ let URL = ENV.apiBaseUrl+url;
       method,
       data,
       success:(res)=>{
-        resolve(res.data)
+        resolve(res)
       },
       fail:(e)=>{
         reject(e)

@@ -53,11 +53,16 @@ export const getSkinConfig = (data,options) => fetch('get_shophome',data,options
 export const setSkinConfig = (data,options) => fetch('update_shophome',data,options)
 //获取商品列表
 export const getProductCategory = (data,options) => fetch('pro_cate',data,options)
+
 //获取详情页
 export const getProductDetail = (data,options) => fetch('prod_detail',data,options)
 //获取评论详情
 export const getCommit = (data,options) => fetch('get_commit',data,options)
 //获取搜索结果
+
+// 获取购物车信息
+export const getCart = (data,options) => fetch('get_cart',data,options)
+// 获取普通产品
 export const getProd = (data,options) => fetch('get_prod',data,options)
 
 

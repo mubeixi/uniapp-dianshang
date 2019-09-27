@@ -2,15 +2,15 @@
   <div>
     <page-title class="nav-title" title="购物车" :right="handleShow ? '管理' : '取消'" @handle="handle" hiddenBack="true" :rightHidden="manage"></page-title>
     <div class="content">
-      <div v-if="list.length>0">
-        <div class="order_msg" v-for="i in list" :key="i">
+      <div v-if="CartList.length>0">
+        <div class="order_msg" v-for="i in CartList" :key="i">
           <div class="biz_msg">
            <div class="mbxa"  v-if="!handleShow" @click="checked=!checked">
 				<img v-if="checked" src="/static/checked.png" >
 				<img v-else src="/static/uncheck.png" >
            </div>
             <img src="/static/detail/user1.png" class="biz_logo" alt />
-            <text class="biz_name">张小凡时尚衣橱</text>
+            <text class="biz_name">张小凡时尚衣橱呀</text>
           </div>
           <div class="pro">
           <div class="mbxa"  v-if="!handleShow" @click="checked=!checked">
@@ -42,12 +42,12 @@
       <!-- 猜你喜欢 -->
       <div class="fenge"><span class="red"></span><span class="caini">猜你喜欢</span><span class="red"></span></div>
       <div class="prolist">
-        <div class="pro-item" v-for="i in 4" :key="i">
-          <img src="/static/check/pro1.png" alt="">
-          <div class="item-name">2018夏装新款短袖蕾丝拼接荷叶边波点雪纺连衣裙女时尚名媛...</div>
+        <div class="pro-item" v-for="(item,index) in prodList" :key="index">
+          <img :src="item.ImgPath" alt="">
+          <div class="item-name">{{item.Products_Name}}</div>
           <div class="price">
-            <span class="n_price"><span>￥</span>169.00</span>
-            <span class="o_price"><span>￥</span>189.00</span>
+            <span class="n_price"><span>￥</span>{{item.Products_PriceX}}</span>
+            <span class="o_price"><span>￥</span>{{item.Products_PriceY}}</span>
           </div>
         </div>
       </div>
@@ -59,7 +59,7 @@
       				<img v-else src="/static/uncheck.png"  style="margin-right: 17rpx;">
 					全选
       </div>
-      <div class="total">合计：<span>￥<span>338.00</span></span></div>
+      <div class="total">合计：<span>￥<span>{{total_price}}</span></span></div>
       <div class="checkbtn">结算</div>
     </div>
    <!-- <tabs style="background:#F3F3F3;"></tabs> -->
@@ -69,28 +69,68 @@
 <script>
 // import tabs from "@/components/tabs";
 // import pagetitle from "@/components/title";
+import {getCart,getProd} from '../../common/fetch.js'
 export default {
   name: "App",
   // components: {
   //   tabs,
   //   pagetitle
   // },
+  
   data(){
     return {
-      list:[2],
+      CartList:[],
+	  prodList: [],
       handleShow: true,
-      checked: false
+      checked: false,
+	  total_count: 0,
+	  total_price: 0,
+	  Users_ID:'wkbq6nc2kc',
+	  User_ID:3,
+	  prod_arg: {
+		page: 1,
+		pageSize: 4,
+	  }
     }
+  },
+  // 用户下拉
+  onPullDownRefresh() {
+  	
+  },
+  // 上拉触底
+  onReachBottom() {
+  	this.prod_arg.page += 1;
+  },
+  created() {
+  	this.getCart();
+	this.getProd();
   },
   methods: {
     handle(){
       this.handleShow = !this.handleShow;            
     },
+	getCart() {
+		getCart({Users_ID:this.Users_ID,User_ID: this.User_ID,cart_key:'CartList'}).then(res=>{
+			console.log(res)
+			this.CartList = res.data.CartList;
+			this.total_count= res.data.total_count;
+			this.total_price= res.data.total_price;
+		}).catch(e=>console.log(e))
+	},
+	getProd(){
+		this.prod_arg.Users_ID = this.Users_ID;
+		getProd(this.prod_arg).then(res=>{
+			console.log(res)
+			this.prodList = res.data;
+			
+		}).catch(e=>console.log(e))		
+	}
   },
   computed: {
     manage(){
-      return this.list.length == 0
-    }
+      return this.CartList.length == 0
+    },
+	
   }
 };
 </script>
@@ -257,29 +297,30 @@ export default {
     /* 购物车为空 */
     .none {
       text-align: center;
-      margin-bottom: 20px;
+      margin-bottom: 40rpx;
       color: #B0B0B0;
+	  font-size: 26rpx;
     }
     .none img {
-      height: 110px;
-      width: 100px;
+      height: 220rpx;
+      width: 200rpx;
     }
     .tobuy {
       color: #F43131;
-      border: 1px solid #F43131;
-      height: 25px;
-      line-height: 25px;
-      padding: 2px 10px;
-      border-radius: 10px;
-      margin-left: 10px;
+      border: 2rpx solid #F43131;
+      height: 50rpx;
+      line-height: 50rpx;
+      padding: 4rpx 20rpx;
+      border-radius: 20rpx;
+      margin-left: 20rpx;
     }
     /* 结算 */
     .checkout {
       position: fixed;
-      bottom: 50px;
+      bottom: 100rpx;
       width: 100%;
-      height: 50px;
-      padding: 0 10px;
+      height: 100rpx;
+      padding: 0 20rpx;
       display: flex;
       justify-content: space-between;
       align-items: center;
