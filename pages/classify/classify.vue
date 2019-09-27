@@ -8,7 +8,7 @@
 		</scroll-view>
 		<scroll-view class="nav-right" scroll-y :scroll-top="scrollTop" @scroll="scroll" :style="'height:'+height+'px'" scroll-with-animation>
 			<view v-for="(foods,index) in classifyData" :key="index" class="box">
-				<view :id="i==0?'first':''" class="nav-right-item" v-for="(item,i) in foods.child" :key="i" @click="cart(item.name)">
+				<view :id="i==0?'first':''" class="nav-right-item" v-for="(item,i) in foods.child" :key="i" @click="cart(item)">
 					<image :src="item.Category_Img" />
 					<view>{{item.Category_Name}}</view>
 				</view>
@@ -112,10 +112,9 @@
 				this.categoryActive = index;
 				this.scrollTop == this.arr[index] ? this.scrollTop = this.scrollTop+1 : this.scrollTop = this.arr[index]//防止两次相等造成点击不触发滚动时间
 			},
-			cart: function (text) {
-				uni.showToast({
-					title: 'haha',
-					icon: "none",
+			cart(item) {
+				uni.navigateTo({
+					url:'../detail/detail?Products_ID='+item.Products_ID
 				})
 			}
 		},

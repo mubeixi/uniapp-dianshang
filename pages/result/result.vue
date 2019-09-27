@@ -63,23 +63,31 @@ export default {
 		inputValue:'',
 		pro:[],
 		page:1,
-		pageSize:10,
-		orderby:''
+		pageSize:8,
+		orderby:'',
+		searchAll:[],//搜索历史
     }
   },
   onLoad: function (option) {
 	  this.inputValue=option.inputValue;
+	  const than = this        // 注意this的指向
+	  	uni.getStorage({
+	  		key: 'searchAll',
+	  		success(res) {
+	  			than.searchAll = res.data
+	  		}
+	  	})
+		this.getProd();
    },
   onPullDownRefresh(){
 	   this.active=0;
 	   this.cate=2;
 	   this.pro=[];
 	   this.page=1;
-	   this.pageSize=4;
 	   this.getProd(this.orderby);
    },
   onShow(){
-   	  this.getProd();
+   	  
   },
   onReachBottom(){
 		if(this.pro.length<this.count){
@@ -97,7 +105,6 @@ export default {
 	  getActive(item){
 		  this.pro=[];
 		  this.page=1;
-		  this.pageSize=4;
 		  if(item==0){
 			  this.active=0;
 			  this.orderby='';
@@ -118,8 +125,18 @@ export default {
 	  success(){
 		  this.pro=[];
 		  this.page=1;
-		  this.pageSize=4;
 		  this.getProd(this.orderby);
+		  if(this.inputValue != '') {    // 输入框的值不为空时
+		            const than = this;
+		  					for(var item of this.searchAll){
+		  						if(item==this.inputValue)return;
+		  					}
+		  					this.searchAll.push(this.inputValue)    // 将输入框的值添加到搜索记录数组中存储
+		  					uni.setStorage({
+		  							key: 'searchAll',
+		  							data: than.searchAll
+		  				})
+		  }
 	  },
 	  getProd(item){
 		  let data;
@@ -152,6 +169,11 @@ export default {
 	  },
 	  close(){
 		  this.inputValue="";
+		  this.pro=[];
+		  this.page=1;
+		  this.active=0;
+		  this.orderby='';
+		  this.getProd();
 	  },
       gotoDetail(item){
           uni.navigateTo({
@@ -262,7 +284,7 @@ export default {
 					margin-top: 45rpx;
 				}
 				.price text {
-					font-size: 20rpx;
+					font-size: 24rpx;
 					font-style: normal;
 				}
 				.n_price {
