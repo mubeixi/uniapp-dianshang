@@ -9,14 +9,8 @@
 	            <view class="page-section swiper">
 	                <view class="page-section-spacing">
 	                    <swiper class="swiper" circular="true" indicator-dots="indicatorDots" autoplay="autoplay" interval="4000" duration="500" indicator-color="#fff" indicator-active-color="#ff5000">
-	                        <swiper-item>
-	                             <img src="/static/detail/banner3.png" alt="">
-	                        </swiper-item>
-	                        <swiper-item>
-	                             <img src="/static/detail/banner3.png" alt="">
-	                        </swiper-item>
-	                        <swiper-item>
-	                             <img src="/static/detail/banner3.png" alt="">
+	                        <swiper-item v-for="(item,i) of product.Products_JSON.ImgPath" :key="i">
+	                             <img :src="item" >
 	                        </swiper-item>
 	                    </swiper>
 	                </view>
@@ -25,20 +19,20 @@
     <!-- 产品信息描述 -->
     <div class="section1">
         <div class="price">
-            <span class="n_price"><i>￥</i>169.00</span>
-            <span class="o_price"><i>￥</i>189.00</span>
+            <span class="n_price"><span class="mm">￥</span>{{product.Products_PriceX}}</span>
+            <span class="o_price"><span class="mm">￥</span>{{product.Products_PriceY}}</span>
             <span class="share" @click="showTick" data-type="share">分享此产品</span>
         </div>
-        <div class="name">女装2019秋季新款撞色丝绒织带钉珠蕾丝网纱连衣裙丝绒织带钉珠蕾丝网纱</div>
+        <div class="name">{{product.Products_Name}}</div>
         <div class="sold">
-            <span>库存2461</span>
-            <span>月销368</span>
+            <span>库存{{product.Products_Count}}</span>
+            <span>月销{{product.Products_Sales}}</span>
         </div>
     </div>
     <!-- 领券 -->
-    <div class="section2" >
+    <div class="section2" @click="showTick" data-type="ticks">
         <div class="btn">领券</div>
-        <div class="right" @click="showTick" data-type="ticks">店铺优惠券 <img src="/static/detail/right.png" alt=""></div>
+        <div class="right" >店铺优惠券 <img src="/static/detail/right.png" alt=""></div>
     </div>
     <!-- 包邮等信息 -->
     <div class="section3">
@@ -65,20 +59,11 @@
             <span>评价</span>
             <div class="right" @click="gotoComments">查看全部 <img src="/static/detail/right.png" alt=""></div>
         </div>
-        <div class="c_content">
+        <div class="c_content" v-for="(item,i) of commit" :key="i">
             <div class="c_content_title">
-                <img src="/static/detail/user1.png" alt="">
-                <span class="user_name">张小凡</span>
-                <span class="c_time">2019-09-10</span>
-            </div>
-            <div class="c_content_msg">衣服好淑女，穿上一下子就变的很有名媛风，好喜欢啊，袖口的珍珠设计让整件衣服变得很高贵，秋天再搭配个外套也绝对好看</div>
-            <div class="c_content_img"></div>
-        </div>
-        <div class="c_content">
-            <div class="c_content_title">
-                <img src="/static/detail/user2.png" alt="">
-                <span class="user_name">张小凡</span>
-                <span class="c_time">2019-09-10</span>
+                <img :src="item.ImgPath" alt="">
+                <span class="user_name">{{item.Note}}</span>
+                <span class="c_time">{{item.CreateTime}}</span>
             </div>
             <div class="c_content_msg">衣服好淑女，穿上一下子就变的很有名媛风，好喜欢啊，袖口的珍珠设计让整件衣服变得很高贵，秋天再搭配个外套也绝对好看</div>
             <div class="c_content_img">
@@ -111,11 +96,11 @@
 		<div class="ticks" v-if="type=='ticks'">
 		    <div class="t_title">
 		        领券
-		        <img src="/static/detail/x.png" height="12" width="12" @click="close" alt="">
+		        <image src="/static/detail/x.png"  @click="close" ></image>
 		    </div>
 		    <div class="t_content">
 		        <div class="t_left">
-		            <div class="t_left_t"><i>￥</i><span class="money">10</span><span>店铺优惠券</span></div>
+		            <div class="t_left_t"><span>￥</span><span class="money">10</span><span>店铺优惠券</span></div>
 		            <div class="t_left_c">满199使用</div>
 		            <div class="t_left_b">有效期2019.09.10-2019.09.30</div>
 		        </div>
@@ -123,7 +108,7 @@
 		    </div>
 		    <div class="t_content">
 		        <div class="t_left">
-		            <div class="t_left_t"><i>￥</i><span class="money">10</span><span>店铺优惠券</span></div>
+		            <div class="t_left_t"><span>￥</span><span class="money">10</span><span>店铺优惠券</span></div>
 		            <div class="t_left_c">满199使用</div>
 		            <div class="t_left_b">有效期2019.09.10-2019.09.30</div>
 		        </div>
@@ -137,19 +122,50 @@
 <script>
 import bottom from '../bottom/bottom'
 import popupLayer from '../../components/popup-layer/popup-layer.vue'
+import {getProductDetail,getCommit} from '../../common/fetch.js';
 export default {
     data(){
         return {
             type: '', // 优惠券内容， 分享内容
             shareShow: false,
-            ticksShow: false
+            ticksShow: false,
+			product:'',//商品结果
+			commit:'',//获取评论
         }
     },
     components: {
         bottom,
 		popupLayer
     },
+	created(){
+		this.getDetail();//缺少商品id	
+	},
+	mounted(){
+		this.getCommit();//缺少商品id
+	},
     methods: {
+		getCommit(){
+			let data={
+				Users_ID:'wkbq6nc2kc',
+				Products_ID:236
+			}
+			getCommit(data).then(res=>{
+				this.commit=res.data;
+			}).catch(e=>{
+				console.log(e)
+			})
+		},
+		getDetail(){
+			let data={
+				prod_id:236,
+				Users_ID:'wkbq6nc2kc'
+			}
+			getProductDetail(data).then(res=>{
+				this.product=res.data;
+			}).catch(e=>{
+				console.log(e)
+			})
+		},
         goBack(){
             this.$router.go(-1);
         },
@@ -214,7 +230,9 @@ export default {
         text-align:center;
         margin-bottom: 40rpx;
     }
-    .t_title img {
+    .t_title image {
+		height: 24rpx;
+		width: 24rpx;
         float: right;
         margin-right: 20rpx;
     }
@@ -222,7 +240,8 @@ export default {
         position: relative;
         width: 720rpx;
         height: 160rpx;
-        background: url('/static/detail/yhq.png') no-repeat ;
+        // background: url('/static/detail/yhq.png') no-repeat ;
+		background-color: #FDF1E5;
         background-size: cover;
         margin: 0 auto 30rpx;
         padding: 20rpx 0 28rpx 40rpx;
@@ -299,7 +318,7 @@ export default {
     .price {
         margin-top: 44rpx;
     }
-    .price i {
+    .price .mm {
         font-size: 20rpx;
         font-style: normal;
     }
@@ -320,6 +339,7 @@ export default {
         font-size: 36rpx;
     }
     .o_price {
+		margin-left: 10rpx;
         color: #afafaf;
         font-size: 28rpx;
         text-decoration: line-through;
@@ -378,6 +398,7 @@ export default {
     }
     .section3 img {
         width: 28rpx;
+		height: 28rpx;
         margin-right: 10rpx;
     }
     /* 包邮信息等 end */

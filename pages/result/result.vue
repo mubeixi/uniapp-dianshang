@@ -2,80 +2,42 @@
   <div class="bd">
     <div class="top">
         <image src="../../static/left.png" class="back"></image>
-		<input type="text" value="女装裙子 夏季" class="search" />
-		<icon type="clear" class="clear"></icon>
+		<input type="text" v-model="inputValue" class="search" />
+		<div class="clear">
+			<icon type="clear" class="clears" size="37rpx" @click="close"></icon>
+		</div>
     </div>
     <div class="tabs">
         <div :class="[active == 0 ? 'checked' : '','tab']" @click="active=0">默认<div class="line"></div></div>
         <div :class="[active == 1 ? 'checked' : '','tab']" @click="active=1">销量<div class="line"></div></div>
         <div :class="[active == 2 ? 'checked' : '','tab']" @click="active=2">价格<div class="line"></div></div>
-        <div :class="[active == 3 ? 'checked' : '','tab']" @click="change">筛选<image src="/static/result/jx.png" @click="changeCate" alt=""></image> <div class="line"></div></div>
+        <div :class="[active == 3 ? 'checked' : '','tab']" @click="change">筛选<div class="line"></div></div>
+		<div><image src="/static/result/jx.png" @click="changeCate" alt="" class="imgm"></image></div>
     </div>
 	<div v-if="cate==1">
 		<div class="cate1">
-			<div class="pro" @click="gotoDetail">
-				<image src="../../static/result/pro1.png" alt=""  class="pro-img"></image>
+			<div class="pro" @click="gotoDetail" v-for="(item,i) of pro" :key="i">
+				<image :src="item.Products_JSON.ImgPath" alt=""  class="pro-img"></image>
 				<div class="pro_desc">
-					<div class="title">2018夏装新款短袖蕾丝拼接荷叶边波点雪白连衣裙女时尚热卖</div>
+					<div class="title">{{item.Products_Name}}</div>
 					<div class="price">
-						<span class="n_price"><text>￥</text>169.00</span>
-						<span class="o_price"><text>￥</text>189.00</span>
+						<span class="n_price"><text>￥</text>{{item.Products_PriceX}}</span>
+						<span class="o_price"><text>￥</text>{{item.Products_PriceY}}</span>
 					</div>
-					<div class="sold">已售22件</div>
-				</div>
-			</div>
-			<div class="pro">
-				<image src="../../static/result/pro2.png" alt="" class="pro-img"></image>
-				<div class="pro_desc">
-					<div class="title">2018夏装新款短袖蕾丝拼接荷叶边波点雪白连衣裙女时尚热卖</div>
-					<div class="price">
-						<span class="n_price"><text>￥</text>169.00</span>
-						<span class="o_price"><text>￥</text>189.00</span>
-					</div>
-					<div class="sold">已售22件</div>
+					<div class="sold">已售{{item.Products_Sales}}件</div>
 				</div>
 			</div>
 		</div>	
 	</div>
     <div v-else>
-		<div class="cate2">
-			<div class="pro" @click="gotoDetail">
-				<image src="../../static/result/pro1.png" alt=""  class="pro-img"></image>
+		<div class="cate2" >
+			<div class="pro" @click="gotoDetail" v-for="(item,i) of pro" :key="i">
+				<image :src="item.Products_JSON.ImgPath" alt=""  class="pro-img"></image>
 				<div class="pro_desc">
-					<div class="title">2018夏装新款短袖蕾丝拼接荷叶边波点雪白连衣裙女时尚热卖</div>
+					<div class="title">{{item.Products_Name}}</div>
 					<div class="price">
-						<span class="n_price"><text>￥</text>169.00</span>
-						<span class="o_price"><text>￥</text>189.00</span>
-					</div>
-				</div>
-			</div>
-			<div class="pro" @click="gotoDetail">
-				<image src="../../static/result/pro1.png" alt=""  class="pro-img"></image>
-				<div class="pro_desc">
-					<div class="title">2018夏装新款短袖蕾丝拼接荷叶边波点雪白连衣裙女时尚热卖</div>
-					<div class="price">
-						<span class="n_price"><text>￥</text>169.00</span>
-						<span class="o_price"><text>￥</text>189.00</span>
-					</div>
-				</div>
-			</div>
-			<div class="pro" @click="gotoDetail">
-				<image src="../../static/result/pro1.png" alt=""  class="pro-img"></image>
-				<div class="pro_desc">
-					<div class="title">2018夏装新款短袖蕾丝拼接荷叶边波点雪白连衣裙女时尚热卖</div>
-					<div class="price">
-						<span class="n_price"><text>￥</text>169.00</span>
-						<span class="o_price"><text>￥</text>189.00</span>
-					</div>
-				</div>
-			</div>
-			<div class="pro" @click="gotoDetail">
-				<image src="../../static/result/pro1.png" alt=""  class="pro-img"></image>
-				<div class="pro_desc">
-					<div class="title">2018夏装新款短袖蕾丝拼接荷叶边波点雪白连衣裙女时尚热卖</div>
-					<div class="price">
-						<span class="n_price"><text>￥</text>169.00</span>
-						<span class="o_price"><text>￥</text>189.00</span>
+						<span class="n_price"><text>￥</text>{{item.Products_PriceX}}</span>
+						<span class="o_price"><text>￥</text>{{item.Products_PriceY}}</span>
 					</div>
 				</div>
 			</div>
@@ -89,21 +51,45 @@
 
 <script>
 import popupLayer from '../../components/popup-layer/popup-layer.vue'
+import {getProd} from '../../common/fetch.js';
 export default {
   name: 'App',
   props: {value:'',},
   data() {
     return {
         active: 0,
-		cate: 2
+		cate: 2,
+		inputValue:'',
+		pro:''
     }
   },
+  onLoad: function (option) {
+	  this.inputValue=option.inputValue;
+   },
+  onReachBottom(){
+		
+   },
   components: {
     popupLayer
   },
-  methods: {
+  created(){
+	  this.getProd();
+  },
+  methods:{
+	  getProd(){
+		  let data={
+			  Users_ID:'wkbq6nc2kc',
+			  Products_Name:this.inputValue
+		  }
+		  getProd(data).then(res=>{
+			 this.pro=res.data; 
+		  }).catch(e=>{})
+	  },
+	  close(){
+		  this.inputValue="";
+	  },
       gotoDetail(){
-          this.$router.push({name: 'detail'})
+          
       },
 	  changeCate(){
 		  this.cate = this.cate == 1 ? 2 : 1
@@ -123,6 +109,7 @@ export default {
         align-items: center;
         padding: 30rpx 20rpx 0;
 		box-sizing: border-box;
+		position: relative;
 		.back {
 			width: 23rpx;
 			height: 37rpx;
@@ -142,6 +129,11 @@ export default {
 			position: absolute;
 			top: 43rpx;
 			right: 48rpx;
+			width: 37rpx;
+			height: 37rpx;
+			z-index: 9999;
+		}
+		.clears{
 			width: 37rpx;
 			height: 37rpx;
 		}
@@ -273,5 +265,9 @@ export default {
 			}
 		}
 		
+	}
+	.imgm{
+		width: 36rpx;
+		height: 34rpx;
 	}
 </style>

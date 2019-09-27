@@ -90,7 +90,7 @@
 	    "borderStyle": "black",
 	    "backgroundColor": "#ffffff",
 	    "list": [{
-	        "pagePath": "pages/check/check",
+	        "pagePath": "pages/index/index",
 	        "iconPath": "static/home.png",
 	        "selectedIconPath": "static/homeCheck.png",
 	        "text": "首页"

@@ -16,7 +16,7 @@
 /*每个页面公共css */
 
 
-.wrap.data-v-2c6595ab {
+.wrap.data-v-0e4ebb98 {
     height: 86rpx;
     line-height: 86rpx;
     width: 100%;
@@ -27,14 +27,14 @@
     color: #333;
     text-align: center;
 }
-._img.data-v-2c6595ab {
+._img.data-v-0e4ebb98 {
     position: absolute;
     top: 24rpx;
     left: 25rpx;
     width: 23rpx;
     height: 37rpx;
 }
-.right.data-v-2c6595ab {
+.right.data-v-0e4ebb98 {
     position: absolute;
     top: 0;
     right: 20rpx;
