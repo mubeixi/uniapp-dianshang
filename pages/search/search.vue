@@ -23,7 +23,7 @@
 </template>
 
 <script>
-
+import {goBack}  from '../../common/tool.js'
 // import tabs from '@/components/tabs'
 export default {
   name: 'App',
@@ -43,6 +43,7 @@ export default {
 	  },
 	  close(){
 		  this.inputValue='';
+		  goBack();
 	  },
       onSearch: function(){
           console.log('1')

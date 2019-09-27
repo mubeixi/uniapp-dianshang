@@ -123,6 +123,7 @@
 import bottom from '../bottom/bottom'
 import popupLayer from '../../components/popup-layer/popup-layer.vue'
 import {getProductDetail,getCommit} from '../../common/fetch.js';
+import {goBack}  from '../../common/tool.js'
 export default {
     data(){
         return {
@@ -137,17 +138,21 @@ export default {
         bottom,
 		popupLayer
     },
-	created(){
-		this.getDetail();//缺少商品id	
-	},
-	mounted(){
-		this.getCommit();//缺少商品id
+	onLoad: function (option) {
+		  this.Products_ID=option.Products_ID;
+	 },
+	onShow(){
+			this.getDetail(this.Products_ID);
+			this.getCommit(this.Products_ID);
 	},
     methods: {
-		getCommit(){
+		goBack(){
+			goBack();
+		},
+		getCommit(item){
 			let data={
 				Users_ID:'wkbq6nc2kc',
-				Products_ID:236
+				Products_ID:item
 			}
 			getCommit(data).then(res=>{
 				this.commit=res.data;
@@ -155,9 +160,9 @@ export default {
 				console.log(e)
 			})
 		},
-		getDetail(){
+		getDetail(item){
 			let data={
-				prod_id:236,
+				prod_id:item,
 				Users_ID:'wkbq6nc2kc'
 			}
 			getProductDetail(data).then(res=>{
@@ -166,9 +171,6 @@ export default {
 				console.log(e)
 			})
 		},
-        goBack(){
-            this.$router.go(-1);
-        },
         gotoComments(){
             
         },
