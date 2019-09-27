@@ -24,7 +24,7 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-.mbxa.data-v-23e8f842 {
+.mbxa.data-v-b71d7a0e {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -34,11 +34,11 @@
       -ms-flex-align: center;
           align-items: center;
 }
-.mbxa ._img.data-v-23e8f842 {
+.mbxa ._img.data-v-b71d7a0e {
     width: 34rpx;
     height: 34rpx;
 }
-.pro-list.data-v-23e8f842 {
+.pro-list.data-v-b71d7a0e {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -49,7 +49,7 @@
           justify-content: space-between;
   padding: 15px 10px;
 }
-.pro.data-v-23e8f842 {
+.pro.data-v-b71d7a0e {
   -webkit-box-flex: 1;
   -webkit-flex: 1;
       -ms-flex: 1;
@@ -61,16 +61,16 @@
   display: flex;
   margin-bottom: 10px;
 }
-.pros.data-v-23e8f842 {
+.pros.data-v-b71d7a0e {
   width: 300rpx;
   height: 300rpx;
   margin-right: 29rpx;
 }
-.pro-img.data-v-23e8f842 {
+.pro-img.data-v-b71d7a0e {
   width: 100%;
   height: 100%;
 }
-.pro-name.data-v-23e8f842 {
+.pro-name.data-v-b71d7a0e {
   width: 321rpx;
   font-size: 26rpx;
   color: #333;
@@ -83,11 +83,11 @@
      text-overflow: ellipsis;
   -webkit-box-orient: vertical;
 }
-.collection.data-v-23e8f842 {
+.collection.data-v-b71d7a0e {
   font-size: 24rpx;
   color: #888;
 }
-.btn.data-v-23e8f842 {
+.btn.data-v-b71d7a0e {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -104,11 +104,11 @@
   color: #F43131;
   font-size: 36rpx;
 }
-.btn ._span.span ._span.data-v-23e8f842 {
+.btn ._span.span ._span.data-v-b71d7a0e {
   font-style: normal;
   font-size: 24rpx;
 }
-.btn .button.data-v-23e8f842 {
+.btn .button.data-v-b71d7a0e {
   width: 135rpx;
   height: 55rpx;
   background: #f43131;
@@ -119,7 +119,7 @@
   line-height: 55rpx;
   text-align: center;
 }
-.bottom.data-v-23e8f842 {
+.bottom.data-v-b71d7a0e {
   position: fixed;
   bottom: 0;
   left: 0;
@@ -144,7 +144,7 @@
   -webkit-box-shadow: 0 0 9px rgba(0, 0, 0, 0.4);
           box-shadow: 0 0 9px rgba(0, 0, 0, 0.4);
 }
-.b_left.data-v-23e8f842 {
+.b_left.data-v-b71d7a0e {
   font-size: 28rpx;
   color: #666666;
   display: -webkit-box;
@@ -156,12 +156,12 @@
       -ms-flex-align: center;
           align-items: center;
 }
-.b_left ._img.data-v-23e8f842 {
+.b_left ._img.data-v-b71d7a0e {
     width: 34rpx;
     height: 34rpx;
     margin-right: 20rpx;
 }
-.b_right.data-v-23e8f842 {
+.b_right.data-v-b71d7a0e {
   font-size: 26rpx;
   color: #F43131;
   height: 54rpx;
