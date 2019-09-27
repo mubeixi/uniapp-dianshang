@@ -2,9 +2,9 @@
   <div >
     <form action="/">
 		<div class="search-wrap">
-			<icon type="search" size="17" class="search_icon"/>
-			<input type="text" class="search-input" name="search"> 
-			<span>取消</span>
+			<icon type="search" size="34rpx" class="search_icon"/>
+			<input type="text" class="search-input" name="search" v-model="inputValue" @confirm="success"> 
+			<span @click="close">取消</span>
 		</div>	
     </form>
     <div class="history">
@@ -23,22 +23,31 @@
 </template>
 
 <script>
-
+import {goBack}  from '../../common/tool.js'
 // import tabs from '@/components/tabs'
 export default {
   name: 'App',
   data(){
       return {
-          value: ''
+		  inputValue:''
       }
   },
   components: {
     
   },
   methods: {
+	  success(){
+		  uni.navigateTo({
+			  url:'../result/result?inputValue='+this.inputValue
+		  })
+	  },
+	  close(){
+		  this.inputValue='';
+		  goBack();
+	  },
       onSearch: function(){
           console.log('1')
-          this.$router.push({path:'/result'})
+         
       },
       onCancel: function(){
 

@@ -1,109 +1,162 @@
 <template>
   <div class="bd">
     <div class="top">
-        <image src="../../static/left.png" class="back"></image>
-		<input type="text" value="女装裙子 夏季" class="search" />
-		<icon type="clear" class="clear"></icon>
+        <image src="../../static/left.png" class="back" @click="goBack"></image>
+		<input type="text" v-model="inputValue" class="search" @confirm="success" />
+		<div class="clear">
+			<icon type="clear" class="clears" size="37rpx" @click="close"></icon>
+		</div>
     </div>
     <div class="tabs">
-        <div :class="[active == 0 ? 'checked' : '','tab']" @click="active=0">默认<div class="line"></div></div>
-        <div :class="[active == 1 ? 'checked' : '','tab']" @click="active=1">销量<div class="line"></div></div>
-        <div :class="[active == 2 ? 'checked' : '','tab']" @click="active=2">价格<div class="line"></div></div>
-        <div :class="[active == 3 ? 'checked' : '','tab']" @click="change">筛选<image src="/static/result/jx.png" @click="changeCate" alt=""></image> <div class="line"></div></div>
+        <div :class="[active == 0 ? 'checked' : '','tab']" @click="getActive(0)">默认<div class="line"></div></div>
+        <div :class="[active == 1 ? 'checked' : '','tab']" @click="getActive(1)">销量<div class="line"></div></div>
+        <div :class="[active == 2 ? 'checked' : '','tab']" @click="getActive(2)">价格<div class="line"></div></div>
+        <div :class="[active == 3 ? 'checked' : '','tab']" @click="change">筛选<div class="line"></div></div>
+		<div><image src="/static/result/jx.png" @click="changeCate" alt="" class="imgm"></image></div>
     </div>
 	<div v-if="cate==1">
 		<div class="cate1">
-			<div class="pro" @click="gotoDetail">
-				<image src="../../static/result/pro1.png" alt=""  class="pro-img"></image>
+			<div class="pro" @click="gotoDetail(item)" v-for="(item,i) of pro" :key="i">
+				<image :src="item.Products_JSON.ImgPath" alt=""  class="pro-img"></image>
 				<div class="pro_desc">
-					<div class="title">2018夏装新款短袖蕾丝拼接荷叶边波点雪白连衣裙女时尚热卖</div>
+					<div class="title">{{item.Products_Name}}</div>
 					<div class="price">
-						<span class="n_price"><text>￥</text>169.00</span>
-						<span class="o_price"><text>￥</text>189.00</span>
+						<span class="n_price"><text>￥</text>{{item.Products_PriceX}}</span>
+						<span class="o_price"><text>￥</text>{{item.Products_PriceY}}</span>
 					</div>
-					<div class="sold">已售22件</div>
-				</div>
-			</div>
-			<div class="pro">
-				<image src="../../static/result/pro2.png" alt="" class="pro-img"></image>
-				<div class="pro_desc">
-					<div class="title">2018夏装新款短袖蕾丝拼接荷叶边波点雪白连衣裙女时尚热卖</div>
-					<div class="price">
-						<span class="n_price"><text>￥</text>169.00</span>
-						<span class="o_price"><text>￥</text>189.00</span>
-					</div>
-					<div class="sold">已售22件</div>
+					<div class="sold">已售{{item.Products_Sales}}件</div>
 				</div>
 			</div>
 		</div>	
 	</div>
     <div v-else>
-		<div class="cate2">
-			<div class="pro" @click="gotoDetail">
-				<image src="../../static/result/pro1.png" alt=""  class="pro-img"></image>
+		<div class="cate2" >
+			<div class="pro" @click="gotoDetail(item)" v-for="(item,i) of pro" :key="i">
+				<image :src="item.Products_JSON.ImgPath" alt=""  class="pro-img"></image>
 				<div class="pro_desc">
-					<div class="title">2018夏装新款短袖蕾丝拼接荷叶边波点雪白连衣裙女时尚热卖</div>
+					<div class="title">{{item.Products_Name}}</div>
 					<div class="price">
-						<span class="n_price"><text>￥</text>169.00</span>
-						<span class="o_price"><text>￥</text>189.00</span>
-					</div>
-				</div>
-			</div>
-			<div class="pro" @click="gotoDetail">
-				<image src="../../static/result/pro1.png" alt=""  class="pro-img"></image>
-				<div class="pro_desc">
-					<div class="title">2018夏装新款短袖蕾丝拼接荷叶边波点雪白连衣裙女时尚热卖</div>
-					<div class="price">
-						<span class="n_price"><text>￥</text>169.00</span>
-						<span class="o_price"><text>￥</text>189.00</span>
-					</div>
-				</div>
-			</div>
-			<div class="pro" @click="gotoDetail">
-				<image src="../../static/result/pro1.png" alt=""  class="pro-img"></image>
-				<div class="pro_desc">
-					<div class="title">2018夏装新款短袖蕾丝拼接荷叶边波点雪白连衣裙女时尚热卖</div>
-					<div class="price">
-						<span class="n_price"><text>￥</text>169.00</span>
-						<span class="o_price"><text>￥</text>189.00</span>
-					</div>
-				</div>
-			</div>
-			<div class="pro" @click="gotoDetail">
-				<image src="../../static/result/pro1.png" alt=""  class="pro-img"></image>
-				<div class="pro_desc">
-					<div class="title">2018夏装新款短袖蕾丝拼接荷叶边波点雪白连衣裙女时尚热卖</div>
-					<div class="price">
-						<span class="n_price"><text>￥</text>169.00</span>
-						<span class="o_price"><text>￥</text>189.00</span>
+						<span class="n_price"><text>￥</text>{{item.Products_PriceX}}</span>
+						<span class="o_price"><text>￥</text>{{item.Products_PriceY}}</span>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 	<popup-layer ref="popupLayer"  :direction="'bottom'">
-		
+
 	</popup-layer>
   </div>
 </template>
 
 <script>
 import popupLayer from '../../components/popup-layer/popup-layer.vue'
+import {getProd} from '../../common/fetch.js';
+import {goBack}  from '../../common/tool.js'
 export default {
   name: 'App',
   props: {value:'',},
   data() {
     return {
         active: 0,
-		cate: 2
+		cate: 2,
+		inputValue:'',
+		pro:[],
+		page:1,
+		pageSize:10,
+		orderby:''
     }
   },
+  onLoad: function (option) {
+	  this.inputValue=option.inputValue;
+   },
+  onPullDownRefresh(){
+	   this.active=0;
+	   this.cate=2;
+	   this.pro=[];
+	   this.page=1;
+	   this.pageSize=4;
+	   this.getProd(this.orderby);
+   },
+  onShow(){
+   	  this.getProd();
+  },
+  onReachBottom(){
+		if(this.pro.length<this.count){
+			this.page++;
+			this.getProd(this.orderby);
+		}
+   },
   components: {
     popupLayer
   },
-  methods: {
-      gotoDetail(){
-          this.$router.push({name: 'detail'})
+  created(){
+	 
+  },
+  methods:{
+	  getActive(item){
+		  this.pro=[];
+		  this.page=1;
+		  this.pageSize=4;
+		  if(item==0){
+			  this.active=0;
+			  this.orderby='';
+			  this.getProd();
+		  }else if(item==1){
+			  this.active=1;
+			  this.orderby='sales';
+			  this.getProd(this.orderby);
+		  }else{
+			  this.active=2;
+			   this.orderby='price';
+			  this.getProd(this.orderby);
+		  }
+	  },
+	  goBack(){
+		  goBack();
+	  },
+	  success(){
+		  this.pro=[];
+		  this.page=1;
+		  this.pageSize=4;
+		  this.getProd(this.orderby);
+	  },
+	  getProd(item){
+		  let data;
+		  if(this.inputValue){
+			 data={
+				 Users_ID:'wkbq6nc2kc',
+				 Products_Name:this.inputValue,
+				 page:this.page,
+				 pageSize:this.pageSize
+			 } 
+		  }else{
+			data={
+				Users_ID:'wkbq6nc2kc',
+				page:this.page,
+				pageSize:this.pageSize
+			} 
+		  }	
+		  if(item=="sales"){
+			  data.order_by=item;
+		  }else if(item=="price"){
+			  data.order_by=item;
+		  }
+		  getProd(data).then(res=>{
+			  for(var item of res.data){
+				  this.pro.push(item);
+			  }
+			 //this.pro=res.data; 
+			 this.count=res.totalCount;
+		  }).catch(e=>{})
+	  },
+	  close(){
+		  this.inputValue="";
+	  },
+      gotoDetail(item){
+          uni.navigateTo({
+          			  url:'../detail/detail?Products_ID='+item.Products_ID
+          })
       },
 	  changeCate(){
 		  this.cate = this.cate == 1 ? 2 : 1
@@ -123,6 +176,7 @@ export default {
         align-items: center;
         padding: 30rpx 20rpx 0;
 		box-sizing: border-box;
+		position: relative;
 		.back {
 			width: 23rpx;
 			height: 37rpx;
@@ -142,6 +196,11 @@ export default {
 			position: absolute;
 			top: 43rpx;
 			right: 48rpx;
+			width: 37rpx;
+			height: 37rpx;
+			z-index: 9999;
+		}
+		.clears{
 			width: 37rpx;
 			height: 37rpx;
 		}
@@ -273,5 +332,9 @@ export default {
 			}
 		}
 		
+	}
+	.imgm{
+		width: 36rpx;
+		height: 34rpx;
 	}
 </style>

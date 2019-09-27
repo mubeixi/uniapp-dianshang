@@ -76,3 +76,10 @@ export const ls = {
     return uni.clearStorageSync()
   }
 };
+
+export const goBack=function(){
+	console.log("111111111")
+	uni.navigateBack({
+	    delta: 1
+	});
+}
