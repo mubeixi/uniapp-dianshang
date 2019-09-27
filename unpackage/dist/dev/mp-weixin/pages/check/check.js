@@ -90,6 +90,16 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  var f0 = _vm._f("formatphone")(_vm.addressinfo.Address_Mobile)
+
+  _vm.$mp.data = Object.assign(
+    {},
+    {
+      $root: {
+        f0: f0
+      }
+    }
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -122,7 +132,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var popupLayer = function popupLayer() {return __webpack_require__.e(/*! import() | components/popup-layer/popup-layer */ "components/popup-layer/popup-layer").then(__webpack_require__.bind(null, /*! ../../components/popup-layer/popup-layer.vue */ 172));};var _default =
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
 
 
@@ -260,6 +270,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
+var _fetch = __webpack_require__(/*! ../../common/fetch.js */ 40);var popupLayer = function popupLayer() {return __webpack_require__.e(/*! import() | components/popup-layer/popup-layer */ "components/popup-layer/popup-layer").then(__webpack_require__.bind(null, /*! ../../components/popup-layer/popup-layer.vue */ 172));};var _default =
 {
   components: {
     popupLayer: popupLayer },
@@ -275,9 +286,26 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       wl_list: [
       { name: '顺丰', price: '免邮', index: 0 },
       { name: '中通', price: '免邮', index: 1 },
-      { name: '圆通', price: '￥20', index: 2 }] };
+      { name: '圆通', price: '￥20', index: 2 }],
 
+      Users_ID: 'wkbq6nc2kc',
+      User_ID: 3,
+      addressinfo: {} // 收货地址信息
+    };
+  },
+  filters: {
+    formatphone: function formatphone(value) {
+      console.log(value);
+      if (value) {
+        var len = value.length;
+        var xx = value.substring(3, len - 4);
+        var values = value.replace(xx, "****");
+        return values;
+      }
+    } },
 
+  created: function created() {
+    this.getAddress();
   },
   methods: {
     // 选择运费
@@ -286,6 +314,22 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
     },
     closeMethod: function closeMethod() {
       this.$refs.popupRef.close();
+    },
+    getAddress: function getAddress() {var _this = this;
+      (0, _fetch.getAddress)({ Users_ID: this.Users_ID, User_ID: this.User_ID }).then(function (res) {
+        console.log(res);
+        if (res.errorCode == 0) {
+          for (var i in res.data) {
+            for (var j in res.data[i]) {
+              if (j == 'Address_Is_Default') {
+                res.data[i][j] == 1;
+                _this.addressinfo = res.data[i];
+              }
+            }
+          }
+          console.log(_this.addressinfo);
+        }
+      }).catch(function (e) {return console.log(e);});
     } } };exports.default = _default;
 
 /***/ }),

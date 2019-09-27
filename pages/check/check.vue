@@ -4,8 +4,8 @@
         <div class="address">
             <img class="loc_icon" src="/static/location.png" alt="">
             <div class="add_msg">
-                <div class="name">收货人：张小凡 <span>136****1133</span></div>
-                <div class="location">收货地址：郑州市金水区农业路与花园路国贸广场22楼2208室</div>
+                <div class="name">收货人：{{addressinfo.Address_Name}} <span>{{addressinfo.Address_Mobile | formatphone}}</span></div>
+                <div class="location">收货地址：{{addressinfo.Address_Province_name}}{{addressinfo.Address_City_name}}{{addressinfo.Address_Area_name}}{{addressinfo.Address_Town_name}}</div>
             </div>
             <img class="right" src="/static/right.png" alt="">
         </div>
@@ -136,6 +136,7 @@
 
 <script>
 import popupLayer from '../../components/popup-layer/popup-layer.vue';
+import {getAddress} from '../../common/fetch.js';
 export default {
     components: {
         popupLayer
@@ -153,8 +154,25 @@ export default {
                 {name:'中通',price:'免邮',index:1},
                 {name:'圆通',price:'￥20',index:2}
             ],
+			Users_ID:'wkbq6nc2kc',
+			User_ID:3,
+			addressinfo: {}, // 收货地址信息
         }
     },
+	filters: {
+		formatphone: function(value) {
+			console.log(value)
+			if(value) {
+				var len= value.length;
+				var xx= value.substring(3,len-4);
+				var values = value.replace(xx,"****");
+				return values;				
+			}
+		}
+	},
+	created() {
+		this.getAddress();
+	},
     methods: {
         // 选择运费
         changeShip(){
@@ -163,6 +181,22 @@ export default {
 		closeMethod(){
 			this.$refs.popupRef.close();
 		},
+		getAddress(){
+			getAddress({Users_ID: this.Users_ID,User_ID: this.User_ID,}).then(res=>{
+				console.log(res)
+				if(res.errorCode == 0) {
+					for(let i in res.data){
+						for(let j in res.data[i]){
+							if(j=='Address_Is_Default'){
+								res.data[i][j] == 1;
+								this.addressinfo = res.data[i]
+							}
+						}
+					}
+					console.log(this.addressinfo)
+				}
+			}).catch(e => console.log(e))
+		}
     }
 }
 </script>
@@ -179,6 +213,9 @@ export default {
         padding: 44rpx;
         border-top: 30rpx solid #FFF3F3F3;
         border-bottom: 20rpx solid #FFF3F3F3;
+		.add_msg {
+			flex: 1;
+		}
     }
     .loc_icon {
         width: 41rpx;

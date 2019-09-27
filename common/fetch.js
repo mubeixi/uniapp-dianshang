@@ -57,6 +57,8 @@ export const getProductCategory = (data,options) => fetch('pro_cate',data,option
 export const getCart = (data,options) => fetch('get_cart',data,options)
 // 获取普通产品
 export const getProd = (data,options) => fetch('get_prod',data,options)
+// 获取收货地址
+export const getAddress = (data,options) => fetch('get_address',data,options)
 
 
 

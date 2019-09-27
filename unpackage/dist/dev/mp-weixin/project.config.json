@@ -42,6 +42,27 @@
 					"pathName": "pages/cart/cart",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/groupDetail/groupDetail",
+					"pathName": "pages/groupDetail/groupDetail",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 2,
+					"name": "pages/check/check",
+					"pathName": "pages/check/check",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/detail/detail",
+					"pathName": "pages/detail/detail",
+					"query": "",
+					"scene": null
 				}
 			]
 		}

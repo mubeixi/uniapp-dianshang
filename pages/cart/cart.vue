@@ -115,9 +115,11 @@ export default {
 	getCart() {
 		getCart({Users_ID:this.Users_ID,User_ID: this.User_ID,cart_key:'CartList'}).then(res=>{
 			console.log(res)
-			this.CartList = res.data.CartList;
-			this.total_count= res.data.total_count;
-			this.total_price= res.data.total_price;
+			if(res.errorCode == 0){
+				this.CartList = res.data.CartList;
+				this.total_count= res.data.total_count;
+				this.total_price= res.data.total_price;				
+			}
 		}).catch(e=>console.log(e))
 	},
 	getProd(){
@@ -125,9 +127,11 @@ export default {
 		let oldlist = this.prodList;
 		getProd(this.prod_arg).then(res=>{
 			console.log(res)
-			this.prodList = oldlist.concat(res.data);
-			this.hasMore = (res.totalCount / this.prod_arg.pageSize) > this.prod_arg.page ? true : false ;
-			this.prod_arg.page += 1;
+			if(res.errorCode == 0){
+				this.prodList = oldlist.concat(res.data);
+				this.hasMore = (res.totalCount / this.prod_arg.pageSize) > this.prod_arg.page ? true : false ;
+				this.prod_arg.page += 1;				
+			}
 		}).catch(e=>console.log(e))		
 	}
   },

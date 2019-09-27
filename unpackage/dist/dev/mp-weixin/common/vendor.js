@@ -8918,7 +8918,7 @@ module.exports = g;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.createToken = exports.get_Users_Account = exports.get_Users_ID = exports.getProd = exports.getCart = exports.getProductCategory = exports.setSkinConfig = exports.getSkinConfig = exports.chooseShopSkin = exports.getShopSkinList = exports.getProductList = exports.getCouponList = exports.login = void 0;var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.createToken = exports.get_Users_Account = exports.get_Users_ID = exports.getAddress = exports.getProd = exports.getCart = exports.getProductCategory = exports.setSkinConfig = exports.getSkinConfig = exports.chooseShopSkin = exports.getShopSkinList = exports.getProductList = exports.getCouponList = exports.login = void 0;var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
 var _env = __webpack_require__(/*! ./env.js */ 24);
 var _md = __webpack_require__(/*! ./tool/md5 */ 41);
 
@@ -8976,7 +8976,9 @@ exports.setSkinConfig = setSkinConfig;var getProductCategory = function getProdu
 // 获取购物车信息
 exports.getProductCategory = getProductCategory;var getCart = function getCart(data, options) {return fetch('get_cart', data, options);};
 // 获取普通产品
-exports.getCart = getCart;var getProd = function getProd(data, options) {return fetch('get_prod', data, options);};exports.getProd = getProd;
+exports.getCart = getCart;var getProd = function getProd(data, options) {return fetch('get_prod', data, options);};
+// 获取收货地址
+exports.getProd = getProd;var getAddress = function getAddress(data, options) {return fetch('get_address', data, options);};exports.getAddress = getAddress;
 
 
 
