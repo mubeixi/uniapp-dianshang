@@ -44,7 +44,7 @@
 		</div>
 	</div>
 	<popup-layer ref="popupLayer"  :direction="'bottom'">
-		
+
 	</popup-layer>
   </div>
 </template>
@@ -63,7 +63,7 @@ export default {
 		inputValue:'',
 		pro:[],
 		page:1,
-		pageSize:8,
+		pageSize:10,
 		orderby:''
     }
   },
