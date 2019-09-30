@@ -3,7 +3,7 @@
     <div class="top">
         <image src="../../static/left.png" class="back" @click="goBack"></image>
 		<input type="text" v-model="inputValue" class="search" @confirm="success" />
-		<div class="clear">
+		<div class="clear" v-if="inputValue">
 			<icon type="clear" class="clears" size="37rpx" @click="close"></icon>
 		</div>
     </div>

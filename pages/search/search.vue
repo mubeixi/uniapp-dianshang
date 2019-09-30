@@ -3,7 +3,7 @@
     <form action="/">
 		<div class="search-wrap">
 			<icon type="search" size="34rpx" class="search_icon"/>
-			<input type="text" class="search-input" name="search" v-model="inputValue" @confirm="success"> 
+			<input type="text" class="search-input" name="search" v-model="inputValue" @confirm="success"  confirm-type='search' focus="true"> 
 			<span @click="close">取消</span>
 		</div>	
     </form>
@@ -117,6 +117,10 @@ export default {
 			top: 46rpx;
 			left: 61rpx;
 		}
+		span{
+			font-size: 30rpx;
+			color: #333333;
+		}
 	}
     .history {
         padding: 0 20rpx;
@@ -124,17 +128,19 @@ export default {
 	.title{
 		display: flex;
 		justify-content: space-between;
-		height: 26rpx;
+		height: 40rpx;
+		align-items: center;
 	}
     .title div{
         font-size: 28rpx;
         color: #333;
         font-weight: 500;
-		height: 26rpx;
-        line-height: 26rpx;
+		height: 40rpx;
+        line-height: 40rpx;
 		img{
-			width: 40rpx;
-			height: 40rpx;
+			width: 100%;
+			height: 100%
+			;
 		}
     }
     .h_content span {
