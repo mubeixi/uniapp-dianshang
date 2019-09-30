@@ -1,6 +1,5 @@
 <template>
   <div>
-     <page-title title="收藏列表" :right="handleShow ? '管理' : '取消'" @handle="handle"></page-title>
       <div class="pro-list" v-for="item in collect_list">
 		  <div class="mbxa"  v-if="!handleShow" @click="checked=!checked">
 			  <img v-if="checked" src="/static/checked.png" >
@@ -8,7 +7,7 @@
 		  </div>
           <div class="pro" >
             <div class="pros">
-				  <img class="pro-img" :src="{{item.ImgPath}}">
+				  <img class="pro-img" :src="item.ImgPath">
 			</div>
             <div class="pro-msg">
                   <div class="pro-name">{{item.Products_Name}}</div>
@@ -24,7 +23,6 @@
       </div>
       <div class="bottom" v-if="!handleShow" >
             <div class="b_left" @click="checked=!checked">
-             <!--   <van-checkbox v-model="checked" checked-color="#F43131">全选</van-checkbox> -->
 				 <img v-if="checked" src="/static/checked.png" >
 				 <img v-else src="/static/uncheck.png" >
 				 全选
