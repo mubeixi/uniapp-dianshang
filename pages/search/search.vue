@@ -8,15 +8,12 @@
 		</div>	
     </form>
     <div class="history">
-        <div class="title">搜索历史</div>
+        <div class="title">
+			<div>搜索历史</div>
+			<div @click="clear"><img src="/static/del.png"></div>
+		</div>
         <div class="h_content">
-            <span>连衣裙</span>
-            <span>中秋月饼</span>
-            <span>奶茶咖啡店</span>
-            <span>乐高积木</span>
-            <span>鲜花干湿分离</span>
-            <span>波力海苔</span>
-            <span>纯牛奶</span>
+            <span v-for="(item,i) of searchAll" :key='i' @click="goSearch(item)">{{item}}</span>
         </div>
     </div>
   </div>
@@ -29,16 +26,54 @@ export default {
   name: 'App',
   data(){
       return {
-		  inputValue:''
+		  inputValue:'',
+		  searchAll:[]
       }
   },
   components: {
     
   },
+  onShow(){
+	const than = this        // 注意this的指向
+		uni.getStorage({
+			key: 'searchAll',
+			success(res) {
+				than.searchAll = res.data
+			}
+		})
+  },
   methods: {
+	  goSearch(item){
+		  uni.navigateTo({
+		  			  url:'../result/result?inputValue='+item
+		  })
+	  },
 	  success(){
+		  if(this.inputValue != '') {    // 输入框的值不为空时
+		            const than = this;
+					for(var item of this.searchAll){
+						if(item==this.inputValue){
+							uni.navigateTo({
+								url:'../result/result?inputValue='+this.inputValue
+							})
+							return;
+						}
+					}
+					this.searchAll.push(this.inputValue)    // 将输入框的值添加到搜索记录数组中存储
+					uni.setStorage({
+							key: 'searchAll',
+							data: than.searchAll
+				})
+			}
 		  uni.navigateTo({
 			  url:'../result/result?inputValue='+this.inputValue
+		  })
+	  },
+	  clear(){
+		  this.searchAll=[];
+		  uni.setStorage({
+		  			key: 'searchAll',
+		  			data: []
 		  })
 	  },
 	  close(){
@@ -86,12 +121,21 @@ export default {
     .history {
         padding: 0 20rpx;
     }
-    .title {
+	.title{
+		display: flex;
+		justify-content: space-between;
+		height: 26rpx;
+	}
+    .title div{
         font-size: 28rpx;
         color: #333;
         font-weight: 500;
+		height: 26rpx;
         line-height: 26rpx;
-        text-align: left;
+		img{
+			width: 40rpx;
+			height: 40rpx;
+		}
     }
     .h_content span {
         float:left;
