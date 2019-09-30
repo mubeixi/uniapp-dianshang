@@ -77,7 +77,9 @@ export const getComments = (data,options) => fetch('get_commit',data,options)
 // 获取收藏列表
 export const getFavouritePro = (data,options) => fetch('get_favourite_prod_list',data,options);
 // 添加收藏产品
-export const addCollection = (data,options) => fetch('add_favourite_prod', data,options)
+export const addCollection = (data,options) => fetch('add_favourite_prod', data,options);
+// 取消收藏
+export const cancelCollection = (data,options) => fetch('cancel_favourite_prod',data,options)
 
 
 

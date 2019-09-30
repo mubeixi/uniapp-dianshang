@@ -2,7 +2,7 @@
   <div class="wrap">
       <img src="/static/left.png"  @click="goBack" v-show="!hiddenBack">
       {{title}}
-      <span class="right" @click="handle" v-show="!rightHidden">{{right}}</span>
+      <span class="right" @click="rightHandle" v-show="!rightHidden">{{right}}</span>
   </div>
 </template>
 
@@ -31,8 +31,8 @@ export default {
         goBack(){
             this.$router.go(-1);
         },
-        handle(){
-            this.$emit('handle')
+        rightHandle(){
+            this.$emit('rightHandle')
         }
     },
     computed: {

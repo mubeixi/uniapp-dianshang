@@ -1,13 +1,13 @@
 <template>
   <div>
-      <div class="pro-list" v-for="item in collect_list">
-		  <div class="mbxa"  v-if="!handleShow" @click="checked=!checked">
-			  <img v-if="checked" src="/static/checked.png" >
-			  <img v-else src="/static/uncheck.png" >
+	  <page-title title="收藏列表" :rightHidden="rightHidden" @rightHandle="rightHandle"  :right="rightText"></page-title>
+      <div class="pro-list" v-for="(item,index) in collect_list" :key="index">
+		  <div class="mbxa"  v-if="rightClicked" @click="check(index)">
+			  <img :src="checked[index].checked?'/static/checked.png':'/static/uncheck.png'" >
 		  </div>
           <div class="pro" >
             <div class="pros">
-				  <img class="pro-img" :src="item.ImgPath">
+				<img class="pro-img" :src="item.ImgPath">
 			</div>
             <div class="pro-msg">
                   <div class="pro-name">{{item.Products_Name}}</div>
@@ -21,19 +21,18 @@
            </div>
           </div>
       </div>
-      <div class="bottom" v-if="!handleShow" >
-            <div class="b_left" @click="checked=!checked">
-				 <img v-if="checked" src="/static/checked.png" >
-				 <img v-else src="/static/uncheck.png" >
+      <div class="bottom" v-if="rightClicked" >
+            <div class="b_left" @click="checkAll">
+				 <img :src="allChecked ? '/static/checked.png' : '/static/uncheck.png'" >
 				 全选
             </div>
-            <div class="b_right">删除(1)</div>
+            <div class="b_right" @click="cancelCollection">删除({{totalNum}})</div>
       </div>
   </div>
 </template>
 
 <script>
-import {getFavouritePro} from '../../common/fetch.js'
+import {getFavouritePro,cancelCollection} from '../../common/fetch.js'
 export default {
     components: {
     
@@ -47,22 +46,74 @@ export default {
 	
     data(){
         return {
-            checked: false,
-            handleShow: false,
+            // checked: false,
+			checked: [],
 			Users_ID: 'wkbq6nc2kc',
 			User_ID: 3,
 			collect_list: [], // 收藏列表,
 			page: 1,
 			pageSize: 4,
 			hasMore: true,
+			rightHidden: false,
+			rightText: '管理',
+			rightClicked: false,
+			prod_id: []
         }
     },
+	watch: {
+		prod_id(){
+			
+		}
+	},
+	computed: {
+		totalNum(){
+			return this.checked.filter(item=>item.checked).length;
+		},
+		allChecked(){
+			return this.checked.filter(item=>item.checked).length == this.checked.length;
+		},
+		
+	},
 	onReachBottom() {
 		if(this.hasMore) {
 			this.getFavouritePro();
 		}
 	},
+	mounted() {
+		
+	},
     methods: {
+		// 取消收藏
+		cancelCollection() {
+			this.prod_id = [];
+			this.checked.forEach((item,index)=>{
+				if(item.checked) {
+					this.prod_id = this.collect_list[index].prod_id
+				}
+			});
+			cancelCollection({
+				Users_ID: this.Users_ID,
+				User_ID: this.User_ID,
+				prod_id: JSON.stringify(this.prod_id)
+			}).then(res=>{
+				console.log(res)
+			}).catch(e=>{
+				console.log(e)
+			})
+		},
+		// 单选
+		check(index) {
+			this.checked[index].checked = !this.checked[index].checked;
+		},
+		// 全选
+		checkAll(){
+			this.collect_list.forEach(item=>item.checked=true)
+		},
+		// 右侧管理按钮
+		rightHandle(){
+			this.rightClicked = !this.rightClicked;
+			this.rightText = this.rightClicked ? '取消' : '管理';
+		},
 		// 获取收藏列表
 		getFavouritePro(){
 			getFavouritePro({Users_ID:this.Users_ID,User_ID: this.User_ID ,page: this.page,pageSize:this.pageSize}).then(res=>{
@@ -72,6 +123,13 @@ export default {
 					this.collect_list = oldlist.concat(res.data);
 					this.hasMore = (res.totalCount / this.pageSize) > this.page ? true : false ;
 					this.page += 1;
+				};
+				this.checked = [];
+				for(var i in this.collect_list) {
+					this.checked.push({
+						index: i,
+						checked: false
+					})
 				}
 			})
 		},
