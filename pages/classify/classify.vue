@@ -1,19 +1,34 @@
 <template>
-	<view class="page-body" :style="'height:'+height+'px'">
-		<scroll-view class="nav-left" scroll-y :style="'height:'+height+'px'" :scroll-top="scrollLeftTop" scroll-with-animation>
-			<view class="nav-left-item" @click="categoryClickMain(index)" :key="index" :class="index==categoryActive?'active':''"
-				v-for="(item,index) in classifyData">
-				{{item.Category_Name}}
-			</view>
-		</scroll-view>
-		<scroll-view class="nav-right" scroll-y :scroll-top="scrollTop" @scroll="scroll" :style="'height:'+height+'px'" scroll-with-animation>
-			<view v-for="(foods,index) in classifyData" :key="index" class="box">
-				<view :id="i==0?'first':''" class="nav-right-item" v-for="(item,i) in foods.child" :key="i" @click="cart(item)">
-					<image :src="item.Category_Img" />
-					<view>{{item.Category_Name}}</view>
+	<view>
+		<view class="search-wrap" @click="goSearch">
+			<icon type="search" size="34rpx" class="search_icon"/>
+			<input type="text" class="search-input" name="search" placeholder="请输入商品关键词" placeholder-style="font-size:26rpx;color:#ADADAD;"> 
+		</view>
+		<view class="page-body" :style="'height:'+height+'px'">
+			<scroll-view class="nav-left" scroll-y :style="'height:'+height+'px'" :scroll-top="scrollLeftTop" scroll-with-animation>
+				<view class="nav-left-item" @click="categoryClickMain(index)" :key="index" :class="index==categoryActive?'active':''"
+					v-for="(item,index) in classifyData">
+					<view class="leftBac" style="position: absolute;"></view>
+					{{item.Category_Name}}
 				</view>
-			</view>
-		</scroll-view>
+			</scroll-view>
+			<scroll-view class="nav-right" scroll-y :scroll-top="scrollTop" @scroll="scroll" :style="'height:'+height+'px'" scroll-with-animation>
+				<view v-for="(foods,index) in classifyData" :key="index" class="box"  :class="index!=0?'marginTop':''">
+					<view class="titles">
+						<view class="titleSum">{{classifyData[index].Category_Name}}</view>
+					<!-- 	<view class="gengduo">查看更多></view> -->
+					</view>
+					<view v-if="foods.Category_Img" class="imgTop">
+						<img :src="foods.Category_Img">
+					</view>
+					<view :id="i==0?'first':''" class="nav-right-item" v-for="(item,i) in foods.child" :key="i" @click="cart(item)">
+						<image :src="item.Category_Img" />
+						<view class="nav-right-txt">{{item.Category_Name}}</view>
+					</view>
+				</view>
+			</scroll-view>
+		</view>
+	
 	</view>
 </template>
 
@@ -29,7 +44,7 @@
 				scrollTop: 0,
 				scrollLeftTop: 0,
 				// scrollHeight: 0,
-				classifyData:classifyData,
+				classifyData:'',
 				arr:[0,584,1168,1752,2336,2805,3274,3858,4442,4911,5380,5734,6203,6672,7017],//初始值，后边计算会根据手机适配覆盖
 				leftItemHeight: 51,//49行会计算出新值进行覆盖
 				navLeftHeight:0,//左边scroll-view 内层nav的总高度
@@ -51,6 +66,11 @@
 			this.getHeightList();
 		},
 		methods: {
+			goSearch(){
+				uni.navigateTo({
+					url:'../search/search'
+				})
+			},
 			getList(){
 				getProductCategory({Users_ID:'wkbq6nc2kc'}).then(res=>{
 					this.classifyData=res.data;
@@ -92,7 +112,7 @@
 					clearTimeout(this.timeoutId);
 				}
 				this.timeoutId = setTimeout(function(){ //节流
-					_this.scrollHeight = e.detail.scrollTop + 1; //+ _this.height/2;
+					_this.scrollHeight = e.detail.scrollTop + 1+ _this.height/2;//+ _this.height/2;
 					//+1不要删除，解决最后一项某种情况下翻到底部，左边按钮并不会切换至最后一个
 					//若想使切换参考线为屏幕顶部请删除 _this.height/2
 					for (let i = 0; i < _this.arr.length;i++) {
@@ -114,7 +134,7 @@
 			},
 			cart(item) {
 				uni.navigateTo({
-					url:'../detail/detail?Products_ID='+item.Products_ID
+					url:'../detail/detail?Products_ID='+item.Category_ID
 				})
 			}
 		},
@@ -123,7 +143,7 @@
 	}
 </script>
 
-<style>
+<style scoped lang="scss">
 	.page-body {
 		display: flex;
 		background: #fff;
@@ -136,29 +156,41 @@
 	}
 
 	.nav-left {
-		width: 25%;
+		width: 200rpx;//25%
 		background: #fafafa;
 	}
 
 	.nav-left-item {
 		height: 100upx;
-		border-right: solid 1px #f1f1f1;
-		border-bottom: solid 1px #f1f1f1;
-		font-size: 30upx;
+		// border-right: solid 1px #f1f1f1;
+		// border-bottom: solid 1px #f1f1f1;
+		font-size: 26rpx;
+		color: #333333;
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		position: relative;
+		background-color: #F6F6F6;
 	}
 	.nav-left-item:last-child{
 		border-bottom: none;
 	}
+	.nav-right-txt{
+		font-size: 23rpx;
+		height: 30rpx;
+		overflow: hidden;
+		color: #333333;
+	}
 	.nav-right {
-		width: 75%;
+		width: 550rpx;//75%
+		padding-right: 20rpx;
+		padding-left: 30rpx;
 	}
 	.box {
 		display: block;
 		overflow: hidden;
-		border-bottom: 20upx solid #f3f3f3;
+		border-bottom: 1rpx solid #ECE8E8;
+		padding-bottom: 50rpx;
 		/* min-height: 100vh; */ 
 		/*若您的子分类过少想使得每个子分类占满屏请放开上边注视 */
 	}
@@ -167,28 +199,95 @@
 		min-height:100vh;
 	}
 	.nav-right-item {
-		width: 28%;
-		height: 220upx;
+		width: 170rpx;
+		box-sizing: border-box;
+		height: 220rpx;
 		float: left;
 		text-align: center;
-		padding: 11upx;
-		font-size: 28upx;
+		padding: 13rpx;
+		font-size: 24rpx;
 		background: #fff;
+		color: #333333;
 	}
 
 	.nav-right-item image {
-		width: 150upx;
-		height: 150upx;
+		width: 140rpx;
+		height: 140rpx;
 	}
 
 	.active {
-		color: #FF80AB;
+		color: #F43131;
 		background: #fff;
 		border-right: 0;
+		.leftBac{
+			display: block;
+			width: 5rpx;
+			height: 50rpx;
+			background-color: #F43131;
+			position: absolute;
+			left: 0;
+			top: 30%;
+		}
 	}
+
 	::-webkit-scrollbar {/*取消小程序的默认导航条样式*/
    width: 0;
    height: 0;
    color: transparent;
 }
+.titles{
+	height: 97rpx;
+	line-height: 97rpx;
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+	.titleSum{
+		font-size: 26rpx;
+		color: #333333;
+	}
+	.gengduo{
+		color: #888888;
+		font-size: 26rpx;
+	}
+}
+.imgTop{
+	width: 100%;
+	height: 150rpx;
+	margin-bottom: 20rpx;
+	img{
+		width: 100%;
+		height: 100%;
+	}
+}
+
+
+.search-wrap {
+		position: relative;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		font-size: 30rpx;
+		padding: 30rpx 20rpx 25rpx 20rpx;
+		box-sizing: border-box;
+		.search-input {
+			float: left;
+			width: 710rpx;
+			height: 65rpx;
+			line-height: 65rpx;
+			border-radius: 10rpx;
+			background: #F4F4F4;
+			font-size: 26rpx;
+			color: #ADADAD;
+			padding-left: 91rpx;
+			box-sizing: border-box;
+		}
+		.search_icon {
+			position: absolute;
+			top: 46rpx;
+			left: 61rpx;
+		}
+	}
+	.marginTop{
+		margin-top: 15rpx;
+	}
 </style>

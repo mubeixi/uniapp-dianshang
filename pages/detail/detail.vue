@@ -116,6 +116,43 @@
 		    </div>
 		</div>
 	</popupLayer>
+	<popupLayer ref="cartPopu" :direction="'top'">
+		<div class="cartSku">
+			<div class="cartTop">
+				<image :src="product.Products_JSON.ImgPath[0]" mode=""></image>
+				<div class="cartTitle">
+					<div class="cartTitles">{{product.Products_Name}}</div>
+					<div class="addInfo">
+						<div class="addPrice">{{product.Products_PriceX}}元</div>
+						<div class="proSale">库存{{product.Products_Count}}</div>
+					</div>
+				</div>
+			</div>
+			<div class="cartCenter">
+				<div class="cartAttr" v-for="(item,i) of product.skujosn" :key="i">
+					<div class="sku">
+						{{i}}
+					</div>
+					<div class="skuValue">
+						<div :class="skuF==index?'skuCheck':''" v-for="(mbx,index) of item" :key="index">{{mbx}}</div>
+					</div>
+				</div>
+			</div>	
+			<div class="numBer">
+				<div class="numBers">
+					数量
+				</div>
+				<div class="inputNumber">
+						<div class="clicks" @click="delNum">-</div>
+						<input v-enter-number type="number" v-model="count"  >
+						<div class="clicks" @click="addNum">+</div>
+				</div>
+			</div>
+		</div>
+		<div class="cartSub" @click="skuSub">
+			确定
+		</div>
+	</popupLayer>
   </div>
 </template>
 <script>
@@ -132,6 +169,8 @@ export default {
 			product:'',//商品结果
 			commit:'',//获取评论
 			Products_ID: 0 ,
+			count:1,//商品数量
+			skuF:1,//规格详情
         }
     },
     components: {
@@ -146,6 +185,23 @@ export default {
 			this.getCommit(this.Products_ID);
 	},
     methods: {
+		skuSub(){
+			//确定加入购物车
+			this.$refs.cartPopu.close();
+		},
+		addNum(){
+			this.count++;
+		},
+		delNum(){
+			if(this.count<=1){
+				uni.showToast({
+					title: '数量最少为1个',
+					icon:'none'
+				})
+			}else{
+				this.count--;
+			}
+		},
 		// 收藏
 		collect(){
 			addCollection({
@@ -153,7 +209,6 @@ export default {
 				prod_id: this.Products_ID,
 				User_ID: 3
 			}).then(res=>{
-				console.log(res)
 				if(res.errorCode == 0) {
 					uni.showToast({
 						title: '收藏成功'
@@ -182,14 +237,18 @@ export default {
 			}
 			getProductDetail(data).then(res=>{
 				this.product=res.data;
+				this.product.skujosn=JSON.parse(res.data.skujosn);
+				this.product.skuvaljosn=JSON.parse(res.data.skuvaljosn);
+				console.log(this.product.skujosn)
 			}).catch(e=>{
 				console.log(e)
 			})
 		},
 		addCart(){
+			this.$refs.cartPopu.show();
 			console.log('cart')
 			this.cart_key = 'CartList';
-			
+	
 		},
 		directBuy(){
 			this.cart_key = 'DirectBuy'
@@ -217,7 +276,6 @@ export default {
             });
         },
         showTick(e){
-			console.log(e)
 			this.type = e.currentTarget.dataset.type
             this.$refs.popupLayer.show();
         },
@@ -510,4 +568,121 @@ export default {
         background: rgba(0, 0, 0, .7);
         z-index: 1000;
     }
+	.cartSku{
+		padding: 0rpx 10rpx;
+		.cartTop{
+			position: relative;
+			display: flex;
+			padding-top: 20rpx;
+			image{
+				width: 220rpx;
+				height: 220rpx;
+			}
+			.cartTitle{
+				margin-left: 20rpx;
+				font-size: 32rpx;
+				width: 420rpx;
+				.cartTitles{
+					height: 80rpx;
+					overflow: hidden;
+					margin-top: 20rpx;
+				}
+				.addInfo{
+					width: 450rpx;
+					margin-top: 70rpx;
+					display: flex;
+					flex-flow: row;
+					justify-content: space-between;
+					align-items: flex-end;
+					.addPrice{
+						font-size: 42rpx;
+						color: #ff4200;
+					}
+					.proSale{
+						font-size: 24rpx;
+						color: #999;
+						justify-content: flex-end;
+					}
+				}
+			}
+		}
+		.cartCenter{
+			margin-top: 20rpx;
+			.cartAttr{
+				display: flex;
+				padding: 15rpx 0rpx;
+				.sku{
+					font-size: 28rpx;
+					height: 70rpx;
+					line-height: 70rpx;
+					width: 140rpx;
+				}
+				.skuValue{
+					display: flex;
+					div{
+						height: 70rpx;
+						line-height: 70rpx;
+						font-size: 28rpx;
+						border-radius: 10rpx;
+						color: #000;
+						background-color: #fff;
+						padding-left: 20rpx;
+						padding-right: 20rpx;
+						margin-right: 20rpx;
+						border: 1px solid #ccc;
+					}
+				}
+			}
+		}
+		.numBer{
+			margin-top: 20rpx;
+			display: flex;
+			padding: 15rpx 0rpx;
+			justify-content: space-between;
+			.numBers{
+				font-size: 28rpx;
+				height: 70rpx;
+				line-height: 70rpx;
+				width: 140rpx;
+			}
+			.inputNumber{
+				border: 1px solid #ccc;
+				border-radius: 6rpx;
+				height: 50rpx;
+				margin-right: 50rpx;
+				display: flex;
+				input{
+					color: black;
+					margin: 0 auto;
+					width: 80rpx;
+					height: 50rpx;
+					text-align: center;
+					font-size: 24rpx;
+					border-left: 2rpx solid #ccc;
+					border-right: 2rpx solid #ccc;
+				}
+				.clicks{
+					height: 50rpx;
+					line-height: 50rpx;
+					width: 60rpx;
+					text-align: center;
+				}
+			}
+		}
+	}
+	.cartSub{
+		width: 100%;
+		height: 90rpx;
+		background-color: #F43131;
+		font-size:20px;
+		line-height: 90rpx;
+		text-align: center;
+		color: #FFFFFF;
+		margin-top: 30rpx;
+	}
+	.skuCheck{
+		color: #fff !important;
+		background-color: #ff4200 !important;
+	}
+	
 </style>
