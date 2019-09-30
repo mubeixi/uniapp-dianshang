@@ -1,7 +1,7 @@
 <template>
     <div>
       <!--  <pagetitle title="提交订单"></pagetitle> -->
-        <div class="address">
+        <div class="address" v-if="orderInfo.is_virtual == 0 && orderInfo.NeedShipping == 1">
             <img class="loc_icon" src="/static/location.png" alt="">
             <div class="add_msg">
                 <div class="name">收货人：{{addressinfo.Address_Name}} <span>{{addressinfo.Address_Mobile | formatphone}}</span></div>
@@ -9,35 +9,26 @@
             </div>
             <img class="right" src="/static/right.png" alt="">
         </div>
-        <div class="order_msg">
+        <div class="order_msg" v-for="(pro,pro_id) in orderInfo.CartList">
             <div class="biz_msg">
-                <img src="/static/detail/user1.png" class="biz_logo" alt="">
-                <span class="biz_name">张小凡时尚衣橱</span>
+                <img :src="orderInfo.ShopLogo" class="biz_logo" alt="">
+                <span class="biz_name">{{orderInfo.ShopName}}</span>
             </div>
-            <div class="pro">
-                <img class="pro-img" src="/static/check/pro1.png" alt="">
+            <div class="pro" v-for="(attr,attr_id) in pro">
+                <img class="pro-img" :src="attr.ImgPath" alt="">
                 <div class="pro-msg">
-                    <div class="pro-name">2018夏装新款短袖蕾丝拼接荷叶边波点雪纺连衣裙女时尚名媛...</div>
-                    <div class="attr"><span>白色;S码</span></div>
-                    <div class="pro-price"><span>￥</span>169.00 <span class="amount">x<span class="num">1</span></span></div>
-                </div>
-            </div>
-            <div class="pro">
-                <img class="pro-img" src="/static/check/pro1.png" alt="">
-                <div class="pro-msg">
-                    <div class="pro-name">2018夏装新款短袖蕾丝拼接荷叶边波点雪纺连衣裙女时尚名媛...</div>
-                    <div class="attr"><span>白色;S码</span></div>
-                    <div class="pro-price"><span>￥</span>169.00 <span class="amount">x<span class="num">1</span></span></div>
+                    <div class="pro-name">{{attr.ProductsName}}</div>
+                    <div class="attr" ><span>白色;S码</span></div>
+                    <div class="pro-price"><span>￥</span>{{attr.ProductsPriceX}} <span class="amount">x<span class="num">{{attr.Qty}}</span></span></div>
                 </div>
             </div>
         </div>
-        <div class="other">
+        <div class="other" v-if="orderInfo.is_virtual == 0 && orderInfo.NeedShipping == 1">
             <div class="bd">
                 <div class="o_title">
                     <span>运费选择</span>
-                    <span style="text-align:right;" @click="changeShip">
-                        <span>顺丰</span>
-                        <span>免邮费</span>
+                    <span style="text-align:right; color: #888;" @click="changeShip">
+						<span>请选择物流</span>
                         <image  class="right" src="/static/right.png" alt=""></image>
                     </span>
                 </div>
@@ -45,7 +36,7 @@
         </div>
         <div class="other">
             <div class="bd">
-                <div class="o_title">
+                <div class="o_title" @click="changeCoupon">
                     <span>优惠券选择</span>
                     <span></span>
                     <image  src="/static/right.png" class="right" alt=""></image>
@@ -58,10 +49,10 @@
                     <span>是否参与积分抵扣</span>
                     <switch checked color="#04B600" @change="switchChange" />
                 </div>
-                <div class="o_de">您当前共有 <text>1000</text>积分，每<text>1000</text>积分可以抵扣<text>1</text>元，总共可抵<text>0.4</text>元</div>
+                <div class="o_de">您当前共有 <text>{{userInfo.User_Integral}}</text>积分，每<text>1000</text>积分可以抵扣<text>1</text>元，总共可抵<text>0.4</text>元</div>
             </div>
         </div>
-        <div class="other">
+        <div class="other" v-if="orderInfo.is_use_money == 1">
             <div class="bd">
                 <div class="o_title">
                     <span>是否使用余额</span>
@@ -87,20 +78,20 @@
                 </div>
             </div>
         </div>
-        <div class="total">
-            <span style="margin-right:20rpx;">共<span>2</span>件商品</span>
-            <span>小计：<span>￥</span><span class="money">388.00</span></span>
-        </div>
+        <!-- <div class="total">
+            <span style="margin-right:20rpx;">共<span>{{orderInfo.total_count}}</span>件商品</span>
+            <span>小计：<span>￥</span><span class="money">{{orderInfo.Order_TotalPrice}}</span></span>
+        </div> -->
         <div style="height:100px;background:#efefef;"></div>
         <div class="order_total">
             <div class="totalinfo">
-                <div class="info">共3件商品 总计：￥507.00</div>
-                <div class="tips">*本次购物一共可获得107积分</div>
+                <div class="info">共{{orderInfo.prod_count}}件商品 总计：￥{{orderInfo.Order_TotalPrice}}</div>
+                <div class="tips">*本次购物一共可获得{{orderInfo.Integral_Get}}积分</div>
             </div>
             <div class="submit">提交订单</div>
         </div>
         <popup-layer ref="popupRef" :direction="'top'">
-        	<div class="bMbx">
+        	<div class="bMbx" v-if="type=='shipping'">
         		<div class="fMbx">运费选择</div>
         		<div class="iMbx">
         			<div>
@@ -127,6 +118,25 @@
 					</div>
 				</div>
         	</div>
+			<div class="bMbx" v-if="type=='coupon'">
+				<div class="fMbx">优惠券选择</div>
+				<div class="iMbx">
+					<div>
+						满20 - 10
+					</div>
+					<div>
+						 <checkbox  checked=""  color="#F43131"/>
+					</div>
+				</div>
+				<div class="iMbx">
+					<div>
+						满10 - 5
+					</div>
+					<div>
+						 <checkbox  checked=""  color="#F43131"/>
+					</div>
+				</div>
+			</div>
         	<div class="sure" @click="closeMethod">
         			确定
         	</div>
@@ -136,7 +146,7 @@
 
 <script>
 import popupLayer from '../../components/popup-layer/popup-layer.vue';
-import {getAddress} from '../../common/fetch.js';
+import {getAddress,getCart,createOrderCheck,getUserInfo} from '../../common/fetch.js';
 export default {
     components: {
         popupLayer
@@ -157,11 +167,13 @@ export default {
 			Users_ID:'wkbq6nc2kc',
 			User_ID:3,
 			addressinfo: {}, // 收货地址信息
+			orderInfo: {},
+			type: 'shipping',
+			userInfo: {}
         }
     },
 	filters: {
 		formatphone: function(value) {
-			console.log(value)
 			if(value) {
 				var len= value.length;
 				var xx= value.substring(3,len-4);
@@ -170,12 +182,30 @@ export default {
 			}
 		}
 	},
-	created() {
+	onShow() {
 		this.getAddress();
+		this.createOrderCheck();
+		this.getUserInfo();
+	},
+	onLoad(options) {
+		this.cart_key = options.cart_key;
 	},
     methods: {
+		getUserInfo(){
+			getUserInfo({User_ID:this.User_ID,Users_ID:this.Users_ID}).then(res => {
+				console.log(res)
+				if(res.errorCode == 0) {
+					this.userInfo = res.data;
+				}
+			})
+		},
+		changeCoupon(){
+			this.type = 'coupon';
+			this.$refs.popupRef.show();
+		},
         // 选择运费
         changeShip(){
+			this.type = 'shipping';
             this.$refs.popupRef.show();
         },
 		closeMethod(){
@@ -196,6 +226,14 @@ export default {
 					console.log(this.addressinfo)
 				}
 			}).catch(e => console.log(e))
+		},
+		createOrderCheck(){
+			createOrderCheck({User_ID: this.User_ID, Users_ID:this.Users_ID,cart_key:this.cart_key}).then(res=>{
+				console.log(res)
+				if(res.errorCode == 0){
+					this.orderInfo = res.data;
+				}
+			})
 		}
     }
 }
@@ -367,6 +405,7 @@ export default {
         text-align: center;
         color: #fff;
         line-height: 100rpx;
+		font-size: 34rpx;
     }
     .totalinfo {
         flex: 1;

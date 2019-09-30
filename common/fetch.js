@@ -66,8 +66,18 @@ export const getCart = (data,options) => fetch('get_cart',data,options)
 export const getProd = (data,options) => fetch('get_prod',data,options)
 // 获取收货地址
 export const getAddress = (data,options) => fetch('get_address',data,options)
-
-
+// 更新购物车
+export const updateCart = (data,options) => fetch('update_cart',data,options)
+// 获取订单操作
+export const createOrderCheck = (data,options) => fetch('create_order_check',data,options)
+// 获取用户信息（临时）
+export const getUserInfo = (data,options) => fetch('get_user_info',data,options)
+// 获取评论
+export const getComments = (data,options) => fetch('get_commit',data,options)
+// 获取收藏列表
+export const getFavouritePro = (data,options) => fetch('get_favourite_prod_list',data,options);
+// 添加收藏产品
+export const addCollection = (data,options) => fetch('add_favourite_prod', data,options)
 
 
 

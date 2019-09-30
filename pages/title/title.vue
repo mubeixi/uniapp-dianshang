@@ -8,7 +8,25 @@
 
 <script>
 export default {
-    props: ['title','right','hiddenBack','rightHidden']  ,
+    // props: ['title','right','hiddenBack','rightHidden'],
+	props: {
+		title: {
+			type: String,
+			default: '标题'
+		},
+		right: {
+			type: String,
+			default: '管理'
+		},
+		hiddenBack: {
+			type: Boolean,
+			default: false
+		},
+		rightHidden: {
+			type: Boolean,
+			default: true
+		}
+	},
     methods: {
         goBack(){
             this.$router.go(-1);

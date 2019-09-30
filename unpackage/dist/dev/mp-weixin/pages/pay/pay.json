@@ -1,6 +1,0 @@
-{
-  "navigationBarTitleText": "付款",
-  "usingComponents": {
-    "popup-layer": "/components/popup-layer/popup-layer"
-  }
-}
