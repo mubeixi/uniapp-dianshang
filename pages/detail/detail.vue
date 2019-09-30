@@ -78,7 +78,7 @@
         <div class="p_detail_title">商品详情</div>
     </div>
     <div style="height:50px;"></div>
-	<bottom></bottom>
+	<bottom @cartHandle="addCart" @directHandle="directBuy" @collect="collect"></bottom>
 	<popupLayer ref="popupLayer" :direction="'top'">
 		<div class="shareinfo" v-if="type=='share'">
 			<div class="s_top">
@@ -122,7 +122,7 @@
 <script>
 import bottom from '../bottom/bottom'
 import popupLayer from '../../components/popup-layer/popup-layer.vue'
-import {getProductDetail,getCommit} from '../../common/fetch.js';
+import {getProductDetail,getCommit,updateCart,addCollection} from '../../common/fetch.js';
 import {goBack}  from '../../common/tool.js'
 export default {
     data(){
@@ -132,6 +132,7 @@ export default {
             ticksShow: false,
 			product:'',//商品结果
 			commit:'',//获取评论
+			Products_ID: 0 ,
         }
     },
     components: {
@@ -139,13 +140,28 @@ export default {
 		popupLayer
     },
 	onLoad: function (option) {
-		  this.Products_ID=option.Products_ID;
+		  this.Products_ID = option.Products_ID;
 	 },
 	onShow(){
 			this.getDetail(this.Products_ID);
 			this.getCommit(this.Products_ID);
 	},
     methods: {
+		// 收藏
+		collect(){
+			addCollection({
+				Users_ID:'wkbq6nc2kc',
+				prod_id: this.Products_ID,
+				User_ID: 3
+			}).then(res=>{
+				console.log(res)
+				if(res.errorCode == 0) {
+					uni.showToast({
+						title: '收藏成功'
+					})
+				}
+			})
+		},
 		goBack(){
 			goBack();
 		},
@@ -171,8 +187,35 @@ export default {
 				console.log(e)
 			})
 		},
+		addCart(){
+			console.log('cart')
+			this.cart_key = 'CartList';
+			
+		},
+		directBuy(){
+			this.cart_key = 'DirectBuy'
+			let arg = {
+				Users_ID: 'wkbq6nc2kc',
+				User_ID: 3,
+				cart_key: this.cart_key,
+				prod_id:  this.Products_ID,
+				qty: 1,
+				// atr_str: "颜色:黑色;尺寸:大号;",
+				// atrid_str: "1;3",	
+			}
+			updateCart(arg).then(res=>{
+				console.log(res)
+				if(res.errorCode == 0) {
+					uni.navigateTo({
+						url: '../check/check?cart_key=' + this.cart_key
+					})
+				}
+			})
+		},
         gotoComments(){
-            
+            uni.navigateTo({
+            	url: '../comments/comments?pro_id='+this.Products_ID
+            });
         },
         showTick(e){
 			console.log(e)

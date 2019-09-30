@@ -1,9 +1,10 @@
 <template>
   <div>
        <!-- <comments title="评论"></comments> -->
+	   <page-title title="评论" right=""></page-title>
         <div class="navs">
-            <div class="nav" :class="index == 0 ? 'active' : ''" @click="index=0">全部</div>
-            <div class="nav" :class="index == 1 ? 'active' : ''" @click="index=1">有图</div>
+            <div class="nav" :class="index == 0 ? 'active' : ''" @click="getAllComment">全部</div>
+            <div class="nav" :class="index == 1 ? 'active' : ''" @click="getHasImgComment">有图</div>
         </div>
         <div class="c_content">
             <div class="c_content_title">
@@ -33,6 +34,7 @@
 
 <script>
 import bottom from '../bottom/bottom'
+import {getComments} from '../../common/fetch.js'
 export default {
     name: 'app',
     components: {
@@ -40,9 +42,48 @@ export default {
     },
     data(){
         return {
-            index:  0
+            index:  0,
+			commentArgs: {
+				Users_ID: 'wkbq6nc2kc',
+				User_ID: 3,
+				Products_ID: 1, // 查询指定产品的评论
+				has_img: 1, //有图评论
+				page: 1,
+				pageSize: 4,				
+			},
+			comment_list: [], // 评论列表
         }
-    }
+    },
+	onload(options){
+		this.commentArgs.Products_ID = options.pro_id;
+	},
+	onShow() {
+		this.getAllComment();
+	},
+	methods: {
+		// 获取所有评论
+		getAllComment() {
+			this.index = 0;
+			this.commentArgs.has_img = 0;
+			this.getComments();
+		},
+		// 有图的评论
+		getHasImgComment() {
+			this.index = 1;
+			this.commentArgs.has_img = 1;
+		},
+		getComments(){
+			getComments(this.commentArgs).then(res=>{
+				console.log(res);
+				if(res.errorCode == 0) {
+					
+				}else if(res.errorCode == 2) {
+					// 暂无数据
+					
+				}
+			})
+		}
+	}
 }
 </script>
 

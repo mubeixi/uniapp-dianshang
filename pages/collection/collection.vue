@@ -1,21 +1,21 @@
 <template>
   <div>
      <page-title title="收藏列表" :right="handleShow ? '管理' : '取消'" @handle="handle"></page-title>
-      <div class="pro-list">
+      <div class="pro-list" v-for="item in collect_list">
 		  <div class="mbxa"  v-if="!handleShow" @click="checked=!checked">
 			  <img v-if="checked" src="/static/checked.png" >
 			  <img v-else src="/static/uncheck.png" >
 		  </div>
           <div class="pro" >
             <div class="pros">
-				  <img class="pro-img" src="/static/check/pro1.png">
+				  <img class="pro-img" :src="{{item.ImgPath}}">
 			</div>
             <div class="pro-msg">
-                  <div class="pro-name">2018夏装新款短袖蕾丝拼接荷叶边波点雪纺连衣裙女时尚名媛...</div>
-                  <div class="collection"><span>5124</span>人收藏</div>
+                  <div class="pro-name">{{item.Products_Name}}</div>
+                  <div class="collection"><span>{{item.favourite_count}}</span>人收藏</div>
                   <div class="btn">
                       <span class="span">
-                        <span>￥</span>169.00
+                        <span>￥</span>{{item.Products_PriceX}}
                       </span>
                       <span class="button" @click="buy">立即购买</span>
                   </div>
@@ -35,18 +35,48 @@
 </template>
 
 <script>
-
+import {getFavouritePro} from '../../common/fetch.js'
 export default {
     components: {
     
     },
+	onLoad(){
+		this.getFavouritePro();
+	},
+	onShow() {
+		
+	},
+	
     data(){
         return {
             checked: false,
-            handleShow: false
+            handleShow: false,
+			Users_ID: 'wkbq6nc2kc',
+			User_ID: 3,
+			collect_list: [], // 收藏列表,
+			page: 1,
+			pageSize: 4,
+			hasMore: true,
         }
     },
+	onReachBottom() {
+		if(this.hasMore) {
+			this.getFavouritePro();
+		}
+	},
     methods: {
+		// 获取收藏列表
+		getFavouritePro(){
+			getFavouritePro({Users_ID:this.Users_ID,User_ID: this.User_ID ,page: this.page,pageSize:this.pageSize}).then(res=>{
+				console.log(res)
+				let oldlist = this.collect_list;
+				if(res.errorCode == 0) {
+					this.collect_list = oldlist.concat(res.data);
+					this.hasMore = (res.totalCount / this.pageSize) > this.page ? true : false ;
+					this.page += 1;
+				}
+			})
+		},
         handle(){
             this.handleShow = !this.handleShow;            
         },

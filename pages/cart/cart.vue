@@ -42,7 +42,7 @@
       <!-- 猜你喜欢 -->
       <div class="fenge"><span class="red"></span><span class="caini">猜你喜欢</span><span class="red"></span></div>
       <div class="prolist">
-        <div class="pro-item" v-for="(item,index) in prodList" :key="index">
+        <div class="pro-item" v-for="(item,index) in prodList" :key="index" @click="gotoDetail(item.Products_ID)" >
           <img :src="item.ImgPath" alt="">
           <div class="item-name">{{item.Products_Name}}</div>
           <div class="price">
@@ -133,6 +133,12 @@ export default {
 				this.prod_arg.page += 1;				
 			}
 		}).catch(e=>console.log(e))		
+	},
+	gotoDetail(e){
+		console.log(e)
+		uni.navigateTo({
+		    url: '../detail/detail?Products_ID=' + e
+		});
 	}
   },
   computed: {
@@ -336,6 +342,11 @@ export default {
       background: #fff;
       box-sizing: border-box;
     }
+	// #ifdef  MP 
+	.checkout {
+		bottom: 0;
+	}
+	// #endif
     .checkbtn {
       background: #F43131;
       color: #fff;

@@ -9,7 +9,7 @@
 				</navigator>
 			</div>
 			
-			<div class="first">
+			<div class="first" @click="collect">
 				<div><img  src="/static/tuan/shou.png" ></div>
 				<div class="txt">收藏</div>
 			</div>
@@ -19,10 +19,10 @@
 			</div>
 		</div>
 		<div class="rightss">
-			<div class="dan bTitle">
+			<div class="dan bTitle" @click="addCart">
 					{{first}}
 			</div>
-			<div class="tuan bTitle">
+			<div class="tuan bTitle" @click="directBuy">
 					{{second}}
 			</div>
 		</div>
@@ -44,6 +44,17 @@
 			second: {
 				type: String,
 				default: '购买'
+			}
+		},
+		methods: {
+			collect(){
+				this.$emit('collect');
+			},
+			addCart(){
+				this.$emit('cartHandle');
+			},
+			directBuy(){
+				this.$emit('directHandle');
 			}
 		}
 	}
