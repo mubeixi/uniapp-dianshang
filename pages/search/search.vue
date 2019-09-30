@@ -7,7 +7,7 @@
 			<span @click="close">取消</span>
 		</div>	
     </form>
-    <div class="history">
+    <div class="history" v-if="searchAll.length>0">
         <div class="title">
 			<div>搜索历史</div>
 			<div @click="clear"><img src="/static/del.png"></div>
