@@ -118,7 +118,6 @@
 	</popupLayer>
   </div>
 </template>
-
 <script>
 import bottom from '../bottom/bottom'
 import popupLayer from '../../components/popup-layer/popup-layer.vue'
