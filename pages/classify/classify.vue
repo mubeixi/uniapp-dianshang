@@ -5,15 +5,15 @@
 			<input type="text" class="search-input" name="search" placeholder="请输入商品关键词" placeholder-style="font-size:26rpx;color:#ADADAD;"> 
 		</view>
 		<view class="page-body" :style="'height:'+height+'px'">
-			<scroll-view class="nav-left" scroll-y :style="'height:'+height+'px'" :scroll-top="scrollLeftTop" scroll-with-animation>
+			<scroll-view class="nav-left" scroll-y :style="'height:'+height+'px'" :scroll-top="scrollLeftTop" scroll-with-animation >
 				<view class="nav-left-item" @click="categoryClickMain(index)" :key="index" :class="index==categoryActive?'active':''"
 					v-for="(item,index) in classifyData">
 					<view class="leftBac" style="position: absolute;"></view>
 					{{item.Category_Name}}
 				</view>
 			</scroll-view>
-			<scroll-view class="nav-right" scroll-y :scroll-top="scrollTop" @scroll="scroll" :style="'height:'+height+'px'" scroll-with-animation>
-				<view v-for="(foods,index) in classifyData" :key="index" class="box"  :class="index!=0?'marginTop':''">
+			<scroll-view class="nav-right" scroll-y :scroll-top="scrollTop" @scroll="scroll" :style="'height:'+height+'px'" scroll-with-animation >
+				<view v-for="(foods,index) in classifyData" :key="index" class="box" >
 					<view class="titles">
 						<view class="titleSum">{{classifyData[index].Category_Name}}</view>
 					<!-- 	<view class="gengduo">查看更多></view> -->
@@ -25,6 +25,9 @@
 						<image :src="item.Category_Img" />
 						<view class="nav-right-txt">{{item.Category_Name}}</view>
 					</view>
+					<view class="bottomBorder">
+						
+					</view>
 				</view>
 			</scroll-view>
 		</view>
@@ -33,7 +36,6 @@
 </template>
 
 <script>
-	import classifyData from '../../common/classify.data.js';
 	import {getProductCategory} from '../../common/fetch.js';
 	export default {
 		data() {
@@ -43,13 +45,13 @@
 				categoryActive: 0,
 				scrollTop: 0,
 				scrollLeftTop: 0,
-				// scrollHeight: 0,
+				scrollHeight: 0,
 				classifyData:'',
 				arr:[0,584,1168,1752,2336,2805,3274,3858,4442,4911,5380,5734,6203,6672,7017],//初始值，后边计算会根据手机适配覆盖
 				leftItemHeight: 51,//49行会计算出新值进行覆盖
 				navLeftHeight:0,//左边scroll-view 内层nav的总高度
 				diff: 0,//左边scroll-view 内层nav的总高度与视口之差
-				tabBarHeight:0,//如果此页面为Tab页面，自己改变高度值,,一般tab高度为51
+				tabBarHeight:50,//如果此页面为Tab页面，自己改变高度值,,一般tab高度为51
 			}
 		},
 		created(){
@@ -84,7 +86,7 @@
 				let selectorQuery=uni.createSelectorQuery();
 				selectorQuery.selectAll('.nav-left-item').boundingClientRect(function(rects) {
 					_this.leftItemHeight  =  rects[0].height;
-					_this.navLeftHeight = _this.leftItemHeight * classifyData.length;
+					_this.navLeftHeight = _this.leftItemHeight * _this.classifyData.length;
 					_this.diff =  _this.navLeftHeight - _this.height;
 				});
 				selectorQuery.selectAll('.box').boundingClientRect(function(rects) {
@@ -107,7 +109,7 @@
 					}).exec()
 			},
 			scroll(e) {
-				let _this = this
+				let _this = this;
 				if(this.timeoutId){
 					clearTimeout(this.timeoutId);
 				}
@@ -120,7 +122,7 @@
 						let height2 = _this.arr[i+1];
 						if (!height2 || (_this.scrollHeight >= height1 && _this.scrollHeight < height2)) {
 							_this.categoryActive = i;
-							(_this.diff>0) && (_this.scrollLeftTop = Math.round((_this.categoryActive * _this.diff)/(classifyData.length-1)));
+							(_this.diff>0) && (_this.scrollLeftTop = Math.round((_this.categoryActive * _this.diff)/(_this.classifyData.length-1)));
 							return false;
 						}
 					}
@@ -189,8 +191,8 @@
 	.box {
 		display: block;
 		overflow: hidden;
-		border-bottom: 1rpx solid #ECE8E8;
-		padding-bottom: 50rpx;
+		// border-bottom: 1rpx solid #ECE8E8;
+		// padding-bottom: 50rpx;
 		/* min-height: 100vh; */ 
 		/*若您的子分类过少想使得每个子分类占满屏请放开上边注视 */
 	}
@@ -287,7 +289,12 @@
 			left: 61rpx;
 		}
 	}
-	.marginTop{
-		margin-top: 15rpx;
+	.bottomBorder{
+		width: 100%;
+		height: 1rpx;
+		background-color: #ECE8E8;
+		margin-top: 20rpx;
+		margin-bottom: 20rpx;
+		float: left;
 	}
 </style>
