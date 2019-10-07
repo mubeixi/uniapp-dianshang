@@ -11,11 +11,15 @@
         <div :class="[active == 0 ? 'checked' : '','tab']" @click="getActive(0)" style="width:90rpx;">默认<div class="line"></div></div>
         <div :class="[active == 1 ? 'checked' : '','tab']" @click="getActive(1)">销量<div class="line"></div></div>
         <div :class="[active == 2 ? 'checked' : '','tab']" @click="getActive(2)">价格<div class="line"></div></div>
-        <div :class="[active == 3 ? 'checked' : '','tab']" @click.stop="change">筛选<div class="line"></div></div>
-		<div class="tab" style="width: 80rpx;">
+        <div :class="[active == 3 ? 'checked' : '','tab']" @click.stop="change" style="width: 80rpx;text-align: right;">筛选<div class="line"></div></div>
+		<div class="tab" v-if="showShai"  style="width: 80rpx;">
+			
+		</div>
+		<div class="tab" style="width: 80rpx;" v-else>
 			<image src="/static/result/jx1.png" @click="changeCate" v-if="cate==2" class="imgm"></image>
 			<image src="/static/result/jx.png" @click="changeCate" v-else class="imgm"></image>
 		</div>
+		
 		<div class="shaixuan" v-if="showShai" @click.stop   catchtouchmove="false">
 			<view class="priceInterval">价格区间(元)</view>
 			<view class="inputPrice">
@@ -25,8 +29,8 @@
 			</view>
 			<view class="priceInterval">是否包邮</view>
 			<view class="isShipping">
-				<span :class="isShipping?'checked':''" @click="shipping(0)">是</span>
-				<span :class="isShipping?'':'checked'" @click="shipping(1)">否</span>
+				<span :class="isShipping==1?'checked':''" @click="shipping(0)">是</span>
+				<span :class="isShipping==2?'':'checked'" @click="shipping(1)">否</span>
 			</view>
 			<view class="submit">
 				<view class="reset" @click="reset">重置</view>
@@ -89,7 +93,7 @@ export default {
 		showShai:false,
 		maxPrice:'',//筛选最高价
 		minPrice:'',//筛选最低价
-		isShipping:true,//是否包邮
+		isShipping:0,//是否包邮
 		Cate_ID:0,//列表id
     }
   },
@@ -130,15 +134,15 @@ export default {
   methods:{
 	  shipping(i){
 		  if(i){
-			  this.isShipping=false;
+			  this.isShipping=2;
 		  }else{
-			  this.isShipping=true;
+			  this.isShipping=1;
 		  }
 	  },
 	  reset(){
 		  this.minPrice='';
 		  this.maxPrice='';
-		  this.isShipping=true;
+		  this.isShipping=0;
 	  },
 	  sureSearch(){
 		  if(isNaN(this.minPrice)||isNaN(this.maxPrice)){
@@ -231,9 +235,9 @@ export default {
 		  }else if(item=="search"){
 				data.min_price=this.minPrice;
 				data.max_price=this.maxPrice;
-			  if(this.isShipping){
+			  if(this.isShipping==1){
 				  data.free_shipping=1;
-			  }else{
+			  }else if(this.isShipping==2){
 				  data.free_shipping=0;
 			  }
 		  }
@@ -332,7 +336,7 @@ export default {
     }
     .tab {
         //flex: 1;
-		width: 150rpx;
+		width: 180rpx;
 		height: 60rpx;
         text-align: center;
 		margin-bottom: 20rpx;
@@ -372,7 +376,7 @@ export default {
 					font-size: 24rpx;
 				}
 				.price {
-					margin-top: 45rpx;
+					margin-top: 21rpx;
 				}
 				.price text {
 					font-size: 24rpx;
@@ -390,7 +394,7 @@ export default {
 				}
 				.sold {
 					color: #666;
-					font-size: 18rpx;
+					font-size: 19rpx;
 					margin-top: 40rpx;
 				}
 			}
@@ -409,7 +413,7 @@ export default {
 				height: 345rpx;
 			}
 			.pro_desc {
-				padding: 17rpx 15rpx 21rpx 11rpx;
+				padding: 17rpx 15rpx 34rpx 11rpx;
 				color: #333;
 				font-size: 24rpx;
 				.title {
@@ -439,7 +443,7 @@ export default {
 				}
 				.sold {
 					color: #666;
-					font-size: 18rpx;
+					font-size: 20rpx;
 					margin-top: 40rpx;
 				}
 			}

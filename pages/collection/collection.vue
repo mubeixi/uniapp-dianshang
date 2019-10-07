@@ -5,7 +5,7 @@
 		  <div class="mbxa"  v-if="rightClicked" @click="check(index)">
 			  <img :src="checked[index].checked?'/static/checked.png':'/static/uncheck.png'" >
 		  </div>
-          <div class="pro" >
+          <div class="pro" @click="goDetail(item)">
             <div class="pros">
 				<img class="pro-img" :src="item.ImgPath">
 			</div>
@@ -83,6 +83,12 @@ export default {
 		
 	},
     methods: {
+		//跳转详情
+		goDetail(item){
+			    uni.navigateTo({
+			    			  url:'../detail/detail?Products_ID='+item.prod_id
+			    })
+		},
 		// 取消收藏
 		cancelCollection() {
 			this.prod_id = [];
@@ -91,6 +97,14 @@ export default {
 					this.prod_id.push(this.collect_list[index].prod_id);
 				}
 			});
+				if(this.prod_id.length<=0){
+					uni.showToast({
+						title: '您还没有选择商品哦！',
+						icon:'none',
+						duration: 2000
+					});
+					return;
+			}
 			cancelCollection({
 				Users_ID: this.Users_ID,
 				User_ID: this.User_ID,
