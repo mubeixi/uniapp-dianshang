@@ -1,5 +1,5 @@
 <template>
-  <div class="bd">
+  <div class="bd" @click="closeShow">
     <div class="top">
         <image src="../../static/left.png" class="back" @click="goBack"></image>
 		<input type="text" v-model="inputValue" class="search" @confirm="success" />
@@ -11,11 +11,33 @@
         <div :class="[active == 0 ? 'checked' : '','tab']" @click="getActive(0)">默认<div class="line"></div></div>
         <div :class="[active == 1 ? 'checked' : '','tab']" @click="getActive(1)">销量<div class="line"></div></div>
         <div :class="[active == 2 ? 'checked' : '','tab']" @click="getActive(2)">价格<div class="line"></div></div>
-        <div :class="[active == 3 ? 'checked' : '','tab']" @click="change" >筛选<div class="line"></div>
-			<div class="c_i"><image src="/static/result/jx.png" @click="changeCate" alt="" class="imgm"></image></div>
+        <div :class="[active == 3 ? 'checked' : '','tab']" @click.stop="change">筛选<div class="line"></div></div>
+		<div>
+			<image src="/static/result/jx1.png" @click="changeCate" v-if="cate==2" class="imgm"></image>
+			<image src="/static/result/jx.png" @click="changeCate" v-else class="imgm"></image>
+		</div>
+		<div class="shaixuan" v-if="showShai" @click.stop   catchtouchmove="false">
+			<view class="priceInterval">价格区间(元)</view>
+			<view class="inputPrice">
+				<input type="number" placeholder="最低价" placeholder-style="color:#999999;font-size:26rpx;" v-model="minPrice">
+				<view>—</view>
+				<input type="number" placeholder="最高价"  placeholder-style="color:#999999;font-size:26rpx;" v-model="maxPrice">
+			</view>
+			<view class="priceInterval">是否包邮</view>
+			<view class="isShipping">
+				<span :class="isShipping?'checked':''" @click="shipping(0)">是</span>
+				<span :class="isShipping?'':'checked'" @click="shipping(1)">否</span>
+			</view>
+			<view class="submit">
+				<view class="reset" @click="reset">重置</view>
+				<view class="sure" @click="sureSearch">确定</view>
+			</view>
+			<view class="zhao" @click="closeShow">>
+				
+			</view>
 		</div>
     </div>
-	<div v-if="cate==1">
+	<div v-if="cate==1" >
 		<div class="cate1">
 			<div class="pro" @click="gotoDetail(item)" v-for="(item,i) of pro" :key="i">
 				<image :src="item.Products_JSON.ImgPath" alt=""  class="pro-img"></image>
@@ -30,7 +52,7 @@
 			</div>
 		</div>	
 	</div>
-    <div v-else>
+    <div v-else >
 		<div class="cate2" >
 			<div class="pro" @click="gotoDetail(item)" v-for="(item,i) of pro" :key="i">
 				<image :src="item.Products_JSON.ImgPath" alt=""  class="pro-img"></image>
@@ -44,9 +66,6 @@
 			</div>
 		</div>
 	</div>
-	<popup-layer ref="popupLayer"  :direction="'bottom'">
-
-	</popup-layer>
   </div>
 </template>
 
@@ -67,6 +86,10 @@ export default {
 		pageSize:8,
 		orderby:'',
 		searchAll:[],//搜索历史
+		showShai:false,
+		maxPrice:'',//筛选最高价
+		minPrice:'',//筛选最低价
+		isShipping:true,//是否包邮
     }
   },
   onLoad: function (option) {
@@ -103,6 +126,37 @@ export default {
 	 
   },
   methods:{
+	  shipping(i){
+		  if(i){
+			  this.isShipping=false;
+		  }else{
+			  this.isShipping=true;
+		  }
+	  },
+	  reset(){
+		  this.minPrice='';
+		  this.maxPrice='';
+		  this.isShipping=true;
+	  },
+	  sureSearch(){
+		  if(this.minPrice>=0.01&&this.maxPrice>=0.01&&this.maxPrice>this.minPrice){
+		  }else{
+		  	uni.showToast({
+		  		title: '输入的价格区间有误，必须为数字且最高价大于最低价',
+		  		icon:'none',
+				duration: 2000
+		  	});
+		  	return;
+		  }
+		  this.pro=[];
+		  this.page=1;
+		  this.orderby="search";
+		  this.getProd(this.orderby);
+		  this.showShai=false;
+	  },
+	  closeShow(){
+		  this.showShai=false;
+	  },
 	  getActive(item){
 		  this.pro=[];
 		  this.page=1;
@@ -159,6 +213,14 @@ export default {
 			  data.order_by=item;
 		  }else if(item=="price"){
 			  data.order_by=item;
+		  }else if(item=="search"){
+			  data.min_price=this.minPrice;
+			  data.max_price=this.maxPrice;
+			  if(this.isShipping){
+				  data.free_shipping=1;
+			  }else{
+				  data.free_shipping=0;
+			  }
 		  }
 		  getProd(data).then(res=>{
 			  for(var item of res.data){
@@ -185,14 +247,22 @@ export default {
 		  this.cate = this.cate == 1 ? 2 : 1
 	  },
 	  change(){
-		  this.active = 3;
-		  this.$refs.popupLayer.show();
+		this.active = 3;
+		if(this.showShai){
+			this.showShai=false;
+			return;
+		}
+		this.showShai=true;
+		
 	  }
   }
 }
 </script>
 
 <style scoped lang="scss">
+	.bd{
+		min-height: 1000rpx;
+	}
     .top {
 		position: relative;
         display: flex;
@@ -233,8 +303,9 @@ export default {
 		font-size: 30rpx;
         justify-content: space-around;
         margin-top: 25px;
-        padding:0 10px;
+        padding:0 20rpx;
 		color: #333;
+		position: relative;
     }
     .tab.checked {
         color: #F43131;
@@ -259,14 +330,6 @@ export default {
         margin: 20rpx auto 0 ;
         background: #fff;
     }
-	.tabs .tab:last-child {
-		position: relative;
-	}
-	.tabs .c_i {
-		position: absolute;
-		top: 5rpx;
-		right: 10rpx;
-	}
 	.cate1 {
 		.pro{
 			display: flex;
@@ -367,5 +430,98 @@ export default {
 	.imgm{
 		width: 36rpx;
 		height: 34rpx;
+	}
+	.shaixuan{
+		position: absolute;
+		top: 70rpx;
+		width: 750rpx;
+		background-color: #FFFFFF;
+		z-index: 999;
+		padding-top: 10rpx;
+		view{
+			padding-left: 20rpx;
+			padding-right: 20rpx;
+		}
+		.priceInterval{
+			font-size: 26rpx;
+			color: #999999;
+			margin-bottom: 24rpx;
+			height:27rpx;
+			line-height: 27rpx;
+		}
+		.inputPrice{
+			display: flex;
+			margin-bottom: 50rpx;
+			view{
+				width:29rpx;
+				height:55rpx;
+				line-height: 55rpx;
+				font-weight: bold;
+				font-size:26rpx;
+				font-family:Microsoft YaHei;
+				font-weight:400;
+				color:rgba(153,153,153,1);
+				margin: 0  20rpx;
+			}
+			input{
+				width:192rpx;
+				height:55rpx;
+				background:rgba(245,245,245,1);
+				border-radius:28rpx;
+				text-align: center;
+			}
+		}
+		.isShipping{
+			display: flex;
+			margin-bottom: 100rpx;
+			span{
+				width:110rpx;
+				height:55rpx;
+				background:#D6D6D6;
+				border-radius:28rpx;
+				display: block;
+				line-height: 55rpx;
+				text-align: center;
+				font-size: 26rpx;
+				color: #FFFFFF;
+				margin-right: 27rpx;
+			}
+			.checked{
+				background-color: #F43131 !important;
+			}
+		}
+		.submit{
+			display: flex;
+			width: 100%;
+			height: 80rpx;
+			padding-left: 0rpx;
+			padding-right: 0rpx;
+			view{
+				width: 50%;
+				height: 80rpx;
+				line-height: 80rpx;
+				text-align: center;
+				color: #FFFFFF;
+				font-size: 30rpx;
+			}
+			.reset{
+				background-color: #B9B9B9;
+			}
+			.sure{
+				background-color: #F43131;
+			}
+		}
+	}
+	.zhao{
+		height:640rpx;
+		width: 100%;
+		padding-left: 0rpx;
+		padding-right: 0rpx;
+		//background: rgba(0, 0, 0, .3);
+		//position: fixed;
+		z-index: 998;
+		position: absolute;
+		background-color:#000;
+		opacity:0.6;
 	}
 </style>
