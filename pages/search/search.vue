@@ -3,7 +3,7 @@
     <form action="/">
 		<div class="search-wrap">
 			<icon type="search" size="34rpx" class="search_icon"/>
-			<input type="text" class="search-input" name="search" v-model="inputValue" @confirm="success"  confirm-type='search' focus="true"> 
+			<input type="text" class="search-input" name="search" v-model="inputValue" @confirm="success"  confirm-type='search' focus="focus" autofocus="autofocus"> 
 			<span @click="close">取消</span>
 		</div>	
     </form>
@@ -34,7 +34,7 @@ export default {
     
   },
   onShow(){
-	const than = this        // 注意this的指向
+	const than = this;       // 注意this的指向
 		uni.getStorage({
 			key: 'searchAll',
 			success(res) {

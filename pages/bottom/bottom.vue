@@ -1,7 +1,6 @@
 <template>
 	<div class="fixed">
-		<div class="leftss">
-			
+		<div class="leftss">	
 			<div class="first">
 				<navigator url="/pages/index/index" open-type="switchTab" >
 					<div><img src="/static/tuan/home.png" ></div>
