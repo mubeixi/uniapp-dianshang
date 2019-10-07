@@ -81,7 +81,6 @@ export default {
 		  goBack();
 	  },
       onSearch: function(){
-          console.log('1')
          
       },
       onCancel: function(){
