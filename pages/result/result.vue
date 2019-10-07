@@ -16,7 +16,7 @@
 			<image src="/static/result/jx1.png" @click="changeCate" v-if="cate==2" class="imgm"></image>
 			<image src="/static/result/jx.png" @click="changeCate" v-else class="imgm"></image>
 		</div>
-		<div class="shaixuan" v-if="showShai" @click.stop>
+		<div class="shaixuan" v-if="showShai" @click.stop   catchtouchmove="false">
 			<view class="priceInterval">价格区间(元)</view>
 			<view class="inputPrice">
 				<input type="number" placeholder="最低价" placeholder-style="color:#999999;font-size:26rpx;" v-model="minPrice">
@@ -32,9 +32,12 @@
 				<view class="reset" @click="reset">重置</view>
 				<view class="sure" @click="sureSearch">确定</view>
 			</view>
+			<view class="zhao">
+				
+			</view>
 		</div>
     </div>
-	<div v-if="cate==1">
+	<div v-if="cate==1" >
 		<div class="cate1">
 			<div class="pro" @click="gotoDetail(item)" v-for="(item,i) of pro" :key="i">
 				<image :src="item.Products_JSON.ImgPath" alt=""  class="pro-img"></image>
@@ -49,7 +52,7 @@
 			</div>
 		</div>	
 	</div>
-    <div v-else>
+    <div v-else >
 		<div class="cate2" >
 			<div class="pro" @click="gotoDetail(item)" v-for="(item,i) of pro" :key="i">
 				<image :src="item.Products_JSON.ImgPath" alt=""  class="pro-img"></image>
@@ -250,6 +253,7 @@ export default {
 			return;
 		}
 		this.showShai=true;
+		
 	  }
   }
 }
@@ -507,5 +511,17 @@ export default {
 				background-color: #F43131;
 			}
 		}
+	}
+	.zhao{
+		height:640rpx;
+		width: 100%;
+		padding-left: 0rpx;
+		padding-right: 0rpx;
+		//background: rgba(0, 0, 0, .3);
+		//position: fixed;
+		z-index: 998;
+		position: absolute;
+		background-color:#000;
+		opacity:0.6;
 	}
 </style>
