@@ -136,7 +136,7 @@
 			},
 			cart(item) {
 				uni.navigateTo({
-					url:'../detail/detail?Products_ID='+item.Category_ID
+					url:'../result/result?Cate_ID='+item.Category_ID
 				})
 			}
 		},

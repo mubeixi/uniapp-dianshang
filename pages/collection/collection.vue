@@ -88,7 +88,7 @@ export default {
 			this.prod_id = [];
 			this.checked.forEach((item,index)=>{
 				if(item.checked) {
-					this.prod_id = this.collect_list[index].prod_id
+					this.prod_id.push(this.collect_list[index].prod_id);
 				}
 			});
 			cancelCollection({
@@ -96,7 +96,15 @@ export default {
 				User_ID: this.User_ID,
 				prod_id: JSON.stringify(this.prod_id)
 			}).then(res=>{
-				console.log(res)
+				uni.showToast({
+					title: res.msg,
+					icon:'none',
+					duration: 2000
+				});
+				this.page=1;
+				this.getFavouritePro();
+				this.rightClicked=false;
+				this.rightText = this.rightClicked ? '取消' : '管理';
 			}).catch(e=>{
 				console.log(e)
 			})
@@ -107,7 +115,21 @@ export default {
 		},
 		// 全选
 		checkAll(){
-			this.collect_list.forEach(item=>item.checked=true)
+			let sum=0;
+			this.checked.forEach(item=>{
+				if(item.checked){
+					sum++;
+				}
+			})
+			if(sum==this.checked.length){
+				this.checked.forEach(item=>{
+					item.checked=false;
+				})
+			}else{
+				this.checked.forEach(item=>{
+					item.checked=true;
+				})
+			}
 		},
 		// 右侧管理按钮
 		rightHandle(){
@@ -118,9 +140,9 @@ export default {
 		getFavouritePro(){
 			getFavouritePro({Users_ID:this.Users_ID,User_ID: this.User_ID ,page: this.page,pageSize:this.pageSize}).then(res=>{
 				console.log(res)
-				let oldlist = this.collect_list;
+				//let oldlist = this.collect_list;
 				if(res.errorCode == 0) {
-					this.collect_list = oldlist.concat(res.data);
+					this.collect_list = res.data;
 					this.hasMore = (res.totalCount / this.pageSize) > this.page ? true : false ;
 					this.page += 1;
 				};
@@ -225,6 +247,8 @@ export default {
         padding: 0 10px;
         box-sizing: border-box;
         box-shadow: 0 0 9px rgba(0, 0, 0, .4);
+		z-index: 999;
+		background-color: #fff;
     }
     .b_left {
         font-size: 28rpx;
