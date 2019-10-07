@@ -32,7 +32,7 @@
 				<view class="reset" @click="reset">重置</view>
 				<view class="sure" @click="sureSearch">确定</view>
 			</view>
-			<view class="zhao">
+			<view class="zhao" @click="closeShow">>
 				
 			</view>
 		</div>
