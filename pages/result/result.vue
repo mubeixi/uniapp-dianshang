@@ -11,8 +11,9 @@
         <div :class="[active == 0 ? 'checked' : '','tab']" @click="getActive(0)">默认<div class="line"></div></div>
         <div :class="[active == 1 ? 'checked' : '','tab']" @click="getActive(1)">销量<div class="line"></div></div>
         <div :class="[active == 2 ? 'checked' : '','tab']" @click="getActive(2)">价格<div class="line"></div></div>
-        <div :class="[active == 3 ? 'checked' : '','tab']" @click="change">筛选<div class="line"></div></div>
-		<div><image src="/static/result/jx.png" @click="changeCate" alt="" class="imgm"></image></div>
+        <div :class="[active == 3 ? 'checked' : '','tab']" @click="change" >筛选<div class="line"></div>
+			<div class="c_i"><image src="/static/result/jx.png" @click="changeCate" alt="" class="imgm"></image></div>
+		</div>
     </div>
 	<div v-if="cate==1">
 		<div class="cate1">
@@ -258,6 +259,14 @@ export default {
         margin: 20rpx auto 0 ;
         background: #fff;
     }
+	.tabs .tab:last-child {
+		position: relative;
+	}
+	.tabs .c_i {
+		position: absolute;
+		top: 5rpx;
+		right: 10rpx;
+	}
 	.cate1 {
 		.pro{
 			display: flex;

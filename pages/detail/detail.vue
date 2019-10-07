@@ -2,7 +2,7 @@
   <div style="position:relative;">
     <div class="top">
         <img src="/static/detail/back.png" @click="goBack" alt="">
-        <img src="/static/detail/cart.png" class="cart" alt="">
+        <img src="/static/detail/cart.png" @click="goCart" class="cart" alt="">
     </div>
 	<!-- 轮播 -->
 	<view class="uni-padding-wrap">
@@ -124,7 +124,7 @@
 					<div class="cartTitles">{{product.Products_Name}}</div>
 					<div class="addInfo">
 						<div class="addPrice">{{product.Products_PriceX}}元</div>
-						<div class="proSale">库存{{product.Products_Count}}</div>
+						<div class="proSale">库存{{postData.count}}</div>
 					</div>
 				</div>
 			</div>
@@ -134,7 +134,7 @@
 						{{i}}
 					</div>
 					<div class="skuValue">
-						<div :class="skuF==index?'skuCheck':''" v-for="(mbx,index) of item" :key="index">{{mbx}}</div>
+						<div :class="check_attr[i]==index?'skuCheck':''" @click="selectAttr(index,i)"  v-for="(mbx,index) of item" :key="index">{{mbx}}</div>
 					</div>
 				</div>
 			</div>	
@@ -149,7 +149,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="cartSub" @click="skuSub">
+		<div class="cartSub" @click="skuSub" :class="submit_flag?'':'disabled'">
 			确定
 		</div>
 	</popupLayer>
@@ -159,7 +159,7 @@
 import bottom from '../bottom/bottom'
 import popupLayer from '../../components/popup-layer/popup-layer.vue'
 import {getProductDetail,getCommit,updateCart,addCollection} from '../../common/fetch.js';
-import {goBack}  from '../../common/tool.js'
+import {goBack,numberSort}  from '../../common/tool.js'
 export default {
     data(){
         return {
@@ -171,6 +171,23 @@ export default {
 			Products_ID: 0 ,
 			count:1,//商品数量
 			skuF:1,//规格详情
+			checkAttr: {} , // 选择的属性
+			check_attrid_arr: [],
+			check_attr: {},
+			//购买需要传输的信息
+			postData: {
+			    act: 'add_cart',
+			    Users_ID: 'wkbq6nc2kc',      //商家ID
+			    User_ID: 3,       //会员ID
+			    prod_id: 0,    //产品ID  在 onLoad中赋值
+			    atrid_str: '',    //选择属性  1；2   数字从小到大
+			    atr_str: '',      //选择属性名称
+			    count: 0,         //选择属性的库存
+			    showimg: '',      //选择属性的图片(用产品图片代替)
+			    qty: 1,           //购买数量
+			    cart_key: '',     //购物车类型   CartList（加入购物车）、DirectBuy（立即购买）、PTCartList（不能加入购物车）
+			},
+			submit_flag: true, //提交按钮
         }
     },
     components: {
@@ -185,21 +202,111 @@ export default {
 			this.getCommit(this.Products_ID);
 	},
     methods: {
+		// 选择属性
+		selectAttr(index,i){
+			var value_index = index; //选择的属性值索引
+			var attr_index = i;   //选择的属性索引
+			console.log(value_index)
+			console.log(attr_index)
+			// if (this.check_attrid_arr.indexOf(value_index) > -1) return false;
+			//记录选择的属性
+			var check_attr = Object.assign(this.check_attr, { [attr_index]: value_index }); //记录选择的属性  attr_index外的[]必须
+			console.log(check_attr)
+			//属性处理
+			var check_attrid = [];
+			var check_attrname = [];
+			var check_attrnames = [];
+			for (var i in check_attr) {
+			    var attr_id = check_attr[i];
+			    check_attrid.push(attr_id);
+			    check_attrname[attr_id] = i;
+			}
+			//数组排序  按从小到大排
+			var check_attrid_arr = check_attrid;
+			check_attrid = numberSort(check_attrid);
+			//获取对应的属性名称
+			for (var i = 0; i < check_attrid.length; i++) {
+			    var attr_id = check_attrid[i];
+			    var attr_name = check_attrname[attr_id];
+			    check_attrnames.push(attr_name + ':' + this.product.skujosn[attr_name][attr_id]);
+			}
+			check_attrid = check_attrid.join(';');
+			var attr_val = this.product.skuvaljosn[check_attrid];   //选择属性对应的属性值
+			//数组转化为字符串
+			check_attrnames = check_attrnames.join(';');
+			this.postData.atr_str = check_attrnames;
+			this.postData.atrid_str = check_attrid;
+			//属性判断
+			if (attr_val) {
+				this.postData.count = attr_val.Property_count;   //选择属性的库存
+				this.postData.showimg = typeof attr_val.Attr_Image != 'undefined' && attr_val.Attr_Image != '' ? attr_val.Attr_Image : this.product.Products_JSON['ImgPath'][0];// 选择属性的图片
+				this.productDetail_price = attr_val.Txt_PriceSon; // 选择属性的价格
+				this.submit_flag = (!this.check_attr || Object.getOwnPropertyNames(this.check_attr).length != Object.getOwnPropertyNames(this.product.skujosn).length) ? false : true;
+			}
+			//判断属性库存
+			if (attr_val && attr_val.Property_count <= 0) {
+			    wx.showToast({
+			        title: '您选择的 ' + check_attrnames + ' 库存不足，请选择其他属性',
+			        icon: 'none'
+			    })
+				this.submit_flag =  false;
+			    return false;
+			}
+			this.check_attr = check_attr;
+			this.check_attrid_arr = check_attrid_arr;
+			this.submit_flag = (!this.check_attr || Object.getOwnPropertyNames(this.check_attr).length != Object.getOwnPropertyNames(this.product.skujosn).length) ? false : true;
+			//购买数量处理  大于最高时赋值最高值
+			if (this.postData.qty > this.postData.count) {
+				this.postData.qty = this.postData.count;
+			}
+		},
 		skuSub(){
+			if(!this.submit_flag) {
+				return ;
+			}
+			this.postData.prod_id = this.Products_ID;
+			updateCart(this.postData).then(res=>{
+				console.log(res)
+				if(res.errorCode == 0) {
+					if(this.postData.cart_key == 'CartList') {
+						uni.showLoading({
+							title: '加入购物车成功',
+							icon: 'success'
+						})						
+					}else {
+						uni.navigateTo({
+							url: '../check/check?cart_key=' + this.cart_key
+						})
+					}
+				}else {
+					uni.showToast({
+						title: res.msg
+					})
+				}
+			})
 			//确定加入购物车
 			this.$refs.cartPopu.close();
 		},
 		addNum(){
-			this.count++;
+			if (this.postData.qty < this.postData.count) {
+				this.postData.qty += 1;
+			}else {
+			    uni.showToast({
+					title: '购买数量不能大于库存量',
+			        icon: 'none',
+			    });
+				this.postData.qty = this.postData.count; 
+			}
 		},
 		delNum(){
-			if(this.count<=1){
+			if (this.postData.qty > 1) {
+				this.postData.qty -= 1;
+			} else {
 				uni.showToast({
-					title: '数量最少为1个',
-					icon:'none'
-				})
-			}else{
-				this.count--;
+			        title: '购买数量不能小于1',
+			        icon: 'none',
+			    });
+				this.postData.qty = 1; 
 			}
 		},
 		// 收藏
@@ -214,6 +321,11 @@ export default {
 						title: '收藏成功'
 					})
 				}
+			})
+		},
+		goCart(){
+			uni.navigateTo({
+				url: '../cart/cart'
 			})
 		},
 		goBack(){
@@ -236,9 +348,13 @@ export default {
 				Users_ID:'wkbq6nc2kc'
 			}
 			getProductDetail(data).then(res=>{
-				this.product=res.data;
-				this.product.skujosn=JSON.parse(res.data.skujosn);
-				this.product.skuvaljosn=JSON.parse(res.data.skuvaljosn);
+				console.log(res)
+				this.product = res.data;
+				this.postData.count = res.data.Products_Count;
+				if(res.data.skujosn) {
+					this.product.skujosn = JSON.parse(res.data.skujosn);
+					this.product.skuvaljosn = JSON.parse(res.data.skuvaljosn);
+				}
 				console.log(this.product.skujosn)
 			}).catch(e=>{
 				console.log(e)
@@ -247,11 +363,11 @@ export default {
 		addCart(){
 			this.$refs.cartPopu.show();
 			console.log('cart')
-			this.cart_key = 'CartList';
-	
+			this.postData.cart_key = 'CartList';
 		},
 		directBuy(){
-			this.cart_key = 'DirectBuy'
+			this.$refs.cartPopu.show();
+			this.postData.cart_key = 'DirectBuy'
 			let arg = {
 				Users_ID: 'wkbq6nc2kc',
 				User_ID: 3,
@@ -679,6 +795,9 @@ export default {
 		text-align: center;
 		color: #FFFFFF;
 		margin-top: 30rpx;
+		&.disabled {
+			background: #999;
+		}
 	}
 	.skuCheck{
 		color: #fff !important;

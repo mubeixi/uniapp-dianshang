@@ -2,37 +2,39 @@
   <div>
     <page-title class="nav-title" title="购物车" :right="handleShow ? '管理' : '取消'" @handle="handle" hiddenBack="true" :rightHidden="manage"></page-title>
     <div class="content">
-      <div v-if="CartList.length>0">
-        <div class="order_msg" v-for="i in CartList" :key="i">
-          <div class="biz_msg">
-           <div class="mbxa"  v-if="!handleShow" @click="checked=!checked">
-				<img v-if="checked" src="/static/checked.png" >
-				<img v-else src="/static/uncheck.png" >
-           </div>
-            <img src="/static/detail/user1.png" class="biz_logo" alt />
-            <text class="biz_name">张小凡时尚衣橱呀</text>
-          </div>
-          <div class="pro">
-          <div class="mbxa"  v-if="!handleShow" @click="checked=!checked">
-          			  <img v-if="checked" src="/static/checked.png" >
-          			  <img v-else src="/static/uncheck.png" >
-          </div>
-            <img class="pro-img" src="/static/check/pro1.png" alt />
-            <div class="pro-msg">
-              <div class="pro-name">2018夏装新款短袖蕾丝拼接荷叶边波点雪纺连衣裙女时尚名媛...</div>
-              <div class="attr">
-                <span>白色;S码</span>
-              </div>
-              <div class="pro-price">
-                <span class="span">￥</span>169.00
-                <span class="amount">
-                  <span class="plus">-</span>
-                  <input type="text" value="1">
-                  <span class="plus">+</span>
-                </span>
-              </div>
-            </div>
-          </div>
+      <div v-if="total_count>0">
+        <div class="order_msg" >
+			<div class="biz_msg">
+			   <div class="mbxa"  v-if="!handleShow" @click="checked=!checked">
+					<img v-if="checked" src="/static/checked.png" >
+					<img v-else src="/static/uncheck.png" >
+			   </div>
+				<img :src="shop_config.ShopLogo" class="biz_logo" alt />
+				<text class="biz_name">{{shop_config.ShopName}}</text>
+			</div>
+			<div class="pro" v-for="(pro,pro_id) in CartList" :key="pro_id">
+				<block v-for="(attr,attr_id) in pro" :key="attr_id">
+					<div class="mbxa"  v-if="!handleShow" @click="checked=!checked">
+						<img v-if="checked" src="/static/checked.png" >
+						<img v-else src="/static/uncheck.png" >
+					</div>
+					<img class="pro-img" :src="attr.ImgPath" alt />
+					<div class="pro-msg">
+						<div class="pro-name">{{attr.ProductsName}}</div>
+						<div class="attr">
+							<span v-for="(item,index) in attr.Productsattrstrval" :key="index">{{item}}</span>
+						</div>
+						<div class="pro-price">
+							<span class="span">￥</span>{{attr.ProductsPriceX}}
+							<span class="amount">
+							  <span class="plus">-</span>
+							  <input type="text" :value="attr.Qty">
+							  <span class="plus">+</span>
+							</span>
+						</div>
+					</div>
+				</block>
+			</div>
         </div>
       </div>
       <div v-else class="none">
@@ -55,9 +57,9 @@
     <!-- 购物车结算 -->
     <div class="checkout">
       <div class="mbxa"  v-if="!handleShow" @click="checked=!checked">
-      				<img v-if="checked" src="/static/checked.png"  style="margin-right: 17rpx;">
-      				<img v-else src="/static/uncheck.png"  style="margin-right: 17rpx;">
-					全选
+      		<img v-if="checked" src="/static/checked.png"  style="margin-right: 17rpx;">
+      		<img v-else src="/static/uncheck.png"  style="margin-right: 17rpx;">
+			全选
       </div>
       <div class="total">合计：<span>￥<span>{{total_price}}</span></span></div>
       <div class="checkbtn">结算</div>
@@ -81,6 +83,7 @@ export default {
     return {
       CartList:[],
 	  prodList: [],
+	  shop_config: {},
       handleShow: true,
       checked: false,
 	  total_count: 0,
@@ -104,7 +107,7 @@ export default {
 		this.getProd();
 	}
   },
-  created() {
+  onShow() {
   	this.getCart();
 	this.getProd();
   },
@@ -118,7 +121,8 @@ export default {
 			if(res.errorCode == 0){
 				this.CartList = res.data.CartList;
 				this.total_count= res.data.total_count;
-				this.total_price= res.data.total_price;				
+				this.total_price= res.data.total_price;			
+				this.shop_config = res.data.shop_config;
 			}
 		}).catch(e=>console.log(e))
 	},
@@ -207,12 +211,12 @@ export default {
     .attr {
         display: inline-block;
         height: 50rpx;
-		width: 150rpx;
+		padding: 0 20rpx;
         line-height: 50rpx;
         background: #FFF5F5;
         color: #666;
         font-size: 24rpx;
-        margin-bottom: 12rpx;
+        margin-bottom: 23rpx;
 		text-align: center;
     }
     .pro-price {
@@ -230,14 +234,20 @@ export default {
 		height: 50rpx;
 		width: 168rpx;
     }
-    .amount input {
-        width: 72rpx;
-        height: 50rpx;
-        line-height: 50rpx;
-        font-size: 28rpx;
-        text-align: center;
-        border: 1px solid #D1D1D1;
-		box-sizing: border-box;
+    .amount {
+		input {
+			width: 72rpx;
+			height: 50rpx;
+			line-height: 50rpx;
+			font-size: 28rpx;
+			text-align: center;
+			border: 1px solid #D1D1D1 {
+				left: 0;
+				right: 0;
+			};
+			box-sizing: border-box;	
+			min-height: 0;
+		}
     }
     .plus {
         width: 48rpx;

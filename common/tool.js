@@ -82,3 +82,17 @@ export const goBack=function(){
 	    delta: 1
 	});
 }
+
+/**
+ * 数组排序（值为number型）
+ * arr 需要排序的数组
+ * order_by   desc: 降续排列  asc: 升续排列
+ * 默认为asc
+ */
+export const numberSort = function(arr, order_by) {
+  if (typeof order_by != 'undefined' && order_by == 'desc') { //desc
+    return arr.sort(function (v1, v2) { return v2 - v1; });
+  } else {  //asc
+    return arr.sort(function (v1, v2) { return v1 - v2; });
+  }
+}
