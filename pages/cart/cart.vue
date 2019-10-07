@@ -1,6 +1,6 @@
 <template>
   <div>
-    <page-title class="nav-title" title="购物车" :right="handleShow ? '管理' : '取消'" @handle="handle" hiddenBack="true" :rightHidden="manage"></page-title>
+    <page-title class="nav-title" title="购物车" :right="handleShow ? '管理' : '取消'" @rightHandle="handle" hiddenBack="true" :rightHidden="manage"></page-title>
     <div class="content">
       <div v-if="total_count>0">
         <div class="order_msg" >
@@ -12,29 +12,31 @@
 				<img :src="shop_config.ShopLogo" class="biz_logo" alt />
 				<text class="biz_name">{{shop_config.ShopName}}</text>
 			</div>
-			<div class="pro" v-for="(pro,pro_id) in CartList" :key="pro_id">
+			<block  v-for="(pro,pro_id) in CartList" :key="pro_id">
 				<block v-for="(attr,attr_id) in pro" :key="attr_id">
-					<div class="mbxa"  v-if="!handleShow" @click="checked=!checked">
-						<img v-if="checked" src="/static/checked.png" >
-						<img v-else src="/static/uncheck.png" >
-					</div>
-					<img class="pro-img" :src="attr.ImgPath" alt />
-					<div class="pro-msg">
-						<div class="pro-name">{{attr.ProductsName}}</div>
-						<div class="attr">
-							<span v-for="(item,index) in attr.Productsattrstrval" :key="index">{{item}}</span>
+					<div class="pro">
+						<div class="mbxa"  v-if="!handleShow" @click="checked=!checked">
+							<img v-if="checked" src="/static/checked.png" >
+							<img v-else src="/static/uncheck.png" >
 						</div>
-						<div class="pro-price">
-							<span class="span">￥</span>{{attr.ProductsPriceX}}
-							<span class="amount">
-							  <span class="plus">-</span>
-							  <input type="text" :value="attr.Qty">
-							  <span class="plus">+</span>
-							</span>
+						<img class="pro-img" :src="attr.ImgPath" alt />
+						<div class="pro-msg">
+							<div class="pro-name">{{attr.ProductsName}}</div>
+							<div class="attr">
+								<span v-for="(item,index) in attr.Productsattrstrval" :key="index">{{item}}</span>
+							</div>
+							<div class="pro-price">
+								<span class="span">￥</span>{{attr.ProductsPriceX}}
+								<span class="amount">
+								  <span class="plus">-</span>
+								  <input type="text" :value="attr.Qty">
+								  <span class="plus">+</span>
+								</span>
+							</div>
 						</div>
 					</div>
 				</block>
-			</div>
+			</block>
         </div>
       </div>
       <div v-else class="none">
