@@ -44,16 +44,25 @@ export default {
         }
     },
 	onShow(){
-		
+		this.getOrder();
 	},
 	onLoad(option){
-		
+		this.index=option.index;
 	},
 	onReachBottom(){
 		
 	},
 	methods:{
-		
+		getOrder(){
+			let data={
+				Users_ID: 'wkbq6nc2kc'
+			}
+			getOrder(data).then(res=>{
+				console.log(res);
+			}).catch(e=>{
+				console.log(e);
+			})
+		}
 	}
 }
 </script>

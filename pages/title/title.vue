@@ -29,7 +29,7 @@ export default {
 	},
     methods: {
         goBack(){
-            this.$router.go(-1);
+            uni.navigateBack(1);
         },
         rightHandle(){
             this.$emit('rightHandle')
