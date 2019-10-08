@@ -36,13 +36,25 @@
 
 <script>
 // import pagetitle from '@/components/title'
-
+import {getOrder} from '@/common/fetch.js'
 export default {
     data(){
         return {
             index: 0
         }
-    }
+    },
+	onShow(){
+		
+	},
+	onLoad(option){
+		
+	},
+	onReachBottom(){
+		
+	},
+	methods:{
+		
+	}
 }
 </script>
 

@@ -79,11 +79,14 @@ export const getFavouritePro = (data,options) => fetch('get_favourite_prod_list'
 // 添加收藏产品
 export const addCollection = (data,options) => fetch('add_favourite_prod', data,options);
 // 取消收藏
-export const cancelCollection = (data,options) => fetch('cancel_favourite_prod',data,options)
+export const cancelCollection = (data,options) => fetch('cancel_favourite_prod',data,options);
+// 获取订单列表
+export const getOrder = (data,options) => fetch('get_order',data,options);
 
-
-
-
+// 获取可领取的优惠券
+export const getCoupon = (data,options) => fetch('get_unaccalimed_coupon',data,options);
+// 用户领取优惠券
+export const getUserCoupon = (data,options) => fetch('user_receive_coupon',data,options);
 
 
 

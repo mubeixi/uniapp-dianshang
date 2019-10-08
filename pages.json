@@ -76,6 +76,10 @@
 		    "path" : "pages/classify/classify",
 		    "style" : {}
 		}
+        ,{
+            "path" : "pages/person/person",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
@@ -109,7 +113,7 @@
 	        "selectedIconPath": "static/cartCheck.png",
 	        "text": "购物车"
 	    }, {
-	        "pagePath": "pages/pay/pay",
+	        "pagePath": "pages/person/person",
 	        "iconPath": "static/person.png",
 	        "selectedIconPath": "static/personCheck.png",
 	        "text": "我的"
