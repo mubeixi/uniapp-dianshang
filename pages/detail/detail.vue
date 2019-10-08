@@ -6,15 +6,15 @@
     </div>
 	<!-- 轮播 -->
 	<view class="uni-padding-wrap">
-	            <view class="page-section swiper">
-	                <view class="page-section-spacing">
-	                    <swiper class="swiper" circular="true" indicator-dots="indicatorDots" autoplay="autoplay" interval="4000" duration="500" indicator-color="#fff" indicator-active-color="#ff5000">
-	                        <swiper-item v-for="(item,i) of product.Products_JSON.ImgPath" :key="i">
-	                             <img :src="item" >
-	                        </swiper-item>
-	                    </swiper>
-	                </view>
-	            </view>
+		<view class="page-section swiper">
+			<view class="page-section-spacing">
+				<swiper class="swiper" circular="true" indicator-dots="indicatorDots" autoplay="autoplay" interval="4000" duration="500" indicator-color="#fff" indicator-active-color="#ff5000">
+					<swiper-item v-for="(item,i) of product.Products_JSON.ImgPath" :key="i">
+						 <img :src="item" >
+					</swiper-item>
+				</swiper>
+			</view>
+		</view>
 	</view>
     <!-- 产品信息描述 -->
     <div class="section1">
@@ -76,6 +76,7 @@
     <!-- 商品详情 -->
     <div class="pro_detail">
         <div class="p_detail_title">商品详情</div>
+		<div v-html="product.Products_Description" class="p_detail_des"></div>
     </div>
     <div style="height:50px;"></div>
 	<bottom @cartHandle="addCart" @directHandle="directBuy" @collect="collect"></bottom>
@@ -324,7 +325,7 @@ export default {
 			})
 		},
 		goCart(){
-			uni.navigateTo({
+			uni.switchTab({
 				url: '../cart/cart'
 			})
 		},
@@ -670,6 +671,12 @@ export default {
     /* 商品详情 start */
     .pro_detail {
         padding: 30rpx 20rpx;
+		.p_detail_des {
+			width:100%;
+			img {
+				width:100% !important;
+			}
+		}
     }
     .p_detail_title {
         color: #333;

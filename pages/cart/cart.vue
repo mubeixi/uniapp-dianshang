@@ -5,9 +5,9 @@
       <div v-if="total_count>0">
         <div class="order_msg" >
 			<div class="biz_msg">
-			   <div class="mbxa"  v-if="!handleShow" @click="checked=!checked">
-					<img v-if="checked" src="/static/checked.png" >
-					<img v-else src="/static/uncheck.png" >
+			   <div class="mbxa" @click="checked=!checked">
+					<img :src="allChecked ? '/static/checked.png' : '/static/uncheck.png'" >
+					
 			   </div>
 				<img :src="shop_config.ShopLogo" class="biz_logo" alt />
 				<text class="biz_name">{{shop_config.ShopName}}</text>
@@ -15,22 +15,21 @@
 			<block  v-for="(pro,pro_id) in CartList" :key="pro_id">
 				<block v-for="(attr,attr_id) in pro" :key="attr_id">
 					<div class="pro">
-						<div class="mbxa"  v-if="!handleShow" @click="checked=!checked">
-							<img v-if="checked" src="/static/checked.png" >
-							<img v-else src="/static/uncheck.png" >
+						<div class="mbxa" @click="change(pro_id,attr_id)">
+							<img :src="attr.checked ? '/static/checked.png' : '/static/uncheck.png'" >
 						</div>
 						<img class="pro-img" :src="attr.ImgPath" alt />
 						<div class="pro-msg">
 							<div class="pro-name">{{attr.ProductsName}}</div>
-							<div class="attr">
+							<div class="attr" v-if="attr.Productsattrstrval">
 								<span v-for="(item,index) in attr.Productsattrstrval" :key="index">{{item}}</span>
 							</div>
 							<div class="pro-price">
 								<span class="span">￥</span>{{attr.ProductsPriceX}}
 								<span class="amount">
-								  <span class="plus">-</span>
-								  <input type="text" :value="attr.Qty">
-								  <span class="plus">+</span>
+								  <span class="plus" :class="attr.Qty == 1 ? 'disabled' : ''" @click="updateCart(pro_id,attr_id,-1)">-</span>
+								  <span class="num">{{attr.Qty}}</span>
+								  <span class="plus" @click="updateCart(pro_id,attr_id,1)">+</span>
 								</span>
 							</div>
 						</div>
@@ -58,12 +57,11 @@
     </div>
     <!-- 购物车结算 -->
     <div class="checkout">
-      <div class="mbxa"  v-if="!handleShow" @click="checked=!checked">
-      		<img v-if="checked" src="/static/checked.png"  style="margin-right: 17rpx;">
-      		<img v-else src="/static/uncheck.png"  style="margin-right: 17rpx;">
+      <div class="mbxa"  @click="checkAll">
+		<img :src="checkAllFlag ? '/static/checked.png' : '/static/uncheck.png'"  style="margin-right: 17rpx;" alt="">
 			全选
       </div>
-      <div class="total">合计：<span>￥<span>{{total_price}}</span></span></div>
+      <div class="total">合计：<span>￥<span>{{totalPrice}}</span></span></div>
       <div class="checkbtn">结算</div>
     </div>
    <!-- <tabs style="background:#F3F3F3;"></tabs> -->
@@ -73,7 +71,7 @@
 <script>
 // import tabs from "@/components/tabs";
 // import pagetitle from "@/components/title";
-import {getCart,getProd} from '../../common/fetch.js'
+import {getCart,getProd,updateCart} from '../../common/fetch.js'
 export default {
   name: "App",
   // components: {
@@ -83,21 +81,50 @@ export default {
   
   data(){
     return {
-      CartList:[],
-	  prodList: [],
-	  shop_config: {},
-      handleShow: true,
-      checked: false,
-	  total_count: 0,
-	  total_price: 0,
-	  Users_ID:'wkbq6nc2kc',
-	  User_ID:3,
-	  prod_arg: {
+		checked: [],
+		CartList:[],
+		prodList: [],
+		shop_config: {},
+		handleShow: true,
+		total_count: 0,
+		total_price: 0,
+		Users_ID:'wkbq6nc2kc',
+		User_ID:3,
+		prod_arg: {
 		page: 1,
 		pageSize: 4,
-	  },
-	  hasMore: true, // 是否还有产品
+		},
+		hasMore: true, // 是否还有产品
+		postData: {
+		  Users_ID: 'wkbq6nc2kc',
+		  User_ID: 3,
+		  cart_key: 'CartList',
+		  prod_id: '',
+		  qty: 0,
+		  atr_str: '',
+		  atrid_str: ''
+		},
+		checkAllFlag: false,
+		totalPrice: 0
     }
+  },
+  computed: {
+		// 合计
+		// totalPrice(){
+		// 	return (function(){
+		// 		console.log(111);
+		// 		var total = 0;
+		// 		for(var i in this.CartList) {
+		// 			for(var j in this.CartList[i]) {
+		// 				if(this.CartList[i][j].checked) {
+		// 					console.log('zhixingle')
+		// 					total += this.CartList[i][j].ProductsPriceX *  this.CartList[i][j].Qty;
+		// 				}
+		// 			}
+		// 		};
+		// 		return total
+		// 	})() 
+		// },
   },
   // 用户下拉
   onPullDownRefresh() {
@@ -114,6 +141,55 @@ export default {
 	this.getProd();
   },
   methods: {
+	 // 修改的单个的状态
+	change(prod_id,attr_id){
+		this.CartList[prod_id][attr_id].checked = !this.CartList[prod_id][attr_id].checked;
+		this.checkAllFlag = true;
+		var total = 0;
+		for(var i in this.CartList) {
+			for(var j in this.CartList[i]) {
+				if(!this.CartList[i][j].checked) {
+					this.checkAllFlag = false;
+					this.totalPrice -= this.CartList[i][j].ProductsPriceX *  this.CartList[i][j].Qty;
+				}else {
+					this.totalPrice += this.CartList[i][j].ProductsPriceX *  this.CartList[i][j].Qty;
+				}
+			}
+		}
+		// this.totalPrice = total;
+	},
+	// 全选
+	checkAll(){
+		if(!this.checkAllFlag) {
+			for(var i in this.CartList) {
+				for(var j in this.CartList[i]) {
+					this.CartList[i][j].checked = true;
+					this.checkAllFlag = true;
+				}
+			}			
+		}else {
+			for(var i in this.CartList) {
+				for(var j in this.CartList[i]) {
+					this.CartList[i][j].checked = false;
+					this.checkAllFlag = false;
+				}
+			}	
+		}
+	},
+	// 更新购物车
+	updateCart(pro_id,attr_id,num){
+		this.postData.prod_id = pro_id;
+		this.postData.qty = num;
+		this.postData.atrid_str = attr_id;
+		this.postData.atr_str = this.CartList[pro_id][attr_id]['Productsattrstrval']?this.CartList[pro_id][attr_id]['Productsattrstrval']:'';
+		if(this.CartList[pro_id]['Qty'] == 1 && num == -1) {return;}
+		updateCart(this.postData).then(res=>{
+			console.log(res)
+			if(res.errorCode == 0) {
+				this.getCart();
+			}
+		}).catch(e=>console.log(e))
+	},
     handle(){
       this.handleShow = !this.handleShow;            
     },
@@ -121,10 +197,15 @@ export default {
 		getCart({Users_ID:this.Users_ID,User_ID: this.User_ID,cart_key:'CartList'}).then(res=>{
 			console.log(res)
 			if(res.errorCode == 0){
-				this.CartList = res.data.CartList;
 				this.total_count= res.data.total_count;
 				this.total_price= res.data.total_price;			
 				this.shop_config = res.data.shop_config;
+				for(var i in res.data.CartList) {
+					for(var j in res.data.CartList[i]) {
+						res.data.CartList[i][j].checked = false;
+					}
+				}
+				this.CartList = res.data.CartList;
 			}
 		}).catch(e=>console.log(e))
 	},
@@ -237,7 +318,7 @@ export default {
 		width: 168rpx;
     }
     .amount {
-		input {
+		.num {
 			width: 72rpx;
 			height: 50rpx;
 			line-height: 50rpx;
@@ -258,6 +339,9 @@ export default {
         text-align: center;
         line-height: 50rpx;
 		box-sizing: border-box;
+		&.disabled {
+			background: #efefef;
+		}
     }
     /* 订单信息 end */
     /* 猜你喜欢 */
