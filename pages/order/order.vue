@@ -8,23 +8,26 @@
             <div class="nav-item" :class="index==3?'active':''" @click="index = 3">待收货</div>
             <div class="nav-item" :class="index==4?'active':''" @click="index = 4">待评价</div>
         </div>
-        <div class="order">
-            <div class="bizinfo">
-                <img src="/static/detail/user1.png" alt="">
-                <span class="bizname">张小凡时尚衣橱</span>
-                <span class="status">待付款</span>
-            </div>
-            <div class="pro">
-                <div class="pro-div">
-            		<img class="pro-img" src="/static/check/pro1.png" alt="">
-            	</div>
-                <div class="pro-msg">
-                    <div class="pro-name">2018夏装新款短袖蕾丝拼接荷叶边波点雪纺连衣裙女时尚名媛...</div>
-                    <div class="attr"><span>白色;S码</span></div>
-                    <div class="pro-price"><span>￥</span>169.00 <span class="amount">x1</span></div>
-                </div>
-            </div>
-            <div class="text-right total">共2件商品 合计：<span class="price"><span>￥</span> 338.00</span></div>
+        <div class="order" v-for="(item,index) of data" :key="index" v-if="item.prod_list.length>0">
+			<div class="bizinfo">
+			    <img src="/static/detail/user1.png" alt="">
+			    <span class="bizname">张小凡时尚衣橱</span>
+			    <span class="status">待付款</span>
+			</div>
+            <block v-for="(i,k) of item.prod_list" :key="k">
+				<div class="pro">
+				    <div class="pro-div">
+						<img class="pro-img" :src="i.prod_img">
+					</div>
+				    <div class="pro-msg">
+				        <div class="pro-name">{{i.prod_name}}</div>
+				        <div class="attr" v-if="item.attr_info"><span>{{item.attr_info}}</span></div>
+						<div class="attr" v-else style="background-color: #FFFFFF;"><span></span></div>
+				        <div class="pro-price"><span>￥</span>{{i.prod_price}} <span class="amount">x{{i.prod_count}}</span></div>
+				    </div>
+				</div>
+			</block>
+            <div class="text-right total">共{{item.prod_list.length}}件商品 合计：<span class="price"><span>￥</span> {{item.Order_Yebc}}</span></div>
             <div class="btn-group">
                 <span>取消订单</span>
                 <span class="active">立即付款</span>
@@ -40,7 +43,8 @@ import {getOrder} from '@/common/fetch.js'
 export default {
     data(){
         return {
-            index: 0
+            index: 0,
+			data:[],
         }
     },
 	onShow(){
@@ -55,9 +59,13 @@ export default {
 	methods:{
 		getOrder(){
 			let data={
-				Users_ID: 'wkbq6nc2kc'
+				Users_ID: 'wkbq6nc2kc',
+				Order_Status:1
 			}
 			getOrder(data).then(res=>{
+				if(res.errorCode==0){
+					this.data=res.data;
+				}		
 				console.log(res);
 			}).catch(e=>{
 				console.log(e);
