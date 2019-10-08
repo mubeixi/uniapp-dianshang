@@ -80,6 +80,8 @@ export const getFavouritePro = (data,options) => fetch('get_favourite_prod_list'
 export const addCollection = (data,options) => fetch('add_favourite_prod', data,options);
 // 取消收藏
 export const cancelCollection = (data,options) => fetch('cancel_favourite_prod',data,options)
+// 删除购物车产品
+export const delCart = (data,options) => fetch('del_cart',data,options)
 
 
 
