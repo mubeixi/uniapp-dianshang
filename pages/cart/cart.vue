@@ -150,7 +150,9 @@ export default {
 					title: '您还未选择商品',
 					icon: 'none'
 				})
+				return;
 			}
+			
 		}else {
 			let obj = {};
 			// 删除

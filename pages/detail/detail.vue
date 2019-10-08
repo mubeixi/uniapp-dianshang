@@ -80,7 +80,7 @@
     </div>
     <div style="height:50px;"></div>
 	<bottom @cartHandle="addCart" @directHandle="directBuy" @collect="collect"></bottom>
-	<popupLayer ref="popupLayer" :direction="'top'">
+	<popupLayer ref="popupLayer" :direction="'top'" >
 		<div class="shareinfo" v-if="type=='share'">
 			<div class="s_top">
 				<div>
@@ -94,28 +94,20 @@
 			</div>
 			<div class="s_bottom" @click="cancel">取消</div>
 		</div>		
-		<div class="ticks" v-if="type=='ticks'">
+		<scroll-view class="ticks" v-if="type=='ticks'" scroll-y=true  @scrolltolower="goNextPage">
 		    <div class="t_title">
 		        领券
 		        <image src="/static/detail/x.png"  @click="close" ></image>
 		    </div>
-		    <div class="t_content">
+		    <div class="t_content" v-for="(item,i) of couponList" :key="i">
 		        <div class="t_left">
-		            <div class="t_left_t"><span>￥</span><span class="money">10</span><span>店铺优惠券</span></div>
-		            <div class="t_left_c">满199使用</div>
-		            <div class="t_left_b">有效期2019.09.10-2019.09.30</div>
+		            <div class="t_left_t"><span>￥</span><span class="money">{{item.Coupon_Cash}}</span><span>{{item.Coupon_Title}}</span></div>
+		            <div class="t_left_c">{{item.Coupon_Description}}</div>
+		            <div class="t_left_b">有效期{{item.Coupon_StartTime}}-{{item.Coupon_EndTime}}</div>
 		        </div>
-		        <div class="t_right">立即领取</div>
+		        <div class="t_right" @click="getMyCoupon(item.Coupon_ID,i)">立即领取</div>
 		    </div>
-		    <div class="t_content">
-		        <div class="t_left">
-		            <div class="t_left_t"><span>￥</span><span class="money">10</span><span>店铺优惠券</span></div>
-		            <div class="t_left_c">满199使用</div>
-		            <div class="t_left_b">有效期2019.09.10-2019.09.30</div>
-		        </div>
-		        <div class="t_right aleady">已领取</div>
-		    </div>
-		</div>
+		</scroll-view>
 	</popupLayer>
 	<popupLayer ref="cartPopu" :direction="'top'">
 		<div class="cartSku">
@@ -145,7 +137,7 @@
 				</div>
 				<div class="inputNumber">
 						<div class="clicks" @click="delNum">-</div>
-						<input v-enter-number type="number" v-model="count"  >
+						<input v-enter-number type="number" v-model="postData.qty"  >
 						<div class="clicks" @click="addNum">+</div>
 				</div>
 			</div>
@@ -159,7 +151,7 @@
 <script>
 import bottom from '../bottom/bottom'
 import popupLayer from '../../components/popup-layer/popup-layer.vue'
-import {getProductDetail,getCommit,updateCart,addCollection} from '../../common/fetch.js';
+import {getProductDetail,getCommit,updateCart,addCollection,getCoupon,getUserCoupon} from '../../common/fetch.js';
 import {goBack,numberSort}  from '../../common/tool.js'
 export default {
     data(){
@@ -175,6 +167,7 @@ export default {
 			checkAttr: {} , // 选择的属性
 			check_attrid_arr: [],
 			check_attr: {},
+			couponList:[],//优惠券列表
 			//购买需要传输的信息
 			postData: {
 			    act: 'add_cart',
@@ -189,6 +182,9 @@ export default {
 			    cart_key: '',     //购物车类型   CartList（加入购物车）、DirectBuy（立即购买）、PTCartList（不能加入购物车）
 			},
 			submit_flag: true, //提交按钮
+			page:1,//优惠券页
+			pageSize:10,//优惠券页
+			totalCount:0,//优惠券个数
         }
     },
     components: {
@@ -201,8 +197,59 @@ export default {
 	onShow(){
 			this.getDetail(this.Products_ID);
 			this.getCommit(this.Products_ID);
+			this.getCoupon();//获取可领取的优惠券
 	},
     methods: {
+		//下一页优惠券
+		goNextPage(){
+			if(this.totalCount>this.couponList.length){
+				this.page++;
+				this.getCoupon();
+			}
+		},
+		//领取优惠券
+		getMyCoupon(item,i){
+			let data={
+				Users_ID: 'wkbq6nc2kc',
+				coupon_id:item,
+				User_ID:1
+			}
+			if(this.couponList.length<=1){
+				this.goNextPage();
+			}
+			getUserCoupon(data).then(res=>{
+					wx.showToast({
+					    title: res.msg,
+					    icon: 'none'
+					})
+					this.page=1;
+					this.couponList.splice(i, 1);
+				console.log(res)
+			}).catch(e=>{
+				console.log(e)
+			})
+			//this.getCoupon();
+		},
+		//获取可领取的优惠券
+		getCoupon(){
+			let data={
+				Users_ID: 'wkbq6nc2kc',
+				pageSize:this.pageSize,
+				page:this.page,
+				User_ID:1
+			}
+			getCoupon(data).then(res=>{
+				if(res.errorCode==0){
+					for(let i of res.data){
+						this.couponList.push(i);
+					}
+					this.totalCount=res.totalCount;
+				}
+				console.log(res)
+			}).catch(e=>{
+				console.log(e);
+			})
+		},
 		// 选择属性
 		selectAttr(index,i){
 			var value_index = index; //选择的属性值索引
@@ -246,10 +293,10 @@ export default {
 			}
 			//判断属性库存
 			if (attr_val && attr_val.Property_count <= 0) {
-			    wx.showToast({
-			        title: '您选择的 ' + check_attrnames + ' 库存不足，请选择其他属性',
-			        icon: 'none'
-			    })
+			    // wx.showToast({
+			    //     title: '您选择的 ' + check_attrnames + ' 库存不足，请选择其他属性',
+			    //     icon: 'none'
+			    // })
 				this.submit_flag =  false;
 			    return false;
 			}
@@ -266,8 +313,18 @@ export default {
 				return ;
 			}
 			this.postData.prod_id = this.Products_ID;
+			if(this.postData.atr_str==''||this.postData.atrid_str==''){
+				if(this.product.skujosn){
+					wx.showToast({
+					    title: '您还没有选择规格',
+					    icon: 'none'
+					})
+					return;
+				}
+			}
+			console.log(this.postData)
 			updateCart(this.postData).then(res=>{
-				console.log(res)
+				//console.log(res)
 				if(res.errorCode == 0) {
 					if(this.postData.cart_key == 'CartList') {
 						uni.showLoading({
@@ -443,6 +500,10 @@ export default {
         border-top-left-radius: 10rpx;
         border-top-right-radius: 10rpx;
     }
+	.ticks{
+		max-height: 1050rpx;
+		// overflow: scroll;
+	}
     .t_title {
 		font-size: 30rpx;
 		color: #333;

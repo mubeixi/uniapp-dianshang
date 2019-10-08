@@ -118,6 +118,7 @@ export default {
 				this.page=1;
 				this.getFavouritePro();
 				this.rightClicked=false;
+				this.collect_list=[];
 				this.rightText = this.rightClicked ? '取消' : '管理';
 			}).catch(e=>{
 				console.log(e)
@@ -154,9 +155,10 @@ export default {
 		getFavouritePro(){
 			getFavouritePro({Users_ID:this.Users_ID,User_ID: this.User_ID ,page: this.page,pageSize:this.pageSize}).then(res=>{
 				console.log(res)
-				//let oldlist = this.collect_list;
+				let oldlist = this.collect_list;
 				if(res.errorCode == 0) {
-					this.collect_list = res.data;
+					this.collect_list = oldlist.concat(res.data);
+					//this.collect_list = res.data;
 					this.hasMore = (res.totalCount / this.pageSize) > this.page ? true : false ;
 					this.page += 1;
 				};
