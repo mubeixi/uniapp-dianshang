@@ -23,6 +23,8 @@ const fetch = function (act, param,options = false,url='/api/little_program/shop
   // param.Users_Account = get_Users_Account();
   // param.Users_ID = get_Users_ID();  Users_ID  写死
   // param.appid = get_Appid();
+	param.User_ID = 3;
+	param.Users_ID = 'wkbq6nc2kc';
 
   // 数据加密
   let data = createToken(param);
@@ -89,7 +91,10 @@ export const delCart = (data,options) => fetch('del_cart',data,options)
 export const getCoupon = (data,options) => fetch('get_unaccalimed_coupon',data,options);
 // 用户领取优惠券
 export const getUserCoupon = (data,options) => fetch('user_receive_coupon',data,options);
-
+// 获取用户已领取的优惠券
+export const getUserReceivedCoupon = (data,options) => fetch('get_user_coupon', data, options);
+// 提交订单
+export const createOrder = (data,options) => fetch('create_order', data,options);
 
 
 

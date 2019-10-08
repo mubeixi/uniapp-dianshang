@@ -105,26 +105,12 @@ export default {
 		  atrid_str: ''
 		},
 		checkAllFlag: false,
-		totalPrice: 0
+		totalPrice: 0,
+		cart_buy: ''
     }
   },
   computed: {
-		// 合计
-		// totalPrice(){
-		// 	return (function(){
-		// 		console.log(111);
-		// 		var total = 0;
-		// 		for(var i in this.CartList) {
-		// 			for(var j in this.CartList[i]) {
-		// 				if(this.CartList[i][j].checked) {
-		// 					console.log('zhixingle')
-		// 					total += this.CartList[i][j].ProductsPriceX *  this.CartList[i][j].Qty;
-		// 				}
-		// 			}
-		// 		};
-		// 		return total
-		// 	})(this.CartList) 
-		// },
+		
   },
   // 用户下拉
   onPullDownRefresh() {
@@ -143,6 +129,21 @@ export default {
   methods: {
 	// 删除或结算
 	submit(){
+		let obj = {};
+		// 删除
+		for(var i in this.CartList) {
+			for(var j in this.CartList[i]) {
+				if(this.CartList[i][j].checked) {
+					if (obj[i]) {
+						obj[i].push(j);
+					} else {
+						obj[i] = [j];
+					}	
+				}
+			}
+		}
+		console.log(obj)
+		this.cart_buy = JSON.stringify(obj);
 		if(this.handleShow) {
 			// 结算
 			if(this.totalPrice <= 0) {
@@ -152,22 +153,10 @@ export default {
 				})
 				return;
 			}
-			
+			uni.navigateTo({
+				url: `../check/check?cart_key=CartList&cart_buy=${this.cart_buy}`
+			})
 		}else {
-			let obj = {};
-			// 删除
-			for(var i in this.CartList) {
-				for(var j in this.CartList[i]) {
-					if(this.CartList[i][j].checked) {
-						if (obj[i]) {
-							obj[i].push(j);
-						} else {
-							obj[i] = [j];
-						}	
-					}
-				}
-			}
-			console.log(obj)
 			delCart({Users_ID: 'wkbq6nc2kc', User_ID: 3, cart_key: 'CartList', prod_attr: JSON.stringify(obj)}).then(res=>{
 				console.log(res)
 				if(res.errorCode == 0) {

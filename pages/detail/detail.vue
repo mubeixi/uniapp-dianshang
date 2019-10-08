@@ -333,7 +333,7 @@ export default {
 						})						
 					}else {
 						uni.navigateTo({
-							url: '../check/check?cart_key=' + this.cart_key
+							url: '../check/check?cart_key=DirectBuy'
 						})
 					}
 				}else {
@@ -439,7 +439,7 @@ export default {
 				console.log(res)
 				if(res.errorCode == 0) {
 					uni.navigateTo({
-						url: '../check/check?cart_key=' + this.cart_key
+						url: '../check/check?cart_key=DirectBuy'
 					})
 				}
 			})

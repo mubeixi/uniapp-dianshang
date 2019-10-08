@@ -9,16 +9,16 @@
             </div>
             <img class="right" src="/static/right.png" alt="">
         </div>
-        <div class="order_msg" v-for="(pro,pro_id) in orderInfo.CartList">
+        <div class="order_msg" v-for="(pro,pro_id) in orderInfo.CartList" :key="pro_id">
             <div class="biz_msg">
                 <img :src="orderInfo.ShopLogo" class="biz_logo" alt="">
                 <span class="biz_name">{{orderInfo.ShopName}}</span>
             </div>
-            <div class="pro" v-for="(attr,attr_id) in pro">
+            <div class="pro" v-for="(attr,attr_id) in pro" :key="attr_id">
                 <img class="pro-img" :src="attr.ImgPath" alt="">
                 <div class="pro-msg">
                     <div class="pro-name">{{attr.ProductsName}}</div>
-                    <div class="attr" ><span>白色;S码</span></div>
+                    <div class="attr" v-if="attr.Productsattrstrval"><span>{{attr.Productsattrstrval}}</span></div>
                     <div class="pro-price"><span>￥</span>{{attr.ProductsPriceX}} <span class="amount">x<span class="num">{{attr.Qty}}</span></span></div>
                 </div>
             </div>
@@ -28,7 +28,7 @@
                 <div class="o_title">
                     <span>运费选择</span>
                     <span style="text-align:right; color: #888;" @click="changeShip">
-						<span>请选择物流</span>
+						<span>{{shipping_name?(shipping_name):'请选择物流'}}</span>
                         <image  class="right" src="/static/right.png" alt=""></image>
                     </span>
                 </div>
@@ -38,43 +38,46 @@
             <div class="bd">
                 <div class="o_title" @click="changeCoupon">
                     <span>优惠券选择</span>
-                    <span></span>
-                    <image  src="/static/right.png" class="right" alt=""></image>
+                    <span style="text-align: right; color: #888;">
+						<span >{{coupon_desc?coupon_desc:'您有优惠券可用'}}</span>
+						<image  src="/static/right.png" class="right" alt=""></image>
+					</span>
                 </div>
             </div>
         </div>
-        <div class="other">
+        <div class="other" v-if="orderInfo.max_diyong_intergral > 0">
             <div class="bd">
                 <div class="o_title">
                     <span>是否参与积分抵扣</span>
-                    <switch checked color="#04B600" @change="switchChange" />
+                    <switch :checked="intergralChecked" color="#04B600" @change="intergralSwitchChange" />
                 </div>
-                <div class="o_de">您当前共有 <text>{{userInfo.User_Integral}}</text>积分，每<text>1000</text>积分可以抵扣<text>1</text>元，总共可抵<text>0.4</text>元</div>
+                <div class="o_de" v-if="intergralChecked">您当前共有 <text>{{userInfo.User_Integral}}</text>积分，每<text>{{orderInfo.Integral_Buy}}</text>积分可以抵扣<text>1</text>元，本次可使用<text>{{orderInfo.max_diyong_intergral}}</text>积分,总共可抵<text>{{orderInfo.max_Integral_Money}}</text>元</div>
             </div>
         </div>
         <div class="other" v-if="orderInfo.is_use_money == 1">
             <div class="bd">
                 <div class="o_title">
                     <span>是否使用余额</span>
-                    <switch checked color="#04B600" @change="switch1Change" />
+                    <switch :checked="userMoneyChecked" color="#04B600" @change="userMoneyChange" />
                 </div>
-                <input class="o_desc" placeholder="请输入金额">
+				<div class="o_de">您当前共有余额: <text>{{userInfo.User_Money}}</text></div>
+                <input v-if="userMoneyChecked" class="o_desc" placeholder="请输入金额" type="number" @confirm="confirm_user_money">
             </div>
         </div>
         <div class="other">
             <div class="bd">
                 <div class="o_title">
                     <span>是否开具发票</span>
-					<switch checked color="#04B600" @change="switch2Change" />
+					<switch :checked="faPiaoChecked" color="#04B600" @change="faPiaoChange" />
                 </div>
-				<input type="text" class="o_desc" placeholder="请输入发票抬头和纳税人识别号" />
+				<input v-if="faPiaoChecked" @confirm="faPiaoConfirm" type="text" class="o_desc" placeholder="请输入发票抬头和纳税人识别号" />
             </div>
         </div>
         <div class="other">
             <div class="bd">
                 <div class="o_title  words">
                     <span>买家留言</span>
-                    <input type="text" placeholder="请填写留言内容">
+                    <input type="text" @confirm="remarkConfirm" placeholder="请填写留言内容">
                 </div>
             </div>
         </div>
@@ -85,60 +88,34 @@
         <div style="height:100px;background:#efefef;"></div>
         <div class="order_total">
             <div class="totalinfo">
-                <div class="info">共{{orderInfo.prod_count}}件商品 总计：￥{{orderInfo.Order_TotalPrice}}</div>
+                <div class="info">共{{orderInfo.prod_count}}件商品 总计：￥{{orderInfo.Order_Fyepay}}</div>
                 <div class="tips">*本次购物一共可获得{{orderInfo.Integral_Get}}积分</div>
             </div>
-            <div class="submit">提交订单</div>
+            <div class="submit" @click="form_submit">提交订单</div>
         </div>
         <popup-layer ref="popupRef" :direction="'top'">
         	<div class="bMbx" v-if="type=='shipping'">
         		<div class="fMbx">运费选择</div>
-        		<div class="iMbx">
+        		<div class="iMbx" v-for="(ship,shipid) in orderInfo.shipping_company" :key="shipid">
         			<div>
-        				顺丰 免邮
+        				{{ship}}
         			</div>
-        			<div>
-        				 <checkbox  checked=""  color="#F43131"/>
-        			</div>
+					<radio-group @change="ShipRadioChange">
+						<radio :value="shipid" :checked="shipid===ship_current" style="float:right;" color="#F43131"/>
+					</radio-group>
         		</div>
-        		<div class="iMbx">
-        			<div>
-        				中通 免邮
-        			</div>
-        			<div>
-        				 <checkbox  checked=""  color="#F43131"/>
-        			</div>
-        		</div>
-				<div class="iMbx">
-					<div>
-						EMS ￥15.00
-					</div>
-					<div>
-						 <checkbox  checked=""  color="#F43131"/>
-					</div>
-				</div>
         	</div>
 			<div class="bMbx" v-if="type=='coupon'">
 				<div class="fMbx">优惠券选择</div>
-				<div class="iMbx">
-					<div>
-						满20 - 10
-					</div>
-					<div>
-						 <checkbox  checked=""  color="#F43131"/>
-					</div>
-				</div>
-				<div class="iMbx">
-					<div>
-						满10 - 5
-					</div>
-					<div>
-						 <checkbox  checked=""  color="#F43131"/>
-					</div>
+				<div class="iMbx" v-for="(coupon,i) in orderInfo.coupon_list" :key="i">
+					满{{coupon.Coupon_Condition}} - {{coupon.Coupon_Cash > 0 ? coupon.Coupon_Cash : coupon.Coupon_Discount}}
+					<radio-group @change="radioChange">
+						<radio :value="coupon.Coupon_ID" :checked="i===current" style="float:right;" color="#F43131"/>
+					</radio-group>
 				</div>
 			</div>
         	<div class="sure" @click="closeMethod">
-        			确定
+        		确定
         	</div>
         </popup-layer>
     </div>
@@ -146,7 +123,7 @@
 
 <script>
 import popupLayer from '../../components/popup-layer/popup-layer.vue';
-import {getAddress,getCart,createOrderCheck,getUserInfo} from '../../common/fetch.js';
+import {getAddress,getCart,createOrderCheck,getUserInfo,createOrder} from '../../common/fetch.js';
 export default {
     components: {
         popupLayer
@@ -169,7 +146,32 @@ export default {
 			addressinfo: {}, // 收货地址信息
 			orderInfo: {},
 			type: 'shipping',
-			userInfo: {}
+			userInfo: {},
+			cart_buy: '',
+			current: '',
+			couponlist: [], // 优惠券列表,
+			coupon_id: '',  // 优惠券id
+			coupon_desc: '', // 优惠券选择描述
+			use_integral: 0, // 用于抵扣的积分数
+			use_money: 0, // 余额支付金额
+			intergralChecked: false,
+			userMoneyChecked: false,
+			faPiaoChecked: false,
+			ship_current: 0,
+			shipping_name: '', // 物流信息描述
+			postData: {
+				cart_key: '',
+				cart_buy: '',
+				shipping_id: '',
+				address_id: '',
+				is_full_reduction: '',// 是否使用满减功能
+				coupon_id: '', 
+				use_integral: 0, // 用于抵扣的积分数
+				use_money: 0,  // 余额支付金额
+				invoice_info: '',  // 发票抬头
+				order_remark: '', // 买家留言
+			},
+			Order_ID: 0,
         }
     },
 	filters: {
@@ -188,9 +190,113 @@ export default {
 		this.getUserInfo();
 	},
 	onLoad(options) {
-		this.cart_key = options.cart_key;
+		this.postData.cart_key = options.cart_key;
+		this.postData.cart_buy = options.cart_buy;
+	},
+	computed: {
+		
 	},
     methods: {
+		// 提交订单
+		form_submit() {
+			if(!this.postData.shipping_id) {
+				uni.showToast({
+					title: '请选择物流'	
+				})
+				return;
+			}
+			createOrder(this.postData).then(res=>{
+				console.log(res)
+				if(res.errorCode == 0) {
+					this.Order_ID = res.data.Order_ID;
+					uni.navigateTo({
+						url: '../pay/pay?Order_ID='+ res.data.Order_ID
+					})
+				}
+			}).catch(e=>{
+				
+			});
+			// uni.setStorage({
+			//     key: 'postData',
+			//     data: this.postData,
+			//     success: function () {
+			//         console.log('success');
+			//     }
+			// });
+			
+		},
+		// 积分抵扣开关
+		intergralSwitchChange(e){
+			this.intergralChecked = e.detail.value;
+			this.postData.use_integral = this.orderInfo.max_diyong_intergral;
+			if(!this.intergralChecked) {
+				this.postData.use_integral = 0;
+			};
+			this.createOrderCheck();
+		},
+		// 余额支付开关
+		userMoneyChange(e){
+			this.userMoneyChecked = e.detail.value;
+			this.postData.use_money = 0;
+			this.createOrderCheck();
+		},
+		// 发票开关
+		faPiaoChange(e) {
+			this.faPiaoChecked = e.detail.value;
+			
+		},
+		// 发票抬头输入完成
+		faPiaoConfirm(e) {
+			let invoice_info = e.detail.value;
+			if(invoice_info == '') {
+				uni.showModal({
+					title: '发票抬头不能为空'
+				})
+				return;
+			}
+			this.postData.invoice_info = invoice_info;
+		},
+		// 余额支付输入完成
+		confirm_user_money(e){
+			// 用户可用余额
+			let user_money = parseInt(this.userInfo.User_Money);
+			// 用户输入的金额
+			let input_money = parseInt(e.detail.value);
+			if(input_money > user_money) {
+				uni.showModal({
+					title: '金额大于您的可用余额',
+					icon:  'none'
+				});
+				return;
+			}
+			this.postData.use_money = input_money;
+			this.createOrderCheck();
+		},
+		// 留言
+		remarkConfirm(e) {
+			this.postData.order_remark = e.detail.value;
+		},
+		// 优惠券改变
+		radioChange(e){
+			var couponlist = this.orderInfo.coupon_list;
+			for(var i=0;i<couponlist.length;i++){
+				if(couponlist[i].Coupon_ID == e.target.value) {
+					this.current = i;
+					break;
+				}
+			};
+			this.postData.coupon_id = e.target.value;
+		},
+		// 物流改变
+		ShipRadioChange(e) {
+			for(var i in this.orderInfo.shipping_company) {
+				if(i == e.target.value) {
+					this.ship_current = i;
+					break;
+				}
+			};
+			this.postData.shipping_id = e.target.value;
+		},
 		getUserInfo(){
 			getUserInfo({User_ID:this.User_ID,Users_ID:this.Users_ID}).then(res => {
 				console.log(res)
@@ -209,6 +315,20 @@ export default {
             this.$refs.popupRef.show();
         },
 		closeMethod(){
+			if(this.type == 'coupon') {
+				for(var i in this.couponlist) {
+					if(this.couponlist[i].Coupon_ID == this.postData.coupon_id) {
+						this.coupon_desc = `满${this.couponlist[i].Coupon_Condition} - ${this.couponlist[i].Coupon_Cash > 0 ? this.couponlist[i].Coupon_Cash : this.couponlist[i].Coupon_Discount}`
+					}
+				}
+			}else {
+				for(var i in this.orderInfo.shipping_company) {
+					if(i == this.postData.shipping_id) {
+						this.shipping_name = `${this.orderInfo.shipping_company[i]}`
+					}
+				}
+			};
+			this.createOrderCheck();
 			this.$refs.popupRef.close();
 		},
 		getAddress(){
@@ -223,15 +343,16 @@ export default {
 							}
 						}
 					}
-					console.log(this.addressinfo)
+					this.postData.address_id = this.addressinfo.Address_ID;
 				}
 			}).catch(e => console.log(e))
 		},
 		createOrderCheck(){
-			createOrderCheck({User_ID: this.User_ID, Users_ID:this.Users_ID,cart_key:this.cart_key}).then(res=>{
-				console.log(res)
+			createOrderCheck(this.postData).then(res=>{
 				if(res.errorCode == 0){
 					this.orderInfo = res.data;
+					this.couponlist = res.data.coupon_list;
+					
 				}
 			})
 		}
@@ -290,6 +411,7 @@ export default {
         width: 70rpx;
         height: 70rpx;
         margin-right: 20rpx;
+		border-radius: 35rpx;
     }
     .biz_name {
         font-size: 28rpx;
@@ -305,6 +427,11 @@ export default {
     }
     .pro-name {
         font-size: 26rpx;
+		display: -webkit-box;
+		-webkit-line-clamp:2;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		-webkit-box-orient: vertical;
     }
 	.pro-msg {
 		flex: 1;

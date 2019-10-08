@@ -8,34 +8,21 @@
         <div class="address">
             <img class="loc_icon" src="/static/location.png" alt="">
             <div class="add_msg">
-                <div class="name">收货人：张小凡 <span>136****1133</span></div>
-                <div class="location">收货地址：郑州市金水区农业路与花园路国贸广场22楼2208室</div>
+                <div class="name">收货人：{{orderInfo.Address_Name}} <span>{{orderInfo.Address_Mobile}}</span></div>
+                <div class="location">收货地址：{{orderInfo.Address_Province_name}}{{orderInfo.Address_City_name}}{{orderInfo.Address_Area_name}}{{orderInfo.Address_Town_name}}</div>
             </div>
-            <img class="right" src="/static/right.png" alt="">
         </div>
-        <div class="order_msg">
+        <div class="order_msg" v-for="(pro,pro_id) in orderInfo.CartList" :key="pro_id">
             <div class="biz_msg">
-                <img src="/static/detail/user1.png" class="biz_logo" alt="">
-                <span class="biz_name">张小凡时尚衣橱</span>
+                <img :src="orderInfo.ShopLogo" class="biz_logo" alt="">
+                <span class="biz_name">{{orderInfo.ShopName}}</span>
             </div>
-            <div class="pro">
-                <div class="pro-div">
-					<img class="pro-img" src="/static/check/pro1.png" alt="">
-				</div>
+            <div class="pro" v-for="(attr,attr_id) in pro" :key="attr_id">
+                <img class="pro-img" :src="attr.ImgPath" alt="">
                 <div class="pro-msg">
-                    <div class="pro-name">2018夏装新款短袖蕾丝拼接荷叶边波点雪纺连衣裙女时尚名媛...</div>
-                    <div class="attr"><span>白色;S码</span></div>
-                    <div class="pro-price"><span>￥</span>169.00 <span class="amount">x1</span></div>
-                </div>
-            </div>
-            <div class="pro">
-                <div class="pro-div">
-                	<img class="pro-img" src="/static/check/pro1.png" alt="">
-                </div>
-                <div class="pro-msg">
-                    <div class="pro-name">2018夏装新款短袖蕾丝拼接荷叶边波点雪纺连衣裙女时尚名媛...</div>
-                    <div class="attr"><span>白色;S码</span></div>
-                    <div class="pro-price"><span>￥</span>169.00<span class="amount">x1</span></div>
+                    <div class="pro-name">{{attr.ProductsName}}</div>
+                    <div class="attr" v-if="attr.Productsattrstrval"><span>{{attr.Productsattrstrval}}</span></div>
+                    <div class="pro-price"><span>￥</span>{{attr.ProductsPriceX}} <span class="amount">x<span class="num">{{attr.Qty}}</span></span></div>
                 </div>
             </div>
         </div>
@@ -63,7 +50,7 @@
             <div class="bd">
                 <div class="o_title">
                     <span>积分抵扣</span>
-                    <span class="c8">1.30元</span>
+                    <span class="c8">{{orderInfo.max_Integral_Money}}</span>
                 </div>
             </div>
         </div>
@@ -77,7 +64,7 @@
                         color="#04B600"
                     />
                 </div>
-                <div class="o_desc c8">23.50元</div>
+                <div class="o_desc c8">{{postData.use_money}}</div>
             </div>
         </div>
         <div class="other">
@@ -90,26 +77,26 @@
                         color="#04B600"
                     />
                 </div>
-                <div class="o_desc c8">张小凡 5454545454745</div>
+                <div class="o_desc c8">{{postData.invoice_info}}</div>
             </div>
         </div>
         <div class="other">
             <div class="bd">
                 <div class="o_title  words">
                     <span>买家留言</span>
-                    <span class="msg c8" >白色和黑色各一个</span>
+                    <span class="msg c8" >{{postData.order_remark}}</span>
                 </div>
             </div>
         </div>
         <div class="total">
-            <span>共<span>2</span>件商品</span>
-            <span class="mbx">小计：<span class="money moneys">￥</span><span class="money">388.00</span></span>
+            <span>共<span>{{orderInfo.prod_count}}</span>件商品</span>
+            <span class="mbx">小计：<span class="money moneys">￥</span><span class="money">{{orderInfo.Order_Fyepay}}</span></span>
         </div>
         <div style="height:100px;background:#efefef;"></div>
         <div class="order_total">
             <div class="totalinfo">
-                <div class="info">共3件商品 总计：<span class="mbxa">￥<span>507.00</span></span></div>
-                <div class="tips">*本次购物一共可获得107积分</div>
+                <div class="info">共{{orderInfo.prod_count}}件商品 总计：<span class="mbxa">￥<span>{{orderInfo.Order_Fyepay}}</span></span></div>
+                <div class="tips">*本次购物一共可获得{{orderInfo.Integral_Get}}积分</div>
             </div>
             <div class="submit" @click="submit">去支付</div>
         </div>
@@ -128,10 +115,28 @@
 
 <script>
 import popupLayer from '../../components/popup-layer/popup-layer.vue'
+import {getAddress,createOrderCheck,getOrder} from '../../common/fetch.js';
 export default {
     components: {
        popupLayer
     },
+	onLoad(options){
+		if(options.Order_ID) {
+			this.Order_ID = options.Order_ID;
+		}
+		// uni.getStorage({
+		//     key: 'postData',
+		//     success: res => {
+		//         console.log(res.data);
+		// 		this.postData = res.data;
+		// 		this.getAddress();
+		// 		this.createOrderCheck();
+		//     }
+		// });
+	},
+	onShow() {
+		this.getOrder();
+	},
     data(){
         return {
             show: false, // 遮罩层
@@ -140,9 +145,42 @@ export default {
             checked1: true,
             checked2: true,
             checked3: true,
+			postData: {},
+			orderInfo: '',
+			addressInfo: '',
+			Order_ID: 0,
         }
     },
     methods: {
+		getOrder(){
+			getOrder({Order_ID: this.Order_ID,}).then(res=>{
+				console.log(res)
+				if(res.errorCode == 0) {
+					for(var i in res.data[0]) {
+						if(i == 'Order_Shipping') {
+							res.data[0][i] = JSON.parse(res.data[0][i])
+						}
+					}
+					this.orderInfo = res.data[0];
+				}
+			})
+		},
+		getAddress(){
+			getAddress({Address_ID: this.postData.address_id}).then(res=>{
+				console.log(res)
+				if(res.errorCode == 0 ){
+					this.addressInfo = res.data[0];
+				}
+			}).catch(e=>{})
+		},
+		createOrderCheck(){
+			createOrderCheck(this.postData).then(res=>{
+				console.log(res)
+				if(res.errorCode == 0) {
+					this.orderInfo = res.data
+				}
+			}).catch(e=>{})
+		},
         // 点击遮罩
         showOverlay(){
             this.show = false;
@@ -150,7 +188,8 @@ export default {
         },
 		submit(){
 			this.$refs.popupLayer.show();
-		}
+		},
+		
     }
 }
 </script>
@@ -238,8 +277,9 @@ export default {
 		height: 200rpx;
 	}
     .pro-img {
-        width: 100%;
-        height: 100%;
+       width: 200rpx;
+       height: 200rpx;
+       margin-right: 28rpx;
     }
     .pro-name {
         font-size: 26rpx;
@@ -298,9 +338,12 @@ export default {
     .words {
         justify-content: flex-start;
     }
-    .words input {
-        border: 0;
-        margin-left: 20rpx;
+    .words {
+		input {
+			border: 0;
+			margin-left: 20rpx;
+			flex: 1;			
+		}
     }
     .total {
         display: flex;
