@@ -94,7 +94,7 @@
 			</div>
 			<div class="s_bottom" @click="cancel">取消</div>
 		</div>		
-		<div class="ticks" v-if="type=='ticks'">
+		<scroll-view class="ticks" v-if="type=='ticks'" scroll-y=true  @scrolltolower="goNextPage">
 		    <div class="t_title">
 		        领券
 		        <image src="/static/detail/x.png"  @click="close" ></image>
@@ -105,9 +105,9 @@
 		            <div class="t_left_c">{{item.Coupon_Description}}</div>
 		            <div class="t_left_b">有效期{{item.Coupon_StartTime}}-{{item.Coupon_EndTime}}</div>
 		        </div>
-		        <div class="t_right" @click="getMyCoupon(item.Coupon_ID)">立即领取</div>
+		        <div class="t_right" @click="getMyCoupon(item.Coupon_ID,i)">立即领取</div>
 		    </div>
-		</div>
+		</scroll-view>
 	</popupLayer>
 	<popupLayer ref="cartPopu" :direction="'top'">
 		<div class="cartSku">
@@ -182,6 +182,9 @@ export default {
 			    cart_key: '',     //购物车类型   CartList（加入购物车）、DirectBuy（立即购买）、PTCartList（不能加入购物车）
 			},
 			submit_flag: true, //提交按钮
+			page:1,//优惠券页
+			pageSize:10,//优惠券页
+			totalCount:0,//优惠券个数
         }
     },
     components: {
@@ -197,34 +200,50 @@ export default {
 			this.getCoupon();//获取可领取的优惠券
 	},
     methods: {
+		//下一页优惠券
+		goNextPage(){
+			if(this.totalCount>this.couponList.length){
+				this.page++;
+				this.getCoupon();
+			}
+		},
 		//领取优惠券
-		getMyCoupon(item){
+		getMyCoupon(item,i){
 			let data={
 				Users_ID: 'wkbq6nc2kc',
 				coupon_id:item,
 				User_ID:1
+			}
+			if(this.couponList.length<=1){
+				this.goNextPage();
 			}
 			getUserCoupon(data).then(res=>{
 					wx.showToast({
 					    title: res.msg,
 					    icon: 'none'
 					})
+					this.page=1;
+					this.couponList.splice(i, 1);
 				console.log(res)
 			}).catch(e=>{
 				console.log(e)
 			})
-			this.getCoupon();
+			//this.getCoupon();
 		},
 		//获取可领取的优惠券
 		getCoupon(){
 			let data={
 				Users_ID: 'wkbq6nc2kc',
-				//pageSize:5,
+				pageSize:this.pageSize,
+				page:this.page,
 				User_ID:1
 			}
 			getCoupon(data).then(res=>{
 				if(res.errorCode==0){
-					this.couponList=res.data;
+					for(let i of res.data){
+						this.couponList.push(i);
+					}
+					this.totalCount=res.totalCount;
 				}
 				console.log(res)
 			}).catch(e=>{
@@ -483,7 +502,7 @@ export default {
     }
 	.ticks{
 		max-height: 1050rpx;
-		overflow: scroll;
+		// overflow: scroll;
 	}
     .t_title {
 		font-size: 30rpx;
