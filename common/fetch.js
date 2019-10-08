@@ -82,6 +82,8 @@ export const addCollection = (data,options) => fetch('add_favourite_prod', data,
 export const cancelCollection = (data,options) => fetch('cancel_favourite_prod',data,options);
 // 获取订单列表
 export const getOrder = (data,options) => fetch('get_order',data,options);
+// 删除购物车产品
+export const delCart = (data,options) => fetch('del_cart',data,options)
 
 // 获取可领取的优惠券
 export const getCoupon = (data,options) => fetch('get_unaccalimed_coupon',data,options);

@@ -5,8 +5,8 @@
       <div v-if="total_count>0">
         <div class="order_msg" >
 			<div class="biz_msg">
-			   <div class="mbxa" @click="checked=!checked">
-					<img :src="allChecked ? '/static/checked.png' : '/static/uncheck.png'" >
+			   <div class="mbxa" @click="checkAll">
+					<img :src="checkAllFlag ? '/static/checked.png' : '/static/uncheck.png'" >
 					
 			   </div>
 				<img :src="shop_config.ShopLogo" class="biz_logo" alt />
@@ -61,8 +61,8 @@
 		<img :src="checkAllFlag ? '/static/checked.png' : '/static/uncheck.png'"  style="margin-right: 17rpx;" alt="">
 			全选
       </div>
-      <div class="total">合计：<span>￥<span>{{totalPrice}}</span></span></div>
-      <div class="checkbtn">结算</div>
+      <div class="total" v-if="handleShow">合计：<span>￥<span>{{totalPrice}}</span></span></div>
+      <div class="checkbtn" @click="submit">{{handleShow?'结算':'删除'}} </div>
     </div>
    <!-- <tabs style="background:#F3F3F3;"></tabs> -->
   </div>
@@ -71,7 +71,7 @@
 <script>
 // import tabs from "@/components/tabs";
 // import pagetitle from "@/components/title";
-import {getCart,getProd,updateCart} from '../../common/fetch.js'
+import {getCart,getProd,updateCart,delCart} from '../../common/fetch.js'
 export default {
   name: "App",
   // components: {
@@ -123,7 +123,7 @@ export default {
 		// 			}
 		// 		};
 		// 		return total
-		// 	})() 
+		// 	})(this.CartList) 
 		// },
   },
   // 用户下拉
@@ -141,22 +141,70 @@ export default {
 	this.getProd();
   },
   methods: {
+	// 删除或结算
+	submit(){
+		if(this.handleShow) {
+			// 结算
+			if(this.totalPrice <= 0) {
+				uni.showToast({
+					title: '您还未选择商品',
+					icon: 'none'
+				})
+				return;
+			}
+			
+		}else {
+			let obj = {};
+			// 删除
+			for(var i in this.CartList) {
+				for(var j in this.CartList[i]) {
+					if(this.CartList[i][j].checked) {
+						if (obj[i]) {
+							obj[i].push(j);
+						} else {
+							obj[i] = [j];
+						}	
+					}
+				}
+			}
+			console.log(obj)
+			delCart({Users_ID: 'wkbq6nc2kc', User_ID: 3, cart_key: 'CartList', prod_attr: JSON.stringify(obj)}).then(res=>{
+				console.log(res)
+				if(res.errorCode == 0) {
+					uni.showLoading({
+						icon: 'success',
+						title: res.msg
+					});
+					this.getCart();
+				}
+			}).catch(e=>{})
+		}
+	},
 	 // 修改的单个的状态
 	change(prod_id,attr_id){
 		this.CartList[prod_id][attr_id].checked = !this.CartList[prod_id][attr_id].checked;
 		this.checkAllFlag = true;
-		var total = 0;
 		for(var i in this.CartList) {
 			for(var j in this.CartList[i]) {
 				if(!this.CartList[i][j].checked) {
 					this.checkAllFlag = false;
-					this.totalPrice -= this.CartList[i][j].ProductsPriceX *  this.CartList[i][j].Qty;
-				}else {
-					this.totalPrice += this.CartList[i][j].ProductsPriceX *  this.CartList[i][j].Qty;
 				}
 			}
 		}
-		// this.totalPrice = total;
+		this.cal_total();
+	},
+	// 计算总价
+	cal_total(){
+		var total = 0;
+		this.totalPrice = 0;
+		for(var i in this.CartList) {
+			for(var j in this.CartList[i]) {
+				if(this.CartList[i][j].checked) {
+					total += this.CartList[i][j].ProductsPriceX *  this.CartList[i][j].Qty;
+				}
+			}
+		}
+		this.totalPrice = total;
 	},
 	// 全选
 	checkAll(){
@@ -175,6 +223,7 @@ export default {
 				}
 			}	
 		}
+		this.cal_total();
 	},
 	// 更新购物车
 	updateCart(pro_id,attr_id,num){
@@ -191,7 +240,8 @@ export default {
 		}).catch(e=>console.log(e))
 	},
     handle(){
-      this.handleShow = !this.handleShow;            
+      this.handleShow = !this.handleShow;    
+	
     },
 	getCart() {
 		getCart({Users_ID:this.Users_ID,User_ID: this.User_ID,cart_key:'CartList'}).then(res=>{
@@ -251,7 +301,7 @@ export default {
 }
  /* 订单信息 start */
     .order_msg {
-        padding: 10px 15px 0px;
+        padding: 20rpx 19rpx 0px;
         background: #fff;
         overflow: hidden;
         margin-bottom: 20px;
@@ -259,19 +309,20 @@ export default {
     .biz_msg {
         display: flex;
         align-items: center;
-        margin-bottom: 15px;
+        margin-bottom: 30rpx;
     }
     .biz_logo {
         width: 70rpx;
         height: 70rpx;
         margin-right: 20rpx;
+		border-radius: 35rpx;
     }
     .biz_name {
         font-size: 28rpx;
     }
     .pro {
         display: flex;
-        margin-bottom: 25px;
+        margin-bottom: 50rpx;
     }
     .pro-msg {
       flex: 1;
