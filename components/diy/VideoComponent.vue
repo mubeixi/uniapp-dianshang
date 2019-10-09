@@ -80,6 +80,7 @@
       width 100%
       top 0
       bottom 0
+      height auto
       vertical-align: top
 
 </style>

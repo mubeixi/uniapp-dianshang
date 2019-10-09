@@ -1,7 +1,7 @@
 <template>
 	<view class="home-wrap">
 		<section :ref="item" v-for="(item, index) in templateList[tagIndex]" :key="index" class="section"  :data-name="item" >
-			<view class="font12 graytext">{{item}}</view>
+<!--			<view class="font12 graytext">{{item}}</view>-->
 			<base-component v-if="item.indexOf('base') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
 			<swiper-component v-if="item.indexOf('swiper') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
 			<nav-component v-if="item.indexOf('nav') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
