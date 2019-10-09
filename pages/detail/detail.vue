@@ -67,9 +67,9 @@
             </div>
             <div class="c_content_msg">衣服好淑女，穿上一下子就变的很有名媛风，好喜欢啊，袖口的珍珠设计让整件衣服变得很高贵，秋天再搭配个外套也绝对好看</div>
             <div class="c_content_img">
-                <img src="/static/detail/coment1.png" alt="">
-                <img src="/static/detail/coment2.png" alt="">
-                <img src="/static/detail/coment3.png" alt="">
+                <img src="/static/detail/coment1.png" >
+                <img src="/static/detail/coment2.png" >
+                <img src="/static/detail/coment3.png" >
             </div>
         </div>
     </div>
@@ -241,7 +241,6 @@ export default {
 				    newContent = newContent.replace(/<br[^>]*\/>/gi, '');
 				    newContent = newContent.replace(/\<img/gi, '<img style="width:100%;float:left;"');
 					//newContent = newContent.replace(/>[\s]*</gi, "><");
-					console.log(newContent)
 				    return newContent;
 				}	
 			},
@@ -270,7 +269,6 @@ export default {
 					})
 					this.page=1;
 					this.couponList.splice(i, 1);
-				console.log(res)
 			}).catch(e=>{
 				console.log(e)
 			})

@@ -100,6 +100,14 @@ export const createOrder = (data,options) => fetch('create_order', data,options)
 export const uploadImage = (data,options) => fetch('upload_image', data,options);
 // 获取订单详情
 export const getOrderDetail = (data,options) => fetch('get_order_detail', data, options);
+
+// 取消订单
+export const cancelOrder = (data,options) => fetch('cancel_order', data, options);
+// 获取订单状态角标数
+export const getOrderNum = (data,options) => fetch('get_order_num', data, options);
+// 获取申请退货退款
+export const getRefund = (data,options) => fetch('get_refund_info', data, options);
+
 // 支付订单
 export const orderPay = (data,options) => fetch('order_pay', data, options);
 
