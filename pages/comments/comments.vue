@@ -6,28 +6,30 @@
             <div class="nav" :class="index == 0 ? 'active' : ''" @click="getAllComment">全部</div>
             <div class="nav" :class="index == 1 ? 'active' : ''" @click="getHasImgComment">有图</div>
         </div>
-        <div class="c_content">
-            <div class="c_content_title">
-                <img src="/static/detail/user1.png" alt="">
-                <span class="user_name">张小凡</span>
-                <span class="c_time">2019-09-10</span>
-            </div>
-            <div class="c_content_msg">衣服好淑女，穿上一下子就变的很有名媛风，好喜欢啊，袖口的珍珠设计让整件衣服变得很高贵，秋天再搭配个外套也绝对好看</div>
-            <div class="c_content_img"></div>
-        </div>
-        <div class="c_content">
-            <div class="c_content_title">
-                <img src="/static/detail/user2.png" alt="">
-                <span class="user_name">张小凡</span>
-                <span class="c_time">2019-09-10</span>
-            </div>
-            <div class="c_content_msg">衣服好淑女，穿上一下子就变的很有名媛风，好喜欢啊，袖口的珍珠设计让整件衣服变得很高贵，秋天再搭配个外套也绝对好看</div>
-            <div class="c_content_img">
-                <img src="/static/detail/coment1.png" alt="">
-                <img src="/static/detail/coment2.png" alt="">
-                <img src="/static/detail/coment3.png" alt="">
-            </div>
-        </div>
+        <block v-for="(item,index) of comment_list" :key="item">
+			<div class="c_content" v-if="!item.ImgPath">
+			    <div class="c_content_title">
+			        <img :src="item.User_HeadImg" alt="">
+			        <span class="user_name">{{item.User_NickName}}</span>
+			        <span class="c_time">{{item.CreateTime}}</span>
+			    </div>
+			    <div class="c_content_msg">{{item.Note}}</div>
+			    <div class="c_content_img"></div>
+			</div>
+			<div class="c_content" v-else>
+			    <div class="c_content_title">
+			        <img :src="item.User_HeadImg" alt="">
+			        <span class="user_name">{{item.User_NickName}}</span>
+			        <span class="c_time">{{item.CreateTime}}</span>
+			    </div>
+			    <div class="c_content_msg">{{item.Note}}</div>
+			    <div class="c_content_img">
+					<block v-for="(i,j) of item.ImgPath"> 
+						 <img :src="i" >
+					</block>   
+			    </div>
+			</div>
+		</block>
 		<bottom></bottom>
   </div>
 </template>
@@ -45,9 +47,7 @@ export default {
             index:  0,
 			commentArgs: {
 				Users_ID: 'wkbq6nc2kc',
-				User_ID: 3,
-				Products_ID: 1, // 查询指定产品的评论
-				has_img: 1, //有图评论
+				Products_ID: 242, // 查询指定产品的评论
 				page: 1,
 				pageSize: 4,				
 			},
@@ -65,20 +65,22 @@ export default {
 		getAllComment() {
 			this.index = 0;
 			this.commentArgs.has_img = 0;
+			this.comment_list=[];
 			this.getComments();
 		},
 		// 有图的评论
 		getHasImgComment() {
 			this.index = 1;
 			this.commentArgs.has_img = 1;
+			this.comment_list=[];
+			this.getComments();
 		},
 		getComments(){
 			getComments(this.commentArgs).then(res=>{
-				console.log(res);
-				if(res.errorCode == 0) {
-					
-				}else if(res.errorCode == 2) {
-					// 暂无数据
+				if(res.errorCode==0){
+					for(let i of res.data){
+						this.comment_list.push(i);
+					}
 					
 				}
 			})

@@ -23,7 +23,7 @@ const fetch = function (act, param,options = false,url='/api/little_program/shop
   // param.Users_Account = get_Users_Account();
   // param.Users_ID = get_Users_ID();  Users_ID  写死
   // param.appid = get_Appid();
-	param.User_ID = 3;
+	//param.User_ID = 3;
 	param.Users_ID = 'wkbq6nc2kc';
 
   // 数据加密
