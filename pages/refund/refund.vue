@@ -1,14 +1,14 @@
 <template>
   <div class="wrap">
         <page-title title="申请退款" rightHidden="true"></page-title>
-        <div class="pro">
+        <div class="pro" v-for="(item,index) of data.refund_prod_list" :key="item">
             <div class="pro-div">
-        		<img class="pro-img" src="/static/check/pro1.png" alt="">
+        		<img class="pro-img" :src="item.prod_img" alt="">
         	</div>
             <div class="pro-msg">
-                <div class="pro-name">2018夏装新款短袖蕾丝拼接荷叶边波点雪纺连衣裙女时尚名媛...</div>
-                <div class="attr"><span>白色;S码</span></div>
-                <div class="pro-price"><span>￥</span>169.00 <span class="amount">x1</span></div>
+                <div class="pro-name">{{item.prod_name}}</div>
+                <div class="attr"><span>{{item.attr_info.attr_name}}</span></div>
+                <div class="pro-price"><span>￥</span>{{item.refund_money_fee}} <span class="amount">x{{item.prod_count}}</span></div>
             </div>
         </div>
 		<div style="height: 20rpx;width: 100%;background-color: #F3F3F3;">
@@ -59,7 +59,7 @@
 						仅退货
 					</div>
 					<div>
-						 <checkbox  :checked="onlyRefund"  color="#F43131"/>
+						 <radio  :checked="onlyRefund"  color="#F43131"/>
 					</div>
 				</div>
 				<div class="iMbx">
@@ -67,7 +67,7 @@
 						退款退货
 					</div>
 					<div>
-						 <checkbox  :checked="onlyRefund"  color="#F43131"/>
+						 <radio  :checked="onlyRefund"  color="#F43131"/>
 					</div>
 				</div>
 			</div>
@@ -84,7 +84,9 @@
 						颜色/尺寸/参数不符
 					</div>
 					<div>
-						 <checkbox  :checked="onlyRefund"  color="#F43131"/>
+						 <radio-group @change="ShipRadioChange">
+						 	<radio :value="shipid" :checked="shipid===ship_current" style="float:right;" color="#F43131"/>
+						 </radio-group>
 					</div>
 				</div>
 				<div class="iMbx">
@@ -92,7 +94,7 @@
 						质量问题
 					</div>
 					<div>
-						 <checkbox  :checked="onlyRefund"  color="#F43131"/>
+						 <radio  :checked="onlyRefund"  color="#F43131"/>
 					</div>
 				</div>
 				<div class="iMbx">
@@ -100,7 +102,7 @@
 						少件/漏发
 					</div>
 					<div>
-						 <checkbox  :checked="onlyRefund"  color="#F43131"/>
+						 <radio  :checked="onlyRefund"  color="#F43131"/>
 					</div>
 				</div>
 			</div>
@@ -114,7 +116,7 @@
 
 <script>
 import popupLayer from '../../components/popup-layer/popup-layer.vue';
-import {uploadImage} from '../../common/fetch.js'
+import {uploadImage,getRefund} from '../../common/fetch.js'
 export default {
     components: {
 		popupLayer
@@ -127,15 +129,42 @@ export default {
                 // 如果图片 URL 中不包含类型信息，可以添加 isImage 标记来声明
                 { url: 'https://cloud-image', isImage: true }
             ],
-			onlyRefund:true,
+			onlyRefund:0,
 			imgs:[],//上传图片预览
+			Order_ID:0,//退款商品id
+			data:'',//商品信息
 			
         }
     },
+	onLoad(option) {
+		this.Order_ID=option.Order_ID;
+	},
+	onShow() {
+		this.getRefund();
+	},
 	created() {
 		
 	},
     methods: {
+		//获取申请退货退款页面
+		getRefund(){
+			getRefund({Order_ID:this.Order_ID}).then(res=>{
+					for(var i in res.data) {
+						if(i=='refund_prod_list'){
+							for(var j in res.data[i]) {
+								for(var k in res.data[i][j]) {
+									if(k=='attr_info'){
+										res.data[i][j][k]=JSON.parse(res.data[i][j][k])
+									}
+								}
+							}
+						}
+					}
+					this.data=res.data;
+			}).catch(e=>{
+				console.log(e)
+			})
+		},
 		//提交
 		submit(){
 
@@ -250,6 +279,12 @@ export default {
     .pro-name {
         font-size: 26rpx;
         margin-bottom: 20rpx;
+		text-overflow: -o-ellipsis-lastline;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
     }
     .attr {
         display: inline-block;
