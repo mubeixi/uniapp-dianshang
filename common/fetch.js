@@ -95,7 +95,8 @@ export const getUserCoupon = (data,options) => fetch('user_receive_coupon',data,
 export const getUserReceivedCoupon = (data,options) => fetch('get_user_coupon', data, options);
 // 提交订单
 export const createOrder = (data,options) => fetch('create_order', data,options);
-
+// 上传图片
+export const uploadImage = (data,options) => fetch('upload_image', data,options);
 
 
 
