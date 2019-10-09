@@ -6,7 +6,9 @@ Vue.config.productionTip = false
 import Common from './common/index.js';
 Vue.use(Common);
 
-
+//加入mixin
+import {defaultMixin} from "./common/mixin";
+Vue.mixin(defaultMixin)
 
 
 App.mpType = 'app'
