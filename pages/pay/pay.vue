@@ -12,17 +12,17 @@
                 <div class="location">收货地址：{{orderInfo.Address_Province_name}}{{orderInfo.Address_City_name}}{{orderInfo.Address_Area_name}}{{orderInfo.Address_Town_name}}</div>
             </div>
         </div>
-        <div class="order_msg" v-for="(pro,pro_id) in orderInfo.CartList" :key="pro_id">
+        <div class="order_msg">
             <div class="biz_msg">
                 <img :src="orderInfo.ShopLogo" class="biz_logo" alt="">
                 <span class="biz_name">{{orderInfo.ShopName}}</span>
             </div>
-            <div class="pro" v-for="(attr,attr_id) in pro" :key="attr_id">
-                <img class="pro-img" :src="attr.ImgPath" alt="">
+            <div class="pro" v-for="(pro,pro_id) in orderInfo.prod_list" :key="pro_id">
+                <img class="pro-img" :src="pro.prod_img" alt="">
                 <div class="pro-msg">
-                    <div class="pro-name">{{attr.ProductsName}}</div>
-                    <div class="attr" v-if="attr.Productsattrstrval"><span>{{attr.Productsattrstrval}}</span></div>
-                    <div class="pro-price"><span>￥</span>{{attr.ProductsPriceX}} <span class="amount">x<span class="num">{{attr.Qty}}</span></span></div>
+                    <div class="pro-name">{{pro.prod_name}}</div>
+                    <div class="attr" v-if="pro.attr_info"><span>{{pro.attr_info.attr_name}}</span></div>
+                    <div class="pro-price"><span>￥</span>{{pro.prod_price}} <span class="amount">x<span class="num">{{pro.prod_count}}</span></span></div>
                 </div>
             </div>
         </div>
@@ -32,8 +32,8 @@
                 <div class="o_title">
                     <span>运费选择</span>
                     <span style="text-align:right;" class="c8">
-                        <span>顺丰</span>
-                        <span>免邮费</span>
+                        <span>{{orderInfo.Order_Shipping.Express}}</span>
+                        <span> {{orderInfo.Order_Shipping.Price > 0 ? (' 运费：' + orderInfo.Order_Shipping.Price) : ' 免运费'}}</span>
                     </span>
                 </div>
             </div>
@@ -42,7 +42,7 @@
             <div class="bd">
                 <div class="o_title">
                     <span>优惠券选择</span>
-                    <span class="c8">10元优惠券</span>
+                    <span class="c8">{{orderInfo.Coupon_Money}}元优惠券</span>
                 </div>
             </div>
         </div>
@@ -50,7 +50,7 @@
             <div class="bd">
                 <div class="o_title">
                     <span>积分抵扣</span>
-                    <span class="c8">{{orderInfo.max_Integral_Money}}</span>
+                    <span class="c8">{{orderInfo.Integral_Money}}</span>
                 </div>
             </div>
         </div>
@@ -62,9 +62,10 @@
                         checked="checked"
                         size='25px'
                         color="#04B600"
+						@change="moneyChange"
                     />
                 </div>
-                <div class="o_desc c8">{{postData.use_money}}</div>
+                <div class="o_desc c8">{{orderInfo.Order_Yebc}}</div>
             </div>
         </div>
         <div class="other">
@@ -77,25 +78,25 @@
                         color="#04B600"
                     />
                 </div>
-                <div class="o_desc c8">{{postData.invoice_info}}</div>
+                <div class="o_desc c8">{{orderInfo.Order_InvoiceInfo}}</div>
             </div>
         </div>
         <div class="other">
             <div class="bd">
                 <div class="o_title  words">
                     <span>买家留言</span>
-                    <span class="msg c8" >{{postData.order_remark}}</span>
+                    <span class="msg c8" >{{orderInfo.liuyan}}</span>
                 </div>
             </div>
         </div>
         <div class="total">
-            <span>共<span>{{orderInfo.prod_count}}</span>件商品</span>
+            <span>共<span>{{orderInfo.prod_list.length}}</span>件商品</span>
             <span class="mbx">小计：<span class="money moneys">￥</span><span class="money">{{orderInfo.Order_Fyepay}}</span></span>
         </div>
         <div style="height:100px;background:#efefef;"></div>
         <div class="order_total">
             <div class="totalinfo">
-                <div class="info">共{{orderInfo.prod_count}}件商品 总计：<span class="mbxa">￥<span>{{orderInfo.Order_Fyepay}}</span></span></div>
+                <div class="info">共{{orderInfo.prod_list.length}}件商品 总计：<span class="mbxa">￥<span>{{orderInfo.Order_Fyepay}}</span></span></div>
                 <div class="tips">*本次购物一共可获得{{orderInfo.Integral_Get}}积分</div>
             </div>
             <div class="submit" @click="submit">去支付</div>
@@ -103,10 +104,10 @@
 		<popup-layer ref="popupLayer" :direction="'top'">
 			<div class="iMbx">
 				<div class="c_method">
-					微信支付 <text>￥577.00</text>
+					微信支付 <text>￥{{orderInfo.Order_Fyepay}}</text>
 				</div>
 				<div class="c_method">
-					银联支付 <text>￥577.00</text>
+					银联支付 <text>￥{{orderInfo.Order_Fyepay}}</text>
 				</div>
 			</div>
 		</popup-layer>
@@ -115,7 +116,7 @@
 
 <script>
 import popupLayer from '../../components/popup-layer/popup-layer.vue'
-import {getAddress,createOrderCheck,getOrder} from '../../common/fetch.js';
+import {getAddress,createOrderCheck,getOrderDetail} from '../../common/fetch.js';
 export default {
     components: {
        popupLayer
@@ -135,7 +136,7 @@ export default {
 		// });
 	},
 	onShow() {
-		this.getOrder();
+		this.getOrderDetail();
 	},
     data(){
         return {
@@ -149,22 +150,42 @@ export default {
 			orderInfo: '',
 			addressInfo: '',
 			Order_ID: 0,
+			pay_money: 0,
         }
     },
     methods: {
-		getOrder(){
-			getOrder({Order_ID: this.Order_ID,}).then(res=>{
+		getOrderDetail(){
+			getOrderDetail({Order_ID: this.Order_ID,}).then(res=>{
 				console.log(res)
 				if(res.errorCode == 0) {
-					for(var i in res.data[0]) {
+					for(var i in res.data) {
 						if(i == 'Order_Shipping') {
-							res.data[0][i] = JSON.parse(res.data[0][i])
+							res.data[i] = JSON.parse(res.data[i])
+						}
+						if(i == 'prod_list') {
+							for(var j in res.data[i]) {
+								for( var k in res.data[i][j]) {
+									if(k == 'attr_info') {
+										res.data[i][j][k] = JSON.parse(res.data[i][j][k])
+									}									
+								}
+							}
 						}
 					}
-					this.orderInfo = res.data[0];
+					this.orderInfo = res.data;
 				}
 			})
 		},
+		// 余额支付开关
+		moneyChange(e) {
+			var checked = e.detail.value;
+			if(checked) {
+				this.pay_money = this.orderInfo.Order_Yebc
+			}else {
+				this.pay_money = 0;
+			}
+		},
+		
 		getAddress(){
 			getAddress({Address_ID: this.postData.address_id}).then(res=>{
 				console.log(res)
@@ -199,7 +220,7 @@ export default {
         background: #fff;
     }
     .state {
-        padding: 20rpx 60rpx;
+        padding: 20rpx 28rpx;
         font-size: 28rpx;
         display: flex;
         align-items: center;
@@ -259,6 +280,7 @@ export default {
     .biz_logo {
         width: 70rpx;
         height: 70rpx;
+		border-radius: 35rpx;
         margin-right: 20rpx;
     }
     .biz_name {

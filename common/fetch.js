@@ -95,7 +95,8 @@ export const getUserCoupon = (data,options) => fetch('user_receive_coupon',data,
 export const getUserReceivedCoupon = (data,options) => fetch('get_user_coupon', data, options);
 // 提交订单
 export const createOrder = (data,options) => fetch('create_order', data,options);
-
+// 获取订单详情
+export const getOrderDetail = (data,options) => fetch('get_order_detail', data, options);
 
 
 

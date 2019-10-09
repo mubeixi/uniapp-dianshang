@@ -208,6 +208,7 @@ export default {
 			createOrder(this.postData).then(res=>{
 				console.log(res)
 				if(res.errorCode == 0) {
+					// 如果order_totalPrice <= 0  直接跳转 订单列表页
 					this.Order_ID = res.data.Order_ID;
 					uni.navigateTo({
 						url: '../pay/pay?Order_ID='+ res.data.Order_ID
@@ -243,16 +244,22 @@ export default {
 		// 发票开关
 		faPiaoChange(e) {
 			this.faPiaoChecked = e.detail.value;
-			
+			if(this.faPiaoChecked) {
+				this.postData.need_invoice = 1;
+			}else {
+				this.postData.need_invoice = 0;
+			}
 		},
 		// 发票抬头输入完成
 		faPiaoConfirm(e) {
 			let invoice_info = e.detail.value;
-			if(invoice_info == '') {
-				uni.showModal({
-					title: '发票抬头不能为空'
-				})
-				return;
+			if(this.postData.need_invoice == 1) {
+				if(invoice_info == '') {
+					uni.showModal({
+						title: '发票抬头不能为空'
+					})
+					return;
+				}				
 			}
 			this.postData.invoice_info = invoice_info;
 		},
