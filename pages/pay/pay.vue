@@ -1,5 +1,15 @@
 <template>
     <div>
+		<div class="zhezhao" v-if="password_input">
+			<div class="input-wrap">
+				<div>请输入余额支付密码</div>
+				<input type="text" placeholder="请输入密码" @blur="user_password">
+				<div class="btns">
+					<div @click="cancelInput">取消</div>
+					<div @click="confirmInput">确定</div>
+				</div>
+			</div>
+		</div>
        <page-title title="付款" rightHidden="true"></page-title>
         <div class="state">
             <img src="/static/wait.png">
@@ -59,13 +69,14 @@
                 <div class="o_title">
                     <span>是否使用余额</span>
                     <switch
-                        checked="checked"
+                        :checked="moneyChecked"
                         size='25px'
                         color="#04B600"
 						@change="moneyChange"
                     />
                 </div>
-                <div class="o_desc c8">{{orderInfo.Order_Yebc}}</div>
+                <!-- <div class="o_desc c8">{{orderInfo.Order_Yebc}}</div> -->
+				<input type="number" :disabled="!moneyChecked" :placeholder="orderInfo.Order_Yebc" @confirm="moneyInputHandle"/>
             </div>
         </div>
         <div class="other">
@@ -73,19 +84,21 @@
                 <div class="o_title">
                     <span>是否开具发票</span>
                     <switch
-                        checked="checked"
+                        :checked="invoiceChecked"
                         size='25px'
                         color="#04B600"
+						@change="invoiceChange"
                     />
                 </div>
-                <div class="o_desc c8">{{orderInfo.Order_InvoiceInfo}}</div>
+                <!-- <div class="o_desc c8">{{orderInfo.Order_InvoiceInfo}}</div> -->
+				<input type="text" :disabled="!openInvoice" :placeholder="orderInfo.Order_InvoiceInfo" @blur="changeMoney"/>
             </div>
         </div>
         <div class="other">
             <div class="bd">
                 <div class="o_title  words">
                     <span>买家留言</span>
-                    <span class="msg c8" >{{orderInfo.liuyan}}</span>
+                    <span class="msg c8" >{{orderInfo.Order_Remark}}</span>
                 </div>
             </div>
         </div>
@@ -111,12 +124,13 @@
 				</div>
 			</div>
 		</popup-layer>
+		
     </div>
 </template>
 
 <script>
 import popupLayer from '../../components/popup-layer/popup-layer.vue'
-import {getAddress,createOrderCheck,getOrderDetail} from '../../common/fetch.js';
+import {getAddress,createOrderCheck,getOrderDetail,orderPay} from '../../common/fetch.js';
 export default {
     components: {
        popupLayer
@@ -142,17 +156,28 @@ export default {
         return {
             show: false, // 遮罩层
             wl_show: false, // 物流选择
-            checked: true,
-            checked1: true,
-            checked2: true,
-            checked3: true,
 			postData: {},
 			orderInfo: '',
 			addressInfo: '',
 			Order_ID: 0,
-			pay_money: 0,
+			totalMoney: 0, // 应支付金额
+			pay_money: 0, // 开启余额支付，表示余额支付的钱，pay_type 为 balance , 先提交一次order_pay,此时pay_money变成剩余应该支付的钱 .不开启余额支付，是应该支付的钱
+			pay_type: 'balance', // balance余额支付，余额补差    wechat 微信支付  ali 支付宝支付
+			user_pay_password: '',  //余额补差，支付密码
+			cate: 'method',
+			password_input: false,
+			openMoney: false, //是否开启了余额功能
+			openInvoice: false, // 是否开启了发票
         }
     },
+	computed:{
+		invoiceChecked(){
+			return this.orderInfo.Order_NeedInvoice > 0 || this.openInvoice;
+		},
+		moneyChecked(){
+			return this.orderInfo.Order_Yebc > 0 || this.openMoney;
+		}
+	},
     methods: {
 		getOrderDetail(){
 			getOrderDetail({Order_ID: this.Order_ID,}).then(res=>{
@@ -173,44 +198,82 @@ export default {
 						}
 					}
 					this.orderInfo = res.data;
+					this.pay_money = this.orderInfo.Order_Yebc
 				}
 			})
+		},
+		// 用户重新更改了余额
+		moneyInputHandle(e){
+			var money = e.detail.value;
+			this.pay_money = money;
+			this.orderInfo.Order_Fyepay = parseInt(this.orderInfo.Order_TotalPrice) - parseInt(money); 
 		},
 		// 余额支付开关
 		moneyChange(e) {
 			var checked = e.detail.value;
 			if(checked) {
+				this.openMoney = true;
 				this.pay_money = this.orderInfo.Order_Yebc
 			}else {
+				this.openMoney = false;
 				this.pay_money = 0;
 			}
 		},
-		
-		getAddress(){
-			getAddress({Address_ID: this.postData.address_id}).then(res=>{
-				console.log(res)
-				if(res.errorCode == 0 ){
-					this.addressInfo = res.data[0];
-				}
-			}).catch(e=>{})
+		// 修改余额金额
+		changeMoney(e) {
+			let money = e.detail.value;
+			if(this.money < 0) {
+				uni.showToast({
+					title: '您输入的金额有误'
+				})
+				return;
+			}else {
+				this.pay_money = money;
+			}
 		},
-		createOrderCheck(){
-			createOrderCheck(this.postData).then(res=>{
-				console.log(res)
-				if(res.errorCode == 0) {
-					this.orderInfo = res.data
-				}
-			}).catch(e=>{})
+		// 发票开关
+		invoiceChange(e) {
+			var checked = e.detail.value;
+			if(checked) {
+				this.need_invoice = 1;
+				this.openInvoice = true;
+				this.invoice_info = this.orderInfo.Order_InvoiceInfo;
+			}else {
+				this.openInvoice = false;
+				this.need_invoice = 0;
+			}
 		},
         // 点击遮罩
         showOverlay(){
             this.show = false;
             this.wl_show = false;
         },
+		// 去支付
 		submit(){
+			if(this.pay_money > 0) {
+				this.password_input = true;
+				
+				return ;
+			}
 			this.$refs.popupLayer.show();
 		},
-		
+		// 取消输入支付密码
+		cancelInput(){
+			this.password_input = false;
+		},
+		// 用户输入密码完毕
+		user_password(e) {
+			this.user_pay_password = e.detail.value;
+		},
+		// 确定输入支付密码
+		confirmInput(e){
+			orderPay({Order_ID:this.Order_ID , pay_type: this.pay_type ,pay_money: this.pay_money,user_pay_password: this.user_pay_password}).then(res=>{
+				console.log(res)
+			}).catch(e=>{
+				
+			})
+			this.password_input = false;
+		}
     }
 }
 </script>
@@ -426,6 +489,31 @@ export default {
 		}
 		& .c_method:nth-last-child(1) {
 			border:none;
+		}
+	}
+	.zhezhao {
+		position: fixed;
+		width: 100%;
+		height: 100%;
+		background: rgba($color: #000000, $alpha: 0.3);
+		z-index: 1000;
+		.input-wrap {
+			background: #fff;
+			color: #000;
+			text-align: center;
+			width: 90%;
+			margin: 400rpx auto;
+			padding: 20rpx 50rpx;
+			box-sizing: border-box;
+			font-size: 28rpx;
+			input {
+				margin: 20rpx 0;
+				border: 1px solid #efefef;
+			}
+			.btns {
+				display: flex;
+				justify-content: space-around;
+			}
 		}
 	}
 </style>

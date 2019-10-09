@@ -1,19 +1,101 @@
 <template>
-	<view class="content">
-		<view class="text-area">
-			<text class="title">{{title}}</text>
-		</view>
+	<view class="home-wrap">
+		<section :ref="item" v-for="(item, index) in templateList[tagIndex]" :key="index" class="section"  :data-name="item" >
+			<view class="font12 graytext">{{item}}</view>
+			<base-component v-if="item.indexOf('base') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
+			<swiper-component v-if="item.indexOf('swiper') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
+			<nav-component v-if="item.indexOf('nav') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
+			<video-component v-if="item.indexOf('video') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
+			<hr-component v-if="item.indexOf('hr') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
+			<space-component v-if="item.indexOf('space') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
+			<title-component v-if="item.indexOf('title') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
+			<text-component v-if="item.indexOf('text') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
+			<search-component v-if="item.indexOf('search') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
+			<notice-component v-if="item.indexOf('notice') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
+		</section>
 	</view>
 </template>
 
 <script>
+	import {getSkinConfig} from "../../common/fetch";
+	import BaseComponent from "../../components/diy/BaseComponent.vue";
+	import SwiperComponent from "../../components/diy/SwiperComponent.vue";
+	import NavComponent from "../../components/diy/NavComponent.vue";
+	import VideoComponent from "../../components/diy/VideoComponent.vue";
+	import HrComponent from "../../components/diy/HrComponent.vue";
+	import SpaceComponent from "../../components/diy/SpaceComponent.vue";
+	import TitleComponent from "../../components/diy/TitleComponent.vue";
+	import TextComponent from "../../components/diy/TextComponent.vue";
+	import SearchComponent from "../../components/diy/SearchComponent.vue";
+	import NoticeComponent from "../../components/diy/NoticeComponent.vue";
+
 	export default {
 		data() {
 			return {
-				title: 'Hello'
+				templateList:[],
+				templateData:[],
+				tagIndex:0
 			}
 		},
+		components:{
+			BaseComponent,SwiperComponent,NavComponent,VideoComponent,HrComponent,SpaceComponent,TitleComponent,TextComponent,SearchComponent,NoticeComponent
+		},
 		onLoad() {
+
+			let _self = this;
+			new Promise(resolve => {
+
+
+				getSkinConfig({}).then(res => {
+
+					resolve(JSON.parse(res.data.Home_Json))
+
+				})
+
+			})
+			.then(templateData => {
+
+
+				//存储页面数据
+				this.templateData = [] //页面数据的二维数组。
+				this.templateList = [] //页面组件的二维数组。
+				// console.log(templateData)
+				if (templateData && Array.isArray(templateData[0])) {
+					//多个页面，每个页面是一个数组
+					templateData.map(item => {
+						this.templateData.push(item)
+						this.templateList.push([])
+					})
+				} else if (
+						templateData &&
+						!Array.isArray(templateData[0]) &&
+						templateData.length > 0
+				) {
+					//单纯是一个对象的时候？？
+					this.templateData = [templateData]
+					this.templateList = [[]]
+				} else {
+					this.templateData = [[]]
+					this.templateList = [[]]
+				}
+				// this.templateData = templateData
+				//存储页面组件templateList
+				for (let i = 0; i < this.templateData.length; i++) {
+					if (
+							this.templateData[i] &&
+							this.templateData[i] !== []
+					) {
+						this.templateData[i].map(m => {
+							this.templateList[i].push(m.tag)
+						})
+					}
+				}
+
+
+			})
+			.catch(err => {
+				console.log(err)
+			})
 
 		},
 		methods: {
@@ -23,29 +105,29 @@
 </script>
 
 <style>
-	.content {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-	}
+	/*.content {*/
+	/*	display: flex;*/
+	/*	flex-direction: column;*/
+	/*	align-items: center;*/
+	/*	justify-content: center;*/
+	/*}*/
 
-	.logo {
-		height: 200rpx;
-		width: 200rpx;
-		margin-top: 200rpx;
-		margin-left: auto;
-		margin-right: auto;
-		margin-bottom: 50rpx;
-	}
+	/*.logo {*/
+	/*	height: 200rpx;*/
+	/*	width: 200rpx;*/
+	/*	margin-top: 200rpx;*/
+	/*	margin-left: auto;*/
+	/*	margin-right: auto;*/
+	/*	margin-bottom: 50rpx;*/
+	/*}*/
 
-	.text-area {
-		display: flex;
-		justify-content: center;
-	}
+	/*.text-area {*/
+	/*	display: flex;*/
+	/*	justify-content: center;*/
+	/*}*/
 
-	.title {
-		font-size: 36rpx;
-		color: #8f8f94;
-	}
+	/*.title {*/
+	/*	font-size: 36rpx;*/
+	/*	color: #8f8f94;*/
+	/*}*/
 </style>
