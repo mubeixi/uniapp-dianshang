@@ -103,7 +103,7 @@
 	        "selectedIconPath": "static/fenleiCheck.png",
 	        "text": "分类"
 	    }, {
-	        "pagePath": "pages/order/order",
+	        "pagePath": "pages/groupSuccess/groupSuccess",
 	        "iconPath": "static/fenxiao.png",
 	        "selectedIconPath": "static/fenxiaoCheck.png",
 	        "text": "分销"

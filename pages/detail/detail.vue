@@ -76,7 +76,8 @@
     <!-- 商品详情 -->
     <div class="pro_detail">
         <div class="p_detail_title">商品详情</div>
-		<div v-html="product.Products_Description" class="p_detail_des"></div>
+		<!-- <div v-html="product.Products_Description" class="p_detail_des"></div> -->
+		<u-parse :content="product.Products_Description"  />
     </div>
     <div style="height:50px;"></div>
 	<bottom @cartHandle="addCart" @directHandle="directBuy" @collect="collect"></bottom>
@@ -153,6 +154,8 @@ import bottom from '../bottom/bottom'
 import popupLayer from '../../components/popup-layer/popup-layer.vue'
 import {getProductDetail,getCommit,updateCart,addCollection,getCoupon,getUserCoupon} from '../../common/fetch.js';
 import {goBack,numberSort}  from '../../common/tool.js'
+
+import uParse from '@/components/gaoyia-parse/parse.vue'
 export default {
     data(){
         return {
@@ -189,7 +192,8 @@ export default {
     },
     components: {
         bottom,
-		popupLayer
+		popupLayer,
+		uParse
     },
 	onLoad: function (option) {
 		  this.Products_ID = option.Products_ID;
