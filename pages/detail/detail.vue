@@ -218,6 +218,7 @@ export default {
 				 * @returns {void|string|*}
 				 */
 				formatRichText (html) { //控制小程序中图片大小
+					if(!html) return;
 				    let newContent= html.replace(/<img[^>]*>/gi,function(match,capture){
 				        match = match.replace(/style="[^"]+"/gi, '')//.replace(/style='[^']+'/gi, '');
 				        match = match.replace(/width="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
