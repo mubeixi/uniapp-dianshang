@@ -1,0 +1,120 @@
+<template>
+  <view  class="nav wrap">
+    <view  class="box style1" >
+      <view class="list" :style="{display:nav.value.list.length<5?'flex':'block'}">
+        <view @click="go(item)" v-for="(item,idx) in nav.value.list" class="item"
+            :style="{flex:nav.value.list.length<5?'1':''}">
+          <view v-if="nav.config.type===1" class="cover"
+               :style="{backgroundImage:'url('+domainFunc(item.img)+')'}">
+          </view>
+          <view class="title">{{item.title}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>
+<script>
+  import {domain} from "../../common/filter";
+
+  export default {
+    props: {
+      index: {
+        required: true,
+      },
+      confData: {
+        type: Object,
+        default: () => ({}),
+      },
+    },
+    data() {
+      return {
+        nav: {},
+      };
+    },
+    computed: {
+      className() {
+        return 'style1';//+this.nav.config.style
+      },
+      style() {
+        // return deepCopyStrict(this.coupon.styleDefault, this.coupon.style);
+      },
+    },
+    filters: {
+      str2num(val) {
+        return parseInt(val)
+      }
+    },
+    watch: {
+
+    },
+    components: {},
+    methods: {
+      go(item){
+        this.$fun.linkTo(item)
+      },
+      domainFunc(url) {
+        return domain(url)
+      },
+
+    },
+    created() {
+
+      this.nav = this.confData;
+    }
+  }
+</script>
+
+
+<style scoped lang="less">
+  @import "../../static/css/app.less";
+
+
+
+.wrap{
+
+  padding: 0 10px;
+}
+  .box {
+    .list {
+
+      .item {
+        margin-right: 15px;
+        text-align: center;
+        cursor: pointer;
+        .cover {
+          .cover-full-bg(cover, 0, none);
+
+          width: 36px;
+          height: 36px;
+          margin: 6px auto;
+        }
+
+        .title {
+          height: 22px;
+          line-height: 22px;
+          text-align: center;
+          font-size: 14px;
+          color: #444;
+        }
+      }
+    }
+  }
+
+  .style1 {
+
+    .list {
+
+      white-space: nowrap;
+      overflow-x: scroll;
+
+
+
+      .item {
+        display: inline-block;
+        /*height: 70px;*/
+        overflow-y: hidden;
+      }
+    }
+  }
+
+</style>
