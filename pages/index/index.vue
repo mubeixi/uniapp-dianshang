@@ -12,6 +12,7 @@
 			<text-component v-if="item.indexOf('text') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
 			<search-component v-if="item.indexOf('search') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
 			<notice-component v-if="item.indexOf('notice') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
+			<coupon-component v-if="item.indexOf('coupon') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
 		</section>
 	</view>
 </template>
@@ -28,6 +29,7 @@
 	import TextComponent from "../../components/diy/TextComponent.vue";
 	import SearchComponent from "../../components/diy/SearchComponent.vue";
 	import NoticeComponent from "../../components/diy/NoticeComponent.vue";
+	import CouponComponent from "../../components/diy/CouponComponent.vue";
 
 	export default {
 		data() {
@@ -38,7 +40,7 @@
 			}
 		},
 		components:{
-			BaseComponent,SwiperComponent,NavComponent,VideoComponent,HrComponent,SpaceComponent,TitleComponent,TextComponent,SearchComponent,NoticeComponent
+			BaseComponent,SwiperComponent,NavComponent,VideoComponent,HrComponent,SpaceComponent,TitleComponent,TextComponent,SearchComponent,NoticeComponent,CouponComponent
 		},
 		onLoad() {
 
