@@ -77,8 +77,12 @@
     <div class="pro_detail">
         <div class="p_detail_title">商品详情</div>
 		<!-- <div v-html="product.Products_Description" class="p_detail_des"></div> -->
-		<u-parse :content="product.Products_Description"  />
+		<rich-text :nodes="product.Products_Description|formatRichText" class="p_detail_des"></rich-text>
+		<!-- <u-parse :content="product.Products_Description"  /> -->
     </div>
+	<div style="clear: both;">
+		
+	</div>
     <div style="height:50px;"></div>
 	<bottom @cartHandle="addCart" @directHandle="directBuy" @collect="collect"></bottom>
 	<popupLayer ref="popupLayer" :direction="'top'" >
@@ -203,6 +207,43 @@ export default {
 			this.getCommit(this.Products_ID);
 			this.getCoupon();//获取可领取的优惠券
 	},
+	filters: {
+				/**
+				 * 处理富文本里的图片宽度自适应
+				 * 1.去掉img标签里的style、width、height属性
+				 * 2.img标签添加style属性：max-width:100%;height:auto
+				 * 3.修改所有style里的width属性为max-width:100%
+				 * 4.去掉<br/>标签
+				 * @param html
+				 * @returns {void|string|*}
+				 */
+				formatRichText (html) { //控制小程序中图片大小
+				    let newContent= html.replace(/<img[^>]*>/gi,function(match,capture){
+				        match = match.replace(/style="[^"]+"/gi, '')//.replace(/style='[^']+'/gi, '');
+				        match = match.replace(/width="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
+				        match = match.replace(/height="[^"]+"/gi, '')//.replace(/height='[^']+'/gi, '');
+				        return match;
+				    });
+					newContent= newContent.replace(/<div[^>]*>/gi,function(match,capture){
+					    match = match.replace(/style="[^"]+"/gi, '')//.replace(/style='[^']+'/gi, '');
+					    match = match.replace(/width="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
+					    match = match.replace(/height="[^"]+"/gi, '')//.replace(/height='[^']+'/gi, '');
+					    return match;
+					});
+					newContent= newContent.replace(/<p[^>]*>/gi,'');
+					newContent= newContent.replace(/<[/]p[^>]*>/gi,'');
+				    newContent = newContent.replace(/style="[^"]+"/gi,function(match,capture){
+				        match = match.replace(/width:[^;]+;/gi, 'width:100%;').replace(/width:[^;]+;/gi, 'width:100%;');
+				        return match;
+				    });
+					
+				    newContent = newContent.replace(/<br[^>]*\/>/gi, '');
+				    newContent = newContent.replace(/\<img/gi, '<img style="width:100%;float:left;"');
+					//newContent = newContent.replace(/>[\s]*</gi, "><");
+					console.log(newContent)
+				    return newContent;
+				}	
+			},
     methods: {
 		//下一页优惠券
 		goNextPage(){
@@ -735,7 +776,6 @@ export default {
     /* 评价 end */
     /* 商品详情 start */
     .pro_detail {
-        padding: 30rpx 20rpx;
 		.p_detail_des {
 			width:100%;
 			img {
@@ -744,6 +784,7 @@ export default {
 		}
     }
     .p_detail_title {
+		padding: 30rpx 20rpx;
         color: #333;
         font-size: 30rpx;
     }
