@@ -12,6 +12,7 @@ Vue.use(Common);
 App.mpType = 'app'
 // 使用pagetitle
 Vue.component('page-title',pagetitle)
+
 const app = new Vue({
     ...App
 })
