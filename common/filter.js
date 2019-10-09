@@ -1,5 +1,11 @@
 
-import {baseApiUrl} from './env.js';
+import {apiBaseUrl} from "./env";
+
+export const domain = (url) => {
+  if(!url)return '';
+  if (url.indexOf('http') == -1) return apiBaseUrl+url;
+  return url;
+}
 
 export default [
   {
@@ -10,11 +16,16 @@ export default [
     },
   },
   {
+    name:'cutstr',
+    methods: (str,len,tip) => {
+      if(!str)return '';
+      console.log(str,len,tip)
+      if(str.length<len)return str;
+      return str.substring(0,len)+tip
+    },
+  },
+  {
     name:'domain',
-    methods:(url) => {
-      if(!url)return '';
-      if (url.indexOf('http') == -1) return baseApiUrl+url;
-      return url;
-    }
+    methods: domain
   }
 ];
