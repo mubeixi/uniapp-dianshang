@@ -29,10 +29,10 @@ const fetch = function (act, param,options = false,url='/api/little_program/shop
   // 数据加密
   let data = createToken(param);
 
-  
+
   // console.log(url,param);
 
-  
+
   return ajax(url,method,data, options).then(res => res.data, e => e);
 
 };
@@ -95,6 +95,9 @@ export const getUserCoupon = (data,options) => fetch('user_receive_coupon',data,
 export const getUserReceivedCoupon = (data,options) => fetch('get_user_coupon', data, options);
 // 提交订单
 export const createOrder = (data,options) => fetch('create_order', data,options);
+
+// 上传图片
+export const uploadImage = (data,options) => fetch('upload_image', data,options);
 // 获取订单详情
 export const getOrderDetail = (data,options) => fetch('get_order_detail', data, options);
 // 支付订单

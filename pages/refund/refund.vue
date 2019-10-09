@@ -38,10 +38,17 @@
         </div>
         <div class="item noborder">上传凭证</div>
         <div class="imgs">
-            <input type="file">
+			<view class="shangchuans" v-for="(item,index) of imgs" :key="index"  >
+				<image :src="item.path" ></image>
+				<image src="/static/delimg.png" class="del" @click="delImg(index)"></image>
+			</view>
+            <view class="shangchuan" @click="addImg">
+				<view class="heng"></view>
+				<view class="shu"></view>
+			</view>
         </div>
         <div style="height: 50px;"></div>
-        <div class="bottom">提交</div>
+        <div class="bottom" @click="submit">提交</div>
         <!-- 弹出层 -->
         <!-- 退款方式 -->
         <popup-layer ref="popupRef" :direction="'top'">
@@ -107,6 +114,7 @@
 
 <script>
 import popupLayer from '../../components/popup-layer/popup-layer.vue';
+import {uploadImage} from '../../common/fetch.js'
 export default {
     components: {
 		popupLayer
@@ -120,6 +128,7 @@ export default {
                 { url: 'https://cloud-image', isImage: true }
             ],
 			onlyRefund:true,
+			imgs:[],//上传图片预览
 			
         }
     },
@@ -127,6 +136,36 @@ export default {
 		
 	},
     methods: {
+		//提交
+		submit(){
+
+			uploadImage({'image':this.imgs[0]}).then(res=>{
+				console.log(res)
+			}).catch(e=>{
+				console.log(e)
+			})
+		},
+		//删除某张预览图片
+		delImg(index){
+			this.imgs.splice(index, 1);
+		},
+		addImg(){
+			let that=this;
+			uni.chooseImage({
+				count:3,
+				sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有  
+				success(res) {
+					for(let item of res.tempFiles){
+						that.imgs.push(item);
+					}
+					
+					console.log(res.tempFiles);
+				},
+				fail(e) {
+					console.log(e);
+				}
+			})
+		},
 		showMethod(){
 			this.$refs.popupRef.show();
 		},
@@ -144,6 +183,48 @@ export default {
 </script>
 
 <style scoped lang="scss">
+	.shangchuans{
+		width:146rpx;
+		height:146rpx;
+		border:1px solid rgba(186,186,186,1);
+		position: relative;
+		margin-right: 28rpx;
+		margin-bottom: 28rpx;
+		image{
+			width: 100%;
+			height: 100%;
+		}
+		.del{
+			width: 38rpx;
+			height: 38rpx;
+			position: absolute;
+			top: -19rpx;
+			right: -19rpx;
+		}
+	}
+	.shangchuan{
+		width:146rpx;
+		height:146rpx;
+		border:1px solid rgba(186,186,186,1);
+		position: relative;
+		.heng{
+			width: 76rpx;
+			height: 3rpx;
+			background-color: #BABABA;
+			position: absolute;
+			top: 72rpx;
+			left: 35rpx;
+		}
+		.shu{
+			width: 3rpx;
+			height: 76rpx;
+			background-color: #BABABA;
+			position: absolute;
+			top: 35rpx;
+			left: 72rpx;
+			
+		}
+	}
     .wrap {
      /*   height: 100vh; */
         background: #fff;
@@ -226,8 +307,9 @@ export default {
     /* 上传图像 */
     .imgs {
         display: flex;
-        justify-content: space-between;
-        padding: 0 10px;
+        padding: 0 20rpx;
+		padding-right: 0rpx;
+		flex-wrap: wrap;
     }
     .bottom {
         position: fixed;
