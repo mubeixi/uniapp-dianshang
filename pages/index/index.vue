@@ -5,6 +5,13 @@
 			<base-component v-if="item.indexOf('base') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
 			<swiper-component v-if="item.indexOf('swiper') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
 			<nav-component v-if="item.indexOf('nav') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
+			<video-component v-if="item.indexOf('video') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
+			<hr-component v-if="item.indexOf('hr') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
+			<space-component v-if="item.indexOf('space') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
+			<title-component v-if="item.indexOf('title') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
+			<text-component v-if="item.indexOf('text') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
+			<search-component v-if="item.indexOf('search') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
+			<notice-component v-if="item.indexOf('notice') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
 		</section>
 	</view>
 </template>
@@ -14,6 +21,13 @@
 	import BaseComponent from "../../components/diy/BaseComponent.vue";
 	import SwiperComponent from "../../components/diy/SwiperComponent.vue";
 	import NavComponent from "../../components/diy/NavComponent.vue";
+	import VideoComponent from "../../components/diy/VideoComponent.vue";
+	import HrComponent from "../../components/diy/HrComponent.vue";
+	import SpaceComponent from "../../components/diy/SpaceComponent.vue";
+	import TitleComponent from "../../components/diy/TitleComponent.vue";
+	import TextComponent from "../../components/diy/TextComponent.vue";
+	import SearchComponent from "../../components/diy/SearchComponent.vue";
+	import NoticeComponent from "../../components/diy/NoticeComponent.vue";
 
 	export default {
 		data() {
@@ -24,7 +38,7 @@
 			}
 		},
 		components:{
-			BaseComponent,SwiperComponent,NavComponent
+			BaseComponent,SwiperComponent,NavComponent,VideoComponent,HrComponent,SpaceComponent,TitleComponent,TextComponent,SearchComponent,NoticeComponent
 		},
 		onLoad() {
 

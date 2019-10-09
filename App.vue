@@ -13,6 +13,7 @@
 </script>
 
 <style lang="less">
+@import "./static/css/icon.css";
 
 ul,li{
     list-style:none
