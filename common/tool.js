@@ -96,3 +96,97 @@ export const numberSort = function(arr, order_by) {
     return arr.sort(function (v1, v2) { return v1 - v2; });
   }
 }
+
+
+
+// 会修改模板对象，将他没有的属性加上
+function addFun(object, newobj) {
+  for (const key in object) {
+    if (!object.hasOwnProperty(key)) continue;
+
+    if (typeof object[key] === 'object') {
+      if (!newobj) continue;
+      addFun(object[key], newobj[key]);
+    } else if (typeof object[key] === 'function') {
+      continue;
+    } else {
+
+      if (!newobj || !newobj[key]) continue;
+      object[key] = newobj[key]
+    }
+  }
+}
+
+// 会修改原数据
+// 浅拷贝对象。。
+/**
+ *
+ * @param current
+ * @param newObj
+ * @param strict 开启严格模式，模板值为false不copy
+ */
+function mergeData(current, newObj, strict) {
+  for (const key in newObj) {
+    if (!newObj.hasOwnProperty(key)) continue;
+    if (strict && !newObj[key]) continue;
+
+    if (typeof newObj[key] === 'object' && newObj[key] !== null) {
+
+      //current[key] 可能是null或者undefined
+      if (!current[key]) {
+        Vue.set(current, key, newObj[key]);
+        continue;
+      }
+      // @ts-ignore
+      mergeData(current[key], newObj[key]);
+    } else {
+      if (!current) {
+        current = newObj;
+        continue;
+      }
+
+
+      // if (!current[key]) {
+      //   Vue.set(current, key, newObj[key]);
+      //   continue;
+      // }
+
+      Vue.set(current, key, newObj[key]);
+    }
+  }
+}
+
+/**
+ * 深拷贝，将tmplObj的属性和方法，都和targetObJ混合，如目标对象无属性/方法则创建，如有则根据参数cover决定是否强制覆盖。
+ * @param targetObj
+ * @param tmplOjb
+ * @param cover
+ *
+ * 一般来说，无脑深拷贝就行了
+ */
+function mergeObject(targetObj,tmplOjb,cover) {
+  let obj = null;
+
+
+  return obj;
+}
+
+/**
+ * 深拷贝，解决引用的问题。
+ * @param currentObj
+ * @param newObject
+ *
+ * 不过很奇怪之前的人为什么要复制两遍
+ */
+export function deepCopy(currentObj, newObject) {
+  addFun(currentObj, newObject);//方法则是保留本地的新建实例  new Search()这样
+  // @ts-ignore
+  // mergeData(currentObj, newObject);
+  return currentObj;
+}
+
+export function deepCopyStrict(currentObj, newObject) {
+  addFun(currentObj, newObject, 1);
+  // mergeData(currentObj, newObject, 1);
+  return currentObj;
+}
