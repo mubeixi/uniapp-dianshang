@@ -2,36 +2,63 @@
     <div>
         <page-title title="我的订单" rightHidden="true"></page-title>
         <div class="navs">
-            <div class="nav-item" :class="index==0?'active':''" @click="index = 0">全部</div>
-            <div class="nav-item" :class="index==1?'active':''" @click="index = 1">待付款</div>
-            <div class="nav-item" :class="index==2?'active':''" @click="index = 2">待发货</div>
-            <div class="nav-item" :class="index==3?'active':''" @click="index = 3">待收货</div>
-            <div class="nav-item" :class="index==4?'active':''" @click="index = 4">待评价</div>
+            <div class="nav-item" :class="index==0?'active':''" @click="changIndex(0)">全部</div>
+            <div class="nav-item" :class="index==1?'active':''" @click="changIndex(1)">
+				待付款
+				<div class="jiaobiao" v-if="orderNum.shop.waitpay>0">{{orderNum.shop.waitpay}}</div>
+			</div>
+            <div class="nav-item" :class="index==2?'active':''" @click="changIndex(2)">
+				待发货
+				<div class="jiaobiao" v-if="orderNum.shop.waitsend>0">{{orderNum.shop.waitsend}}</div>
+			</div>
+            <div class="nav-item" :class="index==3?'active':''" @click="changIndex(3)">
+				待收货
+				<div class="jiaobiao" v-if="orderNum.shop.waitconfirm>0">{{orderNum.shop.waitconfirm}}</div>
+			</div>
+            <div class="nav-item" :class="index==4?'active':''" @click="changIndex(4)">
+				待评价
+				<div class="jiaobiao" v-if="orderNum.shop.waitcomment>0">{{orderNum.shop.waitcomment}}</div>
+			</div>
         </div>
         <div class="order" v-for="(item,index) of data" :key="index" v-if="item.prod_list.length>0">
+			<div style="background-color: #F3F3F3;height: 20rpx;width: 100%;position: absolute;left: 0rpx;"></div>
+			<div style="height: 20rpx;"></div>
 			<div class="bizinfo">
-			    <img src="/static/detail/user1.png" alt="">
-			    <span class="bizname">张小凡时尚衣橱</span>
-			    <span class="status">待付款</span>
+			    <img :src="item.ShopLogo" alt="">
+			    <span class="bizname">{{item.ShopName}}</span>
+			    <span class="status">{{item.Order_Status_desc}}</span>
 			</div>
             <block v-for="(i,k) of item.prod_list" :key="k">
-				<div class="pro">
+				<div class="pro" @click="goPay(item)">
 				    <div class="pro-div">
 						<img class="pro-img" :src="i.prod_img">
 					</div>
 				    <div class="pro-msg">
 				        <div class="pro-name">{{i.prod_name}}</div>
-				        <div class="attr" v-if="item.attr_info"><span>{{item.attr_info}}</span></div>
+				        <div class="attr" v-if="i.attr_info"><span>{{i.attr_info.attr_name}}</span></div>
 						<div class="attr" v-else style="background-color: #FFFFFF;"><span></span></div>
 				        <div class="pro-price"><span>￥</span>{{i.prod_price}} <span class="amount">x{{i.prod_count}}</span></div>
 				    </div>
 				</div>
 			</block>
-            <div class="text-right total">共{{item.prod_list.length}}件商品 合计：<span class="price"><span>￥</span> {{item.Order_Yebc}}</span></div>
-            <div class="btn-group">
-                <span>取消订单</span>
-                <span class="active">立即付款</span>
+            <div class="text-right total">共{{item.prod_list.length}}件商品 合计：<span class="price"><span>￥</span> {{item.Order_Fyepay}}</span></div>
+            <div class="btn-group" v-if="item.Order_Status==1">
+                <span @click="cancelOrder(item.prod_list,index)">取消订单</span>
+                <span class="active" @click="goPay(item)">立即付款</span>
             </div>
+			<div class="btn-group" v-else-if="item.Order_Status==2">
+				<span @click="cancelOrder(item.prod_list,index)">删除订单</span>
+			    <span class="active" @click="goPay(item)">申请退款</span>
+			</div>
+			<div class="btn-group" v-else-if="item.Order_Status==3">
+				<span>查看物流</span>
+			    <span class="active" >确认收货</span>
+				<!-- @click="goPay(item)"跳转退款 -->
+			</div>
+			<div class="btn-group" v-else-if="item.Order_Status==0">
+				<span @click="cancelOrder(item.prod_list,index)">删除订单</span>
+			    <span class="active" @click="goPay(item)">立即评价</span>
+			</div>
         </div>
     </div>
 
@@ -39,35 +66,136 @@
 
 <script>
 // import pagetitle from '@/components/title'
-import {getOrder} from '@/common/fetch.js'
+import {getOrder,cancelOrder,getOrderNum} from '@/common/fetch.js'
 export default {
     data(){
         return {
             index: 0,
 			data:[],
+			pageSize:5,
+			page:1,
+			totalCount:0,
+			orderNum:'',//订单状态角标数
+			isQing:false
         }
     },
 	onShow(){
 		this.getOrder();
+		this.getOrderNum();
 	},
 	onLoad(option){
 		this.index=option.index;
 	},
 	onReachBottom(){
-		
+		if(this.data.length<this.totalCount){
+			this.page++;
+			this.getOrder();
+		}
 	},
 	methods:{
+		//获取订单角标数
+		getOrderNum(){
+			getOrderNum({}).then(res=>{
+				this.orderNum=res.data;
+				console.log(res)
+			}).catch(e=>{
+				console.log(e)
+			})
+		},
+		//取消订单
+		cancelOrder(item,index){
+			let Order_ID;
+			for(let i in item){
+				console.log(i)
+				if(item[i].Order_ID){
+					Order_ID=item[i].Order_ID;
+				}
+			}
+			if(Order_ID){
+				cancelOrder({Order_ID}).then(res=>{
+					if(res.errorCode==0){
+						this.data.splice(index,1);
+						this.getOrderNum();
+						uni.showToast({
+							title:res.msg,
+							icon:"none"
+						})
+					}else{
+						uni.showToast({
+							title:res.msg,
+							icon:"none"
+						})
+					}
+					
+				}).catch(e=>{
+					console.log(e)
+				})
+			}
+		},
+		//跳转订单详情
+		goPay(item){
+			if(item.Order_Status==1){
+				uni.navigateTo({
+					url:"../pay/pay?Order_ID="+item.Order_ID
+				})
+			}else if(item.Order_Status==2||item.Order_Status==3){
+				uni.navigateTo({
+					url:'../refund/refund?Order_ID='+item.Order_ID
+				})
+			}else if(item.Order_Status==0){
+				console.log("评价")
+				// uni.navigateTo({
+				// 	url:'../refund/refund?Order_ID='+item.Order_ID
+				// })
+			}
+			
+		},
+		changIndex(i){
+			this.data=[];
+			this.index=i;
+			this.getOrder();
+		},
 		getOrder(){
+			if(this.isQing) return;
+			this.isQing=true;
 			let data={
-				Users_ID: 'wkbq6nc2kc',
-				Order_Status:1
+				page:this.page,
+				pageSize:this.pageSize
+			};
+			if(this.index>0&&this.index<4){
+				data={
+					Order_Status:this.index
+				}
+			}else if(this.index==4){
+				data={
+					Is_Commit:0,
+					Order_Status:0
+				}
 			}
 			getOrder(data).then(res=>{
 				if(res.errorCode==0){
-					this.data=res.data;
+					for(var i in res.data) {
+						for(var m in res.data[i]){
+							if(m == 'prod_list'){
+								for(var j in res.data[i][m]) {
+										for( var k in res.data[i][m][j]) {
+											if(k == 'attr_info') {
+												res.data[i][m][j][k] = JSON.parse(res.data[i][m][j][k])
+											}									
+										}
+									}
+							}
+						}
+					}
+					
+					for(let item of res.data){
+						this.data.push(item)
+					}
+					this.totalCount=res.totalCount;
+					this.isQing=false;
 				}		
-				console.log(res);
 			}).catch(e=>{
+				this.isQing=false;
 				console.log(e);
 			})
 		}
@@ -84,11 +212,26 @@ export default {
         background: #fff;
         font-size: 28rpx;
         padding: 0 10px;
-        margin-bottom: 20px;
         .nav-item {
             flex: 1;
             box-sizing: border-box;
             text-align: center;
+			position: relative;
+			.jiaobiao{
+				position: absolute;
+				top: 24rpx;
+				right: 20rpx;
+				width: 20rpx;
+				height: 20rpx;
+				border-radius: 50%;
+				background-color: #FFFFFF;
+				border: 1px solid  #F43131;
+				font-size: 15rpx;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				color: #F43131;
+			}
         }
         .nav-item.active {
             color: red;
@@ -96,9 +239,11 @@ export default {
         }
     }
     .order {
-        padding: 30rpx 20rpx;
+        padding: 0rpx 20rpx;
         background: #fff;
+		position: relative;
         .bizinfo {
+			margin-top: 20rpx;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -138,6 +283,12 @@ export default {
        .pro-name {
            font-size: 26rpx;
            margin-bottom: 20rpx;
+		   text-overflow: -o-ellipsis-lastline;
+		   overflow: hidden;
+		   text-overflow: ellipsis;
+		   display: -webkit-box;
+		   -webkit-line-clamp: 2;
+		   -webkit-box-orient: vertical;
        }
        .attr {
            display: inline-block;
@@ -176,9 +327,11 @@ export default {
         }
         .btn-group {
             text-align: right;
+			margin-bottom: 30rpx;
             span {
                 display: inline-block;
-                width: 150rpx;
+                //width: 150rpx;
+				padding: 0rpx 24rpx;
                 height: 60rpx;
                 line-height: 60rpx;
                 text-align: center;
