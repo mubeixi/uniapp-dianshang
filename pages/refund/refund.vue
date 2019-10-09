@@ -39,7 +39,7 @@
         <div class="item noborder">上传凭证</div>
         <div class="imgs">
 			<view class="shangchuans" v-for="(item,index) of imgs" :key="index"  >
-				<image :src="item" ></image>
+				<image :src="item.path" ></image>
 				<image src="/static/delimg.png" class="del" @click="delImg(index)"></image>
 			</view>
             <view class="shangchuan" @click="addImg">
@@ -48,7 +48,7 @@
 			</view>
         </div>
         <div style="height: 50px;"></div>
-        <div class="bottom">提交</div>
+        <div class="bottom" @click="submit">提交</div>
         <!-- 弹出层 -->
         <!-- 退款方式 -->
         <popup-layer ref="popupRef" :direction="'top'">
@@ -136,6 +136,15 @@ export default {
 		
 	},
     methods: {
+		//提交
+		submit(){
+
+			uploadImage({'image':this.imgs[0]}).then(res=>{
+				console.log(res)
+			}).catch(e=>{
+				console.log(e)
+			})
+		},
 		//删除某张预览图片
 		delImg(index){
 			this.imgs.splice(index, 1);
@@ -146,7 +155,10 @@ export default {
 				count:3,
 				sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有  
 				success(res) {
-					that.imgs.push(res.tempFilePaths);
+					for(let item of res.tempFiles){
+						that.imgs.push(item);
+					}
+					
 					console.log(res.tempFiles);
 				},
 				fail(e) {
