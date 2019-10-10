@@ -110,6 +110,8 @@ export const getRefund = (data,options) => fetch('get_refund_info', data, option
 
 // 支付订单
 export const orderPay = (data,options) => fetch('order_pay', data, options);
+// 检查产品是否已收藏
+export const checkProdCollected = (data,options) => fetch('check_prod_favourite', data,options);
 
 
 

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="loading">
     <page-title class="nav-title" title="购物车" :right="handleShow ? '管理' : '取消'" @rightHandle="handle" hiddenBack="true" :rightHidden="manage"></page-title>
     <div class="content">
       <div v-if="total_count>0">
@@ -18,9 +18,9 @@
 						<div class="mbxa" @click="change(pro_id,attr_id)">
 							<img :src="attr.checked ? '/static/checked.png' : '/static/uncheck.png'" >
 						</div>
-						<img class="pro-img" :src="attr.ImgPath" alt />
+						<img class="pro-img" :src="attr.ImgPath" @click="gotoDetail(pro_id)"/>
 						<div class="pro-msg">
-							<div class="pro-name">{{attr.ProductsName}}</div>
+							<div class="pro-name" @click="gotoDetail(pro_id)">{{attr.ProductsName}}</div>
 							<div class="attr" v-if="attr.Productsattrstrval">
 								<span v-for="(item,index) in attr.Productsattrstrval" :key="index">{{item}}</span>
 							</div>
@@ -106,7 +106,8 @@ export default {
 		},
 		checkAllFlag: false,
 		totalPrice: 0,
-		cart_buy: ''
+		cart_buy: '',
+		loading: false
     }
   },
   computed: {
@@ -125,6 +126,7 @@ export default {
   onShow() {
   	this.getCart();
 	this.getProd();
+	this.loading = false;
   },
   methods: {
 	// 删除或结算
@@ -142,7 +144,6 @@ export default {
 				}
 			}
 		}
-		console.log(obj)
 		this.cart_buy = JSON.stringify(obj);
 		if(this.handleShow) {
 			// 结算
@@ -158,7 +159,6 @@ export default {
 			})
 		}else {
 			delCart({Users_ID: 'wkbq6nc2kc', User_ID: 3, cart_key: 'CartList', prod_attr: JSON.stringify(obj)}).then(res=>{
-				console.log(res)
 				if(res.errorCode == 0) {
 					uni.showLoading({
 						icon: 'success',
@@ -220,9 +220,14 @@ export default {
 		this.postData.qty = num;
 		this.postData.atrid_str = attr_id;
 		this.postData.atr_str = this.CartList[pro_id][attr_id]['Productsattrstrval']?this.CartList[pro_id][attr_id]['Productsattrstrval']:'';
-		if(this.CartList[pro_id]['Qty'] == 1 && num == -1) {return;}
+		if(this.CartList[pro_id][attr_id]['Qty'] == 1 && num == -1) {
+			uni.showToast({
+				title: '购买数量不能小于1',
+				icon: 'none'
+			});
+			return;
+		}
 		updateCart(this.postData).then(res=>{
-			console.log(res)
 			if(res.errorCode == 0) {
 				this.getCart();
 			}
@@ -234,7 +239,6 @@ export default {
     },
 	getCart() {
 		getCart({Users_ID:this.Users_ID,User_ID: this.User_ID,cart_key:'CartList'}).then(res=>{
-			console.log(res)
 			if(res.errorCode == 0){
 				this.total_count= res.data.total_count;
 				this.total_price= res.data.total_price;			
@@ -246,13 +250,13 @@ export default {
 				}
 				this.CartList = res.data.CartList;
 			}
+			this.loading = true;
 		}).catch(e=>console.log(e))
 	},
 	getProd(){
 		this.prod_arg.Users_ID = this.Users_ID;
 		let oldlist = this.prodList;
 		getProd(this.prod_arg).then(res=>{
-			console.log(res)
 			if(res.errorCode == 0){
 				this.prodList = oldlist.concat(res.data);
 				this.hasMore = (res.totalCount / this.prod_arg.pageSize) > this.prod_arg.page ? true : false ;
@@ -261,7 +265,6 @@ export default {
 		}).catch(e=>console.log(e))		
 	},
 	gotoDetail(e){
-		console.log(e)
 		uni.navigateTo({
 		    url: '../detail/detail?Products_ID=' + e
 		});
@@ -323,8 +326,9 @@ export default {
     }
     .pro-name {
         font-size: 26rpx;
-        margin-bottom: 25rpx;
+        margin-bottom: 18rpx;
 		width: 390rpx;
+		line-height: 28rpx;
 		display: -webkit-box;
 		    -webkit-line-clamp:2;
 		    overflow: hidden;
@@ -339,7 +343,7 @@ export default {
         background: #FFF5F5;
         color: #666;
         font-size: 24rpx;
-        margin-bottom: 23rpx;
+        margin-bottom: 18rpx;
 		text-align: center;
     }
     .pro-price {
@@ -387,7 +391,7 @@ export default {
     /* 猜你喜欢 */
     .fenge {
       text-align: center;
-      margin-bottom: 10px;
+      margin: 60rpx 0 30rpx;
 	  font-size: 0rpx;
 	  display: flex;
 	  justify-content: center;

@@ -55,7 +55,7 @@ export default {
 			pageSize: 4,
 			hasMore: true,
 			rightHidden: false,
-			rightText: '管理',
+			rightText: '',
 			rightClicked: false,
 			prod_id: []
         }
@@ -158,6 +158,11 @@ export default {
 				let oldlist = this.collect_list;
 				if(res.errorCode == 0) {
 					this.collect_list = oldlist.concat(res.data);
+					if(this.collect_list.length<=0){
+						this.rightText='';
+					}else{
+						this.rightText='管理';
+					}
 					//this.collect_list = res.data;
 					this.hasMore = (res.totalCount / this.pageSize) > this.page ? true : false ;
 					this.page += 1;

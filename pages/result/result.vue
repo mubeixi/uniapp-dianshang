@@ -8,14 +8,14 @@
 		</div>
     </div>
     <div class="tabs">
-        <div :class="[active == 0 ? 'checked' : '','tab']" @click="getActive(0)" style="width:90rpx;">默认<div class="line"></div></div>
+        <div :class="[active == 0 ? 'checked' : '','tab']" @click="getActive(0)" >默认<div class="line"></div></div>
         <div :class="[active == 1 ? 'checked' : '','tab']" @click="getActive(1)">销量<div class="line"></div></div>
         <div :class="[active == 2 ? 'checked' : '','tab']" @click="getActive(2)">价格<div class="line"></div></div>
-        <div :class="[active == 3 ? 'checked' : '','tab']" @click.stop="change" style="width: 80rpx;text-align: right;">筛选<div class="line"></div></div>
-		<div class="tab" v-if="showShai"  style="width: 80rpx;">
+        <div :class="[active == 3 ? 'checked' : '','tab']" @click.stop="change" style="width: 140rpx;">筛选<div class="line"></div></div>
+		<div class="tab" v-if="showShai"   style="width: 40rpx;position: absolute;top: 0rpx;right: 0rpx;">
 			
 		</div>
-		<div class="tab" style="width: 80rpx;" v-else>
+		<div class="tab" style="width: 40rpx;position: absolute;top: 0rpx;right: 28rpx;" v-else>
 			<image src="/static/result/jx1.png" @click="changeCate" v-if="cate==2" class="imgm"></image>
 			<image src="/static/result/jx.png" @click="changeCate" v-else class="imgm"></image>
 		</div>
@@ -30,18 +30,18 @@
 			<view class="priceInterval">是否包邮</view>
 			<view class="isShipping">
 				<span :class="isShipping==1?'checked':''" @click="shipping(0)">是</span>
-				<span :class="isShipping==2?'':'checked'" @click="shipping(1)">否</span>
+				<span :class="isShipping==2?'checked':''" @click="shipping(1)">否</span>
 			</view>
 			<view class="submit">
 				<view class="reset" @click="reset">重置</view>
 				<view class="sure" @click="sureSearch">确定</view>
 			</view>
-			<view class="zhao" @click="closeShow">
+			<view class="zhao" @click="closeShow" catchtouchmove="false">
 				
 			</view>
 		</div>
     </div>
-	<div v-if="cate==1">
+	<div v-if="cate==1" >
 		<div class="cate1">
 			<div class="pro" @click="gotoDetail(item)" v-for="(item,i) of pro" :key="i">
 				<image :src="item.ImgPath"   class="pro-img"></image>
@@ -320,7 +320,7 @@ export default {
     .tabs {
         display: flex;
 		font-size: 30rpx;
-        justify-content: space-around;
+        // justify-content: space-around;
         margin-top: 25px;
         padding:0 20rpx;
 		color: #333;
@@ -336,6 +336,7 @@ export default {
     }
     .tab {
         //flex: 1;
+		//width: 180rpx;
 		width: 180rpx;
 		height: 60rpx;
         text-align: center;
@@ -344,7 +345,7 @@ export default {
     .tab image {
         height: 34rpx;
         width: 40rpx;
-        margin-left: 10rpx;
+        //margin-left: 10rpx;
         vertical-align: middle;
     }
     .tab .line {
@@ -461,6 +462,7 @@ export default {
 		background-color: #FFFFFF;
 		z-index: 999;
 		padding-top: 10rpx;
+		left: 0rpx;
 		view{
 			padding-left: 20rpx;
 			padding-right: 20rpx;

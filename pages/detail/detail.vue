@@ -10,7 +10,7 @@
 			<view class="page-section-spacing">
 				<swiper class="swiper" circular="true" indicator-dots="indicatorDots" autoplay="autoplay" interval="4000" duration="500" indicator-color="#fff" indicator-active-color="#ff5000">
 					<swiper-item v-for="(item,i) of product.Products_JSON.ImgPath" :key="i">
-						 <img :src="item" >
+						 <img :src="item"  @click="yulan(i)">
 					</swiper-item>
 				</swiper>
 			</view>
@@ -30,7 +30,7 @@
         </div>
     </div>
     <!-- 领券 -->
-    <div class="section2" @click="showTick" data-type="ticks">
+    <div class="section2" @click="showTick" data-type="ticks"  v-if="couponList.length>0">
         <div class="btn">领券</div>
         <div class="right" >店铺优惠券 <img src="/static/detail/right.png" alt=""></div>
     </div>
@@ -59,19 +59,30 @@
             <span>评价</span>
             <div class="right" @click="gotoComments">查看全部 <img src="/static/detail/right.png" alt=""></div>
         </div>
-        <div class="c_content" v-for="(item,i) of commit" :key="i">
-            <div class="c_content_title">
-                <img :src="item.ImgPath" alt="">
-                <span class="user_name">{{item.Note}}</span>
-                <span class="c_time">{{item.CreateTime}}</span>
-            </div>
-            <div class="c_content_msg">衣服好淑女，穿上一下子就变的很有名媛风，好喜欢啊，袖口的珍珠设计让整件衣服变得很高贵，秋天再搭配个外套也绝对好看</div>
-            <div class="c_content_img">
-                <img src="/static/detail/coment1.png" >
-                <img src="/static/detail/coment2.png" >
-                <img src="/static/detail/coment3.png" >
-            </div>
-        </div>
+        <block v-for="(item,index) of commit" :key="item">
+        	<div class="c_content" v-if="!item.ImgPath">
+        	    <div class="c_content_title">
+        	        <img :src="item.User_HeadImg" alt="">
+        	        <span class="user_name">{{item.User_NickName}}</span>
+        	        <span class="c_time">{{item.CreateTime}}</span>
+        	    </div>
+        	    <div class="c_content_msg">{{item.Note}}</div>
+        	    <div class="c_content_img"></div>
+        	</div>
+        	<div class="c_content" v-else>
+        	    <div class="c_content_title">
+        	        <img :src="item.User_HeadImg" alt="">
+        	        <span class="user_name">{{item.User_NickName}}</span>
+        	        <span class="c_time">{{item.CreateTime}}</span>
+        	    </div>
+        	    <div class="c_content_msg">{{item.Note}}</div>
+        	    <div class="c_content_img">
+        			<block v-for="(i,j) of item.ImgPath"> 
+        				 <img :src="i" >
+        			</block>   
+        	    </div>
+        	</div>
+        </block>
     </div>
     <!-- 商品详情 -->
     <div class="pro_detail">
@@ -84,7 +95,7 @@
 		
 	</div>
     <div style="height:50px;"></div>
-	<bottom @cartHandle="addCart" @directHandle="directBuy" @collect="collect"></bottom>
+	<bottom @cartHandle="addCart" @directHandle="directBuy" @collect="collect" :collected="isCollected"></bottom>
 	<popupLayer ref="popupLayer" :direction="'top'" >
 		<div class="shareinfo" v-if="type=='share'">
 			<div class="s_top">
@@ -142,7 +153,7 @@
 				</div>
 				<div class="inputNumber">
 						<div class="clicks" @click="delNum">-</div>
-						<input v-enter-number type="number" v-model="postData.qty"  >
+						<input v-enter-number type="number" v-model="postData.qty"  disabled>
 						<div class="clicks" @click="addNum">+</div>
 				</div>
 			</div>
@@ -156,7 +167,7 @@
 <script>
 import bottom from '../bottom/bottom'
 import popupLayer from '../../components/popup-layer/popup-layer.vue'
-import {getProductDetail,getCommit,updateCart,addCollection,getCoupon,getUserCoupon} from '../../common/fetch.js';
+import {getProductDetail,getCommit,updateCart,addCollection,getCoupon,getUserCoupon,checkProdCollected,cancelCollection} from '../../common/fetch.js';
 import {goBack,numberSort}  from '../../common/tool.js'
 
 import uParse from '@/components/gaoyia-parse/parse.vue'
@@ -192,6 +203,7 @@ export default {
 			page:1,//优惠券页
 			pageSize:10,//优惠券页
 			totalCount:0,//优惠券个数
+			isCollected: false, // 该产品是否已收藏
         }
     },
     components: {
@@ -201,11 +213,13 @@ export default {
     },
 	onLoad: function (option) {
 		  this.Products_ID = option.Products_ID;
+		  this.checkProdCollected();
+		  this.getDetail(this.Products_ID);
+		  this.getCommit(this.Products_ID);
+		  this.getCoupon();//获取可领取的优惠券
 	 },
 	onShow(){
-			this.getDetail(this.Products_ID);
-			this.getCommit(this.Products_ID);
-			this.getCoupon();//获取可领取的优惠券
+			
 	},
 	filters: {
 				/**
@@ -245,6 +259,33 @@ export default {
 				}	
 			},
     methods: {
+		//轮播图图片预览
+		yulan(index){
+			uni.previewImage({
+			            urls: this.product.Products_JSON.ImgPath,
+						indicator:'default',
+						current:index, 
+			            longPressActions: {
+			                success: function(data) {
+								
+			                },
+			                fail: function(err) {
+									
+			                }
+			            }
+			});
+		},
+		// 检查产品是否已收藏
+		checkProdCollected() {
+			checkProdCollected({prod_id: this.Products_ID}).then(res => {
+				console.log(res)
+				if(res.errorCode == 0) {
+					this.isCollected = res.data.is_favourite == 1 
+				}
+			}).catch(e => {
+				
+			})
+		},
 		//下一页优惠券
 		goNextPage(){
 			if(this.totalCount>this.couponList.length){
@@ -413,17 +454,33 @@ export default {
 		},
 		// 收藏
 		collect(){
-			addCollection({
-				Users_ID:'wkbq6nc2kc',
-				prod_id: this.Products_ID,
-				User_ID: 3
-			}).then(res=>{
-				if(res.errorCode == 0) {
-					uni.showToast({
-						title: '收藏成功'
-					})
-				}
-			})
+			// 检查是否已收藏
+			if(this.isCollected) {
+				cancelCollection({prod_id: this.Products_ID}).then(res=>{
+					console.log(res)
+					if(res.errorCode == 0) {
+						uni.showToast({
+							title: res.msg
+						});
+						this.isCollected = false;
+					}
+					
+				})
+			}else {
+				addCollection({prod_id: this.Products_ID,}).then(res=>{
+					if(res.errorCode == 0) {
+						uni.showToast({
+							title: '收藏成功'
+						});
+						this.isCollected = true;
+					}else {
+						uni.showToast({
+							title: res.msg,
+							icon: 'fail'
+						})
+					};
+				})				
+			}
 		},
 		goCart(){
 			uni.switchTab({
@@ -436,7 +493,9 @@ export default {
 		getCommit(item){
 			let data={
 				Users_ID:'wkbq6nc2kc',
-				Products_ID:item
+				Products_ID:item,
+				page:1,
+				pageSize:2
 			}
 			getCommit(data).then(res=>{
 				this.commit=res.data;
@@ -464,7 +523,6 @@ export default {
 		},
 		addCart(){
 			this.$refs.cartPopu.show();
-			console.log('cart')
 			this.postData.cart_key = 'CartList';
 		},
 		directBuy(){
@@ -546,6 +604,7 @@ export default {
     }
 	.ticks{
 		max-height: 1050rpx;
+		position: relative;
 		// overflow: scroll;
 	}
     .t_title {
@@ -652,7 +711,7 @@ export default {
         color: #fff;
         text-align: center;
         margin-right: -20rpx;
-        margin-top: -20rpx;
+        margin-top: -15rpx;
         font-size: 26rpx;
         padding: 10rpx;
         border-top-left-radius: 40rpx;
@@ -661,12 +720,14 @@ export default {
     .n_price {
         color: #ff0000;
         font-size: 36rpx;
+		margin-bottom: 10rpx;
     }
     .o_price {
 		margin-left: 10rpx;
-        color: #afafaf;
+        color: #ababab;
         font-size: 28rpx;
         text-decoration: line-through;
+		margin-bottom: 10rpx;
     }
     .name {
         color: #333;
@@ -674,6 +735,10 @@ export default {
         font-weight: 700;
         margin: 10rpx 0;
     }
+	.sold{
+		height: 50rpx;
+		line-height: 50rpx;
+	}
     .sold span {
         color: #999;
         font-size: 26rpx;
@@ -699,7 +764,9 @@ export default {
     .right {
         display: flex;
         align-items: center;
-        font-size: 24rpx;
+        font-size: 26rpx;
+		color: #666666;
+		font-weight: 500;
     }
     .right img{
         width: 20rpx;
@@ -711,7 +778,7 @@ export default {
     .section3 {
         display: flex;
         flex-wrap: wrap;
-        font-size: 24rpx;
+        font-size: 0rpx;
         padding: 30rpx 20rpx;
         border-bottom: 20rpx solid #f8f8f8;
     }
@@ -719,6 +786,10 @@ export default {
         display: flex;
         align-items: center;
         margin-right: 20rpx;
+		span{
+			font-size: 24rpx;
+			color: #333333;
+		}
     }
     .section3 img {
         width: 28rpx;
@@ -735,6 +806,13 @@ export default {
         display: flex;
         justify-content: space-between;
     }
+	.c_title{
+		.right{
+			color: #666666;
+			font-size: 26rpx;
+			font-weight:500;
+		}
+	}
     .c_title>span {
         font-size: 30rpx;
         color: #333;
