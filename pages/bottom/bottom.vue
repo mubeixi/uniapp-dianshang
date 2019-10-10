@@ -42,7 +42,7 @@
 			},
 			second: {
 				type: String,
-				default: '购买'
+				default: '立即购买'
 			}
 		},
 		methods: {

@@ -30,7 +30,7 @@
         </div>
     </div>
     <!-- 领券 -->
-    <div class="section2" @click="showTick" data-type="ticks">
+    <div class="section2" @click="showTick" data-type="ticks"  v-if="couponList.length>0">
         <div class="btn">领券</div>
         <div class="right" >店铺优惠券 <img src="/static/detail/right.png" alt=""></div>
     </div>
@@ -96,7 +96,7 @@
 	</div>
     <div style="height:50px;"></div>
 	<bottom @cartHandle="addCart" @directHandle="directBuy" @collect="collect"></bottom>
-	<popupLayer ref="popupLayer" :direction="'top'" >
+	<popupLayer ref="popupLayer" :direction="'top'">
 		<div class="shareinfo" v-if="type=='share'">
 			<div class="s_top">
 				<div>
@@ -212,7 +212,7 @@ export default {
     },
 	onLoad: function (option) {
 		  this.Products_ID = option.Products_ID;
-	 },
+	},
 	onShow(){
 			this.getDetail(this.Products_ID);
 			this.getCommit(this.Products_ID);
@@ -477,7 +477,6 @@ export default {
 		},
 		addCart(){
 			this.$refs.cartPopu.show();
-			console.log('cart')
 			this.postData.cart_key = 'CartList';
 		},
 		directBuy(){
@@ -666,7 +665,7 @@ export default {
         color: #fff;
         text-align: center;
         margin-right: -20rpx;
-        margin-top: -20rpx;
+        margin-top: -15rpx;
         font-size: 26rpx;
         padding: 10rpx;
         border-top-left-radius: 40rpx;
@@ -675,12 +674,14 @@ export default {
     .n_price {
         color: #ff0000;
         font-size: 36rpx;
+		margin-bottom: 10rpx;
     }
     .o_price {
 		margin-left: 10rpx;
-        color: #afafaf;
+        color: #ababab;
         font-size: 28rpx;
         text-decoration: line-through;
+		margin-bottom: 10rpx;
     }
     .name {
         color: #333;
@@ -688,6 +689,10 @@ export default {
         font-weight: 700;
         margin: 10rpx 0;
     }
+	.sold{
+		height: 50rpx;
+		line-height: 50rpx;
+	}
     .sold span {
         color: #999;
         font-size: 26rpx;
@@ -713,7 +718,9 @@ export default {
     .right {
         display: flex;
         align-items: center;
-        font-size: 24rpx;
+        font-size: 26rpx;
+		color: #666666;
+		font-weight: 500;
     }
     .right img{
         width: 20rpx;
@@ -725,7 +732,7 @@ export default {
     .section3 {
         display: flex;
         flex-wrap: wrap;
-        font-size: 24rpx;
+        font-size: 0rpx;
         padding: 30rpx 20rpx;
         border-bottom: 20rpx solid #f8f8f8;
     }
@@ -733,6 +740,10 @@ export default {
         display: flex;
         align-items: center;
         margin-right: 20rpx;
+		span{
+			font-size: 24rpx;
+			color: #333333;
+		}
     }
     .section3 img {
         width: 28rpx;
@@ -749,6 +760,13 @@ export default {
         display: flex;
         justify-content: space-between;
     }
+	.c_title{
+		.right{
+			color: #666666;
+			font-size: 26rpx;
+			font-weight:500;
+		}
+	}
     .c_title>span {
         font-size: 30rpx;
         color: #333;

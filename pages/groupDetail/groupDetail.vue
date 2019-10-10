@@ -1,33 +1,27 @@
 <template>
   <div style="position:relative;background-color:#f8f8f8">
     <div class="top">
-        <img src="/static/detail/back.png" @click="goBack" alt="">
-        <img src="/static/detail/cart.png" class="cart" alt="">
+        <img src="/static/detail/back.png" @click="goBack" >
+        <img src="/static/detail/cart.png" class="cart" >
     </div>
 	<!-- 轮播 -->
 	<view class="uni-padding-wrap">
-	            <view class="page-section swiper">
-	                <view class="page-section-spacing">
-	                    <swiper class="swiper" circular="true" indicator-dots="indicatorDots" autoplay="autoplay" interval="4000" duration="500" indicator-color="#fff" indicator-active-color="#ff5000">
-	                        <swiper-item>
-	                             <img src="/static/detail/banner3.png" alt="">
-	                        </swiper-item>
-	                        <swiper-item>
-	                             <img src="/static/detail/banner3.png" alt="">
-	                        </swiper-item>
-	                        <swiper-item>
-	                             <img src="/static/detail/banner3.png" alt="">
-	                        </swiper-item>
-	                    </swiper>
-	                </view>
-	            </view>
+		<view class="page-section swiper">
+			<view class="page-section-spacing">
+				<swiper class="swiper" circular="true" indicator-dots="indicatorDots" autoplay="autoplay" interval="4000" duration="500" indicator-color="#fff" indicator-active-color="#ff5000">
+					<swiper-item v-for="(item,i) of product.Products_JSON.ImgPath" :key="i">
+						 <img :src="item" >
+					</swiper-item>
+				</swiper>
+			</view>
+		</view>
 	</view>
     <!-- 产品信息描述 -->
     <div class="section1">
         <div class="leftss">
             <span class="pricef">¥</span>
-            <span class="prices">13.9</span>
-            <span class="pricet">¥ 15.5</span>
+            <span class="prices">{{product.Products_PriceX}}</span>
+            <span class="pricet">¥ {{product.Products_PriceY}}</span>
         </div>
         <div class="rightss">
             <div>
@@ -41,7 +35,7 @@
     <!-- 领券 -->
     <div class="section2" >
         <div class="titles">
-            开迪新款全景鞋柜 多层简易鞋架 防尘带布罩收纳鞋柜 5层/6层8层/10层  DIY可自由拆装鞋柜
+            {{product.Products_Name}}
         </div>
         <div class="titlet">
             加厚5层4格尺寸：长60CM宽30CM高75CM 可放12双鞋子；加厚5层4格尺寸：长60CM宽30CM高75CM 可放12双鞋子；加厚5层4格尺寸：长60CM宽30CM高75CM 可放12双鞋子
@@ -89,85 +83,117 @@
         </div>
     </div>
     <!-- 评价 -->
+    <!-- 评价 -->
     <div class="comment">
         <div class="c_title">
             <span>评价</span>
             <div class="right" @click="gotoComments">查看全部 <img src="/static/detail/right.png" alt=""></div>
         </div>
-        <div class="c_content">
-            <div class="c_content_title">
-                <img src="/static/detail/user1.png" alt="">
-                <span class="user_name">张小凡</span>
-                <span class="c_time">2019-09-10</span>
-            </div>
-            <div class="c_content_msg">衣服好淑女，穿上一下子就变的很有名媛风，好喜欢啊，袖口的珍珠设计让整件衣服变得很高贵，秋天再搭配个外套也绝对好看</div>
-            <div class="c_content_img"></div>
-        </div>
-        <div class="c_content">
-            <div class="c_content_title">
-                <img src="/static/detail/user2.png" alt="">
-                <span class="user_name">张小凡</span>
-                <span class="c_time">2019-09-10</span>
-            </div>
-            <div class="c_content_msg">衣服好淑女，穿上一下子就变的很有名媛风，好喜欢啊，袖口的珍珠设计让整件衣服变得很高贵，秋天再搭配个外套也绝对好看</div>
-            <div class="c_content_img">
-                <img src="/static/detail/coment1.png" alt="">
-                <img src="/static/detail/coment2.png" alt="">
-                <img src="/static/detail/coment3.png" alt="">
-            </div>
-        </div>
+        <block v-for="(item,index) of commit" :key="item">
+        	<div class="c_content" v-if="!item.ImgPath">
+        	    <div class="c_content_title">
+        	        <img :src="item.User_HeadImg" alt="">
+        	        <span class="user_name">{{item.User_NickName}}</span>
+        	        <span class="c_time">{{item.CreateTime}}</span>
+        	    </div>
+        	    <div class="c_content_msg">{{item.Note}}</div>
+        	    <div class="c_content_img"></div>
+        	</div>
+        	<div class="c_content" v-else>
+        	    <div class="c_content_title">
+        	        <img :src="item.User_HeadImg" alt="">
+        	        <span class="user_name">{{item.User_NickName}}</span>
+        	        <span class="c_time">{{item.CreateTime}}</span>
+        	    </div>
+        	    <div class="c_content_msg">{{item.Note}}</div>
+        	    <div class="c_content_img">
+        			<block v-for="(i,j) of item.ImgPath"> 
+        				 <img :src="i" >
+        			</block>   
+        	    </div>
+        	</div>
+        </block>
     </div>
     <!-- 商品详情 -->
     <div class="pro_detail">
         <div class="p_detail_title">商品详情</div>
+    	<!-- <div v-html="product.Products_Description" class="p_detail_des"></div> -->
+    	<rich-text :nodes="product.Products_Description|formatRichText" class="p_detail_des"></rich-text>
+    	<!-- <u-parse :content="product.Products_Description"  /> -->
+    </div>
+    <div style="clear: both;">
+    	
     </div>
     <div style="height:50px;"></div>
-    <!-- goodsaction -->
-    <!-- <goodsaction></goodsaction> -->
-    <!-- 优惠券活分享弹出层 -->
-  <!--  <van-overlay
-        :show="show"
-        @click="close"
-        z-index="100"
-    /> -->
-    <div class="ticks" v-if="ticksShow">
-        <div class="t_title">
-            领券
-            <img src="/static/detail/x.png" height="12" width="12" @click="close" alt="">
-        </div>
-        <div class="t_content">
-            <div class="t_left">
-                <div class="t_left_t"><i>￥</i><span class="money">10</span><span>店铺优惠券</span></div>
-                <div class="t_left_c">满199使用</div>
-                <div class="t_left_b">有效期2019.09.10-2019.09.30</div>
-            </div>
-            <div class="t_right">立即领取</div>
-        </div>
-        <div class="t_content">
-            <div class="t_left">
-                <div class="t_left_t"><i>￥</i><span class="money">10</span><span>店铺优惠券</span></div>
-                <div class="t_left_c">满199使用</div>
-                <div class="t_left_b">有效期2019.09.10-2019.09.30</div>
-            </div>
-            <div class="t_right aleady">已领取</div>
-        </div>
-    </div>
-    <div class="shareinfo" v-if="shareShow">
-        <div class="s_top">
-            <div>
-                <img src="/static/detail/share1.png" alt="">
-                <div>发送好友</div>
-            </div>
-            <div>
-                <img src="/static/detail/share2.png" alt="">
-                <div>分享海报</div>
-            </div>
-        </div>
-        <div class="s_bottom" @click="cancel">取消</div>
-    </div>
+    <popupLayer ref="popupLayer" :direction="'top'" >
+    	<div class="shareinfo" v-if="type=='share'">
+    		<div class="s_top">
+    			<div>
+    				<img src="/static/detail/share1.png" alt="">
+    				<div>发送好友</div>
+    			</div>
+    			<div>
+    				<img src="/static/detail/share2.png" alt="">
+    				<div>分享海报</div>
+    			</div>
+    		</div>
+    		<div class="s_bottom" @click="cancel">取消</div>
+    	</div>		
+    	<scroll-view class="ticks" v-if="type=='ticks'" scroll-y=true  @scrolltolower="goNextPage">
+    	    <div class="t_title">
+    	        领券
+    	        <image src="/static/detail/x.png"  @click="close" ></image>
+    	    </div>
+    	    <div class="t_content" v-for="(item,i) of couponList" :key="i">
+    	        <div class="t_left">
+    	            <div class="t_left_t"><span>￥</span><span class="money">{{item.Coupon_Cash}}</span><span>{{item.Coupon_Title}}</span></div>
+    	            <div class="t_left_c">{{item.Coupon_Description}}</div>
+    	            <div class="t_left_b">有效期{{item.Coupon_StartTime}}-{{item.Coupon_EndTime}}</div>
+    	        </div>
+    	        <div class="t_right" @click="getMyCoupon(item.Coupon_ID,i)">立即领取</div>
+    	    </div>
+    	</scroll-view>
+    </popupLayer>
+	<popupLayer ref="cartPopu" :direction="'top'">
+		<div class="cartSku">
+			<div class="cartTop">
+				<image :src="product.Products_JSON.ImgPath[0]" mode=""></image>
+				<div class="cartTitle">
+					<div class="cartTitles">{{product.Products_Name}}</div>
+					<div class="addInfo">
+						<div class="addPrice">{{product.Products_PriceX}}元</div>
+						<div class="proSale">库存{{postData.count}}</div>
+					</div>
+				</div>
+			</div>
+			<div class="cartCenter">
+				<div class="cartAttr" v-for="(item,i) of product.skujosn" :key="i">
+					<div class="sku">
+						{{i}}
+					</div>
+					<div class="skuValue">
+						<div :class="check_attr[i]==index?'skuCheck':''" @click="selectAttr(index,i)"  v-for="(mbx,index) of item" :key="index">{{mbx}}</div>
+					</div>
+				</div>
+			</div>	
+			<div class="numBer">
+				<div class="numBers">
+					数量
+				</div>
+				<div class="inputNumber">
+						<div class="clicks" @click="delNum">-</div>
+						<input v-enter-number type="number" v-model="postData.qty"  disabled>
+						<div class="clicks" @click="addNum">+</div>
+				</div>
+			</div>
+		</div>
+		<div class="cartSub" @click="skuSub" :class="submit_flag?'':'disabled'">
+			确定
+		</div>
+	</popupLayer>
 	<div class="fixed">
 		<div class="leftss">
-			<div class="first">
+			<div class="first" @click="goHome">
 				<div><img src="/static/tuan/home.png" ></div>
 				<div class="txt">首页</div>
 			</div>
@@ -181,17 +207,17 @@
 			</div>
 		</div>
 		<div class="rightss">
-			<div class="dan bTitle">
+			<div class="dan bTitle" @click="myPay">
 				<div class="danLeft">
-					<span class="bF">¥</span><span class="bS">15.1</span>
+					<span class="bF">¥</span><span class="bS">{{product.flashsale_pricex}}</span>
 				</div>
 				<div class="danRight">
 					单独购买
 				</div>
 			</div>
-			<div class="tuan bTitle">
+			<div class="tuan bTitle" @click="myPin">
 				<div>
-					<span class="bF">¥</span><span class="bS">15.1</span>
+					<span class="bF">¥</span><span class="bS">{{product.pintuan_pricex}}</span>
 				</div>
 				<div class="danRight">
 					一键开团
@@ -203,42 +229,313 @@
 </template>
 
 <script>
-// import goodsaction from '@/components/goodsaction'
+import popupLayer from '../../components/popup-layer/popup-layer.vue'
+import {getProductDetail,getCommit,updateCart,addCollection,getCoupon,getUserCoupon} from '../../common/fetch.js'
+import {goBack,numberSort}  from '../../common/tool.js'
 export default {
     data(){
         return {
-            show: false,
+type: '', // 优惠券内容， 分享内容
             shareShow: false,
-            ticksShow: false
+            ticksShow: false,
+			product:'',//商品结果
+			commit:'',//获取评论
+			Products_ID: 0 ,
+			count:1,//商品数量
+			skuF:1,//规格详情
+			checkAttr: {} , // 选择的属性
+			check_attrid_arr: [],
+			check_attr: {},
+			couponList:[],//优惠券列表
+			submit_flag: true, //提交按钮
+			page:1,//优惠券页
+			pageSize:10,//优惠券页
+			totalCount:0,//优惠券个数
+			postData: {
+			    act: 'add_cart',
+			    Users_ID: 'wkbq6nc2kc',      //商家ID
+			    User_ID: 3,       //会员ID
+			    prod_id: 0,    //产品ID  在 onLoad中赋值
+			    atrid_str: '',    //选择属性  1；2   数字从小到大
+			    atr_str: '',      //选择属性名称
+			    count: 0,         //选择属性的库存
+			    showimg: '',      //选择属性的图片(用产品图片代替)
+			    qty: 1,           //购买数量
+			    cart_key: '',     //购物车类型   CartList（加入购物车）、DirectBuy（立即购买）、PTCartList（不能加入购物车）
+			},
         }
     },
     components: {
-        // goodsaction,
+        popupLayer
     },
+	onLoad: function (option) {
+		  this.Products_ID = option.Products_ID;
+	},
+	onShow() {
+		this.getDetail(this.Products_ID);
+		this.getCommit(this.Products_ID);
+	},
+	filters: {
+				/**
+				 * 处理富文本里的图片宽度自适应
+				 * 1.去掉img标签里的style、width、height属性
+				 * 2.img标签添加style属性：max-width:100%;height:auto
+				 * 3.修改所有style里的width属性为max-width:100%
+				 * 4.去掉<br/>标签
+				 * @param html
+				 * @returns {void|string|*}
+				 */
+				formatRichText (html) { //控制小程序中图片大小
+					if(!html) return;
+				    let newContent= html.replace(/<img[^>]*>/gi,function(match,capture){
+				        match = match.replace(/style="[^"]+"/gi, '')//.replace(/style='[^']+'/gi, '');
+				        match = match.replace(/width="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
+				        match = match.replace(/height="[^"]+"/gi, '')//.replace(/height='[^']+'/gi, '');
+				        return match;
+				    });
+					newContent= newContent.replace(/<div[^>]*>/gi,function(match,capture){
+					    match = match.replace(/style="[^"]+"/gi, '')//.replace(/style='[^']+'/gi, '');
+					    match = match.replace(/width="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
+					    match = match.replace(/height="[^"]+"/gi, '')//.replace(/height='[^']+'/gi, '');
+					    return match;
+					});
+					newContent= newContent.replace(/<p[^>]*>/gi,'');
+					newContent= newContent.replace(/<[/]p[^>]*>/gi,'');
+				    newContent = newContent.replace(/style="[^"]+"/gi,function(match,capture){
+				        match = match.replace(/width:[^;]+;/gi, 'width:100%;').replace(/width:[^;]+;/gi, 'width:100%;');
+				        return match;
+				    });
+					
+				    newContent = newContent.replace(/<br[^>]*\/>/gi, '');
+				    newContent = newContent.replace(/\<img/gi, '<img style="width:100%;float:left;"');
+					//newContent = newContent.replace(/>[\s]*</gi, "><");
+				    return newContent;
+				}	
+			},
     methods: {
+		//拼团
+		myPin(){
+			this.$refs.cartPopu.show();
+		},
+		//单独购买
+		myPay(){
+			this.$refs.cartPopu.show();
+		},
+		//返回首页
+		goHome(){
+			uni.switchTab({
+				url:'../index/index'
+			})
+		},
+        // 选择属性
+        selectAttr(index,i){
+        	var value_index = index; //选择的属性值索引
+        	var attr_index = i;   //选择的属性索引
+        	// if (this.check_attrid_arr.indexOf(value_index) > -1) return false;
+        	//记录选择的属性
+        	var check_attr = Object.assign(this.check_attr, { [attr_index]: value_index }); //记录选择的属性  attr_index外的[]必须
+        	//属性处理
+        	var check_attrid = [];
+        	var check_attrname = [];
+        	var check_attrnames = [];
+        	for (var i in check_attr) {
+        	    var attr_id = check_attr[i];
+        	    check_attrid.push(attr_id);
+        	    check_attrname[attr_id] = i;
+        	}
+        	//数组排序  按从小到大排
+        	var check_attrid_arr = check_attrid;
+        	check_attrid = numberSort(check_attrid);
+        	//获取对应的属性名称
+        	for (var i = 0; i < check_attrid.length; i++) {
+        	    var attr_id = check_attrid[i];
+        	    var attr_name = check_attrname[attr_id];
+        	    check_attrnames.push(attr_name + ':' + this.product.skujosn[attr_name][attr_id]);
+        	}
+        	check_attrid = check_attrid.join(';');
+        	var attr_val = this.product.skuvaljosn[check_attrid];   //选择属性对应的属性值
+        	//数组转化为字符串
+        	check_attrnames = check_attrnames.join(';');
+        	this.postData.atr_str = check_attrnames;
+        	this.postData.atrid_str = check_attrid;
+        	//属性判断
+        	if (attr_val) {
+        		this.postData.count = attr_val.Property_count;   //选择属性的库存
+        		this.postData.showimg = typeof attr_val.Attr_Image != 'undefined' && attr_val.Attr_Image != '' ? attr_val.Attr_Image : this.product.Products_JSON['ImgPath'][0];// 选择属性的图片
+        		this.productDetail_price = attr_val.Txt_PriceSon; // 选择属性的价格
+        		this.submit_flag = (!this.check_attr || Object.getOwnPropertyNames(this.check_attr).length != Object.getOwnPropertyNames(this.product.skujosn).length) ? false : true;
+        	}
+        	//判断属性库存
+        	if (attr_val && attr_val.Property_count <= 0) {
+        	    // wx.showToast({
+        	    //     title: '您选择的 ' + check_attrnames + ' 库存不足，请选择其他属性',
+        	    //     icon: 'none'
+        	    // })
+        		this.submit_flag =  false;
+        	    return false;
+        	}
+        	this.check_attr = check_attr;
+        	this.check_attrid_arr = check_attrid_arr;
+        	this.submit_flag = (!this.check_attr || Object.getOwnPropertyNames(this.check_attr).length != Object.getOwnPropertyNames(this.product.skujosn).length) ? false : true;
+        	//购买数量处理  大于最高时赋值最高值
+        	if (this.postData.qty > this.postData.count) {
+        		this.postData.qty = this.postData.count;
+        	}
+        },
+        skuSub(){
+        	if(!this.submit_flag) {
+        		return ;
+        	}
+        	this.postData.prod_id = this.Products_ID;
+        	if(this.postData.atr_str==''||this.postData.atrid_str==''){
+        		if(this.product.skujosn){
+        			wx.showToast({
+        			    title: '您还没有选择规格',
+        			    icon: 'none'
+        			})
+        			return;
+        		}
+        	}
+        	console.log(this.postData)
+        	updateCart(this.postData).then(res=>{
+        		//console.log(res)
+        		if(res.errorCode == 0) {
+        			if(this.postData.cart_key == 'CartList') {
+        				uni.showLoading({
+        					title: '加入购物车成功',
+        					icon: 'success'
+        				})						
+        			}else {
+        				uni.navigateTo({
+        					url: '../check/check?cart_key=DirectBuy'
+        				})
+        			}
+        		}else {
+        			uni.showToast({
+        				title: res.msg
+        			})
+        		}
+        	})
+        	//确定加入购物车
+        	this.$refs.cartPopu.close();
+        },
+        addNum(){
+        	if (this.postData.qty < this.postData.count) {
+        		this.postData.qty += 1;
+        	}else {
+        	    uni.showToast({
+        			title: '购买数量不能大于库存量',
+        	        icon: 'none',
+        	    });
+        		this.postData.qty = this.postData.count; 
+        	}
+        },
+        delNum(){
+        	if (this.postData.qty > 1) {
+        		this.postData.qty -= 1;
+        	} else {
+        		uni.showToast({
+        	        title: '购买数量不能小于1',
+        	        icon: 'none',
+        	    });
+        		this.postData.qty = 1; 
+        	}
+        },
+        // 收藏
+        collect(){
+        	addCollection({
+        		Users_ID:'wkbq6nc2kc',
+        		prod_id: this.Products_ID,
+        		User_ID: 3
+        	}).then(res=>{
+        		if(res.errorCode == 0) {
+        			uni.showToast({
+        				title: '收藏成功'
+        			})
+        		}
+        	})
+        },
+        goCart(){
+        	uni.switchTab({
+        		url: '../cart/cart'
+        	})
+        },
         goBack(){
-            this.$router.go(-1);
+        	goBack();
+        },
+        getCommit(item){
+        	let data={
+        		Users_ID:'wkbq6nc2kc',
+        		Products_ID:item,
+        		page:1,
+        		pageSize:2
+        	}
+        	getCommit(data).then(res=>{
+        		this.commit=res.data;
+        	}).catch(e=>{
+        		console.log(e)
+        	})
+        },
+        getDetail(item){
+        	let data={
+        		prod_id:item,
+        		Users_ID:'wkbq6nc2kc'
+        	}
+        	getProductDetail(data).then(res=>{
+        		console.log(res)
+        		this.product = res.data;
+        		this.postData.count = res.data.Products_Count;
+        		if(res.data.skujosn) {
+        			this.product.skujosn = JSON.parse(res.data.skujosn);
+        			this.product.skuvaljosn = JSON.parse(res.data.skuvaljosn);
+        		}
+        		console.log(this.product.skujosn)
+        	}).catch(e=>{
+        		console.log(e)
+        	})
+        },
+        addCart(){
+        	this.$refs.cartPopu.show();
+        	console.log('cart')
+        	this.postData.cart_key = 'CartList';
+        },
+        directBuy(){
+        	this.$refs.cartPopu.show();
+        	this.postData.cart_key = 'DirectBuy'
+        	let arg = {
+        		Users_ID: 'wkbq6nc2kc',
+        		User_ID: 3,
+        		cart_key: this.cart_key,
+        		prod_id:  this.Products_ID,
+        		qty: 1,
+        		// atr_str: "颜色:黑色;尺寸:大号;",
+        		// atrid_str: "1;3",	
+        	}
+        	updateCart(arg).then(res=>{
+        		console.log(res)
+        		if(res.errorCode == 0) {
+        			uni.navigateTo({
+        				url: '../check/check?cart_key=DirectBuy'
+        			})
+        		}
+        	})
         },
         gotoComments(){
-            this.$router.push({name:'comments'})
+            uni.navigateTo({
+            	url: '../comments/comments?pro_id='+this.Products_ID
+            });
         },
-        showTick(){
-            this.show = true;
-            this.ticksShow = true;
+        showTick(e){
+        	this.type = e.currentTarget.dataset.type
+            this.$refs.popupLayer.show();
         },
         close(){
-            this.show = false;
-            this.ticksShow = false;
-            this.shareShow = false;
-        },
-        share(){
-            this.show = true;
-            this.shareShow = true;
+        	this.$refs.popupLayer.close();
         },
         cancel(){
-            this.show = false;
-            this.shareShow = false;
+            this.$refs.popupLayer.close();
         }
+
     }
 }
 </script>
@@ -517,14 +814,27 @@ export default {
     }
     /* 评价 end */
     /* 商品详情 start */
-    .pro_detail {
-        padding: 26rpx 26rpx;
-        background-color: #fff;
-    }
-    .p_detail_title {
-        color: #333;
-        font-size: 30rpx;
-    }
+    // .pro_detail {
+    //     padding: 26rpx 26rpx;
+    //     background-color: #fff;
+    // }
+    // .p_detail_title {
+    //     color: #333;
+    //     font-size: 30rpx;
+    // }
+	.pro_detail {
+		.p_detail_des {
+			width:100%;
+			img {
+				width:100% !important;
+			}
+		}
+	}
+	.p_detail_title {
+		padding: 30rpx 20rpx;
+	    color: #333;
+	    font-size: 30rpx;
+	}
     /* 商品详情 end */
     /* 遮罩层 */
     .modal {
@@ -704,5 +1014,125 @@ export default {
 				}
 			}
 		}
+	}
+	//规格
+	.cartSku{
+		padding: 0rpx 10rpx;
+		.cartTop{
+			position: relative;
+			display: flex;
+			padding-top: 20rpx;
+			image{
+				width: 220rpx;
+				height: 220rpx;
+			}
+			.cartTitle{
+				margin-left: 20rpx;
+				font-size: 32rpx;
+				width: 420rpx;
+				.cartTitles{
+					height: 80rpx;
+					overflow: hidden;
+					margin-top: 20rpx;
+				}
+				.addInfo{
+					width: 450rpx;
+					margin-top: 70rpx;
+					display: flex;
+					flex-flow: row;
+					justify-content: space-between;
+					align-items: flex-end;
+					.addPrice{
+						font-size: 42rpx;
+						color: #ff4200;
+					}
+					.proSale{
+						font-size: 24rpx;
+						color: #999;
+						justify-content: flex-end;
+					}
+				}
+			}
+		}
+		.cartCenter{
+			margin-top: 20rpx;
+			.cartAttr{
+				display: flex;
+				padding: 15rpx 0rpx;
+				.sku{
+					font-size: 28rpx;
+					height: 70rpx;
+					line-height: 70rpx;
+					width: 140rpx;
+				}
+				.skuValue{
+					display: flex;
+					div{
+						height: 70rpx;
+						line-height: 70rpx;
+						font-size: 28rpx;
+						border-radius: 10rpx;
+						color: #000;
+						background-color: #fff;
+						padding-left: 20rpx;
+						padding-right: 20rpx;
+						margin-right: 20rpx;
+						border: 1px solid #ccc;
+					}
+				}
+			}
+		}
+		.numBer{
+			margin-top: 20rpx;
+			display: flex;
+			padding: 15rpx 0rpx;
+			justify-content: space-between;
+			.numBers{
+				font-size: 28rpx;
+				height: 70rpx;
+				line-height: 70rpx;
+				width: 140rpx;
+			}
+			.inputNumber{
+				border: 1px solid #ccc;
+				border-radius: 6rpx;
+				height: 50rpx;
+				margin-right: 50rpx;
+				display: flex;
+				input{
+					color: black;
+					margin: 0 auto;
+					width: 80rpx;
+					height: 50rpx;
+					text-align: center;
+					font-size: 24rpx;
+					border-left: 2rpx solid #ccc;
+					border-right: 2rpx solid #ccc;
+				}
+				.clicks{
+					height: 50rpx;
+					line-height: 50rpx;
+					width: 60rpx;
+					text-align: center;
+				}
+			}
+		}
+	}
+	.cartSub{
+		width: 100%;
+		height: 90rpx;
+		background-color: #F43131;
+		font-size:20px;
+		line-height: 90rpx;
+		text-align: center;
+		color: #FFFFFF;
+		margin-top: 30rpx;
+		&.disabled {
+			background: #999;
+		}
+	}
+	.skuCheck{
+		color: #fff !important;
+		background-color: #ff4200 !important;
 	}
 </style>
