@@ -3,8 +3,8 @@
        <!-- <comments title="评论"></comments> -->
 	   <page-title title="评论" right=""></page-title>
         <div class="navs">
-            <div class="nav" :class="index == 0 ? 'active' : ''" @click="getAllComment">全部</div>
-            <div class="nav" :class="index == 1 ? 'active' : ''" @click="getHasImgComment">有图</div>
+            <div class="nav" :class="index == 0 ? 'active' : ''" @click="getComment(0)">全部</div>
+            <div class="nav" :class="index == 1 ? 'active' : ''" @click="getComment(1)">有图</div>
         </div>
         <block v-for="(item,index) of comment_list" :key="item">
 			<div class="c_content" v-if="!item.ImgPath">
@@ -25,7 +25,7 @@
 			    <div class="c_content_msg">{{item.Note}}</div>
 			    <div class="c_content_img">
 					<block v-for="(i,j) of item.ImgPath"> 
-						 <img :src="i" >
+						 <img :src="i"  @click="yulan(index,j)">
 					</block>   
 			    </div>
 			</div>
@@ -51,27 +51,43 @@ export default {
 				page: 1,
 				pageSize: 4,				
 			},
+			totalCount:0,//评论个数
 			comment_list: [], // 评论列表
         }
     },
-	onload(options){
+	onLoad(options){
 		this.commentArgs.Products_ID = options.pro_id;
+		this.getComment(this.index);
 	},
 	onShow() {
-		this.getAllComment();
+		
+	},
+	onReachBottom() {
+		if(this.comment_list.length<this.totalCount){
+			this.commentArgs.page++;
+			this.getComment(this.index);
+		}
 	},
 	methods: {
-		// 获取所有评论
-		getAllComment() {
-			this.index = 0;
-			this.commentArgs.has_img = 0;
-			this.comment_list=[];
-			this.getComments();
+		yulan(index,i){
+			uni.previewImage({
+			            urls: this.comment_list[index].ImgPath,
+						indicator:'default',
+						current:i, 
+			            longPressActions: {
+			                success: function(data) {
+								
+			                },
+			                fail: function(err) {
+									
+			                }
+			            }
+			});
 		},
-		// 有图的评论
-		getHasImgComment() {
-			this.index = 1;
-			this.commentArgs.has_img = 1;
+		getComment(i){
+			this.commentArgs.page=1;
+			this.index = i;
+			this.commentArgs.has_img = i;
 			this.comment_list=[];
 			this.getComments();
 		},
@@ -81,7 +97,7 @@ export default {
 					for(let i of res.data){
 						this.comment_list.push(i);
 					}
-					
+					this.totalCount=res.totalCount;
 				}
 			})
 		}
@@ -142,13 +158,14 @@ export default {
         font-size: 24rpx;
         color: #333;
         line-height: 36rpx;
-        padding: 18rpx 0;
+		padding-top: 18rpx;
+		padding-bottom: 29rpx;
     }
     .c_content_img img {
-        width: 140rpx;
-        height: 140rpx;
+        width: 142rpx;
+        height: 142rpx;
         margin-right: 20rpx;
-        margin-bottom: 20rpx;
+        margin-bottom: 30rpx;
     }
     /* 内容 end */
 </style>

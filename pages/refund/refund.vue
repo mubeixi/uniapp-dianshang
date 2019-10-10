@@ -148,7 +148,7 @@ export default {
     methods: {
 		//获取申请退货退款页面
 		getRefund(){
-			getRefund({Order_ID:this.Order_ID}).then(res=>{
+			getRefund({Order_ID:this.Order_ID,User_ID:3}).then(res=>{
 					for(var i in res.data) {
 						if(i=='refund_prod_list'){
 							for(var j in res.data[i]) {
