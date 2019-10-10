@@ -91,14 +91,14 @@
                     />
                 </div>
                 <!-- <div class="o_desc c8">{{orderInfo.Order_InvoiceInfo}}</div> -->
-				<input type="text" :disabled="!openInvoice" :placeholder="orderInfo.Order_InvoiceInfo" @blur="changeMoney"/>
+				<input type="text" :disabled="!openInvoice" :placeholder="orderInfo.Order_InvoiceInfo" @confirm="invoiceHandle"/>
             </div>
         </div>
         <div class="other">
             <div class="bd">
                 <div class="o_title  words">
                     <span>买家留言</span>
-                    <span class="msg c8" >{{orderInfo.Order_Remark}}</span>
+                    <input class="msg c8" :placeholder="orderInfo.Order_Remark" @confirm="remarkHandle">
                 </div>
             </div>
         </div>
@@ -168,6 +168,7 @@ export default {
 			password_input: false,
 			openMoney: true, //是否开启了余额功能
 			openInvoice: true, // 是否开启了发票
+			order_remark: '', // 留言
         }
     },
 	computed:{
@@ -214,7 +215,7 @@ export default {
 			if(checked) {
 				this.openMoney = true;
 				this.pay_money = parseFloat(this.orderInfo.Order_Yebc).toFixed(2);
-				this.orderInfo.Order_Fyepay = parseFloat(this.orderInfo.Order_TotalPrice).toFixed(2) - parseFloat(this.orderInfo.Order_Yebc).toFixed(2); 
+				this.orderInfo.Order_Fyepay = parseFloat(this.orderInfo.Order_TotalPrice - this.orderInfo.Order_Yebc).toFixed(2); 
 			}else {
 				this.openMoney = false;
 				this.orderInfo.Order_Fyepay = parseFloat(this.orderInfo.Order_TotalPrice).toFixed(2);
@@ -231,6 +232,23 @@ export default {
 				return;
 			}else {
 				this.pay_money = money;
+			}
+		},
+		// 留言
+		remarkHandle(e){
+			let remark = e.detail.value;
+			this.order_remark = remark;
+		},
+		// 发票信息修改
+		invoiceHandle(e) {
+			let invoice = e.detail.value;
+			if(invoice == '') {
+				uni.showToast({
+					title: '发票信息不能为空'
+				});
+				return;
+			}else {
+				this.invoice_info = invoice;
 			}
 		},
 		// 发票开关
@@ -268,7 +286,7 @@ export default {
 					this.$refs.popupLayer.show();
 				}else {
 					// 直接请求
-					orderPay({Order_ID: this.Order_ID, pay_type: this.pay_type ,pay_money: res.data.Order_Fyepay, need_invoice: this.need_invoice ,invoice_info: this.invoice_info, order_remark: this.order_remark})
+					orderPay({Order_ID: this.Order_ID, pay_type: 'balance' ,pay_money: 0, need_invoice: this.need_invoice ,invoice_info: this.invoice_info, order_remark: this.order_remark})
 				}
 			}
 		},

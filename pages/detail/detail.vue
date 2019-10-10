@@ -84,7 +84,7 @@
 		
 	</div>
     <div style="height:50px;"></div>
-	<bottom @cartHandle="addCart" @directHandle="directBuy" @collect="collect"></bottom>
+	<bottom @cartHandle="addCart" @directHandle="directBuy" @collect="collect" :collected="isCollected"></bottom>
 	<popupLayer ref="popupLayer" :direction="'top'" >
 		<div class="shareinfo" v-if="type=='share'">
 			<div class="s_top">
@@ -142,7 +142,7 @@
 				</div>
 				<div class="inputNumber">
 						<div class="clicks" @click="delNum">-</div>
-						<input v-enter-number type="number" v-model="postData.qty"  >
+						<input v-enter-number type="number" v-model="postData.qty"  disabled>
 						<div class="clicks" @click="addNum">+</div>
 				</div>
 			</div>
@@ -156,7 +156,7 @@
 <script>
 import bottom from '../bottom/bottom'
 import popupLayer from '../../components/popup-layer/popup-layer.vue'
-import {getProductDetail,getCommit,updateCart,addCollection,getCoupon,getUserCoupon} from '../../common/fetch.js';
+import {getProductDetail,getCommit,updateCart,addCollection,getCoupon,getUserCoupon,checkProdCollected,cancelCollection} from '../../common/fetch.js';
 import {goBack,numberSort}  from '../../common/tool.js'
 
 import uParse from '@/components/gaoyia-parse/parse.vue'
@@ -192,6 +192,7 @@ export default {
 			page:1,//优惠券页
 			pageSize:10,//优惠券页
 			totalCount:0,//优惠券个数
+			isCollected: false, // 该产品是否已收藏
         }
     },
     components: {
@@ -201,6 +202,7 @@ export default {
     },
 	onLoad: function (option) {
 		  this.Products_ID = option.Products_ID;
+		  this.checkProdCollected();
 	 },
 	onShow(){
 			this.getDetail(this.Products_ID);
@@ -246,6 +248,17 @@ export default {
 				}	
 			},
     methods: {
+		// 检查产品是否已收藏
+		checkProdCollected() {
+			checkProdCollected({prod_id: this.Products_ID}).then(res => {
+				console.log(res)
+				if(res.errorCode == 0) {
+					this.isCollected = res.data.is_favourite == 1 
+				}
+			}).catch(e => {
+				
+			})
+		},
 		//下一页优惠券
 		goNextPage(){
 			if(this.totalCount>this.couponList.length){
@@ -415,17 +428,33 @@ export default {
 		},
 		// 收藏
 		collect(){
-			addCollection({
-				Users_ID:'wkbq6nc2kc',
-				prod_id: this.Products_ID,
-				User_ID: 3
-			}).then(res=>{
-				if(res.errorCode == 0) {
-					uni.showToast({
-						title: '收藏成功'
-					})
-				}
-			})
+			// 检查是否已收藏
+			if(this.isCollected) {
+				cancelCollection({prod_id: this.Products_ID}).then(res=>{
+					console.log(res)
+					if(res.errorCode == 0) {
+						uni.showToast({
+							title: res.msg
+						});
+						this.isCollected = false;
+					}
+					
+				})
+			}else {
+				addCollection({prod_id: this.Products_ID,}).then(res=>{
+					if(res.errorCode == 0) {
+						uni.showToast({
+							title: '收藏成功'
+						});
+						this.isCollected = true;
+					}else {
+						uni.showToast({
+							title: res.msg,
+							icon: 'fail'
+						})
+					};
+				})				
+			}
 		},
 		goCart(){
 			uni.switchTab({

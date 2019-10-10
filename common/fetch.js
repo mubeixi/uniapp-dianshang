@@ -102,6 +102,8 @@ export const uploadImage = (data,options) => fetch('upload_image', data,options)
 export const getOrderDetail = (data,options) => fetch('get_order_detail', data, options);
 // 支付订单
 export const orderPay = (data,options) => fetch('order_pay', data, options);
+// 检查产品是否已收藏
+export const checkProdCollected = (data,options) => fetch('check_prod_favourite', data,options);
 
 
 

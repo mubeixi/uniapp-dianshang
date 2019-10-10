@@ -9,7 +9,7 @@
 			</div>
 			
 			<div class="first" @click="collect">
-				<div><img  src="/static/tuan/shou.png" ></div>
+				<div><img  :src="collected ? '/static/tuan/xx.png' : '/static/tuan/shou.png'" ></div>
 				<div class="txt">收藏</div>
 			</div>
 			<div class="first">
@@ -43,6 +43,10 @@
 			second: {
 				type: String,
 				default: '购买'
+			},
+			collected: {
+				type: Boolean,
+				default: false
 			}
 		},
 		methods: {
