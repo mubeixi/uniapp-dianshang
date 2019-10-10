@@ -1,7 +1,7 @@
 <template>
 	<view class="home-wrap">
 		<section :ref="item" v-for="(item, index) in templateList[tagIndex]" :key="index" class="section"  :data-name="item" >
-<!--			<view class="font12 graytext">{{item}}</view>-->
+			<view class="font12 graytext">{{item}}</view>
 			<base-component v-if="item.indexOf('base') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
 			<swiper-component v-if="item.indexOf('swiper') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
 			<nav-component v-if="item.indexOf('nav') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
@@ -13,6 +13,7 @@
 			<search-component v-if="item.indexOf('search') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
 			<notice-component v-if="item.indexOf('notice') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
 			<coupon-component v-if="item.indexOf('coupon') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
+			<goods-component v-if="item.indexOf('goods') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
 		</section>
 	</view>
 </template>
@@ -30,6 +31,7 @@
 	import SearchComponent from "../../components/diy/SearchComponent.vue";
 	import NoticeComponent from "../../components/diy/NoticeComponent.vue";
 	import CouponComponent from "../../components/diy/CouponComponent.vue";
+	import GoodsComponent from "../../components/diy/GoodsComponent.vue";
 
 	export default {
 		data() {
@@ -40,7 +42,9 @@
 			}
 		},
 		components:{
-			BaseComponent,SwiperComponent,NavComponent,VideoComponent,HrComponent,SpaceComponent,TitleComponent,TextComponent,SearchComponent,NoticeComponent,CouponComponent
+			BaseComponent,SwiperComponent,NavComponent,VideoComponent,HrComponent,SpaceComponent,
+			TitleComponent,TextComponent,SearchComponent,NoticeComponent,CouponComponent,
+			GoodsComponent
 		},
 		onLoad() {
 
@@ -107,6 +111,9 @@
 </script>
 
 <style>
+	.home-wrap{
+		background: #f2f2f2;
+	}
 	/*.content {*/
 	/*	display: flex;*/
 	/*	flex-direction: column;*/
