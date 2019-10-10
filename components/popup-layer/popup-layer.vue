@@ -138,5 +138,7 @@
 		transition: all .3s ease;
 		overflow: hidden;
 		// border:1px solid red;
+		border-top-left-radius: 20rpx;
+		border-top-right-radius: 20rpx;
 	}
 </style>
