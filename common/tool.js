@@ -190,3 +190,17 @@ export function deepCopyStrict(currentObj, newObject) {
   // mergeData(currentObj, newObject, 1);
   return currentObj;
 }
+
+
+
+export const arrayUnique = (arr)=>{
+  var res=[];
+  for(var i=0,len=arr.length;i<len;i++){
+    var obj = arr[i];
+    for(var j=0,jlen = res.length;j<jlen;j++){
+      if(res[j]===obj) break;
+    }
+    if(jlen===j)res.push(obj);
+  }
+  return res;
+}
