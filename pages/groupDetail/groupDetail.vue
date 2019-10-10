@@ -38,7 +38,7 @@
             {{product.Products_Name}}
         </div>
         <div class="titlet">
-            加厚5层4格尺寸：长60CM宽30CM高75CM 可放12双鞋子；加厚5层4格尺寸：长60CM宽30CM高75CM 可放12双鞋子；加厚5层4格尺寸：长60CM宽30CM高75CM 可放12双鞋子
+           {{product.Products_BriefDescription}}
         </div>
     </div>
     <!-- 包邮等信息 -->
