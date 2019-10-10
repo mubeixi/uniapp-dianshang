@@ -91,8 +91,8 @@ export default {
 		Users_ID:'wkbq6nc2kc',
 		User_ID:3,
 		prod_arg: {
-		page: 1,
-		pageSize: 4,
+			page: 1,
+			pageSize: 4,
 		},
 		hasMore: true, // 是否还有产品
 		postData: {
@@ -124,6 +124,9 @@ export default {
 	}
   },
   onShow() {
+	this.handleShow = true;
+	this.checkAllFlag = false;
+	this.totalPrice = 0;
   	this.getCart();
 	this.getProd();
 	this.loading = false;
