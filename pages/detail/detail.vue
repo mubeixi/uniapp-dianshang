@@ -10,7 +10,7 @@
 			<view class="page-section-spacing">
 				<swiper class="swiper" circular="true" indicator-dots="indicatorDots" autoplay="autoplay" interval="4000" duration="500" indicator-color="#fff" indicator-active-color="#ff5000">
 					<swiper-item v-for="(item,i) of product.Products_JSON.ImgPath" :key="i">
-						 <img :src="item" >
+						 <img :src="item"  @click="yulan(i)">
 					</swiper-item>
 				</swiper>
 			</view>
@@ -214,11 +214,12 @@ export default {
 	onLoad: function (option) {
 		  this.Products_ID = option.Products_ID;
 		  this.checkProdCollected();
+		  this.getDetail(this.Products_ID);
+		  this.getCommit(this.Products_ID);
+		  this.getCoupon();//获取可领取的优惠券
 	 },
 	onShow(){
-			this.getDetail(this.Products_ID);
-			this.getCommit(this.Products_ID);
-			this.getCoupon();//获取可领取的优惠券
+			
 	},
 	filters: {
 				/**
@@ -258,6 +259,22 @@ export default {
 				}	
 			},
     methods: {
+		//轮播图图片预览
+		yulan(index){
+			uni.previewImage({
+			            urls: this.product.Products_JSON.ImgPath,
+						indicator:'default',
+						current:index, 
+			            longPressActions: {
+			                success: function(data) {
+								
+			                },
+			                fail: function(err) {
+									
+			                }
+			            }
+			});
+		},
 		// 检查产品是否已收藏
 		checkProdCollected() {
 			checkProdCollected({prod_id: this.Products_ID}).then(res => {

@@ -36,12 +36,12 @@
 				<view class="reset" @click="reset">重置</view>
 				<view class="sure" @click="sureSearch">确定</view>
 			</view>
-			<view class="zhao" @click="closeShow">
+			<view class="zhao" @click="closeShow" catchtouchmove="false">
 				
 			</view>
 		</div>
     </div>
-	<div v-if="cate==1">
+	<div v-if="cate==1" >
 		<div class="cate1">
 			<div class="pro" @click="gotoDetail(item)" v-for="(item,i) of pro" :key="i">
 				<image :src="item.ImgPath"   class="pro-img"></image>
@@ -462,6 +462,7 @@ export default {
 		background-color: #FFFFFF;
 		z-index: 999;
 		padding-top: 10rpx;
+		left: 0rpx;
 		view{
 			padding-left: 20rpx;
 			padding-right: 20rpx;
