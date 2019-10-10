@@ -14,6 +14,7 @@
 			<notice-component v-if="item.indexOf('notice') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
 			<coupon-component v-if="item.indexOf('coupon') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
 			<goods-component v-if="item.indexOf('goods') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
+			<cube-component v-if="item.indexOf('cube') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
 		</section>
 	</view>
 </template>
@@ -32,6 +33,7 @@
 	import NoticeComponent from "../../components/diy/NoticeComponent.vue";
 	import CouponComponent from "../../components/diy/CouponComponent.vue";
 	import GoodsComponent from "../../components/diy/GoodsComponent.vue";
+	import CubeComponent from "../../components/diy/CubeComponent.vue";
 
 	export default {
 		data() {
@@ -44,7 +46,7 @@
 		components:{
 			BaseComponent,SwiperComponent,NavComponent,VideoComponent,HrComponent,SpaceComponent,
 			TitleComponent,TextComponent,SearchComponent,NoticeComponent,CouponComponent,
-			GoodsComponent
+			GoodsComponent,CubeComponent
 		},
 		onLoad() {
 
