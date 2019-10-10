@@ -38,7 +38,7 @@
         </div>
         <div class="item noborder">上传凭证</div>
         <div class="imgs">
-			<view class="shangchuans" v-for="(item,index) of imgs" :key="index"  >
+			<view class="shangchuans" v-for="(item,index) of imgs" :key="index"   @click="yulan(index)">
 				<image :src="item.path" ></image>
 				<image src="/static/delimg.png" class="del" @click="delImg(index)"></image>
 			</view>
@@ -146,9 +146,25 @@ export default {
 		
 	},
     methods: {
+		//图片预览
+		yulan(index){
+			// uni.previewImage({
+			//             urls: this.imgs,
+			// 			indicator:'default',
+			// 			current:index, 
+			//             longPressActions: {
+			//                 success: function(data) {
+								
+			//                 },
+			//                 fail: function(err) {
+									
+			//                 }
+			//             }
+			// });
+		},
 		//获取申请退货退款页面
 		getRefund(){
-			getRefund({Order_ID:this.Order_ID}).then(res=>{
+			getRefund({Order_ID:this.Order_ID,User_ID:3}).then(res=>{
 					for(var i in res.data) {
 						if(i=='refund_prod_list'){
 							for(var j in res.data[i]) {
@@ -167,7 +183,6 @@ export default {
 		},
 		//提交
 		submit(){
-
 			uploadImage({'image':this.imgs[0]}).then(res=>{
 				console.log(res)
 			}).catch(e=>{

@@ -10,7 +10,7 @@
 			<view class="page-section-spacing">
 				<swiper class="swiper" circular="true" indicator-dots="indicatorDots" autoplay="autoplay" interval="4000" duration="500" indicator-color="#fff" indicator-active-color="#ff5000">
 					<swiper-item v-for="(item,i) of product.Products_JSON.ImgPath" :key="i">
-						 <img :src="item" >
+						 <img :src="item"  @click="yulan(i)">
 					</swiper-item>
 				</swiper>
 			</view>
@@ -30,7 +30,7 @@
         </div>
     </div>
     <!-- 领券 -->
-    <div class="section2" @click="showTick" data-type="ticks">
+    <div class="section2" @click="showTick" data-type="ticks"  v-if="couponList.length>0">
         <div class="btn">领券</div>
         <div class="right" >店铺优惠券 <img src="/static/detail/right.png" alt=""></div>
     </div>
@@ -214,11 +214,12 @@ export default {
 	onLoad: function (option) {
 		  this.Products_ID = option.Products_ID;
 		  this.checkProdCollected();
+		  this.getDetail(this.Products_ID);
+		  this.getCommit(this.Products_ID);
+		  this.getCoupon();//获取可领取的优惠券
 	 },
 	onShow(){
-			this.getDetail(this.Products_ID);
-			this.getCommit(this.Products_ID);
-			this.getCoupon();//获取可领取的优惠券
+			
 	},
 	filters: {
 				/**
@@ -258,6 +259,22 @@ export default {
 				}	
 			},
     methods: {
+		//轮播图图片预览
+		yulan(index){
+			uni.previewImage({
+			            urls: this.product.Products_JSON.ImgPath,
+						indicator:'default',
+						current:index, 
+			            longPressActions: {
+			                success: function(data) {
+								
+			                },
+			                fail: function(err) {
+									
+			                }
+			            }
+			});
+		},
 		// 检查产品是否已收藏
 		checkProdCollected() {
 			checkProdCollected({prod_id: this.Products_ID}).then(res => {
@@ -506,7 +523,6 @@ export default {
 		},
 		addCart(){
 			this.$refs.cartPopu.show();
-			console.log('cart')
 			this.postData.cart_key = 'CartList';
 		},
 		directBuy(){
@@ -695,7 +711,7 @@ export default {
         color: #fff;
         text-align: center;
         margin-right: -20rpx;
-        margin-top: -20rpx;
+        margin-top: -15rpx;
         font-size: 26rpx;
         padding: 10rpx;
         border-top-left-radius: 40rpx;
@@ -704,12 +720,14 @@ export default {
     .n_price {
         color: #ff0000;
         font-size: 36rpx;
+		margin-bottom: 10rpx;
     }
     .o_price {
 		margin-left: 10rpx;
-        color: #afafaf;
+        color: #ababab;
         font-size: 28rpx;
         text-decoration: line-through;
+		margin-bottom: 10rpx;
     }
     .name {
         color: #333;
@@ -717,6 +735,10 @@ export default {
         font-weight: 700;
         margin: 10rpx 0;
     }
+	.sold{
+		height: 50rpx;
+		line-height: 50rpx;
+	}
     .sold span {
         color: #999;
         font-size: 26rpx;
@@ -742,7 +764,9 @@ export default {
     .right {
         display: flex;
         align-items: center;
-        font-size: 24rpx;
+        font-size: 26rpx;
+		color: #666666;
+		font-weight: 500;
     }
     .right img{
         width: 20rpx;
@@ -754,7 +778,7 @@ export default {
     .section3 {
         display: flex;
         flex-wrap: wrap;
-        font-size: 24rpx;
+        font-size: 0rpx;
         padding: 30rpx 20rpx;
         border-bottom: 20rpx solid #f8f8f8;
     }
@@ -762,6 +786,10 @@ export default {
         display: flex;
         align-items: center;
         margin-right: 20rpx;
+		span{
+			font-size: 24rpx;
+			color: #333333;
+		}
     }
     .section3 img {
         width: 28rpx;
@@ -778,6 +806,13 @@ export default {
         display: flex;
         justify-content: space-between;
     }
+	.c_title{
+		.right{
+			color: #666666;
+			font-size: 26rpx;
+			font-weight:500;
+		}
+	}
     .c_title>span {
         font-size: 30rpx;
         color: #333;

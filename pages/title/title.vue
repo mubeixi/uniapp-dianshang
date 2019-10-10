@@ -55,10 +55,11 @@ export default {
     }
     img {
         position: absolute;
-        top: 24rpx;
-        left: 25rpx;
+        top: 9rpx;
+        left: 13rpx;
         width: 23rpx;
         height: 37rpx;
+        padding: 20rpx;
     }
     .right {
         position: absolute;
