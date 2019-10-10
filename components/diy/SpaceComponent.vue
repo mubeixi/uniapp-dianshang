@@ -1,5 +1,5 @@
 <template>
-  <view @click.stop="setData({}, 0)"
+  <view 
        :style="{height:style.height+'px',backgroundColor:style.bgColor}" class="space">
 
   </view>

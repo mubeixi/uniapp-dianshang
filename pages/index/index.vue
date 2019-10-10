@@ -13,6 +13,8 @@
 			<search-component v-if="item.indexOf('search') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
 			<notice-component v-if="item.indexOf('notice') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
 			<coupon-component v-if="item.indexOf('coupon') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
+			<goods-component v-if="item.indexOf('goods') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
+			<cube-component v-if="item.indexOf('cube') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
 		</section>
 	</view>
 </template>
@@ -30,6 +32,8 @@
 	import SearchComponent from "../../components/diy/SearchComponent.vue";
 	import NoticeComponent from "../../components/diy/NoticeComponent.vue";
 	import CouponComponent from "../../components/diy/CouponComponent.vue";
+	import GoodsComponent from "../../components/diy/GoodsComponent.vue";
+	import CubeComponent from "../../components/diy/CubeComponent.vue";
 
 	export default {
 		data() {
@@ -40,7 +44,9 @@
 			}
 		},
 		components:{
-			BaseComponent,SwiperComponent,NavComponent,VideoComponent,HrComponent,SpaceComponent,TitleComponent,TextComponent,SearchComponent,NoticeComponent,CouponComponent
+			BaseComponent,SwiperComponent,NavComponent,VideoComponent,HrComponent,SpaceComponent,
+			TitleComponent,TextComponent,SearchComponent,NoticeComponent,CouponComponent,
+			GoodsComponent,CubeComponent
 		},
 		onLoad() {
 
@@ -107,6 +113,9 @@
 </script>
 
 <style>
+	.home-wrap{
+		background: #f2f2f2;
+	}
 	/*.content {*/
 	/*	display: flex;*/
 	/*	flex-direction: column;*/

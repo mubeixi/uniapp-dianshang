@@ -98,7 +98,7 @@
 
 <style scoped lang="less">
   .wrap{
-    padding:0 10px;
+    padding:0 0 0 10px;
   }
   .list {
     .item {

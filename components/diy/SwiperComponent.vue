@@ -1,7 +1,10 @@
 <template>
   <view class="swiper wrap fun-preview-swiper" :class="{single:swiper.value.list.length<2}">
 
-    <swiper style="height:375upx" class="swiper" :indicator-dots="indicatorDots" :autoplay="swiper.config.autoplay" :interval="swiper.config.interval|str2num" :duration="swiper.value.list.length>1">
+    <swiper style="height:375upx" class="swiper"
+            indicator-color="rgba(255, 255, 255, .3)"
+            indicator-active-color="rgba(255, 255, 255, .7)"
+            :indicator-dots="swiper.value.list.length>1" :autoplay="swiper.config.autoplay" :interval="swiper.config.interval|str2num" :duration="1000">
 
       <swiper-item @click="go(item)" v-for="(item,idx) in swiper.value.list" :key="idx">
         <image class="swiper-item" style="width: 750upx"  mode="scaleToFill" :src="domainFunc(item.img_src)"></image>
@@ -41,13 +44,7 @@
       }
     },
     watch: {
-      // 属性变化
-      activeAttr: {
-        deep: true,
-        handler(val) {
 
-        },
-      },
     },
     components: {},
     methods: {
@@ -57,17 +54,7 @@
       domainFunc(url) {
         return domain(url)
       },
-      setData(item, index) {
-        // console.log('hehe',this.search)
-        // @ts-ignore
-        this.$store.commit('activeAttr', this.swiper);// 这里点击之后，setAttr马上就有响应。
-
-        // @ts-ignore
-        this.$store.commit('tabIndex', this.index);
-
-        // 用vuex就不要一层层传递了，头都晕了
-        // this.$emit('setData', this.img.attrData)
-      },
+      
       // ...mapActions(),
     },
     created() {
