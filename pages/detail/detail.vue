@@ -59,19 +59,30 @@
             <span>评价</span>
             <div class="right" @click="gotoComments">查看全部 <img src="/static/detail/right.png" alt=""></div>
         </div>
-        <div class="c_content" v-for="(item,i) of commit" :key="i">
-            <div class="c_content_title">
-                <img :src="item.ImgPath" alt="">
-                <span class="user_name">{{item.Note}}</span>
-                <span class="c_time">{{item.CreateTime}}</span>
-            </div>
-            <div class="c_content_msg">衣服好淑女，穿上一下子就变的很有名媛风，好喜欢啊，袖口的珍珠设计让整件衣服变得很高贵，秋天再搭配个外套也绝对好看</div>
-            <div class="c_content_img">
-                <img src="/static/detail/coment1.png" alt="">
-                <img src="/static/detail/coment2.png" alt="">
-                <img src="/static/detail/coment3.png" alt="">
-            </div>
-        </div>
+        <block v-for="(item,index) of commit" :key="item">
+        	<div class="c_content" v-if="!item.ImgPath">
+        	    <div class="c_content_title">
+        	        <img :src="item.User_HeadImg" alt="">
+        	        <span class="user_name">{{item.User_NickName}}</span>
+        	        <span class="c_time">{{item.CreateTime}}</span>
+        	    </div>
+        	    <div class="c_content_msg">{{item.Note}}</div>
+        	    <div class="c_content_img"></div>
+        	</div>
+        	<div class="c_content" v-else>
+        	    <div class="c_content_title">
+        	        <img :src="item.User_HeadImg" alt="">
+        	        <span class="user_name">{{item.User_NickName}}</span>
+        	        <span class="c_time">{{item.CreateTime}}</span>
+        	    </div>
+        	    <div class="c_content_msg">{{item.Note}}</div>
+        	    <div class="c_content_img">
+        			<block v-for="(i,j) of item.ImgPath"> 
+        				 <img :src="i" >
+        			</block>   
+        	    </div>
+        	</div>
+        </block>
     </div>
     <!-- 商品详情 -->
     <div class="pro_detail">
@@ -243,7 +254,6 @@ export default {
 				    newContent = newContent.replace(/<br[^>]*\/>/gi, '');
 				    newContent = newContent.replace(/\<img/gi, '<img style="width:100%;float:left;"');
 					//newContent = newContent.replace(/>[\s]*</gi, "><");
-					console.log(newContent)
 				    return newContent;
 				}	
 			},
@@ -283,7 +293,6 @@ export default {
 					})
 					this.page=1;
 					this.couponList.splice(i, 1);
-				console.log(res)
 			}).catch(e=>{
 				console.log(e)
 			})
@@ -467,7 +476,9 @@ export default {
 		getCommit(item){
 			let data={
 				Users_ID:'wkbq6nc2kc',
-				Products_ID:item
+				Products_ID:item,
+				page:1,
+				pageSize:2
 			}
 			getCommit(data).then(res=>{
 				this.commit=res.data;
@@ -577,6 +588,7 @@ export default {
     }
 	.ticks{
 		max-height: 1050rpx;
+		position: relative;
 		// overflow: scroll;
 	}
     .t_title {

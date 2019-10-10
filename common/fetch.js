@@ -23,7 +23,7 @@ const fetch = function (act, param,options = false,url='/api/little_program/shop
   // param.Users_Account = get_Users_Account();
   // param.Users_ID = get_Users_ID();  Users_ID  写死
   // param.appid = get_Appid();
-	param.User_ID = 3;
+	//param.User_ID = 3;
 	param.Users_ID = 'wkbq6nc2kc';
 
   // 数据加密
@@ -100,6 +100,14 @@ export const createOrder = (data,options) => fetch('create_order', data,options)
 export const uploadImage = (data,options) => fetch('upload_image', data,options);
 // 获取订单详情
 export const getOrderDetail = (data,options) => fetch('get_order_detail', data, options);
+
+// 取消订单
+export const cancelOrder = (data,options) => fetch('cancel_order', data, options);
+// 获取订单状态角标数
+export const getOrderNum = (data,options) => fetch('get_order_num', data, options);
+// 获取申请退货退款
+export const getRefund = (data,options) => fetch('get_refund_info', data, options);
+
 // 支付订单
 export const orderPay = (data,options) => fetch('order_pay', data, options);
 // 检查产品是否已收藏
