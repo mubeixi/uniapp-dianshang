@@ -85,7 +85,10 @@
 				let _this = this;
 				let selectorQuery=uni.createSelectorQuery();
 				selectorQuery.selectAll('.nav-left-item').boundingClientRect(function(rects) {
-					_this.leftItemHeight  =  rects[0].height;
+					if(rects.length>0){
+						_this.leftItemHeight  =  rects[0].height;
+					}
+					//_this.leftItemHeight  =  rects[0].height;
 					_this.navLeftHeight = _this.leftItemHeight * _this.classifyData.length;
 					_this.diff =  _this.navLeftHeight - _this.height;
 				});

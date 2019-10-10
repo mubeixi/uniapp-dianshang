@@ -25,8 +25,8 @@
         </div>
         <div class="name">{{product.Products_Name}}</div>
         <div class="sold">
-            <span>库存{{product.Products_Count}}</span>
-            <span>月销{{product.Products_Sales}}</span>
+            <span v-if="product.Products_Count">库存{{product.Products_Count}}</span>
+            <span v-if="product.Products_Sales">月销{{product.Products_Sales}}</span>
         </div>
     </div>
     <!-- 领券 -->
@@ -78,7 +78,7 @@
         	    <div class="c_content_msg">{{item.Note}}</div>
         	    <div class="c_content_img">
         			<block v-for="(i,j) of item.ImgPath"> 
-        				 <img :src="i" >
+        				 <img :src="i"  @click="yulanImg(index,j)">
         			</block>   
         	    </div>
         	</div>
@@ -115,10 +115,13 @@
 		        领券
 		        <image src="/static/detail/x.png"  @click="close" ></image>
 		    </div>
+			<div style="height: 90rpx;">
+				
+			</div>
 		    <div class="t_content" v-for="(item,i) of couponList" :key="i">
 		        <div class="t_left">
-		            <div class="t_left_t"><span>￥</span><span class="money">{{item.Coupon_Cash}}</span><span>{{item.Coupon_Title}}</span></div>
-		            <div class="t_left_c">{{item.Coupon_Description}}</div>
+		            <div class="t_left_t"><span>￥</span><span class="money">{{item.Coupon_Cash}}</span><span>店铺优惠券</span></div>
+		            <div class="t_left_c">{{item.Coupon_Title}}</div>
 		            <div class="t_left_b">有效期{{item.Coupon_StartTime}}-{{item.Coupon_EndTime}}</div>
 		        </div>
 		        <div class="t_right" @click="getMyCoupon(item.Coupon_ID,i)">立即领取</div>
@@ -259,6 +262,22 @@ export default {
 				}	
 			},
     methods: {
+		//评价预览
+		yulanImg(i,j){
+			uni.previewImage({
+			            urls: this.commit[i].ImgPath,
+						indicator:'default',
+						current:j, 
+			            longPressActions: {
+			                success: function(data) {
+								
+			                },
+			                fail: function(err) {
+									
+			                }
+			            }
+			});
+		},
 		//轮播图图片预览
 		yulan(index){
 			uni.previewImage({
@@ -605,19 +624,27 @@ export default {
 	.ticks{
 		max-height: 1050rpx;
 		position: relative;
+		padding-top: 0rpx !important;
 		// overflow: scroll;
 	}
     .t_title {
 		font-size: 30rpx;
 		color: #333;
         text-align:center;
-        margin-bottom: 40rpx;
+        //margin-bottom: 40rpx;
+		position: fixed;
+		width: 100%;
+		z-index: 999;
+		height: 90rpx;
+		line-height: 90rpx;
+		background-color: #FFFFFF;
     }
     .t_title image {
 		height: 24rpx;
 		width: 24rpx;
         float: right;
         margin-right: 20rpx;
+		margin-top: 33rpx;
     }
     .t_content {
         position: relative;
@@ -636,17 +663,23 @@ export default {
         float: left;
     }
     .t_left .t_left_t .money {
-        font-size: 36rpx;
+        font-size: 42rpx;
         margin-right: 10rpx;
     }
     .t_left .t_left_t {
-        font-size: 26rpx;
+        font-size: 24rpx;
         margin-bottom: 10rpx;
     }
+	.t_left .t_left_b{
+		margin-top: 6rpx;
+	}
     .t_left .t_left_t i {
         font-size: 22rpx;
         font-style: normal;
     }
+	.t_left .t_left_c,.t_left .t_left_b{
+		font-size: 22rpx;
+	}
     .t_right {
         float: right;
         height: 116rpx;
@@ -699,7 +732,8 @@ export default {
         border-bottom: 20rpx solid #f8f8f8;
     }
     .price {
-        margin-top: 44rpx;
+        margin-top: 38rpx;
+		margin-bottom: 29rpx;
     }
     .price .mm {
         font-size: 20rpx;
@@ -711,23 +745,24 @@ export default {
         color: #fff;
         text-align: center;
         margin-right: -20rpx;
-        margin-top: -15rpx;
+        margin-top: -2rpx;
         font-size: 26rpx;
         padding: 10rpx;
         border-top-left-radius: 40rpx;
         border-bottom-left-radius: 40rpx;
+		height: 56rpx;
+		width: 157rpx;
+		box-sizing: border-box;
     }
     .n_price {
         color: #ff0000;
         font-size: 36rpx;
-		margin-bottom: 10rpx;
     }
     .o_price {
 		margin-left: 10rpx;
         color: #ababab;
         font-size: 28rpx;
         text-decoration: line-through;
-		margin-bottom: 10rpx;
     }
     .name {
         color: #333;
