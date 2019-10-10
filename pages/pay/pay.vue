@@ -91,14 +91,14 @@
                     />
                 </div>
                 <!-- <div class="o_desc c8">{{orderInfo.Order_InvoiceInfo}}</div> -->
-				<input type="text" :disabled="!openInvoice" :placeholder="orderInfo.Order_InvoiceInfo" @blur="changeMoney"/>
+				<input type="text" :disabled="!openInvoice" :placeholder="orderInfo.Order_InvoiceInfo" @confirm="invoiceHandle"/>
             </div>
         </div>
         <div class="other">
             <div class="bd">
                 <div class="o_title  words">
                     <span>买家留言</span>
-                    <span class="msg c8" >{{orderInfo.Order_Remark}}</span>
+                    <input class="msg c8" :placeholder="orderInfo.Order_Remark" @confirm="remarkHandle">
                 </div>
             </div>
         </div>
@@ -116,11 +116,11 @@
         </div>
 		<popup-layer ref="popupLayer" :direction="'top'">
 			<div class="iMbx">
-				<div class="c_method">
+				<div class="c_method" @click="wechatPay">
 					微信支付 <text>￥{{orderInfo.Order_Fyepay}}</text>
 				</div>
-				<div class="c_method">
-					银联支付 <text>￥{{orderInfo.Order_Fyepay}}</text>
+				<div class="c_method" @click="aliPay">
+					支付宝支付 <text>￥{{orderInfo.Order_Fyepay}}</text>
 				</div>
 			</div>
 		</popup-layer>
@@ -166,16 +166,17 @@ export default {
 			user_pay_password: '',  //余额补差，支付密码
 			cate: 'method',
 			password_input: false,
-			openMoney: false, //是否开启了余额功能
-			openInvoice: false, // 是否开启了发票
+			openMoney: true, //是否开启了余额功能
+			openInvoice: true, // 是否开启了发票
+			order_remark: '', // 留言
         }
     },
 	computed:{
 		invoiceChecked(){
-			return this.orderInfo.Order_NeedInvoice > 0 || this.openInvoice;
+			return this.orderInfo.Order_NeedInvoice > 0 && this.openInvoice;
 		},
 		moneyChecked(){
-			return this.orderInfo.Order_Yebc > 0 || this.openMoney;
+			return this.orderInfo.Order_Yebc > 0 && this.openMoney;
 		}
 	},
     methods: {
@@ -205,17 +206,19 @@ export default {
 		// 用户重新更改了余额
 		moneyInputHandle(e){
 			var money = e.detail.value;
-			this.pay_money = money;
-			this.orderInfo.Order_Fyepay = parseInt(this.orderInfo.Order_TotalPrice) - parseInt(money); 
+			this.pay_money = parseFloat(money).toFixed(2);
+			this.orderInfo.Order_Fyepay = parseFloat(this.orderInfo.Order_TotalPrice).toFixed(2) - parseFloat(money).toFixed(2); 
 		},
 		// 余额支付开关
 		moneyChange(e) {
 			var checked = e.detail.value;
 			if(checked) {
 				this.openMoney = true;
-				this.pay_money = this.orderInfo.Order_Yebc
+				this.pay_money = parseFloat(this.orderInfo.Order_Yebc).toFixed(2);
+				this.orderInfo.Order_Fyepay = parseFloat(this.orderInfo.Order_TotalPrice - this.orderInfo.Order_Yebc).toFixed(2); 
 			}else {
 				this.openMoney = false;
+				this.orderInfo.Order_Fyepay = parseFloat(this.orderInfo.Order_TotalPrice).toFixed(2);
 				this.pay_money = 0;
 			}
 		},
@@ -229,6 +232,23 @@ export default {
 				return;
 			}else {
 				this.pay_money = money;
+			}
+		},
+		// 留言
+		remarkHandle(e){
+			let remark = e.detail.value;
+			this.order_remark = remark;
+		},
+		// 发票信息修改
+		invoiceHandle(e) {
+			let invoice = e.detail.value;
+			if(invoice == '') {
+				uni.showToast({
+					title: '发票信息不能为空'
+				});
+				return;
+			}else {
+				this.invoice_info = invoice;
 			}
 		},
 		// 发票开关
@@ -250,12 +270,43 @@ export default {
         },
 		// 去支付
 		submit(){
+			// 使用余额支付了
 			if(this.pay_money > 0) {
-				this.password_input = true;
-				
-				return ;
+				if(this.orderInfo.Order_Fyepay > 0) {
+					// 待支付金额
+					this.$refs.popupLayer.show();
+				}else {
+					// 全部用余额支付了  直接请求
+					this.password_input = true;
+				}
+			}else {
+				// 不使用余额支付
+				if(this.orderInfo.Order_Fyepay > 0) {
+					// 待支付金额
+					this.$refs.popupLayer.show();
+				}else {
+					// 直接请求
+					orderPay({Order_ID: this.Order_ID, pay_type: 'balance' ,pay_money: 0, need_invoice: this.need_invoice ,invoice_info: this.invoice_info, order_remark: this.order_remark})
+				}
 			}
-			this.$refs.popupLayer.show();
+		},
+		// 用户选择 微信支付
+		wechatPay(){
+			this.pay_type = 'wechat';
+			this.$refs.popupLayer.close();
+			if(this.orderInfo.Order_Fyepay > 0) {
+				if(this.pay_money > 0) {
+					this.password_input = true;
+				}
+			}
+		},
+		// 用户选择支付宝支付
+		aliPay(){
+			this.pay_type = 'ali';
+			this.$refs.popupLayer.close();
+			if(this.orderInfo.Order_Fyepay > 0) {
+				this.password_input = true;
+			}
 		},
 		// 取消输入支付密码
 		cancelInput(){
@@ -267,8 +318,11 @@ export default {
 		},
 		// 确定输入支付密码
 		confirmInput(e){
-			orderPay({Order_ID:this.Order_ID , pay_type: this.pay_type ,pay_money: this.pay_money,user_pay_password: this.user_pay_password}).then(res=>{
+			orderPay({Order_ID:this.Order_ID , pay_type: 'balance' ,pay_money: this.pay_money,user_pay_password: this.user_pay_password}).then(res=>{
 				console.log(res)
+				if(res.errorCode == 0) {
+					orderPay({Order_ID: this.Order_ID, pay_type: this.pay_type ,pay_money: res.data.Order_Fyepay, need_invoice: this.need_invoice ,invoice_info: this.invoice_info, order_remark: this.order_remark})
+				}
 			}).catch(e=>{
 				
 			})
