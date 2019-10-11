@@ -380,8 +380,8 @@ export default {
         display: flex;
         align-items: center;
         padding: 44rpx;
-        border-top: 30rpx solid #FFF3F3F3;
-        border-bottom: 20rpx solid #FFF3F3F3;
+        border-top: 30rpx solid #F3F3F3;
+        border-bottom: 20rpx solid #F3F3F3;
 		.add_msg {
 			flex: 1;
 		}
