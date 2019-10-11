@@ -71,7 +71,8 @@
 <script>
 // import tabs from "@/components/tabs";
 // import pagetitle from "@/components/title";
-import {getCart,getProd,updateCart,delCart} from '../../common/fetch.js'
+import {getCart,getProd,updateCart,delCart} from '../../common/fetch.js';
+import {ls} from '../../common/tool.js';
 export default {
   name: "App",
   // components: {
@@ -107,7 +108,8 @@ export default {
 		checkAllFlag: false,
 		totalPrice: 0,
 		cart_buy: '',
-		loading: false
+		loading: false,
+		isfirst: true,
     }
   },
   computed: {
@@ -124,14 +126,21 @@ export default {
 	}
   },
   onShow() {
-	this.handleShow = true;
-	this.checkAllFlag = false;
-	this.totalPrice = 0;
+	this.loading = false;
   	this.getCart();
 	this.getProd();
-	this.loading = false;
+	// this.reset();
+  },
+  onLoad(){
+	ls.clear();
   },
   methods: {
+	// 重置信息
+	// reset(){
+	// 	this.handleShow = true;
+	// 	this.checkAllFlag = false;
+	// 	this.totalPrice = 0;
+	// },
 	// 删除或结算
 	submit(){
 		let obj = {};
@@ -144,6 +153,7 @@ export default {
 					} else {
 						obj[i] = [j];
 					}	
+					ls.remove(i + ';' + j);
 				}
 			}
 		}
@@ -170,11 +180,15 @@ export default {
 					this.getCart();
 				}
 			}).catch(e=>{})
-		}
+		};
+		this.reset();
 	},
 	 // 修改的单个的状态
 	change(prod_id,attr_id){
-		this.CartList[prod_id][attr_id].checked = !this.CartList[prod_id][attr_id].checked;
+		// this.CartList[prod_id][attr_id].checked = !this.CartList[prod_id][attr_id].checked;
+		ls.set((prod_id + ';' + attr_id), !ls.get((prod_id + ';' + attr_id)));
+		let result = ls.get((prod_id+";"+attr_id));
+		this.CartList[prod_id][attr_id].checked = result;
 		this.checkAllFlag = true;
 		for(var i in this.CartList) {
 			for(var j in this.CartList[i]) {
@@ -189,20 +203,26 @@ export default {
 	cal_total(){
 		var total = 0;
 		this.totalPrice = 0;
+		
 		for(var i in this.CartList) {
 			for(var j in this.CartList[i]) {
+				let result = ls.get((i+";"+j));
+				this.CartList[i][j].checked = result;
 				if(this.CartList[i][j].checked) {
 					total += this.CartList[i][j].ProductsPriceX *  this.CartList[i][j].Qty;
 				}
 			}
 		}
-		this.totalPrice = total;
+		this.totalPrice = Number(total).toFixed(2) ;
 	},
 	// 全选
 	checkAll(){
+		// let result = ls.get((prod_id+";"+attr_id));
+		// this.CartList[prod_id][attr_id].checked = result;
 		if(!this.checkAllFlag) {
 			for(var i in this.CartList) {
 				for(var j in this.CartList[i]) {
+					ls.set((i + ';' + j), true);
 					this.CartList[i][j].checked = true;
 					this.checkAllFlag = true;
 				}
@@ -210,6 +230,7 @@ export default {
 		}else {
 			for(var i in this.CartList) {
 				for(var j in this.CartList[i]) {
+					ls.set((i + ';' + j), false);
 					this.CartList[i][j].checked = false;
 					this.checkAllFlag = false;
 				}
@@ -233,27 +254,47 @@ export default {
 		updateCart(this.postData).then(res=>{
 			if(res.errorCode == 0) {
 				this.getCart();
+				this.cal_total();
+			}else {
+				uni.showToast({
+					title: res.msg,
+					icon: 'none'
+				})
 			}
-		}).catch(e=>console.log(e))
+		}).catch(e=>console.log(e));
 	},
     handle(){
       this.handleShow = !this.handleShow;    
 	
     },
+	// 初始化选中对象
+	initCheck(){
+		this.isfirst = false;
+		if(this.loading) {
+			for(var i in this.CartList) {
+				for(var j in this.CartList[i]) {
+					// this.CartList[i][j].checked = false;
+					if(this.isfirst) {
+						ls.set((i+';'+j) , false);
+					}
+					this.CartList[i][j].checked = ls.get((i+";"+j))
+				}
+			};
+			this.cal_total();
+		}
+	},
 	getCart() {
-		getCart({Users_ID:this.Users_ID,User_ID: this.User_ID,cart_key:'CartList'}).then(res=>{
+		getCart({cart_key:'CartList'}).then(res=>{
 			if(res.errorCode == 0){
 				this.total_count= res.data.total_count;
 				this.total_price= res.data.total_price;			
 				this.shop_config = res.data.shop_config;
-				for(var i in res.data.CartList) {
-					for(var j in res.data.CartList[i]) {
-						res.data.CartList[i][j].checked = false;
-					}
-				}
 				this.CartList = res.data.CartList;
 			}
 			this.loading = true;
+			// 把状态存起来
+			this.initCheck();
+			
 		}).catch(e=>console.log(e))
 	},
 	getProd(){
