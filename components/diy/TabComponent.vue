@@ -8,7 +8,7 @@
     <div class="tabs-panel" >
       <div class="box" :class="[className]" :style="{padding:tab.style.wrapmargin+'px'}">
         <ul class="list" >
-          <li v-for="(item,idx) in goodsList" class="item"
+          <li v-for="(item,idx) in goodsList" @click="goDetail(item)" class="item"
               :class="[idx%2==0?'even':'odd',tab.config.radius=='round'?'round':'',tabconfig.showmode]"
               :style="[itemMarginObj(idx)]"
           >
@@ -170,6 +170,15 @@
     },
     components: {},
     methods: {
+      goDetail(goods){
+        console.log(goods)
+        // Products_ID=243
+        let linkObj = {link:'/pages/detail/detail?Products_ID='+goods.Products_ID,linkType:'default'};
+
+        this.$fun.linkTo(linkObj)
+
+
+      },
       clickTab(item, idx) {
 
         if (this.tabActive === idx) {
