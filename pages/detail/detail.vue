@@ -266,7 +266,7 @@ export default {
 		yulanImg(i,j){
 			uni.previewImage({
 			            urls: this.commit[i].ImgPath,
-						indicator:'default',
+						indicator:'number',
 						current:j, 
 			            longPressActions: {
 			                success: function(data) {

@@ -80,6 +80,14 @@
             "path" : "pages/person/person",
             "style" : {}
         }
+        ,{
+            "path" : "pages/fenxiao/fenxiao",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/erweima/erweima",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
@@ -103,7 +111,7 @@
 	        "selectedIconPath": "static/fenleiCheck.png",
 	        "text": "分类"
 	    }, {
-	        "pagePath": "pages/groupSuccess/groupSuccess",
+	        "pagePath": "pages/fenxiao/fenxiao",
 	        "iconPath": "static/fenxiao.png",
 	        "selectedIconPath": "static/fenxiaoCheck.png",
 	        "text": "分销"
