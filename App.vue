@@ -18,7 +18,9 @@
 ul,li{
     list-style:none
 }
-
+div,view{
+	box-sizing: border-box;
+}
 .font12{font-size:12px}
 .font14{font-size : 14px}
 .font16{font-size : 16px}

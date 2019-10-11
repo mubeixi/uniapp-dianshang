@@ -88,6 +88,42 @@
             "path" : "pages/erweima/erweima",
             "style" : {}
         }
+        ,{
+            "path" : "pages/myTeam/myTeam",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/finance/finance",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/customizeShare/customizeShare",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/Promotion/Promotion",
+            "style" : {}
+        }
+        ,{
+            "path" : "components/circleTitle/circleTitle",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/region/region",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/record/record",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/leaderboard/leaderboard",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/addInformation/addInformation",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
