@@ -1,7 +1,7 @@
 <template>
 	<view class="home-wrap">
 		<section :ref="item" v-for="(item, index) in templateList[tagIndex]" :key="index" class="section"  :data-name="item" >
-			<view class="font12 graytext">{{item}}</view>
+<!--			<view class="font12 graytext">{{item}}</view>-->
 			<base-component v-if="item.indexOf('base') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
 			<swiper-component v-if="item.indexOf('swiper') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
 			<nav-component v-if="item.indexOf('nav') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
@@ -15,6 +15,7 @@
 			<coupon-component v-if="item.indexOf('coupon') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
 			<goods-component v-if="item.indexOf('goods') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
 			<cube-component v-if="item.indexOf('cube') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
+			<tab-component v-if="item.indexOf('tab') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
 		</section>
 	</view>
 </template>
@@ -34,6 +35,7 @@
 	import CouponComponent from "../../components/diy/CouponComponent.vue";
 	import GoodsComponent from "../../components/diy/GoodsComponent.vue";
 	import CubeComponent from "../../components/diy/CubeComponent.vue";
+	import TabComponent from "../../components/diy/TabComponent.vue";
 
 	export default {
 		data() {
@@ -46,7 +48,7 @@
 		components:{
 			BaseComponent,SwiperComponent,NavComponent,VideoComponent,HrComponent,SpaceComponent,
 			TitleComponent,TextComponent,SearchComponent,NoticeComponent,CouponComponent,
-			GoodsComponent,CubeComponent
+			GoodsComponent,CubeComponent,TabComponent
 		},
 		onLoad() {
 

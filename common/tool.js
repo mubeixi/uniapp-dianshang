@@ -1,3 +1,5 @@
+import {fun} from "./index";
+
 export const formatTime = date => {
   const year = date.getFullYear()
   const month = date.getMonth() + 1
@@ -119,6 +121,10 @@ function addFun(object, newobj) {
 
 // 会修改原数据
 // 浅拷贝对象。。
+function obj2obj(o){
+  return o;//JSON.parse(JSON.stringify(o))
+}
+
 /**
  *
  * @param current
@@ -134,14 +140,14 @@ function mergeData(current, newObj, strict) {
 
       //current[key] 可能是null或者undefined
       if (!current[key]) {
-        Vue.set(current, key, newObj[key]);
+        Vue.set(current, key, obj2obj(newObj[key]));
         continue;
       }
       // @ts-ignore
       mergeData(current[key], newObj[key]);
     } else {
       if (!current) {
-        current = newObj;
+        current = obj2obj(newObj);
         continue;
       }
 
@@ -151,7 +157,7 @@ function mergeData(current, newObj, strict) {
       //   continue;
       // }
 
-      Vue.set(current, key, newObj[key]);
+      Vue.set(current, key, obj2obj(newObj[key]));
     }
   }
 }
