@@ -1,5 +1,5 @@
 <template>
-  <div class="wrap">
+  <div class="wrap" :style="{backgroundColor: bgcolor}">
       <img src="/static/left.png"  @click="goBack" v-show="!hiddenBack">
       {{title}}
       <span class="right" @click="rightHandle" v-show="!rightHidden">{{right}}</span>
@@ -25,6 +25,9 @@ export default {
 		rightHidden: {
 			type: Boolean,
 			default: true
+		},
+		bgcolor:{
+			default: '#f8f8f8'
 		}
 	},
     methods: {
@@ -48,7 +51,6 @@ export default {
         width: 100%;
         position: relative;
         top: 0;
-        background: #f8f8f8;
         font-size: 32rpx;
         color: #333;
         text-align: center;
