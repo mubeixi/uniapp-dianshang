@@ -88,6 +88,10 @@
             "path" : "pages/erweima/erweima",
             "style" : {}
         }
+        ,{
+            "path" : "pages/editAddress/editAddress",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
