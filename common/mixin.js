@@ -8,7 +8,7 @@ import {ls} from "./tool";
 export const defaultMixin = {
     async created() {
 
-        console.log('default mixin ready')
+        // console.log('default mixin ready')
 
     }
 

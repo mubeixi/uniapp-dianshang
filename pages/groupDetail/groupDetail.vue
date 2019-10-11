@@ -108,7 +108,7 @@
         	    <div class="c_content_msg">{{item.Note}}</div>
         	    <div class="c_content_img">
         			<block v-for="(i,j) of item.ImgPath"> 
-        				 <img :src="i" >
+        				 <img :src="i" @click="yulanImg(index,j)">
         			</block>   
         	    </div>
         	</div>
@@ -315,6 +315,22 @@ type: '', // 优惠券内容， 分享内容
 				}	
 			},
     methods: {
+		//评价预览
+		yulanImg(i,j){
+			uni.previewImage({
+			            urls: this.commit[i].ImgPath,
+						indicator:'number',
+						current:j, 
+			            longPressActions: {
+			                success: function(data) {
+								
+			                },
+			                fail: function(err) {
+									
+			                }
+			            }
+			});
+		},
 		// 收藏
 		collect(){
 			// 检查是否已收藏
