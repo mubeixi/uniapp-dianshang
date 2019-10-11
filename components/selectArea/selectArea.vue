@@ -6,10 +6,10 @@
 				<view class="circleQ">
 					<view></view>
 				</view>
-				<view class="lineQ">
+				<view class="lineQ lineW">
 					
 				</view>
-				<view class="circleQ circleW">
+				<view class="circleQ">
 					<view></view>
 				</view>
 				<view class="lineQ">
@@ -33,29 +33,11 @@
 		</view>
 		<view class="three">
 			<view class="haha">
-				姓名
+				选择区域
 			</view>
-			<input type="text" placeholder="请输入您的姓名" placeholder-class="place">
-		</view>
-		<view class="three">
-			<view class="haha">
-				电话
+			<view class="images">
+				<image src="/static/fenxiao/chakan.png" ></image>
 			</view>
-			<input type="text" placeholder="请输入您的电话" placeholder-class="place">
-		</view>
-		<view class="three">
-			<view class="haha">
-				级别
-			</view>
-			<radio-group @change="radioChange" class="myRadio">
-					<view v-for="(item, index) in items" :key="item.value" class="myRadioQ">
-						<view>
-							<radio :value="item.value" :checked="index === current" />
-						</view>
-						<view class="mbx">{{item.name}}</view>
-					</view>
-			</radio-group>
-
 		</view>
 		<view class="four">
 			下一步
@@ -137,6 +119,9 @@
 			height: 4rpx;
 			background-color: #999999;
 		}
+		.lineW{
+			background-color: #F43131;
+		}
 	}
 	.second{
 		margin-top: 21rpx;
@@ -149,6 +134,7 @@
 			color: #F43131;
 		}
 		.secondW{
+			color: #F43131;
 			margin-left: 137rpx;
 		}
 		.secondE{
@@ -164,36 +150,19 @@
 		border-bottom: 1px solid #E7E7E7;
 		display: flex;
 		align-items: center;
+		justify-content: space-between;
 		view.haha{
 			font-size: 30rpx;
 			color: #333333;
 			margin-right: 42rpx;
 		}
-		input{
+		.images{
+			width: 16rpx;
 			height: 88rpx;
 			line-height: 88rpx;
-			font-size: 28rpx;
-			color: #333333;
-		}
-		.place{
-			font-size: 28rpx;
-			color: #CAC8C8;
-		}
-		.myRadio{
-			height: 88rpx;
-			display: flex;
-			.myRadioQ{
-				height: 88rpx;
-				display: flex;
-				margin-right: 17rpx;
-				radio{
-					transform:scale(0.7);
-				}
-				.mbx{
-					font-size: 28rpx;
-					color: #777777;
-					margin-left: 13rpx;
-				}
+			image{
+				width: 16rpx;
+				height: 25rpx;
 			}
 		}
 
