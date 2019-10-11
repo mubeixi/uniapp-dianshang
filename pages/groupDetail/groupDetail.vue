@@ -197,8 +197,8 @@
 				<div><img src="/static/tuan/home.png" ></div>
 				<div class="txt">首页</div>
 			</div>
-			<div class="first">
-				<div><img  src="/static/tuan/shou.png" ></div>
+			<div class="first" @click="collect">
+				<div><img  :src="isCollected ? '/static/tuan/xx.png' : '/static/tuan/shou.png'" ></div>
 				<div class="txt">收藏</div>
 			</div>
 			<div class="first">
@@ -230,7 +230,7 @@
 
 <script>
 import popupLayer from '../../components/popup-layer/popup-layer.vue'
-import {getProductDetail,getCommit,updateCart,addCollection,getCoupon,getUserCoupon} from '../../common/fetch.js'
+import {getProductDetail,getCommit,updateCart,addCollection,getCoupon,getUserCoupon,cancelCollection,checkProdCollected} from '../../common/fetch.js'
 import {goBack,numberSort}  from '../../common/tool.js'
 export default {
     data(){
@@ -263,6 +263,7 @@ type: '', // 优惠券内容， 分享内容
 			    qty: 1,           //购买数量
 			    cart_key: '',     //购物车类型   CartList（加入购物车）、DirectBuy（立即购买）、PTCartList（不能加入购物车）
 			},
+			isCollected: false, // 该产品是否已收藏
         }
     },
     components: {
@@ -270,6 +271,7 @@ type: '', // 优惠券内容， 分享内容
     },
 	onLoad: function (option) {
 		  this.Products_ID = option.Products_ID;
+		  this.checkProdCollected();
 	},
 	onShow() {
 		this.getDetail(this.Products_ID);
@@ -313,6 +315,45 @@ type: '', // 优惠券内容， 分享内容
 				}	
 			},
     methods: {
+		// 收藏
+		collect(){
+			// 检查是否已收藏
+			if(this.isCollected) {
+				cancelCollection({prod_id: this.Products_ID}).then(res=>{
+					if(res.errorCode == 0) {
+						uni.showToast({
+							title: res.msg
+						});
+						this.isCollected = false;
+					}
+					
+				})
+			}else {
+				addCollection({prod_id: this.Products_ID,}).then(res=>{
+					if(res.errorCode == 0) {
+						uni.showToast({
+							title: '收藏成功'
+						});
+						this.isCollected = true;
+					}else {
+						uni.showToast({
+							title: res.msg,
+							icon: 'fail'
+						})
+					};
+				})				
+			}
+		},
+		// 检查产品是否已收藏
+		checkProdCollected() {
+			checkProdCollected({prod_id: this.Products_ID}).then(res => {
+				if(res.errorCode == 0) {
+					this.isCollected = res.data.is_favourite == 1 
+				}
+			}).catch(e => {
+				
+			})
+		},
 		//拼团
 		myPin(){
 			this.$refs.cartPopu.show();
@@ -440,20 +481,6 @@ type: '', // 优惠券内容， 分享内容
         	    });
         		this.postData.qty = 1; 
         	}
-        },
-        // 收藏
-        collect(){
-        	addCollection({
-        		Users_ID:'wkbq6nc2kc',
-        		prod_id: this.Products_ID,
-        		User_ID: 3
-        	}).then(res=>{
-        		if(res.errorCode == 0) {
-        			uni.showToast({
-        				title: '收藏成功'
-        			})
-        		}
-        	})
         },
         goCart(){
         	uni.switchTab({

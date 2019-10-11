@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="loading">
       <!--  <pagetitle title="提交订单"></pagetitle> -->
         <div class="address" v-if="orderInfo.is_virtual == 0 && orderInfo.NeedShipping == 1">
             <img class="loc_icon" src="/static/location.png" alt="">
@@ -9,19 +9,21 @@
             </div>
             <img class="right" src="/static/right.png" alt="">
         </div>
-        <div class="order_msg" v-for="(pro,pro_id) in orderInfo.CartList" :key="pro_id">
-            <div class="biz_msg">
-                <img :src="orderInfo.ShopLogo" class="biz_logo" alt="">
-                <span class="biz_name">{{orderInfo.ShopName}}</span>
-            </div>
-            <div class="pro" v-for="(attr,attr_id) in pro" :key="attr_id">
-                <img class="pro-img" :src="attr.ImgPath" alt="">
-                <div class="pro-msg">
-                    <div class="pro-name">{{attr.ProductsName}}</div>
-                    <div class="attr" v-if="attr.Productsattrstrval"><span>{{attr.Productsattrstrval}}</span></div>
-                    <div class="pro-price"><span>￥</span>{{attr.ProductsPriceX}} <span class="amount">x<span class="num">{{attr.Qty}}</span></span></div>
-                </div>
-            </div>
+		<div class="biz_msg">
+			<img :src="orderInfo.ShopLogo" class="biz_logo" alt="">
+			<span class="biz_name">{{orderInfo.ShopName}}</span>
+		</div>
+        <div class="order_msg">
+			<block  v-for="(pro,pro_id) in orderInfo.CartList" :key="pro_id">
+				<div class="pro" v-for="(attr,attr_id) in pro" :key="attr_id">
+					<img class="pro-img" :src="attr.ImgPath" alt="">
+					<div class="pro-msg">
+						<div class="pro-name">{{attr.ProductsName}}</div>
+						<div class="attr" v-if="attr.Productsattrstrval"><span>{{attr.Productsattrstrval}}</span></div>
+						<div class="pro-price"><span>￥</span>{{attr.ProductsPriceX}} <span class="amount">x<span class="num">{{attr.Qty}}</span></span></div>
+					</div>
+				</div>
+			</block>
         </div>
         <div class="other" v-if="orderInfo.is_virtual == 0 && orderInfo.NeedShipping == 1">
             <div class="bd">
@@ -172,6 +174,7 @@ export default {
 				order_remark: '', // 买家留言
 			},
 			Order_ID: 0,
+			loading: false, //数据是否加载完成
         }
     },
 	filters: {
@@ -359,7 +362,7 @@ export default {
 				if(res.errorCode == 0){
 					this.orderInfo = res.data;
 					this.couponlist = res.data.coupon_list;
-					
+					this.loading = true;
 				}
 			})
 		}
@@ -377,8 +380,8 @@ export default {
         display: flex;
         align-items: center;
         padding: 44rpx;
-        border-top: 30rpx solid #FFF3F3F3;
-        border-bottom: 20rpx solid #FFF3F3F3;
+        border-top: 30rpx solid #F3F3F3;
+        border-bottom: 20rpx solid #F3F3F3;
 		.add_msg {
 			flex: 1;
 		}
@@ -407,12 +410,13 @@ export default {
     /* 收货地址 end */
     /* 订单信息 start */
     .order_msg {
-        padding: 20rpx 30rpx 0px;
+        padding: 0 30rpx;
     }
     .biz_msg {
         display: flex;
         align-items: center;
         margin-bottom: 30rpx;
+		padding: 20rpx 30rpx 0rpx;
     }
     .biz_logo {
         width: 70rpx;
@@ -439,6 +443,7 @@ export default {
 		overflow: hidden;
 		text-overflow: ellipsis;
 		-webkit-box-orient: vertical;
+		line-height: 28rpx;
     }
 	.pro-msg {
 		flex: 1;
