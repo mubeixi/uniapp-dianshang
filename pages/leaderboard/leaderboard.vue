@@ -112,6 +112,9 @@
 </script>
 
 <style lang="scss" scoped>
+	view,div{
+		box-sizing: border-box;
+	}
 .all{
 	height: 95rpx;
 	width: 750rpx;

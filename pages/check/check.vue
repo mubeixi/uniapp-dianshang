@@ -3,14 +3,14 @@
       <!--  <pagetitle title="提交订单"></pagetitle> -->
         <div class="address" v-if="orderInfo.is_virtual == 0 && orderInfo.NeedShipping == 1">
             <img class="loc_icon" src="/static/location.png" alt="">
-            <div class="add_msg" v-if="!remindAddress">
+            <div class="add_msg" v-if="addressinfo">
                 <div class="name">收货人：{{addressinfo.Address_Name}} <span>{{addressinfo.Address_Mobile | formatphone}}</span></div>
                 <div class="location">收货地址：{{addressinfo.Address_Province_name}}{{addressinfo.Address_City_name}}{{addressinfo.Address_Area_name}}{{addressinfo.Address_Town_name}}</div>
             </div>
 			<div class="add_msg" v-else>
-				<div style="font-size:28rpx;">暂无收货地址，去添加</div>
+				<div>暂无收货地址，去添加</div>
 			</div>
-            <img class="right" src="/static/right.png" @click="gotoAddressList" alt="">
+            <img class="right" src="/static/right.png" alt="">
         </div>
 		<div class="biz_msg">
 			<img :src="orderInfo.ShopLogo" class="biz_logo" alt="">
@@ -208,9 +208,9 @@ export default {
 		}
 	},
 	onShow() {
-		this.getUserInfo();
 		this.getAddress();
 		this.createOrderCheck();
+		this.getUserInfo();
 	},
 	onLoad(options) {
 		this.postData.cart_key = options.cart_key;
@@ -222,12 +222,6 @@ export default {
 		}
 	},
     methods: {
-		// 地址列表页
-		gotoAddressList(){
-			uni.navigateTo({
-				url: '../addressList/addressList?from_page=checkout'
-			});
-		},
 		goback(){
 			goBack();
 		},
@@ -391,8 +385,10 @@ export default {
 						}
 					}
 					this.postData.address_id = this.addressinfo.Address_ID;
-				}else if(res.errorCode == 2) {
-					this.addressinfo = '';
+				}
+				if(this.orderInfo.is_virtual == 0 && this.orderInfo.NeedShipping == 1 && !this.addressinfo) {
+					// 需要收货地址
+					this.remindAddress = true;
 				}
 				this.addressLoading = true;
 				// this.createOrderCheck();
@@ -413,6 +409,7 @@ export default {
 						// 需要收货地址
 						this.remindAddress = true;
 					}
+					this.loading = true;
 				}else {
 					// 获取失败
 					// uni.showModal({

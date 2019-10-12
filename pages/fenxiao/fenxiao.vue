@@ -43,43 +43,43 @@
 		<view class="last">
 			<image src="/static/fenxiao/background.png" class="back"></image>
 			<view class="zhezhao">
-				<view class="td">
+				<view class="td" @click="goErweima">
 					<image src="/static/fenxiao/erweima.png" ></image>
 					<view>
 						二维码
 					</view>
 				</view>
-				<view class="td">
+				<view class="td"  @click="goMyTeam">
 					<image src="/static/fenxiao/wode.png" ></image>
 					<view>
 						我的团队
 					</view>
 				</view>
-				<view class="td" style="border-right: 0px;">
+				<view class="td" style="border-right: 0px;" @click="goFinance">
 					<image src="/static/fenxiao/caiwu.png" ></image>
 					<view>
 						财务明细
 					</view>
 				</view>
-				<view class="td">
+				<view class="td" @click="goPromotion">
 					<image src="/static/fenxiao/juewei.png" ></image>
 					<view>
 						爵位晋升
 					</view>
 				</view>
-				<view class="td">
+				<view class="td" @click="goRegion">
 					<image src="/static/fenxiao/quyu.png" ></image>
 					<view>
 						区域代理
 					</view>
 				</view>
-				<view class="td" style="border-right: 0px;">
+				<view class="td" style="border-right: 0px;" @click="goLeaderboard">
 					<image src="/static/fenxiao/caifu.png" ></image>
 					<view>
 						财富排行榜
 					</view>
 				</view>
-				<view class="td" style="border-bottom: 0px;">
+				<view class="td" style="border-bottom: 0px;" @click="goShare">
 					<image src="/static/fenxiao/zidingyi.png" ></image>
 					<view>
 						自定义分享
@@ -103,6 +103,50 @@
 			return {
 				
 			};
+		},
+		methods:{
+			//自定义分享
+			goShare(){
+				uni.navigateTo({
+					url:'../customizeShare/customizeShare'
+				})
+			},
+			//财富排行榜
+			goLeaderboard(){
+				uni.navigateTo({
+					url:'../leaderboard/leaderboard'
+				})	
+			},
+			//爵位晋升
+			goPromotion(){
+				uni.navigateTo({
+					url:'../promotion/promotion'
+				})
+			},
+			//区域代理
+			goFinance(){
+				uni.navigateTo({
+					url:'../finance/finance'
+				})
+			},
+			//财务明细
+			goRegion(){
+				uni.navigateTo({
+					url:'../region/region'
+				})
+			},
+			//我的团队
+			goMyTeam(){
+				uni.navigateTo({
+					url:'../myTeam/myTeam'
+				})
+			},
+			//二维码
+			goErweima(){
+				uni.navigateTo({
+					url:'../erweima/erweima'
+				})
+			}
 		}
 	}
 </script>

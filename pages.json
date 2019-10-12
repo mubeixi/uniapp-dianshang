@@ -136,6 +136,18 @@
             "path" : "components/selectArea/selectArea",
             "style" : {}
         }
+        ,{
+            "path" : "pages/withdrawal/withdrawal",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/withdrawalMethod/withdrawalMethod",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/addWithdrawal/addWithdrawal",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
