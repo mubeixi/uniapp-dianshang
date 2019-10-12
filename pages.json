@@ -148,6 +148,14 @@
             "path" : "pages/addWithdrawal/addWithdrawal",
             "style" : {}
         }
+        ,{
+            "path" : "pages/logistics/logistics",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/taskCenter/taskCenter",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
