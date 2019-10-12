@@ -166,7 +166,7 @@
 				if (!address_info.Address_Name) {
 				  uni.showToast({
 					title: '请输入收货人名称',
-					icon: 'loading'
+					icon: 'none'
 				  });
 				  return false;
 				} else {
@@ -175,7 +175,7 @@
 				if (!address_info.Address_Mobile) {
 				  uni.showToast({
 					title: '请输入收货人电话',
-					icon: 'loading'
+					icon: 'none'
 				  });
 				  return false;
 				} else if (!utils.check_mobile(address_info.Address_Mobile)) {
@@ -191,21 +191,21 @@
 				if (!this.address_info.Address_Province || !this.address_info.Address_City || !this.address_info.Address_Area) {
 				  uni.showToast({
 					title: '请选择收货地址',
-					icon: 'loading'
+					icon: 'none'
 				  });
 				  return false;
 				}
 				if (!this.address_info.Address_Town) {
 				      uni.showToast({
 				        title: '请选择街道',
-				        icon: 'loading'
+				        icon: 'none'
 				      });
 				      return false;
 				}
 				if (!address_info.Address_Detailed) {
 				  uni.showToast({
 					title: '请填写详细的地址',
-					icon: 'loading'
+					icon: 'none'
 				  });
 				  return false;
 				} else {

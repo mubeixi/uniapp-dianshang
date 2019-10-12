@@ -11,8 +11,8 @@
 				<view class="item">
 					<view class="sub-title">选择链接</view>
 					<text>链接方式： </text>
-					 <label class="radio"><radio value="r1" checked="true" />商城链接</label>
-					 <label class="radio"><radio value="r2" />图文链接</label>
+					 <label class="radio"><radio style="transform:scale(0.7)" value="r1" checked="true" />商城链接</label>
+					 <label class="radio"><radio style="transform:scale(0.7)" value="r2" />图文链接</label>
 				</view>
 				<view class="item">
 					<view class="sub-title">联系方式</view>
@@ -21,8 +21,10 @@
 						<input type="text" value="" placeholder="请在此输入你的电话" />
 						<input type="text" value="" placeholder="请在此输入你的QQ" />
 						<input type="text" value="" placeholder="请在此输入你的邮箱" />
-						<button form-type="submit">提交</button>
-						<button >转发详情</button>
+						<view class="btns">
+							<button class="submit" form-type="submit">提交</button>
+							<button class="share">转发详情</button>
+						</view>
 					</form>
 				</view>
 			</view>
@@ -68,7 +70,6 @@
 			}
 			.website {
 				border: 1px solid #efefef;
-				color: #efefef;
 				height: 70rpx;
 				line-height: 70rpx;
 				padding-left: 20rpx;
@@ -76,6 +77,41 @@
 			form input[type='text']{
 				border: 1px solid #efefef;
 				margin: 20rpx 0;
+				height: 70rpx;
+				line-height: 70rpx;
+				padding-left: 60rpx;
+			}
+			form input[type='text']:nth-child(1) {
+				background: url(../../static/tuiguang/center.png) no-repeat 10rpx center ;
+				background-size: 40rpx 40rpx;
+			}
+			form input[type='text']:nth-child(2) {
+				background: url(../../static/tuiguang/dianhua.png) no-repeat 10rpx center ;
+				background-size: 40rpx 40rpx;
+			}
+			form input[type='text']:nth-child(3) {
+				background: url(../../static/tuiguang/qq.png) no-repeat 10rpx center ;
+				background-size: 40rpx 40rpx;
+			}
+			form input[type='text']:nth-child(4) {
+				background: url(../../static/tuiguang/youxiang.png) no-repeat 10rpx center ;
+				background-size: 40rpx 40rpx;
+			}
+			.btns {
+				display: flex;
+				justify-content: space-around;
+				align-items: center;
+				margin-top: 40rpx;
+				color: #fff;
+				button {
+					background: #F43131;
+					color: #fff;
+					width: 200rpx;
+					height: 80rpx;
+					text-align: center;
+					line-height: 80rpx;
+					font-size: 28rpx;
+				}
 			}
 		}
 	}

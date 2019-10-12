@@ -66,7 +66,7 @@
                     <switch :checked="userMoneyChecked" color="#04B600" @change="userMoneyChange" />
                 </div>
 				<div class="o_de">您当前共有余额: <text>{{userInfo.User_Money}}</text></div>
-                <input v-if="userMoneyChecked" class="o_desc" placeholder="请输入金额" type="number" @confirm="confirm_user_money">
+                <input v-if="userMoneyChecked" class="o_desc" placeholder="请输入金额" type="number" @blur="confirm_user_money">
             </div>
         </div>
         <div class="other">
@@ -75,14 +75,14 @@
                     <span>是否开具发票</span>
 					<switch :checked="faPiaoChecked" color="#04B600" @change="faPiaoChange" />
                 </div>
-				<input v-if="faPiaoChecked" @confirm="faPiaoConfirm" type="text" class="o_desc" placeholder="请输入发票抬头和纳税人识别号" />
+				<input v-if="faPiaoChecked"  @blur="faPiaoConfirm" type="text" class="o_desc" placeholder="请输入发票抬头和纳税人识别号" />
             </div>
         </div>
         <div class="other">
             <div class="bd">
                 <div class="o_title  words">
                     <span>买家留言</span>
-                    <input type="text" @confirm="remarkConfirm" placeholder="请填写留言内容">
+                    <input type="text"  @blur="remarkConfirm" placeholder="请填写留言内容">
                 </div>
             </div>
         </div>
@@ -260,6 +260,10 @@ export default {
 						this.Order_ID = res.data.Order_ID;
 						uni.navigateTo({
 							url: '../pay/pay?Order_ID='+ res.data.Order_ID
+						})
+					}else {
+						uni.showToast({
+							title: res.msg
 						})
 					}
 					this.submited = false;
