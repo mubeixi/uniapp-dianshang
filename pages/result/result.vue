@@ -352,7 +352,6 @@ export default {
         width: 100rpx;
         height: 4rpx;
         margin: 20rpx auto 0 ;
-        background: #fff;
     }
 	.cate1 {
 		.pro{

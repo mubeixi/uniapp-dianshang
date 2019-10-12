@@ -56,7 +56,7 @@
       </div>
     </div>
     <!-- 购物车结算 -->
-    <div class="checkout">
+    <div class="checkout" v-if="!manage">
       <div class="mbxa"  @click="checkAll">
 		<img :src="checkAllFlag ? '/static/checked.png' : '/static/uncheck.png'"  style="margin-right: 17rpx;" alt="">
 			全选
