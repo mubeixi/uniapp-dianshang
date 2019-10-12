@@ -92,7 +92,6 @@
 				</view>
 				<image src="/static/person/right.png" class="right"></image>
 			</view>
-		
 			<view class="bargain">
 				<image src="/static/person/renwu.png" class="left"></image>
 				<view class="pintuan">
@@ -100,8 +99,7 @@
 				</view>
 				<image src="/static/person/right.png" class="right"></image>
 			</view>
-			
-			<view class="bargain">
+			<view class="bargain"  @click="gotoAddresslist" >
 				<image src="/static/person/di.png" class="left"></image>
 				<view class="pintuan">
 					地址管理
@@ -159,6 +157,12 @@
 					uni.navigateTo({
 						url:'../order/order?index='+item
 					})	
+			},
+			// 去地址管理
+			gotoAddresslist() {
+				uni.navigateTo({
+					url: '../addressList/addressList'
+				})
 			}
 		}
 	}

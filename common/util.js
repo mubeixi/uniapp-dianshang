@@ -321,6 +321,8 @@ function format_money_string(money, mtype = 0) {
 //数组转化
 function array_change(arr) {
   var array = [];
+  console.log('utls')
+  console.log(arr)
   for (var i in arr) {
     array.push({ 'id': i, 'name': arr[i] });
   }
