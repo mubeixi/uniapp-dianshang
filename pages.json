@@ -156,6 +156,14 @@
             "path" : "pages/taskCenter/taskCenter",
             "style" : {}
         }
+        ,{
+            "path" : "pages/qiandao/qiandao",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/vipGrade/vipGrade",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
