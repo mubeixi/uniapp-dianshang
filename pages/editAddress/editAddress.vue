@@ -249,15 +249,13 @@
 						//跳回收货地址列表页面  不需操作
 					  } else {  //添加
 						//从提交订单页来的，跳回提交订单页
-						if (that.data.from_page == 'checkout') {
+						if (that.from_page == 'checkout') {
 						  if (typeof res.data.send_flag != 'undefined' && res.data.Address_ID) {
 							// 判断添加的收货地址是否是在配送范围内
 							if (res.data.send_flag == 1) {
-							 //  var pages = getCurrentPages();          //获取页面堆栈
-							 //  var prevPage = pages[pages.length - 2]; //上一页
-							 //  prevPage.setData({
-								// back_address_id: res.data.Address_ID
-							 //  });
+							  var pages = getCurrentPages();          //获取页面堆栈
+							  var prevPage = pages[pages.length - 2]; //上一页
+							  prevPage.back_address_id = res.data.Address_ID;
 							} else {
 							  wx.showModal({
 								title: '提示',
@@ -265,12 +263,10 @@
 								confirmText: '重新添加',
 								success: function (res) {
 								  if(res.confirm) {
-									that.setData({
-									  is_first_add: false
-									});
+									that.is_first_add = false;
 								  } else if(res.cancel) {
-									wx.redirectTo({
-									  url: '../addresslist/addresslist?from=' + that.data.from_page
+									uni.redirectTo({
+									  url: '../addresslist/addresslist?from=' + that.from_page
 									})
 								  }
 								}
@@ -287,13 +283,13 @@
 						//从地址列表跳转来的，跳回列表页面  不需操作
 					  }
 					  //返回上一页
-					  wx.navigateBack({
+					  uni.navigateBack({
 						delta: 1
 					  });
 					} 
 				  });
 				} else {
-				  wx.showModal({
+				  uni.showModal({
 					title: '错误',
 					content: res.msg,
 					showCancel: false
@@ -351,12 +347,11 @@
 			  load: function () {
 				//如果有Address_ID， 则为编辑
 				if (this.address_info.Address_ID) {
-				  var addressArgs = {
-					act: 'get_address',
-					User_ID: 2,
-					Address_ID: this.data.address_info.Address_ID
-				  };
-				  // app.http_req(addressArgs, app.globalData.init.api_url, 'POST', this.setAddressInfo);
+				  getAddress({Address_ID: this.address_info.Address_ID}).then(
+				  	res => {
+				  		this.setAddressInfo();
+				  	}
+				  )
 				} else {  //添加收货地址  初始化地址选择数据
 				  //地区数据处理
 					this.objectMultiArray = [
@@ -374,14 +369,15 @@
 				  //查询是否是该用户要添加的第一条收货地址
 				  var addressArgs = {
 					act: 'get_address',
-					User_ID: 2
 				  };
-					getAddress({User_ID: 2}).then(
+					getAddress({}).then(
 						res =>{
-							//设是否为第一条收获地址状态
-							if ((res.errorCode == 0 && res.data.length <= 0) || res.errorCode == 2) {
-							  this.is_first_add = true;
-							}							
+							if(res.errorCode == 0){
+								//设是否为第一条收获地址状态
+								if ((res.errorCode == 0 && res.data.length <= 0) || res.errorCode == 2) {
+								  this.is_first_add = true;
+								}															
+							}
 						}
 					)
 				}
@@ -399,21 +395,11 @@
 		
 		    //有addressid 地址编辑
 		    if (options.addressid) {
-		      this.setData({
-		        'address_info.Address_ID': options.addressid
-		      });
-		    }
-		    // 判断是否有商家id，用于判断收货地址是否是可配送范围
-		    if (options.biz_id) {
-		      this.setData({
-		        'address_info.Biz_ID': options.biz_id
-		      });
+				this.address_info.Address_ID = options.addressid
 		    }
 		    //页面来源
 		    if (options.from) {
-		      this.setData({
-		        from_page: options.from 
-		      });
+				this.from_page = options.from;
 		    }
 		
 		    this.load();
@@ -464,6 +450,9 @@
 </script>
 
 <style scoped lang="scss">
+	div,view{
+		box-sizing: content-box;
+	}
 .xinxi{width: 710rpx; padding:0  20rpx; border-bottom:1px #f4f4f4 solid; overflow: hidden; margin-bottom: 20rpx;}
 .xinxi text{float: left;width: 140rpx; font-size: 28rpx; line-height:90rpx;}
 .xinxi input{width: 570rpx; float: left;font-size: 28rpx; line-height:90rpx;height:90rpx;}

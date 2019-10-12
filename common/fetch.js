@@ -23,7 +23,7 @@ const fetch = function (act, param,options = false,url='/api/little_program/shop
   // param.Users_Account = get_Users_Account();
   // param.Users_ID = get_Users_ID();  Users_ID  写死
   // param.appid = get_Appid();
-	param.User_ID = 2;
+	param.User_ID = 3;
 	param.Users_ID = 'wkbq6nc2kc';
 
   // 数据加密
@@ -118,6 +118,8 @@ export const getTown = (data,options) => fetch('get_town', data, options);
 export const editAddress = (data,options) => fetch('edit_address', data, options);
 // 添加收货地址
 export const addAddress = (data, options) => fetch('add_address', data, options);
+// 删除收货地址
+export const delAddress = (data, options) => fetch('del_address', data, options);
 
 function get_Appid() {
   return 'xhh';

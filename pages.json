@@ -128,6 +128,10 @@
             "path" : "pages/addInformation/addInformation",
             "style" : {}
         }
+        ,{
+            "path" : "pages/addressList/addressList",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
