@@ -129,18 +129,18 @@ export default {
 	this.loading = false;
   	this.getCart();
 	this.getProd();
-	// this.reset();
+	this.reset();
   },
   onLoad(){
 	ls.clear();
   },
   methods: {
 	// 重置信息
-	// reset(){
-	// 	this.handleShow = true;
-	// 	this.checkAllFlag = false;
-	// 	this.totalPrice = 0;
-	// },
+	reset(){
+		this.handleShow = true;
+		this.checkAllFlag = false;
+		this.totalPrice = 0;
+	},
 	// 删除或结算
 	submit(){
 		let obj = {};
@@ -181,7 +181,6 @@ export default {
 				}
 			}).catch(e=>{})
 		};
-		this.reset();
 	},
 	 // 修改的单个的状态
 	change(prod_id,attr_id){

@@ -687,7 +687,7 @@ export default {
         padding: 0 36rpx;
         font-size: 30rpx;
         border-left: 2rpx dotted #999;
-        width: 124rpx;
+        //width: 124rpx;
         text-align: center; 
     }
     .aleady {

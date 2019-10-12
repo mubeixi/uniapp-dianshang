@@ -210,5 +210,3 @@ export const hexMD5 = function(string) {
   var tempValue = wordToHex(a) + wordToHex(b) + wordToHex(c) + wordToHex(d);
   return tempValue.toLowerCase();
 }
-
-

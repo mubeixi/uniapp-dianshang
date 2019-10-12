@@ -3,10 +3,13 @@
       <!--  <pagetitle title="提交订单"></pagetitle> -->
         <div class="address" v-if="orderInfo.is_virtual == 0 && orderInfo.NeedShipping == 1">
             <img class="loc_icon" src="/static/location.png" alt="">
-            <div class="add_msg">
+            <div class="add_msg" v-if="addressinfo">
                 <div class="name">收货人：{{addressinfo.Address_Name}} <span>{{addressinfo.Address_Mobile | formatphone}}</span></div>
                 <div class="location">收货地址：{{addressinfo.Address_Province_name}}{{addressinfo.Address_City_name}}{{addressinfo.Address_Area_name}}{{addressinfo.Address_Town_name}}</div>
             </div>
+			<div class="add_msg" v-else>
+				<div>暂无收货地址，去添加</div>
+			</div>
             <img class="right" src="/static/right.png" alt="">
         </div>
 		<div class="biz_msg">
@@ -120,12 +123,27 @@
         		确定
         	</div>
         </popup-layer>
+		<view class="remind-wrap" >
+			<div class="remind-add">
+				<div class="text-align-center mb20">新建收货地址</div>
+				<view class="remind_desc">
+					您还没有收货地址，请先添加一个新的收货地址
+				</view>
+				<view class="remind_btns text-align-center">
+					<view class="text-align-center fl1" @click="goback">返回</view>
+					<view class="text-align-center fl1 confirm" @click="goEditAdd">
+						新建
+					</view>
+				</view>
+			</div>			
+		</view>
     </div>
 </template>
 
 <script>
 import popupLayer from '../../components/popup-layer/popup-layer.vue';
 import {getAddress,getCart,createOrderCheck,getUserInfo,createOrder} from '../../common/fetch.js';
+import {goBack} from '../../common/tool.js'
 export default {
     components: {
         popupLayer
@@ -175,6 +193,7 @@ export default {
 			},
 			Order_ID: 0,
 			loading: false, //数据是否加载完成
+			remindAddress: false, // 提醒添加收货地址
         }
     },
 	filters: {
@@ -200,6 +219,15 @@ export default {
 		
 	},
     methods: {
+		goback(){
+			goBack();
+		},
+		// 跳转新增地址页面
+		goEditAdd(){
+			uni.navigateTo({
+				url: '../editAddress/editAddress'
+			})
+		},
 		// 提交订单
 		form_submit() {
 			if(!this.postData.shipping_id) {
@@ -355,6 +383,10 @@ export default {
 					}
 					this.postData.address_id = this.addressinfo.Address_ID;
 				}
+				if(this.orderInfo.is_virtual == 0 && this.orderInfo.NeedShipping == 1 && !this.addressinfo) {
+					// 需要收货地址
+					this.remindAddress = true;
+				}
 			}).catch(e => console.log(e))
 		},
 		createOrderCheck(){
@@ -363,6 +395,9 @@ export default {
 					this.orderInfo = res.data;
 					this.couponlist = res.data.coupon_list;
 					this.loading = true;
+					
+				}else {
+					// 获取失败
 				}
 			})
 		}
@@ -585,5 +620,48 @@ export default {
 		margin-top: 96rpx;
 		line-height: 90rpx;
 		text-align: center;
+	}
+	// 提醒用户添加收货地址信息
+	.remind-wrap {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: rgba(0,0,0,.2);
+		z-index: 100;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		.remind-add {
+			background: #fff;
+			width: 90%;
+			padding: 50rpx 0 0;
+			border-radius: 20rpx;
+			overflow: hidden;
+			.text-align-center {
+				text-align: center;
+			}
+			.mb20 {
+				margin-bottom:20rpx;
+			}
+			.remind_desc {
+				padding: 0 20rpx;
+				font-size: 30rpx;
+				margin: 40rpx 0 60rpx;
+			}
+			.remind_btns {
+				display: flex;
+				border-top: 1rpx solid #efefef;
+				line-height: 80rpx;
+				.fl1 {
+					flex: 1;
+				}
+				.confirm {
+					background: #F43131;
+					color: #fff;
+				}
+			}
+		}
 	}
 </style>

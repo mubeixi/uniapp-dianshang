@@ -112,10 +112,14 @@ export const getRefund = (data,options) => fetch('get_refund_info', data, option
 export const orderPay = (data,options) => fetch('order_pay', data, options);
 // 检查产品是否已收藏
 export const checkProdCollected = (data,options) => fetch('check_prod_favourite', data,options);
-
-
-
-
+// 获取乡镇
+export const getTown = (data,options) => fetch('get_town', data, options);
+// 编辑收货地址
+export const editAddress = (data,options) => fetch('edit_address', data, options);
+// 添加收货地址
+export const addAddress = (data, options) => fetch('add_address', data, options);
+// 删除收货地址
+export const delAddress = (data, options) => fetch('del_address', data, options);
 
 function get_Appid() {
   return 'xhh';

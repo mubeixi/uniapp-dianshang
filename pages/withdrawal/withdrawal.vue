@@ -1,0 +1,207 @@
+<template>
+	<view class="all" :style="{'min-height':height+'px'}">
+		<page-title title="提现" rightHidden="true" bgcolor="#ffffff" ></page-title>
+		<view class="content">
+			<view class="bank" v-if="isShow">
+				<image src="/static/fenxiao/zhaoshang.png" class="bankCard"></image>
+				<view class="bankName">
+					中国银行(尾号8888)
+				</view>
+				<image src="/static/fenxiao/right.png"  class="right"></image>
+			</view>
+			<view class="bank guanli" v-else>
+				+ 管理提现方式
+			</view>
+			<view class="tiMoney">
+				提现金额
+			</view>
+			<view class="inputMoney">
+				<view>
+					¥  <input type="number">
+				</view>
+			</view>
+			<view class="canTi">
+				<view class="canTiMoney">
+					可提现金额：5200元
+				</view>
+				<view class="allTi">
+					全部提现
+				</view>
+			</view>
+			<view class="kong">
+				
+			</view>
+			<view class="tishi">
+				<image src="/static/fenxiao/tishi.png" ></image>
+				<view>
+					申请提现后，系统会自动扣除您提现的2.00%的手续费，10.00%转入您的会员余额，88%店主会将钱打入您的账号；若全部转入余额则不扣除手续费。
+				</view>
+			</view>
+			<view class="liji">
+				立即提现
+			</view>
+			<view class="lishi">
+				历史提现 <image src="/static/fenxiao/right.png" ></image>
+			</view>
+		</view>
+	</view>
+</template>
+
+<script>
+	export default {
+		data(){
+			return {
+				height:1000,//获取手机屏幕高度
+				isShow:true,//可删除控制显示银行卡 还是管理
+			};
+		},
+		onLoad() {
+			let that=this;
+			uni.getSystemInfo({
+			    success: function (res) {
+			        that.height=res.screenHeight-68;
+			    }
+			});
+		}
+	}
+</script>
+
+<style scoped lang="scss">
+.all{
+	background-color: #f8f8f8;
+}
+.content{
+	background-color: #FFFFFF;
+	width: 710rpx;
+	margin: 40rpx 20rpx 0rpx 20rpx;
+	padding-bottom: 85rpx;
+	border-radius: 10rpx;
+	.bank{
+		width: 710rpx;
+		background-color: #EEEEEE;
+		height: 100rpx;
+		padding: 0rpx 30rpx;
+		display: flex;
+		align-items: center;
+		.bankCard{
+			width: 50rpx;
+			height: 50rpx;
+			margin-right: 18rpx;
+		}
+		.bankName{
+			font-size: 28rpx;
+			color: #333333;
+		}
+		.right{
+			width: 18rpx;
+			height: 27rpx;
+			margin-left: auto;
+		}
+	}
+	.guanli{
+		font-size: 28rpx;
+		color: #5E9BFF;
+		line-height: 100rpx;
+		display: block;
+		text-align: center;
+	}
+	.tiMoney{
+		width: 710rpx;
+		height: 25rpx;
+		line-height: 25rpx;
+		margin: 68rpx 0rpx 68rpx 30rpx;
+		font-size: 26rpx;
+		color: #333333;
+	}
+	.inputMoney{
+		width: 650rpx;
+		height: 66rpx;
+		margin-left: 30rpx;
+		margin-right: 30rpx;
+		border-bottom: 1rpx solid #ECE8E8;
+		display: flex;
+		font-size: 48rpx;
+		color: #333333;
+		padding-bottom: 30rpx;
+		view{
+			height: 35rpx;
+			line-height: 35rpx;
+			display: flex;
+			align-items: center;
+			input{
+				margin-left: 20rpx;
+				height: 35rpx;
+				width: 600rpx;
+			}
+		}
+	}
+	.canTi{
+		width: 670rpx;
+		height: 76rpx;
+		margin: 0 auto;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		.canTiMoney{
+			font-size: 22rpx;
+			color: #999999;
+		}
+		.allTi{
+			font-size: 22rpx;
+			color: #69A1FF;
+		}
+	}
+	.kong{
+		background-color: #F8F8F8;
+		width: 690rpx;
+		margin: 0 auto;
+		height: 20rpx;
+	}
+	.tishi{
+		margin-top: 27rpx;
+		margin-left: 32rpx;
+		margin-right: 33rpx;
+		width: 645rpx;
+		display: flex;
+		image{
+			width: 22rpx;
+			height: 22rpx;
+			margin-right: 10rpx;
+			margin-top: 5rpx;
+		}
+		view{
+			width: 613rpx;
+			font-size: 20rpx;
+			color: #999999;
+		}
+	}
+	.liji{
+		margin-top: 98rpx;
+		width:620rpx;
+		height:80rpx;
+		line-height: 80rpx;
+		background:#F43131;
+		border-radius:10rpx;
+		margin-left: 50rpx;
+		margin-right: 40rpx;
+		text-align: center;
+		font-size: 34rpx;
+		color: #FFFFFF;
+	}
+	.lishi{
+		height: 21rpx;
+		width: 106rpx;
+		margin-top: 15rpx;
+		margin-left: 565rpx;
+		font-size: 22rpx;
+		color: #999999;
+		display: flex;
+		align-items: center;
+		image{
+			width: 12rpx;
+			height: 20rpx;
+			margin-left: 6rpx;
+		}
+	}
+}
+</style>
