@@ -32,8 +32,19 @@
 			</view>
 		</view>
 		<view class="three">
-			<view class="haha">
-				选择区域
+			<view class="haha" @columnchange="bindMultiPickerColumnChange">
+				<!-- 选择区域 -->
+				<picker mode="multiSelector"  @change="bindMultiPickerChange" @columnchange="bindMultiPickerColumnChange" :value="change_multiIndex" :range="change_objectMultiArray" range-key="name">
+								<view class="picker">
+								  <view class="quyu">选择区域</view>
+								  <view v-if="!address_info.Address_Province">选择省份</view>
+								  <view v-else>{{objectMultiArray[0][multiIndex[0]]['name']}}</view>
+								  <view v-if="!address_info.Address_City">选择城市</view>
+								  <view v-else>{{objectMultiArray[1][multiIndex[1]]['name']}}</view>
+								  <view v-if="!address_info.Address_Area">选择地区</view>
+								  <view v-else>{{objectMultiArray[2][multiIndex[2]]['name']}}</view>
+								</view>
+				</picker>
 			</view>
 			<view class="images">
 				<image src="/static/fenxiao/chakan.png" ></image>
@@ -50,26 +61,71 @@
 </template>
 
 <script>
+	import area from '../../common/area.js';
+	import utils from '../../common/util.js';
 	export default {
 		data() {
 			return {
-				items:[
-					{
-						name:'省级',
-						value:'sheng'
-					},{
-						name:'市级',
-						value:'shi'
-					},
-					{
-						name:'县/区',
-						value:'xian'
-					}
-				],
-				current:0,
+				change_objectMultiArray: [],  //选择数据
+				address_info:{},
+				objectMultiArray: [],   //展示数据
+				multiIndex: [0, 0, 0],  //选择数据
 			};
 		},
+		onLoad() {
+			this.objectMultiArray = [
+			  utils.array_change(area.area[0]['0']),
+			  utils.array_change(area.area[0]['0,1']),
+			  utils.array_change(area.area[0]['0,1,36'])
+			];
+			this.change_objectMultiArray = [
+			  utils.array_change(area.area[0]['0']),
+			  utils.array_change(area.area[0]['0,1']),
+			  utils.array_change(area.area[0]['0,1,36'])
+			];
+		},
 		methods:{
+			//处理省市区联动信息
+			  addressChange: function (columnValue) {
+				var p_arr = this.change_objectMultiArray[0];
+				var p_id = p_arr[columnValue[0]]['id'];
+				var c_arr = utils.array_change(area.area[0][0 + ',' + p_id]);
+				var c_id = c_arr[columnValue[1]]['id'];
+				var a_arr = utils.array_change(area.area[0][0 + ',' + p_id + ',' + c_id]);
+				this.change_objectMultiArray = [
+					p_arr,
+					c_arr,
+					a_arr
+				  ];
+				this.change_multiIndex = columnValue;
+			  },
+			//选择收货地址
+			bindMultiPickerColumnChange: function (e) {
+							var column = e.detail.column;  //修改的列
+							var index = e.detail.value;    //选择列的下标（从0开始）
+							var change_multiIndex = 'change_multiIndex[' + column + ']';
+					
+							var columnValue = [
+							  column == 0 ? index : this.change_multiIndex[0],
+							  column == 0 ? 0 : (column == 1 ? index : this.change_multiIndex[1]),
+							  column == 0 || column == 1 ? 0 : index
+							];
+							this.addressChange(columnValue);
+			},
+			//选择收获地址三级联动后确定按钮动作
+			bindMultiPickerChange: function (e) {
+							this.addressChange(e.detail.value);
+							this.objectMultiArray = this.change_objectMultiArray;
+							this.multiIndex = e.detail.value;
+							this.address_info.Address_Province = this.objectMultiArray[0][this.multiIndex[0]]['id'];
+							this.address_info.Address_City = this.objectMultiArray[1][this.multiIndex[1]]['id'];
+							this.address_info.Address_Area = this.objectMultiArray[2][this.multiIndex[2]]['id'];
+							this.address_info.Address_Town = 0;
+							this.t_arr = [];
+							this.t_index = 0;
+							// 处理街道信息
+							// this.address_town();
+			},
 			radioChange: function(evt) {
 				for (let i = 0; i < this.items.length; i++) {
 					if (this.items[i].value === evt.target.value) {
@@ -154,7 +210,7 @@
 		view.haha{
 			font-size: 30rpx;
 			color: #333333;
-			margin-right: 42rpx;
+			//margin-right: 42rpx;
 		}
 		.images{
 			width: 16rpx;
@@ -194,4 +250,6 @@
 		margin-left: 10rpx;
 	}
 }
+.picker view{width: 160rpx;font-size: 28rpx; line-height:90rpx;height:90rpx; margin-right: 10rpx;}
+.picker{display: flex;.quyu{width: 120rpx;}}
 </style>
