@@ -6,7 +6,11 @@
 				提现方式
 			</view>
 			<view class="right"> 
-				中国银行 <image src="/static/right.png"></image>
+				<!-- 中国银行 <image src="/static/right.png"></image> -->
+				<picker @change="bindPickerChange" :value="index" :range="array">
+				    <view class="uni-input">{{array[index]}}</view>
+				</picker>
+				<image src="/static/right.png"></image>
 			</view>
 		</view>
 		
@@ -14,7 +18,22 @@
 			<view class="left">
 				户名
 			</view>
-			<input type="text" placeholder="请输入您的户名">
+			<input type="text" placeholder="请输入您的户名" placeholder-style="places">
+		</view>
+		<view class="centers">
+			<view class="left">
+				账号
+			</view>
+			<input type="text" placeholder="请输入您的账号" placeholder-style="places">
+		</view>
+		<view class="centers">
+			<view class="left">
+				开户行
+			</view>
+			<input type="text" placeholder="请输入您的开户行" placeholder-style="places">
+		</view>
+		<view class="addInfo">
+			添加
 		</view>
 	</view>
 </template>
@@ -23,8 +42,14 @@
 	export default {
 		data() {
 			return {
-				
+				array:['请选择银行','中国银行','中国工商银行'],
+				index:0,
 			};
+		},
+		methods:{
+			bindPickerChange(e){
+				 this.index = e.target.value
+			}
 		}
 	}
 </script>
@@ -47,6 +72,8 @@
 	.right{
 		font-size: 26rpx;
 		color: #888888;
+		display: flex;
+		align-items: center;
 		image{
 			width: 15rpx;
 			height: 23rpx;
@@ -69,7 +96,25 @@
 		color: #333333;
 	}
 	input{
-		width: 660rpx;
+		width: 570rpx;
+		color: #333333;
+		font-size: 24rpx;
 	}
+}
+.places{
+	color: #B8B8B8;
+	font-size: 24rpx;
+}
+.addInfo{
+	width:580rpx;
+	height:76rpx;
+	line-height: 76rpx;
+	margin: 0 auto;
+	background:rgba(244,49,49,1);
+	border-radius:10rpx;
+	margin-top: 124rpx;
+	font-size: 32rpx;
+	color: #FFFFFF;
+	text-align: center;
 }
 </style>

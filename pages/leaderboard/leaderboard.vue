@@ -146,9 +146,9 @@
 	}
 }
 .mains{
-	margin-top: 40rpx;
 	width: 710rpx;
 	margin: 0 auto;
+	margin-top: 40rpx;
 	box-shadow:0px 0px 18rpx 0px rgba(0, 0, 0, 0.18);
 	border-radius:10rpx;
 	.paiming{
