@@ -719,7 +719,7 @@ export default {
     /* 产品描述部分 start */
     .section1 {
         padding: 0 20rpx 20rpx;
-        border-bottom: 20rpx solid #f8f8f8;
+        border-bottom: 20rpx solid #efefef;
     }
     .price {
         margin-top: 38rpx;
@@ -779,7 +779,7 @@ export default {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        border-bottom: 20rpx solid #f8f8f8;
+        border-bottom: 20rpx solid #efefef;
     }
     .section2 .btn {
         padding: 0 10rpx;
@@ -805,7 +805,7 @@ export default {
         flex-wrap: wrap;
         font-size: 0rpx;
         padding: 30rpx 20rpx;
-        border-bottom: 20rpx solid #f8f8f8;
+        border-bottom: 20rpx solid #efefef;
     }
     .section3>span {
         display: flex;
@@ -825,7 +825,7 @@ export default {
     /* 评价 start */
     .comment {
         padding: 30rpx 20rpx;
-        border-bottom: 20rpx solid #f8f8f8;
+        border-bottom: 20rpx solid #efefef;
     }
     .c_title {
         display: flex;
@@ -868,7 +868,7 @@ export default {
         color: #333;
         line-height: 36rpx;
         padding: 18rpx 0;
-        border-bottom: 2rpx solid #f8f8f8;
+        border-bottom: 2rpx solid #efefef;
     }
     .c_content_img img {
         width: 140rpx;

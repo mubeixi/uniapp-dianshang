@@ -156,6 +156,10 @@
             "path" : "pages/taskCenter/taskCenter",
             "style" : {}
         }
+        ,{
+            "path" : "pages/promotionAssist/promotionAssist",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
