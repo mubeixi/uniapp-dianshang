@@ -3,14 +3,14 @@
       <!--  <pagetitle title="提交订单"></pagetitle> -->
         <div class="address" v-if="orderInfo.is_virtual == 0 && orderInfo.NeedShipping == 1">
             <img class="loc_icon" src="/static/location.png" alt="">
-            <div class="add_msg" v-if="addressinfo">
+            <div class="add_msg" v-if="addressinfo.Address_Name">
                 <div class="name">收货人：{{addressinfo.Address_Name}} <span>{{addressinfo.Address_Mobile | formatphone}}</span></div>
                 <div class="location">收货地址：{{addressinfo.Address_Province_name}}{{addressinfo.Address_City_name}}{{addressinfo.Address_Area_name}}{{addressinfo.Address_Town_name}}</div>
             </div>
 			<div class="add_msg" v-else>
 				<div>暂无收货地址，去添加</div>
 			</div>
-            <img class="right" src="/static/right.png" alt="">
+            <img class="right" src="/static/right.png" alt="" @click="goAddressList">
         </div>
 		<div class="biz_msg">
 			<img :src="orderInfo.ShopLogo" class="biz_logo" alt="">
@@ -194,7 +194,9 @@ export default {
 			addressLoading: false, // 收货地址信息是否加载完
 			orderLoading: false, //订单信息是否加载完
 			userLoading: false, //个人信息是否加载完
-			remindAddress: false, // 提醒添加收货地址
+			// remindAddress: false, // 提醒添加收货地址
+			submited: false,  // 是否已经提交过，防止重复提交
+			back_address_id: 0,
         }
     },
 	filters: {
@@ -219,11 +221,21 @@ export default {
 	computed: {
 		loading: function(){
 			return this.addressLoading && this.orderLoading && this.userLoading
+		},
+		remindAddress: function(){
+			return this.orderInfo.is_virtual == 0 && this.orderInfo.NeedShipping == 1 && !this.addressinfo.Address_Name
 		}
+		
 	},
     methods: {
 		goback(){
 			goBack();
+		},
+		// 跳转地址列表页
+		goAddressList(){
+			uni.navigateTo({
+				url: '../addressList/addressList?from=checkout&addressid='+this.postData.address_id
+			})
 		},
 		// 跳转新增地址页面
 		goEditAdd(){
@@ -233,32 +245,28 @@ export default {
 		},
 		// 提交订单
 		form_submit() {
-			if(!this.postData.shipping_id) {
-				uni.showToast({
-					title: '请选择物流'	
-				})
-				return;
-			}
-			createOrder(this.postData).then(res=>{
-				console.log(res)
-				if(res.errorCode == 0) {
-					// 如果order_totalPrice <= 0  直接跳转 订单列表页
-					this.Order_ID = res.data.Order_ID;
-					uni.navigateTo({
-						url: '../pay/pay?Order_ID='+ res.data.Order_ID
-					})
+			if(!this.submited){
+				this.submited = true;
+				if(!this.postData.shipping_id) {
+					uni.showToast({
+						title: '请选择物流'	
+					});
+					this.submited = false;
+					return;
 				}
-			}).catch(e=>{
-				
-			});
-			// uni.setStorage({
-			//     key: 'postData',
-			//     data: this.postData,
-			//     success: function () {
-			//         console.log('success');
-			//     }
-			// });
-			
+				createOrder(this.postData).then(res=>{
+					if(res.errorCode == 0) {
+						// 如果order_totalPrice <= 0  直接跳转 订单列表页
+						this.Order_ID = res.data.Order_ID;
+						uni.navigateTo({
+							url: '../pay/pay?Order_ID='+ res.data.Order_ID
+						})
+					}
+					this.submited = false;
+				}).catch(e=>{
+					this.submited = true;
+				});
+			}
 		},
 		// 积分抵扣开关
 		intergralSwitchChange(e){
@@ -374,7 +382,25 @@ export default {
 			this.$refs.popupRef.close();
 		},
 		getAddress(){
-			getAddress({Users_ID: this.Users_ID,User_ID: this.User_ID,}).then(res=>{
+			this.$vm.$on('fire', (data) =>{
+				this.back_address_id = data;
+			})
+			console.log(this.back_address_id)
+			var Address_ID;
+			if (this.back_address_id) {  //添加、选择收获地址返回
+			    Address_ID = this.back_address_id;
+			} else if (this.addressinfo.Address_ID) { //有收获地址，则更新（防止收获地址编辑后返回）
+			    Address_ID = this.addressinfo.Address_ID;
+			}
+			getAddress({Address_ID: Address_ID?Address_ID:0}).then(res=>{
+				if (this.back_address_id && res.errorCode != 0) {  //添加、选择收获地址返回
+					uni.showModal({
+					  title: '错误',
+					  content: '收货地址获取失败',
+					  showCancel: false
+					});
+					return false;
+				}
 				if(res.errorCode == 0) {
 					for(let i in res.data){
 						for(let j in res.data[i]){
@@ -386,10 +412,7 @@ export default {
 					}
 					this.postData.address_id = this.addressinfo.Address_ID;
 				}
-				if(this.orderInfo.is_virtual == 0 && this.orderInfo.NeedShipping == 1 && !this.addressinfo) {
-					// 需要收货地址
-					this.remindAddress = true;
-				}
+				this.back_address_id = 0;
 				this.addressLoading = true;
 				// this.createOrderCheck();
 			}).catch(e => {
@@ -405,11 +428,7 @@ export default {
 					this.orderInfo = res.data;
 					this.couponlist = res.data.coupon_list;
 					this.orderLoading = true;
-					if(this.orderInfo.is_virtual == 0 && this.orderInfo.NeedShipping == 1 && !this.addressinfo) {
-						// 需要收货地址
-						this.remindAddress = true;
-					}
-					this.loading = true;
+					
 				}else {
 					// 获取失败
 					// uni.showModal({
@@ -436,6 +455,7 @@ export default {
         border-bottom: 20rpx solid #F3F3F3;
 		.add_msg {
 			flex: 1;
+			font-size: 28rpx;
 		}
 		.right {
 		    width: 18rpx;
@@ -689,7 +709,8 @@ export default {
 			.remind_desc {
 				padding: 0 20rpx;
 				font-size: 30rpx;
-				margin: 40rpx 0 60rpx;
+				margin: 40rpx 0;
+				color: #666;
 			}
 			.remind_btns {
 				display: flex;

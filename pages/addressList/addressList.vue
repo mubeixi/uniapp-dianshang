@@ -2,7 +2,7 @@
 	<view>
 		<radio-group class="radio-group" @change="radioChange">
 		  <label class="radio" :class="!check_flag ? 'no-redio' : ''" v-for="item in addresslist" :key="">
-			<radio :value="item.Address_ID" :checked="item.Address_ID == check_address_id" v-if="check_flag" :disabled="!check_flag"/>
+			<radio :value="item.Address_ID" color="#F43131" :checked="item.Address_ID == check_address_id" v-if="check_flag" :disabled="!check_flag"/>
 			<view class="flex-main">
 			  <view class='flex-top'>
 				<view class='name'>收货人：{{item.Address_Name}}</view>
@@ -21,7 +21,7 @@
 		<view style='height:82rpx;'></view>
 		<view class='tianjia' @click="addressAddEdit('a')">
 		  <view class='jia_img'>
-			<image src='../../static/address/jia.png'></image>
+			<image src='../../static/jia.png'></image>
 		  </view>
 		  <text>新增个人地址</text>
 		  <view class='go_img'>
@@ -47,11 +47,18 @@
 			//选择地址
 			  radioChange: function (e) {
 			    var address_id = e.detail.value;  //选择的地址ID
-			    if (this.data.from_page == 'checkout') {
+			    if (this.from_page == 'checkout') {
 			      var pages = getCurrentPages();          //获取页面堆栈
 			      var prevPage = pages[pages.length - 2]; //上一页
-				  prevPage.back_address_id = address_id;
+				  prevPage.setData({
+					  back_address_id: address_id
+				  })
+				  // #ifdef APP-PLUS
+					prevPage.$getAppWebview().back_address_id = address_id;
+				  // #endif
 			    }
+				this.$vm.$emit('fire',address_id)
+				console.log(address_id);
 			    //返回上一页
 			    uni.navigateBack({
 			      delta: 1
