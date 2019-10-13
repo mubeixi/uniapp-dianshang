@@ -39,7 +39,10 @@
 </template>
 
 <script>
+	import {pageMixin} from "../../common/mixin";
+	
 	export default {
+		mixins:[pageMixin],
 		data() {
 			return {
 				array:['请选择银行','中国银行','中国工商银行'],

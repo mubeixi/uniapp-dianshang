@@ -57,7 +57,10 @@
 	import area from '../../common/area.js';
 	import utils from '../../common/util.js';
 	import {getAddress,getTown,editAddress,addAddress} from '../../common/fetch.js';
+	import {pageMixin} from "../../common/mixin";
+	
 	export default {
+		mixins:[pageMixin],
 		data() {
 			return {
 				//用于收货地址展示用

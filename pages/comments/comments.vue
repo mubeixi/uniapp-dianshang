@@ -76,7 +76,10 @@ import bottom from '../bottom/bottom'
 import {getComments,getProductDetail,updateCart,addCollection,getCoupon,getUserCoupon,checkProdCollected,cancelCollection} from '../../common/fetch.js'
 import popupLayer from '../../components/popup-layer/popup-layer.vue'
 import {goBack,numberSort}  from '../../common/tool.js'
+import {pageMixin} from "../../common/mixin";
+
 export default {
+	mixins:[pageMixin],
     name: 'app',
     components: {
         bottom,

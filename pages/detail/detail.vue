@@ -174,7 +174,10 @@ import {getProductDetail,getCommit,updateCart,addCollection,getCoupon,getUserCou
 import {goBack,numberSort}  from '../../common/tool.js'
 
 import uParse from '@/components/gaoyia-parse/parse.vue'
+import {pageMixin} from "../../common/mixin";
+
 export default {
+	mixins:[pageMixin],
     data(){
         return {
             type: '', // 优惠券内容， 分享内容
