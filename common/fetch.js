@@ -7,8 +7,6 @@ import Base64 from './tool/base64.js'
 import {ls} from "./tool.js";
 import {post,get,ajax} from './interceptors.js';
 
-
-
 const fetch = function (act, param,options = false,url='/api/little_program/shopconfig.php',  method = 'post') {
   if(!act){
 	  uni.showToast({
@@ -18,6 +16,8 @@ const fetch = function (act, param,options = false,url='/api/little_program/shop
 	  });
 	  return;
   };
+
+  if(!param)param = {}
 
   param.act = act;
   // param.Users_Account = get_Users_Account();
@@ -37,6 +37,8 @@ const fetch = function (act, param,options = false,url='/api/little_program/shop
 
 };
 
+//获取全局配置
+export const getSystemConf = (data,options) => {return new Promise((resolve, reject) => {resolve({aa:22,bb:333})})};//fetch('get_base_config', data,options)
 
 export const login = (data,options) => fetch('users_login', data,options)
 

@@ -73,7 +73,7 @@
         "appid" : "tt6f4419f9f06ea321"
     },
     "h5" : {
-		"publicPath": "./",
+		"publicPath": process.env.NODE_ENV === 'production' ? './' : '/',//解决资源路径问题
         "devServer" : {
 			"port": 4100,
 			"disableHostCheck": true,

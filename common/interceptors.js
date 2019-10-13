@@ -18,7 +18,7 @@ export const ajax = (url,method,data,options)=>{
   let token
 
   var header = {
-    // 'Cookie': '',
+
     'Authorization':'Bearer '+token,
     "content-type": "application/x-www-form-urlencoded"
   };
@@ -26,7 +26,10 @@ export const ajax = (url,method,data,options)=>{
   //   header.Cookie = wx.getStorageSync('cookie')
   // }
 
+
 let URL = ENV.apiBaseUrl+url;
+
+
 // console.log(URL)
 	
   return new Promise(function(resolve, reject){

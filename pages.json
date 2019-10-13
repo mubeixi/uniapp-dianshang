@@ -148,6 +148,10 @@
             "path" : "pages/addWithdrawal/addWithdrawal",
             "style" : {}
         }
+        ,{
+            "path" : "pages/login/login",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

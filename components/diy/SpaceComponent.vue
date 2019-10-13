@@ -7,8 +7,7 @@
 <script>
   import {deepCopyStrict} from "../../common/tool";
   const styleDefault = {
-    bgColor: '#fff',
-    height: '10', // 默认是10吧
+    
   }
   export default {
     props: {
@@ -27,7 +26,7 @@
     },
     computed: {
       style() {
-        return deepCopyStrict(styleDefault, this.space.style);
+        return this.space.style;//deepCopyStrict(styleDefault, this.space.style);
       },
     },
     watch: {

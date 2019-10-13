@@ -1,7 +1,14 @@
 <script>
-	export default {
+    import {ls,GetQueryByString} from "./common/tool";
+
+    export default {
 		onLaunch: function() {
-			// console.log('App Launch')
+
+            // #ifdef H5
+
+            // #endif
+
+			console.log('App Launch')
 		},
 		onShow: function() {
 			// console.log('App Show')
@@ -17,6 +24,13 @@
 
 ul,li{
     list-style:none
+}
+
+.inline{
+    display: inline;
+}
+.inline-block{
+    display: inline-block;
 }
 .box-sizing{
 	box-sizing: border-box;

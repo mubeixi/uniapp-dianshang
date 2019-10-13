@@ -180,12 +180,13 @@
 
       },
       clickTab(item, idx) {
-
-        if (this.tabActive === idx) {
-          return;
-        }
-        this.tabActive = idx
-        this.currentTab = item;
+		this.$set(this,'tabActive',idx)
+		this.$set(this,'currentTab',item)
+        // if (this.tabActive === idx) {
+        //   return;
+        // }
+        // this.tabActive = idx
+        // this.currentTab = item;
       },
       loadGoodsList() {
 
@@ -197,6 +198,7 @@
         console.log(list,cate_id,limit)
         //如果值还没有设置的话
         if(cate_id.length===0){
+		this.goodsList = []
           return;
         }
 
@@ -585,7 +587,7 @@
         .info {
           width: 100%;
           background: white;
-          padding: 10px;
+          // padding: 10px;
           box-sizing: border-box;
           /*display: flex;*/
           /*justify-content: space-between;*/
@@ -597,7 +599,7 @@
 
             .title {
               width: 100%;
-              overflow-x: hidden;
+              overflow: hidden;
               max-height: 42px;
               text-overflow: ellipsis;
               line-height: 21px;
@@ -625,11 +627,15 @@
 
           .buybtn {
             font-size: 12px;
+			// width:40px;
+			// box-sizing: border-box;
+			padding: 2px 6px;
             height: 24px;
             line-height: 24px;
             position: absolute;
-            right: 10px;
-            bottom: 10px;
+            right: 4px;
+            bottom: 4px;
+			
             /*position: absolute;*/
             /*right: 0;*/
             /*top:50%;*/
