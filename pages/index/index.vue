@@ -21,7 +21,6 @@
 </template>
 
 <script>
-	import {getSkinConfig} from "../../common/fetch";
 	import BaseComponent from "../../components/diy/BaseComponent.vue";
 	import SwiperComponent from "../../components/diy/SwiperComponent.vue";
 	import NavComponent from "../../components/diy/NavComponent.vue";
@@ -37,7 +36,12 @@
 	import CubeComponent from "../../components/diy/CubeComponent.vue";
 	import TabComponent from "../../components/diy/TabComponent.vue";
 
+	import {getSkinConfig} from "../../common/fetch";
+
+	import {pageMixin} from "../../common/mixin";
+
 	export default {
+		mixins:[pageMixin],
 		data() {
 			return {
 				templateList:[],
@@ -116,6 +120,8 @@
 
 <style>
 	.home-wrap{
+		width: 750upx;
+		overflow-x: hidden;
 		background: #f2f2f2;
 	}
 	/*.content {*/
