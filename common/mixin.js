@@ -11,17 +11,19 @@ export const defaultMixin = {
     created() {
 
     },
-    methods:{
-        ...mapActions(['getInitData'])
-    }
+
 
 }
 
 export const pageMixin = {
-    created() {
+    mounted() {
 
+        if(!ls.get('initData')){
+            //this.getInitData()
+        }
 
         // #ifdef H5
+
         let users_id = GetQueryByString(location.href, 'users_id')
         console.log('users_id is'+users_id)
         //如果连接里面已经有了，就不需要搞事
@@ -56,5 +58,9 @@ export const pageMixin = {
         }
         // #endif
 
+
+    },
+    methods:{
+        ...mapActions(['getInitData'])
     }
 }

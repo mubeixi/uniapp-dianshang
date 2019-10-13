@@ -84,7 +84,7 @@
 				</view>
 				<image src="/static/person/right.png" class="right"></image>
 			</view>
-			
+
 			<view class="bargain">
 				<image src="/static/person/kan.png" class="left"></image>
 				<view class="pintuan">
@@ -106,7 +106,7 @@
 				</view>
 				<image src="/static/person/right.png" class="right"></image>
 			</view>
-	
+
 			<view class="bargain">
 				<image src="/static/person/wo.png" class="left"></image>
 				<view class="pintuan">
@@ -114,7 +114,7 @@
 				</view>
 				<image src="/static/person/right.png" class="right"></image>
 			</view>
-			
+
 			<view class="bargain">
 				<image src="/static/person/tui.png" class="left"></image>
 				<view class="pintuan">
@@ -122,7 +122,7 @@
 				</view>
 				<image src="/static/person/right.png" class="right"></image>
 			</view>
-			
+
 			<view class="setting">
 				<image src="/static/person/she.png" class="left"></image>
 				<view class="pintuan">
@@ -137,18 +137,22 @@
 
 <script>
 	import {pageMixin} from "../../common/mixin";
-	
+	import {mapActions} from 'vuex';
 	export default {
 		mixins:[pageMixin],
 		data() {
 			return {
-				
+
 			};
 		},
+		computed:{
+
+		},
 		onShow(){
-			
+
 		},
 		methods:{
+			...mapActions(['getUserInfo']),
 			//去任务中心
 			goRenwu(){
 				uni.navigateTo({
@@ -171,7 +175,7 @@
 			goOrder(item){
 					uni.navigateTo({
 						url:'../order/order?index='+item
-					})	
+					})
 			},
 			// 去地址管理
 			gotoAddresslist() {
@@ -179,6 +183,9 @@
 					url: '../addressList/addressList'
 				})
 			}
+		},
+		created(){
+			let userInfo = this.getUserInfo()
 		}
 	}
 </script>
@@ -321,7 +328,7 @@
 		}
 	}
 	.order{
-		margin: 140rpx 20rpx 25rpx 20rpx;	
+		margin: 140rpx 20rpx 25rpx 20rpx;
 		width: 710rpx;
 		height: 268rpx;
 		background-color: #FFFFFF;
@@ -452,7 +459,7 @@
 				color: #333333;
 			}
 		}
-		
+
 	}
 }
 </style>

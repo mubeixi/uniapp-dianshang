@@ -469,6 +469,8 @@ export default {
   created() {
 
     this.isShowWeiXin= isWeiXin();
+    console.log(this.isShowWeiXin)
+
     this.initDataFn();
 
     // if (this.$route.query.status) {

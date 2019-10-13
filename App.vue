@@ -1,18 +1,29 @@
 <script>
     import {ls,GetQueryByString} from "./common/tool";
+    import {getSystemConf} from "./common/fetch";
 
     export default {
 		onLaunch: function() {
 
-            // #ifdef H5
-            let users_id = GetQueryByString(location.href, 'users_id')
 
-            //如果连接里面已经有了，就不需要搞事
-            if(users_id){
-                ls.set('users_id',users_id);
-                return;
-            }
+
+            // #ifdef H5
+
+            // let users_id = GetQueryByString(location.href, 'users_id')
+            //
+            // //如果连接里面已经有了，就不需要搞事
+            // if(users_id){
+            //     ls.set('users_id',users_id);
+            //     return;
+            // }
             // #endif
+
+
+
+
+
+
+
 
 			console.log('App Launch')
 		},

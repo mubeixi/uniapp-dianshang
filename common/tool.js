@@ -59,17 +59,18 @@ export const ls = {
 
     if(!val && (val!=0 || val!= false))return false;
 
-    return  uni.setStorageSync(key, JSON.stringify(val))
+    return  uni.setStorageSync(key, val)
   },
 
   get(key) {
     var val = uni.getStorageSync(key);
-    if(!val) return '';
-    try{
-      return JSON.parse(val)
-    }catch (e) {
-      return '';
-    }
+    return val;
+    // if(!val) return '';
+    // try{
+    //   return JSON.parse(val)
+    // }catch (e) {
+    //   return '';
+    // }
 
   },
   remove(key) {
