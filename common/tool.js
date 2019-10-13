@@ -56,18 +56,19 @@ export const GetQueryByString = (str, name) => {
 
 export const ls = {
   set(key, val) {
-    //Null undefined '' 这些不让传进来了
+
     if(!val && (val!=0 || val!= false))return false;
+
     return  uni.setStorageSync(key, JSON.stringify(val))
   },
 
   get(key) {
     var val = uni.getStorageSync(key);
-    if(!val) return false;
+    if(!val) return '';
     try{
       return JSON.parse(val)
     }catch (e) {
-      return false;
+      return '';
     }
 
   },

@@ -23,7 +23,7 @@ export const pageMixin = {
 
         // #ifdef H5
         let users_id = GetQueryByString(location.href, 'users_id')
-
+        console.log('users_id is'+users_id)
         //如果连接里面已经有了，就不需要搞事
         if(users_id){
             ls.set('users_id',users_id);
@@ -31,6 +31,8 @@ export const pageMixin = {
         }else{
             users_id = ls.get('users_id');
         }
+
+        console.log('users_id is'+users_id)
 
         if (users_id) {
 
