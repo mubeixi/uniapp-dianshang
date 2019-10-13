@@ -56,7 +56,7 @@
     "quickapp" : {},
     /* 小程序特有相关 */
     "mp-weixin" : {
-        "appid" : "wxbdeb9e51dacbbafc",
+        "appid" : "wx57c0d6caade2c2c7",
         "setting" : {
             "urlCheck" : false,
             "postcss" : false
@@ -74,20 +74,20 @@
         "appid" : "tt6f4419f9f06ea321"
     },
     "h5" : {
-		"publicPath": "./",
+        "publicPath" : "./",
         "devServer" : {
-			"port": 4100,
-			"disableHostCheck": true,
-			"proxy": {
-				"/api": {
-					"target": "http://new401.bafangka.com/api",
-					"changeOrigin": true,
-					"secure": false,
-					"pathRewrite": {
-					  "^/api": ""
-					}
-				}
-			}
+            "port" : 4100,
+            "disableHostCheck" : true,
+            "proxy" : {
+                "/api" : {
+                    "target" : "http://new401.bafangka.com/api",
+                    "changeOrigin" : true,
+                    "secure" : false,
+                    "pathRewrite" : {
+                        "^/api" : ""
+                    }
+                }
+            }
         },
         "router" : {
             "base" : ""

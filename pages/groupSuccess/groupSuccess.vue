@@ -102,7 +102,10 @@
 
 <script>
 // import pagetitle from "@/components/title";
+import {pageMixin} from "../../common/mixin";
+
 export default {
+	mixins:[pageMixin],
   name: 'App',
   components: {
     // pagetitle

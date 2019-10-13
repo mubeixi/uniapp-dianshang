@@ -4,7 +4,7 @@
 			<image src="/static/person/top.png" ></image>
 			<view class="qiandao">
 				<image src="/static/person/qiandao.png"></image>
-				<view>签到</view>
+				<view @click="goQian">签到</view>
 			</view>
 			<view class="personInfo">
 				<view class="left">
@@ -92,7 +92,7 @@
 				</view>
 				<image src="/static/person/right.png" class="right"></image>
 			</view>
-			<view class="bargain">
+			<view class="bargain"  @click="goRenwu">
 				<image src="/static/person/renwu.png" class="left"></image>
 				<view class="pintuan">
 					任务中心
@@ -136,7 +136,10 @@
 </template>
 
 <script>
+	import {pageMixin} from "../../common/mixin";
+	
 	export default {
+		mixins:[pageMixin],
 		data() {
 			return {
 				
@@ -146,6 +149,18 @@
 			
 		},
 		methods:{
+			//去任务中心
+			goRenwu(){
+				uni.navigateTo({
+					url:'../taskCenter/taskCenter'
+				})
+			},
+			//去签到
+			goQian(){
+				uni.navigateTo({
+					url:'../qiandao/qiandao'
+				})
+			},
 			//去收藏页
 			goCollection(){
 				uni.navigateTo({

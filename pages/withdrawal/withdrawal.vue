@@ -48,7 +48,10 @@
 </template>
 
 <script>
+	import {pageMixin} from "../../common/mixin";
+	
 	export default {
+		mixins:[pageMixin],
 		data(){
 			return {
 				height:1000,//获取手机屏幕高度
