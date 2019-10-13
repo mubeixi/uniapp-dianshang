@@ -1,18 +1,18 @@
 <template>
-  <div class="loginSign">
+  <div class="loginSign font16">
     <ul>
       <li class="codeContent" v-if="status == 1">
         <h1 class="topTitle">
           <view class="funicon icon icon-fanhui inline-block"></view>
           登陆 / 注册</h1>
         <div class="codeLogin">
-          <label class="inputLable flex">
+          <label class="inputLable flex line20">
 
             <span>+{{ telNum }}</span>
             <input type="number" placeholder="请输入手机号" v-model="mobile" />
           </label>
-          <div class="submitBtn sendCode" @click="codeSendVerification(4)"
-                  :disabled="isCodeDisabled">发送验证码</div>
+          <button type="primary" class="submitBtn sendCode" @click="codeSendVerification(4)"
+                  :disabled="isCodeDisabled">发送验证码</button>
           <div class="passwordLogin" @click="(status = 2), (loginStatus = 2)">
             使用密码登陆
           </div>
@@ -211,6 +211,7 @@ import wx from "weixin-js-sdk";
 import {GetQueryByString} from "../../common/tool";
 
 
+
 // import {
 //   getSmsCode,
 //   login,
@@ -228,7 +229,6 @@ import { mapGetters, mapActions, Store } from "vuex";
 import { isWeiXin } from "../../common/tool";
 import {pageMixin} from "../../common/mixin";
 
-import {pageMixin} from "../../common/mixin";
 
 export default {
 	mixins:[pageMixin],
@@ -326,9 +326,9 @@ export default {
       if (mobile == "" || !mobile)
         return toast("请先填入手机号");
       let event = undefined;
-      // return getSmsCode(mobile, event)
-      //   .then(() => toast("发送短信成功"))
-      //   .then(() => this.startCountdown());
+      return getSmsCode(mobile, event)
+        .then(() => toast("发送短信成功"))
+        .then(() => this.startCountdown());
     },
     async codeSendVerification(status) {
       // 发送验证码并设置 status（更新页面）
@@ -374,10 +374,10 @@ export default {
         });
       } else {
           let querys={};
-          let aid=this.$route.query.aid;
+          let users_id=this.$route.query.users_id;
           //console.log(this.froms);
           querys=this.froms.query;
-          querys.aid=aid;
+          querys.users_id=users_id;
           //delete querys.from_id;
           if(this.froms.path=="/member/personalInfo"){
             this.$router.push({ path:'/member',query:querys});
@@ -418,10 +418,10 @@ export default {
     },
     weixinlogin() {
         const url=window.location.href;
-        const aid=GetQueryByString(url,'aid');
+        const users_id=GetQueryByString(url,'users_id');
         let my=new NATIVE_APP();
         if(my.isIos||my.isAndroid){
-          my.wxLogin(1, ajaxUrl+`/index/user/appwxlogin?aid=${aid}`);
+          my.wxLogin(1, ajaxUrl+`/index/user/appwxlogin?users_id=${users_id}`);
         }else{
           weixinAuthUrl().then(res => {
               if (res.link) window.location.href = res.link;
@@ -433,8 +433,8 @@ export default {
       //   const url=window.location.href;
       //   let start=url.indexOf("code");
       //   const code=url.substr(start+5,32);
-      //   //const aid=this.$route.query.aid;
-      //   const aid=GetQueryByString(url,'aid');
+      //   //const users_id=this.$route.query.users_id;
+      //   const users_id=GetQueryByString(url,'users_id');
       //   if (start>=0) {
       //     weixinlogin(code,this.fromId)
       //       .then(res => {
@@ -442,7 +442,7 @@ export default {
       //         this.setInitData()
       //           .then(() => {
       //             window.location.replace(
-      //               window.location.origin + window.location.pathname + "#/?aid="+aid
+      //               window.location.origin + window.location.pathname + "#/?users_id="+users_id
       //             );
       //           })
       //           .catch(err => {
@@ -450,7 +450,7 @@ export default {
       //       })
       //       .catch(err => {
       //         window.location.replace(
-      //          window.location.origin + window.location.pathname + "#/login?aid="+aid
+      //          window.location.origin + window.location.pathname + "#/login?users_id="+users_id
       //         );
       //       });
       //   }
@@ -510,6 +510,7 @@ export default {
   .topTitle {
     font-size: 27px;
     line-height: 1;
+    font-weight: 400;
     margin: 36px 0 0 20px;
   }
 

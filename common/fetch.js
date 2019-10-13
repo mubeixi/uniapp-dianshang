@@ -123,6 +123,29 @@ export const addAddress = (data, options) => fetch('add_address', data, options)
 // 删除收货地址
 export const delAddress = (data, options) => fetch('del_address', data, options);
 
+//短信验证码
+export const getSmsCode = (data, options) => fetch('del_address', data, options);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function get_Appid() {
   return 'xhh';
 }

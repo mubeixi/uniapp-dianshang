@@ -5,11 +5,11 @@
 		onLaunch: function() {
 
             // #ifdef H5
-            let aid = GetQueryByString(location.href, 'aid')
+            let users_id = GetQueryByString(location.href, 'users_id')
 
             //如果连接里面已经有了，就不需要搞事
-            if(aid){
-                ls.set('aid',aid);
+            if(users_id){
+                ls.set('users_id',users_id);
                 return;
             }
             // #endif
@@ -26,10 +26,13 @@
 </script>
 
 <style lang="less">
+@import "./static/css/app.less";
 @import "./static/css/icon.css";
 
+
 ul,li{
-    list-style:none
+    list-style:none;
+    .reset
 }
 
 .inline{
@@ -51,6 +54,7 @@ ul,li{
 .line8{margin-bottom : 8px !important}
 .line10{margin-bottom : 10px !important}
 .line15{margin-bottom : 15px !important}
+.line20{margin-bottom : 20px !important}
 
 .graytext{color : #666 !important}
 .graytext2{color : #999 !important}
