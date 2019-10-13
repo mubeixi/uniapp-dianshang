@@ -192,7 +192,7 @@ export function deepCopy(currentObj, newObject) {
 }
 
 export function deepCopyStrict(currentObj, newObject) {
-  addFun(currentObj, newObject, 1);
+  addFun(currentObj, newObject);
   // mergeData(currentObj, newObject, 1);
   return currentObj;
 }
@@ -209,4 +209,42 @@ export const arrayUnique = (arr)=>{
     if(jlen===j)res.push(obj);
   }
   return res;
+}
+
+
+export function mixinStyle(defaultStyle, style) {
+  if(!defaultStyle)defaultStyle={};
+  if(!style)style={};
+
+  let rt = objTranslate(defaultStyle)
+  for(var i in style){
+    if(!style.hasOwnProperty(i))continue;
+    rt[i] = style[i]
+
+  }
+  return rt;
+}
+
+
+export function isWeiXin() {
+  // #ifdef H5
+  var ua = window.navigator.userAgent.toLowerCase();
+  if (
+	  ua.match(/MicroMessenger/i) == 'micromessenger'
+	  && ua.match(/miniProgram/i)
+	  && ua.match(/miniProgram/i)[0] == 'miniprogram'
+  ) {
+	return 'xcx'
+  }
+  if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+	return true;
+  } else {
+	return false;
+  }
+  // #endif
+
+  // #ifndef H5
+  return false
+  // #endif
+
 }

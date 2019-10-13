@@ -209,6 +209,9 @@
             }
         }
         ,{
+            "path" : "pages/login/login",
+            "style" : {}
+        },{
             "path" : "pages/logistics/logistics",
             "style" : {
             	"navigationBarTitleText": "物流跟踪"

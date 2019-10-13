@@ -1,7 +1,7 @@
 {
-    "name" : "网中网电商",
-    "appid" : "__UNI__E5E1B20",
-    "description" : "网中网电商",
+    "name" : "新电商",
+    "appid" : "",
+    "description" : "",
     "versionName" : "1.0.0",
     "versionCode" : "100",
     "transformPx" : false,
@@ -56,10 +56,9 @@
     "quickapp" : {},
     /* 小程序特有相关 */
     "mp-weixin" : {
-        "appid" : "wx57c0d6caade2c2c7",
+        "appid" : "wxbdeb9e51dacbbafc",
         "setting" : {
-            "urlCheck" : false,
-            "postcss" : false
+            "urlCheck" : false
         },
         "usingComponents" : true
     },
@@ -74,20 +73,20 @@
         "appid" : "tt6f4419f9f06ea321"
     },
     "h5" : {
-        "publicPath" : "./",
+		"publicPath": process.env.NODE_ENV === 'production' ? './' : '/',//解决资源路径问题
         "devServer" : {
-            "port" : 4100,
-            "disableHostCheck" : true,
-            "proxy" : {
-                "/api" : {
-                    "target" : "http://new401.bafangka.com/api",
-                    "changeOrigin" : true,
-                    "secure" : false,
-                    "pathRewrite" : {
-                        "^/api" : ""
-                    }
-                }
-            }
+			"port": 4100,
+			"disableHostCheck": true,
+			"proxy": {
+				"/api": {
+					"target": "http://new401.bafangka.com/api",
+					"changeOrigin": true,
+					"secure": false,
+					"pathRewrite": {
+					  "^/api": ""
+					}
+				}
+			}
         },
         "router" : {
             "base" : ""

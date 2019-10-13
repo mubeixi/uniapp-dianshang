@@ -1,5 +1,5 @@
 <template>
-  <view class="text">
+  <view class="text" @click="go">
     <view :style="{fontSize:text.style.fontSize+'px',color:text.style.color,backgroundColor:text.style.bgColor,textAlign:text.style.textAlign}"
          class="text">{{text.value.content}}
     </view>
@@ -40,7 +40,9 @@
     },
     components: {},
     methods: {
-
+		go(){
+			this.$fun.linkTo(this.text.value)
+		}
     },
     created() {
       //用这个来搞事啊
