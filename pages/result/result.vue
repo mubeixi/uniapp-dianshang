@@ -83,7 +83,10 @@
 import popupLayer from '../../components/popup-layer/popup-layer.vue'
 import {getProd} from '../../common/fetch.js';
 import {goBack}  from '../../common/tool.js'
+import {pageMixin} from "../../common/mixin";
+
 export default {
+	mixins:[pageMixin],
   name: 'App',
   props: {value:'',},
   data() {

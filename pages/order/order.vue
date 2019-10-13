@@ -67,7 +67,10 @@
 <script>
 // import pagetitle from '@/components/title'
 import {getOrder,cancelOrder,getOrderNum} from '@/common/fetch.js'
+import {pageMixin} from "../../common/mixin";
+
 export default {
+	mixins:[pageMixin],
     data(){
         return {
             index: 0,

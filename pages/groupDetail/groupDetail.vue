@@ -232,7 +232,10 @@
 import popupLayer from '../../components/popup-layer/popup-layer.vue'
 import {getProductDetail,getCommit,updateCart,addCollection,getCoupon,getUserCoupon,cancelCollection,checkProdCollected} from '../../common/fetch.js'
 import {goBack,numberSort}  from '../../common/tool.js'
+import {pageMixin} from "../../common/mixin";
+
 export default {
+	mixins:[pageMixin],
     data(){
         return {
 type: '', // 优惠券内容， 分享内容

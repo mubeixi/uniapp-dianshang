@@ -87,7 +87,10 @@
 <script>
 	import {goBack}  from '../../common/tool.js'
 	import circleTitle from '../../components/circleTitle/circleTitle.vue'
+	import {pageMixin} from "../../common/mixin";
+	
 	export default {
+		mixins:[pageMixin],
 		data() {
 			return {
 				

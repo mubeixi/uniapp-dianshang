@@ -33,7 +33,10 @@
 
 <script>
 import {getFavouritePro,cancelCollection} from '../../common/fetch.js'
+import {pageMixin} from "../../common/mixin";
+
 export default {
+	mixins:[pageMixin],
     components: {
     
     },

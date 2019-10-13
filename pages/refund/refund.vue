@@ -117,7 +117,10 @@
 <script>
 import popupLayer from '../../components/popup-layer/popup-layer.vue';
 import {uploadImage,getRefund} from '../../common/fetch.js'
+import {pageMixin} from "../../common/mixin";
+
 export default {
+	mixins:[pageMixin],
     components: {
 		popupLayer
     },

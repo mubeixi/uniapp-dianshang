@@ -22,7 +22,10 @@
 <script>
 import {goBack}  from '../../common/tool.js'
 // import tabs from '@/components/tabs'
+import {pageMixin} from "../../common/mixin";
+
 export default {
+	mixins:[pageMixin],
   name: 'App',
   data(){
       return {

@@ -227,7 +227,10 @@ import { mapGetters, mapActions, Store } from "vuex";
 
 import { isWeiXin } from "../../common/tool";
 
+import {pageMixin} from "../../common/mixin";
+
 export default {
+	mixins:[pageMixin],
   data() {
     return {
       froms:'',//跳转过来的路由

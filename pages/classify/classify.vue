@@ -37,7 +37,10 @@
 
 <script>
 	import {getProductCategory} from '../../common/fetch.js';
+	import {pageMixin} from "../../common/mixin";
+	
 	export default {
+		mixins:[pageMixin],
 		data() {
 			return {
 				name: "wkiwi",
