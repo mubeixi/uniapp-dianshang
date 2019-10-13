@@ -40,7 +40,7 @@
       </div>
       <div v-else class="none">
         <img src="/static/box.png" alt="">
-        <div><span>购物车空空如也</span><span class="tobuy">去逛逛</span></div>
+        <div><span>购物车空空如也</span><span class="tobuy" @click="gotoBuy">去逛逛</span></div>
       </div>
       <!-- 猜你喜欢 -->
       <div class="fenge"><span class="red"></span><span class="caini">猜你喜欢</span><span class="red"></span></div>
@@ -56,7 +56,7 @@
       </div>
     </div>
     <!-- 购物车结算 -->
-    <div class="checkout">
+    <div class="checkout" v-if="!manage">
       <div class="mbxa"  @click="checkAll">
 		<img :src="checkAllFlag ? '/static/checked.png' : '/static/uncheck.png'"  style="margin-right: 17rpx;" alt="">
 			全选
@@ -135,6 +135,12 @@ export default {
 	ls.clear();
   },
   methods: {
+	 // 去逛逛
+	gotoBuy(){
+		uni.switchTab({
+			url: '../index/index'
+		})
+	},
 	// 重置信息
 	reset(){
 		this.handleShow = true;
@@ -171,7 +177,14 @@ export default {
 				url: `../check/check?cart_key=CartList&cart_buy=${this.cart_buy}`
 			})
 		}else {
-			delCart({Users_ID: 'wkbq6nc2kc', User_ID: 3, cart_key: 'CartList', prod_attr: JSON.stringify(obj)}).then(res=>{
+			if(Object.getOwnPropertyNames(obj).length == 0) {
+				uni.showToast({
+					title: '您选择您要删除的产品',
+					icon: 'none'
+				});
+				return;
+			}
+			delCart({ cart_key: 'CartList', prod_attr: JSON.stringify(obj)}).then(res=>{
 				if(res.errorCode == 0) {
 					uni.showLoading({
 						icon: 'success',

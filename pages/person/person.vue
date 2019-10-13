@@ -8,7 +8,7 @@
 			</view>
 			<view class="personInfo">
 				<view class="left">
-					<image src="/static/person/tou.png" ></image>
+					<image src="/static/default.png" ></image>
 				</view>
 				<view class="right">
 					<view class="nickName">坚果姑娘</view>
@@ -84,7 +84,7 @@
 				</view>
 				<image src="/static/person/right.png" class="right"></image>
 			</view>
-			<view class="line"></view>
+			
 			<view class="bargain">
 				<image src="/static/person/kan.png" class="left"></image>
 				<view class="pintuan">
@@ -92,15 +92,21 @@
 				</view>
 				<image src="/static/person/right.png" class="right"></image>
 			</view>
-			<view class="line"></view>
 			<view class="bargain">
+				<image src="/static/person/renwu.png" class="left"></image>
+				<view class="pintuan">
+					任务中心
+				</view>
+				<image src="/static/person/right.png" class="right"></image>
+			</view>
+			<view class="bargain"  @click="gotoAddresslist" >
 				<image src="/static/person/di.png" class="left"></image>
 				<view class="pintuan">
 					地址管理
 				</view>
 				<image src="/static/person/right.png" class="right"></image>
 			</view>
-			<view class="line"></view>
+	
 			<view class="bargain">
 				<image src="/static/person/wo.png" class="left"></image>
 				<view class="pintuan">
@@ -108,7 +114,7 @@
 				</view>
 				<image src="/static/person/right.png" class="right"></image>
 			</view>
-			<view class="line"></view>
+			
 			<view class="bargain">
 				<image src="/static/person/tui.png" class="left"></image>
 				<view class="pintuan">
@@ -116,7 +122,7 @@
 				</view>
 				<image src="/static/person/right.png" class="right"></image>
 			</view>
-			<view class="line"></view>
+			
 			<view class="setting">
 				<image src="/static/person/she.png" class="left"></image>
 				<view class="pintuan">
@@ -151,6 +157,12 @@
 					uni.navigateTo({
 						url:'../order/order?index='+item
 					})	
+			},
+			// 去地址管理
+			gotoAddresslist() {
+				uni.navigateTo({
+					url: '../addressList/addressList'
+				})
 			}
 		}
 	}
@@ -348,7 +360,7 @@
 	}
 	.list{
 		width: 710rpx;
-		height: 533rpx;
+		//height: 533rpx;
 		margin: 0  auto;
 		background-color: #FFFFFF;
 		border-radius:20rpx;
@@ -358,6 +370,9 @@
 		.line{
 			height:1px;
 			background:rgba(236,232,232,1);
+		}
+		&>view{
+			border-bottom: 1px solid rgba(236,232,232,1) ;
 		}
 		.group{
 			height: 94rpx;

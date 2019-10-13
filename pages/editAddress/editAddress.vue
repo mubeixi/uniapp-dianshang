@@ -166,7 +166,7 @@
 				if (!address_info.Address_Name) {
 				  uni.showToast({
 					title: '请输入收货人名称',
-					icon: 'loading'
+					icon: 'none'
 				  });
 				  return false;
 				} else {
@@ -175,7 +175,7 @@
 				if (!address_info.Address_Mobile) {
 				  uni.showToast({
 					title: '请输入收货人电话',
-					icon: 'loading'
+					icon: 'none'
 				  });
 				  return false;
 				} else if (!utils.check_mobile(address_info.Address_Mobile)) {
@@ -191,21 +191,21 @@
 				if (!this.address_info.Address_Province || !this.address_info.Address_City || !this.address_info.Address_Area) {
 				  uni.showToast({
 					title: '请选择收货地址',
-					icon: 'loading'
+					icon: 'none'
 				  });
 				  return false;
 				}
 				if (!this.address_info.Address_Town) {
 				      uni.showToast({
 				        title: '请选择街道',
-				        icon: 'loading'
+				        icon: 'none'
 				      });
 				      return false;
 				}
 				if (!address_info.Address_Detailed) {
 				  uni.showToast({
 					title: '请填写详细的地址',
-					icon: 'loading'
+					icon: 'none'
 				  });
 				  return false;
 				} else {
@@ -218,19 +218,18 @@
 				if (this.address_info.Address_ID) {
 				  // 编辑
 				  var data = this.address_info;
-				  editAddress(data).then(res=>{
-					  // console.log('bianji')
-					  console.log(res)
+				  editAddress(data).then(res => {
+					  this.setAddressInfo(res);
 				  })
 				} else {
 				  // 添加
 				  var data = this.address_info;
 				  data.act = 'add_address';
 				  delete data.Address_ID;
-				  addAddress(data).then(res=>{
-					  console.log('zengjia')
-					  console.log(res)
+				  addAddress(data).then(res => {
+					  this.addeditAddress(res)
 				  })
+				  
 				  // app.http_req(data, app.globalData.init.api_url, 'POST', this.addeditAddress);
 				}
 			  },
@@ -240,7 +239,7 @@
 				var that = this;
 				if (res.errorCode == 0) {
 				  //返回来时页面
-				  wx.showToast({
+				  uni.showToast({
 					title: (that.address_info.Address_ID ? '编辑成功' : '添加成功'),
 					icon: 'success',
 					duration: 2000,
@@ -257,7 +256,7 @@
 							  var prevPage = pages[pages.length - 2]; //上一页
 							  prevPage.back_address_id = res.data.Address_ID;
 							} else {
-							  wx.showModal({
+							  uni.showModal({
 								title: '提示',
 								content: '添加的收货地址不在配送范围内',
 								confirmText: '重新添加',
@@ -301,37 +300,71 @@
 			  setAddressInfo: function (res) {
 				if (res.errorCode == 0) {
 					var addressInfo = res.data[0];
-					this.address_info.Address_ID = addressInfo['Address_ID'],
-					this.address_info.Address_Name = addressInfo['Address_Name'],
-					this.address_info.Address_Mobile = addressInfo['Address_Mobile'],
-					this.address_info.Address_Province = addressInfo['Address_Province'],
-					this.address_info.Address_City = addressInfo['Address_City'],
-					this.address_info.address_info.Address_Area = addressInfo['Address_Area'],
-					this.address_info.Address_Detailed = addressInfo['Address_Detailed'],
-					this.address_info.Address_Is_Default = addressInfo['Address_Is_Default'],  //是否为默认地址
-					//初始化地址选择数据
-					this.objectMultiArray = [
-					  utils.array_change(area.area[0]['0']),
-					  utils.array_change(area.area[0]['0,' + addressInfo['Address_Province']]),
-					  utils.array_change(area.area[0]['0,' + addressInfo['Address_Province'] + ',' + addressInfo['Address_City']])
-					];
-					this.change_objectMultiArray = [
-					  utils.array_change(area.area[0]['0']),
-					  utils.array_change(area.area[0]['0,' + addressInfo['Address_Province']]),
-					  utils.array_change(area.area[0]['0,' + addressInfo['Address_Province'] + ',' + addressInfo['Address_City']])
-					];
+			// 		this.address_info.Address_ID = addressInfo['Address_ID'],
+			// 		this.address_info.Address_Name = addressInfo['Address_Name'],
+			// 		this.address_info.Address_Mobile = addressInfo['Address_Mobile'],
+			// 		this.address_info.Address_Province = addressInfo['Address_Province'],
+			// 		this.address_info.Address_City = addressInfo['Address_City'],
+			// 		this.address_info.address_info.Address_Area = addressInfo['Address_Area'],
+			// 		this.address_info.Address_Detailed = addressInfo['Address_Detailed'],
+			// 		this.address_info.Address_Town = addressInfo['Address_Town'],
+			// 		this.address_info.Address_Is_Default = addressInfo['Address_Is_Default'],  //是否为默认地址
+			// 		//初始化地址选择数据
+			// 		this.objectMultiArray = [
+			// 		  utils.array_change(area.area[0]['0']),
+			// 		  utils.array_change(area.area[0]['0,' + addressInfo['Address_Province']]),
+			// 		  utils.array_change(area.area[0]['0,' + addressInfo['Address_Province'] + ',' + addressInfo['Address_City']])
+			// 		];
+			// 		this.change_objectMultiArray = [
+			// 		  utils.array_change(area.area[0]['0']),
+			// 		  utils.array_change(area.area[0]['0,' + addressInfo['Address_Province']]),
+			// 		  utils.array_change(area.area[0]['0,' + addressInfo['Address_Province'] + ',' + addressInfo['Address_City']])
+			// 		];
 			
-				  //设置初始显示列
-					this.multiIndex = [
-					  utils.get_arr_index(this.data.objectMultiArray[0], addressInfo['Address_Province']),
-					  utils.get_arr_index(this.data.objectMultiArray[1], addressInfo['Address_City']),
-					  utils.get_arr_index(this.data.objectMultiArray[2], addressInfo['Address_Area'])
-					];
-					this.change_multiIndex = [
-					  utils.get_arr_index(this.data.objectMultiArray[0], addressInfo['Address_Province']),
-					  utils.get_arr_index(this.data.objectMultiArray[1], addressInfo['Address_City']),
-					  utils.get_arr_index(this.data.objectMultiArray[2], addressInfo['Address_Area'])
-					];
+			// 	  //设置初始显示列
+			// 		this.multiIndex = [
+			// 		  utils.get_arr_index(this.data.objectMultiArray[0], addressInfo['Address_Province']),
+			// 		  utils.get_arr_index(this.data.objectMultiArray[1], addressInfo['Address_City']),
+			// 		  utils.get_arr_index(this.data.objectMultiArray[2], addressInfo['Address_Area'])
+			// 		];
+			// 		this.change_multiIndex = [
+			// 		  utils.get_arr_index(this.data.objectMultiArray[0], addressInfo['Address_Province']),
+			// 		  utils.get_arr_index(this.data.objectMultiArray[1], addressInfo['Address_City']),
+			// 		  utils.get_arr_index(this.data.objectMultiArray[2], addressInfo['Address_Area'])
+			// 		];
+				  delete addressInfo['Address_Province_name'];
+			      delete addressInfo['Address_Province_code'];
+			      delete addressInfo['Address_City_name'];
+			      delete addressInfo['Address_City_code'];
+			      delete addressInfo['Address_Area_name'];
+			      delete addressInfo['Address_Area_code'];
+			      delete addressInfo['Address_Town_name'];
+			      delete addressInfo['Address_Town_code'];
+			
+			      //初始化地址选择数据
+				  console.log(['0,' + addressInfo['Address_Province']]);
+				  console.log(['0,' + addressInfo['Address_Province'] + ',' + addressInfo['Address_City']]);
+				  console.log(['0,' + addressInfo['Address_Province'] + ',' + addressInfo['Address_City']]);
+			      let objectMultiArray = [
+			        utils.array_change(area.area[0]['0']),
+			        utils.array_change(area.area[0]['0,' + addressInfo['Address_Province']]),
+			        utils.array_change(area.area[0]['0,' + addressInfo['Address_Province'] + ',' + addressInfo['Address_City']])
+			      ];
+			      //设置初始显示列
+			      let multiIndex = [
+			        utils.get_arr_index(objectMultiArray[0], addressInfo['Address_Province']),
+			        utils.get_arr_index(objectMultiArray[1], addressInfo['Address_City']),
+			        utils.get_arr_index(objectMultiArray[2], addressInfo['Address_Area'])
+			      ];
+			      this.address_info = addressInfo;
+				  this.objectMultiArray = objectMultiArray;
+				  this.change_objectMultiArray = objectMultiArray;
+				  this.multiIndex = multiIndex;
+				  this.change_multiIndex = multiIndex;
+			        
+			
+			      // 处理街道信息
+			      this.address_town();
 				} else {
 				  uni.showModal({
 					title: '错误',
@@ -349,7 +382,7 @@
 				if (this.address_info.Address_ID) {
 				  getAddress({Address_ID: this.address_info.Address_ID}).then(
 				  	res => {
-				  		this.setAddressInfo();
+				  		this.setAddressInfo(res);
 				  	}
 				  )
 				} else {  //添加收货地址  初始化地址选择数据

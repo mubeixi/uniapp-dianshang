@@ -151,6 +151,29 @@
         ,{
             "path" : "pages/login/login",
             "style" : {}
+        },{
+            "path" : "pages/logistics/logistics",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/taskCenter/taskCenter",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/promotionAssist/promotionAssist",
+			"style" : {}
+		}
+		,{
+            "path" : "pages/qiandao/qiandao",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/vipGrade/vipGrade",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/publishComment/publishComment",
+            "style" : {}
         }
     ],
 	"globalStyle": {

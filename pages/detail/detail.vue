@@ -297,7 +297,6 @@ export default {
 		// 检查产品是否已收藏
 		checkProdCollected() {
 			checkProdCollected({prod_id: this.Products_ID}).then(res => {
-				console.log(res)
 				if(res.errorCode == 0) {
 					this.isCollected = res.data.is_favourite == 1 
 				}
@@ -349,7 +348,6 @@ export default {
 					}
 					this.totalCount=res.totalCount;
 				}
-				console.log(res)
 			}).catch(e=>{
 				console.log(e);
 			})
@@ -358,12 +356,9 @@ export default {
 		selectAttr(index,i){
 			var value_index = index; //选择的属性值索引
 			var attr_index = i;   //选择的属性索引
-			console.log(value_index)
-			console.log(attr_index)
 			// if (this.check_attrid_arr.indexOf(value_index) > -1) return false;
 			//记录选择的属性
 			var check_attr = Object.assign(this.check_attr, { [attr_index]: value_index }); //记录选择的属性  attr_index外的[]必须
-			console.log(check_attr)
 			//属性处理
 			var check_attrid = [];
 			var check_attrname = [];
@@ -426,9 +421,7 @@ export default {
 					return;
 				}
 			}
-			console.log(this.postData)
 			updateCart(this.postData).then(res=>{
-				//console.log(res)
 				if(res.errorCode == 0) {
 					if(this.postData.cart_key == 'CartList') {
 						uni.showLoading({
@@ -476,7 +469,6 @@ export default {
 			// 检查是否已收藏
 			if(this.isCollected) {
 				cancelCollection({prod_id: this.Products_ID}).then(res=>{
-					console.log(res)
 					if(res.errorCode == 0) {
 						uni.showToast({
 							title: res.msg
@@ -528,14 +520,12 @@ export default {
 				Users_ID:'wkbq6nc2kc'
 			}
 			getProductDetail(data).then(res=>{
-				console.log(res)
 				this.product = res.data;
 				this.postData.count = res.data.Products_Count;
 				if(res.data.skujosn) {
 					this.product.skujosn = JSON.parse(res.data.skujosn);
 					this.product.skuvaljosn = JSON.parse(res.data.skuvaljosn);
 				}
-				console.log(this.product.skujosn)
 			}).catch(e=>{
 				console.log(e)
 			})
@@ -547,23 +537,23 @@ export default {
 		directBuy(){
 			this.$refs.cartPopu.show();
 			this.postData.cart_key = 'DirectBuy'
-			let arg = {
-				Users_ID: 'wkbq6nc2kc',
-				User_ID: 3,
-				cart_key: this.cart_key,
-				prod_id:  this.Products_ID,
-				qty: 1,
-				// atr_str: "颜色:黑色;尺寸:大号;",
-				// atrid_str: "1;3",	
-			}
-			updateCart(arg).then(res=>{
-				console.log(res)
-				if(res.errorCode == 0) {
-					uni.navigateTo({
-						url: '../check/check?cart_key=DirectBuy'
-					})
-				}
-			})
+			// let arg = {
+			// 	Users_ID: 'wkbq6nc2kc',
+			// 	User_ID: 3,
+			// 	cart_key: this.cart_key,
+			// 	prod_id:  this.Products_ID,
+			// 	qty: 1,
+			// 	// atr_str: "颜色:黑色;尺寸:大号;",
+			// 	// atrid_str: "1;3",	
+			// }
+			// updateCart(arg).then(res=>{
+			// 	console.log(res)
+			// 	if(res.errorCode == 0) {
+			// 		uni.navigateTo({
+			// 			url: '../check/check?cart_key=DirectBuy'
+			// 		})
+			// 	}
+			// })
 		},
         gotoComments(){
             uni.navigateTo({
@@ -729,7 +719,7 @@ export default {
     /* 产品描述部分 start */
     .section1 {
         padding: 0 20rpx 20rpx;
-        border-bottom: 20rpx solid #f8f8f8;
+        border-bottom: 20rpx solid #efefef;
     }
     .price {
         margin-top: 38rpx;
@@ -789,7 +779,7 @@ export default {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        border-bottom: 20rpx solid #f8f8f8;
+        border-bottom: 20rpx solid #efefef;
     }
     .section2 .btn {
         padding: 0 10rpx;
@@ -815,7 +805,7 @@ export default {
         flex-wrap: wrap;
         font-size: 0rpx;
         padding: 30rpx 20rpx;
-        border-bottom: 20rpx solid #f8f8f8;
+        border-bottom: 20rpx solid #efefef;
     }
     .section3>span {
         display: flex;
@@ -835,7 +825,7 @@ export default {
     /* 评价 start */
     .comment {
         padding: 30rpx 20rpx;
-        border-bottom: 20rpx solid #f8f8f8;
+        border-bottom: 20rpx solid #efefef;
     }
     .c_title {
         display: flex;
@@ -878,7 +868,7 @@ export default {
         color: #333;
         line-height: 36rpx;
         padding: 18rpx 0;
-        border-bottom: 2rpx solid #f8f8f8;
+        border-bottom: 2rpx solid #efefef;
     }
     .c_content_img img {
         width: 140rpx;

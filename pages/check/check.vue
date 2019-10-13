@@ -3,14 +3,14 @@
       <!--  <pagetitle title="提交订单"></pagetitle> -->
         <div class="address" v-if="orderInfo.is_virtual == 0 && orderInfo.NeedShipping == 1">
             <img class="loc_icon" src="/static/location.png" alt="">
-            <div class="add_msg" v-if="addressinfo">
+            <div class="add_msg" v-if="addressinfo.Address_Name">
                 <div class="name">收货人：{{addressinfo.Address_Name}} <span>{{addressinfo.Address_Mobile | formatphone}}</span></div>
                 <div class="location">收货地址：{{addressinfo.Address_Province_name}}{{addressinfo.Address_City_name}}{{addressinfo.Address_Area_name}}{{addressinfo.Address_Town_name}}</div>
             </div>
 			<div class="add_msg" v-else>
 				<div>暂无收货地址，去添加</div>
 			</div>
-            <img class="right" src="/static/right.png" alt="">
+            <img class="right" src="/static/right.png" alt="" @click="goAddressList">
         </div>
 		<div class="biz_msg">
 			<img :src="orderInfo.ShopLogo" class="biz_logo" alt="">
@@ -33,7 +33,7 @@
                 <div class="o_title">
                     <span>运费选择</span>
                     <span style="text-align:right; color: #888;" @click="changeShip">
-						<span>{{shipping_name?(shipping_name):'请选择物流'}}</span>
+						<span>{{shipping_name?(shipping_name + ' ' + (orderInfo.Order_Shipping.Price > 0 ? orderInfo.Order_Shipping.Price : '免运费')):'请选择物流'}}</span>
                         <image  class="right" src="/static/right.png" alt=""></image>
                     </span>
                 </div>
@@ -43,7 +43,7 @@
             <div class="bd">
                 <div class="o_title" @click="changeCoupon">
                     <span>优惠券选择</span>
-                    <span style="text-align: right; color: #888;">
+                    <span style="text-align: right; color: #888;display: flex;align-items: center;">
 						<span >{{coupon_desc?coupon_desc:'您有优惠券可用'}}</span>
 						<image  src="/static/right.png" class="right" alt=""></image>
 					</span>
@@ -66,7 +66,7 @@
                     <switch :checked="userMoneyChecked" color="#04B600" @change="userMoneyChange" />
                 </div>
 				<div class="o_de">您当前共有余额: <text>{{userInfo.User_Money}}</text></div>
-                <input v-if="userMoneyChecked" class="o_desc" placeholder="请输入金额" type="number" @confirm="confirm_user_money">
+                <input v-if="userMoneyChecked" class="o_desc" placeholder="请输入金额" type="number" @blur="confirm_user_money">
             </div>
         </div>
         <div class="other">
@@ -75,14 +75,14 @@
                     <span>是否开具发票</span>
 					<switch :checked="faPiaoChecked" color="#04B600" @change="faPiaoChange" />
                 </div>
-				<input v-if="faPiaoChecked" @confirm="faPiaoConfirm" type="text" class="o_desc" placeholder="请输入发票抬头和纳税人识别号" />
+				<input v-if="faPiaoChecked"  @blur="faPiaoConfirm" type="text" class="o_desc" placeholder="请输入发票抬头和纳税人识别号" />
             </div>
         </div>
         <div class="other">
             <div class="bd">
                 <div class="o_title  words">
                     <span>买家留言</span>
-                    <input type="text" @confirm="remarkConfirm" placeholder="请填写留言内容">
+                    <input type="text"  @blur="remarkConfirm" placeholder="请填写留言内容">
                 </div>
             </div>
         </div>
@@ -90,10 +90,9 @@
             <span style="margin-right:20rpx;">共<span>{{orderInfo.total_count}}</span>件商品</span>
             <span>小计：<span>￥</span><span class="money">{{orderInfo.Order_TotalPrice}}</span></span>
         </div> -->
-        <div style="height:100px;background:#efefef;"></div>
         <div class="order_total">
             <div class="totalinfo">
-                <div class="info">共{{orderInfo.prod_count}}件商品 总计：￥{{orderInfo.Order_Fyepay}}</div>
+                <div class="info">共{{orderInfo.prod_count}}件商品 总计：<text class="money"><text class="m_icon">￥</text> {{orderInfo.Order_Fyepay}}</text></div>
                 <div class="tips">*本次购物一共可获得{{orderInfo.Integral_Get}}积分</div>
             </div>
             <div class="submit" @click="form_submit">提交订单</div>
@@ -123,7 +122,7 @@
         		确定
         	</div>
         </popup-layer>
-		<view class="remind-wrap" >
+		<view class="remind-wrap" v-if="remindAddress">
 			<div class="remind-add">
 				<div class="text-align-center mb20">新建收货地址</div>
 				<view class="remind_desc">
@@ -192,8 +191,12 @@ export default {
 				order_remark: '', // 买家留言
 			},
 			Order_ID: 0,
-			loading: false, //数据是否加载完成
-			remindAddress: false, // 提醒添加收货地址
+			addressLoading: false, // 收货地址信息是否加载完
+			orderLoading: false, //订单信息是否加载完
+			userLoading: false, //个人信息是否加载完
+			// remindAddress: false, // 提醒添加收货地址
+			submited: false,  // 是否已经提交过，防止重复提交
+			back_address_id: 0,
         }
     },
 	filters: {
@@ -216,46 +219,58 @@ export default {
 		this.postData.cart_buy = options.cart_buy;
 	},
 	computed: {
+		loading: function(){
+			return this.addressLoading && this.orderLoading && this.userLoading
+		},
+		remindAddress: function(){
+			return this.orderInfo.is_virtual == 0 && this.orderInfo.NeedShipping == 1 && !this.addressinfo.Address_Name
+		}
 		
 	},
     methods: {
 		goback(){
 			goBack();
 		},
+		// 跳转地址列表页
+		goAddressList(){
+			uni.navigateTo({
+				url: '../addressList/addressList?from=checkout&addressid='+this.postData.address_id
+			})
+		},
 		// 跳转新增地址页面
 		goEditAdd(){
 			uni.navigateTo({
-				url: '../editAddress/editAddress'
+				url: '../editAddress/editAddress?from=checkout'
 			})
 		},
 		// 提交订单
 		form_submit() {
-			if(!this.postData.shipping_id) {
-				uni.showToast({
-					title: '请选择物流'	
-				})
-				return;
-			}
-			createOrder(this.postData).then(res=>{
-				console.log(res)
-				if(res.errorCode == 0) {
-					// 如果order_totalPrice <= 0  直接跳转 订单列表页
-					this.Order_ID = res.data.Order_ID;
-					uni.navigateTo({
-						url: '../pay/pay?Order_ID='+ res.data.Order_ID
-					})
+			if(!this.submited){
+				this.submited = true;
+				if(!this.postData.shipping_id) {
+					uni.showToast({
+						title: '请选择物流'	
+					});
+					this.submited = false;
+					return;
 				}
-			}).catch(e=>{
-				
-			});
-			// uni.setStorage({
-			//     key: 'postData',
-			//     data: this.postData,
-			//     success: function () {
-			//         console.log('success');
-			//     }
-			// });
-			
+				createOrder(this.postData).then(res=>{
+					if(res.errorCode == 0) {
+						// 如果order_totalPrice <= 0  直接跳转 订单列表页
+						this.Order_ID = res.data.Order_ID;
+						uni.navigateTo({
+							url: '../pay/pay?Order_ID='+ res.data.Order_ID
+						})
+					}else {
+						uni.showToast({
+							title: res.msg
+						})
+					}
+					this.submited = false;
+				}).catch(e=>{
+					this.submited = true;
+				});
+			}
 		},
 		// 积分抵扣开关
 		intergralSwitchChange(e){
@@ -337,10 +352,11 @@ export default {
 		},
 		getUserInfo(){
 			getUserInfo({User_ID:this.User_ID,Users_ID:this.Users_ID}).then(res => {
-				console.log(res)
 				if(res.errorCode == 0) {
 					this.userInfo = res.data;
+					
 				}
+				this.userLoading = true;
 			})
 		},
 		changeCoupon(){
@@ -370,8 +386,25 @@ export default {
 			this.$refs.popupRef.close();
 		},
 		getAddress(){
-			getAddress({Users_ID: this.Users_ID,User_ID: this.User_ID,}).then(res=>{
-				console.log(res)
+			this.$vm.$on('fire', (data) =>{
+				this.back_address_id = data;
+			})
+			console.log(this.back_address_id)
+			var Address_ID;
+			if (this.back_address_id) {  //添加、选择收获地址返回
+			    Address_ID = this.back_address_id;
+			} else if (this.addressinfo.Address_ID) { //有收获地址，则更新（防止收获地址编辑后返回）
+			    Address_ID = this.addressinfo.Address_ID;
+			}
+			getAddress({Address_ID: Address_ID?Address_ID:0}).then(res=>{
+				if (this.back_address_id && res.errorCode != 0) {  //添加、选择收获地址返回
+					uni.showModal({
+					  title: '错误',
+					  content: '收货地址获取失败',
+					  showCancel: false
+					});
+					return false;
+				}
 				if(res.errorCode == 0) {
 					for(let i in res.data){
 						for(let j in res.data[i]){
@@ -383,21 +416,28 @@ export default {
 					}
 					this.postData.address_id = this.addressinfo.Address_ID;
 				}
-				if(this.orderInfo.is_virtual == 0 && this.orderInfo.NeedShipping == 1 && !this.addressinfo) {
-					// 需要收货地址
-					this.remindAddress = true;
-				}
-			}).catch(e => console.log(e))
+				this.back_address_id = 0;
+				this.addressLoading = true;
+				// this.createOrderCheck();
+			}).catch(e => {
+				uni.showModal({
+					title: e.data,
+					
+				})
+			})
 		},
 		createOrderCheck(){
 			createOrderCheck(this.postData).then(res=>{
 				if(res.errorCode == 0){
 					this.orderInfo = res.data;
 					this.couponlist = res.data.coupon_list;
-					this.loading = true;
+					this.orderLoading = true;
 					
 				}else {
 					// 获取失败
+					// uni.showModal({
+					// 	title: res.msg
+					// })
 				}
 			})
 		}
@@ -414,11 +454,17 @@ export default {
         /* margin: 15px 0 10px; */
         display: flex;
         align-items: center;
-        padding: 44rpx;
+        padding: 44rpx 38rpx 45rpx;
         border-top: 30rpx solid #F3F3F3;
         border-bottom: 20rpx solid #F3F3F3;
 		.add_msg {
 			flex: 1;
+			font-size: 28rpx;
+		}
+		.right {
+		    width: 18rpx;
+		    height: 27rpx;
+		    margin-left: 34rpx;
 		}
     }
     .loc_icon {
@@ -426,26 +472,25 @@ export default {
         height: 51rpx;
         margin-right: 31rpx;
     }
-    .right {
-        width: 18rpx;
-        height: 27rpx;
-        margin-left: 34rpx;
-    }
+    
     .name {
         margin-bottom: 30rpx;
         font-size: 28rpx;
+		color: #333;
+		line-height: 22rpx;
     }
     .name>span {
         margin-left: 10rpx;
     }
     .location {
         font-size: 24rpx;
-        color: #444;
+        color: #333;
+		line-height: 32rpx;
     }
     /* 收货地址 end */
     /* 订单信息 start */
     .order_msg {
-        padding: 0 30rpx;
+        padding: 0 40rpx 0 30rpx;
     }
     .biz_msg {
         display: flex;
@@ -461,11 +506,16 @@ export default {
     }
     .biz_name {
         font-size: 28rpx;
+		color: #333;
+		line-height: 30rpx;
     }
     .pro {
         display: flex;
         margin-bottom: 50rpx;
     }
+	.order_msg .pro:last-child {
+		margin-bottom:17rpx
+	}
     .pro-img {
         width: 200rpx;
         height: 200rpx;
@@ -478,7 +528,8 @@ export default {
 		overflow: hidden;
 		text-overflow: ellipsis;
 		-webkit-box-orient: vertical;
-		line-height: 28rpx;
+		line-height: 30rpx;
+		height: 61rpx
     }
 	.pro-msg {
 		flex: 1;
@@ -503,6 +554,7 @@ export default {
 		.amount {
 		    float: right;
 		    color: #333;
+			font-size: 22rpx;
 			.num {
 				font-size: 30rpx;
 			}
@@ -512,8 +564,13 @@ export default {
     /* 订单信息 end */
     /* 订单其他信息 start */
     .other {
-        padding: 30rpx 30rpx 0;
+        padding: 30rpx 40rpx 0 30rpx;
         font-size: 22rpx;
+		.right {
+			margin-left: 18rpx;
+			width: 15rpx;
+			height: 23rpx;
+		}
     }
     .other .bd {
         padding-bottom: 30rpx;
@@ -583,10 +640,18 @@ export default {
     }
     .totalinfo {
         flex: 1;
-        text-align: center;
+        padding-left: 93rpx;
+		line-height: 30rpx;
     }
     .info {
         font-size: 24rpx;
+		.money {
+			color: #F43131;
+			font-size: 30rpx;
+			.m_icon {
+				font-size: 24rpx;
+			}
+		}
     }
     .tips {
         font-size: 20rpx;
@@ -628,7 +693,7 @@ export default {
 		left: 0;
 		width: 100%;
 		height: 100%;
-		background: rgba(0,0,0,.2);
+		background: rgba(0,0,0,.3);
 		z-index: 100;
 		display: flex;
 		align-items: center;
@@ -648,12 +713,13 @@ export default {
 			.remind_desc {
 				padding: 0 20rpx;
 				font-size: 30rpx;
-				margin: 40rpx 0 60rpx;
+				margin: 40rpx 0;
+				color: #666;
 			}
 			.remind_btns {
 				display: flex;
 				border-top: 1rpx solid #efefef;
-				line-height: 80rpx;
+				line-height: 90rpx;
 				.fl1 {
 					flex: 1;
 				}

@@ -2,7 +2,7 @@
 	<view>
 		<radio-group class="radio-group" @change="radioChange">
 		  <label class="radio" :class="!check_flag ? 'no-redio' : ''" v-for="item in addresslist" :key="">
-			<radio :value="item.Address_ID" :checked="item.Address_ID == check_address_id" v-if="check_flag" :disabled="!check_flag"/>
+			<radio :value="item.Address_ID" color="#F43131" :checked="item.Address_ID == check_address_id" v-if="check_flag" :disabled="!check_flag"/>
 			<view class="flex-main">
 			  <view class='flex-top'>
 				<view class='name'>收货人：{{item.Address_Name}}</view>
@@ -12,8 +12,8 @@
 			  <view class='flex-add default' v-if="item.Address_Is_Default == 1">默认地址</view>
 			</view>
 			<view class="flex-action">
-			  <image src='../../static/address/del.png' @click.stop="deladdress(item.Address_ID)"></image>
-			  <image src='../../static/address/edit.png' @click.stop="addressAddEdit(item.Address_ID)" ></image>
+			  <image src='../../static/address/del.png' @click="deladdress(item.Address_ID)"></image>
+			  <image src='../../static/address/edit.png' @click="addressAddEdit(item.Address_ID)" ></image>
 			</view>
 		  </label>
 		</radio-group>
@@ -21,7 +21,7 @@
 		<view style='height:82rpx;'></view>
 		<view class='tianjia' @click="addressAddEdit('a')">
 		  <view class='jia_img'>
-			<image src='../../static/address/jia.png'></image>
+			<image src='../../static/jia.png'></image>
 		  </view>
 		  <text>新增个人地址</text>
 		  <view class='go_img'>
@@ -47,11 +47,18 @@
 			//选择地址
 			  radioChange: function (e) {
 			    var address_id = e.detail.value;  //选择的地址ID
-			    if (this.data.from_page == 'checkout') {
+			    if (this.from_page == 'checkout') {
 			      var pages = getCurrentPages();          //获取页面堆栈
 			      var prevPage = pages[pages.length - 2]; //上一页
-				  prevPage.back_address_id = address_id;
+				  prevPage.setData({
+					  back_address_id: address_id
+				  })
+				  // #ifdef APP-PLUS
+					prevPage.$getAppWebview().back_address_id = address_id;
+				  // #endif
 			    }
+				this.$vm.$emit('fire',address_id)
+				console.log(address_id);
 			    //返回上一页
 			    uni.navigateBack({
 			      delta: 1
@@ -61,26 +68,27 @@
 			  //删除收获地址
 			  deladdress: function (id) {
 			    var that = this;
-			    var address_id = id;
-			    wx.showModal({
+			    var del_address_id = id;
+			    uni.showModal({
 			      title: '提示',
 			      content: '确定要删除此收货地址吗？',
 			      success: function (res) {
 			        if (res.confirm) {
-			          if (address_id) {
-						delAddress({Address_ID: address_id}).then(res=>{
+			          if (del_address_id) {
+						delAddress({Address_ID: del_address_id}).then(res=>{
 							if (res.errorCode == 0) {
 							  //更新收货地址列表
-							  var addresslist = this.addresslist;
+							  var addresslist = that.addresslist;
 							  for (var i in addresslist) {
-							    if (addresslist[i]['Address_ID'] == this.del_address_id) {
+							    if (addresslist[i]['Address_ID'] == del_address_id) {
 							      addresslist.splice(i, 1);
 							    }
 							  }
 							  //重置删除收货地址id
-							  this.addresslist = addresslist;
-							  this.del_address_id = 0;
+							  that.addresslist = addresslist;
+							  del_address_id = 0;
 							 
+							 console.log(that.addresslist)
 							  uni.showToast({
 							    title: '删除成功',
 							    icon: 'success',
@@ -95,7 +103,7 @@
 							}
 						})
 			          } else {
-			            wx.showModal({
+			            uni.showModal({
 			              title: '错误',
 			              content: '收货地址id获取失败',
 			              showCancel: false
@@ -106,7 +114,7 @@
 			    });
 			  },
 			
-			  //添加收货地址    前台需要使用非冒泡事件:catchtap 因外面有一点击事件 radioChange
+			  //添加收货地址   
 			  addressAddEdit: function(id){
 			    //判断是添加还是编辑
 				var address_id;
@@ -115,7 +123,7 @@
 				}
 				console.log(address_id)
 			    uni.navigateTo({
-			      url: '../editAddress/editAddress?from=addresslist' + (address_id ? '&addressid=' + address_id : ''),
+			    	url: '../editAddress/editAddress?from=addresslist' + (address_id ? '&addressid=' + address_id : '')
 			    })
 			  },
 			
@@ -150,8 +158,11 @@
 				this.from_page = options.from
 		      
 		    }
-			this.getAddressList();
+			
 		  },
+		  onShow(){
+			  this.getAddressList();
+		  }
 	}
 </script>
 

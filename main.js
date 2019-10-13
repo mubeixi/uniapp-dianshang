@@ -18,7 +18,7 @@ Vue.use(Common);
 App.mpType = 'app'
 // 使用pagetitle
 Vue.component('page-title',pagetitle)
-
+Vue.prototype.$vm = new Vue();
 const app = new Vue({
     ...App,
     store
