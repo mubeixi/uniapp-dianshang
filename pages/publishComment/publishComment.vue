@@ -17,7 +17,7 @@
 			<div class="item noborder">上传照片(最多9张)</div>
 			<div class="imgs">
 				<view class="shangchuans" v-for="(item,index) of imgs" :key="index"   @click="yulan(index)">
-					<image :src="item.path" ></image>
+					<image :src="'data:image/jpeg;base64,'+item" ></image>
 					<image src="/static/delimg.png" class="del" @click="delImg(index)"></image>
 				</view>
 			    <view class="shangchuan" @click="addImg">
@@ -34,7 +34,7 @@
 
 <script>
 	import {pageMixin} from "../../common/mixin";
-	
+	import {urlTobase64} from '../../common/tool.js'
 	export default {
 		mixins:[pageMixin],
 		data() {
@@ -45,19 +45,11 @@
 		methods:{
 			//图片预览
 			yulan(index){
-				// uni.previewImage({
-				//             urls: this.imgs,
-				// 			indicator:'default',
-				// 			current:index, 
-				//             longPressActions: {
-				//                 success: function(data) {
-									
-				//                 },
-				//                 fail: function(err) {
-										
-				//                 }
-				//             }
-				// });
+				uni.previewImage({
+				            urls: this.imgs,
+							indicator:'default',
+							current:index
+				});
 			},
 			//提交
 			submit(){
@@ -78,10 +70,11 @@
 					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有  
 					success(res) {
 						for(let item of res.tempFiles){
-							that.imgs.push(item);
+							that.imgs.push(item.path);
 						}
-						
-						console.log(res.tempFiles);
+						for(let i=0;i<that.imgs.length;i++){
+							that.imgs[i]=urlTobase64(that.imgs[i]);
+						}
 					},
 					fail(e) {
 						console.log(e);

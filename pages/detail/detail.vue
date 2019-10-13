@@ -270,15 +270,7 @@ export default {
 			uni.previewImage({
 			            urls: this.commit[i].ImgPath,
 						indicator:'number',
-						current:j, 
-			            longPressActions: {
-			                success: function(data) {
-								
-			                },
-			                fail: function(err) {
-									
-			                }
-			            }
+						current:j
 			});
 		},
 		//轮播图图片预览
@@ -286,15 +278,7 @@ export default {
 			uni.previewImage({
 			            urls: this.product.Products_JSON.ImgPath,
 						indicator:'default',
-						current:index, 
-			            longPressActions: {
-			                success: function(data) {
-								
-			                },
-			                fail: function(err) {
-									
-			                }
-			            }
+						current:index
 			});
 		},
 		// 检查产品是否已收藏
