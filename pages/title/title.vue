@@ -1,9 +1,9 @@
 <template>
-  <div class="wrap" :style="{backgroundColor: bgcolor}">
-      <img src="/static/left.png"  @click="goBack" v-show="!hiddenBack">
-      {{title}}
-      <span class="right" @click="rightHandle" v-show="!rightHidden">{{right}}</span>
-  </div>
+	  <div class="wrap" :style="{backgroundColor: bgcolor}">
+		  <img src="/static/left.png"  @click="goBack" v-show="!hiddenBack">
+		  {{title}}
+		  <span class="right" @click="rightHandle" v-show="!rightHidden">{{right}}</span>
+	  </div>
 </template>
 
 <script>

@@ -3,40 +3,56 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "uni-app"
+				"navigationBarTitleText": "电商"
 			}
 		},
 		{
 		    "path" : "pages/check/check",
-		    "style" : {}
+		    "style" : {
+				"navigationBarTitleText": "提交订单"
+			}
 		},
 		{
 			"path" : "pages/cart/cart",
-			"style" : {}
+			"style" : {
+				"navigationBarTitleText": "购物车"
+			}
 		},
         {
             "path" : "pages/collection/collection",
-            "style" : {}
+            "style" : {
+            	"navigationBarTitleText": "收藏列表"
+            }
         }
         ,{
             "path" : "pages/comments/comments",
-            "style" : {}
+            "style" : {
+            	"navigationBarTitleText": "评论"
+            }
         }
         ,{
             "path" : "pages/detail/detail",
-            "style" : {}
+            "style" : {
+            	"navigationBarTitleText": "商品详情"
+            }
         }
         ,{
             "path" : "pages/fenlei/fenlei",
-            "style" : {}
+            "style" : {
+           	 "navigationBarTitleText": "分类"
+            }
         }
         ,{
             "path" : "pages/groupDetail/groupDetail",
-            "style" : {}
+            "style" : {
+            	"navigationBarTitleText": "拼团详情"
+            }
         }
         ,{
             "path" : "pages/groupSuccess/groupSuccess",
-            "style" : {}
+            "style" : {
+            	"navigationBarTitleText": "参团详情"
+            }
         }
         ,{
             "path" : "pages/pay/pay",
@@ -46,15 +62,21 @@
         }
         ,{
             "path" : "pages/result/result",
-            "style" : {}
+            "style" : {
+            	"navigationBarTitleText": "列表"
+            }
         },
         {
             "path" : "pages/search/search",
-            "style" : {}
+            "style" : {
+            	"navigationBarTitleText": "搜索"
+            }
         }
         ,{
             "path" : "pages/searchhistory/searchhistory",
-            "style" : {}
+            "style" : {
+            	"navigationBarTitleText": "搜索历史"
+            }
         }
         ,{
             "path" : "pages/title/title",
@@ -66,47 +88,69 @@
         }
         ,{
             "path" : "pages/order/order",
-            "style" : {}
+            "style" : {
+            	"navigationBarTitleText": "我的订单"
+            }
         }
         ,{
             "path" : "pages/refund/refund",
-            "style" : {}
+            "style" : {
+            	"navigationBarTitleText": "申请退款"
+            }
         },
 		{
 		    "path" : "pages/classify/classify",
-		    "style" : {}
+		    "style" : {
+		    	"navigationBarTitleText": "分类"
+		    }
 		}
         ,{
             "path" : "pages/person/person",
-            "style" : {}
+            "style" : {
+            	"navigationBarTitleText": "个人中心"
+            }
         }
         ,{
             "path" : "pages/fenxiao/fenxiao",
-            "style" : {}
+            "style" : {
+            	"navigationBarTitleText": "分销中心"
+            }
         }
         ,{
             "path" : "pages/erweima/erweima",
-            "style" : {}
+            "style" : {
+            	"navigationBarTitleText": "二维码"
+            }
         }
         ,{
             "path" : "pages/editAddress/editAddress",
-			"style" : {}
+			"style" : {
+		
+			}
 		}
 		,{
             "path" : "pages/myTeam/myTeam",
-            "style" : {}
+            "style" : {
+            	"navigationBarTitleText": "我的团队"
+            }
         }
         ,{
             "path" : "pages/finance/finance",
-            "style" : {}
+            "style" : {
+            	"navigationBarTitleText": "财务明细"
+            }
         }
         ,{
             "path" : "pages/customizeShare/customizeShare",
-            "style" : {}
+            "style" : {
+            	"navigationBarTitleText": "自定义分享"
+            }
         }
         ,{
             "path" : "pages/promotion/promotion",
-            "style" : {}
+            "style" : {
+            	"navigationBarTitleText": "爵位晋升"
+            }
         }
         ,{
             "path" : "components/circleTitle/circleTitle",
@@ -114,23 +158,33 @@
         }
         ,{
             "path" : "pages/region/region",
-            "style" : {}
+            "style" : {
+            	"navigationBarTitleText": "区域代理"
+            }
         }
         ,{
             "path" : "pages/record/record",
-            "style" : {}
+            "style" : {
+            	"navigationBarTitleText": "申请记录"
+            }
         }
         ,{
             "path" : "pages/leaderboard/leaderboard",
-            "style" : {}
+            "style" : {
+            	"navigationBarTitleText": "财富排行榜"
+            }
         }
         ,{
             "path" : "pages/addInformation/addInformation",
-            "style" : {}
+            "style" : {
+            	"navigationBarTitleText": "填写信息"
+            }
         }
         ,{
             "path" : "pages/addressList/addressList",
-			"style": {}
+			"style" : {
+				"navigationBarTitleText": "收货地址"
+			}
 		}
 		,{
             "path" : "components/selectArea/selectArea",
@@ -138,39 +192,57 @@
         }
         ,{
             "path" : "pages/withdrawal/withdrawal",
-            "style" : {}
+            "style" : {
+            	"navigationBarTitleText": "提现"
+            }
         }
         ,{
             "path" : "pages/withdrawalMethod/withdrawalMethod",
-            "style" : {}
+            "style" : {
+            	"navigationBarTitleText": "我的提现方式"
+            }
         }
         ,{
             "path" : "pages/addWithdrawal/addWithdrawal",
-            "style" : {}
+            "style" : {
+            	"navigationBarTitleText": "添加提现方式"
+            }
         }
         ,{
             "path" : "pages/logistics/logistics",
-            "style" : {}
+            "style" : {
+            	"navigationBarTitleText": "物流跟踪"
+            }
         }
         ,{
             "path" : "pages/taskCenter/taskCenter",
-            "style" : {}
+            "style" : {
+            	"navigationBarTitleText": "任务中心"
+            }
         }
         ,{
             "path" : "pages/promotionAssist/promotionAssist",
-			"style" : {}
+			"style" : {
+				"navigationBarTitleText": "推广小助手"
+			}
 		}
 		,{
             "path" : "pages/qiandao/qiandao",
-            "style" : {}
+            "style" : {
+            	"navigationBarTitleText": "签到"
+            }
         }
         ,{
             "path" : "pages/vipGrade/vipGrade",
-            "style" : {}
+            "style" : {
+            	"navigationBarTitleText": "会员等级"
+            }
         }
         ,{
             "path" : "pages/publishComment/publishComment",
-            "style" : {}
+            "style" : {
+            	"navigationBarTitleText": "发布评价"
+            }
         }
     ],
 	"globalStyle": {

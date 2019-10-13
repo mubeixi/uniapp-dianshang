@@ -2,7 +2,7 @@
   <div class="bd" @click="closeShow">
     <div class="top">
         <image src="../../static/left.png" class="back" @click="goBack"></image>
-		<input type="text" v-model="inputValue" class="search" @confirm="success" />
+		<input type="text" v-model="inputValue" class="search" @confirm="success"  @click="goSearch" disabled/>
 		<div class="clear" v-if="inputValue">
 			<icon type="clear" class="clears" size="37rpx" @click="close"></icon>
 		</div>
@@ -54,6 +54,9 @@
 					<div class="sold">已售{{item.Products_Sales}}件</div>
 				</div>
 			</div>
+			<div class="defaults" v-if="pro.length<=0">
+				<image src="/static/defaultImg.png" ></image>
+			</div>
 		</div>	
 	</div>
     <div v-else>
@@ -67,6 +70,9 @@
 						<span class="o_price"><text>￥</text>{{item.Products_PriceY}}</span>
 					</div>
 				</div>
+			</div>
+			<div class="defaults" v-if="pro.length<=0">
+				<image src="/static/defaultImg.png" ></image>
 			</div>
 		</div>
 	</div>
@@ -132,6 +138,12 @@ export default {
 	 
   },
   methods:{
+	  //跳转搜索页
+	  goSearch(){
+		  uni.navigateTo({
+		  	url:'../search/search'
+		  })
+	  },
 	  shipping(i){
 		  if(i){
 			  this.isShipping=2;
@@ -550,5 +562,11 @@ export default {
 		position: absolute;
 		background-color:#000;
 		opacity:0.6;
+	}
+	.defaults{
+		margin: 0 auto;
+		width: 640rpx;
+		height: 480rpx;
+
 	}
 </style>
