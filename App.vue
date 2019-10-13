@@ -5,7 +5,13 @@
 		onLaunch: function() {
 
             // #ifdef H5
+            let aid = GetQueryByString(location.href, 'aid')
 
+            //如果连接里面已经有了，就不需要搞事
+            if(aid){
+                ls.set('aid',aid);
+                return;
+            }
             // #endif
 
 			console.log('App Launch')
