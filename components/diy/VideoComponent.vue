@@ -1,6 +1,6 @@
 <template>
   <view class="video">
-    <video id="myVideo" :src="video.config.src"
+    <video class="myVideo" :src="video.config.src"
            @error="videoErrorCallback" controls></video>
 <!--    <img v-if="video.config.cover" :src="video.config.cover|domain"/>-->
 <!--    <div v-else>-->
@@ -58,14 +58,14 @@
     padding-top 55.6%
     position relative
 
-    img
-      position absolute
-      width 100%
-      height 100%
-      top 0
-      vertical-align top
+    // img
+    //   position absolute
+    //   width 100%
+    //   height 100%
+    //   top 0
+    //   vertical-align top
 
-    video
+    .myVideo
       position absolute
       width 100%
       top 0

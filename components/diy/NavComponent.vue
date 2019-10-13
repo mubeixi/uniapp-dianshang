@@ -1,9 +1,9 @@
 <template>
-  <view  class="nav wrap">
+  <view  class="nav wrap"  :style="{backgroundColor:style.bgColor}">
     <view  class="box style1" >
-      <view class="list" :style="{display:nav.value.list.length<5?'flex':'block'}">
+      <view class="list" :class="displayStyle" :style="{display:nav.value.list.length<6?'flex':'block'}">
         <view @click="go(item)" v-for="(item,idx) in nav.value.list" class="item"
-            :style="{flex:nav.value.list.length<5?'1':''}">
+            :style="{flex:nav.value.list.length<6?'1':''}">
           <view v-if="nav.config.type===1" class="cover"
                :style="{backgroundImage:'url('+domainFunc(item.img)+')'}">
           </view>
@@ -32,11 +32,14 @@
       };
     },
     computed: {
+		displayStyle(){
+			return this.nav.value.list.length<6?'isflex':'isblock'
+		},
       className() {
         return 'style1';//+this.nav.config.style
       },
       style() {
-        // return deepCopyStrict(this.coupon.styleDefault, this.coupon.style);
+        return this.nav.style;//deepCopyStrict(this.coupon.styleDefault, this.coupon.style);
       },
     },
     filters: {
@@ -101,20 +104,40 @@
   }
 
   .style1 {
-
-    .list {
-
-      white-space: nowrap;
-      overflow-x: scroll;
-
-
-
-      .item {
-        display: inline-block;
-        /*height: 70px;*/
-        overflow-y: hidden;
+  
+      .list {
+  
+        &.isflex{
+          .item{
+            .cover{
+              /*width: 44px;*/
+              /*height: 44px;*/
+            }
+          }
+        }
+        &.isblock{
+          white-space: nowrap;
+          overflow-x: scroll;
+          .item{
+            margin-right: 15px;
+            padding: 0 6px;
+          }
+        }
+  
+  
+      
+  
+        .item {
+          display: inline-block;
+          /*height: 70px;*/
+          overflow-y: hidden;
+          /*max-width: 50px;*/
+          .title{
+            overflow-y: hidden;
+            /*text-overflow: ellipsis;*/
+          }
+        }
       }
     }
-  }
 
 </style>

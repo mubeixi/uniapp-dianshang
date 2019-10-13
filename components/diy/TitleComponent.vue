@@ -1,5 +1,5 @@
 <template>
-  <view class="title" :style="{color:title.style.color,backgroundColor:title.style.bgColor}">
+  <view class="title" :style="{color:title.style.color,backgroundColor:title.style.bgColor,paddingLeft:title.style.padding+'px',paddingRight:title.style.padding+'px'}">
     <view class="text">{{title.value.title}}</view>
     <view class="small">{{title.value.small}}</view>
     <view class="more" @click="go(moreData)">{{moreData.title}}</view>

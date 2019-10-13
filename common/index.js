@@ -1,11 +1,46 @@
 import Vue from 'vue';
 // const i18n = require('i18n');
 
+export const toast = (title,icon,image,duration)=>{
+
+    uni.showToast({
+        title,
+        duration:duration||2000,
+        icon,
+        image
+    })
+
+}
+
+export const error = (title,icon,duration)=>toast(title,null,'/static/icon_http_error.png',duration)
+
+
+
+
+export const confirm = (options)=>{
+
+	return new Promise(function(resolve,reject){
+
+		uni.showModal({
+		    ...options,
+		    success: function (res) {
+		        if (res.confirm) {
+		            resolve(res)
+		        } else if (res.cancel) {
+		            //console.log('用户点击取消');
+		        }
+		    },
+			fail:function(res){reject(res)}
+		});
+
+	})
+}
 
 
 import filter from './filter.js';
 
 const tabbarRouter = ['/pages/index/index','/pages/classify/classify','/pages/groupSuccess/groupSuccess','/pages/cart/cart','/pages/person/person'];
+
 export const fun = {
 
   //跳转方法
@@ -27,7 +62,7 @@ export const fun = {
       });
 
     }
-  }
+  },
   // success: ({ msg = '操作成功', title = '成功' }) => Notification({
   //   title,
   //   message: msg,
@@ -38,10 +73,10 @@ export const fun = {
   //   message: msg,
   //   type: 'warning',
   // }),
-  // info: ({ msg = '', title = '消息' }) => Notification({
-  //   title,
-  //   message: msg,
-  //   type: 'info',
+  // info: ({ msg = ''}) => uni.showToast({
+  //     title: msg,
+  //     duration: 2000,
+  //     icon:'none'
   // }),
   // error: ({ msg = '错误', title = '错误' }) => Notification({
   //   title,

@@ -149,6 +149,9 @@
             "style" : {}
         }
         ,{
+            "path" : "pages/login/login",
+            "style" : {}
+        },{
             "path" : "pages/logistics/logistics",
             "style" : {}
         }

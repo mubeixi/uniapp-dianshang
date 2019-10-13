@@ -1,28 +1,32 @@
 <template>
-  <view @click="toSearch" v-if="search.style.position==='absolute'"  class="search wrap absolute" :style="[getWrapStyle]">
+  <view @click="toSearch" v-if="style.position==='absolute'"  class="search wrap absolute" :style="[getWrapStyle]">
     <view class="box" :class="{'round':search.config.type==='round'}">
-      <icon class="icon" type="search" size="16"/>
-      <input :placeholder="placeholderText" class="input font14" disabled :style="{height:search.style.height+'px',lineHeight:search.style.height-8+'px',backgroundColor:search.style.inputBgColor,color:search.style.color}" />
+      <icon class="icon" type="search" :color="style.color" size="16"/>
+      <!-- <input :placeholder="placeholderText" class="input font14" disabled :style="{height:style.height+'px',lineHeight:style.height-8+'px',backgroundColor:style.inputBgColor,color:style.color}" /> -->
+	  <view class="input font14" :style="{height:style.height+'px',lineHeight:style.height+'px',backgroundColor:style.inputBgColor,color:style.color}" >
+	  		  {{placeholderText}}
+	  </view>
     </view>
   </view>
   <view @click="toSearch" v-else class="search wrap" :style="[getWrapStyle]">
     <view class="box" :class="{'round':search.config.type==='round'}">
-      <icon class="icon" type="search" size="16"/>
-
-      <input :placeholder="placeholderText" class="input font14" disabled :style="{height:search.style.height+'px',lineHeight:search.style.height-8+'px',backgroundColor:search.style.inputBgColor,color:search.style.color}" />
+      <icon class="icon" type="search" :color="style.color" size="16"/>
+      <view class="input font14" :style="{height:style.height+'px',lineHeight:style.height+'px',backgroundColor:style.inputBgColor,color:style.color}" >
+		  {{placeholderText}}
+	  </view>
     </view>
   </view>
 </template>
 <script>
-  import {deepCopyStrict} from "../../common/tool";
+  import {deepCopyStrict,mixinStyle} from "../../common/tool";
   const styleDefault = {
-    bgColor: '#fff',
-    height: 30,
-    color: '#444',
-    inputBgColor: '#f2f2f2',
-    position:'inherit',
-    x:0,
-    y:0
+    // bgColor: '#fff',
+    // height: 30,
+    // color: '#444',
+    // inputBgColor: '#f2f2f2',
+    // position:'inherit',
+    // x:0,
+    // y:0
   }
   export default {
     props: {
@@ -44,23 +48,23 @@
         return this.search.value.hot.join(' ')
       },
       getWrapStyle(){
-        if(this.search.style.position==='absolute'){
+        if(this.style.position==='absolute'){
           return {
-            backgroundColor:this.search.style.bgColor,
-            // left:this.search.style.x+'px',
-            top:this.search.style.y+'px',
+            backgroundColor:this.style.bgColor,
+            // left:this.style.x+'px',
+            top:this.style.y+'px',
             position:'absolute'
           }
         }
 
         return {
-          backgroundColor:this.search.style.bgColor,
+          backgroundColor:this.style.bgColor,
           position:'inherit'
         }
 
       },
       style() {
-        return deepCopyStrict(styleDefault, this.search.style);
+        return this.search.style;
       },
 
     },
