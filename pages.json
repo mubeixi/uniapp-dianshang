@@ -168,6 +168,10 @@
             "path" : "pages/vipGrade/vipGrade",
             "style" : {}
         }
+        ,{
+            "path" : "pages/publishComment/publishComment",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

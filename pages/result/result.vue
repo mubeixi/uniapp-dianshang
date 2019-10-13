@@ -11,7 +11,7 @@
         <div :class="[active == 0 ? 'checked' : '','tab']" @click="getActive(0)" >默认<div class="line"></div></div>
         <div :class="[active == 1 ? 'checked' : '','tab']" @click="getActive(1)">销量<div class="line"></div></div>
         <div :class="[active == 2 ? 'checked' : '','tab']" @click="getActive(2)">价格<div class="line"></div></div>
-        <div :class="[active == 3 ? 'checked' : '','tab']" @click.stop="change" style="width: 140rpx;">筛选<div class="line"></div></div>
+        <div :style="{color:showShai?'#F43131':''}" @click.stop="change" style="width: 140rpx;">筛选<div class="line"></div></div>
 		<div class="tab" v-if="showShai"   style="width: 40rpx;position: absolute;top: 0rpx;right: 0rpx;">
 			
 		</div>
@@ -162,8 +162,9 @@ export default {
 		  }
 		  this.pro=[];
 		  this.page=1;
-		  this.orderby="search";
-		  this.getProd(this.orderby);
+		  //this.orderby="search";
+		  let item='search';
+		  this.getProd(item);
 		  this.showShai=false;
 	  },
 	  closeShow(){
@@ -235,6 +236,7 @@ export default {
 		  }else if(item=="search"){
 				data.min_price=this.minPrice;
 				data.max_price=this.maxPrice;
+				data.order_by=this.orderby;
 			  if(this.isShipping==1){
 				  data.free_shipping=1;
 			  }else if(this.isShipping==2){
@@ -266,7 +268,7 @@ export default {
 		  this.cate = this.cate == 1 ? 2 : 1
 	  },
 	  change(){
-		this.active = 3;
+		//this.active = 3;
 		if(this.showShai){
 			this.showShai=false;
 			return;
@@ -455,6 +457,7 @@ export default {
 		height: 34rpx;
 	}
 	.shaixuan{
+		box-sizing: border-box;
 		position: absolute;
 		top: 70rpx;
 		width: 750rpx;

@@ -251,6 +251,7 @@ export default {
 		height:146rpx;
 		border:1px solid rgba(186,186,186,1);
 		position: relative;
+		margin-bottom: 28rpx;
 		.heng{
 			width: 76rpx;
 			height: 3rpx;

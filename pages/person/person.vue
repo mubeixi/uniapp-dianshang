@@ -8,7 +8,7 @@
 			</view>
 			<view class="personInfo">
 				<view class="left">
-					<image src="/static/person/tou.png" ></image>
+					<image src="/static/default.png" ></image>
 				</view>
 				<view class="right">
 					<view class="nickName">坚果姑娘</view>
