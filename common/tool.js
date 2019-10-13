@@ -248,3 +248,17 @@ export function isWeiXin() {
   // #endif
 
 }
+
+// base64
+export const urlTobase64=function(url){
+    uni.request({
+	url: url,
+	method:'GET',
+	responseType: 'arraybuffer',
+	success: ress => {
+		let base64 = wx.arrayBufferToBase64(ress.data); //把arraybuffer转成base64 
+		//base64 = 'data:image/jpeg;base64,' + base64 //不加上这串字符，在页面无法显示的哦
+		return base64;
+	}
+    })
+}
