@@ -134,6 +134,8 @@ export const getShopWithdrawMethod = (data, options) => fetch('get_shop_withdraw
 export const withdrawApply = (data, options) => fetch('withdraw_apply', data, options);
 // 获取申请提现记录
 export const getWithdrawRecordList = (data, options) => fetch('get_withdraw_record_list', data, options);
+// 删除提现方式
+export const delUserWithdrawMethod = (data, options) => fetch('del_user_withdraw_method', data, options);
 
 
 //短信验证码
