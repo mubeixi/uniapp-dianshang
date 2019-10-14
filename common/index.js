@@ -106,8 +106,12 @@ uni.navigateTo = (opt)=>{
     let {url} = opt;
     if(url.indexOf('users_id')===-1){
 
+        let users_id = null;
 
-        let users_id = GetQueryByString(location.href, 'users_id')
+		// #ifdef H5
+		users_id = GetQueryByString(location.href, 'users_id')
+		// #endif
+        
 
         //如果连接里面已经有了，就不需要搞事
         if(!users_id){

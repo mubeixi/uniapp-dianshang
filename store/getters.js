@@ -2,8 +2,8 @@ import {toast,error} from "../common";
 
 export const userInfo = function (state, value) {
     if(!state.userInfo){
-        error('用户信息为空')
-        return false;
+        //error('用户信息为空')
+        return {};
     }
     return state.userInfo;
 };

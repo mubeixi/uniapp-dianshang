@@ -43,7 +43,6 @@ export const getUserInfo = async ({commit,state}) => {
       commit('SET_USER_INFO',data2);
       return data2
     }
-
   }
 
   uni.navigateTo({
