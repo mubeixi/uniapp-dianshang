@@ -216,7 +216,9 @@ export default {
 	},
 	onLoad(options) {
 		this.postData.cart_key = options.cart_key;
-		this.postData.cart_buy = options.cart_buy;
+		if(options.cart_buy){	
+			this.postData.cart_buy = options.cart_buy;
+		}
 	},
 	computed: {
 		loading: function(){

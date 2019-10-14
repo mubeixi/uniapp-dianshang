@@ -192,7 +192,7 @@ export default {
 							for(var j in res.data[i]) {
 								for( var k in res.data[i][j]) {
 									if(k == 'attr_info') {
-										res.data[i][j][k] = JSON.parse(res.data[i][j][k])
+										res.data[i][j][k] = res.data[i][j][k] && JSON.parse(res.data[i][j][k])
 									}									
 								}
 							}
