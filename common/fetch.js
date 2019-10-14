@@ -122,6 +122,19 @@ export const editAddress = (data,options) => fetch('edit_address', data, options
 export const addAddress = (data, options) => fetch('add_address', data, options);
 // 删除收货地址
 export const delAddress = (data, options) => fetch('del_address', data, options);
+// 获取分销中心首页数据
+export const getDisInit = (data, options) => fetch('get_dis_init', data, options);
+// 获取用户提现方式
+export const getUserWithdrawMethod = (data, options) => fetch('get_user_withdraw_method', data, options);
+// 用户新增提现方式
+export const addUserWithdrawMethod = (data, options) => fetch('operate_user_withdraw_method', data, options);
+// 获取商城提现方式
+export const getShopWithdrawMethod = (data, options) => fetch('get_shop_withdraw_method', data, options);
+// 申请提现
+export const withdrawApply = (data, options) => fetch('withdraw_apply', data, options);
+// 获取申请提现记录
+export const getWithdrawRecordList = (data, options) => fetch('get_withdraw_record_list', data, options);
+
 
 //短信验证码
 export const getSmsCode = (data, options) => fetch('login_sms', data, options);

@@ -1,5 +1,5 @@
 import {fun} from "./index";
-
+import { staticUrl } from './env.js';
 export const formatTime = date => {
   const year = date.getFullYear()
   const month = date.getMonth() + 1
@@ -251,6 +251,35 @@ export function isWeiXin() {
 
 }
 
+//上传图片
+export const uploadImages=(formData,imgs)=>{
+	let sum=0;
+	for(let i=0;i<imgs.length;i++){
+		uni.uploadFile({
+				url: staticUrl+'/api/little_program/shopconfig.php', 
+				filePath: imgs[i],
+				name: 'image',
+				formData: formData,
+				success: (uploadFileRes) => {
+					sum++;
+					let msg=JSON.parse(uploadFileRes.data);
+					if(sum==imgs.length){
+						uni.showToast({
+							title:msg.msg
+						})
+						if(msg.errorCode==0){
+		
+						}else{
+							
+						}
+						
+					}
+				}
+		})
+	}
+
+}
+
 
 
 export const urlencode = (str)=>{
@@ -259,16 +288,4 @@ export const urlencode = (str)=>{
   replace(/\)/g, '%29').replace(/\*/g, '%2A').replace(/%20/g, '+');
 
 }
-// base64
-export const urlTobase64=function(url){
-    uni.request({
-	url: url,
-	method:'GET',
-	responseType: 'arraybuffer',
-	success: ress => {
-		let base64 = wx.arrayBufferToBase64(ress.data); //把arraybuffer转成base64 
-		//base64 = 'data:image/jpeg;base64,' + base64 //不加上这串字符，在页面无法显示的哦
-		return base64;
-	}
-    })
-}
+
