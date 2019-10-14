@@ -125,7 +125,7 @@
         ,{
             "path" : "pages/editAddress/editAddress",
 			"style" : {
-		
+
 			}
 		}
 		,{
@@ -250,9 +250,14 @@
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uni-app",
+		"navigationBarTitleText": "网中网",
 		"navigationBarBackgroundColor": "#F8F8F8",
-		"backgroundColor": "#F8F8F8"
+		"backgroundColor": "#F8F8F8",
+        "app-plus": {
+          //#ifdef H5
+          "titleNView": false
+          //#endif
+        }
 	},
 	"tabBar": {
 	    "color": "#7A7E83",
