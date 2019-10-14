@@ -72,14 +72,16 @@
 // import tabs from "@/components/tabs";
 // import pagetitle from "@/components/title";
 import {getCart,getProd,updateCart,delCart} from '../../common/fetch.js';
-import {ls} from '../../common/tool.js';
-export default {
-  name: "App",
-  // components: {
-  //   tabs,
-  //   pagetitle
-  // },
-  
+	import {pageMixin} from "../../common/mixin";
+
+	export default {
+		mixins:[pageMixin],
+		  name: "App",
+		  // components: {
+		  //   tabs,
+		  //   pagetitle
+		  // },
+
   data(){
     return {
 		checked: [],

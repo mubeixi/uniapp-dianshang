@@ -56,19 +56,21 @@ export const GetQueryByString = (str, name) => {
 
 export const ls = {
   set(key, val) {
-    //Null undefined '' 这些不让传进来了
+
     if(!val && (val!=0 || val!= false))return false;
-    return  uni.setStorageSync(key, JSON.stringify(val))
+
+    return  uni.setStorageSync(key, val)
   },
 
   get(key) {
     var val = uni.getStorageSync(key);
-    if(!val) return false;
-    try{
-      return JSON.parse(val)
-    }catch (e) {
-      return false;
-    }
+    return val;
+    // if(!val) return '';
+    // try{
+    //   return JSON.parse(val)
+    // }catch (e) {
+    //   return '';
+    // }
 
   },
   remove(key) {
@@ -192,7 +194,7 @@ export function deepCopy(currentObj, newObject) {
 }
 
 export function deepCopyStrict(currentObj, newObject) {
-  addFun(currentObj, newObject, 1);
+  addFun(currentObj, newObject);
   // mergeData(currentObj, newObject, 1);
   return currentObj;
 }
@@ -209,4 +211,64 @@ export const arrayUnique = (arr)=>{
     if(jlen===j)res.push(obj);
   }
   return res;
+}
+
+
+export function mixinStyle(defaultStyle, style) {
+  if(!defaultStyle)defaultStyle={};
+  if(!style)style={};
+
+  let rt = objTranslate(defaultStyle)
+  for(var i in style){
+    if(!style.hasOwnProperty(i))continue;
+    rt[i] = style[i]
+
+  }
+  return rt;
+}
+
+
+export function isWeiXin() {
+  // #ifdef H5
+  var ua = window.navigator.userAgent.toLowerCase();
+  if (
+	  ua.match(/MicroMessenger/i) == 'micromessenger'
+	  && ua.match(/miniProgram/i)
+	  && ua.match(/miniProgram/i)[0] == 'miniprogram'
+  ) {
+	return 'xcx'
+  }
+  if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+	return true;
+  } else {
+	return false;
+  }
+  // #endif
+
+  // #ifndef H5
+  return false
+  // #endif
+
+}
+
+
+
+export const urlencode = (str)=>{
+
+  return encodeURIComponent(str).replace(/!/g, '%21').replace(/'/g, '%27').replace(/\(/g, '%28').
+  replace(/\)/g, '%29').replace(/\*/g, '%2A').replace(/%20/g, '+');
+
+}
+// base64
+export const urlTobase64=function(url){
+    uni.request({
+	url: url,
+	method:'GET',
+	responseType: 'arraybuffer',
+	success: ress => {
+		let base64 = wx.arrayBufferToBase64(ress.data); //把arraybuffer转成base64 
+		//base64 = 'data:image/jpeg;base64,' + base64 //不加上这串字符，在页面无法显示的哦
+		return base64;
+	}
+    })
 }

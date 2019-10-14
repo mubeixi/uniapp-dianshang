@@ -85,7 +85,7 @@
 						自定义分享
 					</view>
 				</view>
-				<view class="td" style="border-bottom: 0px;">
+				<view class="td" style="border-bottom: 0px;" @click="goAssist">
 					<image src="/static/fenxiao/tuiguang.png" ></image>
 					<view>
 						推广小助手
@@ -98,13 +98,22 @@
 </template>
 
 <script>
+	import {pageMixin} from "../../common/mixin";
+	
 	export default {
+		mixins:[pageMixin],
 		data() {
 			return {
 				
 			};
 		},
 		methods:{
+			//推广小助手
+			goAssist(){
+				uni.navigateTo({
+					url:'../promotionAssist/promotionAssist'
+				})
+			},
 			//自定义分享
 			goShare(){
 				uni.navigateTo({

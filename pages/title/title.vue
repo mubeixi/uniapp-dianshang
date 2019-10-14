@@ -1,13 +1,16 @@
 <template>
-  <div class="wrap" :style="{backgroundColor: bgcolor}">
-      <img src="/static/left.png"  @click="goBack" v-show="!hiddenBack">
-      {{title}}
-      <span class="right" @click="rightHandle" v-show="!rightHidden">{{right}}</span>
-  </div>
+	  <div class="wrap" :style="{backgroundColor: bgcolor}">
+		  <img src="/static/left.png"  @click="goBack" v-show="!hiddenBack">
+		  {{title}}
+		  <span class="right" @click="rightHandle" v-show="!rightHidden">{{right}}</span>
+	  </div>
 </template>
 
 <script>
+import {pageMixin} from "../../common/mixin";
+
 export default {
+	mixins:[pageMixin],
     // props: ['title','right','hiddenBack','rightHidden'],
 	props: {
 		title: {

@@ -29,7 +29,10 @@
 </template>
 
 <script>
+	import {pageMixin} from "../../common/mixin";
+	
 	export default {
+		mixins:[pageMixin],
 		data() {
 			return {
 				

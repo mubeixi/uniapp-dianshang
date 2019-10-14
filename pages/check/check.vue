@@ -143,7 +143,10 @@
 import popupLayer from '../../components/popup-layer/popup-layer.vue';
 import {getAddress,getCart,createOrderCheck,getUserInfo,createOrder} from '../../common/fetch.js';
 import {goBack} from '../../common/tool.js'
+import {pageMixin} from "../../common/mixin";
+
 export default {
+	mixins:[pageMixin],
     components: {
         popupLayer
     },

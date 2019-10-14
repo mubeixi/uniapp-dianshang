@@ -31,7 +31,10 @@
 
 // import tabs from '@/components/tabs'
 // import search from '@/components/search'
+import {pageMixin} from "../../common/mixin";
+
 export default {
+	mixins:[pageMixin],
   name: 'App',
   components: {
     // tabs,

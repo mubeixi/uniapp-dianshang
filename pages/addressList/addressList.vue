@@ -33,7 +33,10 @@
 
 <script>
 	import {getAddress,delAddress} from '../../common/fetch.js'
+	import {pageMixin} from "../../common/mixin";
+	
 	export default {
+		mixins:[pageMixin],
 		data() {
 			return {
 				addresslist: [],

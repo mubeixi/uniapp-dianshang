@@ -117,7 +117,10 @@
 <script>
 import popupLayer from '../../components/popup-layer/popup-layer.vue';
 import {uploadImage,getRefund} from '../../common/fetch.js'
+import {pageMixin} from "../../common/mixin";
+
 export default {
+	mixins:[pageMixin],
     components: {
 		popupLayer
     },
@@ -148,19 +151,11 @@ export default {
     methods: {
 		//图片预览
 		yulan(index){
-			// uni.previewImage({
-			//             urls: this.imgs,
-			// 			indicator:'default',
-			// 			current:index, 
-			//             longPressActions: {
-			//                 success: function(data) {
-								
-			//                 },
-			//                 fail: function(err) {
-									
-			//                 }
-			//             }
-			// });
+			uni.previewImage({
+			            urls: this.imgs,
+						indicator:'default',
+						current:index
+			});
 		},
 		//获取申请退货退款页面
 		getRefund(){
@@ -251,6 +246,7 @@ export default {
 		height:146rpx;
 		border:1px solid rgba(186,186,186,1);
 		position: relative;
+		margin-bottom: 28rpx;
 		.heng{
 			width: 76rpx;
 			height: 3rpx;

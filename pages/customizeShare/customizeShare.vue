@@ -11,7 +11,10 @@
 </template>
 
 <script>
+	import {pageMixin} from "../../common/mixin";
+	
 	export default {
+		mixins:[pageMixin],
 		data() {
 			return {
 				
@@ -31,6 +34,7 @@
 		margin-top: 42rpx;
 		padding-top: 23rpx;
 		padding-left: 27rpx;
+		padding-right: 40rpx;
 		font-size: 28rpx;
 		color: #333333;
 	}
@@ -50,4 +54,5 @@
 		text-align: center;
 		margin-top: 65rpx;
 	}
+
 </style>

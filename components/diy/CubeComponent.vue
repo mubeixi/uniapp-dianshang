@@ -135,7 +135,7 @@
       this.cube = this.confData
 
       const res = uni.getSystemInfoSync();
-
+	  console.log(res)
       this.fullW = res.screenWidth;
 
       //长宽比计算出高度

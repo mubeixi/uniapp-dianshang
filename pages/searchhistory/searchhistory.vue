@@ -16,8 +16,10 @@
 </template>
 
 <script>
+import {pageMixin} from "../../common/mixin";
 
 export default {
+	mixins:[pageMixin],
   name: 'App',
   props: {value:'',},
   data() {

@@ -1,9 +1,9 @@
 
-import {apiBaseUrl} from "./env";
+import {apiBaseUrl,staticUrl} from "./env";
 
 export const domain = (url) => {
   if(!url)return '';
-  if (url.indexOf('http') == -1) return apiBaseUrl+url;
+  if (url.indexOf('http') == -1) return staticUrl+url;
   return url;
 }
 

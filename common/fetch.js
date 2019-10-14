@@ -7,8 +7,6 @@ import Base64 from './tool/base64.js'
 import {ls} from "./tool.js";
 import {post,get,ajax} from './interceptors.js';
 
-
-
 const fetch = function (act, param,options = false,url='/api/little_program/shopconfig.php',  method = 'post') {
   if(!act){
 	  uni.showToast({
@@ -18,6 +16,8 @@ const fetch = function (act, param,options = false,url='/api/little_program/shop
 	  });
 	  return;
   };
+
+  if(!param)param = {}
 
   param.act = act;
   // param.Users_Account = get_Users_Account();
@@ -37,8 +37,10 @@ const fetch = function (act, param,options = false,url='/api/little_program/shop
 
 };
 
+//获取全局配置
+export const getSystemConf = (data,options) => fetch('shopconfig', data,options)
 
-export const login = (data,options) => fetch('users_login', data,options)
+export const login = (data,options) => fetch('user_login', data,options)
 
 export const getCouponList = (data,options) => fetch('get_unaccalimed_coupon',data,options)
 
@@ -120,6 +122,29 @@ export const editAddress = (data,options) => fetch('edit_address', data, options
 export const addAddress = (data, options) => fetch('add_address', data, options);
 // 删除收货地址
 export const delAddress = (data, options) => fetch('del_address', data, options);
+
+//短信验证码
+export const getSmsCode = (data, options) => fetch('login_sms', data, options);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function get_Appid() {
   return 'xhh';
