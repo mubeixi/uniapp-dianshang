@@ -63,6 +63,7 @@
 				balance:0,//可提现金额
 				User_Method_ID:0,//传过来选中的提现方式
 				price:'',//提现金额
+				isQing:false,//是否发起提现
 			};
 		},
 		onLoad(options) {
@@ -87,20 +88,35 @@
 			},
 			//申请提现
 			withdrawApply(){
+				let that=this;
+				if(that.isQing){
+					return;
+				}
+				that.isQing=true;
 				if(isNaN(this.price)){
 					uni.showToast({
 						title:'输入金额有误,请重新输入',
 						icon:'none'
 					})
 					this.price='';
+					that.isQing=false;
 					return;
 				}
-			
+				if(this.price==''){
+					uni.showToast({
+						title:'未输入金额',
+						icon:'none'
+					})
+					this.price='';
+					that.isQing=false;
+					return;
+				}
 				let data={
 					User_Method_ID:this.User_Method_ID,
 					money:this.price
 				}
 				withdrawApply(data).then(res=>{
+					that.isQing=false;
 					if(res.errorCode==0){
 						uni.showToast({
 							title:res.msg,

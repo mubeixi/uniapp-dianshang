@@ -157,5 +157,6 @@ view,div{
 	font-size: 30rpx;
 	color: #FFFFFF;
 	margin-top: 128rpx;
+	margin-bottom: 100rpx;
 }
 </style>
