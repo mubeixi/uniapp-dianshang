@@ -7,32 +7,48 @@
 			</view>
 			<view class="right"> 
 				<!-- 中国银行 <image src="/static/right.png"></image> -->
-				<picker @change="bindPickerChange" :value="index" :range="array">
-				    <view class="uni-input">{{array[index]}}</view>
+				<picker @change="bindPickerChange" :value="index" :range="array" range-key="Method_Name" >
+				    <view class="uni-input">{{array[index].Method_Name}}</view>
 				</picker>
 				<image src="/static/right.png"></image>
 			</view>
 		</view>
 		
-		<view class="centers">
-			<view class="left">
-				户名
+		<block v-if="data.Method_Type=='bank_card'">
+			<view class="centers">
+				<view class="left">
+					户名
+				</view>
+				<input type="text" placeholder="请输入您的户名" placeholder-style="places" v-model="data.Account_Name">
 			</view>
-			<input type="text" placeholder="请输入您的户名" placeholder-style="places">
-		</view>
-		<view class="centers">
-			<view class="left">
-				账号
+			<view class="centers">
+				<view class="left">
+					账号
+				</view>
+				<input type="text" placeholder="请输入您的银行卡卡号" placeholder-style="places" v-model="data.Account_Val">
 			</view>
-			<input type="text" placeholder="请输入您的账号" placeholder-style="places">
-		</view>
-		<view class="centers">
-			<view class="left">
-				开户行
+			<view class="centers">
+				<view class="left">
+					开户行
+				</view>
+				<input type="text" placeholder="请输入您的开户行" placeholder-style="places" v-model="data.Bank_Position"> 
 			</view>
-			<input type="text" placeholder="请输入您的开户行" placeholder-style="places">
-		</view>
-		<view class="addInfo">
+		</block>
+		<block v-else-if="data.Method_Type=='alipay'">
+			<view class="centers">
+				<view class="left">
+					昵称
+				</view>
+				<input type="text" placeholder="请输入您的昵称" placeholder-style="places" v-model="data.Account_Name">
+			</view>
+			<view class="centers">
+				<view class="left">
+					账号
+				</view>
+				<input type="text" placeholder="请输入您的支付宝账号" placeholder-style="places" v-model="data.Account_Val">
+			</view>
+		</block>
+		<view class="addInfo" @click="addInfo">
 			添加
 		</view>
 	</view>
@@ -40,18 +56,105 @@
 
 <script>
 	import {pageMixin} from "../../common/mixin";
-	
+	import {getUserWithdrawMethod,getShopWithdrawMethod,addUserWithdrawMethod} from '../../common/fetch.js'
 	export default {
 		mixins:[pageMixin],
 		data() {
 			return {
-				array:['请选择银行','中国银行','中国工商银行'],
-				index:0,
+				array:[],
+				index:0,//选择提现方式下表
+				data:{
+					Method_Type:'',//提现方式类型
+					Method_Name:'',//提现方式名称
+					Account_Name:'',//户名
+					Account_Val:'',//账号
+					Bank_Position:'',//开户行
+				},
+				
 			};
 		},
+		onLoad() {
+			
+		},
+		onShow() {
+			//获取商城提现方式
+			this.getShopWithdrawMethod();
+		},
 		methods:{
+			//新增提现方式
+			addInfo(){
+				let data={};
+				if(this.data.Method_Type=="bank_card"){
+					data={
+						Method_Type:this.data.Method_Type,//提现方式类型
+						Method_Name:this.data.Method_Name,//提现方式名称
+						Account_Name:this.data.Account_Name,//户名
+						Account_Val:this.data.Account_Val,//账号
+						Bank_Position:this.Bank_Position //开户行
+					}
+				}else if(this.data.Method_Type=="alipay"){
+					data={
+						Method_Type:this.data.Method_Type,//提现方式类型
+						Method_Name:this.data.Method_Name,//提现方式名称
+						Account_Name:this.data.Account_Name,//户名
+						Account_Val:this.data.Account_Val//账号
+					}
+				}else{
+					data={
+						Method_Type:this.data.Method_Type,//提现方式类型
+						Method_Name:this.data.Method_Name//提现方式名称
+					}
+				}
+				
+				addUserWithdrawMethod(this.data).then(res=>{
+					if(res.errorCode==0){
+						let User_Method_ID=res.data.User_Method_ID;
+						uni.showModal({
+						    title: res.msg,
+							confirmText:'提现方式',
+							cancelText:'立即提现',
+							cancelColor:'#000000',
+							confirmColor:"#000000",
+						    content: '',
+						    success: function (res) {
+						        if (res.confirm) {
+						           uni.navigateTo({
+						           	url:'../withdrawalMethod/withdrawalMethod?User_Method_ID='+User_Method_ID
+						           })
+						        } else if (res.cancel) {
+						            uni.navigateTo({
+						            	url:'../withdrawal/withdrawal?User_Method_ID='+User_Method_ID
+						            })
+						        }
+						    }
+						});
+					}else{
+						uni.showToast({
+							title:res.msg,
+							icon:'none'
+						})
+					}
+				}).catch(e=>{
+					console.log(e)
+				})
+			},
+			//获取商城提现方式
+			getShopWithdrawMethod(){
+				getShopWithdrawMethod().then(res=>{
+					if(res.errorCode==0){
+						this.array=res.data;
+						//初始化第一个提现类型默认选择的
+						this.data.Method_Type=this.array[0].Method_Type;
+						this.data.Method_Name=this.array[0].Method_Name;
+					}
+				}).catch(err=>{
+					console.log(err);
+				})
+			},
 			bindPickerChange(e){
-				 this.index = e.target.value
+				 this.index = e.target.value;
+				 this.data.Method_Type=this.array[this.index].Method_Type;
+				 this.data.Method_Name=this.array[this.index].Method_Name;
 			}
 		}
 	}

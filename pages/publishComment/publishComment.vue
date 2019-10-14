@@ -16,8 +16,8 @@
 		<view class="shangH">
 			<div class="item noborder">上传照片(最多9张)</div>
 			<div class="imgs">
-				<view class="shangchuans" v-for="(item,index) of imgs" :key="index"   @click="yulan(index)">
-					<image :src="'data:image/jpeg;base64,'+item" ></image>
+				<view class="shangchuans" v-for="(item,index) of imgs" :key="index"  >
+					<image :src="item"  @click="yulan(index)"></image>
 					<image src="/static/delimg.png" class="del" @click="delImg(index)"></image>
 				</view>
 			    <view class="shangchuan" @click="addImg">
@@ -26,7 +26,7 @@
 				</view>
 			</div>
 		</view>
-		<view class="submit">
+		<view class="submit" @click="submit">
 			提交
 		</view>
 	</view>
@@ -34,7 +34,8 @@
 
 <script>
 	import {pageMixin} from "../../common/mixin";
-	import {urlTobase64} from '../../common/tool.js'
+	import {uploadImages} from '../../common/tool.js'
+	import {uploadImage} from '../../common/fetch.js'
 	export default {
 		mixins:[pageMixin],
 		data() {
@@ -53,11 +54,15 @@
 			},
 			//提交
 			submit(){
-				uploadImage({'image':this.imgs[0]}).then(res=>{
-					console.log(res)
-				}).catch(e=>{
-					console.log(e)
-				})
+				let data={
+					'Users_ID': 'wkbq6nc2kc',
+					'timestamp':'1502263578',
+					'sign':'DA1525TR85D6S5A9E5236FDSWD52F147WA',
+					'sortToken':1,
+					'act':'upload_image'
+				};
+				//上传图片
+				uploadImages(data,this.imgs);
 			},
 			//删除某张预览图片
 			delImg(index){
@@ -71,10 +76,7 @@
 					success(res) {
 						for(let item of res.tempFiles){
 							that.imgs.push(item.path);
-						}
-						for(let i=0;i<that.imgs.length;i++){
-							that.imgs[i]=urlTobase64(that.imgs[i]);
-						}
+						}		
 					},
 					fail(e) {
 						console.log(e);
@@ -255,6 +257,7 @@
 			position: absolute;
 			top: -19rpx;
 			right: -19rpx;
+			z-index: 9999;
 		}
 	}
 	.shangchuan{
