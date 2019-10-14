@@ -254,6 +254,8 @@ export function isWeiXin() {
 //上传图片
 export const uploadImages=(formData,imgs)=>{
 	let sum=0;
+	let arr=[];
+	let that=this;
 	for(let i=0;i<imgs.length;i++){
 		uni.uploadFile({
 				url: staticUrl+'/api/little_program/shopconfig.php', 
@@ -263,6 +265,7 @@ export const uploadImages=(formData,imgs)=>{
 				success: (uploadFileRes) => {
 					sum++;
 					let msg=JSON.parse(uploadFileRes.data);
+					arr.push(msg.data.path);
 					if(sum==imgs.length){
 						uni.showToast({
 							title:msg.msg
@@ -277,7 +280,7 @@ export const uploadImages=(formData,imgs)=>{
 				}
 		})
 	}
-
+	return arr;
 }
 
 

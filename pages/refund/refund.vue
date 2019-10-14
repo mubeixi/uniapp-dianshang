@@ -136,6 +136,7 @@ export default {
 			imgs:[],//上传图片预览
 			Order_ID:0,//退款商品id
 			data:'',//商品信息
+			arr:[],//上传成功的图片
 			
         }
     },
@@ -186,7 +187,8 @@ export default {
 				'act':'upload_image'
 			};
 			//上传图片
-			uploadImages(data,this.imgs);
+			let arr=uploadImages(data,this.imgs);
+			// arr 是上传的图片
 		},
 		//删除某张预览图片
 		delImg(index){
