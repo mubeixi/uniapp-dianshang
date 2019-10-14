@@ -22,64 +22,68 @@
                     <p><span>《使用协议》</span>和<span>《隐私协议》</span></p>
                 </div> -->
         <div class="otherLogin" v-show="isShowWeiXin==1">
-          <p @click="weixinlogin"><i class="iconfont iconweixin"></i></p>
+          <div class="flex box" style="width: 100px;text-align: center;margin: 0 auto;">
+            <div class="inline-block flex1 text-center" @click="weixinlogin"><i class="funicon icon-weixin font24" ></i></div>
+            <div class="inline-block flex1 text-center" @click="qqlogin"><i style="color: #2eb1f1;font-size: 32px;margin-top: 2px" class="funicon icon-QQ1" ></i></div>
+          </div>
         </div>
       </li>
       <li class="phoneContent" v-else-if="status == 2">
         <div class="title">
-          <i
-            class="iconfont iconhook-left prebBtn"
-            @click="(status = 1), (loginStatus = 1)"
-          ></i
-          >手机账号登陆
+<!--          <i-->
+<!--            class="iconfont iconhook-left prebBtn"-->
+<!--            @click="(status = 1), (loginStatus = 1)"-->
+<!--          ></i>-->
+          <view @click="(status = 1), (loginStatus = 1)" class="funicon icon icon-fanhui inline-block prebBtn"></view>
+          手机账号登陆
         </div>
         <div class="content">
-          <form @submit.prevent="login">
-            <label class="inputLable">
+
+            <label class="inputLable flex line20">
               <!-- <span @click="tel.show = true">+{{ telNum }}</span> -->
               <span>+{{ telNum }}</span>
               <input
-                type="number"
                 placeholder="请输入手机号"
                 v-model="mobile"
                 maxlength="11"
               />
             </label>
-            <label class="inputLable">
-              <span>密码</span>
+            <label class="inputLable  flex">
+              <span style="width: 50px;">密码</span>
               <input
-                :type="phone.inputType ? 'text' : 'password'"
+                type="password"
                 placeholder="请输入密码"
                 v-model="phone.password"
               />
-              <i
-                class="iconfont right"
-                :class="hasVisibleIcon"
-                @click="phone.inputType = !phone.inputType"
-              ></i>
+<!--              <i-->
+<!--                class="iconfont right"-->
+<!--                :class="hasVisibleIcon"-->
+<!--                @click="phone.inputType = !phone.inputType"-->
+<!--              ></i>-->
             </label>
             <div class="searchPass" @click="(status = 3), (loginStatus = 3)">
               找回密码？
             </div>
-            <input
-              type="submit"
-              value="登录"
-              class="submitBtn sendCode"
-              :disabled="isPhoneDisabled"
-            />
-          </form>
+
+
+          <button @click="login" type="primary" class="submitBtn sendCode" :disabled="isPhoneDisabled">登录</button>
+
+
+
         </div>
       </li>
       <li class="searchPassword" v-else-if="status == 3">
         <div class="title">
-          <i
-            class="iconfont iconhook-left prebBtn"
-            @click="(status = 2), (loginStatus = 2)"
-          ></i
-          >找回密码
+<!--          <i-->
+<!--            class="iconfont iconhook-left prebBtn"-->
+<!--            @click="(status = 2), (loginStatus = 2)"-->
+<!--          ></i>-->
+          <view @click="(status = 2), (loginStatus = 2)" class="funicon icon icon-fanhui inline-block prebBtn"></view>
+
+          找回密码
         </div>
         <div class="content">
-          <label class="inputLable">
+          <label class="inputLable flex ">
             <!-- <span @click="tel.show = true">+{{ telNum }}</span> -->
             <span >+{{ telNum }}</span>
             <input
@@ -89,13 +93,8 @@
               maxlength="11"
             />
           </label>
-          <input
-            type="button"
-            value="发送验证码"
-            class="submitBtn"
-            :disabled="isCodeDisabled"
-            @click="codeSendVerification(4)"
-          />
+
+          <button @click="codeSendVerification(4)" type="primary" class="submitBtn" :disabled="isCodeDisabled">发送验证码</button>
         </div>
       </li>
       <li class="fillCode" v-else-if="status == 4">
@@ -115,7 +114,7 @@
         />
 
         <div class="searchNewPass editSearchPassword" v-if="loginStatus === 3">
-          <label class="inputLable">
+          <label class="inputLable flex line20">
             <span>验证码</span>
             <input
               type="text"
@@ -124,57 +123,48 @@
               @input="substr"
             />
           </label>
-          <label class="inputLable">
+          <label class="inputLable flex">
             <span>新密码</span>
             <input
-              :type="phone.inputType ? 'text' : 'password'"
+              type="password"
               placeholder="请输入新密码"
               v-model="newPassword"
             />
-            <i
-              class="iconfont right"
-              :class="hasVisibleIcon"
-              @click="phone.inputType = !phone.inputType"
-            ></i>
+<!--            <i-->
+<!--              class="iconfont right"-->
+<!--              :class="hasVisibleIcon"-->
+<!--              @click="phone.inputType = !phone.inputType"-->
+<!--            ></i>-->
           </label>
-          <input
-            type="button"
-            value="完成"
-            class="submitBtn sendCode"
-            :disabled="isNewPassDisabled"
-            @click="setNewPassOk"
-          />
+
+          <button @click="setNewPassOk" type="primary" class="submitBtn" :disabled="isNewPassDisabled">完成</button>
         </div>
       </li>
       <li class="setNewPass" v-else-if="status == 5">
         <div class="title">
-          <i
-            class="iconfont iconhook-left prebBtn"
-            @click="(status = 3), (loginStatus = 3)"
-          ></i
-          >设置新密码
+<!--          <i-->
+<!--            class="iconfont iconhook-left prebBtn"-->
+<!--            @click="(status = 3), (loginStatus = 3)"-->
+<!--          ></i>-->
+          <view @click="(status = 3), (loginStatus = 3)" class="funicon icon icon-fanhui inline-block prebBtn"></view>
+          设置新密码
         </div>
         <div class="content">
-          <label class="inputLable">
+          <label class="inputLable flex lin20">
             <span>密码</span>
             <input
-              :type="phone.inputType ? 'text' : 'password'"
+              :type="password"
               placeholder="请输入新密码"
               v-model="newPassword"
             />
-            <i
-              class="iconfont right"
-              :class="hasVisibleIcon"
-              @click="phone.inputType = !phone.inputType"
-            ></i>
+<!--            <i-->
+<!--              class="iconfont right"-->
+<!--              :class="hasVisibleIcon"-->
+<!--              @click="phone.inputType = !phone.inputType"-->
+<!--            ></i>-->
           </label>
-          <input
-            type="button"
-            value="完成"
-            class="submitBtn sendCode"
-            :disabled="isNewPassDisabled"
-            @click="setNewPassOk"
-          />
+
+          <button @click="setNewPassOk" type="primary" class="submitBtn sendCode" :disabled="isNewPassDisabled">完成</button>
         </div>
       </li>
 
@@ -222,11 +212,11 @@ import {GetQueryByString} from "../../common/tool";
 //   editPassword,
 //   logout
 // } from "@/assets/js/fetch/index";
-import {toast,confirm} from "../../common";
+import {toast,confirm,error} from "../../common";
 
 import { mapGetters, mapActions, Store } from "vuex";
 
-import { isWeiXin } from "../../common/tool";
+import { isWeiXin,urlencode} from "../../common/tool";
 import {pageMixin} from "../../common/mixin";
 
 
@@ -234,6 +224,7 @@ export default {
 	mixins:[pageMixin],
   data() {
     return {
+      initData:{},
       froms:'',//跳转过来的路由
       status: 1, // 页面状态 1: 登录注册； 2：密码登陆； 3： 找回密码； 4：输入验证码； 5：设置新密码； 6:修改密码
       loginStatus: 1, // 1: 短信登陆； 2: 手机号登陆； 3: 找回密码； 4：修改密码
@@ -308,7 +299,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["setInitData", "setUser"]),
+    ...mapActions(["getInitData", "setUser"]),
     setData(from){
       this.froms=from;
       //console.log(this.froms);
@@ -350,43 +341,43 @@ export default {
     async login() {
       //登录 - 多个地方用了
       //console.log(this.fromId, "这是fromId");
-      if (this.loginStatus === 1) {
-        // 短信登录
-        await loginSign(this.mobile,this.verificationCode,this.fromId).then(
-          () => toast("登录成功！")
-        );
-      } else if (this.loginStatus === 2) {
-        // 账号密码登录
-        await login(this.mobile, this.fromId, this.phone.password).then(res =>
-           {
-             toast(res.msg);
-            // this.store.commit("promotion/setFromId", "");
-           }
-        );
-      } else if (this.loginStatus === 3) {
-        // 找回密码
-        await loginSign(this.mobile, this.verificationCode);
-      }
-      await this.setInitData();
-      if (isWeiXin() === "111111xcx") {
-        wx.miniProgram.navigateBack({
-          delta: 1
-        });
-      } else {
-          let querys={};
-          let users_id=this.$route.query.users_id;
-          //console.log(this.froms);
-          querys=this.froms.query;
-          querys.users_id=users_id;
-          //delete querys.from_id;
-          if(this.froms.path=="/member/personalInfo"){
-            this.$router.push({ path:'/member',query:querys});
-          }else{
-            this.$router.push({ path:this.froms.fullPath});//,query:querys
-          }
-
-          // this.$router.go(-1);
-      }
+      // if (this.loginStatus === 1) {
+      //   // 短信登录
+      //   await loginSign(this.mobile,this.verificationCode,this.fromId).then(
+      //     () => toast("登录成功！")
+      //   );
+      // } else if (this.loginStatus === 2) {
+      //   // 账号密码登录
+      //   await login(this.mobile, this.fromId, this.phone.password).then(res =>
+      //      {
+      //        toast(res.msg);
+      //       // this.store.commit("promotion/setFromId", "");
+      //      }
+      //   );
+      // } else if (this.loginStatus === 3) {
+      //   // 找回密码
+      //   await loginSign(this.mobile, this.verificationCode);
+      // }
+      // await this.setInitData();
+      // if (isWeiXin() === "111111xcx") {
+      //   wx.miniProgram.navigateBack({
+      //     delta: 1
+      //   });
+      // } else {
+      //     let querys={};
+      //     let users_id=this.$route.query.users_id;
+      //     //console.log(this.froms);
+      //     querys=this.froms.query;
+      //     querys.users_id=users_id;
+      //     //delete querys.from_id;
+      //     if(this.froms.path=="/member/personalInfo"){
+      //       this.$router.push({ path:'/member',query:querys});
+      //     }else{
+      //       this.$router.push({ path:this.froms.fullPath});//,query:querys
+      //     }
+      //
+      //     // this.$router.go(-1);
+      // }
 
     },
     setNewPassOk() {
@@ -417,46 +408,38 @@ export default {
       }, 1000);
     },
     weixinlogin() {
-        const url=window.location.href;
-        const users_id=GetQueryByString(url,'users_id');
-        let my=new NATIVE_APP();
-        if(my.isIos||my.isAndroid){
-          my.wxLogin(1, ajaxUrl+`/index/user/appwxlogin?users_id=${users_id}`);
-        }else{
-          weixinAuthUrl().then(res => {
-              if (res.link) window.location.href = res.link;
-          });
-        }
+
+      if(!this.initData.authorized.authorizer_appid || !this.initData.authorized.component_appid){
+        error('登录参数获取错误')
+        return;
+      }
+
+
+      console.log(this.initData)
+      let REDIRECT_URI = urlencode(location.href);//encodeURIComponent(location.href);//location.origin+'/pages/login/login';//encodeURIComponent();//encodeURIComponent(location.origin+'/pages/login/login');
+      console.log(REDIRECT_URI)
+      let wxAuthUrl = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${this.initData.authorized.authorizer_appid}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=snsapi_userinfo&state=STATE&component_appid=${this.initData.authorized.component_appid}#wechat_redirect`;
+      console.log(wxAuthUrl)
+
+      // https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx0fb2eb432a8e3652&redirect_uri=http://o2o.bafangka.com/pages/login/login&response_type=code&scope=snsapi_login&state=STATE&component_appid=wx4e207f4337cdbf6d
+      window.location.href = wxAuthUrl;
+        // const url=window.location.href;
+        // const users_id=GetQueryByString(url,'users_id');
+        // let my=new NATIVE_APP();
+        // if(my.isIos||my.isAndroid){
+        //   my.wxLogin(1, ajaxUrl+`/index/user/appwxlogin?users_id=${users_id}`);
+        // }else{
+        //   weixinAuthUrl().then(res => {
+        //       if (res.link) window.location.href = res.link;
+        //   });
+        // }
+
     },
-    initDataFn() {
-      // try {
-      //   const url=window.location.href;
-      //   let start=url.indexOf("code");
-      //   const code=url.substr(start+5,32);
-      //   //const users_id=this.$route.query.users_id;
-      //   const users_id=GetQueryByString(url,'users_id');
-      //   if (start>=0) {
-      //     weixinlogin(code,this.fromId)
-      //       .then(res => {
-      //
-      //         this.setInitData()
-      //           .then(() => {
-      //             window.location.replace(
-      //               window.location.origin + window.location.pathname + "#/?users_id="+users_id
-      //             );
-      //           })
-      //           .catch(err => {
-      //           });
-      //       })
-      //       .catch(err => {
-      //         window.location.replace(
-      //          window.location.origin + window.location.pathname + "#/login?users_id="+users_id
-      //         );
-      //       });
-      //   }
-      // } catch (err) {
-      //
-      // }
+    async initDataFn() {
+
+      this.isShowWeiXin= isWeiXin();
+      this.initData = await this.getInitData();
+
     }
 
   },
@@ -468,18 +451,10 @@ export default {
   // },
   created() {
 
-    this.isShowWeiXin= isWeiXin();
-    console.log(this.isShowWeiXin)
+
 
     this.initDataFn();
 
-    // if (this.$route.query.status) {
-    //   this.status = parseInt(this.$route.query.status);
-    //   this.mobile = this.user.mobile;
-    // }
-    // if (this.$route.query.loginStatus) {
-    //   this.loginStatus = parseInt(this.$route.query.loginStatus);
-    // }
 
   }
 };
@@ -615,7 +590,7 @@ export default {
         }
 
         input {
-          padding-left: 22%;
+          /*padding-left: 22%;*/
         }
       }
     }
@@ -634,11 +609,11 @@ export default {
 
       .inputLable {
         span {
-          padding:10px 0;
+          /*padding:10px 0;*/
         }
 
         input {
-          padding-left: 22%;
+          /*padding-left: 22%;*/
         }
       }
 
@@ -721,43 +696,47 @@ export default {
 
   .otherLogin {
     position: fixed;
-    bottom: 0.6rem;
+    bottom: 60px;
     left: 0;
     text-align: center;
     width: 100%;
 
-    p {
+    .box{
       position: relative;
-      display: inline-block;
-      padding: 0 0.6rem;
+      /*display: inline-block;*/
+      /*padding: 0 0.6rem;*/
 
-      // &:after,
+      &:after,
       &:before {
         position: absolute;
         content: "";
         display: block;
         height: 1px;
-        left: 50%;
+
         top: 50%;
-        transform: translateX(-50%);
-        z-index: -1;
+
+
       }
 
       &:before {
         background-color: #e6e6e6;
-        width: 100%;
+        width: 20%;
+        left: -20%;
       }
 
       &:after {
-        background-color: white;
-        width: 40%;
+        background-color: #e6e6e6;
+        width: 20%;
+        left: 100%;
       }
     }
 
     i {
       background-color: white;
       color: $weixinColor;
-      font-size: 0.45rem;
+      font-size: 36px;
+      vertical-align: top;
+      display: inline-block;
     }
   }
 }

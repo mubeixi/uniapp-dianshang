@@ -20,9 +20,15 @@ export const getInitData = async ({commit,state}) => {
   }
 
   await getSystemConf().then(res=>{
+    console.log(res.data)
     commit('SET_INIT_DATA', res.data);
-    return res.data
+    data = res.data
+    console.log(9999999999)
   })
+
+
+  console.log(11111111111)
+  return data;
 
 };
 
