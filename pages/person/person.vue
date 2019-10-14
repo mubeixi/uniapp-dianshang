@@ -11,7 +11,7 @@
 					<image src="/static/default.png" ></image>
 				</view>
 				<view class="right">
-					<view class="nickName">坚果姑娘</view>
+					<view class="nickName">{{userInfo.User_NickName}}</view>
 					<view class="cart">金卡会员<image src="/static/person/rightCart.png" ></image></view>
 				</view>
 			</view>
@@ -137,12 +137,12 @@
 
 <script>
 	import {pageMixin} from "../../common/mixin";
-	import {mapActions} from 'vuex';
+	import {mapGetters,mapActions} from 'vuex';
 	export default {
 		mixins:[pageMixin],
 		data() {
 			return {
-
+				userInfo:{}
 			};
 		},
 		computed:{
@@ -184,8 +184,11 @@
 				})
 			}
 		},
+		async onShow(){
+			this.userInfo = await this.getUserInfo();
+		},
 		created(){
-			let userInfo = this.getUserInfo()
+
 		}
 	}
 </script>
