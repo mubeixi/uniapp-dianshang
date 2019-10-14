@@ -38,9 +38,9 @@ const fetch = function (act, param,options = false,url='/api/little_program/shop
 };
 
 //获取全局配置
-export const getSystemConf = (data,options) => {return new Promise((resolve, reject) => {resolve({aa:22,bb:333})})};//fetch('get_base_config', data,options)
+export const getSystemConf = (data,options) => fetch('shopconfig', data,options)
 
-export const login = (data,options) => fetch('users_login', data,options)
+export const login = (data,options) => fetch('user_login', data,options)
 
 export const getCouponList = (data,options) => fetch('get_unaccalimed_coupon',data,options)
 
@@ -134,6 +134,29 @@ export const getShopWithdrawMethod = (data, options) => fetch('get_shop_withdraw
 export const withdrawApply = (data, options) => fetch('withdraw_apply', data, options);
 // 获取申请提现记录
 export const getWithdrawRecordList = (data, options) => fetch('get_withdraw_record_list', data, options);
+
+
+//短信验证码
+export const getSmsCode = (data, options) => fetch('login_sms', data, options);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 function get_Appid() {

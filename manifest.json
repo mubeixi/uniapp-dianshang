@@ -74,6 +74,10 @@
         "appid" : "tt6f4419f9f06ea321"
     },
     "h5" : {
+        "router" : {
+            "mode" : "history",
+            "base" : ""
+        },
         "publicPath" : "./",
         "devServer" : {
             "port" : 4100,
@@ -88,9 +92,6 @@
                     }
                 }
             }
-        },
-        "router" : {
-            "base" : ""
         }
     }
 }

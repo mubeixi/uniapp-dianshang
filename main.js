@@ -7,7 +7,10 @@ import pagetitle from './pages/title/title.vue'
 Vue.config.productionTip = false
 
 import Common from './common/index.js';
+import {GetQueryByString, ls} from "./common/tool";
 Vue.use(Common);
+
+
 
 //加入mixin
 // import {defaultMixin,aidMixin} from "./common/mixin";

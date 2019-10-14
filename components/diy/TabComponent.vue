@@ -427,7 +427,7 @@
   }
 
   ul, li {
-    .rest;
+    .reset;
     display: block;
   }
 
@@ -635,7 +635,7 @@
             position: absolute;
             right: 4px;
             bottom: 4px;
-			
+
             /*position: absolute;*/
             /*right: 0;*/
             /*top:50%;*/

@@ -11,35 +11,39 @@ export const defaultMixin = {
     created() {
 
     },
-    methods:{
-        ...mapActions(['getInitData'])
-    }
+
 
 }
 
 export const pageMixin = {
-    created() {
+    mounted() {
 
+        // if(!ls.get('initData')){
+        //     this.getInitData()
+        // }
 
         // #ifdef H5
-        let aid = GetQueryByString(location.href, 'aid')
 
+        let users_id = GetQueryByString(location.href, 'users_id')
+        console.log('users_id is'+users_id)
         //如果连接里面已经有了，就不需要搞事
-        if(aid){
-            ls.set('aid',aid);
+        if(users_id){
+            ls.set('users_id',users_id);
             return;
         }else{
-            aid = ls.get('aid');
+            users_id = ls.get('users_id');
         }
 
-        if (aid) {
+        console.log('users_id is'+users_id)
+
+        if (users_id) {
 
             let search = location.search;
 
             if(search.indexOf('?')===-1){
-                search += '?aid='+aid
+                search += '?users_id='+users_id
             }else{
-                search.replace(/\?/,'?aid='+aid+'&')
+                search.replace(/\?/,'?users_id='+users_id+'&')
             }
 
             location.search = search
@@ -54,5 +58,9 @@ export const pageMixin = {
         }
         // #endif
 
+
+    },
+    methods:{
+        ...mapActions(['getInitData'])
     }
 }
