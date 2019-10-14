@@ -242,7 +242,7 @@
   }
 
   ul, li {
-    .rest;
+    .reset;
     display: block;
   }
 

@@ -56,19 +56,21 @@ export const GetQueryByString = (str, name) => {
 
 export const ls = {
   set(key, val) {
-    //Null undefined '' 这些不让传进来了
+
     if(!val && (val!=0 || val!= false))return false;
-    return  uni.setStorageSync(key, JSON.stringify(val))
+
+    return  uni.setStorageSync(key, val)
   },
 
   get(key) {
     var val = uni.getStorageSync(key);
-    if(!val) return false;
-    try{
-      return JSON.parse(val)
-    }catch (e) {
-      return false;
-    }
+    return val;
+    // if(!val) return '';
+    // try{
+    //   return JSON.parse(val)
+    // }catch (e) {
+    //   return '';
+    // }
 
   },
   remove(key) {
@@ -249,6 +251,14 @@ export function isWeiXin() {
 
 }
 
+
+
+export const urlencode = (str)=>{
+
+  return encodeURIComponent(str).replace(/!/g, '%21').replace(/'/g, '%27').replace(/\(/g, '%28').
+  replace(/\)/g, '%29').replace(/\*/g, '%2A').replace(/%20/g, '+');
+
+}
 // base64
 export const urlTobase64=function(url){
     uni.request({

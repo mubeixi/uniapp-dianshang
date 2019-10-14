@@ -2,7 +2,7 @@ import * as ENV from './env.js';
 // console.log(ENV.apiBaseUrl)
 
 export const ajax = (url,method,data,options)=>{
-	
+
   if(!options)options={}
   if(!data)data={}
   let {tip='',mask=false,timelen=2000} = options;
@@ -13,8 +13,8 @@ export const ajax = (url,method,data,options)=>{
   })
 
   //if(!data._ajax)data._ajax=2;
-  //if (!data.aid && aid)data.aid=aid;
-  
+  //if (!data.users_id && users_id)data.users_id=users_id;
+
   let token
 
   var header = {
@@ -31,7 +31,7 @@ let URL = ENV.apiBaseUrl+url;
 
 
 // console.log(URL)
-	
+
   return new Promise(function(resolve, reject){
     uni.request({
       header,
