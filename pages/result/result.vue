@@ -96,7 +96,7 @@ export default {
 		inputValue:'',
 		pro:[],
 		page:1,
-		pageSize:8,
+		pageSize:6,
 		orderby:'',
 		searchAll:[],//搜索历史
 		showShai:false,
@@ -570,6 +570,6 @@ export default {
 		margin: 0 auto;
 		width: 640rpx;
 		height: 480rpx;
-
+		margin-top: 100rpx;
 	}
 </style>

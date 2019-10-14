@@ -151,19 +151,11 @@ export default {
     methods: {
 		//图片预览
 		yulan(index){
-			// uni.previewImage({
-			//             urls: this.imgs,
-			// 			indicator:'default',
-			// 			current:index, 
-			//             longPressActions: {
-			//                 success: function(data) {
-								
-			//                 },
-			//                 fail: function(err) {
-									
-			//                 }
-			//             }
-			// });
+			uni.previewImage({
+			            urls: this.imgs,
+						indicator:'default',
+						current:index
+			});
 		},
 		//获取申请退货退款页面
 		getRefund(){
