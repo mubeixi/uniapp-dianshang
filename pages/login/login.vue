@@ -24,9 +24,9 @@
 				<!-- #ifdef H5 -->
 				<div class="otherLogin" v-show="isShowWeiXin==1">
 					<div class="flex box" style="width: 100px;text-align: center;margin: 0 auto;">
-						<div class="inline-block flex1 text-center" @click="weixinlogin"><i class="funicon icon-weixin font24"></i></div>
-						<div class="inline-block flex1 text-center" @click="qqlogin"><i style="color: #2eb1f1;font-size: 32px;margin-top: 2px"
-							 class="funicon icon-QQ1"></i></div>
+						<div class="inline-block flex1 text-center" @click="weixinlogin"><i class="funicon icon-weixin"></i></div>
+						<!-- <div class="inline-block flex1 text-center" @click="qqlogin"><i style="color: #2eb1f1;font-size: 32px;margin-top: 2px"
+							 class="funicon icon-QQ1"></i></div> -->
 					</div>
 				</div>
 				<!-- #endif -->
@@ -41,13 +41,13 @@
 					</div>
 				</div>
 				<!-- #endif -->
-				
+
 				<!-- #ifdef APP-PLUS -->
 				<div class="otherLogin">
 					<div class="flex box" style="width: 100px;text-align: center;margin: 0 auto;">
-						<div class="inline-block flex1 text-center" @click="weixinlogin"><i class="funicon icon-weixin font24"></i></div>
-						<div class="inline-block flex1 text-center" @click="qqlogin"><i style="color: #2eb1f1;font-size: 32px;margin-top: 2px"
-							 class="funicon icon-QQ1"></i></div>
+						<div class="inline-block flex1 text-center" @click="weixinlogin"><i class="funicon icon-weixin"></i></div>
+						<!-- <div class="inline-block flex1 text-center" @click="qqlogin"><i style="color: #2eb1f1;font-size: 32px;margin-top: 2px"
+							 class="funicon icon-QQ1"></i></div> -->
 					</div>
 				</div>
 				<!-- #endif -->
@@ -187,12 +187,9 @@
 	import wx from "weixin-js-sdk";
 	// #endif
 
-
 	import {
 		GetQueryByString
 	} from "../../common/tool";
-
-
 
 	// import {
 	//   login,
@@ -428,7 +425,7 @@
 				// #ifdef MP-WEIXIN
 				let userWxInfo = res.detail.userInfo,userData = res.detail
 				// #endif
-				
+
 				// #ifdef APP-PLUS
 				uni.login({
 				  provider: 'weixin',
@@ -474,9 +471,7 @@
 
 		},
 		created() {
-
 			this.initDataFn();
-
 
 			// #ifdef H5
 			if (isWeiXin()) {
@@ -492,12 +487,6 @@
 				}
 			}
 			// #endif
-
-
-
-
-
-
 
 		}
 	};
@@ -792,13 +781,19 @@
 				}
 			}
 
-			i {
+			.funicon {
 				background-color: white;
 				color: $weixinColor;
-				font-size: 36px;
+				font-size: 72upx;
 				vertical-align: top;
 				display: inline-block;
 			}
+			/* #ifdef APP-PLUS */
+			.icon-weixin{
+				font-size: 88upx;
+			}
+			/* #endif */
+
 		}
 	}
 </style>

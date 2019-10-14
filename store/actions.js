@@ -1,5 +1,6 @@
 import {getSystemConf} from "../common/fetch";
-import {ls} from "../common/tool";
+import {GetQueryByString, ls} from "../common/tool";
+import {confirm} from "../common";
 
 export const setUserInfo = ({commit}, data) => {
   commit('SET_USER_INFO', data);
@@ -45,9 +46,19 @@ export const getUserInfo = async ({commit,state}) => {
     }
   }
 
-  uni.navigateTo({
-    url:'/pages/login/login'
+
+
+  await confirm({title:'提示',content:'该操作需要登录,请问是否登录?',confirmText:'去登录',cancelText:'暂不登录'}).then(()=>{
+    uni.navigateTo({
+      url:'/pages/login/login'
+    })
+  }).catch(()=>{
+
   })
+
+  return {}
+  //要替换掉navigateTo，不然登录页面回退就尴尬了
+
 
 };
 

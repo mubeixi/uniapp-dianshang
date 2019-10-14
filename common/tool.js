@@ -25,7 +25,7 @@ export const GetQueryByString = (str, name) => {
 
   //获取？号出现几次
   var tempArr = str.split('?');
-  console.log(tempArr)
+  // console.log(tempArr)
   // //如果大于1
   if (tempArr.length - 1 > 1) {
     var rt = null;
@@ -44,7 +44,7 @@ export const GetQueryByString = (str, name) => {
   var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
   if (!str.split("?")[1]) return null;
   var r = str.split("?")[1].match(reg); //匹配目标参数
-  console.log(r)
+  // console.log(r)
   if (r != null) {
     return decodeURIComponent(r[2]);
 
@@ -266,7 +266,7 @@ export const urlTobase64=function(url){
 	method:'GET',
 	responseType: 'arraybuffer',
 	success: ress => {
-		let base64 = wx.arrayBufferToBase64(ress.data); //把arraybuffer转成base64 
+		let base64 = wx.arrayBufferToBase64(ress.data); //把arraybuffer转成base64
 		//base64 = 'data:image/jpeg;base64,' + base64 //不加上这串字符，在页面无法显示的哦
 		return base64;
 	}

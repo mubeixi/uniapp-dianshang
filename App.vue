@@ -59,6 +59,7 @@ ul,li{
 .font14{font-size : 14px}
 .font16{font-size : 16px}
 .font24{font-size : 24px}
+.font36{font-size : 24px}
 
 .line6{margin-bottom : 6px !important}
 .line4{margin-bottom : 4px !important}
