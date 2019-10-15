@@ -99,7 +99,17 @@
 							image_path:arr
 						}
 						comment(data).then(res=>{
-							
+							if(res.errorCode==0){
+								uni.showToast({
+									title:res.msg,
+									icon:''
+								})
+							}else{
+								uni.showToast({
+									title:res.msg,
+									icon:''
+								})
+							}
 						}).catch(e=>{
 							console.log(e);
 						})

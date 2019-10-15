@@ -144,8 +144,8 @@ export const confirmOrder = (data, options) => fetch('confirm_order', data, opti
 //短信验证码
 export const getSmsCode = (data, options) => fetch('login_sms', data, options);
 
-
-
+//获取赠品列表
+export const getGiftList = (data, options) => fetch('get_gift_list', data, options);
 
 
 
