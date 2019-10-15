@@ -148,9 +148,6 @@
 		computed:{
 
 		},
-		onShow(){
-
-		},
 		methods:{
 			...mapActions(['getUserInfo']),
 			//去任务中心

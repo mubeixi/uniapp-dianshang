@@ -136,7 +136,10 @@ export const withdrawApply = (data, options) => fetch('withdraw_apply', data, op
 export const getWithdrawRecordList = (data, options) => fetch('get_withdraw_record_list', data, options);
 // 删除提现方式
 export const delUserWithdrawMethod = (data, options) => fetch('del_user_withdraw_method', data, options);
-
+// 提交评论
+export const comment = (data, options) => fetch('comment', data, options);
+// 订单确认收货
+export const confirmOrder = (data, options) => fetch('confirm_order', data, options);
 
 //短信验证码
 export const getSmsCode = (data, options) => fetch('login_sms', data, options);
