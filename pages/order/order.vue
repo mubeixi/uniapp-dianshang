@@ -52,21 +52,24 @@
 			</div>
 			<div class="btn-group" v-else-if="item.Order_Status==3">
 				<span>查看物流</span>
-			    <span class="active" >确认收货</span>
+			    <span class="active" @click="confirmOrder(item)">确认收货</span>
 				<!-- @click="goPay(item)"跳转退款 -->
 			</div>
-			<div class="btn-group" v-else-if="item.Order_Status==0">
+			<div class="btn-group" v-else-if="item.Order_Status==4">
 				<span @click="cancelOrder(item.prod_list,index)">删除订单</span>
 			    <span class="active" @click="goPay(item)">立即评价</span>
 			</div>
         </div>
-    </div>
+		<div class="defaults" v-if="data.length<=0">
+			<image src="/static/defaultImg.png" ></image>
+		</div>
+	</div>
 
 </template>
 
 <script>
 // import pagetitle from '@/components/title'
-import {getOrder,cancelOrder,getOrderNum} from '@/common/fetch.js'
+import {getOrder,cancelOrder,getOrderNum,confirmOrder} from '@/common/fetch.js'
 import {pageMixin} from "../../common/mixin";
 
 export default {
@@ -96,6 +99,24 @@ export default {
 		}
 	},
 	methods:{
+		//确认收货
+		confirmOrder(item){
+			let data={
+				Order_ID:item.Order_ID
+			}
+			let that=this;
+			confirmOrder(data).then(res=>{
+				if(res.errorCode==0){
+					uni.showToast({
+						title:res.msg,
+						icon:'none'
+					})
+					that.getOrder();
+				}
+			}).catch(e=>{
+				console.log(e);
+			})
+		},
 		//获取订单角标数
 		getOrderNum(){
 			getOrderNum({}).then(res=>{
@@ -145,11 +166,10 @@ export default {
 				uni.navigateTo({
 					url:'../refund/refund?Order_ID='+item.Order_ID
 				})
-			}else if(item.Order_Status==0){
-				console.log("评价")
-				// uni.navigateTo({
-				// 	url:'../refund/refund?Order_ID='+item.Order_ID
-				// })
+			}else if(item.Order_Status==4){
+				uni.navigateTo({
+					url:'../publishComment/publishComment?Order_ID='+item.Order_ID
+				})
 			}
 			
 		},
@@ -172,25 +192,26 @@ export default {
 			}else if(this.index==4){
 				data={
 					Is_Commit:0,
-					Order_Status:0
+					Order_Status:this.index
 				}
 			}
 			getOrder(data).then(res=>{
 				if(res.errorCode==0){
 					for(var i in res.data) {
-						for(var m in res.data[i]){
-							if(m == 'prod_list'){
-								for(var j in res.data[i][m]) {
+						for(var m in res.data[i]){		
+							if(m == 'prod_list'){				
+								for(var j in res.data[i][m]) {					
 										for( var k in res.data[i][m][j]) {
 											if(k == 'attr_info') {
-												res.data[i][m][j][k] = JSON.parse(res.data[i][m][j][k])
+												if(res.data[i][m][j][k]){
+													res.data[i][m][j][k] = JSON.parse(res.data[i][m][j][k])
+												}
 											}									
 										}
 									}
 							}
 						}
 					}
-					
 					for(let item of res.data){
 						this.data.push(item)
 					}
@@ -199,7 +220,6 @@ export default {
 				}		
 			}).catch(e=>{
 				this.isQing=false;
-				console.log(e);
 			})
 		}
 	}
@@ -356,4 +376,10 @@ export default {
     .text-right {
         text-align: right;
     }
+	.defaults{
+		margin: 0 auto;
+		width: 640rpx;
+		height: 480rpx;
+		margin-top: 100rpx;
+	}
 </style>

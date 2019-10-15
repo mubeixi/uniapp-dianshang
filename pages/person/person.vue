@@ -92,6 +92,13 @@
 				</view>
 				<image src="/static/person/right.png" class="right"></image>
 			</view>
+			<view class="bargain" @click="goGift">
+				<image src="/static/person/zengpin.png" class="left"></image>
+				<view class="pintuan">
+					赠品中心
+				</view>
+				<image src="/static/person/right.png" class="right"></image>
+			</view>
 			<view class="bargain"  @click="goRenwu">
 				<image src="/static/person/renwu.png" class="left"></image>
 				<view class="pintuan">
@@ -148,11 +155,14 @@
 		computed:{
 
 		},
-		onShow(){
-
-		},
 		methods:{
 			...mapActions(['getUserInfo']),
+			//去赠品中心
+			goGift(){
+				uni.navigateTo({
+					url:'../MyGift/MyGift'
+				})
+			},
 			//去任务中心
 			goRenwu(){
 				uni.navigateTo({
@@ -185,7 +195,7 @@
 			}
 		},
 		async onShow(){
-			this.userInfo = await this.getUserInfo();
+			//this.userInfo = await this.getUserInfo();
 		},
 		created(){
 

@@ -1,7 +1,14 @@
 <template>
 	<view class="all">
 		<page-title title="发表评论" rightHidden="true" bgcolor="#ffffff"></page-title>
-		<textarea class="edit"  contenteditable="true" placeholder="宝贝是否满足了你的期待？说说你的使用心得，分享给其他想购买的朋友吧。" placeholder-style="place">
+		<view class="rate">
+			<view class="rates">整体评价</view>
+			<uni-rate value="5" active-color="#F43131" size='20' @change="show" margin="2"></uni-rate>
+			<view class="score">
+				{{Score}}
+			</view>
+		</view>
+		<textarea class="edit"  contenteditable="true" placeholder="宝贝是否满足了你的期待？说说你的使用心得，分享给其他想购买的朋友吧。" placeholder-style="place" v-model="Note">
 			
 		</textarea>
 		
@@ -10,14 +17,14 @@
 				匿名评价
 			</view>
 			<view>
-				<switch checked="true"  />
+				<switch checked @change="switchChange"  />
 			</view>
 		</view>
 		<view class="shangH">
 			<div class="item noborder">上传照片(最多9张)</div>
 			<div class="imgs">
-				<view class="shangchuans" v-for="(item,index) of imgs" :key="index"   @click="yulan(index)">
-					<image :src="'data:image/jpeg;base64,'+item" ></image>
+				<view class="shangchuans" v-for="(item,index) of imgs" :key="index"  >
+					<image :src="item"  @click="yulan(index)"></image>
 					<image src="/static/delimg.png" class="del" @click="delImg(index)"></image>
 				</view>
 			    <view class="shangchuan" @click="addImg">
@@ -26,7 +33,7 @@
 				</view>
 			</div>
 		</view>
-		<view class="submit">
+		<view class="submit" @click="submit">
 			提交
 		</view>
 	</view>
@@ -34,15 +41,38 @@
 
 <script>
 	import {pageMixin} from "../../common/mixin";
-	import {urlTobase64} from '../../common/tool.js'
+	import {uploadImages} from '../../common/tool.js'
+	import {uploadImage,comment} from '../../common/fetch.js'
+		import {uniRate} from "../../components/uni-rate/uni-rate.vue"
 	export default {
 		mixins:[pageMixin],
+		components: {uniRate},
 		data() {
 			return {
 				imgs:[],//上传图片预览
+				arr:[],//评价上传图片
+				isSubmit:true,//是否可以提交
+				Order_ID:0,//订单id
+				Score:5,//评价分数
+				isAnonymous:1,//是否匿名评价
 			};
 		},
+		onLoad(options) {
+			this.Order_ID=options.Order_ID;
+		},
 		methods:{
+			//是否匿名评价
+			switchChange(e){
+				if(e.target.value){
+					this.isAnonymous=1;
+				}else{
+					this.isAnonymous=0;
+				}
+			},
+			//评价分数
+			show(value){
+				this.Score=value.value;
+			},
 			//图片预览
 			yulan(index){
 				uni.previewImage({
@@ -53,28 +83,79 @@
 			},
 			//提交
 			submit(){
-				uploadImage({'image':this.imgs[0]}).then(res=>{
-					console.log(res)
-				}).catch(e=>{
-					console.log(e)
-				})
+				let arr=[];
+				for(let item of this.arr){
+					arr.push(item[0]);
+				}
+				arr=JSON.stringify(arr);
+				if(this.isSubmit){
+					if(this.Note){
+						//提交评论
+						let data={
+							Order_ID:this.Order_ID,
+							Score:this.Score,
+							Note:this.Note,
+							is_anonymous:this.isAnonymous,
+							image_path:arr
+						}
+						comment(data).then(res=>{
+							if(res.errorCode==0){
+								uni.showToast({
+									title:res.msg,
+									icon:''
+								})
+							}else{
+								uni.showToast({
+									title:res.msg,
+									icon:''
+								})
+							}
+						}).catch(e=>{
+							console.log(e);
+						})
+					}else{
+						uni.showToast({
+							title:'您还未填写评价哦',
+							icon:'none'
+						})
+					}
+				}else{
+					uni.showToast({
+						title:'图片还没上传完成',
+						icon:'none'
+					})
+				}
 			},
 			//删除某张预览图片
 			delImg(index){
 				this.imgs.splice(index, 1);
+				this.arr.splice(index, 1);
 			},
 			addImg(){
+				let data={
+					'Users_ID': 'wkbq6nc2kc',
+					'timestamp':'1502263578',
+					'sign':'DA1525TR85D6S5A9E5236FDSWD52F147WA',
+					'sortToken':1,
+					'act':'upload_image'
+				};
 				let that=this;
 				uni.chooseImage({
 					count:3,
 					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有  
 					success(res) {
+						that.isSubmit=false;
 						for(let item of res.tempFiles){
 							that.imgs.push(item.path);
+							//上传图片
+							let arrs=[];
+							arrs.push(item.path);
+							let arr=uploadImages(data,arrs);
+							that.arr.push(arr);
+							//是否可以提交
+							that.isSubmit=true;
 						}
-						for(let i=0;i<that.imgs.length;i++){
-							that.imgs[i]=urlTobase64(that.imgs[i]);
-						}
+						
 					},
 					fail(e) {
 						console.log(e);
@@ -99,7 +180,7 @@
 		border:1px solid rgba(233,233,233,1);
 		border-radius:10px;
 		margin: 0 auto;
-		margin-top: 42rpx;
+		margin-top: 20rpx;
 		padding-top: 23rpx;
 		padding-left: 27rpx;
 		padding-right: 40rpx;
@@ -255,6 +336,7 @@
 			position: absolute;
 			top: -19rpx;
 			right: -19rpx;
+			z-index: 9999;
 		}
 	}
 	.shangchuan{
@@ -285,5 +367,30 @@
 		background-color: #FFFFFF;
 		width: 710rpx;
 		margin: 0 auto;
+	}
+	
+	.rate{
+		margin: 0 auto;
+		width: 710rpx;
+		height: 75rpx;
+		background-color: #FFFFFF;
+		margin-top: 40rpx;
+		display: flex;
+		align-items: center;
+		border-radius: 10rpx;
+		padding: 25rpx 0rpx;
+		.rates{
+			font-size: 26rpx;
+			color: #333333;
+			margin-left: 25rpx;
+			margin-right: 22rpx;
+		}
+		.score{
+			padding-top: 5rpx;
+			font-size:26rpx;
+			font-weight:500;
+			color: #F43131;
+			margin-left: 15rpx;
+		}
 	}
 </style>

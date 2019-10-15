@@ -66,49 +66,33 @@
 			<view class="floats">	
 				<view class="floatm">
 					<view class="imgs">
-						<image src="/static/detail/share2.png"></image>
+						<image src="/static/fenxiao/shengri.png" ></image>
 					</view>
-						生日特权1
+						生日特权
 				</view>
 			</view>
 			<view class="floats">
 				<view class="floatm">
 					<view class="imgs">
-						<image src="/static/detail/share2.png"></image>
+						<image src="/static/fenxiao/gaosu.png" ></image>
 					</view>
-						生日特权2
+						高速下载
 				</view>
 			</view>
 			<view class="floats">
 				<view class="floatm">
 					<view class="imgs">
-						<image src="/static/detail/share2.png"></image>
+						<image src="/static/fenxiao/wuxian.png" ></image>
 					</view>
-						生日特权3
+						无限下载
 				</view>
 			</view>
 			<view class="floats">
 				<view class="floatm">
 					<view class="imgs">
-						<image src="/static/detail/share2.png"></image>
+						<image src="/static/fenxiao/shouquan.png" ></image>
 					</view>
-						生日特权4
-				</view>
-			</view>
-			<view class="floats">
-				<view class="floatm">
-					<view class="imgs">
-						<image src="/static/detail/share2.png"></image>
-					</view>
-						生日特权5
-				</view>
-			</view>
-			<view class="floats">
-				<view class="floatm">
-					<view class="imgs">
-						<image src="/static/detail/share2.png"></image>
-					</view>
-						生日特权6
+						授权商用
 				</view>
 			</view>
 		</scroll-view>
@@ -143,7 +127,7 @@
 		<view style="height: 20rpx;background-color: #F8F8F8;width: 750rpx;"></view>
 		<view class="lasts">
 			<view class="titles">
-				<image src="/static/detail/share2.png" ></image>
+				<image src="/static/fenxiao/wen.png" ></image>
 				<view>
 					什么是成长值
 				</view>
@@ -155,7 +139,7 @@
 		<view style="height: 20rpx;background-color: #F8F8F8;width: 750rpx;"></view>
 		<view class="lasts">
 			<view class="titles">
-				<image src="/static/detail/share2.png" ></image>
+				<image src="/static/fenxiao/wen.png" ></image>
 				<view>
 					如何获得成长值
 				</view>

@@ -38,8 +38,8 @@
         </div>
         <div class="item noborder">上传凭证</div>
         <div class="imgs">
-			<view class="shangchuans" v-for="(item,index) of imgs" :key="index"   @click="yulan(index)">
-				<image :src="item.path" ></image>
+			<view class="shangchuans" v-for="(item,index) of imgs" :key="index"  >
+				<image :src="item"  @click="yulan(index)"></image>
 				<image src="/static/delimg.png" class="del" @click="delImg(index)"></image>
 			</view>
             <view class="shangchuan" @click="addImg">
@@ -118,7 +118,7 @@
 import popupLayer from '../../components/popup-layer/popup-layer.vue';
 import {uploadImage,getRefund} from '../../common/fetch.js'
 import {pageMixin} from "../../common/mixin";
-
+import {uploadImages} from '../../common/tool.js'
 export default {
 	mixins:[pageMixin],
     components: {
@@ -136,6 +136,7 @@ export default {
 			imgs:[],//上传图片预览
 			Order_ID:0,//退款商品id
 			data:'',//商品信息
+			arr:[],//上传成功的图片
 			
         }
     },
@@ -178,11 +179,16 @@ export default {
 		},
 		//提交
 		submit(){
-			uploadImage({'image':this.imgs[0]}).then(res=>{
-				console.log(res)
-			}).catch(e=>{
-				console.log(e)
-			})
+			let data={
+				'Users_ID': 'wkbq6nc2kc',
+				'timestamp':'1502263578',
+				'sign':'DA1525TR85D6S5A9E5236FDSWD52F147WA',
+				'sortToken':1,
+				'act':'upload_image'
+			};
+			//上传图片
+			let arr=uploadImages(data,this.imgs);
+			// arr 是上传的图片
 		},
 		//删除某张预览图片
 		delImg(index){
@@ -195,9 +201,9 @@ export default {
 				sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有  
 				success(res) {
 					for(let item of res.tempFiles){
-						that.imgs.push(item);
+						that.imgs.push(item.path);
 					}
-					
+		
 					console.log(res.tempFiles);
 				},
 				fail(e) {
@@ -239,6 +245,7 @@ export default {
 			position: absolute;
 			top: -19rpx;
 			right: -19rpx;
+			z-index: 999;
 		}
 	}
 	.shangchuan{

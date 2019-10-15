@@ -1,7 +1,7 @@
 <template>
 	<view class="all" :style="{'min-height':height+'px'}">
 		<page-title title="申请记录" rightHidden="true" bgcolor="#ffffff"></page-title>
-		<view class="main">
+		<view class="main" v-for="(item,index) of data" :key="index">
 			<view class="fir">
 				<view class="left">
 					申请区域：
@@ -35,12 +35,15 @@
 
 <script>
 	import {pageMixin} from "../../common/mixin";
-	
+	import {getWithdrawRecordList} from '../../common/fetch.js'
 	export default {
 		mixins:[pageMixin],
 		data() {
 			return {
 				height:1000,//获取手机屏幕高度
+				page:1,
+				pageSize:10,
+				data:[],
 			};
 		},
 		onLoad() {
@@ -50,6 +53,28 @@
 			        that.height=res.screenHeight-68;
 			    }
 			});
+		},
+		onShow() {
+			//获取申请记录
+			this.getWithdrawRecordList();
+		},
+		onReachBottom() {
+			
+		},
+		methods:{
+			//获取提现记录
+			getWithdrawRecordList(){
+				let data={
+					page:this.page,
+				}
+				getWithdrawRecordList(data).then(res=>{
+					if(res.errorCode==0){
+						this.data=res.data;
+					}
+				}).catch(e=>{
+					console.log(e)
+				})
+			}
 		}
 	}
 </script>

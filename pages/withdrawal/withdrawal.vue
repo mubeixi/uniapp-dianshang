@@ -2,14 +2,17 @@
 	<view class="all" :style="{'min-height':height+'px'}">
 		<page-title title="提现" rightHidden="true" bgcolor="#ffffff" ></page-title>
 		<view class="content">
-			<view class="bank" v-if="isShow">
+			<view class="bank" v-if="isShow" @click="goMethod">
 				<image src="/static/fenxiao/zhaoshang.png" class="bankCard"></image>
-				<view class="bankName">
-					中国银行(尾号8888)
+				<view class="bankName" v-if="data.Method_Type=='bank_card'||data.Method_Type=='alipay'">
+					{{data.Method_Name}}({{data.Account_Val}})
+				</view>
+				<view class="bankName" v-else>
+					{{data.Method_Name}}
 				</view>
 				<image src="/static/fenxiao/right.png"  class="right"></image>
 			</view>
-			<view class="bank guanli" v-else>
+			<view class="bank guanli" @click="guanWithdrawal" v-else>
 				+ 管理提现方式
 			</view>
 			<view class="tiMoney">
@@ -17,14 +20,14 @@
 			</view>
 			<view class="inputMoney">
 				<view>
-					¥  <input type="number">
+					¥  <input type="number" v-model="price">
 				</view>
 			</view>
 			<view class="canTi">
 				<view class="canTiMoney">
-					可提现金额：5200元
+					可提现金额：{{balance}}元
 				</view>
-				<view class="allTi">
+				<view class="allTi" @click="allTi">
 					全部提现
 				</view>
 			</view>
@@ -37,10 +40,10 @@
 					申请提现后，系统会自动扣除您提现的2.00%的手续费，10.00%转入您的会员余额，88%店主会将钱打入您的账号；若全部转入余额则不扣除手续费。
 				</view>
 			</view>
-			<view class="liji">
+			<view class="liji" @click="withdrawApply">
 				立即提现
 			</view>
-			<view class="lishi">
+			<view class="lishi" @click="goRecord">
 				历史提现 <image src="/static/fenxiao/right.png" ></image>
 			</view>
 		</view>
@@ -49,22 +52,131 @@
 
 <script>
 	import {pageMixin} from "../../common/mixin";
-	
+	import {getUserWithdrawMethod,withdrawApply} from '../../common/fetch.js'
 	export default {
 		mixins:[pageMixin],
 		data(){
 			return {
 				height:1000,//获取手机屏幕高度
-				isShow:true,//可删除控制显示银行卡 还是管理
+				isShow:false,//可删除控制显示银行卡 还是管理
+				data:{},
+				balance:0,//可提现金额
+				User_Method_ID:0,//传过来选中的提现方式
+				price:'',//提现金额
+				isQing:false,//是否发起提现
 			};
 		},
-		onLoad() {
+		onLoad(options) {
 			let that=this;
+			that.User_Method_ID=options.User_Method_ID;
 			uni.getSystemInfo({
 			    success: function (res) {
 			        that.height=res.screenHeight-68;
 			    }
 			});
+		},
+		onShow() {
+			//获取我的提现方式
+			this.getUserWithdrawMethod();
+		},
+		methods:{
+			//申请记录
+			goRecord(){
+				uni.navigateTo({
+					url:'../record/record'
+				})
+			},
+			//申请提现
+			withdrawApply(){
+				let that=this;
+				if(that.isQing){
+					return;
+				}
+				that.isQing=true;
+				if(isNaN(this.price)){
+					uni.showToast({
+						title:'输入金额有误,请重新输入',
+						icon:'none'
+					})
+					this.price='';
+					that.isQing=false;
+					return;
+				}
+				if(this.price==''){
+					uni.showToast({
+						title:'未输入金额',
+						icon:'none'
+					})
+					this.price='';
+					that.isQing=false;
+					return;
+				}
+				let data={
+					User_Method_ID:this.User_Method_ID,
+					money:this.price
+				}
+				withdrawApply(data).then(res=>{
+					
+					setTimeout(() => {
+							that.isQing=false;
+					}, 4000)					
+					if(res.errorCode==0){
+						//提现成功清除金额
+						that.price='';
+						uni.showToast({
+							title:res.msg,
+							icon:'none'
+						})
+					}else{
+						uni.showToast({
+							title:res.msg,
+							icon:'none'
+						})
+					}
+				}).catch(e=>{
+					console.log(e)
+				})
+			},
+			//全部提现
+			allTi(){
+				this.price=this.balance;
+			},
+			getUserWithdrawMethod(){
+				getUserWithdrawMethod().then(res=>{
+					if(res.errorCode==0){
+						if(res.data.list.length>0){
+							this.isShow=true;
+						}else{
+							this.isShow=false;
+						}
+						if(this.User_Method_ID){
+							for(let item of res.data.list){
+								if(item.User_Method_ID==this.User_Method_ID){
+									this.data=item;
+								}
+							}
+						}else{
+							this.data=res.data.list[0];
+							this.User_Method_ID=res.data.list[0].User_Method_ID;
+						}
+						this.balance=res.data.balance
+					}
+				}).catch(err=>{
+					console.log(err)
+				})
+			},
+			//我的提现方式
+			goMethod(){
+				uni.navigateTo({
+					url:"../withdrawalMethod/withdrawalMethod?User_Method_ID="+this.data.User_Method_ID
+				})
+			},
+			//管理提现方式
+			guanWithdrawal(){
+				uni.navigateTo({
+					url:"../addWithdrawal/addWithdrawal"
+				})
+			}
 		}
 	}
 </script>
@@ -72,6 +184,9 @@
 <style scoped lang="scss">
 .all{
 	background-color: #f8f8f8;
+}
+view,div{
+	box-sizing: border-box;
 }
 .content{
 	background-color: #FFFFFF;
