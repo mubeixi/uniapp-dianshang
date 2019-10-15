@@ -55,7 +55,7 @@
 			    <span class="active" @click="confirmOrder(item)">确认收货</span>
 				<!-- @click="goPay(item)"跳转退款 -->
 			</div>
-			<div class="btn-group" v-else-if="item.Order_Status==0">
+			<div class="btn-group" v-else-if="item.Order_Status==4">
 				<span @click="cancelOrder(item.prod_list,index)">删除订单</span>
 			    <span class="active" @click="goPay(item)">立即评价</span>
 			</div>
@@ -166,9 +166,9 @@ export default {
 				uni.navigateTo({
 					url:'../refund/refund?Order_ID='+item.Order_ID
 				})
-			}else if(item.Order_Status==0){
+			}else if(item.Order_Status==4){
 				uni.navigateTo({
-					url:'../refund/refund?Order_ID='+item.Order_ID
+					url:'../publishComment/publishComment?Order_ID='+item.Order_ID
 				})
 			}
 			
@@ -192,25 +192,19 @@ export default {
 			}else if(this.index==4){
 				data={
 					Is_Commit:0,
-					Order_Status:0
+					Order_Status:this.index
 				}
 			}
 			getOrder(data).then(res=>{
 				if(res.errorCode==0){
 					for(var i in res.data) {
-	
-						for(var m in res.data[i]){
-		
-							if(m == 'prod_list'){
-				
-								for(var j in res.data[i][m]) {
-					
+						for(var m in res.data[i]){		
+							if(m == 'prod_list'){				
+								for(var j in res.data[i][m]) {					
 										for( var k in res.data[i][m][j]) {
-					
 											if(k == 'attr_info') {
 												if(res.data[i][m][j][k]){
 													res.data[i][m][j][k] = JSON.parse(res.data[i][m][j][k])
-				
 												}
 											}									
 										}

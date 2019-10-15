@@ -13,9 +13,9 @@
 			</view>
 		</view>
 		
-		<view class="center">
+		<view class="center" v-for="(item,index) of data" :key="index">
 			<view class="tops">
-				八月十五中秋之礼
+				{{item.gift_name}}
 			</view>
 			<view class="bottoms">
 				<view class="tupian">
@@ -23,27 +23,36 @@
 				</view>
 				<view class="neirong">
 					<view class="titles">
-						2018夏装新款短袖蕾丝拼接荷叶边波点雪纺连衣裙女时尚名媛2018夏装新款短袖蕾丝拼接荷叶边波点雪纺连衣裙女时尚名媛2018夏装新款短袖蕾丝拼接荷叶边波点雪纺连衣裙女时尚名媛
+						{{item.product_name}}
 					</view>
 					<view class="button">
-						<view class="sku">颜色：白色</view>
-						<view class="chakan">查看订单</view>
+						<view class="sku">{{item.attr_txt}}</view>
+						<view class="chakan" v-if="checked==0" @click="goDetail(item)">立即申请</view>
+						<view class="chakan" v-else-if="checked==1">查看订单</view>
 					</view>
+					<view class="youxiao" v-if="checked!=1">{{item.valid_scope}}</view>
 				</view>
 			</view>
+		</view>
+		<view class="defaults" v-if="data.length<=0">
+			<image src="/static/defaultImg.png" ></image>
 		</view>
 	</view>
 </template>
 
 <script>
 	import {pageMixin} from "../../common/mixin";
-
+	import {getGiftList} from '../../common/fetch.js'
 	export default {
 		mixins:[pageMixin],
 		data() {
 			return {
 				height:1000,//获取手机屏幕高度
 				checked:0,//选中
+				data:[],//数据
+				page:1,
+				pageSize:4,
+				totalCount:0,//一共多少条数据
 			};
 		},
 		onLoad() {
@@ -54,9 +63,45 @@
 			    }
 			});
 		},
+		onShow() {
+			this.getGiftList();
+		},
+		onReachBottom(){
+			if(this.totalCount>this.data.length){
+				this.page++;
+				this.getGiftList();
+			}
+		},
 		methods:{
+			//去详情页
+			goDetail(item){
+				uni.navigateTo({
+					url:'../detail/detail?gift='+item.product_id
+				})
+			},
+			//获取列表
+			getGiftList(){
+				let data={
+					page:this.page,
+					pageSize:this.pageSize,
+					status:this.checked
+				}
+				getGiftList(data).then(res=>{
+					if(res.errorCode==0){
+						for(let item of res.data){
+							this.data.push(item)
+						}
+						this.totalCount=res.totalCount;
+					}
+				}).catch(e=>{
+					console.log(e);
+				})
+			},
 			change(item){
 				this.checked=item;
+				this.data=[];
+				this.page=1;
+				this.getGiftList();
 			}
 		}
 	}
@@ -131,6 +176,7 @@ view{
 			margin-left: 23rpx;
 			height: 184rpx;
 			width: 463rpx;
+			position: relative;
 			.titles{
 				font-size: 26rpx;
 				color: #333333;
@@ -170,5 +216,17 @@ view{
 			}
 		}
 	}
+}
+.defaults{
+		margin: 0 auto;
+		width: 640rpx;
+		height: 480rpx;
+		margin-top: 100rpx;
+	}
+.youxiao{
+	font-size: 20rpx;
+	color: #888888;
+	position: absolute;
+	bottom: 0rpx;
 }
 </style>
