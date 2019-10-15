@@ -73,6 +73,7 @@
 // import pagetitle from "@/components/title";
 import {getCart,getProd,updateCart,delCart} from '../../common/fetch.js';
 	import {pageMixin} from "../../common/mixin";
+	import {ls} from '../../common/tool.js'
 
 	export default {
 		mixins:[pageMixin],
@@ -134,7 +135,7 @@ import {getCart,getProd,updateCart,delCart} from '../../common/fetch.js';
 	this.reset();
   },
   onLoad(){
-	ls.clear();
+	
   },
   methods: {
 	 // 去逛逛

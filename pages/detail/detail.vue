@@ -77,7 +77,7 @@
         	    </div>
         	    <div class="c_content_msg">{{item.Note}}</div>
         	    <div class="c_content_img">
-        			<block v-for="(i,j) of item.ImgPath"> 
+        			<block v-for="(i,j) of item.ImgPath" :key="j"> 
         				 <img :src="i"  @click="yulanImg(index,j)">
         			</block>   
         	    </div>
@@ -422,7 +422,8 @@ export default {
 					}
 				}else {
 					uni.showToast({
-						title: res.msg
+						title: res.msg,
+						icon: 'none'
 					})
 				}
 			})
