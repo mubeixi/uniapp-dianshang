@@ -1,5 +1,6 @@
 import * as ENV from './env.js';
 // console.log(ENV.apiBaseUrl)
+import {error} from "./index";
 
 export const ajax = (url,method,data,options)=>{
 
@@ -39,7 +40,17 @@ let URL = ENV.apiBaseUrl+url;
       method,
       data,
       success:(res)=>{
-        resolve(res)
+
+		if(res.statusCode!==200 || typeof res.data !='object'){
+          error('服务器去旅行了')
+		}
+
+		if(res.data.errorCode===0){
+			resolve(res)
+		}else{
+			reject(res)
+		}
+
       },
       fail:(e)=>{
         reject(e)

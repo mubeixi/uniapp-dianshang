@@ -24,19 +24,23 @@
 				<!-- #ifdef H5 -->
 				<div class="otherLogin" v-show="isShowWeiXin==1">
 					<div class="flex box" style="width: 100px;text-align: center;margin: 0 auto;">
-						<div class="inline-block flex1 text-center" @click="weixinlogin"><i class="funicon icon-weixin"></i></div>
-						<!-- <div class="inline-block flex1 text-center" @click="qqlogin"><i style="color: #2eb1f1;font-size: 32px;margin-top: 2px"
-							 class="funicon icon-QQ1"></i></div> -->
+						<div class="inline-block flex1 text-center" v-for="(channel,idx) in channels">
+							<i v-if="channel.type=='wx_mp'" @click="weixinlogin(channel)" class="funicon icon-weixin"></i>
+							<i v-if="channel.type=='qq'" @click="qqlogin(channel)" style="color: #2eb1f1;font-size: 32px;margin-top: 2px" class="funicon icon-QQ1"></i>
+						</div>
+<!--						<div class="inline-block flex1 text-center" @click="weixinlogin"><i class="funicon icon-weixin"></i></div>-->
+<!--						<div class="inline-block flex1 text-center" @click="qqlogin"></div>-->
 					</div>
 				</div>
 				<!-- #endif -->
 				<!-- #ifdef MP-WEIXIN -->
 				<div class="otherLogin mp-weixin">
-					<div class="box" style="margin: 0 20px;">
+					<div class="box" style="margin: 0 30px;">
 						<!-- <i class="funicon icon-weixin font24" ></i> -->
-						<button type="primary" class="text-center" @getuserinfo="weixinlogin" open-type="getUserInfo">登录</button>
+						<!--@getuserinfo="weixinlogin" open-type="getUserInfo"-->
+						<button type="primary" class="text-center"  @click="weixinlogin">登录</button>
 						<div class="line10"></div>
-						<button class="text-center" @click="toHome">暂不登录</button>
+						<button class="text-center" @click="toHome" >暂不登录</button>
 						<!-- <div class="inline-block flex1 text-center" @click="qqlogin"><i style="color: #2eb1f1;font-size: 32px;margin-top: 2px" class="funicon icon-QQ1" ></i></div> -->
 					</div>
 				</div>
@@ -81,12 +85,7 @@
 					<div class="searchPass" @click="(status = 3), (loginStatus = 3)">
 						找回密码？
 					</div>
-
-
 					<button @click="login" type="primary" class="submitBtn sendCode" :disabled="isPhoneDisabled">登录</button>
-
-
-
 				</div>
 			</li>
 			<li class="searchPassword" v-else-if="status == 3">
@@ -231,6 +230,7 @@
 		data() {
 			return {
 				initData: {},
+				channels:[],
 				froms: '', //跳转过来的路由
 				status: 1, // 页面状态 1: 登录注册； 2：密码登陆； 3： 找回密码； 4：输入验证码； 5：设置新密码； 6:修改密码
 				loginStatus: 1, // 1: 短信登陆； 2: 手机号登陆； 3: 找回密码； 4：修改密码
@@ -410,20 +410,50 @@
 			},
 			weixinlogin(res) {
 
+				let _self = this;
+
 				// #ifdef H5
-				if (!this.initData.authorized.authorizer_appid || !this.initData.authorized.component_appid) {
-					error('登录参数获取错误')
-					return;
-				}
+				let channel = res;
+
 				let REDIRECT_URI = urlencode(location.href);
 				console.log(REDIRECT_URI)
-				let wxAuthUrl =
-					`https://open.weixin.qq.com/connect/oauth2/authorize?appid=${this.initData.authorized.authorizer_appid}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=snsapi_userinfo&state=STATE&component_appid=${this.initData.authorized.component_appid}#wechat_redirect`;
+
+
+				let wxAuthUrl = null;
+
+				if(channel.type=='wx_mp' && channel.component_appid){
+					//服务商模式登录
+					wxAuthUrl = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${channel.appid}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=snsapi_userinfo&state=STATE&component_appid=${channel.component_appid}#wechat_redirect`;
+
+				}else{
+
+					//公众号自己的appid用于登录
+					wxAuthUrl = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${channel.appid}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect`
+
+				}
+
 				window.location.href = wxAuthUrl;
+
+
+
 				// #endif
 
 				// #ifdef MP-WEIXIN
-				let userWxInfo = res.detail.userInfo,userData = res.detail
+				uni.login({
+
+					success: function (loginRes) {
+						console.log(loginRes);
+						let CODE = loginRes.code
+
+						login({code:CODE,login_method:'wx_lp'}).then(res=>{
+							if(res.errorCode === 0){
+								_self.loginCall(res.data)
+							}
+						}).catch(e=>{})
+
+					}
+				});
+
 				// #endif
 
 				// #ifdef APP-PLUS
@@ -444,10 +474,26 @@
 			async initDataFn() {
 
 				// #ifdef H5
-				this.isShowWeiXin = isWeiXin();
+				this.isShowWeiXin = isWeiXin()
 				// #endif
 
-				this.initData = await this.getInitData();
+				let initData = await this.getInitData()
+
+				this.initData = initData;
+
+				let login_methods = initData.login_methods;
+				let component_appid = login_methods.component_appid
+
+				//根据服务器返回配置设置channels,只有微信公众号和小程序会用到component_appid
+				//而且状态可以灵活控制 state为1
+				for(var i in login_methods){
+					if(i!='component_appid' && login_methods[i].state){
+						this.channels.push(['wx_mp','wx_lp'].indexOf(login_methods[i].type)===-1?{...login_methods[i]}:{...login_methods[i],component_appid})
+					}
+				}
+
+				console.log('login channels is',this.channels)
+
 
 			},
 			loginCall(userData){
@@ -478,10 +524,15 @@
 				let code = GetQueryByString(location.href, 'code');
 				if (code) {
 					login({
-						login_method: 'wx_jsapi',
+						login_method: 'wx_mp',
 						code: code
 					}).then(res => {
-						this.loginCall(res.data)
+						console.log(res)
+						if(res.errorCode === 0){
+							this.loginCall(res.data)
+						}
+
+
 					})
 					return;
 				}
@@ -575,7 +626,7 @@
 			}
 
 			.searchNewPass {
-				margin: 20px 20px 0;
+				margin: 20px 0px 0;
 			}
 		}
 

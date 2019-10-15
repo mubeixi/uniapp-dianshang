@@ -18,9 +18,9 @@ export const defaultMixin = {
 export const pageMixin = {
     mounted() {
 
-        // if(!ls.get('initData')){
-        //     this.getInitData()
-        // }
+        if(!ls.get('initData')){
+            this.getInitData()
+        }
 
         // #ifdef H5
         let users_id = GetQueryByString(location.href, 'users_id')
