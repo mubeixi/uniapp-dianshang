@@ -10,7 +10,15 @@
     <div class="tabs">
         <div :class="[active == 0 ? 'checked' : '','tab']" @click="getActive(0)" >默认<div class="line"></div></div>
         <div :class="[active == 1 ? 'checked' : '','tab']" @click="getActive(1)">销量<div class="line"></div></div>
-        <div :class="[active == 2 ? 'checked' : '','tab']" @click="getActive(2)">价格<div class="line"></div></div>
+        <div :class="[active == 2 ? 'checked' : '','tab']" @click="getActive(2)">价格<div class="line">
+			<view class="xiangshang">
+				<image src="/static/result/tops.png" v-if="isSheng==1"></image>
+				<image src="/static/result/top.png" v-else></image>
+				
+				<image src="/static/result/bottoms.png" v-if="isSheng==2" style="bottom: 0rpx;"></image>
+				<image src="/static/result/bottom.png" v-else style="bottom: 0rpx;"></image>
+			</view>
+		</div></div>
         <div :style="{color:showShai?'#F43131':''}" @click.stop="change" style="width: 140rpx;">筛选<div class="line"></div></div>
 		<div class="tab" v-if="showShai"   style="width: 40rpx;position: absolute;top: 0rpx;right: 0rpx;">
 			
@@ -104,6 +112,7 @@ export default {
 		minPrice:'',//筛选最低价
 		isShipping:0,//是否包邮
 		Cate_ID:0,//列表id
+		isSheng:0,//是否升序
     }
   },
   onLoad: function (option) {
@@ -189,14 +198,21 @@ export default {
 		  this.pro=[];
 		  this.page=1;
 		  if(item==0){
+			  this.isSheng=0;
 			  this.active=0;
 			  this.orderby='';
 			  this.getProd();
 		  }else if(item==1){
+			  this.isSheng=0;
 			  this.active=1;
 			  this.orderby='sales';
 			  this.getProd(this.orderby);
 		  }else{
+			  if(this.isSheng==1){
+				  this.isSheng=2;
+			  }else{
+				  this.isSheng=1;
+			  }
 			  this.active=2;
 			   this.orderby='price';
 			  this.getProd(this.orderby);
@@ -248,10 +264,20 @@ export default {
 			  data.order_by=item;
 		  }else if(item=="price"){
 			  data.order_by=item;
+			  if(this.isSheng==1){
+				   data.order_by_direction="asc";
+			  }else if(this.isSheng==2){
+				  data.order_by_direction="desc";
+			  }
 		  }else if(item=="search"){
 				data.min_price=this.minPrice;
 				data.max_price=this.maxPrice;
 				data.order_by=this.orderby;
+				if(this.isSheng==1){
+					data.order_by_direction="asc";
+				}else if(this.isSheng==2){
+					data.order_by_direction="desc";
+				}
 			  if(this.isShipping==1){
 				  data.free_shipping=1;
 			  }else if(this.isShipping==2){
@@ -358,6 +384,7 @@ export default {
 		height: 60rpx;
         text-align: center;
 		margin-bottom: 20rpx;
+		position: relative;
     }
     .tab image {
         height: 34rpx;
@@ -571,5 +598,18 @@ export default {
 		width: 640rpx;
 		height: 480rpx;
 		margin-top: 100rpx;
+	}
+	.xiangshang{
+		width: 14rpx;
+		height: 25rpx;
+		position: absolute;
+		top: 10rpx;
+		right: 40rpx;
+		image{
+			width: 14rpx;
+			height: 9rpx;
+			position: absolute;
+			left: 0rpx;
+		}
 	}
 </style>
