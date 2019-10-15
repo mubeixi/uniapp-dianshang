@@ -1,7 +1,14 @@
 <template>
 	<view class="all">
 		<page-title title="发表评论" rightHidden="true" bgcolor="#ffffff"></page-title>
-		<textarea class="edit"  contenteditable="true" placeholder="宝贝是否满足了你的期待？说说你的使用心得，分享给其他想购买的朋友吧。" placeholder-style="place">
+		<view class="rate">
+			<view class="rates">整体评价</view>
+			<uni-rate value="5" active-color="#F43131" size='20' @change="show" margin="2"></uni-rate>
+			<view class="score">
+				{{Score}}
+			</view>
+		</view>
+		<textarea class="edit"  contenteditable="true" placeholder="宝贝是否满足了你的期待？说说你的使用心得，分享给其他想购买的朋友吧。" placeholder-style="place" v-model="Note">
 			
 		</textarea>
 		
@@ -10,7 +17,7 @@
 				匿名评价
 			</view>
 			<view>
-				<switch checked="true"  />
+				<switch checked @change="switchChange"  />
 			</view>
 		</view>
 		<view class="shangH">
@@ -35,15 +42,37 @@
 <script>
 	import {pageMixin} from "../../common/mixin";
 	import {uploadImages} from '../../common/tool.js'
-	import {uploadImage} from '../../common/fetch.js'
+	import {uploadImage,comment} from '../../common/fetch.js'
+		import {uniRate} from "../../components/uni-rate/uni-rate.vue"
 	export default {
 		mixins:[pageMixin],
+		components: {uniRate},
 		data() {
 			return {
 				imgs:[],//上传图片预览
+				arr:[],//评价上传图片
+				isSubmit:true,//是否可以提交
+				Order_ID:0,//订单id
+				Score:5,//评价分数
+				isAnonymous:1,//是否匿名评价
 			};
 		},
+		onLoad(options) {
+			this.Order_ID=options.Order_ID;
+		},
 		methods:{
+			//是否匿名评价
+			switchChange(e){
+				if(e.target.value){
+					this.isAnonymous=1;
+				}else{
+					this.isAnonymous=0;
+				}
+			},
+			//评价分数
+			show(value){
+				this.Score=value.value;
+			},
 			//图片预览
 			yulan(index){
 				uni.previewImage({
@@ -54,6 +83,45 @@
 			},
 			//提交
 			submit(){
+				let arr=[];
+				for(let item of this.arr){
+					arr.push(item[0]);
+				}
+				arr=JSON.stringify(arr);
+				if(this.isSubmit){
+					if(this.Note){
+						//提交评论
+						let data={
+							Order_ID:this.Order_ID,
+							Score:this.Score,
+							Note:this.Note,
+							is_anonymous:this.isAnonymous,
+							image_path:arr
+						}
+						comment(data).then(res=>{
+							
+						}).catch(e=>{
+							console.log(e);
+						})
+					}else{
+						uni.showToast({
+							title:'您还未填写评价哦',
+							icon:'none'
+						})
+					}
+				}else{
+					uni.showToast({
+						title:'图片还没上传完成',
+						icon:'none'
+					})
+				}
+			},
+			//删除某张预览图片
+			delImg(index){
+				this.imgs.splice(index, 1);
+				this.arr.splice(index, 1);
+			},
+			addImg(){
 				let data={
 					'Users_ID': 'wkbq6nc2kc',
 					'timestamp':'1502263578',
@@ -61,22 +129,23 @@
 					'sortToken':1,
 					'act':'upload_image'
 				};
-				//上传图片
-				uploadImages(data,this.imgs);
-			},
-			//删除某张预览图片
-			delImg(index){
-				this.imgs.splice(index, 1);
-			},
-			addImg(){
 				let that=this;
 				uni.chooseImage({
 					count:3,
 					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有  
 					success(res) {
+						that.isSubmit=false;
 						for(let item of res.tempFiles){
 							that.imgs.push(item.path);
-						}		
+							//上传图片
+							let arrs=[];
+							arrs.push(item.path);
+							let arr=uploadImages(data,arrs);
+							that.arr.push(arr);
+							//是否可以提交
+							that.isSubmit=true;
+						}
+						
 					},
 					fail(e) {
 						console.log(e);
@@ -101,7 +170,7 @@
 		border:1px solid rgba(233,233,233,1);
 		border-radius:10px;
 		margin: 0 auto;
-		margin-top: 42rpx;
+		margin-top: 20rpx;
 		padding-top: 23rpx;
 		padding-left: 27rpx;
 		padding-right: 40rpx;
@@ -288,5 +357,30 @@
 		background-color: #FFFFFF;
 		width: 710rpx;
 		margin: 0 auto;
+	}
+	
+	.rate{
+		margin: 0 auto;
+		width: 710rpx;
+		height: 75rpx;
+		background-color: #FFFFFF;
+		margin-top: 40rpx;
+		display: flex;
+		align-items: center;
+		border-radius: 10rpx;
+		padding: 25rpx 0rpx;
+		.rates{
+			font-size: 26rpx;
+			color: #333333;
+			margin-left: 25rpx;
+			margin-right: 22rpx;
+		}
+		.score{
+			padding-top: 5rpx;
+			font-size:26rpx;
+			font-weight:500;
+			color: #F43131;
+			margin-left: 15rpx;
+		}
 	}
 </style>

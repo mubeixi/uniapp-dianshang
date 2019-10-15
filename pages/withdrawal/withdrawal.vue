@@ -116,8 +116,13 @@
 					money:this.price
 				}
 				withdrawApply(data).then(res=>{
-					that.isQing=false;
+					
+					setTimeout(() => {
+							that.isQing=false;
+					}, 4000)					
 					if(res.errorCode==0){
+						//提现成功清除金额
+						that.price='';
 						uni.showToast({
 							title:res.msg,
 							icon:'none'
