@@ -280,6 +280,7 @@ export const uploadImages=(formData,imgs)=>{
 				}
 		})
 	}
+	console.log(arr)
 	return arr;
 }
 
