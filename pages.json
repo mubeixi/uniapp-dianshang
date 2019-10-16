@@ -248,7 +248,7 @@
             }
         }
         ,{
-            "path" : "pages/MyGift/MyGift",
+            "path" : "pages/myGift/myGift",
             "style" : {}
         }
     ],
