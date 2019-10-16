@@ -105,6 +105,23 @@
                         "spotlight@3x" : "unpackage/res/icons/120x120.png"
                     }
                 }
+            },
+            "splashscreen" : {
+                "android" : {
+                    "hdpi" : "devlopment/launch/480-762.png",
+                    "xhdpi" : "devlopment/launch/720-1242.png",
+                    "xxhdpi" : "devlopment/launch/1080-1882.png"
+                },
+                "ios" : {
+                    "iphone" : {
+                        "portrait-896h@3x" : "devlopment/launch/1242-2688.png",
+                        "iphonex" : "devlopment/launch/1125-2436.png",
+                        "retina55" : "devlopment/launch/1242-2208.png",
+                        "retina47" : "devlopment/launch/750-1334.png",
+                        "retina40" : "devlopment/launch/640-1136.png",
+                        "retina35" : "devlopment/launch/640-960.png"
+                    }
+                }
             }
         }
     },

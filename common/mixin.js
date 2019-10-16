@@ -19,7 +19,7 @@ import {getJsSign} from "./fetch";
 import wx from 'weixin-js-sdk';
 
 function setWxConfig(config) {
-	// console.log('wx seting',config)
+	console.log('wx seting',config)
 	wx.config(config);
 }
 
@@ -55,25 +55,22 @@ function setWxConfig(config) {
  */
 const WX_JSSDK_INIT = () => new Promise((resolve, reject) => {
 
-	if(!isWeiXin())return;
+	if(!isWeiXin())reject(false);
+
 	getJsSign({
 		url:location.href.split('#')[0],
 		//debug : process.env.NODE_ENV === 'production' ? false : true
 	}).then((res) => {
-
 		if(res.errorCode === 0){
 
-
 			let config = res.data;
-
 			//线上环境，听服务器的，本地的一律调试
-			config.debug = process.env.NODE_ENV === 'production'?config.debug?true:false:true
-
-			config.jsApiList = ['chooseImage', 'previewImage', 'uploadImage', 'openLocation',
+			let debug = process.env.NODE_ENV === 'production'?config.debug?true:false:true
+			let jsApiList = ['chooseImage', 'previewImage', 'uploadImage', 'openLocation',
 				'getLocation', 'chooseWXPay', 'getSystemInfo', 'onMenuShareAppMessage','onMenuShareTimeline','scanQRCode'];
+			let {noncestr,timestamp,appId,signature} = config;
 
-			delete config.jsapi_ticket;
-			setWxConfig(config);
+			setWxConfig({debug,appId,timestamp,nonceStr:noncestr,signature,jsApiList});
 
 			wx.ready(function(){
 
@@ -90,7 +87,6 @@ const WX_JSSDK_INIT = () => new Promise((resolve, reject) => {
 	}).catch(res=>{
 		reject(false)
 	})
-
 
 })
 // #endif
@@ -110,20 +106,21 @@ export const pageMixin = {
 	data: function () {
 		return {
 			// #ifdef H5
+			JSSDK_CALL:null,
 			JSSDK_INIT:false,//是否需要微信签名
 			// #endif
 
 		}
 	},
 	//页面的初始化
-    onLoad(option) {
+	async onLoad(option) {
 
 		if(!ls.get('initData')){
 		    this.getInitData()
 		}
 
 
-		let order_id = null
+		let owner_id = null
 
 		// #ifdef H5
 
@@ -166,13 +163,13 @@ export const pageMixin = {
 		}
 
 
-		//order_id 机制
-		order_id = GetQueryByString(location.href, 'order_id')
+		//owner_id 机制
+		owner_id = GetQueryByString(location.href, 'owner_id')
 
 		//如果连接里面已经有了，就不需要搞事
-		if(order_id){
-		    ls.set('order_id',order_id);
-		    console.log('this page order_id is '+order_id)
+		if(owner_id){
+		    ls.set('owner_id',owner_id);
+		    console.log('this page owner_id is '+owner_id)
 		    return;
 		}
 		// #endif
@@ -181,23 +178,24 @@ export const pageMixin = {
 		// #ifndef H5
 
 		//option为object类型，会序列化上个页面传递的参数
-		//order_id 机制
-		order_id = option.order_id
+		//owner_id 机制
+		owner_id = option.owner_id
 		//如果连接里面已经有了，就不需要搞事
-		if(order_id){
-		    ls.set('order_id',order_id);
-		    console.log('this page order_id is '+order_id)
+		if(owner_id){
+		    ls.set('owner_id',owner_id);
+		    console.log('this page owner_id is '+owner_id)
 		    return;
 		}
 		// #endif
 
+
+
     },
 	async created(){
 
-		// #ifdef H5
-		//需要签名的页面，第一时间就可以了。
-		this.JSSDK_INIT && await WX_JSSDK_INIT()
-		// #endif
+
+
+
 
 	},
     mounted() {
@@ -221,6 +219,9 @@ export const pageMixin = {
 
     },
     methods:{
+		// #ifdef H5
+		WX_JSSDK_INIT,
+		// #endif
         ...mapActions(['getInitData'])
     }
 }

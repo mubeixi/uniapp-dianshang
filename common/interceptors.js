@@ -67,11 +67,11 @@ const hookErrorCode = [0,88001];
 		  	content:JSON.stringify(e)
 		  })
 		  // #endif
-		 
+
         reject(e)
       },
       complete:(res)=>{
-        console.log(res)
+        // console.log(res)
         setTimeout(function(){
           uni.hideLoading()
         },500)

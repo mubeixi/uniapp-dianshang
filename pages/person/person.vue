@@ -1,6 +1,11 @@
 <template>
 	<view class="person">
+		<!-- #ifdef APP-PLUS -->
+		<view class="status_bar" style="background: #f81111;"><!-- 这里是状态栏 --></view>
+		<!-- #endif -->
+
 		<view class="personTop">
+
 			<image src="/static/person/top.png" ></image>
 			<view class="qiandao">
 				<image src="/static/person/qiandao.png"></image>
@@ -229,6 +234,7 @@
 			//opacity:0.45;
 			border-radius:20rpx;
 			position: absolute;
+			
 			top: 22rpx;
 			right: 20rpx;
 			display: flex;

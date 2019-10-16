@@ -1,5 +1,8 @@
 <template>
   <div style="position:relative;">
+	  <!-- #ifdef APP-PLUS -->
+	  <view class="status_bar"><!-- 这里是状态栏 --></view>
+	  <!-- #endif -->
     <div class="top">
         <img src="/static/detail/back.png" @click="goBack" alt="">
         <img src="/static/detail/cart.png" @click="goCart" class="cart" alt="">
@@ -156,7 +159,7 @@
 				</div>
 				<div class="inputNumber">
 						<div class="clicks" @click="delNum">-</div>
-<!--					v-enter-number-->
+						<!--v-enter-number-->
 						<input  type="number" v-model="postData.qty"  disabled>
 						<div class="clicks" @click="addNum">+</div>
 				</div>
@@ -181,7 +184,6 @@ export default {
 	mixins:[pageMixin],
     data(){
         return {
-			JSSDK_INIT:true,
             type: '', // 优惠券内容， 分享内容
             shareShow: false,
             ticksShow: false,
@@ -221,37 +223,6 @@ export default {
     },
 	onLoad: function (option) {
 		this.Products_ID = option.Products_ID;
-		this.checkProdCollected();
-		this.getCommit(this.Products_ID);
-		this.getCoupon();//获取可领取的优惠券
-
-		//商品信息
-		this.getDetail(this.Products_ID);
-
-
-		let _self = this;
-		this.$wx.onMenuShareTimeline({
-			title: '#网中网#'+_self.product.Products_Name, // 分享标题
-			link: location.href, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-			imgUrl: _self.product.ImgPath, // 分享图标
-			success: function() {
-				// 用户点击了分享后执行的回调函数
-			}
-		});
-
-		this.$wx.onMenuShareAppMessage({
-			title: '#网中网#'+_self.product.Products_Name, // 分享标题
-			link: location.href, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-			imgUrl: _self.product.ImgPath, // 分享图标
-			desc: _self.product.goods_desc||'好物推荐',
-			type: 'link', // 分享类型,music、video或link，不填默认为link
-			// dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
-			success: function() {
-				// 用户点击了分享后执行的回调函数
-			}
-		});
-
-
 	 },
 	onShow(){
 
@@ -531,12 +502,16 @@ export default {
 				console.log(e)
 			})
 		},
-		getDetail(item){
+		async getDetail(item){
 			let data={
 				prod_id:item,
 				Users_ID:'wkbq6nc2kc'
 			}
-			getProductDetail(data).then(res=>{
+
+			let product = null;
+
+			await getProductDetail(data).then(res=>{
+				product = res.data
 				this.product = res.data;
 				this.postData.count = res.data.Products_Count;
 				if(res.data.skujosn) {
@@ -546,6 +521,41 @@ export default {
 			}).catch(e=>{
 				console.log(e)
 			})
+
+
+            //let _self = this;
+			// #ifdef H5
+            this.WX_JSSDK_INIT().then((wxEnv)=>{
+
+                this.$wx.onMenuShareTimeline({
+                    title: '#网中网#'+product.Products_Name, // 分享标题
+                    link: location.href, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                    imgUrl: product.ImgPath, // 分享图标
+                    success: function() {
+                        // 用户点击了分享后执行的回调函数
+                    }
+                });
+
+                //两种方式都可以
+                wxEnv.onMenuShareAppMessage({
+                    title: '#网中网#'+product.Products_Name, // 分享标题
+                    link: location.href, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                    imgUrl: product.ImgPath, // 分享图标
+                    desc: product.goods_desc||'好物推荐',
+                    type: 'link', // 分享类型,music、video或link，不填默认为link
+                    // dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                    success: function() {
+                        // 用户点击了分享后执行的回调函数
+                    }
+                });
+
+            }).catch(()=>{})
+
+			// #endif
+
+
+
+
 		},
 		addCart(){
 			this.$refs.cartPopu.show();
@@ -591,6 +601,13 @@ export default {
 	created(){
 
 
+
+		this.checkProdCollected();
+		this.getCommit(this.Products_ID);
+		this.getCoupon();//获取可领取的优惠券
+
+		//商品信息
+		this.getDetail(this.Products_ID);
 
 	}
 }

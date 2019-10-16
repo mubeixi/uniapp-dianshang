@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<!-- #ifdef APP-PLUS -->
-		<view class="status_bar"><!-- 这里是状态栏 --></view>
+		<view class="status_bar" style="background-color: rgb(248, 248, 248);"><!-- 这里是状态栏 --></view>
 		<!-- #endif -->
 
 		<div v-if="loading">

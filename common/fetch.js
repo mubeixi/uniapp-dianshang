@@ -38,7 +38,7 @@ export const getSystemConf = (data,options) => fetch('shopconfig', data,options)
 
 export const login = (data,options) => {
     //获取推荐人id
-    let owner_id = ls.get("order_id")
+    let owner_id = ls.get("owner_id")
     if(owner_id){
       data = {...data,owner_id}
     }
