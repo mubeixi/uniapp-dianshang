@@ -153,6 +153,9 @@ export const getGiftList = (data, options) => fetch('get_gift_list', data, optio
 // 退款
 export const orderRefund = (data,options) => fetch('order_refund', data, options);
 
+//jssdk签名
+
+export const getJsSign = (data,options) => fetch('share_config', data, options);
 
 
 

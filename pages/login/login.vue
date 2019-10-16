@@ -507,7 +507,7 @@
 
 				  	login({login_method:'wx_app',...loginRes.authResult}).then(res=>{
 				  		console.log('wx app login result is ',JSON.stringify(res))
-
+						_self.loginCall(res.data)
 					}).catch(e=>{
 
 					})
