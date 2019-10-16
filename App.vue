@@ -59,6 +59,7 @@ ul,li{
 .font14{font-size : 14px}
 .font16{font-size : 16px}
 .font24{font-size : 24px}
+.font36{font-size : 24px}
 
 .line6{margin-bottom : 6px !important}
 .line4{margin-bottom : 4px !important}
@@ -78,6 +79,13 @@ ul,li{
 .padding10{padding : 10px}
 .padding10-c{padding : 0 10px}
 .padding10-r{padding : 10px 0}
+
+//titleView为custom或者false时专用，让状态栏显示出来（对于商品详情页等需要显示的则不需要)
+.status_bar {
+      height: var(--status-bar-height);
+      width: 100%;
+	  background: none;
+}
 
 
 /*每个页面公共css */

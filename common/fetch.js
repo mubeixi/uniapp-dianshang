@@ -23,15 +23,11 @@ const fetch = function (act, param,options = false,url='/api/little_program/shop
   // param.Users_Account = get_Users_Account();
   // param.Users_ID = get_Users_ID();  Users_ID  写死
   // param.appid = get_Appid();
-	param.User_ID = 3;
-	param.Users_ID = 'wkbq6nc2kc';
+  param.User_ID = 3;
+  param.Users_ID = 'wkbq6nc2kc';
 
   // 数据加密
   let data = createToken(param);
-
-
-  // console.log(url,param);
-
 
   return ajax(url,method,data, options).then(res => res.data, e => e);
 
@@ -40,7 +36,14 @@ const fetch = function (act, param,options = false,url='/api/little_program/shop
 //获取全局配置
 export const getSystemConf = (data,options) => fetch('shopconfig', data,options)
 
-export const login = (data,options) => fetch('user_login', data,options)
+export const login = (data,options) => {
+    //获取推荐人id
+    let owner_id = ls.get("order_id")
+    if(owner_id){
+      data = {...data,owner_id}
+    }
+    fetch('user_login', data,options)
+}
 
 export const getCouponList = (data,options) => fetch('get_unaccalimed_coupon',data,options)
 
@@ -153,20 +156,6 @@ export const orderRefund = (data,options) => fetch('order_refund', data, options
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 function get_Appid() {
   return 'xhh';
 }
@@ -203,7 +192,7 @@ function ObjectToArr(object, addkey) {
         }
       }
     } else {
-      this.ObjectToArr(object[i], newkey);
+      ObjectToArr(object[i], newkey);
     }
   }
   var newkey_1 = Object.keys(arrs).sort();
