@@ -15,8 +15,8 @@
 					<view class="salesSum">
 						累计销售额（元）
 					</view>
-					<view class="salesSumPrice">
-						1563.98
+					<view class="salesSumPrice" v-if="">
+						{{data.total_sales}}
 					</view>
 				</view>
 				<view class="right">
@@ -24,7 +24,7 @@
 						累计利润（元）
 					</view>
 					<view class="salesSumPrice">
-						689.00
+						{{data.total_income}}
 					</view>
 				</view>
 			</view>
@@ -34,9 +34,9 @@
 				可提现金额
 			</view>
 			<view>
-				689.00
+				{{data.balance}}
 			</view>
-			<view>
+			<view @click="tixian">
 				提现
 			</view>
 		</view>
@@ -99,15 +99,42 @@
 
 <script>
 	import {pageMixin} from "../../common/mixin";
-	
+	import {getDisInit} from '../../common/fetch.js'
 	export default {
 		mixins:[pageMixin],
 		data() {
 			return {
-				
+				data:{
+					total_sales:'',
+					total_income:'',
+					balance:''
+				},//
 			};
 		},
+		onLoad() {
+			
+		},
+		onShow() {
+			//获取分销首页
+			this.getDisInit();
+		},
 		methods:{
+			//获取分销首页数据
+			getDisInit(){
+				getDisInit().then(res=>{
+					if(res.errorCode==0){
+						this.data=res.data;
+					}
+				}).catch(err=>{
+					console.log(err)
+				})
+			},
+			//去提现
+			tixian(){
+				uni.navigateTo({
+					url:'../withdrawal/withdrawal'
+				})
+			},
 			//推广小助手
 			goAssist(){
 				uni.navigateTo({

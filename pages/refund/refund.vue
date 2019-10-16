@@ -1,7 +1,7 @@
 <template>
   <div class="wrap">
         <page-title title="申请退款" rightHidden="true"></page-title>
-        <div class="pro" v-for="(item,index) of data.refund_prod_list" :key="item">
+        <div class="pro" v-for="(item,index) of refundInfo.refund_prod_list" :key="item">
             <div class="pro-div">
         		<img class="pro-img" :src="item.prod_img" alt="">
         	</div>
@@ -14,32 +14,33 @@
 		<div style="height: 20rpx;width: 100%;background-color: #F3F3F3;">
 			
 		</div>
-        <div class="item">
+		<!-- 退款方式暂且不要 -->
+        <!-- <div class="item">
             <div class="item-left">退款方式</div>
             <div class="item-right" @click="showMethod">
                 <span>仅退款</span>
                 <img src="/static/right.png" alt="">
             </div>
-        </div>
+        </div> -->
         <div class="item">
             <div class="item-left">退款原因</div>
             <div class="item-right" @click="showReason">
-				<span>质量问题</span>
+				<span>{{reasonDes?reasonDes: '请选择'}}</span>
                 <img src="/static/right.png" alt="">
             </div>
         </div>
-        <div class="item spe">
+        <!-- <div class="item spe">
             <div class="item-left">退款金额</div>
             <input type="text" placeholder="请输入退款金额" placeholder-style="font-size:24rpx;color:#B8B8B8">
-        </div>
+        </div> -->
         <div class="item spe">
             <div class="item-left">退款说明</div>
-            <input type="text" placeholder="请输入退款说明" placeholder-style="font-size:24rpx;color:#B8B8B8">
+            <input type="text" placeholder="请输入退款说明" placeholder-style="font-size:24rpx;color:#B8B8B8" @blur="inputHandle">
         </div>
         <div class="item noborder">上传凭证</div>
         <div class="imgs">
-			<view class="shangchuans" v-for="(item,index) of imgs" :key="index"   @click="yulan(index)">
-				<image :src="item.path" ></image>
+			<view class="shangchuans" v-for="(item,index) of imgs" :key="index"  >
+				<image :src="item"  @click="yulan(index)"></image>
 				<image src="/static/delimg.png" class="del" @click="delImg(index)"></image>
 			</view>
             <view class="shangchuan" @click="addImg">
@@ -50,8 +51,8 @@
         <div style="height: 50px;"></div>
         <div class="bottom" @click="submit">提交</div>
         <!-- 弹出层 -->
-        <!-- 退款方式 -->
-        <popup-layer ref="popupRef" :direction="'top'">
+        <!-- 退款方式 暂且不要-->
+        <!-- <popup-layer ref="popupRef" :direction="'top'">
         	<div class="bMbx">
 				<div class="fMbx">退款方式</div>
 				<div class="iMbx">
@@ -74,22 +75,22 @@
 			<div class="sure" @click="closeMethod">
 					确定
 			</div>
-        </popup-layer>
+        </popup-layer> -->
         <!-- 退款原因 -->
 		<popup-layer ref="popup" :direction="'top'">
 			<div class="bMbx">
 				<div class="fMbx">退款原因</div>
-				<div class="iMbx">
+				<div class="iMbx" v-for="(item,index) in refundInfo.shop_reason" :key="index">
 					<div>
-						颜色/尺寸/参数不符
+						{{item.Reason_Name}}
 					</div>
 					<div>
 						 <radio-group @change="ShipRadioChange">
-						 	<radio :value="shipid" :checked="shipid===ship_current" style="float:right;" color="#F43131"/>
+						 	<radio :value="index" :checked="index==current" style="float:right;" color="#F43131"/>
 						 </radio-group>
 					</div>
 				</div>
-				<div class="iMbx">
+				<!-- <div class="iMbx">
 					<div>
 						质量问题
 					</div>
@@ -104,7 +105,7 @@
 					<div>
 						 <radio  :checked="onlyRefund"  color="#F43131"/>
 					</div>
-				</div>
+				</div> -->
 			</div>
 			<div class="sure" @click="closeReason">
 					确定
@@ -116,9 +117,9 @@
 
 <script>
 import popupLayer from '../../components/popup-layer/popup-layer.vue';
-import {uploadImage,getRefund} from '../../common/fetch.js'
+import {uploadImage,getRefund,orderRefund} from '../../common/fetch.js'
 import {pageMixin} from "../../common/mixin";
-
+import {uploadImages} from '../../common/tool.js'
 export default {
 	mixins:[pageMixin],
     components: {
@@ -135,8 +136,12 @@ export default {
 			onlyRefund:0,
 			imgs:[],//上传图片预览
 			Order_ID:0,//退款商品id
-			data:'',//商品信息
-			
+			refundInfo:'',//商品信息
+			arr:[],//上传成功的图片
+			reasonDes: '', // 退款原因
+			current: 0,
+			reason_id: 0 ,// 退款原因id
+			refund_desc: '', // 退款说明
         }
     },
 	onLoad(option) {
@@ -149,6 +154,14 @@ export default {
 		
 	},
     methods: {
+		// 退款说明
+		inputHandle(e){
+			this.refund_desc = e.detail.value;
+		},
+		// 退款原因选择
+		ShipRadioChange(e) {
+			this.current = e.detail.value;
+		},
 		//图片预览
 		yulan(index){
 			uni.previewImage({
@@ -171,17 +184,45 @@ export default {
 							}
 						}
 					}
-					this.data=res.data;
+					this.refundInfo=res.data;
 			}).catch(e=>{
 				console.log(e)
 			})
 		},
 		//提交
 		submit(){
-			uploadImage({'image':this.imgs[0]}).then(res=>{
-				console.log(res)
-			}).catch(e=>{
-				console.log(e)
+			// 按照订单退款
+			if(!this.reason_id) {
+				uni.showModal({
+					title: '请选择退款原因',
+					showCancel: false
+				});
+				return;
+			}
+			orderRefund({
+				image_path: JSON.stringify(this.arr),
+				reason_id: this.reason_id,
+				refund_desc: this.refund_desc,
+				Order_ID: this.Order_ID
+			}).then(res=>{
+				if(res.errorCode == 0){
+					uni.showToast({
+						title: '提交成功',
+						duration: 1500,
+						complete: function(){
+							setTimeout(()=>{
+							  uni.navigateBack({
+								delta: 1
+							  });
+							},1500)
+						}
+					});
+				}else {
+					uni.showToast({
+						title: res.msg,
+						icon: 'none'
+					})
+				}
 			})
 		},
 		//删除某张预览图片
@@ -189,16 +230,30 @@ export default {
 			this.imgs.splice(index, 1);
 		},
 		addImg(){
+			let data={
+				'Users_ID': 'wkbq6nc2kc',
+				'timestamp':'1502263578',
+				'sign':'DA1525TR85D6S5A9E5236FDSWD52F147WA',
+				'sortToken':1,
+				'act':'upload_image'
+			};
 			let that=this;
 			uni.chooseImage({
-				count:3,
+				count:5,
 				sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有  
 				success(res) {
+					that.isSubmit=false;
 					for(let item of res.tempFiles){
-						that.imgs.push(item);
+						that.imgs.push(item.path);
+						//上传图片
+						let arrs=[];
+						arrs.push(item.path);
+						let arr=uploadImages(data,arrs);
+						that.arr.push(arr);
+						//是否可以提交
+						that.isSubmit=true;
 					}
 					
-					console.log(res.tempFiles);
 				},
 				fail(e) {
 					console.log(e);
@@ -215,6 +270,8 @@ export default {
 			this.$refs.popupRef.close();
 		},
 		closeReason(){
+			this.reasonDes = this.refundInfo.shop_reason[this.current]['Reason_Name'];
+			this.reason_id = this.refundInfo.shop_reason[this.current]['Reason_ID'];
 			this.$refs.popup.close();
 		}
     }
@@ -239,6 +296,7 @@ export default {
 			position: absolute;
 			top: -19rpx;
 			right: -19rpx;
+			z-index: 999;
 		}
 	}
 	.shangchuan{

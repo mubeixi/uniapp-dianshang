@@ -21,6 +21,9 @@
            </div>
           </div>
       </div>
+	  <div class="defaults" v-if="collect_list.length<=0">
+	  	<image src="/static/defaultImg.png" ></image>
+	  </div>
       <div class="bottom" v-if="rightClicked" >
             <div class="b_left" @click="checkAll">
 				 <img :src="allChecked ? '/static/checked.png' : '/static/uncheck.png'" >
@@ -294,4 +297,10 @@ export default {
         border-radius: 8px;
         border: 1px solid #F43131;
     }
+	.defaults{
+		margin: 0 auto;
+		width: 640rpx;
+		height: 480rpx;
+		margin-top: 100rpx;
+	}
 </style>

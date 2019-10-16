@@ -44,7 +44,7 @@
                 <div class="o_title" @click="changeCoupon">
                     <span>优惠券选择</span>
                     <span style="text-align: right; color: #888;display: flex;align-items: center;">
-						<span >{{coupon_desc?coupon_desc:'您有优惠券可用'}}</span>
+						<span >{{couponlist.length>0?(coupon_desc?coupon_desc:'您有优惠券使用'): '暂无可用优惠券'}}</span>
 						<image  src="/static/right.png" class="right" alt=""></image>
 					</span>
                 </div>
@@ -66,7 +66,7 @@
                     <switch :checked="userMoneyChecked" color="#04B600" @change="userMoneyChange" />
                 </div>
 				<div class="o_de">您当前共有余额: <text>{{userInfo.User_Money}}</text></div>
-                <input v-if="userMoneyChecked" class="o_desc" placeholder="请输入金额" type="number" @blur="confirm_user_money">
+                <input v-if="userMoneyChecked" v-model="postData.user_money" class="o_desc" placeholder="请输入金额" type="number" @blur="confirm_user_money">
             </div>
         </div>
         <div class="other">
@@ -90,13 +90,15 @@
             <span style="margin-right:20rpx;">共<span>{{orderInfo.total_count}}</span>件商品</span>
             <span>小计：<span>￥</span><span class="money">{{orderInfo.Order_TotalPrice}}</span></span>
         </div> -->
-        <div class="order_total">
-            <div class="totalinfo">
-                <div class="info">共{{orderInfo.prod_count}}件商品 总计：<text class="money"><text class="m_icon">￥</text> {{orderInfo.Order_Fyepay}}</text></div>
-                <div class="tips">*本次购物一共可获得{{orderInfo.Integral_Get}}积分</div>
-            </div>
-            <div class="submit" @click="form_submit">提交订单</div>
-        </div>
+		<view style="height: 100rpx;">
+			<div class="order_total">
+				<div class="totalinfo">
+					<div class="info">共{{orderInfo.prod_count}}件商品 总计：<text class="money"><text class="m_icon">￥</text> {{orderInfo.Order_Fyepay}}</text></div>
+					<div class="tips">*本次购物一共可获得{{orderInfo.Integral_Get}}积分</div>
+				</div>
+				<div class="submit" @click="form_submit">提交订单</div>
+			</div>
+		</view>
         <popup-layer ref="popupRef" :direction="'top'">
         	<div class="bMbx" v-if="type=='shipping'">
         		<div class="fMbx">运费选择</div>
@@ -109,15 +111,15 @@
 					</radio-group>
         		</div>
         	</div>
-			<div class="bMbx" v-if="type=='coupon'">
-				<div class="fMbx">优惠券选择</div>
-				<div class="iMbx" v-for="(coupon,i) in orderInfo.coupon_list" :key="i">
+			<scroll-view style="height:430rpx;width:95%;"  scroll-y="true" class="bMbx" v-if="type=='coupon'">
+				<div class="fMbx scroll-view-item">优惠券选择</div>
+				<div class="iMbx scroll-view-item" v-for="(coupon,i) in orderInfo.coupon_list" :key="i">
 					满{{coupon.Coupon_Condition}} - {{coupon.Coupon_Cash > 0 ? coupon.Coupon_Cash : coupon.Coupon_Discount}}
 					<radio-group @change="radioChange">
 						<radio :value="coupon.Coupon_ID" :checked="i===current" style="float:right;" color="#F43131"/>
 					</radio-group>
 				</div>
-			</div>
+			</scroll-view>
         	<div class="sure" @click="closeMethod">
         		确定
         	</div>
@@ -144,6 +146,7 @@ import popupLayer from '../../components/popup-layer/popup-layer.vue';
 import {getAddress,getCart,createOrderCheck,getUserInfo,createOrder} from '../../common/fetch.js';
 import {goBack} from '../../common/tool.js'
 import {pageMixin} from "../../common/mixin";
+import {check_money_in} from "../../common/util.js";
 
 export default {
 	mixins:[pageMixin],
@@ -184,7 +187,7 @@ export default {
 			postData: {
 				cart_key: '',
 				cart_buy: '',
-				shipping_id: '',
+				shipping_id: 0,
 				address_id: '',
 				is_full_reduction: '',// 是否使用满减功能
 				coupon_id: '', 
@@ -219,7 +222,9 @@ export default {
 	},
 	onLoad(options) {
 		this.postData.cart_key = options.cart_key;
-		this.postData.cart_buy = options.cart_buy;
+		if(options.cart_buy){	
+			this.postData.cart_buy = options.cart_buy;
+		}
 	},
 	computed: {
 		loading: function(){
@@ -252,7 +257,8 @@ export default {
 				this.submited = true;
 				if(!this.postData.shipping_id) {
 					uni.showToast({
-						title: '请选择物流'	
+						title: '请选择物流',
+						icon: 'none'
 					});
 					this.submited = false;
 					return;
@@ -261,12 +267,13 @@ export default {
 					if(res.errorCode == 0) {
 						// 如果order_totalPrice <= 0  直接跳转 订单列表页
 						this.Order_ID = res.data.Order_ID;
-						uni.navigateTo({
-							url: '../pay/pay?Order_ID='+ res.data.Order_ID
+						uni.redirectTo({
+							url: '../pay/pay?Order_ID='+ res.data.Order_ID	
 						})
 					}else {
 						uni.showToast({
-							title: res.msg
+							title: res.msg,
+							icon: 'none'
 						})
 					}
 					this.submited = false;
@@ -287,7 +294,9 @@ export default {
 		// 余额支付开关
 		userMoneyChange(e){
 			this.userMoneyChecked = e.detail.value;
-			this.postData.use_money = 0;
+			if(!this.userMoneyChecked) {
+				this.postData.use_money = 0;
+			}
 			this.createOrderCheck();
 		},
 		// 发票开关
@@ -315,9 +324,29 @@ export default {
 		// 余额支付输入完成
 		confirm_user_money(e){
 			// 用户可用余额
-			let user_money = parseInt(this.userInfo.User_Money);
+			let user_money = Number(this.userInfo.User_Money);
 			// 用户输入的金额
-			let input_money = parseInt(e.detail.value);
+			let input_money = Number(e.detail.value);
+			console.log(user_money,input_money)
+			//输入订单金额
+			  inputMoney: function (e) {
+			    var money = e.detail.value.length == 0 ? '' : e.detail.value;
+			    if (!utils.check_money_in(money)) {
+			      money = money.length > 0 ? money.slice(0, -1) : '';
+			    }
+			    
+			    this.setData({
+			      tx_money: money
+			    })
+			  },
+			if(input_money < 0 || isNaN(input_money)){
+				uni.showToast({
+					title: '输入金额有误',
+					icon: 'none'
+				});
+				this.postData.user_money = 0;
+				return;
+			}
 			if(input_money > user_money) {
 				uni.showModal({
 					title: '金额大于您的可用余额',
@@ -325,7 +354,7 @@ export default {
 				});
 				return;
 			}
-			this.postData.use_money = input_money;
+			this.postData.use_money = input_money.toFixed(2);
 			this.createOrderCheck();
 		},
 		// 留言
@@ -364,6 +393,7 @@ export default {
 		},
 		changeCoupon(){
 			this.type = 'coupon';
+			if(this.couponlist.length == 0) {return;}
 			this.$refs.popupRef.show();
 		},
         // 选择运费
@@ -608,6 +638,7 @@ export default {
     .words input {
         border: 0;
         margin-left: 20rpx;
+		flex: 1;
     }
     .total {
         display: flex;

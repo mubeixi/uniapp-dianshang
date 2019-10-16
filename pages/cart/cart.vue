@@ -83,7 +83,7 @@
 // import pagetitle from "@/components/title";
 import {getCart,getProd,updateCart,delCart} from '../../common/fetch.js';
 import {pageMixin} from "../../common/mixin";
-import {ls} from "../../common/tool";
+import {ls} from '../../common/tool.js'
 
 export default {
 		mixins:[pageMixin],
@@ -145,7 +145,7 @@ export default {
 	this.reset();
   },
   onLoad(){
-	ls.clear();
+	
   },
   methods: {
 	 // 去逛逛

@@ -187,7 +187,7 @@
 /* 没有选择框样式 */
 .radio.no-redio .flex-main {width:86%; padding: 0 3%;}
 
-.tianjia{color: #666;line-height: 40rpx;font-size: 28rpx; float: left;width: 710rpx; position: fixed;bottom: 0;z-index: 5;padding:20rpx; border-top:1px #f4f4f4 solid;}
+.tianjia{color: #666;line-height: 40rpx;font-size: 28rpx; float: left;width: 710rpx; position: fixed;bottom: 0;z-index: 5;padding:20rpx; border-top:1px #f4f4f4 solid;background:#fff;}
 .tianjia view.jia_img image{width: 40rpx;height: 40rpx; float: left;}
 .tianjia view.go_img image{width: 40rpx;height: 40rpx; float: right;}
 .tianjia text{width: 200rpx; float: left; margin-left: 10rpx;}

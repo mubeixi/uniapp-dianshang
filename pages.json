@@ -247,6 +247,10 @@
             	"navigationBarTitleText": "发布评价"
             }
         }
+        ,{
+            "path" : "pages/myGift/myGift",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

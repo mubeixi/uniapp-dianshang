@@ -23,15 +23,11 @@ const fetch = function (act, param,options = false,url='/api/little_program/shop
   // param.Users_Account = get_Users_Account();
   // param.Users_ID = get_Users_ID();  Users_ID  写死
   // param.appid = get_Appid();
-	param.User_ID = 3;
-	param.Users_ID = 'wkbq6nc2kc';
+  param.User_ID = 3;
+  param.Users_ID = 'wkbq6nc2kc';
 
   // 数据加密
   let data = createToken(param);
-
-
-  // console.log(url,param);
-
 
   return ajax(url,method,data, options).then(res => res.data, e => e);
 
@@ -129,26 +125,33 @@ export const editAddress = (data,options) => fetch('edit_address', data, options
 export const addAddress = (data, options) => fetch('add_address', data, options);
 // 删除收货地址
 export const delAddress = (data, options) => fetch('del_address', data, options);
+// 获取分销中心首页数据
+export const getDisInit = (data, options) => fetch('get_dis_init', data, options);
+// 获取用户提现方式
+export const getUserWithdrawMethod = (data, options) => fetch('get_user_withdraw_method', data, options);
+// 用户新增提现方式
+export const addUserWithdrawMethod = (data, options) => fetch('operate_user_withdraw_method', data, options);
+// 获取商城提现方式
+export const getShopWithdrawMethod = (data, options) => fetch('get_shop_withdraw_method', data, options);
+// 申请提现
+export const withdrawApply = (data, options) => fetch('withdraw_apply', data, options);
+// 获取申请提现记录
+export const getWithdrawRecordList = (data, options) => fetch('get_withdraw_record_list', data, options);
+// 删除提现方式
+export const delUserWithdrawMethod = (data, options) => fetch('del_user_withdraw_method', data, options);
+// 提交评论
+export const comment = (data, options) => fetch('comment', data, options);
+// 订单确认收货
+export const confirmOrder = (data, options) => fetch('confirm_order', data, options);
 
 //短信验证码
 export const getSmsCode = (data, options) => fetch('login_sms', data, options);
 
+//获取赠品列表
+export const getGiftList = (data, options) => fetch('get_gift_list', data, options);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// 退款
+export const orderRefund = (data,options) => fetch('order_refund', data, options);
 
 
 

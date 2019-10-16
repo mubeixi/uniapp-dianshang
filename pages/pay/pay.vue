@@ -76,7 +76,7 @@
                     />
                 </div>
                 <!-- <div class="o_desc c8">{{orderInfo.Order_Yebc}}</div> -->
-				<input type="number" :disabled="!moneyChecked" :placeholder="orderInfo.Order_Yebc" @confirm="moneyInputHandle"/>
+				<input type="number" :value="pay_money" :disabled="!moneyChecked" :placeholder="orderInfo.Order_Yebc" @blur="moneyInputHandle"/>
             </div>
         </div>
         <div class="other">
@@ -88,17 +88,18 @@
                         size='25px'
                         color="#04B600"
 						@change="invoiceChange"
+						
                     />
                 </div>
                 <!-- <div class="o_desc c8">{{orderInfo.Order_InvoiceInfo}}</div> -->
-				<input type="text" :disabled="!openInvoice" :placeholder="orderInfo.Order_InvoiceInfo" @confirm="invoiceHandle"/>
+				<input type="text" :value="invoice_info" :disabled="!openInvoice" :placeholder="orderInfo.Order_InvoiceInfo" @blur="invoiceHandle"/>
             </div>
         </div>
         <div class="other">
             <div class="bd">
                 <div class="o_title  words">
                     <span>买家留言</span>
-                    <input class="msg c8" :placeholder="orderInfo.Order_Remark" @confirm="remarkHandle">
+                    <input class="msg c8" :placeholder="orderInfo.Order_Remark" @blur="remarkHandle">
                 </div>
             </div>
         </div>
@@ -169,9 +170,10 @@ export default {
 			user_pay_password: '',  //余额补差，支付密码
 			cate: 'method',
 			password_input: false,
-			openMoney: true, //是否开启了余额功能
+			openMoney: false, //是否开启了余额功能
 			openInvoice: true, // 是否开启了发票
 			order_remark: '', // 留言
+			need_invoice: 0, // 是否需要发票
         }
     },
 	computed:{
@@ -179,7 +181,7 @@ export default {
 			return this.orderInfo.Order_NeedInvoice > 0 && this.openInvoice;
 		},
 		moneyChecked(){
-			return this.orderInfo.Order_Yebc > 0 && this.openMoney;
+			return this.orderInfo.Order_Yebc > 0 || this.openMoney;
 		}
 	},
     methods: {
@@ -195,33 +197,52 @@ export default {
 							for(var j in res.data[i]) {
 								for( var k in res.data[i][j]) {
 									if(k == 'attr_info') {
-										res.data[i][j][k] = JSON.parse(res.data[i][j][k])
+										res.data[i][j][k] = res.data[i][j][k] && JSON.parse(res.data[i][j][k])
 									}									
 								}
 							}
 						}
 					}
 					this.orderInfo = res.data;
-					this.pay_money = this.orderInfo.Order_Yebc
+					this.pay_money = this.orderInfo.Order_Yebc;
+					this.openMoney = this.pay_money > 0 ;
 				}
 			})
 		},
 		// 用户重新更改了余额
 		moneyInputHandle(e){
 			var money = e.detail.value;
-			this.pay_money = parseFloat(money).toFixed(2);
-			this.orderInfo.Order_Fyepay = parseFloat(this.orderInfo.Order_TotalPrice).toFixed(2) - parseFloat(money).toFixed(2); 
+			this.pay_money = Number(money).toFixed(2);
+			if(this.pay_money<0 || isNaN(this.pay_money)){
+				uni.showToast({
+					title: '您输入的金额有误',
+					icon: 'none'
+				});
+				this.pay_money = 0;
+				this.submit_flag = false;
+				return;
+			}
+			if(this.orderInfo.Order_TotalPrice - money < 0 ){
+				uni.showToast({
+					title: '最大金额不能超过订单金额',
+					icon: 'none'
+				});
+				this.pay_money = this.orderInfo.Order_TotalPrice;
+				// this.orderInfo.Order_TotalPrice = money;
+				return;
+			}  
+			this.orderInfo.Order_Fyepay = Number(this.orderInfo.Order_TotalPrice - money).toFixed(2); 
 		},
 		// 余额支付开关
 		moneyChange(e) {
 			var checked = e.detail.value;
 			if(checked) {
 				this.openMoney = true;
-				this.pay_money = parseFloat(this.orderInfo.Order_Yebc).toFixed(2);
-				this.orderInfo.Order_Fyepay = parseFloat(this.orderInfo.Order_TotalPrice - this.orderInfo.Order_Yebc).toFixed(2); 
+				this.pay_money = Number(this.orderInfo.Order_Yebc).toFixed(2);
+				this.orderInfo.Order_Fyepay = Number(this.orderInfo.Order_TotalPrice - this.pay_money).toFixed(2); 
 			}else {
 				this.openMoney = false;
-				this.orderInfo.Order_Fyepay = parseFloat(this.orderInfo.Order_TotalPrice).toFixed(2);
+				this.orderInfo.Order_Fyepay = Number(this.orderInfo.Order_TotalPrice).toFixed(2);
 				this.pay_money = 0;
 			}
 		},
@@ -232,6 +253,7 @@ export default {
 				uni.showToast({
 					title: '您输入的金额有误'
 				})
+				this.submit_flag = false;
 				return;
 			}else {
 				this.pay_money = money;
@@ -245,14 +267,16 @@ export default {
 		// 发票信息修改
 		invoiceHandle(e) {
 			let invoice = e.detail.value;
-			if(invoice == '') {
-				uni.showToast({
-					title: '发票信息不能为空'
-				});
-				return;
-			}else {
-				this.invoice_info = invoice;
-			}
+			this.invoice_info = invoice;
+			// if(invoice == '') {
+			// 	uni.showToast({
+			// 		title: '发票信息不能为空',
+			// 		icon: 'none'
+			// 	});
+			// 	return;
+			// }else {
+			// 	this.invoice_info = invoice;
+			// }
 		},
 		// 发票开关
 		invoiceChange(e) {
@@ -289,7 +313,18 @@ export default {
 					this.$refs.popupLayer.show();
 				}else {
 					// 直接请求
-					orderPay({Order_ID: this.Order_ID, pay_type: 'balance' ,pay_money: 0, need_invoice: this.need_invoice ,invoice_info: this.invoice_info, order_remark: this.order_remark})
+					if(this.need_invoice && this.invoice_info == '') {
+						uni.showToast({
+							title: '发票信息不能为空',
+							icon: 'none'
+						});
+						return;
+					}
+					// 不使用余额支付，pay_money为要提交的金额
+					orderPay({Order_ID: this.Order_ID, pay_type: 'balance' ,pay_money: this.orderInfo.Order_Fyepay, need_invoice: this.need_invoice ,invoice_info: this.invoice_info, order_remark: this.order_remark}).then(res=>{
+						console.log(res);
+						
+					})
 				}
 			}
 		},
@@ -300,6 +335,12 @@ export default {
 			if(this.orderInfo.Order_Fyepay > 0) {
 				if(this.pay_money > 0) {
 					this.password_input = true;
+				}else {
+					// 用户选择微信，并且不用余额支付
+					orderPay({Order_ID: this.Order_ID, pay_type: 'wechat' ,pay_money: this.orderInfo.Order_Fyepay, need_invoice: this.need_invoice ,invoice_info: this.invoice_info, order_remark: this.order_remark}).then(res=>{
+						console.log(res);
+						
+					})
 				}
 			}
 		},
@@ -308,7 +349,15 @@ export default {
 			this.pay_type = 'ali';
 			this.$refs.popupLayer.close();
 			if(this.orderInfo.Order_Fyepay > 0) {
-				this.password_input = true;
+				if(this.pay_money > 0) {
+					this.password_input = true;
+				}else {
+					// 选择支付宝，并且不用余额
+					orderPay({Order_ID: this.Order_ID, pay_type: 'ali' ,pay_money: this.orderInfo.Order_Fyepay, need_invoice: this.need_invoice ,invoice_info: this.invoice_info, order_remark: this.order_remark}).then(res=>{
+						console.log(res);
+						
+					})
+				}
 			}
 		},
 		// 取消输入支付密码
@@ -324,7 +373,45 @@ export default {
 			orderPay({Order_ID:this.Order_ID , pay_type: 'balance' ,pay_money: this.pay_money,user_pay_password: this.user_pay_password}).then(res=>{
 				console.log(res)
 				if(res.errorCode == 0) {
-					orderPay({Order_ID: this.Order_ID, pay_type: this.pay_type ,pay_money: res.data.Order_Fyepay, need_invoice: this.need_invoice ,invoice_info: this.invoice_info, order_remark: this.order_remark})
+					orderPay({Order_ID: this.Order_ID, pay_type: this.pay_type ,pay_money: res.data.Order_Fyepay, need_invoice: this.need_invoice ,invoice_info: this.invoice_info, order_remark: this.order_remark}).then(res=>{
+						console.log(res)
+						if(res.errorCode == 0) {
+							if(this.pay_type == 'ali') {
+								// 支付宝支付
+								uni.requestPayment({
+								    provider: 'alipay',
+								    orderInfo: 'orderInfo', //微信、支付宝订单数据
+								    success: function (res) {
+								        console.log('success:' + JSON.stringify(res));
+								    },
+								    fail: function (err) {
+								        console.log('fail:' + JSON.stringify(err));
+								    }
+								});
+							}else if(this.pay_type == 'wechat'){
+								uni.requestPayment({
+								// 微信支付
+									provider: 'wxpay',
+								    timeStamp: String(Date.now()),
+								    nonceStr: 'A1B2C3D4E5',
+								    package: 'prepay_id=wx20180101abcdefg',
+								    signType: 'MD5',
+								    paySign: '',
+								    success: function (res) {
+								        console.log('success:' + JSON.stringify(res));
+								    },
+								    fail: function (err) {
+								        console.log('fail:' + JSON.stringify(err));
+								    }
+								})
+							}
+						}
+					})
+				}else {
+					uni.showToast({
+						title: res.msg,
+						icon: 'none'
+					})
 				}
 			}).catch(e=>{
 				
