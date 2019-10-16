@@ -8,7 +8,7 @@
 			<page-title class="nav-title" title="购物车"
 			:right="handleShow ? '管理' : '取消'"
 			@rightHandle="handle"
-			hiddenBack="true"
+			:hiddenBack="true"
 			:rightHidden="manage" ></page-title>
 			<div class="content">
 			  <div v-if="total_count>0">
@@ -145,7 +145,7 @@ export default {
 	this.reset();
   },
   onLoad(){
-	
+
   },
   methods: {
 	 // 去逛逛
