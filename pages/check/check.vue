@@ -66,7 +66,7 @@
                     <switch :checked="userMoneyChecked" color="#04B600" @change="userMoneyChange" />
                 </div>
 				<div class="o_de">您当前共有余额: <text>{{userInfo.User_Money}}</text></div>
-                <input v-if="userMoneyChecked" class="o_desc" placeholder="请输入金额" type="number" @blur="confirm_user_money">
+                <input v-if="userMoneyChecked" v-model="postData.user_money" class="o_desc" placeholder="请输入金额" type="number" @blur="confirm_user_money">
             </div>
         </div>
         <div class="other">
@@ -146,6 +146,7 @@ import popupLayer from '../../components/popup-layer/popup-layer.vue';
 import {getAddress,getCart,createOrderCheck,getUserInfo,createOrder} from '../../common/fetch.js';
 import {goBack} from '../../common/tool.js'
 import {pageMixin} from "../../common/mixin";
+import {check_money_in} from "../../common/util.js";
 
 export default {
 	mixins:[pageMixin],
@@ -327,6 +328,25 @@ export default {
 			// 用户输入的金额
 			let input_money = Number(e.detail.value);
 			console.log(user_money,input_money)
+			//输入订单金额
+			  inputMoney: function (e) {
+			    var money = e.detail.value.length == 0 ? '' : e.detail.value;
+			    if (!utils.check_money_in(money)) {
+			      money = money.length > 0 ? money.slice(0, -1) : '';
+			    }
+			    
+			    this.setData({
+			      tx_money: money
+			    })
+			  },
+			if(input_money < 0 || isNaN(input_money)){
+				uni.showToast({
+					title: '输入金额有误',
+					icon: 'none'
+				});
+				this.postData.user_money = 0;
+				return;
+			}
 			if(input_money > user_money) {
 				uni.showModal({
 					title: '金额大于您的可用余额',
@@ -618,6 +638,7 @@ export default {
     .words input {
         border: 0;
         margin-left: 20rpx;
+		flex: 1;
     }
     .total {
         display: flex;

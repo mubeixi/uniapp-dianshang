@@ -92,7 +92,7 @@
                     />
                 </div>
                 <!-- <div class="o_desc c8">{{orderInfo.Order_InvoiceInfo}}</div> -->
-				<input type="text" :disabled="!openInvoice" :placeholder="orderInfo.Order_InvoiceInfo" @blur="invoiceHandle"/>
+				<input type="text" :value="invoice_info" :disabled="!openInvoice" :placeholder="orderInfo.Order_InvoiceInfo" @blur="invoiceHandle"/>
             </div>
         </div>
         <div class="other">

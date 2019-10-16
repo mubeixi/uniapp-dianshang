@@ -160,7 +160,6 @@ export default {
 		},
 		// 退款原因选择
 		ShipRadioChange(e) {
-			console.log(e)
 			this.current = e.detail.value;
 		},
 		//图片预览

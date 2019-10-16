@@ -222,6 +222,9 @@
 				  // 编辑
 				  var data = this.address_info;
 				  editAddress(data).then(res => {
+					  uni.showToast({
+					  	title: res.msg
+					  })
 					  this.setAddressInfo(res);
 				  })
 				} else {
@@ -230,6 +233,9 @@
 				  data.act = 'add_address';
 				  delete data.Address_ID;
 				  addAddress(data).then(res => {
+					  uni.showToast({
+					  	title: res.msg
+					  });
 					  this.addeditAddress(res)
 				  })
 				  
@@ -276,13 +282,7 @@
 							  return;
 							}
 						  }
-						  //由于有配送范围的考虑，从提交订单跳转过来的页跳回收货地址列表页
-						  // wx.navigateTo({
-						  //   url: '../addresslist/addresslist?from=' + that.data.from_page
-						  // });
-						  // return;
 						}
-						//从地址列表跳转来的，跳回列表页面  不需操作
 					  }
 					  //返回上一页
 					  uni.navigateBack({
@@ -302,39 +302,7 @@
 			  //编辑地址时，获取地址信息的回调，初始化地址信息
 			  setAddressInfo: function (res) {
 				if (res.errorCode == 0) {
-					var addressInfo = res.data[0];
-			// 		this.address_info.Address_ID = addressInfo['Address_ID'],
-			// 		this.address_info.Address_Name = addressInfo['Address_Name'],
-			// 		this.address_info.Address_Mobile = addressInfo['Address_Mobile'],
-			// 		this.address_info.Address_Province = addressInfo['Address_Province'],
-			// 		this.address_info.Address_City = addressInfo['Address_City'],
-			// 		this.address_info.address_info.Address_Area = addressInfo['Address_Area'],
-			// 		this.address_info.Address_Detailed = addressInfo['Address_Detailed'],
-			// 		this.address_info.Address_Town = addressInfo['Address_Town'],
-			// 		this.address_info.Address_Is_Default = addressInfo['Address_Is_Default'],  //是否为默认地址
-			// 		//初始化地址选择数据
-			// 		this.objectMultiArray = [
-			// 		  utils.array_change(area.area[0]['0']),
-			// 		  utils.array_change(area.area[0]['0,' + addressInfo['Address_Province']]),
-			// 		  utils.array_change(area.area[0]['0,' + addressInfo['Address_Province'] + ',' + addressInfo['Address_City']])
-			// 		];
-			// 		this.change_objectMultiArray = [
-			// 		  utils.array_change(area.area[0]['0']),
-			// 		  utils.array_change(area.area[0]['0,' + addressInfo['Address_Province']]),
-			// 		  utils.array_change(area.area[0]['0,' + addressInfo['Address_Province'] + ',' + addressInfo['Address_City']])
-			// 		];
-			
-			// 	  //设置初始显示列
-			// 		this.multiIndex = [
-			// 		  utils.get_arr_index(this.data.objectMultiArray[0], addressInfo['Address_Province']),
-			// 		  utils.get_arr_index(this.data.objectMultiArray[1], addressInfo['Address_City']),
-			// 		  utils.get_arr_index(this.data.objectMultiArray[2], addressInfo['Address_Area'])
-			// 		];
-			// 		this.change_multiIndex = [
-			// 		  utils.get_arr_index(this.data.objectMultiArray[0], addressInfo['Address_Province']),
-			// 		  utils.get_arr_index(this.data.objectMultiArray[1], addressInfo['Address_City']),
-			// 		  utils.get_arr_index(this.data.objectMultiArray[2], addressInfo['Address_Area'])
-			// 		];
+				  var addressInfo = res.data[0];
 				  delete addressInfo['Address_Province_name'];
 			      delete addressInfo['Address_Province_code'];
 			      delete addressInfo['Address_City_name'];
@@ -345,9 +313,6 @@
 			      delete addressInfo['Address_Town_code'];
 			
 			      //初始化地址选择数据
-				  console.log(['0,' + addressInfo['Address_Province']]);
-				  console.log(['0,' + addressInfo['Address_Province'] + ',' + addressInfo['Address_City']]);
-				  console.log(['0,' + addressInfo['Address_Province'] + ',' + addressInfo['Address_City']]);
 			      let objectMultiArray = [
 			        utils.array_change(area.area[0]['0']),
 			        utils.array_change(area.area[0]['0,' + addressInfo['Address_Province']]),
