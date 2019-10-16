@@ -38,11 +38,11 @@ export const getSystemConf = (data,options) => fetch('shopconfig', data,options)
 
 export const login = (data,options) => {
     //获取推荐人id
-    let owner_id = ls.get("order_id")
+    let owner_id = ls.get("owner_id")
     if(owner_id){
       data = {...data,owner_id}
     }
-    fetch('user_login', data,options)
+    return fetch('user_login', data,options)
 }
 
 export const getCouponList = (data,options) => fetch('get_unaccalimed_coupon',data,options)
@@ -157,6 +157,9 @@ export const jifenProdDetail = (data,options) => fetch('jifen_prod_detail', data
 // 获取赠品详情
 export const judgeReceiveGift = (data, options) => fetch('judge_receive_gift', data, options);
 
+//jssdk签名
+
+export const getJsSign = (data,options) => fetch('share_config', data, options);
 
 
 

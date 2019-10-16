@@ -1,14 +1,14 @@
 <template>
 	<div>
 		<!-- #ifdef APP-PLUS -->
-		<view class="status_bar"><!-- 这里是状态栏 --></view>
+		<view class="status_bar" style="background-color: rgb(248, 248, 248);"><!-- 这里是状态栏 --></view>
 		<!-- #endif -->
 
 		<div v-if="loading">
 			<page-title class="nav-title" title="购物车"
 			:right="handleShow ? '管理' : '取消'"
 			@rightHandle="handle"
-			hiddenBack="true"
+			:hiddenBack="true"
 			:rightHidden="manage" ></page-title>
 			<div class="content">
 			  <div v-if="total_count>0">
@@ -145,7 +145,7 @@ export default {
 	this.reset();
   },
   onLoad(){
-	
+
   },
   methods: {
 	 // 去逛逛

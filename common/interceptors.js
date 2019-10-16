@@ -49,16 +49,29 @@ const hookErrorCode = [0,88001];
 		if(hookErrorCode.indexOf(res.data.errorCode) != -1){
 			resolve(res)
 		}else{
+			// #ifdef APP-PLUS
+			uni.showModal({
+				title:"app提示",
+				content:JSON.stringify(res)
+			})
+			// #endif
 		  error(res.data.msg)
           reject(res)
 		}
 
       },
       fail:(e)=>{
+		  // #ifdef APP-PLUS
+		  // uni.showModal({
+		  // 	title:"app提示",
+		  // 	content:JSON.stringify(e)
+		  // })
+		  // #endif
+
         reject(e)
       },
       complete:(res)=>{
-        console.log(res)
+        // console.log(res)
         setTimeout(function(){
           uni.hideLoading()
         },500)

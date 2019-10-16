@@ -1,26 +1,26 @@
 import Vue from 'vue';
 // const i18n = require('i18n');
 
+
+// #ifdef H5
+import wx from 'weixin-js-sdk';
+// #endif
+
+import filter from './filter.js';
+
 import {post,get,ajax} from './interceptors.js';
 import {GetQueryByString, ls} from "./tool";
 
-
-
 export const toast = (title,icon,image,duration)=>{
-
     uni.showToast({
         title,
         duration:duration||2000,
         icon,
         image
     })
-
 }
 
 export const error = (title,icon,duration)=>toast(title,null,'/static/icon_http_error.png',duration)
-
-
-
 
 export const confirm = (options)=>{
 
@@ -40,9 +40,6 @@ export const confirm = (options)=>{
 
 	})
 }
-
-
-import filter from './filter.js';
 
 const tabbarRouter = ['/pages/index/index','/pages/classify/classify','/pages/groupSuccess/groupSuccess','/pages/cart/cart','/pages/person/person'];
 
@@ -121,6 +118,7 @@ uni.navigateTo = (opt)=>{
             users_id = ls.get('users_id');
 
             if (users_id) {
+                console.log(url)
 
                 if(url.indexOf('?')===-1){
                     url += '?users_id='+users_id
@@ -136,7 +134,7 @@ uni.navigateTo = (opt)=>{
 
     }
 
-    
+
     let endOpt = {...opt,url}
     console.log('endOpt is ',endOpt)
     navigateTOCopy(endOpt)
@@ -195,6 +193,10 @@ export default {
     Vue.prototype.$post = post;
     Vue.prototype.$get = get;
     Vue.prototype.$http = ajax;
+
+    // #ifdef H5
+    Vue.prototype.$wx = wx;
+    // #endif
 
     // Vue.prototype.$loading = Loading.service;
     // Vue.prototype.$notify = Notification;

@@ -1,5 +1,8 @@
 <template>
 	<view class="all">
+		<!-- #ifdef APP-PLUS -->
+		<view class="status_bar" style="background: #f81111;"><!-- 这里是状态栏 --></view>
+		<!-- #endif -->
 		<view class="top">
 			<image src="/static/fenxiao/top.png"></image>
 			<view class="title">分销中心</view>
@@ -112,7 +115,7 @@
 			};
 		},
 		onLoad() {
-			
+
 		},
 		onShow() {
 			//获取分销首页
@@ -151,7 +154,7 @@
 			goLeaderboard(){
 				uni.navigateTo({
 					url:'../leaderboard/leaderboard'
-				})	
+				})
 			},
 			//爵位晋升
 			goPromotion(){
@@ -193,6 +196,7 @@
 	width: 750rpx;
 	height: 400rpx;
 	position: relative;
+	
 	image{
 		width: 100%;
 		height: 100%;
@@ -224,7 +228,7 @@
 			width: 100%;
 			height: 100%;
 		}
-		
+
 	}
 	view.nickName{
 				font-size: 28rpx;

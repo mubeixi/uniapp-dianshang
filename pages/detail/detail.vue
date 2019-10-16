@@ -1,5 +1,8 @@
 <template>
   <div style="position:relative;">
+	  <!-- #ifdef APP-PLUS -->
+	  <view class="status_bar"><!-- 这里是状态栏 --></view>
+	  <!-- #endif -->
     <div class="top">
         <img src="/static/detail/back.png" @click="goBack" alt="">
         <img src="/static/detail/cart.png" @click="goCart" class="cart" alt="">
@@ -77,9 +80,9 @@
         	    </div>
         	    <div class="c_content_msg">{{item.Note}}</div>
         	    <div class="c_content_img">
-        			<block v-for="(i,j) of item.ImgPath" :key="j"> 
+        			<block v-for="(i,j) of item.ImgPath" :key="j">
         				 <img :src="i"  @click="yulanImg(index,j)">
-        			</block>   
+        			</block>
         	    </div>
         	</div>
         </block>
@@ -92,7 +95,7 @@
 		<!-- <u-parse :content="product.Products_Description"  /> -->
     </div>
 	<div style="clear: both;">
-		
+
 	</div>
     <div style="height:50px;"></div>
 	<bottom @cartHandle="addCart" @directHandle="directBuy" @collect="collect" :collected="isCollected"></bottom>
@@ -109,14 +112,14 @@
 				</div>
 			</div>
 			<div class="s_bottom" @click="cancel">取消</div>
-		</div>		
+		</div>
 		<scroll-view class="ticks" v-if="type=='ticks'" scroll-y=true  @scrolltolower="goNextPage">
 		    <div class="t_title">
 		        领券
 		        <image src="/static/detail/x.png"  @click="close" ></image>
 		    </div>
 			<div style="height: 90rpx;">
-				
+
 			</div>
 		    <div class="t_content" v-for="(item,i) of couponList" :key="i">
 		        <div class="t_left">
@@ -149,14 +152,15 @@
 						<div :class="check_attr[i]==index?'skuCheck':''" @click="selectAttr(index,i)"  v-for="(mbx,index) of item" :key="index">{{mbx}}</div>
 					</div>
 				</div>
-			</div>	
+			</div>
 			<div class="numBer">
 				<div class="numBers">
 					数量
 				</div>
 				<div class="inputNumber">
 						<div class="clicks" @click="delNum">-</div>
-						<input v-enter-number type="number" v-model="postData.qty"  disabled>
+						<!--v-enter-number-->
+						<input  type="number" v-model="postData.qty"  disabled>
 						<div class="clicks" @click="addNum">+</div>
 				</div>
 			</div>
@@ -234,7 +238,7 @@ export default {
 		  }
 	 },
 	onShow(){
-			
+
 	},
 	filters: {
 				/**
@@ -266,12 +270,12 @@ export default {
 				        match = match.replace(/width:[^;]+;/gi, 'width:100%;').replace(/width:[^;]+;/gi, 'width:100%;');
 				        return match;
 				    });
-					
+
 				    newContent = newContent.replace(/<br[^>]*\/>/gi, '');
 				    newContent = newContent.replace(/\<img/gi, '<img style="width:100%;float:left;"');
 					//newContent = newContent.replace(/>[\s]*</gi, "><");
 				    return newContent;
-				}	
+				}
 			},
     methods: {
 		// 赠品
@@ -303,10 +307,10 @@ export default {
 		checkProdCollected() {
 			checkProdCollected({prod_id: this.Products_ID}).then(res => {
 				if(res.errorCode == 0) {
-					this.isCollected = res.data.is_favourite == 1 
+					this.isCollected = res.data.is_favourite == 1
 				}
 			}).catch(e => {
-				
+
 			})
 		},
 		//下一页优惠券
@@ -432,7 +436,7 @@ export default {
 						uni.showLoading({
 							title: '加入购物车成功',
 							icon: 'success'
-						})						
+						})
 					}else {
 						uni.navigateTo({
 							url: '../check/check?cart_key=DirectBuy'
@@ -456,7 +460,7 @@ export default {
 					title: '购买数量不能大于库存量',
 			        icon: 'none',
 			    });
-				this.postData.qty = this.postData.count; 
+				this.postData.qty = this.postData.count;
 			}
 		},
 		delNum(){
@@ -467,7 +471,7 @@ export default {
 			        title: '购买数量不能小于1',
 			        icon: 'none',
 			    });
-				this.postData.qty = 1; 
+				this.postData.qty = 1;
 			}
 		},
 		// 收藏
@@ -481,7 +485,7 @@ export default {
 						});
 						this.isCollected = false;
 					}
-					
+
 				})
 			}else {
 				addCollection({prod_id: this.Products_ID,}).then(res=>{
@@ -496,7 +500,7 @@ export default {
 							icon: 'fail'
 						})
 					};
-				})				
+				})
 			}
 		},
 		goCart(){
@@ -520,12 +524,16 @@ export default {
 				console.log(e)
 			})
 		},
-		getDetail(item){
+		async getDetail(item){
 			let data={
 				prod_id:item,
 				Users_ID:'wkbq6nc2kc'
 			}
-			getProductDetail(data).then(res=>{
+
+			let product = null;
+
+			await getProductDetail(data).then(res=>{
+				product = res.data
 				this.product = res.data;
 				this.postData.count = res.data.Products_Count;
 				if(res.data.skujosn) {
@@ -535,6 +543,41 @@ export default {
 			}).catch(e=>{
 				console.log(e)
 			})
+
+
+            //let _self = this;
+			// #ifdef H5
+            this.WX_JSSDK_INIT().then((wxEnv)=>{
+
+                this.$wx.onMenuShareTimeline({
+                    title: '#网中网#'+product.Products_Name, // 分享标题
+                    link: location.href, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                    imgUrl: product.ImgPath, // 分享图标
+                    success: function() {
+                        // 用户点击了分享后执行的回调函数
+                    }
+                });
+
+                //两种方式都可以
+                wxEnv.onMenuShareAppMessage({
+                    title: '#网中网#'+product.Products_Name, // 分享标题
+                    link: location.href, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                    imgUrl: product.ImgPath, // 分享图标
+                    desc: product.goods_desc||'好物推荐',
+                    type: 'link', // 分享类型,music、video或link，不填默认为link
+                    // dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                    success: function() {
+                        // 用户点击了分享后执行的回调函数
+                    }
+                });
+
+            }).catch(()=>{})
+
+			// #endif
+
+
+
+
 		},
 		addCart(){
 			this.$refs.cartPopu.show();
@@ -550,7 +593,7 @@ export default {
 			// 	prod_id:  this.Products_ID,
 			// 	qty: 1,
 			// 	// atr_str: "颜色:黑色;尺寸:大号;",
-			// 	// atrid_str: "1;3",	
+			// 	// atrid_str: "1;3",
 			// }
 			// updateCart(arg).then(res=>{
 			// 	console.log(res)
@@ -576,7 +619,19 @@ export default {
         cancel(){
             this.$refs.popupLayer.close();
         }
-    }
+    },
+	created(){
+
+
+
+		this.checkProdCollected();
+		this.getCommit(this.Products_ID);
+		this.getCoupon();//获取可领取的优惠券
+
+		//商品信息
+		this.getDetail(this.Products_ID);
+
+	}
 }
 </script>
 
@@ -684,7 +739,7 @@ export default {
         font-size: 30rpx;
         border-left: 2rpx dotted #999;
         //width: 124rpx;
-        text-align: center; 
+        text-align: center;
     }
     .aleady {
         color: #999;
@@ -1024,5 +1079,5 @@ export default {
 		color: #fff !important;
 		background-color: #ff4200 !important;
 	}
-	
+
 </style>
