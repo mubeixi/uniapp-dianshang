@@ -174,7 +174,7 @@
 <script>
 import bottom from '../bottom/bottom'
 import popupLayer from '../../components/popup-layer/popup-layer.vue'
-import {getProductDetail,getCommit,updateCart,addCollection,getCoupon,getUserCoupon,checkProdCollected,cancelCollection} from '../../common/fetch.js';
+import {getProductDetail,getCommit,updateCart,addCollection,getCoupon,getUserCoupon,checkProdCollected,cancelCollection,judgeReceiveGift} from '../../common/fetch.js';
 import {goBack,numberSort}  from '../../common/tool.js'
 
 import uParse from '@/components/gaoyia-parse/parse.vue'
@@ -214,6 +214,7 @@ export default {
 			pageSize:10,//优惠券页
 			totalCount:0,//优惠券个数
 			isCollected: false, // 该产品是否已收藏
+			gift: 0, //赠品id
         }
     },
     components: {
@@ -222,7 +223,19 @@ export default {
 		uParse
     },
 	onLoad: function (option) {
-		this.Products_ID = option.Products_ID;
+		  
+		  // 赠品
+		  if(option.gift) {
+			  this.gift = option.gift;
+			  this.judgeReceiveGift();
+		  }else {
+			  this.Products_ID = option.Products_ID;
+			  this.checkProdCollected();
+			  this.getDetail(this.Products_ID);
+			  this.getCommit(this.Products_ID);
+			  this.getCoupon();//获取可领取的优惠券
+			  
+		  }
 	 },
 	onShow(){
 
@@ -265,6 +278,15 @@ export default {
 				}
 			},
     methods: {
+		// 赠品
+		judgeReceiveGift(){
+			judgeReceiveGift({gift: this.gift}).then(res=>{
+				console.log(res)
+				if(res.errorCode ==0){
+					
+				}
+			})
+		},
 		//评价预览
 		yulanImg(i,j){
 			uni.previewImage({

@@ -152,6 +152,10 @@ export const getGiftList = (data, options) => fetch('get_gift_list', data, optio
 
 // 退款
 export const orderRefund = (data,options) => fetch('order_refund', data, options);
+// 获取兑换产品详情
+export const jifenProdDetail = (data,options) => fetch('jifen_prod_detail', data, options);
+// 获取赠品详情
+export const judgeReceiveGift = (data, options) => fetch('judge_receive_gift', data, options);
 
 //jssdk签名
 

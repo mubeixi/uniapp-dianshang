@@ -62,10 +62,10 @@ const hookErrorCode = [0,88001];
       },
       fail:(e)=>{
 		  // #ifdef APP-PLUS
-		  uni.showModal({
-		  	title:"app提示",
-		  	content:JSON.stringify(e)
-		  })
+		  // uni.showModal({
+		  // 	title:"app提示",
+		  // 	content:JSON.stringify(e)
+		  // })
 		  // #endif
 
         reject(e)

@@ -66,7 +66,7 @@
                     <switch :checked="userMoneyChecked" color="#04B600" @change="userMoneyChange" />
                 </div>
 				<div class="o_de">您当前共有余额: <text>{{userInfo.User_Money}}</text></div>
-                <input v-if="userMoneyChecked" v-model="postData.user_money" class="o_desc" placeholder="请输入金额" type="number" @blur="confirm_user_money">
+                <input v-if="userMoneyChecked" v-model.number="postData.use_money" class="o_desc" placeholder="请输入金额" type="number" @input="confirm_user_money">
             </div>
         </div>
         <div class="other">
@@ -323,28 +323,27 @@ export default {
 		},
 		// 余额支付输入完成
 		confirm_user_money(e){
-			// 用户可用余额
-			let user_money = Number(this.userInfo.User_Money);
-			// 用户输入的金额
-			let input_money = Number(e.detail.value);
-			console.log(user_money,input_money)
-			//输入订单金额
-			//   inputMoney: function (e) {
-			//     var money = e.detail.value.length == 0 ? '' : e.detail.value;
-			//     if (!utils.check_money_in(money)) {
-			//       money = money.length > 0 ? money.slice(0, -1) : '';
-			//     }
-			//
-			//     this.setData({
-			//       tx_money: money
-			//     })
-			//   },
+			// // 用户可用余额
+			// let user_money = Number(this.userInfo.User_Money);
+			// // 用户输入的金额
+			// // let input_money = Number(e.detail.value);
+			// var input_money = e.detail.value.length == 0 ? '' : e.detail.value;
+			// console.log(user_money,input_money)
+			// if (!check_money_in(input_money)) {
+			//     input_money = input_money.length > 0 ? '' : input_money.slice(0, -1);
+			// };
+			// this.postData.use_money = input_money ? input_money : 0;
+			// console.log(input_money, this.postData)
+			
+			// return;
+			let input_money = e.detail.value;
+			let user_money = this.userInfo.User_Money;
 			if(input_money < 0 || isNaN(input_money)){
 				uni.showToast({
 					title: '输入金额有误',
 					icon: 'none'
 				});
-				this.postData.user_money = 0;
+				this.postData.use_money = 0;
 				return;
 			}
 			if(input_money > user_money) {
@@ -354,7 +353,7 @@ export default {
 				});
 				return;
 			}
-			this.postData.use_money = input_money.toFixed(2);
+			this.postData.use_money = Number(input_money).toFixed(2);
 			this.createOrderCheck();
 		},
 		// 留言

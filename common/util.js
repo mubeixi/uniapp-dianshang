@@ -319,8 +319,10 @@ function format_money_string(money, mtype = 0) {
 //输入金额时时验证
 function check_money_in (money) {
   if (!(/(^[1-9]([0-9]+)?(\.[0-9]{0,2})?$)|(^(0){1}$)|(^[0-9]\.([0-9]){0,2}?$)/.test(money))) {
+	  console.log('false')
     return false;
   } else {
+	  console.log('true')
     return true;
   }
 }
@@ -810,7 +812,8 @@ module.exports = {
   jiudian_room_format: jiudian_room_format,
   gonglue_format: gonglue_format,
   date_format: date_format,
-  overPullDownRefresh: overPullDownRefresh
+  overPullDownRefresh: overPullDownRefresh,
+  check_money_in: check_money_in
 }
 
 
