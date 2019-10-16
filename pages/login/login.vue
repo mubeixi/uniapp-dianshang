@@ -113,12 +113,12 @@
 					验证码已发送至手机 {{ mobile }}
 					<span :class="{ disabled: countdownStatus }" @click="againSendCode">重新发送{{ countdownStr }}</span>
 				</p>
-				<input type="number" v-if="loginStatus !== 3 && loginStatus !== 4" class="code" v-model="verificationCode" @input="fillCode" />
+				<input type="number" v-if="loginStatus !== 3 && loginStatus !== 4" :value="verificationCode" class="code" @input="fillCode" />
 
 				<div class="searchNewPass editSearchPassword" v-if="loginStatus === 3">
 					<label class="inputLable flex line20">
 						<span>验证码</span>
-						<input type="text" placeholder="请输入验证码" v-model="verificationCode" @input="substr" />
+						<input type="text" placeholder="请输入验证码" :value="verificationCode" @input="substr" />
 					</label>
 					<label class="inputLable flex">
 						<span>新密码</span>
@@ -342,15 +342,29 @@
 			againSendCode() {
 				if (!this.countdownStatus) this.sendCode();
 			},
-			substr() {
-				this.verificationCode = this.verificationCode.toString().substr(0, 4);
+			substr(event) {
+				this.verificationCode = event.target.value;
 			},
-			fillCode() {
+			fillCode(event) {
+				let _self = this;
 				//填写验证码
-				this.substr();
-				if (this.verificationCode.length == 4) this.login();
+				//this.substr();
+				this.verificationCode = event.target.value
+
+
+				if (this.verificationCode.length == 4){
+					this.login(null,function () {
+						_self.verificationCode = ''
+					});
+				}
 			},
-			async login() {
+			/**
+			 * 可以加两个回调
+			 * @param scall
+			 * @param ecall
+			 * @return {Promise<void>}
+			 */
+			async login(scall,ecall) {
 
 				//登录 - 多个地方用了
 				//console.log(this.fromId, "这是fromId");
@@ -359,10 +373,14 @@
 				  await login({mobile:this.mobile, captcha:this.verificationCode,login_method:'sms_login'}).then(res =>
 				  {
 				  	if(res.errorCode === 0){
-						this.loginCall(res.data)
+				  		//么有自定义回调，就默认的额
+						!scall && this.loginCall(res.data)
+						scall && scall()
+					}else{
+						ecall && ecall()
 					}
 
-				  })
+				  }).catch(e=>{ecall && ecall()})
 
 				} else if (this.loginStatus === 2) {
 

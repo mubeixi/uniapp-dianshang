@@ -136,7 +136,7 @@
 						新建
 					</view>
 				</view>
-			</div>			
+			</div>
 		</view>
     </div>
 </template>
@@ -190,7 +190,7 @@ export default {
 				shipping_id: 0,
 				address_id: '',
 				is_full_reduction: '',// 是否使用满减功能
-				coupon_id: '', 
+				coupon_id: '',
 				use_integral: 0, // 用于抵扣的积分数
 				use_money: 0,  // 余额支付金额
 				invoice_info: '',  // 发票抬头
@@ -211,7 +211,7 @@ export default {
 				var len= value.length;
 				var xx= value.substring(3,len-4);
 				var values = value.replace(xx,"****");
-				return values;				
+				return values;
 			}
 		}
 	},
@@ -222,7 +222,7 @@ export default {
 	},
 	onLoad(options) {
 		this.postData.cart_key = options.cart_key;
-		if(options.cart_buy){	
+		if(options.cart_buy){
 			this.postData.cart_buy = options.cart_buy;
 		}
 	},
@@ -233,7 +233,7 @@ export default {
 		remindAddress: function(){
 			return this.orderInfo.is_virtual == 0 && this.orderInfo.NeedShipping == 1 && !this.addressinfo.Address_Name
 		}
-		
+
 	},
     methods: {
 		goback(){
@@ -268,7 +268,7 @@ export default {
 						// 如果order_totalPrice <= 0  直接跳转 订单列表页
 						this.Order_ID = res.data.Order_ID;
 						uni.redirectTo({
-							url: '../pay/pay?Order_ID='+ res.data.Order_ID	
+							url: '../pay/pay?Order_ID='+ res.data.Order_ID
 						})
 					}else {
 						uni.showToast({
@@ -317,7 +317,7 @@ export default {
 						title: '发票抬头不能为空'
 					})
 					return;
-				}				
+				}
 			}
 			this.postData.invoice_info = invoice_info;
 		},
@@ -329,16 +329,16 @@ export default {
 			let input_money = Number(e.detail.value);
 			console.log(user_money,input_money)
 			//输入订单金额
-			  inputMoney: function (e) {
-			    var money = e.detail.value.length == 0 ? '' : e.detail.value;
-			    if (!utils.check_money_in(money)) {
-			      money = money.length > 0 ? money.slice(0, -1) : '';
-			    }
-			    
-			    this.setData({
-			      tx_money: money
-			    })
-			  },
+			//   inputMoney: function (e) {
+			//     var money = e.detail.value.length == 0 ? '' : e.detail.value;
+			//     if (!utils.check_money_in(money)) {
+			//       money = money.length > 0 ? money.slice(0, -1) : '';
+			//     }
+			//
+			//     this.setData({
+			//       tx_money: money
+			//     })
+			//   },
 			if(input_money < 0 || isNaN(input_money)){
 				uni.showToast({
 					title: '输入金额有误',
@@ -386,7 +386,7 @@ export default {
 			getUserInfo({User_ID:this.User_ID,Users_ID:this.Users_ID}).then(res => {
 				if(res.errorCode == 0) {
 					this.userInfo = res.data;
-					
+
 				}
 				this.userLoading = true;
 			})
@@ -455,7 +455,7 @@ export default {
 			}).catch(e => {
 				uni.showModal({
 					title: e.data,
-					
+
 				})
 			})
 		},
@@ -465,7 +465,7 @@ export default {
 					this.orderInfo = res.data;
 					this.couponlist = res.data.coupon_list;
 					this.orderLoading = true;
-					
+
 				}else {
 					// 获取失败
 					// uni.showModal({
@@ -505,7 +505,7 @@ export default {
         height: 51rpx;
         margin-right: 31rpx;
     }
-    
+
     .name {
         margin-bottom: 30rpx;
         font-size: 28rpx;
@@ -593,7 +593,7 @@ export default {
 			}
 		}
     }
-    
+
     /* 订单信息 end */
     /* 订单其他信息 start */
     .other {
@@ -704,12 +704,12 @@ export default {
 			display: flex;
 			justify-content: space-between;
 			height: 104rpx;
-			border-bottom:1px solid rgba(230,230,230,1); 
+			border-bottom:1px solid rgba(230,230,230,1);
 			align-items: center;
 			font-size: 28rpx;
 		}
 	}
-	
+
 	.sure{
 		height: 90rpx;
 		width: 100%;

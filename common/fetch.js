@@ -42,7 +42,7 @@ export const login = (data,options) => {
     if(owner_id){
       data = {...data,owner_id}
     }
-    fetch('user_login', data,options)
+    return fetch('user_login', data,options)
 }
 
 export const getCouponList = (data,options) => fetch('get_unaccalimed_coupon',data,options)
