@@ -160,7 +160,7 @@
 			//去赠品中心
 			goGift(){
 				uni.navigateTo({
-					url:'../MyGift/MyGift'
+					url:'../myGift/myGift'
 				})
 			},
 			//去任务中心

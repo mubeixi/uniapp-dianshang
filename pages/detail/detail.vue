@@ -223,6 +223,11 @@ export default {
 		  this.getDetail(this.Products_ID);
 		  this.getCommit(this.Products_ID);
 		  this.getCoupon();//获取可领取的优惠券
+		  
+		  // 积分兑换
+		  if(option.gift) {
+			  
+		  }
 	 },
 	onShow(){
 			
