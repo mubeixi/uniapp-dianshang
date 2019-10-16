@@ -12,51 +12,86 @@ export const defaultMixin = {
 
     },
 
-
 }
 
 export const pageMixin = {
+	//页面的初始化
+    onLoad(option) { 
+		
+		if(!ls.get('initData')){
+		    this.getInitData()
+		}
+		
+		// #ifdef H5
+		
+		//商户id机制
+		let users_id = GetQueryByString(location.href, 'users_id')
+		
+		//如果连接里面已经有了，就不需要搞事
+		if(users_id){
+		    ls.set('users_id',users_id);
+		
+		    console.log('this page users_id is '+users_id)
+		    return;
+		}else{
+		    users_id = ls.get('users_id');
+		}
+		
+		
+		if (users_id) {
+		
+		    let search = location.search;
+		
+		    if(search.indexOf('?')===-1){
+		        search += '?users_id='+users_id
+		    }else{
+		        search.replace(/\?/,'?users_id='+users_id+'&')
+		    }
+		
+		    location.search = search
+		
+		}else{
+		    uni.showModal({
+		        title: '提示',
+		        content: '缺少商户id',
+		        success: function (res) {
+		        }
+		    });
+		}
+		
+		//order_id 机制
+		let order_id = GetQueryByString(location.href, 'order_id')
+		
+		//如果连接里面已经有了，就不需要搞事
+		if(order_id){
+		    ls.set('order_id',order_id);
+		    console.log('this page order_id is '+order_id)
+		    return;
+		}
+		// #endif
+		
+		
+		// #ifndef H5
+		
+		//option为object类型，会序列化上个页面传递的参数
+		console.log(option.id); //打印出上个页面传递的参数。
+		console.log(option.name); //打印出上个页面传递的参数。
+		
+		//order_id 机制
+		let order_id = option.order_id
+		//如果连接里面已经有了，就不需要搞事
+		if(order_id){
+		    ls.set('order_id',order_id);
+		    console.log('this page order_id is '+order_id)
+		    return;
+		}
+		// #endif
+		
+    },
     mounted() {
 
-        // if(!ls.get('initData')){
-        //     this.getInitData()
-        // }
-
-        // #ifdef H5
-
-        let users_id = GetQueryByString(location.href, 'users_id')
-        console.log('users_id is'+users_id)
-        //如果连接里面已经有了，就不需要搞事
-        if(users_id){
-            ls.set('users_id',users_id);
-            return;
-        }else{
-            users_id = ls.get('users_id');
-        }
-
-        console.log('users_id is'+users_id)
-
-        if (users_id) {
-
-            let search = location.search;
-
-            if(search.indexOf('?')===-1){
-                search += '?users_id='+users_id
-            }else{
-                search.replace(/\?/,'?users_id='+users_id+'&')
-            }
-
-            location.search = search
-
-        }else{
-            uni.showModal({
-                title: '提示',
-                content: '缺少商户id',
-                success: function (res) {
-                }
-            });
-        }
-        // #endif
+		
+        
 
 
     },

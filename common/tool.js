@@ -25,7 +25,7 @@ export const GetQueryByString = (str, name) => {
 
   //获取？号出现几次
   var tempArr = str.split('?');
-  console.log(tempArr)
+  // console.log(tempArr)
   // //如果大于1
   if (tempArr.length - 1 > 1) {
     var rt = null;
@@ -44,7 +44,7 @@ export const GetQueryByString = (str, name) => {
   var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
   if (!str.split("?")[1]) return null;
   var r = str.split("?")[1].match(reg); //匹配目标参数
-  console.log(r)
+  // console.log(r)
   if (r != null) {
     return decodeURIComponent(r[2]);
 
@@ -292,4 +292,3 @@ export const urlencode = (str)=>{
   replace(/\)/g, '%29').replace(/\*/g, '%2A').replace(/%20/g, '+');
 
 }
-

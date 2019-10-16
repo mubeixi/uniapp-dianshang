@@ -1,70 +1,80 @@
 <template>
-  <div v-if="loading">
-    <page-title class="nav-title" title="购物车" :right="handleShow ? '管理' : '取消'" @rightHandle="handle" hiddenBack="true" :rightHidden="manage"></page-title>
-    <div class="content">
-      <div v-if="total_count>0">
-        <div class="order_msg" >
-			<div class="biz_msg">
-			   <div class="mbxa" @click="checkAll">
-					<img :src="checkAllFlag ? '/static/checked.png' : '/static/uncheck.png'" >
-					
-			   </div>
-				<img :src="shop_config.ShopLogo" class="biz_logo" alt />
-				<text class="biz_name">{{shop_config.ShopName}}</text>
-			</div>
-			<block  v-for="(pro,pro_id) in CartList" :key="pro_id">
-				<block v-for="(attr,attr_id) in pro" :key="attr_id">
-					<div class="pro">
-						<div class="mbxa" @click="change(pro_id,attr_id)">
-							<img :src="attr.checked ? '/static/checked.png' : '/static/uncheck.png'" >
-						</div>
-						<img class="pro-img" :src="attr.ImgPath" @click="gotoDetail(pro_id)"/>
-						<div class="pro-msg">
-							<div class="pro-name" @click="gotoDetail(pro_id)">{{attr.ProductsName}}</div>
-							<div class="attr" v-if="attr.Productsattrstrval">
-								<span v-for="(item,index) in attr.Productsattrstrval" :key="index">{{item}}</span>
-							</div>
-							<div class="pro-price">
-								<span class="span">￥</span>{{attr.ProductsPriceX}}
-								<span class="amount">
-								  <span class="plus" :class="attr.Qty == 1 ? 'disabled' : ''" @click="updateCart(pro_id,attr_id,-1)">-</span>
-								  <span class="num">{{attr.Qty}}</span>
-								  <span class="plus" @click="updateCart(pro_id,attr_id,1)">+</span>
-								</span>
-							</div>
-						</div>
+	<div>
+		<!-- #ifdef APP-PLUS -->
+		<view class="status_bar"><!-- 这里是状态栏 --></view>
+		<!-- #endif -->
+
+		<div v-if="loading">
+			<page-title class="nav-title" title="购物车"
+			:right="handleShow ? '管理' : '取消'"
+			@rightHandle="handle"
+			hiddenBack="true"
+			:rightHidden="manage" ></page-title>
+			<div class="content">
+			  <div v-if="total_count>0">
+				<div class="order_msg" >
+					<div class="biz_msg">
+					   <div class="mbxa" @click="checkAll">
+							<img :src="checkAllFlag ? '/static/checked.png' : '/static/uncheck.png'" >
+
+					   </div>
+						<img :src="shop_config.ShopLogo" class="biz_logo" alt />
+						<text class="biz_name">{{shop_config.ShopName}}</text>
 					</div>
-				</block>
-			</block>
-        </div>
-      </div>
-      <div v-else class="none">
-        <img src="/static/box.png" alt="">
-        <div><span>购物车空空如也</span><span class="tobuy" @click="gotoBuy">去逛逛</span></div>
-      </div>
-      <!-- 猜你喜欢 -->
-      <div class="fenge"><span class="red"></span><span class="caini">猜你喜欢</span><span class="red"></span></div>
-      <div class="prolist">
-        <div class="pro-item" v-for="(item,index) in prodList" :key="index" @click="gotoDetail(item.Products_ID)" >
-          <img :src="item.ImgPath" alt="">
-          <div class="item-name">{{item.Products_Name}}</div>
-          <div class="price">
-            <span class="n_price"><span>￥</span>{{item.Products_PriceX}}</span>
-            <span class="o_price"><span>￥</span>{{item.Products_PriceY}}</span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- 购物车结算 -->
-    <div class="checkout" v-if="!manage">
-      <div class="mbxa"  @click="checkAll">
-		<img :src="checkAllFlag ? '/static/checked.png' : '/static/uncheck.png'"  style="margin-right: 17rpx;" alt="">
-			全选
-      </div>
-      <div class="total" v-if="handleShow">合计：<span>￥<span>{{totalPrice}}</span></span></div>
-      <div class="checkbtn" @click="submit">{{handleShow?'结算':'删除'}} </div>
-    </div>
-   <!-- <tabs style="background:#F3F3F3;"></tabs> -->
+					<block  v-for="(pro,pro_id) in CartList" :key="pro_id">
+						<block v-for="(attr,attr_id) in pro" :key="attr_id">
+							<div class="pro">
+								<div class="mbxa" @click="change(pro_id,attr_id)">
+									<img :src="attr.checked ? '/static/checked.png' : '/static/uncheck.png'" >
+								</div>
+								<img class="pro-img" :src="attr.ImgPath" @click="gotoDetail(pro_id)"/>
+								<div class="pro-msg">
+									<div class="pro-name" @click="gotoDetail(pro_id)">{{attr.ProductsName}}</div>
+									<div class="attr" v-if="attr.Productsattrstrval">
+										<span v-for="(item,index) in attr.Productsattrstrval" :key="index">{{item}}</span>
+									</div>
+									<div class="pro-price">
+										<span class="span">￥</span>{{attr.ProductsPriceX}}
+										<span class="amount">
+										  <span class="plus" :class="attr.Qty == 1 ? 'disabled' : ''" @click="updateCart(pro_id,attr_id,-1)">-</span>
+										  <span class="num">{{attr.Qty}}</span>
+										  <span class="plus" @click="updateCart(pro_id,attr_id,1)">+</span>
+										</span>
+									</div>
+								</div>
+							</div>
+						</block>
+					</block>
+				</div>
+			  </div>
+			  <div v-else class="none">
+				<img src="/static/box.png" alt="">
+				<div><span>购物车空空如也</span><span class="tobuy" @click="gotoBuy">去逛逛</span></div>
+			  </div>
+			  <!-- 猜你喜欢 -->
+			  <div class="fenge"><span class="red"></span><span class="caini">猜你喜欢</span><span class="red"></span></div>
+			  <div class="prolist">
+				<div class="pro-item" v-for="(item,index) in prodList" :key="index" @click="gotoDetail(item.Products_ID)" >
+				  <img :src="item.ImgPath" alt="">
+				  <div class="item-name">{{item.Products_Name}}</div>
+				  <div class="price">
+					<span class="n_price"><span>￥</span>{{item.Products_PriceX}}</span>
+					<span class="o_price"><span>￥</span>{{item.Products_PriceY}}</span>
+				  </div>
+				</div>
+			  </div>
+			</div>
+			<!-- 购物车结算 -->
+			<div class="checkout" v-if="!manage">
+			  <div class="mbxa"  @click="checkAll">
+				<img :src="checkAllFlag ? '/static/checked.png' : '/static/uncheck.png'"  style="margin-right: 17rpx;" alt="">
+					全选
+			  </div>
+			  <div class="total" v-if="handleShow">合计：<span>￥<span>{{totalPrice}}</span></span></div>
+			  <div class="checkbtn" @click="submit">{{handleShow?'结算':'删除'}} </div>
+			</div>
+		   <!-- <tabs style="background:#F3F3F3;"></tabs> -->
+		</div>
   </div>
 </template>
 
@@ -72,10 +82,10 @@
 // import tabs from "@/components/tabs";
 // import pagetitle from "@/components/title";
 import {getCart,getProd,updateCart,delCart} from '../../common/fetch.js';
-	import {pageMixin} from "../../common/mixin";
-	import {ls} from '../../common/tool.js'
+import {pageMixin} from "../../common/mixin";
+import {ls} from '../../common/tool.js'
 
-	export default {
+export default {
 		mixins:[pageMixin],
 		  name: "App",
 		  // components: {
@@ -116,11 +126,11 @@ import {getCart,getProd,updateCart,delCart} from '../../common/fetch.js';
     }
   },
   computed: {
-		
+
   },
   // 用户下拉
   onPullDownRefresh() {
-  	
+
   },
   // 上拉触底
   onReachBottom() {
@@ -161,7 +171,7 @@ import {getCart,getProd,updateCart,delCart} from '../../common/fetch.js';
 						obj[i].push(j);
 					} else {
 						obj[i] = [j];
-					}	
+					}
 					ls.remove(i + ';' + j);
 				}
 			}
@@ -218,7 +228,7 @@ import {getCart,getProd,updateCart,delCart} from '../../common/fetch.js';
 	cal_total(){
 		var total = 0;
 		this.totalPrice = 0;
-		
+
 		for(var i in this.CartList) {
 			for(var j in this.CartList[i]) {
 				let result = ls.get((i+";"+j));
@@ -241,7 +251,7 @@ import {getCart,getProd,updateCart,delCart} from '../../common/fetch.js';
 					this.CartList[i][j].checked = true;
 					this.checkAllFlag = true;
 				}
-			}			
+			}
 		}else {
 			for(var i in this.CartList) {
 				for(var j in this.CartList[i]) {
@@ -249,7 +259,7 @@ import {getCart,getProd,updateCart,delCart} from '../../common/fetch.js';
 					this.CartList[i][j].checked = false;
 					this.checkAllFlag = false;
 				}
-			}	
+			}
 		}
 		this.cal_total();
 	},
@@ -279,8 +289,8 @@ import {getCart,getProd,updateCart,delCart} from '../../common/fetch.js';
 		}).catch(e=>console.log(e));
 	},
     handle(){
-      this.handleShow = !this.handleShow;    
-	
+      this.handleShow = !this.handleShow;
+
     },
 	// 初始化选中对象
 	initCheck(){
@@ -302,14 +312,14 @@ import {getCart,getProd,updateCart,delCart} from '../../common/fetch.js';
 		getCart({cart_key:'CartList'}).then(res=>{
 			if(res.errorCode == 0){
 				this.total_count= res.data.total_count;
-				this.total_price= res.data.total_price;			
+				this.total_price= res.data.total_price;
 				this.shop_config = res.data.shop_config;
 				this.CartList = res.data.CartList;
 			}
 			this.loading = true;
 			// 把状态存起来
 			this.initCheck();
-			
+
 		}).catch(e=>console.log(e))
 	},
 	getProd(){
@@ -319,9 +329,9 @@ import {getCart,getProd,updateCart,delCart} from '../../common/fetch.js';
 			if(res.errorCode == 0){
 				this.prodList = oldlist.concat(res.data);
 				this.hasMore = (res.totalCount / this.prod_arg.pageSize) > this.prod_arg.page ? true : false ;
-				this.prod_arg.page += 1;				
+				this.prod_arg.page += 1;
 			}
-		}).catch(e=>console.log(e))		
+		}).catch(e=>console.log(e))
 	},
 	gotoDetail(e){
 		uni.navigateTo({
@@ -333,7 +343,7 @@ import {getCart,getProd,updateCart,delCart} from '../../common/fetch.js';
     manage(){
       return this.CartList.length == 0
     },
-	
+
   }
 };
 </script>
@@ -431,7 +441,7 @@ import {getCart,getProd,updateCart,delCart} from '../../common/fetch.js';
 				left: 0;
 				right: 0;
 			};
-			box-sizing: border-box;	
+			box-sizing: border-box;
 			min-height: 0;
 		}
     }
@@ -541,7 +551,7 @@ import {getCart,getProd,updateCart,delCart} from '../../common/fetch.js';
       background: #fff;
       box-sizing: border-box;
     }
-	// #ifdef  MP 
+	// #ifdef  MP
 	.checkout {
 		bottom: 0;
 	}

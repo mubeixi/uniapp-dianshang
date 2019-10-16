@@ -17,7 +17,11 @@
         },
         /* 模块配置 */
         "modules" : {
+<<<<<<< HEAD
+            "OAuth" : {}
+=======
             "Payment" : {}
+>>>>>>> upstream/master
         },
         /* 应用发布信息 */
         "distribute" : {
@@ -54,12 +58,16 @@
             "ios" : {},
             /* SDK配置 */
             "sdkConfigs" : {
+<<<<<<< HEAD
+                "oauth" : {}
+=======
                 "payment" : {
                     "alipay" : {},
                     "weixin" : {
                         "appid" : ""
                     }
                 }
+>>>>>>> upstream/master
             }
         }
     },

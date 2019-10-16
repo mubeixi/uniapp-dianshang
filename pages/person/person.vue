@@ -8,11 +8,11 @@
 			</view>
 			<view class="personInfo">
 				<view class="left">
-					<image src="/static/default.png" ></image>
+					<image style="border-radius: 50%;" src="{{userInfo.User_HeadImg||'/static/default.png'}}" ></image>
 				</view>
 				<view class="right">
 					<view class="nickName">{{userInfo.User_NickName}}</view>
-					<view class="cart">金卡会员<image src="/static/person/rightCart.png" ></image></view>
+					<view class="cart">{{userInfo.Users_Level[userInfo.User_Level].Name}}<image src="/static/person/rightCart.png" ></image></view>
 				</view>
 			</view>
 			<view class="nav">

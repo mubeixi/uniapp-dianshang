@@ -258,11 +258,8 @@
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8",
         "app-plus": {
-			// #ifdef H5
 			"titleNView": false
-			// #endif
         }
-		
 	},
 	"tabBar": {
 	    "color": "#7A7E83",

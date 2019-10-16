@@ -1,5 +1,6 @@
 import * as ENV from './env.js';
 // console.log(ENV.apiBaseUrl)
+import {error} from "./index";
 
 export const ajax = (url,method,data,options)=>{
 
@@ -29,6 +30,7 @@ export const ajax = (url,method,data,options)=>{
 
 let URL = ENV.apiBaseUrl+url;
 
+const hookErrorCode = [0,88001];
 
 // console.log(URL)
 
@@ -39,13 +41,24 @@ let URL = ENV.apiBaseUrl+url;
       method,
       data,
       success:(res)=>{
-        resolve(res)
+
+		if(res.statusCode!==200 || typeof res.data !='object'){
+          error('服务器去旅行了')
+		}
+
+		if(hookErrorCode.indexOf(res.data.errorCode) != -1){
+			resolve(res)
+		}else{
+		  error(res.data.msg)
+          reject(res)
+		}
+
       },
       fail:(e)=>{
         reject(e)
       },
-      complete:(rt)=>{
-        console.log(rt)
+      complete:(res)=>{
+        console.log(res)
         setTimeout(function(){
           uni.hideLoading()
         },500)
