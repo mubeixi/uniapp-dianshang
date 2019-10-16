@@ -38,7 +38,7 @@
 					<div class="box" style="margin: 0 30px;">
 						<!-- <i class="funicon icon-weixin font24" ></i> -->
 						<!--@getuserinfo="weixinlogin" open-type="getUserInfo"-->
-						<button type="primary" class="text-center"  @click="weixinlogin">登录</button>
+						<button type="primary" class="text-center" open-type="getUserInfo"  @getuserinfo="weixinlogin">登录</button>
 						<div class="line10"></div>
 						<button class="text-center" @click="toHome" >暂不登录</button>
 						<!-- <div class="inline-block flex1 text-center" @click="qqlogin"><i style="color: #2eb1f1;font-size: 32px;margin-top: 2px" class="funicon icon-QQ1" ></i></div> -->
@@ -408,12 +408,12 @@
 					}
 				}, 1000);
 			},
-			weixinlogin(res) {
+			async weixinlogin(data) {
 
 				let _self = this;
 
 				// #ifdef H5
-				let channel = res;
+				let channel = data;
 
 				let REDIRECT_URI = urlencode(location.href);
 				console.log(REDIRECT_URI)
@@ -445,25 +445,58 @@
 						console.log(loginRes);
 						let CODE = loginRes.code
 
-						login({code:CODE,login_method:'wx_lp'}).then(res=>{
-							if(res.errorCode === 0){
-								_self.loginCall(res.data)
+						login({code:CODE,login_method:'wx_lp'}).then(result=>{
+							if(result.errorCode === 0){
+								_self.loginCall(result.data)
+							}
+
+							if(result.errorCode === 88001){
+
+								// 可以通过 wx.getSetting 先查询一下用户是否授权了 "scope.record" 这个 scope
+								wx.getSetting({
+									success(res) {
+										if (res.authSetting['scope.userInfo']) {
+											wx.authorize({
+												scope: 'scope.userInfo',
+												success () {
+
+													const lp_raw_data = {...data.detail.userInfo,...result.data}
+													console.log(lp_raw_data)
+
+													login({code:CODE,login_method:'wx_lp',lp_raw_data:JSON.stringify(lp_raw_data)}).then(ret=>{
+														_self.loginCall(ret.data)
+													}).catch(err=>{})
+												},
+												fail(){
+													error('请点击授权登录')
+												}
+											})
+										}else{
+											error('请点击授权登录')
+										}
+									}
+								})
 							}
 						}).catch(e=>{})
-
 					}
 				});
-
 				// #endif
 
 				// #ifdef APP-PLUS
 				uni.login({
 				  provider: 'weixin',
 				  success: function (loginRes) {
-					  uni.showModal({
-					  	titile:'微信登录信息',
-						content:JSON.stringify(loginRes.authResult)
-					  })
+
+				  	login({login_method:'wx_app',...loginRes.authResult}).then(res=>{
+				  		console.log('wx app login result is ',JSON.stringify(res))
+
+					}).catch(e=>{
+
+					})
+					  // uni.showModal({
+					  // 	titile:'微信登录信息',
+						// content:JSON.stringify(loginRes.authResult)
+					  // })
 				    console.log(JSON.stringify(loginRes.authResult));
 				  }
 				});
