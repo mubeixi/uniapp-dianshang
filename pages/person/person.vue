@@ -8,7 +8,7 @@
 			</view>
 			<view class="personInfo">
 				<view class="left">
-					<image style="border-radius: 50%;" src="{{userInfo.User_HeadImg||'/static/default.png'}}" ></image>
+					<image style="border-radius: 50%;" :src="userInfo.User_HeadImg||'/static/default.png'" ></image>
 				</view>
 				<view class="right">
 					<view class="nickName">{{userInfo.User_NickName}}</view>
