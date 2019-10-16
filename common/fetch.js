@@ -40,7 +40,14 @@ const fetch = function (act, param,options = false,url='/api/little_program/shop
 //获取全局配置
 export const getSystemConf = (data,options) => fetch('shopconfig', data,options)
 
-export const login = (data,options) => fetch('user_login', data,options)
+export const login = (data,options) => {
+    //获取推荐人id
+    let owner_id = ls.get("order_id")
+    if(owner_id){
+      data = {...data,owner_id}
+    }
+    fetch('user_login', data,options)
+}
 
 export const getCouponList = (data,options) => fetch('get_unaccalimed_coupon',data,options)
 
@@ -182,7 +189,7 @@ function ObjectToArr(object, addkey) {
         }
       }
     } else {
-      this.ObjectToArr(object[i], newkey);
+      ObjectToArr(object[i], newkey);
     }
   }
   var newkey_1 = Object.keys(arrs).sort();

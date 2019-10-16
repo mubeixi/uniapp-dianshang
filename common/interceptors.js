@@ -30,6 +30,7 @@ export const ajax = (url,method,data,options)=>{
 
 let URL = ENV.apiBaseUrl+url;
 
+const hookErrorCode = [0,88001];
 
 // console.log(URL)
 
@@ -45,18 +46,19 @@ let URL = ENV.apiBaseUrl+url;
           error('服务器去旅行了')
 		}
 
-		if(res.data.errorCode===0){
+		if(hookErrorCode.indexOf(res.data.errorCode) != -1){
 			resolve(res)
 		}else{
-			reject(res)
+		  error(res.data.msg)
+          reject(res)
 		}
 
       },
       fail:(e)=>{
         reject(e)
       },
-      complete:(rt)=>{
-        console.log(rt)
+      complete:(res)=>{
+        console.log(res)
         setTimeout(function(){
           uni.hideLoading()
         },500)
