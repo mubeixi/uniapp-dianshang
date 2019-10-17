@@ -148,8 +148,8 @@
     },
     "h5" : {
         "router" : {
-            "mode" : "history",
-            "base" : ""
+          "mode" : "history",
+          "base" : ""
         },
         "publicPath" : "./",
         "devServer" : {

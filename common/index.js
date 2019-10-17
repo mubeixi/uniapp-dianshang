@@ -1,15 +1,15 @@
 import Vue from 'vue';
 // const i18n = require('i18n');
 
+//重写uni部分
+require('./uni');
 
 // #ifdef H5
 import wx from 'weixin-js-sdk';
 // #endif
 
 import filter from './filter.js';
-
 import {post,get,ajax} from './interceptors.js';
-import {GetQueryByString, ls} from "./tool";
 
 export const toast = (title,icon,image,duration)=>{
     uni.showToast({
@@ -40,6 +40,7 @@ export const confirm = (options)=>{
 
 	})
 }
+
 
 const tabbarRouter = ['/pages/index/index','/pages/classify/classify','/pages/groupSuccess/groupSuccess','/pages/cart/cart','/pages/person/person'];
 
@@ -95,98 +96,6 @@ export const fun = {
 // console.log(filter)
 
 
-
-
-
-//重写navigateTo
-let navigateTOCopy = uni.navigateTo;
-
-uni.navigateTo = (opt)=>{
-
-    let {url} = opt;
-    if(url.indexOf('users_id')===-1){
-
-        let users_id = null;
-
-		// #ifdef H5
-		users_id = GetQueryByString(url, 'users_id')
-		// #endif
-
-        //如果连接里面已经有了，就不需要搞事
-        if(!users_id){
-
-            users_id = ls.get('users_id');
-
-            if (users_id) {
-                console.log(url)
-
-                if(url.indexOf('?')===-1){
-                    url += '?users_id='+users_id
-                }else{
-                    url.replace(/\?/,'?users_id='+users_id+'&')
-                }
-
-                console.log('users_id is '+users_id)
-
-            }
-        }
-
-
-    }
-
-
-    let endOpt = {...opt,url}
-    console.log('endOpt is ',endOpt)
-    navigateTOCopy(endOpt)
-
-}
-
-let redirectToCopy = uni.redirectTo;
-
-uni.redirectTo = (opt)=>{
-
-    let {url} = opt;
-    if(url.indexOf('users_id')===-1){
-
-        let users_id = null;
-
-        // #ifdef H5
-        users_id = GetQueryByString(url, 'users_id')
-        // #endif
-
-        //如果连接里面已经有了，就不需要搞事
-        if(!users_id){
-
-            users_id = ls.get('users_id');
-
-            if (users_id) {
-
-                if(url.indexOf('?')===-1){
-                    url += '?users_id='+users_id
-                }else{
-                    url.replace(/\?/,'?users_id='+users_id+'&')
-                }
-
-                console.log('users_id is '+users_id)
-
-            }
-        }
-
-
-    }
-
-    console.log('url is '+url);
-    let endOpt = {...opt,url}
-    console.log('endOpt is ',endOpt)
-    redirectToCopy(endOpt)
-
-}
-
-
-
-
-
-
 export default {
   install() {
 
@@ -194,15 +103,14 @@ export default {
     Vue.prototype.$get = get;
     Vue.prototype.$http = ajax;
 
+    Vue.prototype.$toast = toast;
+    Vue.prototype.$error = error;
+
     // #ifdef H5
     Vue.prototype.$wx = wx;
     // #endif
 
-    // Vue.prototype.$loading = Loading.service;
-    // Vue.prototype.$notify = Notification;
-    // Vue.prototype.$message = Message;
-    // Vue.prototype.$alert = MessageBox.alert;
-    // Vue.prototype.$confirm = MessageBox.confirm;
+
     Vue.prototype.$fun = fun;
 
     filter.map((value) => {
@@ -210,3 +118,7 @@ export default {
     });
   },
 };
+
+
+
+
