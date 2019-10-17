@@ -26,7 +26,7 @@
 						{{second}}
 				</div>
 			</block>
-			<div class="all" @click="lingqu" v-else>立即领取</div>
+			<div class="all" @click="lingqu" :class="canSubmit?'':'disable'" v-else>立即领取</div>
 		</div>
 	</div>
 </template>
@@ -55,6 +55,10 @@
 			recieve: {
 				type: Boolean,
 				default: false
+			},
+			canSubmit: {
+				type: Boolean,
+				default: true
 			}
 		},
 		methods: {
@@ -68,7 +72,9 @@
 				this.$emit('directHandle');
 			},
 			lingqu(){
-				this.$emit('goGet')
+				if(this.canSubmit) {
+					this.$emit('goGet')
+				}
 			}
 		}
 	}
@@ -137,6 +143,10 @@
 				line-height: 98rpx;
 				background: #F43131 ;
 				color: #fff;
+			}
+			.disable {
+				background: #efefef;
+				color: #999;
 			}
 		}
 	}

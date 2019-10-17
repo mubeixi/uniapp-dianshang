@@ -140,6 +140,7 @@ view{
 	align-items: center;
 	font-size: 30rpx;
 	color: #333333;
+	background: #f8f8f8;
 	view{
 		width: 236rpx;
 		height: 72rpx;

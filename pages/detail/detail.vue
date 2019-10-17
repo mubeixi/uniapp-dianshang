@@ -98,7 +98,7 @@
 
 	</div>
     <div style="height:50px;"></div>
-	<bottom @cartHandle="addCart" @directHandle="directBuy" @goGet="lingqu" @collect="collect" :collected="isCollected" :recieve="recieve"></bottom>
+	<bottom @cartHandle="addCart" @directHandle="directBuy" @goGet="lingqu" @collect="collect" :collected="isCollected" :recieve="recieve" :canSubmit="canSubmit"></bottom>
 	<popupLayer ref="popupLayer" :direction="'top'" >
 		<div class="shareinfo" v-if="type=='share'">
 			<div class="s_top">
@@ -233,7 +233,8 @@ export default {
 			gift: 0, //赠品id
 			skuval: [], // 赠品带过来的产品属性
 			recieve: false,  //是否是赠品，赠品按钮显示 立即领取
-			gift_atr_str: '', //赠品属性
+			gift_atr_str: '', //赠品属性,
+			canSubmit: true
         }
     },
     components: {
@@ -337,18 +338,19 @@ export default {
 		judgeReceiveGift(){
 			judgeReceiveGift({gift: this.gift}).then(res=>{
 				console.log(res)
-				if(res.errorCode ==0){
+				if(res.data.errorCode ==0){
 					console.log('22')
 					let arr = res.data.skuval;
 					this.gift_atr_str = res.data.skuval;
 					this.skuval = arr.split(';');
 					
-				}else if(res.errorCode == 1) {
+				}else if(res.data.errorCode == 1) {
 					console.log('res')
 					uni.showModal({
-						title: res.msg,
+						title: res.data.msg,
 						showCancel: false
-					})
+					});
+					this.canSubmit = false;
 				}
 			}).catch(res=>{
 				console.log('catch222222222222222')
