@@ -111,7 +111,8 @@
 					<img src="/static/detail/sahre3.png" alt="">
 					<div>朋友圈</div>
 				</div>
-				<div class="flex1" @click="shareFunc('wxmini')">
+				<!--只有配置了这个参数的app，才有分享到小程序选项-->
+				<div class="flex1" @click="shareFunc('wxmini')" v-if="wxMiniOriginId">
 					<img src="/static/detail/share4.png" alt="">
 					<div>微信小程序</div>
 				</div>
@@ -197,12 +198,13 @@ import {pageMixin} from "../../common/mixin";
 import {WX_MINI_ORIGIN_ID} from "../../common/env";
 // #endif
 
-
-
 export default {
 	mixins:[pageMixin],
     data(){
         return {
+			// #ifdef APP-PLUS
+        	wxMiniOriginId:WX_MINI_ORIGIN_ID,
+			// #endif
 			JSSDK_INIT:false,//自己有分享的业务
             type: '', // 优惠券内容， 分享内容
             shareShow: false,
