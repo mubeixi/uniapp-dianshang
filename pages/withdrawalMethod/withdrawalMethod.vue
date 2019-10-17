@@ -36,7 +36,9 @@
 		},
 		onLoad(options) {
 			let that=this;
-			that.User_Method_ID=options.User_Method_ID;
+			if(that.User_Method_ID){
+				that.User_Method_ID=options.User_Method_ID;
+			}
 			uni.getSystemInfo({
 			    success: function (res) {
 			        that.height=res.screenHeight-68;
@@ -44,6 +46,9 @@
 			});
 		},
 		onShow() {
+			this.$vm.$on('fir', (data) =>{
+				this.User_Method_ID = data;
+			})
 			this.getUserWithdrawMethod();
 		},
 		methods:{
@@ -85,9 +90,14 @@
 					return;
 				}
 				this.User_Method_ID=item.User_Method_ID;
-				uni.navigateTo({
-					url:'../withdrawal/withdrawal?User_Method_ID='+this.User_Method_ID
-				})
+				// uni.navigateTo({
+				// 	url:'../withdrawal/withdrawal?User_Method_ID='+this.User_Method_ID
+				// })
+				this.$vm.$emit('fires',this.User_Method_ID)
+				//返回上一页
+				uni.navigateBack({
+				  delta: 1
+				});
 			},
 			//获取用户提现方式
 			getUserWithdrawMethod(){
