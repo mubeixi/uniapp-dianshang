@@ -24,11 +24,11 @@ export const getInitData = async ({commit,state}) => {
     console.log(res.data)
     commit('SET_INIT_DATA', res.data);
     data = res.data
-    console.log(9999999999)
+
   })
 
 
-  console.log(11111111111)
+
   return data;
 
 };

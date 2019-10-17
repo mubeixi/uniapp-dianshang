@@ -1,5 +1,8 @@
-import {fun} from "./index";
+import {error, fun} from "./index";
 import { staticUrl } from './env.js';
+import {get_Users_ID} from "./fetch";
+
+
 export const formatTime = date => {
   const year = date.getFullYear()
   const month = date.getMonth() + 1
@@ -258,7 +261,7 @@ export const uploadImages=(formData,imgs)=>{
 	let that=this;
 	for(let i=0;i<imgs.length;i++){
 		uni.uploadFile({
-				url: staticUrl+'/api/little_program/shopconfig.php', 
+				url: staticUrl+'/api/little_program/shopconfig.php',
 				filePath: imgs[i],
 				name: 'image',
 				formData: formData,
@@ -271,11 +274,11 @@ export const uploadImages=(formData,imgs)=>{
 							title:msg.msg
 						})
 						if(msg.errorCode==0){
-		
+
 						}else{
-							
+
 						}
-						
+
 					}
 				}
 		})
@@ -290,5 +293,58 @@ export const urlencode = (str)=>{
 
   return encodeURIComponent(str).replace(/!/g, '%21').replace(/'/g, '%27').replace(/\(/g, '%28').
   replace(/\)/g, '%29').replace(/\*/g, '%2A').replace(/%20/g, '+');
+
+}
+
+
+// #ifndef H5
+//构造分享事件
+/**
+ *
+ * @param path 这个里面无需传owenr_id和users_id
+ * @return {string}
+ */
+export const buildSharePath = (path)=>{
+
+    let users_ID = ls.get('users_id');
+    let userInfo = ls.get('userInfo');
+
+    let search = '';
+
+    if(path.indexOf('users_id')===-1){
+        search += (users_ID?('users_id='+users_ID):'')
+    }
+
+    if(path.indexOf('owner_id')===-1){
+        search += userInfo && userInfo.User_ID?'owner_id='+userInfo.User_ID:''
+    }
+
+
+    let ret = path + (search?'?':'')+search
+
+    if(ret.indexOf('users_id')===-1){
+        error('组建分享参数失败');
+        throw "必须有users_id"
+    }
+
+    return ret
+}
+
+// #endif
+
+
+/**
+ *获取商品缩略图
+ * @param img
+ * @param size n3最小
+ */
+export const getProductThumb = (img,size) => {
+    if(!size)size ='n3';
+
+    let tempArr = img.split('/');
+    let name = tempArr.pop();
+    name = size+'/'+name;
+
+    return [...tempArr,name].join('/')
 
 }

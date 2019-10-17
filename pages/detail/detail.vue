@@ -102,11 +102,23 @@
 	<popupLayer ref="popupLayer" :direction="'top'" >
 		<div class="shareinfo" v-if="type=='share'">
 			<div class="s_top">
-				<div>
+				<!-- #ifdef APP-PLUS -->
+				<div class="flex1" @click="shareFunc('wx')">
 					<img src="/static/detail/share1.png" alt="">
 					<div>发送好友</div>
 				</div>
-				<div>
+				<div class="flex1" @click="shareFunc('wxtimeline')">
+					<img src="/static/detail/sahre3.png" alt="">
+					<div>朋友圈</div>
+				</div>
+				<!--只有配置了这个参数的app，才有分享到小程序选项-->
+				<div class="flex1" @click="shareFunc('wxmini')" v-if="wxMiniOriginId">
+					<img src="/static/detail/share4.png" alt="">
+					<div>微信小程序</div>
+				</div>
+				<!-- #endif -->
+
+				<div class="flex1" @click="shareFunc('pic')">
 					<img src="/static/detail/share2.png" alt="">
 					<div>分享海报</div>
 				</div>
@@ -158,7 +170,7 @@
 						<div :class="skuval[0]==index?'skuCheck':''"  v-for="(mbx,index) of item" :key="index">{{mbx}}</div>
 					</div> -->
 				</div>
-			</div>	
+			</div>
 			<div class="numBer" v-if="gift == 0">
 				<div class="numBers">
 					数量
@@ -191,15 +203,23 @@
 import bottom from '../bottom/bottom'
 import popupLayer from '../../components/popup-layer/popup-layer.vue'
 import {getProductDetail,getCommit,updateCart,addCollection,getCoupon,getUserCoupon,checkProdCollected,cancelCollection,judgeReceiveGift} from '../../common/fetch.js';
-import {goBack,numberSort}  from '../../common/tool.js'
+import {goBack,numberSort,getProductThumb}  from '../../common/tool.js'
+import {buildSharePath,ls} from "../../common/tool";
+
+import { mapGetters, mapActions, Store,mapState } from "vuex";
 
 import uParse from '@/components/gaoyia-parse/parse.vue'
 import {pageMixin} from "../../common/mixin";
+
 
 export default {
 	mixins:[pageMixin],
     data(){
         return {
+			// #ifdef APP-PLUS
+        	wxMiniOriginId:'',
+			// #endif
+			JSSDK_INIT:false,//自己有分享的业务
             type: '', // 优惠券内容， 分享内容
             shareShow: false,
             ticksShow: false,
@@ -242,13 +262,30 @@ export default {
 		popupLayer,
 		uParse
     },
-	onLoad: function (option) {	  
+	// #ifdef MP-WEIXIN || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO
+	//自定义小程序分享
+	onShareAppMessage(){
+
+		let path = '/pages/detail/detail';
+		let shareObj = {
+			title: this.product.Products_Name,
+			desc:this.product.Products_BriefDescription,
+			imageUrl:this.product.ImgPath,
+			path: buildSharePath(path)
+		};
+		console.log(shareObj)
+		return shareObj
+
+	},
+	// #endif
+	onLoad: function (option) {
+
 		this.Products_ID = option.Products_ID;
 		this.postData.prod_id = option.Products_ID;
 		this.checkProdCollected();
 		this.getDetail(this.Products_ID);
 		this.getCommit(this.Products_ID);
-		this.getCoupon();//获取可领取的优惠券 
+		this.getCoupon();//获取可领取的优惠券
 		// 是否是赠品，赠品不能选择属性
 		if(option.gift) {
 			this.gift = option.gift;
@@ -257,10 +294,12 @@ export default {
 			this.judgeReceiveGift();
 			this.recieve = true;
 		}
-		
 	 },
 	onShow(){
 
+	},
+	computed:{
+	...mapState(['initData'])
 	},
 	filters: {
 				/**
@@ -300,6 +339,81 @@ export default {
 				}
 			},
     methods: {
+		shareFunc(channel) {
+
+			let _self = this
+			let path = 'pages/detail/detail';
+			let front_url = this.initData.front_url;
+
+			let shareObj = {
+				title: this.product.Products_Name,
+				desc: this.product.Products_BriefDescription,
+				imageUrl: getProductThumb(this.product.ImgPath),
+				path: buildSharePath(path)
+			};
+
+			console.log(shareObj)
+
+			switch (channel) {
+				case 'wx':
+					uni.share({
+						provider: "weixin",
+						scene: "WXSceneSession",
+						type: 0,
+						href: front_url + shareObj.path,
+						title: shareObj.title,
+						summary: shareObj.desc,
+						imageUrl: shareObj.imageUrl,
+						success: function (res) {
+							console.log("success:" + JSON.stringify(res));
+						},
+						fail: function (err) {
+							console.log("fail:" + JSON.stringify(err));
+						}
+					});
+					break;
+				case 'wxtimeline':
+					uni.share({
+						provider: "weixin",
+						scene: "WXSenceTimeline",
+						type: 0,
+						href: front_url + shareObj.path,
+						title: shareObj.title,
+						summary: shareObj.desc,
+						imageUrl: shareObj.imageUrl,
+						success: function (res) {
+							console.log("success:" + JSON.stringify(res));
+						},
+						fail: function (err) {
+							console.log("fail:" + JSON.stringify(err));
+						}
+					});
+					break;
+				case 'wxmini':
+
+					uni.share({
+						provider: 'weixin',
+						scene: "WXSceneSession",
+						type: 5,
+						imageUrl: shareObj.imageUrl,
+						title: shareObj.title,
+						miniProgram: {
+							id: _self.wxMiniOriginId,
+							path: '/' + shareObj.path,
+							type: 0,
+							webUrl: 'http://uniapp.dcloud.io'
+						},
+						success: ret => {
+							console.log(JSON.stringify(ret));
+						}
+					});
+					break;
+				case 'pic':
+					this.$toast('comming soon')
+
+					break;
+			}
+		},
 		// 立即领取
 		lingqu(){
 			this.postData.cart_key = 'DirectBuy';
@@ -332,7 +446,7 @@ export default {
 					})
 				}
 			})
-			
+
 		},
 		// 赠品
 		judgeReceiveGift(){
@@ -343,7 +457,7 @@ export default {
 					let arr = res.data.skuval;
 					this.gift_atr_str = res.data.skuval;
 					this.skuval = arr.split(';');
-					
+
 				}else if(res.data.errorCode == 1) {
 					console.log('res')
 					uni.showModal({
@@ -627,7 +741,7 @@ export default {
 
             //let _self = this;
 			// #ifdef H5
-            this.WX_JSSDK_INIT().then((wxEnv)=>{
+            this.WX_JSSDK_INIT(this).then((wxEnv)=>{
 
                 this.$wx.onMenuShareTimeline({
                     title: '#网中网#'+product.Products_Name, // 分享标题
@@ -643,7 +757,7 @@ export default {
                     title: '#网中网#'+product.Products_Name, // 分享标题
                     link: location.href, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
                     imgUrl: product.ImgPath, // 分享图标
-                    desc: product.goods_desc||'好物推荐',
+                    desc: product.Products_BriefDescription||'好物推荐',
                     type: 'link', // 分享类型,music、video或link，不填默认为link
                     // dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
                     success: function() {
@@ -698,9 +812,10 @@ export default {
         },
         cancel(){
             this.$refs.popupLayer.close();
-        }
+        },
+
     },
-	created(){
+	async created(){
 
 
 
@@ -710,6 +825,25 @@ export default {
 
 		//商品信息
 		this.getDetail(this.Products_ID);
+
+		let WX_MINI_ORIGIN_ID = ls.get('WX_MINI_ORIGIN_ID');
+		if(!WX_MINI_ORIGIN_ID){
+
+			let initData = await this.getInitData();
+
+			let login_methods = initData.login_methods
+			for(var i in login_methods){
+				if(i!='component_appid' && login_methods[i].type === 'wx_lp' && login_methods[i].authorizer_user_name){
+					WX_MINI_ORIGIN_ID = login_methods[i].authorizer_user_name
+					break;
+				}
+			}
+
+		}
+
+		this.wxMiniOriginId = WX_MINI_ORIGIN_ID;
+		console.log('wxMiniOriginId is '+this.wxMiniOriginId)
+
 
 	}
 }
@@ -844,7 +978,7 @@ export default {
         margin: 0 auto 10rpx;
     }
     .s_top>div:nth-child(1) {
-        margin-right: 120rpx;
+        /*margin-right: 120rpx;*/
     }
     .s_bottom {
         position: relative;
@@ -855,7 +989,7 @@ export default {
         font-size: 26rpx;
         text-align: center;
         line-height: 60rpx;
-        margin-top: 50rpx;
+        margin-top: 16rpx;
     }
     /* 产品描述部分 start */
     .section1 {
