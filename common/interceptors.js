@@ -49,7 +49,7 @@ const hookErrorCode = [0,88001];
 		if(hookErrorCode.indexOf(res.data.errorCode) != -1){
 			resolve(res)
 		}else{
-		  error(res.data.msg)
+		  console.log(res.data.msg)
           reject(res)
 		}
 

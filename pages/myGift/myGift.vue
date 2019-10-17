@@ -19,7 +19,7 @@
 			</view>
 			<view class="bottoms">
 				<view class="tupian">
-					<image src="/static/fenxiao/top.png" ></image>
+					<image :src="item.img_url" ></image>
 				</view>
 				<view class="neirong">
 					<view class="titles">
@@ -64,6 +64,10 @@
 			});
 		},
 		onShow() {
+			// 重置
+			this.data = [];
+			this.page = 1;
+			this.checked = 0;
 			this.getGiftList();
 		},
 		onReachBottom(){

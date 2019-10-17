@@ -64,7 +64,7 @@
                 </div>
             </div>
         </div>
-        <div class="other">
+        <div class="other" v-if="orderInfo.is_use_money && orderInfo.is_use_money == 1">
             <div class="bd">
                 <div class="o_title">
                     <span>是否使用余额</span>

@@ -82,7 +82,8 @@ export default {
 			page:1,
 			totalCount:0,
 			orderNum:'',//订单状态角标数
-			isQing:false
+			isQing:false,
+			Order_Type: 'shop,gift' , //请求的订单类型
         }
     },
 	onShow(){
@@ -183,7 +184,8 @@ export default {
 			this.isQing=true;
 			let data={
 				page:this.page,
-				pageSize:this.pageSize
+				pageSize:this.pageSize,
+				Order_Type: this.Order_Type
 			};
 			if(this.index>0&&this.index<4){
 				data={
