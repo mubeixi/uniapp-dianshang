@@ -188,22 +188,20 @@ import bottom from '../bottom/bottom'
 import popupLayer from '../../components/popup-layer/popup-layer.vue'
 import {getProductDetail,getCommit,updateCart,addCollection,getCoupon,getUserCoupon,checkProdCollected,cancelCollection,judgeReceiveGift} from '../../common/fetch.js';
 import {goBack,numberSort,getProductThumb}  from '../../common/tool.js'
-import {buildSharePath} from "../../common/tool";
+import {buildSharePath,ls} from "../../common/tool";
+
+import { mapGetters, mapActions, Store,mapState } from "vuex";
 
 import uParse from '@/components/gaoyia-parse/parse.vue'
 import {pageMixin} from "../../common/mixin";
 
-// #ifdef APP-PLUS
-//这个在分享小程序管用
-import {WX_MINI_ORIGIN_ID} from "../../common/env";
-// #endif
 
 export default {
 	mixins:[pageMixin],
     data(){
         return {
 			// #ifdef APP-PLUS
-        	wxMiniOriginId:WX_MINI_ORIGIN_ID,
+        	wxMiniOriginId:'',
 			// #endif
 			JSSDK_INIT:false,//自己有分享的业务
             type: '', // 优惠券内容， 分享内容
@@ -278,6 +276,9 @@ export default {
 	onShow(){
 
 	},
+	computed:{
+	...mapState(['initData'])
+	},
 	filters: {
 				/**
 				 * 处理富文本里的图片宽度自适应
@@ -318,7 +319,10 @@ export default {
     methods: {
 		shareFunc(channel){
 
-			let path = '/pages/detail/detail';
+			let _self = this
+			let path = 'pages/detail/detail';
+			let front_url = this.initData.front_url;
+
 			let shareObj = {
 				title: this.product.Products_Name,
 				desc:this.product.Products_BriefDescription,
@@ -334,7 +338,7 @@ export default {
 						provider: "weixin",
 						scene: "WXSceneSession",
 						type: 0,
-						href: shareObj.path,
+						href: front_url+shareObj.path,
 						title: shareObj.title,
 						summary: shareObj.desc,
 						imageUrl: shareObj.imageUrl,
@@ -351,7 +355,7 @@ export default {
 						provider: "weixin",
 						scene: "WXSenceTimeline",
 						type: 0,
-						href: shareObj.path,
+						href: front_url+shareObj.path,
 						title: shareObj.title,
 						summary: shareObj.desc,
 						imageUrl: shareObj.imageUrl,
@@ -372,8 +376,8 @@ export default {
 						imageUrl: shareObj.imageUrl,
 						title: shareObj.title,
 						miniProgram: {
-							id: WX_MINI_ORIGIN_ID,
-							path: shareObj.path,
+							id: _self.wxMiniOriginId,
+							path: '/'+shareObj.path,
 							type: 0,
 							webUrl: 'http://uniapp.dcloud.io'
 						},
@@ -729,9 +733,10 @@ export default {
         },
         cancel(){
             this.$refs.popupLayer.close();
-        }
+        },
+
     },
-	created(){
+	async created(){
 
 
 
@@ -741,6 +746,25 @@ export default {
 
 		//商品信息
 		this.getDetail(this.Products_ID);
+
+		let WX_MINI_ORIGIN_ID = ls.get('WX_MINI_ORIGIN_ID');
+		if(!WX_MINI_ORIGIN_ID){
+
+			let initData = await this.getInitData();
+
+			let login_methods = initData.login_methods
+			for(var i in login_methods){
+				if(i!='component_appid' && login_methods[i].type === 'wx_lp' && login_methods[i].authorizer_user_name){
+					WX_MINI_ORIGIN_ID = login_methods[i].authorizer_user_name
+					break;
+				}
+			}
+
+		}
+
+		this.wxMiniOriginId = WX_MINI_ORIGIN_ID;
+		console.log('wxMiniOriginId is '+this.wxMiniOriginId)
+
 
 	}
 }
