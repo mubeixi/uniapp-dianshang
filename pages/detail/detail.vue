@@ -170,7 +170,7 @@
 						<div :class="skuval[0]==index?'skuCheck':''"  v-for="(mbx,index) of item" :key="index">{{mbx}}</div>
 					</div> -->
 				</div>
-			</div>	
+			</div>
 			<div class="numBer" v-if="gift == 0">
 				<div class="numBers">
 					数量
@@ -285,7 +285,7 @@ export default {
 		this.checkProdCollected();
 		this.getDetail(this.Products_ID);
 		this.getCommit(this.Products_ID);
-		this.getCoupon();//获取可领取的优惠券 
+		this.getCoupon();//获取可领取的优惠券
 		// 是否是赠品，赠品不能选择属性
 		if(option.gift) {
 			this.gift = option.gift;
@@ -339,8 +339,7 @@ export default {
 				}
 			},
     methods: {
-<<<<<<< HEAD
-		shareFunc(channel){
+		shareFunc(channel) {
 
 			let _self = this
 			let path = 'pages/detail/detail';
@@ -348,20 +347,20 @@ export default {
 
 			let shareObj = {
 				title: this.product.Products_Name,
-				desc:this.product.Products_BriefDescription,
-				imageUrl:getProductThumb(this.product.ImgPath),
+				desc: this.product.Products_BriefDescription,
+				imageUrl: getProductThumb(this.product.ImgPath),
 				path: buildSharePath(path)
 			};
 
 			console.log(shareObj)
 
-			switch(channel){
+			switch (channel) {
 				case 'wx':
 					uni.share({
 						provider: "weixin",
 						scene: "WXSceneSession",
 						type: 0,
-						href: front_url+shareObj.path,
+						href: front_url + shareObj.path,
 						title: shareObj.title,
 						summary: shareObj.desc,
 						imageUrl: shareObj.imageUrl,
@@ -372,13 +371,13 @@ export default {
 							console.log("fail:" + JSON.stringify(err));
 						}
 					});
-				break;
+					break;
 				case 'wxtimeline':
 					uni.share({
 						provider: "weixin",
 						scene: "WXSenceTimeline",
 						type: 0,
-						href: front_url+shareObj.path,
+						href: front_url + shareObj.path,
 						title: shareObj.title,
 						summary: shareObj.desc,
 						imageUrl: shareObj.imageUrl,
@@ -389,7 +388,7 @@ export default {
 							console.log("fail:" + JSON.stringify(err));
 						}
 					});
-				break;
+					break;
 				case 'wxmini':
 
 					uni.share({
@@ -400,7 +399,7 @@ export default {
 						title: shareObj.title,
 						miniProgram: {
 							id: _self.wxMiniOriginId,
-							path: '/'+shareObj.path,
+							path: '/' + shareObj.path,
 							type: 0,
 							webUrl: 'http://uniapp.dcloud.io'
 						},
@@ -408,14 +407,13 @@ export default {
 							console.log(JSON.stringify(ret));
 						}
 					});
-				break;
+					break;
 				case 'pic':
 					this.$toast('comming soon')
 
-				break;
+					break;
 			}
-
-=======
+		},
 		// 立即领取
 		lingqu(){
 			this.postData.cart_key = 'DirectBuy';
@@ -448,23 +446,18 @@ export default {
 					})
 				}
 			})
-			
->>>>>>> upstream/master
+
 		},
 		// 赠品
 		judgeReceiveGift(){
 			judgeReceiveGift({gift: this.gift}).then(res=>{
 				console.log(res)
-<<<<<<< HEAD
-				if(res.errorCode ==0){
-
-=======
 				if(res.data.errorCode ==0){
 					console.log('22')
 					let arr = res.data.skuval;
 					this.gift_atr_str = res.data.skuval;
 					this.skuval = arr.split(';');
-					
+
 				}else if(res.data.errorCode == 1) {
 					console.log('res')
 					uni.showModal({
@@ -472,7 +465,6 @@ export default {
 						showCancel: false
 					});
 					this.canSubmit = false;
->>>>>>> upstream/master
 				}
 			}).catch(res=>{
 				console.log('catch222222222222222')
