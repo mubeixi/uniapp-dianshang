@@ -68,6 +68,11 @@
       },
       itemw() {
         let full = this.fullWidth;
+
+        if(this.goods.config.showmode == 'border-bgwhite'){
+          full -= 4;//4个边框
+        }
+
         if (this.goods.config.style === 2) {
           //内边不是乘以3 而是1
           return (full - this.goods.style.wrapmargin * 2 - this.goods.style.margin * 1) / 2 + 'px';
