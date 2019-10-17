@@ -5,7 +5,7 @@
 		<view class="status_bar" style="position: fixed;background-color: white;top:0;left:0;z-index: 99;"></view>
 		<!-- #endif -->
 		<view class="home-wrap">
-			
+
 			<section :ref="item" v-for="(item, index) in templateList[tagIndex]" :key="index" class="section"  :data-name="item" >
 				<base-component v-if="item.indexOf('base') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
 				<swiper-component v-if="item.indexOf('swiper') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
@@ -24,7 +24,7 @@
 			</section>
 		</view>
 	</view>
-	
+
 </template>
 
 <script>
@@ -71,6 +71,8 @@
 
 					resolve(JSON.parse(res.data.Home_Json))
 
+				}).catch(e=>{
+					console.log(e)
 				})
 
 			})
