@@ -14,7 +14,7 @@ export const ajax = (url,method,data,options)=>{
   })
 
   //if(!data._ajax)data._ajax=2;
-  //if (!data.users_id && users_id)data.users_id=users_id;
+  //if (!data.owner_id && owner_id)data.owner_id=owner_id;
 
   let token
 
@@ -49,24 +49,12 @@ const hookErrorCode = [0,88001];
 		if(hookErrorCode.indexOf(res.data.errorCode) != -1){
 			resolve(res)
 		}else{
-			// #ifdef APP-PLUS
-			uni.showModal({
-				title:"app提示",
-				content:JSON.stringify(res)
-			})
-			// #endif
-		  error(res.data.msg)
+		  //error(res.data.msg)
           reject(res)
 		}
 
       },
       fail:(e)=>{
-		  // #ifdef APP-PLUS
-		  // uni.showModal({
-		  // 	title:"app提示",
-		  // 	content:JSON.stringify(e)
-		  // })
-		  // #endif
 
         reject(e)
       },
