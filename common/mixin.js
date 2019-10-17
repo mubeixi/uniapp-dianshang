@@ -55,6 +55,7 @@ const WX_JSSDK_INIT = (vm) => new Promise((resolve, reject) => {
 
 			wx.ready(function(){
 
+				vm.JSSDK_READY = true;
 				console.log('wx ready')
 				//将微信这个变量传进去，所以在页面就不需要传了
 				resolve(wx);
@@ -147,6 +148,8 @@ export const pageMixin = {
 		// #endif
 
 		// #ifdef MP-WEIXIN || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO
+		
+		
 
 		/*users_id*/
 		users_id = option.users_id
@@ -157,8 +160,19 @@ export const pageMixin = {
 		}else{
 			users_id = ls.get('users_id');
 		}
+		
+		
+		// #ifdef MP-WEIXIN
+		//如果没有的话，就从小程序的远程配置里面拿吧
+		if(!users_id){
+			let extConfig = wx.getExtConfigSync ? wx.getExtConfigSync() : {};
+			console.log('extConfig info is',extConfig);
+			users_id = extConfig.users_id;
+		}
+		// #endif
 
 		if (!users_id){
+			
 			uni.showModal({
 				title: '提示',
 				content: '缺少商户id',
@@ -199,9 +213,11 @@ export const pageMixin = {
 	async created(){
 
 		// #ifdef H5
+		console.log('JSSDK_INITJSSDK_INITJSSDK_INITJSSDK_INITJSSDK_INIT',this.JSSDK_INIT)
 		let initData = await this.getInitData()
 		//页面默认全都是分享出去是首页的
-		if(isWeiXin() && this.JSSDK_INIT){
+		if(this.JSSDK_INIT){
+			console.log(44444444444444444)
 			this.WX_JSSDK_INIT(this).then((env)=>{
 
 				this.$wx.onMenuShareTimeline({
@@ -237,22 +253,7 @@ export const pageMixin = {
 	},
     mounted() {
 
-		// #ifndef H5
-		uni.getProvider({
-		    service: 'share',
-		    success: function (res) {
-		        console.log(res.provider)
-		        if (~res.provider.indexOf('qq')) {
-		            uni.login({
-		                provider: 'qq',
-		                success: function (loginRes) {
-		                    console.log(JSON.stringify(loginRes));
-		                }
-		            });
-		        }
-		    }
-		});
-		// #endif
+
 
     },
     methods:{

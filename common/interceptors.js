@@ -55,7 +55,6 @@ const hookErrorCode = [0,88001];
 
       },
       fail:(e)=>{
-
         reject(e)
       },
       complete:(res)=>{

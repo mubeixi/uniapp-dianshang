@@ -68,6 +68,11 @@
       },
       itemw() {
         let full = this.fullWidth;
+
+        if(this.goods.config.showmode == 'border-bgwhite'){
+          full -= 4;//4个边框
+        }
+
         if (this.goods.config.style === 2) {
           //内边不是乘以3 而是1
           return (full - this.goods.style.wrapmargin * 2 - this.goods.style.margin * 1) / 2 + 'px';
@@ -103,7 +108,7 @@
 
           //if(!cate_id)cate_id = []
 
-          console.log(list,cate_id,limit)
+          // console.log(list,cate_id,limit)
           //如果值还没有设置的话
           if(list.length===0 && cate_id.length===0){
             return;
@@ -158,18 +163,18 @@
             right = 0;
             break;
           case 2:
-            console.log(idx)
+            // console.log(idx)
             top = 0;
             left = idx % 2 == 0 ? 0 : conf / 2;
             right = idx % 2 == 0 ? conf / 2 : 0;
             break;
         }
-        console.log({
-          marginTop: top + 'px',
-          marginBottom: bottom + 'px',
-          marginLeft: left + 'px',
-          marginRight: right + 'px'
-        })
+        // console.log({
+        //   marginTop: top + 'px',
+        //   marginBottom: bottom + 'px',
+        //   marginLeft: left + 'px',
+        //   marginRight: right + 'px'
+        // })
         return {
           marginTop: top + 'px',
           marginBottom: bottom + 'px',

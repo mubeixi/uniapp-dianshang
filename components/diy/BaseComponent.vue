@@ -1,22 +1,38 @@
 <template>
   <view class="base wrap">
     <view v-if="base.config.style==2" class="cover style2" :style="{backgroundImage:'url('+domainFunc(base.config.cover)+')'}">
-      <view class="logotitle">
-        <image class="logo" :src="base.config.logo|domain"/>
-        <view class="title font16">{{base.config.title}}</view>
-      </view>
+      <div class="logotitle">
+        <div class="flex">
+          <img class="logo" style="margin-top: 8px" :src="base.config.logo|domain"/>
+          <div class="title">
+            <div style="line-height: 32px">{{base.config.title}}</div>
+            <div class="flex" style="line-height: initial">
+              <div class="total font12">全部商品{{base.config.total}} </div>
+              <div class="new font12" style="margin-left: 4px;"> 上新{{base.config.new}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
       <view v-if="base.config.style===2" class="round">
         <view class="mask" :style="{height:3.5933*W+'px',width:3.5933*W+'px',backgroundSize:W+'px',backgroundImage:'url('+domainFunc(base.config.cover)+')'}"></view>
       </view>
     </view>
     <view v-else class="cover style1" :style="{backgroundImage:'url('+domainFunc(base.config.cover)+')'}">
-      <view class="logotitle">
-        <image class="logo" :src="base.config.logo|domain"/>
-        <view class="title font16">{{base.config.title}}</view>
-      </view>
-      <view v-if="base.config.style===2" class="round">
-        <view class="mask" :style="{height:3.5933*W+'px',width:3.5933*W+'px',backgroundSize:W+'px',backgroundImage:'url('+domainFunc(base.config.cover)+')'}"></view>
-      </view>
+      <div class="logotitle">
+        <div class="flex">
+          <img class="logo" style="margin-top: 8px" :src="base.config.logo|domain"/>
+          <div class="title">
+            <div style="line-height: 32px">{{base.config.title}}</div>
+            <div class="flex" style="line-height: initial">
+              <div class="total font12">全部商品{{base.config.total}} </div>
+              <div class="new font12" style="margin-left: 4px;"> 上新{{base.config.new}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+<!--      <view v-if="base.config.style===2" class="round">-->
+<!--        <view class="mask" :style="{height:3.5933*W+'px',width:3.5933*W+'px',backgroundSize:W+'px',backgroundImage:'url('+domainFunc(base.config.cover)+')'}"></view>-->
+<!--      </view>-->
     </view>
 
   </view>
@@ -99,7 +115,7 @@
       position: absolute;
       left: 30px;
       bottom: 20px;
-      display: flex;
+      /*display: flex;*/
     }
 
     .logo {
@@ -109,7 +125,7 @@
     }
 
     .title {
-      line-height: 40px;
+      /*line-height: 40px;*/
       margin-left: 10px;
     }
 
