@@ -98,7 +98,7 @@
 
 	</div>
     <div style="height:50px;"></div>
-	<bottom @cartHandle="addCart" @directHandle="directBuy" @collect="collect" :collected="isCollected"></bottom>
+	<bottom @cartHandle="addCart" @directHandle="directBuy" @goGet="lingqu" @collect="collect" :collected="isCollected" :recieve="recieve" :canSubmit="canSubmit"></bottom>
 	<popupLayer ref="popupLayer" :direction="'top'" >
 		<div class="shareinfo" v-if="type=='share'">
 			<div class="s_top">
@@ -156,16 +156,22 @@
 				</div>
 			</div>
 			<div class="cartCenter">
-				<div class="cartAttr" v-for="(item,i) of product.skujosn" :key="i">
+				<div class="cartAttr" v-for="(item,i) of product.skujosn_new" :key="i">
 					<div class="sku">
-						{{i}}
+						{{item.sku}}
 					</div>
-					<div class="skuValue">
-						<div :class="check_attr[i]==index?'skuCheck':''" @click="selectAttr(index,i)"  v-for="(mbx,index) of item" :key="index">{{mbx}}</div>
+					<div class="skuValue" v-if="gift == 0">
+						<div :class="check_attr[item.sku]==index?'skuCheck':''" @click="selectAttr(index,item.sku)"  v-for="(mbx,index) of item.val" :key="index">{{mbx}}</div>
 					</div>
+					<div class="skuValue" v-else>
+						<div :class="skuval[i]==index?'skuCheck':'unablechoose'"  v-for="(mbx,index) of item.val" :key="index">{{mbx}}</div>
+					</div>
+					<!-- <div class="skuValue" v-else>
+						<div :class="skuval[0]==index?'skuCheck':''"  v-for="(mbx,index) of item" :key="index">{{mbx}}</div>
+					</div> -->
 				</div>
-			</div>
-			<div class="numBer">
+			</div>	
+			<div class="numBer" v-if="gift == 0">
 				<div class="numBers">
 					数量
 				</div>
@@ -174,6 +180,16 @@
 						<!--v-enter-number-->
 						<input  type="number" v-model="postData.qty"  disabled>
 						<div class="clicks" @click="addNum">+</div>
+				</div>
+			</div>
+			<div class="numBer" v-else>
+				<div class="numBers">
+					数量
+				</div>
+				<div class="inputNumber">
+						<div class="clicks">-</div>
+						<input  type="number" value="1"  disabled>
+						<div class="clicks">+</div>
 				</div>
 			</div>
 		</div>
@@ -235,6 +251,10 @@ export default {
 			totalCount:0,//优惠券个数
 			isCollected: false, // 该产品是否已收藏
 			gift: 0, //赠品id
+			skuval: [], // 赠品带过来的产品属性
+			recieve: false,  //是否是赠品，赠品按钮显示 立即领取
+			gift_atr_str: '', //赠品属性,
+			canSubmit: true
         }
     },
     components: {
@@ -260,18 +280,20 @@ export default {
 	// #endif
 	onLoad: function (option) {
 
-		  // 赠品
-		  if(option.gift) {
-			  this.gift = option.gift;
-			  this.judgeReceiveGift();
-		  }else {
-			  this.Products_ID = option.Products_ID;
-			  this.checkProdCollected();
-			  this.getDetail(this.Products_ID);
-			  this.getCommit(this.Products_ID);
-			  this.getCoupon();//获取可领取的优惠券
-
-		  }
+		this.Products_ID = option.Products_ID;
+		this.postData.prod_id = option.Products_ID;
+		this.checkProdCollected();
+		this.getDetail(this.Products_ID);
+		this.getCommit(this.Products_ID);
+		this.getCoupon();//获取可领取的优惠券 
+		// 是否是赠品，赠品不能选择属性
+		if(option.gift) {
+			this.gift = option.gift;
+			this.postData.record_id = option.gift;
+			this.postData.active = 'gift';
+			this.judgeReceiveGift();
+			this.recieve = true;
+		}
 	 },
 	onShow(){
 
@@ -317,6 +339,7 @@ export default {
 				}
 			},
     methods: {
+<<<<<<< HEAD
 		shareFunc(channel){
 
 			let _self = this
@@ -392,22 +415,75 @@ export default {
 				break;
 			}
 
+=======
+		// 立即领取
+		lingqu(){
+			this.postData.cart_key = 'DirectBuy';
+			// 领取礼物
+			this.postData.atrid_str = this.gift_atr_str;
+			var arr = [];
+			if(this.product.skujosn){
+				for(var i in this.product.skujosn){
+					for(var j in this.product.skujosn[i]){
+						if(this.skuval.indexOf(this.product.skujosn[i])){
+							arr[i] = this.product.skujosn[i][j];
+						}
+					}
+				}
+			}
+			var str = '';
+			for(var i in arr){
+				str += i + ':' + arr[i] + ';'
+			}
+			this.postData.atr_str = str;
+			updateCart(this.postData).then(res=>{
+				if(res.errorCode == 0) {
+					uni.navigateTo({
+						url: '../check/check?cart_key=DirectBuy'
+					})
+				}else {
+					uni.showToast({
+						title: res.msg,
+						icon: 'none'
+					})
+				}
+			})
+			
+>>>>>>> upstream/master
 		},
 		// 赠品
 		judgeReceiveGift(){
 			judgeReceiveGift({gift: this.gift}).then(res=>{
 				console.log(res)
+<<<<<<< HEAD
 				if(res.errorCode ==0){
 
+=======
+				if(res.data.errorCode ==0){
+					console.log('22')
+					let arr = res.data.skuval;
+					this.gift_atr_str = res.data.skuval;
+					this.skuval = arr.split(';');
+					
+				}else if(res.data.errorCode == 1) {
+					console.log('res')
+					uni.showModal({
+						title: res.data.msg,
+						showCancel: false
+					});
+					this.canSubmit = false;
+>>>>>>> upstream/master
 				}
+			}).catch(res=>{
+				console.log('catch222222222222222')
 			})
 		},
 		//评价预览
 		yulanImg(i,j){
 			uni.previewImage({
-			            urls: this.commit[i].ImgPath,
-						indicator:'number',
-						current:j
+			        urls: this.commit[i].ImgPath,
+					indicator:'number',
+					current:j
 			});
 		},
 		//轮播图图片预览
@@ -634,7 +710,9 @@ export default {
 				pageSize:2
 			}
 			getCommit(data).then(res=>{
-				this.commit=res.data;
+				if(res.errorCode == 0){
+					this.commit=res.data;
+				}
 			}).catch(e=>{
 				console.log(e)
 			})
@@ -652,8 +730,17 @@ export default {
 				this.product = res.data;
 				this.postData.count = res.data.Products_Count;
 				if(res.data.skujosn) {
-					this.product.skujosn = JSON.parse(res.data.skujosn);
-					this.product.skuvaljosn = JSON.parse(res.data.skuvaljosn);
+					let skujosn = res.data.skujosn;
+					let skujosn_new = [];
+					for (let i in res.data.skujosn) {
+						skujosn_new.push({
+							sku: i,
+							val: skujosn[i]
+						});
+					}
+					this.product.skujosn_new = skujosn_new;
+					this.product.skuvaljosn = res.data.skuvaljosn;
+					console.log(this.product.skujosn);
 				}
 			}).catch(e=>{
 				console.log(e)
@@ -1157,6 +1244,9 @@ export default {
 						padding-right: 20rpx;
 						margin-right: 20rpx;
 						border: 1px solid #ccc;
+					}
+					.unablechoose {
+						background: #ddd;
 					}
 				}
 			}

@@ -18,21 +18,21 @@
 			</div>
 		</div>
 		<div class="rightss">
-			<div class="dan bTitle" @click="addCart">
-					{{first}}
-			</div>
-			<div class="tuan bTitle" @click="directBuy">
-					{{second}}
-			</div>
+			<block v-if="!recieve">
+				<div class="dan bTitle" @click="addCart">
+						{{first}}
+				</div>
+				<div class="tuan bTitle" @click="directBuy">
+						{{second}}
+				</div>
+			</block>
+			<div class="all" @click="lingqu" :class="canSubmit?'':'disable'" v-else>立即领取</div>
 		</div>
 	</div>
 </template>
 
 <script>
-	// import {pageMixin} from "../../common/mixin";
-
 	export default {
-		// mixins:[pageMixin],
 		data() {
 			return {
 
@@ -50,6 +50,15 @@
 			collected: {
 				type: Boolean,
 				default: false
+			},
+			// 详情页 没有购物车和立即购买按钮，只有 立即领取
+			recieve: {
+				type: Boolean,
+				default: false
+			},
+			canSubmit: {
+				type: Boolean,
+				default: true
 			}
 		},
 		methods: {
@@ -61,6 +70,11 @@
 			},
 			directBuy(){
 				this.$emit('directHandle');
+			},
+			lingqu(){
+				if(this.canSubmit) {
+					this.$emit('goGet')
+				}
 			}
 		}
 	}
@@ -121,6 +135,18 @@
 				.danRight{
 					font-size: 26rpx;
 				}
+			}
+			.all {
+				width: 100%;
+				height: 100%;
+				text-align: center;
+				line-height: 98rpx;
+				background: #F43131 ;
+				color: #fff;
+			}
+			.disable {
+				background: #efefef;
+				color: #999;
 			}
 		}
 	}

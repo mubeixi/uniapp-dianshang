@@ -39,7 +39,7 @@
                 </div>
             </div>
         </div>
-        <div class="other">
+        <div class="other" v-if="couponlist.length > 0">
             <div class="bd">
                 <div class="o_title" @click="changeCoupon">
                     <span>优惠券选择</span>
@@ -66,7 +66,7 @@
                     <switch :checked="userMoneyChecked" color="#04B600" @change="userMoneyChange" />
                 </div>
 				<div class="o_de">您当前共有余额: <text>{{userInfo.User_Money}}</text></div>
-                <input v-if="userMoneyChecked" v-model.number="postData.use_money" class="o_desc" placeholder="请输入金额" type="number" @input="confirm_user_money">
+                <input v-if="userMoneyChecked" v-model.number="postData.use_money" class="o_desc" placeholder="请输入金额" type="number" @blur="confirm_user_money">
             </div>
         </div>
         <div class="other">
@@ -266,6 +266,13 @@ export default {
 				createOrder(this.postData).then(res=>{
 					if(res.errorCode == 0) {
 						// 如果order_totalPrice <= 0  直接跳转 订单列表页
+						if(res.data.Order_Status != 1) {
+							// 直接跳转订单列表页
+							uni.redirectTo({
+								url: '../order/order'
+							});
+							return ;
+						}
 						this.Order_ID = res.data.Order_ID;
 						uni.redirectTo({
 							url: '../pay/pay?Order_ID='+ res.data.Order_ID
@@ -346,7 +353,9 @@ export default {
 				this.postData.use_money = 0;
 				return;
 			}
-			if(input_money > user_money) {
+			console.log(input_money)
+			console.log(user_money)
+			if(input_money - user_money > 0) {
 				uni.showModal({
 					title: '金额大于您的可用余额',
 					icon:  'none'
@@ -565,16 +574,24 @@ export default {
     }
 	.pro-msg {
 		flex: 1;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
 	}
     .attr {
         display: inline-block;
         height: 50rpx;
         line-height: 50rpx;
-        background: #FFF5F5;
+        
         color: #666;
         font-size: 24rpx;
-        padding: 0 20rpx;
-        margin: 25rpx 0 24rpx;
+        // padding: 0 20rpx;
+        // margin: 25rpx 0 24rpx;
+		span {
+			padding: 14rpx 20rpx;
+			margin: 25rpx 0 24rpx;
+			background: #FFF5F5;
+		}
     }
     .pro-price {
         color: #F43131;

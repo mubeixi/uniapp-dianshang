@@ -3,10 +3,10 @@
 		<div class="zhezhao" v-if="password_input">
 			<div class="input-wrap">
 				<div>请输入余额支付密码</div>
-				<input type="text" placeholder="请输入密码" @blur="user_password">
+				<input type="password" placeholder="请输入密码" @blur="user_password">
 				<div class="btns">
-					<div @click="cancelInput">取消</div>
-					<div @click="confirmInput">确定</div>
+					<div @click="cancelInput" class="btn">取消</div>
+					<div @click="confirmInput" class="btn">确定</div>
 				</div>
 			</div>
 		</div>
@@ -64,7 +64,7 @@
                 </div>
             </div>
         </div>
-        <div class="other">
+        <div class="other" v-if="orderInfo.is_use_money && orderInfo.is_use_money == 1">
             <div class="bd">
                 <div class="o_title">
                     <span>是否使用余额</span>
@@ -76,7 +76,7 @@
                     />
                 </div>
                 <!-- <div class="o_desc c8">{{orderInfo.Order_Yebc}}</div> -->
-				<input type="number" :value="pay_money" :disabled="!moneyChecked" :placeholder="orderInfo.Order_Yebc" @blur="moneyInputHandle"/>
+				<input type="number" v-if="moneyChecked" :value="pay_money" :disabled="!openMoney" :placeholder="orderInfo.Order_Yebc" @blur="moneyInputHandle"/>
             </div>
         </div>
         <div class="other">
@@ -92,7 +92,7 @@
                     />
                 </div>
                 <!-- <div class="o_desc c8">{{orderInfo.Order_InvoiceInfo}}</div> -->
-				<input type="text" :value="invoice_info" :disabled="!openInvoice" :placeholder="orderInfo.Order_InvoiceInfo" @blur="invoiceHandle"/>
+				<input type="text" v-if="invoiceChecked" :value="invoice_info" :disabled="!openInvoice" :placeholder="orderInfo.Order_InvoiceInfo" @blur="invoiceHandle"/>
             </div>
         </div>
         <div class="other">
@@ -170,7 +170,7 @@ export default {
 			user_pay_password: '',  //余额补差，支付密码
 			cate: 'method',
 			password_input: false,
-			openMoney: false, //是否开启了余额功能
+			openMoney: true, //是否开启了余额功能
 			openInvoice: true, // 是否开启了发票
 			order_remark: '', // 留言
 			need_invoice: 0, // 是否需要发票
@@ -181,7 +181,7 @@ export default {
 			return this.orderInfo.Order_NeedInvoice > 0 && this.openInvoice;
 		},
 		moneyChecked(){
-			return this.orderInfo.Order_Yebc > 0 || this.openMoney;
+			return this.orderInfo.Order_Yebc > 0 && this.openMoney;
 		}
 	},
     methods: {
@@ -206,6 +206,8 @@ export default {
 					this.orderInfo = res.data;
 					this.pay_money = this.orderInfo.Order_Yebc;
 					this.openMoney = this.pay_money > 0 ;
+					this.need_invoice = this.orderInfo.Order_NeedInvoice;
+					this.invoice_info = this.orderInfo.Order_InvoiceInfo;
 				}
 			})
 		},
@@ -657,6 +659,9 @@ export default {
 			.btns {
 				display: flex;
 				justify-content: space-around;
+				.btn {
+					flex: 1;
+				}
 			}
 		}
 	}

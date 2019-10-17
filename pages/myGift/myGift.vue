@@ -1,6 +1,6 @@
 <template>
 	<view class="all" :style="{'min-height':height+'px'}">
-		<page-title  title="我的赠品" bgcolor="#ffffff"></page-title>
+		<page-title  title="我的赠品" bgcolor="#ffffff" class="titless"></page-title>
 		<view class="nav">
 			<view :class="checked==0?'checked':''" @click="change(0)">
 				未领取
@@ -12,14 +12,16 @@
 				已过期
 			</view>
 		</view>
-		
+		<view style="height: 198rpx;width: 100%;">
+			
+		</view>
 		<view class="center" v-for="(item,index) of data" :key="index">
 			<view class="tops">
 				{{item.gift_name}}
 			</view>
 			<view class="bottoms">
 				<view class="tupian">
-					<image src="/static/fenxiao/top.png" ></image>
+					<image :src="item.img_url" ></image>
 				</view>
 				<view class="neirong">
 					<view class="titles">
@@ -64,6 +66,10 @@
 			});
 		},
 		onShow() {
+			// 重置
+			this.data = [];
+			this.page = 1;
+			this.checked = 0;
 			this.getGiftList();
 		},
 		onReachBottom(){
@@ -114,7 +120,19 @@
 view{
 	box-sizing: border-box;
 }
+.titless{
+		position: fixed;
+		top: 0rpx;
+		left: 0rpx;
+		width: 100%;
+		z-index: 999;
+}
 .nav{
+	z-index: 999;
+	position: fixed;
+	top: 86rpx;
+	left: 0rpx;
+	width: 750rpx;
 	margin: 0 auto;
 	margin: 20rpx;
 	height: 72rpx;
@@ -122,6 +140,7 @@ view{
 	align-items: center;
 	font-size: 30rpx;
 	color: #333333;
+	background: #f8f8f8;
 	view{
 		width: 236rpx;
 		height: 72rpx;
