@@ -1,6 +1,10 @@
 // export const apiBaseUrl = 'http://www.qiyeban.com';
 export const isDev = process.env.NODE_ENV === 'production' ? false : true;
 
+// #ifdef APP-PLUS
+export const APP_USERS_ID = 89757;
+export const WX_MINI_ORIGIN_ID = 'WX_MINI_ORIGIN_ID';
+// #endif
 
 // #ifdef H5
 console.log('NODE_ENV is '+isDev);

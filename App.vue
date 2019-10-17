@@ -1,29 +1,17 @@
 <script>
-    import {ls,GetQueryByString} from "./common/tool";
-    import {getSystemConf} from "./common/fetch";
+    import {ls} from "./common/tool";
+
+	// #ifdef APP-PLUS
+	import {APP_USERS_ID} from "./common/env";
+	// #endif
 
     export default {
-		onLaunch: function() {
+        //目前只有app端用到了应用的全局onLaunch
+		onLaunch: function(option) {
 
-
-
-            // #ifdef H5
-
-            // let users_id = GetQueryByString(location.href, 'users_id')
-            //
-            // //如果连接里面已经有了，就不需要搞事
-            // if(users_id){
-            //     ls.set('users_id',users_id);
-            //     return;
-            // }
-            // #endif
-
-
-
-
-
-
-
+			// #ifdef APP-PLUS
+			ls.set('users_id',APP_USERS_ID);//app里面需要写死打包，不然办法
+			// #endif
 
 			console.log('App Launch')
 		},
