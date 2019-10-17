@@ -1,6 +1,6 @@
 <template>
 	<view class="all" :style="{'min-height':height+'px'}">
-		<page-title  title="我的赠品" bgcolor="#ffffff"></page-title>
+		<page-title  title="我的赠品" bgcolor="#ffffff" class="titless"></page-title>
 		<view class="nav">
 			<view :class="checked==0?'checked':''" @click="change(0)">
 				未领取
@@ -12,7 +12,9 @@
 				已过期
 			</view>
 		</view>
-		
+		<view style="height: 198rpx;width: 100%;">
+			
+		</view>
 		<view class="center" v-for="(item,index) of data" :key="index">
 			<view class="tops">
 				{{item.gift_name}}
@@ -114,7 +116,19 @@
 view{
 	box-sizing: border-box;
 }
+.titless{
+		position: fixed;
+		top: 0rpx;
+		left: 0rpx;
+		width: 100%;
+		z-index: 999;
+}
 .nav{
+	z-index: 999;
+	position: fixed;
+	top: 86rpx;
+	left: 0rpx;
+	width: 750rpx;
 	margin: 0 auto;
 	margin: 20rpx;
 	height: 72rpx;
