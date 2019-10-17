@@ -20,8 +20,8 @@ const fetch = function (act, param,options = false,url='/api/little_program/shop
   if(!param)param = {}
 
   param.act = act;
-  // param.Users_Account = get_Users_Account();
-  // param.Users_ID = get_Users_ID();  Users_ID  写死
+  // param.User_ID = get_User_ID();
+  // param.Users_ID = get_Users_ID();   //Users_ID  写死
   // param.appid = get_Appid();
   param.User_ID = 3;
   param.Users_ID = 'wkbq6nc2kc';
@@ -169,7 +169,7 @@ function get_Appid() {
 
 export const get_Users_ID = ()=>ls.get('Users_ID')
 
-export const get_Users_Account= ()=>ls.get('Users_Account')
+export const get_User_ID = ()=>ls.get('get_User_ID')
 
 export const createToken = function(object) {
   object = ObjectToArr(object);

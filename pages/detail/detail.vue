@@ -1,7 +1,7 @@
 <template>
   <div style="position:relative;">
 	  <!-- #ifdef APP-PLUS -->
-	  <view class="status_bar"><!-- 这里是状态栏 --></view>
+	  <view class="status_bar" style="background: #f81111;"><!-- 这里是状态栏 --></view>
 	  <!-- #endif -->
     <div class="top">
         <img src="/static/detail/back.png" @click="goBack" alt="">
@@ -200,7 +200,7 @@
   </div>
 </template>
 <script>
-import bottom from '../bottom/bottom'
+import bottom from '../../components/bottom/bottom'
 import popupLayer from '../../components/popup-layer/popup-layer.vue'
 import {getProductDetail,getCommit,updateCart,addCollection,getCoupon,getUserCoupon,checkProdCollected,cancelCollection,judgeReceiveGift} from '../../common/fetch.js';
 import {goBack,numberSort,getProductThumb}  from '../../common/tool.js'

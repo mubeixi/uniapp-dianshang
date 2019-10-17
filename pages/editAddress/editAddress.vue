@@ -1,5 +1,8 @@
 <template>
 	<view>
+		<!-- #ifdef APP-PLUS -->
+		<view class="status_bar" style="background: #f81111;"><!-- 这里是状态栏 --></view>
+		<!-- #endif -->
 		<form @submit="formSubmit">
 		  <view class='xinxi'>
 			<text>收货人</text>

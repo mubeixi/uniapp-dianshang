@@ -1,4 +1,7 @@
 <template>
+	<!-- #ifdef APP-PLUS -->
+	<view class="status_bar" style="background: #f81111;"><!-- 这里是状态栏 --></view>
+	<!-- #endif -->
 	<view>
 		<radio-group class="radio-group" @change="radioChange">
 		  <label class="radio" :class="!check_flag ? 'no-redio' : ''" v-for="item in addresslist" :key="">

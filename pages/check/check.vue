@@ -30,9 +30,9 @@
         </div>
         <div class="other" v-if="orderInfo.is_virtual == 0 && orderInfo.NeedShipping == 1">
             <div class="bd">
-                <div class="o_title">
+                <div class="o_title" @click="changeShip">
                     <span>运费选择</span>
-                    <span style="text-align:right; color: #888;" @click="changeShip">
+                    <span style="text-align:right; color: #888;" >
 						<span>{{shipping_name?(shipping_name + ' ' + (orderInfo.Order_Shipping.Price > 0 ? orderInfo.Order_Shipping.Price : '免运费')):'请选择物流'}}</span>
                         <image  class="right" src="/static/right.png" alt=""></image>
                     </span>

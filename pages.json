@@ -83,10 +83,6 @@
             "style" : {}
         }
         ,{
-            "path" : "pages/bottom/bottom",
-            "style" : {}
-        }
-        ,{
             "path" : "pages/order/order",
             "style" : {
             	"navigationBarTitleText": "我的订单"
@@ -255,8 +251,7 @@
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "网中网",
-		"navigationBarBackgroundColor": "#F8F8F8",
-		"backgroundColor": "#F8F8F8",
+		"navigationBarBackgroundColor": "#FFFFFF",
         "app-plus": {
 			"titleNView": false
         }
