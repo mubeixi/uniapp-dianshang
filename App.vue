@@ -10,8 +10,12 @@
 		onLaunch: function(option) {
 
 			// #ifdef APP-PLUS
-			ls.clear()
+			// ls.clear()
 			ls.set('users_id',APP_USERS_ID);//app里面需要写死打包，不然办法
+			// #endif
+
+			// #ifdef H5
+			//ls.set('openid','')
 			// #endif
 
 			console.log('App Launch')

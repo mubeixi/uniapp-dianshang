@@ -442,12 +442,10 @@
 				if(channel.type=='wx_mp' && channel.component_appid){
 					//服务商模式登录
 					wxAuthUrl = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${channel.appid}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=snsapi_userinfo&state=STATE&component_appid=${channel.component_appid}#wechat_redirect`;
-
 				}else{
 
 					//公众号自己的appid用于登录
 					wxAuthUrl = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${channel.appid}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect`
-
 				}
 
 				window.location.href = wxAuthUrl;
@@ -538,6 +536,7 @@
 				//根据服务器返回配置设置channels,只有微信公众号和小程序会用到component_appid
 				//而且状态可以灵活控制 state为1
 				for(var i in login_methods){
+					// && login_methods[i].state ??状态呢？
 					if(i!='component_appid' && login_methods[i].state){
 						this.channels.push(['wx_mp','wx_lp'].indexOf(login_methods[i].type)===-1?{...login_methods[i]}:{...login_methods[i],component_appid})
 					}

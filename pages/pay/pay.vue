@@ -36,7 +36,7 @@
                 </div>
             </div>
         </div>
-        
+
 		<div class="other">
             <div class="bd">
                 <div class="o_title">
@@ -88,7 +88,7 @@
                         size='25px'
                         color="#04B600"
 						@change="invoiceChange"
-						
+
                     />
                 </div>
                 <!-- <div class="o_desc c8">{{orderInfo.Order_InvoiceInfo}}</div> -->
@@ -125,7 +125,7 @@
 				</div>
 			</div>
 		</popup-layer>
-		
+
     </div>
 </template>
 
@@ -133,6 +133,7 @@
 import popupLayer from '../../components/popup-layer/popup-layer.vue'
 import {getAddress,createOrderCheck,getOrderDetail,orderPay} from '../../common/fetch.js';
 import {pageMixin} from "../../common/mixin";
+import {ls, GetQueryByString, isWeiXin,urlencode} from "../../common/tool";
 
 export default {
 	mixins:[pageMixin],
@@ -158,6 +159,8 @@ export default {
 	},
     data(){
         return {
+            code:'',
+            JSSDK_INIT:false,
             show: false, // 遮罩层
             wl_show: false, // 物流选择
 			postData: {},
@@ -184,6 +187,20 @@ export default {
 			return this.orderInfo.Order_Yebc > 0 && this.openMoney;
 		}
 	},
+    created(){
+
+        // #ifdef H5
+
+        if (isWeiXin()) {
+            this.code = GetQueryByString(location.href, 'code');
+            if (this.code) {
+                // ls.set('code',this.code)
+                this.wechatPay();
+            }
+        }
+        // #endif
+
+    },
     methods: {
 		getOrderDetail(){
 			getOrderDetail({Order_ID: this.Order_ID,}).then(res=>{
@@ -198,7 +215,7 @@ export default {
 								for( var k in res.data[i][j]) {
 									if(k == 'attr_info') {
 										res.data[i][j][k] = res.data[i][j][k] && JSON.parse(res.data[i][j][k])
-									}									
+									}
 								}
 							}
 						}
@@ -232,8 +249,8 @@ export default {
 				this.pay_money = this.orderInfo.Order_TotalPrice;
 				// this.orderInfo.Order_TotalPrice = money;
 				return;
-			}  
-			this.orderInfo.Order_Fyepay = Number(this.orderInfo.Order_TotalPrice - money).toFixed(2); 
+			}
+			this.orderInfo.Order_Fyepay = Number(this.orderInfo.Order_TotalPrice - money).toFixed(2);
 		},
 		// 余额支付开关
 		moneyChange(e) {
@@ -241,7 +258,7 @@ export default {
 			if(checked) {
 				this.openMoney = true;
 				this.pay_money = Number(this.orderInfo.Order_Yebc).toFixed(2);
-				this.orderInfo.Order_Fyepay = Number(this.orderInfo.Order_TotalPrice - this.pay_money).toFixed(2); 
+				this.orderInfo.Order_Fyepay = Number(this.orderInfo.Order_TotalPrice - this.pay_money).toFixed(2);
 			}else {
 				this.openMoney = false;
 				this.orderInfo.Order_Fyepay = Number(this.orderInfo.Order_TotalPrice).toFixed(2);
@@ -325,13 +342,89 @@ export default {
 					// 不使用余额支付，pay_money为要提交的金额
 					orderPay({Order_ID: this.Order_ID, pay_type: 'balance' ,pay_money: this.orderInfo.Order_Fyepay, need_invoice: this.need_invoice ,invoice_info: this.invoice_info, order_remark: this.order_remark}).then(res=>{
 						console.log(res);
-						
+
 					})
 				}
 			}
 		},
+        async $_init_wxpay_env(){
+
+
+
+            let initData = await this.getInitData()
+
+            let login_methods = initData.login_methods;
+            let component_appid = login_methods.component_appid
+
+            let channel = null;
+
+            //根据服务器返回配置设置channels,只有微信公众号和小程序会用到component_appid
+            //而且状态可以灵活控制 state为1
+            for(var i in login_methods){
+                // && login_methods[i].state ??状态呢？
+                if(i!='component_appid' && login_methods[i].state){
+                    channel = ['wx_mp'].indexOf(login_methods[i].type)===-1?{...login_methods[i]}:{...login_methods[i],component_appid};
+                    break;
+                }
+            }
+
+            if(!channel){
+                this.$error('未开通公众号支付');
+                return false;
+            }
+
+
+            //如果url有code去掉
+            let {origin,pathname,search,hash} = window.location;
+            let strArr = []
+            if(search.indexOf('code')!=-1){
+                let tempArr = search.split('&');
+                for(var i in tempArr){
+
+                    if(i.indexOf('code')===-1){
+                        strArr.push(tempArr[i])
+                    }
+                }
+                let newSearchStr = strArr.join('&');
+                if(newSearchStr.idnexOf('?')===-1){
+                    newSearchStr = '?'+newSearchStr
+                }
+
+
+                search = newSearchStr;
+
+            }
+
+
+
+
+            let REDIRECT_URI = urlencode(origin+pathname+search+hash);
+
+            let wxAuthUrl = null;
+
+            if(channel.component_appid){
+                //服务商模式登录
+                wxAuthUrl = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${channel.appid}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=snsapi_userinfo&state=STATE&component_appid=${channel.component_appid}#wechat_redirect`;
+            }else{
+                //公众号自己的appid用于登录
+                wxAuthUrl = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${channel.appid}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect`
+            }
+
+            console.log(wxAuthUrl)
+
+
+            window.location.href = wxAuthUrl;
+
+
+
+        },
 		// 用户选择 微信支付
 		wechatPay(){
+
+
+
+		    let _self = this;
+
 			this.pay_type = 'wechat';
 			this.$refs.popupLayer.close();
 			if(this.orderInfo.Order_Fyepay > 0) {
@@ -339,10 +432,99 @@ export default {
 					this.password_input = true;
 				}else {
 					// 用户选择微信，并且不用余额支付
-					orderPay({Order_ID: this.Order_ID, pay_type: 'wechat' ,pay_money: this.orderInfo.Order_Fyepay, need_invoice: this.need_invoice ,invoice_info: this.invoice_info, order_remark: this.order_remark}).then(res=>{
-						console.log(res);
-						
-					})
+
+                    let payConf = {Order_ID: this.Order_ID,pay_money: this.orderInfo.Order_Fyepay, need_invoice: this.need_invoice ,invoice_info: this.invoice_info, order_remark: this.order_remark};
+
+                    //需要格外有一个code
+					// #ifdef H5
+                    if(!isWeiXin()){
+                        this.$error('请在微信内打开')
+                        return;
+                    }
+                    let isHasCode = this.code || GetQueryByString('code');
+
+                    if(isHasCode){
+
+                        //拿到之前的配置
+                        payConf = {...ls.get('temp_order_info'),code:isHasCode,pay_type:'wx_mp'}
+
+                    }else{
+
+                        //存上临时的数据
+                        ls.set('temp_order_info',payConf);
+                        //去掉转吧
+                        this.$_init_wxpay_env();
+                    }
+					// #endif
+
+                    // #ifdef MP-WEIXIN
+                    payConf.pay_type = 'wx_lp'
+                    // #endif
+
+                    // #ifdef APP-PLUS
+                    payConf.pay_type = 'wx_app'
+                    // #endif
+
+
+                    console.log('payConf is',payConf)
+                    orderPay(payConf).then(res=>{
+                        console.log(res);
+
+                        // #ifdef H5
+                        let {timestamp,nonceStr,signType,paySign} = res.data;
+
+                        //直接支付
+                        _self.WX_JSSDK_INIT(_self).then((wxEnv)=>{
+
+                            //关键字？？package
+                            wxEnv.chooseWXPay({
+                                timestamp,nonceStr,package:res.data.package,signType,paySign,
+                                success: function (res) {
+                                    // 支付成功后的回调函数
+                                }
+                            });
+
+                        }).catch((e)=>{
+                            console.log('支付失败')
+                        })
+
+                        return;
+
+
+                        // #endif
+
+
+                        let provider = 'wxpay';
+                        let orderInfo = {}
+
+                        // #ifdef MP-WEIXIN || MP-BAIDU || MP-TOUTIAO || MP-ALIPAY
+
+
+                        // #endif
+
+                        // #ifdef APP-PLUS
+                            console.log(res.data,'支付数据222222222222222222');
+                        // #endif
+
+                        uni.requestPayment({
+                            provider,
+                            orderInfo, //微信、支付宝订单数据
+                            success: function (res) {
+                                console.log('success:' + JSON.stringify(res));
+                            },
+                            fail: function (err) {
+                                console.log('fail:' + JSON.stringify(err));
+                            }
+                        });
+
+                    })
+
+
+
+
+
+
+
 				}
 			}
 		},
@@ -357,7 +539,7 @@ export default {
 					// 选择支付宝，并且不用余额
 					orderPay({Order_ID: this.Order_ID, pay_type: 'ali' ,pay_money: this.orderInfo.Order_Fyepay, need_invoice: this.need_invoice ,invoice_info: this.invoice_info, order_remark: this.order_remark}).then(res=>{
 						console.log(res);
-						
+
 					})
 				}
 			}
@@ -416,7 +598,7 @@ export default {
 					})
 				}
 			}).catch(e=>{
-				
+
 			})
 			this.password_input = false;
 		}
@@ -573,7 +755,7 @@ export default {
 		input {
 			border: 0;
 			margin-left: 20rpx;
-			flex: 1;			
+			flex: 1;
 		}
     }
     .total {
