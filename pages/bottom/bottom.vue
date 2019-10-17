@@ -1,13 +1,13 @@
 <template>
 	<div class="fixed">
-		<div class="leftss">	
+		<div class="leftss">
 			<div class="first">
 				<navigator url="/pages/index/index" open-type="switchTab" >
 					<div><img src="/static/tuan/home.png" ></div>
 					<div class="txt">首页</div>
 				</navigator>
 			</div>
-			
+
 			<div class="first" @click="collect">
 				<div><img  :src="collected ? '/static/tuan/xx.png' : '/static/tuan/shou.png'" ></div>
 				<div class="txt">收藏</div>
@@ -35,7 +35,7 @@
 	export default {
 		data() {
 			return {
-				
+
 			};
 		},
 		props: {

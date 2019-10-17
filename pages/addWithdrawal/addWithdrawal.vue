@@ -105,7 +105,7 @@
 						Method_Name:this.data.Method_Name//提现方式名称
 					}
 				}
-				
+				let that=this;
 				addUserWithdrawMethod(this.data).then(res=>{
 					if(res.errorCode==0){
 						let User_Method_ID=res.data.User_Method_ID;
@@ -118,9 +118,14 @@
 						    content: '',
 						    success: function (res) {
 						        if (res.confirm) {
-						           uni.navigateTo({
-						           	url:'../withdrawalMethod/withdrawalMethod?User_Method_ID='+User_Method_ID
-						           })
+						           // uni.navigateTo({
+						           // 	url:'../withdrawalMethod/withdrawalMethod?User_Method_ID='+User_Method_ID
+						           // })
+								   that.$vm.$emit('fir',User_Method_ID)
+								   //返回上一页
+								   uni.navigateBack({
+								     delta: 1
+								   });
 						        } else if (res.cancel) {
 						            uni.navigateTo({
 						            	url:'../withdrawal/withdrawal?User_Method_ID='+User_Method_ID

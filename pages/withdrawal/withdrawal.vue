@@ -68,7 +68,9 @@
 		},
 		onLoad(options) {
 			let that=this;
-			that.User_Method_ID=options.User_Method_ID;
+			if(options.User_Method_ID){
+				that.User_Method_ID=options.User_Method_ID;
+			}
 			uni.getSystemInfo({
 			    success: function (res) {
 			        that.height=res.screenHeight-68;
@@ -144,12 +146,15 @@
 			getUserWithdrawMethod(){
 				getUserWithdrawMethod().then(res=>{
 					if(res.errorCode==0){
-						if(res.data.list.length>0){
-							this.isShow=true;
-						}else{
-							this.isShow=false;
-						}
-						if(this.User_Method_ID){
+						this.$vm.$on('fires', (data) =>{
+							this.User_Method_ID = data;
+						})
+					if(res.data.list.length>0){
+						this.isShow=true;
+					}else{
+						this.isShow=false;
+					}
+					if(this.User_Method_ID){
 							for(let item of res.data.list){
 								if(item.User_Method_ID==this.User_Method_ID){
 									this.data=item;

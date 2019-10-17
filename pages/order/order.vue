@@ -1,6 +1,6 @@
 <template>
     <div>
-        <page-title title="我的订单" rightHidden="true"></page-title>
+        <page-title title="我的订单" rightHidden="true" class="titless"></page-title>
         <div class="navs">
             <div class="nav-item" :class="index==0?'active':''" @click="changIndex(0)">全部</div>
             <div class="nav-item" :class="index==1?'active':''" @click="changIndex(1)">
@@ -20,6 +20,9 @@
 				<div class="jiaobiao" v-if="orderNum.shop.waitcomment>0">{{orderNum.shop.waitcomment}}</div>
 			</div>
         </div>
+		<view style="height: 186rpx;width: 100%;">
+			
+		</view>
         <div class="order" v-for="(item,index) of data" :key="index" v-if="item.prod_list.length>0">
 			<div style="background-color: #F3F3F3;height: 20rpx;width: 100%;position: absolute;left: 0rpx;"></div>
 			<div style="height: 20rpx;"></div>
@@ -229,11 +232,24 @@ export default {
 </script>
 
 <style scoped lang="scss">
+	.titless{
+		position: fixed;
+		top: 0rpx;
+		left: 0rpx;
+		width: 100%;
+		z-index: 999;
+	}
     .navs {
+		z-index: 999;
+		position: fixed;
+		top: 86rpx;
+		left: 0rpx;
+		width: 750rpx;
+		box-sizing: border-box;
         display: flex;
         align-items: center;
-        height: 50px;
-        line-height: 50px;
+        height: 100rpx;
+        line-height: 100rpx;
         background: #fff;
         font-size: 28rpx;
         padding: 0 10px;

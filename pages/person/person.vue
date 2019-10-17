@@ -1,6 +1,11 @@
 <template>
 	<view class="person">
+		<!-- #ifdef APP-PLUS -->
+		<view class="status_bar" style="background: #f81111;"><!-- 这里是状态栏 --></view>
+		<!-- #endif -->
+
 		<view class="personTop">
+
 			<image src="/static/person/top.png" ></image>
 			<view class="qiandao">
 				<image src="/static/person/qiandao.png"></image>
@@ -11,8 +16,8 @@
 					<image style="border-radius: 50%;" :src="userInfo.User_HeadImg||'/static/default.png'" ></image>
 				</view>
 				<view class="right">
-					<view class="nickName">{{userInfo.User_NickName}}</view>
-					<view class="cart">{{userInfo.Users_Level[userInfo.User_Level].Name}}<image src="/static/person/rightCart.png" ></image></view>
+					<view class="nickName">{{userInfo.User_NickName||'用户'+userInfo.User_No}}</view>
+					<view class="cart">{{userLevelText}}<image src="/static/person/rightCart.png" ></image></view>
 				</view>
 			</view>
 			<view class="nav">
@@ -153,6 +158,12 @@
 			};
 		},
 		computed:{
+			userLevelText(){
+				if(this.userInfo.Users_Level && this.userInfo.User_Level && this.userInfo.Users_Level[this.userInfo.User_Level]){
+					return this.userInfo.Users_Level[this.userInfo.User_Level].Name
+				}
+				return '普通用户';
+			}
 
 		},
 		methods:{
@@ -195,7 +206,7 @@
 			}
 		},
 		async onShow(){
-			//this.userInfo = await this.getUserInfo();
+			this.userInfo = await this.getUserInfo();
 		},
 		created(){
 
@@ -222,6 +233,7 @@
 			//opacity:0.45;
 			border-radius:20rpx;
 			position: absolute;
+			
 			top: 22rpx;
 			right: 20rpx;
 			display: flex;
