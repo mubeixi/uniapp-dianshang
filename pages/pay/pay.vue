@@ -36,7 +36,7 @@
                 </div>
             </div>
         </div>
-        
+
 		<div class="other">
             <div class="bd">
                 <div class="o_title">
@@ -88,7 +88,7 @@
                         size='25px'
                         color="#04B600"
 						@change="invoiceChange"
-						
+
                     />
                 </div>
                 <!-- <div class="o_desc c8">{{orderInfo.Order_InvoiceInfo}}</div> -->
@@ -125,7 +125,7 @@
 				</div>
 			</div>
 		</popup-layer>
-		
+
     </div>
 </template>
 
@@ -133,6 +133,7 @@
 import popupLayer from '../../components/popup-layer/popup-layer.vue'
 import {getAddress,createOrderCheck,getOrderDetail,orderPay} from '../../common/fetch.js';
 import {pageMixin} from "../../common/mixin";
+import {ls} from "../../common/tool";
 
 export default {
 	mixins:[pageMixin],
@@ -198,7 +199,7 @@ export default {
 								for( var k in res.data[i][j]) {
 									if(k == 'attr_info') {
 										res.data[i][j][k] = res.data[i][j][k] && JSON.parse(res.data[i][j][k])
-									}									
+									}
 								}
 							}
 						}
@@ -232,8 +233,8 @@ export default {
 				this.pay_money = this.orderInfo.Order_TotalPrice;
 				// this.orderInfo.Order_TotalPrice = money;
 				return;
-			}  
-			this.orderInfo.Order_Fyepay = Number(this.orderInfo.Order_TotalPrice - money).toFixed(2); 
+			}
+			this.orderInfo.Order_Fyepay = Number(this.orderInfo.Order_TotalPrice - money).toFixed(2);
 		},
 		// 余额支付开关
 		moneyChange(e) {
@@ -241,7 +242,7 @@ export default {
 			if(checked) {
 				this.openMoney = true;
 				this.pay_money = Number(this.orderInfo.Order_Yebc).toFixed(2);
-				this.orderInfo.Order_Fyepay = Number(this.orderInfo.Order_TotalPrice - this.pay_money).toFixed(2); 
+				this.orderInfo.Order_Fyepay = Number(this.orderInfo.Order_TotalPrice - this.pay_money).toFixed(2);
 			}else {
 				this.openMoney = false;
 				this.orderInfo.Order_Fyepay = Number(this.orderInfo.Order_TotalPrice).toFixed(2);
@@ -325,13 +326,68 @@ export default {
 					// 不使用余额支付，pay_money为要提交的金额
 					orderPay({Order_ID: this.Order_ID, pay_type: 'balance' ,pay_money: this.orderInfo.Order_Fyepay, need_invoice: this.need_invoice ,invoice_info: this.invoice_info, order_remark: this.order_remark}).then(res=>{
 						console.log(res);
-						
+
 					})
 				}
 			}
 		},
+        async $_init_wxpay_env(){
+
+
+
+            let initData = await this.getInitData()
+
+            let login_methods = initData.login_methods;
+            let component_appid = login_methods.component_appid
+
+            let channel = null;
+
+            //根据服务器返回配置设置channels,只有微信公众号和小程序会用到component_appid
+            //而且状态可以灵活控制 state为1
+            for(var i in login_methods){
+                // && login_methods[i].state ??状态呢？
+                if(i!='component_appid' && login_methods[i].state){
+                    channel = ['wx_mp'].indexOf(login_methods[i].type)===-1?{...login_methods[i]}:{...login_methods[i],component_appid};
+                    break;
+                }
+            }
+
+            if(!channel){
+                this.$error('未开通公众号支付');
+                return false;
+            }
+
+
+
+            let REDIRECT_URI = urlencode(location.href);
+
+            let wxAuthUrl = null;
+
+            if(channel.component_appid){
+                //服务商模式登录
+                wxAuthUrl = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${channel.appid}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=snsapi_userinfo&state=STATE&component_appid=${channel.component_appid}#wechat_redirect`;
+            }else{
+                //公众号自己的appid用于登录
+                wxAuthUrl = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${channel.appid}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect`
+            }
+
+
+            window.location.href = wxAuthUrl;
+
+
+
+        },
 		// 用户选择 微信支付
 		wechatPay(){
+
+            // #ifdef H5
+            let isHasOpenid = ls.get('openid');
+            if(!isHasOpenid){
+                this.$_init_wxpay_env();
+            }
+            // #endif
+
+
 			this.pay_type = 'wechat';
 			this.$refs.popupLayer.close();
 			if(this.orderInfo.Order_Fyepay > 0) {
@@ -339,9 +395,24 @@ export default {
 					this.password_input = true;
 				}else {
 					// 用户选择微信，并且不用余额支付
-					orderPay({Order_ID: this.Order_ID, pay_type: 'wechat' ,pay_money: this.orderInfo.Order_Fyepay, need_invoice: this.need_invoice ,invoice_info: this.invoice_info, order_remark: this.order_remark}).then(res=>{
+
+					// #ifdef H5
+
+					// #endif
+
+					// #ifdef MP-WEIXIN || MP-BAIDU || MP-TOUTIAO || MP-ALIPAY
+
+					// #endif
+
+					// #ifdef APP-PLUS
+
+					// #endif
+                    let payConf = {Order_ID: this.Order_ID, pay_type: 'wechat' ,pay_money: this.orderInfo.Order_Fyepay, need_invoice: this.need_invoice ,invoice_info: this.invoice_info, order_remark: this.order_remark};
+
+
+					orderPay().then(res=>{
 						console.log(res);
-						
+
 					})
 				}
 			}
@@ -357,7 +428,7 @@ export default {
 					// 选择支付宝，并且不用余额
 					orderPay({Order_ID: this.Order_ID, pay_type: 'ali' ,pay_money: this.orderInfo.Order_Fyepay, need_invoice: this.need_invoice ,invoice_info: this.invoice_info, order_remark: this.order_remark}).then(res=>{
 						console.log(res);
-						
+
 					})
 				}
 			}
@@ -416,7 +487,7 @@ export default {
 					})
 				}
 			}).catch(e=>{
-				
+
 			})
 			this.password_input = false;
 		}
@@ -573,7 +644,7 @@ export default {
 		input {
 			border: 0;
 			margin-left: 20rpx;
-			flex: 1;			
+			flex: 1;
 		}
     }
     .total {

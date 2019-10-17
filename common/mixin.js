@@ -237,22 +237,7 @@ export const pageMixin = {
 	},
     mounted() {
 
-		// #ifndef H5
-		uni.getProvider({
-		    service: 'share',
-		    success: function (res) {
-		        console.log(res.provider)
-		        if (~res.provider.indexOf('qq')) {
-		            uni.login({
-		                provider: 'qq',
-		                success: function (loginRes) {
-		                    console.log(JSON.stringify(loginRes));
-		                }
-		            });
-		        }
-		    }
-		});
-		// #endif
+		
 
     },
     methods:{

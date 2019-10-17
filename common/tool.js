@@ -58,31 +58,32 @@ export const GetQueryByString = (str, name) => {
 
 
 export const ls = {
-  set(key, val) {
+    set(key, val) {
 
-    if(!val && (val!=0 || val!= false))return false;
+        if(!val && (val!=0 || val!= false))return false;
 
-    return  uni.setStorageSync(key, val)
-  },
+        return  uni.setStorageSync(key, val)
+    },
 
-  get(key) {
-    var val = uni.getStorageSync(key);
-    return val;
-    // if(!val) return '';
-    // try{
-    //   return JSON.parse(val)
-    // }catch (e) {
-    //   return '';
-    // }
+    get(key) {
+        var val = uni.getStorageSync(key);
+        return val;
+        // if(!val) return '';
+        // try{
+        //   return JSON.parse(val)
+        // }catch (e) {
+        //   return '';
+        // }
 
-  },
-  remove(key) {
-    return uni.removeStorageSync(key)
-  },
-  clear() {
-    return uni.clearStorageSync()
-  }
+    },
+    remove(key) {
+        return uni.removeStorageSync(key)
+    },
+    clear() {
+        return uni.clearStorageSync()
+    }
 };
+
 
 export const goBack=function(){
 	uni.navigateBack({
