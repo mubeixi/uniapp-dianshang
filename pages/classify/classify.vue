@@ -1,8 +1,6 @@
 <template>
 	<view>
-		<!-- #ifdef APP-PLUS -->
-		<view class="status_bar"><!-- 这里是状态栏 --></view>
-		<!-- #endif -->
+
 		<view class="search-wrap" @click="goSearch">
 			<icon type="search" size="34rpx" class="search_icon"/>
 			<input type="text" class="search-input" name="search" placeholder="请输入商品关键词" placeholder-style="font-size:26rpx;color:#ADADAD;">

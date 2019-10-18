@@ -16,7 +16,7 @@
 					<image style="border-radius: 50%;" :src="userInfo.User_HeadImg||'/static/default.png'" ></image>
 				</view>
 				<view class="right">
-					<view class="nickName">{{userInfo.User_NickName||'用户'+userInfo.User_No}}</view>
+					<view class="nickName">{{userInfo.User_NickName||''}}</view>
 					<view class="cart">{{userLevelText}}<image src="/static/person/rightCart.png" ></image></view>
 				</view>
 			</view>
@@ -233,7 +233,7 @@
 			//opacity:0.45;
 			border-radius:20rpx;
 			position: absolute;
-			
+
 			top: 22rpx;
 			right: 20rpx;
 			display: flex;

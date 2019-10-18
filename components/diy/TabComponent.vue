@@ -9,7 +9,7 @@
       <div class="box" :class="[className]" :style="{padding:tab.style.wrapmargin+'px'}">
         <ul class="list" >
           <li v-for="(item,idx) in goodsList" @click="goDetail(item)" class="item"
-              :class="[idx%2==0?'even':'odd',tab.config.radius=='round'?'round':'',tabconfig.showmode]"
+              :class="[idx%2==0?'even':'odd',tab.config.radius=='round'?'round':'',tab.config.showmode]"
               :style="[itemMarginObj(idx)]"
           >
             <div class="cover"
@@ -37,33 +37,33 @@
           </li>
 
           <!--因为参数是带了limit,所以这里不会为负数-->
-          <li v-for="(item,idx) in (limit-goodsList.length)" class="item"
-              :class="[idx%2==0?'even':'odd',tab.config.radius=='round'?'round':'',tab.config.showmode]"
-              :style="[itemMarginObj(idx)]"
-          >
-            <div class="cover"
-                 :style="{width:itemw,height:itemw,backgroundImage:'url('+domainFunc(infoTmpl.ImgPath)+')'}">
-              <div v-show="tab.config.attr.tag.show" :class="tab.config.attr.tag.style"
-                   v-if="['new','hot'].indexOf(tab.config.attr.tag.style)!=-1" class="tag">
-                {{tab.config.attr.tag.style=='hot'?'hot':'new'}}
-              </div>
-              <div v-show="tab.config.attr.tag.show" v-else class="tag img"><img
-                :src="tab.config.attr.tag.img|domain"/></div>
-            </div>
-            <div class="info" :style="{width:itemw}" :class="{empyInfo:isEmpeyInfo}">
-              <div class="left">
-                <div v-show="tab.config.attr.title.show" class="title">{{infoTmpl.Products_Name}}</div>
-                <div v-show="tab.config.attr.desc.show" class="font12 graytext desc">
-                  {{infoTmpl.Products_BriefDescription||'暂无介绍'}}
-                </div>
-                <div v-show="tab.config.attr.price.show" class="price"><span class="sign">￥</span>{{infoTmpl.Products_PriceX}}
-                </div>
-              </div>
-              <div v-show="tab.config.attr.buybtn.show" class="buybtn" :class="'theme'+tab.config.attr.buybtn.style">
-                {{tab.config.attr.buybtn.text||'购买'}}
-              </div>
-            </div>
-          </li>
+<!--          <li v-for="(item,idx) in (limit-goodsList.length)" class="item"-->
+<!--              :class="[idx%2==0?'even':'odd',tab.config.radius=='round'?'round':'',tab.config.showmode]"-->
+<!--              :style="[itemMarginObj(idx)]"-->
+<!--          >-->
+<!--            <div class="cover"-->
+<!--                 :style="{width:itemw,height:itemw,backgroundImage:'url('+domainFunc(infoTmpl.ImgPath)+')'}">-->
+<!--              <div v-show="tab.config.attr.tag.show" :class="tab.config.attr.tag.style"-->
+<!--                   v-if="['new','hot'].indexOf(tab.config.attr.tag.style)!=-1" class="tag">-->
+<!--                {{tab.config.attr.tag.style=='hot'?'hot':'new'}}-->
+<!--              </div>-->
+<!--              <div v-show="tab.config.attr.tag.show" v-else class="tag img"><img-->
+<!--                :src="tab.config.attr.tag.img|domain"/></div>-->
+<!--            </div>-->
+<!--            <div class="info" :style="{width:itemw}" :class="{empyInfo:isEmpeyInfo}">-->
+<!--              <div class="left">-->
+<!--                <div v-show="tab.config.attr.title.show" class="title">{{infoTmpl.Products_Name}}</div>-->
+<!--                <div v-show="tab.config.attr.desc.show" class="font12 graytext desc">-->
+<!--                  {{infoTmpl.Products_BriefDescription||'暂无介绍'}}-->
+<!--                </div>-->
+<!--                <div v-show="tab.config.attr.price.show" class="price"><span class="sign">￥</span>{{infoTmpl.Products_PriceX}}-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div v-show="tab.config.attr.buybtn.show" class="buybtn" :class="'theme'+tab.config.attr.buybtn.style">-->
+<!--                {{tab.config.attr.buybtn.text||'购买'}}-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </li>-->
         </ul>
 
       </div>
@@ -121,6 +121,10 @@
       },
       itemw() {
         let full = this.fullWidth;
+
+        if(this.tab.config.showmode == 'border-bgwhite'){
+          full -= 4;//4个边框
+        }
 
         //内边不是乘以3 而是1
         //375-90-30-10 = 245px
@@ -313,7 +317,7 @@
   }
 
   .border-bgwhite{
-
+    box-sizing: border-box;
     border: 1px solid #e3e3e3;
   }
 

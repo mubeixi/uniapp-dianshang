@@ -184,7 +184,9 @@ export const judgeReceiveGift = (data, options) => fetch('judge_receive_gift', d
 //jssdk签名
 
 export const getJsSign = (data,options) => fetch('share_config', data, options);
+//jssdk签名
 
+export const getBalanceRank = (data,options) => fetch('get_balance_rank', data, options);
 
 
 function get_Appid() {

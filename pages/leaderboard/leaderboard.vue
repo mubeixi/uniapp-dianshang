@@ -2,10 +2,10 @@
 	<view>
 		<page-title title="财富排行榜" rightHidden="true" ></page-title>
 		<view class="all">
-			<view class="checked">
+			<view :class="index==0?'checked':''" @click="change(0)">
 				总部分销商
 			</view>
-			<view>
+			<view  :class="index==1?'checked':''"   @click="change(1)">
 				我的好友
 			</view>
 		</view>
@@ -21,80 +21,80 @@
 					佣金
 				</view>
 			</view>
-			<view class="content">
-				<view class="contentLeft">
+			<view class="content" v-for="(item,index) of pro " :key="index" v-if="index==0">
+				<view class="contentLeft" >
 					<view class="ming">
 						<image src="/static/fenxiao/first.png" ></image>
 					</view>
 					<view class="info">
-						<image src="/static/fenxiao/person.png" ></image>
+						<image :src="item.User_HeadImg" ></image>
 					</view>
 					<view class="nickName">
-						莫小贝
+						{{item.Shop_Name}}
 					</view>
 				</view>
 				<view class="contentCenter">
-					无
+					{{item.pro_title_name}}
 				</view>
 				<view class="contentRight">
-					¥<text>1280.00</text>
+					¥<text>{{item.balance}}</text>
 				</view>
 			</view>
-			<view class="content">
+			<view class="content" v-else-if="index==1">
 				<view class="contentLeft">
 					<view class="ming">
 						<image src="/static/fenxiao/second.png" ></image>
 					</view>
 					<view class="info">
-						<image src="/static/fenxiao/person.png" ></image>
+							<image :src="item.User_HeadImg" ></image>
+						</view>
+						<view class="nickName">
+							{{item.Shop_Name}}
+						</view>
 					</view>
-					<view class="nickName">
-						莫小贝
+					<view class="contentCenter">
+						{{item.pro_title_name}}
 					</view>
-				</view>
-				<view class="contentCenter">
-					无
-				</view>
-				<view class="contentRight">
-					¥<text>1280.00</text>
-				</view>
+					<view class="contentRight">
+						¥<text>{{item.balance}}</text>
+					</view>
 			</view>
-			<view class="content">
+			<view class="content" v-else-if="index==2">
 				<view class="contentLeft">
 					<view class="ming">
 						<image src="/static/fenxiao/three.png" ></image>
 					</view>
 					<view class="info">
-						<image src="/static/fenxiao/person.png" ></image>
+							<image :src="item.User_HeadImg" ></image>
 					</view>
 					<view class="nickName">
-						莫小贝
+						{{item.Shop_Name}}
 					</view>
 				</view>
 				<view class="contentCenter">
-					无
+					{{item.pro_title_name}}
 				</view>
 				<view class="contentRight">
-					¥<text>1280.00</text>
+					¥<text>{{item.balance}}</text>
 				</view>
 			</view>
-			<view class="content">
+			<view class="content" v-else>
 				<view class="contentLeft">
 					<view class="ming">
-						4
+						{{index+1}}
 					</view>
 					<view class="info">
-						<image src="/static/fenxiao/person.png" ></image>
+							<image :src="item.User_HeadImg" ></image>
 					</view>
 					<view class="nickName">
-						莫小贝
+						{{item.Shop_Name}}
 					</view>
 				</view>
 				<view class="contentCenter">
-					无
+					{{item.pro_title_name}}
 				</view>
 				<view class="contentRight">
-					¥<text>1280.00</text>
+					¥<text>{{item.balance}}</text>
 				</view>
 			</view>
 		</view>
@@ -103,13 +103,63 @@
 
 <script>
 	import {pageMixin} from "../../common/mixin";
-	
+	import {getBalanceRank} from "../../common/fetch.js"
 	export default {
 		mixins:[pageMixin],
 		data() {
 			return {
-				
+				index:0,
+				page:1,
+				pageSize:10,
+				isFriend:0,
+				pro:[],
+				myInfo:'',
+				totalCount:0
 			};
+		},
+		onShow() {
+			this.page=1;
+			this.pro=[];
+			this.getPro();
+		},
+		onReachBottom() {
+			if(this.totalCount>this.pro.length){
+				this.page++;
+				this.getPro();
+			}
+		},
+		methods:{
+			change(item){
+				this.index=item;
+				if(item==1){
+					this.isFriend=1;
+				}else{
+					this.isFriend=0;
+				}
+				this.pro=[];
+				this.page=1;
+				this.getPro();
+			},
+			getPro(){
+				let data={
+					page:this.page,
+					pageSize:this.pageSize
+				}
+				if(this.isFriend){
+					data.is_my_friend=1;
+				}
+				getBalanceRank(data).then(res=>{
+					if(res.errorCode==0){
+						for(let item of res.data.list){
+							this.pro.push(item);
+						}
+						this.totalCount=res.totalCount;
+						this.myInfo=res.data.my_rank;
+					}
+				}).catch(e=>{
+					console.log(e)
+				})
+			}
 		}
 	}
 </script>

@@ -148,8 +148,8 @@ export const pageMixin = {
 		// #endif
 
 		// #ifdef MP-WEIXIN || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO
-		
-		
+
+
 
 		/*users_id*/
 		users_id = option.users_id
@@ -160,8 +160,8 @@ export const pageMixin = {
 		}else{
 			users_id = ls.get('users_id');
 		}
-		
-		
+
+
 		// #ifdef MP-WEIXIN
 		//如果没有的话，就从小程序的远程配置里面拿吧
 		if(!users_id){
@@ -172,7 +172,7 @@ export const pageMixin = {
 		// #endif
 
 		if (!users_id){
-			
+
 			uni.showModal({
 				title: '提示',
 				content: '缺少商户id',
@@ -216,7 +216,7 @@ export const pageMixin = {
 		console.log('JSSDK_INITJSSDK_INITJSSDK_INITJSSDK_INITJSSDK_INIT',this.JSSDK_INIT)
 		let initData = await this.getInitData()
 		//页面默认全都是分享出去是首页的
-		if(this.JSSDK_INIT){
+		if(isWeiXin() && this.JSSDK_INIT){
 			console.log(44444444444444444)
 			this.WX_JSSDK_INIT(this).then((env)=>{
 

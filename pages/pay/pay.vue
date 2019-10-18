@@ -213,15 +213,15 @@
 		},
 		methods: {
 			// 统一方法
-			self_orderPay(){
+			async self_orderPay(){
 				if(this.need_invoice == 1 && this.invoice_info == '') {
 					uni.showToast({
 						title: '发票信息不能为空',
 						icon: 'none'
 					});
 					return;
-				}
-				orderPay({
+				};
+				let payConf = {
 					Order_ID: this.Order_ID,
 					pay_type: this.pay_type,
 					pay_money: this.orderInfo.Order_Fyepay, // 剩余支付的钱
@@ -230,119 +230,137 @@
 					need_invoice: this.need_invoice, 
 					invoice_info: this.invoice_info,
 					order_remark: this.order_remark
-				}).then(res=>{	
-					console.log(res);
-					if(res.errorCode == 0) {
-						
-						let payConf = {
-								Order_ID: this.Order_ID,
-								pay_money: this.orderInfo.Order_Fyepay,
-								need_invoice: this.need_invoice,
-								invoice_info: this.invoice_info,
-								order_remark: this.order_remark
-						};
-						
-							//需要格外有一个code
-							// #ifdef H5
-							if (!isWeiXin()) {
-								this.$error('请在微信内打开')
-								return;
-							}
-							let isHasCode = this.code || GetQueryByString('code');
-						
-							if (isHasCode) {
-						
-								//拿到之前的配置
-								payConf = { ...ls.get('temp_order_info'),
-									code: isHasCode,
-									pay_type: 'wx_mp'
-								}
-						
-							} else {
-						
-								//存上临时的数据
-								ls.set('temp_order_info', payConf);
-								//去掉转吧
-								this.$_init_wxpay_env();
-							}
-							// #endif
-						
-							// #ifdef MP-WEIXIN
-							payConf.pay_type = 'wx_lp'
-							// #endif
-						
-							// #ifdef APP-PLUS
-							payConf.pay_type = 'wx_app'
-							// #endif
-						
-						
-							console.log('payConf is', payConf)
-							orderPay(payConf).then(res => {
-								console.log(res);
-						
-								// #ifdef H5
-								let {
-									timestamp,
-									nonceStr,
-									signType,
-									paySign
-								} = res.data;
-						
-								//直接支付
-								_self.WX_JSSDK_INIT(_self).then((wxEnv) => {
-						
-									//关键字？？package
-									wxEnv.chooseWXPay({
-										timestamp,
-										nonceStr,
-										package: res.data.package,
-										signType,
-										paySign,
-										success: function(res) {
-											// 支付成功后的回调函数
-										}
-									});
-						
-								}).catch((e) => {
-									console.log('支付失败')
-								})
-						
-								return;
-						
-						
-								// #endif
-						
-						
-								let provider = 'wxpay';
-								let orderInfo = {}
-						
-								// #ifdef MP-WEIXIN || MP-BAIDU || MP-TOUTIAO || MP-ALIPAY
-						
-						
-								// #endif
-						
-								// #ifdef APP-PLUS
-								console.log(res.data, '支付数据222222222222222222');
-								// #endif
-						
-								uni.requestPayment({
-									provider,
-									orderInfo, //微信、支付宝订单数据
-									success: function(res) {
-										console.log('success:' + JSON.stringify(res));
-									},
-									fail: function(err) {
-										console.log('fail:' + JSON.stringify(err));
-									}
-								});
-						
-							})
-					}else {
-						uni.showToast({
-							title: res.msg,
-							icon: 'none'
-						})
+				};
+				//需要格外有一个code
+				// #ifdef H5
+				if (!isWeiXin()) {
+					this.$error('请在微信内打开')
+					return;
+				}
+				let isHasCode = this.code || GetQueryByString('code');
+
+				if (isHasCode) {
+					// payConf.code = isHasCode;
+					//拿到之前的配置
+					payConf = { ...ls.get('temp_order_info'),
+						code: isHasCode,
+						pay_type: 'wx_mp'
 					}
+
+				} else {
+					//存上临时的数据
+					ls.set('temp_order_info', payConf);
+					//去掉转吧
+					this.$_init_wxpay_env();
+				}
+
+
+				// #endif
+				
+				// #ifdef MP-WEIXIN
+					payConf.pay_type = 'wx_lp';
+
+					await new Promise((resolve) => {
+						uni.login({
+							success: function (loginRes) {
+								console.log(loginRes);
+								payConf.code = loginRes.code
+								resolve()
+							}
+						});
+					})
+				// #endif
+				
+				orderPay(payConf).then(res => {
+					console.log(res);
+					
+					
+					// #ifdef H5
+					let {
+						timestamp,
+						nonceStr,
+						signType,
+						paySign
+					} = res.data;
+
+					//直接支付
+					_self.WX_JSSDK_INIT(_self).then((wxEnv) => {
+
+						//关键字？？package
+						wxEnv.chooseWXPay({
+							timestamp,
+							nonceStr,
+							package: res.data.package,
+							signType,
+							paySign,
+							success: function(res) {
+								// 支付成功后的回调函数
+							}
+						});
+
+					}).catch((e) => {
+						console.log('支付失败')
+					})
+
+					return;
+
+
+					// #endif
+
+
+					let provider = 'wxpay';
+					let orderInfo = {}
+
+					// #ifdef MP-WEIXIN || MP-BAIDU || MP-TOUTIAO || MP-ALIPAY
+
+
+					// #endif
+
+					// #ifdef MP-WEIXIN
+
+					provider = 'wxpay';
+					orderInfo = res.data
+					delete orderInfo.timestamp
+
+					console.log(provider,orderInfo,'支付数据222222222222222222');
+					uni.requestPayment({
+					...orderInfo,
+						provider,
+						success: function (res) {
+							console.log('success:' + JSON.stringify(res));
+							_self.paySuccessCall(res)
+						},
+						fail: function (err) {
+							console.log('fail:' + JSON.stringify(err));
+							uni.showModal({
+								title:'支付错误',
+								content:JSON.stringify(err)
+							})
+						}
+					});
+					// #endif
+
+					// #ifdef APP-PLUS
+					provider = 'wxpay';
+					orderInfo = res.data
+					console.log(provider,orderInfo,'支付数据222222222222222222');
+
+					uni.requestPayment({
+						provider,
+						orderInfo, //微信、支付宝订单数据
+						success: function (res) {
+							_self.paySuccessCall(res)
+							console.log('success:' + JSON.stringify(res));
+						},
+						fail: function (err) {
+							console.log('fail:' + JSON.stringify(err));
+							uni.showModal({
+								title:'支付错误',
+								content:JSON.stringify(err)
+							})
+						}
+					});
+					// #endif
 				})
 			},
 			//获取用户支付方式 
@@ -388,13 +406,7 @@
 						this.need_invoice = this.orderInfo.Order_NeedInvoice;
 						this.openInvoice = this.orderInfo.Order_NeedInvoice > 0;
 						this.invoice_info = this.orderInfo.Order_InvoiceInfo;
-						this.order_remark = this.orderInfo.Order_Remark;
-						// this.pay_money = this.orderInfo.Order_Yebc;
-						// this.openMoney = this.orderInfo.Order_Yebc > 0;
-						// this.need_invoice = this.orderInfo.Order_NeedInvoice;
-						// this.openInvoice = this.orderInfo.Order_NeedInvoice > 0;
-						// this.invoice_info = this.orderInfo.Order_InvoiceInfo;
-						// this.order_remark = this.orderInfo.Order_Remark;
+						this.order_remark = this.orderInfo.Order_Remark;											
 						if(this.showDirect) {
 							this.$refs.popupLayer.show();
 						}
@@ -506,8 +518,6 @@
 			},
 			async $_init_wxpay_env() {
 
-
-
 				let initData = await this.getInitData()
 
 				let login_methods = initData.login_methods;
@@ -580,8 +590,13 @@
 
 
 			},
+			paySuccessCall(){
+				uni.navigateTo({
+					url:'/pages/order/order'
+				})
+			},
 			// 用户选择 微信支付
-			wechatPay() {
+			async wechatPay() {
 
 				let _self = this;
 
@@ -595,6 +610,7 @@
 
 						let payConf = {
 							Order_ID: this.Order_ID,
+							user_money: this.user_money,
 							pay_money: this.orderInfo.Order_Fyepay,
 							need_invoice: this.need_invoice,
 							invoice_info: this.invoice_info,
@@ -624,6 +640,8 @@
 							//去掉转吧
 							this.$_init_wxpay_env();
 						}
+
+
 						// #endif
 
 						// #ifdef MP-WEIXIN
@@ -635,9 +653,25 @@
 						// #endif
 
 
+ 						// #ifdef MP-WEIXIN
+						payConf.pay_type = 'wx_lp'
+
+						await new Promise((resolve => {
+							uni.login({
+								success: function (loginRes) {
+									console.log(loginRes);
+									payConf.code = loginRes.code
+									resolve()
+								}
+							});
+						}))
+
+						// #endif
+
 						console.log('payConf is', payConf)
 						orderPay(payConf).then(res => {
 							console.log(res);
+
 
 							// #ifdef H5
 							let {
@@ -680,20 +714,51 @@
 
 							// #endif
 
-							// #ifdef APP-PLUS
-							console.log(res.data, '支付数据222222222222222222');
+							// #ifdef MP-WEIXIN
+
+							provider = 'wxpay';
+							orderInfo = res.data
+							delete orderInfo.timestamp
+
+							console.log(provider,orderInfo,'支付数据222222222222222222');
+							uni.requestPayment({
+							...orderInfo,
+								provider,
+								success: function (res) {
+									console.log('success:' + JSON.stringify(res));
+									_self.paySuccessCall(res)
+								},
+								fail: function (err) {
+									console.log('fail:' + JSON.stringify(err));
+									uni.showModal({
+										title:'支付错误',
+										content:JSON.stringify(err)
+									})
+								}
+							});
 							// #endif
+
+							// #ifdef APP-PLUS
+							provider = 'wxpay';
+							orderInfo = res.data
+							console.log(provider,orderInfo,'支付数据222222222222222222');
 
 							uni.requestPayment({
 								provider,
 								orderInfo, //微信、支付宝订单数据
-								success: function(res) {
+								success: function (res) {
+									_self.paySuccessCall(res)
 									console.log('success:' + JSON.stringify(res));
 								},
-								fail: function(err) {
+								fail: function (err) {
 									console.log('fail:' + JSON.stringify(err));
+									uni.showModal({
+										title:'支付错误',
+										content:JSON.stringify(err)
+									})
 								}
 							});
+							// #endif			
 
 						})
 
@@ -723,6 +788,7 @@
 					}
 				}
 			},
+			
 			// 取消输入支付密码
 			cancelInput() {
 				this.password_input = false;
@@ -777,6 +843,7 @@
 		border-bottom: 20rpx solid #FFF3F3F3;
 	}
 
+
 	.loc_icon {
 		width: 41rpx;
 		height: 51rpx;
@@ -797,6 +864,7 @@
 	.name>span {
 		margin-left: 10rpx;
 	}
+
 
 	.location {
 		font-size: 24rpx;
@@ -831,6 +899,7 @@
 		margin-bottom: 50rpx;
 	}
 
+
 	.pro-msg {
 		margin-left: 27rpx;
 		width: 451rpx;
@@ -851,6 +920,8 @@
 		font-size: 26rpx;
 		margin-bottom: 20rpx;
 	}
+
+                        
 
 	.attr {
 		display: inline-block;
