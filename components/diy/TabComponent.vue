@@ -240,7 +240,7 @@
             right = 0;
             break;
           case 2:
-            console.log(idx)
+            // console.log(idx)
             // top = 0;
             left = idx % 2 == 0 ? 0 : conf / 2;
             right = idx % 2 == 0 ? conf / 2 : 0;
@@ -253,7 +253,10 @@
         //   marginRight: right + 'px'
         // })
         //6666
-        if(idx===0 || idx===1)top = 0
+        if(idx===0 )top = 0
+        //这个需要是2
+        if(idx===1 && this.tab.config.style==2 )top = 0
+		
         return {
           marginTop: top + 'px',
           marginBottom: bottom + 'px',
