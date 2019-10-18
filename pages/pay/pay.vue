@@ -418,6 +418,11 @@ export default {
 
 
         },
+        paySuccessCall(){
+		    uni.navigateTo({
+                url:'/pages/order/order'
+            })
+        },
 		// 用户选择 微信支付
 		async wechatPay(){
 
@@ -460,8 +465,6 @@ export default {
                     // #ifdef MP-WEIXIN
                     payConf.pay_type = 'wx_lp'
 
-
-
                     await new Promise((resolve => {
                         uni.login({
                             success: function (loginRes) {
@@ -478,7 +481,6 @@ export default {
                     payConf.pay_type = 'wx_app'
                     // #endif
 
-
                     console.log('payConf is',payConf)
                     orderPay(payConf).then(res=>{
                         console.log(res);
@@ -494,6 +496,7 @@ export default {
                                 timestamp,nonceStr,package:res.data.package,signType,paySign,
                                 success: function (res) {
                                     // 支付成功后的回调函数
+                                    _self.paySuccessCall(res)
                                 }
                             });
 
@@ -522,9 +525,14 @@ export default {
                             provider,
                             success: function (res) {
                                 console.log('success:' + JSON.stringify(res));
+                                _self.paySuccessCall(res)
                             },
                             fail: function (err) {
                                 console.log('fail:' + JSON.stringify(err));
+                                uni.showModal({
+                                    title:'支付错误',
+                                    content:JSON.stringify(err)
+                                })
                             }
                         });
 
@@ -533,22 +541,27 @@ export default {
 
                         // #ifdef APP-PLUS
                         provider = 'wxpay';
-
                         orderInfo = res.data
-
                         console.log(provider,orderInfo,'支付数据222222222222222222');
-                        // #endif
 
                         uni.requestPayment({
                             provider,
                             orderInfo, //微信、支付宝订单数据
                             success: function (res) {
+                                _self.paySuccessCall(res)
                                 console.log('success:' + JSON.stringify(res));
                             },
                             fail: function (err) {
                                 console.log('fail:' + JSON.stringify(err));
+                                uni.showModal({
+                                    title:'支付错误',
+                                    content:JSON.stringify(err)
+                                })
                             }
                         });
+                        // #endif
+
+
 
                     })
 
