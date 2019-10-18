@@ -7,6 +7,30 @@ import Base64 from './tool/base64.js'
 import {ls} from "./tool.js";
 import {post,get,ajax} from './interceptors.js';
 
+export const GET_ENV = ()=>{
+	// #ifdef APP-PLUS
+	return 'app'
+	// #endif
+	
+	// #ifdef MP-WEIXIN
+	return 'wx_lp'
+	// #endif
+	
+	// #ifdef MP-TOUTIAO
+	return 'tt_lp'
+	// #endif
+	
+	// #ifdef MP-ALIPAY 
+	return 'ali_lp'
+	// #endif
+	
+	// #ifdef H5
+	return 'wx_mp'
+	// #endif
+}
+
+
+
 const fetch = function (act, param,options = false,url='/api/little_program/shopconfig.php',  method = 'post') {
   if(!act){
 	  uni.showToast({
@@ -20,11 +44,11 @@ const fetch = function (act, param,options = false,url='/api/little_program/shop
   if(!param)param = {}
 
   param.act = act;
-  // param.User_ID = get_User_ID();
-  // param.Users_ID = get_Users_ID();   //Users_ID  写死
-  // param.appid = get_Appid();
-  param.User_ID = 3;
-  param.Users_ID = 'wkbq6nc2kc';
+  param.User_ID = get_User_ID();
+  param.Users_ID = get_Users_ID();   //Users_ID  写死
+  param.appid = get_Appid();
+  // param.User_ID = 3;
+  // param.Users_ID = 'wkbq6nc2kc';
 
   // 数据加密
   let data = createToken(param);
@@ -78,7 +102,7 @@ export const updateCart = (data,options) => fetch('update_cart',data,options)
 // 获取订单操作
 export const createOrderCheck = (data,options) => fetch('create_order_check',data,options)
 // 获取用户信息（临时）
-export const getUserInfo = (data,options) => fetch('get_user_info',data,options)
+export const get_user_info = (data,options) => fetch('get_user_info',data,options)
 // 获取评论
 export const getComments = (data,options) => fetch('get_commit',data,options)
 // 获取收藏列表
@@ -167,9 +191,9 @@ function get_Appid() {
   return 'xhh';
 }
 
-export const get_Users_ID = ()=>ls.get('Users_ID')
+export const get_Users_ID = ()=>ls.get('users_id');
 
-export const get_User_ID = ()=>ls.get('get_User_ID')
+export const get_User_ID = ()=>ls.get('user_id');
 
 export const createToken = function(object) {
   object = ObjectToArr(object);

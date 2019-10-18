@@ -84,7 +84,7 @@
 import {getCart,getProd,updateCart,delCart} from '../../common/fetch.js';
 import {pageMixin} from "../../common/mixin";
 import {ls} from '../../common/tool.js';
-
+import {mapActions} from 'vuex';
 export default {
 		mixins:[pageMixin],
 		  name: "App",
@@ -102,16 +102,12 @@ export default {
 		handleShow: true,
 		total_count: 0,
 		total_price: 0,
-		Users_ID:'wkbq6nc2kc',
-		User_ID:3,
 		prod_arg: {
 			page: 1,
 			pageSize: 4,
 		},
 		hasMore: true, // 是否还有产品
 		postData: {
-		  Users_ID: 'wkbq6nc2kc',
-		  User_ID: 3,
 		  cart_key: 'CartList',
 		  prod_id: '',
 		  qty: 0,
@@ -147,7 +143,11 @@ export default {
   onLoad(){
 
   },
+	async created(){
+		let UserInfo = this.getUserInfo();
+	},
   methods: {
+		...mapActions(['getUserInfo']),
 	 // 去逛逛
 	gotoBuy(){
 		uni.switchTab({
