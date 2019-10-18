@@ -419,7 +419,7 @@ export default {
 
         },
 		// 用户选择 微信支付
-		wechatPay(){
+		async wechatPay(){
 
 
 
@@ -459,6 +459,19 @@ export default {
 
                     // #ifdef MP-WEIXIN
                     payConf.pay_type = 'wx_lp'
+
+
+
+                    await new Promise((resolve => {
+                        uni.login({
+                            success: function (loginRes) {
+                                console.log(loginRes);
+                                payConf.code = loginRes.code
+                                resolve()
+                            }
+                        });
+                    }))
+
                     // #endif
 
                     // #ifdef APP-PLUS
@@ -494,16 +507,36 @@ export default {
                         // #endif
 
 
-                        let provider = 'wxpay';
+                        let provider = '';
                         let orderInfo = {}
 
-                        // #ifdef MP-WEIXIN || MP-BAIDU || MP-TOUTIAO || MP-ALIPAY
+                        // #ifdef MP-WEIXIN
+
+                        provider = 'wxpay';
+                        orderInfo = res.data
+                        delete orderInfo.timestamp
+
+                        console.log(provider,orderInfo,'支付数据222222222222222222');
+                        uni.requestPayment({
+                        ...orderInfo,
+                            provider,
+                            success: function (res) {
+                                console.log('success:' + JSON.stringify(res));
+                            },
+                            fail: function (err) {
+                                console.log('fail:' + JSON.stringify(err));
+                            }
+                        });
 
 
                         // #endif
 
                         // #ifdef APP-PLUS
-                            console.log(res.data,'支付数据222222222222222222');
+                        provider = 'wxpay';
+
+                        orderInfo = res.data
+
+                        console.log(provider,orderInfo,'支付数据222222222222222222');
                         // #endif
 
                         uni.requestPayment({
@@ -557,6 +590,7 @@ export default {
 			orderPay({Order_ID:this.Order_ID , pay_type: 'balance' ,pay_money: this.pay_money,user_pay_password: this.user_pay_password}).then(res=>{
 				console.log(res)
 				if(res.errorCode == 0) {
+
 					orderPay({Order_ID: this.Order_ID, pay_type: this.pay_type ,pay_money: res.data.Order_Fyepay, need_invoice: this.need_invoice ,invoice_info: this.invoice_info, order_remark: this.order_remark}).then(res=>{
 						console.log(res)
 						if(res.errorCode == 0) {
