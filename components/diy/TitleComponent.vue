@@ -59,6 +59,7 @@
 
   .title
     position relative
+    box-sizing border-box
     width 100%
 
     .text
