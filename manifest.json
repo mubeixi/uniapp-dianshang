@@ -149,9 +149,9 @@
     "h5" : {
         "router" : {
           "mode" : "history",
-          "base" : ""
+          "base" : "fre"
         },
-        "publicPath" : "./",
+        //"publicPath" : "./",
         "devServer" : {
             "port" : 4100,
             "disableHostCheck" : true,

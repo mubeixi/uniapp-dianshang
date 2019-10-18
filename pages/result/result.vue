@@ -1,5 +1,9 @@
 <template>
   <div class="bd" @click="closeShow">
+	  <!-- #ifdef APP-PLUS -->
+	  <!-- 这里是状态栏 -->
+	  <view class="status_bar" ></view>
+	  <!-- #endif -->
     <div class="top">
         <image src="../../static/left.png" class="back" @click="goBack"></image>
 		<input type="text" v-model="inputValue" class="search" @confirm="success"  @click="goSearch" disabled/>
@@ -14,20 +18,20 @@
 			<view class="xiangshang">
 				<image src="/static/result/tops.png" v-if="isSheng==1"></image>
 				<image src="/static/result/top.png" v-else></image>
-				
+
 				<image src="/static/result/bottoms.png" v-if="isSheng==2" style="bottom: 0rpx;"></image>
 				<image src="/static/result/bottom.png" v-else style="bottom: 0rpx;"></image>
 			</view>
 		</div></div>
         <div :style="{color:showShai?'#F43131':''}" @click.stop="change" style="width: 140rpx;">筛选<div class="line"></div></div>
 		<div class="tab" v-if="showShai"   style="width: 40rpx;position: absolute;top: 0rpx;right: 0rpx;">
-			
+
 		</div>
 		<div class="tab" style="width: 40rpx;position: absolute;top: 0rpx;right: 28rpx;" v-else>
 			<image src="/static/result/jx1.png" @click="changeCate" v-if="cate==2" class="imgm"></image>
 			<image src="/static/result/jx.png" @click="changeCate" v-else class="imgm"></image>
 		</div>
-		
+
 		<div class="shaixuan" v-if="showShai" @click.stop   catchtouchmove="false">
 			<view class="priceInterval">价格区间(元)</view>
 			<view class="inputPrice">
@@ -45,7 +49,7 @@
 				<view class="sure" @click="sureSearch">确定</view>
 			</view>
 			<view class="zhao" @click="closeShow" catchtouchmove="false">
-				
+
 			</view>
 		</div>
     </div>
@@ -65,7 +69,7 @@
 			<div class="defaults" v-if="pro.length<=0">
 				<image src="/static/defaultImg.png" ></image>
 			</div>
-		</div>	
+		</div>
 	</div>
     <div v-else>
 		<div class="cate2" >
@@ -135,7 +139,7 @@ export default {
 	   this.getProd(this.orderby);
    },
   onShow(){
-   	  
+
   },
   onReachBottom(){
 		if(this.pro.length<this.count){
@@ -147,7 +151,7 @@ export default {
     popupLayer
   },
   created(){
-	 
+
   },
   methods:{
 	  //跳转搜索页
@@ -245,20 +249,20 @@ export default {
 				 Products_Name:this.inputValue,
 				 page:this.page,
 				 pageSize:this.pageSize
-			 } 
+			 }
 		  }else if(this.Cate_ID){
 			data={
 				Users_ID:'wkbq6nc2kc',
 				Cate_ID:this.Cate_ID,
 				page:this.page,
 				pageSize:this.pageSize
-			} 
+			}
 		  }else{
 			 data={
 			 	Users_ID:'wkbq6nc2kc',
 			 	page:this.page,
 			 	pageSize:this.pageSize
-			 }  
+			 }
 		  }
 		  if(item=="sales"){
 			  data.order_by=item;
@@ -288,7 +292,7 @@ export default {
 			  for(var item of res.data){
 				  this.pro.push(item);
 			  }
-			 //this.pro=res.data; 
+			 //this.pro=res.data;
 			 this.count=res.totalCount;
 		  }).catch(e=>{})
 	  },
@@ -315,7 +319,7 @@ export default {
 			return;
 		}
 		this.showShai=true;
-		
+
 	  }
   }
 }
@@ -492,7 +496,7 @@ export default {
 				}
 			}
 		}
-		
+
 	}
 	.imgm{
 		width: 36rpx;

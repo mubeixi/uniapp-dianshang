@@ -418,8 +418,13 @@ export default {
 
 
         },
+        paySuccessCall(){
+		    uni.navigateTo({
+                url:'/pages/order/order'
+            })
+        },
 		// 用户选择 微信支付
-		wechatPay(){
+		async wechatPay(){
 
 
 
@@ -459,12 +464,22 @@ export default {
 
                     // #ifdef MP-WEIXIN
                     payConf.pay_type = 'wx_lp'
+
+                    await new Promise((resolve => {
+                        uni.login({
+                            success: function (loginRes) {
+                                console.log(loginRes);
+                                payConf.code = loginRes.code
+                                resolve()
+                            }
+                        });
+                    }))
+
                     // #endif
 
                     // #ifdef APP-PLUS
                     payConf.pay_type = 'wx_app'
                     // #endif
-
 
                     console.log('payConf is',payConf)
                     orderPay(payConf).then(res=>{
@@ -481,11 +496,12 @@ export default {
                                 timestamp,nonceStr,package:res.data.package,signType,paySign,
                                 success: function (res) {
                                     // 支付成功后的回调函数
+                                    _self.paySuccessCall(res)
                                 }
                             });
 
                         }).catch((e)=>{
-                            console.log('支付失败')
+                            console.log('发起支付失败')
                         })
 
                         return;
@@ -494,28 +510,58 @@ export default {
                         // #endif
 
 
-                        let provider = 'wxpay';
+                        let provider = '';
                         let orderInfo = {}
 
-                        // #ifdef MP-WEIXIN || MP-BAIDU || MP-TOUTIAO || MP-ALIPAY
+                        // #ifdef MP-WEIXIN
+
+                        provider = 'wxpay';
+                        orderInfo = res.data
+                        delete orderInfo.timestamp
+
+                        console.log(provider,orderInfo,'支付数据222222222222222222');
+                        uni.requestPayment({
+                        ...orderInfo,
+                            provider,
+                            success: function (res) {
+                                console.log('success:' + JSON.stringify(res));
+                                _self.paySuccessCall(res)
+                            },
+                            fail: function (err) {
+                                console.log('fail:' + JSON.stringify(err));
+                                uni.showModal({
+                                    title:'支付错误',
+                                    content:JSON.stringify(err)
+                                })
+                            }
+                        });
 
 
                         // #endif
 
                         // #ifdef APP-PLUS
-                            console.log(res.data,'支付数据222222222222222222');
-                        // #endif
+                        provider = 'wxpay';
+                        orderInfo = res.data
+                        console.log(provider,orderInfo,'支付数据222222222222222222');
 
                         uni.requestPayment({
                             provider,
                             orderInfo, //微信、支付宝订单数据
                             success: function (res) {
+                                _self.paySuccessCall(res)
                                 console.log('success:' + JSON.stringify(res));
                             },
                             fail: function (err) {
                                 console.log('fail:' + JSON.stringify(err));
+                                uni.showModal({
+                                    title:'支付错误',
+                                    content:JSON.stringify(err)
+                                })
                             }
                         });
+                        // #endif
+
+
 
                     })
 
@@ -557,6 +603,7 @@ export default {
 			orderPay({Order_ID:this.Order_ID , pay_type: 'balance' ,pay_money: this.pay_money,user_pay_password: this.user_pay_password}).then(res=>{
 				console.log(res)
 				if(res.errorCode == 0) {
+
 					orderPay({Order_ID: this.Order_ID, pay_type: this.pay_type ,pay_money: res.data.Order_Fyepay, need_invoice: this.need_invoice ,invoice_info: this.invoice_info, order_remark: this.order_remark}).then(res=>{
 						console.log(res)
 						if(res.errorCode == 0) {

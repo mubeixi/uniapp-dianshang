@@ -5,10 +5,6 @@ export const isDev = process.env.NODE_ENV === 'production' ? false : true;
 export const APP_USERS_ID = 89757;
 // #endif
 
-
-
-
-
 // #ifdef H5
 console.log('NODE_ENV is '+isDev);
 export const apiBaseUrl = isDev?'':'http://new401.bafangka.com';//h5调试为了跨域

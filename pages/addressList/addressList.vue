@@ -1,7 +1,5 @@
 <template>
-	<!-- #ifdef APP-PLUS -->
-	<view class="status_bar" style="background: #f81111;"><!-- 这里是状态栏 --></view>
-	<!-- #endif -->
+
 	<view>
 		<radio-group class="radio-group" @change="radioChange">
 		  <label class="radio" :class="!check_flag ? 'no-redio' : ''" v-for="item in addresslist" :key="">
@@ -20,7 +18,7 @@
 			</view>
 		  </label>
 		</radio-group>
-		
+
 		<view style='height:82rpx;'></view>
 		<view class='tianjia' @click="addressAddEdit('a')">
 		  <view class='jia_img'>
@@ -37,7 +35,7 @@
 <script>
 	import {getAddress,delAddress} from '../../common/fetch.js'
 	import {pageMixin} from "../../common/mixin";
-	
+
 	export default {
 		mixins:[pageMixin],
 		data() {
@@ -70,7 +68,7 @@
 			      delta: 1
 			    });
 			  },
-			
+
 			  //删除收获地址
 			  deladdress: function (id) {
 			    var that = this;
@@ -93,7 +91,7 @@
 							  //重置删除收货地址id
 							  that.addresslist = addresslist;
 							  del_address_id = 0;
-							 
+
 							 console.log(that.addresslist)
 							  uni.showToast({
 							    title: '删除成功',
@@ -119,8 +117,8 @@
 			      }
 			    });
 			  },
-			
-			  //添加收货地址   
+
+			  //添加收货地址
 			  addressAddEdit: function(id){
 			    //判断是添加还是编辑
 				var address_id;
@@ -132,7 +130,7 @@
 			    	url: '../editAddress/editAddress?from=addresslist' + (address_id ? '&addressid=' + address_id : '')
 			    })
 			  },
-			
+
 			  //获取收货地址列表
 			  getAddressList: function () {
 				getAddress({}).then(res => {
@@ -145,10 +143,10 @@
 						content: res.msg,
 						showCancel: false
 					  })
-					}					
+					}
 				})
 			  },
-			
+
 		},
 		/**
 		   * 生命周期函数--监听页面加载
@@ -162,9 +160,9 @@
 		    //页面来源
 		    if (options.from) {
 				this.from_page = options.from
-		      
+
 		    }
-			
+
 		  },
 		  onShow(){
 			  this.getAddressList();
