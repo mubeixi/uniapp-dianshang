@@ -15,7 +15,10 @@
 		{
 			"path" : "pages/cart/cart",
 			"style" : {
-				"navigationBarTitleText": "购物车"
+				"navigationBarTitleText": "购物车",
+                "app-plus": {
+                  "titleNView": false
+                }
 			}
 		},
         {
@@ -63,7 +66,10 @@
         ,{
             "path" : "pages/result/result",
             "style" : {
-            	"navigationBarTitleText": "列表"
+            	"navigationBarTitleText": "列表",
+                "app-plus": {
+                  "titleNView": false
+                }
             }
         },
         {
@@ -103,13 +109,19 @@
         ,{
             "path" : "pages/person/person",
             "style" : {
-            	"navigationBarTitleText": "个人中心"
+            	"navigationBarTitleText": "个人中心",
+				"app-plus": {
+					"titleNView": false
+				}
             }
         }
         ,{
             "path" : "pages/fenxiao/fenxiao",
             "style" : {
-            	"navigationBarTitleText": "分销中心"
+            	"navigationBarTitleText": "分销中心",
+				"app-plus": {
+					"titleNView": false
+				}
             }
         }
         ,{
@@ -252,9 +264,10 @@
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "网中网",
 		"navigationBarBackgroundColor": "#FFFFFF",
-        "app-plus": {
+		"h5":{
 			"titleNView": false
-        }
+		}
+
 	},
 	"tabBar": {
 	    "color": "#7A7E83",
