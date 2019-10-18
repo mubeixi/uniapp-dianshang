@@ -135,7 +135,7 @@
 				<image src="/static/person/right.png" class="right"></image>
 			</view>
 
-			<view class="setting">
+			<view class="setting" @click="goSetting">
 				<image src="/static/person/she.png" class="left"></image>
 				<view class="pintuan">
 					设置
@@ -172,6 +172,11 @@
 			goGift(){
 				uni.navigateTo({
 					url:'../myGift/myGift'
+				})
+			},
+			goSetting(){
+				uni.navigateTo({
+					url:'../setting/setting'
 				})
 			},
 			//去任务中心

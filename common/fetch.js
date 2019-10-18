@@ -161,7 +161,7 @@ export const judgeReceiveGift = (data, options) => fetch('judge_receive_gift', d
 
 export const getJsSign = (data,options) => fetch('share_config', data, options);
 
-
+export const getProductCountInfo  = (data,options) => fetch('get_users_info', data, options);
 
 function get_Appid() {
   return 'xhh';

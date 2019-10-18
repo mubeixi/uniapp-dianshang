@@ -1,8 +1,6 @@
 <template>
   <div style="position:relative;">
-	  <!-- #ifdef APP-PLUS -->
-	  <view class="status_bar" style="background: #f81111;"><!-- 这里是状态栏 --></view>
-	  <!-- #endif -->
+	  
     <div class="top">
         <img src="/static/detail/back.png" @click="goBack" alt="">
         <img src="/static/detail/cart.png" @click="goCart" class="cart" alt="">
@@ -351,6 +349,7 @@ export default {
 				imageUrl: getProductThumb(this.product.ImgPath),
 				path: buildSharePath(path)
 			};
+
 
 			console.log(shareObj)
 
@@ -864,10 +863,14 @@ export default {
 		}
 	}
     /* 返回按钮和购物车按钮 */
+	
     .top {
         position: absolute;
         top: 10px;
         padding: 0 10px;
+		/* #ifdef APP-PLUS */
+		padding-top: var(--status-bar-height);
+		/* #endif */
         display: flex;
         justify-content: space-between;
         z-index: 10;
