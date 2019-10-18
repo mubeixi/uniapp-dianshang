@@ -90,6 +90,8 @@ export default {
         }
     },
 	onShow(){
+		this.data=[];
+		this.page=1;
 		this.getOrder();
 		this.getOrderNum();
 	},
