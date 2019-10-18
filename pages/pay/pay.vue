@@ -501,7 +501,7 @@ export default {
                             });
 
                         }).catch((e)=>{
-                            console.log('支付失败')
+                            console.log('发起支付失败')
                         })
 
                         return;
