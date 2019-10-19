@@ -2,7 +2,7 @@
     import {ls} from "./common/tool";
 
 	// #ifdef APP-PLUS
-	import {APP_USERS_ID} from "./common/env";
+	import {APP_USERS_ID,isDev} from "./common/env";
 	// #endif
 
     export default {
@@ -10,7 +10,7 @@
 		onLaunch: function(option) {
 
 			// #ifdef APP-PLUS
-			ls.clear()
+            // isDev && ls.clear()
 			ls.set('users_id',APP_USERS_ID);//app里面需要写死打包，不然办法
 			// #endif
 

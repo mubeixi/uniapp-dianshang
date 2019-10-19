@@ -224,7 +224,11 @@
         }
         ,{
             "path" : "pages/login/login",
-            "style" : {}
+            "style" : {
+				"app-plus": {
+					"titleNView": false
+				}
+			}
         },{
             "path" : "pages/logistics/logistics",
             "style" : {

@@ -103,6 +103,9 @@ export const fun = {
 
         }
     },
+    back:()=>{
+        uni.navigateBack()
+    }
     // success: ({ msg = '操作成功', title = '成功' }) => Notification({
     //   title,
     //   message: msg,

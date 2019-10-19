@@ -11,7 +11,7 @@
 
 			<image v-if="userInfo.User_ID" class="msg" src="/static/fenxiao/msg.png"></image>
 			<view class="person" v-if="userInfo.User_ID">
-					<image :src="userInfo.User_HeadImg||'/static/default.png'" ></image>
+					<image style="border-radius: 50%;overflow: hidden" :src="userInfo.User_HeadImg||'/static/default.png'" ></image>
 			</view>
 			<view class="nickName" v-if="userInfo.User_ID">
 				{{userInfo.User_NickName||userInfo.User_No?('用户'+userInfo.User_No):'暂无昵称'}}
@@ -22,16 +22,22 @@
 					<view class="salesSum">
 						累计销售额（元）
 					</view>
-					<view class="salesSumPrice" v-if="">
-						{{data.total_sales||'—'}}
+					<view class="salesSumPrice" v-if="userInfo.User_ID">
+						{{data.total_sales}}
+					</view>
+					<view class="salesSumPrice" v-else>
+						{{'—'}}
 					</view>
 				</view>
 				<view class="right">
 					<view class="salesSum">
 						累计利润（元）
 					</view>
-					<view class="salesSumPrice">
-						{{data.total_income||'—'}}
+					<view class="salesSumPrice" v-if="userInfo.User_ID">
+						{{data.total_income}}
+					</view>
+					<view class="salesSumPrice" v-else>
+						{{'—'}}
 					</view>
 				</view>
 			</view>
