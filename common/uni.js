@@ -20,7 +20,7 @@ uni.navigateTo = (opt)=>{
             users_id = ls.get('users_id');
 
             if (users_id) {
-                console.log(url)
+                console.log(users_id)
 
                 if(url.indexOf('?')===-1){
                     url += '?users_id='+users_id
@@ -28,10 +28,14 @@ uni.navigateTo = (opt)=>{
                     url.replace(/\?/,'?users_id='+users_id+'&')
                 }
 
-                console.log('users_id is '+users_id)
+
 
             }
         }
+
+        console.log('users_id is 2222222222222222222222222'+users_id)
+
+
 
 
     }

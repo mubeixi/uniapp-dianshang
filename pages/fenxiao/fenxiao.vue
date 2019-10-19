@@ -14,7 +14,7 @@
 					<image :src="userInfo.User_HeadImg||'/static/default.png'" ></image>
 			</view>
 			<view class="nickName" v-if="userInfo.User_ID">
-				{{userInfo.User_NickName}}
+				{{userInfo.User_NickName||userInfo.User_No?('用户'+userInfo.User_No):'暂无昵称'}}
 			</view>
 			<view class="font14 loginBtn" v-if="!userInfo.User_ID" plain size="mini" @click="goLogin">登录/注册</view>
 			<view class="sales">
@@ -109,12 +109,12 @@
 <script>
 	import {pageMixin} from "../../common/mixin";
 	import {getDisInit} from '../../common/fetch.js'
-	import {mapActions} from 'vuex';
+	import {mapActions,mapState,mapGetters} from 'vuex';
 	export default {
 		mixins:[pageMixin],
 		data() {
 			return {
-				userInfo:{},
+
 				data:{
 					total_sales:'',
 					total_income:'',
@@ -122,15 +122,20 @@
 				},//
 			};
 		},
+		computed:{
+			...mapGetters(['userInfo'])
+		},
 		onLoad() {
 
 		},
-		onShow() {
+		async onShow() {
 			//获取分销首页
 			this.getDisInit();
+
+			//this.userInfo = await this.getUserInfo();
 		},
-		async created(){
-			this.userInfo = await this.getUserInfo();
+		created(){
+
 		},
 		methods:{
 			...mapActions(['getUserInfo']),

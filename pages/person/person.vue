@@ -17,7 +17,7 @@
 				</view>
 				<view class="right flex1" :style="{position:!userInfo.User_ID?'relative':'static'}">
 					<view class="font14 loginBtn" v-if="!userInfo.User_ID" plain size="mini" @click="goLogin">登录/注册</view>
-					<view v-if="userInfo.User_ID" class="nickName">{{userInfo.User_NickName||''}}</view>
+					<view v-if="userInfo.User_ID" class="nickName">{{userInfo.User_NickName||userInfo.User_No?('用户'+userInfo.User_No):'暂无昵称'}}</view>
 					<view v-if="userInfo.User_ID" class="cart">{{userLevelText}}<image src="/static/person/rightCart.png" ></image></view>
 				</view>
 			</view>
@@ -305,7 +305,7 @@
 					//width:136rpx;
 					height:42rpx;
 					line-height: 42rpx;
-					display: flex;
+					display: inline-block;//flex;
 					align-items: center;
 					padding-left: 16rpx;
 					padding-right: 12rpx;
