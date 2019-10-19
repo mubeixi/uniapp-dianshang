@@ -461,13 +461,7 @@
 			invoiceHandle(e) {
 				let invoice = e.detail.value;
 				this.invoice_info = invoice;
-				if(invoice == '') {
-					uni.showToast({
-						title: '发票信息不能为空',
-						icon: 'none'
-					});
-					return;
-				}else {
+				if(this.openInvoice) {
 					this.invoice_info = invoice;
 				}
 			},
@@ -490,6 +484,14 @@
 			},
 			// 去支付
 			submit() {
+				// 发票信息
+				if (this.need_invoice && this.invoice_info == '') {
+					uni.showToast({
+						title: '发票信息不能为空',
+						icon: 'none'
+					});
+					return;
+				}
 				// 使用余额支付了
 				if (this.user_money > 0) {
 					// 待支付金额
@@ -505,14 +507,6 @@
 						// 待支付金额
 						this.$refs.popupLayer.show();
 					} else {
-						// 直接请求
-						if (this.need_invoice && this.invoice_info == '') {
-							uni.showToast({
-								title: '发票信息不能为空',
-								icon: 'none'
-							});
-							return;
-						}
 						// 不使用余额支付，pay_money为要提交的金额
 						this.self_orderPay();
 					}
