@@ -1,16 +1,16 @@
 <template>
     <div v-if="loading">
       <!--  <pagetitle title="提交订单"></pagetitle> -->
-        <div class="address" v-if="orderInfo.is_virtual == 0 && orderInfo.NeedShipping == 1">
+        <div class="address" v-if="orderInfo.is_virtual == 0 && orderInfo.NeedShipping == 1" @click="goAddressList">
             <img class="loc_icon" src="/static/location.png" alt="">
             <div class="add_msg" v-if="addressinfo.Address_Name">
                 <div class="name">收货人：{{addressinfo.Address_Name}} <span>{{addressinfo.Address_Mobile | formatphone}}</span></div>
                 <div class="location">收货地址：{{addressinfo.Address_Province_name}}{{addressinfo.Address_City_name}}{{addressinfo.Address_Area_name}}{{addressinfo.Address_Town_name}}</div>
             </div>
-			<div class="add_msg" v-else>
-				<div>暂无收货地址，去添加</div>
-			</div>
-            <img class="right" src="/static/right.png" alt="" @click="goAddressList">
+						<div class="add_msg" v-else>
+							<div>暂无收货地址，去添加</div>
+						</div>
+            <img class="right" src="/static/right.png" alt="" >
         </div>
 		<div class="biz_msg">
 			<img :src="orderInfo.ShopLogo" class="biz_logo" alt="">
@@ -143,11 +143,11 @@
 
 <script>
 import popupLayer from '../../components/popup-layer/popup-layer.vue';
-import {getAddress,getCart,createOrderCheck,getUserInfo,createOrder} from '../../common/fetch.js';
+import {getAddress,getCart,createOrderCheck,get_user_info,createOrder} from '../../common/fetch.js';
 import {goBack} from '../../common/tool.js'
 import {pageMixin} from "../../common/mixin";
 import {check_money_in} from "../../common/util.js";
-
+import {mapGetters,mapActions} from 'vuex';
 export default {
 	mixins:[pageMixin],
     components: {
@@ -155,54 +155,53 @@ export default {
     },
     data(){
         return {
-            show: false, // 遮罩层
-            wl_show: false, // 物流选择
-            checked: true,
-            checked1: true,
-            checked2: true,
-            checked3: true,
-            wl_list: [
-                {name:'顺丰',price:'免邮',index:0},
-                {name:'中通',price:'免邮',index:1},
-                {name:'圆通',price:'￥20',index:2}
-            ],
-			Users_ID:'wkbq6nc2kc',
-			User_ID:3,
-			addressinfo: {}, // 收货地址信息
-			orderInfo: {},
-			type: 'shipping',
-			userInfo: {},
-			cart_buy: '',
-			current: '',
-			couponlist: [], // 优惠券列表,
-			coupon_id: '',  // 优惠券id
-			coupon_desc: '', // 优惠券选择描述
-			use_integral: 0, // 用于抵扣的积分数
-			use_money: 0, // 余额支付金额
-			intergralChecked: false,
-			userMoneyChecked: false,
-			faPiaoChecked: false,
-			ship_current: 0,
-			shipping_name: '', // 物流信息描述
-			postData: {
-				cart_key: '',
-				cart_buy: '',
-				shipping_id: 0,
-				address_id: '',
-				is_full_reduction: '',// 是否使用满减功能
-				coupon_id: '',
-				use_integral: 0, // 用于抵扣的积分数
-				use_money: 0,  // 余额支付金额
-				invoice_info: '',  // 发票抬头
-				order_remark: '', // 买家留言
-			},
-			Order_ID: 0,
-			addressLoading: false, // 收货地址信息是否加载完
-			orderLoading: false, //订单信息是否加载完
-			userLoading: false, //个人信息是否加载完
-			// remindAddress: false, // 提醒添加收货地址
-			submited: false,  // 是否已经提交过，防止重复提交
-			back_address_id: 0,
+					show: false, // 遮罩层
+					wl_show: false, // 物流选择
+					checked: true,
+					checked1: true,
+					checked2: true,
+					checked3: true,
+					wl_list: [
+							{name:'顺丰',price:'免邮',index:0},
+							{name:'中通',price:'免邮',index:1},
+							{name:'圆通',price:'￥20',index:2}
+					],
+					addressinfo: {}, // 收货地址信息
+					orderInfo: {},
+					type: 'shipping',
+					userInfo: {},
+					cart_buy: '',
+					current: '',
+					couponlist: [], // 优惠券列表,
+					coupon_id: '',  // 优惠券id
+					coupon_desc: '', // 优惠券选择描述
+					use_integral: 0, // 用于抵扣的积分数
+					use_money: 0, // 余额支付金额
+					intergralChecked: false,
+					userMoneyChecked: false,
+					faPiaoChecked: false,
+					ship_current: 0,
+					shipping_name: '', // 物流信息描述
+					postData: {
+						cart_key: '',
+						cart_buy: '',
+						shipping_id: 0,
+						address_id: '',
+						is_full_reduction: '',// 是否使用满减功能
+						coupon_id: '',
+						use_integral: 0, // 用于抵扣的积分数
+						use_money: 0,  // 余额支付金额
+						invoice_info: '',  // 发票抬头
+						order_remark: '', // 买家留言
+					},
+					Order_ID: 0,
+					addressLoading: false, // 收货地址信息是否加载完
+					orderLoading: false, //订单信息是否加载完
+					userLoading: false, //个人信息是否加载完
+					// remindAddress: false, // 提醒添加收货地址
+					submited: false,  // 是否已经提交过，防止重复提交
+					back_address_id: 0,
+					userInfo: {}
         }
     },
 	filters: {
@@ -218,7 +217,10 @@ export default {
 	onShow() {
 		this.getAddress();
 		this.createOrderCheck();
-		this.getUserInfo();
+		this.get_User_Info();
+	},
+	async created(){
+		let UserInfo = this.getUserInfo();
 	},
 	onLoad(options) {
 		this.postData.cart_key = options.cart_key;
@@ -235,7 +237,8 @@ export default {
 		}
 
 	},
-    methods: {
+  methods: {
+		...mapActions(['getUserInfo']),
 		goback(){
 			goBack();
 		},
@@ -275,7 +278,7 @@ export default {
 						}
 						this.Order_ID = res.data.Order_ID;
 						uni.redirectTo({
-							url: '../pay/pay?Order_ID='+ res.data.Order_ID
+							url: '../pay/pay?Order_ID='+ res.data.Order_ID+'&pagefrom=check'
 						})
 					}else {
 						uni.showToast({
@@ -390,11 +393,10 @@ export default {
 			};
 			this.postData.shipping_id = e.target.value;
 		},
-		getUserInfo(){
-			getUserInfo({User_ID:this.User_ID,Users_ID:this.Users_ID}).then(res => {
+		get_User_Info(){
+			get_user_info({User_ID:this.User_ID,Users_ID:this.Users_ID}).then(res => {
 				if(res.errorCode == 0) {
 					this.userInfo = res.data;
-
 				}
 				this.userLoading = true;
 			})

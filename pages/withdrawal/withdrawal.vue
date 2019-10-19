@@ -189,6 +189,8 @@
 <style scoped lang="scss">
 .all{
 	background-color: #f8f8f8;
+	width: 750rpx;
+	overflow: hidden;
 }
 view,div{
 	box-sizing: border-box;

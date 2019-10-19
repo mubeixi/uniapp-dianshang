@@ -29,7 +29,7 @@ function setWxConfig(config) {
 }
 
 
-const WX_JSSDK_INIT = (vm) => new Promise((resolve, reject) => {
+const WX_JSSDK_INIT = async(vm) => new Promise((resolve, reject) => {
 
 	if(!isWeiXin())reject(false);
 
@@ -38,7 +38,7 @@ const WX_JSSDK_INIT = (vm) => new Promise((resolve, reject) => {
 		resolve(wx);
 	}
 
-	getJsSign({
+	await getJsSign({
 		url:location.href.split('#')[0],
 		//debug : process.env.NODE_ENV === 'production' ? false : true
 	}).then((res) => {
@@ -66,6 +66,7 @@ const WX_JSSDK_INIT = (vm) => new Promise((resolve, reject) => {
 		}else{
 			reject(false)
 		}
+
 	}).catch(res=>{
 		reject(false)
 	})
