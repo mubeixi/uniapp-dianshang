@@ -8,6 +8,7 @@
 
 <script>
 	import {ls} from "../../../common/tool";
+	import {toast} from "../../../common";
 
 	export default {
 		data() {
@@ -26,6 +27,11 @@
 		},
 		created(){
 			this.info = ls.get('temp_sharepic_info')
+
+			uni.showToast({
+				position:'top',
+				title:'点击图片保存'
+			})
 		}
 	}
 </script>

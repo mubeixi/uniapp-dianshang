@@ -109,7 +109,7 @@ export const pageMixin = {
 		//如果连接里面已经有了，就不需要搞事
 		if(users_id){
 		    ls.set('users_id',users_id);
-		    console.log('this page users_id is '+users_id)
+		    // console.log('this page users_id is '+users_id)
 		    return;
 		}else{
 		    users_id = ls.get('users_id');
@@ -126,10 +126,10 @@ export const pageMixin = {
 				search = search.replace(/\?/,'?users_id='+users_id+'&')
 		    }
 
-		    console.log(search)
+		    // console.log(search)
 
 		    location.search = search
-			console.log(location.search)
+			// console.log(location.search)
 
 
 		}else{
@@ -221,19 +221,19 @@ export const pageMixin = {
 	async created(){
 
 		// #ifdef H5
-		console.log('JSSDK_INITJSSDK',this.JSSDK_INIT)
-		console.log('aaaaaaaaaaaaaaa')
+		// console.log('JSSDK_INITJSSDK',this.JSSDK_INIT)
+		// console.log('aaaaaaaaaaaaaaa')
 		let initData = await this.getInitData()
-		console.log('cccccccccccccc')
+		// console.log('cccccccccccccc')
 		//页面默认全都是分享出去是首页的
 		if(isWeiXin() && this.JSSDK_INIT){
-			console.log(44444444444444444)
+			// console.log(44444444444444444)
 
-			console.log('dddddddddddddddd')
+			// console.log('dddddddddddddddd')
 			await this.WX_JSSDK_INIT(this).then((env)=>{
 
 
-				console.log('eeeeeeeeeeeeeeeee')
+				// console.log('eeeeeeeeeeeeeeeee')
 				this.$wx.onMenuShareTimeline({
 					title: initData.ShopName, // 分享标题
 					link: location.origin, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
@@ -259,7 +259,7 @@ export const pageMixin = {
 			})
 		}
 
-		console.log('fffffffffffffffffffffffffffffff')
+		// console.log('fffffffffffffffffffffffffffffff')
 
 
 		// #endif

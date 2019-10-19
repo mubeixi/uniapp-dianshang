@@ -7,7 +7,7 @@ export const setUserInfo = ({commit}, data) => {
 };
 
 export const getInitData = async ({commit, state}) => {
-  console.log('bbbbbbbbbbbbbb')
+  // console.log('bbbbbbbbbbbbbb')
   let data = state.initData
   if (data) return data;
 
@@ -21,7 +21,7 @@ export const getInitData = async ({commit, state}) => {
   }
 
   await getSystemConf().then(res => {
-    console.log(res.data)
+    // console.log(res.data)
     commit('SET_INIT_DATA', res.data);
     data = res.data
 
