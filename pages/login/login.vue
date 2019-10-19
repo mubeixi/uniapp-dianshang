@@ -548,12 +548,12 @@
 			},
 			loginCall(userData){
 				this.setUserInfo(userData);
-				toast('登录成功', 'success')
+				//toast('登录成功', 'success')
 				setTimeout(function() {
 					uni.switchTab({
 						url: '/pages/index/index'
 					})
-				}, 500)
+				}, 200)
 			}
 
 		},

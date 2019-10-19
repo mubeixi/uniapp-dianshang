@@ -73,6 +73,12 @@ ul,li{
 .padding10-c{padding : 0 10px}
 .padding10-r{padding : 10px 0}
 
+
+.margin15{
+    margin: 15px;
+
+}
+
 //titleView为custom或者false时专用，让状态栏显示出来（对于商品详情页等需要显示的则不需要)
 .status_bar {
       height: var(--status-bar-height);

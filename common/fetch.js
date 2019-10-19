@@ -6,26 +6,33 @@ import Base64 from './tool/base64.js'
 
 import {ls} from "./tool.js";
 import {post,get,ajax} from './interceptors.js';
+import {isWeiXin} from "./tool";
 
 export const GET_ENV = ()=>{
 	// #ifdef APP-PLUS
 	return 'app'
 	// #endif
-	
+
 	// #ifdef MP-WEIXIN
 	return 'wx_lp'
 	// #endif
-	
+
 	// #ifdef MP-TOUTIAO
 	return 'tt_lp'
 	// #endif
-	
-	// #ifdef MP-ALIPAY 
+
+	// #ifdef MP-ALIPAY
 	return 'ali_lp'
 	// #endif
-	
+
 	// #ifdef H5
-	return 'wx_mp'
+    //需要考虑是不是普通浏览器
+    if(isWeiXin()){
+      return 'wx_mp'
+    }else{
+      return 'wap'
+    }
+
 	// #endif
 }
 
@@ -187,6 +194,7 @@ export const judgeReceiveGift = (data, options) => fetch('judge_receive_gift', d
 export const getJsSign = (data,options) => fetch('share_config', data, options);
 //jssdk签名
 
+export const getProductCountInfo  = (data,options) => fetch('get_users_info', data, options);
 export const getBalanceRank = (data,options) => fetch('get_balance_rank', data, options);
 
 

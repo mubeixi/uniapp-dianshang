@@ -3,12 +3,12 @@
     <view v-if="base.config.style==2" class="cover style2" :style="{backgroundImage:'url('+domainFunc(base.config.cover)+')'}">
       <div class="logotitle">
         <div class="flex">
-          <img class="logo" style="margin-top: 8px" :src="base.config.logo|domain"/>
+          <img class="logo" style="margin-top: 8px" :src="info.ShopLogo|domain"/>
           <div class="title">
-            <div style="line-height: 32px">{{base.config.title}}</div>
+            <div style="line-height: 32px">{{info.ShopName}}</div>
             <div class="flex" style="line-height: initial">
-              <div class="total font12">全部商品{{base.config.total}} </div>
-              <div class="new font12" style="margin-left: 4px;"> 上新{{base.config.new}}</div>
+              <div class="total font12">全部商品{{info.prod_total}} </div>
+              <div class="new font12" style="margin-left: 4px;"> 上新{{info.prod_isnew_total}}</div>
             </div>
           </div>
         </div>
@@ -20,12 +20,12 @@
     <view v-else class="cover style1" :style="{backgroundImage:'url('+domainFunc(base.config.cover)+')'}">
       <div class="logotitle">
         <div class="flex">
-          <img class="logo" style="margin-top: 8px" :src="base.config.logo|domain"/>
+          <img class="logo" style="margin-top: 8px" :src="info.ShopLogo|domain"/>
           <div class="title">
-            <div style="line-height: 32px">{{base.config.title}}</div>
+            <div style="line-height: 32px">{{info.ShopName}}</div>
             <div class="flex" style="line-height: initial">
-              <div class="total font12">全部商品{{base.config.total}} </div>
-              <div class="new font12" style="margin-left: 4px;"> 上新{{base.config.new}}</div>
+              <div class="total font12">全部商品{{info.prod_total}} </div>
+              <div class="new font12" style="margin-left: 4px;"> 上新{{info.prod_isnew_total}}</div>
             </div>
           </div>
         </div>
@@ -39,6 +39,7 @@
 </template>
 <script>
   import {domain} from "../../common/filter";
+import {getProductCountInfo} from "../../common/fetch";
 
   export default {
     name:'BaseComponent',
@@ -54,6 +55,7 @@
     data() {
       return {
         base: {},
+        info:{}
       };
     },
     computed: {
@@ -87,6 +89,17 @@
     created() {
 
       this.base = this.confData;
+
+      getProductCountInfo().then(res=>{
+        console.log(res)
+
+        this.info = res.data
+        // ShopLogo: "http://new401.bafangka.com/static/api/images/user/face.jpg"
+        // ShopName: "admin的微商城"
+        // description: ""
+        // prod_isnew_total: 7
+        // prod_total: 9
+      })
     }
   }
 </script>

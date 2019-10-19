@@ -2,7 +2,7 @@
 	<view style="position: relative;">
 		<!-- #ifdef APP-PLUS -->
 		<!-- 这里是状态栏 -->
-<!--		<view class="status_bar" style="position: fixed;background-color: white;top:0;left:0;z-index: 99;"></view>-->
+		<view class="status_bar" style="position: fixed;background-color: white;top:0;left:0;z-index: 99;"></view>
 		<!-- #endif -->
 		<view class="home-wrap">
 
@@ -133,7 +133,7 @@
 		overflow-x: hidden;
 		background: #f2f2f2;
 		/* #ifdef APP-PLUS */
-		/*padding-top: var(--status-bar-height);*/
+		padding-top: var(--status-bar-height);
 		/* #endif */
 	}
 	/*.content {*/
