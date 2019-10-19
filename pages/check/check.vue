@@ -258,6 +258,16 @@ export default {
 		form_submit() {
 			if(!this.submited){
 				this.submited = true;
+				if(this.postData.need_invoice == 1 && this.postData.invoice_info == '') {
+					this.submited = false;
+					if(this.postData.invoice_info == '') {
+						uni.showToast({
+							title: '发票信息不能为空',
+							icon:  'none'
+						})
+						return;
+					}
+				}
 				if(!this.postData.shipping_id) {
 					uni.showToast({
 						title: '请选择物流',
@@ -321,14 +331,7 @@ export default {
 		// 发票抬头输入完成
 		faPiaoConfirm(e) {
 			let invoice_info = e.detail.value;
-			if(this.postData.need_invoice == 1) {
-				if(invoice_info == '') {
-					uni.showModal({
-						title: '发票抬头不能为空'
-					})
-					return;
-				}
-			}
+			
 			this.postData.invoice_info = invoice_info;
 		},
 		// 余额支付输入完成
