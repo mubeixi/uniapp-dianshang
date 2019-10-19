@@ -46,7 +46,7 @@ const fetch = function (act, param,options = false,url='/api/little_program/shop
   param.act = act;
   param.User_ID = get_User_ID();
   param.Users_ID = get_Users_ID();   //Users_ID  写死
-  param.appid = get_Appid();
+  // param.appid = get_Appid();
 	param.env = GET_ENV();
   // param.User_ID = 3;
   // param.Users_ID = 'wkbq6nc2kc';

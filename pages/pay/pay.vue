@@ -214,6 +214,7 @@
 		methods: {
 			// 统一方法
 			async self_orderPay(){
+				let _self = this;
 				if(this.need_invoice == 1 && this.invoice_info == '') {
 					uni.showToast({
 						title: '发票信息不能为空',
@@ -238,7 +239,7 @@
 					return;
 				}
 				let isHasCode = this.code || GetQueryByString('code');
-
+				
 				if (isHasCode) {
 					// payConf.code = isHasCode;
 					//拿到之前的配置
@@ -259,7 +260,7 @@
 				
 				// #ifdef MP-WEIXIN
 					payConf.pay_type = 'wx_lp';
-
+					console.log(payConf)
 					await new Promise((resolve) => {
 						uni.login({
 							success: function (loginRes) {
@@ -323,6 +324,7 @@
 					delete orderInfo.timestamp
 
 					console.log(provider,orderInfo,'支付数据222222222222222222');
+					
 					uni.requestPayment({
 					...orderInfo,
 						provider,
