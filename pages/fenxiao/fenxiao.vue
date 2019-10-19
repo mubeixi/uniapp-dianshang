@@ -7,11 +7,11 @@
 			<image src="/static/fenxiao/top.png"></image>
 			<view class="title">分销中心</view>
 			<image class="msg" src="/static/fenxiao/msg.png"></image>
-			<view class="person">
-					<image src="/static/fenxiao/person.png" ></image>
+			<view class="person" v-if="data.disInfo">
+					<image :src="data.disInfo.Shop_Logo" ></image>
 			</view>
-			<view class="nickName">
-				张小凡
+			<view class="nickName" v-if="data.disInfo">
+				{{data.disInfo.Parent_NickName}}
 			</view>
 			<view class="sales">
 				<view class="left">
@@ -102,7 +102,7 @@
 
 <script>
 	import {pageMixin} from "../../common/mixin";
-	import {getDisInit} from '../../common/fetch.js'
+	import {getDisInit,getUserDisInfo} from '../../common/fetch.js'
 	export default {
 		mixins:[pageMixin],
 		data() {
@@ -112,6 +112,7 @@
 					total_income:'',
 					balance:''
 				},//
+				pro:[],
 			};
 		},
 		onLoad() {

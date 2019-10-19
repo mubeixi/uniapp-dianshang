@@ -9,7 +9,7 @@
 				坚果姑娘
 			</view>
 			<view class="juewei">
-				一星爵位
+				{{pro.pro_title_name}}爵位
 			</view>
 		</view>
 		<view class="moneySum">
@@ -19,7 +19,7 @@
 						总佣金
 					</view>
 					<view class="moneyBottom">
-						￥<text>356.98</text>
+						￥<text>{{pro.total_nobi}}</text>
 					</view>
 				</view>
 				<view>
@@ -27,7 +27,7 @@
 						已发放佣金
 					</view>
 					<view class="moneyBottom">
-						￥<text>289.00</text>
+						￥<text>{{pro.total_nobi_send}}</text>
 					</view>
 				</view>
 			</view>
@@ -53,15 +53,15 @@
 			</view>
 			<view class="myDataTop myDataBottom">
 				<view class="td">
-					¥<text>785.25</text>
+					¥<text>{{pro.self_buy}}</text>
 				</view>
 				<view class="shu"></view>
 				<view class="td">
-					¥<text>785.25</text>
+					¥<text>{{pro.self_sales}}</text>
 				</view>
 				<view class="shu"></view>
 				<view class="td">
-					¥<text>785.25</text>
+					¥<text>{{pro.team_sales}}</text>
 				</view>
 			</view>
 		</view>
@@ -84,38 +84,29 @@
 					奖励百分比
 				</view>
 			</view>
-			<view class="t1 t2">
+			<view class="t1 t2"  v-for="(item,index) of pro.Pro_Title_Level"  :key="item">
 				<view class="names">
-					一星
+					{{item.Name}}
 				</view>
 				<view class="zishen">
-					￥856.31
+					￥{{item.Consume}}
 				</view>
 				<view class="zishen">
-					￥856.31
+					￥{{item.Sales_Self}}
 				</view>
 				<view class="zishen">
-					￥856.31
+					￥{{item.Sales_Group}}
 				</view>
 				<view class="zishen rightZ">
-					10%
+					{{item.Bonus}}%
 				</view>
 			</view>
 		</view>
 		<circleTitle title="名词解释"></circleTitle>
 		<view class="noun">
-			<view >
-				1、自身消费额是指此处是自身销售额的解释说明文字
-			</view>	 
-			<view >
-				 2、自身销售额是指此处是自身销售额的解释说明
-			</view>
-			<view >
-				3、团队销售额是指此处是自身销售额的解释说明文字说明
-			</view>		
-			<view>
-				4、奖励百分比是指此处是自身销售额
-			</view>			   			                           
+			<view v-for="(i,j) of pro.noun_desc" :key="j">
+				{{j+1}}、{{i}}
+			</view>	 	   			                           
 		</view>
 	</view>
 </template>
@@ -123,16 +114,30 @@
 <script>
 	import circleTitle from '../../components/circleTitle/circleTitle.vue' 
 	import {pageMixin} from "../../common/mixin";
-	
+	import {nobiInfo} from '../../common/fetch.js'
 	export default {
 		mixins:[pageMixin],
 		data() {
 			return {
-				
+				pro:[],
 			};
 		},
 		components:{
 			circleTitle
+		},
+		onLoad() {
+			this.nobiInfo();
+		},
+		methods:{
+			nobiInfo(){
+				nobiInfo().then(res=>{
+					if(res.errorCode==0){
+						this.pro=res.data;
+					}
+				}).catch(e=>{
+					console.log(e);
+				})
+			}
 		}
 	}
 </script>

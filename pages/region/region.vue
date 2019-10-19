@@ -1,13 +1,13 @@
 <template>
-	<view class="all">
+	<view class="all" v-if="pro.agent_rate">
 		<page-title title="区域代理" rightHidden="true"></page-title>
 		<view class="top">
 			<view class="person">
-				<image src="/static/fenxiao/person.png"></image>
+				<image :src="pro.disInfo.Shop_Logo"></image>
 			</view>
 			<view class="nickName">
 				<view class="tops">
-					坚果姑娘
+					{{pro.disInfo.Shop_Name}}
 				</view>
 				<view class="bottoms">
 					<image src="/static/fenxiao/vip.png"></image>
@@ -25,15 +25,15 @@
 						总佣金
 					</view>
 					<view class="moneyBottom">
-						￥<text>356.98</text>
+						￥<text>{{pro.total_agent}}</text>
 					</view>
 				</view>
 				<view>
 					<view class="moneyTop">
-						已发放佣金
+						已发放佣金{{pro.total_agent}}
 					</view>
 					<view class="moneyBottom">
-						￥<text>289.00</text>
+						￥<text>{{pro.total_agent}}</text>
 					</view>
 				</view>
 			</view>
@@ -43,26 +43,23 @@
 			</view>
 		</view>
 		<circleTitle title="区域代理门槛说明"></circleTitle>
-		<view class="xiang">
+		<view class="xiang" v-for="(item,index) of pro.agent_rate" :key="index"  v-if="item.title">
 			<view class="xiangTop">
-				乡(镇)级
+				{{item.title}}
 			</view>
 			<view class="xiangCenter">
 				<view class="xiangLeft">
 					申请条件:
 				</view>
 				<view class="xiangRight">
-					<view>
-						1、此处是申请条件内容第一条的申请说明文字
+					<view v-if="item.Level>0">
+						分销商等级:{{item.Level_name}}
 					</view>
-					<view>
-						2、此处是申请条件内容第二条的申请说明文字
+					<view v-if="item.Protitle>0">
+						爵位等级:{{item.Level_name}}
 					</view>
-					<view>
-						3、此处是申请条件内容第三条的申请说明文字
-					</view>
-					<view>
-						4、此处是申请条件内容第四条的申请说明文字
+					<view >
+						个人消费额:{{item.Selfpro}}
 					</view>
 				</view>
 			</view>
@@ -71,42 +68,11 @@
 					所需金额:
 				</view>
 				<view class="xiangBottomB">
-					¥<text>200.00</text>
+					¥<text>{{item.Selfpro}}</text>
 				</view>
 			</view>
 		</view>
-		<view class="xiang">
-			<view class="xiangTop">
-				县/区级
-			</view>
-			<view class="xiangCenter">
-				<view class="xiangLeft">
-					申请条件:
-				</view>
-				<view class="xiangRight">
-					<view>
-						1、此处是申请条件内容第一条的申请说明文字
-					</view>
-					<view>
-						2、此处是申请条件内容第二条的申请说明文字
-					</view>
-					<view>
-						3、此处是申请条件内容第三条的申请说明文字
-					</view>
-					<view>
-						4、此处是申请条件内容第四条的申请说明文字
-					</view>
-				</view>
-			</view>
-			<view class="xiangBottom">
-				<view class="xiangBottomT">
-					所需金额:
-				</view>
-				<view class="xiangBottomB">
-					¥<text>200.00</text>
-				</view>
-			</view>
-		</view>
+		
 		<view style="height: 20rpx;width: 100%;"></view>
 		<circleTitle title="收益介绍"></circleTitle>
 		<view class="shouyi">
@@ -126,16 +92,16 @@
 			</view>
 			<view class="tt ts">
 				<view>
-					20%
+					{{pro.agent_rate.pro.Province}}%
 				</view>
 				<view>
-					20%
+					{{pro.agent_rate.cit.Province}}%
 				</view>
 				<view>
-					20%
+					{{pro.agent_rate.cou.Province}}%
 				</view>
 				<view class="rightZ">
-					20%
+					{{pro.agent_rate.tow.Province}}%
 				</view>
 			</view>
 		</view>
@@ -148,16 +114,30 @@
 <script>
 	import circleTitle from '../../components/circleTitle/circleTitle.vue' 
 	import {pageMixin} from "../../common/mixin";
-	
+	import {agentInfo} from '../../common/fetch.js'
 	export default {
 		mixins:[pageMixin],
 		data() {
 			return {
-				
+				pro:[],
 			};
 		},
 		components:{
 			circleTitle
+		},
+		onShow(){
+			this.agentInfo();
+		},
+		methods:{
+			agentInfo(){
+				agentInfo().then(res=>{
+					if(res.errorCode==0){
+						this.pro=res.data;
+					}
+				}).catch(err=>{
+					console.log(err);
+				})
+			}
 		}
 	}
 </script>

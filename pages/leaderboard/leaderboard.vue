@@ -27,7 +27,7 @@
 						<image src="/static/fenxiao/first.png" ></image>
 					</view>
 					<view class="info">
-						<image :src="item.User_HeadImg" ></image>
+						<image :src="item.Shop_Logo" ></image>
 					</view>
 					<view class="nickName">
 						{{item.Shop_Name}}
@@ -46,7 +46,7 @@
 						<image src="/static/fenxiao/second.png" ></image>
 					</view>
 					<view class="info">
-							<image :src="item.User_HeadImg" ></image>
+							<image :src="item.Shop_Logo" ></image>
 						</view>
 						<view class="nickName">
 							{{item.Shop_Name}}
@@ -65,7 +65,7 @@
 						<image src="/static/fenxiao/three.png" ></image>
 					</view>
 					<view class="info">
-							<image :src="item.User_HeadImg" ></image>
+							<image :src="item.Shop_Logo" ></image>
 					</view>
 					<view class="nickName">
 						{{item.Shop_Name}}
@@ -84,7 +84,7 @@
 						{{index+1}}
 					</view>
 					<view class="info">
-							<image :src="item.User_HeadImg" ></image>
+							<image :src="item.Shop_Logo" ></image>
 					</view>
 					<view class="nickName">
 						{{item.Shop_Name}}

@@ -281,6 +281,7 @@ export default {
 		this.Products_ID = option.Products_ID;
 		this.postData.prod_id = option.Products_ID;
 		this.checkProdCollected();
+		this.$refs.cartPopu.close();
 		this.getDetail(this.Products_ID);
 		this.getCommit(this.Products_ID);
 		this.getCoupon();//获取可领取的优惠券
