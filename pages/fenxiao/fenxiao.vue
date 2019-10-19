@@ -5,34 +5,45 @@
 		<!-- #endif -->
 		<view class="top">
 			<image src="/static/fenxiao/top.png"></image>
+			<!-- #ifdef APP-PLUS -->
 			<view class="title">分销中心</view>
-			<image class="msg" src="/static/fenxiao/msg.png"></image>
-			<view class="person" v-if="data.disInfo">
-					<image :src="data.disInfo.Shop_Logo" ></image>
+			<!-- #endif -->
+
+			<image v-if="userInfo.User_ID" class="msg" src="/static/fenxiao/msg.png"></image>
+			<view class="person" v-if="userInfo.User_ID">
+					<image style="border-radius: 50%;overflow: hidden" :src="userInfo.User_HeadImg||'/static/default.png'" ></image>
 			</view>
-			<view class="nickName" v-if="data.disInfo">
-				{{data.disInfo.Parent_NickName}}
+			<view class="nickName" v-if="userInfo.User_ID">
+				{{userInfo.User_NickName||userInfo.User_No?('用户'+userInfo.User_No):'暂无昵称'}}
 			</view>
+			<view class="font14 loginBtn" v-if="!userInfo.User_ID" plain size="mini" @click="goLogin">登录/注册</view>
 			<view class="sales">
 				<view class="left">
 					<view class="salesSum">
 						累计销售额（元）
 					</view>
-					<view class="salesSumPrice" v-if="">
+					<view class="salesSumPrice" v-if="userInfo.User_ID">
 						{{data.total_sales}}
+					</view>
+					<view class="salesSumPrice" v-else>
+						{{'—'}}
 					</view>
 				</view>
 				<view class="right">
 					<view class="salesSum">
 						累计利润（元）
 					</view>
-					<view class="salesSumPrice">
+					<view class="salesSumPrice" v-if="userInfo.User_ID">
 						{{data.total_income}}
+					</view>
+					<view class="salesSumPrice" v-else>
+						{{'—'}}
 					</view>
 				</view>
 			</view>
+
 		</view>
-		<view class="center">
+		<view class="center" v-if="userInfo.User_ID">
 			<view>
 				可提现金额
 			</view>
@@ -43,6 +54,7 @@
 				提现
 			</view>
 		</view>
+		<view v-else style="height: 25px;"></view>
 		<view class="last">
 			<image src="/static/fenxiao/background.png" class="back"></image>
 			<view class="zhezhao">
@@ -102,11 +114,13 @@
 
 <script>
 	import {pageMixin} from "../../common/mixin";
-	import {getDisInit,getUserDisInfo} from '../../common/fetch.js'
+	import {getDisInit} from '../../common/fetch.js'
+	import {mapActions,mapState,mapGetters} from 'vuex';
 	export default {
 		mixins:[pageMixin],
 		data() {
 			return {
+
 				data:{
 					total_sales:'',
 					total_income:'',
@@ -115,14 +129,28 @@
 				pro:[],
 			};
 		},
+		computed:{
+			...mapGetters(['userInfo'])
+		},
 		onLoad() {
 
 		},
-		onShow() {
+		async onShow() {
 			//获取分销首页
 			this.getDisInit();
+
+			//this.userInfo = await this.getUserInfo();
+		},
+		created(){
+
 		},
 		methods:{
+			...mapActions(['getUserInfo']),
+			goLogin(){
+				uni.navigateTo({
+					url:'../login/login'
+				})
+			},
 			//获取分销首页数据
 			getDisInit(){
 				getDisInit().then(res=>{
@@ -197,7 +225,7 @@
 	width: 750rpx;
 	height: 400rpx;
 	position: relative;
-	
+
 	image{
 		width: 100%;
 		height: 100%;
@@ -242,6 +270,16 @@
 				top: 215rpx;
 				left: 175rpx;
 				text-align: center;
+	}
+	.loginBtn{
+		padding:4px 10px;
+		color: white;
+		border: 1px solid #e7e7e7;
+		border-radius: 4px;
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		transform: translate(-50%,-50%);
 	}
 	.sales{
 		width: 690rpx;

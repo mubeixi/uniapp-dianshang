@@ -220,7 +220,7 @@ export default {
 		this.get_User_Info();
 	},
 	async created(){
-		let UserInfo = this.getUserInfo();
+		let UserInfo = this.getUserInfo(true);
 	},
 	onLoad(options) {
 		this.postData.cart_key = options.cart_key;
@@ -344,7 +344,7 @@ export default {
 			// };
 			// this.postData.use_money = input_money ? input_money : 0;
 			// console.log(input_money, this.postData)
-			
+
 			// return;
 			let input_money = e.detail.value;
 			let user_money = this.userInfo.User_Money;
@@ -584,7 +584,7 @@ export default {
         display: inline-block;
         height: 50rpx;
         line-height: 50rpx;
-        
+
         color: #666;
         font-size: 24rpx;
         // padding: 0 20rpx;

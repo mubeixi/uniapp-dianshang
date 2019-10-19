@@ -298,7 +298,7 @@ export const urlencode = (str)=>{
 }
 
 
-// #ifndef H5
+
 //构造分享事件
 /**
  *
@@ -316,8 +316,10 @@ export const buildSharePath = (path)=>{
         search += (users_ID?('users_id='+users_ID):'')
     }
 
+
+
     if(path.indexOf('owner_id')===-1){
-        search += userInfo && userInfo.User_ID?'owner_id='+userInfo.User_ID:''
+        search += userInfo && userInfo.User_ID?'&owner_id='+userInfo.User_ID:''
     }
 
 
@@ -331,7 +333,7 @@ export const buildSharePath = (path)=>{
     return ret
 }
 
-// #endif
+
 
 
 /**

@@ -1,122 +1,162 @@
 import Vue from 'vue';
+// #ifdef H5
+import wx from 'weixin-js-sdk';
+// #endif
+
+
+import filter from './filter.js';
+import {ajax, get, post} from './interceptors.js';
+import store from '../store';
+import {ls} from "./tool";
 // const i18n = require('i18n');
 
 //重写uni部分
 require('./uni');
 
-// #ifdef H5
-import wx from 'weixin-js-sdk';
-// #endif
 
-import filter from './filter.js';
-import {post,get,ajax} from './interceptors.js';
 
-export const toast = (title,icon,image,duration)=>{
+export const toast = (title, icon, image, duration) => {
     uni.showToast({
         title,
-        duration:duration||2000,
+        duration: duration || 2000,
         icon,
         image
     })
 }
 
-export const error = (title,icon,duration)=>toast(title,null,'/static/icon_http_error.png',duration)
+export const error = (title, icon, duration) => toast(title, null, '/static/icon_http_error.png', duration)
 
-export const confirm = (options)=>{
+export const confirm = (options) => {
 
-	return new Promise(function(resolve,reject){
+    return new Promise(function (resolve, reject) {
 
-		uni.showModal({
-		    ...options,
-		    success: function (res) {
-		        if (res.confirm) {
-		            resolve(res)
-		        } else if (res.cancel) {
-		            //console.log('用户点击取消');
-		        }
-		    },
-			fail:function(res){reject(res)}
-		});
+        uni.showModal({
+            ...options,
+            success: function (res) {
+                if (res.confirm) {
+                    resolve(res)
+                } else if (res.cancel) {
+                    //console.log('用户点击取消');
+                }
+            },
+            fail: function (res) {
+                reject(res)
+            }
+        });
 
-	})
+    })
 }
 
+/**
+ * 检测是否登录
+ * @param redirect
+ * @return {boolean}
+ */
+export const checkIsLogin = (redirect,tip) => {
+    let userInfo = store.state.userInfo || ls.get('userInfo')
 
-const tabbarRouter = ['/pages/index/index','/pages/classify/classify','/pages/groupSuccess/groupSuccess','/pages/cart/cart','/pages/person/person'];
+    if (!userInfo || JSON.stringify(userInfo) === '{}') {
+        if (redirect) {
+
+            if(!tip){
+                uni.navigateTo({
+                    url: '/pages/login/login'
+                })
+                return;
+            }
+            confirm({title: '提示', content: '该操作需要登录,请问是否登录?', confirmText: '去登录', cancelText: '暂不登录'}).then(() => {
+                uni.navigateTo({
+                    url: '/pages/login/login'
+                })
+
+            }).catch(() => {
+
+            })
+        }
+        return false;
+    }
+
+    return true;
+}
+
+const tabbarRouter = ['/pages/index/index', '/pages/classify/classify', '/pages/groupSuccess/groupSuccess', '/pages/cart/cart', '/pages/person/person'];
 
 export const fun = {
+    checkIsLogin,
+    //跳转方法
+    linkTo: (linkObj) => {
 
-  //跳转方法
-  linkTo:(linkObj) => {
+        let {link, linkType} = linkObj;
+        console.log('跳转link:' + link + '===type:' + linkType)
+        //除了这些页面之外，其他都走普通跳转
+        if (tabbarRouter.indexOf(link) != -1) {
 
-    let {link,linkType} = linkObj;
-    console.log('跳转link:'+link+'===type:'+linkType)
-    //除了这些页面之外，其他都走普通跳转
-    if(tabbarRouter.indexOf(link)!=-1){
+            uni.switchTab({
+                url: link
+            });
 
-      uni.switchTab({
-        url: link
-      });
+        } else {
 
-    }else{
+            uni.navigateTo({
+                url: link
+            });
 
-      uni.navigateTo({
-        url: link
-      });
-
+        }
+    },
+    back:()=>{
+        uni.navigateBack()
     }
-  },
-  // success: ({ msg = '操作成功', title = '成功' }) => Notification({
-  //   title,
-  //   message: msg,
-  //   type: 'success',
-  // }),
-  // warning: ({ msg = '', title = '警告' }) => Notification({
-  //   title,
-  //   message: msg,
-  //   type: 'warning',
-  // }),
-  // info: ({ msg = ''}) => uni.showToast({
-  //     title: msg,
-  //     duration: 2000,
-  //     icon:'none'
-  // }),
-  // error: ({ msg = '错误', title = '错误' }) => Notification({
-  //   title,
-  //   message: msg,
-  //   type: 'error',
-  // }),
-  // Loading:({text = 'loading',fullscreen = false,lock = true,spinner = 'el-icon-loading',mask = false}) =>{
-  //   window.funLoading = Loading.service({text,fullscreen,lock,spinner,background:mask?'rgba(0, 0, 0, 0.1)':null})
-  //
-  // },
-  // close:()=>{window.funLoading.close()}
+    // success: ({ msg = '操作成功', title = '成功' }) => Notification({
+    //   title,
+    //   message: msg,
+    //   type: 'success',
+    // }),
+    // warning: ({ msg = '', title = '警告' }) => Notification({
+    //   title,
+    //   message: msg,
+    //   type: 'warning',
+    // }),
+    // info: ({ msg = ''}) => uni.showToast({
+    //     title: msg,
+    //     duration: 2000,
+    //     icon:'none'
+    // }),
+    // error: ({ msg = '错误', title = '错误' }) => Notification({
+    //   title,
+    //   message: msg,
+    //   type: 'error',
+    // }),
+    // Loading:({text = 'loading',fullscreen = false,lock = true,spinner = 'el-icon-loading',mask = false}) =>{
+    //   window.funLoading = Loading.service({text,fullscreen,lock,spinner,background:mask?'rgba(0, 0, 0, 0.1)':null})
+    //
+    // },
+    // close:()=>{window.funLoading.close()}
 
 };
 // console.log(filter)
 
 
 export default {
-  install() {
+    install() {
 
-    Vue.prototype.$post = post;
-    Vue.prototype.$get = get;
-    Vue.prototype.$http = ajax;
+        Vue.prototype.$post = post;
+        Vue.prototype.$get = get;
+        Vue.prototype.$http = ajax;
 
-    Vue.prototype.$toast = toast;
-    Vue.prototype.$error = error;
+        Vue.prototype.$toast = toast;
+        Vue.prototype.$error = error;
 
-    // #ifdef H5
-    Vue.prototype.$wx = wx;
-    // #endif
+        // #ifdef H5
+        Vue.prototype.$wx = wx;
+        // #endif
 
 
-    Vue.prototype.$fun = fun;
+        Vue.prototype.$fun = fun;
 
-    filter.map((value) => {
-      Vue.filter(value.name, value.methods);
-    });
-  },
+        filter.map((value) => {
+            Vue.filter(value.name, value.methods);
+        });
+    },
 };
 
 

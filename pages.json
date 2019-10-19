@@ -224,7 +224,11 @@
         }
         ,{
             "path" : "pages/login/login",
-            "style" : {}
+            "style" : {
+				"app-plus": {
+					"titleNView": false
+				}
+			}
         },{
             "path" : "pages/logistics/logistics",
             "style" : {
@@ -269,6 +273,12 @@
             "path" : "pages/setting/setting",
             "style" : {
 				"navigationBarTitleText": "系统设置"
+			}
+        }
+        ,{
+            "path" : "pages/detail/sharepic/sharepic",
+            "style" : {
+				"navigationBarTitleText": "分享商品"
 			}
         }
     ],
