@@ -96,9 +96,7 @@ export const pageMixin = {
 	//页面的初始化
 	async onLoad(option) {
 
-		if(!ls.get('initData')){
-		    this.getInitData()
-		}
+
 
 
 		let owner_id = null,users_id = null
@@ -170,6 +168,12 @@ export const pageMixin = {
 			console.log('extConfig info is',extConfig);
 			users_id = extConfig.users_id;
 		}
+
+		//开发环境下，就手动给一下吧
+		if(!users_id && process.env.NODE_ENV != 'production'){
+			users_id = 'wkbq6nc2kc';
+			ls.set('users_id',users_id);
+		}
 		// #endif
 
 		if (!users_id){
@@ -191,6 +195,12 @@ export const pageMixin = {
 			ls.set('owner_id',owner_id);
 			console.log('this page owner_id is '+owner_id)
 
+		}
+
+
+
+		if(!ls.get('initData')){
+			this.getInitData()
 		}
 
 
