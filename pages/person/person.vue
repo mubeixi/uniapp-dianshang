@@ -155,10 +155,11 @@
 		mixins:[pageMixin],
 		data() {
 			return {
-				userInfo:{}
+				//userInfo:{}
 			};
 		},
 		computed:{
+			...mapGetters(['userInfo']),
 			userLevelText(){
 				if(this.userInfo.Users_Level && this.userInfo.User_Level && this.userInfo.Users_Level[this.userInfo.User_Level]){
 					return this.userInfo.Users_Level[this.userInfo.User_Level].Name
@@ -168,7 +169,7 @@
 
 		},
 		methods:{
-			...mapActions(['getUserInfo']),
+			// ...mapActions(['getUserInfo']),
 			goLogin(){
 				uni.navigateTo({
 					url:'../login/login'
@@ -224,7 +225,7 @@
 			}
 		},
 		async onShow(){
-			this.userInfo = await this.getUserInfo();
+			//this.userInfo = await this.getUserInfo();
 		},
 		created(){
 
