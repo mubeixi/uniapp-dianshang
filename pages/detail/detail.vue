@@ -825,8 +825,12 @@ export default {
     },
 	async created(){
 
-		let UserInfo = this.getUserInfo()
+// #ifdef H5
 
+
+		console.log(location.href,'进入产品详情页面进入产品详情页面进入产品详情页面进入产品详情页面进入产品详情页面进入产品详情页面进入产品详情页面')
+		let UserInfo = this.getUserInfo()
+// #endif
 		// this.checkProdCollected();
 		// this.getCommit(this.Products_ID);
 		// this.getCoupon();//获取可领取的优惠券
