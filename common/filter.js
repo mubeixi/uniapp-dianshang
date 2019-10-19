@@ -6,6 +6,11 @@ export const domain = (url) => {
   if (url.indexOf('http') == -1) return staticUrl+url;
   return url;
 }
+export const imgdomain = (url) => {
+  if(!url)return '';
+  if (url.indexOf('http') == -1) return 'http'+url;
+  return url;
+}
 
 export default [
   {
@@ -27,5 +32,8 @@ export default [
   {
     name:'domain',
     methods: domain
+  },{
+    name:'imgdomain',
+    methods: imgdomain
   }
 ];

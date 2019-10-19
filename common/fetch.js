@@ -225,7 +225,7 @@ function get_Appid() {
 
 export const get_Users_ID = ()=>ls.get('users_id');
 
-export const get_User_ID = ()=>ls.get('user_id');
+export const get_User_ID = ()=> ls.get('user_id')?ls.get('user_id'):'null';
 
 export const createToken = function(object) {
   object = ObjectToArr(object);

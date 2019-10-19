@@ -281,6 +281,10 @@
 				"navigationBarTitleText": "分享商品"
 			}
         }
+        ,{
+            "path" : "pages/beDistributor/beDistributor",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
