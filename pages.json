@@ -3,7 +3,10 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "电商"
+				"navigationBarTitleText": "电商",
+				"app-plus": {
+					"titleNView": false
+				}
 			}
 		},
 		{
@@ -36,7 +39,10 @@
         ,{
             "path" : "pages/detail/detail",
             "style" : {
-            	"navigationBarTitleText": "商品详情"
+            	"navigationBarTitleText": "商品详情",
+				"app-plus": {
+					"titleNView": false
+				}
             }
         }
         ,{
@@ -259,15 +265,24 @@
             "path" : "pages/myGift/myGift",
             "style" : {}
         }
+        ,{
+            "path" : "pages/setting/setting",
+            "style" : {
+				"navigationBarTitleText": "系统设置"
+			}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "网中网",
 		"navigationBarBackgroundColor": "#FFFFFF",
-		"h5":{
-			"titleNView": false
-		}
+		//#ifdef H5
+		//去掉网页里的顶部导航栏
+		"navigationStyle":"custom",
+		 //#endif
+        "app-plus": {
 
+        }
 	},
 	"tabBar": {
 	    "color": "#7A7E83",

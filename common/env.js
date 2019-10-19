@@ -2,7 +2,7 @@
 export const isDev = process.env.NODE_ENV === 'production' ? false : true;
 
 // #ifdef APP-PLUS
-export const APP_USERS_ID = 89757;
+export const APP_USERS_ID = 'wkbq6nc2kc';
 // #endif
 
 // #ifdef H5
