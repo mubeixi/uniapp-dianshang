@@ -256,7 +256,7 @@
         if(idx===0 )top = 0
         //这个需要是2
         if(idx===1 && this.tab.config.style==2 )top = 0
-		
+
         return {
           marginTop: top + 'px',
           marginBottom: bottom + 'px',
@@ -529,7 +529,7 @@
           /*flex: 1;*/
 
           .title {
-            max-height: 42px;
+            height: 42px;
             line-height: 21px;
             overflow: hidden;
             text-overflow: ellipsis;

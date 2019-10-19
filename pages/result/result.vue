@@ -422,6 +422,8 @@ export default {
 					-webkit-line-clamp:2;
 					-webkit-box-orient: vertical;
 					font-size: 24rpx;
+					line-height: 30rpx;
+					height: 60rpx;
 				}
 				.price {
 					margin-top: 21rpx;
@@ -471,6 +473,8 @@ export default {
 					-webkit-line-clamp:2;
 					-webkit-box-orient: vertical;
 					font-size: 24rpx;
+					line-height: 30rpx;
+					height: 60rpx;
 				}
 				.price {
 					margin-top: 21rpx;

@@ -417,15 +417,19 @@ export default {
 						ls.set('temp_sharepic_info',res.data)
 						return res.data.img_url
 					})
+
 					console.log('海报的地址是'+sharePic)
 
 					if(!sharePic){
 						error('获取分享参数失败');
 						return;
 					}
-					uni.navigateTo({
-						url:'/pages/detail/sharepic/sharepic'
-					})
+
+					setTimeout(function(){
+						uni.navigateTo({
+							url:'/pages/detail/sharepic/sharepic'
+						})
+					},200)
 					// uni.previewImage({
 					// 	urls: [sharePic],
 					// 	indicator:'default',
