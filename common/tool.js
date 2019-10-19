@@ -315,9 +315,11 @@ export const buildSharePath = (path)=>{
     if(path.indexOf('users_id')===-1){
         search += (users_ID?('users_id='+users_ID):'')
     }
+	
+	
 
     if(path.indexOf('owner_id')===-1){
-        search += userInfo && userInfo.User_ID?'owner_id='+userInfo.User_ID:''
+        search += userInfo && userInfo.User_ID?'&owner_id='+userInfo.User_ID:''
     }
 
 

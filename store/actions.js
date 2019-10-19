@@ -52,16 +52,16 @@ export const getUserInfo = async ({commit, state}) => {
 
 
   //则本地没有用户信息，提示用户是否需要登录。
-
-  await confirm({title: '提示', content: '该操作需要登录,请问是否登录?', confirmText: '去登录', cancelText: '暂不登录'}).then(() => {
-
-    //要替换掉navigateTo，不然登录页面回退就尴尬了
-    uni.navigateTo({
-      url: '/pages/login/login'
-    })
-  }).catch(() => {
-
+  //要替换掉navigateTo，不然登录页面回退就尴尬了
+  uni.navigateTo({
+    url: '/pages/login/login'
   })
+  // await confirm({title: '提示', content: '该操作需要登录,请问是否登录?', confirmText: '去登录', cancelText: '暂不登录'}).then(() => {
+  //
+  //
+  // }).catch(() => {
+  //
+  // })
 
   return {}
 
