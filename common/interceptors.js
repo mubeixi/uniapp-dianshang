@@ -27,6 +27,8 @@ export const ajax = (url,method,data,options)=>{
   //   header.Cookie = wx.getStorageSync('cookie')
   // }
 
+  console.log('ajax url is '+data.act);
+
 
 let URL = ENV.apiBaseUrl+url;
 

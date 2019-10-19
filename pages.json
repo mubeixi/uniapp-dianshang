@@ -271,6 +271,12 @@
 				"navigationBarTitleText": "系统设置"
 			}
         }
+        ,{
+            "path" : "pages/detail/sharepic/sharepic",
+            "style" : {
+				"navigationBarTitleText": "分享商品"
+			}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

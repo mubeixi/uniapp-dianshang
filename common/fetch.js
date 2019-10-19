@@ -195,7 +195,11 @@ export const getJsSign = (data,options) => fetch('share_config', data, options);
 //jssdk签名
 
 export const getProductCountInfo  = (data,options) => fetch('get_users_info', data, options);
+
 export const getBalanceRank = (data,options) => fetch('get_balance_rank', data, options);
+
+//获取商品的海报
+export const getProductSharePic = (data,options) => fetch('get_product_tgqrcode', data, options);
 
 
 function get_Appid() {

@@ -29,7 +29,7 @@ function setWxConfig(config) {
 }
 
 
-const WX_JSSDK_INIT = async(vm) => new Promise((resolve, reject) => {
+const WX_JSSDK_INIT = (vm) => new Promise((resolve, reject) => {
 
 	if(!isWeiXin())reject(false);
 
@@ -38,7 +38,7 @@ const WX_JSSDK_INIT = async(vm) => new Promise((resolve, reject) => {
 		resolve(wx);
 	}
 
-	await getJsSign({
+	getJsSign({
 		url:location.href.split('#')[0],
 		//debug : process.env.NODE_ENV === 'production' ? false : true
 	}).then((res) => {
@@ -46,9 +46,9 @@ const WX_JSSDK_INIT = async(vm) => new Promise((resolve, reject) => {
 
 			let config = res.data;
 			//线上环境，听服务器的，本地的一律调试
-			let debug = process.env.NODE_ENV === 'production'?config.debug?true:false:true
-			let jsApiList = ['chooseImage', 'previewImage', 'uploadImage', 'openLocation',
-				'getLocation', 'chooseWXPay', 'getSystemInfo', 'onMenuShareAppMessage','onMenuShareTimeline','scanQRCode'];
+			let debug = false;//process.env.NODE_ENV === 'production'?config.debug?true:false:true
+			let jsApiList = ['onMenuShareAppMessage','onMenuShareTimeline'];
+			// ['chooseImage', 'previewImage', 'uploadImage', 'openLocation','getLocation', 'chooseWXPay', 'getSystemInfo', 'onMenuShareAppMessage','onMenuShareTimeline','scanQRCode'];
 			let {noncestr,timestamp,appId,signature} = config;
 
 			setWxConfig({debug,appId,timestamp,nonceStr:noncestr,signature,jsApiList});
@@ -130,7 +130,7 @@ export const pageMixin = {
 
 		    location.search = search
 			console.log(location.search)
-			return;
+
 
 		}else{
 		    uni.showModal({
@@ -221,13 +221,19 @@ export const pageMixin = {
 	async created(){
 
 		// #ifdef H5
-		console.log('JSSDK_INITJSSDK_INITJSSDK_INITJSSDK_INITJSSDK_INIT',this.JSSDK_INIT)
+		console.log('JSSDK_INITJSSDK',this.JSSDK_INIT)
+		console.log('aaaaaaaaaaaaaaa')
 		let initData = await this.getInitData()
+		console.log('cccccccccccccc')
 		//页面默认全都是分享出去是首页的
 		if(isWeiXin() && this.JSSDK_INIT){
 			console.log(44444444444444444)
-			this.WX_JSSDK_INIT(this).then((env)=>{
 
+			console.log('dddddddddddddddd')
+			await this.WX_JSSDK_INIT(this).then((env)=>{
+
+
+				console.log('eeeeeeeeeeeeeeeee')
 				this.$wx.onMenuShareTimeline({
 					title: initData.ShopName, // 分享标题
 					link: location.origin, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
@@ -252,6 +258,8 @@ export const pageMixin = {
 
 			})
 		}
+
+		console.log('fffffffffffffffffffffffffffffff')
 
 
 		// #endif
