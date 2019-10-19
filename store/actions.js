@@ -7,7 +7,7 @@ export const setUserInfo = ({commit}, data) => {
 };
 
 export const getInitData = async ({commit, state}) => {
-
+  // console.log('bbbbbbbbbbbbbb')
   let data = state.initData
   if (data) return data;
 
@@ -21,7 +21,7 @@ export const getInitData = async ({commit, state}) => {
   }
 
   await getSystemConf().then(res => {
-    console.log(res.data)
+    // console.log(res.data)
     commit('SET_INIT_DATA', res.data);
     data = res.data
 
@@ -35,7 +35,7 @@ export const getInitData = async ({commit, state}) => {
 /**
  *类似缓存的穿透机制，一层拿不到就继续往下取
  **/
-export const getUserInfo = async ({commit, state}) => {
+export const getUserInfo = async ({commit, state},through) => {
 
   //第一次是在内存里
   let data = state.userInfo
@@ -50,18 +50,21 @@ export const getUserInfo = async ({commit, state}) => {
     }
   }
 
-
-  //则本地没有用户信息，提示用户是否需要登录。
-
-  await confirm({title: '提示', content: '该操作需要登录,请问是否登录?', confirmText: '去登录', cancelText: '暂不登录'}).then(() => {
-
-    //要替换掉navigateTo，不然登录页面回退就尴尬了
+  if(through){
     uni.navigateTo({
       url: '/pages/login/login'
     })
-  }).catch(() => {
+  }
 
-  })
+  //则本地没有用户信息，提示用户是否需要登录。
+
+  // await confirm({title: '提示', content: '该操作需要登录,请问是否登录?', confirmText: '去登录', cancelText: '暂不登录'}).then(() => {
+  //
+  //   //要替换掉navigateTo，不然登录页面回退就尴尬了
+  //
+  // }).catch(() => {
+  //
+  // })
 
   return {}
 

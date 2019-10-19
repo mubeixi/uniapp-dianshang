@@ -6,18 +6,19 @@
 
 		<view class="personTop">
 
-			<image src="/static/person/top.png" ></image>
-			<view class="qiandao">
+			<image src="/static/person/top.png"  ></image>
+			<view class="qiandao" v-if="userInfo.User_ID">
 				<image src="/static/person/qiandao.png"></image>
 				<view @click="goQian">签到</view>
 			</view>
-			<view class="personInfo">
+			<view class="personInfo flex">
 				<view class="left">
 					<image style="border-radius: 50%;" :src="userInfo.User_HeadImg||'/static/default.png'" ></image>
 				</view>
-				<view class="right">
-					<view class="nickName">{{userInfo.User_NickName||''}}</view>
-					<view class="cart">{{userLevelText}}<image src="/static/person/rightCart.png" ></image></view>
+				<view class="right flex1" :style="{position:!userInfo.User_ID?'relative':'static'}">
+					<view class="font14 loginBtn" v-if="!userInfo.User_ID" plain size="mini" @click="goLogin">登录/注册</view>
+					<view v-if="userInfo.User_ID" class="nickName">{{userInfo.User_NickName||userInfo.User_No?('用户'+userInfo.User_No):'暂无昵称'}}</view>
+					<view v-if="userInfo.User_ID" class="cart">{{userLevelText}}<image src="/static/person/rightCart.png" ></image></view>
 				</view>
 			</view>
 			<view class="nav">
@@ -154,10 +155,11 @@
 		mixins:[pageMixin],
 		data() {
 			return {
-				userInfo:{}
+				//userInfo:{}
 			};
 		},
 		computed:{
+			...mapGetters(['userInfo']),
 			userLevelText(){
 				if(this.userInfo.Users_Level && this.userInfo.User_Level && this.userInfo.Users_Level[this.userInfo.User_Level]){
 					return this.userInfo.Users_Level[this.userInfo.User_Level].Name
@@ -167,51 +169,63 @@
 
 		},
 		methods:{
-			...mapActions(['getUserInfo']),
+			// ...mapActions(['getUserInfo']),
+			goLogin(){
+				uni.navigateTo({
+					url:'../login/login'
+				})
+			},
 			//去赠品中心
 			goGift(){
+				if(!this.$fun.checkIsLogin(1))return;
 				uni.navigateTo({
 					url:'../myGift/myGift'
 				})
 			},
 			goSetting(){
+				if(!this.$fun.checkIsLogin(1))return;
 				uni.navigateTo({
 					url:'../setting/setting'
 				})
 			},
 			//去任务中心
 			goRenwu(){
+				if(!this.$fun.checkIsLogin(1))return;
 				uni.navigateTo({
 					url:'../taskCenter/taskCenter'
 				})
 			},
 			//去签到
 			goQian(){
+				if(!this.$fun.checkIsLogin(1))return;
 				uni.navigateTo({
 					url:'../qiandao/qiandao'
 				})
 			},
 			//去收藏页
 			goCollection(){
+				if(!this.$fun.checkIsLogin(1))return;
 				uni.navigateTo({
 					url:'../collection/collection'
 				})
 			},
 			//去订单页
 			goOrder(item){
-					uni.navigateTo({
-						url:'../order/order?index='+item
-					})
+				if(!this.$fun.checkIsLogin(1))return;
+				uni.navigateTo({
+					url:'../order/order?index='+item
+				})
 			},
 			// 去地址管理
 			gotoAddresslist() {
+				if(!this.$fun.checkIsLogin(1))return;
 				uni.navigateTo({
 					url: '../addressList/addressList'
 				})
 			}
 		},
 		async onShow(){
-			this.userInfo = await this.getUserInfo();
+			//this.userInfo = await this.getUserInfo();
 		},
 		created(){
 
@@ -259,6 +273,7 @@
 		.personInfo{
 			position: absolute;
 			left: 57rpx;
+			right: 57rpx;
 			top: 80rpx;
 			height: 100rpx;
 			display: flex;
@@ -274,6 +289,9 @@
 			.right{
 				margin-left: 19rpx;
 				padding-top: 10rpx;
+				.loginBtn{
+					padding:4px 10px;color: white;border: 1px solid #e7e7e7;border-radius: 4px;position: absolute;left: 10px;top: 50%;transform: translateY(-50%);
+				}
 				.nickName{
 					font-size:30rpx;
 					height: 29rpx;
@@ -288,7 +306,7 @@
 					//width:136rpx;
 					height:42rpx;
 					line-height: 42rpx;
-					display: flex;
+					display: inline-block;//flex;
 					align-items: center;
 					padding-left: 16rpx;
 					padding-right: 12rpx;

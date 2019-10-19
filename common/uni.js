@@ -8,6 +8,7 @@ uni.navigateTo = (opt)=>{
     let {url} = opt;
     if(url.indexOf('users_id')===-1){
 
+        console.log('链接中没有users_id，需要改造');
         let users_id = null;
 
         // #ifdef H5
@@ -20,18 +21,22 @@ uni.navigateTo = (opt)=>{
             users_id = ls.get('users_id');
 
             if (users_id) {
-                console.log(url)
+                console.log(users_id)
 
                 if(url.indexOf('?')===-1){
                     url += '?users_id='+users_id
                 }else{
-                    url.replace(/\?/,'?users_id='+users_id+'&')
+                    url = url.replace(/\?/,'?users_id='+users_id+'&')
                 }
 
-                console.log('users_id is '+users_id)
+
 
             }
         }
+
+        console.log('users_id is 2222222222222222222222222 '+users_id)
+
+
 
 
     }
@@ -66,7 +71,7 @@ uni.redirectTo = (opt)=>{
                 if(url.indexOf('?')===-1){
                     url += '?users_id='+users_id
                 }else{
-                    url.replace(/\?/,'?users_id='+users_id+'&')
+                    url = url.replace(/\?/,'?users_id='+users_id+'&')
                 }
 
                 console.log('users_id is '+users_id)

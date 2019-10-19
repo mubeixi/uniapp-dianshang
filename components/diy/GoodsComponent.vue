@@ -344,7 +344,7 @@
           /*flex: 1;*/
 
           .title {
-            max-height: 42px;
+            height: 42px;
             line-height: 21px;
             overflow: hidden;
             text-overflow: ellipsis;

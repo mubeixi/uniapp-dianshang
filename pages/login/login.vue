@@ -1,9 +1,12 @@
 <template>
 	<div class="loginSign font16">
+		<!-- #ifdef APP-PLUS -->
+		<view class="status_bar" ><!-- 这里是状态栏 --></view>
+		<!-- #endif -->
 		<ul>
 			<li class="codeContent" v-if="status == 1">
 				<h1 class="topTitle">
-					<view class="funicon icon icon-fanhui inline-block"></view>
+					<view @click="$fun.back" class="funicon icon icon-fanhui inline-block"></view>
 					登陆 / 注册
 				</h1>
 				<div class="codeLogin">
