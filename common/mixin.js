@@ -197,7 +197,6 @@ export const pageMixin = {
 
 		}
 
-
 		if(!ls.get('initData')){
 			this.getInitData()
 		}
