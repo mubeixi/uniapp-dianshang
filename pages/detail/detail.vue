@@ -88,9 +88,14 @@
     <!-- 商品详情 -->
     <div class="pro_detail">
         <div class="p_detail_title">商品详情</div>
-		<!-- <div v-html="product.Products_Description" class="p_detail_des"></div> -->
+		<!-- #ifdef H5||APP-PLUS -->
+		<div v-html="product.Products_Description" class="p_detail_des"></div>
+		<!-- #endif -->
+		
+		<!-- #ifdef MP -->
 		<rich-text :nodes="product.Products_Description|formatRichText" class="p_detail_des"></rich-text>
-		<!-- <u-parse :content="product.Products_Description"  /> -->
+		<!-- #endif -->
+		
     </div>
 	<div style="clear: both;">
 
