@@ -7,6 +7,7 @@
 			<image src="/static/fenxiao/top.png"></image>
 			<!-- #ifdef APP-PLUS -->
 			<view class="title">分销中心</view>
+<<<<<<< HEAD
 			<!-- #endif -->
 
 			<image v-if="userInfo.User_ID" class="msg" src="/static/fenxiao/msg.png"></image>
@@ -15,6 +16,14 @@
 			</view>
 			<view class="nickName" v-if="userInfo.User_ID">
 				{{userInfo.User_NickName||userInfo.User_No?('用户'+userInfo.User_No):'暂无昵称'}}
+=======
+			<image class="msg" src="/static/fenxiao/msg.png"></image>
+			<view class="person" v-if="data.disInfo">
+					<image :src="data.disInfo.Shop_Logo" ></image>
+			</view>
+			<view class="nickName" v-if="data.disInfo">
+				{{data.disInfo.Parent_NickName}}
+>>>>>>> upstream/master
 			</view>
 			<view class="font14 loginBtn" v-if="!userInfo.User_ID" plain size="mini" @click="goLogin">登录/注册</view>
 			<view class="sales">
@@ -114,8 +123,12 @@
 
 <script>
 	import {pageMixin} from "../../common/mixin";
+<<<<<<< HEAD
 	import {getDisInit} from '../../common/fetch.js'
 	import {mapActions,mapState,mapGetters} from 'vuex';
+=======
+	import {getDisInit,getUserDisInfo} from '../../common/fetch.js'
+>>>>>>> upstream/master
 	export default {
 		mixins:[pageMixin],
 		data() {
@@ -126,6 +139,7 @@
 					total_income:'',
 					balance:''
 				},//
+				pro:[],
 			};
 		},
 		computed:{

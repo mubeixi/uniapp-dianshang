@@ -159,6 +159,8 @@ export const addAddress = (data, options) => fetch('add_address', data, options)
 export const delAddress = (data, options) => fetch('del_address', data, options);
 // 获取分销中心首页数据
 export const getDisInit = (data, options) => fetch('get_dis_init', data, options);
+// 获取团队对应等级人数
+export const getDisTeamCount = (data, options) => fetch('get_dis_team_count', data, options);
 // 获取用户提现方式
 export const getUserWithdrawMethod = (data, options) => fetch('get_user_withdraw_method', data, options);
 // 用户新增提现方式
@@ -189,8 +191,23 @@ export const jifenProdDetail = (data,options) => fetch('jifen_prod_detail', data
 // 获取赠品详情
 export const judgeReceiveGift = (data, options) => fetch('judge_receive_gift', data, options);
 
-//jssdk签名
+// 获取佣金列表 爵位
+export const getNobiRecordList = (data, options) => fetch('get_nobi_record_list', data, options);
+// 获取佣金列表分销
+export const getDisRecordList = (data, options) => fetch('get_dis_record_list', data, options);
+// 获取佣金列表 股东 
+export const getShaRecordList = (data, options) => fetch('get_sha_record_list', data, options);
+// 获取爵位晋升
+export const nobiInfo = (data, options) => fetch('nobi_info', data, options);
+//获取分销商信息
+export const getUserDisInfo = (data, options) => fetch('get_user_dis_info', data, options);
+//修改分销商分享语 店名  头像信息  
+export const updateUserDisInfo = (data, options) => fetch('update_user_dis_info', data, options);
+//获取区域代理
+export const agentInfo = (data, options) => fetch('agent_info', data, options);
 
+
+//jssdk签名
 export const getJsSign = (data,options) => fetch('share_config', data, options);
 //jssdk签名
 

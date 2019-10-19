@@ -1,16 +1,16 @@
 <template>
 	<view class="team" :style="{'min-height':height+'px'}">
 		<page-title title="我的团队" rightHidden="true" bgcolor="#ffffff"></page-title>
-		<view class="teamName">
+		<view class="teamName" v-if="pro.disInfo">
 			<view class="teamImg">
-				<image src="/static/fenxiao/person.png"></image>
+				<image :src="pro.disInfo.Shop_Logo"></image>
 			</view>
 			<view class="teamInfo">
 				<view class="nickName">
-					坚果是个姑娘
+					{{pro.disInfo.Shop_Name}}
 				</view>
 				<view class="tuijianren">
-					推荐人：张小凡
+					推荐人：{{pro.disInfo.Parent_NickName}}
 				</view>
 			</view>
 		</view>
@@ -19,28 +19,12 @@
 				<image src="/static/fenxiao/teamNumber.png" ></image>
 				<view>团队总人数</view>
 			</view>
-			<view class="teamGrade">
+			<view class="teamGrade" v-for="(item,index) of pro.team_level_count" :key="index">
 				<view>
-					一级分销商
+					{{item.title}}
 				</view>
 				<view>
-					<text>20</text><image src="/static/fenxiao/right.png"></image>
-				</view>
-			</view>
-			<view class="teamGrade">
-				<view>
-					二级分销商
-				</view>
-				<view>
-					<text>20</text><image src="/static/fenxiao/right.png"></image>
-				</view>
-			</view>
-			<view class="teamGrade">
-				<view>
-					三级分销商
-				</view>
-				<view>
-					<text>20</text><image src="/static/fenxiao/right.png"></image>
+					<text>{{item.count}}</text><image src="/static/fenxiao/right.png"></image>
 				</view>
 			</view>
 		
@@ -50,12 +34,13 @@
 
 <script>
 	import {pageMixin} from "../../common/mixin";
-	
+	import {getDisTeamCount} from '../../common/fetch.js'
 	export default {
 		mixins:[pageMixin],
 		data() {
 			return {
 				height:1000,//获取手机屏幕高度
+				pro:[],
 			};
 		},
 		onLoad() {
@@ -65,6 +50,21 @@
 			        that.height=res.screenHeight-68;
 			    }
 			});
+			this.getDisTeamCount();
+		},
+		onShow() {
+			
+		},
+		methods:{
+			getDisTeamCount(){
+				getDisTeamCount().then(res=>{
+					if(res.errorCode==0){
+						this.pro=res.data;
+					}
+				}).catch(e=>{
+					console.log(e)
+				})
+			}
 		}
 	}
 </script>
