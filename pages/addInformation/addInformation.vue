@@ -6,10 +6,10 @@
 				<view class="circleQ">
 					<view></view>
 				</view>
-				<view class="lineQ">
+				<view class="lineQ" :class="isNext?'lineW':''">
 					
 				</view>
-				<view class="circleQ circleW">
+				<view class="circleQ" :class="isNext?'':'circleW'">
 					<view></view>
 				</view>
 				<view class="lineQ">
@@ -23,7 +23,7 @@
 				<view class="secondQ">
 					填写信息
 				</view>
-				<view class="secondW">
+				<view class="secondW" :class="isNext?'secondQ':''">
 					选择区域
 				</view>
 				<view class="secondE">
@@ -57,7 +57,41 @@
 			</radio-group>
 
 		</view>
-		<view class="four">
+		
+		<view class="threes">
+			<view class="haha" @columnchange="bindMultiPickerColumnChange">
+				<!-- 选择区域 -->
+				<picker mode="multiSelector"  @change="bindMultiPickerChange" @columnchange="bindMultiPickerColumnChange" :value="change_multiIndex" :range="change_objectMultiArray" range-key="name">
+								<view class="picker">
+								  <view class="quyu">选择区域</view>
+								  <view v-if="!address_info.Address_Province">选择省份</view>
+								  <view v-else>{{objectMultiArray[0][multiIndex[0]]['name']}}</view>
+								  <view v-if="!address_info.Address_City">选择城市</view>
+								  <view v-else>{{objectMultiArray[1][multiIndex[1]]['name']}}</view>
+								  <view v-if="!address_info.Address_Area">选择地区</view>
+								  <view v-else>{{objectMultiArray[2][multiIndex[2]]['name']}}</view>
+								</view>
+				</picker>
+			</view>
+			<view class="images">
+				<image src="/static/fenxiao/chakan.png" ></image>
+			</view>
+		</view>
+		<view class="threes">
+				<view class="haha">
+				  <picker mode="selector" @change="t_pickerChange" :range="t_arr" range-key="name" :value="t_index">
+					<view class="picker">
+					  <text style="font-size: 28rpx;">街道地址</text>
+					  <view v-if="!address_info.Address_Town" style="margin-left: 20rpx;width: 300rpx;">选择街道</view>
+					  <view v-else>{{t_arr[t_index]['name']}}</view>
+					</view>
+				  </picker>
+				</view>
+				<view class="images">
+					<image src="/static/fenxiao/chakan.png" ></image>
+				</view>
+		</view>
+		<view class="four" @click="nextStep">
 			下一步
 		</view>
 		<view class="five">
@@ -69,28 +103,127 @@
 
 <script>
 	import {pageMixin} from "../../common/mixin";
-	
+	import area from '../../common/area.js';
+	import utils from '../../common/util.js';
+	import {getTown} from '../../common/fetch.js';
 	export default {
 		mixins:[pageMixin],
 		data() {
 			return {
+				isNext:false,
 				items:[
 					{
 						name:'省级',
-						value:'sheng'
+						value:'pro'
 					},{
 						name:'市级',
-						value:'shi'
+						value:'cit'
 					},
 					{
 						name:'县/区',
-						value:'xian'
+						value:'cou'
+					},
+					{
+						name:'镇',
+						value:'tow'
 					}
 				],
+				change_objectMultiArray: [],  //选择数据
+				address_info:{},
+				objectMultiArray: [],   //展示数据
+				multiIndex: [0, 0, 0],  //选择数据
 				current:0,
+				// 街道信息
+				t_arr: [],
+				t_index: 0,
 			};
 		},
+		onLoad() {
+			this.objectMultiArray = [
+			  utils.array_change(area.area[0]['0']),
+			  utils.array_change(area.area[0]['0,1']),
+			  utils.array_change(area.area[0]['0,1,36'])
+			];
+			this.change_objectMultiArray = [
+			  utils.array_change(area.area[0]['0']),
+			  utils.array_change(area.area[0]['0,1']),
+			  utils.array_change(area.area[0]['0,1,36'])
+			];
+		},
 		methods:{
+			nextStep(){
+				if(this.isNext){
+					
+				}else{
+					this.isNext=true;
+				}
+			},
+			// 乡镇地址 点击确定
+			t_pickerChange: function (e) {
+			  this.t_index = e.detail.value;
+			  this.address_info.Address_Town = this.t_arr[e.detail.value]['id'];
+			},
+			address_town: function () {
+			    getTown({'a_id': this.address_info.Address_Area }).then(res => {
+			      if (res.errorCode == 0) {
+			            var t_arr = [];
+			            var t_index = 0;
+			            var idx = 0;
+			            for (var i in res.data) {
+			               for (var j in res.data[i]) {
+			                t_arr.push({ 'id': j, 'name': res.data[i][j] });
+			                if (j == this.address_info.Address_Town) {
+			                    t_index = idx;
+			                }
+			                  idx++;
+			                }
+			              }
+			            this.t_arr = t_arr;
+			            this.t_index = t_index;
+			        }
+				})
+			},
+			//处理省市区联动信息
+			  addressChange: function (columnValue) {
+				var p_arr = this.change_objectMultiArray[0];
+				var p_id = p_arr[columnValue[0]]['id'];
+				var c_arr = utils.array_change(area.area[0][0 + ',' + p_id]);
+				var c_id = c_arr[columnValue[1]]['id'];
+				var a_arr = utils.array_change(area.area[0][0 + ',' + p_id + ',' + c_id]);
+				this.change_objectMultiArray = [
+					p_arr,
+					c_arr,
+					a_arr
+				  ];
+				this.change_multiIndex = columnValue;
+			  },
+			//选择收货地址
+			bindMultiPickerColumnChange: function (e) {
+							var column = e.detail.column;  //修改的列
+							var index = e.detail.value;    //选择列的下标（从0开始）
+							var change_multiIndex = 'change_multiIndex[' + column + ']';
+					
+							var columnValue = [
+							  column == 0 ? index : this.change_multiIndex[0],
+							  column == 0 ? 0 : (column == 1 ? index : this.change_multiIndex[1]),
+							  column == 0 || column == 1 ? 0 : index
+							];
+							this.addressChange(columnValue);
+			},
+			//选择收获地址三级联动后确定按钮动作
+			bindMultiPickerChange: function (e) {
+							this.addressChange(e.detail.value);
+							this.objectMultiArray = this.change_objectMultiArray;
+							this.multiIndex = e.detail.value;
+							this.address_info.Address_Province = this.objectMultiArray[0][this.multiIndex[0]]['id'];
+							this.address_info.Address_City = this.objectMultiArray[1][this.multiIndex[1]]['id'];
+							this.address_info.Address_Area = this.objectMultiArray[2][this.multiIndex[2]]['id'];
+							this.address_info.Address_Town = 0;
+							this.t_arr = [];
+							this.t_index = 0;
+							// 处理街道信息
+							this.address_town();
+			},
 			radioChange: function(evt) {
 				for (let i = 0; i < this.items.length; i++) {
 					if (this.items[i].value === evt.target.value) {
@@ -228,4 +361,36 @@
 		margin-left: 10rpx;
 	}
 }
+
+.threes{
+		height: 88rpx;
+		line-height: 88rpx;
+		width: 710rpx;
+		margin: 0 auto;
+		border-bottom: 1px solid #E7E7E7;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		view.haha{
+			font-size: 30rpx;
+			color: #333333;
+			//margin-right: 42rpx;
+		}
+		.images{
+			width: 16rpx;
+			height: 88rpx;
+			line-height: 88rpx;
+			image{
+				width: 16rpx;
+				height: 25rpx;
+			}
+		}
+
+	}
+	
+	.picker view{width: 160rpx;font-size: 28rpx; line-height:90rpx;height:90rpx; margin-right: 10rpx;}
+	.picker{display: flex;.quyu{width: 120rpx;}}
+	.lineW{
+		background-color: #F43131 !important;
+	}
 </style>
