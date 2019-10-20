@@ -14,7 +14,7 @@
 					郑州市代
 				</view>
 			</view>
-			<view class="juewei">
+			<view class="juewei" @click="go">
 				立即申请
 			</view>
 		</view>
