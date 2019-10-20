@@ -83,7 +83,7 @@
 				      Address_Province: 0,  //为id
 				      Address_City: 0,      //为id
 				      Address_Area: 0,      //为id
-					  Address_Town: 0,
+							Address_Town: 0,
 				      Address_Detailed: '',
 				      Address_Is_Default: 0  //是否为默认地址
 				    },
@@ -98,17 +98,17 @@
 		methods: {
 			//处理省市区联动信息
 			  addressChange: function (columnValue) {
-				var p_arr = this.change_objectMultiArray[0];
-				var p_id = p_arr[columnValue[0]]['id'];
-				var c_arr = utils.array_change(area.area[0][0 + ',' + p_id]);
-				var c_id = c_arr[columnValue[1]]['id'];
-				var a_arr = utils.array_change(area.area[0][0 + ',' + p_id + ',' + c_id]);
-				this.change_objectMultiArray = [
-					p_arr,
-					c_arr,
-					a_arr
-				  ];
-				this.change_multiIndex = columnValue;
+					var p_arr = this.change_objectMultiArray[0];
+					var p_id = p_arr[columnValue[0]]['id'];
+					var c_arr = utils.array_change(area.area[0][0 + ',' + p_id]);
+					var c_id = c_arr[columnValue[1]]['id'];
+					var a_arr = utils.array_change(area.area[0][0 + ',' + p_id + ',' + c_id]);
+					this.change_objectMultiArray = [
+						p_arr,
+						c_arr,
+						a_arr
+						];
+					this.change_multiIndex = columnValue;
 			  },
 			  // 获取乡镇
 			address_town: function () {
@@ -138,31 +138,31 @@
 			  },
 			  //选择收获地址三级联动后确定按钮动作
 			  bindMultiPickerChange: function (e) {
-				this.addressChange(e.detail.value);
-				this.objectMultiArray = this.change_objectMultiArray;
-				this.multiIndex = e.detail.value;
-				this.address_info.Address_Province = this.objectMultiArray[0][this.multiIndex[0]]['id'];
-				this.address_info.Address_City = this.objectMultiArray[1][this.multiIndex[1]]['id'];
-				this.address_info.Address_Area = this.objectMultiArray[2][this.multiIndex[2]]['id'];
-				this.address_info.Address_Town = 0;
-				this.t_arr = [];
-				this.t_index = 0;
-				// 处理街道信息
-				this.address_town();
+					this.addressChange(e.detail.value);
+					this.objectMultiArray = this.change_objectMultiArray;
+					this.multiIndex = e.detail.value;
+					this.address_info.Address_Province = this.objectMultiArray[0][this.multiIndex[0]]['id'];
+					this.address_info.Address_City = this.objectMultiArray[1][this.multiIndex[1]]['id'];
+					this.address_info.Address_Area = this.objectMultiArray[2][this.multiIndex[2]]['id'];
+					this.address_info.Address_Town = 0;
+					this.t_arr = [];
+					this.t_index = 0;
+					// 处理街道信息
+					this.address_town();
 			  },
 			
 			  //选择收货地址
 			  bindMultiPickerColumnChange: function (e) {
-				var column = e.detail.column;  //修改的列
-				var index = e.detail.value;    //选择列的下标（从0开始）
-				var change_multiIndex = 'change_multiIndex[' + column + ']';
-		
-				var columnValue = [
-				  column == 0 ? index : this.change_multiIndex[0],
-				  column == 0 ? 0 : (column == 1 ? index : this.change_multiIndex[1]),
-				  column == 0 || column == 1 ? 0 : index
-				];
-				this.addressChange(columnValue);
+					var column = e.detail.column;  //修改的列
+					var index = e.detail.value;    //选择列的下标（从0开始）
+					var change_multiIndex = 'change_multiIndex[' + column + ']';
+			
+					var columnValue = [
+						column == 0 ? index : this.change_multiIndex[0],
+						column == 0 ? 0 : (column == 1 ? index : this.change_multiIndex[1]),
+						column == 0 || column == 1 ? 0 : index
+					];
+					this.addressChange(columnValue);
 			  },
 			
 			  //提交地址
@@ -328,12 +328,10 @@
 			        utils.get_arr_index(objectMultiArray[2], addressInfo['Address_Area'])
 			      ];
 			      this.address_info = addressInfo;
-				  this.objectMultiArray = objectMultiArray;
-				  this.change_objectMultiArray = objectMultiArray;
-				  this.multiIndex = multiIndex;
-				  this.change_multiIndex = multiIndex;
-			        
-			
+						this.objectMultiArray = objectMultiArray;
+						this.change_objectMultiArray = objectMultiArray;
+						this.multiIndex = multiIndex;
+						this.change_multiIndex = multiIndex;
 			      // 处理街道信息
 			      this.address_town();
 				} else {
