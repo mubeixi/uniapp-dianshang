@@ -14,7 +14,7 @@
 					<image style="border-radius: 50%;overflow: hidden" :src="userInfo.User_HeadImg||'/static/default.png'" ></image>
 			</view>
 			<view class="nickName" v-if="userInfo.User_ID">
-				{{userInfo.User_NickName||userInfo.User_No?('用户'+userInfo.User_No):'暂无昵称'}}
+				{{userInfo.User_NickName||(userInfo.User_No?('用户'+userInfo.User_No):'暂无昵称')}}
 			</view>
 			<view class="font14 loginBtn" v-if="!userInfo.User_ID" plain size="mini" @click="goLogin">登录/注册</view>
 			<view class="sales">
