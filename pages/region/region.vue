@@ -14,7 +14,7 @@
 					郑州市代
 				</view>
 			</view>
-			<view class="juewei">
+			<view class="juewei" @click="goAddInfo">
 				立即申请
 			</view>
 		</view>
@@ -136,6 +136,11 @@
 					}
 				}).catch(err=>{
 					console.log(err);
+				})
+			},
+			goAddInfo(){
+				uni.navigateTo({
+					url:'../addInformation/addInformation'
 				})
 			}
 		}

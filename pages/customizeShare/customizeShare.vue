@@ -50,7 +50,7 @@
 			getUserDisInfo(){
 				getUserDisInfo().then(res=>{
 					if(res.errorCode==0){
-						this.Shop_Announce=Shop_Announce;
+						this.Shop_Announce=res.data.Shop_Announce;
 					}
 				}).catch(err=>{
 					console.log(err);

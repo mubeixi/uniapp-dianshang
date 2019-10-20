@@ -1,6 +1,6 @@
 import {error, fun} from "./index";
 import { staticUrl } from './env.js';
-import {get_Users_ID} from "./fetch";
+import {get_Users_ID,GET_ENV} from "./fetch";
 
 
 export const formatTime = date => {
@@ -260,6 +260,7 @@ export const uploadImages=(formData,imgs)=>{
 	let sum=0;
 	let arr=[];
 	let that=this;
+	formData.env=GET_ENV();
 	for(let i=0;i<imgs.length;i++){
 		uni.uploadFile({
 				url: staticUrl+'/api/little_program/shopconfig.php',
@@ -269,6 +270,7 @@ export const uploadImages=(formData,imgs)=>{
 				success: (uploadFileRes) => {
 					sum++;
 					let msg=JSON.parse(uploadFileRes.data);
+					console.log(msg)
 					arr.push(msg.data.path);
 					if(sum==imgs.length){
 						uni.showToast({
