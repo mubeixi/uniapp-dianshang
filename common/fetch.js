@@ -205,6 +205,9 @@ export const getUserDisInfo = (data, options) => fetch('get_user_dis_info', data
 export const updateUserDisInfo = (data, options) => fetch('update_user_dis_info', data, options);
 //获取区域代理
 export const agentInfo = (data, options) => fetch('agent_info', data, options);
+//获取成为分销商配置信息
+export const disApplyInit = (data, options) => fetch('dis_apply_init', data, options);
+
 
 
 //jssdk签名

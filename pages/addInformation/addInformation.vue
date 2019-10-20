@@ -36,13 +36,13 @@
 				<view class="haha">
 					姓名
 				</view>
-				<input type="text" placeholder="请输入您的姓名" placeholder-class="place">
+				<input type="text" placeholder="请输入您的姓名" placeholder-class="place" v-model="arr.apply_name">
 			</view>
 			<view class="three">
 				<view class="haha">
 					电话
 				</view>
-				<input type="text" placeholder="请输入您的电话" placeholder-class="place">
+				<input type="number" placeholder="请输入您的电话" placeholder-class="place" v-model="arr.apply_mobile" @blur="isTell">
 			</view>
 			<view class="three">
 				<view class="haha">
@@ -85,7 +85,7 @@
 						<view class="picker">
 						  <text style="font-size: 28rpx;">街道地址</text>
 						  <view v-if="!address_info.Address_Town" style="margin-left: 20rpx;width: 300rpx;">选择街道</view>
-						  <view v-else>{{t_arr[t_index]['name']}}</view>
+						  <view v-else style="margin-left: 20rpx;width: 300rpx;">{{t_arr[t_index]['name']}}</view>
 						</view>
 					  </picker>
 					</view>
@@ -132,6 +132,7 @@
 					}
 				],
 				change_objectMultiArray: [],  //选择数据
+				change_multiIndex: [0, 0, 0], //改变的收货地址对应列的下标
 				address_info:{},
 				objectMultiArray: [],   //展示数据
 				multiIndex: [0, 0, 0],  //选择数据
@@ -139,21 +140,38 @@
 				// 街道信息
 				t_arr: [],
 				t_index: 0,
+				arr:{
+					apply_name:'',
+					apply_mobile:'',
+					apply_area:'',
+					pro_id:0,
+					city_id:0,
+					area_id:0,
+					town_id:0
+				}
 			};
 		},
 		onLoad() {
 			this.objectMultiArray = [
 			  utils.array_change(area.area[0]['0']),
 			  utils.array_change(area.area[0]['0,1']),
-			  utils.array_change(area.area[0]['0,1,36'])
+			  utils.array_change(area.area[0]['0,1,35'])
 			];
 			this.change_objectMultiArray = [
 			  utils.array_change(area.area[0]['0']),
 			  utils.array_change(area.area[0]['0,1']),
-			  utils.array_change(area.area[0]['0,1,36'])
+			  utils.array_change(area.area[0]['0,1,35'])
 			];
 		},
 		methods:{
+			isTell(){
+				if(!(/^1[3456789]\d{9}$/.test(this.arr.apply_mobile))){
+					uni.showToast({
+						title:'手机号输入错误，请重新输入',
+						icon:"none"
+					})
+				}
+			},
 			lookJilu(){
 				if(this.isNext){
 					this.isNext=false;
