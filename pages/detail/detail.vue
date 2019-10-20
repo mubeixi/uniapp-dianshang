@@ -89,13 +89,13 @@
     <div class="pro_detail">
         <div class="p_detail_title">商品详情</div>
 		<!-- #ifdef H5||APP-PLUS -->
-		<div v-html="product.Products_Description|formatRichTexts" class="p_detail_des"></div>
+		<div v-html="formatRichTexts(product.Products_Description)" class="p_detail_des"></div>
 		<!-- #endif -->
-		
+
 		<!-- #ifdef MP -->
 		<rich-text :nodes="product.Products_Description|formatRichText" class="p_detail_des"></rich-text>
 		<!-- #endif -->
-		
+
     </div>
 	<div style="clear: both;">
 
@@ -286,7 +286,7 @@ export default {
 		this.Products_ID = option.Products_ID;
 		this.postData.prod_id = option.Products_ID;
 		this.checkProdCollected();
-		this.$refs.cartPopu.close();
+
 		this.getDetail(this.Products_ID);
 		this.getCommit(this.Products_ID);
 		this.getCoupon();//获取可领取的优惠券
@@ -298,6 +298,8 @@ export default {
 			this.judgeReceiveGift();
 			this.recieve = true;
 		}
+
+		this.$refs.cartPopu.close();
 	 },
 	onShow(){
 
@@ -315,34 +317,7 @@ export default {
 				 * @param html
 				 * @returns {void|string|*}
 				 */
-				formatRichTexts(html){
-					if(!html) return;
-					let newContent= html.replace(/<img[^>]*>/gi,function(match,capture){
-					    match = match.replace(/style="[^"]+"/gi, '')//.replace(/style='[^']+'/gi, '');
-					    match = match.replace(/width="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
-					    match = match.replace(/height="[^"]+"/gi, '')//.replace(/height='[^']+'/gi, '');
-					    return match;
-					});
-					newContent= newContent.replace(/<div[^>]*>/gi,function(match,capture){
-					    match = match.replace(/style="[^"]+"/gi, '')//.replace(/style='[^']+'/gi, '');
-					    match = match.replace(/width="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
-					    match = match.replace(/height="[^"]+"/gi, '')//.replace(/height='[^']+'/gi, '');
-					    return match;
-					});
-					newContent= newContent.replace(/<p[^>]*>/gi,'');
-					newContent= newContent.replace(/<[/]p[^>]*>/gi,'');
-					newContent = newContent.replace(/style="[^"]+"/gi,function(match,capture){
-					    match = match.replace(/width:[^;]+;/gi, 'width:100%;').replace(/width:[^;]+;/gi, 'width:100%;');
-					    return match;
-					});
-					
-					newContent = newContent.replace(/<br[^>]*\/>/gi, '');
-					newContent = newContent.replace(/\<img/gi, '<img style="width:100%;float:left;"');
-					newContent = newContent.replace(/src="\/\//gi, 'src="http://');
-					//newContent = newContent.replace(/>[\s]*</gi, "><");
-					console.log(newContent);
-					return newContent;
-				},
+
 				formatRichText (html) { //控制小程序中图片大小
 					if(!html) return;
 				    let newContent= html.replace(/<img[^>]*>/gi,function(match,capture){
@@ -367,11 +342,45 @@ export default {
 				    newContent = newContent.replace(/<br[^>]*\/>/gi, '');
 				    newContent = newContent.replace(/\<img/gi, '<img style="width:100%;float:left;"');
 					//newContent = newContent.replace(/>[\s]*</gi, "><");
-					console.log(newContent,"22");
+
 				    return newContent;
 				}
 			},
     methods: {
+		formatRichTexts(html){
+			if(!html) return;
+			let newContent= html.replace(/<img[^>]*>/gi,function(match,capture){
+				match = match.replace(/style="[^"]+"/gi, '')//.replace(/style='[^']+'/gi, '');
+				match = match.replace(/width="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
+				match = match.replace(/height="[^"]+"/gi, '')//.replace(/height='[^']+'/gi, '');
+				
+				//图片app不支持
+				// #ifdef APP-PLUS
+				match = match.replace(/!*.webp/gi, '')
+				// #endif
+				
+				return match;
+			});
+			newContent= newContent.replace(/<div[^>]*>/gi,function(match,capture){
+				match = match.replace(/style="[^"]+"/gi, '')//.replace(/style='[^']+'/gi, '');
+				match = match.replace(/width="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
+				match = match.replace(/height="[^"]+"/gi, '')//.replace(/height='[^']+'/gi, '');
+				return match;
+			});
+			newContent= newContent.replace(/<p[^>]*>/gi,'');
+			newContent= newContent.replace(/<[/]p[^>]*>/gi,'');
+			newContent = newContent.replace(/style="[^"]+"/gi,function(match,capture){
+				match = match.replace(/width:[^;]+;/gi, 'width:100%;').replace(/width:[^;]+;/gi, 'width:100%;');
+				return match;
+			});
+
+			newContent = newContent.replace(/<br[^>]*\/>/gi, '');
+			newContent = newContent.replace(/\<img/gi, '<img style="width:100%;float:left;"');
+			newContent = newContent.replace(/src="\/\//gi, 'src="http://');
+			//newContent = newContent.replace(/>[\s]*</gi, "><");
+			console.log(newContent);
+			return newContent;
+		},
 		async shareFunc(channel) {
 
 			let _self = this
@@ -826,7 +835,9 @@ export default {
                     }
                 });
 
-            }).catch(()=>{})
+            }).catch(()=>{
+            	console.log('不是微信环境')
+			})
 
 			// #endif
 
