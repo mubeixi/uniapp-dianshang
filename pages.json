@@ -285,6 +285,10 @@
             "path" : "pages/beDistributor/beDistributor",
             "style" : {}
         }
+        ,{
+            "path" : "pages/distributorCenter/distributorCenter",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
