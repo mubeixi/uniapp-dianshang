@@ -1,6 +1,6 @@
 import {error, fun} from "./index";
 import { staticUrl } from './env.js';
-import {get_Users_ID} from "./fetch";
+import {get_Users_ID,GET_ENV} from "./fetch";
 
 
 export const formatTime = date => {
@@ -260,6 +260,7 @@ export const uploadImages=(formData,imgs)=>{
 	let sum=0;
 	let arr=[];
 	let that=this;
+	formData.env=GET_ENV();
 	for(let i=0;i<imgs.length;i++){
 		uni.uploadFile({
 				url: staticUrl+'/api/little_program/shopconfig.php',
@@ -311,6 +312,7 @@ export const buildSharePath = (path)=>{
     let users_ID = ls.get('users_id');
     let userInfo = ls.get('userInfo');
 
+    console.log(userInfo,users_ID)
     let search = '';
 
     if(path.indexOf('users_id')===-1){
@@ -320,12 +322,24 @@ export const buildSharePath = (path)=>{
 
 
     if(path.indexOf('owner_id')===-1){
-        search += userInfo && userInfo.User_ID?'&owner_id='+userInfo.User_ID:''
+
+        let owner_id = 0;
+        if(userInfo.User_ID && userInfo.Is_Distribute===1){
+            owner_id = userInfo.User_ID
+        }
+        search += ('&owner_id='+owner_id)
     }
 
 
-    let ret = path + (search?'?':'')+search
+    let ret = ''
+    if(path.indexOf('?')!=-1){
+        ret = path + (search?'&':'')+search
+    }else{
+        ret = path + (search?'?':'')+search
+    }
 
+
+    console.log(ret)
     if(ret.indexOf('users_id')===-1){
         error('组建分享参数失败');
         throw "必须有users_id"

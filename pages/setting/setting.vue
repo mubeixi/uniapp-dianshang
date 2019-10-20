@@ -10,6 +10,7 @@
 <script>
 	import {confirm} from "../../common";
 	import {ls} from "../../common/tool";
+	import {mapActions} from 'vuex';
 
 	export default {
 		data() {
@@ -18,6 +19,7 @@
 			};
 		},
 		methods:{
+			...mapActions(['setUserInfo']),
 			logoutFunc(){
 				confirm({title:'操作提示',content:'是否退出登录'}).then(res=>{
 
@@ -26,6 +28,8 @@
 					let users_id = ls.get('users_id');
 					ls.clear();
 					ls.set('users_id',users_id);
+
+					this.setUserInfo({})
 
 					uni.switchTab({
 						url:'/pages/index/index'

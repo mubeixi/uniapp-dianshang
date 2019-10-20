@@ -201,7 +201,7 @@
 			}
 		}
 		,{
-            "path" : "components/selectArea/selectArea",
+            "path" : "pages/selectArea/selectArea",
             "style" : {}
         }
         ,{

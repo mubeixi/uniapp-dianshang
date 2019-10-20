@@ -41,9 +41,9 @@
 
 <script>
 	import {pageMixin} from "../../common/mixin";
-	import {uploadImages} from '../../common/tool.js'
+	import {uploadImages,ls} from '../../common/tool.js'
 	import {uploadImage,comment} from '../../common/fetch.js'
-		import {uniRate} from "../../components/uni-rate/uni-rate.vue"
+	import {uniRate} from "../../components/uni-rate/uni-rate.vue"
 	export default {
 		mixins:[pageMixin],
 		components: {uniRate},
@@ -133,6 +133,7 @@
 			},
 			addImg(){
 				let data={
+					'Users_ID': ls.get('users_id'),
 					'timestamp':'1502263578',
 					'sign':'DA1525TR85D6S5A9E5236FDSWD52F147WA',
 					'sortToken':1,
