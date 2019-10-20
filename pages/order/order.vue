@@ -92,7 +92,7 @@ export default {
 	onShow(){
 		this.data=[];
 		this.page=1;
-		this.getOrder();
+		this._getOrder();
 		this.getOrderNum();
 	},
 	onLoad(option){
@@ -101,7 +101,7 @@ export default {
 	onReachBottom(){
 		if(this.data.length<this.totalCount){
 			this.page++;
-			this.getOrder();
+			this._getOrder();
 		}
 	},
 	methods:{
@@ -117,7 +117,7 @@ export default {
 						title:res.msg,
 						icon:'none'
 					})
-					that.getOrder();
+					that._getOrder();
 				}
 			}).catch(e=>{
 				console.log(e);
@@ -182,9 +182,9 @@ export default {
 		changIndex(i){
 			this.data=[];
 			this.index=i;
-			this.getOrder();
+			this._getOrder();
 		},
-		getOrder(){
+		_getOrder(){
 			if(this.isQing) return;
 			this.isQing=true;
 			let data={
@@ -193,14 +193,10 @@ export default {
 				Order_Type: this.Order_Type
 			};
 			if(this.index>0&&this.index<4){
-				data={
-					Order_Status:this.index
-				}
+				data['Order_Status'] = this.index;
 			}else if(this.index==4){
-				data={
-					Is_Commit:0,
-					Order_Status:this.index
-				}
+				data['Is_Commit'] = 0;
+				data['Order_Status'] = this.index;
 			}
 			getOrder(data).then(res=>{
 				if(res.errorCode==0){

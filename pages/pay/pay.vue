@@ -587,7 +587,7 @@
 
 			},
 			paySuccessCall(){
-				uni.navigateTo({
+				uni.redirectTo({
 					url:'/pages/order/order'
 				})
 			},
