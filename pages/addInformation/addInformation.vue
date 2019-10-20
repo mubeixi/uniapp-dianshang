@@ -131,27 +131,35 @@
 						value:'tow'
 					}
 				],
-				change_objectMultiArray: [],  //选择数据
-				address_info:{},
 				objectMultiArray: [],   //展示数据
 				multiIndex: [0, 0, 0],  //选择数据
+								
+				//用于收货地址选择用
+				change_objectMultiArray: [],  //选择数据
+				change_multiIndex: [0, 0, 0], //改变的收货地址对应列的下标
+								
+				change_objectMultiArray: [],  //选择数据
+				address_info:{},
 				current:0,
 				// 街道信息
 				t_arr: [],
 				t_index: 0,
 			};
 		},
-		onLoad() {
+		onShow(){
 			this.objectMultiArray = [
 			  utils.array_change(area.area[0]['0']),
 			  utils.array_change(area.area[0]['0,1']),
-			  utils.array_change(area.area[0]['0,1,36'])
+			  utils.array_change(area.area[0]['0,1,35'])
 			];
 			this.change_objectMultiArray = [
 			  utils.array_change(area.area[0]['0']),
 			  utils.array_change(area.area[0]['0,1']),
-			  utils.array_change(area.area[0]['0,1,36'])
+			  utils.array_change(area.area[0]['0,1,35'])
 			];
+		},
+		onLoad() {
+			
 		},
 		methods:{
 			lookJilu(){

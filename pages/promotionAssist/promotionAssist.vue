@@ -11,8 +11,9 @@
 				<view class="item">
 					<view class="sub-title">选择链接</view>
 					<text>链接方式： </text>
-					 <label class="radio"><radio style="transform:scale(0.7)" value="r1" checked="true" />商城链接</label>
-					 <label class="radio"><radio style="transform:scale(0.7)" value="r2" />图文链接</label>
+					<radio-group @change="radioChange">
+						 <label class="radio" v-for="item in radioArr"><radio color="#F43131" style="transform:scale(0.7)" :value="item.value"  />{{item.name}}</label>
+					 </radio-group>
 				</view>
 				<view class="item">
 					<view class="sub-title">联系方式</view>
@@ -39,11 +40,22 @@
 		mixins:[pageMixin],
 		data() {
 			return {
-				
+				val: 'r1',
+				radioArr: [
+					{value: 'sc', name: '商城链接'},
+					{value: 'tw', name: '图文展示'}
+				],
+				postData: {
+					
+				}
 			}
 		},
 		methods: {
-			
+			radioChange(e) {
+				console.log(e)
+				let val = e.detail.value;
+				console.log(val)
+			}
 		}
 	}
 </script>

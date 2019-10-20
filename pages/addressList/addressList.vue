@@ -133,20 +133,19 @@
 
 			  //获取收货地址列表
 			  getAddressList: function () {
-				getAddress({}).then(res => {
-					if (res.errorCode == 0) {
-					  var addresslist = res.data;
-					  this.addresslist = addresslist;
-					} else if (res.errorCode == 1) {
-					  uni.showModal({
-						title: '错误',
-						content: res.msg,
-						showCancel: false
-					  })
-					}
-				})
+					getAddress({}).then(res => {
+						if (res.errorCode == 0) {
+							var addresslist = res.data;
+							this.addresslist = addresslist;
+						} else if (res.errorCode == 1) {
+							uni.showModal({
+							title: '错误',
+							content: res.msg,
+							showCancel: false
+							})
+						}
+					})
 			  },
-
 		},
 		/**
 		   * 生命周期函数--监听页面加载

@@ -107,7 +107,7 @@
         				{{ship}}
         			</div>
 					<radio-group @change="ShipRadioChange">
-						<radio :value="shipid" :checked="shipid===ship_current" style="float:right;" color="#F43131"/>
+						<radio :value="shipid" :checked="shipid==ship_current" style="float:right;" color="#F43131"/>
 					</radio-group>
         		</div>
         	</div>
@@ -201,7 +201,7 @@ export default {
 					// remindAddress: false, // 提醒添加收货地址
 					submited: false,  // 是否已经提交过，防止重复提交
 					back_address_id: 0,
-					userInfo: {}
+					userInfo: {},
         }
     },
 	filters: {
@@ -359,8 +359,6 @@ export default {
 				this.postData.use_money = 0;
 				return;
 			}
-			console.log(input_money)
-			console.log(user_money)
 			if(input_money - user_money > 0) {
 				uni.showModal({
 					title: '金额大于您的可用余额',
@@ -411,8 +409,10 @@ export default {
 		},
         // 选择运费
         changeShip(){
-			this.type = 'shipping';
-            this.$refs.popupRef.show();
+					this.type = 'shipping';
+					this.ship_current = this.postData.shipping_id;
+					console.log(this.ship_current);
+          this.$refs.popupRef.show();
         },
 		closeMethod(){
 			if(this.type == 'coupon') {
@@ -464,13 +464,17 @@ export default {
 				}
 				this.back_address_id = 0;
 				this.addressLoading = true;
-				// this.createOrderCheck();
+				
+				// 获取用户收货地址，获取订单信息，后台判断运费信息
+				this.createOrderCheck();
 			}).catch(e => {
 				uni.showModal({
 					title: e.data,
 
 				})
 			})
+			
+			
 		},
 		createOrderCheck(){
 			createOrderCheck(this.postData).then(res=>{
@@ -478,7 +482,12 @@ export default {
 					this.orderInfo = res.data;
 					this.couponlist = res.data.coupon_list;
 					this.orderLoading = true;
-
+					this.postData.shipping_id = res.data.Order_Shipping.shipping_id;
+					for(var i in this.orderInfo.shipping_company) {
+						if(i == this.postData.shipping_id) {
+							this.shipping_name = `${this.orderInfo.shipping_company[i]}`
+						}
+					}
 				}else {
 					// 获取失败
 					// uni.showModal({

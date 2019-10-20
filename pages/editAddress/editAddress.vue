@@ -359,12 +359,12 @@
 					this.objectMultiArray = [
 					  utils.array_change(area.area[0]['0']),
 					  utils.array_change(area.area[0]['0,1']),
-					  utils.array_change(area.area[0]['0,1,36'])
+					  utils.array_change(area.area[0]['0,1,35'])
 					];
 					this.change_objectMultiArray = [
 					  utils.array_change(area.area[0]['0']),
 					  utils.array_change(area.area[0]['0,1']),
-					  utils.array_change(area.area[0]['0,1,36'])
+					  utils.array_change(area.area[0]['0,1,35'])
 					],
 					this.t_arr = [];
 					this.c_t_arr = [];

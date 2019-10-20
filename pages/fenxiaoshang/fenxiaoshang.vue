@@ -1,6 +1,8 @@
 <template>
 	<view>
+		<!-- #ifdef APP-PLUS -->
 		<page-title title="分销商信息" rightHidden="true" bgcolor="#F8F8F8"></page-title>
+		<!-- #endif -->
 		<view class="user-info">
 			<view class="user-avator">
 				<image :src="Shop_Logo" mode=""></image>
@@ -110,7 +112,7 @@
 						console.log(res)
 						if(res.errorCode == 0){
 							uni.showToast({
-								title: res.msg,
+								title: '修改成功',
 								icon: 'success'
 							})
 						}else {

@@ -29,31 +29,20 @@
             <span v-if="product.Products_Count">库存{{product.Products_Count}}</span>
             <span v-if="product.Products_Sales">月销{{product.Products_Sales}}</span>
         </div>
+				<!-- 包邮等信息 -->
+				<div class="section3" v-if="product.Products_Promise.length > 0">
+						<span v-for="item in product.Products_Promise" v-if="item.name">
+								<img src="/static/detail/dh.png" alt="">
+								<span>{{item.name}}</span>
+						</span>
+				</div>
     </div>
     <!-- 领券 -->
     <div class="section2" @click="showTick" data-type="ticks"  v-if="couponList.length>0">
         <div class="btn">领券</div>
         <div class="right" >店铺优惠券 <img src="/static/detail/right.png" alt=""></div>
     </div>
-    <!-- 包邮等信息 -->
-    <div class="section3">
-        <span>
-            <img src="/static/detail/dh.png" alt="">
-            <span>假一赔十</span>
-        </span>
-        <span>
-            <img src="/static/detail/dh.png" alt="">
-            <span>包邮</span>
-        </span>
-        <span>
-            <img src="/static/detail/dh.png" alt="">
-            <span>7天包退</span>
-        </span>
-        <span>
-            <img src="/static/detail/dh.png" alt="">
-            <span>正品保证</span>
-        </span>
-    </div>
+    
     <!-- 评价 -->
     <div class="comment">
         <div class="c_title">
@@ -1150,21 +1139,23 @@ export default {
         display: flex;
         flex-wrap: wrap;
         font-size: 0rpx;
-        padding: 30rpx 20rpx;
-        border-bottom: 20rpx solid #efefef;
+				// padding: 30rpx 0;
+        // padding: 30rpx 20rpx;
+        // border-bottom: 20rpx solid #efefef;
     }
     .section3>span {
         display: flex;
         align-items: center;
-        margin-right: 20rpx;
-		span{
-			font-size: 24rpx;
-			color: #333333;
-		}
+        // margin-right: 20rpx;
+				margin: 20rpx 20rpx 20rpx 0;
+				span{
+					font-size: 24rpx;
+					color: #333333;
+				}
     }
     .section3 img {
         width: 28rpx;
-		height: 28rpx;
+				height: 28rpx;
         margin-right: 10rpx;
     }
     /* 包邮信息等 end */

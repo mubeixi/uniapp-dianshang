@@ -283,14 +283,20 @@
         }
         ,{
             "path" : "pages/beDistributor/beDistributor",
-            "style" : {}
+            "style" : {
+							"navigationBarTitleText": "成为分销商"
+						}
         }
         ,{
             "path" : "pages/fenxiaoshang/fenxiaoshang",
-						"style" : {}
+						"style" : {
+							"navigationBarTitleText": "分销商信息"
+						}
 				},{
             "path" : "pages/distributorCenter/distributorCenter",
-            "style" : {}
+            "style" : {
+							"navigationBarTitleText": "分销商信息"
+						}
         }
     ],
 	"globalStyle": {
