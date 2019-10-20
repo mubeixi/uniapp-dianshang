@@ -271,7 +271,8 @@ export default {
 	//自定义小程序分享
 	onShareAppMessage(){
 
-		let path = '/pages/detail/detail';
+		let path = '/pages/detail/detail?Products_ID='+this.Products_ID;
+
 		let shareObj = {
 			title: this.product.Products_Name,
 			desc:this.product.Products_BriefDescription,
@@ -355,12 +356,12 @@ export default {
 				match = match.replace(/style="[^"]+"/gi, '')//.replace(/style='[^']+'/gi, '');
 				match = match.replace(/width="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
 				match = match.replace(/height="[^"]+"/gi, '')//.replace(/height='[^']+'/gi, '');
-				
+
 				//图片app不支持
 				// #ifdef APP-PLUS
 				match = match.replace(/!*.webp/gi, '')
 				// #endif
-				
+
 				return match;
 			});
 			newContent= newContent.replace(/<div[^>]*>/gi,function(match,capture){
@@ -380,13 +381,13 @@ export default {
 			newContent = newContent.replace(/\<img/gi, '<img style="width:100%;float:left;"');
 			newContent = newContent.replace(/src="\/\//gi, 'src="http://');
 			//newContent = newContent.replace(/>[\s]*</gi, "><");
-			console.log(newContent);
+			// console.log(newContent);
 			return newContent;
 		},
 		async shareFunc(channel) {
 
 			let _self = this
-			let path = 'pages/detail/detail';
+			let path = 'pages/detail/detail?Products_ID='+this.Products_ID;
 			let front_url = this.initData.front_url;
 
 			let shareObj = {
@@ -813,11 +814,16 @@ export default {
 
             //let _self = this;
 			// #ifdef H5
+
+			let path = '/pages/detail/detail?Products_ID='+this.Products_ID;
+			let front_url = this.initData.front_url;
+
+
             this.WX_JSSDK_INIT(this).then((wxEnv)=>{
 
                 this.$wx.onMenuShareTimeline({
                     title: '#网中网#'+product.Products_Name, // 分享标题
-                    link: location.href, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                    link: location.origin+buildSharePath(path), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
                     imgUrl: product.ImgPath, // 分享图标
                     success: function() {
                         // 用户点击了分享后执行的回调函数
@@ -827,7 +833,7 @@ export default {
                 //两种方式都可以
                 wxEnv.onMenuShareAppMessage({
                     title: '#网中网#'+product.Products_Name, // 分享标题
-                    link: location.href, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                    link: location.origin+buildSharePath(path), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
                     imgUrl: product.ImgPath, // 分享图标
                     desc: product.Products_BriefDescription||'好物推荐',
                     type: 'link', // 分享类型,music、video或link，不填默认为link
