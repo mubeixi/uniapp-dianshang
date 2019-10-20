@@ -269,6 +269,7 @@ export const uploadImages=(formData,imgs)=>{
 				success: (uploadFileRes) => {
 					sum++;
 					let msg=JSON.parse(uploadFileRes.data);
+					console.log(msg)
 					arr.push(msg.data.path);
 					if(sum==imgs.length){
 						uni.showToast({

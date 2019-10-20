@@ -218,7 +218,6 @@ export const getBalanceRank = (data,options) => fetch('get_balance_rank', data, 
 //获取商品的海报
 export const getProductSharePic = (data,options) => fetch('get_product_tgqrcode', data, options);
 
-
 function get_Appid() {
   return 'xhh';
 }

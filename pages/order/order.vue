@@ -80,13 +80,13 @@ export default {
     data(){
         return {
             index: 0,
-			data:[],
-			pageSize:5,
-			page:1,
-			totalCount:0,
-			orderNum:'',//订单状态角标数
-			isQing:false,
-			Order_Type: 'shop,gift' , //请求的订单类型
+						data:[],
+						pageSize:5,
+						page:1,
+						totalCount:0,
+						orderNum:'',//订单状态角标数
+						isQing:false,
+						Order_Type: 'shop,gift' , //请求的订单类型
         }
     },
 	onShow(){

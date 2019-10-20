@@ -133,7 +133,6 @@
 			},
 			addImg(){
 				let data={
-					'Users_ID': 'wkbq6nc2kc',
 					'timestamp':'1502263578',
 					'sign':'DA1525TR85D6S5A9E5236FDSWD52F147WA',
 					'sortToken':1,
