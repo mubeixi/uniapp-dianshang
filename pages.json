@@ -286,6 +286,9 @@
             "style" : {}
         }
         ,{
+            "path" : "pages/fenxiaoshang/fenxiaoshang",
+						"style" : {}
+				},{
             "path" : "pages/distributorCenter/distributorCenter",
             "style" : {}
         }
