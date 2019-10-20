@@ -31,71 +31,74 @@
 				</view>
 			</view>
 		</view>
-		<view class="three">
-			<view class="haha">
-				姓名
-			</view>
-			<input type="text" placeholder="请输入您的姓名" placeholder-class="place">
-		</view>
-		<view class="three">
-			<view class="haha">
-				电话
-			</view>
-			<input type="text" placeholder="请输入您的电话" placeholder-class="place">
-		</view>
-		<view class="three">
-			<view class="haha">
-				级别
-			</view>
-			<radio-group @change="radioChange" class="myRadio">
-					<view v-for="(item, index) in items" :key="item.value" class="myRadioQ">
-						<view>
-							<radio :value="item.value" :checked="index === current" />
-						</view>
-						<view class="mbx">{{item.name}}</view>
-					</view>
-			</radio-group>
-
-		</view>
-		
-		<view class="threes">
-			<view class="haha" @columnchange="bindMultiPickerColumnChange">
-				<!-- 选择区域 -->
-				<picker mode="multiSelector"  @change="bindMultiPickerChange" @columnchange="bindMultiPickerColumnChange" :value="change_multiIndex" :range="change_objectMultiArray" range-key="name">
-								<view class="picker">
-								  <view class="quyu">选择区域</view>
-								  <view v-if="!address_info.Address_Province">选择省份</view>
-								  <view v-else>{{objectMultiArray[0][multiIndex[0]]['name']}}</view>
-								  <view v-if="!address_info.Address_City">选择城市</view>
-								  <view v-else>{{objectMultiArray[1][multiIndex[1]]['name']}}</view>
-								  <view v-if="!address_info.Address_Area">选择地区</view>
-								  <view v-else>{{objectMultiArray[2][multiIndex[2]]['name']}}</view>
-								</view>
-				</picker>
-			</view>
-			<view class="images">
-				<image src="/static/fenxiao/chakan.png" ></image>
-			</view>
-		</view>
-		<view class="threes">
+		<block v-if="!isNext">
+			<view class="three">
 				<view class="haha">
-				  <picker mode="selector" @change="t_pickerChange" :range="t_arr" range-key="name" :value="t_index">
-					<view class="picker">
-					  <text style="font-size: 28rpx;">街道地址</text>
-					  <view v-if="!address_info.Address_Town" style="margin-left: 20rpx;width: 300rpx;">选择街道</view>
-					  <view v-else>{{t_arr[t_index]['name']}}</view>
-					</view>
-				  </picker>
+					姓名
+				</view>
+				<input type="text" placeholder="请输入您的姓名" placeholder-class="place">
+			</view>
+			<view class="three">
+				<view class="haha">
+					电话
+				</view>
+				<input type="text" placeholder="请输入您的电话" placeholder-class="place">
+			</view>
+			<view class="three">
+				<view class="haha">
+					级别
+				</view>
+				<radio-group @change="radioChange" class="myRadio">
+						<view v-for="(item, index) in items" :key="item.value" class="myRadioQ">
+							<view>
+								<radio :value="item.value" :checked="index === current" />
+							</view>
+							<view class="mbx">{{item.name}}</view>
+						</view>
+				</radio-group>
+
+			</view>
+		</block>
+		<block v-else>
+			<view class="threes">
+				<view class="haha">
+					<!-- 选择区域 -->
+					<picker mode="multiSelector"  @change="bindMultiPickerChange" @columnchange="bindMultiPickerColumnChange" :value="change_multiIndex" :range="change_objectMultiArray" range-key="name">
+									<view class="picker">
+									  <view class="quyu">选择区域</view>
+									  <view v-if="!address_info.Address_Province">选择省份</view>
+									  <view v-else>{{objectMultiArray[0][multiIndex[0]]['name']}}</view>
+									  <view v-if="!address_info.Address_City">选择城市</view>
+									  <view v-else>{{objectMultiArray[1][multiIndex[1]]['name']}}</view>
+									  <view v-if="!address_info.Address_Area">选择地区</view>
+									  <view v-else>{{objectMultiArray[2][multiIndex[2]]['name']}}</view>
+									</view>
+					</picker>
 				</view>
 				<view class="images">
 					<image src="/static/fenxiao/chakan.png" ></image>
 				</view>
-		</view>
+			</view>
+			<view class="threes">
+					<view class="haha">
+					  <picker mode="selector" @change="t_pickerChange" :range="t_arr" range-key="name" :value="t_index">
+						<view class="picker">
+						  <text style="font-size: 28rpx;">街道地址</text>
+						  <view v-if="!address_info.Address_Town" style="margin-left: 20rpx;width: 300rpx;">选择街道</view>
+						  <view v-else>{{t_arr[t_index]['name']}}</view>
+						</view>
+					  </picker>
+					</view>
+					<view class="images">
+						<image src="/static/fenxiao/chakan.png" ></image>
+					</view>
+			</view>
+		</block>
 		<view class="four" @click="nextStep">
-			下一步
+			{{isNext?'提交申请':'下一步'}}
 		</view>
-		<view class="five">
-			查看申请记录
+		<view class="five" @click="lookJilu">
+			{{isNext?'返回修改':'查看申请记录'}}
 			<image src="/static/fenxiao/chakan.png" ></image>
 		</view>
 	</view>
@@ -151,6 +154,13 @@
 			];
 		},
 		methods:{
+			lookJilu(){
+				if(this.isNext){
+					this.isNext=false;
+				}else{
+					
+				}
+			},
 			nextStep(){
 				if(this.isNext){
 					
