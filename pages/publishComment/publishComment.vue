@@ -9,9 +9,9 @@
 			</view>
 		</view>
 		<textarea class="edit"  contenteditable="true" placeholder="宝贝是否满足了你的期待？说说你的使用心得，分享给其他想购买的朋友吧。" placeholder-style="place" v-model="Note">
-			
+
 		</textarea>
-		
+
 		<view class="niming">
 			<view>
 				匿名评价
@@ -142,7 +142,7 @@
 				let that=this;
 				uni.chooseImage({
 					count:3,
-					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有  
+					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
 					success(res) {
 						that.isSubmit=false;
 						for(let item of res.tempFiles){
@@ -155,7 +155,7 @@
 							//是否可以提交
 							that.isSubmit=true;
 						}
-						
+
 					},
 					fail(e) {
 						console.log(e);
@@ -204,7 +204,7 @@
 		text-align: center;
 		margin-top: 65rpx;
 	}
-	
+
 	.niming{
 		width: 710rpx;
 		height: 75rpx;
@@ -219,7 +219,7 @@
 		margin-top: 20rpx;
 		margin-bottom: 20rpx;
 	}
-	
+
 	.item {
 	    display: flex;
 	    height: 50px;
@@ -304,7 +304,7 @@
 			display: flex;
 			justify-content: space-between;
 			height: 104rpx;
-			border-bottom:1px solid rgba(230,230,230,1); 
+			border-bottom:1px solid rgba(230,230,230,1);
 			align-items: center;
 			font-size: 28rpx;
 		}
@@ -360,7 +360,7 @@
 			position: absolute;
 			top: 35rpx;
 			left: 72rpx;
-			
+
 		}
 	}
 	.shangH{
@@ -368,7 +368,7 @@
 		width: 710rpx;
 		margin: 0 auto;
 	}
-	
+
 	.rate{
 		margin: 0 auto;
 		width: 710rpx;

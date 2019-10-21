@@ -14,7 +14,7 @@
 				坚持每天连续签到可以获多重奖励哦
 			</view>
 		</view>
-		
+
 		<view class="jilu">
 			<view class="chang">
 				<image src="/static/task/checked.png" ></image>
@@ -84,12 +84,12 @@
 <script>
 	import {goBack}  from '../../common/tool.js'
 	import {pageMixin} from "../../common/mixin";
-	
+
 	export default {
 		mixins:[pageMixin],
 		data() {
 			return {
-				
+
 			};
 		},
 		methods:{
@@ -220,6 +220,6 @@
 		height: 40rpx;
 		line-height: 40rpx;
 	}
-	
+
 }
 </style>

@@ -5,7 +5,7 @@
 			<view class="left">
 				提现方式
 			</view>
-			<view class="right"> 
+			<view class="right">
 				<!-- 中国银行 <image src="/static/right.png"></image> -->
 				<picker @change="bindPickerChange" :value="index" :range="array" range-key="Method_Name" >
 				    <view class="uni-input">{{array[index].Method_Name}}</view>
@@ -13,7 +13,7 @@
 				<image src="/static/right.png"></image>
 			</view>
 		</view>
-		
+
 		<block v-if="data.Method_Type=='bank_card'">
 			<view class="centers">
 				<view class="left">
@@ -31,7 +31,7 @@
 				<view class="left">
 					开户行
 				</view>
-				<input type="text" placeholder="请输入您的开户行" placeholder-style="places" v-model="data.Bank_Position"> 
+				<input type="text" placeholder="请输入您的开户行" placeholder-style="places" v-model="data.Bank_Position">
 			</view>
 		</block>
 		<block v-else-if="data.Method_Type=='alipay'">
@@ -70,11 +70,11 @@
 					Account_Val:'',//账号
 					Bank_Position:'',//开户行
 				},
-				
+
 			};
 		},
 		onLoad() {
-			
+
 		},
 		onShow() {
 			//获取商城提现方式

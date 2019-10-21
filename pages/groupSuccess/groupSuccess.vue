@@ -31,9 +31,9 @@
         <div class="three">
             <div class="paySuc"><img src="/static/tuan/paySuc.png" >支付成功</div>
             <ul class="lyl">
-                <li><img src="/static/tuan/lyl.png"><img src="/static/tuan/tuanzhang.png" class="tuanzhang"><span class="tuanzhang">团长</span></li>  
-                <li><img src="/static/tuan/lyl.png"></li>  
-                <li><img src="/static/tuan/lyl.png"></li>  
+                <li><img src="/static/tuan/lyl.png"><img src="/static/tuan/tuanzhang.png" class="tuanzhang"><span class="tuanzhang">团长</span></li>
+                <li><img src="/static/tuan/lyl.png"></li>
+                <li><img src="/static/tuan/lyl.png"></li>
             </ul>
         </div>
         <!-- 倒计时 -->
@@ -64,7 +64,7 @@
         <div class="liji">
              <div class="vanButton">立即参团</div>
         </div>
-         
+
         <!-- 间隙 -->
         <div class="mbxline"></div>
         <!-- 拼团规则 -->
@@ -95,7 +95,7 @@
                     <span class="n_price"><span class="pricem">￥</span>169.00</span>
                     <span class="o_price">已团555件</span>
                 </div>
-             </div>  
+             </div>
         </div>
   </div>
 </template>
@@ -407,7 +407,7 @@ export default {
         font-size: 30rpx;
         color: #333333;
         background-color: #f2f2f2;
-        padding: 17px;       
+        padding: 17px;
     }
 }
 // 查看更多
@@ -458,5 +458,5 @@ export default {
         color: #afafaf;
         font-size: 12px;
         margin-left: 22rpx;
-    } 
+    }
 </style>

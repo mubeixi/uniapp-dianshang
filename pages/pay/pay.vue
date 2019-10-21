@@ -10,13 +10,13 @@
 				</div>
 			</div>
 		</div>
-		<page-title title="付款" rightHidden="true" bgcolor="#ffffff"></page-title>
+		<page-title title="付款" :rightHidden="true" bgcolor="#ffffff"></page-title>
 		<div class="state">
-			<img src="/static/wait.png">
+			<image class="img" src="/static/wait.png" />
 			<span class="state-desc">等待买家付款</span>
 		</div>
 		<div class="address">
-			<img class="loc_icon" src="/static/location.png" alt="">
+			<image class="loc_icon" src="/static/location.png" alt="" />
 			<div class="add_msg">
 				<div class="name">收货人：{{orderInfo.Address_Name}} <span>{{orderInfo.Address_Mobile}}</span></div>
 				<div class="location">收货地址：{{orderInfo.Address_Province_name}}{{orderInfo.Address_City_name}}{{orderInfo.Address_Area_name}}{{orderInfo.Address_Town_name}}</div>
@@ -24,11 +24,11 @@
 		</div>
 		<div class="order_msg">
 			<div class="biz_msg">
-				<img :src="orderInfo.ShopLogo" class="biz_logo" alt="">
+				<image :src="orderInfo.ShopLogo" class="biz_logo" alt="" />
 				<span class="biz_name">{{orderInfo.ShopName}}</span>
 			</div>
 			<div class="pro" v-for="(pro,pro_id) in orderInfo.prod_list" :key="pro_id">
-				<img class="pro-img" :src="pro.prod_img" alt="">
+				<image class="pro-img" :src="pro.prod_img" alt="" />
 				<div class="pro-msg">
 					<div class="pro-name">{{pro.prod_name}}</div>
 					<div class="attr" v-if="pro.attr_info"><span>{{pro.attr_info.attr_name}}</span></div>
@@ -380,6 +380,8 @@
 			},
 			// 订单详情
 			getOrderDetail() {
+
+				let _self = this;
 				getOrderDetail({
 					Order_ID: this.Order_ID,
 				}).then(res => {
@@ -410,7 +412,10 @@
 						this.invoice_info = this.orderInfo.Order_InvoiceInfo;
 						this.order_remark = this.orderInfo.Order_Remark;
 						if(this.showDirect) {
-							this.$refs.popupLayer.show();
+							_self.$nextTick().then(()=>{
+								_self.$refs.popupLayer.show();
+							})
+
 						}
 					}
 				})
@@ -814,7 +819,7 @@
 		align-items: center;
 		border-top: 30rpx solid #FFF3F3F3;
 
-		img {
+		.img {
 			width: 60rpx;
 			height: 60rpx;
 		}

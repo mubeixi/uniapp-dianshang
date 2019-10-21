@@ -74,11 +74,11 @@
 				           	console.log(e)
 				           })
 				        } else if (res.cancel) {
-				           
+
 				        }
 				    }
 				});
-				
+
 			},
 			//管理切换选中 删除
 			handle(){
@@ -150,7 +150,7 @@ view,div{
 			right: 35rpx;
 		}
 	}
-	
+
 }
 .del{
 	width: 25rpx !important;
