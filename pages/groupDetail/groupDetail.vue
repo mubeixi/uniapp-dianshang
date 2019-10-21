@@ -65,7 +65,7 @@
         <div class="pinTitle">
             小伙伴在开团
         </div>
-        <div class="pinCenter">
+        <div class="pinCenter" v-for="(team,idx) in teamList">
             <div class="image">
                 <img src="/static/tuan/info.png">
             </div>
@@ -191,7 +191,8 @@
 				</div>
 				<div class="inputNumber">
 						<div class="clicks" @click="delNum">-</div>
-						<input v-enter-number type="number" v-model="postData.qty"  disabled>
+<!--					v-enter-number-->
+						<input  type="number" v-model="postData.qty"  disabled>
 						<div class="clicks" @click="addNum">+</div>
 				</div>
 			</div>
@@ -242,7 +243,7 @@
 
 <script>
 import popupLayer from '../../components/popup-layer/popup-layer.vue'
-import {getProductDetail,getCommit,updateCart,addCollection,getCoupon,getUserCoupon,cancelCollection,checkProdCollected} from '../../common/fetch.js'
+import {getProductDetail,getCommit,updateCart,addCollection,getCoupon,getUserCoupon,cancelCollection,checkProdCollected,getPintuanTeam,addProductViews} from '../../common/fetch.js'
 import {goBack,numberSort}  from '../../common/tool.js'
 import {pageMixin} from "../../common/mixin";
 import {error} from "../../common";
@@ -253,6 +254,7 @@ export default {
         return {
 type: '', // 优惠券内容， 分享内容
             shareShow: false,
+			teamList:[],//正在开团的列表
             ticksShow: false,
 			product:'',//商品结果
 			commit:[],//获取评论
@@ -292,6 +294,14 @@ type: '', // 优惠券内容， 分享内容
 	onShow() {
 		this.getDetail(this.Products_ID);
 		this.getCommit(this.Products_ID);
+
+		addProductViews(this.Products_ID).then().catch()
+
+		//获取正在拼团的团队
+		this.getPintuanTeamList(this.Products_ID)
+
+
+
 	},
 	filters: {
 				/**
@@ -331,6 +341,16 @@ type: '', // 优惠券内容， 分享内容
 				}
 			},
     methods: {
+		getPintuanTeamList(id){
+			getPintuanTeam({prod_id:id}).then(res=>{
+				if(res.errorCode === 0){
+					this.teamList = res.data
+				}
+
+			}).catch(e=>{
+
+			})
+		},
 		formatRichTexts(html){
 			if(!html) return;
 			let newContent= html.replace(/<img[^>]*>/gi,function(match,capture){
@@ -593,10 +613,9 @@ type: '', // 优惠券内容， 分享内容
 					this.product = res.data;
 					this.postData.count = res.data.Products_Count;
 					if(res.data.skujosn) {
-						this.product.skujosn = JSON.parse(res.data.skujosn);
-						this.product.skuvaljosn = JSON.parse(res.data.skuvaljosn);
+						this.product.skujosn = typeof res.data.skujosn ==='string' ?JSON.parse(res.data.skujosn):res.data.skujosn;
+						this.product.skuvaljosn = typeof res.data.skuvaljosn === 'string' ?JSON.parse(res.data.skuvaljosn):res.data.skuvaljosn;
 					}
-					console.log(this.product.skujosn)
 
 				}
 

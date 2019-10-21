@@ -195,7 +195,7 @@
 <script>
 import bottom from '../../components/bottom/bottom'
 import popupLayer from '../../components/popup-layer/popup-layer.vue'
-import {getProductDetail,getCommit,updateCart,addCollection,getCoupon,getUserCoupon,checkProdCollected,cancelCollection,judgeReceiveGift,getProductSharePic} from '../../common/fetch.js';
+import {getProductDetail,getCommit,updateCart,addCollection,getCoupon,getUserCoupon,checkProdCollected,cancelCollection,judgeReceiveGift,getProductSharePic,addProductViews} from '../../common/fetch.js';
 import {goBack,numberSort,getProductThumb}  from '../../common/tool.js'
 import {buildSharePath,ls} from "../../common/tool";
 
@@ -290,6 +290,8 @@ export default {
 		}
 
 		this.$refs.cartPopu.close();
+
+		addProductViews(this.Products_ID)
 	 },
 	onShow(){
 
@@ -790,6 +792,8 @@ export default {
 							val: skujosn[i]
 						});
 					}
+
+
 					this.product.skujosn_new = skujosn_new;
 					this.product.skuvaljosn = res.data.skuvaljosn;
 					console.log(this.product.skujosn);
