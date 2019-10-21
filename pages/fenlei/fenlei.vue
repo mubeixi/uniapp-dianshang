@@ -1,7 +1,7 @@
 <template>
   <div >
    <!-- <search></search>
-    <van-tree-select  
+    <van-tree-select
         :items="items"
         :main-active-index.sync="activeIndex"
         >
@@ -57,7 +57,7 @@ export default {
     }
   },
   methods: {
-      
+
   }
 }
 </script>

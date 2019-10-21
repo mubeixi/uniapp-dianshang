@@ -13,7 +13,7 @@
 			</view>
 		</view>
 		<view style="height: 198rpx;width: 100%;">
-			
+
 		</view>
 		<view class="center" v-for="(item,index) of data" :key="index">
 			<view class="tops">

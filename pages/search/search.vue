@@ -3,14 +3,14 @@
     <form action="/">
 		<div class="search-wrap">
 			<icon type="search" size="34rpx" class="search_icon"/>
-			<input type="text" class="search-input" name="search" v-model="inputValue" @confirm="success"  confirm-type='search' focus="focus" autofocus="autofocus"> 
+			<input type="text" class="search-input" name="search" v-model="inputValue" @confirm="success"  confirm-type='search' focus="focus" autofocus="autofocus">
 			<span @click="close">取消</span>
-		</div>	
+		</div>
     </form>
     <div class="history" v-if="searchAll.length>0">
         <div class="title">
 			<div>搜索历史</div>
-			<div @click="clear" class="dels"><img src="/static/del.png"></div>
+			<div @click="clear" class="dels"><img src="./static/del.png"></div>
 		</div>
         <div class="h_content">
             <span v-for="(item,i) of searchAll" :key='i' @click="goSearch(item)">{{item}}</span>
@@ -34,7 +34,7 @@ export default {
       }
   },
   components: {
-    
+
   },
   onShow(){
 	const than = this;       // 注意this的指向
@@ -84,7 +84,7 @@ export default {
 		  goBack();
 	  },
       onSearch: function(){
-         
+
       },
       onCancel: function(){
 
@@ -139,7 +139,7 @@ export default {
         font-weight: 500;
 		height: 40rpx;
         line-height: 40rpx;
-		
+
 		img{
 			width: 100%;
 			height: 100%

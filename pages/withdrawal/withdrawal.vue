@@ -32,7 +32,7 @@
 				</view>
 			</view>
 			<view class="kong">
-				
+
 			</view>
 			<view class="tishi">
 				<image src="/static/fenxiao/tishi.png" ></image>
@@ -118,10 +118,10 @@
 					money:this.price
 				}
 				withdrawApply(data).then(res=>{
-					
+
 					setTimeout(() => {
 							that.isQing=false;
-					}, 4000)					
+					}, 4000)
 					if(res.errorCode==0){
 						//提现成功清除金额
 						that.price='';
