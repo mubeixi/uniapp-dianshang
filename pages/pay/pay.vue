@@ -156,10 +156,10 @@
 			}
 			// 获取支付方式
 			this.pay_arr = ls.get('initData').pay_arr;
-			
+
 		},
 		filters: {
-		
+
 		},
 		onShow() {
 			this.getOrderDetail();
@@ -228,7 +228,7 @@
 					pay_money: this.orderInfo.Order_Fyepay, // 剩余支付的钱
 					use_money: this.user_money , // 使用的余额
 					user_pay_password: this.user_pay_password, //余额支付密码
-					need_invoice: this.need_invoice, 
+					need_invoice: this.need_invoice,
 					invoice_info: this.invoice_info,
 					order_remark: this.order_remark
 				};
@@ -239,7 +239,7 @@
 					return;
 				}
 				let isHasCode = this.code || GetQueryByString('code');
-				
+
 				if (isHasCode) {
 					// payConf.code = isHasCode;
 					//拿到之前的配置
@@ -257,7 +257,7 @@
 
 
 				// #endif
-				
+
 				// #ifdef MP-WEIXIN
 					payConf.pay_type = 'wx_lp';
 					console.log(payConf)
@@ -271,11 +271,11 @@
 						});
 					})
 				// #endif
-				
+
 				orderPay(payConf).then(res => {
 					console.log(res);
-					
-					
+
+
 					// #ifdef H5
 					let {
 						timestamp,
@@ -324,7 +324,7 @@
 					delete orderInfo.timestamp
 
 					console.log(provider,orderInfo,'支付数据222222222222222222');
-					
+
 					uni.requestPayment({
 					...orderInfo,
 						provider,
@@ -365,7 +365,7 @@
 					// #endif
 				})
 			},
-			//获取用户支付方式 
+			//获取用户支付方式
 			chooseType(name) {
 				this.pay_type = name;
 				this.$refs.popupLayer.close();
@@ -408,7 +408,7 @@
 						this.need_invoice = this.orderInfo.Order_NeedInvoice;
 						this.openInvoice = this.orderInfo.Order_NeedInvoice > 0;
 						this.invoice_info = this.orderInfo.Order_InvoiceInfo;
-						this.order_remark = this.orderInfo.Order_Remark;											
+						this.order_remark = this.orderInfo.Order_Remark;
 						if(this.showDirect) {
 							this.$refs.popupLayer.show();
 						}
@@ -588,7 +588,7 @@
 			},
 			paySuccessCall(){
 				uni.redirectTo({
-					url:'/pages/order/order'
+					url:'/pages/order/order?index=2'
 				})
 			},
 			// 用户选择 微信支付
@@ -754,7 +754,7 @@
 									})
 								}
 							});
-							// #endif			
+							// #endif
 
 						})
 
@@ -784,7 +784,7 @@
 					}
 				}
 			},
-			
+
 			// 取消输入支付密码
 			cancelInput() {
 				this.password_input = false;
@@ -917,7 +917,7 @@
 		margin-bottom: 20rpx;
 	}
 
-                        
+
 
 	.attr {
 		display: inline-block;

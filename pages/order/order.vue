@@ -1,6 +1,10 @@
 <template>
     <div>
-        <page-title title="我的订单" rightHidden="true" class="titless"></page-title>
+		<!-- #ifdef APP-PLUS -->
+		<view class="status_bar" style="background:white;position: fixed;top: 0;z-index: 22"><!-- 这里是状态栏 --></view>
+		<!-- #endif -->
+
+<!--        <page-title title="我的订单" rightHidden="true" class="titless"></page-title>-->
         <div class="navs">
             <div class="nav-item" :class="index==0?'active':''" @click="changIndex(0)">全部</div>
             <div class="nav-item" :class="index==1?'active':''" @click="changIndex(1)">
@@ -20,8 +24,7 @@
 				<div class="jiaobiao" v-if="orderNum.shop.waitcomment>0">{{orderNum.shop.waitcomment}}</div>
 			</div>
         </div>
-		<view style="height: 186rpx;width: 100%;">
-			
+		<view class="space" style="height: 100rpx;width: 100%;">
 		</view>
         <div class="order" v-for="(item,index) of data" :key="index" v-if="item.prod_list.length>0">
 			<div style="background-color: #F3F3F3;height: 20rpx;width: 100%;position: absolute;left: 0rpx;"></div>
@@ -156,7 +159,7 @@ export default {
 							icon:"none"
 						})
 					}
-					
+
 				}).catch(e=>{
 					console.log(e)
 				})
@@ -177,7 +180,7 @@ export default {
 					url:'../publishComment/publishComment?Order_ID='+item.Order_ID
 				})
 			}
-			
+
 		},
 		changIndex(i){
 			this.data=[];
@@ -201,15 +204,15 @@ export default {
 			getOrder(data).then(res=>{
 				if(res.errorCode==0){
 					for(var i in res.data) {
-						for(var m in res.data[i]){		
-							if(m == 'prod_list'){				
-								for(var j in res.data[i][m]) {					
+						for(var m in res.data[i]){
+							if(m == 'prod_list'){
+								for(var j in res.data[i][m]) {
 										for( var k in res.data[i][m][j]) {
 											if(k == 'attr_info') {
 												if(res.data[i][m][j][k]){
 													res.data[i][m][j][k] = JSON.parse(res.data[i][m][j][k])
 												}
-											}									
+											}
 										}
 									}
 							}
@@ -220,7 +223,7 @@ export default {
 					}
 					this.totalCount=res.totalCount;
 					this.isQing=false;
-				}		
+				}
 			}).catch(e=>{
 				this.isQing=false;
 			})
@@ -240,7 +243,11 @@ export default {
     .navs {
 		z-index: 999;
 		position: fixed;
-		top: 86rpx;
+		top:0rpx;
+		/* #ifdef APP-PLUS */
+		top: var(--status-bar-height);//86rpx;
+		/* #endif */
+
 		left: 0rpx;
 		width: 750rpx;
 		box-sizing: border-box;
@@ -277,6 +284,12 @@ export default {
             border-bottom: 2px solid red;
         }
     }
+	.space{
+		/* #ifdef APP-PLUS */
+		margin-top: var(--status-bar-height);
+		/* #endif */
+
+	}
     .order {
         padding: 0rpx 20rpx;
         background: #fff;
@@ -290,7 +303,7 @@ export default {
             img {
                 width: 70rpx;
                 height: 70rpx;
-                border-radius: 50%;    
+                border-radius: 50%;
                 margin-right: 21rpx;
             }
             .bizname {
