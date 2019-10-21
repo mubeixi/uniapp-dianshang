@@ -55,7 +55,7 @@
     </div>
 	<div v-if="cate==1" >
 		<div class="cate1">
-			<div class="pro" @click="gotoDetail(item)" v-for="(item,i) of pro" :key="i">
+			<div class="pro" @click="goProductDetail(item.Products_ID,item.is_pintuan)" v-for="(item,i) of pro" :key="i">
 				<image :src="item.ImgPath"   class="pro-img"></image>
 				<div class="pro_desc">
 					<div class="title">{{item.Products_Name}}</div>
@@ -73,7 +73,7 @@
 	</div>
     <div v-else>
 		<div class="cate2" >
-			<div class="pro" @click="gotoDetail(item)" v-for="(item,i) of pro" :key="i">
+			<div class="pro" @click="goProductDetail(item.Products_ID,item.is_pintuan)" v-for="(item,i) of pro" :key="i">
 				<image :src="item.ImgPath" alt=""  class="pro-img"></image>
 				<div class="pro_desc">
 					<div class="title">{{item.Products_Name}}</div>
@@ -96,6 +96,7 @@ import popupLayer from '../../components/popup-layer/popup-layer.vue'
 import {getProd} from '../../common/fetch.js';
 import {goBack}  from '../../common/tool.js'
 import {pageMixin} from "../../common/mixin";
+import {goProductDetail} from "../../common";
 
 export default {
 	mixins:[pageMixin],
@@ -154,6 +155,7 @@ export default {
 
   },
   methods:{
+	  goProductDetail,
 	  //跳转搜索页
 	  goSearch(){
 		  uni.navigateTo({

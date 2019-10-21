@@ -54,7 +54,7 @@
 			  <!-- 猜你喜欢 -->
 			  <div class="fenge"><span class="red"></span><span class="caini">猜你喜欢</span><span class="red"></span></div>
 			  <div class="prolist">
-				<div class="pro-item" v-for="(item,index) in prodList" :key="index" @click="gotoDetail(item.Products_ID)" >
+				<div class="pro-item" v-for="(item,index) in prodList" :key="index" @click="goProductDetail(item.Products_ID,item.is_pintuan)" >
 				  <img :src="item.ImgPath" alt="">
 				  <div class="item-name">{{item.Products_Name}}</div>
 				  <div class="price">
@@ -85,6 +85,8 @@ import {getCart,getProd,updateCart,delCart} from '../../common/fetch.js';
 import {pageMixin} from "../../common/mixin";
 import {ls} from '../../common/tool.js';
 import {mapActions} from 'vuex';
+import {goProductDetail} from "../../common";
+
 export default {
 		mixins:[pageMixin],
 		  name: "App",
@@ -147,7 +149,8 @@ export default {
 		let UserInfo = this.getUserInfo();
 	},
   methods: {
-		...mapActions(['getUserInfo']),
+	  goProductDetail,
+	...mapActions(['getUserInfo']),
 	 // 去逛逛
 	gotoBuy(){
 		uni.switchTab({
