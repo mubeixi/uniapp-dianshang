@@ -593,19 +593,19 @@ export default {
 		justify-content: space-between;
 	}
     .attr {
-        display: inline-block;
-        height: 50rpx;
-        line-height: 50rpx;
+			display: inline-block;
+			height: 50rpx;
+			line-height: 50rpx;
 
-        color: #666;
-        font-size: 24rpx;
-        // padding: 0 20rpx;
-        // margin: 25rpx 0 24rpx;
-		span {
-			padding: 14rpx 20rpx;
-			margin: 25rpx 0 24rpx;
-			background: #FFF5F5;
-		}
+			color: #666;
+			font-size: 24rpx;
+			// padding: 0 20rpx;
+			// margin: 25rpx 0 24rpx;
+			span {
+				padding: 14rpx 20rpx;
+				margin: 25rpx 0 24rpx;
+				background: #FFF5F5;
+			}
     }
     .pro-price {
         color: #F43131;
