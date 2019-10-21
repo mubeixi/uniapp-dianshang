@@ -79,10 +79,24 @@ export const checkIsLogin = (redirect,tip) => {
     return true;
 }
 
+/**
+ * 根据拼团跳转不同的页面
+ * @param id
+ * @param is_group
+ */
+export const goProductDetail = (id,is_group) => {
+    if(!id)return;
+    let path = is_group ? '/pages/groupDetail/groupDetail':'/pages/detail/detail';//根据不同路径跳转
+    uni.navigateTo({
+        url:path+'?Products_ID='+id
+    })
+}
+
 const tabbarRouter = ['/pages/index/index', '/pages/classify/classify', '/pages/groupSuccess/groupSuccess', '/pages/cart/cart', '/pages/person/person'];
 
 export const fun = {
     checkIsLogin,
+    goProductDetail,
     //跳转方法
     linkTo: (linkObj) => {
 
