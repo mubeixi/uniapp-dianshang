@@ -186,7 +186,7 @@
 		color: #333333;
 	}
 	.checked{
-		color: #F43131 !important;	
+		color: #F43131 !important;
 	}
 	.checked:after{
 		content: '';

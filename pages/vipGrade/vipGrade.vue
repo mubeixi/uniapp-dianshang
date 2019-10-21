@@ -15,13 +15,13 @@
 					</view>
 					<view class="mmp">
 						<view class="da">
-							
+
 						</view>
 						<view class="tu" :style="{transform: 'rotate('+jiaodu+'deg)'}">
-							
+
 						</view>
 						<view class="xiao">
-							
+
 						</view>
 						<view class="texts">
 							<view class="posiQ">我的成长值</view>
@@ -42,13 +42,13 @@
 					</view>
 					<view class="mmp">
 						<view class="da">
-							
+
 						</view>
 						<view class="tu" :style="{transform: 'rotate('+jiaodu+'deg)'}">
-							
+
 						</view>
 						<view class="xiao">
-							
+
 						</view>
 						<view class="texts">
 							<view class="posiQ">我的成长值</view>
@@ -58,12 +58,12 @@
 					</view>
 				</view>
 			</scroll-view>
-			
+
 		</view>
 		<view style="height: 220rpx;"></view>
 		<circleTitle title="VIP4权益" ></circleTitle>
 		<scroll-view class="mbxa" scroll-x="true">
-			<view class="floats">	
+			<view class="floats">
 				<view class="floatm">
 					<view class="imgs">
 						<image src="/static/fenxiao/shengri.png" ></image>
@@ -155,7 +155,7 @@
 	import {goBack}  from '../../common/tool.js'
 	import circleTitle from '../../components/circleTitle/circleTitle.vue'
 	import {pageMixin} from "../../common/mixin";
-	
+
 	export default {
 		mixins:[pageMixin],
 		data() {
@@ -182,7 +182,7 @@
 			// 	const ctx = uni.createCanvasContext('firstCanvas');
 			// 	ctx.arc(50, 50, 50, 0, 2 * Math.PI)
 			// 	ctx.setFillStyle('#EEEEEE')
-			// 	ctx.fill()		
+			// 	ctx.fill()
 			// 	ctx.draw();
 			// },
 			goBack(){
@@ -272,7 +272,7 @@ view{
 			}
 		}
 	}
-	
+
 }
 .mbxa{
 	margin-top: 20rpx;
@@ -354,9 +354,9 @@ view{
 			height: 69rpx;
 		}
 	}
-	
-	
-	
+
+
+
 }
 .lasts{
 	padding: 35rpx 0rpx 35rpx 18rpx;

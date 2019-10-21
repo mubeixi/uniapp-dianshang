@@ -12,7 +12,7 @@
             </div>
         </div>
 		<div style="height: 20rpx;width: 100%;background-color: #F3F3F3;">
-			
+
 		</div>
 		<!-- 退款方式暂且不要 -->
         <!-- <div class="item">
@@ -111,7 +111,7 @@
 					确定
 			</div>
 		</popup-layer>
-		
+
   </div>
 </template>
 
@@ -151,7 +151,7 @@ export default {
 		this.getRefund();
 	},
 	created() {
-		
+
 	},
     methods: {
 		// 退款说明
@@ -240,7 +240,7 @@ export default {
 			let that=this;
 			uni.chooseImage({
 				count:5,
-				sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有  
+				sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
 				success(res) {
 					that.isSubmit=false;
 					for(let item of res.tempFiles){
@@ -253,7 +253,7 @@ export default {
 						//是否可以提交
 						that.isSubmit=true;
 					}
-					
+
 				},
 				fail(e) {
 					console.log(e);
@@ -320,7 +320,7 @@ export default {
 			position: absolute;
 			top: 35rpx;
 			left: 72rpx;
-			
+
 		}
 	}
     .wrap {
@@ -464,7 +464,7 @@ export default {
 			display: flex;
 			justify-content: space-between;
 			height: 104rpx;
-			border-bottom:1px solid rgba(230,230,230,1); 
+			border-bottom:1px solid rgba(230,230,230,1);
 			align-items: center;
 			font-size: 28rpx;
 		}

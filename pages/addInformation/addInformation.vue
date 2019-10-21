@@ -7,13 +7,13 @@
 					<view></view>
 				</view>
 				<view class="lineQ" :class="isNext?'lineW':''">
-					
+
 				</view>
 				<view class="circleQ" :class="isNext?'':'circleW'">
 					<view></view>
 				</view>
 				<view class="lineQ">
-					
+
 				</view>
 				<view class="circleQ circleW">
 					<view></view>
@@ -133,11 +133,11 @@
 				],
 				objectMultiArray: [],   //展示数据
 				multiIndex: [0, 0, 0],  //选择数据
-								
+
 				//用于收货地址选择用
 				change_objectMultiArray: [],  //选择数据
 				change_multiIndex: [0, 0, 0], //改变的收货地址对应列的下标
-								
+
 				change_objectMultiArray: [],  //选择数据
 				address_info:{},
 				current:0,
@@ -168,7 +168,7 @@
 			];
 		},
 		onLoad() {
-			
+
 		},
 		methods:{
 			isTell(){
@@ -183,12 +183,12 @@
 				if(this.isNext){
 					this.isNext=false;
 				}else{
-					
+
 				}
 			},
 			nextStep(){
 				if(this.isNext){
-					
+
 				}else{
 					this.isNext=true;
 				}
@@ -237,7 +237,7 @@
 							var column = e.detail.column;  //修改的列
 							var index = e.detail.value;    //选择列的下标（从0开始）
 							var change_multiIndex = 'change_multiIndex[' + column + ']';
-					
+
 							var columnValue = [
 							  column == 0 ? index : this.change_multiIndex[0],
 							  column == 0 ? 0 : (column == 1 ? index : this.change_multiIndex[1]),
@@ -422,7 +422,7 @@
 		}
 
 	}
-	
+
 	.picker view{width: 160rpx;font-size: 28rpx; line-height:90rpx;height:90rpx; margin-right: 10rpx;}
 	.picker{display: flex;.quyu{width: 120rpx;}}
 	.lineW{

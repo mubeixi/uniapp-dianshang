@@ -7,13 +7,13 @@
 					<view></view>
 				</view>
 				<view class="lineQ lineW">
-					
+
 				</view>
 				<view class="circleQ">
 					<view></view>
 				</view>
 				<view class="lineQ">
-					
+
 				</view>
 				<view class="circleQ circleW">
 					<view></view>
@@ -104,7 +104,7 @@
 							var column = e.detail.column;  //修改的列
 							var index = e.detail.value;    //选择列的下标（从0开始）
 							var change_multiIndex = 'change_multiIndex[' + column + ']';
-					
+
 							var columnValue = [
 							  column == 0 ? index : this.change_multiIndex[0],
 							  column == 0 ? 0 : (column == 1 ? index : this.change_multiIndex[1]),
