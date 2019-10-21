@@ -208,7 +208,8 @@ export const agentInfo = (data, options) => fetch('agent_info', data, options);
 //获取成为分销商配置信息
 export const disApplyInit = (data, options) => fetch('dis_apply_init', data, options);
 
-
+//申请成为分销商
+export const disApply = (data, options) => fetch('dis_apply', data, options);
 
 //jssdk签名
 export const getJsSign = (data,options) => fetch('share_config', data, options);
