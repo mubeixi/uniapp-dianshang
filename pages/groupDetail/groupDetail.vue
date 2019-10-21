@@ -295,7 +295,7 @@ type: '', // 优惠券内容， 分享内容
 		this.getDetail(this.Products_ID);
 		this.getCommit(this.Products_ID);
 
-		addProductViews(this.Products_ID).then().catch()
+		addProductViews({prod_id:this.Products_ID}).then().catch()
 
 		//获取正在拼团的团队
 		this.getPintuanTeamList(this.Products_ID)

@@ -291,7 +291,7 @@ export default {
 
 		this.$refs.cartPopu.close();
 
-		addProductViews(this.Products_ID)
+		addProductViews({prod_id:this.Products_ID}).then().catch()
 	 },
 	onShow(){
 
