@@ -1221,6 +1221,7 @@ export default {
     .pro_detail {
 		.p_detail_des {
 			width:100%;
+			font-size: 28rpx;
 			img {
 				width:100% !important;
 			}
