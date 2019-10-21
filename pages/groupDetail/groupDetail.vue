@@ -310,7 +310,7 @@ export default {
 	//自定义小程序分享
 	onShareAppMessage(){
 
-		let path = '/pages/detail/detail?Products_ID='+this.Products_ID;
+		let path = '/pages/groupDetail/groupDetail?Products_ID='+this.Products_ID;
 
 		let shareObj = {
 			title: this.product.Products_Name,
@@ -397,8 +397,9 @@ export default {
 		async shareFunc(channel) {
 
 			let _self = this
-			let path = 'pages/detail/detail?Products_ID=' + this.Products_ID;
+			let path = 'pages/groupDetail/groupDetail?Products_ID=' + this.Products_ID;
 			let front_url = this.initData.front_url;
+			console.log('front_url is '+front_url)
 
 			let shareObj = {
 				title: this.product.Products_Name,
@@ -756,7 +757,7 @@ export default {
 				}
 			}
 
-			console.log(rt)
+			//console.log(rt)
 
 			this.countdown = rt
 		},
@@ -792,9 +793,9 @@ export default {
 				}
 
 
-				this.stampCount()
+				//this.stampCount()
 				//开发时候一直倒计时太乱了
-				//window.groupStam = setInterval(this.stampCount,1000)
+				window.groupStam = setInterval(this.stampCount,1000)
 
 				product = res.data
 
@@ -1192,7 +1193,9 @@ export default {
     //     color: #333;
     //     font-size: 30rpx;
     // }
+
 	.pro_detail {
+		background: white;
 		.p_detail_des {
 			width:100%;
 			img {
@@ -1204,6 +1207,7 @@ export default {
 		padding: 30rpx 20rpx;
 	    color: #333;
 	    font-size: 30rpx;
+
 	}
     /* 商品详情 end */
     /* 遮罩层 */
