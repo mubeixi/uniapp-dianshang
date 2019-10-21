@@ -367,6 +367,7 @@
 			},
 			//获取用户支付方式 
 			chooseType(name) {
+				console.log(name)
 				this.pay_type = name;
 				this.$refs.popupLayer.close();
 				// 判断是否使用了余额，

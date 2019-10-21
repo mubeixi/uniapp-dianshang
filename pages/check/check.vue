@@ -143,7 +143,7 @@
 
 <script>
 import popupLayer from '../../components/popup-layer/popup-layer.vue';
-import {getAddress,getCart,createOrderCheck,get_user_info,createOrder} from '../../common/fetch.js';
+import {getAddress,getCart,createOrderCheck,createOrder} from '../../common/fetch.js';
 import {goBack} from '../../common/tool.js'
 import {pageMixin} from "../../common/mixin";
 import {check_money_in} from "../../common/util.js";
@@ -169,7 +169,6 @@ export default {
 					addressinfo: {}, // 收货地址信息
 					orderInfo: {},
 					type: 'shipping',
-					userInfo: {},
 					cart_buy: '',
 					current: '',
 					couponlist: [], // 优惠券列表,
@@ -201,7 +200,7 @@ export default {
 					// remindAddress: false, // 提醒添加收货地址
 					submited: false,  // 是否已经提交过，防止重复提交
 					back_address_id: 0,
-					userInfo: {},
+					
         }
     },
 	filters: {
@@ -217,10 +216,9 @@ export default {
 	onShow() {
 		this.getAddress();
 		this.createOrderCheck();
-		this.get_User_Info();
 	},
 	async created(){
-		let UserInfo = this.getUserInfo(true);
+		let userInfo = this.getUserInfo(true);
 	},
 	onLoad(options) {
 		this.postData.cart_key = options.cart_key;
@@ -230,12 +228,12 @@ export default {
 	},
 	computed: {
 		loading: function(){
-			return this.addressLoading && this.orderLoading && this.userLoading
+			return this.addressLoading && this.orderLoading
 		},
 		remindAddress: function(){
 			return this.orderInfo.is_virtual == 0 && this.orderInfo.NeedShipping == 1 && !this.addressinfo.Address_Name
-		}
-
+		},
+		...mapGetters(['userInfo'])
 	},
   methods: {
 		...mapActions(['getUserInfo']),
@@ -292,12 +290,17 @@ export default {
 						})
 					}else {
 						uni.showToast({
-							title: res.msg,
+							title: res.data.msg,
 							icon: 'none'
 						})
 					}
 					this.submited = false;
 				}).catch(e=>{
+					console.log(e)
+					uni.showToast({
+							title: e.msg,
+							icon: 'none'
+					})
 					this.submited = true;
 				});
 			}
@@ -350,6 +353,7 @@ export default {
 
 			// return;
 			let input_money = e.detail.value;
+			// let user_money = this.userInfo.User_Money;
 			let user_money = this.userInfo.User_Money;
 			if(input_money < 0 || isNaN(input_money)){
 				uni.showToast({
@@ -394,14 +398,14 @@ export default {
 			};
 			this.postData.shipping_id = e.target.value;
 		},
-		get_User_Info(){
-			get_user_info({User_ID:this.User_ID,Users_ID:this.Users_ID}).then(res => {
-				if(res.errorCode == 0) {
-					this.userInfo = res.data;
-				}
-				this.userLoading = true;
-			})
-		},
+		// get_User_Info(){
+		// 	get_user_info({User_ID:this.User_ID,Users_ID:this.Users_ID}).then(res => {
+		// 		if(res.errorCode == 0) {
+		// 			this.userInfo = res.data;
+		// 		}
+		// 		this.userLoading = true;
+		// 	})
+		// },
 		changeCoupon(){
 			this.type = 'coupon';
 			if(this.couponlist.length == 0) {return;}
@@ -488,12 +492,12 @@ export default {
 							this.shipping_name = `${this.orderInfo.shipping_company[i]}`
 						}
 					}
-				}else {
-					// 获取失败
-					// uni.showModal({
-					// 	title: res.msg
-					// })
 				}
+			}).catch(e=>{
+				uni.showToast({
+					title: e.data,
+					icon: 'none'
+				})
 			})
 		}
     }

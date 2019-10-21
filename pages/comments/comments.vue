@@ -1,7 +1,8 @@
 <template>
   <div>
-       <!-- <comments title="评论"></comments> -->
-	   <page-title title="评论" right=""></page-title>
+		<!-- #ifdef APP-PLUS -->
+			 <page-title title="评论" rightHidden="true" bgcolor="#F8F8F8"></page-title>
+		<!-- #endif -->
         <div class="navs">
             <div class="nav" :class="index == 0 ? 'active' : ''" @click="getComment(0)">全部</div>
             <div class="nav" :class="index == 1 ? 'active' : ''" @click="getComment(1)">有图</div>

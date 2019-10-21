@@ -231,7 +231,8 @@ export const addProductViews = (data,options) => fetch('prod_views', data, optio
 //获取拼团的团队
 export const getPintuanTeam = (data,options) => fetch('get_pintuan_team', data, options);
 
-
+//更新用户信息
+export const upDateUserInfo = (data, options) => fetch('update_user_info', data, options);
 function get_Appid() {
   return 'xhh';
 }

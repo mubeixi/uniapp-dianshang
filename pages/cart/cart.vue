@@ -552,7 +552,7 @@ export default {
     /* 结算 */
     .checkout {
       position: fixed;
-      bottom: 100rpx;
+      bottom: 98rpx;
       width: 100%;
       height: 100rpx;
       padding: 0 20rpx;

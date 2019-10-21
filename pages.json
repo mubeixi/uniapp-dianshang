@@ -310,6 +310,10 @@
 							"navigationBarTitleText": "账号设置"
 						}
         }
+        ,{
+            "path" : "pages/editPersonalMsg/editPersonalMsg",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
