@@ -116,16 +116,37 @@
 		</block>
 		
 		
-		<block v-else-if="pro.dis_config.Distribute_Type==2&&pro.dis_level[0].Level_LimitType==2">
-			<view class="fenxiao">
-				普通分销商<text>(购买任意商品)</text>          
-			</view>
-			
-			<view class="isFenxiao">
-				进入商城
-			</view>
-		</block>
-		<block v-else-if="pro.dis_config.Distribute_Type==2">
+		
+		
+		<view  class="disConfig" v-else-if="pro.dis_config.Distribute_Type==2&&pro.dis_level[0].Level_LimitType==2">
+			<block v-for="(fen,ins) of pro.dis_level" :key="ins">
+				<view class="line" v-if="ins!=0"></view>
+				<view class="fenxiao">
+					{{fen.Level_Name}}<text>({{fen.Level_LimitValue[0]==0?'购买任意商品':'购买以下任意商品'}})</text>          
+				</view>
+				<block v-if="fen.Level_LimitValue[0]==0">
+					<view class="isFenxiao" @click="goResult">
+						进入商城
+					</view>
+				</block>
+				<block v-else>
+					<view class="pro">
+						<view class="forOf" v-for="(m,n) of fen.prod_list" :key="n" @click="goDetail(m.Products_ID)"> 
+							<view class="imgs">
+								<image :src="m.ImgPath"></image>
+							</view>
+							<view class="text">
+								{{m.Products_Name}}
+							</view>
+							<view class="prices">
+								¥<text>{{m.Products_PriceX}}</text>
+							</view>
+						</view>	
+					</view>
+				</block>
+			</block>
+		</view>
+		<!-- <block v-else-if="pro.dis_config.Distribute_Type==2">
 			<view class="line"></view>
 			<view class="pro">
 				<view class="forOf">
@@ -163,6 +184,64 @@
 						¥<text>584.00</text>
 					</view>
 				</view>
+			</view>
+		</block> -->
+		
+		<block v-else-if="pro.dis_config.Distribute_Type==1&&pro.dis_level[0].Level_LimitType==1">
+			<block v-for="(fo,ind) of pro.dis_level" :key="ind">
+				<view class="line" v-if="ind!=0"></view>
+				<view class="fenxiao">
+					{{fo.Level_Name}}<text>({{fo.Level_LimitValue[0]==0?'商城总消费':'一次性消费'}}<text>{{fo.Level_LimitValue[1]}}</text>)</text>          
+				</view>
+				<block>
+					<view class="isFenxiao" @click="goResult">
+						进入商城
+					</view>
+				</block>
+			</block>
+		</block>
+		
+		<block v-else-if="pro.dis_config.Distribute_Type==0&&pro.dis_level[0].Level_LimitType==0">
+			<view class="center" v-if="pro.dis_level[0].Distribute_Form.DisplayName==1">
+						<view class="mbx"> 
+							姓名
+						</view>
+						<input type="text" placeholder="请输入您的姓名" placeholder-style="color: #CAC8C8;" v-model="shenArr.DisplayName">
+			</view>
+			<view class="center" v-if="pro.dis_level[0].Distribute_Form.DisplayTelephone==1">
+						<view class="mbx"> 
+							电话
+						</view>
+						<input type="text" placeholder="请输入您的电话" placeholder-style="color: #CAC8C8;" v-model="shenArr.DisplayTelephone" @blur="isTell">
+			</view>
+			<view class="center" v-for="(itm,idx) of select_lists" :key="idx">
+						<view class="mbx">
+							{{itm.name}}
+						</view>
+						<view class="haha">
+						  <picker :value="itm.index" mode="selector" :range="itm.options"  @change="selectS(idx,$event)">
+											<view class="picker">
+											{{itm.options[itm.index]}} 
+											</view>
+						  </picker>
+						</view>
+			</view>	
+			<view class="center" v-for="(m,n) of text_lists" :key="n">
+						<view class="mbx"> 
+							{{m.Name}}
+						</view>
+						<input type="text" v-model="m.Value" :placeholder="'请输入'+m.Name">
+			</view>
+			<radio-group >
+				<label class="uni-list-cell " v-for="(item, index) in pro.dis_level" :key="item.Level_Name">
+					<view>
+						<radio style="transform: scale(0.8);" :value="item.Level_Name" :checked="index === current" />
+					</view>
+					<view>{{item.Level_Name}}({{item.Level_LimitType==0?'商城总消费':'一次性消费'}}{{item.Level_LimitValue}}元)</view>
+				</label>
+			</radio-group>
+			<view class="submits" @click="becomeFenxiao">
+				立即购买成为分销商
 			</view>
 		</block>
 	</view>
@@ -216,6 +295,56 @@
 			];
 		},
 		methods:{
+			//立即购买成为分销商
+			becomeFenxiao(){
+				let arr=true;
+				if(this.pro.dis_level[0].Distribute_Form.DisplayName==1&&this.shenArr.DisplayName==''){
+					uni.showToast({
+						title:"姓名不能为空",
+						icon:'none'
+					})
+					arr=false;
+				}else{
+					if(this.pro.dis_level[0].Distribute_Form.DisplayTelephone==1&&this.shenArr.DisplayTelephone==''){
+						uni.showToast({
+							title:"电话不能为空",
+							icon:'none'
+						})
+						arr=false;
+					}else if(this.pro.dis_level[0].Distribute_Form.DisplayTelephone==1&&!(/^1[3456789]\d{9}$/.test(this.shenArr.DisplayTelephone))){
+						uni.showToast({
+							title:'手机号输入错误，请重新输入',
+							icon:"none"
+						})
+						arr=false;
+					}else{
+						//循环判断输入框
+						if(this.text_lists.length>0){
+							for(let item of this.text_lists){
+								if(item.Value==''){
+									uni.showToast({
+										title:item.Name+'不能为空',
+										icon:"none"
+									})
+									arr=false;
+								}
+							}
+						}	
+					}
+				}
+			},
+			//跳转商品详情
+			goDetail(item){
+				uni.navigateTo({
+					url:'../detail/detail?Products_ID='+item
+				})
+			},
+			//跳转去列表页
+			goResult(){
+				uni.navigateTo({
+					url:'../result/result'
+				})
+			},
 			application(){
 				if(this.submitM){
 					uni.showToast({
@@ -323,6 +452,10 @@
 						if(res.errorCode==0){
 							this.textShen=res.msg;
 						}else{
+							uni.showToast({
+								title:res.data.msg,
+								icon:"none"
+							})
 							this.textShen=res.data.msg;
 						}
 						console.log(res)
@@ -425,6 +558,7 @@
 					if(res.errorCode==0){
 						this.pro=res.data;
 						if(this.pro.dis_level[0].Level_LimitType==5){
+							// 处理自定义  select  和text
 							let dislist = this.pro.dis_level[0];
 							 dislist['Distribute_Form'] = typeof dislist.Distribute_Form != 'object' ? JSON.parse(dislist.Distribute_Form) : dislist.Distribute_Form;
 							          var select_arrays=[];
@@ -452,6 +586,7 @@
 							            this.select_lists=select_arrays;
 										this.text_lists=text_arrays;
 							            this.disLevelInfo=dislist['Distribute_Form'];    
+										// 如果用户之前提交过
 									if(!((JSON.stringify(this.pro.apply_order) == "{}"))){
 										this.shenArr.DisplayName=this.pro.apply_order.Applyfor_Name;
 										this.shenArr.DisplayTelephone=this.pro.apply_order.Applyfor_Mobile;
@@ -482,7 +617,37 @@
 											
 										}
 									}
+						}else if(this.pro.dis_config.Distribute_Type==0&&this.pro.dis_level[0].Level_LimitType==0){
+							// 处理自定义  select  和text
+							let dislist = this.pro.dis_config;
+							 dislist['Distribute_Form'] = typeof dislist.Distribute_Form != 'object' ? JSON.parse(dislist.Distribute_Form) : dislist.Distribute_Form;
+							          var select_arrays=[];
+									  var text_arrays=[];
+							          for (var fi in dislist['Distribute_Form']) {
+							            if (dislist['Distribute_Form'][fi]['Type'] == 'select') {
+							              dislist['Distribute_Form'][fi]['Name'] + '|' + dislist['Distribute_Form'][fi]['Value'];
+							              var select_array = dislist['Distribute_Form'][fi]['Value'].split("|");              
+							              dislist['Distribute_Form'][fi]['Value'] = select_array;
+							              var temp = new Object();
+							              temp.index = 0;
+							              temp.name = dislist['Distribute_Form'][fi]['Name'];
+							              temp.options = select_array;
+										  temp.arrs=fi;
+							              select_arrays.push(temp);
+							            }else if(dislist['Distribute_Form'][fi]['Type'] == 'text'){
+											var temp = new Object();
+											temp.Name=dislist['Distribute_Form'][fi].Name;
+											temp.Type=dislist['Distribute_Form'][fi].Type;
+											temp.Value=dislist['Distribute_Form'][fi].Value;
+											temp.arrs=fi;
+											text_arrays.push(temp);
+										}
+							          }      
+							            this.select_lists=select_arrays;
+										this.text_lists=text_arrays;
+							            this.disLevelInfo=dislist['Distribute_Form'];    
 						}
+						
 						
 					}
 				}).catch(e=>{
@@ -515,6 +680,11 @@ view{
 	font-size: 30rpx;
 	text{
 		font-size: 24rpx;
+		color: #666666;
+		text{
+			font-size: 28rpx;
+			color: #F43131;
+		}
 	}
 }
 .isFenxiao{
@@ -523,7 +693,7 @@ view{
 	background:rgba(244,49,49,1);
 	border-radius:20rpx;
 	margin: 0  auto;
-	margin-top: 177rpx;
+	margin-top: 50rpx;
 	font-size: 34rpx;
 	color: #FFFFFF;
 	line-height: 80rpx;
@@ -541,6 +711,9 @@ view{
 	display: flex;
 	justify-content: space-between;
 	flex-wrap: wrap;
+	margin-top: 50rpx;
+	padding-top: 0rpx;
+	padding-bottom: 0rpx;
 	.forOf{
 		width: 345rpx;
 		view.imgs{
@@ -714,10 +887,20 @@ view{
 	}
 }
 .picker view{width: 160rpx;font-size: 28rpx; line-height:90rpx;height:90rpx; margin-right: 10rpx;overflow: hidden;}
-	.picker{display: flex;.quyu{width: 120rpx;}}
-	view.haha{
-		font-size: 30rpx;
-		color: #333333;
-		margin-right: 42rpx;
-	}
+.picker{display: flex;.quyu{width: 120rpx;}}
+view.haha{
+	font-size: 30rpx;
+	color: #333333;
+	margin-right: 42rpx;
+}
+.disConfig{
+	padding-bottom: 50rpx;
+}
+
+.uni-list-cell{
+	display: flex;
+	align-items: center;
+	height: 80rpx;
+	font-size: 35rpx;
+}
 </style>
