@@ -15,7 +15,7 @@
 				<div class="order_msg" >
 					<div class="biz_msg">
 					   <div class="mbxa" @click="checkAll">
-							<img :src="checkAllFlag ? '/static/checked.png' : '/static/uncheck.png'" >
+							<image class="img" :src="checkAllFlag ? '/static/checked.png' : '/static/uncheck.png'" />
 
 					   </div>
 						<img :src="shop_config.ShopLogo" class="biz_logo" alt />
@@ -25,7 +25,7 @@
 						<block v-for="(attr,attr_id) in pro" :key="attr_id">
 							<div class="pro">
 								<div class="mbxa" @click="change(pro_id,attr_id)">
-									<img :src="attr.checked ? '/static/checked.png' : '/static/uncheck.png'" >
+									<image class="img" :src="attr.checked ? '/static/checked.png' : '/static/uncheck.png'" />
 								</div>
 								<img class="pro-img" :src="attr.ImgPath" @click="gotoDetail(pro_id)"/>
 								<div class="pro-msg">
@@ -49,7 +49,7 @@
 				</div>
 			  </div>
 			  <div v-else class="none">
-				<img src="/static/box.png" alt="">
+				<image class="img" src="/static/box.png" />
 				<div><span>购物车空空如也</span><span class="tobuy" @click="gotoBuy">去逛逛</span></div>
 			  </div>
 			  <!-- 猜你喜欢 -->
@@ -68,7 +68,7 @@
 			<!-- 购物车结算 -->
 			<div class="checkout" v-if="!manage">
 			  <div class="mbxa"  @click="checkAll">
-				<img :src="checkAllFlag ? '/static/checked.png' : '/static/uncheck.png'"  style="margin-right: 17rpx;" alt="">
+				<image class="img" :src="checkAllFlag ? '/static/checked.png' : '/static/uncheck.png'"  style="margin-right: 17rpx;" alt="" />
 					全选
 			  </div>
 			  <div class="total" v-if="handleShow">合计：<span>￥<span>{{totalPrice}}</span></span></div>
@@ -536,7 +536,7 @@ export default {
       color: #B0B0B0;
 	  font-size: 26rpx;
     }
-    .none img {
+    .none .img {
       height: 220rpx;
       width: 200rpx;
     }
@@ -596,7 +596,7 @@ export default {
 		align-items: center;
 		margin-right: 17rpx;
 		font-size: 28rpx;
-		img{
+		.img{
 			width: 34rpx;
 			height: 34rpx;
 		}

@@ -211,6 +211,9 @@ export const disApplyInit = (data, options) => fetch('dis_apply_init', data, opt
 //申请成为分销商
 export const disApply = (data, options) => fetch('dis_apply', data, options);
 
+//购买分销商
+export const disBuy = (data, options) => fetch('dis_buy', data, options);
+
 //jssdk签名
 export const getJsSign = (data,options) => fetch('share_config', data, options);
 //jssdk签名

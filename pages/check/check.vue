@@ -334,7 +334,7 @@ export default {
 		// 发票抬头输入完成
 		faPiaoConfirm(e) {
 			let invoice_info = e.detail.value;
-			
+
 			this.postData.invoice_info = invoice_info;
 		},
 		// 余额支付输入完成
@@ -468,7 +468,7 @@ export default {
 				}
 				this.back_address_id = 0;
 				this.addressLoading = true;
-				
+
 				// 获取用户收货地址，获取订单信息，后台判断运费信息
 				this.createOrderCheck();
 			}).catch(e => {
@@ -477,8 +477,8 @@ export default {
 
 				})
 			})
-			
-			
+
+
 		},
 		createOrderCheck(){
 			createOrderCheck(this.postData).then(res=>{

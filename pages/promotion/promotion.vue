@@ -106,13 +106,13 @@
 		<view class="noun">
 			<view v-for="(i,j) of pro.noun_desc" :key="j">
 				{{j+1}}、{{i}}
-			</view>	 	   			                           
+			</view>
 		</view>
 	</view>
 </template>
 
 <script>
-	import circleTitle from '../../components/circleTitle/circleTitle.vue' 
+	import circleTitle from '../../components/circleTitle/circleTitle.vue'
 	import {pageMixin} from "../../common/mixin";
 	import {nobiInfo} from '../../common/fetch.js'
 	export default {

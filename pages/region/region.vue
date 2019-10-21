@@ -72,7 +72,7 @@
 				</view>
 			</view>
 		</view>
-		
+
 		<view style="height: 20rpx;width: 100%;"></view>
 		<circleTitle title="收益介绍"></circleTitle>
 		<view class="shouyi">
@@ -112,7 +112,7 @@
 </template>
 
 <script>
-	import circleTitle from '../../components/circleTitle/circleTitle.vue' 
+	import circleTitle from '../../components/circleTitle/circleTitle.vue'
 	import {pageMixin} from "../../common/mixin";
 	import {agentInfo} from '../../common/fetch.js'
 	export default {
@@ -258,7 +258,7 @@
 	}
 	.xiang{
 		width: 710rpx;
-		margin: 0 auto; 
+		margin: 0 auto;
 		margin-bottom: 25rpx;
 		border-radius: 20rpx;
 		padding: 25rpx 34rpx 33rpx 34rpx;

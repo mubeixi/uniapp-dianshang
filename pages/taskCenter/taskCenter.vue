@@ -18,10 +18,10 @@
 				</view>
 				<view class="zhangValue">
 					<view :style="{width:(50/100)*100+'%'}">
-						
+
 					</view>
 				</view>
-				<view class="myValue"> 
+				<view class="myValue">
 					480/1000
 				</view>
 				<view class="shengji">
@@ -40,17 +40,17 @@
 		<circleTitle title="我的特权"></circleTitle>
 		<view class="myPrivilege">
 			<view>
-				1、八折优惠，显示会员价的所有商品均可享受八折优惠                   
+				1、八折优惠，显示会员价的所有商品均可享受八折优惠
 			</view>
 			<view>
-				2、八折优惠，显示会员价的所有商品均可享受八折优惠                   
+				2、八折优惠，显示会员价的所有商品均可享受八折优惠
 			</view>
 		</view>
 		<view style="height: 20rpx;width: 100%;background-color: #F8F8F8;">
-			
+
 		</view>
 		<circleTitle title="如何升级"></circleTitle>
-		
+
 		<view class="ruhe">
 			<view class="td">
 				<image src="/static/task/edit.png"></image>
@@ -88,12 +88,12 @@
 	import {goBack}  from '../../common/tool.js'
 	import circleTitle from '../../components/circleTitle/circleTitle.vue'
 	import {pageMixin} from "../../common/mixin";
-	
+
 	export default {
 		mixins:[pageMixin],
 		data() {
 			return {
-				
+
 			};
 		},
 		components:{

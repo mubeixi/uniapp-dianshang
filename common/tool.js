@@ -366,3 +366,42 @@ export const getProductThumb = (img,size) => {
     return [...tempArr,name].join('/')
 
 }
+
+// const year = date.getFullYear()
+// const month = date.getMonth() + 1
+// const day = date.getDate()
+// const hour = date.getHours()
+// const minute = date.getMinutes()
+// const second = date.getSeconds()
+//
+// return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':')
+
+// function stampByPhp2js(s){
+//     return s.toString().length === 10 ?s*1000:s
+// }
+/**
+ *pintuan_start_time
+ * @param current 开始的时间，如果不传入，则用现在的时间
+ * @param end_timeStamp
+ */
+export const getGroupCountdown = ({end_timeStamp = 1571221631,current = (new Date()).getTime()} = {}) => {
+
+    let {d=0,h=0,m=0,s=0} = {};
+    //时间戳格式转换
+    current = parseInt(current/1000)
+
+    // console.log(end_timeStamp,current)
+    let countTime = end_timeStamp - current
+    if(countTime<0){
+        console.log('已经结束')
+        return false
+    };
+
+    d = parseInt(countTime/(60*60*24))
+    h = parseInt((countTime-d*60*60*24)/(60*60))
+    m = parseInt((countTime-d*60*60*24-h*60*60)/60)
+    s = countTime-d*60*60*24-h*60*60-m*60
+
+    return {d,h,m,s}
+
+}

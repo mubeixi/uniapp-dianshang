@@ -10,13 +10,13 @@
 				</div>
 			</div>
 		</div>
-		<page-title title="付款" rightHidden="true" bgcolor="#ffffff"></page-title>
+		<page-title title="付款" :rightHidden="true" bgcolor="#ffffff"></page-title>
 		<div class="state">
-			<img src="/static/wait.png">
+			<image class="img" src="/static/wait.png" />
 			<span class="state-desc">等待买家付款</span>
 		</div>
 		<div class="address">
-			<img class="loc_icon" src="/static/location.png" alt="">
+			<image class="loc_icon" src="/static/location.png" alt="" />
 			<div class="add_msg">
 				<div class="name">收货人：{{orderInfo.Address_Name}} <span>{{orderInfo.Address_Mobile}}</span></div>
 				<div class="location">收货地址：{{orderInfo.Address_Province_name}}{{orderInfo.Address_City_name}}{{orderInfo.Address_Area_name}}{{orderInfo.Address_Town_name}}</div>
@@ -24,11 +24,11 @@
 		</div>
 		<div class="order_msg">
 			<div class="biz_msg">
-				<img :src="orderInfo.ShopLogo" class="biz_logo" alt="">
+				<image :src="orderInfo.ShopLogo" class="biz_logo" alt="" />
 				<span class="biz_name">{{orderInfo.ShopName}}</span>
 			</div>
 			<div class="pro" v-for="(pro,pro_id) in orderInfo.prod_list" :key="pro_id">
-				<img class="pro-img" :src="pro.prod_img" alt="">
+				<image class="pro-img" :src="pro.prod_img" alt="" />
 				<div class="pro-msg">
 					<div class="pro-name">{{pro.prod_name}}</div>
 					<div class="attr" v-if="pro.attr_info"><span>{{pro.attr_info.attr_name}}</span></div>
@@ -156,10 +156,10 @@
 			}
 			// 获取支付方式
 			this.pay_arr = ls.get('initData').pay_arr;
-			
+
 		},
 		filters: {
-		
+
 		},
 		onShow() {
 			this.getOrderDetail();
@@ -228,7 +228,7 @@
 					pay_money: this.orderInfo.Order_Fyepay, // 剩余支付的钱
 					use_money: this.user_money , // 使用的余额
 					user_pay_password: this.user_pay_password, //余额支付密码
-					need_invoice: this.need_invoice, 
+					need_invoice: this.need_invoice,
 					invoice_info: this.invoice_info,
 					order_remark: this.order_remark
 				};
@@ -239,7 +239,7 @@
 					return;
 				}
 				let isHasCode = this.code || GetQueryByString('code');
-				
+
 				if (isHasCode) {
 					// payConf.code = isHasCode;
 					//拿到之前的配置
@@ -257,7 +257,7 @@
 
 
 				// #endif
-				
+
 				// #ifdef MP-WEIXIN
 					payConf.pay_type = 'wx_lp';
 					console.log(payConf)
@@ -271,11 +271,11 @@
 						});
 					})
 				// #endif
-				
+
 				orderPay(payConf).then(res => {
 					console.log(res);
-					
-					
+
+
 					// #ifdef H5
 					let {
 						timestamp,
@@ -324,7 +324,7 @@
 					delete orderInfo.timestamp
 
 					console.log(provider,orderInfo,'支付数据222222222222222222');
-					
+
 					uni.requestPayment({
 					...orderInfo,
 						provider,
@@ -365,7 +365,7 @@
 					// #endif
 				})
 			},
-			//获取用户支付方式 
+			//获取用户支付方式
 			chooseType(name) {
 				console.log(name)
 				this.pay_type = name;
@@ -381,6 +381,8 @@
 			},
 			// 订单详情
 			getOrderDetail() {
+
+				let _self = this;
 				getOrderDetail({
 					Order_ID: this.Order_ID,
 				}).then(res => {
@@ -409,9 +411,12 @@
 						this.need_invoice = this.orderInfo.Order_NeedInvoice;
 						this.openInvoice = this.orderInfo.Order_NeedInvoice > 0;
 						this.invoice_info = this.orderInfo.Order_InvoiceInfo;
-						this.order_remark = this.orderInfo.Order_Remark;											
+						this.order_remark = this.orderInfo.Order_Remark;
 						if(this.showDirect) {
-							this.$refs.popupLayer.show();
+							_self.$nextTick().then(()=>{
+								_self.$refs.popupLayer.show();
+							})
+
 						}
 					}
 				})
@@ -589,7 +594,7 @@
 			},
 			paySuccessCall(){
 				uni.redirectTo({
-					url:'/pages/order/order'
+					url:'/pages/order/order?index=2'
 				})
 			},
 			// 用户选择 微信支付
@@ -755,7 +760,7 @@
 									})
 								}
 							});
-							// #endif			
+							// #endif
 
 						})
 
@@ -785,7 +790,7 @@
 					}
 				}
 			},
-			
+
 			// 取消输入支付密码
 			cancelInput() {
 				this.password_input = false;
@@ -815,7 +820,7 @@
 		align-items: center;
 		border-top: 30rpx solid #FFF3F3F3;
 
-		img {
+		.img {
 			width: 60rpx;
 			height: 60rpx;
 		}
@@ -918,7 +923,7 @@
 		margin-bottom: 20rpx;
 	}
 
-                        
+
 
 	.attr {
 		display: inline-block;

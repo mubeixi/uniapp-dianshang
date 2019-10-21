@@ -151,6 +151,7 @@
           "mode" : "history",
           "base" : "fre"
         },
+		"publicPath" : "/fre/",
         "devServer" : {
             "port" : 4100,
             "disableHostCheck" : true,
