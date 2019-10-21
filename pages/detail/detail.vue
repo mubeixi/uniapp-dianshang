@@ -1222,6 +1222,7 @@ export default {
 		.p_detail_des {
 			width:100%;
 			font-size: 28rpx;
+			color: #999;
 			img {
 				width:100% !important;
 			}
