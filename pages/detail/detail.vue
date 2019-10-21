@@ -31,7 +31,7 @@
         </div>
 				<!-- 包邮等信息 -->
 				<div class="section3" v-if="product.Products_Promise.length > 0">
-						<span v-for="item in product.Products_Promise" v-if="item.name">
+						<span v-for="(item,index) in product.Products_Promise" v-if="item.name" :key="index">
 								<img src="/static/detail/dh.png" alt="">
 								<span>{{item.name}}</span>
 						</span>
