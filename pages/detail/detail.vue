@@ -1059,6 +1059,7 @@ export default {
     .section1 {
         padding: 0 20rpx 20rpx;
         border-bottom: 20rpx solid #efefef;
+		padding-bottom: 0rpx;
     }
     .price {
         margin-top: 38rpx;
