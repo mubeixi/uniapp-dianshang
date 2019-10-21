@@ -24,9 +24,9 @@
 			    </div>
 			    <div class="c_content_msg">{{item.Note}}</div>
 			    <div class="c_content_img">
-					<block v-for="(i,j) of item.ImgPath"> 
+					<block v-for="(i,j) of item.ImgPath">
 						 <img :src="i"  @click="yulan(index,j)">
-					</block>   
+					</block>
 			    </div>
 			</div>
 		</block>
@@ -51,7 +51,7 @@
 							<div :class="check_attr[i]==index?'skuCheck':''" @click="selectAttr(index,i)"  v-for="(mbx,index) of item" :key="index">{{mbx}}</div>
 						</div>
 					</div>
-				</div>	
+				</div>
 				<div class="numBer">
 					<div class="numBers">
 						数量
@@ -92,7 +92,7 @@ export default {
 				Users_ID: 'wkbq6nc2kc',
 				Products_ID: 242, // 查询指定产品的评论
 				page: 1,
-				pageSize: 4,				
+				pageSize: 4,
 			},
 			totalCount:0,//评论个数
 			comment_list: [], // 评论列表
@@ -129,7 +129,7 @@ export default {
 		this.getDetail(this.Products_ID);
 	},
 	onShow() {
-		
+
 	},
 	onReachBottom() {
 		if(this.comment_list.length<this.totalCount){
@@ -143,10 +143,10 @@ export default {
 			checkProdCollected({prod_id: this.Products_ID}).then(res => {
 				console.log(res)
 				if(res.errorCode == 0) {
-					this.isCollected = res.data.is_favourite == 1 
+					this.isCollected = res.data.is_favourite == 1
 				}
 			}).catch(e => {
-				
+
 			})
 		},
 		// 选择属性
@@ -229,7 +229,7 @@ export default {
 						uni.showLoading({
 							title: '加入购物车成功',
 							icon: 'success'
-						})						
+						})
 					}else {
 						uni.navigateTo({
 							url: '../check/check?cart_key=DirectBuy'
@@ -252,7 +252,7 @@ export default {
 					title: '购买数量不能大于库存量',
 			        icon: 'none',
 			    });
-				this.postData.qty = this.postData.count; 
+				this.postData.qty = this.postData.count;
 			}
 		},
 		delNum(){
@@ -263,7 +263,7 @@ export default {
 			        title: '购买数量不能小于1',
 			        icon: 'none',
 			    });
-				this.postData.qty = 1; 
+				this.postData.qty = 1;
 			}
 		},
 		// 收藏
@@ -278,7 +278,7 @@ export default {
 						});
 						this.isCollected = false;
 					}
-					
+
 				})
 			}else {
 				addCollection({prod_id: this.Products_ID,}).then(res=>{
@@ -293,7 +293,7 @@ export default {
 							icon: 'fail'
 						})
 					};
-				})				
+				})
 			}
 		},
 		goCart(){
@@ -333,7 +333,7 @@ export default {
 				prod_id:  this.Products_ID,
 				qty: 1,
 				// atr_str: "颜色:黑色;尺寸:大号;",
-				// atrid_str: "1;3",	
+				// atrid_str: "1;3",
 			}
 			updateCart(arg).then(res=>{
 				console.log(res)
@@ -348,13 +348,13 @@ export default {
 			uni.previewImage({
 			            urls: this.comment_list[index].ImgPath,
 						indicator:'default',
-						current:i, 
+						current:i,
 			            longPressActions: {
 			                success: function(data) {
-								
+
 			                },
 			                fail: function(err) {
-									
+
 			                }
 			            }
 			});

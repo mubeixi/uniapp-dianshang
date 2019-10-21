@@ -72,6 +72,7 @@
 					resolve(JSON.parse(res.data.Home_Json))
 
 				}).catch(e=>{
+					console.log('获取首页模板信息失败')
 					console.log(e)
 				})
 

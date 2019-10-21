@@ -2,7 +2,7 @@
   <div class="goods wrap" id="goods" :style="{paddingLeft:goods.style.wrapmargin+'px',paddingRight:goods.style.wrapmargin+'px'}">
     <div :class="className">
       <ul class="list" >
-        <li @click="goDetail(item)" v-for="(item,idx) in goodsList" class="item" :class="[idx%2==0?'even':'odd',goods.config.radius=='round'?'round':'',goods.config.showmode]" :style="[itemMarginObj(idx)]">
+        <li  @click="goProductDetail(item.Products_ID,item.is_pintuan)" v-for="(item,idx) in goodsList" class="item" :class="[idx%2==0?'even':'odd',goods.config.radius=='round'?'round':'',goods.config.showmode]" :style="[itemMarginObj(idx)]">
           <div class="cover" :style="{width:itemw,height:itemw,backgroundImage:'url('+domainFunc(item.ImgPath)+')'}">
             <div v-show="goods.config.attr && goods.config.attr.tag.show" :class="goods.config.attr.tag.style" v-if="['new','hot'].indexOf(goods.config.attr.tag.style)!=-1" class="tag">
               {{goods.config.attr.tag.style=='hot'?'hot':'new'}}
@@ -31,6 +31,7 @@
 <script>
   import {getProductList} from "../../common/fetch";
   import {domain} from "../../common/filter";
+  import {goProductDetail} from "../../common";
 
   export default {
     props: {
@@ -132,6 +133,7 @@
     },
     components: {},
     methods: {
+      goProductDetail,
       goDetail(goods){
         console.log(goods)
         // Products_ID=243

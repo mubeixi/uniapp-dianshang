@@ -195,13 +195,13 @@ export const judgeReceiveGift = (data, options) => fetch('judge_receive_gift', d
 export const getNobiRecordList = (data, options) => fetch('get_nobi_record_list', data, options);
 // 获取佣金列表分销
 export const getDisRecordList = (data, options) => fetch('get_dis_record_list', data, options);
-// 获取佣金列表 股东 
+// 获取佣金列表 股东
 export const getShaRecordList = (data, options) => fetch('get_sha_record_list', data, options);
 // 获取爵位晋升
 export const nobiInfo = (data, options) => fetch('nobi_info', data, options);
 //获取分销商信息
 export const getUserDisInfo = (data, options) => fetch('get_user_dis_info', data, options);
-//修改分销商分享语 店名  头像信息  
+//修改分销商分享语 店名  头像信息
 export const updateUserDisInfo = (data, options) => fetch('update_user_dis_info', data, options);
 //获取区域代理
 export const agentInfo = (data, options) => fetch('agent_info', data, options);
@@ -223,6 +223,13 @@ export const getProductSharePic = (data,options) => fetch('get_product_tgqrcode'
 
 // 推广小助手 添加文章
 export const addPromotionArticle = (data,options) => fetch('add_promotion_article', data, options);
+
+//增加产品的浏览次数
+export const addProductViews = (data,options) => fetch('prod_views', data, options);
+
+//获取拼团的团队
+export const getPintuanTeam = (data,options) => fetch('get_pintuan_team', data, options);
+
 
 function get_Appid() {
   return 'xhh';
