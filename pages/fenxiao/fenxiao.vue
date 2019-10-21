@@ -71,37 +71,37 @@
 					</view>
 				</view>
 				<view class="td" style="border-right: 0px;" @click="goFinance">
-					<image src="./static/fenxiao/caiwu.png" ></image>
+					<image src="/static/fenxiao/caiwu.png" ></image>
 					<view>
 						财务明细
 					</view>
 				</view>
 				<view class="td" @click="goPromotion">
-					<image src="./static/fenxiao/juewei.png" ></image>
+					<image src="/static/fenxiao/juewei.png" ></image>
 					<view>
 						爵位晋升
 					</view>
 				</view>
 				<view class="td" @click="goRegion">
-					<image src="./static/fenxiao/quyu.png" ></image>
+					<image src="/static/fenxiao/quyu.png" ></image>
 					<view>
 						区域代理
 					</view>
 				</view>
 				<view class="td" style="border-right: 0px;" @click="goLeaderboard">
-					<image src="./static/fenxiao/caifu.png" ></image>
+					<image src="/static/fenxiao/caifu.png" ></image>
 					<view>
 						财富排行榜
 					</view>
 				</view>
 				<view class="td" style="border-bottom: 0px;" @click="goShare">
-					<image src="./static/fenxiao/zidingyi.png" ></image>
+					<image src="/static/fenxiao/zidingyi.png" ></image>
 					<view>
 						自定义分享
 					</view>
 				</view>
 				<view class="td" style="border-bottom: 0px;" @click="goAssist">
-					<image src="./static/fenxiao/tuiguang.png" ></image>
+					<image src="/static/fenxiao/tuiguang.png" ></image>
 					<view>
 						推广小助手
 					</view>

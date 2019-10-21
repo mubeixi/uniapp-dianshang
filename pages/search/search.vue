@@ -10,7 +10,7 @@
     <div class="history" v-if="searchAll.length>0">
         <div class="title">
 			<div>搜索历史</div>
-			<div @click="clear" class="dels"><img src="./static/del.png"></div>
+			<div @click="clear" class="dels"><image class="img" src="/static/del.png" /></div>
 		</div>
         <div class="h_content">
             <span v-for="(item,i) of searchAll" :key='i' @click="goSearch(item)">{{item}}</span>
@@ -133,17 +133,19 @@ export default {
 		height: 40rpx;
 		align-items: center;
 	}
-    .title div{
+    .title{
         font-size: 28rpx;
         color: #333;
         font-weight: 500;
 		height: 40rpx;
+
         line-height: 40rpx;
 
-		img{
-			width: 100%;
-			height: 100%
-			;
+		.img{
+            width: 40rpx;
+            height: 40rpx;
+            /*width: 100%;*/
+            /*height: 100%;*/
 		}
     }
 	.dels{

@@ -10,13 +10,13 @@
 				</div>
 			</div>
 		</div>
-		<page-title title="付款" rightHidden="true" bgcolor="#ffffff"></page-title>
+		<page-title title="付款" :rightHidden="true" bgcolor="#ffffff"></page-title>
 		<div class="state">
-			<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAMAAAANIilAAAADAFBMVEVHcEyAgIAAAACZmZmZmZmUlJSZmZmZmZmXl5eYmJiZmZmZmZmZmZmKior///+YmJiZmZmZmZmPj4+ZmZmZmZmZmZmAgICZmZmXl5eZmZmZmZmampqYmJiZmZmOjo6ZmZmWlpaZmZmYmJiZmZmWlpaXl5eZmZmZmZmZmZmYmJiSkpKSkpKZmZmYmJidnZ1VVVWZmZmYmJibm5uXl5eVlZWZmZmYmJiYmJiYmJiYmJiYmJiZmZmZmZmAgICZmZmZmZmYmJiYmJiYmJiZmZmWlpaZmZmYmJiZmZmYmJiYmJiYmJiVlZWYmJiZmZmZmZmYmJiZmZmXl5eSkpKVlZWZmZmZmZmYmJiYmJiXl5eZmZmYmJiZmZmXl5eZmZmYmJiZmZmXl5eZmZmYmJiZmZmYmJiYmJiZmZmVlZWVlZWVlZWYmJiWlpaSkpKZmZmZmZmZmZmZmZmYmJiYmJiRkZGYmJiZmZmZmZmYmJiZmZmSkpKZmZmAgICZmZmfn5+ZmZmZmZmYmJiOjo6YmJiYmJiYmJiYmJiYmJiYmJiYmJiXl5eZmZmXl5eJiYmZmZmZmZmQkJCYmJhmZmaampqWlpaZmZmYmJiYmJiZmZmZmZmqqqqVlZWZmZmYmJiYmJiampqZmZmZmZmZmZmZmZmYmJiYmJiZmZmYmJiWlpaZmZmXl5eVlZWZmZmZmZmZmZmZmZmYmJiYmJiYmJiZmZmMjIyYmJiZmZmYmJiYmJiYmJiIiIiYmJiZmZmXl5eYmJiXl5eXl5eXl5eYmJiYmJiZmZmZmZmYmJiYmJiYmJiZmZmWlpaXl5eZmZmYmJiXl5eYmJiZmZmbm5udnZ2Xl5eWlpaZmZmWlpaYmJiXl5eZmZmUlJSTk5OYmJiZmZmZmZmVlZWZmZmZmZmZmZmXl5eWlpaXl5eZmZmYmJiampqZmZmTk5OYmJiWlpaTk5OioqKXl5eVlZWampqZmZmZmZmTk5OampqVlZWXl5eYmJiYmJiWlpacnJyYmJiZmZmampqampqZmZmNxJo6AAAA/3RSTlMAAgH6+ROg/iy/9/3vCgH29fwQk/vyBOggBfAP8goJ+BH0+xQiFu3ryvMHDuWXDQPzdxwbKaXsrrU5pqIpCI7xpPihZkTa2ObKmro6cuDW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">
+			<image class="img" src="/static/wait.png" />
 			<span class="state-desc">等待买家付款</span>
 		</div>
 		<div class="address">
-			<img class="loc_icon" src="data:image/png;base64,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" alt="">
+			<image class="loc_icon" src="/static/location.png" alt="" />
 			<div class="add_msg">
 				<div class="name">收货人：{{orderInfo.Address_Name}} <span>{{orderInfo.Address_Mobile}}</span></div>
 				<div class="location">收货地址：{{orderInfo.Address_Province_name}}{{orderInfo.Address_City_name}}{{orderInfo.Address_Area_name}}{{orderInfo.Address_Town_name}}</div>
@@ -24,11 +24,11 @@
 		</div>
 		<div class="order_msg">
 			<div class="biz_msg">
-				<img :src="orderInfo.ShopLogo" class="biz_logo" alt="">
+				<image :src="orderInfo.ShopLogo" class="biz_logo" alt="" />
 				<span class="biz_name">{{orderInfo.ShopName}}</span>
 			</div>
 			<div class="pro" v-for="(pro,pro_id) in orderInfo.prod_list" :key="pro_id">
-				<img class="pro-img" :src="pro.prod_img" alt="">
+				<image class="pro-img" :src="pro.prod_img" alt="" />
 				<div class="pro-msg">
 					<div class="pro-name">{{pro.prod_name}}</div>
 					<div class="attr" v-if="pro.attr_info"><span>{{pro.attr_info.attr_name}}</span></div>
@@ -380,6 +380,8 @@
 			},
 			// 订单详情
 			getOrderDetail() {
+
+				let _self = this;
 				getOrderDetail({
 					Order_ID: this.Order_ID,
 				}).then(res => {
@@ -410,7 +412,10 @@
 						this.invoice_info = this.orderInfo.Order_InvoiceInfo;
 						this.order_remark = this.orderInfo.Order_Remark;
 						if(this.showDirect) {
-							this.$refs.popupLayer.show();
+							_self.$nextTick().then(()=>{
+								_self.$refs.popupLayer.show();
+							})
+
 						}
 					}
 				})
@@ -814,7 +819,7 @@
 		align-items: center;
 		border-top: 30rpx solid #FFF3F3F3;
 
-		img {
+		.img {
 			width: 60rpx;
 			height: 60rpx;
 		}

@@ -32,7 +32,7 @@
 				<!-- 包邮等信息 -->
 				<div class="section3" v-if="product.Products_Promise.length > 0">
 						<span v-for="(item,index) in product.Products_Promise" v-if="item.name" :key="index">
-								<img src="/static/detail/dh.png" alt="">
+								<image src="/static/detail/dh.png" alt="" />
 								<span>{{item.name}}</span>
 						</span>
 				</div>
@@ -40,14 +40,14 @@
     <!-- 领券 -->
     <div class="section2" @click="showTick" data-type="ticks"  v-if="couponList.length>0">
         <div class="btn">领券</div>
-        <div class="right" >店铺优惠券 <img src="/static/detail/right.png" alt=""></div>
+        <div class="right" >店铺优惠券 <image class="img" src="/static/detail/right.png" alt="" /></div>
     </div>
 
     <!-- 评价 -->
     <div class="comment">
         <div class="c_title">
             <span>评价</span>
-            <div class="right" @click="gotoComments">查看全部 <img src="/static/detail/right.png" alt=""></div>
+            <div class="right" @click="gotoComments">查看全部  <image style="width: 19rpx;height: 30rpx;margin-left: 20rpx;" src="/static/detail/right.png" alt="" /></div>
         </div>
         <block v-for="(item,index) of commit" :key="item">
         	<div class="c_content" v-if="!item.ImgPath">
@@ -1132,7 +1132,7 @@ export default {
 		color: #666666;
 		font-weight: 500;
     }
-    .right img{
+    .right .img{
         width: 20rpx;
         height: 26rpx;
         margin-left: 20rpx;
@@ -1157,9 +1157,9 @@ export default {
 					color: #333333;
 				}
     }
-    .section3 img {
+    .section3 .img {
         width: 28rpx;
-				height: 28rpx;
+		height: 28rpx;
         margin-right: 10rpx;
     }
     /* 包邮信息等 end */
