@@ -221,6 +221,9 @@ export const getBalanceRank = (data,options) => fetch('get_balance_rank', data, 
 //获取商品的海报
 export const getProductSharePic = (data,options) => fetch('get_product_tgqrcode', data, options);
 
+// 推广小助手 添加文章
+export const addPromotionArticle = (data,options) => fetch('add_promotion_article', data, options);
+
 function get_Appid() {
   return 'xhh';
 }
