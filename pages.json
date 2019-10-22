@@ -320,6 +320,10 @@
             "path" : "pages/editPersonalMsg/editPersonalMsg",
             "style" : {}
         }
+        ,{
+            "path" : "pages/updateUserPsw/updateUserPsw",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
