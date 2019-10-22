@@ -200,7 +200,7 @@ export default {
 					// remindAddress: false, // 提醒添加收货地址
 					submited: false,  // 是否已经提交过，防止重复提交
 					back_address_id: 0,
-					
+
         }
     },
 	filters: {
@@ -221,6 +221,7 @@ export default {
 		let userInfo = this.getUserInfo(true);
 	},
 	onLoad(options) {
+		console.log('options is',options)
 		this.postData.cart_key = options.cart_key;
 		if(options.cart_buy){
 			this.postData.cart_buy = options.cart_buy;
@@ -435,7 +436,7 @@ export default {
 			this.createOrderCheck();
 			this.$refs.popupRef.close();
 		},
-		getAddress(){
+		async getAddress(){
 			this.$vm.$on('fire', (data) =>{
 				this.back_address_id = data;
 			})
@@ -446,7 +447,8 @@ export default {
 			} else if (this.addressinfo.Address_ID) { //有收获地址，则更新（防止收获地址编辑后返回）
 			    Address_ID = this.addressinfo.Address_ID;
 			}
-			getAddress({Address_ID: Address_ID?Address_ID:0}).then(res=>{
+			console.log(Address_ID)
+			await getAddress({Address_ID: Address_ID?Address_ID:0}).then(res=>{
 				if (this.back_address_id && res.errorCode != 0) {  //添加、选择收获地址返回
 					uni.showModal({
 					  title: '错误',
@@ -467,16 +469,14 @@ export default {
 					this.postData.address_id = this.addressinfo.Address_ID;
 				}
 				this.back_address_id = 0;
-				this.addressLoading = true;
 
 				// 获取用户收货地址，获取订单信息，后台判断运费信息
 				this.createOrderCheck();
-			}).catch(e => {
-				uni.showModal({
-					title: e.data,
+			},err=>{
 
-				})
 			})
+
+			this.addressLoading = true;
 
 
 		},
