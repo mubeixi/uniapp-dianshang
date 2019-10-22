@@ -141,6 +141,7 @@
 		isWeiXin,
 		urlencode
 	} from "../../common/tool";
+	import {error} from "../../common";
 
 	export default {
 		mixins: [pageMixin],
@@ -258,6 +259,10 @@
 
 				// #endif
 
+				// #ifdef MP-TOUTIAO
+
+				// #endif
+
 				// #ifdef MP-WEIXIN
 					payConf.pay_type = 'wx_lp';
 					console.log(payConf)
@@ -272,7 +277,7 @@
 					})
 				// #endif
 
-				orderPay(payConf).then(res => {
+				orderPay(payConf,{errtip:false}).then(res => {
 					console.log(res);
 
 
@@ -315,6 +320,77 @@
 					// #ifdef MP-WEIXIN || MP-BAIDU || MP-TOUTIAO || MP-ALIPAY
 
 
+					// #endif
+
+					// #ifdef MP-TOUTIAO
+
+					//头条参数
+					// "merchant_id": "1900013286",
+					// "app_id": "800132868040",
+					// "sign_type": "MD5",
+					// "timestamp": 1571652591,
+					// "version": "2.0",
+					// "trade_type": "H5",
+					// "product_code": "pay",
+					// "payment_type": "direct",
+					// "out_order_no": "157165255471",
+					// "uid": 49,
+					// "total_amount": 1,
+					// "currency": "CNY",
+					// "subject": "admin的微商城微商城在线付款，订单编号:71",
+					// "body": "admin的微商城微商城在线付款，订单编号:71",
+					// "trade_time": 1571652591,
+					// "valid_time": 1571653491,
+					// "notify_url": "http://new401.bafangka.com",
+					// "wx_url": "https://wx.tenpay.com/cgi-bin/mmpayweb-bin/checkmweb?prepay_id=wx21180952897263ebe491c4d01231368300&package=2309503405",
+					// "wx_type": "MWEB",
+					// "sign": "6c01d5975dbf55faae4ebfdb71558b62",
+					// "Order_ID": 71
+
+					provider = 'wxpay';
+					orderInfo = res.data
+
+					orderInfo.out_order_no = (orderInfo.Order_ID+'')
+					orderInfo.timestamp +='';//string
+					orderInfo.uid += '';
+					orderInfo.trade_time +='';
+					orderInfo.valid_time +='';
+
+					//
+					//orderInfo.risk_info = JSON.stringify({ip: '127.0.0.1', device_id: '485737374363263'});
+					//
+					//
+					// orderInfo.params = ''
+					// orderInfo.pay_type = ''
+					// orderInfo.pay_channel = ''
+					// orderInfo.method = ''
+					// orderInfo.trade_no = ''
+
+
+					delete orderInfo.Order_ID
+
+					//固定值：1（拉起小程序收银台）开发者如果不希望使用头条小程序收银台，service设置为3/4时，可以直接拉起微信/支付宝进行支付：service=3： 微信API支付，不拉起小程序收银台；service=4： 支付宝API支付，不拉起小程序收银台。其中service=3、4，仅在1.35.0.1+基础库(头条743+)支持
+					//console.log(orderInfo)
+
+
+
+					uni.requestPayment({
+						provider,
+
+						service:1,//
+						orderInfo, //微信、支付宝订单数据
+						success: function (res) {
+							_self.paySuccessCall(res)
+							console.log('success:' + JSON.stringify(res));
+						},
+						fail: function (err) {
+							console.log('fail:' + JSON.stringify(err));
+							uni.showModal({
+								title:'支付错误',
+								content:JSON.stringify(err)
+							})
+						}
+					});
 					// #endif
 
 					// #ifdef MP-WEIXIN
@@ -363,6 +439,14 @@
 						}
 					});
 					// #endif
+				},err=>{
+
+					uni.showModal({
+						title:'提示',
+						content:'获取支付参数失败:'+err.msg
+					})
+				}).catch(e=>{
+
 				})
 			},
 			//获取用户支付方式
