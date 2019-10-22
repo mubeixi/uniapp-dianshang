@@ -247,9 +247,9 @@
 						return;
 					}
 					this.isNext=true;
+					this.multiIndex=[0, 0, 0];
+					this.change_multiIndex=[0, 0, 0];
 					if(this.current==3){
-						this.multiIndex=[0, 0, 0];
-						this.change_multiIndex=[0, 0, 0];
 						this.objectMultiArray = [
 						  utils.array_change(area.area[0]['0']),
 						  utils.array_change(area.area[0]['0,1']),
@@ -261,8 +261,6 @@
 						  utils.array_change(area.area[0]['0,1,35'])
 						];
 					}else if(this.current==2){
-						this.multiIndex=[0, 0, 0];
-						this.change_multiIndex=[0, 0, 0];
 						this.objectMultiArray = [
 						  utils.array_change(area.area[0]['0']),
 						  utils.array_change(area.area[0]['0,1']),
@@ -274,8 +272,6 @@
 						  utils.array_change(area.area[0]['0,1,35'])
 						];
 					}else if(this.current==1){
-						this.multiIndex=[0, 0];
-						this.change_multiIndex=[0, 0];
 						this.objectMultiArray = [
 						  utils.array_change(area.area[0]['0']),
 						  utils.array_change(area.area[0]['0,1'])
@@ -285,8 +281,6 @@
 						  utils.array_change(area.area[0]['0,1'])
 						];
 					}else{
-						this.multiIndex=[0];
-						this.change_multiIndex=[0];
 						this.objectMultiArray = [
 						  utils.array_change(area.area[0]['0'])
 						];
