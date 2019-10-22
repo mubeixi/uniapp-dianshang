@@ -147,24 +147,6 @@
 		components: {
 			popupLayer
 		},
-		onLoad(options) {
-			if (options.Order_ID) {
-				this.Order_ID = options.Order_ID;
-			}
-			if(options.pagefrom =='check'){
-				this.showDirect = true;
-			}
-			// 获取支付方式
-			this.pay_arr = ls.get('initData').pay_arr;
-
-		},
-		filters: {
-
-		},
-		onShow() {
-			this.getOrderDetail();
-			// this.get_user_info();// 获取用于可用余额
-		},
 		data() {
 			return {
 				code: '',
@@ -188,6 +170,24 @@
 				showDirect: false, // 是否直接显示付款方式
 				pay_arr: [], // 支付方式
 			}
+		},
+		onLoad(options) {
+			if (options.Order_ID) {
+				this.Order_ID = options.Order_ID;
+			}
+			if(options.pagefrom =='check'){
+				this.showDirect = true;
+			}
+			// 获取支付方式
+			this.pay_arr = ls.get('initData').pay_arr;
+
+		},
+		filters: {
+
+		},
+		onShow() {
+			this.getOrderDetail();
+			// this.get_user_info();// 获取用于可用余额
 		},
 		computed: {
 			invoiceChecked() {
@@ -232,6 +232,15 @@
 					invoice_info: this.invoice_info,
 					order_remark: this.order_remark
 				};
+				// 用户选择余额支付
+				if(this.pay_type == 'remainder_pay') {
+					orderPay(payConf).then(res=>{
+						console.log(res)
+					}).catch(e=>{
+						console.log(e)
+					});
+					return;
+				}
 				//需要格外有一个code
 				// #ifdef H5
 				if (!isWeiXin()) {
@@ -274,37 +283,41 @@
 
 				orderPay(payConf).then(res => {
 					console.log(res);
-
-
-					// #ifdef H5
-					let {
-						timestamp,
-						nonceStr,
-						signType,
-						paySign
-					} = res.data;
-
-					//直接支付
-					_self.WX_JSSDK_INIT(_self).then((wxEnv) => {
-
-						//关键字？？package
-						wxEnv.chooseWXPay({
+					if(res.errorCode != 0) {
+						uni.showToast({
+							title: res.data.msg,
+							icon: 'none'
+						});
+						return;
+					}
+						// #ifdef H5
+						let {
 							timestamp,
 							nonceStr,
-							package: res.data.package,
 							signType,
-							paySign,
-							success: function(res) {
-								// 支付成功后的回调函数
-							}
-						});
+							paySign
+						} = res.data;
 
-					}).catch((e) => {
-						console.log('支付失败')
-					})
+						//直接支付
+						_self.WX_JSSDK_INIT(_self).then((wxEnv) => {
 
-					return;
+							//关键字？？package
+							wxEnv.chooseWXPay({
+								timestamp,
+								nonceStr,
+								package: res.data.package,
+								signType,
+								paySign,
+								success: function(res) {
+									// 支付成功后的回调函数
+								}
+							});
 
+						}).catch((e) => {
+							console.log('支付失败')
+						})
+
+						return;
 
 					// #endif
 
@@ -334,10 +347,7 @@
 						},
 						fail: function (err) {
 							console.log('fail:' + JSON.stringify(err));
-							uni.showModal({
-								title:'支付错误',
-								content:JSON.stringify(err)
-							})
+							_self.payFailCall(err);
 						}
 					});
 					// #endif
@@ -356,10 +366,7 @@
 						},
 						fail: function (err) {
 							console.log('fail:' + JSON.stringify(err));
-							uni.showModal({
-								title:'支付错误',
-								content:JSON.stringify(err)
-							})
+							_self.payFailCall(err);
 						}
 					});
 					// #endif
@@ -371,7 +378,7 @@
 				this.pay_type = name;
 				this.$refs.popupLayer.close();
 				// 判断是否使用了余额，
-				if(this.user_money > 0){
+				if(this.user_money > 0 || name == 'remainder_pay'){
 					// 使用了 余额支付
 					this.password_input = true;
 				}else {
@@ -412,7 +419,8 @@
 						this.openInvoice = this.orderInfo.Order_NeedInvoice > 0;
 						this.invoice_info = this.orderInfo.Order_InvoiceInfo;
 						this.order_remark = this.orderInfo.Order_Remark;
-						if(this.showDirect) {
+						if(this.showDirect && this.orderInfo.Order_Fyepay > 0) {
+							// 需要支付的金额大于0 ，直接弹出支付方式，简化支付流程
 							_self.$nextTick().then(()=>{
 								_self.$refs.popupLayer.show();
 							})
@@ -591,6 +599,17 @@
 				window.location.href = wxAuthUrl;
 
 
+			},
+			payFailCall(){
+				uni.showToast({
+					title: '支付失败',
+					icon: 'none'
+				});
+				setTimeout(function(){
+					uni.redirectTo({
+						url: '/pages/order/order?index=1'
+					})					
+				},1000)
 			},
 			paySuccessCall(){
 				uni.redirectTo({
@@ -1083,10 +1102,10 @@
 			text-align: center;
 			width: 90%;
 			margin: 400rpx auto;
-			padding: 20rpx 50rpx;
+			padding: 40rpx 50rpx 30rpx;
 			box-sizing: border-box;
 			font-size: 28rpx;
-
+			border-radius: 10rpx;
 			input {
 				margin: 40rpx 0;
 				border: 1px solid #efefef;
@@ -1095,7 +1114,8 @@
 			.btns {
 				display: flex;
 				justify-content: space-around;
-
+				height: 60rpx;
+				line-height: 60rpx;
 				.btn {
 					flex: 1;
 				}
