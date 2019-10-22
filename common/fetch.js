@@ -221,6 +221,9 @@ export const readUserMessage = (data, options) => fetch('read_user_message', dat
 export const judgeSignin = (data, options) => fetch('judge_signin', data, options);
 //获取个人中心签到状态 
 export const signin = (data, options) => fetch('signin', data, options);
+//获取签到页信息 
+export const getSignin = (data, options) => fetch('get_signin', data, options);
+
 //申请成为区域代理
 export const agentApply = (data, options) => fetch('agent_apply', data, options);
 

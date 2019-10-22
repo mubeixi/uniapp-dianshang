@@ -101,7 +101,7 @@
 		
 		<block v-if="isLast">
 			<view class="four" >
-				提交审核
+				提交审核中
 			</view>
 		</block>
 		<block v-else>
@@ -158,7 +158,8 @@
 				arr:{
 					apply_name:'',
 					apply_mobile:''
-				}
+				},
+				isAgr:false,
 			};
 		},
 		onShow(){
@@ -185,6 +186,10 @@
 			},
 			nextStep(){
 				if(this.isNext){
+					if(this.isAgr){
+						return;
+					}
+					this.isAgr=true;
 					if(JSON.stringify(this.address_info)=="{}"){
 						uni.showToast({
 							title:"请选择地区信息",
@@ -224,10 +229,10 @@
 						
 						
 						agentApply(info).then(res=>{
-							this.isLast=true;
-							
+							this.isLast=true;	
+							this.isAgr=false;
 						},err=>{
-							
+							this.isAgr=false;
 						}).catch(e=>{
 							console.log(e);
 						})
@@ -327,11 +332,23 @@
 				if(this.current>1){
 					var a_arr = utils.array_change(area.area[0][0 + ',' + p_id + ',' + c_id]);
 				}
-				this.change_objectMultiArray = [
-					p_arr,
-					c_arr,
-					a_arr
-				  ];
+				if(this.current==0){
+					this.change_objectMultiArray = [
+						p_arr
+					  ];
+				}else if(this.current==1){
+					this.change_objectMultiArray = [
+						p_arr,
+						c_arr
+					  ];
+				}else{
+					this.change_objectMultiArray = [
+						p_arr,
+						c_arr,
+						a_arr
+					  ];
+				}
+				
 				this.change_multiIndex = columnValue;
 			  },
 			//选择收货地址
@@ -533,7 +550,7 @@
 
 	}
 
-	.picker view{width: 160rpx;font-size: 28rpx; line-height:90rpx;height:90rpx; margin-right: 10rpx;}
+	.picker view{width: 180rpx;font-size: 28rpx; line-height:90rpx;height:90rpx; margin-right: 10rpx;}
 	.picker{display: flex;.quyu{width: 120rpx;}}
 	.lineW{
 		background-color: #F43131 !important;
