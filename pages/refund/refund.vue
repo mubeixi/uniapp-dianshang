@@ -3,7 +3,7 @@
         <page-title title="申请退款" rightHidden="true"></page-title>
         <div class="pro" v-for="(item,index) of refundInfo.refund_prod_list" :key="item">
             <div class="pro-div">
-        		<img class="pro-img" :src="item.prod_img" alt="">
+        		<image class="pro-img" :src="item.prod_img" alt="" />
         	</div>
             <div class="pro-msg">
                 <div class="pro-name">{{item.prod_name}}</div>
@@ -19,14 +19,14 @@
             <div class="item-left">退款方式</div>
             <div class="item-right" @click="showMethod">
                 <span>仅退款</span>
-                <img src="/static/right.png" alt="">
+                <image class="img" src="/static/right.png" alt="" />
             </div>
         </div> -->
         <div class="item">
             <div class="item-left">退款原因</div>
             <div class="item-right" @click="showReason">
 				<span>{{reasonDes?reasonDes: '请选择'}}</span>
-                <img src="/static/right.png" alt="">
+                <image class="img" src="/static/right.png" alt="" />
             </div>
         </div>
         <!-- <div class="item spe">
@@ -403,7 +403,7 @@ export default {
     .noborder {
         border: none;
     }
-    .item-right img {
+    .item-right .img {
         width: 15rpx;
         height: 23rpx;
         margin-left: 25rpx;

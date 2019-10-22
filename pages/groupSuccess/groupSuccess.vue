@@ -1,10 +1,10 @@
 <template>
   <div class="start">
-       <page-title class="nav-title" :title="msg"  @handle="handle" rightHidden="true"></page-title>
+<!--       <page-title class="nav-title" :title="msg"  @handle="handle" rightHidden="true"></page-title>-->
         <!-- 商品详情部分 -->
         <div class="first">
             <div class="left">
-                <img src="/static/result/pro1.png">
+                <image src="/static/result/pro1.png" />
             </div>
             <div class="right">
                    <div class="top">
@@ -22,23 +22,23 @@
         </div>
         <!-- 商品保证 -->
         <ul class="second">
-            <li><img src="/static/tuan/check.png">全场包邮</li>
-            <li><img src="/static/tuan/check.png">7天退换</li>
-            <li><img src="/static/tuan/check.png">48小时发货</li>
-            <li><img src="/static/tuan/check.png">假一赔十</li>
+            <li><image class="img" src="/static/tuan/check.png" />全场包邮</li>
+            <li><image class="img" src="/static/tuan/check.png" />7天退换</li>
+            <li><image class="img" src="/static/tuan/check.png" />48小时发货</li>
+            <li><image class="img" src="/static/tuan/check.png" />假一赔十</li>
         </ul>
         <!-- 团长 -->
         <div class="three">
-            <div class="paySuc"><img src="/static/tuan/paySuc.png" >支付成功</div>
+            <div class="paySuc"><image class="img" src="/static/tuan/paySuc.png" />支付成功</div>
             <ul class="lyl">
-                <li><img src="/static/tuan/lyl.png"><img src="/static/tuan/tuanzhang.png" class="tuanzhang"><span class="tuanzhang">团长</span></li>
-                <li><img src="/static/tuan/lyl.png"></li>
-                <li><img src="/static/tuan/lyl.png"></li>
+                <li><image class="img" src="/static/tuan/lyl.png" /><image src="/static/tuan/tuanzhang.png" class=" img tuanzhang" /><span class="tuanzhang">团长</span></li>
+                <li><image class="img" src="/static/tuan/lyl.png" /></li>
+                <li><image class="img" src="/static/tuan/lyl.png" /></li>
             </ul>
         </div>
         <!-- 倒计时 -->
         <div class="how">
-            <img src="/static/tuan/time.png" >
+            <image class="img" src="/static/tuan/time.png" />
             <span class="my">拼团中，还差<span>1</span>人</span>
         </div>
         <div class="times">
@@ -72,16 +72,16 @@
             <div class="top">拼团规则</div>
             <div class="xiang">
                 <div class="hang">
-                    <img src="/static/tuan/ju.png"><span>开团或者参加别人的团</span>
+                    <image class="img" src="/static/tuan/ju.png" /><span>开团或者参加别人的团</span>
                 </div>
                 <div class="hang">
-                    <img src="/static/tuan/ju.png"><span>在规定的时间内，邀请好友参团</span>
+                    <image class="img" src="/static/tuan/ju.png" /><span>在规定的时间内，邀请好友参团</span>
                 </div>
                 <div class="hang">
-                    <img src="/static/tuan/ju.png"><span>达到拼团人数，分别给团长和团员发货</span>
+                    <image class="img" src="/static/tuan/ju.png" /><span>达到拼团人数，分别给团长和团员发货</span>
                 </div>
                 <div class="hang">
-                    <img src="/static/tuan/ju.png"><span>未达到拼团人数，货款将自动原路返还</span>
+                    <image class="img" src="/static/tuan/ju.png" /><span>未达到拼团人数，货款将自动原路返还</span>
                 </div>
             </div>
         </div>
@@ -89,7 +89,7 @@
         <div class="dianzhang">店长推荐</div>
         <div class="prolist">
             <div class="pro-item" v-for="i in 4" :key="i">
-                <img src="/static/check/pro1.png" alt="">
+                <image src="/static/check/pro1.png" alt="" class="img" />
                 <div class="item-name">2018夏装新款短袖蕾丝拼接荷叶边波点雪纺连衣裙女时尚名媛...</div>
                 <div class="price">
                     <span class="n_price"><span class="pricem">￥</span>169.00</span>
@@ -131,7 +131,7 @@ export default {
         .left{
             width: 290rpx;
 			height: 290rpx;
-            img{
+            .img{
                 width: 100%;
 				height: 100%;
             }
@@ -194,7 +194,7 @@ export default {
         @media screen and (max-width: 371px) {
             padding:14px 0px;
         }
-        img{
+        .img{
             width: 16px;
             height: 16px;
             margin-right: 4px;
@@ -215,7 +215,7 @@ export default {
             font-weight:500;
             color:rgba(244,49,49,1);
             line-height:38px;
-            img{
+            .img{
                 width: 34px;
                 height: 31px;
             }
@@ -226,7 +226,7 @@ export default {
             padding-left: 220rpx;
 			padding-right: 205rpx;
 			list-style: none;
-            img{
+            .img{
                 width: 100%;
                 height: 100%;
                 border-radius: 50%;
@@ -262,7 +262,7 @@ export default {
 		padding-left: 231rpx;
         display: flex;
         align-items: center;
-        img{
+        .img{
             width: 18px;
             height: 18px;
         }
@@ -391,7 +391,7 @@ export default {
                 display: flex;
                 align-items: center;
                 margin-bottom: 10px;
-                img{
+                .img{
                     width: 6px;
                     height: 11px;
                 }
@@ -423,7 +423,7 @@ export default {
       margin-bottom: 15px;
       background: #fff;
     }
-    .pro-item img {
+    .pro-item .img {
       width: 100%;
       height: 345rpx;
     }
