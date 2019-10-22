@@ -320,6 +320,12 @@
             "path" : "pages/editPersonalMsg/editPersonalMsg",
             "style" : {}
         }
+        ,{
+            "path" : "pages/systemMsg/systemMsg",
+            "style" : {
+            				"navigationBarTitleText": "消息"
+            			}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
