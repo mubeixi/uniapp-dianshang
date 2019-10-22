@@ -19,7 +19,7 @@
             <div class="item-left">退款方式</div>
             <div class="item-right" @click="showMethod">
                 <span>仅退款</span>
-                <img src="/static/right.png" alt="">
+                <image class="img" src="/static/right.png" alt="" />
             </div>
         </div> -->
         <div class="item">

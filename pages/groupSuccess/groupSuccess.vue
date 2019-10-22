@@ -1,10 +1,10 @@
 <template>
   <div class="start">
-       <page-title class="nav-title" :title="msg"  @handle="handle" rightHidden="true"></page-title>
+<!--       <page-title class="nav-title" :title="msg"  @handle="handle" rightHidden="true"></page-title>-->
         <!-- 商品详情部分 -->
         <div class="first">
             <div class="left">
-                <img src="/static/result/pro1.png">
+                <image src="/static/result/pro1.png" />
             </div>
             <div class="right">
                    <div class="top">
@@ -131,7 +131,7 @@ export default {
         .left{
             width: 290rpx;
 			height: 290rpx;
-            img{
+            .img{
                 width: 100%;
 				height: 100%;
             }

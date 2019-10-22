@@ -71,7 +71,7 @@
         </div>
         <div class="pinCenter" v-for="(team,idx) in teamList">
             <div class="image">
-                <img src="/static/tuan/info.png">
+                <image src="/static/tuan/info.png" class="img" />
             </div>
             <div class="info">
                 <div class="nick">
@@ -91,7 +91,7 @@
     <div class="comment">
         <div class="c_title">
             <span>评价</span>
-            <div class="right" @click="gotoComments">查看全部 <img src="/static/detail/right.png" alt=""></div>
+            <div class="right" @click="gotoComments">查看全部 <image class="img" src="/static/detail/right.png" alt="" /></div>
         </div>
         <block v-for="(item,index) of commit" :key="item">
         	<div class="c_content" v-if="!item.ImgPath">
@@ -1108,7 +1108,7 @@ export default {
         font-size: 24rpx;
 		color: #666666;
     }
-    .right img{
+    .right .img{
         width: 19rpx;
         height: 30rpx;
         margin-left: 20rpx;
@@ -1305,7 +1305,7 @@ export default {
                     height: 100rpx;
                     border-radius: 50%;
                     overflow: hidden;
-                    img{
+                    .img{
                         width: 100%;
                         height: 100%;
                     }
