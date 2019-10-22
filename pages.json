@@ -304,6 +304,22 @@
 							"navigationBarTitleText": "分销商信息"
 						}
         }
+        ,{
+            "path" : "pages/personalMsg/personalMsg",
+            "style" : {
+							"navigationBarTitleText": "个人信息"
+						}
+        }
+        ,{
+            "path" : "pages/editAccount/editAccount",
+            "style" : {
+							"navigationBarTitleText": "账号设置"
+						}
+        }
+        ,{
+            "path" : "pages/editPersonalMsg/editPersonalMsg",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

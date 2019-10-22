@@ -208,7 +208,11 @@ export const agentInfo = (data, options) => fetch('agent_info', data, options);
 //获取成为分销商配置信息
 export const disApplyInit = (data, options) => fetch('dis_apply_init', data, options);
 
+//申请成为分销商
+export const disApply = (data, options) => fetch('dis_apply', data, options);
 
+//购买分销商
+export const disBuy = (data, options) => fetch('dis_buy', data, options);
 
 //jssdk签名
 export const getJsSign = (data,options) => fetch('share_config', data, options);
@@ -221,13 +225,17 @@ export const getBalanceRank = (data,options) => fetch('get_balance_rank', data, 
 //获取商品的海报
 export const getProductSharePic = (data,options) => fetch('get_product_tgqrcode', data, options);
 
+// 推广小助手 添加文章
+export const addPromotionArticle = (data,options) => fetch('add_promotion_article', data, options);
+
 //增加产品的浏览次数
 export const addProductViews = (data,options) => fetch('prod_views', data, options);
 
 //获取拼团的团队
 export const getPintuanTeam = (data,options) => fetch('get_pintuan_team', data, options);
 
-
+//更新用户信息
+export const upDateUserInfo = (data, options) => fetch('update_user_info', data, options);
 function get_Appid() {
   return 'xhh';
 }

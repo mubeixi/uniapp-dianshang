@@ -31,7 +31,8 @@
 								<div class="pro-msg">
 									<div class="pro-name" @click="gotoDetail(pro_id)">{{attr.ProductsName}}</div>
 									<div class="attr" v-if="attr.Productsattrstrval">
-										<span v-for="(item,index) in attr.Productsattrstrval" :key="index">{{item}}</span>
+										<!-- <span v-for="(item,index) in attr.Productsattrstrval" :key="index">{{item}}</span> -->
+										<span>{{attr.Productsattrstrval}}</span>
 									</div>
 									<div class="pro-price">
 										<span class="span">￥</span>{{attr.ProductsPriceX}}
@@ -390,6 +391,9 @@ export default {
     }
     .pro-msg {
       flex: 1;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
     }
     .pro-img {
         width: 200rpx;
@@ -399,28 +403,32 @@ export default {
     .pro-name {
         font-size: 26rpx;
         margin-bottom: 18rpx;
-		width: 390rpx;
-		line-height: 28rpx;
-		display: -webkit-box;
+				width: 390rpx;
+				line-height: 28rpx;
+				display: -webkit-box;
 		    -webkit-line-clamp:2;
 		    overflow: hidden;
 		    text-overflow: ellipsis;
 		    -webkit-box-orient: vertical;
     }
     .attr {
-        display: inline-block;
-        height: 50rpx;
-		padding: 0 20rpx;
-        line-height: 50rpx;
-        background: #FFF5F5;
-        color: #666;
-        font-size: 24rpx;
-        margin-bottom: 18rpx;
-		text-align: center;
+    	display: inline-block;
+    	height: 50rpx;
+    	line-height: 50rpx;
+    
+    	color: #666;
+    	font-size: 24rpx;
+    	// padding: 0 20rpx;
+    	// margin: 25rpx 0 24rpx;
+    	span {
+    		padding: 14rpx 20rpx;
+    		margin: 25rpx 0 24rpx;
+    		background: #FFF5F5;
+    	}
     }
     .pro-price {
         color: #F43131;
-		font-size: 36rpx;
+				font-size: 36rpx;
     }
     .pro-price .span {
         font-size: 24rpx;
@@ -544,7 +552,7 @@ export default {
     /* 结算 */
     .checkout {
       position: fixed;
-      bottom: 100rpx;
+      bottom: 98rpx;
       width: 100%;
       height: 100rpx;
       padding: 0 20rpx;

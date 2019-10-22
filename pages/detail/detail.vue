@@ -1059,6 +1059,7 @@ export default {
     .section1 {
         padding: 0 20rpx 20rpx;
         border-bottom: 20rpx solid #efefef;
+		padding-bottom: 0rpx;
     }
     .price {
         margin-top: 38rpx;
@@ -1221,6 +1222,8 @@ export default {
     .pro_detail {
 		.p_detail_des {
 			width:100%;
+			font-size: 28rpx;
+			color: #999;
 			img {
 				width:100% !important;
 			}
