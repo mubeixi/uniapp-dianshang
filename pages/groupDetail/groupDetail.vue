@@ -292,16 +292,14 @@ export default {
 			totalCount:0,//优惠券个数
 			countdown:{d:0,h:0,m:0,s:0},
 			postData: {
-			    act: 'add_cart',
-			    Users_ID: 'wkbq6nc2kc',      //商家ID
-			    User_ID: 3,       //会员ID
 			    prod_id: 0,    //产品ID  在 onLoad中赋值
 			    atrid_str: '',    //选择属性  1；2   数字从小到大
 			    atr_str: '',      //选择属性名称
 			    count: 0,         //选择属性的库存
 			    showimg: '',      //选择属性的图片(用产品图片代替)
 			    qty: 1,           //购买数量
-			    cart_key: '',     //购物车类型   CartList（加入购物车）、DirectBuy（立即购买）、PTCartList（不能加入购物车）
+			    cart_key: 'DirectBuy',     //购物车类型   CartList（加入购物车）、DirectBuy（立即购买）、PTCartList（不能加入购物车）
+					active: 'pintuan',   //拼团时候选，不是拼团不选
 			},
 			isCollected: false, // 该产品是否已收藏
         }
@@ -595,10 +593,12 @@ export default {
 		},
 		//拼团
 		myPin(){
+			this.postData.active = 'pintuan';
 			this.$refs.cartPopu.show();
 		},
 		//单独购买
 		myPay(){
+			delete this.postData.active ;
 			this.$refs.cartPopu.show();
 		},
 		//返回首页
@@ -680,16 +680,9 @@ export default {
         	updateCart(this.postData).then(res=>{
         		//console.log(res)
         		if(res.errorCode == 0) {
-        			if(this.postData.cart_key == 'CartList') {
-        				uni.showLoading({
-        					title: '加入购物车成功',
-        					icon: 'success'
-        				})
-        			}else {
         				uni.navigateTo({
         					url: '../check/check?cart_key=DirectBuy'
         				})
-        			}
         		}else {
         			uni.showToast({
         				title: res.msg
@@ -731,7 +724,6 @@ export default {
         },
         getCommit(item){
         	let data={
-        		Users_ID:'wkbq6nc2kc',
         		Products_ID:item,
         		page:1,
         		pageSize:2
