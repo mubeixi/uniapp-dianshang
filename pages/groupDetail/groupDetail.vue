@@ -493,7 +493,7 @@ export default {
 
 		},
 		getPintuanTeamList(id){
-			getPintuanTeam({prod_id:id}).then(res=>{
+			getPintuanTeam({prod_id:id},{errtip:false}).then(res=>{
 				if(res.errorCode === 0){
 					this.teamList = res.data
 				}
@@ -678,17 +678,21 @@ export default {
         	}
         	console.log(this.postData)
         	updateCart(this.postData).then(res=>{
-        		//console.log(res)
+        		console.log(res)
         		if(res.errorCode == 0) {
         				uni.navigateTo({
         					url: '../check/check?cart_key=DirectBuy'
         				})
         		}else {
-        			uni.showToast({
-        				title: res.msg
-        			})
+
         		}
-        	})
+
+        	}).catch(e=>{
+				console.log(e)
+				uni.showToast({
+					title: e.msg
+				})
+			})
         	//确定加入购物车
         	this.$refs.cartPopu.close();
         },
@@ -728,13 +732,14 @@ export default {
         		page:1,
         		pageSize:2
         	}
-        	getCommit(data).then(res=>{
-        		if(res.errorCode === 0){
-					this.commit=res.data;
-				}
-        	}).catch(e=>{
-        		console.log(e)
-        	})
+
+        	getCommit(data,{errtip:false}).then(res=>{
+				this.commit=res.data;
+        	},err=>{
+        		console.log('获取评论失败',err)
+			}).catch(e=>{
+
+			})
         },
 		stampCount(){
 
@@ -760,7 +765,9 @@ export default {
         	}
         	let _self = this;
 			let product = null;
+
 			getProductDetail(data).then(res=>{
+
         		console.log(res)
 				if(res.errorCode != 0){
 					return;

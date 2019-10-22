@@ -271,7 +271,13 @@
 	import area from '../../common/area.js';
 	import utils from '../../common/util.js';
 	import popupLayer from '../../components/popup-layer/popup-layer.vue'
-	import {ls} from "../../common/tool";
+	import {mapGetters,mapActions} from 'vuex';
+	import {
+		ls,
+		GetQueryByString,
+		isWeiXin,
+		urlencode
+	} from "../../common/tool";
 	export default {
 		mixins:[pageMixin],
 		components: {
@@ -305,9 +311,25 @@
 				pay_arr:[],//支付方式
 				password_input:false,//弹出密码输入框
 				user_pay_password:'',//用户输入的密码
+				code:'',//code
+				pay_type:'',//支付方式
+				pay_money:0,//支付金额
 			};
 		},
+		computed:{
+			...mapGetters(['userInfo']),
+		},
 		onLoad() {
+			//如果用户手机号登录获取code
+			let that=this;
+			if(!this.userInfo.openid){
+				uni.login({
+					 provider: 'weixin',
+					  success: function (loginRes) {
+						  that.code=loginRes.code;
+					  }
+				})
+			}
 			this.disApplyInit();
 			this.objectMultiArray = [
 			  utils.array_change(area.area[0]['0']),
@@ -320,8 +342,7 @@
 			  utils.array_change(area.area[0]['0,1,35'])
 			];
 			//获取支付方式
-			this.pay_arr = ls.get('initData').pay_arr;
-			
+			this.pay_arr = ls.get('initData').pay_arr;	
 		},
 		methods:{
 			// 取消输入支付密码
@@ -336,9 +357,12 @@
 			confirmInput(e) {
 				// this.self_orderPay();
 				this.password_input = false;
+				//提交信息
+				this.disBuy();
 			},
 			payFenId(index){
 				this.current=index;
+				this.pay_money=this.pro.dis_level[index].Level_LimitValue;
 			},
 			//选择支付方式
 			chooseType(index){
@@ -348,6 +372,7 @@
 					this.password_input=true;//弹出密码输入框
 					return;
 				}
+				
 				this.disBuy();
 			},
 			//购买提交信息
@@ -379,8 +404,24 @@
 				}
 				data.buy_level_id=this.pro.dis_level[this.current].Level_ID;
 				data.buy_info=JSON.stringify(data.buy_info);
+				if(this.pay_type=='remainder_pay'){
+					data.user_pay_password=this.user_pay_password;
+				}else{
+					if(!this.userInfo.openid){
+						data.code=this.code;
+					}
+				}
 				disBuy(data).then(res=>{
-					console.log(res,"sssss");
+					if(this.pay_type=='remainder_pay'){
+						if(res.errorCode==0){
+							uni.navigateTo({
+								url:'../fenxiao/fenxiao'
+							})
+						}
+					}else{
+						//不用余额调微信支付
+						//this.wechatPay();
+					}
 				}).catch(e=>{
 					console.log(e);
 				})
@@ -645,6 +686,167 @@
 							// 处理街道信息
 							this.address_town();
 			},
+			// 用户选择 微信支付
+			async wechatPay(Order_ID) {
+			
+				let _self = this;
+			
+				this.pay_type = 'wechat';
+				this.$refs.popupLayer.close();
+						// 用户选择微信，并且不用余额支付
+			
+						let payConf = {
+							Order_ID: Order_ID,
+							pay_money:this.pay_money,
+						};
+			
+						//需要格外有一个code
+						// #ifdef H5
+						if (!isWeiXin()) {
+							this.$error('请在微信内打开')
+							return;
+						}
+						let isHasCode = this.code || GetQueryByString('code');
+			
+						if (isHasCode) {
+			
+							//拿到之前的配置
+							payConf = { ...ls.get('temp_order_info'),
+								code: isHasCode,
+								pay_type: 'wx_mp'
+							}
+			
+						} else {
+			
+							//存上临时的数据
+							ls.set('temp_order_info', payConf);
+							//去掉转吧
+							this.$_init_wxpay_env();
+						}
+			
+			
+						// #endif
+			
+						// #ifdef MP-WEIXIN
+						payConf.pay_type = 'wx_lp'
+						// #endif
+			
+						// #ifdef APP-PLUS
+						payConf.pay_type = 'wx_app'
+						// #endif
+			
+			
+						// #ifdef MP-WEIXIN
+						payConf.pay_type = 'wx_lp'
+			
+						await new Promise((resolve => {
+							uni.login({
+								success: function (loginRes) {
+									console.log(loginRes);
+									payConf.code = loginRes.code
+									resolve()
+								}
+							});
+						}))
+			
+						// #endif
+			
+						console.log('payConf is', payConf)
+						orderPay(payConf).then(res => {
+							console.log(res);
+			
+			
+							// #ifdef H5
+							let {
+								timestamp,
+								nonceStr,
+								signType,
+								paySign
+							} = res.data;
+			
+							//直接支付
+							_self.WX_JSSDK_INIT(_self).then((wxEnv) => {
+			
+								//关键字？？package
+								wxEnv.chooseWXPay({
+									timestamp,
+									nonceStr,
+									package: res.data.package,
+									signType,
+									paySign,
+									success: function(res) {
+										// 支付成功后的回调函数
+									}
+								});
+			
+							}).catch((e) => {
+								console.log('支付失败')
+							})
+			
+							return;
+			
+			
+							// #endif
+			
+			
+							let provider = 'wxpay';
+							let orderInfo = {}
+			
+							// #ifdef MP-WEIXIN || MP-BAIDU || MP-TOUTIAO || MP-ALIPAY
+			
+			
+							// #endif
+			
+							// #ifdef MP-WEIXIN
+			
+							provider = 'wxpay';
+							orderInfo = res.data
+							delete orderInfo.timestamp
+			
+							console.log(provider,orderInfo,'支付数据222222222222222222');
+							uni.requestPayment({
+							...orderInfo,
+								provider,
+								success: function (res) {
+									console.log('success:' + JSON.stringify(res));
+									_self.paySuccessCall(res)
+								},
+								fail: function (err) {
+									console.log('fail:' + JSON.stringify(err));
+									uni.showModal({
+										title:'支付错误',
+										content:JSON.stringify(err)
+									})
+								}
+							});
+							// #endif
+			
+							// #ifdef APP-PLUS
+							provider = 'wxpay';
+							orderInfo = res.data
+							console.log(provider,orderInfo,'支付数据222222222222222222');
+			
+							uni.requestPayment({
+								provider,
+								orderInfo, //微信、支付宝订单数据
+								success: function (res) {
+									_self.paySuccessCall(res)
+									console.log('success:' + JSON.stringify(res));
+								},
+								fail: function (err) {
+									console.log('fail:' + JSON.stringify(err));
+									uni.showModal({
+										title:'支付错误',
+										content:JSON.stringify(err)
+									})
+								}
+							});
+							// #endif
+			
+						})
+			
+	
+			},
 			disApplyInit(){
 				disApplyInit().then(res=>{
 					if(res.errorCode==0){
@@ -710,6 +912,8 @@
 										}
 									}
 						}else if(this.pro.dis_config.Distribute_Type==0&&this.pro.dis_level[0].Level_LimitType==0){
+							//获取第一个分销商的金额
+							this.pay_money=this.pro.dis_level[0].Level_LimitValue
 							// 处理自定义  select  和text
 							let dislist = this.pro.dis_config;
 							 dislist['Distribute_Form'] = typeof dislist.Distribute_Form != 'object' ? JSON.parse(dislist.Distribute_Form) : dislist.Distribute_Form;

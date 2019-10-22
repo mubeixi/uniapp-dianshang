@@ -61,7 +61,7 @@ const fetch = function (act, param,options = false,url='/api/little_program/shop
   // 数据加密
   let data = createToken(param);
 
-  return ajax(url,method,data, options).then(res => res.data, e => e);
+  return ajax(url,method,data, options);
 
 };
 
