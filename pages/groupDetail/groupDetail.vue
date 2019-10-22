@@ -678,7 +678,7 @@ export default {
         	}
         	console.log(this.postData)
         	updateCart(this.postData).then(res=>{
-        		//console.log(res)
+        		console.log(res)
         		if(res.errorCode == 0) {
         			if(this.postData.cart_key == 'CartList') {
         				uni.showLoading({
@@ -691,11 +691,15 @@ export default {
         				})
         			}
         		}else {
-        			uni.showToast({
-        				title: res.msg
-        			})
+
         		}
-        	})
+
+        	}).catch(e=>{
+				console.log(e)
+				uni.showToast({
+					title: e.msg
+				})
+			})
         	//确定加入购物车
         	this.$refs.cartPopu.close();
         },
@@ -736,13 +740,12 @@ export default {
         		page:1,
         		pageSize:2
         	}
+
         	getCommit(data).then(res=>{
-        		if(res.errorCode === 0){
-					this.commit=res.data;
-				}
-        	}).catch(e=>{
-        		console.log(e)
-        	})
+				this.commit=res.data;
+        	},err=>{
+        		console.log('获取评论失败',err)
+			})
         },
 		stampCount(){
 
@@ -768,7 +771,9 @@ export default {
         	}
         	let _self = this;
 			let product = null;
+
 			getProductDetail(data).then(res=>{
+
         		console.log(res)
 				if(res.errorCode != 0){
 					return;
