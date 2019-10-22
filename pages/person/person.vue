@@ -7,6 +7,7 @@
 		<view class="personTop">
 
 			<image src="/static/person/top.png"  ></image>
+			<image  class="msg" src="/static/fenxiao/msg.png"></image>
 			<view class="qiandao" v-if="userInfo.User_ID">
 				<image src="/static/person/qiandao.png"></image>
 				<view @click="goQian">签到</view>
@@ -510,4 +511,12 @@
 
 	}
 }
+
+.msg{
+		width: 45rpx !important;
+		height: 45rpx !important;
+		position: absolute;
+		top: 27rpx;
+		right: 175rpx;
+	}
 </style>

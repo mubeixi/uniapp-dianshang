@@ -16,6 +16,9 @@
 			<view class="nickName" v-if="userInfo.User_ID">
 				{{userInfo.User_NickName||(userInfo.User_No?('用户'+userInfo.User_No):'暂无昵称')}}
 			</view>
+			<view class="putong">
+				{{data.disInfo.Level_Name}}
+			</view>
 			<view class="font14 loginBtn" v-if="!userInfo.User_ID" plain size="mini" @click="goLogin">登录/注册</view>
 			<view class="sales">
 				<view class="left">
@@ -160,8 +163,7 @@
 			//获取分销首页数据
 			getDisInit(){
 				getDisInit().then(res=>{
-					console.log(res,"ssssssssssssss")
-					if(res.data.errorCode==0){
+					if(res.errorCode==0){
 						this.data=res.data;
 					}else if(res.data.errorCode==1){
 						uni.navigateTo({
@@ -412,4 +414,17 @@
 		}
 	}
 }
+.putong{
+		width:152rpx;
+		height:50rpx;
+		line-height: 50rpx;
+		text-align: center;
+		background-color: #FFFFFF;
+		font-size: 24rpx;
+		color: #333333;
+		position: absolute;
+		top: 124rpx;
+		right: 0rpx;
+		border-radius:152rpx 0px 0px 152rpx;
+	}
 </style>
