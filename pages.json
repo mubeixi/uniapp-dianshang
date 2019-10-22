@@ -324,7 +324,10 @@
             "path" : "pages/systemMsg/systemMsg",
             "style" : {
             				"navigationBarTitleText": "消息"
-            			}
+						}
+		},{
+            "path" : "pages/updateUserPsw/updateUserPsw",
+            "style" : {}
         }
     ],
 	"globalStyle": {

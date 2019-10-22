@@ -1,6 +1,8 @@
 <template>
 	<view>
-		<page-title :title="title" rightHidden="true" bgcolor="#F8F8F8"></page-title>
+		<!-- #ifdef APP-PLUS -->
+			<page-title :title="title" rightHidden="true" bgcolor="#F8F8F8"></page-title>
+		<!-- #endif -->
 		<input v-if="type == 0" type="text" v-model="User_Name" class="v_input" placeholder="在此修改" />
 		<input v-if="type == 1" type="text" v-model="User_NickName" class="v_input" placeholder="在此修改" />
 		<input v-if="type == 3" type="text" v-model="User_Email" class="v_input" placeholder="在此修改" />
@@ -35,7 +37,10 @@
 					case '1' : this.title = '修改昵称';break;
 					case '3' : this.title = '修改邮箱';break;
 					case '4' : this.title = '修改地址';break;
-				}
+				};
+				uni.setNavigationBarTitle({
+					title: this.title
+				})
 			},
 			save(){
 				upDateUserInfo({

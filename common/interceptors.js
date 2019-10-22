@@ -6,15 +6,18 @@ export const ajax = (url,method,data,options)=>{
 
   if(!options)options={}
   if(!data)data={}
-  let {tip='',mask=false,timelen=2000} = options;
+
+
+  let {tip='',mask=false,timelen=2000,errtip = true} = options;
 
   uni.showLoading({
     title: tip||'loading',
     mask:mask
   })
 
-  //if(!data._ajax)data._ajax=2;
-  //if (!data.owner_id && owner_id)data.owner_id=owner_id;
+
+  // if(!data._ajax)data._ajax=2;
+  // if (!data.owner_id && owner_id)data.owner_id=owner_id;
 
   let token
 
@@ -29,43 +32,62 @@ export const ajax = (url,method,data,options)=>{
 
   console.log('ajax url is '+data.act);
 
+  let URL = ENV.apiBaseUrl+url;
 
-let URL = ENV.apiBaseUrl+url;
+  const hookErrorCode = [0,88001];
 
-const hookErrorCode = [0,88001];
 
-// console.log(URL)
+  return new Promise((resolve, reject) =>{
 
-  return new Promise(function(resolve, reject){
+
     uni.request({
       header,
       url: URL,
       method,
       data,
-      success:(res)=>{
+      success:(ret)=>{
 
-		if(res.statusCode!==200 || typeof res.data !='object'){
-          error('服务器去旅行了')
-		}
+          if(ret.statusCode!==200 || typeof ret.data !='object'){
+              error('服务器去旅行了')
+          }
+          let res = ret.data;
 
-		if(hookErrorCode.indexOf(res.data.errorCode) != -1){
-			resolve(res)
-		}else{
-		  //error(res.data.msg)
-          reject(res)
-		}
+          if(hookErrorCode.indexOf(res.errorCode) != -1){
+              resolve(res)
+          }else{
+              if(errtip)error(res.msg)
+              reject(res)
+          }
+
+
 
       },
       fail:(e)=>{
-        reject(e)
+          reject(e)
       },
-      complete:(res)=>{
+      complete:()=>{
         // console.log(res)
-        setTimeout(function(){
-          uni.hideLoading()
-        },500)
+        uni.hideLoading()
+        // setTimeout(function(){
+        //   uni.hideLoading()
+        // },500)
       }
     })
+
+    //     .then(data=>{
+    //     var [error, res]  = data;
+    //     console.log(res.data);
+    //     if(hookErrorCode.indexOf(res.errorCode) != -1){
+    //     	resolve(res)
+    //     }else{
+    //         // throw new Error(res)
+    //       //error(res.data.msg)
+    //         reject(res);
+    //     }
+    // },e=>{
+    //     reject(e);
+    // })
+
   })
 
 }

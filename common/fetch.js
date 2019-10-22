@@ -61,7 +61,7 @@ const fetch = function (act, param,options = false,url='/api/little_program/shop
   // 数据加密
   let data = createToken(param);
 
-  return ajax(url,method,data, options).then(res => res.data, e => e);
+  return ajax(url,method,data, options);
 
 };
 
@@ -241,6 +241,13 @@ export const getPintuanTeam = (data,options) => fetch('get_pintuan_team', data, 
 
 //更新用户信息
 export const upDateUserInfo = (data, options) => fetch('update_user_info', data, options);
+
+// 修改登录密码
+export const updateUserLoginPsw = (data,options) => fetch('update_user_login_psw',data,options);
+
+// 修改支付密码
+export const updateUserPayPsw = (data,options) => fetch('update_user_pay_psw', data, options);
+
 function get_Appid() {
   return 'xhh';
 }

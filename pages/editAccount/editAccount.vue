@@ -8,11 +8,11 @@
 				<view>修改手机号码</view>
 				<image src="../../static/right.png" mode=""></image>
 			</view>
-			<view class="item">
+			<view class="item" @click="update(0)">
 				<view>登录密码</view>
 				<image src="../../static/right.png" mode=""></image>
 			</view>		
-			<view class="item">
+			<view class="item" @click="update(1)">
 				<view>支付密码</view>
 				<image src="../../static/right.png" mode=""></image>
 			</view>		
@@ -29,7 +29,13 @@
 			}
 		},
 		methods: {
-			
+			// 修改信息
+			update(type){
+				// type 0 表示修改登录，1，修改支付
+				uni.navigateTo({
+					url: '../updateUserPsw/updateUserPsw?type='+type
+				})
+			}
 		}
 	}
 </script>
