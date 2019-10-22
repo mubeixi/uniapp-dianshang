@@ -745,6 +745,8 @@ export default {
 				this.commit=res.data;
         	},err=>{
         		console.log('获取评论失败',err)
+			}).catch(e=>{
+
 			})
         },
 		stampCount(){

@@ -74,7 +74,7 @@ export const ajax = (url,method,data,options)=>{
 
   if(!options)options={}
   if(!data)data={}
-  let {tip='',mask=false,timelen=2000} = options;
+  let {tip='',mask=false,timelen=2000,errtip = true} = options;
 
   uni.showLoading({
     title: tip||'loading',
@@ -111,17 +111,18 @@ export const ajax = (url,method,data,options)=>{
       url: URL,
       method,
       data,
-      success:(res)=>{
+      success:(ret)=>{
 
-          if(res.statusCode!==200 || typeof res.data !='object'){
+          if(ret.statusCode!==200 || typeof ret.data !='object'){
               error('服务器去旅行了')
           }
+          let res = ret.data;
 
-          if(hookErrorCode.indexOf(res.data.errorCode) != -1){
-              resolve(res.data)
+          if(hookErrorCode.indexOf(res.errorCode) != -1){
+              resolve(res)
           }else{
-              // error(res.data.msg)
-              reject(res.data)
+              if(errtip)error(res.msg)
+              reject(res)
           }
 
 
