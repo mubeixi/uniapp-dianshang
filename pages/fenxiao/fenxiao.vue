@@ -97,12 +97,12 @@
 						财富排行榜
 					</view>
 				</view>
-				<view class="td" style="border-bottom: 0px;" @click="goShare">
+				<!-- <view class="td" style="border-bottom: 0px;" @click="goShare">
 					<image src="/static/fenxiao/zidingyi.png" ></image>
 					<view>
 						自定义分享
 					</view>
-				</view>
+				</view> -->
 				<view class="td" style="border-bottom: 0px;" @click="goAssist">
 					<image src="/static/fenxiao/tuiguang.png" ></image>
 					<view>

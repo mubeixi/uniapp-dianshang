@@ -19,7 +19,7 @@
 				{{item.Message_CreateTime}}
 			</view>
 			
-			<view class="msg" :style="item.isShow?'':'height: 70rpx;'">
+			<view class="msg" :class="item.isShow?'':'trans'">
 				{{item.Message_Description}}
 			</view>
 		</view>
@@ -27,7 +27,8 @@
 </template>
 
 <script>
-	import {getUserMessage,readUserMessage} from '../../common/fetch.js'
+	import {getUserMessage,readUserMessage} from '../../common/fetch.js';
+		import {mapGetters,mapActions} from 'vuex';
 	export default {
 		data() {
 			return {
@@ -44,9 +45,12 @@
 			});
 			this.getUserMessage();
 		},
+		computed:{
+			...mapGetters(['userInfo']),
+		},
 		methods:{
 			readMsg(item,index){
-				if(item.is_read==0){
+				if(item.is_read==0&&JSON.stringify(this.userInfo) != '{}'){
 					let data={}
 					data.msg_id=item.Message_ID;
 					readUserMessage(data).then(res=>{
@@ -135,6 +139,14 @@ view{
 		width: 652rpx;
 		line-height: 35rpx;
 		overflow: hidden;
+		max-height: 70rpx; 
+		min-height: 35rpx; 
+		overflow: hidden; 
+		transition: max-height ease-out 0.2s; 
+	}
+	.trans{
+		max-height: 500rpx; 
+		transition: max-height ease-in 0.2s;
 	}
 }
 </style>

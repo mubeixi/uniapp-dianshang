@@ -12,10 +12,10 @@
 				<view class="circleQ" :class="isNext?'':'circleW'">
 					<view></view>
 				</view>
-				<view class="lineQ">
+				<view class="lineQ"  :class="isLast?'lineW':''">
 
 				</view>
-				<view class="circleQ circleW">
+				<view class="circleQ" :class="isLast?'':'circleW'">
 					<view></view>
 				</view>
 			</view>
@@ -26,7 +26,7 @@
 				<view class="secondW" :class="isNext?'secondQ':''">
 					选择区域
 				</view>
-				<view class="secondE">
+				<view class="secondE" :class="isLast?'secondQ':''">
 					提交审核
 				</view>
 			</view>
@@ -68,10 +68,14 @@
 									  <view class="quyu">选择区域</view>
 									  <view v-if="!address_info.Address_Province">选择省份</view>
 									  <view v-else>{{objectMultiArray[0][multiIndex[0]]['name']}}</view>
-									  <view v-if="!address_info.Address_City">选择城市</view>
-									  <view v-else>{{objectMultiArray[1][multiIndex[1]]['name']}}</view>
-									  <view v-if="!address_info.Address_Area">选择地区</view>
-									  <view v-else>{{objectMultiArray[2][multiIndex[2]]['name']}}</view>
+									  <block v-if="current>0">
+									  	<view v-if="!address_info.Address_City">选择城市</view>
+									  	<view v-else>{{objectMultiArray[1][multiIndex[1]]['name']}}</view>								  
+									  </block> 
+									  <block v-if="current>1">
+										  <view v-if="!address_info.Address_Area">选择地区</view>
+										  <view v-else>{{objectMultiArray[2][multiIndex[2]]['name']}}</view>	
+									  </block>
 									</view>
 					</picker>
 				</view>
@@ -79,7 +83,7 @@
 					<image src="/static/fenxiao/chakan.png" ></image>
 				</view>
 			</view>
-			<view class="threes">
+			<view class="threes" v-if="current==3">
 					<view class="haha">
 					  <picker mode="selector" @change="t_pickerChange" :range="t_arr" range-key="name" :value="t_index">
 						<view class="picker">
@@ -94,13 +98,21 @@
 					</view>
 			</view>
 		</block>
-		<view class="four" @click="nextStep">
-			{{isNext?'提交申请':'下一步'}}
-		</view>
-		<view class="five" @click="lookJilu">
-			{{isNext?'返回修改':'查看申请记录'}}
-			<image src="/static/fenxiao/chakan.png" ></image>
-		</view>
+		
+		<block v-if="isLast">
+			<view class="four" >
+				提交审核
+			</view>
+		</block>
+		<block v-else>
+			<view class="four" @click="nextStep">
+				{{isNext?'提交申请':'下一步'}}
+			</view>
+			<view class="five" @click="lookJilu">
+				{{isNext?'返回修改':'查看申请记录'}}
+				<image src="/static/fenxiao/chakan.png" ></image>
+			</view>
+		</block>
 	</view>
 </template>
 
@@ -108,7 +120,7 @@
 	import {pageMixin} from "../../common/mixin";
 	import area from '../../common/area.js';
 	import utils from '../../common/util.js';
-	import {getTown} from '../../common/fetch.js';
+	import {getTown,agentApply} from '../../common/fetch.js';
 	export default {
 		mixins:[pageMixin],
 		data() {
@@ -131,14 +143,13 @@
 						value:'tow'
 					}
 				],
+				isLast:false,
 				objectMultiArray: [],   //展示数据
 				multiIndex: [0, 0, 0],  //选择数据
 
 				//用于收货地址选择用
 				change_objectMultiArray: [],  //选择数据
 				change_multiIndex: [0, 0, 0], //改变的收货地址对应列的下标
-
-				change_objectMultiArray: [],  //选择数据
 				address_info:{},
 				current:0,
 				// 街道信息
@@ -146,26 +157,12 @@
 				t_index: 0,
 				arr:{
 					apply_name:'',
-					apply_mobile:'',
-					apply_area:'',
-					pro_id:0,
-					city_id:0,
-					area_id:0,
-					town_id:0
+					apply_mobile:''
 				}
 			};
 		},
 		onShow(){
-			this.objectMultiArray = [
-			  utils.array_change(area.area[0]['0']),
-			  utils.array_change(area.area[0]['0,1']),
-			  utils.array_change(area.area[0]['0,1,35'])
-			];
-			this.change_objectMultiArray = [
-			  utils.array_change(area.area[0]['0']),
-			  utils.array_change(area.area[0]['0,1']),
-			  utils.array_change(area.area[0]['0,1,35'])
-			];
+			
 		},
 		onLoad() {
 
@@ -188,9 +185,115 @@
 			},
 			nextStep(){
 				if(this.isNext){
-
+					if(JSON.stringify(this.address_info)=="{}"){
+						uni.showToast({
+							title:"请选择地区信息",
+							icon:'none'
+						})
+						return;
+					}else{
+						let info={};
+						info.apply_name=this.arr.apply_name;
+						info.apply_mobile=this.arr.apply_mobile;
+						if(this.current==0){
+							info.apply_area='pro';
+							info.pro_id=this.address_info.Address_Province;
+						}else if(this.current==1){
+							info.apply_area='cit';
+							info.pro_id=this.address_info.Address_Province;
+							info.city_id=this.address_info.Address_City;
+						}else if(this.current==2){
+							info.apply_area='cou';
+							info.pro_id=this.address_info.Address_Province;
+							info.city_id=this.address_info.Address_City;
+							info.area_id=this.address_info.Address_Area;
+						}else if(this.current==3){
+							if(this.address_info.Address_Town==0){
+								uni.showToast({
+									title:"请选择街道信息",
+									icon:'none'
+								})
+								return;
+							}
+							info.apply_area='tow';
+							info.pro_id=this.address_info.Address_Province;
+							info.city_id=this.address_info.Address_City;
+							info.area_id=this.address_info.Address_Area;
+							info.town_id=this.address_info.Address_Town;
+						}
+						
+						
+						agentApply(info).then(res=>{
+							this.isLast=true;
+							
+						},err=>{
+							
+						}).catch(e=>{
+							console.log(e);
+						})
+					}
 				}else{
+					if(!this.arr.apply_name){
+						uni.showToast({
+							title:"请输入姓名",
+							icon:'none'
+						})
+						return;
+					}else if(!(/^1[3456789]\d{9}$/.test(this.arr.apply_mobile))){
+						uni.showToast({
+							title:'手机号输入错误，请重新输入',
+							icon:"none"
+						})
+						return;
+					}
 					this.isNext=true;
+					if(this.current==3){
+						this.multiIndex=[0, 0, 0];
+						this.change_multiIndex=[0, 0, 0];
+						this.objectMultiArray = [
+						  utils.array_change(area.area[0]['0']),
+						  utils.array_change(area.area[0]['0,1']),
+						  utils.array_change(area.area[0]['0,1,35'])
+						];
+						this.change_objectMultiArray = [
+						  utils.array_change(area.area[0]['0']),
+						  utils.array_change(area.area[0]['0,1']),
+						  utils.array_change(area.area[0]['0,1,35'])
+						];
+					}else if(this.current==2){
+						this.multiIndex=[0, 0, 0];
+						this.change_multiIndex=[0, 0, 0];
+						this.objectMultiArray = [
+						  utils.array_change(area.area[0]['0']),
+						  utils.array_change(area.area[0]['0,1']),
+						  utils.array_change(area.area[0]['0,1,35'])
+						];
+						this.change_objectMultiArray = [
+						  utils.array_change(area.area[0]['0']),
+						  utils.array_change(area.area[0]['0,1']),
+						  utils.array_change(area.area[0]['0,1,35'])
+						];
+					}else if(this.current==1){
+						this.multiIndex=[0, 0];
+						this.change_multiIndex=[0, 0];
+						this.objectMultiArray = [
+						  utils.array_change(area.area[0]['0']),
+						  utils.array_change(area.area[0]['0,1'])
+						];
+						this.change_objectMultiArray = [
+						  utils.array_change(area.area[0]['0']),
+						  utils.array_change(area.area[0]['0,1'])
+						];
+					}else{
+						this.multiIndex=[0];
+						this.change_multiIndex=[0];
+						this.objectMultiArray = [
+						  utils.array_change(area.area[0]['0'])
+						];
+						this.change_objectMultiArray = [
+						  utils.array_change(area.area[0]['0'])
+						];
+					}
 				}
 			},
 			// 乡镇地址 点击确定
@@ -222,9 +325,14 @@
 			  addressChange: function (columnValue) {
 				var p_arr = this.change_objectMultiArray[0];
 				var p_id = p_arr[columnValue[0]]['id'];
-				var c_arr = utils.array_change(area.area[0][0 + ',' + p_id]);
-				var c_id = c_arr[columnValue[1]]['id'];
-				var a_arr = utils.array_change(area.area[0][0 + ',' + p_id + ',' + c_id]);
+				var c_arr,c_id,a_arr;
+				if(this.current>0){
+					 c_arr = utils.array_change(area.area[0][0 + ',' + p_id]);
+					 c_id = c_arr[columnValue[1]]['id'];
+				}
+				if(this.current>1){
+					var a_arr = utils.array_change(area.area[0][0 + ',' + p_id + ',' + c_id]);
+				}
 				this.change_objectMultiArray = [
 					p_arr,
 					c_arr,
@@ -251,13 +359,21 @@
 							this.objectMultiArray = this.change_objectMultiArray;
 							this.multiIndex = e.detail.value;
 							this.address_info.Address_Province = this.objectMultiArray[0][this.multiIndex[0]]['id'];
-							this.address_info.Address_City = this.objectMultiArray[1][this.multiIndex[1]]['id'];
-							this.address_info.Address_Area = this.objectMultiArray[2][this.multiIndex[2]]['id'];
-							this.address_info.Address_Town = 0;
+							if(this.current>0){
+								this.address_info.Address_City = this.objectMultiArray[1][this.multiIndex[1]]['id'];
+							}
+							if(this.current>1){
+								this.address_info.Address_Area = this.objectMultiArray[2][this.multiIndex[2]]['id'];
+							}
+							if(this.current>2){
+								this.address_info.Address_Town = 0;
+							}
 							this.t_arr = [];
 							this.t_index = 0;
 							// 处理街道信息
-							this.address_town();
+							if(this.current>2){
+								this.address_town();
+							}
 			},
 			radioChange: function(evt) {
 				for (let i = 0; i < this.items.length; i++) {

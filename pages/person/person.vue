@@ -7,10 +7,10 @@
 		<view class="personTop">
 
 			<image src="/static/person/top.png"  ></image>
-			<image  class="msg" src="/static/fenxiao/msg.png"></image>
-			<view class="qiandao" v-if="userInfo.User_ID">
+			<image   :class="userInfo.User_ID&&show>=0?'':'onlyMsg'"  class="msg" src="/static/fenxiao/msg.png"></image>
+			<view class="qiandao" v-if="userInfo.User_ID&&show>=0"  :class="signin?'isQian':''" @click="signinMethod">
 				<image src="/static/person/qiandao.png"></image>
-				<view @click="goQian">签到</view>
+				<view>{{signin?'已签到':'签到'}}</view>
 			</view>
 			<view class="personInfo flex">
 				<view class="left">
@@ -152,11 +152,14 @@
 <script>
 	import {pageMixin} from "../../common/mixin";
 	import {mapGetters,mapActions} from 'vuex';
+	import { judgeSignin,signin } from "../../common/fetch.js"
 	export default {
 		mixins:[pageMixin],
 		data() {
 			return {
 				//userInfo:{}
+				show:1,//是否能签到 0不显示签到 1 直接签到   2  跳转签到
+				signin:0,//0未签到  1 已签到
 			};
 		},
 		computed:{
@@ -169,7 +172,41 @@
 			}
 
 		},
+		onLoad(){
+			this.judgeSignin();
+		},
 		methods:{
+			//签到
+			signinMethod(){
+				if(!this.$fun.checkIsLogin(1))return;
+				if(this.show==1){
+					signin().then(res=>{
+						uni.showToast({
+							title:res.msg
+						})
+					},err=>{
+						
+					}).catch(e=>{
+						console.log(e);
+					})
+				}else if(this.show==2){	
+					uni.navigateTo({
+						url:'../qiandao/qiandao'
+					})
+				}
+				
+			},
+			//获取签到状态
+			judgeSignin(){
+				judgeSignin({},{errtip:false}).then(res=>{
+					this.show=res.data.show;
+					this.signin=res.data.signin;
+				},err=>{
+					
+				}).catch(e=>{
+					console.log(e)
+				})
+			},
 			// ...mapActions(['getUserInfo']),
 			goLogin(){
 				uni.navigateTo({
@@ -194,13 +231,6 @@
 				if(!this.$fun.checkIsLogin(1))return;
 				uni.navigateTo({
 					url:'../taskCenter/taskCenter'
-				})
-			},
-			//去签到
-			goQian(){
-				if(!this.$fun.checkIsLogin(1))return;
-				uni.navigateTo({
-					url:'../qiandao/qiandao'
 				})
 			},
 			//去收藏页
@@ -516,7 +546,14 @@
 		width: 45rpx !important;
 		height: 45rpx !important;
 		position: absolute;
-		top: 27rpx;
+		top: 22rpx;
 		right: 175rpx;
 	}
+.onlyMsg{
+	right: 25rpx;
+}
+.isQian{
+	padding-left: 12rpx !important; 
+	padding-right: 12rpx !important;
+}
 </style>
