@@ -70,10 +70,13 @@ function UserException(tmpl) {
     return {...tmpl};
 }
 
+
 export const ajax = (url,method,data,options)=>{
 
   if(!options)options={}
   if(!data)data={}
+
+
   let {tip='',mask=false,timelen=2000,errtip = true} = options;
 
   uni.showLoading({

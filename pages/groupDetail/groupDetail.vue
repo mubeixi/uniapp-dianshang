@@ -495,7 +495,7 @@ export default {
 
 		},
 		getPintuanTeamList(id){
-			getPintuanTeam({prod_id:id}).then(res=>{
+			getPintuanTeam({prod_id:id},{errtip:false}).then(res=>{
 				if(res.errorCode === 0){
 					this.teamList = res.data
 				}
@@ -741,7 +741,7 @@ export default {
         		pageSize:2
         	}
 
-        	getCommit(data).then(res=>{
+        	getCommit(data,{errtip:false}).then(res=>{
 				this.commit=res.data;
         	},err=>{
         		console.log('获取评论失败',err)
