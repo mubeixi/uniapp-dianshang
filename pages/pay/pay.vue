@@ -3,14 +3,14 @@
 		<div class="zhezhao" v-if="password_input">
 			<div class="input-wrap">
 				<div>请输入余额支付密码</div>
-				<input type="password" placeholder="请输入密码" @blur="user_password">
+				<input type="password" placeholder="请输入密码" @input="user_password">
 				<div class="btns">
 					<div @click="cancelInput" class="btn">取消</div>
 					<div @click="confirmInput" class="btn">确定</div>
 				</div>
 			</div>
 		</div>
-		<page-title title="付款" :rightHidden="true" bgcolor="#ffffff"></page-title>
+<!--		<page-title title="付款" :rightHidden="true" bgcolor="#ffffff"></page-title>-->
 		<div class="state">
 			<image class="img" src="/static/wait.png" />
 			<span class="state-desc">等待买家付款</span>
@@ -141,7 +141,7 @@
 		isWeiXin,
 		urlencode
 	} from "../../common/tool";
-	import {error} from "../../common";
+	import {error, toast} from "../../common";
 
 	export default {
 		mixins: [pageMixin],
@@ -237,9 +237,8 @@
 				if(this.pay_type == 'remainder_pay') {
 					orderPay(payConf).then(res=>{
 						console.log(res)
-						if(res.errorCode == 0) {
-							this.paySuccessCall();
-						}
+						//跳转到拼团订单列表
+						_self.paySuccessCall(res)
 					}).catch(e=>{
 						console.log(e)
 					});
@@ -695,13 +694,27 @@
 				setTimeout(function(){
 					uni.redirectTo({
 						url: '/pages/order/order?index=1'
-					})					
+					})
 				},1000)
 			},
 			paySuccessCall(){
-				uni.redirectTo({
-					url:'/pages/order/order?index=2'
-				})
+
+				let _self = this;
+				toast('支付成功');
+
+				setTimeout(function () {
+					//拼团订单则跳转到开团成功
+					if(_self.orderInfo.Order_Type === 'pintuan'){
+						uni.redirectTo({
+							url:'/pages/groupSuccess/groupSuccess?order_id='+_self.Order_ID
+						})
+					}else{
+						uni.redirectTo({
+							url:'/pages/order/order?index=2'
+						})
+					}
+				},1000)
+
 			},
 			// 用户选择 微信支付
 			async wechatPay() {
@@ -801,6 +814,7 @@
 									paySign,
 									success: function(res) {
 										// 支付成功后的回调函数
+										_self.paySuccessCall(res)
 									}
 								});
 
@@ -903,6 +917,7 @@
 			},
 			// 用户输入密码完毕
 			user_password(e) {
+				console.log(e)
 				this.user_pay_password = e.detail.value;
 			},
 			// 确定输入支付密码

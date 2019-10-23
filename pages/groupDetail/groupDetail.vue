@@ -5,7 +5,7 @@
         <img src="data:image/png;base64,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" class="cart" >
     </div>
 
-  <span class="share" @click="showTick" data-type="share">分享此产品</span>
+
 
 	<!-- 轮播 -->
 	<view class="uni-padding-wrap">
@@ -39,7 +39,8 @@
     <!-- 领券 -->
     <div class="section2" >
         <div class="titles">
-            {{product.Products_Name}}
+            <div class="title">{{product.Products_Name}}</div>
+			<span class="share" @click="showTick" data-type="share">分享此产品</span>
         </div>
         <div class="titlet">
            {{product.Products_BriefDescription}}
@@ -71,17 +72,17 @@
         </div>
         <div class="pinCenter" v-for="(team,idx) in teamList">
             <div class="image">
-                <image src="/static/tuan/info.png" class="img" />
+                <image :src="team.User_HeadImg" class="img" />
             </div>
             <div class="info">
                 <div class="nick">
-                    你+我=幸福
+                    {{team.User_NickName}}
                 </div>
                 <div class="message">
-                    还差1人，剩余23 : 32 : 06
+                    还差{{product.pintuan_people-team.teamnum}}人，剩余{{team.addtime|endtime}}
                 </div>
             </div>
-            <div class="cantuan">
+            <div class="cantuan" @click="toJoinGroup(team.id)">
                 去参团
             </div>
         </div>
@@ -355,43 +356,76 @@ export default {
 
 	},
 	filters: {
-				/**
-				 * 处理富文本里的图片宽度自适应
-				 * 1.去掉img标签里的style、width、height属性
-				 * 2.img标签添加style属性：max-width:100%;height:auto
-				 * 3.修改所有style里的width属性为max-width:100%
-				 * 4.去掉<br/>标签
-				 * @param html
-				 * @returns {void|string|*}
-				 */
-				formatRichText (html) { //控制小程序中图片大小
-					if(!html) return;
-				    let newContent= html.replace(/<img[^>]*>/gi,function(match,capture){
-				        match = match.replace(/style="[^"]+"/gi, '')//.replace(/style='[^']+'/gi, '');
-				        match = match.replace(/width="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
-				        match = match.replace(/height="[^"]+"/gi, '')//.replace(/height='[^']+'/gi, '');
-				        return match;
-				    });
-					newContent= newContent.replace(/<div[^>]*>/gi,function(match,capture){
-					    match = match.replace(/style="[^"]+"/gi, '')//.replace(/style='[^']+'/gi, '');
-					    match = match.replace(/width="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
-					    match = match.replace(/height="[^"]+"/gi, '')//.replace(/height='[^']+'/gi, '');
-					    return match;
-					});
-					newContent= newContent.replace(/<p[^>]*>/gi,'');
-					newContent= newContent.replace(/<[/]p[^>]*>/gi,'');
-				    newContent = newContent.replace(/style="[^"]+"/gi,function(match,capture){
-				        match = match.replace(/width:[^;]+;/gi, 'width:100%;').replace(/width:[^;]+;/gi, 'width:100%;');
-				        return match;
-				    });
+		endtime(timeStamp){
 
-				    newContent = newContent.replace(/<br[^>]*\/>/gi, '');
-				    newContent = newContent.replace(/\<img/gi, '<img style="width:100%;float:left;"');
-					//newContent = newContent.replace(/>[\s]*</gi, "><");
-				    return newContent;
-				}
-			},
+			//一天过期
+			let end_timeStamp = timeStamp+60*60*24
+			let current = (new Date()).getTime()
+
+			let {d=0,h=0,m=0,s=0} = {};
+			//时间戳格式转换
+			current = parseInt(current/1000)
+
+			// console.log(end_timeStamp,current)
+			let countTime = end_timeStamp - current
+			if(countTime<0){
+				console.log('已经结束')
+				return false
+			};
+
+			h = parseInt(countTime/(60*60))
+			m = parseInt((countTime-h*60*60)/60)
+			s = countTime-h*60*60-m*60
+
+			if(h<10)h='0'+h;
+			if(m<10)m='0'+m;
+			if(s<10)s='0'+s;
+
+			return `${h}:${m}:${s}`
+		},
+		/**
+		 * 处理富文本里的图片宽度自适应
+		 * 1.去掉img标签里的style、width、height属性
+		 * 2.img标签添加style属性：max-width:100%;height:auto
+		 * 3.修改所有style里的width属性为max-width:100%
+		 * 4.去掉<br/>标签
+		 * @param html
+		 * @returns {void|string|*}
+		 */
+		formatRichText (html) { //控制小程序中图片大小
+			if(!html) return;
+			let newContent= html.replace(/<img[^>]*>/gi,function(match,capture){
+				match = match.replace(/style="[^"]+"/gi, '')//.replace(/style='[^']+'/gi, '');
+				match = match.replace(/width="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
+				match = match.replace(/height="[^"]+"/gi, '')//.replace(/height='[^']+'/gi, '');
+				return match;
+			});
+			newContent= newContent.replace(/<div[^>]*>/gi,function(match,capture){
+				match = match.replace(/style="[^"]+"/gi, '')//.replace(/style='[^']+'/gi, '');
+				match = match.replace(/width="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
+				match = match.replace(/height="[^"]+"/gi, '')//.replace(/height='[^']+'/gi, '');
+				return match;
+			});
+			newContent= newContent.replace(/<p[^>]*>/gi,'');
+			newContent= newContent.replace(/<[/]p[^>]*>/gi,'');
+			newContent = newContent.replace(/style="[^"]+"/gi,function(match,capture){
+				match = match.replace(/width:[^;]+;/gi, 'width:100%;').replace(/width:[^;]+;/gi, 'width:100%;');
+				return match;
+			});
+
+			newContent = newContent.replace(/<br[^>]*\/>/gi, '');
+			newContent = newContent.replace(/\<img/gi, '<img style="width:100%;float:left;"');
+			//newContent = newContent.replace(/>[\s]*</gi, "><");
+			return newContent;
+		}
+	},
     methods: {
+		toJoinGroup(tid){
+			//Team_ID=12&Products_ID=238&users_id=wkbq6nc2kc&owner_id=48
+			uni.navigateTo({
+				url:"/pages/groupJoin/groupJoin?Team_ID="+tid+"&Products_ID="+this.Products_ID
+			})
+		},
 		async shareFunc(channel) {
 
 			let _self = this
@@ -495,7 +529,7 @@ export default {
 		getPintuanTeamList(id){
 			getPintuanTeam({prod_id:id},{errtip:false}).then(res=>{
 				if(res.errorCode === 0){
-					this.teamList = res.data
+					this.teamList = res.data.splice(0,3)
 				}
 
 			}).catch(e=>{
@@ -593,11 +627,13 @@ export default {
 		},
 		//拼团
 		myPin(){
+			if(!this.$fun.checkIsLogin(1))return;
 			this.postData.active = 'pintuan';
 			this.$refs.cartPopu.show();
 		},
 		//单独购买
 		myPay(){
+			if(!this.$fun.checkIsLogin(1))return;
 			delete this.postData.active ;
 			this.$refs.cartPopu.show();
 		},
@@ -698,7 +734,7 @@ export default {
         },
         addNum(){
         	if (this.postData.qty < this.postData.count) {
-        		this.postData.qty += 1;
+				this.postData.qty = parseInt(this.postData.qty) + 1;
         	}else {
         	    uni.showToast({
         			title: '购买数量不能大于库存量',
@@ -709,7 +745,7 @@ export default {
         },
         delNum(){
         	if (this.postData.qty > 1) {
-        		this.postData.qty -= 1;
+				this.postData.qty = parseInt(this.postData.qty) - 1;
         	} else {
         		uni.showToast({
         	        title: '购买数量不能小于1',
@@ -785,6 +821,7 @@ export default {
 
 
 				this.product = res.data;
+
 				this.postData.count = res.data.Products_Count;
 				if(res.data.skujosn) {
 					this.product.skujosn = typeof res.data.skujosn ==='string' ?JSON.parse(res.data.skujosn):res.data.skujosn;
@@ -923,20 +960,6 @@ export default {
 	}
 }
 
-.share {
-	position: fixed;
-	right: 0;
-	z-index: 999;
-	top: 50%;
-	background: red;
-	color: #fff;
-	text-align: center;
-	margin-top: -10px;
-	font-size: 13px;
-	padding: 5px;
-	border-top-left-radius: 20px;
-	border-bottom-left-radius: 20px;
-}
 
     /* 返回按钮和购物车按钮 */
     .top {
@@ -1085,9 +1108,10 @@ export default {
     /* 产品描述部分 end */
     /* 领券start */
     .section2 {
+		position: relative;
         padding-left: 26rpx;
 		padding-top: 20rpx;
-		padding-right: 37rpx;
+		padding-right: 0rpx;
 		padding-bottom: 20rpx;
         font-size: 22rpx;
         // display: flex;
@@ -1270,14 +1294,34 @@ export default {
         }
     }
     .titles{
-        font-size:28rpx;
-        font-family:PingFang SC;
-        font-weight:bold;
-        color:rgba(51,51,51,1);
-        line-height:22px;
+		position: relative;
+		padding-right: 150rpx;
+        .title{
+			font-size:28rpx;
+			font-family:PingFang SC;
+			font-weight:bold;
+			color:rgba(51,51,51,1);
+			line-height:22px;
+		}
+
+		.share {
+			position: absolute;
+			right: 0;
+			z-index: 999;
+			top: 50%;
+			background: red;
+			color: #fff;
+			text-align: center;
+			margin-top: -10px;
+			font-size: 13px;
+			padding: 5px;
+			border-top-left-radius: 20px;
+			border-bottom-left-radius: 20px;
+		}
     }
     .titlet{
         margin-top: 12px;
+		padding-right: 36rpx;
         font-size:12px;
         font-family:PingFang SC;
         font-weight:500;
