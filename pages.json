@@ -324,6 +324,10 @@
             "path" : "pages/updateUserPsw/updateUserPsw",
             "style" : {}
         }
+        ,{
+            "path" : "pages/pintuanOrderlist/pintuanOrderlist",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
