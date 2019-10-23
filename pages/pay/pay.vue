@@ -237,6 +237,9 @@
 				if(this.pay_type == 'remainder_pay') {
 					orderPay(payConf).then(res=>{
 						console.log(res)
+						if(res.errorCode == 0) {
+							this.paySuccessCall();
+						}
 					}).catch(e=>{
 						console.log(e)
 					});
