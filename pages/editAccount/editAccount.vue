@@ -1,10 +1,10 @@
 <template>
 	<view>
 		<!-- #ifdef APP-PLUS -->
-		<page-title title="账号设置" rightHidden="true" bgcolor="#F8F8F8"></page-title>
+		<page-title title="设置" rightHidden="true" bgcolor="#F8F8F8"></page-title>
 		<!-- #endif -->
 		<view class="wrap">
-			<view class="item">
+			<view class="item" @click="update(3)">
 				<view>修改手机号码</view>
 				<image src="../../static/right.png" mode=""></image>
 			</view>
@@ -17,11 +17,13 @@
 				<image src="../../static/right.png" mode=""></image>
 			</view>		
 		</view>
-		<view class="btn">退出登录</view>
+		<view class="btn" @click="logoutFunc">退出登录</view>
 	</view>
 </template>
 
 <script>
+	import {mapActions} from 'vuex'
+	import {confirm} from "../../common";
 	export default {
 		data() {
 			return {
@@ -29,13 +31,34 @@
 			}
 		},
 		methods: {
-			// 修改信息
-			update(type){
-				// type 0 表示修改登录，1，修改支付
-				uni.navigateTo({
-					url: '../updateUserPsw/updateUserPsw?type='+type
+			...mapActions(['setUserInfo']),
+				// 修改信息
+				update(type){
+					console.log('asdf')
+					// type 0 表示修改登录，1，修改支付
+					uni.navigateTo({
+						url: '../updateUserPsw/updateUserPsw?type='+type
+					})
+				},
+			logoutFunc(){
+				confirm({title:'操作提示',content:'是否退出登录'}).then(res=>{
+			
+					//只需要商户id
+			
+					let users_id = ls.get('users_id');
+					ls.clear();
+					ls.set('users_id',users_id);
+			
+					this.setUserInfo({})
+			
+					uni.switchTab({
+						url:'/pages/index/index'
+					})
+			
+				}).catch(()=>{
+			
 				})
-			}
+			},
 		}
 	}
 </script>

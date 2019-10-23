@@ -44,7 +44,7 @@
 			<view class="item" @click="update(4)">
 				<view class="item-name">详细地址</view>
 				<view class="info">
-					{{}}
+					{{User_Province_name}}{{User_City_name}}{{User_Area_name}}{{User_Tow_name}}{{User_Address}}
 				</view>
 				<view class="go">
 					<image src="../../static/right.png" mode=""></image>
@@ -56,7 +56,7 @@
 
 <script>
 	import {mapGetters,mapActions} from 'vuex';
-	import {GET_ENV,get_Users_ID,upDateUserInfo} from '../../common/fetch.js';
+	import {GET_ENV,get_Users_ID,upDateUserInfo,get_user_info} from '../../common/fetch.js';
 	import { staticUrl } from '../../common/env.js';
 	import { ls } from '../../common/tool.js';
 	export default {
@@ -65,7 +65,12 @@
 				imgs: [],
 				tem_Shop_Logo: '',
 				User_HeadImg: '',
-				userInfo:''
+				userInfo:'',
+				User_Province_name: '',
+				User_City_name: '',
+				User_Area_name: '',
+				User_Tow_name: '',
+				User_Address: ''
 			}
 		},
 		async created(){
@@ -75,12 +80,23 @@
 			console.log('122')
 			this.userInfo=ls.get('userInfo');
 			this.User_HeadImg = this.userInfo.User_HeadImg;
+			this.get_user_info();
 		},
 		methods: {
 			...mapActions(['getUserInfo']),
 			update(num){
 				uni.navigateTo({
 					url: '../editPersonalMsg/editPersonalMsg?type=' + num
+				})
+			},
+			get_user_info(){
+				get_user_info().then(res=>{
+					console.log(res)
+					this.User_Province_name = res.data.User_Province_name;
+					this.User_City_name = res.data.User_City_name;
+					this.User_Area_name = res.data.User_Area_name;
+					this.User_Tow_name = res.data.User_Tow_name;
+					this.User_Address = res.data.User_Address;
 				})
 			},
 			// 更换头像

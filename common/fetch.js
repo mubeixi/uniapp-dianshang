@@ -130,6 +130,8 @@ export const getCoupon = (data,options) => fetch('get_unaccalimed_coupon',data,o
 export const getUserCoupon = (data,options) => fetch('user_receive_coupon',data,options);
 // 获取用户已领取的优惠券
 export const getUserReceivedCoupon = (data,options) => fetch('get_user_coupon', data, options);
+// 获取用户已失效的优惠券
+export const getExpiredCoupon = (data,options) => fetch('get_expired_coupon', data, options);
 // 提交订单
 export const createOrder = (data,options) => fetch('create_order', data,options);
 
@@ -226,6 +228,8 @@ export const getSignin = (data, options) => fetch('get_signin', data, options);
 
 //申请成为区域代理
 export const agentApply = (data, options) => fetch('agent_apply', data, options);
+//获取订单物流追踪
+export const getOrderExpress = (data, options) => fetch('get_order_express', data, options);
 
 
 //jssdk签名
@@ -256,6 +260,12 @@ export const updateUserLoginPsw = (data,options) => fetch('update_user_login_psw
 
 // 修改支付密码
 export const updateUserPayPsw = (data,options) => fetch('update_user_pay_psw', data, options);
+
+// 更新用户手机号  获取验证码
+export const updateMobileSms = (data,options) => fetch('update_mobile_sms',data,options);
+
+// 更新用户手机号
+export const updateUserMobile = (data,options) => fetch('update_user_mobile',data,options);
 
 function get_Appid() {
   return 'xhh';

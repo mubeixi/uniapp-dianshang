@@ -1,132 +1,132 @@
 <template>
-    <div v-if="loading">
+    <view v-if="loading">
       <!--  <pagetitle title="提交订单"></pagetitle> -->
-        <div class="address" v-if="orderInfo.is_virtual == 0 && orderInfo.NeedShipping == 1" @click="goAddressList">
+        <view class="address" v-if="orderInfo.is_virtual == 0 && orderInfo.NeedShipping == 1" @click="goAddressList">
             <img class="loc_icon" src="/static/location.png" alt="">
-            <div class="add_msg" v-if="addressinfo.Address_Name">
-                <div class="name">收货人：{{addressinfo.Address_Name}} <span>{{addressinfo.Address_Mobile | formatphone}}</span></div>
-                <div class="location">收货地址：{{addressinfo.Address_Province_name}}{{addressinfo.Address_City_name}}{{addressinfo.Address_Area_name}}{{addressinfo.Address_Town_name}}</div>
-            </div>
-						<div class="add_msg" v-else>
-							<div>暂无收货地址，去添加</div>
-						</div>
+            <view class="add_msg" v-if="addressinfo.Address_Name">
+                <view class="name">收货人：{{addressinfo.Address_Name}} <span>{{addressinfo.Address_Mobile | formatphone}}</span></view>
+                <view class="location">收货地址：{{addressinfo.Address_Province_name}}{{addressinfo.Address_City_name}}{{addressinfo.Address_Area_name}}{{addressinfo.Address_Town_name}}</view>
+            </view>
+						<view class="add_msg" v-else>
+							<view>暂无收货地址，去添加</view>
+						</view>
             <img class="right" src="/static/right.png" alt="" >
-        </div>
-		<div class="biz_msg">
-			<img :src="orderInfo.ShopLogo" class="biz_logo" alt="">
+        </view>
+		<view class="biz_msg">
+			<image :src="orderInfo.ShopLogo" class="biz_logo" alt="" />
 			<span class="biz_name">{{orderInfo.ShopName}}</span>
-		</div>
-        <div class="order_msg">
-			<block  v-for="(pro,pro_id) in orderInfo.CartList" :key="pro_id">
-				<div class="pro" v-for="(attr,attr_id) in pro" :key="attr_id">
-					<img class="pro-img" :src="attr.ImgPath" alt="">
-					<div class="pro-msg">
-						<div class="pro-name">{{attr.ProductsName}}</div>
-						<div class="attr" v-if="attr.Productsattrstrval"><span>{{attr.Productsattrstrval}}</span></div>
-						<div class="pro-price"><span>￥</span>{{attr.ProductsPriceX}} <span class="amount">x<span class="num">{{attr.Qty}}</span></span></div>
-					</div>
-				</div>
-			</block>
-        </div>
-        <div class="other" v-if="orderInfo.is_virtual == 0 && orderInfo.NeedShipping == 1">
-            <div class="bd">
-                <div class="o_title" @click="changeShip">
+		</view>
+        <view class="order_msg">
+					<block  v-for="(pro,pro_id) in orderInfo.CartList" :key="pro_id">
+						<view class="pro" v-for="(attr,attr_id) in pro" :key="attr_id">
+							<img class="pro-img" :src="attr.ImgPath" alt="">
+							<view class="pro-msg">
+								<view class="pro-name">{{attr.ProductsName}}</view>
+								<view class="attr" v-if="attr.Productsattrstrval"><span>{{attr.Productsattrstrval}}</span></view>
+								<view class="pro-price"><span>￥</span>{{attr.ProductsPriceX}} <span class="amount">x<span class="num">{{attr.Qty}}</span></span></view>
+							</view>
+						</view>
+					</block>
+        </view>
+        <view class="other" v-if="orderInfo.is_virtual == 0 && orderInfo.NeedShipping == 1">
+            <view class="bd">
+                <view class="o_title" @click="changeShip">
                     <span>运费选择</span>
                     <span style="text-align:right; color: #888;" >
 						<span>{{shipping_name?(shipping_name + ' ' + (orderInfo.Order_Shipping.Price > 0 ? orderInfo.Order_Shipping.Price : '免运费')):'请选择物流'}}</span>
                         <image  class="right" src="/static/right.png" alt=""></image>
                     </span>
-                </div>
-            </div>
-        </div>
-        <div class="other" v-if="couponlist.length > 0">
-            <div class="bd">
-                <div class="o_title" @click="changeCoupon">
+                </view>
+            </view>
+        </view>
+        <view class="other" v-if="couponlist.length > 0">
+            <view class="bd">
+                <view class="o_title" @click="changeCoupon">
                     <span>优惠券选择</span>
                     <span style="text-align: right; color: #888;display: flex;align-items: center;">
 						<span >{{couponlist.length>0?(coupon_desc?coupon_desc:'您有优惠券使用'): '暂无可用优惠券'}}</span>
 						<image  src="/static/right.png" class="right" alt=""></image>
 					</span>
-                </div>
-            </div>
-        </div>
-        <div class="other" v-if="orderInfo.max_diyong_intergral > 0">
-            <div class="bd">
-                <div class="o_title">
+                </view>
+            </view>
+        </view>
+        <view class="other" v-if="orderInfo.max_diyong_intergral > 0">
+            <view class="bd">
+                <view class="o_title">
                     <span>是否参与积分抵扣</span>
                     <switch :checked="intergralChecked" color="#04B600" @change="intergralSwitchChange" />
-                </div>
-                <div class="o_de" v-if="intergralChecked">您当前共有 <text>{{userInfo.User_Integral}}</text>积分，每<text>{{orderInfo.Integral_Buy}}</text>积分可以抵扣<text>1</text>元，本次可使用<text>{{orderInfo.max_diyong_intergral}}</text>积分,总共可抵<text>{{orderInfo.max_Integral_Money}}</text>元</div>
-            </div>
-        </div>
-        <div class="other" v-if="orderInfo.is_use_money == 1">
-            <div class="bd">
-                <div class="o_title">
+                </view>
+                <view class="o_de" v-if="intergralChecked">您当前共有 <text>{{userInfo.User_Integral}}</text>积分，每<text>{{orderInfo.Integral_Buy}}</text>积分可以抵扣<text>1</text>元，本次可使用<text>{{orderInfo.max_diyong_intergral}}</text>积分,总共可抵<text>{{orderInfo.max_Integral_Money}}</text>元</view>
+            </view>
+        </view>
+        <view class="other" v-if="orderInfo.is_use_money == 1">
+            <view class="bd">
+                <view class="o_title">
                     <span>是否使用余额</span>
                     <switch :checked="userMoneyChecked" color="#04B600" @change="userMoneyChange" />
-                </div>
-				<div class="o_de">您当前共有余额: <text>{{userInfo.User_Money}}</text></div>
-                <input v-if="userMoneyChecked" v-model.number="postData.use_money" class="o_desc" placeholder="请输入金额" type="number" @blur="confirm_user_money">
-            </div>
-        </div>
-        <div class="other">
-            <div class="bd">
-                <div class="o_title">
+                </view>
+								<view class="o_de">您当前最多使用余额: <text>{{userInfo.User_Money < orderInfo.Order_TotalPrice ? userInfo.User_Money : orderInfo.Order_TotalPrice}}</text></view>
+                <input v-if="userMoneyChecked" @focus="postData.use_money = 0" v-model.number="postData.use_money" class="o_desc" placeholder="请输入金额" type="number" @blur="confirm_user_money">
+            </view>
+        </view>
+        <view class="other">
+            <view class="bd">
+                <view class="o_title">
                     <span>是否开具发票</span>
 					<switch :checked="faPiaoChecked" color="#04B600" @change="faPiaoChange" />
-                </div>
+                </view>
 				<input v-if="faPiaoChecked"  @blur="faPiaoConfirm" type="text" class="o_desc" placeholder="请输入发票抬头和纳税人识别号" />
-            </div>
-        </div>
-        <div class="other">
-            <div class="bd">
-                <div class="o_title  words">
+            </view>
+        </view>
+        <view class="other">
+            <view class="bd">
+                <view class="o_title  words">
                     <span>买家留言</span>
                     <input type="text"  @blur="remarkConfirm" placeholder="请填写留言内容">
-                </div>
-            </div>
-        </div>
-        <!-- <div class="total">
+                </view>
+            </view>
+        </view>
+        <!-- <view class="total">
             <span style="margin-right:20rpx;">共<span>{{orderInfo.total_count}}</span>件商品</span>
             <span>小计：<span>￥</span><span class="money">{{orderInfo.Order_TotalPrice}}</span></span>
-        </div> -->
+        </view> -->
 		<view style="height: 100rpx;">
-			<div class="order_total">
-				<div class="totalinfo">
-					<div class="info">共{{orderInfo.prod_count}}件商品 总计：<text class="money"><text class="m_icon">￥</text> {{orderInfo.Order_Fyepay}}</text></div>
-					<div class="tips">*本次购物一共可获得{{orderInfo.Integral_Get}}积分</div>
-				</div>
-				<div class="submit" @click="form_submit">提交订单</div>
-			</div>
+			<view class="order_total">
+				<view class="totalinfo">
+					<view class="info">共{{orderInfo.prod_count}}件商品 总计：<text class="money"><text class="m_icon">￥</text> {{orderInfo.Order_Fyepay}}</text></view>
+					<view class="tips">*本次购物一共可获得{{orderInfo.Integral_Get}}积分</view>
+				</view>
+				<view class="submit" @click="form_submit">提交订单</view>
+			</view>
 		</view>
         <popup-layer ref="popupRef" :direction="'top'">
-        	<div class="bMbx" v-if="type=='shipping'">
-        		<div class="fMbx">运费选择</div>
-        		<div class="iMbx" v-for="(ship,shipid) in orderInfo.shipping_company" :key="shipid">
-        			<div>
+        	<view class="bMbx" v-if="type=='shipping'">
+        		<view class="fMbx">运费选择</view>
+        		<view class="iMbx" v-for="(ship,shipid) in orderInfo.shipping_company" :key="shipid">
+        			<view>
         				{{ship}}
-        			</div>
+        			</view>
 					<radio-group @change="ShipRadioChange">
 						<radio :value="shipid" :checked="shipid==ship_current" style="float:right;" color="#F43131"/>
 					</radio-group>
-        		</div>
-        	</div>
+        		</view>
+        	</view>
 			<scroll-view style="height:430rpx;width:95%;"  scroll-y="true" class="bMbx" v-if="type=='coupon'">
-				<div class="fMbx scroll-view-item">优惠券选择</div>
-				<div class="iMbx scroll-view-item" v-for="(coupon,i) in orderInfo.coupon_list" :key="i">
+				<view class="fMbx scroll-view-item">优惠券选择</view>
+				<view class="iMbx scroll-view-item" v-for="(coupon,i) in orderInfo.coupon_list" :key="i">
 					满{{coupon.Coupon_Condition}} - {{coupon.Coupon_Cash > 0 ? coupon.Coupon_Cash : coupon.Coupon_Discount}}
 					<radio-group @change="radioChange">
 						<radio :value="coupon.Coupon_ID" :checked="i===current" style="float:right;" color="#F43131"/>
 					</radio-group>
-				</div>
+				</view>
 			</scroll-view>
-        	<div class="sure" @click="closeMethod">
+        	<view class="sure" @click="closeMethod">
         		确定
-        	</div>
+        	</view>
         </popup-layer>
 		<view class="remind-wrap" v-if="remindAddress">
-			<div class="remind-add">
-				<div class="text-align-center mb20">新建收货地址</div>
+			<view class="remind-add">
+				<view class="text-align-center mb20">新建收货地址</view>
 				<view class="remind_desc">
 					您还没有收货地址，请先添加一个新的收货地址
 				</view>
@@ -136,9 +136,9 @@
 						新建
 					</view>
 				</view>
-			</div>
+			</view>
 		</view>
-    </div>
+    </view>
 </template>
 
 <script>
@@ -293,7 +293,8 @@ export default {
 						uni.showToast({
 							title: res.data.msg,
 							icon: 'none'
-						})
+						});
+						this.submited = false;
 					}
 					this.submited = false;
 				}).catch(e=>{
@@ -302,7 +303,7 @@ export default {
 							title: e.msg,
 							icon: 'none'
 					})
-					this.submited = true;
+					this.submited = false;
 				});
 			}
 		},
@@ -355,7 +356,8 @@ export default {
 			// return;
 			let input_money = e.detail.value;
 			// let user_money = this.userInfo.User_Money;
-			let user_money = this.userInfo.User_Money;
+			// 用户的金额和订单金额比较，取较小的那个与用户输入金额比较
+			let user_money = (this.userInfo.User_Money < this.orderInfo.Order_TotalPrice) ? this.userInfo.User_Money : this.orderInfo.Order_TotalPrice;
 			if(input_money < 0 || isNaN(input_money)){
 				uni.showToast({
 					title: '输入金额有误',
@@ -366,9 +368,11 @@ export default {
 			}
 			if(input_money - user_money > 0) {
 				uni.showModal({
-					title: '金额大于您的可用余额',
-					icon:  'none'
+					title: '金额大于最大使用余额',
+					icon:  'none',
+					showCancel: 'none'
 				});
+				this.postData.use_money = user_money;
 				return;
 			}
 			this.postData.use_money = Number(input_money).toFixed(2);

@@ -7,7 +7,7 @@
 		<view class="personTop">
 
 			<image src="/static/person/top.png"  ></image>
-			<image   :class="userInfo.User_ID&&show>=0?'':'onlyMsg'"  class="msg" src="/static/fenxiao/msg.png"></image>
+			<image   :class="userInfo.User_ID&&show>=0?'':'onlyMsg'"  class="msg" src="/static/fenxiao/msg.png" @click="goMsg"></image>
 			<view class="qiandao" v-if="userInfo.User_ID&&show>=0"  :class="signin?'isQian':''" @click="signinMethod">
 				<image src="/static/person/qiandao.png"></image>
 				<view>{{signin?'已签到':'签到'}}</view>
@@ -18,7 +18,7 @@
 				</view>
 				<view class="right flex1" :style="{position:!userInfo.User_ID?'relative':'static'}">
 					<view class="font14 loginBtn" v-if="!userInfo.User_ID" plain size="mini" @click="goLogin">登录/注册</view>
-					<view v-if="userInfo.User_ID" class="nickName">{{userInfo.User_NickName||(userInfo.User_No?('用户'+userInfo.User_No):'暂无昵称')}}</view>
+					<view v-if="userInfo.User_ID" class="nickName" @click="goPersonMsg">{{userInfo.User_NickName||(userInfo.User_No?('用户'+userInfo.User_No):'暂无昵称')}}</view>
 					<view v-if="userInfo.User_ID" class="cart">{{userLevelText}}<image src="/static/person/rightCart.png" ></image></view>
 				</view>
 			</view>
@@ -41,7 +41,7 @@
 						收藏
 					</view>
 				</view>
-				<view class="navList four">
+				<view class="navList four" @click="goCoupon">
 					<image src="/static/person/youhuijuan.png" mode=""></image>
 					<view style="left: 50rpx;">
 						优惠券
@@ -84,25 +84,29 @@
 			</view>
 		</view>
 		<view class="list">
-		<view class="group">
-			<image src="/static/person/pin.png" class="left"></image>
-			<view class="pintuan">
-				拼团订单
+			<view class="group" @click="goPintuanOrderlist">
+				<image src="/static/person/pin.png" class="left"></image>
+				<view class="pintuan">
+					拼团订单
+				</view>
+				<image src="/static/person/right.png" class="right"></image>
 			</view>
 			<image src="/static/person/right.png" class="right"></image>
 		</view>
 
-		<view class="bargain">
-			<image src="/static/person/kan.png" class="left"></image>
-			<view class="pintuan">
-				砍价订单
-			</view>
-			<image src="/static/person/right.png" class="right"></image>
-		</view>
-		<view class="bargain" @click="goGift">
-			<image src="/static/person/zengpin.png" class="left"></image>
-			<view class="pintuan">
-				赠品中心
+			<!-- <view class="bargain">
+				<image src="/static/person/kan.png" class="left"></image>
+				<view class="pintuan">
+					砍价订单
+				</view>
+				<image src="/static/person/right.png" class="right"></image>
+			</view> -->
+			<view class="bargain" @click="goGift">
+				<image src="/static/person/zengpin.png" class="left"></image>
+				<view class="pintuan">
+					赠品中心
+				</view>
+				<image src="/static/person/right.png" class="right"></image>
 			</view>
 			<image src="/static/person/right.png" class="right"></image>
 		</view>
@@ -121,13 +125,13 @@
 			<image src="/static/person/right.png" class="right"></image>
 		</view>
 
-		<view class="bargain">
-			<image src="/static/person/wo.png" class="left"></image>
-			<view class="pintuan">
-				我的预约
-			</view>
-			<image src="/static/person/right.png" class="right"></image>
-		</view>
+			<!-- <view class="bargain">
+				<image src="/static/person/wo.png" class="left"></image>
+				<view class="pintuan">
+					我的预约
+				</view>
+				<image src="/static/person/right.png" class="right"></image>
+			</view> -->
 
 		<view class="bargain">
 			<image src="/static/person/tui.png" class="left"></image>
@@ -160,6 +164,7 @@
 				//userInfo:{}
 				show:1,//是否能签到 0不显示签到 1 直接签到   2  跳转签到
 				signin:0,//0未签到  1 已签到
+				isLodnig:false,
 			};
 		},
 		computed:{
@@ -176,14 +181,37 @@
 			this.judgeSignin();
 		},
 		methods:{
+			goCoupon(){
+				uni.navigateTo({
+					url:'../coupon/coupon'
+				})
+			},
+			goMsg(){
+				uni.navigateTo({
+					url:'../systemMsg/systemMsg'
+				})
+			},
 			//签到
 			signinMethod(){
 				if(!this.$fun.checkIsLogin(1))return;
+				if(this.isLodnig) return;
+				this.isLodnig=true;
+				if(this.signin==1){
+					uni.showToast({
+						title:'今日已签到',
+						icon:"none"
+					})
+					this.isLodnig=false;
+					return;
+				}
 				if(this.show==1){
 					signin().then(res=>{
 						uni.showToast({
-							title:res.msg
+							title:res.msg,
+							icon:'none'
 						})
+						this.signin=1;
+						this.isLodnig=false;
 					},err=>{
 
 					}).catch(e=>{
@@ -213,6 +241,11 @@
 					url:'../login/login'
 				})
 			},
+			goPintuanOrderlist(){
+				uni.navigateTo({
+					url: '../pintuanOrderlist/pintuanOrderlist'
+				})
+			},
 			//去赠品中心
 			goGift(){
 				if(!this.$fun.checkIsLogin(1))return;
@@ -223,8 +256,11 @@
 			goSetting(){
 				if(!this.$fun.checkIsLogin(1))return;
 				uni.navigateTo({
-					url:'../setting/setting'
+					url: '../editAccount/editAccount'
 				})
+				// uni.navigateTo({
+				// 	url:'../setting/setting'
+				// })
 			},
 			//去任务中心
 			goRenwu(){
@@ -252,6 +288,13 @@
 				if(!this.$fun.checkIsLogin(1))return;
 				uni.navigateTo({
 					url: '../addressList/addressList'
+				})
+			},
+			// 去个人信息页
+			goPersonMsg(){
+				if(!this.$fun.checkIsLogin(1))return;
+				uni.navigateTo({
+					url: '../personalMsg/personalMsg'
 				})
 			}
 		},

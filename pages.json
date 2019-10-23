@@ -334,6 +334,22 @@
             "style" : {
               "navigationBarTitleText": "立即参团"
             }
+        },
+        {
+            "path" : "pages/pintuanOrderlist/pintuanOrderlist",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/coupon/coupon",
+            "style" : {
+                "navigationBarTitleText": "优惠券"
+            }
+        }
+        ,{
+            "path" : "pages/expiredCoupon/expiredCoupon",
+            "style" : {
+                "navigationBarTitleText": "失效优惠券"
+            }
         }
     ],
 	"globalStyle": {

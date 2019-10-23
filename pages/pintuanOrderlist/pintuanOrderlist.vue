@@ -9,19 +9,19 @@
             <div class="nav-item" :class="index==0?'active':''" @click="changIndex(0)">全部</div>
             <div class="nav-item" :class="index==1?'active':''" @click="changIndex(1)">
 				待付款
-				<div class="jiaobiao" v-if="orderNum.shop.waitpay>0">{{orderNum.shop.waitpay}}</div>
+				<div class="jiaobiao" v-if="orderNum.pintuan.waitpay>0">{{orderNum.pintuan.waitpay}}</div>
 			</div>
             <div class="nav-item" :class="index==2?'active':''" @click="changIndex(2)">
 				待发货
-				<div class="jiaobiao" v-if="orderNum.shop.waitsend>0">{{orderNum.shop.waitsend}}</div>
+				<div class="jiaobiao" v-if="orderNum.pintuan.waitsend>0">{{orderNum.pintuan.waitsend}}</div>
 			</div>
             <div class="nav-item" :class="index==3?'active':''" @click="changIndex(3)">
 				待收货
-				<div class="jiaobiao" v-if="orderNum.shop.waitconfirm>0">{{orderNum.shop.waitconfirm}}</div>
+				<div class="jiaobiao" v-if="orderNum.pintuan.waitconfirm>0">{{orderNum.pintuan.waitconfirm}}</div>
 			</div>
             <div class="nav-item" :class="index==4?'active':''" @click="changIndex(4)">
 				待评价
-				<div class="jiaobiao" v-if="orderNum.shop.waitcomment>0">{{orderNum.shop.waitcomment}}</div>
+				<div class="jiaobiao" v-if="orderNum.pintuan.waitcomment>0">{{orderNum.pintuan.waitcomment}}</div>
 			</div>
         </div>
 		<view class="space" style="height: 100rpx;width: 100%;">
@@ -35,7 +35,7 @@
 			    <span class="status">{{item.Order_Status_desc}}</span>
 			</div>
             <block v-for="(i,k) of item.prod_list" :key="k">
-				<div class="pro" @click="goDetail(item)">
+				<div class="pro" @click="goPay(item)">
 				    <div class="pro-div">
 						<img class="pro-img" :src="i.prod_img">
 					</div>
@@ -47,7 +47,7 @@
 				    </div>
 				</div>
 			</block>
-            <div class="text-right total">共{{item.prod_list.length}}件商品 合计：<span class="price"><span>￥</span> {{item.Order_Fyepay}}</span></div>
+            <div class="total"><view class="ptdesc" v-if="item.teamstatus_desc">{{item.teamstatus_desc}}</view><view> 共{{item.prod_list.length}}件商品 合计：<span class="price"><span>￥</span> {{item.Order_Fyepay}}</span></view></div>
             <div class="btn-group" v-if="item.Order_Status==1">
                 <span @click="cancelOrder(item.prod_list,index)">取消订单</span>
                 <span class="active" @click="goPay(item)">立即付款</span>
@@ -57,7 +57,7 @@
 			    <span class="active" @click="goPay(item)">申请退款</span>
 			</div>
 			<div class="btn-group" v-else-if="item.Order_Status==3">
-				<span @click="goLogistics(item)">查看物流</span>
+				<span>查看物流</span>
 			    <span class="active" @click="confirmOrder(item)">确认收货</span>
 				<!-- @click="goPay(item)"跳转退款 -->
 			</div>
@@ -89,8 +89,7 @@ export default {
 						totalCount:0,
 						orderNum:'',//订单状态角标数
 						isQing:false,
-						Order_Type: 'shop,gift' , //请求的订单类型
-						isLoading:false,
+						Order_Type: 'pintuan' , //请求的订单类型
         }
     },
 	onShow(){
@@ -127,12 +126,6 @@ export default {
 				console.log(e);
 			})
 		},
-		goLogistics(item){
-			//跳转物流追踪
-			uni.navigateTo({
-				url:'../logistics/logistics?Order_ID='+item.Order_ID
-			})
-		},
 		//获取订单角标数
 		getOrderNum(){
 			getOrderNum({}).then(res=>{
@@ -144,8 +137,6 @@ export default {
 		},
 		//取消订单
 		cancelOrder(item,index){
-			if(this.isLoading)return 
-			this.isLoading=true;
 			let Order_ID;
 			for(let i in item){
 				console.log(i)
@@ -155,7 +146,6 @@ export default {
 			}
 			if(Order_ID){
 				cancelOrder({Order_ID}).then(res=>{
-					this.isLoading=false;
 					if(res.errorCode==0){
 						this.data.splice(index,1);
 						this.getOrderNum();
@@ -171,17 +161,11 @@ export default {
 					}
 
 				}).catch(e=>{
-					console.log(e);
-					this.isLoading=false;
+					console.log(e)
 				})
 			}
 		},
-		goDetail(item){
-			uni.navigateTo({
-				url:"../detail/detail?Products_ID="+item.prod_list[0].prod_id
-			})
-		},
-		//跳转申请退款 支付   发表评论
+		//跳转订单详情
 		goPay(item){
 			if(item.Order_Status==1){
 				uni.navigateTo({
@@ -384,14 +368,24 @@ export default {
         .total {
             font-size: 24rpx;
             margin: 40rpx 0rpx;
-			margin-right: 15rpx;
+						margin-right: 15rpx;
+						display: flex;
+						align-items: center;
+						justify-content: space-between;
             .price {
                 color: red;
                 font-size: 30rpx;
                 span{
-					font-size: 24rpx;
-				}
+								font-size: 24rpx;
+							}
             }
+						.ptdesc {
+							background: #F43131;
+							padding: 10rpx;
+							color: #fff;
+							border-top-right-radius: 20rpx;
+							border-bottom-right-radius: 20rpx;
+						}
         }
         .btn-group {
             text-align: right;
