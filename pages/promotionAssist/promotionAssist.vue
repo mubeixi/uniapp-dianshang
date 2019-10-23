@@ -137,17 +137,15 @@
 					qq: this.postData.qq,
 					email: this.postData.email
 				}).then(res=>{
-					console.log(res)
-					if(res.errorCode == 0) {
 						uni.showToast({
-							title:  res.msg,
-						})
-					}else {
-						uni.showToast({
-							title: res.msg,
-							icon: 'none'
-						})						
-					}
+							title: res.msg
+						}),err=>{
+							uni.showToast({
+								title: err.msg
+							})
+						}
+				}).catch(e=>{
+					console.log(e)
 				})
 			}
 		}

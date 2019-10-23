@@ -18,7 +18,7 @@
 				</view>
 				<view class="right flex1" :style="{position:!userInfo.User_ID?'relative':'static'}">
 					<view class="font14 loginBtn" v-if="!userInfo.User_ID" plain size="mini" @click="goLogin">登录/注册</view>
-					<view v-if="userInfo.User_ID" class="nickName">{{userInfo.User_NickName||(userInfo.User_No?('用户'+userInfo.User_No):'暂无昵称')}}</view>
+					<view v-if="userInfo.User_ID" class="nickName" @click="goPersonMsg">{{userInfo.User_NickName||(userInfo.User_No?('用户'+userInfo.User_No):'暂无昵称')}}</view>
 					<view v-if="userInfo.User_ID" class="cart">{{userLevelText}}<image src="/static/person/rightCart.png" ></image></view>
 				</view>
 			</view>
@@ -84,7 +84,7 @@
 			</view>
 		</view>
 		<view class="list">
-			<view class="group">
+			<view class="group" @click="goPintuanOrderlist">
 				<image src="/static/person/pin.png" class="left"></image>
 				<view class="pintuan">
 					拼团订单
@@ -232,6 +232,11 @@
 					url:'../login/login'
 				})
 			},
+			goPintuanOrderlist(){
+				uni.navigateTo({
+					url: '../pintuanOrderlist/pintuanOrderlist'
+				})
+			},
 			//去赠品中心
 			goGift(){
 				if(!this.$fun.checkIsLogin(1))return;
@@ -242,8 +247,11 @@
 			goSetting(){
 				if(!this.$fun.checkIsLogin(1))return;
 				uni.navigateTo({
-					url:'../setting/setting'
+					url: '../editAccount/editAccount'
 				})
+				// uni.navigateTo({
+				// 	url:'../setting/setting'
+				// })
 			},
 			//去任务中心
 			goRenwu(){
@@ -271,6 +279,13 @@
 				if(!this.$fun.checkIsLogin(1))return;
 				uni.navigateTo({
 					url: '../addressList/addressList'
+				})
+			},
+			// 去个人信息页
+			goPersonMsg(){
+				if(!this.$fun.checkIsLogin(1))return;
+				uni.navigateTo({
+					url: '../personalMsg/personalMsg'
 				})
 			}
 		},

@@ -259,6 +259,12 @@ export const updateUserLoginPsw = (data,options) => fetch('update_user_login_psw
 // 修改支付密码
 export const updateUserPayPsw = (data,options) => fetch('update_user_pay_psw', data, options);
 
+// 更新用户手机号  获取验证码
+export const updateMobileSms = (data,options) => fetch('update_mobile_sms',data,options);
+
+// 更新用户手机号
+export const updateUserMobile = (data,options) => fetch('update_user_mobile',data,options);
+
 function get_Appid() {
   return 'xhh';
 }
