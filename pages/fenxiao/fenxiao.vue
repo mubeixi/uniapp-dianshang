@@ -10,11 +10,11 @@
 			<!-- #endif -->
 
 			<image v-if="userInfo.User_ID" class="msg" src="/static/fenxiao/msg.png" @click="goMsg"></image>
-			<view class="person" v-if="userInfo.User_ID">
-					<image style="border-radius: 50%;overflow: hidden" :src="userInfo.User_HeadImg||'/static/default.png'"  @click="tofenxiaoshang"></image>
+			<view class="person" >
+					<image style="border-radius: 50%;overflow: hidden" :src="data.disInfo.Shop_Logo"  @click="tofenxiaoshang"></image>
 			</view>
-			<view class="nickName" v-if="userInfo.User_ID">
-				{{userInfo.User_NickName||(userInfo.User_No?('用户'+userInfo.User_No):'暂无昵称')}}
+			<view class="nickName">
+				{{data.disInfo.Shop_Name}}
 			</view>
 			<view class="putong">
 				{{data.disInfo.Level_Name}}

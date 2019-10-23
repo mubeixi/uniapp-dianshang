@@ -6,15 +6,15 @@
 		<view class="user-info">
 			<view class="user-avator">
 				<image :src="Shop_Logo" mode=""></image>
-				<view class="xiangji" v-if="canEdit"></view>
+				<view class="xiangji" ></view>
 			</view>
 			<view class="change" @click="changeAvator">更换头像</view>
 		</view>
 		<view class="content">
-			<view class="c_1"><text>店名</text><input type="text" v-model="Shop_Name" :disabled="!canEdit" /></view>
-			<view class="c_2"><text>公告</text><input type="text" v-model="Shop_Announce" :disabled="!canEdit" /></view>
+			<view class="c_1"><text>店名</text><input type="text" v-model="Shop_Name"  /></view>
+			<view class="c_2"><text>公告</text><input type="text" v-model="Shop_Announce"  /></view>
 		</view>
-		<view class="submit" :class=" canEdit?'' : 'cannot'" @click="save">保存</view>
+		<view class="submit" @click="save">保存</view>
 	</view>
 </template>
 
@@ -26,7 +26,7 @@
 		data() {
 			return {
 				userDisInfo: {},
-				canEdit: false   ,//用户是否可以编辑
+				
 				Shop_Name: '',  // 自定义店铺名称
 				Shop_Logo: '',  // 自定义头像
 				Shop_Announce: '' ,//自定义分享与
@@ -49,7 +49,7 @@
 						console.log(this.userDisInfo)
 						this.Shop_Name = this.userDisInfo.Shop_Name;
 						this.Shop_Logo = this.userDisInfo.Shop_Logo;
-						this.canEdit = this.userDisInfo.Distribute_Customize == 1
+						
 					}else {
 						
 					}
@@ -58,7 +58,6 @@
 			// 更换头像
 			changeAvator(){
 				let _this = this;
-				if(this.canEdit) {
 					let data={
 						'timestamp':'1502263578',
 						'sign':'DA1525TR85D6S5A9E5236FDSWD52F147WA',
@@ -99,11 +98,10 @@
 							console.log(e);
 						}
 					});
-				}
+				
 			},
 			// 保存
 			save(){
-				if(this.canEdit){
 					updateUserDisInfo({
 						Shop_Name: this.Shop_Name,
 						Shop_Logo: this.tem_Shop_Logo,
@@ -122,7 +120,6 @@
 							})
 						}
 					})
-				}
 			}
 		},
 		onShow: function(){
