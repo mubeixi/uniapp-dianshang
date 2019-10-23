@@ -1,15 +1,15 @@
 <template>
 	<view class="all" :style="{'min-height':height+'px'}">
 		<page-title title="物流追踪" rightHidden="true" bgcolor="#ffffff" ></page-title>
-		<view class="wuliu box-sizing">
-			<image src="http://vod.q172.net/image/default/BC434C55F50940D2B4B09B7FECFD150E-6-2.png"></image>
+		<view class="wuliu box-sizing" v-if="pro.list">
+			<image :src="pro.imgpath"></image>
 			<view>
 				<view class="fonts">
 					<view class="left">
 						物流状态: 
 					</view>
 					<view class="right">
-						已签收
+						{{pro.shipping_status}}
 					</view>
 				</view>
 				<view class="fonts">
@@ -17,103 +17,107 @@
 						物流公司: 
 					</view>
 					<view>
-						顺丰快递
+						{{pro.shipping_express}}
 					</view>
 				</view>
-				<view class="fonts">
+				<view class="fonts" v-if="pro.shipping_no">
 					<view class="left">
 						物流单号: 
 					</view>
 					<view>
-						4546448558888			                        
+						{{pro.shipping_no}}			                        
 					</view>
 				</view>
-				<view class="fonts">
+				<view class="fonts" v-if="pro.delivery_man_phone">
 					<view class="left">
 						派送员电话: 
 					</view>
 					<view>
-						95500			                        
+						{{pro.delivery_man_phone}}			                        
 					</view>
 				</view>
 			</view>
 		</view>
 		<view class="box-sizing xiangxi">
-			<view class="center">
-				<view class="lefts">
-					<view class="tops">
-						<view></view>
+			<block v-for="(item,index) of pro.list" :key="index">
+				<view class="center" v-if="index==0">
+					<view class="lefts">
+						<view class="tops">
+							<view></view>
+						</view>
+						<view class="bottoms" v-if="(index+1)<pro.list.length"> 
+							
+						</view>
 					</view>
-					<view class="bottoms">
-						
-					</view>
-				</view>
-				<view class="rights">
-					<view class="tops">
-						本人签收
-					</view>
-					<view class="bottoms">
-						2019-01-20  12:20:30
-					</view>
-				</view>
-			</view>
-			<view class="center">
-				<view class="lefts">
-					<view class="tops unBgcolor">
-						<view></view>
-					</view>
-					<view class="bottoms">
-						
+					<view class="rights">
+						<view class="tops">
+							{{item.AcceptStation}}
+						</view>
+						<view class="bottoms">
+							{{item.AcceptTime}}
+						</view>
 					</view>
 				</view>
-				<view class="rights">
-					<view class="tops unColor">
-						派送中，沈阳天河派件员，罗大汪正在派件
+				<view class="center" v-else>
+					<view class="lefts">
+						<view class="tops unBgcolor">
+							<view></view>
+						</view>
+						<view class="bottoms" v-if="(index+1)<pro.list.length">
+							
+						</view>
 					</view>
-					<view class="bottoms">
-						2019-01-19  12:20:30
-					</view>
-				</view>
-			</view>
-			<view class="center">
-				<view class="lefts">
-					<view class="tops unBgcolor">
-						<view></view>
-					</view>
-					<!-- <view class="bottoms" >
-						
-					</view> -->
-				</view>
-				<view class="rights">
-					<view class="tops unColor">
-						已发货
-					</view>
-					<view class="bottoms">
-						2019-01-10  12:20:30
+					<view class="rights">
+						<view class="tops unColor">
+							{{item.AcceptStation}}
+						</view>
+						<view class="bottoms">
+							{{item.AcceptTime}}
+						</view>
 					</view>
 				</view>
-			</view>
+			</block>	
 		</view>
 	</view>
 </template>
 
 <script>
 	import {pageMixin} from "../../common/mixin";
-	
+	import {getOrderExpress} from '../../common/fetch.js'
 	export default {
 		mixins:[pageMixin],
 		data(){
 			return {
 				height:1000,//获取手机屏幕高度
+				Order_ID:0,
+				pro:[],
 			};
 		},
-		onLoad() {
+		onLoad(options) {
+			this.Order_ID=options.Order_ID;
 			let that=this;
 			uni.getSystemInfo({
 			    success: function (res) {
 			        that.height=res.screenHeight-68;
 			    }
 			});
+		},
+		onShow() {
+			this.getOrderExpress();
+		},
+		methods:{
+			getOrderExpress(){
+				let data={
+					Order_ID:this.Order_ID
+				}
+				getOrderExpress(data).then(res=>{
+					this.pro=res.data;
+				},err=>{
+					
+				}).catch(e=>{
+					console.log(e)
+				})
+			}
 		}
 	}
 </script>

@@ -226,6 +226,8 @@ export const getSignin = (data, options) => fetch('get_signin', data, options);
 
 //申请成为区域代理
 export const agentApply = (data, options) => fetch('agent_apply', data, options);
+//获取订单物流追踪
+export const getOrderExpress = (data, options) => fetch('get_order_express', data, options);
 
 
 //jssdk签名

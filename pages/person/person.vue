@@ -7,7 +7,7 @@
 		<view class="personTop">
 
 			<image src="/static/person/top.png"  ></image>
-			<image   :class="userInfo.User_ID&&show>=0?'':'onlyMsg'"  class="msg" src="/static/fenxiao/msg.png"></image>
+			<image   :class="userInfo.User_ID&&show>=0?'':'onlyMsg'"  class="msg" src="/static/fenxiao/msg.png" @click="goMsg"></image>
 			<view class="qiandao" v-if="userInfo.User_ID&&show>=0"  :class="signin?'isQian':''" @click="signinMethod">
 				<image src="/static/person/qiandao.png"></image>
 				<view>{{signin?'已签到':'签到'}}</view>
@@ -160,6 +160,7 @@
 				//userInfo:{}
 				show:1,//是否能签到 0不显示签到 1 直接签到   2  跳转签到
 				signin:0,//0未签到  1 已签到
+				isLodnig:false,
 			};
 		},
 		computed:{
@@ -176,14 +177,32 @@
 			this.judgeSignin();
 		},
 		methods:{
+			goMsg(){
+				uni.navigateTo({
+					url:'../systemMsg/systemMsg'
+				})
+			},
 			//签到
 			signinMethod(){
 				if(!this.$fun.checkIsLogin(1))return;
+				if(this.isLodnig) return;
+				this.isLodnig=true;
+				if(this.signin==1){
+					uni.showToast({
+						title:'今日已签到',
+						icon:"none"
+					})
+					this.isLodnig=false;
+					return;
+				}
 				if(this.show==1){
 					signin().then(res=>{
 						uni.showToast({
-							title:res.msg
+							title:res.msg,
+							icon:'none'
 						})
+						this.signin=1;
+						this.isLodnig=false;
 					},err=>{
 						
 					}).catch(e=>{
