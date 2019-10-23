@@ -567,6 +567,12 @@ export default {
 		bottom: 0;
 	}
 	// #endif
+	
+	// #ifdef APP-PLUS
+	.checkout {
+		bottom: 0;
+	}
+	// #endif
     .checkbtn {
       background: #F43131;
       color: #fff;

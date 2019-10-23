@@ -571,7 +571,7 @@ export default {
 			if(this.couponList.length<=1){
 				this.goNextPage();
 			}
-			getUserCoupon(data).then(res=>{
+			getUserCoupon(data,{errtip:false}).then(res=>{
 					wx.showToast({
 					    title: res.msg,
 					    icon: 'none'
@@ -763,7 +763,7 @@ export default {
 				page:1,
 				pageSize:2
 			}
-			getCommit(data).then(res=>{
+			getCommit(data,{errtip:false}).then(res=>{
 				if(res.errorCode == 0){
 					this.commit=res.data;
 				}
@@ -926,7 +926,7 @@ export default {
     /* 返回按钮和购物车按钮 */
 
     .top {
-        position: absolute;
+        position: fixed;
         top: 10px;
         padding: 0 10px;
 		/* #ifdef APP-PLUS */

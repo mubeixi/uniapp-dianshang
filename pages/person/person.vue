@@ -12,13 +12,13 @@
 				<image src="/static/person/qiandao.png"></image>
 				<view>{{signin?'已签到':'签到'}}</view>
 			</view>
-			<view class="personInfo flex">
+			<view class="personInfo flex" @click="goPersonMsg">
 				<view class="left">
-					<image style="border-radius: 50%;" :src="userInfo.User_HeadImg||'/static/default.png'" ></image>
+					<image style="border-radius: 50%;"  :src="userInfo.User_HeadImg||'/static/default.png'" ></image>
 				</view>
 				<view class="right flex1" :style="{position:!userInfo.User_ID?'relative':'static'}">
 					<view class="font14 loginBtn" v-if="!userInfo.User_ID" plain size="mini" @click="goLogin">登录/注册</view>
-					<view v-if="userInfo.User_ID" class="nickName" @click="goPersonMsg">{{userInfo.User_NickName||(userInfo.User_No?('用户'+userInfo.User_No):'暂无昵称')}}</view>
+					<view v-if="userInfo.User_ID" class="nickName">{{userInfo.User_NickName||(userInfo.User_No?('用户'+userInfo.User_No):'暂无昵称')}}</view>
 					<view v-if="userInfo.User_ID" class="cart">{{userLevelText}}<image src="/static/person/rightCart.png" ></image></view>
 				</view>
 			</view>

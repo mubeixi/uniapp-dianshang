@@ -368,9 +368,10 @@ export default {
 			}
 			if(input_money - user_money > 0) {
 				uni.showModal({
-					title: '金额大于最大使用余额',
+					title: '提示',
+					content: '金额大于最大使用余额',
 					icon:  'none',
-					showCancel: 'none'
+					showCancel: false
 				});
 				this.postData.use_money = user_money;
 				return;

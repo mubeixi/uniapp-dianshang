@@ -333,6 +333,10 @@
             "path" : "pages/pintuanOrderlist/pintuanOrderlist",
             "style" : {}
         }
+        ,{
+            "path" : "pages/orderDetail/orderDetail",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

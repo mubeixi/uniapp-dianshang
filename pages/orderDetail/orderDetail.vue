@@ -15,6 +15,7 @@
 			<image class="img" src="/static/wait.png" />
 			<span class="state-desc">等待买家付款</span>
 		</div>
+		<view>订单号：{{order.Order_ID}}</view>
 		<div class="address">
 			<image class="loc_icon" src="/static/location.png" alt="" />
 			<div class="add_msg">
@@ -178,6 +179,10 @@
 			}
 			if(options.pagefrom =='check'){
 				this.showDirect = true;
+			}
+			if(options.pagefrom == 'order') {
+				// 来自订单列表页
+				this.pageFromOrder = true;
 			}
 			// 获取支付方式
 			this.pay_arr = ls.get('initData').pay_arr;
