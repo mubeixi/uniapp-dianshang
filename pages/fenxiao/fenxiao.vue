@@ -9,7 +9,7 @@
 			<view class="title">分销中心</view>
 			<!-- #endif -->
 
-			<image v-if="userInfo.User_ID" class="msg" src="/static/fenxiao/msg.png"></image>
+			<image v-if="userInfo.User_ID" class="msg" src="/static/fenxiao/msg.png" @click="goMsg"></image>
 			<view class="person" v-if="userInfo.User_ID">
 					<image style="border-radius: 50%;overflow: hidden" :src="userInfo.User_HeadImg||'/static/default.png'"  @click="tofenxiaoshang"></image>
 			</view>
@@ -152,6 +152,11 @@
 			goLogin(){
 				uni.navigateTo({
 					url:'../login/login'
+				})
+			},
+			goMsg(){
+				uni.navigateTo({
+					url:'../systemMsg/systemMsg'
 				})
 			},
 			// 去分销商页面

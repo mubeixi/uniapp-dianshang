@@ -68,7 +68,7 @@
 					所需金额:
 				</view>
 				<view class="xiangBottomB">
-					¥<text>{{item.Selfpro}}</text>
+					¥<text>{{item.Teampro}}</text>
 				</view>
 			</view>
 		</view>

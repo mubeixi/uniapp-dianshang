@@ -35,7 +35,7 @@
 			    <span class="status">{{item.Order_Status_desc}}</span>
 			</div>
             <block v-for="(i,k) of item.prod_list" :key="k">
-				<div class="pro" @click="goPay(item)">
+				<div class="pro" @click="goDetail(item)">
 				    <div class="pro-div">
 						<img class="pro-img" :src="i.prod_img">
 					</div>
@@ -57,7 +57,7 @@
 			    <span class="active" @click="goPay(item)">申请退款</span>
 			</div>
 			<div class="btn-group" v-else-if="item.Order_Status==3">
-				<span>查看物流</span>
+				<span @click="goLogistics(item)">查看物流</span>
 			    <span class="active" @click="confirmOrder(item)">确认收货</span>
 				<!-- @click="goPay(item)"跳转退款 -->
 			</div>
@@ -90,6 +90,7 @@ export default {
 						orderNum:'',//订单状态角标数
 						isQing:false,
 						Order_Type: 'shop,gift' , //请求的订单类型
+						isLoading:false,
         }
     },
 	onShow(){
@@ -126,6 +127,12 @@ export default {
 				console.log(e);
 			})
 		},
+		goLogistics(item){
+			//跳转物流追踪
+			uni.navigateTo({
+				url:'../logistics/logistics?Order_ID='+item.Order_ID
+			})
+		},
 		//获取订单角标数
 		getOrderNum(){
 			getOrderNum({}).then(res=>{
@@ -137,6 +144,8 @@ export default {
 		},
 		//取消订单
 		cancelOrder(item,index){
+			if(this.isLoading)return 
+			this.isLoading=true;
 			let Order_ID;
 			for(let i in item){
 				console.log(i)
@@ -146,6 +155,7 @@ export default {
 			}
 			if(Order_ID){
 				cancelOrder({Order_ID}).then(res=>{
+					this.isLoading=false;
 					if(res.errorCode==0){
 						this.data.splice(index,1);
 						this.getOrderNum();
@@ -161,11 +171,17 @@ export default {
 					}
 
 				}).catch(e=>{
-					console.log(e)
+					console.log(e);
+					this.isLoading=false;
 				})
 			}
 		},
-		//跳转订单详情
+		goDetail(item){
+			uni.navigateTo({
+				url:"../detail/detail?Products_ID="+item.prod_list[0].prod_id
+			})
+		},
+		//跳转申请退款 支付   发表评论
 		goPay(item){
 			if(item.Order_Status==1){
 				uni.navigateTo({
