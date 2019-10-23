@@ -233,7 +233,7 @@
 					console.log(e)
 				})
 			},
-			// ...mapActions(['getUserInfo']),
+			...mapActions(['getUserInfo']),
 			goLogin(){
 				uni.navigateTo({
 					url:'../login/login'
@@ -296,8 +296,9 @@
 				})
 			}
 		},
-		async onShow(){
-			//this.userInfo = await this.getUserInfo();
+		onShow(){
+			// console.log('22')
+			// this.userInfo = this.getUserInfo();
 		},
 		created(){
 
