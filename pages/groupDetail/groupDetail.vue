@@ -593,11 +593,13 @@ export default {
 		},
 		//拼团
 		myPin(){
+			if(!this.$fun.checkIsLogin(1))return;
 			this.postData.active = 'pintuan';
 			this.$refs.cartPopu.show();
 		},
 		//单独购买
 		myPay(){
+			if(!this.$fun.checkIsLogin(1))return;
 			delete this.postData.active ;
 			this.$refs.cartPopu.show();
 		},
