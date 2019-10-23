@@ -3,7 +3,7 @@
 		<view class="top">
 			<image src="/static/task/left.png" class="goBack" @click="goBack"></image>
 			<view class="titles">会员等级</view>
-			<scroll-view class="center"  scroll-x="true">
+			<scroll-view class="center"  scroll-x="true"  @scroll="goRight">
 				<view class="vipFir ">
 					<image src="/static/task/vip.png" class="allImg"></image>
 					<image src="/static/task/vips.png" class="leftImg"></image>
@@ -54,6 +54,33 @@
 							<view class="posiQ">我的成长值</view>
 							<view class="posiW">520</view>
 							<view class="posiE">还差20升级为VIP5</view>
+						</view>
+					</view>
+				</view>
+				
+				<view class="vipFir  ">
+					<image src="/static/task/vip.png" class="allImg"></image>
+					<image src="/static/task/vips.png" class="leftImg"></image>
+					<view class="vipGrade">
+						VIP6
+					</view>
+					<view class="dangqian">
+						当前等级
+					</view>
+					<view class="mmp">
+						<view class="da">
+				
+						</view>
+						<view class="tu" :style="{transform: 'rotate('+jiaodu+'deg)'}">
+				
+						</view>
+						<view class="xiao">
+				
+						</view>
+						<view class="texts">
+							<view class="posiQ">我的成长值</view>
+							<view class="posiW">520</view>
+							<view class="posiE">还差20升级为VIP6</view>
 						</view>
 					</view>
 				</view>
@@ -162,29 +189,36 @@
 			return {
 				widths:414,
 				jiaodu:90,
+				index:0,//第几个会员等级
 			};
 		},
 		components:{
 			circleTitle
 		},
 		onLoad() {
-			// this.canvas();
-			// let that=this;
-			// uni.getSystemInfo({
-			//     success: function (res) {
-			// 		console.log(res)
-			//         that.widths=res.screenWidth*0.367;
-			//     }
-			// });
+
 		},
 		methods:{
-			// canvas(item,sum){
-			// 	const ctx = uni.createCanvasContext('firstCanvas');
-			// 	ctx.arc(50, 50, 50, 0, 2 * Math.PI)
-			// 	ctx.setFillStyle('#EEEEEE')
-			// 	ctx.fill()
-			// 	ctx.draw();
-			// },
+			goRight(event){
+				if(event.detail.scrollLeft<300){
+					this.index=0;
+				}else if(event.detail.scrollLeft>300&&event.detail.scrollLeft<600){
+					this.index=1;
+				}else if(event.detail.scrollLeft>600&&event.detail.scrollLeft<900){
+					this.index=2;
+				}else if(event.detail.scrollLeft>900&&event.detail.scrollLeft<1200){
+					this.index=3;
+				}else if(event.detail.scrollLeft>1200&&event.detail.scrollLeft<1500){
+					this.index=4;
+				}else if(event.detail.scrollLeft>1500&&event.detail.scrollLeft<1800){
+					this.index=5;
+				}else if(event.detail.scrollLeft>1800&&event.detail.scrollLeft<2100){
+					this.index=6;
+				}else if(event.detail.scrollLeft>2100&&event.detail.scrollLeft<2400){
+					this.index=7;
+				}
+				
+			},
 			goBack(){
 				goBack();
 			},
