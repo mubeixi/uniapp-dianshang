@@ -267,7 +267,7 @@
 
 <script>
 	import {pageMixin} from "../../common/mixin";
-	import {disApplyInit,getTown,disApply,disBuy} from '../../common/fetch.js';
+	import {disApplyInit,getTown,disApply,disBuy,orderPay} from '../../common/fetch.js';
 	import area from '../../common/area.js';
 	import utils from '../../common/util.js';
 	import popupLayer from '../../components/popup-layer/popup-layer.vue'
@@ -414,13 +414,13 @@
 				disBuy(data).then(res=>{
 					if(this.pay_type=='remainder_pay'){
 						if(res.errorCode==0){
-							uni.navigateTo({
+							uni.switchTab({
 								url:'../fenxiao/fenxiao'
 							})
 						}
 					}else{
 						//不用余额调微信支付
-						//this.wechatPay();
+						this.wechatPay(res.data);
 					}
 				}).catch(e=>{
 					console.log(e);
@@ -687,7 +687,7 @@
 							this.address_town();
 			},
 			// 用户选择 微信支付
-			async wechatPay(Order_ID) {
+			async wechatPay(res) {
 			
 				let _self = this;
 			
@@ -696,7 +696,7 @@
 						// 用户选择微信，并且不用余额支付
 			
 						let payConf = {
-							Order_ID: Order_ID,
+							Order_ID: res.Order_ID,
 							pay_money:this.pay_money,
 						};
 			
@@ -751,8 +751,8 @@
 			
 						// #endif
 			
-						console.log('payConf is', payConf)
-						orderPay(payConf).then(res => {
+						// console.log('payConf is', payConf)
+						// orderPay(payConf).then(res => {
 							console.log(res);
 			
 			
@@ -762,7 +762,7 @@
 								nonceStr,
 								signType,
 								paySign
-							} = res.data;
+							} = res;
 			
 							//直接支付
 							_self.WX_JSSDK_INIT(_self).then((wxEnv) => {
@@ -771,7 +771,7 @@
 								wxEnv.chooseWXPay({
 									timestamp,
 									nonceStr,
-									package: res.data.package,
+									package: res.package,
 									signType,
 									paySign,
 									success: function(res) {
@@ -800,7 +800,7 @@
 							// #ifdef MP-WEIXIN
 			
 							provider = 'wxpay';
-							orderInfo = res.data
+							orderInfo = res;
 							delete orderInfo.timestamp
 			
 							console.log(provider,orderInfo,'支付数据222222222222222222');
@@ -823,7 +823,7 @@
 			
 							// #ifdef APP-PLUS
 							provider = 'wxpay';
-							orderInfo = res.data
+							orderInfo = res
 							console.log(provider,orderInfo,'支付数据222222222222222222');
 			
 							uni.requestPayment({
@@ -843,7 +843,7 @@
 							});
 							// #endif
 			
-						})
+						// })
 			
 	
 			},

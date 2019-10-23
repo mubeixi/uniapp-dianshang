@@ -1,7 +1,7 @@
 <script>
     import {ls} from "./common/tool";
 
-	// #ifdef APP-PLUS
+	// #ifdef APP-PLUS || MP-TOUTIAO
 	import {APP_USERS_ID,isDev} from "./common/env";
 	// #endif
 
@@ -10,9 +10,22 @@
 		onLaunch: function(option) {
 
 			// #ifdef APP-PLUS
+
             isDev && ls.clear()
-			ls.set('users_id',APP_USERS_ID);//app里面需要写死打包，不然办法
+
+            if(isDev){
+                ls.set('users_id',APP_USERS_ID);//app里面需要写死打包，不然办法
+            }
+
 			// #endif
+
+            //头条的需要写入一下
+            // #ifdef MP-TOUTIAO
+            if(isDev){
+                tt.setStorageSync('users_id', 'wkbq6nc2kc');
+            }
+            // #endif
+
 
 			// #ifdef H5
 			//ls.set('openid','')

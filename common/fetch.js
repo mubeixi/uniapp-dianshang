@@ -213,6 +213,20 @@ export const disApply = (data, options) => fetch('dis_apply', data, options);
 
 //购买分销商
 export const disBuy = (data, options) => fetch('dis_buy', data, options);
+//用户获取系统消息
+export const getUserMessage = (data, options) => fetch('get_user_message', data, options);
+//用户已读系统消息
+export const readUserMessage = (data, options) => fetch('read_user_message', data, options);
+//获取个人中心签到状态 
+export const judgeSignin = (data, options) => fetch('judge_signin', data, options);
+//获取个人中心签到状态 
+export const signin = (data, options) => fetch('signin', data, options);
+//获取签到页信息 
+export const getSignin = (data, options) => fetch('get_signin', data, options);
+
+//申请成为区域代理
+export const agentApply = (data, options) => fetch('agent_apply', data, options);
+
 
 //jssdk签名
 export const getJsSign = (data,options) => fetch('share_config', data, options);

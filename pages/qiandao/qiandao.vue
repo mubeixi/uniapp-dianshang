@@ -3,11 +3,11 @@
 		<view class="top">
 			<image src="/static/task/left.png" class="goBack" @click="goBack"></image>
 			<view class="titles">每日签到</view>
-			<view class="yuan">
+			<view class="yuan" @click="signinMethod">
 				<image src="/static/task/yuan.png"></image>
 				<image src="/static/task/qiandao.png" class="qiandao"></image>
 				<view class="qiandaoliji">
-					立即签到
+					{{pro.signin?'已经签到':'立即签到'}}
 				</view>
 			</view>
 			<view class="msg">
@@ -16,58 +16,11 @@
 		</view>
 
 		<view class="jilu">
-			<view class="chang">
-				<image src="/static/task/checked.png" ></image>
+			<view class="chang" v-for="item in pro.continue_" :key="item">
+				<image v-if="item<pro.continue" src="/static/task/checked.png" ></image>
+				<image v-else src="/static/task/unchecked.png" ></image>
 				<view>
-					第1天
-				</view>
-			</view>
-			<view class="chang">
-				<image src="/static/task/unchecked.png" ></image>
-				<view>
-					第2天
-				</view>
-			</view>
-			<view class="chang">
-				<image src="/static/task/unchecked.png" ></image>
-				<view>
-					第2天
-				</view>
-			</view>
-			<view class="chang">
-				<image src="/static/task/unchecked.png" ></image>
-				<view>
-					第2天
-				</view>
-			</view>
-			<view class="chang">
-				<image src="/static/task/unchecked.png" ></image>
-				<view>
-					第2天
-				</view>
-			</view>
-			<view class="chang">
-				<image src="/static/task/unchecked.png" ></image>
-				<view>
-					第2天
-				</view>
-			</view>
-			<view class="chang">
-				<image src="/static/task/unchecked.png" ></image>
-				<view>
-					第2天
-				</view>
-			</view>
-			<view class="chang">
-				<image src="/static/task/unchecked.png" ></image>
-				<view>
-					第2天
-				</view>
-			</view>
-			<view class="chang">
-				<image src="/static/task/unchecked.png" ></image>
-				<view>
-					第2天
+					第{{item+1}}天
 				</view>
 			</view>
 		</view>
@@ -75,8 +28,8 @@
 			<image src="/static/task/err.png" mode=""></image>
 			温馨提示
 		</view>
-		<view class="last">
-			每日签到可获得10成长值和10优币的奖励，连续完成15天签到以上可额外获得奖励，连续签满15天后将会重置签到记录
+		<view class="last" v-if="pro">
+			{{pro.desc}}
 		</view>
 	</view>
 </template>
@@ -84,15 +37,56 @@
 <script>
 	import {goBack}  from '../../common/tool.js'
 	import {pageMixin} from "../../common/mixin";
-
+	import {getSignin,signin} from '../../common/fetch.js'
 	export default {
 		mixins:[pageMixin],
 		data() {
 			return {
-
+				pro:''
 			};
 		},
+		onLoad() {
+			this.getSignin();
+		},
 		methods:{
+			//签到
+			signinMethod(){
+				if(!this.$fun.checkIsLogin(1))return;
+				if(this.pro.signin==1){
+					uni.showToast({
+						title:'今日已经签到',
+						icon:"none"
+					})
+				}
+				if(this.pro.show==2&&this.pro.signin!=1){
+					signin().then(res=>{
+						this.pro.signin=1;
+						this.getSignin();
+						uni.showToast({
+							title:res.msg,
+							duration:2500,
+							icon:"none"
+						})
+					},err=>{
+						
+					}).catch(e=>{
+						console.log(e);
+					})
+				}else{	
+					uni.navigateTo({
+						url:'../person/person'
+					})
+				}
+				
+			},
+			getSignin(){
+				getSignin().then(res=>{
+					this.pro=res.data;
+					this.pro.continue_=parseInt(this.pro.continue_);
+				},err=>{
+					
+				})
+			},
 			goBack(){
 				goBack();
 			}

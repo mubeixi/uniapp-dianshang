@@ -20,10 +20,7 @@
 						使用密码登陆
 					</div>
 				</div>
-				<!-- <div class="protocol">
-                    <p>点击按钮即表示您同意并愿遵守</p>
-                    <p><span>《使用协议》</span>和<span>《隐私协议》</span></p>
-                </div> -->
+
 				<!-- #ifdef H5 -->
 				<div class="otherLogin" v-show="isShowWeiXin==1">
 					<div class="flex box" style="width: 100px;text-align: center;margin: 0 auto;">
@@ -31,8 +28,7 @@
 							<i v-if="channel.type=='wx_mp'" @click="weixinlogin(channel)" class="funicon icon-weixin"></i>
 							<i v-if="channel.type=='qq'" @click="qqlogin(channel)" style="color: #2eb1f1;font-size: 32px;margin-top: 2px" class="funicon icon-QQ1"></i>
 						</div>
-<!--						<div class="inline-block flex1 text-center" @click="weixinlogin"><i class="funicon icon-weixin"></i></div>-->
-<!--						<div class="inline-block flex1 text-center" @click="qqlogin"></div>-->
+
 					</div>
 				</div>
 				<!-- #endif -->
@@ -53,8 +49,6 @@
 				<div class="otherLogin">
 					<div class="flex box" style="width: 100px;text-align: center;margin: 0 auto;">
 						<div class="inline-block flex1 text-center" @click="weixinlogin"><i class="funicon icon-weixin"></i></div>
-						<!-- <div class="inline-block flex1 text-center" @click="qqlogin"><i style="color: #2eb1f1;font-size: 32px;margin-top: 2px"
-							 class="funicon icon-QQ1"></i></div> -->
 					</div>
 				</div>
 				<!-- #endif -->
@@ -62,28 +56,20 @@
 			</li>
 			<li class="phoneContent" v-else-if="status == 2">
 				<div class="title">
-					<!--          <i-->
-					<!--            class="iconfont iconhook-left prebBtn"-->
-					<!--            @click="(status = 1), (loginStatus = 1)"-->
-					<!--          ></i>-->
 					<view @click="(status = 1), (loginStatus = 1)" class="funicon icon icon-fanhui inline-block prebBtn"></view>
 					手机账号登陆
 				</div>
 				<div class="content">
 
 					<label class="inputLable flex line20">
-						<!-- <span @click="tel.show = true">+{{ telNum }}</span> -->
+
 						<span>+{{ telNum }}</span>
 						<input placeholder="请输入手机号" v-model="mobile" maxlength="11" />
 					</label>
 					<label class="inputLable  flex">
 						<span style="width: 50px;">密码</span>
 						<input type="password" placeholder="请输入密码" v-model="phone.password" />
-						<!--              <i-->
-						<!--                class="iconfont right"-->
-						<!--                :class="hasVisibleIcon"-->
-						<!--                @click="phone.inputType = !phone.inputType"-->
-						<!--              ></i>-->
+
 					</label>
 					<div class="searchPass" @click="(status = 3), (loginStatus = 3)">
 						找回密码？
@@ -93,10 +79,7 @@
 			</li>
 			<li class="searchPassword" v-else-if="status == 3">
 				<div class="title">
-					<!--          <i-->
-					<!--            class="iconfont iconhook-left prebBtn"-->
-					<!--            @click="(status = 2), (loginStatus = 2)"-->
-					<!--          ></i>-->
+
 					<view @click="(status = 2), (loginStatus = 2)" class="funicon icon icon-fanhui inline-block prebBtn"></view>
 					找回密码
 				</div>
@@ -126,11 +109,7 @@
 					<label class="inputLable flex">
 						<span>新密码</span>
 						<input type="password" placeholder="请输入新密码" v-model="newPassword" />
-						<!--            <i-->
-						<!--              class="iconfont right"-->
-						<!--              :class="hasVisibleIcon"-->
-						<!--              @click="phone.inputType = !phone.inputType"-->
-						<!--            ></i>-->
+
 					</label>
 
 					<button @click="setNewPassOk" type="primary" class="submitBtn" :disabled="isNewPassDisabled">完成</button>
@@ -138,29 +117,19 @@
 			</li>
 			<li class="setNewPass" v-else-if="status == 5">
 				<div class="title">
-					<!--          <i-->
-					<!--            class="iconfont iconhook-left prebBtn"-->
-					<!--            @click="(status = 3), (loginStatus = 3)"-->
-					<!--          ></i>-->
-					<view @click="(status = 3), (loginStatus = 3)" class="funicon icon icon-fanhui inline-block prebBtn"></view>
+					<view @click="setStatusFunc" class="funicon icon icon-fanhui inline-block prebBtn"></view>
 					设置新密码
 				</div>
 				<div class="content">
 					<label class="inputLable flex lin20">
 						<span>密码</span>
-						<input :type="password" placeholder="请输入新密码" v-model="newPassword" />
-						<!--            <i-->
-						<!--              class="iconfont right"-->
-						<!--              :class="hasVisibleIcon"-->
-						<!--              @click="phone.inputType = !phone.inputType"-->
-						<!--            ></i>-->
+						<input type="password" placeholder="请输入新密码" v-model="newPassword" />
 					</label>
-
 					<button @click="setNewPassOk" type="primary" class="submitBtn sendCode" :disabled="isNewPassDisabled">完成</button>
 				</div>
 			</li>
-
 		</ul>
+
 		<!--    <popup v-model="tel.show" class="telContent">-->
 		<!--      <popup-header title="选择国际电话区号"></popup-header>-->
 		<!--      <group gutter="0" class="content">-->
@@ -172,13 +141,6 @@
 		<!--      </group>-->
 		<!--    </popup>-->
 
-		<!-- <pre><code>{{ editPass }}</code></pre> -->
-		<!-- <div class="propmtText"></div> -->
-		<!-- <pre><code>状态：{{ loginStatus }}</code></pre>
-        <pre><code>手机号：{{ mobile }}</code></pre>
-        <pre><code>验证码：{{ verificationCode }}</code></pre>
-        <pre><code>密码：{{ phone.password }}</code></pre>
-        <pre><code>新密码：{{ newPassword }}</code></pre> -->
 	</div>
 </template>
 
@@ -309,6 +271,10 @@
 		},
 		methods: {
 			...mapActions(["getInitData", "setUserInfo"]),
+			setStatusFunc(){
+				this.status = 3
+				this.loginStatus = 3
+			},
 			toHome() {
 				this.$fun.linkTo({
 					link: '/pages/index/index',
