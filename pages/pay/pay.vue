@@ -141,7 +141,7 @@
 		isWeiXin,
 		urlencode
 	} from "../../common/tool";
-	import {error} from "../../common";
+	import {error, toast} from "../../common";
 
 	export default {
 		mixins: [pageMixin],
@@ -237,6 +237,8 @@
 				if(this.pay_type == 'remainder_pay') {
 					orderPay(payConf).then(res=>{
 						console.log(res)
+						//跳转到拼团订单列表
+						_self.paySuccessCall(res)
 					}).catch(e=>{
 						console.log(e)
 					});
@@ -692,13 +694,27 @@
 				setTimeout(function(){
 					uni.redirectTo({
 						url: '/pages/order/order?index=1'
-					})					
+					})
 				},1000)
 			},
 			paySuccessCall(){
-				uni.redirectTo({
-					url:'/pages/order/order?index=2'
-				})
+
+				let _self = this;
+				toast('支付成功');
+
+				setTimeout(function () {
+					//拼团订单则跳转到开团成功
+					if(_self.orderInfo.Order_Type === 'pintuan'){
+						uni.redirectTo({
+							url:'/pages/groupSuccess/groupSuccess?order_id='+_self.Order_ID
+						})
+					}else{
+						uni.redirectTo({
+							url:'/pages/order/order?index=2'
+						})
+					}
+				},1000)
+
 			},
 			// 用户选择 微信支付
 			async wechatPay() {
@@ -798,6 +814,7 @@
 									paySign,
 									success: function(res) {
 										// 支付成功后的回调函数
+										_self.paySuccessCall(res)
 									}
 								});
 
