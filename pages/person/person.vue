@@ -84,67 +84,67 @@
 			</view>
 		</view>
 		<view class="list">
-			<view class="group">
-				<image src="/static/person/pin.png" class="left"></image>
-				<view class="pintuan">
-					拼团订单
-				</view>
-				<image src="/static/person/right.png" class="right"></image>
+		<view class="group">
+			<image src="/static/person/pin.png" class="left"></image>
+			<view class="pintuan">
+				拼团订单
 			</view>
-
-			<view class="bargain">
-				<image src="/static/person/kan.png" class="left"></image>
-				<view class="pintuan">
-					砍价订单
-				</view>
-				<image src="/static/person/right.png" class="right"></image>
-			</view>
-			<view class="bargain" @click="goGift">
-				<image src="/static/person/zengpin.png" class="left"></image>
-				<view class="pintuan">
-					赠品中心
-				</view>
-				<image src="/static/person/right.png" class="right"></image>
-			</view>
-			<view class="bargain"  @click="goRenwu">
-				<image src="/static/person/renwu.png" class="left"></image>
-				<view class="pintuan">
-					任务中心
-				</view>
-				<image src="/static/person/right.png" class="right"></image>
-			</view>
-			<view class="bargain"  @click="gotoAddresslist" >
-				<image src="/static/person/di.png" class="left"></image>
-				<view class="pintuan">
-					地址管理
-				</view>
-				<image src="/static/person/right.png" class="right"></image>
-			</view>
-
-			<view class="bargain">
-				<image src="/static/person/wo.png" class="left"></image>
-				<view class="pintuan">
-					我的预约
-				</view>
-				<image src="/static/person/right.png" class="right"></image>
-			</view>
-
-			<view class="bargain">
-				<image src="/static/person/tui.png" class="left"></image>
-				<view class="pintuan">
-					退款/售后
-				</view>
-				<image src="/static/person/right.png" class="right"></image>
-			</view>
-
-			<view class="setting" @click="goSetting">
-				<image src="/static/person/she.png" class="left"></image>
-				<view class="pintuan">
-					设置
-				</view>
-				<image src="/static/person/right.png" class="right"></image>
-			</view>
+			<image src="/static/person/right.png" class="right"></image>
 		</view>
+
+		<view class="bargain">
+			<image src="/static/person/kan.png" class="left"></image>
+			<view class="pintuan">
+				砍价订单
+			</view>
+			<image src="/static/person/right.png" class="right"></image>
+		</view>
+		<view class="bargain" @click="goGift">
+			<image src="/static/person/zengpin.png" class="left"></image>
+			<view class="pintuan">
+				赠品中心
+			</view>
+			<image src="/static/person/right.png" class="right"></image>
+		</view>
+		<view class="bargain"  @click="goRenwu">
+			<image src="/static/person/renwu.png" class="left"></image>
+			<view class="pintuan">
+				任务中心
+			</view>
+			<image src="/static/person/right.png" class="right"></image>
+		</view>
+		<view class="bargain"  @click="gotoAddresslist" >
+			<image src="/static/person/di.png" class="left"></image>
+			<view class="pintuan">
+				地址管理
+			</view>
+			<image src="/static/person/right.png" class="right"></image>
+		</view>
+
+		<view class="bargain">
+			<image src="/static/person/wo.png" class="left"></image>
+			<view class="pintuan">
+				我的预约
+			</view>
+			<image src="/static/person/right.png" class="right"></image>
+		</view>
+
+		<view class="bargain">
+			<image src="/static/person/tui.png" class="left"></image>
+			<view class="pintuan">
+				退款/售后
+			</view>
+			<image src="/static/person/right.png" class="right"></image>
+		</view>
+
+		<view class="setting" @click="goSetting">
+			<image src="/static/person/she.png" class="left"></image>
+			<view class="pintuan">
+				设置
+			</view>
+			<image src="/static/person/right.png" class="right"></image>
+		</view>
+	</view>
 		<view style="height: 118rpx;"></view>
 	</view>
 </template>
@@ -185,16 +185,16 @@
 							title:res.msg
 						})
 					},err=>{
-						
+
 					}).catch(e=>{
 						console.log(e);
 					})
-				}else if(this.show==2){	
+				}else if(this.show==2){
 					uni.navigateTo({
 						url:'../qiandao/qiandao'
 					})
 				}
-				
+
 			},
 			//获取签到状态
 			judgeSignin(){
@@ -202,7 +202,7 @@
 					this.show=res.data.show;
 					this.signin=res.data.signin;
 				},err=>{
-					
+
 				}).catch(e=>{
 					console.log(e)
 				})
@@ -553,7 +553,7 @@
 	right: 25rpx;
 }
 .isQian{
-	padding-left: 12rpx !important; 
+	padding-left: 12rpx !important;
 	padding-right: 12rpx !important;
 }
 </style>
