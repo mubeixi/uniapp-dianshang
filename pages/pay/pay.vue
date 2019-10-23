@@ -244,7 +244,14 @@
 					});
 					return;
 				}
+
+
+				if(this.pay_type === 'unionpay'){
+					error('即将上线')
+					return;
+				}
 				//需要格外有一个code
+
 				// #ifdef H5
 				if (!isWeiXin()) {
 					this.$error('请在微信内打开')
