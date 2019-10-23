@@ -368,13 +368,18 @@ export default {
 			this.getComments();
 		},
 		getComments(){
-			getComments(this.commentArgs).then(res=>{
+			getComments(this.commentArgs,{errtip:false}).then(res=>{
 				if(res.errorCode==0){
 					for(let i of res.data){
 						this.comment_list.push(i);
 					}
 					this.totalCount=res.totalCount;
 				}
+			},err=>{
+				uni.showToast({
+					title: err.msg,
+					icon: 'none'
+				})
 			})
 		}
 	}

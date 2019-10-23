@@ -3,25 +3,27 @@
 		<!-- #ifdef APP-PLUS -->
 		<view class="status_bar" style="background:white;position: fixed;top: 0;z-index: 22"><!-- 这里是状态栏 --></view>
 		<!-- #endif -->
-
-<!--        <page-title title="我的订单" rightHidden="true" class="titless"></page-title>-->
+		<!-- #ifdef APP-PLUS -->
+		<page-title title="我的订单" rightHidden="true" bgcolor="#F8F8F8"></page-title>
+		<!-- #endif -->
+<!--    <page-title title="我的订单" rightHidden="true" class="titless"></page-title>-->
         <div class="navs">
             <div class="nav-item" :class="index==0?'active':''" @click="changIndex(0)">全部</div>
             <div class="nav-item" :class="index==1?'active':''" @click="changIndex(1)">
 				待付款
-				<div class="jiaobiao" v-if="orderNum.shop.waitpay>0">{{orderNum.shop.waitpay}}</div>
+				<div class="jiaobiao" v-if="orderNum.waitpay>0">{{orderNum.waitpay}}</div>
 			</div>
             <div class="nav-item" :class="index==2?'active':''" @click="changIndex(2)">
 				待发货
-				<div class="jiaobiao" v-if="orderNum.shop.waitsend>0">{{orderNum.shop.waitsend}}</div>
+				<div class="jiaobiao" v-if="orderNum.waitsend>0">{{orderNum.waitsend}}</div>
 			</div>
             <div class="nav-item" :class="index==3?'active':''" @click="changIndex(3)">
 				待收货
-				<div class="jiaobiao" v-if="orderNum.shop.waitconfirm>0">{{orderNum.shop.waitconfirm}}</div>
+				<div class="jiaobiao" v-if="orderNum.waitconfirm>0">{{orderNum.waitconfirm}}</div>
 			</div>
             <div class="nav-item" :class="index==4?'active':''" @click="changIndex(4)">
 				待评价
-				<div class="jiaobiao" v-if="orderNum.shop.waitcomment>0">{{orderNum.shop.waitcomment}}</div>
+				<div class="jiaobiao" v-if="orderNum.waitcomment>0">{{orderNum.waitcomment}}</div>
 			</div>
         </div>
 		<view class="space" style="height: 100rpx;width: 100%;">
@@ -135,7 +137,7 @@ export default {
 		},
 		//获取订单角标数
 		getOrderNum(){
-			getOrderNum({}).then(res=>{
+			getOrderNum({Order_Type:this.Order_Type}).then(res=>{
 				this.orderNum=res.data;
 				console.log(res)
 			}).catch(e=>{
@@ -178,7 +180,7 @@ export default {
 		},
 		goDetail(item){
 			uni.navigateTo({
-				url:"../detail/detail?Products_ID="+item.prod_list[0].prod_id
+				url:"../orderDetail/orderDetail?Order_ID="+item.Order_ID+'&pagefrom=order'
 			})
 		},
 		//跳转申请退款 支付   发表评论

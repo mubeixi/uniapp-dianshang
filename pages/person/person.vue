@@ -5,20 +5,19 @@
 		<!-- #endif -->
 
 		<view class="personTop">
-
 			<image src="/static/person/top.png"  ></image>
 			<image   :class="userInfo.User_ID&&show>=0?'':'onlyMsg'"  class="msg" src="/static/fenxiao/msg.png" @click="goMsg"></image>
 			<view class="qiandao" v-if="userInfo.User_ID&&show>=0"  :class="signin?'isQian':''" @click="signinMethod">
 				<image src="/static/person/qiandao.png"></image>
 				<view>{{signin?'已签到':'签到'}}</view>
 			</view>
-			<view class="personInfo flex">
+			<view class="personInfo flex" @click="goPersonMsg">
 				<view class="left">
-					<image style="border-radius: 50%;" :src="userInfo.User_HeadImg||'/static/default.png'" ></image>
+					<image style="border-radius: 50%;"  :src="userInfo.User_HeadImg||'/static/default.png'" ></image>
 				</view>
 				<view class="right flex1" :style="{position:!userInfo.User_ID?'relative':'static'}">
 					<view class="font14 loginBtn" v-if="!userInfo.User_ID" plain size="mini" @click="goLogin">登录/注册</view>
-					<view v-if="userInfo.User_ID" class="nickName" @click="goPersonMsg">{{userInfo.User_NickName||(userInfo.User_No?('用户'+userInfo.User_No):'暂无昵称')}}</view>
+					<view v-if="userInfo.User_ID" class="nickName">{{userInfo.User_NickName||(userInfo.User_No?('用户'+userInfo.User_No):'暂无昵称')}}</view>
 					<view v-if="userInfo.User_ID" class="cart">{{userLevelText}}<image src="/static/person/rightCart.png" ></image></view>
 				</view>
 			</view>
@@ -62,20 +61,20 @@
 					<view>
 						待付款
 					</view>
-				</view>
-				<view class="orderLast" @click="goOrder(2)">
+			</view>
+			<view class="orderLast" @click="goOrder(2)">
 					<image src="/static/person/fa.png"></image>
 					<view>
 						待发货
 					</view>
-				</view>
-				<view class="orderLast" @click="goOrder(3)">
+			</view>
+			<view class="orderLast" @click="goOrder(3)">
 					<image src="/static/person/shou.png"></image>
 					<view>
 						待收货
 					</view>
-				</view>
-				<view class="orderLast" @click="goOrder(4)">
+			</view>
+			<view class="orderLast" @click="goOrder(4)">
 					<image src="/static/person/ping.png"></image>
 					<view>
 						待评价
@@ -91,7 +90,6 @@
 				</view>
 				<image src="/static/person/right.png" class="right"></image>
 			</view>
-
 			<!-- <view class="bargain">
 				<image src="/static/person/kan.png" class="left"></image>
 				<view class="pintuan">
@@ -120,7 +118,6 @@
 				</view>
 				<image src="/static/person/right.png" class="right"></image>
 			</view>
-
 			<!-- <view class="bargain">
 				<image src="/static/person/wo.png" class="left"></image>
 				<view class="pintuan">
@@ -136,7 +133,7 @@
 				</view>
 				<image src="/static/person/right.png" class="right"></image>
 			</view>
-
+	
 			<view class="setting" @click="goSetting">
 				<image src="/static/person/she.png" class="left"></image>
 				<view class="pintuan">
@@ -209,16 +206,16 @@
 						this.signin=1;
 						this.isLodnig=false;
 					},err=>{
-						
+
 					}).catch(e=>{
 						console.log(e);
 					})
-				}else if(this.show==2){	
+				}else if(this.show==2){
 					uni.navigateTo({
 						url:'../qiandao/qiandao'
 					})
 				}
-				
+
 			},
 			//获取签到状态
 			judgeSignin(){
@@ -226,7 +223,7 @@
 					this.show=res.data.show;
 					this.signin=res.data.signin;
 				},err=>{
-					
+
 				}).catch(e=>{
 					console.log(e)
 				})
@@ -592,7 +589,7 @@
 	right: 25rpx;
 }
 .isQian{
-	padding-left: 12rpx !important; 
+	padding-left: 12rpx !important;
 	padding-right: 12rpx !important;
 }
 </style>

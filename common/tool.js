@@ -405,3 +405,25 @@ export const getGroupCountdown = ({end_timeStamp = 1571221631,current = (new Dat
     return {d,h,m,s}
 
 }
+
+// export const getCountdownByJoin = ({end_timeStamp = 1571221631,current = (new Date()).getTime()} = {}) => {
+//
+//     let {d=0,h=0,m=0,s=0} = {};
+//     //时间戳格式转换
+//     current = parseInt(current/1000)
+//
+//     // console.log(end_timeStamp,current)
+//     let countTime = end_timeStamp - current
+//     if(countTime<0){
+//         console.log('已经结束')
+//         return false
+//     };
+//
+//
+//     h = parseInt((countTime)/(60*60))
+//     m = parseInt((countTime-h*60*60)/60)
+//     s = countTime-h*60*60-m*60
+//
+//     return {h,m,s}
+//
+// }

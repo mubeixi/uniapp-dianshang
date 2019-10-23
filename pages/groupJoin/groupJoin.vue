@@ -75,22 +75,13 @@
             <div class="line"></div>
         </div>
         <!--查看订单 -->
-        <div class="dingdan">
+<!--        <div class="dingdan">-->
 
-            <!-- #ifdef MP-WEIXIN || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO -->
-            <button @click="goOrderDetail" class="vanButton">查看订单</button>
-<!--            open-type="share"-->
-            <button   open-type="share" class="vanButton invi" >邀请好友</button>
-            <!-- #endif -->
 
-            <!-- #ifdef H5 || APP-PLUS -->
-            <span @click="goOrderDetail" class="vanButton">查看订单</span>
-            <span class="vanButton invi" @click="inviteFunc">邀请好友</span>
-            <!-- #endif -->
-        </div>
-<!--        <div class="liji">-->
-<!--            <div class="vanButton">立即参团</div>-->
 <!--        </div>-->
+            <div class="liji">
+                <div @click="joinFunc" class="vanButton">立即参团</div>
+            </div>
 
         <!-- 间隙 -->
         <div class="mbxline"></div>
@@ -120,7 +111,7 @@
         <div class="dianzhang">店长推荐</div>
         <div class="prolist">
             <div class="pro-item" v-for="(item,index) in prodList" :key="index" @click="goProductDetail(item.Products_ID,item.is_pintuan)">
-<!--                <image src="/static/check/pro1.png" alt="" class="img"/>-->
+                <!--                <image src="/static/check/pro1.png" alt="" class="img"/>-->
                 <img :src="item.ImgPath" alt="" class="img">
                 <div class="item-name">{{item.Products_Name}}</div>
                 <div class="price">
@@ -150,10 +141,10 @@
                     </div>
                     <!-- #endif -->
 
-<!--                    <div class="flex1" @click="shareFunc('pic')">-->
-<!--                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEwAAABMCAMAAADwSaEZAAAChVBMVEVHcEz/dwD/eAD/dwD/dwD/eAD/eQD/eAD/eAD/eAD/AAD/dwD/dwD/cQD/dwD/dgD/dgD/eAD/eAD/eAD/dAD/dwD/eAD/eAD/eAD/agD/eQD/eAD/dgD/eAD/eAD/dAD/eAD/eAD/dwD/dwD/dQD/dQD/dwD/eAD/eAD/gAD/eAD/eAD/dgD/dwD/dAD/eQD/dgD/dwD/eAD/eQD/eAD/dwD/eAD/eAD/eAD/egD/eAD/egD/ZgD/dAD/dwD/////eAD/8OL/8OP/6tn/egX/9Ov/plf/9ez/7t//eQP/oEz/eQL/5tD/eAH/jir/eQH/9/D/fQr/fgv/9u7/fAf/9+//+/f/9e3//v3/gxT/tXP/69n/egT/pVX/7+L/7Nv/ql7/fgz/hxz/mDz/uHn/pFP/+fT//fv/+PL/+vX/8eX/8eT/vIH/r2j/4cb/jyv/gA//5c//8+n/oEv/hBf/7t7/yJf/iyX/s3D//Pn/zJ7/n0r/hRf/+/j//vz/6tj/pVb/7d3/5s//un3/rWX/38P/8OT/+/n/uXr/rGP/ewX/+PH/zaH/gBD/yJj/5Mz/ewb/xI//fgr/6db/mD3/+vb/mkH/6NX/nUX/sGr/sm3/48z/fQn/fAj/hhv/uXv/wIj/ypv/yZj/tnb/iSD/ghP/tHH//v7/jCb/9Or/8uf/+fP/sGn/iB7/fw3/wYr/vYP///7/59L/wov/iB//3b7/vID/v4b/2bj/17P/0qr/69r/8+j/yZn/fw7/8ub/egP//Pr/7+H/59H/5c7/jSf/zqP/hhr/+vf/6NP/rGL/ghL/q2D/tnX/yJb/jSj/u37/9ev/n0n/y53/hBb/plb/hRmkOcILAAAAP3RSTlMAzyKFnPMT/bnoAZ3pCfxBOPtT9kKYcbGEDMsgNDP1IenUsDw7MuHgygz851T2Nzs21NW44W9AmYYy6kMKOYezI2QOAAADrklEQVRYw72Y9V8TcRjHDzcWMBbCKKUERDAoxfb7HTrGwNFd0mBhooIg2N3d3d3d3e3f4w0Exu757mr4+WWvu+f2fl08TVGO5JcwSh8fMnS4Wj18aEi8flSCHyVMblrfITpsJ90QX60bb1Q/SQQmKELSjxcqzEeOHUjuE8YZFa7ArFKEc0LJpHLMQXKpjJ3VX4U5StWfBeUhxTwk9XDEGuCCecllAJkVo8I8pYohsTSumLdcNTDLyxMLkKcXxBroigXJdSCTFaTEAqUMYviECxYsF3sPccci5G7n91iUesWCTCUOprKNUykWKWkPa6xcLEwe0A1TYNFSdLFC7S0194uL2yaT1Fb88PYlBq0r9w6yN9zLQ45Vd4MBG/SvdjDe2EyECrLLyhIhGcpMyxDKYL61ziojYRgS0bL339pLk5J+JzHUXlrU8ByZmG9N0lEfBzPOG9D3zx+n0CqZwlRJVukLCBZhradaDNzZ8h8W+jfzz68c4MstngrBsJaGTQJhS83Y/HVJ86JPCy0M82sYNoaG+UOw5BSzJe1Nfuu7GbMKGeY0GOZP9yY6AiyrKNvqBckLzBxhOj9Kg2FYasvPJius/mQWRxjWUN4kWOGXViss98Ahe/OclzDMm9ITYOacD09p1tl5VemMrzkPhunBIO+A4bd3GnOzD5bbPmVJ5pW5c5+kvUL5cLCHEGGWwqVL9lft6D6bvnlOzZlZV2/effwIvrNYSkmEYZyaebjnGSt2bd+aPD/jYm399AJkBMsUFegAZiPLkeq903vSBggLpNQgrNHOu9LPHTfZ5iAQpibAklOe9TpzqrkWcYDBjzl/dq8IX3gsA7HDAsEPYEBND27ZHJ8+eh5xgClB1zDQV1+7nPrvKLWy+gLiAosFnZaGXTed2FdZkbNhW2bLnkVGxAmmAMPJYL0+b9qmdbPL1xdt2bkbcYPpwUA3dP5j7cZsU34GWKmMcKBryDAHMsIpCEqOwmC6SDBtC4PRaZvydRZsDFzqhMG0pCIsADbYDW4PBMEkhMYlkRVmIjUulI+9YQYrLJfUUjGbvdV1LKyCaQxYKKkNXdWwxuBIM1esJLahVIAzG2TxrbvtjCILFscKlvXVuOPcQUzciDihL4dX547Vzh34Ba4ixpMWGyN4u9u4Ef9nfUN7CC9/c/dg2VMN4zyuBw/7v8s4rmvCAM5bx2i2BWY0z9XqSBJqJM/VasdQO9HXX+2cpW+nIr28RyvilJ5RUZ7KOMVob69Ih5f/BXD0lUCxw3LTAAAAAElFTkSuQmCC" alt="">-->
-<!--                        <div>分享海报</div>-->
-<!--                    </div>-->
+                    <!--                    <div class="flex1" @click="shareFunc('pic')">-->
+                    <!--                        <img src="data:image/png;base64,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" alt="">-->
+                    <!--                        <div>分享海报</div>-->
+                    <!--                    </div>-->
                 </div>
                 <div class="s_bottom" @click="cancel">取消</div>
             </div>
@@ -166,6 +157,45 @@
             <div><image  src="/static/share/guide_btn.png"  class="guide_btn"  /></div>
         </div>
         <!--分享引导框结束-->
+
+        <popupLayer ref="cartPopu" :direction="'top'">
+            <div class="cartSku">
+                <div class="cartTop">
+                    <image :src="product.Products_JSON.ImgPath[0]" mode=""></image>
+                    <div class="cartTitle">
+                        <div class="cartTitles">{{product.Products_Name}}</div>
+                        <div class="addInfo">
+                            <div class="addPrice">{{product.Products_PriceX}}元</div>
+                            <div class="proSale">库存{{postData.count}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="cartCenter">
+                    <div class="cartAttr" v-for="(item,i) of product.skujosn" :key="i">
+                        <div class="sku">
+                            {{i}}
+                        </div>
+                        <div class="skuValue">
+                            <div :class="check_attr[i]==index?'skuCheck':''" @click="selectAttr(index,i)"  v-for="(mbx,index) of item" :key="index">{{mbx}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="numBer">
+                    <div class="numBers">
+                        数量
+                    </div>
+                    <div class="inputNumber">
+                        <div class="clicks" @click="delNum">-</div>
+                        <!--					v-enter-number-->
+                        <input  type="number" v-model="postData.qty"  disabled>
+                        <div class="clicks" @click="addNum">+</div>
+                    </div>
+                </div>
+            </div>
+            <div class="cartSub" @click="skuSub" :class="submit_flag?'':'disabled'">
+                确定
+            </div>
+        </popupLayer>
 
     </div>
 </template>
@@ -190,6 +220,7 @@
                 // #endif
                 JSSDK_INIT:false,//自己有分享的业务
                 type:'',
+                addtime:0,//开始的时间
                 join_team_list:[],
                 Team_ID:null,
                 orderInfo: {},
@@ -205,6 +236,25 @@
                     pageSize: 4,
                 },
                 hasMore: true, // 是否还有产品
+
+
+                count:1,//商品数量
+                skuF:1,//规格详情
+                checkAttr: {} , // 选择的属性
+                check_attrid_arr: [],
+                check_attr: {},
+                couponList:[],//优惠券列表
+                submit_flag: true, //提交按钮
+                postData: {
+                    prod_id: 0,    //产品ID  在 onLoad中赋值
+                    atrid_str: '',    //选择属性  1；2   数字从小到大
+                    atr_str: '',      //选择属性名称
+                    count: 0,         //选择属性的库存
+                    showimg: '',      //选择属性的图片(用产品图片代替)
+                    qty: 1,           //购买数量
+                    cart_key: 'DirectBuy',     //购物车类型   CartList（加入购物车）、DirectBuy（立即购买）、PTCartList（不能加入购物车）
+                    active: 'pintuan',   //拼团时候选，不是拼团不选
+                },
             }
         },
         components: {
@@ -215,11 +265,8 @@
             ...mapState(['initData'])
         },
         onLoad(options) {
-
-            if(!this.$fun.checkIsLogin(1))return;
-            if (options.order_id) {
-                this.Order_ID = options.order_id;
-            }
+            this.Prod_ID = options.Products_ID;
+            this.Team_ID = options.Team_ID;
         },
         onShow() {
             this.INIT()
@@ -244,6 +291,122 @@
         },
         // #endif
         methods: {
+            // 选择属性
+            selectAttr(index,i){
+                var value_index = index; //选择的属性值索引
+                var attr_index = i;   //选择的属性索引
+                // if (this.check_attrid_arr.indexOf(value_index) > -1) return false;
+                //记录选择的属性
+                var check_attr = Object.assign(this.check_attr, { [attr_index]: value_index }); //记录选择的属性  attr_index外的[]必须
+                //属性处理
+                var check_attrid = [];
+                var check_attrname = [];
+                var check_attrnames = [];
+                for (var i in check_attr) {
+                    var attr_id = check_attr[i];
+                    check_attrid.push(attr_id);
+                    check_attrname[attr_id] = i;
+                }
+                //数组排序  按从小到大排
+                var check_attrid_arr = check_attrid;
+                check_attrid = numberSort(check_attrid);
+                //获取对应的属性名称
+                for (var i = 0; i < check_attrid.length; i++) {
+                    var attr_id = check_attrid[i];
+                    var attr_name = check_attrname[attr_id];
+                    check_attrnames.push(attr_name + ':' + this.product.skujosn[attr_name][attr_id]);
+                }
+                check_attrid = check_attrid.join(';');
+                var attr_val = this.product.skuvaljosn[check_attrid];   //选择属性对应的属性值
+                //数组转化为字符串
+                check_attrnames = check_attrnames.join(';');
+                this.postData.atr_str = check_attrnames;
+                this.postData.atrid_str = check_attrid;
+                //属性判断
+                if (attr_val) {
+                    this.postData.count = attr_val.Property_count;   //选择属性的库存
+                    this.postData.showimg = typeof attr_val.Attr_Image != 'undefined' && attr_val.Attr_Image != '' ? attr_val.Attr_Image : this.product.Products_JSON['ImgPath'][0];// 选择属性的图片
+                    this.productDetail_price = attr_val.Txt_PriceSon; // 选择属性的价格
+                    this.submit_flag = (!this.check_attr || Object.getOwnPropertyNames(this.check_attr).length != Object.getOwnPropertyNames(this.product.skujosn).length) ? false : true;
+                }
+                //判断属性库存
+                if (attr_val && attr_val.Property_count <= 0) {
+                    // wx.showToast({
+                    //     title: '您选择的 ' + check_attrnames + ' 库存不足，请选择其他属性',
+                    //     icon: 'none'
+                    // })
+                    this.submit_flag =  false;
+                    return false;
+                }
+                this.check_attr = check_attr;
+                this.check_attrid_arr = check_attrid_arr;
+                this.submit_flag = (!this.check_attr || Object.getOwnPropertyNames(this.check_attr).length != Object.getOwnPropertyNames(this.product.skujosn).length) ? false : true;
+                //购买数量处理  大于最高时赋值最高值
+                if (this.postData.qty > this.postData.count) {
+                    this.postData.qty = this.postData.count;
+                }
+            },
+            skuSub(){
+                if(!this.submit_flag) {
+                    return ;
+                }
+                this.postData.prod_id = this.Products_ID;
+                if(this.postData.atr_str==''||this.postData.atrid_str==''){
+                    if(this.product.skujosn){
+                        wx.showToast({
+                            title: '您还没有选择规格',
+                            icon: 'none'
+                        })
+                        return;
+                    }
+                }
+                console.log(this.postData)
+                updateCart(this.postData).then(res=>{
+                    console.log(res)
+                    if(res.errorCode == 0) {
+                        uni.navigateTo({
+                            url: '../check/check?cart_key=DirectBuy'
+                        })
+                    }else {
+
+                    }
+
+                }).catch(e=>{
+                    console.log(e)
+                    uni.showToast({
+                        title: e.msg
+                    })
+                })
+                //确定加入购物车
+                this.$refs.cartPopu.close();
+            },
+            addNum(){
+                if (this.postData.qty < this.postData.count) {
+                    this.postData.qty = parseInt(this.postData.qty) + 1;
+                }else {
+                    uni.showToast({
+                        title: '购买数量不能大于库存量',
+                        icon: 'none',
+                    });
+                    this.postData.qty = this.postData.count;
+                }
+            },
+            delNum(){
+                if (this.postData.qty > 1) {
+                    this.postData.qty = parseInt(this.postData.qty) - 1;
+                } else {
+                    uni.showToast({
+                        title: '购买数量不能小于1',
+                        icon: 'none',
+                    });
+                    this.postData.qty = 1;
+                }
+            },
+            joinFunc(){
+                if(!this.$fun.checkIsLogin(1))return;
+                this.postData.active = 'pintuan';
+                this.$refs.cartPopu.show();
+            },
             async shareFunc(channel) {
 
                 let _self = this
@@ -360,9 +523,9 @@
                 this.isShowGuide = true
                 // #endif
 
-				// #ifdef MP-WEIXIN || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO
+                // #ifdef MP-WEIXIN || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO
 
-				 // #endif
+                // #endif
 
 
                 // #ifdef APP-PLUS
@@ -382,7 +545,7 @@
             },
             async INIT(){
                 //这里要设置Prod_ID
-                await this.getOrderDetail();
+
                 await this.getProdDetail(this.Prod_ID);
 
                 await this.getProdFunc()
@@ -414,15 +577,18 @@
 
                     this.product = res.data;
 
+                    this.postData.count = res.data.Products_Count;
+
                     this.join_team_list = res.data.join_team_list
 
                     //获取开团的时间
-                    for(var team of this.join_team_list){
-                        if(team.team_head){
-                            this.addtime = team.addtime
-                            break;
-                        }
-                    }
+                   for(var team of this.join_team_list){
+                       if(team.team_head){
+                           this.addtime = team.addtime
+                           break;
+                       }
+                   }
+
 
                     if(res.data.skujosn) {
                         this.product.skujosn = typeof res.data.skujosn ==='string' ?JSON.parse(res.data.skujosn):res.data.skujosn;
@@ -432,44 +598,6 @@
                     //this.stampCount()
                     //开发时候一直倒计时太乱了
                     window.groupStam = setInterval(this.stampCount,1000)
-
-
-                    let product = this.product
-                    // #ifdef H5
-
-                    let path = '/pages/groupJoin/groupJoin?Team_ID='+this.Team_ID+'&Products_ID='+this.Prod_ID;
-                    let front_url = this.initData.front_url;
-
-
-                    this.WX_JSSDK_INIT(this).then((wxEnv)=>{
-
-                        this.$wx.onMenuShareTimeline({
-                            title: '#网中网#'+product.Products_Name, // 分享标题
-                            link: location.origin+buildSharePath(path), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-                            imgUrl: product.ImgPath, // 分享图标
-                            success: function() {
-                                // 用户点击了分享后执行的回调函数
-                            }
-                        });
-
-                        //两种方式都可以
-                        wxEnv.onMenuShareAppMessage({
-                            title: '#网中网#'+product.Products_Name, // 分享标题
-                            link: location.origin+buildSharePath(path), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-                            imgUrl: product.ImgPath, // 分享图标
-                            desc: product.Products_BriefDescription||'好物推荐',
-                            type: 'link', // 分享类型,music、video或link，不填默认为link
-                            // dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
-                            success: function() {
-                                // 用户点击了分享后执行的回调函数
-                            }
-                        });
-
-                    }).catch(()=>{
-                        console.log('不是微信环境')
-                    })
-
-                    // #endif
 
                 }).catch(e=>{
                     console.log(e)
@@ -836,6 +964,7 @@
                 display: flex;
                 align-items: center;
                 font-size: 24rpx;
+                text-align: center;
                 .myTime {
                     margin: 0 28rpx;
                     font-size: 30rpx;
@@ -903,9 +1032,8 @@
         }
 
         .liji {
-            margin-top: 18px;
-            font-size: 0;
             margin: 0 auto;
+            margin-top: 18px;
             display: flex;
             margin-bottom: 15px;
             height: 74rpx;
@@ -1026,5 +1154,126 @@
         color: #afafaf;
         font-size: 12px;
         margin-left: 22rpx;
+    }
+
+    //规格
+    .cartSku{
+        padding: 0rpx 10rpx;
+        .cartTop{
+            position: relative;
+            display: flex;
+            padding-top: 20rpx;
+            image{
+                width: 220rpx;
+                height: 220rpx;
+            }
+            .cartTitle{
+                margin-left: 20rpx;
+                font-size: 32rpx;
+                width: 420rpx;
+                .cartTitles{
+                    height: 80rpx;
+                    overflow: hidden;
+                    margin-top: 20rpx;
+                }
+                .addInfo{
+                    width: 450rpx;
+                    margin-top: 70rpx;
+                    display: flex;
+                    flex-flow: row;
+                    justify-content: space-between;
+                    align-items: flex-end;
+                    .addPrice{
+                        font-size: 42rpx;
+                        color: #ff4200;
+                    }
+                    .proSale{
+                        font-size: 24rpx;
+                        color: #999;
+                        justify-content: flex-end;
+                    }
+                }
+            }
+        }
+        .cartCenter{
+            margin-top: 20rpx;
+            .cartAttr{
+                display: flex;
+                padding: 15rpx 0rpx;
+                .sku{
+                    font-size: 28rpx;
+                    height: 70rpx;
+                    line-height: 70rpx;
+                    width: 140rpx;
+                }
+                .skuValue{
+                    display: flex;
+                    div{
+                        height: 70rpx;
+                        line-height: 70rpx;
+                        font-size: 28rpx;
+                        border-radius: 10rpx;
+                        color: #000;
+                        background-color: #fff;
+                        padding-left: 20rpx;
+                        padding-right: 20rpx;
+                        margin-right: 20rpx;
+                        border: 1px solid #ccc;
+                    }
+                }
+            }
+        }
+        .numBer{
+            margin-top: 20rpx;
+            display: flex;
+            padding: 15rpx 0rpx;
+            justify-content: space-between;
+            .numBers{
+                font-size: 28rpx;
+                height: 70rpx;
+                line-height: 70rpx;
+                width: 140rpx;
+            }
+            .inputNumber{
+                border: 1px solid #ccc;
+                border-radius: 6rpx;
+                height: 50rpx;
+                margin-right: 50rpx;
+                display: flex;
+                input{
+                    color: black;
+                    margin: 0 auto;
+                    width: 80rpx;
+                    height: 50rpx;
+                    text-align: center;
+                    font-size: 24rpx;
+                    border-left: 2rpx solid #ccc;
+                    border-right: 2rpx solid #ccc;
+                }
+                .clicks{
+                    height: 50rpx;
+                    line-height: 50rpx;
+                    width: 60rpx;
+                    text-align: center;
+                }
+            }
+        }
+    }
+    .cartSub{
+        width: 100%;
+        height: 90rpx;
+        background-color: #F43131;
+        font-size:20px;
+        line-height: 90rpx;
+        text-align: center;
+        color: #FFFFFF;
+        margin-top: 30rpx;
+        &.disabled {
+            background: #999;
+        }
+    }
+    .skuCheck{
+        color: #fff !important;
+        background-color: #ff4200 !important;
     }
 </style>

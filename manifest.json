@@ -59,18 +59,21 @@
                 "payment" : {
                     "alipay" : {},
                     "weixin" : {
-                        "appid" : "wxc7ca4f60d7453081"
+                        "appid" : "wxc7ca4f60d7453081",
+                        "UniversalLinks" : "https://new401.bafangka.com/"
                     }
                 },
                 "oauth" : {
                     "weixin" : {
                         "appid" : "wxc7ca4f60d7453081",
-                        "appsecret" : "71dc6d9a76f44848aa5feef0fde556bd"
+                        "appsecret" : "71dc6d9a76f44848aa5feef0fde556bd",
+                        "UniversalLinks" : "https://new401.bafangka.com/"
                     }
                 },
                 "share" : {
                     "weixin" : {
-                        "appid" : "wxc7ca4f60d7453081"
+                        "appid" : "wxc7ca4f60d7453081",
+                        "UniversalLinks" : "https://new401.bafangka.com/"
                     }
                 }
             },
@@ -148,10 +151,10 @@
     },
     "h5" : {
         "router" : {
-          "mode" : "history",
-          "base" : "fre"
+            "mode" : "history",
+            "base" : "fre"
         },
-		"publicPath" : "/fre/",
+        "publicPath" : "/fre/",
         "devServer" : {
             "port" : 4100,
             "disableHostCheck" : true,

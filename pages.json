@@ -63,7 +63,7 @@
         ,{
             "path" : "pages/groupSuccess/groupSuccess",
             "style" : {
-            	"navigationBarTitleText": "参团详情"
+            	"navigationBarTitleText": "开团成功"
             }
         }
         ,{
@@ -323,27 +323,38 @@
         ,{
             "path" : "pages/systemMsg/systemMsg",
             "style" : {
-            				"navigationBarTitleText": "消息"
-						}
+                "navigationBarTitleText": "消息"
+            }
 		},{
             "path" : "pages/updateUserPsw/updateUserPsw",
             "style" : {}
         }
         ,{
+            "path" : "pages/groupJoin/groupJoin",
+            "style" : {
+              "navigationBarTitleText": "立即参团"
+            }
+        },
+        {
             "path" : "pages/pintuanOrderlist/pintuanOrderlist",
             "style" : {}
         }
         ,{
+            "path" : "pages/orderDetail/orderDetail",
+            "style" : {
+							"navigationBarTitleText": "订单详情"
+						}
+				},{
             "path" : "pages/coupon/coupon",
             "style" : {
-            				"navigationBarTitleText": "优惠券"
-            			}
+                "navigationBarTitleText": "优惠券"
+            }
         }
         ,{
             "path" : "pages/expiredCoupon/expiredCoupon",
             "style" : {
-            				"navigationBarTitleText": "失效优惠券"
-            			}
+                "navigationBarTitleText": "失效优惠券"
+            }
         }
     ],
 	"globalStyle": {
