@@ -3,7 +3,7 @@
 		<div class="zhezhao" v-if="password_input">
 			<div class="input-wrap">
 				<div>请输入余额支付密码</div>
-				<input type="password" class="input" placeholder="请输入密码" @input="user_password">
+				<input type="password" class="input" placeholder="请输入密码" @blur="user_password">
 				<div class="btns">
 					<div @click="cancelInput" class="btn">取消</div>
 					<div @click="confirmInput" class="btn">确定</div>
@@ -15,6 +15,7 @@
 			<image class="img" src="/static/wait.png" />
 			<span class="state-desc">等待买家付款</span>
 		</div>
+		<view>订单号：{{orderInfo.Order_ID}}</view>
 		<div class="address">
 			<image class="loc_icon" src="/static/location.png" alt="" />
 			<div class="add_msg">
@@ -141,7 +142,7 @@
 		isWeiXin,
 		urlencode
 	} from "../../common/tool";
-	import {error, toast} from "../../common";
+	import {error} from "../../common";
 
 	export default {
 		mixins: [pageMixin],
@@ -178,6 +179,10 @@
 			}
 			if(options.pagefrom =='check'){
 				this.showDirect = true;
+			}
+			if(options.pagefrom == 'order') {
+				// 来自订单列表页
+				this.pageFromOrder = true;
 			}
 			// 获取支付方式
 			this.pay_arr = ls.get('initData').pay_arr;
@@ -245,20 +250,13 @@
 							title: '提示',
 							content: err.msg,
 							showCancel: false
-						});
+						})
 					}).catch(e=>{
 						console.log(e)
 					});
 					return;
 				}
-
-
-				if(this.pay_type === 'unionpay'){
-					error('即将上线')
-					return;
-				}
 				//需要格外有一个code
-
 				// #ifdef H5
 				if (!isWeiXin()) {
 					this.$error('请在微信内打开')
@@ -713,22 +711,9 @@
 				// },1000)
 			},
 			paySuccessCall(){
-
-				let _self = this;
-				toast('支付成功');
-				setTimeout(function () {
-					//拼团订单则跳转到开团成功
-					if(_self.orderInfo.Order_Type === 'pintuan'){
-						uni.redirectTo({
-							url:'/pages/groupSuccess/groupSuccess?order_id='+_self.Order_ID
-						})
-					}else{
-						uni.redirectTo({
-							url:'/pages/order/order?index=2'
-						})
-					}
-				},1000)
-
+				uni.redirectTo({
+					url:'/pages/order/order?index=2'
+				})
 			},
 			// 用户选择 微信支付
 			async wechatPay() {
@@ -828,7 +813,6 @@
 									paySign,
 									success: function(res) {
 										// 支付成功后的回调函数
-										_self.paySuccessCall(res)
 									}
 								});
 
@@ -931,7 +915,6 @@
 			},
 			// 用户输入密码完毕
 			user_password(e) {
-				console.log(e)
 				this.user_pay_password = e.detail.value;
 			},
 			// 确定输入支付密码

@@ -1,34 +1,35 @@
 <template>
-	<view>
+	<view v-if="pro.img_url">
 		<view class="top">
 			<image class="widthTen" src="/static/task/top.png" ></image>
 			<image src="/static/task/left.png" class="goBack" @click="goBack"></image>
 			<view class="titles">任务中心</view>
-			<view class="center">
-				<image class="widthTen" src="/static/task/center.png" ></image>
+			<view class="center">  
+				<!-- <image class="widthTen" src="/static/task/center.png" ></image> -->
+				<image class="widthTen" :src="pro.img_url" ></image>
 				<view class="info">
-					<image src="/static/default.png" class="widthTen" ></image>
+					<image :src="pro.avatar" class="widthTen" ></image>
 				</view>
-				<view class="nickName">
-					坚果姑娘
+				<view class="nickName" v-if="pro.nickname">
+					{{pro.nickname}}
 				</view>
-				<view class="vip">
-					金卡会员
+				<view class="vip" v-if="pro.level_name">
+					{{pro.level_name}}
 					<image src="/static/task/right.png"></image>
 				</view>
 				<view class="zhangValue">
-					<view :style="{width:(50/100)*100+'%'}">
+					<view :style="{width:(pro.growth_value/pro.upper_growth)*100+'%'}">
 
 					</view>
 				</view>
-				<view class="myValue">
-					480/1000
+				<view class="myValue" v-if="pro.growth_value">
+					{{pro.growth_value}}/{{pro.upper_growth}}
 				</view>
-				<view class="shengji">
+				<view class="shengji" v-if="pro.need_growth>0">
 					升级
 				</view>
-				<view class="numberValue">
-					520
+				<view class="numberValue" v-if="pro.growth_value">
+					{{pro.growth_value}}
 				</view>
 				<view class="valueM">
 					成长值
@@ -36,14 +37,11 @@
 				</view>
 			</view>
 		</view>
-		<view style="height: 20rpx;"></view>
+		<view style="height: 60rpx;"></view>
 		<circleTitle title="我的特权"></circleTitle>
 		<view class="myPrivilege">
-			<view>
-				1、八折优惠，显示会员价的所有商品均可享受八折优惠
-			</view>
-			<view>
-				2、八折优惠，显示会员价的所有商品均可享受八折优惠
+			<view v-for="(i,j) of pro.basic" :key="j">
+				{{j+1}}、{{i}}
 			</view>
 		</view>
 		<view style="height: 20rpx;width: 100%;background-color: #F8F8F8;">
@@ -52,31 +50,17 @@
 		<circleTitle title="如何升级"></circleTitle>
 
 		<view class="ruhe">
-			<view class="td">
-				<image src="/static/task/edit.png"></image>
+			<view class="td" v-for="(it,ind) of pro.obtain" :key="ind">
+				<image :src="it.img_url"></image>
 				<view class="mbx">
 					<view class="tops">
-						完善资料
+						{{it.name}}
 					</view>
 					<view class="bottoms">
-						成长值+5
+						{{it.desc}}
 					</view>
 				</view>
-				<view class="submit">
-					去完成
-				</view>
-			</view>
-			<view class="td">
-				<image src="/static/task/bangding.png"></image>
-				<view class="mbx">
-					<view class="tops">
-						绑定手机号
-					</view>
-					<view class="bottoms">
-						成长值+15
-					</view>
-				</view>
-				<view class="submit">
+				<view class="submit" @click="goJump(it)">
 					去完成
 				</view>
 			</view>
@@ -88,18 +72,42 @@
 	import {goBack}  from '../../common/tool.js'
 	import circleTitle from '../../components/circleTitle/circleTitle.vue'
 	import {pageMixin} from "../../common/mixin";
-
+	import {getTaskCenter} from '../../common/fetch.js'
 	export default {
 		mixins:[pageMixin],
 		data() {
 			return {
-
+				pro:[],
 			};
 		},
 		components:{
 			circleTitle
 		},
+		onShow() {
+			this.getTaskCenter();
+		},
 		methods:{
+			getTaskCenter(){
+				getTaskCenter().then(res=>{
+					this.pro=res.data;
+				},err=>{
+					
+				}).catch(e=>{
+					console.log(e)
+				})
+			},
+			goJump(item){
+				if(item.cu){
+					uni.switchTab({
+						url:item.jump_url
+					})
+				}else{
+					uni.navigateTo({
+						url:item.jump_url
+					})
+				}
+				
+			},
 			goBack(){
 				goBack();
 			}
@@ -141,6 +149,7 @@
 		.info{
 			width: 93rpx;
 			height: 92rpx;
+			overflow: hidden;
 			position: absolute;
 			left: 57rpx;
 			top: 64rpx;

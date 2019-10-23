@@ -9,19 +9,19 @@
             <div class="nav-item" :class="index==0?'active':''" @click="changIndex(0)">全部</div>
             <div class="nav-item" :class="index==1?'active':''" @click="changIndex(1)">
 				待付款
-				<div class="jiaobiao" v-if="orderNum.pintuan.waitpay>0">{{orderNum.pintuan.waitpay}}</div>
+				<div class="jiaobiao" v-if="orderNum.waitpay>0">{{orderNum.waitpay}}</div>
 			</div>
             <div class="nav-item" :class="index==2?'active':''" @click="changIndex(2)">
 				待发货
-				<div class="jiaobiao" v-if="orderNum.pintuan.waitsend>0">{{orderNum.pintuan.waitsend}}</div>
+				<div class="jiaobiao" v-if="orderNum.waitsend>0">{{orderNum.waitsend}}</div>
 			</div>
             <div class="nav-item" :class="index==3?'active':''" @click="changIndex(3)">
 				待收货
-				<div class="jiaobiao" v-if="orderNum.pintuan.waitconfirm>0">{{orderNum.pintuan.waitconfirm}}</div>
+				<div class="jiaobiao" v-if="orderNum.waitconfirm>0">{{orderNum.waitconfirm}}</div>
 			</div>
             <div class="nav-item" :class="index==4?'active':''" @click="changIndex(4)">
 				待评价
-				<div class="jiaobiao" v-if="orderNum.pintuan.waitcomment>0">{{orderNum.pintuan.waitcomment}}</div>
+				<div class="jiaobiao" v-if="orderNum.waitcomment>0">{{orderNum.waitcomment}}</div>
 			</div>
         </div>
 		<view class="space" style="height: 100rpx;width: 100%;">
@@ -128,7 +128,7 @@ export default {
 		},
 		//获取订单角标数
 		getOrderNum(){
-			getOrderNum({}).then(res=>{
+			getOrderNum({Order_Type: this.Order_Type}).then(res=>{
 				this.orderNum=res.data;
 				console.log(res)
 			}).catch(e=>{

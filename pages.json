@@ -340,6 +340,11 @@
             "style" : {}
         }
         ,{
+            "path" : "pages/orderDetail/orderDetail",
+            "style" : {
+							"navigationBarTitleText": "订单详情"
+						}
+				},{
             "path" : "pages/coupon/coupon",
             "style" : {
                 "navigationBarTitleText": "优惠券"
