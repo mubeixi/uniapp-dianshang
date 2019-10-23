@@ -9,11 +9,11 @@
 				<image src="../../static/right.png" mode=""></image>
 			</view>
 			<view class="item" @click="update(0)">
-				<view>登录密码</view>
+				<view>修改登录密码</view>
 				<image src="../../static/right.png" mode=""></image>
 			</view>		
 			<view class="item" @click="update(1)">
-				<view>支付密码</view>
+				<view>修改支付密码</view>
 				<image src="../../static/right.png" mode=""></image>
 			</view>		
 		</view>

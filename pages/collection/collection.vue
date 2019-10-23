@@ -44,10 +44,10 @@ export default {
 
     },
 	onLoad(){
-		this.getFavouritePro();
+		
 	},
 	onShow() {
-
+		this.getFavouritePro();
 	},
 
     data(){
