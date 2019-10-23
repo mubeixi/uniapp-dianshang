@@ -130,6 +130,8 @@ export const getCoupon = (data,options) => fetch('get_unaccalimed_coupon',data,o
 export const getUserCoupon = (data,options) => fetch('user_receive_coupon',data,options);
 // 获取用户已领取的优惠券
 export const getUserReceivedCoupon = (data,options) => fetch('get_user_coupon', data, options);
+// 获取用户已失效的优惠券
+export const getExpiredCoupon = (data,options) => fetch('get_expired_coupon', data, options);
 // 提交订单
 export const createOrder = (data,options) => fetch('create_order', data,options);
 

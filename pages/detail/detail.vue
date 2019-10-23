@@ -246,7 +246,8 @@ export default {
 			skuval: [], // 赠品带过来的产品属性
 			recieve: false,  //是否是赠品，赠品按钮显示 立即领取
 			gift_atr_str: '', //赠品属性,
-			canSubmit: true
+			canSubmit: true,
+			isLoading:false
         }
     },
     components: {
@@ -563,6 +564,8 @@ export default {
 		},
 		//领取优惠券
 		getMyCoupon(item,i){
+			if(this.isLoading==true)return;
+			this.isLoading=true;
 			let data={
 				Users_ID: 'wkbq6nc2kc',
 				coupon_id:item,
@@ -576,10 +579,12 @@ export default {
 					    title: res.msg,
 					    icon: 'none'
 					})
+					this.isLoading=false;
 					this.page=1;
 					this.couponList.splice(i, 1);
 			}).catch(e=>{
 				console.log(e)
+				this.isLoading=false;
 			})
 			//this.getCoupon();
 		},
@@ -674,7 +679,7 @@ export default {
 			updateCart(this.postData).then(res=>{
 				if(res.errorCode == 0) {
 					if(this.postData.cart_key == 'CartList') {
-						uni.showLoading({
+						uni.showToast({
 							title: '加入购物车成功',
 							icon: 'success'
 						})

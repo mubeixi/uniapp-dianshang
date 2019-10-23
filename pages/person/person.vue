@@ -41,7 +41,7 @@
 						收藏
 					</view>
 				</view>
-				<view class="navList four">
+				<view class="navList four" @click="goCoupon">
 					<image src="/static/person/youhuijuan.png" mode=""></image>
 					<view style="left: 50rpx;">
 						优惠券
@@ -92,13 +92,13 @@
 				<image src="/static/person/right.png" class="right"></image>
 			</view>
 
-			<view class="bargain">
+			<!-- <view class="bargain">
 				<image src="/static/person/kan.png" class="left"></image>
 				<view class="pintuan">
 					砍价订单
 				</view>
 				<image src="/static/person/right.png" class="right"></image>
-			</view>
+			</view> -->
 			<view class="bargain" @click="goGift">
 				<image src="/static/person/zengpin.png" class="left"></image>
 				<view class="pintuan">
@@ -121,13 +121,13 @@
 				<image src="/static/person/right.png" class="right"></image>
 			</view>
 
-			<view class="bargain">
+			<!-- <view class="bargain">
 				<image src="/static/person/wo.png" class="left"></image>
 				<view class="pintuan">
 					我的预约
 				</view>
 				<image src="/static/person/right.png" class="right"></image>
-			</view>
+			</view> -->
 
 			<view class="bargain">
 				<image src="/static/person/tui.png" class="left"></image>
@@ -177,6 +177,11 @@
 			this.judgeSignin();
 		},
 		methods:{
+			goCoupon(){
+				uni.navigateTo({
+					url:'../coupon/coupon'
+				})
+			},
 			goMsg(){
 				uni.navigateTo({
 					url:'../systemMsg/systemMsg'

@@ -101,7 +101,7 @@
 		
 		<block v-if="isLast">
 			<view class="four" >
-				提交审核中
+				信息审核中
 			</view>
 		</block>
 		<block v-else>
@@ -231,6 +231,9 @@
 						agentApply(info).then(res=>{
 							this.isLast=true;	
 							this.isAgr=false;
+							uni.showToast({
+								title:res.msg
+							})
 						},err=>{
 							this.isAgr=false;
 						}).catch(e=>{
