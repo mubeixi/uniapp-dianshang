@@ -230,6 +230,8 @@ export const getSignin = (data, options) => fetch('get_signin', data, options);
 export const agentApply = (data, options) => fetch('agent_apply', data, options);
 //获取订单物流追踪
 export const getOrderExpress = (data, options) => fetch('get_order_express', data, options);
+//获取任务中心数据
+export const getTaskCenter = (data, options) => fetch('get_task_center', data, options);
 
 
 //jssdk签名
