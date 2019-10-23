@@ -85,14 +85,14 @@ export default {
     data(){
         return {
             index: 0,
-						data:[],
-						pageSize:5,
-						page:1,
-						totalCount:0,
-						orderNum:'',//订单状态角标数
-						isQing:false,
-						Order_Type: 'shop,gift' , //请求的订单类型
-						isLoading:false,
+			data:[],
+			pageSize:5,
+			page:1,
+			totalCount:0,
+			orderNum:'',//订单状态角标数
+			isQing:false,
+			Order_Type: 'shop,gift' , //请求的订单类型
+			isLoading:false,
         }
     },
 	onShow(){
@@ -113,6 +113,7 @@ export default {
 	methods:{
 		//确认收货
 		confirmOrder(item){
+			
 			let data={
 				Order_ID:item.Order_ID
 			}

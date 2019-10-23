@@ -374,6 +374,7 @@ export default {
 					showCancel: false
 				});
 				this.postData.use_money = user_money;
+				this.createOrderCheck();
 				return;
 			}
 			this.postData.use_money = Number(input_money).toFixed(2);

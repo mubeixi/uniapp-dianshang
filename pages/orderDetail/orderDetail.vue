@@ -10,12 +10,12 @@
 				</div>
 			</div>
 		</div>
-		<page-title title="付款" :rightHidden="true" bgcolor="#ffffff"></page-title>
-		<div class="state">
+		<page-title title="订单详情" :rightHidden="true" bgcolor="#ffffff"></page-title>
+		<div class="state" v-if="orderInfo.Order_Status == 1">
 			<image class="img" src="/static/wait.png" />
 			<span class="state-desc">等待买家付款</span>
 		</div>
-		<view>订单号：{{orderInfo.Order_ID}}</view>
+		<view class="address order-id">订单号：{{orderInfo.Order_ID}}</view>
 		<div class="address">
 			<image class="loc_icon" src="/static/location.png" alt="" />
 			<div class="add_msg">
@@ -65,59 +65,98 @@
 				</div>
 			</div>
 		</div>
-		<div class="other" v-if="orderInfo.is_use_money && orderInfo.is_use_money == 1">
-			<div class="bd">
-				<div class="o_title">
-					<span>是否使用余额</span>
-					<switch :checked="moneyChecked" size='25px' color="#04B600" @change="moneyChange" />
-				</div>
-				<!-- <div class="o_desc c8">{{orderInfo.Order_Yebc}}</div> -->
-				<input type="number" v-if="openMoney" :value="user_money" :disabled="!openMoney" :placeholder="orderInfo.Order_Yebc"
-				 @blur="moneyInputHandle" />
-			</div>
-		</div>
-		<div class="other">
-			<div class="bd">
-				<div class="o_title">
-					<span>是否开具发票</span>
-					<switch :checked="invoiceChecked" size='25px' color="#04B600" @change="invoiceChange" />
-				</div>
-				<!-- <div class="o_desc c8">{{orderInfo.Order_InvoiceInfo}}</div> -->
-				<input type="text" v-if="openInvoice" :value="invoice_info" :disabled="!openInvoice" :placeholder="orderInfo.Order_InvoiceInfo"
-				 @blur="invoiceHandle" />
-			</div>
-		</div>
-		<div class="other">
-			<div class="bd">
-				<div class="o_title  words">
-					<span>买家留言</span>
-					<input class="msg c8" :placeholder="orderInfo.Order_Remark" @blur="remarkHandle">
+		<block  v-if="orderInfo.Order_Status == 1">
+			<div class="other" v-if="orderInfo.is_use_money && orderInfo.is_use_money == 1">
+				<div class="bd">
+					<div class="o_title">
+						<span>是否使用余额</span>
+						<switch :checked="moneyChecked" size='25px' color="#04B600" @change="moneyChange" />
+					</div>
+					<!-- <div class="o_desc c8">{{orderInfo.Order_Yebc}}</div> -->
+					<input type="number" v-if="openMoney" :value="user_money" :disabled="!openMoney" :placeholder="orderInfo.Order_Yebc"
+					@blur="moneyInputHandle" />
 				</div>
 			</div>
-		</div>
-		<div class="total">
+			<div class="other">
+				<div class="bd">
+					<div class="o_title">
+						<span>是否开具发票</span>
+						<switch :checked="invoiceChecked" size='25px' color="#04B600" @change="invoiceChange" />
+					</div>
+					<!-- <div class="o_desc c8">{{orderInfo.Order_InvoiceInfo}}</div> -->
+					<input type="text" v-if="openInvoice" :value="invoice_info" :disabled="!openInvoice" :placeholder="orderInfo.Order_InvoiceInfo"
+					@blur="invoiceHandle" />
+				</div>
+			</div>
+			<div class="other">
+				<div class="bd">
+					<div class="o_title  words">
+						<span>买家留言</span>
+						<input class="msg c8" :placeholder="orderInfo.Order_Remark" @blur="remarkHandle">
+					</div>
+				</div>
+			</div>
+		</block>
+		<block v-else>
+			<!-- 待发货 -->
+			<div class="other" v-if="orderInfo.is_use_money && orderInfo.is_use_money == 1">
+				<div class="bd">
+					<div class="o_title">
+						<span>使用余额:</span>
+						<span>{{orderInfo.Order_Yebc}}元</span>
+					</div>
+				</div>
+			</div>
+			<div class="other" v-if="Order_NeedInvoice == 1">
+				<div class="bd">
+					<div class="o_title">
+						<span>发票信息</span>
+						<span>{{orderInfo.Order_InvoiceInfo}}</span>
+					</div>
+				</div>
+			</div>
+			<div class="other">
+				<div class="bd">
+					<div class="o_title  words">
+						<span>买家留言</span>
+						<span>{{orderInfo.Order_Remark}}</span>
+					</div>
+				</div>
+			</div>
+		</block>
+		<!-- <div class="total">
 			<span>共<span>{{orderInfo.prod_list.length}}</span>件商品</span>
 			<span class="mbx">小计：<span class="money moneys">￥</span><span class="money">{{orderInfo.Order_Fyepay}}</span></span>
-		</div>
+		</div> -->
 		<div style="height:100px;background:#efefef;"></div>
 		<div class="order_total">
 			<div class="totalinfo">
 				<div class="info">共{{orderInfo.prod_list.length}}件商品 总计：<span class="mbxa">￥<span>{{orderInfo.Order_Fyepay}}</span></span></div>
 				<div class="tips">*本次购物一共可获得{{orderInfo.Integral_Get}}积分</div>
 			</div>
-			<div class="submit" @click="submit">去支付</div>
+			<div class="btn-group" v-if="orderInfo.Order_Status==1">
+                <span @click="cancelOrder(orderInfo.Order_ID)">取消订单</span>
+                <span class="active" @click="submit">立即付款</span>
+            </div>
+			<div class="btn-group" v-else-if="orderInfo.Order_Status==2">
+				<span @click="cancelOrder(orderInfo.Order_ID)">删除订单</span>
+			    <span class="active" @click="goPay(orderInfo.Order_ID)">申请退款</span>
+			</div>
+			<div class="btn-group" v-else-if="orderInfo.Order_Status==3">
+				<span @click="goLogistics(orderInfo.Order_ID)">查看物流</span>
+			    <span class="active" @click="confirmOrder(orderInfo.Order_ID)">确认收货</span>
+				<!-- @click="goPay(item)"跳转退款 -->
+			</div>
+			<div class="btn-group" v-else-if="orderInfo.Order_Status==4">
+				<span @click="cancelOrder(orderInfo.Order_ID)">删除订单</span>
+			    <span class="active" @click="goPay(orderInfo.Order_ID)">立即评价</span>
+			</div>
 		</div>
 		<popup-layer ref="popupLayer" :direction="'top'">
 			<div class="iMbx">
 				<div class="c_method" v-for="(item,index) in pay_arr" @click="chooseType(index)" :key="index">
 					{{item}} <text>￥{{orderInfo.Order_Fyepay}}</text>
 				</div>
-				<!-- <div class="c_method" @click="wechatPay" >
-					微信支付 <text>￥{{orderInfo.Order_Fyepay}}</text>
-				</div>
-				<div class="c_method" @click="aliPay">
-					支付宝支付 <text>￥{{orderInfo.Order_Fyepay}}</text>
-				</div> -->
 			</div>
 		</popup-layer>
 
@@ -131,7 +170,9 @@
 		createOrderCheck,
 		getOrderDetail,
 		orderPay,
-		get_user_info
+		get_user_info,
+		cancelOrder,
+		confirmOrder
 	} from '../../common/fetch.js';
 	import {
 		pageMixin
@@ -218,6 +259,71 @@
 
 		},
 		methods: {
+			goLogistics({Order_ID}){
+				//跳转物流追踪
+				uni.navigateTo({
+					url:'../logistics/logistics?Order_ID='+Order_ID
+				})
+			},
+			//取消订单
+			cancelOrder(Order_ID){
+				if(Order_ID){
+					cancelOrder({Order_ID}).then(res=>{
+						if(res.errorCode==0){
+							uni.showToast({
+								title:res.msg,
+								icon:"none"
+							});
+							setTimeout(() => {
+								uni.navigateBack({
+									delta: 1
+								})
+							}, 1000);
+						}else{
+							uni.showToast({
+								title:res.msg,
+								icon:"none"
+							})
+						}
+
+					}).catch(e=>{
+						console.log(e);
+						this.isLoading=false;
+					})
+				}
+			},
+			//确认收货
+			confirmOrder(Order_ID){
+				let that=this;
+				confirmOrder({Order_ID: Order_ID}).then(res=>{
+					if(res.errorCode==0){
+						uni.showToast({
+							title:res.msg,
+							icon:'none'
+						})
+						setTimeout(() => {
+							uni.navigateBack({
+								delta: 1
+							})
+						}, 1000);
+					}
+				}).catch(e=>{
+					console.log(e);
+				})
+			},
+			//跳转申请退款  发表评论
+			goPay(Order_ID){
+				if(this.orderInfo.Order_Status==2||this.orderInfo.Order_Status==3){
+					uni.navigateTo({
+						url:'../refund/refund?Order_ID='+Order_ID
+					})
+				}else if(this.orderInfo.Order_Status==4){
+					uni.navigateTo({
+						url:'../publishComment/publishComment?Order_ID='+Order_ID
+					})
+				}
+
+			},
 			// 统一方法
 			async self_orderPay(){
 				let _self = this;
@@ -936,7 +1042,7 @@
 		font-size: 28rpx;
 		display: flex;
 		align-items: center;
-		border-top: 30rpx solid #FFF3F3F3;
+		border-top: 30rpx solid #F3F3F3;
 
 		.img {
 			width: 60rpx;
@@ -959,11 +1065,15 @@
 		display: flex;
 		align-items: center;
 		padding: 40rpx 38rpx 40rpx 28rpx;
-		border-top: 30rpx solid #FFF3F3F3;
-		border-bottom: 20rpx solid #FFF3F3F3;
+		border-top: 30rpx solid #F3F3F3;
+		border-bottom: 20rpx solid #F3F3F3;
 	}
 
-
+	// 订单号
+	.order-id {
+		font-size: 28rpx;
+		border-bottom: none;
+	}
 	.loc_icon {
 		width: 41rpx;
 		height: 51rpx;
@@ -1144,6 +1254,7 @@
 		align-items: center;
 		background: #fff;
 		z-index: 100;
+		justify-content: space-around;
 	}
 
 	.submit {
@@ -1155,8 +1266,30 @@
 	}
 
 	.totalinfo {
-		flex: 1;
+		// flex: 1;
 		text-align: center;
+	}
+	.btn-group {
+		span {
+			display: inline-block;
+			//width: 150rpx;
+			padding: 0rpx 24rpx;
+			height: 60rpx;
+			line-height: 60rpx;
+			text-align: center;
+			border: 1px solid #999;
+			border-radius:10rpx;
+			color: #999;
+			font-size: 26rpx;
+			&:first-child{
+				margin-right: 14rpx;
+			}
+			&.active {
+				color: #fff;
+				background: #F43131;
+				border: none;
+			}
+		}
 	}
 
 	.info {
