@@ -415,7 +415,7 @@ export default {
     	display: inline-block;
     	height: 50rpx;
     	line-height: 50rpx;
-    
+
     	color: #666;
     	font-size: 24rpx;
     	// padding: 0 20rpx;

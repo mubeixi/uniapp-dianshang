@@ -15,7 +15,7 @@
 			<image class="img" src="/static/wait.png" />
 			<span class="state-desc">等待买家付款</span>
 		</div>
-		<view>订单号：{{order.Order_ID}}</view>
+		<view>订单号：{{orderInfo.Order_ID}}</view>
 		<div class="address">
 			<image class="loc_icon" src="/static/location.png" alt="" />
 			<div class="add_msg">
