@@ -115,7 +115,7 @@
             return;
           }
 
-          let param = {pageSize: cate_id.length===0 && limit ? limit : 6}
+          let param = {pageSize: limit};//cate_id.length===0 && limit ? limit : 900}
           if (cate_id.length>0) {
             param.Cate_ID = cate_id.join(',')
           } else {
