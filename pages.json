@@ -356,6 +356,14 @@
                 "navigationBarTitleText": "失效优惠券"
             }
         }
+        ,{
+            "path" : "pages/jifenExchange/jifenExchange",
+            "style" : {
+							 "navigationBarTitleText": "积分兑换",
+							 "navigationBarBackgroundColor": "#FF5C33",
+							 "navigationBarTextStyle": "white"
+						}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
