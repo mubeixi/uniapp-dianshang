@@ -9,10 +9,10 @@ uni.navigateTo = (opt)=>{
     if(url.indexOf('users_id')===-1){
 
         console.log('链接中没有users_id，需要改造');
-        let users_id = null;
+        let users_id = null,owner_id= null;
 
         // #ifdef H5
-        users_id = GetQueryByString(url, 'users_id')
+        users_id = GetQueryByString(url, 'users_id');
         // #endif
 
         //如果连接里面已经有了，就不需要搞事
@@ -34,7 +34,25 @@ uni.navigateTo = (opt)=>{
             }
         }
 
-        console.log('users_id is 2222222222222222222222222 '+users_id)
+
+        if(!owner_id){
+
+            owner_id = ls.get('owner_id');
+
+            if (owner_id) {
+
+                if(url.indexOf('?')===-1){
+                    url += '?owner_id='+owner_id
+                }else{
+                    url = url.replace(/\?/,'?owner_id='+owner_id+'&')
+                }
+
+
+
+            }
+        }
+
+        console.log('owner_id is 2222222222222222222222222 '+owner_id)
 
 
 
@@ -55,7 +73,9 @@ uni.redirectTo = (opt)=>{
     let {url} = opt;
     if(url.indexOf('users_id')===-1){
 
-        let users_id = null;
+
+        let users_id = null,owner_id= null;
+
 
         // #ifdef H5
         users_id = GetQueryByString(url, 'users_id')
@@ -79,6 +99,24 @@ uni.redirectTo = (opt)=>{
             }
         }
 
+        if(!owner_id){
+
+            owner_id = ls.get('owner_id');
+
+            if (owner_id) {
+
+                if(url.indexOf('?')===-1){
+                    url += '?owner_id='+owner_id
+                }else{
+                    url = url.replace(/\?/,'?owner_id='+owner_id+'&')
+                }
+
+
+
+            }
+        }
+
+        console.log('owner_id is 2222222222222222222222222 '+owner_id)
 
     }
 
@@ -96,10 +134,13 @@ uni.switchTab = (opt)=>{
     let {url} = opt;
     if(url.indexOf('users_id')===-1){
 
-        let users_id = null;
+        let users_id = null,owner_id=null;
+
+        
 
         // #ifdef H5
         users_id = GetQueryByString(url, 'users_id')
+        owner_id = GetQueryByString(url, 'owner_id')
         // #endif
 
         //如果连接里面已经有了，就不需要搞事
@@ -119,6 +160,24 @@ uni.switchTab = (opt)=>{
 
             }
         }
+
+
+
+        if(!owner_id){
+
+            owner_id = ls.get('owner_id');
+
+            if (owner_id) {
+
+                if(url.indexOf('?')===-1){
+                    url += '?owner_id='+owner_id
+                }else{
+                    url = url.replace(/\?/,'?owner_id='+owner_id+'&')
+                }
+
+            }
+        }
+
 
 
     }

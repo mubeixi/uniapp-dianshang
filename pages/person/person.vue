@@ -22,13 +22,13 @@
 				</view>
 			</view>
 			<view class="nav">
-				<view class="navList first">
+				<view class="navList first" @click="goBalance">
 					<image src="/static/person/yue.png" mode=""></image>
 					<view>
 						余额
 					</view>
 				</view>
-				<view class="navList second">
+				<view class="navList second" @click="goIntegral">
 					<image src="/static/person/jifen.png" mode=""></image>
 					<view>
 						积分
@@ -57,28 +57,32 @@
 			</view>
 			<view class="orderCenter">
 				<view class="orderLast" @click="goOrder(1)">
-					<image src="/static/person/pay.png"></image>
-					<view>
-						待付款
-					</view>
-			</view>
-			<view class="orderLast" @click="goOrder(2)">
-					<image src="/static/person/fa.png"></image>
-					<view>
-						待发货
-					</view>
-			</view>
-			<view class="orderLast" @click="goOrder(3)">
-					<image src="/static/person/shou.png"></image>
-					<view>
-						待收货
-					</view>
-			</view>
-			<view class="orderLast" @click="goOrder(4)">
-					<image src="/static/person/ping.png"></image>
-					<view>
-						待评价
-					</view>
+						<image src="/static/person/pay.png"></image>
+						<view>
+							待付款
+						</view>
+						<view class="jiaobiao" v-if="orderNum.waitpay>0">{{orderNum.waitpay}}</view>
+				</view>
+				<view class="orderLast" @click="goOrder(2)">
+						<image src="/static/person/fa.png"></image>
+						<view>
+							待发货
+						</view>
+						<div class="jiaobiao" v-if="orderNum.waitsend>0">{{orderNum.waitsend}}</div>
+				</view>
+				<view class="orderLast" @click="goOrder(3)">
+						<image src="/static/person/shou.png"></image>
+						<view>
+							待收货
+						</view>
+						<div class="jiaobiao" v-if="orderNum.waitconfirm>0">{{orderNum.waitconfirm}}</div>
+				</view>
+				<view class="orderLast" @click="goOrder(4)">
+						<image src="/static/person/ping.png"></image>
+						<view>
+							待评价
+						</view>
+						<div class="jiaobiao" v-if="orderNum.waitcomment>0">{{orderNum.waitcomment}}</div>
 				</view>
 			</view>
 		</view>
@@ -149,7 +153,7 @@
 <script>
 	import {pageMixin} from "../../common/mixin";
 	import {mapGetters,mapActions} from 'vuex';
-	import { judgeSignin,signin } from "../../common/fetch.js"
+	import { judgeSignin,signin,getOrderNum } from "../../common/fetch.js"
 	export default {
 		mixins:[pageMixin],
 		data() {
@@ -158,6 +162,8 @@
 				show:1,//是否能签到 0不显示签到 1 直接签到   2  跳转签到
 				signin:0,//0未签到  1 已签到
 				isLodnig:false,
+				orderNum:'',//订单状态角标数
+				Order_Type: 'shop,gift' , //请求的订单类型
 			};
 		},
 		computed:{
@@ -171,9 +177,32 @@
 
 		},
 		onLoad(){
+			
+		},
+		onShow() {
+			this.getOrderNum();
 			this.judgeSignin();
 		},
 		methods:{
+			goIntegral(){
+				uni.navigateTo({
+					url:'../integralCenter/integralCenter'
+				})
+			},
+			goBalance(){
+				uni.navigateTo({
+					url:'../balanceCenter/balanceCenter'
+				})
+			},
+			//获取角标
+			getOrderNum(){
+				getOrderNum({Order_Type:this.Order_Type}).then(res=>{
+					this.orderNum=res.data;
+					console.log(res)
+				}).catch(e=>{
+					console.log(e)
+				})
+			},
 			goVip(){
 				uni.navigateTo({
 					url:'../vipGrade/vipGrade'
@@ -295,10 +324,6 @@
 					url: '../personalMsg/personalMsg'
 				})
 			}
-		},
-		onShow(){
-			// console.log('22')
-			// this.userInfo = this.getUserInfo();
 		},
 		created(){
 
@@ -490,6 +515,7 @@
 				width: 177.5rpx;
 				height: 107rpx;
 				text-align: center;
+				position: relative;
 				image{
 					width: 65rpx;
 					height: 65rpx;
@@ -598,4 +624,20 @@
 	padding-left: 12rpx !important;
 	padding-right: 12rpx !important;
 }
+
+.jiaobiao{
+		position: absolute;
+		top: -3rpx;
+		right: 52rpx;
+		width: 20rpx;
+		height: 20rpx;
+		border-radius: 50%;
+		background-color: #FFFFFF;
+		border: 1px solid  #F43131;
+		font-size: 15rpx !important;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: #F43131 !important;
+	}
 </style>

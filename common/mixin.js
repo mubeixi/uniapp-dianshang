@@ -96,9 +96,7 @@ export const pageMixin = {
 	//option为object类型，会序列化上个页面传递的参数
 	//页面的初始化
 	async onLoad(option) {
-
-
-
+		
 
 		let owner_id = null,users_id = null
 
@@ -106,12 +104,13 @@ export const pageMixin = {
 
 		/*商户id机制*/
 		users_id = GetQueryByString(location.href, 'users_id')
+		console.log(owner_id)
 
 		//如果连接里面已经有了，就不需要搞事
 		if(users_id){
 		    ls.set('users_id',users_id);
 		    // console.log('this page users_id is '+users_id)
-		    return;
+		    //return;
 		}else{
 		    users_id = ls.get('users_id');
 		}
@@ -119,18 +118,23 @@ export const pageMixin = {
 
 		if (users_id) {
 
-		    let search = location.search;
+			if(!GetQueryByString(location.href, 'users_id')){
+				let search = location.search;
 
-		    if(search.indexOf('?')===-1){
-		        search += '?users_id='+users_id
-		    }else{
-				search = search.replace(/\?/,'?users_id='+users_id+'&')
-		    }
+				if(search.indexOf('?')===-1){
+					search += '?users_id='+users_id
+				}else{
+					search = search.replace(/\?/,'?users_id='+users_id+'&')
+				}
 
-		    // console.log(search)
+				// console.log(search)
 
-		    location.search = search
-			// console.log(location.search)
+				location.search = search
+				// console.log(location.search)
+			}
+				
+			
+		    
 
 
 		}else{
@@ -144,12 +148,9 @@ export const pageMixin = {
 
 		/*owner_id 机制*/
 		owner_id = GetQueryByString(location.href, 'owner_id')
-
+		
+		console.log(owner_id)
 		// #endif
-
-
-
-
 
 
 		// #ifdef MP-WEIXIN || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO
@@ -198,8 +199,10 @@ export const pageMixin = {
 		owner_id = option.owner_id
 		// #endif
 
+
+
 		//如果连接里面已经有了，就不需要搞事
-		if(owner_id){
+		if(owner_id || owner_id===0 || owner_id==='0'){
 			ls.set('owner_id',owner_id);
 			console.log('this page owner_id is '+owner_id)
 

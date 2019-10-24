@@ -53,7 +53,8 @@
 			return {
 				templateList:[],
 				templateData:[],
-				tagIndex:0
+				tagIndex:0,
+				system:{}
 			}
 		},
 		components:{
@@ -77,8 +78,10 @@
 				})
 
 			})
-			.then(templateData => {
+			.then(mixinData => {
 
+				let templateData = mixinData.plugin;
+				this.system = mixinData.system;
 
 				//存储页面数据
 				this.templateData = [] //页面数据的二维数组。
