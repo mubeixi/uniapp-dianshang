@@ -119,13 +119,15 @@ export default {
 			}
 			let that=this;
 			confirmOrder(data).then(res=>{
-				if(res.errorCode==0){
 					uni.showToast({
 						title:res.msg,
 						icon:'none'
 					})
-					that._getOrder();
-				}
+					setTimeout(function(){
+						that._getOrder();
+					},1000)
+			},err=>{
+				
 			}).catch(e=>{
 				console.log(e);
 			})
@@ -159,20 +161,12 @@ export default {
 			if(Order_ID){
 				cancelOrder({Order_ID}).then(res=>{
 					this.isLoading=false;
-					if(res.errorCode==0){
-						this.data.splice(index,1);
-						this.getOrderNum();
+					this.data.splice(index,1);
+					this.getOrderNum();
 						uni.showToast({
 							title:res.msg,
 							icon:"none"
 						})
-					}else{
-						uni.showToast({
-							title:res.msg,
-							icon:"none"
-						})
-					}
-
 				}).catch(e=>{
 					console.log(e);
 					this.isLoading=false;

@@ -104,6 +104,11 @@
 									title:res.msg,
 									icon:''
 								})
+								setTimeout(function(){
+									uni.navigateTo({
+										url:"../order/order?index=4"
+									})
+								},2000)
 							}else{
 								uni.showToast({
 									title:res.msg,
