@@ -2,7 +2,7 @@
     <view v-if="loading">
       <!--  <pagetitle title="提交订单"></pagetitle> -->
         <view class="address" v-if="orderInfo.is_virtual == 0 && orderInfo.NeedShipping == 1" @click="goAddressList">
-            <img class="loc_icon" src="/static/location.png" alt="">
+            <image class="loc_icon" src="/static/location.png" alt="" ></image>
             <view class="add_msg" v-if="addressinfo.Address_Name">
                 <view class="name">收货人：{{addressinfo.Address_Name}} <span>{{addressinfo.Address_Mobile | formatphone}}</span></view>
                 <view class="location">收货地址：{{addressinfo.Address_Province_name}}{{addressinfo.Address_City_name}}{{addressinfo.Address_Area_name}}{{addressinfo.Address_Town_name}}</view>
@@ -10,7 +10,7 @@
 						<view class="add_msg" v-else>
 							<view>暂无收货地址，去添加</view>
 						</view>
-            <img class="right" src="/static/right.png" alt="" >
+            <image class="right" src="/static/right.png" alt="" ></image>
         </view>
 		<view class="biz_msg">
 			<image :src="orderInfo.ShopLogo" class="biz_logo" alt="" />
@@ -519,7 +519,7 @@ export default {
         display: flex;
         align-items: center;
         padding: 44rpx 38rpx 45rpx;
-        border-top: 30rpx solid #F3F3F3;
+        // border-top: 30rpx solid #F3F3F3;
         border-bottom: 20rpx solid #F3F3F3;
 		.add_msg {
 			flex: 1;
