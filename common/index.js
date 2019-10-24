@@ -80,6 +80,36 @@ export const checkIsLogin = (redirect,tip) => {
 }
 
 /**
+ * 检测是否是分销商
+ * @param redirect
+ * @return {boolean}
+ */
+export const checkIsDistribute = (redirect,tip) => {
+    let userInfo = store.state.userInfo || ls.get('userInfo')
+
+    if (userInfo.Is_Distribute!=1) {
+        if (redirect) {
+            if(!tip){
+                uni.navigateTo({
+                    url: '/pages/distributorCenter/distributorCenter'
+                })
+                return;
+            }
+            confirm({title: '提示', content: '该操作需要是分销商,请问是否成为分销商?', confirmText: '成为分销商', cancelText: '暂不成为'}).then(() => {
+                uni.navigateTo({
+                    url: '/pages/distributorCenter/distributorCenter'
+                })
+
+            }).catch(() => {
+
+            })
+        }
+        return false;
+    }
+
+    return true;
+}
+/**
  * 根据拼团跳转不同的页面
  * @param id
  * @param is_group

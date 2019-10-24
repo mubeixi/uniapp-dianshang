@@ -13,13 +13,14 @@
 			<view class="person" >
 					<image style="border-radius: 50%;overflow: hidden" :src="data.disInfo.Shop_Logo"  @click="tofenxiaoshang"></image>
 			</view>
-			<view class="nickName">
+			<view class="nickName" v-if="userInfo.User_ID&&userInfo.Is_Distribute==1">
 				{{data.disInfo.Shop_Name}}
 			</view>
-			<view class="putong">
+			<view class="putong" v-if="userInfo.User_ID&&userInfo.Is_Distribute==1">
 				{{data.disInfo.Level_Name}}
 			</view>
 			<view class="font14 loginBtn" v-if="!userInfo.User_ID" plain size="mini" @click="goLogin">登录/注册</view>
+			<view class="font14 loginBtn" v-if="userInfo.User_ID&&userInfo.Is_Distribute!=1" plain size="mini" @click="goDistributor">成为分销商</view>
 			<view class="sales">
 				<view class="left">
 					<view class="salesSum">
@@ -149,6 +150,12 @@
 		},
 		methods:{
 			...mapActions(['getUserInfo']),
+			goDistributor(){
+				//跳转成为分销商
+				uni.navigateTo({
+					url:'../distributorCenter/distributorCenter'
+				})
+			},
 			goLogin(){
 				uni.navigateTo({
 					url:'../login/login'
@@ -167,7 +174,7 @@
 			},
 			//获取分销首页数据
 			getDisInit(){
-				getDisInit().then(res=>{
+				getDisInit({},{errtip:false}).then(res=>{
 					this.data=res.data;
 				},err=>{
 
