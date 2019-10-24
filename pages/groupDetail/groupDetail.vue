@@ -421,7 +421,7 @@ export default {
 	},
     methods: {
 		toJoinGroup(tid){
-			//Team_ID=12&Products_ID=238&users_id=wkbq6nc2kc&owner_id=48
+			
 			uni.navigateTo({
 				url:"/pages/groupJoin/groupJoin?Team_ID="+tid+"&Products_ID="+this.Products_ID
 			})
