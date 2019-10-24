@@ -268,6 +268,9 @@ export const updateMobileSms = (data,options) => fetch('update_mobile_sms',data,
 
 // 更新用户手机号
 export const updateUserMobile = (data,options) => fetch('update_user_mobile',data,options);
+// 获取会员等级信息
+export const getLevelCenter = (data,options) => fetch('get_level_center',data,options);
+
 
 function get_Appid() {
   return 'xhh';

@@ -107,7 +107,6 @@
 				}
 				let that=this;
 				addUserWithdrawMethod(this.data).then(res=>{
-					if(res.errorCode==0){
 						let User_Method_ID=res.data.User_Method_ID;
 						uni.showModal({
 						    title: res.msg,
@@ -133,12 +132,8 @@
 						        }
 						    }
 						});
-					}else{
-						uni.showToast({
-							title:res.msg,
-							icon:'none'
-						})
-					}
+				},err=>{
+					
 				}).catch(e=>{
 					console.log(e)
 				})
