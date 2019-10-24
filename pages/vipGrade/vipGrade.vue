@@ -3,96 +3,50 @@
 		<view class="top">
 			<image src="/static/task/left.png" class="goBack" @click="goBack"></image>
 			<view class="titles">会员等级</view>
-			<scroll-view class="center"  scroll-x="true">
-				<view class="vipFir ">
+			<scroll-view class="center"  scroll-x="true"  @scroll="goRight">
+				<view class="vipFir " v-for="(item,index) of pro.levels" :key="index">
 					<image src="/static/task/vip.png" class="allImg"></image>
 					<image src="/static/task/vips.png" class="leftImg"></image>
 					<view class="vipGrade">
-						VIP4
+						{{item.level_name}}
 					</view>
-					<view class="dangqian">
+					<view class="dangqian" v-if="index==0">
 						当前等级
 					</view>
 					<view class="mmp">
 						<view class="da">
 
 						</view>
-						<view class="tu" :style="{transform: 'rotate('+jiaodu+'deg)'}">
-
+						<view class="tu" :style="{transform: 'rotate('+item.growth_value/item.curlevel.upper_growth*180+'deg)'}">
+						
 						</view>
+						<!-- <view class="tu" :style="{transform: 'rotate('+jiaodu+'deg)'}">
+
+						</view> -->
 						<view class="xiao">
 
 						</view>
 						<view class="texts">
 							<view class="posiQ">我的成长值</view>
-							<view class="posiW">520</view>
-							<view class="posiE">还差20升级为VIP5</view>
+							<view class="posiW">{{item.growth_value}}</view>
+							<view class="posiE" v-if="item.curlevel.need_growth">还差{{item.curlevel.need_growth}}升级为{{pro.levels[index+1].level_name}}</view>
 						</view>
 					</view>
 					<!-- <canvas :style="{width:widths+'px'}" canvas-id="firstCanvas" class="canvass"></canvas> -->
 				</view>
-				<view class="vipFir  ">
-					<image src="/static/task/vip.png" class="allImg"></image>
-					<image src="/static/task/vips.png" class="leftImg"></image>
-					<view class="vipGrade">
-						VIP5
-					</view>
-					<view class="dangqian">
-						当前等级
-					</view>
-					<view class="mmp">
-						<view class="da">
-
-						</view>
-						<view class="tu" :style="{transform: 'rotate('+jiaodu+'deg)'}">
-
-						</view>
-						<view class="xiao">
-
-						</view>
-						<view class="texts">
-							<view class="posiQ">我的成长值</view>
-							<view class="posiW">520</view>
-							<view class="posiE">还差20升级为VIP5</view>
-						</view>
-					</view>
-				</view>
+				
 			</scroll-view>
 
 		</view>
 		<view style="height: 220rpx;"></view>
-		<circleTitle title="VIP4权益" ></circleTitle>
+		<circleTitle :title="tequan.level_name" ></circleTitle>
 		<scroll-view class="mbxa" scroll-x="true">
-			<view class="floats">
+			<view class="floats" v-for="(mb,mx) of tequan.basic" :key="mx">
 				<view class="floatm">
 					<view class="imgs">
-						<image src="/static/fenxiao/shengri.png" ></image>
+						<image :src="mb.img_url" ></image>
 					</view>
-						生日特权
-				</view>
-			</view>
-			<view class="floats">
-				<view class="floatm">
-					<view class="imgs">
-						<image src="/static/fenxiao/gaosu.png" ></image>
-					</view>
-						高速下载
-				</view>
-			</view>
-			<view class="floats">
-				<view class="floatm">
-					<view class="imgs">
-						<image src="/static/fenxiao/wuxian.png" ></image>
-					</view>
-						无限下载
-				</view>
-			</view>
-			<view class="floats">
-				<view class="floatm">
-					<view class="imgs">
-						<image src="/static/fenxiao/shouquan.png" ></image>
-					</view>
-						授权商用
+						{{mb.name}}
 				</view>
 			</view>
 		</scroll-view>
@@ -107,20 +61,12 @@
 					所需成长值
 				</view>
 			</view>
-			<view class="td">
+			<view class="td" v-for="(i,j) of pro.growths" :key="j">
 				<view class="lefts">
-					VIP1
+					{{i.name}}
 				</view>
 				<view class="rights">
-					5
-				</view>
-			</view>
-			<view class="td">
-				<view class="lefts">
-					VIP2
-				</view>
-				<view class="rights">
-					10
+					{{i.value}}
 				</view>
 			</view>
 		</view>
@@ -155,36 +101,56 @@
 	import {goBack}  from '../../common/tool.js'
 	import circleTitle from '../../components/circleTitle/circleTitle.vue'
 	import {pageMixin} from "../../common/mixin";
-
+	import {getLevelCenter} from '../../common/fetch.js';
 	export default {
 		mixins:[pageMixin],
 		data() {
 			return {
 				widths:414,
 				jiaodu:90,
+				index:0,//第几个会员等级
+				pro:[],
+				tequan:[],
 			};
 		},
 		components:{
 			circleTitle
 		},
 		onLoad() {
-			// this.canvas();
-			// let that=this;
-			// uni.getSystemInfo({
-			//     success: function (res) {
-			// 		console.log(res)
-			//         that.widths=res.screenWidth*0.367;
-			//     }
-			// });
+
+		},
+		onShow() {
+			this.getLevelCenter();
 		},
 		methods:{
-			// canvas(item,sum){
-			// 	const ctx = uni.createCanvasContext('firstCanvas');
-			// 	ctx.arc(50, 50, 50, 0, 2 * Math.PI)
-			// 	ctx.setFillStyle('#EEEEEE')
-			// 	ctx.fill()
-			// 	ctx.draw();
-			// },
+			getLevelCenter(){
+				getLevelCenter().then(res=>{
+					this.pro=res.data;
+					this.tequan=res.data.levels[0];
+				},err=>{}).catch(e=>{
+					console.log(e)
+				})
+			},
+			goRight(event){
+				if(event.detail.scrollLeft<300){
+					this.index=0;
+				}else if(event.detail.scrollLeft>300&&event.detail.scrollLeft<600){
+					this.index=1;
+				}else if(event.detail.scrollLeft>600&&event.detail.scrollLeft<900){
+					this.index=2;
+				}else if(event.detail.scrollLeft>900&&event.detail.scrollLeft<1200){
+					this.index=3;
+				}else if(event.detail.scrollLeft>1200&&event.detail.scrollLeft<1500){
+					this.index=4;
+				}else if(event.detail.scrollLeft>1500&&event.detail.scrollLeft<1800){
+					this.index=5;
+				}else if(event.detail.scrollLeft>1800&&event.detail.scrollLeft<2100){
+					this.index=6;
+				}else if(event.detail.scrollLeft>2100&&event.detail.scrollLeft<2400){
+					this.index=7;
+				}
+				this.tequan=this.pro.levels[this.index];
+			},
 			goBack(){
 				goBack();
 			},

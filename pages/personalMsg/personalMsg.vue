@@ -77,13 +77,12 @@
 			let userInfo = this.getUserInfo(true);
 		},
 		onShow(){
-			console.log('122')
 			this.userInfo=ls.get('userInfo');
 			this.User_HeadImg = this.userInfo.User_HeadImg;
 			this.get_user_info();
 		},
 		methods: {
-			...mapActions(['getUserInfo']),
+			...mapActions(['getUserInfo','setUserInfo']),
 			update(num){
 				uni.navigateTo({
 					url: '../editPersonalMsg/editPersonalMsg?type=' + num
@@ -139,6 +138,8 @@
 															icon: 'success'
 														});
 														that.User_HeadImg = res.data.User_HeadImg;
+														that.userInfo.User_HeadImg = res.data.User_HeadImg;
+														that.setUserInfo(that.userInfo);
 													}else {
 														uni.showToast({
 															title: res.msg,

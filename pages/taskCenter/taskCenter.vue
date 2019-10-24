@@ -41,7 +41,7 @@
 		<circleTitle title="我的特权"></circleTitle>
 		<view class="myPrivilege">
 			<view v-for="(i,j) of pro.basic" :key="j">
-				{{j+1}}、{{i}}
+				{{j+1}}、{{i.name}}
 			</view>
 		</view>
 		<view style="height: 20rpx;width: 100%;background-color: #F8F8F8;">
@@ -290,7 +290,7 @@
 				font-size: 28rpx;
 			}
 			.bottoms{
-				margin-top: 13rpx;
+				margin-top: 15rpx;
 				height:23rpx;
 				line-height: 23rpx;
 				font-size:24rpx;

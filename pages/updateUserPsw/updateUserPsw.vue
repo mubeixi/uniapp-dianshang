@@ -69,6 +69,20 @@
 				},1000)
 			},
 			confirm(){
+				if(!(/^1[3456789]\d{9}$/.test(this.mobile))){
+					uni.showToast({
+						title:'手机号输入错误，请重新输入',
+						icon:"none"
+					})
+					return;
+				}
+				if(!this.code){
+					uni.showToast({
+						title:'验证码不能为空',
+						icon:"none"
+					})
+					return;
+				}
 				updateUserMobile({
 					mobile: this.mobile,
 					code: this.code

@@ -80,7 +80,8 @@
 
 <!--        </div>-->
             <div class="liji">
-                <div @click="joinFunc" class="vanButton">立即参团</div>
+								<view v-if="joined" class="vanButton">去分享</view>
+                <div v-else @click="joinFunc" class="vanButton">立即参团</div>
             </div>
 
         <!-- 间隙 -->
@@ -204,10 +205,10 @@
     // import pagetitle from "@/components/title";
     import popupLayer from '../../components/popup-layer/popup-layer.vue'
     import {pageMixin} from "../../common/mixin";
-    import {getOrderDetail,getProductDetail,getProd,getPintuanTeam,getProductSharePic} from "../../common/fetch";
-    import {getGroupCountdown,buildSharePath,getProductThumb,ls} from "../../common/tool";
+    import {getOrderDetail,getProductDetail,getProd,getPintuanTeam,getProductSharePic,updateCart} from "../../common/fetch";
+    import {getGroupCountdown,buildSharePath,getProductThumb,ls,numberSort} from "../../common/tool";
     import {goProductDetail} from "../../common";
-    import {mapState} from 'vuex';
+    import {mapState,mapGetters} from 'vuex';
 
     export default {
         mixins: [pageMixin],
@@ -255,6 +256,7 @@
                     cart_key: 'DirectBuy',     //购物车类型   CartList（加入购物车）、DirectBuy（立即购买）、PTCartList（不能加入购物车）
                     active: 'pintuan',   //拼团时候选，不是拼团不选
                 },
+								joined: false,  //是否已经参加过团
             }
         },
         components: {
@@ -262,7 +264,8 @@
             // pagetitle
         },
         computed:{
-            ...mapState(['initData'])
+            ...mapState(['initData']),
+						...mapGetters(['userInfo'])
         },
         onLoad(options) {
             this.Prod_ID = options.Products_ID;
@@ -360,6 +363,8 @@
                         return;
                     }
                 }
+								this.postData.teamid = this.Team_ID;
+								this.postData.prod_id = this.Prod_ID;
                 console.log(this.postData)
                 updateCart(this.postData).then(res=>{
                     console.log(res)
@@ -581,6 +586,12 @@
 
                     this.join_team_list = res.data.join_team_list
 
+										// 查看用户是否已经参加过团 
+										for(var team of this.join_team_list) {
+											if(team.userid == this.userInfo.User_ID) {
+												this.joined = true;
+											}
+										}
                     //获取开团的时间
                    for(var team of this.join_team_list){
                        if(team.team_head){

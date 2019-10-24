@@ -65,7 +65,7 @@
                     <span>是否使用余额</span>
                     <switch :checked="userMoneyChecked" color="#04B600" @change="userMoneyChange" />
                 </view>
-								<view class="o_de">您当前最多使用余额: <text>{{userInfo.User_Money < orderInfo.Order_TotalPrice ? userInfo.User_Money : orderInfo.Order_TotalPrice}}</text></view>
+				<view class="o_de">您当前最多使用余额: <text>{{userInfo.User_Money < orderInfo.Order_TotalPrice ? userInfo.User_Money : orderInfo.Order_TotalPrice}}</text></view>
                 <input v-if="userMoneyChecked" @focus="postData.use_money = 0" v-model.number="postData.use_money" class="o_desc" placeholder="请输入金额" type="number" @blur="confirm_user_money">
             </view>
         </view>
@@ -267,13 +267,15 @@ export default {
 						return;
 					}
 				}
-				if(!this.postData.shipping_id) {
-					uni.showToast({
-						title: '请选择物流',
-						icon: 'none'
-					});
-					this.submited = false;
-					return;
+				if(this.orderInfo.is_virtual == 0 && this.orderInfo.NeedShipping == 1) {
+					if(!this.postData.shipping_id) {
+						uni.showToast({
+							title: '请选择物流',
+							icon: 'none'
+						});
+						this.submited = false;
+						return;
+					}					
 				}
 				createOrder(this.postData).then(res=>{
 					if(res.errorCode == 0) {
@@ -374,6 +376,7 @@ export default {
 					showCancel: false
 				});
 				this.postData.use_money = user_money;
+				this.createOrderCheck();
 				return;
 			}
 			this.postData.use_money = Number(input_money).toFixed(2);

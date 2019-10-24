@@ -159,8 +159,8 @@
 				addressInfo: '',
 				Order_ID: 0,
 				totalMoney: 0, // 应支付金额
-				pay_money: 0, // 开启余额支付，表示余额支付的钱，pay_type 为 balance , 先提交一次order_pay,此时pay_money变成剩余应该支付的钱 .不开启余额支付，是应该支付的钱
-				pay_type: 'balance', // balance余额支付，余额补差    wechat 微信支付  ali 支付宝支付
+				pay_money: 0, // 开启余额支付，表示余额支付的钱，pay_type 为 remainder_pay ,  
+				pay_type: 'remainder_pay', // remainder_pay余额支付，余额补差    wechat 微信支付  ali 支付宝支付
 				user_pay_password: '', //余额补差，支付密码
 				cate: 'method',
 				password_input: false,
