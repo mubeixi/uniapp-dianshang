@@ -35,7 +35,7 @@
 			    <span class="status">{{item.Order_Status_desc}}</span>
 			</div>
             <block v-for="(i,k) of item.prod_list" :key="k">
-				<div class="pro" @click="goPay(item)">
+				<div class="pro" @click="goDetail(item)">
 				    <div class="pro-div">
 						<img class="pro-img" :src="i.prod_img">
 					</div>
@@ -60,7 +60,7 @@
 			</div>
 			<div class="btn-group" v-else-if="item.Order_Status==3">
 				<span @click="goLogistics(item)">查看物流</span>
-				<span @click="goPay(item)">申请退款退货</span>
+				<span @click="goPay(item)" style="margin-left: 14rpx;">申请退款退货</span>
 			  <span class="active" @click="confirmOrder(item)">确认收货</span>
 			</div>
 			<div class="btn-group" v-else-if="item.Order_Status==4 && item.Is_Commit == 0">
@@ -165,6 +165,12 @@ export default {
 					console.log(e)
 				})
 			}
+		},
+		// 订单详情
+		goDetail(item){
+			uni.navigateTo({
+				url:"../orderDetail/orderDetail?Order_ID="+item.Order_ID+'&pagefrom=order'
+			})
 		},
 		goLogistics(item){
 			//跳转物流追踪
@@ -408,8 +414,8 @@ export default {
 				border-radius:10rpx;
                 color: #999;
 				font-size: 26rpx;
-				&:first-child{
-					margin-right: 14rpx;
+				&:last-child{
+					margin-left: 14rpx;
 				}
                 &.active {
                     color: #fff;
