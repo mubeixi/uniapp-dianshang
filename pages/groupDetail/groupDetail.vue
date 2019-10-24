@@ -239,7 +239,7 @@
 		<div class="rightss">
 			<div class="dan bTitle" @click="myPay">
 				<div class="danLeft">
-					<span class="bF">¥</span><span class="bS">{{product.flashsale_pricex}}</span>
+					<span class="bF">¥</span><span class="bS">{{product.Products_PriceX}}</span>
 				</div>
 				<div class="danRight">
 					单独购买
@@ -421,7 +421,7 @@ export default {
 	},
     methods: {
 		toJoinGroup(tid){
-			
+
 			uni.navigateTo({
 				url:"/pages/groupJoin/groupJoin?Team_ID="+tid+"&Products_ID="+this.Products_ID
 			})
