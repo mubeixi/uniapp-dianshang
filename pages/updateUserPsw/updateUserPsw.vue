@@ -1,8 +1,11 @@
 <template>
 	<view class="wrap" :style="{height: height + 'px', background:bgcolor}">
 		<!-- #ifdef APP-PLUS -->
-		<page-title :title="title" rightHidden="true" bgcolor="#F8F8F8"></page-title>
+		<view class="status_bar" style="background-color: rgb(248, 248, 248);"><!-- 这里是状态栏 --></view>
 		<!-- #endif -->
+	
+		<!-- <page-title :title="title" rightHidden="true" bgcolor="#F8F8F8"></page-title> -->
+
 		<block v-if="type != 3">
 			<view v-if="type == 0" class="content">
 				<input type="password" class="item" v-model="curr_psw" placeholder="请输入原始登录密码">

@@ -1,6 +1,10 @@
 <template>
 	<view class="all" :style="{'min-height':height+'px'}">
-		<page-title title="提现" rightHidden="true" bgcolor="#ffffff" ></page-title>
+		<!-- #ifdef APP-PLUS -->
+		<view class="status_bar" style="background-color: rgb(248, 248, 248);"><!-- 这里是状态栏 --></view>
+		<!-- #endif -->
+	
+		<!-- <page-title title="提现" rightHidden="true" bgcolor="#ffffff" ></page-title> -->
 		<view class="content">
 			<view class="bank" v-if="isShow" @click="goMethod">
 				<image src="/static/fenxiao/zhaoshang.png" class="bankCard"></image>

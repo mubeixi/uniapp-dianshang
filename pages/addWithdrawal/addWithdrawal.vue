@@ -1,6 +1,9 @@
 <template>
 	<view>
-		<page-title title="添加提现方式" rightHidden="true" ></page-title>
+		<!-- #ifdef APP-PLUS -->
+		<view class="status_bar" style="background-color: rgb(248, 248, 248);"><!-- 这里是状态栏 --></view>
+		<!-- #endif -->
+		<!-- <page-title title="添加提现方式" rightHidden="true" ></page-title> -->
 		<view class="center">
 			<view class="left">
 				提现方式

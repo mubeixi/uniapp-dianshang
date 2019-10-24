@@ -1,5 +1,8 @@
 <template>
 	<view class="all" :style="{'min-height':height+'px'}">
+		<!-- #ifdef APP-PLUS -->
+		<view class="status_bar" style="background-color: rgb(248, 248, 248);"><!-- 这里是状态栏 --></view>
+		<!-- #endif -->
 		<page-title title="我的提现方式" :rightHidden="false" bgcolor="#ffffff" :right="isShow ? '取消' : '管理'" @rightHandle="handle"></page-title>
 		<view class="content">
 			<block v-for="(item,index) of data " :key="index" >

@@ -104,7 +104,7 @@
       }
 
       box-sizing: border-box;
-      z-index: 999;
+      z-index: 2;
     }
 
     .box {

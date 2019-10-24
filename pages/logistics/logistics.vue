@@ -1,6 +1,9 @@
 <template>
 	<view class="all" :style="{'min-height':height+'px'}">
-		<page-title title="物流追踪" rightHidden="true" bgcolor="#ffffff" ></page-title>
+		<!-- #ifdef APP-PLUS -->
+		<view class="status_bar" style="background-color: rgb(248, 248, 248);"><!-- 这里是状态栏 --></view>
+		<!-- #endif -->
+		<!-- <page-title title="物流追踪" rightHidden="true" bgcolor="#ffffff" ></page-title> -->
 		<view class="wuliu box-sizing" v-if="pro.list">
 			<image :src="pro.imgpath"></image>
 			<view>

@@ -1,8 +1,11 @@
 <template>
 	<view>
 		<!-- #ifdef APP-PLUS -->
-		<page-title title="个人信息" rightHidden="true" bgcolor="#F8F8F8"></page-title>
+		<view class="status_bar" style="background-color: rgb(248, 248, 248);"><!-- 这里是状态栏 --></view>
 		<!-- #endif -->
+		
+		<!-- <page-title title="个人信息" rightHidden="true" bgcolor="#F8F8F8"></page-title> -->
+
 		<view class="msg">
 			<view class="item">
 				<view class="item-name">头像</view>

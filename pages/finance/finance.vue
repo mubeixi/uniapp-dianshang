@@ -1,6 +1,9 @@
 <template>
 	<view class="team" :style="{'min-height':height+'px'}">
-		<page-title title="财务明细" rightHidden="true" bgcolor="#ffffff"></page-title>
+		<!-- #ifdef APP-PLUS -->
+		<view class="status_bar" style="background-color: rgb(248, 248, 248);"><!-- 这里是状态栏 --></view>
+		<!-- #endif -->
+		<!-- <page-title title="财务明细" rightHidden="true" bgcolor="#ffffff"></page-title> -->
 		<view class="nav">
 			<view :class="index==0?'checked':''" @click="change(0)">
 				分销
