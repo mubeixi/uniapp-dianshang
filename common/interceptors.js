@@ -16,9 +16,6 @@ export const ajax = (url,method,data,options)=>{
   })
 
 
-  // if(!data._ajax)data._ajax=2;
-  // if (!data.owner_id && owner_id)data.owner_id=owner_id;
-
   let token
 
   var header = {

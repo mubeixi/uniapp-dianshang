@@ -138,7 +138,7 @@
     <div style="clear: both;">
 
     </div>
-    <div style="height:50px;"></div>
+    <div style="height:60px;background: white;"></div>
     <popupLayer ref="popupLayer" :direction="'top'" >
     	<div class="shareinfo" v-if="type=='share'">
     		<div class="s_top">
@@ -421,7 +421,7 @@ export default {
 	},
     methods: {
 		toJoinGroup(tid){
-			//Team_ID=12&Products_ID=238&users_id=wkbq6nc2kc&owner_id=48
+			
 			uni.navigateTo({
 				url:"/pages/groupJoin/groupJoin?Team_ID="+tid+"&Products_ID="+this.Products_ID
 			})

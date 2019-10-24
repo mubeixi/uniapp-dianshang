@@ -382,7 +382,16 @@
         }
         ,{
             "path" : "pages/myRedemption/myRedemption",
-            "style" : {}
+            "style" : {
+                "navigationBarTitleText": "我的兑换"
+            }
+		},{
+            "path" : "pages/jifenExchange/jifenExchange",
+            "style" : {
+						 "navigationBarTitleText": "积分兑换",
+						 "navigationBarBackgroundColor": "#FF5C33",
+						 "navigationBarTextStyle": "white"
+						}
         }
     ],
 	"globalStyle": {
