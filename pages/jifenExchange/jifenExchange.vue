@@ -3,9 +3,9 @@
 		<!-- #ifdef APP-PLUS -->
 		<view class="status_bar" style="background-color: #FF5C33;"><!-- 这里是状态栏 --></view>
 		<!-- #endif -->
-		<!-- #ifdef APP-PLUS -->
-			<page-title title="积分兑换" rightHidden="true" bgcolor="#FF5C33"></page-title>
-		<!-- #endif -->
+	
+		<!-- 	<page-title title="积分兑换" rightHidden="true" bgcolor="#FF5C33"></page-title> -->
+
 		<view class="top">
 			<view class="img-wrap">
 				<view class="t-title">我的积分</view>

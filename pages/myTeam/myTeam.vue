@@ -1,6 +1,9 @@
 <template>
 	<view class="team" :style="{'min-height':height+'px'}">
-		<page-title title="我的团队" rightHidden="true" bgcolor="#ffffff"></page-title>
+		<!-- #ifdef APP-PLUS -->
+		<view class="status_bar" style="background-color: rgb(248, 248, 248);"><!-- 这里是状态栏 --></view>
+		<!-- #endif -->
+		<!-- <page-title title="我的团队" rightHidden="true" bgcolor="#ffffff"></page-title> -->
 		<view class="teamName" v-if="pro.disInfo">
 			<view class="teamImg">
 				<image :src="pro.disInfo.Shop_Logo"></image>

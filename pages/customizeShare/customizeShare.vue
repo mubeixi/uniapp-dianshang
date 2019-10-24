@@ -1,6 +1,9 @@
 <template>
 	<view>
-		<page-title title="自定义分享" rightHidden="true"></page-title>
+		<!-- #ifdef APP-PLUS -->
+		<view class="status_bar" style="background-color: rgb(248, 248, 248);"><!-- 这里是状态栏 --></view>
+		<!-- #endif -->
+		<!-- <page-title title="自定义分享" rightHidden="true"></page-title> -->
 		<textarea class="edit"  contenteditable="true" placeholder="请输入分享语" placeholder-style="place" v-model="Shop_Announce">
 			
 		</textarea>

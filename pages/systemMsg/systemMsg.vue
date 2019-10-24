@@ -1,6 +1,9 @@
 <template>
 	<view class="all" :style="{'min-height':height+'px'}">
-		<page-title  title="消息" bgcolor="#ffffff" class="titless"></page-title>
+		<!-- #ifdef APP-PLUS -->
+		<view class="status_bar" style="background-color: rgb(248, 248, 248);"><!-- 这里是状态栏 --></view>
+		<!-- #endif -->
+		<!-- <page-title  title="消息" bgcolor="#ffffff" class="titless"></page-title> -->
 		<view style="height: 30rpx;"></view>
 		<view class="centers" v-for="(item,index) of pro" :key="item" @click="readMsg(item,index)">
 			<view class="tops">

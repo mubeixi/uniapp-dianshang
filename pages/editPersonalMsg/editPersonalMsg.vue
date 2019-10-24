@@ -1,8 +1,11 @@
 <template>
 	<view>
 		<!-- #ifdef APP-PLUS -->
-			<page-title :title="title" rightHidden="true" bgcolor="#F8F8F8"></page-title>
+		<view class="status_bar" style="background-color: rgb(248, 248, 248);"><!-- 这里是状态栏 --></view>
 		<!-- #endif -->
+	
+		<!-- 	<page-title :title="title" rightHidden="true" bgcolor="#F8F8F8"></page-title> -->
+
 		<input v-if="type == 0" type="text" v-model="User_Name" class="v_input" placeholder="在此修改" />
 		<input v-if="type == 1" type="text" v-model="User_NickName" class="v_input" placeholder="在此修改" />
 		<input v-if="type == 3" type="text" v-model="User_Email" class="v_input" placeholder="在此修改" />

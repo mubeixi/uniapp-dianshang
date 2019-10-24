@@ -1,8 +1,11 @@
 <template>
   <div>
-		<!-- #ifdef APP-PLUS -->
-			 <page-title title="评论" rightHidden="true" bgcolor="#F8F8F8"></page-title>
-		<!-- #endif -->
+		  <!-- #ifdef APP-PLUS -->
+		  <view class="status_bar" style="background-color: rgb(248, 248, 248);"><!-- 这里是状态栏 --></view>
+		  <!-- #endif -->
+
+			 <!-- <page-title title="评论" rightHidden="true" bgcolor="#F8F8F8"></page-title> -->
+
         <div class="navs">
             <div class="nav" :class="index == 0 ? 'active' : ''" @click="getComment(0)">全部</div>
             <div class="nav" :class="index == 1 ? 'active' : ''" @click="getComment(1)">有图</div>
