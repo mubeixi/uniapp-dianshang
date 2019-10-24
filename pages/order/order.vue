@@ -63,7 +63,7 @@
 				</div>
 				<div class="btn-group" v-else-if="item.Order_Status==3">
 					<span @click="goLogistics(item)">查看物流</span>
-					<span @click="goPay(item)">申请退款退货</span>
+					<span @click="goPay(item)" style="margin-left: 15rpx;">申请退款退货</span>
 					<span class="active" @click="confirmOrder(item,index)">确认收货</span>
 					<!-- @click="goPay(item)"跳转退款 -->
 				</div>
@@ -408,8 +408,8 @@ export default {
 				border-radius:10rpx;
                 color: #999;
 				font-size: 26rpx;
-				&:first-child{
-					margin-right: 14rpx;
+				&:last-child{
+					margin-left: 14rpx;
 				}
                 &.active {
                     color: #fff;

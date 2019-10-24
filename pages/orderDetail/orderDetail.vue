@@ -146,7 +146,7 @@
 			</div>
 			<div class="btn-group" v-else-if="orderInfo.Order_Status==3">
 				<span @click="goLogistics(orderInfo.Order_ID)">查看物流</span>
-				<span @click="goPay(orderInfo.Order_ID)">申请退款退货</span>
+				<span @click="goPay(orderInfo.Order_ID)" style="margin-left: 14rpx;">申请退款退货</span>
 			  <span class="active" @click="confirmOrder(orderInfo.Order_ID)">确认收货</span>
 			</div>
 			<div class="btn-group" v-else-if="item.Order_Status==4 && item.Is_Commit == 0">
@@ -1282,8 +1282,8 @@
 			border-radius:10rpx;
 			color: #999;
 			font-size: 26rpx;
-			&:first-child{
-				margin-right: 14rpx;
+			&:last-child{
+				margin-left: 14rpx;
 			}
 			&.active {
 				color: #fff;
