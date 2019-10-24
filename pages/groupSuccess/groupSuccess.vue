@@ -377,7 +377,7 @@
             goOrderDetail(){
                 //这里应该需要跳转到订单详情页
                 uni.navigateTo({
-                    url:'/pages/order/order?index='+2
+                    url:'/pages/pintuanOrderlist/pintuanOrderlist?index='+2
                 })
             },
             async INIT(){

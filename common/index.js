@@ -95,6 +95,7 @@ export const goProductDetail = (id,is_group) => {
 const tabbarRouter = ['/pages/index/index', '/pages/classify/classify', '/pages/groupSuccess/groupSuccess', '/pages/cart/cart', '/pages/person/person'];
 
 export const fun = {
+    confirm,
     checkIsLogin,
     goProductDetail,
     //跳转方法
