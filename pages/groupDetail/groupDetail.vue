@@ -138,7 +138,7 @@
     <div style="clear: both;">
 
     </div>
-    <div style="height:50px;"></div>
+    <div style="height:60px;background: white;"></div>
     <popupLayer ref="popupLayer" :direction="'top'" >
     	<div class="shareinfo" v-if="type=='share'">
     		<div class="s_top">

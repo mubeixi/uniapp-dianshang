@@ -133,7 +133,7 @@
 				</view>
 				<image src="/static/person/right.png" class="right"></image>
 			</view>
-	
+
 			<view class="setting" @click="goSetting">
 				<image src="/static/person/she.png" class="left"></image>
 				<view class="pintuan">

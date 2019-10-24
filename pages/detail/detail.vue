@@ -89,7 +89,7 @@
 	<div style="clear: both;">
 
 	</div>
-    <div style="height:50px;"></div>
+    <div style="height:60px;background: white;"></div>
 	<bottom @cartHandle="addCart" @directHandle="directBuy" @goGet="lingqu" @collect="collect" :collected="isCollected" :recieve="recieve" :canSubmit="canSubmit"></bottom>
 	<popupLayer ref="popupLayer" :direction="'top'" >
 		<div class="shareinfo" v-if="type=='share'">
@@ -540,9 +540,9 @@ export default {
 		//轮播图图片预览
 		yulan(index){
 			uni.previewImage({
-			            urls: this.product.Products_JSON.ImgPath,
-						indicator:'default',
-						current:index
+				urls: this.product.Products_JSON.ImgPath,
+				indicator:'default',
+				current:index
 			});
 		},
 		// 检查产品是否已收藏
