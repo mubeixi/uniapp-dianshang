@@ -38,11 +38,13 @@ export const getInitData = async ({commit, state}) => {
 
 /**
  *类似缓存的穿透机制，一层拿不到就继续往下取
+ * async
  **/
-export const getUserInfo = async ({commit, state},through) => {
+export const getUserInfo = ({commit, state},through) => {
 
   //第一次是在内存里
   let data = state.userInfo
+  console.log(data)
   if (data) return data;
 
   //从ls中获取

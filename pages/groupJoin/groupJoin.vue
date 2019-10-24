@@ -41,10 +41,11 @@
         </ul>
         <!-- 团长 -->
         <div class="three">
-            <div class="paySuc">
-                <image class="img" src="/static/tuan/paySuc.png"/>
-                支付成功
-            </div>
+<!--            <div class="paySuc">-->
+<!--                <image class="img" src="/static/tuan/paySuc.png"/>-->
+<!--                支付成功-->
+<!--            </div>-->
+            <div class="padding10-r"></div>
             <ul class="lyl">
                 <li v-for="(user,idx) in join_team_list">
                     <image class="img" :src="user.User_HeadImg" />
@@ -79,10 +80,25 @@
 
 
 <!--        </div>-->
-            <div class="liji">
-								<view v-if="joined" class="vanButton">去分享</view>
-                <div v-else @click="joinFunc" class="vanButton">立即参团</div>
-            </div>
+
+        <!-- #ifdef MP-WEIXIN || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO -->
+        <div class="liji">
+        <button v-if="joined"   open-type="share" class="vanButton invi" >邀请好友</button>
+        <div v-else @click="joinFunc" class="vanButton">立即参团</div>
+        </div>
+        <!-- #endif -->
+
+        <!-- #ifdef H5 || APP-PLUS -->
+        <div class="liji">
+            <view v-if="joined" @click="inviteFunc" class="vanButton">去分享</view>
+            <div v-else @click="joinFunc" class="vanButton">立即参团</div>
+        </div>
+        <!-- #endif -->
+
+<!--            <div class="liji">-->
+<!--                <view v-if="joined" @click="shareFunc" class="vanButton">去分享</view>-->
+<!--                <div v-else @click="joinFunc" class="vanButton">立即参团</div>-->
+<!--            </div>-->
 
         <!-- 间隙 -->
         <div class="mbxline"></div>
@@ -586,12 +602,13 @@
 
                     this.join_team_list = res.data.join_team_list
 
-										// 查看用户是否已经参加过团 
-										for(var team of this.join_team_list) {
-											if(team.userid == this.userInfo.User_ID) {
-												this.joined = true;
-											}
-										}
+                    // 查看用户是否已经参加过团
+                    for(var team of this.join_team_list) {
+                        if(team.userid == this.userInfo.User_ID) {
+                            this.joined = true;
+                        }
+                    }
+
                     //获取开团的时间
                    for(var team of this.join_team_list){
                        if(team.team_head){
@@ -609,6 +626,44 @@
                     //this.stampCount()
                     //开发时候一直倒计时太乱了
                     window.groupStam = setInterval(this.stampCount,1000)
+
+
+                    let product = this.product
+                    // #ifdef H5
+
+                    let path = '/pages/groupJoin/groupJoin?Team_ID='+this.Team_ID+'&Products_ID='+this.Prod_ID;
+                    let front_url = this.initData.front_url;
+
+
+                    this.WX_JSSDK_INIT(this).then((wxEnv)=>{
+
+                        this.$wx.onMenuShareTimeline({
+                            title: '#网中网#'+product.Products_Name, // 分享标题
+                            link: location.origin+buildSharePath(path), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                            imgUrl: product.ImgPath, // 分享图标
+                            success: function() {
+                                // 用户点击了分享后执行的回调函数
+                            }
+                        });
+
+                        //两种方式都可以
+                        wxEnv.onMenuShareAppMessage({
+                            title: '#网中网#'+product.Products_Name, // 分享标题
+                            link: location.origin+buildSharePath(path), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                            imgUrl: product.ImgPath, // 分享图标
+                            desc: product.Products_BriefDescription||'好物推荐',
+                            type: 'link', // 分享类型,music、video或link，不填默认为link
+                            // dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                            success: function() {
+                                // 用户点击了分享后执行的回调函数
+                            }
+                        });
+
+                    }).catch(()=>{
+                        console.log('不是微信环境')
+                    })
+
+                    // #endif
 
                 }).catch(e=>{
                     console.log(e)

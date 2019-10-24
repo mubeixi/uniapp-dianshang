@@ -82,7 +82,7 @@
                     还差{{product.pintuan_people-team.teamnum}}人，剩余{{team.addtime|endtime}}
                 </div>
             </div>
-            <div class="cantuan" @click="toJoinGroup(team.id)">
+            <div class="cantuan" @click="toJoinGroup(team.id,team)">
                 去参团
             </div>
         </div>
@@ -239,7 +239,7 @@
 		<div class="rightss">
 			<div class="dan bTitle" @click="myPay">
 				<div class="danLeft">
-					<span class="bF">¥</span><span class="bS">{{product.flashsale_pricex}}</span>
+					<span class="bF">¥</span><span class="bS">{{product.Products_PriceX}}</span>
 				</div>
 				<div class="danRight">
 					单独购买
@@ -264,7 +264,7 @@ import {getProductDetail,getCommit,updateCart,addCollection,getCoupon,getUserCou
 import {goBack,numberSort,getGroupCountdown,buildSharePath,getProductThumb,ls}  from '../../common/tool.js'
 import {pageMixin} from "../../common/mixin";
 import {error} from "../../common";
-import {mapState} from 'vuex';
+import {mapState,mapGetters,mapActions} from 'vuex';
 
 export default {
 	mixins:[pageMixin],
@@ -273,6 +273,7 @@ export default {
 			// #ifdef APP-PLUS
 			wxMiniOriginId:'',
 			// #endif
+
 			JSSDK_INIT:false,//自己有分享的业务
 			type: '', // 优惠券内容， 分享内容
             shareShow: false,
@@ -326,6 +327,7 @@ export default {
         popupLayer
     },
 	computed:{
+		...mapGetters(['userInfo']),
 		...mapState(['initData'])
 		// countdown(){
 		// 	if(this.product || !this.product.pintuan_end_time)return {};
@@ -351,7 +353,6 @@ export default {
 
 		//获取正在拼团的团队
 		this.getPintuanTeamList(this.Products_ID)
-
 
 
 	},
@@ -420,8 +421,27 @@ export default {
 		}
 	},
     methods: {
-		toJoinGroup(tid){
-			
+		...mapActions(['getUserInfo']),
+		toJoinGroup(tid,team){
+			console.log(team)
+			if(!this.$fun.checkIsLogin())return;
+
+			for(var usr of team.join_user){
+				console.log(usr)
+				if(this.userInfo.User_ID == usr){
+
+					this.$fun.confirm({title:'操作提示',content:'您已经参加该团,是否继续查看?'}).then(res=>{
+						uni.navigateTo({
+							url:"/pages/groupJoin/groupJoin?Team_ID="+tid+"&Products_ID="+this.Products_ID
+						})
+					},err=>{
+
+					})
+					return;
+				}
+			}
+
+
 			uni.navigateTo({
 				url:"/pages/groupJoin/groupJoin?Team_ID="+tid+"&Products_ID="+this.Products_ID
 			})
