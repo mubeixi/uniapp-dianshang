@@ -168,13 +168,15 @@
 			//获取分销首页数据
 			getDisInit(){
 				getDisInit().then(res=>{
-					if(res.errorCode==0){
-						this.data=res.data;
-					}else if(res.data.errorCode==1){
-						uni.navigateTo({
-							url:'../distributorCenter/distributorCenter'
-						})
+					this.data=res.data;
+				},err=>{
+
+					if(err.errorCode==1){
+						// uni.navigateTo({
+						// 	url:'../distributorCenter/distributorCenter'
+						// })
 					}
+
 				}).catch(err=>{
 					console.log(err)
 				})
