@@ -61,7 +61,7 @@
 				</div>
 				<div class="btn-group" v-else-if="item.Order_Status==3">
 					<span @click="goLogistics(item)">查看物流</span>
-					<span class="active" @click="confirmOrder(item)">确认收货</span>
+					<span class="active" @click="confirmOrder(item,index)">确认收货</span>
 					<!-- @click="goPay(item)"跳转退款 -->
 				</div>
 				<div class="btn-group" v-else-if="item.Order_Status==4">
@@ -114,20 +114,19 @@ export default {
 	},
 	methods:{
 		//确认收货
-		confirmOrder(item){
+		confirmOrder(item,index){
 
 			let data={
 				Order_ID:item.Order_ID
 			}
 			let that=this;
 			confirmOrder(data).then(res=>{
+					this.data.splice(index,1);
+					that.getOrderNum();
 					uni.showToast({
 						title:res.msg,
 						icon:'none'
 					})
-					setTimeout(function(){
-						that._getOrder();
-					},1000)
 			},err=>{
 				
 			}).catch(e=>{
@@ -201,6 +200,7 @@ export default {
 			this.data=[];
 			this.index=i;
 			this._getOrder();
+			this.getOrderNum();
 		},
 		_getOrder(){
 			if(this.isQing) return;
