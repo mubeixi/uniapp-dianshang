@@ -267,13 +267,15 @@ export default {
 						return;
 					}
 				}
-				if(!this.postData.shipping_id) {
-					uni.showToast({
-						title: '请选择物流',
-						icon: 'none'
-					});
-					this.submited = false;
-					return;
+				if(this.orderInfo.is_virtual == 0 && this.orderInfo.NeedShipping == 1) {
+					if(!this.postData.shipping_id) {
+						uni.showToast({
+							title: '请选择物流',
+							icon: 'none'
+						});
+						this.submited = false;
+						return;
+					}					
 				}
 				createOrder(this.postData).then(res=>{
 					if(res.errorCode == 0) {
