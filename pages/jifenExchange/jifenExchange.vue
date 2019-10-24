@@ -1,7 +1,10 @@
 <template>
 	<view>
 		<!-- #ifdef APP-PLUS -->
-		<page-title title="积分兑换" rightHidden="true" bgcolor="#FF5C33"></page-title>
+		<view class="status_bar" style="background-color: #FF5C33;"><!-- 这里是状态栏 --></view>
+		<!-- #endif -->
+		<!-- #ifdef APP-PLUS -->
+			<page-title title="积分兑换" rightHidden="true" bgcolor="#FF5C33"></page-title>
 		<!-- #endif -->
 		<view class="top">
 			<view class="img-wrap">

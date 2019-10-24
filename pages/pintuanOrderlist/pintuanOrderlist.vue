@@ -47,23 +47,24 @@
 				    </div>
 				</div>
 			</block>
-            <div class="total"><view class="ptdesc" v-if="item.teamstatus_desc">{{item.teamstatus_desc}}</view><view> 共{{item.prod_list.length}}件商品 合计：<span class="price"><span>￥</span> {{item.Order_Fyepay}}</span></view></div>
-            <div class="btn-group" v-if="item.Order_Status==1">
-                <span @click="cancelOrder(item.prod_list,index)">取消订单</span>
-                <span class="active" @click="goPay(item)">立即付款</span>
-            </div>
+			<div class="total"><view class="ptdesc" v-if="item.teamstatus_desc">{{item.teamstatus_desc}}</view><view> 共{{item.prod_list.length}}件商品 合计：<span class="price"><span>￥</span> {{item.Order_Fyepay}}</span></view></div>
+			<div class="btn-group" v-if="item.Order_Status==0">
+					<span @click="cancelOrder(item.prod_list,index)">取消订单</span>
+			</div>
+			<div class="btn-group" v-if="item.Order_Status==1">
+					<span @click="cancelOrder(item.prod_list,index)">取消订单</span>
+					<span class="active" @click="goPay(item)">立即付款</span>
+			</div>
 			<div class="btn-group" v-else-if="item.Order_Status==2">
-				<span @click="cancelOrder(item.prod_list,index)">删除订单</span>
 			    <span class="active" @click="goPay(item)">申请退款</span>
 			</div>
 			<div class="btn-group" v-else-if="item.Order_Status==3">
-				<span>查看物流</span>
-			    <span class="active" @click="confirmOrder(item)">确认收货</span>
-				<!-- @click="goPay(item)"跳转退款 -->
+				<span @click="goLogistics(item)">查看物流</span>
+				<span @click="goPay(item)">申请退款退货</span>
+			  <span class="active" @click="confirmOrder(item)">确认收货</span>
 			</div>
-			<div class="btn-group" v-else-if="item.Order_Status==4">
-				<span @click="cancelOrder(item.prod_list,index)">删除订单</span>
-			    <span class="active" @click="goPay(item)">立即评价</span>
+			<div class="btn-group" v-else-if="item.Order_Status==4 && item.Is_Commit == 0">
+			  <span class="active" @click="goPay(item)">立即评价</span>
 			</div>
         </div>
 		<div class="defaults" v-if="data.length<=0">
@@ -164,6 +165,12 @@ export default {
 					console.log(e)
 				})
 			}
+		},
+		goLogistics(item){
+			//跳转物流追踪
+			uni.navigateTo({
+				url:'../logistics/logistics?Order_ID='+item.Order_ID
+			})
 		},
 		//跳转订单详情
 		goPay(item){

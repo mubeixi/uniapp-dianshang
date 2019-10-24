@@ -1,6 +1,8 @@
 <template>
 	<view>
+		<!-- #ifdef APP-PLUS -->
 		<page-title  title="优惠券" bgcolor="#f8f8f8" class="titless"></page-title>
+		<!-- #endif -->
 <!-- 		<view class="nav">
 			<view :class="checked==0?'checked':''" @click="change(0)">
 				全部

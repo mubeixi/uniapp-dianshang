@@ -134,21 +134,22 @@
 				<div class="info">共{{orderInfo.prod_list.length}}件商品 总计：<span class="mbxa">￥<span>{{orderInfo.Order_Fyepay}}</span></span></div>
 				<div class="tips">*本次购物一共可获得{{orderInfo.Integral_Get}}积分</div>
 			</div>
+			<div class="btn-group" v-if="orderInfo.Order_Status==0">
+				<span @click="cancelOrder(orderInfo.Order_ID)">取消订单</span>
+			</div>
 			<div class="btn-group" v-if="orderInfo.Order_Status==1">
-                <span @click="cancelOrder(orderInfo.Order_ID)">取消订单</span>
-                <span class="active" @click="submit">立即付款</span>
-            </div>
+					<span @click="cancelOrder(orderInfo.Order_ID)">取消订单</span>
+					<span class="active" @click="submit">立即付款</span>
+			</div>
 			<div class="btn-group" v-else-if="orderInfo.Order_Status==2">
-				<span @click="cancelOrder(orderInfo.Order_ID)">删除订单</span>
 			    <span class="active" @click="goPay(orderInfo.Order_ID)">申请退款</span>
 			</div>
 			<div class="btn-group" v-else-if="orderInfo.Order_Status==3">
 				<span @click="goLogistics(orderInfo.Order_ID)">查看物流</span>
-			    <span class="active" @click="confirmOrder(orderInfo.Order_ID)">确认收货</span>
-				<!-- @click="goPay(item)"跳转退款 -->
+				<span @click="goPay(orderInfo.Order_ID)">申请退款退货</span>
+			  <span class="active" @click="confirmOrder(orderInfo.Order_ID)">确认收货</span>
 			</div>
-			<div class="btn-group" v-else-if="orderInfo.Order_Status==4">
-				<span @click="cancelOrder(orderInfo.Order_ID)">删除订单</span>
+			<div class="btn-group" v-else-if="item.Order_Status==4 && item.Is_Commit == 0">
 			    <span class="active" @click="goPay(orderInfo.Order_ID)">立即评价</span>
 			</div>
 		</div>
@@ -259,7 +260,7 @@
 
 		},
 		methods: {
-			goLogistics({Order_ID}){
+			goLogistics(Order_ID){
 				//跳转物流追踪
 				uni.navigateTo({
 					url:'../logistics/logistics?Order_ID='+Order_ID

@@ -1,6 +1,8 @@
 <template>
   <div class="wrap">
+		<!-- #ifdef APP-PLUS -->
         <page-title title="申请退款" rightHidden="true"></page-title>
+		<!-- #endif -->
         <div class="pro" v-for="(item,index) of refundInfo.refund_prod_list" :key="item">
             <div class="pro-div">
         		<image class="pro-img" :src="item.prod_img" alt="" />
