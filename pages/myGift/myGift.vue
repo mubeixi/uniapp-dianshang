@@ -1,6 +1,9 @@
 <template>
 	<view class="all" :style="{'min-height':height+'px'}">
-		<page-title  title="我的赠品" bgcolor="#ffffff" class="titless"></page-title>
+		<!-- #ifdef APP-PLUS -->
+		<view class="status_bar" style="background-color: rgb(248, 248, 248);"><!-- 这里是状态栏 --></view>
+		<!-- #endif -->
+		<!-- <page-title  title="我的赠品" bgcolor="#ffffff" class="titless"></page-title> -->
 		<view class="nav">
 			<view :class="checked==0?'checked':''" @click="change(0)">
 				未领取
@@ -12,7 +15,7 @@
 				已过期
 			</view>
 		</view>
-		<view style="height: 198rpx;width: 100%;">
+		<view style="height: 72rpx;width: 100%;">
 
 		</view>
 		<view class="center" v-for="(item,index) of data" :key="index">

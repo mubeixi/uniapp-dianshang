@@ -1,6 +1,9 @@
 <template>
 	<view class="all" :style="{'min-height':height+'px'}">
-		<page-title title="申请记录" rightHidden="true" bgcolor="#ffffff"></page-title>
+		<!-- #ifdef APP-PLUS -->
+		<view class="status_bar" style="background-color: rgb(248, 248, 248);"><!-- 这里是状态栏 --></view>
+		<!-- #endif -->
+		<!-- <page-title title="申请记录" rightHidden="true" bgcolor="#ffffff"></page-title> -->
 		<view class="main" v-for="(item,index) of data" :key="index">
 			<view class="fir">
 				<view class="left">

@@ -1,5 +1,8 @@
 <template>
   <div>
+	  <!-- #ifdef APP-PLUS -->
+	  <view class="status_bar" style="background-color: rgb(248, 248, 248);"><!-- 这里是状态栏 --></view>
+	  <!-- #endif -->
 	  <page-title title="收藏列表" :rightHidden="rightHidden" @rightHandle="rightHandle"  :right="rightText"></page-title>
       <div class="pro-list" v-for="(item,index) in collect_list" :key="index">
 		  <div class="mbxa"  v-if="rightClicked" @click="check(index)">

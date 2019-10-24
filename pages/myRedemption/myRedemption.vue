@@ -3,7 +3,7 @@
 		<!-- #ifdef APP-PLUS -->
 		<view class="status_bar" style="background-color: rgb(248, 248, 248);"><!-- 这里是状态栏 --></view>
 		<!-- #endif -->
-		<page-title title="我的兑换" bgcolor="#ffffff"></page-title>
+		<!-- <page-title title="我的兑换" bgcolor="#ffffff"></page-title> -->
 		
 		<view class="myHa">
 			<view class="tops">
