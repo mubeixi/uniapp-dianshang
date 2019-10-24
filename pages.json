@@ -356,6 +356,34 @@
                 "navigationBarTitleText": "失效优惠券"
             }
         }
+        ,{
+            "path" : "pages/balanceCenter/balanceCenter",
+            "style" : {
+                "navigationBarTitleText": "余额中心"
+            }
+        }
+        ,{
+            "path" : "pages/integralCenter/integralCenter",
+            "style" : {
+                "navigationBarTitleText": "积分中心"
+            }
+        }
+        ,{
+            "path" : "pages/vipRecharge/vipRecharge",
+            "style" : {
+                "navigationBarTitleText": "会员充值"
+            }
+        }
+        ,{
+            "path" : "pages/storePay/storePay",
+            "style" : {
+                "navigationBarTitleText": "实体店消费"
+            }
+        }
+        ,{
+            "path" : "pages/myRedemption/myRedemption",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
