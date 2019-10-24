@@ -1,11 +1,11 @@
 <template>
 	<view class="person">
 		<!-- #ifdef APP-PLUS -->
-		<view class="status_bar" style="background: #f81111;"><!-- 这里是状态栏 --></view>
+		<view class="status_bar" style="background: #f81111;"></view>
 		<!-- #endif -->
 
 		<view class="personTop">
-			<image src="/static/person/top.png"  ></image>
+			<image class="bg" src="/static/person/top.png"  ></image>
 			<image   :class="userInfo.User_ID&&show>=0?'':'onlyMsg'"  class="msg" src="/static/fenxiao/msg.png" @click="goMsg"></image>
 			<view class="qiandao" v-if="userInfo.User_ID&&show>=0"  :class="signin?'isQian':''" @click="signinMethod">
 				<image src="/static/person/qiandao.png"></image>
@@ -338,9 +338,13 @@
 		width: 750rpx;
 		height: 373rpx;
 		position: relative;
+		.bg{
+			
+		}
 		image{
 			width: 100%;
 			height: 100%;
+			
 		}
 		.qiandao{
 			width:120rpx;
@@ -388,7 +392,14 @@
 				margin-left: 19rpx;
 				padding-top: 10rpx;
 				.loginBtn{
-					padding:4px 10px;color: white;border: 1px solid #e7e7e7;border-radius: 4px;position: absolute;left: 10px;top: 50%;transform: translateY(-50%);
+					padding:4px 10px;
+					color: white;
+					border: 1px solid #e7e7e7;
+					border-radius: 4px;
+					position: absolute;
+					left: 10px;
+					top: 50%;
+					transform: translateY(-50%);
 				}
 				.nickName{
 					font-size:30rpx;
