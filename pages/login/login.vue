@@ -37,9 +37,9 @@
 					<div class="box" style="margin: 0 30px;">
 						<!-- <i class="funicon icon-weixin font24" ></i> -->
 						<!--@getuserinfo="weixinlogin" open-type="getUserInfo"-->
-						<button type="primary" class="text-center" open-type="getUserInfo"  @getuserinfo="weixinlogin">登录</button>
+						<button size="mini" type="primary" class="text-center" open-type="getUserInfo"  @getuserinfo="weixinlogin">登录</button>
 						<div class="line10"></div>
-						<button class="text-center" @click="toHome" >暂不登录</button>
+						<button size="mini"  class="text-center" @click="toHome" >暂不登录</button>
 						<!-- <div class="inline-block flex1 text-center" @click="qqlogin"><i style="color: #2eb1f1;font-size: 32px;margin-top: 2px" class="funicon icon-QQ1" ></i></div> -->
 					</div>
 				</div>
@@ -517,11 +517,30 @@
 			},
 			loginCall(userData){
 				this.setUserInfo(userData);
+
 				//toast('登录成功', 'success')
 				setTimeout(function() {
-					uni.switchTab({
-						url: '/pages/index/index'
-					})
+
+					var pages = getCurrentPages();
+					console.log(pages)
+					var currPage = pages[pages.length - 1]; //当前页面
+					var prevPage = pages[pages.length - 2]; //上一个页面
+
+					//只有登陆页的话
+					if(pages.length<2){
+						// #ifdef H5
+						//hack navigateBack无效
+						history.back();
+						rtturn;
+						// #endif
+
+					}
+
+					uni.navigateBack()
+
+					// uni.switchTab({
+					// 	url: '/pages/index/index'
+					// })
 				}, 200)
 			}
 

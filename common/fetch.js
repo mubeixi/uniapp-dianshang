@@ -283,6 +283,13 @@ export const jifenProdDuihuan = (data,options) => fetch('jifen_prod_duihuan', da
 // 获取物流
 export const getShipping = (data, options) => fetch('get_shipping', data, options);
 
+//获取用户资金变动记录
+export const getUserMoneyRecord = (data,options) => fetch('user_money_record',data,options);
+
+//获取用户的余额记录
+export const getUserChargeRecord = (data,options) => fetch('user_charge_record',data,options);
+
+
 function get_Appid() {
   return 'xhh';
 }

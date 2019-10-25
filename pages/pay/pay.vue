@@ -162,7 +162,7 @@
 				addressInfo: '',
 				Order_ID: 0,
 				totalMoney: 0, // 应支付金额
-				pay_money: 0, // 开启余额支付，表示余额支付的钱，pay_type 为 remainder_pay ,  
+				pay_money: 0, // 开启余额支付，表示余额支付的钱，pay_type 为 remainder_pay ,
 				pay_type: 'remainder_pay', // remainder_pay余额支付，余额补差    wechat 微信支付  ali 支付宝支付
 				user_pay_password: '', //余额补差，支付密码
 				cate: 'method',
@@ -209,7 +209,7 @@
 				this.code = GetQueryByString(location.href, 'code');
 				if (this.code) {
 					// ls.set('code',this.code)
-					this.wechatPay();
+					this.self_orderPay(1);
 				}
 			}
 			// #endif
@@ -217,49 +217,67 @@
 		},
 		methods: {
 			// 统一方法
-			async self_orderPay(){
-				let _self = this;
-				if(this.need_invoice == 1 && this.invoice_info == '') {
-					uni.showToast({
-						title: '发票信息不能为空',
-						icon: 'none'
-					});
-					return;
-				};
-				let payConf = {
-					Order_ID: this.Order_ID,
-					pay_type: this.pay_type,
-					pay_money: this.orderInfo.Order_Fyepay, // 剩余支付的钱
-					use_money: this.user_money , // 使用的余额
-					user_pay_password: this.user_pay_password, //余额支付密码
-					need_invoice: this.need_invoice,
-					invoice_info: this.invoice_info,
-					order_remark: this.order_remark
-				};
-				// 用户选择余额支付
-				if(this.pay_type == 'remainder_pay') {
-					orderPay(payConf,{errtip:false}).then(res=>{
-						console.log(res)
-						if(res.errorCode == 0) {
-							this.paySuccessCall();
-						}
-					},err=>{
-						uni.showModal({
-							title: '提示',
-							content: err.msg,
-							showCancel: false
-						});
-					}).catch(e=>{
-						console.log(e)
-					});
-					return;
-				}
+			async self_orderPay(is_forward){
 
+				let _self = this;
+				let payConf = {};
+
+				//不是跳转的
+				if(!is_forward){
+					if(this.need_invoice == 1 && this.invoice_info == '') {
+						uni.showToast({
+							title: '发票信息不能为空',
+							icon: 'none'
+						});
+						return;
+					};
+					payConf = {
+						Order_ID: this.Order_ID,
+						pay_type: this.pay_type,
+						pay_money: this.orderInfo.Order_Fyepay, // 剩余支付的钱
+						use_money: this.user_money , // 使用的余额
+						user_pay_password: this.user_pay_password, //余额支付密码
+						need_invoice: this.need_invoice,
+						invoice_info: this.invoice_info,
+						order_remark: this.order_remark
+					};
+					// 用户选择余额支付
+					if(this.pay_type == 'remainder_pay') {
+						orderPay(payConf,{errtip:false}).then(res=>{
+							console.log(res)
+							if(res.errorCode == 0) {
+								this.paySuccessCall();
+							}
+						},err=>{
+							uni.showModal({
+								title: '提示',
+								content: err.msg,
+								showCancel: false
+							});
+						}).catch(e=>{
+							console.log(e)
+						});
+						return;
+					}
+
+
+
+				}
 
 				if(this.pay_type === 'unionpay'){
 					error('即将上线')
 					return;
 				}
+
+				if(this.pay_type === 'ali_app'){
+
+
+
+				}
+
+
+				//下面都是微信
+
 				//需要格外有一个code
 
 				// #ifdef H5
@@ -282,6 +300,7 @@
 					ls.set('temp_order_info', payConf);
 					//去掉转吧
 					this.$_init_wxpay_env();
+					return;
 				}
 
 
@@ -292,56 +311,107 @@
 				// #endif
 
 				// #ifdef MP-WEIXIN
-					payConf.pay_type = 'wx_lp';
-					console.log(payConf)
-					await new Promise((resolve) => {
-						uni.login({
-							success: function (loginRes) {
-								console.log(loginRes);
-								payConf.code = loginRes.code
-								resolve()
-							}
-						});
-					})
+				payConf.pay_type = 'wx_lp';
+				console.log(payConf)
+				await new Promise((resolve) => {
+					uni.login({
+						success: function (loginRes) {
+							console.log(loginRes);
+							payConf.code = loginRes.code
+							resolve()
+						}
+					});
+				})
 				// #endif
 
-				orderPay(payConf,{errtip:false}).then(res => {
+
+				if(this.pay_type === 'ali_app'){
+
+					let provider = 'alipay';
+					let orderInfo = 'app_id=2019102568624486&charset=utf-8&format=JSON&version=1.0&sign_type=RSA2&timestamp=2019-10-25+16%3A46%3A27&notify_url=http%3A%2F%2Fnew401.bafangka.com%2Falipay%2Fnotify_url.php&return_url=http%3A%2F%2Fnew401.bafangka.com%2Ffre%2Fpages%2Forder%2Forder%3Fusers_id%3Dwkbq6nc2kc%26index%3D2&method=alipay.trade.app.pay&biz_content=%7B%22product_code%22%3A%22QUICK_MSECURITY_PAY%22%2C%22out_trade_no%22%3A%2215011112252141%22%2C%22subject%22%3A%22%E6%94%AF%E4%BB%98%E5%AE%9D%E5%95%86%E5%9F%8E%E6%94%AF%E4%BB%98%22%2C%22total_amount%22%3A9%2C%22quit_url%22%3A%22http%3A%5C%2F%5C%2Fnew401.bafangka.com%5C%2Ffre%5C%2Fpages%5C%2Forder%5C%2Forder%3Fusers_id%3Dwkbq6nc2kc%26index%3D1%22%7D&sign=SlPkLtMa8BkxCAhXsMxqw6mMZ8hVgIvR%2FCFDbgyPdOeIRGqCGxhggRML5cUsMYakH%2BiPK08IJqIEnDsLj2lhjlnsNRLO9R705vkWcSqVE64wMXlN7ofd6eXwGPptuPvH%2FKKxgNpLdA24AJC5%2BiLDsAgvPKqgYK2Pa2xXlWP1K3mSb6qsGJr1bPVIP1oGqONcBEiOX4car%2B0bwzF%2BYwjlXm%2FBMRGOhL9qX4vrKbKv%2F2kuwC%2BDtR10v4W4Nfz9XPujMmJVTVYfSmejIhhyEo2pJwij0Q%2B78UNMQjmYvW78NJnKKxGGxgRBvTVmnjAedXuxlYmkAgDS7Jsz%2FIc5wuNsBQ%3D%3D';
+
+					uni.requestPayment({
+						provider,
+						orderInfo, //微信、支付宝订单数据
+						success: function (res) {
+							_self.paySuccessCall(res)
+							console.log('success:' + JSON.stringify(res));
+						},
+						fail: function (err) {
+							console.log('fail:' + JSON.stringify(err));
+							uni.showModal({
+								title:'支付错误',
+								content:JSON.stringify(err)
+							})
+						}
+					});
+
+					return;
+
+				}
+				return;
+
+				console.log('payConf',payConf)
+				orderPay(payConf).then(res => {
 					console.log(res);
-					if(res.errorCode != 0) {
-						uni.showToast({
-							title: res.data.msg,
-							icon: 'none'
+
+
+
+
+					if(this.pay_type === 'ali_app'){
+
+						let provider = 'alipay';
+						let orderInfo = res.data;
+
+						uni.requestPayment({
+							provider,
+							orderInfo, //微信、支付宝订单数据
+							success: function (res) {
+								_self.paySuccessCall(res)
+								console.log('success:' + JSON.stringify(res));
+							},
+							fail: function (err) {
+								console.log('fail:' + JSON.stringify(err));
+								uni.showModal({
+									title:'支付错误',
+									content:JSON.stringify(err)
+								})
+							}
 						});
+
 						return;
+
 					}
-						// #ifdef H5
-						let {
+
+
+					// #ifdef H5
+					let {
+						timestamp,
+						nonceStr,
+						signType,
+						paySign
+					} = res.data;
+
+					//直接支付
+					_self.WX_JSSDK_INIT(_self).then((wxEnv) => {
+
+						//关键字？？package
+						wxEnv.chooseWXPay({
 							timestamp,
 							nonceStr,
+							package: res.data.package,
 							signType,
-							paySign
-						} = res.data;
+							paySign,
+							success: function(res) {
+								// 支付成功后的回调函数
+							}
+						});
 
-						//直接支付
-						_self.WX_JSSDK_INIT(_self).then((wxEnv) => {
+					}).catch((e) => {
+						console.log('支付失败')
+					})
 
-							//关键字？？package
-							wxEnv.chooseWXPay({
-								timestamp,
-								nonceStr,
-								package: res.data.package,
-								signType,
-								paySign,
-								success: function(res) {
-									// 支付成功后的回调函数
-								}
-							});
-
-						}).catch((e) => {
-							console.log('支付失败')
-						})
-
-						return;
+					return;
 
 					// #endif
 
@@ -356,32 +426,8 @@
 
 					// #ifdef MP-TOUTIAO
 
-					//头条参数
-					// "merchant_id": "1900013286",
-					// "app_id": "800132868040",
-					// "sign_type": "MD5",
-					// "timestamp": 1571652591,
-					// "version": "2.0",
-					// "trade_type": "H5",
-					// "product_code": "pay",
-					// "payment_type": "direct",
-					// "out_order_no": "157165255471",
-					// "uid": 49,
-					// "total_amount": 1,
-					// "currency": "CNY",
-					// "subject": "admin的微商城微商城在线付款，订单编号:71",
-					// "body": "admin的微商城微商城在线付款，订单编号:71",
-					// "trade_time": 1571652591,
-					// "valid_time": 1571653491,
-					// "notify_url": "http://new401.bafangka.com",
-					// "wx_url": "https://wx.tenpay.com/cgi-bin/mmpayweb-bin/checkmweb?prepay_id=wx21180952897263ebe491c4d01231368300&package=2309503405",
-					// "wx_type": "MWEB",
-					// "sign": "6c01d5975dbf55faae4ebfdb71558b62",
-					// "Order_ID": 71
-
 					provider = 'wxpay';
 					orderInfo = res.data
-
 					orderInfo.out_order_no = (orderInfo.Order_ID+'')
 					orderInfo.timestamp +='';//string
 					orderInfo.uid += '';
@@ -465,8 +511,8 @@
 						}
 					});
 					// #endif
-				},err=>{
 
+				},err=>{
 					uni.showModal({
 						title:'提示',
 						content:'获取支付参数失败:'+err.msg
@@ -477,7 +523,7 @@
 			},
 			//获取用户支付方式
 			chooseType(name) {
-				console.log(name)
+				console.log('支付方式',name)
 				this.pay_type = name;
 				this.$refs.popupLayer.close();
 				// 判断是否使用了余额，
@@ -712,7 +758,7 @@
 				// setTimeout(function(){
 				// 	uni.redirectTo({
 				// 		url: '/pages/order/order?index=1'
-				// 	})					
+				// 	})
 				// },1000)
 			},
 			paySuccessCall(){
@@ -777,9 +823,10 @@
 							ls.set('temp_order_info', payConf);
 							//去掉转吧
 							this.$_init_wxpay_env();
+							return;
 						}
 
-
+return;
 						// #endif
 
 						// #ifdef MP-WEIXIN
@@ -805,6 +852,8 @@
 						}))
 
 						// #endif
+
+
 
 						console.log('payConf is', payConf)
 						orderPay(payConf).then(res => {

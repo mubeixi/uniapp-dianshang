@@ -37,12 +37,12 @@
 					  </picker>
 					</view>
 			 </block> -->
-			 <view class="center" v-for="(itm,idx) of select_lists" :key="idx">
+			 <view class="center" v-for="(itm,idx2) of select_lists" :key="idx2">
 			 			<view class="mbx">
 			 				{{itm.name}}
 			 			</view>
 			 			<view class="haha">
-			 			  <picker :value="itm.index" mode="selector" :range="itm.options"  @change="selectS(idx,$event)">
+			 			  <picker :value="itm.index" mode="selector" :range="itm.options"  @change="selectS(idx2,$event)">
 								<view class="picker">
 								{{itm.options[itm.index]}}
 								</view>
@@ -80,9 +80,9 @@
 						<view class="haha">
 						  <picker mode="selector" @change="t_pickerChange" :range="t_arr" range-key="name" :value="t_index">
 							<view class="picker">
-							<!--  <text style="font-size: 28rpx;">街道地址</text> -->
-							  <view v-if="!address_info.Address_Town" style="margin-left: 20rpx;width: 300rpx;">选择街道</view>
-							  <view v-else style="margin-left: 20rpx;width: 300rpx;">{{t_arr[t_index]['name']}}</view>
+							<!--  <text style="font-size: 28upx;">街道地址</text> -->
+							  <view v-if="!address_info.Address_Town" style="margin-left: 20upx;width: 300upx;">选择街道</view>
+							  <view v-else style="margin-left: 20upx;width: 300upx;">{{t_arr[t_index]['name']}}</view>
 							</view>
 						  </picker>
 						</view>
@@ -237,14 +237,14 @@
 						  </picker>
 						</view>
 			</view>
-			<view class="center" v-for="(m,n) of text_lists" :key="n">
+			<view class="center" v-for="(m,n1) of text_lists" :key="n1">
 						<view class="mbx">
 							{{m.Name}}
 						</view>
 						<input type="text" v-model="m.Value" :placeholder="'请输入'+m.Name">
 			</view>
 			<radio-group >
-				<label class="uni-list-cell " v-for="(item, index) in pro.dis_level" :key="item.Level_Name" @click="payFenId(index)">
+				<label class="uni-list-cell " v-for="(item, index) in pro.dis_level" :key="index" @click="payFenId(index)">
 					<view>
 						<radio style="transform: scale(0.8);" :value="item.Level_Name" :checked="index === current" />
 					</view>
@@ -258,7 +258,7 @@
 		<popup-layer ref="popupLayer" :direction="'top'">
 			<div class="iMbx">
 				<div class="c_method" v-for="(item,index) in pay_arr" @click="chooseType(index)" :key="index">
-					{{item}} <text>￥{{200}}</text>
+					{{item}} <text>￥{{pay_money}}</text>
 				</div>
 			</div>
 		</popup-layer>
@@ -278,6 +278,7 @@
 		isWeiXin,
 		urlencode
 	} from "../../common/tool";
+	import {toast} from "../../common";
 	export default {
 		mixins:[pageMixin],
 		components: {
@@ -312,6 +313,7 @@
 				password_input:false,//弹出密码输入框
 				user_pay_password:'',//用户输入的密码
 				code:'',//code
+				JSSDK_INIT: false,
 				pay_type:'',//支付方式
 				pay_money:0,//支付金额
 			};
@@ -375,6 +377,14 @@
 
 				this.disBuy();
 			},
+			paySuccessCall(){
+				toast('成为经销商');
+				setTimeout(function () {
+					uni.switchTab({
+						url:'../fenxiao/fenxiao'
+					})
+				},1000)
+			},
 			//购买提交信息
 			disBuy(){
 				let data={
@@ -411,20 +421,21 @@
 						data.code=this.code;
 					}
 				}
-				disBuy(data).then(res=>{
-					if(this.pay_type=='remainder_pay'){
-						if(res.errorCode==0){
-							uni.switchTab({
-								url:'../fenxiao/fenxiao'
-							})
-						}
-					}else{
-						//不用余额调微信支付
-						this.wechatPay(res.data);
-					}
-				}).catch(e=>{
-					console.log(e);
-				})
+
+				if(this.pay_type=='remainder_pay'){
+
+					disBuy(data).then(res=>{
+						this.paySuccessCall(res)
+					}).catch(e=>{
+						console.log(e);
+					})
+
+				}else{
+					//不用余额调微信支付
+					this.wechatPay(data);
+				}
+
+
 			},
 			becomeFenxiao(){
 				let arr=true;
@@ -686,164 +697,321 @@
 							// 处理街道信息
 							this.address_town();
 			},
+			async $_init_wxpay_env() {
+
+				let initData = await this.getInitData()
+
+				let login_methods = initData.login_methods;
+				let component_appid = login_methods.component_appid
+
+				let channel = null;
+
+				//根据服务器返回配置设置channels,只有微信公众号和小程序会用到component_appid
+				//而且状态可以灵活控制 state为1
+				for (var i in login_methods) {
+					// && login_methods[i].state ??状态呢？
+					if (i != 'component_appid' && login_methods[i].state) {
+						channel = ['wx_mp'].indexOf(login_methods[i].type) === -1 ? { ...login_methods[i]
+						} : { ...login_methods[i],
+							component_appid
+						};
+						break;
+					}
+				}
+
+				if (!channel) {
+					this.$error('未开通公众号支付');
+					return false;
+				}
+
+
+				//如果url有code去掉
+				let {
+					origin,
+					pathname,
+					search,
+					hash
+				} = window.location;
+				let strArr = []
+				if (search.indexOf('code') != -1) {
+					let tempArr = search.split('&');
+					for (var i in tempArr) {
+
+						if (i.indexOf('code') === -1) {
+							strArr.push(tempArr[i])
+						}
+					}
+					let newSearchStr = strArr.join('&');
+					if (newSearchStr.idnexOf('?') === -1) {
+						newSearchStr = '?' + newSearchStr
+					}
+
+
+					search = newSearchStr;
+
+				}
+
+
+				let REDIRECT_URI = urlencode(origin + pathname + search + hash);
+
+				let wxAuthUrl = null;
+
+				if (channel.component_appid) {
+					//服务商模式登录
+					wxAuthUrl =
+							`https://open.weixin.qq.com/connect/oauth2/authorize?appid=${channel.appid}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=snsapi_userinfo&state=STATE&component_appid=${channel.component_appid}#wechat_redirect`;
+				} else {
+					//公众号自己的appid用于登录
+					wxAuthUrl =
+							`https://open.weixin.qq.com/connect/oauth2/authorize?appid=${channel.appid}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect`
+				}
+				console.log(wxAuthUrl)
+
+				window.location.href = wxAuthUrl;
+
+
+			},
 			// 用户选择 微信支付
 			async wechatPay(res) {
 
 				let _self = this;
 
 				this.pay_type = 'wechat';
-				this.$refs.popupLayer.close();
-						// 用户选择微信，并且不用余额支付
+				//this.$refs.popupLayer.close();
+				// 用户选择微信，并且不用余额支付
 
-						let payConf = {
-							Order_ID: res.Order_ID,
-							pay_money:this.pay_money,
-						};
+				let payConf = {...res};
 
-						//需要格外有一个code
-						// #ifdef H5
-						if (!isWeiXin()) {
-							this.$error('请在微信内打开')
-							return;
+				//需要格外有一个code
+				// #ifdef H5
+				if (!isWeiXin()) {
+					this.$error('请在微信内打开')
+					return;
+				}
+				let isHasCode = this.code || GetQueryByString('code');
+
+				if (isHasCode) {
+
+					//拿到之前的配置
+					payConf = { ...ls.get('temp_order_info'),
+						code: isHasCode,
+						pay_type: 'wx_mp'
+					}
+
+				} else {
+
+					//存上临时的数据
+					ls.set('temp_order_info', payConf);
+					//去掉转吧
+					this.$_init_wxpay_env();
+				}
+
+				console.log(payConf)
+
+
+				// #endif
+
+				// #ifdef MP-WEIXIN
+				payConf.pay_type = 'wx_lp'
+				// #endif
+
+				// #ifdef APP-PLUS
+				payConf.pay_type = 'wx_app'
+				// #endif
+
+
+				// #ifdef MP-WEIXIN
+				payConf.pay_type = 'wx_lp'
+
+				await new Promise((resolve => {
+					uni.login({
+						success: function (loginRes) {
+							console.log(loginRes);
+							payConf.code = loginRes.code
+							resolve()
 						}
-						let isHasCode = this.code || GetQueryByString('code');
+					});
+				}))
 
-						if (isHasCode) {
+				// #endif
 
-							//拿到之前的配置
-							payConf = { ...ls.get('temp_order_info'),
-								code: isHasCode,
-								pay_type: 'wx_mp'
+				// console.log('payConf is', payConf)
+				// orderPay(payConf).then(res => {
+
+
+					let payParam = {}
+					await disBuy(payConf).then(res=>{
+						payParam = res.data
+					}).catch(e=>{
+						console.log(e);
+					})
+
+				console.log(payParam);
+
+
+					// #ifdef H5
+					let {
+						timestamp,
+						nonceStr,
+						signType,
+						paySign
+					} = payParam;
+
+					//直接支付
+					_self.WX_JSSDK_INIT(_self).then((wxEnv) => {
+
+						//关键字？？package
+						wxEnv.chooseWXPay({
+							timestamp,
+							nonceStr,
+							package: res.package,
+							signType,
+							paySign,
+							success: function(res) {
+								// 支付成功后的回调函数
+								_self.paySuccessCall(res)
 							}
+						});
 
-						} else {
+					}).catch((e) => {
+						console.log('支付失败')
+					})
 
-							//存上临时的数据
-							ls.set('temp_order_info', payConf);
-							//去掉转吧
-							this.$_init_wxpay_env();
-						}
-
-
-						// #endif
-
-						// #ifdef MP-WEIXIN
-						payConf.pay_type = 'wx_lp'
-						// #endif
-
-						// #ifdef APP-PLUS
-						payConf.pay_type = 'wx_app'
-						// #endif
+					return;
 
 
-						// #ifdef MP-WEIXIN
-						payConf.pay_type = 'wx_lp'
-
-						await new Promise((resolve => {
-							uni.login({
-								success: function (loginRes) {
-									console.log(loginRes);
-									payConf.code = loginRes.code
-									resolve()
-								}
-							});
-						}))
-
-						// #endif
-
-						// console.log('payConf is', payConf)
-						// orderPay(payConf).then(res => {
-							console.log(res);
+					// #endif
 
 
-							// #ifdef H5
-							let {
-								timestamp,
-								nonceStr,
-								signType,
-								paySign
-							} = res;
+					let provider = 'wxpay';
+					let orderInfo = {}
 
-							//直接支付
-							_self.WX_JSSDK_INIT(_self).then((wxEnv) => {
+					// #ifdef MP-WEIXIN || MP-BAIDU || MP-TOUTIAO || MP-ALIPAY
 
-								//关键字？？package
-								wxEnv.chooseWXPay({
-									timestamp,
-									nonceStr,
-									package: res.package,
-									signType,
-									paySign,
-									success: function(res) {
-										// 支付成功后的回调函数
-									}
-								});
 
-							}).catch((e) => {
-								console.log('支付失败')
+					// #endif
+
+					// #ifdef MP-WEIXIN
+
+					provider = 'wxpay';
+					orderInfo = payParam;
+					delete orderInfo.timestamp
+
+					console.log(provider,orderInfo,'支付数据222222222222222222');
+					uni.requestPayment({
+						...orderInfo,
+						provider,
+						success: function (res) {
+							console.log('success:' + JSON.stringify(res));
+							_self.paySuccessCall(res)
+						},
+						fail: function (err) {
+							console.log('fail:' + JSON.stringify(err));
+							uni.showModal({
+								title:'支付错误',
+								content:JSON.stringify(err)
 							})
+						}
+					});
+					// #endif
 
-							return;
+					// #ifdef APP-PLUS
+					provider = 'wxpay';
+					orderInfo = payParam
+					console.log(provider,orderInfo,'支付数据222222222222222222');
+
+					uni.requestPayment({
+						provider,
+						orderInfo, //微信、支付宝订单数据
+						success: function (res) {
+							_self.paySuccessCall(res)
+							console.log('success:' + JSON.stringify(res));
+						},
+						fail: function (err) {
+							console.log('fail:' + JSON.stringify(err));
+							uni.showModal({
+								title:'支付错误',
+								content:JSON.stringify(err)
+							})
+						}
+					});
+					// #endif
 
 
-							// #endif
+				// #ifdef MP-TOUTIAO
+
+				//头条参数
+				// "merchant_id": "1900013286",
+				// "app_id": "800132868040",
+				// "sign_type": "MD5",
+				// "timestamp": 1571652591,
+				// "version": "2.0",
+				// "trade_type": "H5",
+				// "product_code": "pay",
+				// "payment_type": "direct",
+				// "out_order_no": "157165255471",
+				// "uid": 49,
+				// "total_amount": 1,
+				// "currency": "CNY",
+				// "subject": "admin的微商城微商城在线付款，订单编号:71",
+				// "body": "admin的微商城微商城在线付款，订单编号:71",
+				// "trade_time": 1571652591,
+				// "valid_time": 1571653491,
+				// "notify_url": "http://new401.bafangka.com",
+				// "wx_url": "https://wx.tenpay.com/cgi-bin/mmpayweb-bin/checkmweb?prepay_id=wx21180952897263ebe491c4d01231368300&package=2309503405",
+				// "wx_type": "MWEB",
+				// "sign": "6c01d5975dbf55faae4ebfdb71558b62",
+				// "Order_ID": 71
+
+				provider = 'wxpay';
+				orderInfo = res.data
+
+				orderInfo.out_order_no = (orderInfo.Order_ID+'')
+				orderInfo.timestamp +='';//string
+				orderInfo.uid += '';
+				orderInfo.trade_time +='';
+				orderInfo.valid_time +='';
+
+				//
+				//orderInfo.risk_info = JSON.stringify({ip: '127.0.0.1', device_id: '485737374363263'});
+				//
+				//
+				// orderInfo.params = ''
+				// orderInfo.pay_type = ''
+				// orderInfo.pay_channel = ''
+				// orderInfo.method = ''
+				// orderInfo.trade_no = ''
 
 
-							let provider = 'wxpay';
-							let orderInfo = {}
+				delete orderInfo.Order_ID
 
-							// #ifdef MP-WEIXIN || MP-BAIDU || MP-TOUTIAO || MP-ALIPAY
+				//固定值：1（拉起小程序收银台）开发者如果不希望使用头条小程序收银台，service设置为3/4时，可以直接拉起微信/支付宝进行支付：service=3： 微信API支付，不拉起小程序收银台；service=4： 支付宝API支付，不拉起小程序收银台。其中service=3、4，仅在1.35.0.1+基础库(头条743+)支持
+				//console.log(orderInfo)
 
 
-							// #endif
 
-							// #ifdef MP-WEIXIN
+				uni.requestPayment({
+					provider,
 
-							provider = 'wxpay';
-							orderInfo = res;
-							delete orderInfo.timestamp
+					service:1,//
+					orderInfo, //微信、支付宝订单数据
+					success: function (res) {
+						_self.paySuccessCall(res)
+						console.log('success:' + JSON.stringify(res));
+					},
+					fail: function (err) {
+						console.log('fail:' + JSON.stringify(err));
+						uni.showModal({
+							title:'支付错误',
+							content:JSON.stringify(err)
+						})
+					}
+				});
+				// #endif
 
-							console.log(provider,orderInfo,'支付数据222222222222222222');
-							uni.requestPayment({
-							...orderInfo,
-								provider,
-								success: function (res) {
-									console.log('success:' + JSON.stringify(res));
-									_self.paySuccessCall(res)
-								},
-								fail: function (err) {
-									console.log('fail:' + JSON.stringify(err));
-									uni.showModal({
-										title:'支付错误',
-										content:JSON.stringify(err)
-									})
-								}
-							});
-							// #endif
 
-							// #ifdef APP-PLUS
-							provider = 'wxpay';
-							orderInfo = res
-							console.log(provider,orderInfo,'支付数据222222222222222222');
 
-							uni.requestPayment({
-								provider,
-								orderInfo, //微信、支付宝订单数据
-								success: function (res) {
-									_self.paySuccessCall(res)
-									console.log('success:' + JSON.stringify(res));
-								},
-								fail: function (err) {
-									console.log('fail:' + JSON.stringify(err));
-									uni.showModal({
-										title:'支付错误',
-										content:JSON.stringify(err)
-									})
-								}
-							});
-							// #endif
-
-						// })
+				// })
 
 
 			},
@@ -953,6 +1121,22 @@
 			changes(){
 				this.isAgree=!this.isAgree;
 			}
+		},
+		created(){
+
+			// #ifdef H5
+
+			if (isWeiXin()) {
+				console.log(333333333333333333)
+				this.code = GetQueryByString(location.href, 'code');
+				console.log(this.code)
+				if (this.code) {
+					// ls.set('code',this.code)
+					this.wechatPay({});
+				}
+			}
+			// #endif
+
 		}
 	}
 </script>
@@ -962,70 +1146,70 @@ view{
 	box-sizing: border-box;
 }
 .titleImg{
-	width: 750rpx;
-	height: 330rpx;
-	margin-bottom: 25rpx;
+	width: 750upx;
+	height: 330upx;
+	margin-bottom: 25upx;
 	image{
 		width: 100%;
 		height: 100%;
 	}
 }
 .fenxiao{
-	margin-top: 30rpx;
-	margin-left: 20rpx;
-	font-size: 30rpx;
+	margin-top: 30upx;
+	margin-left: 20upx;
+	font-size: 30upx;
 	text{
-		font-size: 24rpx;
+		font-size: 24upx;
 		color: #666666;
 		text{
-			font-size: 28rpx;
+			font-size: 28upx;
 			color: #F43131;
 		}
 	}
 }
 .isFenxiao{
-	width:620rpx;
-	height:80rpx;
+	width:620upx;
+	height:80upx;
 	background:rgba(244,49,49,1);
-	border-radius:20rpx;
+	border-radius:20upx;
 	margin: 0  auto;
-	margin-top: 50rpx;
-	font-size: 34rpx;
+	margin-top: 50upx;
+	font-size: 34upx;
 	color: #FFFFFF;
-	line-height: 80rpx;
+	line-height: 80upx;
 	text-align: center;
 }
 .line{
-	width:750rpx;
-	height:20rpx;
+	width:750upx;
+	height:20upx;
 	background:rgba(248,248,248,1);
-	margin-top: 30rpx;
+	margin-top: 30upx;
 }
 .pro{
-	width: 750rpx;
-	padding: 30rpx 20rpx;
+	width: 750upx;
+	padding: 30upx 20upx;
 	display: flex;
 	justify-content: space-between;
 	flex-wrap: wrap;
-	margin-top: 50rpx;
-	padding-top: 0rpx;
-	padding-bottom: 0rpx;
+	margin-top: 50upx;
+	padding-top: 0upx;
+	padding-bottom: 0upx;
 	.forOf{
-		width: 345rpx;
+		width: 345upx;
 		view.imgs{
-			width: 345rpx;
-			height: 345rpx;
+			width: 345upx;
+			height: 345upx;
 			image{
 				width: 100%;
 				height: 100%;
 			}
 		}
 		.text{
-			margin: 17rpx 15rpx 20rpx 11rpx;
-			width:319rpx;
-			height:60rpx;
-			line-height: 30rpx;
-			font-size:24rpx;
+			margin: 17upx 15upx 20upx 11upx;
+			width:319upx;
+			height:60upx;
+			line-height: 30upx;
+			font-size:24upx;
 			font-weight:500;
 			color:rgba(51,51,51,1);
 			 text-overflow: -o-ellipsis-lastline;
@@ -1040,81 +1224,81 @@ view{
 }
 .prices{
 	color: #F43131;
-	font-size: 24rpx;
-	margin-left: 15rpx;
-	margin-bottom: 37rpx;
+	font-size: 24upx;
+	margin-left: 15upx;
+	margin-bottom: 37upx;
 	text{
-		font-size: 34rpx;
+		font-size: 34upx;
 		font-weight: bold;
 	}
 }
 .titleImg{
-	width: 750rpx;
-	height: 330rpx;
-	margin-bottom: 25rpx;
+	width: 750upx;
+	height: 330upx;
+	margin-bottom: 25upx;
 	image{
 		width: 100%;
 		height: 100%;
 	}
 }
 .center{
-	height: 98rpx;
-	width: 710rpx;
+	height: 98upx;
+	width: 710upx;
 	margin: 0 auto;
-	border-bottom: 1rpx solid #E7E7E7;
+	border-bottom: 1upx solid #E7E7E7;
 	display: flex;
 	align-items: center;
 	.mbx{
-		width:140rpx;
-		font-size: 30rpx;
+		width:140upx;
+		font-size: 30upx;
 		color: #333333;
 	}
 	input{
-		width: 600rpx;
-		font-size: 28rpx;
+		width: 600upx;
+		font-size: 28upx;
 	}
 }
 .checks{
-	font-size: 20rpx;
+	font-size: 20upx;
 	color: #333333;
 	display: flex;
 	align-items: center;
-	margin-top: 33rpx;
-	margin-left: 4rpx;
+	margin-top: 33upx;
+	margin-left: 4upx;
 }
 .checkq{
 	color: #69A1FF;
-	margin-left: 10rpx;
+	margin-left: 10upx;
 }
 
 .submits{
-	width:620rpx;
-	height:80rpx;
-	line-height: 80rpx;
+	width:620upx;
+	height:80upx;
+	line-height: 80upx;
 	background:rgba(244,49,49,1);
-	border-radius:20rpx;
+	border-radius:20upx;
 	margin: 0 auto;
-	font-size: 34rpx;
+	font-size: 34upx;
 	color: #FFFFFF;
 	text-align: center;
-	margin-top: 40rpx;
-	margin-bottom: 120rpx;
+	margin-top: 40upx;
+	margin-bottom: 120upx;
 }
 
 .qwe{
-	width:750rpx;
-	height:100rpx;
+	width:750upx;
+	height:100upx;
 	position: fixed;
-	bottom: 0rpx;
-	left: 0rpx;
+	bottom: 0upx;
+	left: 0upx;
 	background:rgba(64,61,61,1);
 	display: flex;
 	align-items: center;
-	padding-left: 20rpx;
-	padding-right: 24rpx;
+	padding-left: 20upx;
+	padding-right: 24upx;
 	.imgs{
-		width: 68rpx;
-		height: 68rpx;
+		width: 68upx;
+		height: 68upx;
 		border-radius: 50%;
 		image{
 			width: 100%;
@@ -1122,100 +1306,100 @@ view{
 		}
 	}
 	.nickName{
-		font-size: 30rpx;
+		font-size: 30upx;
 		color: #FFFFFF;
-		margin-left: 16rpx;
+		margin-left: 16upx;
 	}
 	.liji{
-		margin-left: 113rpx;
-		font-size: 22rpx;
+		margin-left: 113upx;
+		font-size: 22upx;
 		color: #FFFFFF;
 	}
 	.hahas{
-		width:140rpx;
-		height:50rpx;
+		width:140upx;
+		height:50upx;
 		background:rgba(244,49,49,1);
-		border-radius:10rpx;
+		border-radius:10upx;
 		position: absolute;
-		top: 25rpx;
-		right: 20rpx;
-		font-size: 26rpx;
+		top: 25upx;
+		right: 20upx;
+		font-size: 26upx;
 		color: #FFFFFF;
 		text-align: center;
-		line-height: 50rpx;
+		line-height: 50upx;
 	}
 }
 .zhezhao{
 	width: 100%;
 	height: 100%;
 	position: fixed;
-	top: 0rpx;
-	left: 0rpx;
+	top: 0upx;
+	left: 0upx;
 	z-index: 9999;
 	background-color: rgba($color: #000000, $alpha: .3);
 	.zhezhaoText{
-		width: 630rpx;
+		width: 630upx;
 		position: absolute;
-		top: 332rpx;
-		left: 60rpx;
-		border-radius: 20rpx;
+		top: 332upx;
+		left: 60upx;
+		border-radius: 20upx;
 		background-color: #FFFFFF;
-		padding: 30rpx 28rpx 75rpx 31rpx;
+		padding: 30upx 28upx 75upx 31upx;
 		image{
 			position: absolute;
-			top: -21rpx;
-			right:-21rpx;
-			width: 49rpx;
-			height: 49rpx;
+			top: -21upx;
+			right:-21upx;
+			width: 49upx;
+			height: 49upx;
 		}
 		.zhezhaoTitle{
-			font-size: 32rpx;
+			font-size: 32upx;
 			font-weight: bold;
 			color: #333333;
 			width: 100%;
 			text-align: center;
 		}
 		.zhezhaoAic{
-			font-size: 22rpx;
+			font-size: 22upx;
 			color: #666666;
-			margin-top: 38rpx;
+			margin-top: 38upx;
 		}
 	}
 }
-.picker view{width: 160rpx;font-size: 28rpx; line-height:90rpx;height:90rpx; margin-right: 10rpx;overflow: hidden;}
-.picker{display: flex;.quyu{width: 120rpx;}}
+.picker view{width: 160upx;font-size: 28upx; line-height:90upx;height:90upx; margin-right: 10upx;overflow: hidden;}
+.picker{display: flex;.quyu{width: 120upx;}}
 view.haha{
-	font-size: 30rpx;
+	font-size: 30upx;
 	color: #333333;
-	margin-right: 42rpx;
+	margin-right: 42upx;
 }
 .disConfig{
-	padding-bottom: 50rpx;
+	padding-bottom: 50upx;
 }
 
 .uni-list-cell{
 	display: flex;
 	align-items: center;
-	font-size: 25rpx;
+	font-size: 25upx;
 	color: #333333;
-	height: 25rpx;
-	padding-top: 38rpx;
-	margin-left: 20rpx;
-	width: 710rpx;
+	height: 25upx;
+	padding-top: 38upx;
+	margin-left: 20upx;
+	width: 710upx;
 	&:last-child{
-		padding-bottom: 30rpx;
-		border-bottom: 1rpx solid #E7E7E7;
+		padding-bottom: 30upx;
+		border-bottom: 1upx solid #E7E7E7;
 	}
 }
 .iMbx {
 		text-align: center;
-		padding: 0 20rpx;
-		font-size: 28rpx;
+		padding: 0 20upx;
+		font-size: 28upx;
 		color: #333;
 
 		.c_method {
-			padding: 37rpx 0;
-			border-bottom: 2rpx solid #E6E6E6;
+			padding: 37upx 0;
+			border-bottom: 2upx solid #E6E6E6;
 		}
 
 		& .c_method:first-child {
@@ -1239,13 +1423,13 @@ view.haha{
 			color: #000;
 			text-align: center;
 			width: 90%;
-			margin: 400rpx auto;
-			padding: 20rpx 50rpx;
+			margin: 400upx auto;
+			padding: 20upx 50upx;
 			box-sizing: border-box;
-			font-size: 28rpx;
+			font-size: 28upx;
 
 			input {
-				margin: 40rpx 0;
+				margin: 40upx 0;
 				border: 1px solid #efefef;
 			}
 

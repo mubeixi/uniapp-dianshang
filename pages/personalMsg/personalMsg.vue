@@ -1,9 +1,7 @@
 <template>
 	<view>
-		<!-- #ifdef APP-PLUS -->
-		<view class="status_bar" style="background-color: rgb(248, 248, 248);"><!-- 这里是状态栏 --></view>
-		<!-- #endif -->
-		
+
+
 		<!-- <page-title title="个人信息" rightHidden="true" bgcolor="#F8F8F8"></page-title> -->
 
 		<view class="msg">
@@ -34,7 +32,7 @@
 					<image src="../../static/right.png" mode=""></image>
 				</view>
 			</view>
-			
+
 			<view class="item" @click="update(3)">
 				<view class="item-name">邮箱</view>
 				<view class="info">
@@ -115,7 +113,7 @@
 					let that=this;
 					uni.chooseImage({
 						count:1,
-						sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有  
+						sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
 						success(res) {
 							for(let item of res.tempFiles){
 								that.User_head = item.path;
@@ -151,10 +149,10 @@
 													}
 												})
 											}
-									});		
-								}	
+									});
+								}
 							}
-							
+
 						},
 						fail(e) {
 							console.log(e);

@@ -6,7 +6,7 @@
 
 		<view class="personTop">
 			<image class="bg" src="/static/person/top.png"  ></image>
-			<image   :class="userInfo.User_ID&&show>=0?'':'onlyMsg'"  class="msg" src="/static/fenxiao/msg.png" @click="goMsg"></image>
+			<image :class="userInfo.User_ID&&show>=0?'':'onlyMsg'"  class="msg" src="/static/fenxiao/msg.png" @click="goMsg"></image>
 			<view class="qiandao" v-if="userInfo.User_ID&&show>=0"  :class="signin?'isQian':''" @click="signinMethod">
 				<image src="/static/person/qiandao.png"></image>
 				<view>{{signin?'已签到':'签到'}}</view>
@@ -177,7 +177,7 @@
 
 		},
 		onLoad(){
-			
+
 		},
 		onShow() {
 			this.getOrderNum();
@@ -185,11 +185,13 @@
 		},
 		methods:{
 			goIntegral(){
+				if(!this.$fun.checkIsLogin(1))return;
 				uni.navigateTo({
 					url:'../integralCenter/integralCenter'
 				})
 			},
 			goBalance(){
+				if(!this.$fun.checkIsLogin(1))return;
 				uni.navigateTo({
 					url:'../balanceCenter/balanceCenter'
 				})
@@ -339,12 +341,12 @@
 		height: 373rpx;
 		position: relative;
 		.bg{
-			
+
 		}
 		image{
 			width: 100%;
 			height: 100%;
-			
+
 		}
 		.qiandao{
 			width:120rpx;
@@ -622,12 +624,12 @@
 }
 
 .msg{
-		width: 45rpx !important;
-		height: 45rpx !important;
-		position: absolute;
-		top: 22rpx;
-		right: 175rpx;
-	}
+	width: 45rpx !important;
+	height: 45rpx !important;
+	position: absolute;
+	top: 22rpx;
+	right: 175rpx;
+}
 .onlyMsg{
 	right: 25rpx;
 }
@@ -638,17 +640,18 @@
 
 .jiaobiao{
 		position: absolute;
-		top: -3rpx;
-		right: 52rpx;
-		width: 20rpx;
-		height: 20rpx;
+		top: -6rpx;
+		right: 42rpx;
+		width: 24rpx;
+		height: 24rpx;
+		padding: 4rpx;
 		border-radius: 50%;
-		background-color: #FFFFFF;
+		background-color: #f43131;
 		border: 1px solid  #F43131;
-		font-size: 15rpx !important;
+		font-size: 24rpx !important;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		color: #F43131 !important;
+		color: #fff !important;
 	}
 </style>
