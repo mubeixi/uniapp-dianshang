@@ -30,12 +30,12 @@
 				</view>
 				<input type="text" placeholder="请输入您的银行卡卡号" placeholder-style="places" v-model="data.Account_Val">
 			</view>
-			<view class="centers">
+			<!-- <view class="centers">
 				<view class="left">
 					开户行
 				</view>
 				<input type="text" placeholder="请输入您的开户行" placeholder-style="places" v-model="data.Bank_Position">
-			</view>
+			</view> -->
 		</block>
 		<block v-else-if="data.Method_Type=='alipay'">
 			<view class="centers">

@@ -531,8 +531,12 @@ export default {
 		},
 		//评价预览
 		yulanImg(i,j){
+			let ImgPath = this.commit[i].ImgPath;
+			for(var k in ImgPath) {
+				ImgPath[k] = ImgPath[k].replace(/n\d\//,'');
+			}
 			uni.previewImage({
-			        urls: this.commit[i].ImgPath,
+			        urls: ImgPath,
 					indicator:'number',
 					current:j
 			});
@@ -567,9 +571,7 @@ export default {
 			if(this.isLoading==true)return;
 			this.isLoading=true;
 			let data={
-				Users_ID: 'wkbq6nc2kc',
 				coupon_id:item,
-				User_ID:1
 			}
 			if(this.couponList.length<=1){
 				this.goNextPage();
@@ -591,10 +593,8 @@ export default {
 		//获取可领取的优惠券
 		getCoupon(){
 			let data={
-				Users_ID: 'wkbq6nc2kc',
 				pageSize:this.pageSize,
 				page:this.page,
-				User_ID:1
 			}
 			getCoupon(data).then(res=>{
 				if(res.errorCode==0){
@@ -763,7 +763,6 @@ export default {
 		},
 		getCommit(item){
 			let data={
-				Users_ID:'wkbq6nc2kc',
 				Products_ID:item,
 				page:1,
 				pageSize:2
@@ -779,7 +778,6 @@ export default {
 		async getDetail(item){
 			let data={
 				prod_id:item,
-				Users_ID:'wkbq6nc2kc'
 			}
 
 			let product = null;
@@ -974,11 +972,11 @@ export default {
 		background-color: #FFFFFF;
     }
     .t_title image {
-		height: 24rpx;
-		width: 24rpx;
-        float: right;
-        margin-right: 20rpx;
-		margin-top: 33rpx;
+			height: 24rpx;
+			width: 24rpx;
+			position: absolute;
+			top: 33rpx;
+			right: 20rpx;
     }
     .t_content {
         position: relative;

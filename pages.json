@@ -337,7 +337,9 @@
         },
         {
             "path" : "pages/pintuanOrderlist/pintuanOrderlist",
-            "style" : {}
+            "style" : {
+							 "navigationBarTitleText": "拼团订单"
+						}
         }
         ,{
             "path" : "pages/orderDetail/orderDetail",
@@ -393,6 +395,10 @@
 						 "navigationBarTextStyle": "white"
 						}
         }
+        ,{
+            "path" : "pages/jifenCheck/jifenCheck",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
@@ -438,5 +444,4 @@
 	        "text": "我的"
 	    }]
 	}
-
 }

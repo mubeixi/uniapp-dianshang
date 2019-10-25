@@ -12,7 +12,8 @@
         	</div>
             <div class="pro-msg">
                 <div class="pro-name">{{item.prod_name}}</div>
-                <div class="attr"><span>{{item.attr_info.attr_name}}</span></div>
+                <div class="attr" v-if="item.attr_info"><span>{{item.attr_info.attr_name}}</span></div>
+								<div class="attr" v-else style="background-color:#fff;"><span></span></div>
                 <div class="pro-price"><span>￥</span>{{item.refund_money_fee}} <span class="amount">x{{item.prod_count}}</span></div>
             </div>
         </div>
@@ -124,7 +125,8 @@
 import popupLayer from '../../components/popup-layer/popup-layer.vue';
 import {uploadImage,getRefund,orderRefund} from '../../common/fetch.js'
 import {pageMixin} from "../../common/mixin";
-import {uploadImages} from '../../common/tool.js'
+import {uploadImages,ls} from '../../common/tool.js'
+
 export default {
 	mixins:[pageMixin],
     components: {
@@ -177,19 +179,23 @@ export default {
 		},
 		//获取申请退货退款页面
 		getRefund(){
-			getRefund({Order_ID:this.Order_ID,User_ID:3}).then(res=>{
+			getRefund({Order_ID:this.Order_ID}).then(res=>{
+				console.log(res)
 					for(var i in res.data) {
 						if(i=='refund_prod_list'){
 							for(var j in res.data[i]) {
 								for(var k in res.data[i][j]) {
 									if(k=='attr_info'){
-										res.data[i][j][k]=JSON.parse(res.data[i][j][k])
+										if(res.data[i][j][k]) {
+											res.data[i][j][k]=JSON.parse(res.data[i][j][k] && res.data[i][j][k])
+										}
 									}
 								}
 							}
 						}
 					}
 					this.refundInfo=res.data;
+					console.log(this.refundInfo)
 			}).catch(e=>{
 				console.log(e)
 			})
@@ -236,7 +242,7 @@ export default {
 		},
 		addImg(){
 			let data={
-				'Users_ID': 'wkbq6nc2kc',
+				'Users_ID': ls.get('users_id'),
 				'timestamp':'1502263578',
 				'sign':'DA1525TR85D6S5A9E5236FDSWD52F147WA',
 				'sortToken':1,
@@ -344,7 +350,6 @@ export default {
     .pro-div{
     	width: 200rpx;
     	height: 200rpx;
-		margin-left: 20rpx;
     }
     .pro-img {
         width: 100%;
@@ -353,12 +358,12 @@ export default {
     .pro-name {
         font-size: 26rpx;
         margin-bottom: 20rpx;
-		text-overflow: -o-ellipsis-lastline;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		display: -webkit-box;
-		-webkit-line-clamp: 2;
-		-webkit-box-orient: vertical;
+    text-overflow: -o-ellipsis-lastline;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
     }
     .attr {
         display: inline-block;

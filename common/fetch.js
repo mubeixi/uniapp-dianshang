@@ -271,6 +271,17 @@ export const updateUserMobile = (data,options) => fetch('update_user_mobile',dat
 // 获取会员等级信息
 export const getLevelCenter = (data,options) => fetch('get_level_center',data,options);
 
+// 积分记录
+export const userIntegralRecord = (data,options) => fetch('user_integral_record', data, options);
+// 积分兑换产品列表
+export const getJifenProd = (data,options) => fetch('get_jifen_prod',data,options);
+// 我的积分兑换列表
+export const jifenProdOrder = (data,options) => fetch('jifen_prod_order',data,options);
+// 积分支付
+export const jifenProdDuihuan = (data,options) => fetch('jifen_prod_duihuan', data, options);
+
+// 获取物流
+export const getShipping = (data, options) => fetch('get_shipping', data, options);
 
 function get_Appid() {
   return 'xhh';

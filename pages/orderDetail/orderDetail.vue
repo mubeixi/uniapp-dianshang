@@ -1,5 +1,8 @@
 <template>
 	<div>
+		<!-- #ifdef APP-PLUS -->
+		<view class="status_bar" style="background:white;position: fixed;top: 0;z-index: 22"><!-- 这里是状态栏 --></view>
+		<!-- #endif -->
 		<div class="zhezhao" v-if="password_input">
 			<div class="input-wrap">
 				<div>请输入余额支付密码</div>
@@ -10,7 +13,6 @@
 				</div>
 			</div>
 		</div>
-		<page-title title="订单详情" :rightHidden="true" bgcolor="#ffffff"></page-title>
 		<div class="state" v-if="orderInfo.Order_Status == 1">
 			<image class="img" src="/static/wait.png" />
 			<span class="state-desc">等待买家付款</span>

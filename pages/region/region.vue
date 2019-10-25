@@ -12,13 +12,13 @@
 				<view class="tops">
 					{{pro.disInfo.Shop_Name}}
 				</view>
-				<view class="bottoms">
+				<view class="bottoms" v-if="pro.agent_identity">
 					<image src="/static/fenxiao/vip.png"></image>
-					郑州市代
+					{{pro.agent_identity}}
 				</view>
 			</view>
 			<view class="juewei" @click="goAddInfo">
-				立即申请
+				{{pro.agent_identity ? '立即申请' : '暂不可申请'}}
 			</view>
 		</view>
 		<view class="moneySum">
@@ -169,6 +169,10 @@
 			}
 		}
 		.nickName{
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			// align-items: center;
 			margin-left: 15rpx;
 			font-size: 30rpx;
 			height: 83rpx;
@@ -266,6 +270,7 @@
 		border-radius: 20rpx;
 		padding: 25rpx 34rpx 33rpx 34rpx;
 		background-color: #FFFFFF;
+		box-sizing: border-box;
 		.xiangTop{
 			width:186rpx;
 			height:56rpx;
