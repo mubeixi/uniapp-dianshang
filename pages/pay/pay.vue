@@ -159,7 +159,7 @@
 				addressInfo: '',
 				Order_ID: 0,
 				totalMoney: 0, // 应支付金额
-				pay_money: 0, // 开启余额支付，表示余额支付的钱，pay_type 为 remainder_pay ,  
+				pay_money: 0, // 开启余额支付，表示余额支付的钱，pay_type 为 remainder_pay ,
 				pay_type: 'remainder_pay', // remainder_pay余额支付，余额补差    wechat 微信支付  ali 支付宝支付
 				user_pay_password: '', //余额补差，支付密码
 				cate: 'method',
@@ -206,7 +206,7 @@
 				this.code = GetQueryByString(location.href, 'code');
 				if (this.code) {
 					// ls.set('code',this.code)
-					this.wechatPay();
+					this.self_orderPay(1);
 				}
 			}
 			// #endif
@@ -214,49 +214,56 @@
 		},
 		methods: {
 			// 统一方法
-			async self_orderPay(){
+			async self_orderPay(is_forward){
 				let _self = this;
-				if(this.need_invoice == 1 && this.invoice_info == '') {
-					uni.showToast({
-						title: '发票信息不能为空',
-						icon: 'none'
-					});
-					return;
-				};
-				let payConf = {
-					Order_ID: this.Order_ID,
-					pay_type: this.pay_type,
-					pay_money: this.orderInfo.Order_Fyepay, // 剩余支付的钱
-					use_money: this.user_money , // 使用的余额
-					user_pay_password: this.user_pay_password, //余额支付密码
-					need_invoice: this.need_invoice,
-					invoice_info: this.invoice_info,
-					order_remark: this.order_remark
-				};
-				// 用户选择余额支付
-				if(this.pay_type == 'remainder_pay') {
-					orderPay(payConf,{errtip:false}).then(res=>{
-						console.log(res)
-						if(res.errorCode == 0) {
-							this.paySuccessCall();
-						}
-					},err=>{
-						uni.showModal({
-							title: '提示',
-							content: err.msg,
-							showCancel: false
+				let payConf = {};
+				if(!is_forward){
+					if(this.need_invoice == 1 && this.invoice_info == '') {
+						uni.showToast({
+							title: '发票信息不能为空',
+							icon: 'none'
 						});
-					}).catch(e=>{
-						console.log(e)
-					});
-					return;
+						return;
+					};
+					payConf = {
+						Order_ID: this.Order_ID,
+						pay_type: this.pay_type,
+						pay_money: this.orderInfo.Order_Fyepay, // 剩余支付的钱
+						use_money: this.user_money , // 使用的余额
+						user_pay_password: this.user_pay_password, //余额支付密码
+						need_invoice: this.need_invoice,
+						invoice_info: this.invoice_info,
+						order_remark: this.order_remark
+					};
+					// 用户选择余额支付
+					if(this.pay_type == 'remainder_pay') {
+						orderPay(payConf,{errtip:false}).then(res=>{
+							console.log(res)
+							if(res.errorCode == 0) {
+								this.paySuccessCall();
+							}
+						},err=>{
+							uni.showModal({
+								title: '提示',
+								content: err.msg,
+								showCancel: false
+							});
+						}).catch(e=>{
+							console.log(e)
+						});
+						return;
+					}
+
+					if(this.pay_type === 'unionpay'){
+						error('即将上线')
+						return;
+					}
+
 				}
 
 
-				if(this.pay_type === 'unionpay'){
-					error('即将上线')
-					return;
-				}
+
+
 				//需要格外有一个code
 
 				// #ifdef H5
@@ -279,6 +286,7 @@
 					ls.set('temp_order_info', payConf);
 					//去掉转吧
 					this.$_init_wxpay_env();
+					return;
 				}
 
 
@@ -709,7 +717,7 @@
 				// setTimeout(function(){
 				// 	uni.redirectTo({
 				// 		url: '/pages/order/order?index=1'
-				// 	})					
+				// 	})
 				// },1000)
 			},
 			paySuccessCall(){
@@ -774,9 +782,10 @@
 							ls.set('temp_order_info', payConf);
 							//去掉转吧
 							this.$_init_wxpay_env();
+							return;
 						}
 
-
+return;
 						// #endif
 
 						// #ifdef MP-WEIXIN
@@ -802,6 +811,8 @@
 						}))
 
 						// #endif
+
+
 
 						console.log('payConf is', payConf)
 						orderPay(payConf).then(res => {
