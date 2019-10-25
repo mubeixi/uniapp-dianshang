@@ -176,10 +176,12 @@ export const pageMixin = {
 			let extConfig = wx.getExtConfigSync ? wx.getExtConfigSync() : {};
 			console.log('extConfig info is',extConfig);
 			users_id = extConfig.users_id;
+			
 		}
 
 		//开发环境下，就手动给一下吧
-		if(!users_id && process.env.NODE_ENV != 'production'){
+		// && process.env.NODE_ENV != 'production'
+		if(!users_id){
 			users_id = 'wkbq6nc2kc';
 			ls.set('users_id',users_id);
 		}
