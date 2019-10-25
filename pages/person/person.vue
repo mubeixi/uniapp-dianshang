@@ -185,11 +185,13 @@
 		},
 		methods:{
 			goIntegral(){
+				if(!this.$fun.checkIsLogin(1))return;
 				uni.navigateTo({
 					url:'../integralCenter/integralCenter'
 				})
 			},
 			goBalance(){
+				if(!this.$fun.checkIsLogin(1))return;
 				uni.navigateTo({
 					url:'../balanceCenter/balanceCenter'
 				})

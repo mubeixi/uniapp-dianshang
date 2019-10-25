@@ -11,11 +11,11 @@
 
 			// #ifdef APP-PLUS
 
-            isDev && ls.clear()
+            //isDev && ls.clear()
 
 			ls.set('users_id',APP_USERS_ID);//app里面需要写死打包，不然办法
             // if(isDev){
-                
+
             // }
 
 			// #endif
@@ -46,6 +46,24 @@
 <style lang="less">
 @import "./static/css/app.less";
 @import "./static/css/icon.css";
+
+/* #ifdef MP */
+page{
+    /*background: #f8f8f8;*/
+    /*padding-bottom: constant(safe-area-inset-bottom);*/
+    /*padding-bottom: env(safe-area-inset-bottom);*/
+    font-size: 16px;
+    font-family:-apple-system,'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
+}
+/* #endif */
+
+/* #ifdef H5 */
+/*'Hiragino Sans GB',*/
+html,body{
+    font-size: 16px;
+    font-family:-apple-system,'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
+}
+/* #endif */
 
 ul,li{
     list-style:none;

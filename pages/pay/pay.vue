@@ -321,6 +321,34 @@
 				})
 				// #endif
 
+
+				if(this.pay_type === 'ali_app'){
+
+					let provider = 'alipay';
+					let orderInfo = 'app_id=2019102568624486&charset=utf-8&format=JSON&version=1.0&sign_type=RSA2&timestamp=2019-10-25+16%3A46%3A27&notify_url=http%3A%2F%2Fnew401.bafangka.com%2Falipay%2Fnotify_url.php&return_url=http%3A%2F%2Fnew401.bafangka.com%2Ffre%2Fpages%2Forder%2Forder%3Fusers_id%3Dwkbq6nc2kc%26index%3D2&method=alipay.trade.app.pay&biz_content=%7B%22product_code%22%3A%22QUICK_MSECURITY_PAY%22%2C%22out_trade_no%22%3A%2215011112252141%22%2C%22subject%22%3A%22%E6%94%AF%E4%BB%98%E5%AE%9D%E5%95%86%E5%9F%8E%E6%94%AF%E4%BB%98%22%2C%22total_amount%22%3A9%2C%22quit_url%22%3A%22http%3A%5C%2F%5C%2Fnew401.bafangka.com%5C%2Ffre%5C%2Fpages%5C%2Forder%5C%2Forder%3Fusers_id%3Dwkbq6nc2kc%26index%3D1%22%7D&sign=SlPkLtMa8BkxCAhXsMxqw6mMZ8hVgIvR%2FCFDbgyPdOeIRGqCGxhggRML5cUsMYakH%2BiPK08IJqIEnDsLj2lhjlnsNRLO9R705vkWcSqVE64wMXlN7ofd6eXwGPptuPvH%2FKKxgNpLdA24AJC5%2BiLDsAgvPKqgYK2Pa2xXlWP1K3mSb6qsGJr1bPVIP1oGqONcBEiOX4car%2B0bwzF%2BYwjlXm%2FBMRGOhL9qX4vrKbKv%2F2kuwC%2BDtR10v4W4Nfz9XPujMmJVTVYfSmejIhhyEo2pJwij0Q%2B78UNMQjmYvW78NJnKKxGGxgRBvTVmnjAedXuxlYmkAgDS7Jsz%2FIc5wuNsBQ%3D%3D';
+
+					uni.requestPayment({
+						provider,
+						orderInfo, //微信、支付宝订单数据
+						success: function (res) {
+							_self.paySuccessCall(res)
+							console.log('success:' + JSON.stringify(res));
+						},
+						fail: function (err) {
+							console.log('fail:' + JSON.stringify(err));
+							uni.showModal({
+								title:'支付错误',
+								content:JSON.stringify(err)
+							})
+						}
+					});
+
+					return;
+
+				}
+				return;
+
+				console.log('payConf',payConf)
 				orderPay(payConf).then(res => {
 					console.log(res);
 

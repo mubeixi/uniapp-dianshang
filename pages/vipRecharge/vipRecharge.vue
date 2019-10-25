@@ -14,7 +14,7 @@
 			</view>
 		</view>
 
-		<input  class="inputs" type="number" placeholder="请输入充值金额">
+		<input  class="inputs" @input="changeNun" type="number" step="2" placeholder="请输入充值金额">
 		<view class="line"></view>
 		<view class="payMethod">
 			支付方式
@@ -25,10 +25,10 @@
 				{{channel}}
 			</view>
 			<view class="radio">
-				<view class="el-radio"></view>
+				<view class="el-radio" :class="{check:payChannel===idx}"></view>
 			</view>
 		</view>
-		<view class="queren">
+		<view class="queren" @click="sub">
 			确认
 		</view>
 	</view>
@@ -37,10 +37,12 @@
 <script>
 import {get_user_info} from "../../common/fetch";
 import {mapGetters} from 'vuex';
+import {error} from "../../common";
 export default {
 	data() {
 		return {
 			info:{},
+			num:null,
 			payChannel:null,
 		};
 	},
@@ -51,17 +53,46 @@ export default {
 	},
 	computed:{
 		payChannelList(){
-			let arr = [];
+			let obj = {};
 
-			if(!this.initData || !this.initData.pay_arr)return;
-			arr = this.initData.pay_arr.map((item,idx)=>{
-				if(idx!='remainder_pay')return item
-			})
-			return arr
+			if(!this.initData || !this.initData.pay_arr)return arr;
+			for(var i in this.initData.pay_arr){
+				if(i!='remainder_pay'){
+					//默认第一个
+					if(!this.payChannel)this.payChannel = i
+					obj[i] = this.initData.pay_arr[i]
+				}
+			}
+			console.log(obj)
+			// arr = this.initData.pay_arr.map((item,idx)=>{
+			// 	if(idx!='remainder_pay')return item
+			// })
+			return obj
 		},
 		...mapGetters(['initData'])
 	},
 	methods:{
+		changeNun(e){
+
+			this.num = e.detail.value
+		},
+		sub(){
+			let reg = /^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/
+			if (!reg.test(this.num)) {
+				error('充值金额最多2位小数')
+				this.num = null;
+				return
+			}
+
+			if(!this.payChannel){
+				error('支付渠道必选')
+				return;
+			}
+
+			//create recharge order
+
+			//redirect to pay page
+		}
 
 	}
 }
