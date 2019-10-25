@@ -517,11 +517,30 @@
 			},
 			loginCall(userData){
 				this.setUserInfo(userData);
+
 				//toast('登录成功', 'success')
 				setTimeout(function() {
-					uni.switchTab({
-						url: '/pages/index/index'
-					})
+
+					var pages = getCurrentPages();
+					console.log(pages)
+					var currPage = pages[pages.length - 1]; //当前页面
+					var prevPage = pages[pages.length - 2]; //上一个页面
+
+					//只有登陆页的话
+					if(pages.length<2){
+						// #ifdef H5
+						//hack navigateBack无效
+						history.back();
+						rtturn;
+						// #endif
+
+					}
+
+					uni.navigateBack()
+
+					// uni.switchTab({
+					// 	url: '/pages/index/index'
+					// })
 				}, 200)
 			}
 

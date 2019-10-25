@@ -26,13 +26,13 @@ function format_time(format_str, mtime) {
     var mtime = new Date(parseInt(mtime) * 1000);
   }
   var timeObject = {
-    "M+": mtime.getMonth() + 1,                   //月份 
-    "d+": mtime.getDate(),                        //日 
-    "h+": mtime.getHours(),                       //小时 
-    "m+": mtime.getMinutes() < 10 ? '0' + mtime.getMinutes() : mtime.getMinutes(),                     //分 
-    "s+": mtime.getSeconds() < 10 ? '0' + mtime.getSeconds() : mtime.getSeconds(),                     //秒 
-    "q+": Math.floor((mtime.getMonth() + 3) / 3), //季度 
-    "S": mtime.getMilliseconds()                  //毫秒 
+    "M+": mtime.getMonth() + 1,                   //月份
+    "d+": mtime.getDate(),                        //日
+    "h+": mtime.getHours(),                       //小时
+    "m+": mtime.getMinutes() < 10 ? '0' + mtime.getMinutes() : mtime.getMinutes(),                     //分
+    "s+": mtime.getSeconds() < 10 ? '0' + mtime.getSeconds() : mtime.getSeconds(),                     //秒
+    "q+": Math.floor((mtime.getMonth() + 3) / 3), //季度
+    "S": mtime.getMilliseconds()                  //毫秒
   };
   if (/(y+)/.test(format_str)) {
     format_str = format_str.replace(RegExp.$1, (mtime.getFullYear() + "").substr(4 - RegExp.$1.length));
@@ -64,8 +64,8 @@ function formatCate(lists, front_url) {
 
 //帖子列表处理
 function formatNote(lists, front_url) {
-  for (var i in lists) {   
-    lists[i].imgcount = lists[i].images ? parseInt(lists[i].images.length) : 0;    
+  for (var i in lists) {
+    lists[i].imgcount = lists[i].images ? parseInt(lists[i].images.length) : 0;
     lists[i].imgnum = parseInt(lists[i].imgcount - 3);
     //初始化第三张图片为空
     lists[i].third = {};
@@ -75,13 +75,13 @@ function formatNote(lists, front_url) {
      */
     lists[i].show_count = lists[i].imgcount > 3 ? 2 : lists[i].imgcount;
     //格式化地址，为了防止
-    lists[i].address = lists[i].noteaddress.length > 23 ? lists[i].noteaddress.substr(0, 22)+'...' : lists[i].noteaddress; 
-    
+    lists[i].address = lists[i].noteaddress.length > 23 ? lists[i].noteaddress.substr(0, 22)+'...' : lists[i].noteaddress;
+
     for (var j in lists[i].images) {
-      lists[i].images[j] = this.format_imgs(lists[i].images[j], front_url);  
+      lists[i].images[j] = this.format_imgs(lists[i].images[j], front_url);
       if (j == 2) {
         lists[i].third = lists[i].images[j];
-    }    
+    }
     }
   }
   return lists;
@@ -89,22 +89,22 @@ function formatNote(lists, front_url) {
 
 //砍价列表处理
 function formatProd(lists, front_url) {
-  for (var i in lists) { 
+  for (var i in lists) {
     lists[i].prodimg = this.format_imgs(lists[i].prodimg, front_url);
   }
   return lists;
 }
 
- 
+
 //订单列表订单信息处理
 function formatComment(lists, front_url) {
-  for (var i in lists) {   
+  for (var i in lists) {
     //时间处理
     lists[i]['created_at'] = format_time('M-d h:m', lists[i]['created_at']);
   }
   return lists;
 }
- 
+
 
 
 //创建随即字符串
@@ -244,7 +244,7 @@ function check_mobile(mobile) {
     return true;
   }
 }
-//验证金额格式 
+//验证金额格式
 function check_money(money) {
   if (!(/(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/.test(String(money)))) {
     return false;
@@ -330,8 +330,8 @@ function check_money_in (money) {
 //数组转化
 function array_change(arr) {
   var array = [];
-  console.log('utls')
-  console.log(arr)
+  // console.log('utls')
+  // console.log(arr)
   for (var i in arr) {
     array.push({ 'id': i, 'name': arr[i] });
   }
@@ -440,7 +440,7 @@ function alert(content, callback) {
  * 获取地址
  */
 function  get_cache(cachename) {
-  return wx.getStorageSync(cachename) ? wx.getStorageSync(cachename) : {};  
+  return wx.getStorageSync(cachename) ? wx.getStorageSync(cachename) : {};
 }
 //写入缓存
 function set_cache(cachename,cache) {
@@ -450,7 +450,7 @@ function set_cache(cachename,cache) {
 /**
  * 获取距离
  */
-function get_distance(distance) {  
+function get_distance(distance) {
   var distance = (parseInt(distance) / 1000).toFixed(2);
   if (distance < 0.5) {
     distance = "<500m"
@@ -458,24 +458,24 @@ function get_distance(distance) {
     distance = "<1km"
   } else {
     distance = distance + "km"
-  } 
+  }
   return distance;
 }
 
-// 时间格式化输出，如1天天23时时12分分12秒秒12 。每10ms都会调用一次  
+// 时间格式化输出，如1天天23时时12分分12秒秒12 。每10ms都会调用一次
 function dateformat(micro_second) {
-  // 总秒数  
+  // 总秒数
   var second = parseInt(micro_second);
-  // 天数  
+  // 天数
   var day = Math.floor(second / 3600 / 24);
-  // 总小时  
+  // 总小时
   var hr = Math.floor(second / 3600);
-  // 小时位  
+  // 小时位
   var hr2 = hr % 24;
-  // 分钟位  
+  // 分钟位
   var min = Math.floor((second - hr * 3600) / 60);
-  // 秒位  
-  var sec = (second - hr * 3600 - min * 60);// equal to => var sec = second % 60;  
+  // 秒位
+  var sec = (second - hr * 3600 - min * 60);// equal to => var sec = second % 60;
   return day + "天" + hr2 + ":" + min + ":" + sec;
 }
 //房间列表处理
@@ -511,9 +511,9 @@ function addMessageCode (info) {
     return false;
   }
   info.act = 'template_message';
-  
+
   var app = getApp();
-  app.http_req(info, app.globalData.init.api_url, 'POST');  
+  app.http_req(info, app.globalData.init.api_url, 'POST');
 }
 /**
  * 数组排序（值为number型）
@@ -568,7 +568,7 @@ function formatOrder(front_url, orderlist) {
           CartList[pro_id][attr_id]['pro_img'] = ImgPath && ImgPath.indexOf('http') > -1 ? ImgPath : front_url + ImgPath;
           let start = CartList[pro_id][attr_id]['start'];
           CartList[pro_id][attr_id]['start'] = format_time('yyyy年M月d日', start);
-          
+
           if (typeof CartList[pro_id][attr_id]['end'] != 'undefined') {
             let end = CartList[pro_id][attr_id]['end'];
             CartList[pro_id][attr_id]['end'] = format_time('yyyy年M月d日', end);

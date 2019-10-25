@@ -28,7 +28,7 @@
 					<view class="salesSum">
 						累计销售额（元）
 					</view>
-					<view class="salesSumPrice" v-if="userInfo.User_ID">
+					<view class="salesSumPrice" v-if="userInfo.User_ID&&userInfo.Is_Distribute">
 						{{data.total_sales}}
 					</view>
 					<view class="salesSumPrice" v-else>
@@ -39,7 +39,7 @@
 					<view class="salesSum">
 						累计利润（元）
 					</view>
-					<view class="salesSumPrice" v-if="userInfo.User_ID">
+					<view class="salesSumPrice" v-if="userInfo.User_ID&&userInfo.Is_Distribute">
 						{{data.total_income}}
 					</view>
 					<view class="salesSumPrice" v-else>
@@ -49,7 +49,7 @@
 			</view>
 
 		</view>
-		<view class="center" v-if="userInfo.User_ID">
+		<view class="center" v-if="userInfo.User_ID&&userInfo.Is_Distribute">
 			<view>
 				可提现金额
 			</view>

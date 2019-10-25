@@ -63,6 +63,8 @@
 			GoodsComponent,CubeComponent,TabComponent
 		},
 		onLoad() {
+			
+			
 
 			let _self = this;
 			new Promise(resolve => {
