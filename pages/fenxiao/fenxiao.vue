@@ -8,19 +8,21 @@
 			<!-- #ifdef APP-PLUS -->
 			<view class="title">分销中心</view>
 			<!-- #endif -->
+			<div v-if="userInfo.User_ID&&userInfo.Is_Distribute===1">
+				<image v-if="userInfo.User_ID" class="msg" src="/static/fenxiao/msg.png" @click="goMsg"></image>
+				<view class="person" >
+					<image style="border-radius: 50%;overflow: hidden" :src="data.disInfo.Shop_Logo||data.disInfo.User_HeadImg"  @click="tofenxiaoshang"></image>
+				</view>
+				<view class="nickName" v-if="userInfo.User_ID&&userInfo.Is_Distribute==1">
+					{{data.disInfo.Shop_Name}}
+				</view>
+				<view class="putong" v-if="userInfo.User_ID&&userInfo.Is_Distribute==1">
+					{{data.disInfo.Level_Name}}
+				</view>
+			</div>
 
-			<image v-if="userInfo.User_ID" class="msg" src="/static/fenxiao/msg.png" @click="goMsg"></image>
-			<view class="person" >
-					<image style="border-radius: 50%;overflow: hidden" :src="data.disInfo.Shop_Logo"  @click="tofenxiaoshang"></image>
-			</view>
-			<view class="nickName" v-if="userInfo.User_ID&&userInfo.Is_Distribute==1">
-				{{data.disInfo.Shop_Name}}
-			</view>
-			<view class="putong" v-if="userInfo.User_ID&&userInfo.Is_Distribute==1">
-				{{data.disInfo.Level_Name}}
-			</view>
 			<view class="font14 loginBtn" v-if="!userInfo.User_ID" plain size="mini" @click="goLogin">登录/注册</view>
-			<view class="font14 loginBtn" v-if="userInfo.User_ID&&userInfo.Is_Distribute!=1" plain size="mini" @click="goDistributor">成为分销商</view>
+			<view class="font14 loginBtn" v-if="userInfo.User_ID && userInfo.Is_Distribute!=1" plain size="mini" @click="goDistributor">成为分销商</view>
 			<view class="sales">
 				<view class="left">
 					<view class="salesSum">
@@ -151,6 +153,8 @@
 		methods:{
 			...mapActions(['getUserInfo']),
 			goDistributor(){
+
+
 				//跳转成为分销商
 				uni.navigateTo({
 					url:'../distributorCenter/distributorCenter'
@@ -168,6 +172,7 @@
 			},
 			// 去分销商页面
 			tofenxiaoshang(){
+				if(!this.$fun.checkIsDistribute(1,1))return;
 				uni.navigateTo({
 					url: '../fenxiaoshang/fenxiaoshang'
 				})
@@ -190,36 +195,42 @@
 			},
 			//去提现
 			tixian(){
+				if(!this.$fun.checkIsDistribute(1,1))return;
 				uni.navigateTo({
 					url:'../withdrawal/withdrawal'
 				})
 			},
 			//推广小助手
 			goAssist(){
+				if(!this.$fun.checkIsDistribute(1,1))return;
 				uni.navigateTo({
 					url:'../promotionAssist/promotionAssist'
 				})
 			},
 			//自定义分享
 			goShare(){
+				if(!this.$fun.checkIsDistribute(1,1))return;
 				uni.navigateTo({
 					url:'../customizeShare/customizeShare'
 				})
 			},
 			//财富排行榜
 			goLeaderboard(){
+				if(!this.$fun.checkIsDistribute(1,1))return;
 				uni.navigateTo({
 					url:'../leaderboard/leaderboard'
 				})
 			},
 			//爵位晋升
 			goPromotion(){
+				if(!this.$fun.checkIsDistribute(1,1))return;
 				uni.navigateTo({
 					url:'../promotion/promotion'
 				})
 			},
 			//区域代理
 			goFinance(){
+				if(!this.$fun.checkIsDistribute(1,1))return;
 				uni.navigateTo({
 					url:'../finance/finance'
 				})
@@ -232,12 +243,14 @@
 			},
 			//我的团队
 			goMyTeam(){
+				if(!this.$fun.checkIsDistribute(1,1))return;
 				uni.navigateTo({
 					url:'../myTeam/myTeam'
 				})
 			},
 			//二维码
 			goErweima(){
+				if(!this.$fun.checkIsDistribute(1,1))return;
 				uni.navigateTo({
 					url:'../erweima/erweima'
 				})

@@ -86,8 +86,8 @@ export const checkIsLogin = (redirect,tip) => {
  */
 export const checkIsDistribute = (redirect,tip) => {
     let userInfo = store.state.userInfo || ls.get('userInfo')
-
-    if (userInfo.Is_Distribute!=1) {
+    console.log(userInfo)
+    if (userInfo.Is_Distribute !=1 ) {
         if (redirect) {
             if(!tip){
                 uni.navigateTo({
@@ -128,6 +128,7 @@ export const fun = {
     confirm,
     checkIsLogin,
     goProductDetail,
+    checkIsDistribute,
     //跳转方法
     linkTo: (linkObj) => {
 

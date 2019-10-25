@@ -177,7 +177,7 @@
 
 		},
 		onLoad(){
-			
+
 		},
 		onShow() {
 			this.getOrderNum();
@@ -339,12 +339,12 @@
 		height: 373rpx;
 		position: relative;
 		.bg{
-			
+
 		}
 		image{
 			width: 100%;
 			height: 100%;
-			
+
 		}
 		.qiandao{
 			width:120rpx;
@@ -638,17 +638,18 @@
 
 .jiaobiao{
 		position: absolute;
-		top: -3rpx;
-		right: 52rpx;
-		width: 20rpx;
-		height: 20rpx;
+		top: -6rpx;
+		right: 42rpx;
+		width: 24rpx;
+		height: 24rpx;
+		padding: 4rpx;
 		border-radius: 50%;
-		background-color: #FFFFFF;
+		background-color: #f43131;
 		border: 1px solid  #F43131;
-		font-size: 15rpx !important;
+		font-size: 24rpx !important;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		color: #F43131 !important;
+		color: #fff !important;
 	}
 </style>
