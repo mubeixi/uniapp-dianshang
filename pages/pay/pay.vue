@@ -215,8 +215,11 @@
 		methods: {
 			// 统一方法
 			async self_orderPay(is_forward){
+
 				let _self = this;
 				let payConf = {};
+
+				//不是跳转的
 				if(!is_forward){
 					if(this.need_invoice == 1 && this.invoice_info == '') {
 						uni.showToast({
@@ -254,15 +257,23 @@
 						return;
 					}
 
-					if(this.pay_type === 'unionpay'){
-						error('即将上线')
-						return;
-					}
+
+
+				}
+
+				if(this.pay_type === 'unionpay'){
+					error('即将上线')
+					return;
+				}
+
+				if(this.pay_type === 'ali_app'){
+
+
 
 				}
 
 
-
+				//下面都是微信
 
 				//需要格外有一个code
 
@@ -297,56 +308,79 @@
 				// #endif
 
 				// #ifdef MP-WEIXIN
-					payConf.pay_type = 'wx_lp';
-					console.log(payConf)
-					await new Promise((resolve) => {
-						uni.login({
-							success: function (loginRes) {
-								console.log(loginRes);
-								payConf.code = loginRes.code
-								resolve()
-							}
-						});
-					})
+				payConf.pay_type = 'wx_lp';
+				console.log(payConf)
+				await new Promise((resolve) => {
+					uni.login({
+						success: function (loginRes) {
+							console.log(loginRes);
+							payConf.code = loginRes.code
+							resolve()
+						}
+					});
+				})
 				// #endif
 
-				orderPay(payConf,{errtip:false}).then(res => {
+				orderPay(payConf).then(res => {
 					console.log(res);
-					if(res.errorCode != 0) {
-						uni.showToast({
-							title: res.data.msg,
-							icon: 'none'
+
+
+
+
+					if(this.pay_type === 'ali_app'){
+
+						let provider = 'alipay';
+						let orderInfo = res.data;
+
+						uni.requestPayment({
+							provider,
+							orderInfo, //微信、支付宝订单数据
+							success: function (res) {
+								_self.paySuccessCall(res)
+								console.log('success:' + JSON.stringify(res));
+							},
+							fail: function (err) {
+								console.log('fail:' + JSON.stringify(err));
+								uni.showModal({
+									title:'支付错误',
+									content:JSON.stringify(err)
+								})
+							}
 						});
+
 						return;
+
 					}
-						// #ifdef H5
-						let {
+
+
+					// #ifdef H5
+					let {
+						timestamp,
+						nonceStr,
+						signType,
+						paySign
+					} = res.data;
+
+					//直接支付
+					_self.WX_JSSDK_INIT(_self).then((wxEnv) => {
+
+						//关键字？？package
+						wxEnv.chooseWXPay({
 							timestamp,
 							nonceStr,
+							package: res.data.package,
 							signType,
-							paySign
-						} = res.data;
+							paySign,
+							success: function(res) {
+								// 支付成功后的回调函数
+							}
+						});
 
-						//直接支付
-						_self.WX_JSSDK_INIT(_self).then((wxEnv) => {
+					}).catch((e) => {
+						console.log('支付失败')
+					})
 
-							//关键字？？package
-							wxEnv.chooseWXPay({
-								timestamp,
-								nonceStr,
-								package: res.data.package,
-								signType,
-								paySign,
-								success: function(res) {
-									// 支付成功后的回调函数
-								}
-							});
-
-						}).catch((e) => {
-							console.log('支付失败')
-						})
-
-						return;
+					return;
 
 					// #endif
 
@@ -361,32 +395,8 @@
 
 					// #ifdef MP-TOUTIAO
 
-					//头条参数
-					// "merchant_id": "1900013286",
-					// "app_id": "800132868040",
-					// "sign_type": "MD5",
-					// "timestamp": 1571652591,
-					// "version": "2.0",
-					// "trade_type": "H5",
-					// "product_code": "pay",
-					// "payment_type": "direct",
-					// "out_order_no": "157165255471",
-					// "uid": 49,
-					// "total_amount": 1,
-					// "currency": "CNY",
-					// "subject": "admin的微商城微商城在线付款，订单编号:71",
-					// "body": "admin的微商城微商城在线付款，订单编号:71",
-					// "trade_time": 1571652591,
-					// "valid_time": 1571653491,
-					// "notify_url": "http://new401.bafangka.com",
-					// "wx_url": "https://wx.tenpay.com/cgi-bin/mmpayweb-bin/checkmweb?prepay_id=wx21180952897263ebe491c4d01231368300&package=2309503405",
-					// "wx_type": "MWEB",
-					// "sign": "6c01d5975dbf55faae4ebfdb71558b62",
-					// "Order_ID": 71
-
 					provider = 'wxpay';
 					orderInfo = res.data
-
 					orderInfo.out_order_no = (orderInfo.Order_ID+'')
 					orderInfo.timestamp +='';//string
 					orderInfo.uid += '';
@@ -470,8 +480,8 @@
 						}
 					});
 					// #endif
-				},err=>{
 
+				},err=>{
 					uni.showModal({
 						title:'提示',
 						content:'获取支付参数失败:'+err.msg
@@ -482,7 +492,7 @@
 			},
 			//获取用户支付方式
 			chooseType(name) {
-				console.log(name)
+				console.log('支付方式',name)
 				this.pay_type = name;
 				this.$refs.popupLayer.close();
 				// 判断是否使用了余额，
