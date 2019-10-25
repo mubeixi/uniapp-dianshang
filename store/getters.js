@@ -10,10 +10,10 @@ export const userInfo = function (state, value) {
     return state.userInfo;
 };
 
-// export const initData = function (state, value) {
-//     if(!state.initData){
-//         error('全局配置为空')
-//         return {};
-//     }
-//     return state.initData;
-// };
+export const initData = function (state, value) {
+    if(!state.initData){
+        if(ls.get('initData'))return ls.get('initData')
+        return {};
+    }
+    return state.initData;
+};

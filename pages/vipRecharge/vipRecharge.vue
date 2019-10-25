@@ -10,38 +10,92 @@
 				余额
 			</view>
 			<view class="pricsw">
-				7000.00
+				{{info.User_Money}}
 			</view>
 		</view>
-		
-		<input  class="inputs" type="text" placeholder="请输入充值金额">
+
+		<input  class="inputs" @input="changeNun" type="number" step="2" placeholder="请输入充值金额">
 		<view class="line"></view>
 		<view class="payMethod">
 			支付方式
 		</view>
-		
-		<view class="selectq">
+
+		<view class="selectq" v-for="(channel,idx) in payChannelList" @click="payChannel=idx">
 			<view>
-				微支付
+				{{channel}}
 			</view>
 			<view class="radio">
-					<view></view>
+				<view class="el-radio" :class="{check:payChannel===idx}"></view>
 			</view>
 		</view>
-		<view class="queren">
+		<view class="queren" @click="sub">
 			确认
 		</view>
 	</view>
 </template>
 
 <script>
-	export default {
-		data() {
-			return {
-				
-			};
+import {get_user_info} from "../../common/fetch";
+import {mapGetters} from 'vuex';
+import {error} from "../../common";
+export default {
+	data() {
+		return {
+			info:{},
+			num:null,
+			payChannel:null,
+		};
+	},
+	onShow(){
+		get_user_info().then(res=>{
+			this.info = res.data
+		},err=>{}).catch()
+	},
+	computed:{
+		payChannelList(){
+			let obj = {};
+
+			if(!this.initData || !this.initData.pay_arr)return arr;
+			for(var i in this.initData.pay_arr){
+				if(i!='remainder_pay'){
+					//默认第一个
+					if(!this.payChannel)this.payChannel = i
+					obj[i] = this.initData.pay_arr[i]
+				}
+			}
+			console.log(obj)
+			// arr = this.initData.pay_arr.map((item,idx)=>{
+			// 	if(idx!='remainder_pay')return item
+			// })
+			return obj
+		},
+		...mapGetters(['initData'])
+	},
+	methods:{
+		changeNun(e){
+
+			this.num = e.detail.value
+		},
+		sub(){
+			let reg = /^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/
+			if (!reg.test(this.num)) {
+				error('充值金额最多2位小数')
+				this.num = null;
+				return
+			}
+
+			if(!this.payChannel){
+				error('支付渠道必选')
+				return;
+			}
+
+			//create recharge order
+
+			//redirect to pay page
 		}
+
 	}
+}
 </script>
 
 <style lang="scss" scoped>
@@ -120,11 +174,14 @@ view{
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	view{
+	.el-radio{
 		width:12rpx;
 		height:12rpx;
-		background:linear-gradient(107deg,rgba(255,187,170,1),rgba(254,80,37,1));
+		background:linear-gradient(107deg,rgba(237, 236, 238, 1),rgba(228, 228, 228, 1));
 		border-radius:50%;
+		&.check{
+			background:linear-gradient(107deg,rgba(255,187,170,1),rgba(254,80,37,1));
+		}
 	}
 }
 

@@ -359,7 +359,10 @@
         ,{
             "path" : "pages/balanceCenter/balanceCenter",
             "style" : {
-                "navigationBarTitleText": "余额中心"
+                "navigationBarTitleText": "余额中心",
+				"app-plus": {
+					"titleNView": false
+				}
             }
         }
         ,{

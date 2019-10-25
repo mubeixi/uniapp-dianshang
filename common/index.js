@@ -58,7 +58,6 @@ export const checkIsLogin = (redirect,tip) => {
     if (!userInfo || JSON.stringify(userInfo) === '{}') {
         if (redirect) {
 
-
             if(!tip){
                 uni.navigateTo({
                     url: '/pages/login/login'
