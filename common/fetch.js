@@ -271,6 +271,12 @@ export const updateUserMobile = (data,options) => fetch('update_user_mobile',dat
 // 获取会员等级信息
 export const getLevelCenter = (data,options) => fetch('get_level_center',data,options);
 
+//获取用户资金变动记录
+export const getUserMoneyRecord = (data,options) => fetch('user_money_record',data,options);
+
+//获取用户的余额记录
+export const getUserChargeRecord = (data,options) => fetch('user_charge_record',data,options);
+
 
 function get_Appid() {
   return 'xhh';

@@ -6,7 +6,7 @@
 
 		<view class="personTop">
 			<image class="bg" src="/static/person/top.png"  ></image>
-			<image   :class="userInfo.User_ID&&show>=0?'':'onlyMsg'"  class="msg" src="/static/fenxiao/msg.png" @click="goMsg"></image>
+			<image :class="userInfo.User_ID&&show>=0?'':'onlyMsg'"  class="msg" src="/static/fenxiao/msg.png" @click="goMsg"></image>
 			<view class="qiandao" v-if="userInfo.User_ID&&show>=0"  :class="signin?'isQian':''" @click="signinMethod">
 				<image src="/static/person/qiandao.png"></image>
 				<view>{{signin?'已签到':'签到'}}</view>
@@ -622,12 +622,12 @@
 }
 
 .msg{
-		width: 45rpx !important;
-		height: 45rpx !important;
-		position: absolute;
-		top: 22rpx;
-		right: 175rpx;
-	}
+	width: 45rpx !important;
+	height: 45rpx !important;
+	position: absolute;
+	top: 22rpx;
+	right: 175rpx;
+}
 .onlyMsg{
 	right: 25rpx;
 }
