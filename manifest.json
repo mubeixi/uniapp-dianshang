@@ -168,6 +168,11 @@
                     }
                 }
             }
+        },
+        "optimization" : {
+            "treeShaking" : {
+                "enable" : true
+            }
         }
     }
 }
