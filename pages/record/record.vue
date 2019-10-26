@@ -1,8 +1,5 @@
 <template>
 	<view class="all" :style="{'min-height':height+'px'}">
-		<!-- #ifdef APP-PLUS -->
-		<view class="status_bar" style="background-color: rgb(248, 248, 248);"><!-- 这里是状态栏 --></view>
-		<!-- #endif -->
 		<!-- <page-title title="申请记录" rightHidden="true" bgcolor="#ffffff"></page-title> -->
 		<view class="main" v-for="(item,index) of data" :key="index">
 			<view class="fir">
@@ -29,7 +26,7 @@
 			        时间：
 				</view>
 				<view class="right">
-                    2019-10-08  17:34:12 
+                    2019-10-08  17:34:12
 				</view>
 			</view>
 		</view>
@@ -62,7 +59,7 @@
 			this.getWithdrawRecordList();
 		},
 		onReachBottom() {
-			
+
 		},
 		methods:{
 			//获取提现记录

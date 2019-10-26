@@ -219,7 +219,7 @@
         ,{
             "path" : "pages/withdrawalMethod/withdrawalMethod",
             "style" : {
-            	"navigationBarTitleText": "我的提现方式"
+            	"navigationBarTitleText": "提现方式"
             }
         }
         ,{
@@ -330,7 +330,7 @@
         ,{
             "path" : "pages/systemMsg/systemMsg",
             "style" : {
-                "navigationBarTitleText": "消息"
+                "navigationBarTitleText": "系统消息"
             }
 		},{
             "path" : "pages/updateUserPsw/updateUserPsw",
