@@ -54,13 +54,20 @@
 			    if (this.from_page == 'checkout') {
 			      var pages = getCurrentPages();          //获取页面堆栈
 			      var prevPage = pages[pages.length - 2]; //上一页
-				  prevPage.setData({
-					  back_address_id: address_id
-				  })
+						prevPage.setData({
+							back_address_id: address_id
+						})
 				  // #ifdef APP-PLUS
 					prevPage.$getAppWebview().back_address_id = address_id;
 				  // #endif
 			    }
+					if(this.from_page == 'jifen') {
+						var pages = getCurrentPages();          //获取页面堆栈
+						var prevPage = pages[pages.length - 2]; //上一页
+						prevPage.setData({
+						  address_id: address_id
+						})
+					}
 				this.$vm.$emit('fire',address_id)
 				console.log(address_id);
 			    //返回上一页
@@ -158,8 +165,10 @@
 		    }
 		    //页面来源
 		    if (options.from) {
-				this.from_page = options.from
-
+					this.from_page = options.from
+					if(options.from == 'jifen'){
+						this.check_flag = true;
+					}
 		    }
 
 		  },

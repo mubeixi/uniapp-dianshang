@@ -92,8 +92,7 @@ export default {
     data(){
         return {
             index:  0,
-			commentArgs: {
-				Users_ID: 'wkbq6nc2kc',
+				commentArgs: {
 				Products_ID: 242, // 查询指定产品的评论
 				page: 1,
 				pageSize: 4,
@@ -111,8 +110,6 @@ export default {
 			//购买需要传输的信息
 			postData: {
 			    act: 'add_cart',
-			    Users_ID: 'wkbq6nc2kc',      //商家ID
-			    User_ID: 3,       //会员ID
 			    prod_id: 0,    //产品ID  在 onLoad中赋值
 			    atrid_str: '',    //选择属性  1；2   数字从小到大
 			    atr_str: '',      //选择属性名称
@@ -349,8 +346,12 @@ export default {
 			})
 		},
 		yulan(index,i){
+			let imgPath = this.comment_list[index].ImgPath;
+			for(var k in imgPath) {
+				imgPath[k] = imgPath[k].replace(/n\d\//,'');
+			}
 			uni.previewImage({
-			            urls: this.comment_list[index].ImgPath,
+			      urls: imgPath,
 						indicator:'default',
 						current:i,
 			            longPressActions: {

@@ -4,46 +4,72 @@
 		<view class="status_bar" style="background-color: rgb(248, 248, 248);"><!-- 这里是状态栏 --></view>
 		<!-- #endif -->
 		<!-- <page-title title="我的兑换" bgcolor="#ffffff"></page-title> -->
-		
-		<view class="myHa">
-			<view class="tops">
-				<view>
-					订单编号：12345679875
-				</view>
-				<view class="times">
-					<image src="/static/check/time.png"></image>
-					2019-04-26
-				</view>
-			</view>
-			<view class="last">
-				<image src="/static/detail/sahre3.png" ></image>
-				<view class="myRight">
-					<view class="titles">
-						<view class="leftM">
-							市领导哈里斯大家啊胜利大街爱上了多久了
-						</view>
-						<view class="rightM">
-							未发货
-						</view>
+		<template v-if="prod_list.length > 0">
+			<view class="myHa" v-for="(item,index) in prod_list">
+				<view class="tops">
+					<view>
+						订单编号：{{item.Gift_ID}}
 					</view>
-					<view class="rty">
-						<image src="/static/check/ji.png" mode=""></image>
-						<text>888</text>
+					<view class="times">
+						<image src="/static/check/time.png"></image>
+						{{item.Gift_CreateTime}}
 					</view>
 				</view>
-				
+				<view class="last">
+					<image :src="item.Gift_ImgPath" ></image>
+					<view class="myRight">
+						<view class="titles">
+							<view class="leftM">
+								{{item.Gift_Name}}
+							</view>
+							<view class="rightM">
+								未发货
+							</view>
+						</view>
+						<view class="rty">
+							<image src="/static/check/ji.png" mode=""></image>
+							<text>{{item.Gift_Integral}}</text>
+						</view>
+					</view>
+				</view>
 			</view>
-		</view>
+		</template>
+		<template v-else>
+			<text class="nodata">未查询到数据</text>
+		</template>
 	</view>
 </template>
 
 <script>
+	import {jifenProdOrder} from '../../common/fetch.js'
 	export default {
 		data() {
 			return {
-				
+				prod_list: [],
+				hasMore: false
 			};
+		},
+		onShow(){
+			this.get_jifen_order();
+		},
+		methods: {
+			get_jifen_order(){
+				jifenProdOrder({errtip: false}).then(res=>{
+					console.log(res)
+					// let old = this.prod_list;
+					// this.prod_list = old.concat(res.data);
+					// if(this.prod_list.length < res.totalCount) {
+					// 	this.hasMore = true;
+					// }
+				},err=>{
+					uni.showToast({
+						title: err.msg,
+						icon: 'none'
+					})
+				})
+			}
 		}
+		
 	}
 </script>
 
@@ -53,6 +79,7 @@ view{
 }
 .all{
 	background-color: #F8F8F8;
+	text-align: center;
 }
 .myHa{
 	width:700rpx;
@@ -138,6 +165,10 @@ view{
 			}
 		}
 	}
-	
+}
+.nodata {
+	text-align: center;
+	color: #666;
+	font-size: 28rpx;
 }
 </style>

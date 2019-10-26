@@ -3,7 +3,6 @@
 		<!-- #ifdef APP-PLUS -->
 		<view class="status_bar" style="background:white;position: fixed;top: 0;z-index: 22"><!-- 这里是状态栏 --></view>
 		<!-- #endif -->
-
 <!--    <page-title title="我的订单" rightHidden="true" class="titless"></page-title>-->
         <div class="navs">
             <div class="nav-item" :class="index==0?'active':''" @click="changIndex(0)">全部</div>
@@ -81,7 +80,7 @@
 // import pagetitle from '@/components/title'
 import {getOrder,cancelOrder,getOrderNum,confirmOrder} from '@/common/fetch.js'
 import {pageMixin} from "../../common/mixin";
-
+import {confirm} from '../../common'
 export default {
 	mixins:[pageMixin],
     data(){
@@ -115,22 +114,26 @@ export default {
 	methods:{
 		//确认收货
 		confirmOrder(item,index){
-
-			let data={
-				Order_ID:item.Order_ID
-			}
-			let that=this;
-			confirmOrder(data).then(res=>{
-					this.data.splice(index,1);
-					that.getOrderNum();
-					uni.showToast({
-						title:res.msg,
-						icon:'none'
-					})
-			},err=>{
-
+			// 先询问
+			confirm({title: '提示',content:'确认收货？'}).then( ()=>{
+				let data={
+					Order_ID:item.Order_ID
+				}
+				let that=this;
+				confirmOrder(data).then(res=>{
+						this.data.splice(index,1);
+						that.getOrderNum();
+						uni.showToast({
+							title:res.msg,
+							icon:'none'
+						})
+				},err=>{
+					
+				}).catch(e=>{
+					console.log(e);
+				})				
 			}).catch(e=>{
-				console.log(e);
+				console.log(e)
 			})
 		},
 		goLogistics(item){

@@ -345,11 +345,8 @@
         {
             "path" : "pages/pintuanOrderlist/pintuanOrderlist",
             "style" : {
-              "navigationBarTitleText": "拼团订单",
-              "app-plus": {
-                "titleNView": false
-              }
-            }
+							 "navigationBarTitleText": "拼团订单"
+						}
         }
         ,{
             "path" : "pages/orderDetail/orderDetail",
@@ -409,10 +406,14 @@
 						}
         }
         ,{
-            "path" : "pages/pay/wx/wx",
+        "path" : "pages/pay/wx/wx",
             "style" : {
-              "navigationBarTitleText": "支付宝支付"
+                "navigationBarTitleText": "支付宝支付"
             }
+        },
+        {
+            "path" : "pages/jifenCheck/jifenCheck",
+            "style" : {}
         }
     ],
 	"globalStyle": {
@@ -459,5 +460,4 @@
 	        "text": "我的"
 	    }]
 	}
-
 }

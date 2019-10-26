@@ -31,8 +31,9 @@
 				积分中心
 			</view>
 			<image class="momo" src="/static/check/momo.png"></image>
-			<view class="prices">
-				400.00
+
+			<view class="prices">	
+				{{userInfo.User_Integral}}
 			</view>
 			<view class="duihuan">
 				积分可在积分商城里兑换产品
@@ -41,13 +42,13 @@
 				转出
 			</view>
 			<view class="bottoms">
-				<view class="lefts qwe">
+				<view class="lefts qwe" @click="gotojifen"> 
 					<image src="/static/check/t3.png" ></image>
 					<text>积分商城</text>
 				</view>
 				<view class="line">
 				</view>
-				<view class="rights qwe" style="padding-left: 66rpx;">
+				<view class="rights qwe" style="padding-left: 66rpx;" @click="gotoMyExchange">
 					<image src="/static/check/t4.png" ></image>
 					<text>我的兑换</text>
 				</view>
@@ -63,34 +64,90 @@
 		</view>
 
 		<view class="contents">
-			<view class="mingxi">
-				<view>
+			<template v-if="recordList.length > 0">
+				<view class="mingxi" v-for="(item,index) in recordList">
 					<view>
-						后台操作
+						<view>
+							{{item.Record_Description}}
+						</view>
+						<view class="times">
+							{{item.Record_CreateTime}}
+						</view>
 					</view>
-					<view class="times">
-						2019-04-29  09:57:30
+					<view>
+						{{item.Record_Integral > 0 ? `+${item.Record_Integral}` : ''}}
 					</view>
 				</view>
-				<view>
-					dsadas
-				</view>
-			</view>
+			</template>
+			<template v-else>
+				<view class="norecord">暂无记录</view>
+			</template>
 		</view>
 
 	</view>
 </template>
 
 <script>
+	import {mapGetters} from 'vuex'
+	import {userIntegralRecord} from '../../common/fetch.js';
 	export default {
 		data() {
 			return {
 				isShow:false,
+				page: 1,
+				pageSize: 10,
+				recordList: [],
+				hasMore: false
 			};
 		},
+		computed: {
+			...mapGetters(['userInfo']),
+		},
+		onShow() {
+			this.reset();
+			this.userIntegralRecord();
+		},
+		// 下拉加载
+		onReachBottom() {
+			if(this.hasMore) {
+				this.page += 1;
+				this.userIntegralRecord();
+			}
+		},
 		methods:{
+			// 重置，防止重复
+			reset(){
+				this.recordList = [];
+				this.page = 1;
+				this.hasMore = false;
+			},
+			// 去积分商城
+			gotojifen(){
+				uni.navigateTo({
+					url: '../jifenExchange/jifenExchange'
+				})
+			},
+			// 去我的兑换列表
+			gotoMyExchange() {
+				uni.navigateTo({
+					url: '../myRedemption/myRedemption'
+				})
+			},
 			goBack(){
 			    uni.navigateBack(1);
+			},
+			userIntegralRecord(){
+				userIntegralRecord({page:this.page,pageSize:this.pageSize},{errtip: false}).then(res=>{
+					let oldlist = this.recordList;
+					this.recordList = oldlist.concat(res.data);
+					if(res.totalCount > this.recordList.length) {
+						this.hasMore = true;
+					}
+				},err=>{
+					console.log(err)
+				}).catch(e=>{
+					console.log(e)
+				})
 			}
 		}
 	}
@@ -123,6 +180,7 @@ view{
 			left: 30rpx;
 			display: flex;
 			align-items: center;
+			justify-content: space-around;
 			padding: 38rpx 97rpx 37rpx 41rpx;
 			image{
 				width: 58rpx;
@@ -134,7 +192,7 @@ view{
 				background:rgba(240,239,240,1);
 			}
 			view.qwe{
-				width: 278rpx;
+				// width: 278rpx;
 				height: 58rpx;
 				line-height: 58rpx;
 				font-size: 34rpx;
@@ -265,7 +323,11 @@ view{
 		}
 	}
 
-
+.norecord {
+	text-align: center;
+	color: #999;
+	font-size: 28rpx;
+}
 
 .zhezhao{
 	width: 100%;

@@ -1,11 +1,8 @@
 <template>
 	<view>
 		<!-- #ifdef APP-PLUS -->
-		<view class="status_bar" style="background-color: rgb(248, 248, 248);"><!-- 这里是状态栏 --></view>
+		<view class="status_bar" style="background-color: #FF5C33;"><!-- 这里是状态栏 --></view>
 		<!-- #endif -->
-
-		<!-- <page-title  title="优惠券" bgcolor="#f8f8f8" class="titless"></page-title> -->
-
 <!-- 		<view class="nav">
 			<view :class="checked==0?'checked':''" @click="change(0)">
 				全部
