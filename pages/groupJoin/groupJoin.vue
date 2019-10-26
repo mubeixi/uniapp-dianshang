@@ -143,22 +143,22 @@
             <div class="shareinfo" v-if="type=='share'">
                 <div class="s_top">
                     <!-- #ifdef APP-PLUS -->
-                    <div class="flex1" @click="shareFunc('wx')">
-                        <img src="/static/detail/share1.png" alt="">
-                        <div>发送好友</div>
-                    </div>
-                    <div class="flex1" @click="shareFunc('wxtimeline')">
-                        <img src="/static/detail/sahre3.png" alt="">
-                        <div>朋友圈</div>
-                    </div>
-                    <!--只有配置了这个参数的app，才有分享到小程序选项-->
-                    <div class="flex1" @click="shareFunc('wxmini')" v-if="wxMiniOriginId">
-                        <img src="/static/detail/share4.png" alt="">
-                        <div>微信小程序</div>
-                    </div>
-                    <!-- #endif -->
+				<div class="flex1" @click="shareFunc('wx')">
+					<image class='img' src="/static/detail/share1.png" alt=""></image>
+					<div>发送好友</div>
+				</div>
+				<div class="flex1" @click="shareFunc('wxtimeline')">
+					<image class='img' src="/static/detail/sahre3.png" alt=""></image>
+					<div>朋友圈</div>
+				</div>
+				<!--只有配置了这个参数的app，才有分享到小程序选项-->
+				<div class="flex1" @click="shareFunc('wxmini')" v-if="wxMiniOriginId">
+					<img class='img' src="/static/detail/share4.png" alt="">
+					<div>微信小程序</div>
+				</div>
+				<!-- #endif -->
 
-
+				
                 </div>
                 <div class="s_bottom" @click="cancel">取消</div>
             </div>
@@ -801,7 +801,7 @@
         justify-content: center;
         align-items: center;
     }
-    .s_top img {
+    .s_top .img {
         width: 38px;
         height: 38px;
         display: block;
