@@ -124,6 +124,9 @@
 							that.isQing=false;
 					}, 4000)
 					if(res.errorCode==0){
+
+						this.getUserWithdrawMethod();
+
 						//提现成功清除金额
 						that.price='';
 						uni.showToast({

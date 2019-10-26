@@ -112,7 +112,7 @@
 						let User_Method_ID=res.data.User_Method_ID;
 						uni.showModal({
 						    title: res.msg,
-							confirmText:'继续添加',
+							confirmText:'提现方式',
 							cancelText:'立即提现',
 							cancelColor:'#000000',
 							confirmColor:"#000000",
