@@ -3,9 +3,7 @@
 		<!-- #ifdef APP-PLUS -->
 		<view class="status_bar" style="background:white;position: fixed;top: 0;z-index: 22"><!-- 这里是状态栏 --></view>
 		<!-- #endif -->
-		<!-- #ifdef APP-PLUS -->
-		<page-title title="我的订单" rightHidden="true" bgcolor="#F8F8F8"></page-title>
-		<!-- #endif -->
+
 <!--    <page-title title="我的订单" rightHidden="true" class="titless"></page-title>-->
         <div class="navs">
             <div class="nav-item" :class="index==0?'active':''" @click="changIndex(0)">全部</div>
@@ -130,7 +128,7 @@ export default {
 						icon:'none'
 					})
 			},err=>{
-				
+
 			}).catch(e=>{
 				console.log(e);
 			})
@@ -152,7 +150,7 @@ export default {
 		},
 		//取消订单
 		cancelOrder(item,index){
-			if(this.isLoading)return 
+			if(this.isLoading)return
 			this.isLoading=true;
 			let Order_ID;
 			for(let i in item){

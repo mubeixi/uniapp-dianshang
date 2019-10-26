@@ -1,7 +1,7 @@
 <template>
 	<view class="all" :style="{'min-height':height+'px'}">
 		<!-- #ifdef APP-PLUS -->
-		<view class="status_bar" style="background-color: rgb(248, 248, 248);"><!-- 这里是状态栏 --></view>
+<!--		<view class="status_bar" style="background-color: rgb(248, 248, 248);"></view>-->
 		<!-- #endif -->
 		<!-- <page-title  title="我的赠品" bgcolor="#ffffff" class="titless"></page-title> -->
 		<view class="nav">

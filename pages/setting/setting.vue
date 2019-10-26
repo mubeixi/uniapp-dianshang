@@ -149,7 +149,7 @@
 			image.left{
 				width: 36rpx;
 				height: 36rpx;
-				margin-left: 7rpx;
+				margin-left: 7r4px;
 			}
 			image.right{
 				width: 17rpx;

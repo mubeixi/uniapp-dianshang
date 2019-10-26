@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<!-- #ifdef APP-PLUS -->
-		<view class="status_bar" style="background-color: rgb(248, 248, 248);"><!-- 这里是状态栏 --></view>
+<!--		<view class="status_bar" style="background-color: rgb(248, 248, 248);"></view>-->
 		<!-- #endif -->
 		<!-- <page-title title="设置" rightHidden="true" bgcolor="#F8F8F8"></page-title> -->
 		<view class="wrap">
@@ -12,11 +12,11 @@
 			<view class="item" @click="update(0)">
 				<view>修改登录密码</view>
 				<image src="../../static/right.png" mode=""></image>
-			</view>		
+			</view>
 			<view class="item" @click="update(1)">
 				<view>修改支付密码</view>
 				<image src="../../static/right.png" mode=""></image>
-			</view>		
+			</view>
 		</view>
 		<view class="btn" @click="logoutFunc">退出登录</view>
 	</view>
@@ -29,7 +29,7 @@
 	export default {
 		data() {
 			return {
-				
+
 			}
 		},
 		methods: {
@@ -51,9 +51,9 @@
 					uni.switchTab({
 						url:'/pages/index/index'
 					})
-			
+
 				}).catch(()=>{
-			
+
 				})
 			},
 		}

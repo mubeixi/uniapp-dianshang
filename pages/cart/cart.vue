@@ -68,7 +68,7 @@
 			<!-- 购物车结算 -->
 			<div class="checkout" v-if="!manage">
 			  <div class="mbxa"  @click="checkAll">
-				<image class="img" :src="checkAllFlag ? '/static/checked.png' : '/static/uncheck.png'"  style="margin-right: 17rpx;" alt="" />
+				<image class="img" :src="checkAllFlag ? '/static/checked.png' : '/static/uncheck.png'"  style="margin-right: 17upx;" alt="" />
 					全选
 			  </div>
 			  <div class="total" v-if="handleShow">合计：<span>￥<span>{{totalPrice}}</span></span></div>
@@ -359,14 +359,14 @@ export default {
 }
 .content {
   background: #f3f3f3;
-  padding: 30rpx 20rpx 160rpx;
+  padding: 30upx 20upx 160upx;
 }
 .van-checkbox {
   margin-right: 5px;
 }
  /* 订单信息 start */
     .order_msg {
-        padding: 20rpx 19rpx 0px;
+        padding: 20upx 19upx 0px;
         background: #fff;
         overflow: hidden;
         margin-bottom: 20px;
@@ -374,20 +374,20 @@ export default {
     .biz_msg {
         display: flex;
         align-items: center;
-        margin-bottom: 30rpx;
+        margin-bottom: 30upx;
     }
     .biz_logo {
-        width: 70rpx;
-        height: 70rpx;
-        margin-right: 20rpx;
-		border-radius: 35rpx;
+        width: 70upx;
+        height: 70upx;
+        margin-right: 20upx;
+		border-radius: 35upx;
     }
     .biz_name {
-        font-size: 28rpx;
+        font-size: 28upx;
     }
     .pro {
         display: flex;
-        margin-bottom: 50rpx;
+        margin-bottom: 50upx;
     }
     .pro-msg {
       flex: 1;
@@ -396,15 +396,15 @@ export default {
 			justify-content: space-between;
     }
     .pro-img {
-        width: 200rpx;
-        height: 200rpx;
-        margin-right: 32rpx;
+        width: 200upx;
+        height: 200upx;
+        margin-right: 32upx;
     }
     .pro-name {
-        font-size: 26rpx;
-        margin-bottom: 18rpx;
-				width: 390rpx;
-				line-height: 28rpx;
+        font-size: 26upx;
+        margin-bottom: 18upx;
+				width: 390upx;
+				line-height: 28upx;
 				display: -webkit-box;
 		    -webkit-line-clamp:2;
 		    overflow: hidden;
@@ -413,40 +413,40 @@ export default {
     }
     .attr {
     	display: inline-block;
-    	height: 50rpx;
-    	line-height: 50rpx;
+    	height: 50upx;
+    	line-height: 50upx;
 
     	color: #666;
-    	font-size: 24rpx;
-    	// padding: 0 20rpx;
-    	// margin: 25rpx 0 24rpx;
+    	font-size: 24upx;
+    	// padding: 0 20upx;
+    	// margin: 25upx 0 24upx;
     	span {
-    		padding: 14rpx 20rpx;
-    		margin: 25rpx 0 24rpx;
+    		padding: 14upx 20upx;
+    		margin: 25upx 0 24upx;
     		background: #FFF5F5;
     	}
     }
     .pro-price {
         color: #F43131;
-				font-size: 36rpx;
+				font-size: 36upx;
     }
     .pro-price .span {
-        font-size: 24rpx;
+        font-size: 24upx;
         font-style: normal;
     }
     .amount {
         float: right;
         display: flex;
         color: #666;
-		height: 50rpx;
-		width: 168rpx;
+		height: 50upx;
+		width: 168upx;
     }
     .amount {
 		.num {
-			width: 72rpx;
-			height: 50rpx;
-			line-height: 50rpx;
-			font-size: 28rpx;
+			width: 72upx;
+			height: 50upx;
+			line-height: 50upx;
+			font-size: 28upx;
 			text-align: center;
 			border: 1px solid #D1D1D1 {
 				left: 0;
@@ -457,11 +457,11 @@ export default {
 		}
     }
     .plus {
-        width: 48rpx;
-        height: 50rpx;
+        width: 48upx;
+        height: 50upx;
         border: 1px solid #D1D1D1;
         text-align: center;
-        line-height: 50rpx;
+        line-height: 50upx;
 		box-sizing: border-box;
 		&.disabled {
 			background: #efefef;
@@ -471,16 +471,16 @@ export default {
     /* 猜你喜欢 */
     .fenge {
       text-align: center;
-      margin: 60rpx 0 30rpx;
-	  font-size: 0rpx;
+      margin: 60upx 0 30upx;
+	  font-size: 0upx;
 	  display: flex;
 	  justify-content: center;
 	  align-items: center;
     }
 	.caini{
-		font-size: 30rpx;
-		margin-left: 13rpx;
-		margin-right: 13rpx;
+		font-size: 30upx;
+		margin-left: 13upx;
+		margin-right: 13upx;
 	}
     .prolist {
       display: flex;
@@ -493,12 +493,12 @@ export default {
       background: #fff;
     }
     .pro-item img {
-      width: 345rpx;
-      height: 345rpx;
+      width: 345upx;
+      height: 345upx;
     }
     .item-name {
-      font-size: 24rpx;
-      padding: 0 10rpx;
+      font-size: 24upx;
+      padding: 0 10upx;
       color: #333;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -509,53 +509,53 @@ export default {
     .red {
       background-color: #F43131;
 	  display: inline-block;
-	  height: 3rpx;
-	  width: 44rpx;
+	  height: 3upx;
+	  width: 44upx;
     }
     .price {
-        margin-top: 20rpx;
-        padding: 0 10rpx 20rpx;
+        margin-top: 20upx;
+        padding: 0 10upx 20upx;
     }
     .n_price {
         color: #ff0000;
-        font-size: 34rpx;
+        font-size: 34upx;
 		span{
-			font-size: 24rpx;
+			font-size: 24upx;
 		}
     }
     .o_price {
-		margin-left: 15rpx;
+		margin-left: 15upx;
         color: #afafaf;
-        font-size: 24rpx;
+        font-size: 24upx;
         text-decoration: line-through;
     }
     /* 购物车为空 */
     .none {
       text-align: center;
-      margin-bottom: 40rpx;
+      margin-bottom: 40upx;
       color: #B0B0B0;
-	  font-size: 26rpx;
+	  font-size: 26upx;
     }
     .none .img {
-      height: 220rpx;
-      width: 200rpx;
+      height: 220upx;
+      width: 200upx;
     }
     .tobuy {
       color: #F43131;
-      border: 2rpx solid #F43131;
-      height: 50rpx;
-      line-height: 50rpx;
-      padding: 4rpx 20rpx;
-      border-radius: 20rpx;
-      margin-left: 20rpx;
+      border: 2upx solid #F43131;
+      height: 50upx;
+      line-height: 50upx;
+      padding: 4upx 20upx;
+      border-radius: 20upx;
+      margin-left: 20upx;
     }
     /* 结算 */
     .checkout {
       position: fixed;
-      bottom: 98rpx;
+      bottom: 50px;
       width: 100%;
-      height: 100rpx;
-      padding: 0 20rpx;
+      height: 100upx;
+      padding: 0 20upx;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -567,7 +567,7 @@ export default {
 		bottom: 0;
 	}
 	// #endif
-	
+
 	// #ifdef APP-PLUS
 	.checkout {
 		bottom: 0;
@@ -576,35 +576,35 @@ export default {
     .checkbtn {
       background: #F43131;
       color: #fff;
-	  width: 126rpx;
+	  width: 126upx;
 	  text-align: center;
-      height: 54rpx;
-      line-height: 54rpx;
-      font-size: 28rpx;
+      height: 54upx;
+      line-height: 54upx;
+      font-size: 28upx;
       border-radius: 8px;
     }
     .total {
       flex: 1;
       text-align: right;
-      margin-right: 40rpx;
-	  font-size: 26rpx;
+      margin-right: 40upx;
+	  font-size: 26upx;
     }
     .total>span {
       color: #F43131;
-	  font-size: 26rpx;
+	  font-size: 26upx;
     }
     .total>span>span {
       font-style: normal;
-      font-size: 32rpx;
+      font-size: 32upx;
     }
 	.mbxa{
 		display: flex;
 		align-items: center;
-		margin-right: 17rpx;
-		font-size: 28rpx;
+		margin-right: 17upx;
+		font-size: 28upx;
 		.img{
-			width: 34rpx;
-			height: 34rpx;
+			width: 34upx;
+			height: 34upx;
 		}
 	}
 </style>

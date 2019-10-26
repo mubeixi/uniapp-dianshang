@@ -25,7 +25,7 @@
 		</view>
 
 		<view class="top">
-			<image  class="bgImg" src="/static/blance/bg.png" ></image>
+			<image  class="bgImg" src="/static/blance/bg.jpg" ></image>
 			<!-- #ifdef APP-PLUS -->
 			<image class="back" @click="goBack" src="/static/check/left.png"></image>
 			<view class="titleq">

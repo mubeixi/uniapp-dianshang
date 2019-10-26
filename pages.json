@@ -245,6 +245,7 @@
             "path" : "pages/taskCenter/taskCenter",
             "style" : {
             	"navigationBarTitleText": "任务中心"
+
             }
         }
         ,{
@@ -256,7 +257,8 @@
 		,{
             "path" : "pages/qiandao/qiandao",
             "style" : {
-            	"navigationBarTitleText": "签到"
+            	"navigationBarTitleText": "每日签到"
+
             }
         }
         ,{
@@ -273,7 +275,12 @@
         }
         ,{
             "path" : "pages/myGift/myGift",
-            "style" : {}
+            "style" : {
+              "navigationBarTitleText": "赠品中心",
+              "app-plus": {
+                "titleNView": false
+              }
+            }
         }
         ,{
             "path" : "pages/setting/setting",
@@ -337,7 +344,12 @@
         },
         {
             "path" : "pages/pintuanOrderlist/pintuanOrderlist",
-            "style" : {}
+            "style" : {
+              "navigationBarTitleText": "拼团订单",
+              "app-plus": {
+                "titleNView": false
+              }
+            }
         }
         ,{
             "path" : "pages/orderDetail/orderDetail",
@@ -395,6 +407,12 @@
 						 "navigationBarBackgroundColor": "#FF5C33",
 						 "navigationBarTextStyle": "white"
 						}
+        }
+        ,{
+            "path" : "pages/pay/wx/wx",
+            "style" : {
+              "navigationBarTitleText": "支付宝支付"
+            }
         }
     ],
 	"globalStyle": {

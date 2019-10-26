@@ -5,7 +5,7 @@
 		<!-- #endif -->
 		<!-- <page-title title="会员充值"></page-title> -->
 		<view class="yue">
-			<image src="/static/blance/storePay.png" ></image>
+			<image src="/static/blance/storePay.jpg" ></image>
 			<view class="yueq">
 				余额
 			</view>
