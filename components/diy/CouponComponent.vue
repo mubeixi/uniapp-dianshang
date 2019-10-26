@@ -2,7 +2,7 @@
   <div class="coupon coupon-list wrap">
     <div v-if="coupon.config.type===1 && couponList.length>0">
       <div v-if="couponList.length<4"  class="list style1 style1flex" >
-        <div class="item" v-for="(item,idx) in couponList">
+        <div @click="getCoupon(item)" class="item" v-for="(item,idx) in couponList">
           <p class="title">满{{item.Coupon_Condition}}享</p>
           <p class="info"> {{item.Coupon_UseType == 0?item.Coupon_Discount+'折扣':'￥'+item.Coupon_Cash+'减免'}}</p>
           <p class="area">({{item.Coupon_UseArea==0?'实体店':'微商城'}})</p>
@@ -18,7 +18,7 @@
     </div>
 
     <div class="list style2"  v-if="coupon.config.type=== 2 && couponList.length>0">
-      <div class="item" v-for="(item,idx) in couponList">
+      <div @click="getCoupon(item)" class="item" v-for="(item,idx) in couponList">
         <div class="c">
           <p v-if="item.Coupon_UseType == 0">满￥{{item.Coupon_Condition}} {{item.Coupon_Discount+'折'}}</p>
           <p v-else><span>满￥{{item.Coupon_Condition}} 减 {{item.Coupon_Cash+'元'}}</span></p>
@@ -26,7 +26,7 @@
       </div>
     </div>
     <div class="list style3"  v-if="coupon.config.type=== 3 && couponList.length>0">
-      <div class="item" v-for="(item,idx) in couponList">
+      <div @click="getCoupon(item)" class="item" v-for="(item,idx) in couponList">
         <div class="c">
           <p v-if="item.Coupon_UseType == 0">满￥{{item.Coupon_Condition}} {{item.Coupon_Discount+'折'}}</p>
           <p v-else><span>满￥{{item.Coupon_Condition}} 减 {{item.Coupon_Cash+'元'}}</span></p>
@@ -37,7 +37,7 @@
       </div>
     </div>
     <div class="list style4"  v-if="coupon.config.type=== 4 && couponList.length>0">
-      <div class="item" v-for="(item,idx) in couponList">
+      <div @click="getCoupon(item)" class="item" v-for="(item,idx) in couponList">
         <div class="c">
           <div class="cwrap">
             <p v-if="item.Coupon_UseType == 0">满￥{{item.Coupon_Condition}} {{item.Coupon_Discount+'折'}}</p>
@@ -51,6 +51,26 @@
   </div>
 </template>
 <script>
+  import {getCoupon,getUserCoupon} from "../../common/fetch";
+  import {mapGetters} from 'vuex';
+
+  /**
+   * 某个值是否在指定数组内存在（指定键值)
+   * @param val
+   * @param arr
+   * @param index
+   * @return {boolean}
+   */
+  function is_index_has(val,arr,index) {
+
+    for(var item of arr){
+
+      if(item[index] === val){
+        return true;
+      }
+    }
+    return false;
+  }
   export default {
     props: {
       index: {
@@ -64,14 +84,27 @@
     data() {
       return {
         coupon: {},
+        isAllowCouponList:[]
       };
     },
     computed: {
+      ...mapGetters(['userInfo']),
       couponList(){
         if(this.coupon.value.list.length<1){
           return []
         }
-        return this.coupon.value.list
+
+        let arr = [],confData = this.coupon.value.list;
+
+        console.log(confData,this.isAllowCouponList);
+
+        //只有在允许获得的优惠券里面才可以
+        for(var coupon of confData){
+          if(is_index_has(coupon.Coupon_ID,this.isAllowCouponList,'Coupon_ID')){
+            arr.push(coupon)
+          }
+        }
+        return arr
       },
       style() {
         // return deepCopyStrict(this.coupon.styleDefault, this.coupon.style);
@@ -84,9 +117,27 @@
     },
     components: {},
     methods: {
+      getCoupon(couponInfo){
 
+        getUserCoupon({coupon_id:couponInfo.Coupon_ID}).then(res=>{
+          getCoupon({pageSize:999}).then(res=>{
+            this.isAllowCouponList = res.data
+          })
+
+
+        },err=>{
+
+        })
+
+      }
     },
-    created() {
+    async created() {
+
+
+      await getCoupon({pageSize:999}).then(res=>{
+        this.isAllowCouponList = res.data
+      })
+
 
       this.coupon = this.confData;
 
