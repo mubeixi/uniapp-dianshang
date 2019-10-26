@@ -166,7 +166,7 @@ export const getDisTeamCount = (data, options) => fetch('get_dis_team_count', da
 // 获取用户提现方式
 export const getUserWithdrawMethod = (data, options) => fetch('get_user_withdraw_method', data, options);
 // 用户新增提现方式
-export const addUserWithdrawMethod = (data, options) => fetch('operate_user_withdraw_method', data, options);
+export const addUserWithdrawMethod = (data, options) => fetch('add_user_withdraw_method', data, options);
 // 获取商城提现方式
 export const getShopWithdrawMethod = (data, options) => fetch('get_shop_withdraw_method', data, options);
 // 申请提现
