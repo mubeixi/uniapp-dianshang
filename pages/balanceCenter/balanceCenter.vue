@@ -8,16 +8,16 @@
 				<view class="zhezhaoCenter">
 					<view>
 						<image src="/static/check/phone.png"></image>
-						<input type="text" placeholder="请输入对方会员号">
+						<input type="text" placeholder="请输入对方会员号" v-model="user_no">
 					</view>
 				</view>
 				<view class="zhezhaoCenter">
 					<view>
 						<image src="/static/check/money.png"></image>
-						<input type="text" placeholder="请输入转出金额">
+						<input type="text" placeholder="请输入转出金额" v-model="money">
 					</view>
 				</view>
-				<view class="zheButton">
+				<view class="zheButton" @click="confirm">
 					确认转出
 				</view>
 			</view>
@@ -68,10 +68,11 @@
 		<view class="contents" v-show="current=='charge'">
 			<view class="mingxi" v-for="(item,idx) in charge_records">
 				<view>
-					后台操作
+					充值{{item.Amount}} <text v-if="item.present > 0">,系统赠送您{{item.present}}</text>
+					<text style="float: right;">{{item.Status_desc}}</text>
 				</view>
 				<view class="times">
-					2019-04-29  09:57:30
+					{{item.CreateTime}}
 				</view>
 			</view>
 		</view>
@@ -97,8 +98,8 @@
 </template>
 
 <script>
-	import {get_user_info,getUserMoneyRecord,getUserChargeRecord} from "../../common/fetch";
-
+	import {get_user_info,getUserMoneyRecord,getUserChargeRecord,transferBalance} from "../../common/fetch";
+	import {mapActions} from 'vuex';
 	export default {
 		data() {
 			return {
@@ -106,10 +107,18 @@
 				info:{},
 				current:'charge',
 				charge_records:[],
-				records:[]
+				records:[],
+				user_no: '', //会员号
+				money: '', // 转出金额
+				chargePage: 1, // 充值记录分页
+				moneyPage: 1,  // 资金流水分页
+				pageSize: 10,
+				moneyMore: false,  //资金流水是否还有更多
+				chargeMore: false  // 充值记录是否还有更多
 			};
 		},
 		methods:{
+			...mapActions(['setUserInfo']),
 			goFacePay(){
 				uni.navigateTo({
 					url:'/pages/storePay/storePay'
@@ -122,20 +131,103 @@
 				uni.navigateTo({
 					url:'/pages/vipRecharge/vipRecharge'
 				})
+			},
+			confirm(){
+				if(this.money == '' || isNaN(this.money) || (this.money<0)) {
+					uni.showToast({
+						title: '输入金额有误',
+						icon: 'none'
+					});
+					return;
+				}
+				if(this.user_no == '') {
+					uni.showToast({
+						title: '转出会员号不能为空',
+						icon: 'none'
+					});
+					return;
+				}
+				transferBalance({
+					money: this.money,
+					user_no: this.user_no
+				}).then(res=>{
+					uni.showToast({
+						title: res.msg,
+						duration:1500
+					});
+					this.setUserInfo({});
+					setTimeout(()=>{
+						// 重新获取积分信息
+						get_user_info().then(res=>{
+							this.info=res.data
+							// 更新用户信息
+							this.setUserInfo(res.data);
+						});						
+					},1500)
+				},err=>{
+					uni.showToast({
+						title: err.msg,
+						icon: 'none'
+					})
+				});
+				this.isShow = false;
+			},
+			get_user_money_record(){
+				getUserMoneyRecord({
+					page: this.moneyPage,
+					pageSize: this.pageSize
+				}).then(res=>{
+					let old = this.records;
+					this.records = old.concat(res.data);
+					if(this.records.length < res.totalCount) {
+						this.moneyMore = true;
+					}
+				}).catch()
+			},
+			get_user_charge_record(){
+				getUserChargeRecord({
+					page: this.chargePage,
+					pageSize: this.pageSize
+				}).then(res=>{
+					let old = this.charge_records;
+					this.charge_records = old.concat(res.data);
+					if(this.charge_records.length > res.totalCount) {
+						this.chargeMore = true;
+					}
+				}).catch()
+			},
+			// 重置
+			reset(){
+				this.chargePage = 1;
+				this.moneyPage = 1;
+				this.charge_records = [];
+				this.records = [];
+				this.moneyMore = false;
+				this.chargeMore = false;  
+			}
+		},
+		onReachBottom() {
+			if(this.current=='charge') {
+				// 充值记录
+				if(this.chargeMore) {
+					this.chargePage += 1;
+					this.get_user_charge_record();
+				}
+			}else if(this.current = 'money') {
+				// 资金流水
+				if(this.moneyMore) {
+					this.moneyPage += 1;
+					this.get_user_money_record();
+				}
 			}
 		},
 		onShow(){
+			this.reset();
 			get_user_info().then(res=>{
 				this.info = res.data
 			},err=>{}).catch()
-
-			getUserMoneyRecord().then(res=>{
-				this.records = res.data;
-			}).catch()
-
-			getUserChargeRecord().then(res=>{
-				this.charge_records = res.data
-			}).catch()
+			this.get_user_money_record();
+			this.get_user_charge_record();
 
 		}
 	}

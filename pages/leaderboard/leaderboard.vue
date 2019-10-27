@@ -40,7 +40,7 @@
 					{{item.pro_title_name}}
 				</view>
 				<view class="contentRight">
-					¥<text>{{item.balance}}</text>
+					¥<text>{{item.Total_Income}}</text>
 				</view>
 			</view>
 			<view class="content" v-else-if="index==1">
@@ -59,7 +59,7 @@
 						{{item.pro_title_name}}
 					</view>
 					<view class="contentRight">
-						¥<text>{{item.balance}}</text>
+						¥<text>{{item.Total_Income}}</text>
 					</view>
 			</view>
 			<view class="content" v-else-if="index==2">
@@ -78,7 +78,7 @@
 					{{item.pro_title_name}}
 				</view>
 				<view class="contentRight">
-					¥<text>{{item.balance}}</text>
+					¥<text>{{item.Total_Income}}</text>
 				</view>
 			</view>
 			<view class="content" v-else>
@@ -97,7 +97,7 @@
 					{{item.pro_title_name}}
 				</view>
 				<view class="contentRight">
-					¥<text>{{item.balance}}</text>
+					¥<text>{{item.Total_Income}}</text>
 				</view>
 			</view>
 		</view>

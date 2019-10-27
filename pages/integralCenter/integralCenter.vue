@@ -8,16 +8,16 @@
 				<view class="zhezhaoCenter">
 					<view>
 						<image src="/static/check/phone.png"></image>
-						<input type="text" placeholder="请输入对方会员号">
+						<input type="text" placeholder="请输入对方会员号" v-model="user_no">
 					</view>
 				</view>
 				<view class="zhezhaoCenter">
 					<view>
 						<image src="/static/check/money.png"></image>
-						<input type="text" placeholder="请输入转出金额">
+						<input type="text" placeholder="请输入转出金额" v-model="integral">
 					</view>
 				</view>
-				<view class="zheButton">
+				<view class="zheButton" @click="confirm">
 					确认转出
 				</view>
 			</view>
@@ -25,7 +25,7 @@
 		</view>
 
 		<view class="top">
-			<image  class="bgImg" src="/static/blance/bg.png" ></image>
+			<image  class="bgImg" src="/static/blance/bg.jpg" ></image>
 			<image class="back" @click="goBack" src="/static/check/left.png"></image>
 			<view class="titleq">
 				积分中心
@@ -33,7 +33,7 @@
 			<image class="momo" src="/static/check/momo.png"></image>
 
 			<view class="prices">	
-				{{userInfo.User_Integral}}
+				{{info.User_Integral}}
 			</view>
 			<view class="duihuan">
 				积分可在积分商城里兑换产品
@@ -88,8 +88,8 @@
 </template>
 
 <script>
-	import {mapGetters} from 'vuex'
-	import {userIntegralRecord} from '../../common/fetch.js';
+	import {mapGetters,mapActions} from 'vuex'
+	import {userIntegralRecord,transferIntegral,get_user_info} from '../../common/fetch.js';
 	export default {
 		data() {
 			return {
@@ -97,15 +97,22 @@
 				page: 1,
 				pageSize: 10,
 				recordList: [],
-				hasMore: false
+				hasMore: false,
+				user_no: '',
+				integral: '',
+				info: {},
+				isClicked: false , // 是否已经点击过
 			};
 		},
 		computed: {
-			...mapGetters(['userInfo']),
+			
 		},
 		onShow() {
 			this.reset();
 			this.userIntegralRecord();
+			get_user_info().then(res=>{
+				this.info = res.data
+			},err=>{}).catch()
 		},
 		// 下拉加载
 		onReachBottom() {
@@ -115,6 +122,52 @@
 			}
 		},
 		methods:{
+			...mapActions(['setUserInfo','getUserInfo']),
+			// 确认转出
+			confirm(){
+				if(this.isClicked) return;
+				this.isClicked = true;
+				if(!this.integral || this.integral < 0 || isNaN(this.integral)) {
+					uni.showToast({
+						title: '您输入的积分有误',
+						icon: 'none'
+					});
+					this.isClicked = false;
+					return;
+				}
+				if(!this.user_no) {
+					uni.showToast({
+						title: '请确认转出账号',
+						icon: 'none'
+					});
+					this.isClicked = false;
+					return;
+				}
+				transferIntegral({
+					integral: this.integral,
+					user_no: this.user_no
+				}).then(res=>{
+					uni.showToast({
+						title: res.msg,
+						duration:1500
+					});
+					this.isShow = false;
+					setTimeout(()=>{
+						this.isClicked = false;
+						this.setUserInfo({});
+						get_user_info().then(res=>{
+							this.info = res.data;
+							this.setUserInfo(this.info);
+						},err=>{}).catch()						
+					},1500)
+				},err=>{
+					this.isClicked = false;
+					uni.showToast({
+						title: err.msg,
+						icon: 'none'
+					})
+				});
+			},
 			// 重置，防止重复
 			reset(){
 				this.recordList = [];

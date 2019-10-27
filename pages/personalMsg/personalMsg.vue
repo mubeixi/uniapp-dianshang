@@ -59,14 +59,12 @@
 	import {mapGetters,mapActions} from 'vuex';
 	import {GET_ENV,get_Users_ID,upDateUserInfo,get_user_info} from '../../common/fetch.js';
 	import { staticUrl } from '../../common/env.js';
-	import { ls } from '../../common/tool.js';
 	export default {
 		data() {
 			return {
 				imgs: [],
 				tem_Shop_Logo: '',
 				User_HeadImg: '',
-				userInfo:'',
 				User_Province_name: '',
 				User_City_name: '',
 				User_Area_name: '',
@@ -76,9 +74,9 @@
 		},
 		async created(){
 			let userInfo = this.getUserInfo(true);
+			
 		},
 		onShow(){
-			this.userInfo=ls.get('userInfo');
 			this.User_HeadImg = this.userInfo.User_HeadImg;
 			this.get_user_info();
 		},
@@ -91,7 +89,6 @@
 			},
 			get_user_info(){
 				get_user_info().then(res=>{
-					console.log(res)
 					this.User_Province_name = res.data.User_Province_name;
 					this.User_City_name = res.data.User_City_name;
 					this.User_Area_name = res.data.User_Area_name;
@@ -161,7 +158,7 @@
 			},
 		},
 		computed: {
-			// ...mapGetters(['userInfo'])
+			...mapGetters(['userInfo'])
 		}
 	}
 </script>

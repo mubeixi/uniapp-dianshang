@@ -10,33 +10,86 @@
 				余额
 			</view>
 			<view class="pricsw">
-				7000.00
+				{{info.User_Money}}
 			</view>
 		</view>
 
 		<view class="inputs">
 			<image src="/static/check/money.png" ></image>
-			<input  type="text" placeholder="请输入充值金额">
+			<input  type="text" placeholder="请输入消费金额" v-model="money">
 		</view>
 		<view class="inputs">
 			<image src="/static/check/password.png" ></image>
-			<input  type="password" placeholder="请输入支付密码">
+			<input  type="password" placeholder="请输入支付密码" v-model="passwd">
 		</view>
 		<view class="zhu">
 			注：若通过注册页面成为会员的用户，原支付密码与登录密码一致；否则，支付密码为“123456”
 		</view>
-		<view class="queren">
+		<view class="queren" @click="confirm">
 			确认
 		</view>
 	</view>
 </template>
 
 <script>
+	import {storeConsume,get_user_info} from '../../common/fetch.js';
+	
 	export default {
 		data() {
 			return {
-
+				info: {},
+				passwd: '',
+				money: '',
+				isClicked: false
 			};
+		},
+		methods: {
+			confirm(){
+				if(this.isClicked) {return};
+				this.isClicked = true;
+				if(this.passwd == '') {
+					uni.showToast({
+						title: '密码不能为空',
+						icon: 'none'
+					});
+					this.isClicked = false;
+					return;
+				}
+				if(this.money == '' || isNaN(this.money) || this.money < 0) {
+					uni.showToast({
+						title: '输入金额有误',
+						icon: 'none'
+					});
+					this.isClicked = false;
+					return;
+				}
+				storeConsume({
+					passwd: this.passwd,
+					money: this.money
+				}).then(res=>{
+					uni.showToast({
+						title: res.msg,
+						duration: 1500
+					});
+					setTimeout(()=>{
+						this.isClicked = false;
+						uni.navigateBack({
+							delta: 1
+						})						
+					},1500)
+				},err=>{
+					this.isClicked = false;
+					uni.showToast({
+						title: err.msg,
+						icon: 'none'
+					})
+				})
+			}
+		},
+		onShow(){
+			get_user_info().then(res=>{
+				this.info = res.data
+			},err=>{}).catch()
 		}
 	}
 </script>

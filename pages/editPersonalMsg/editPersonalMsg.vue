@@ -46,6 +46,7 @@
 	import utils from '../../common/util.js';
 	import {upDateUserInfo,getTown} from '../../common/fetch.js';
 	import {ls} from "../../common/tool.js";
+	import {mapGetters,mapActions} from 'vuex'
 	export default {
 		data() {
 			return {
@@ -72,7 +73,11 @@
 				address_info: {}
 			}
 		},
+		computed: {
+			...mapGetters(['userInfo']),
+		},
 		methods: {
+			...mapActions(['setUserInfo']),
 			getTitle(){
 				switch (this.type) {
 					case '0' : this.title = '修改姓名';break;
@@ -112,15 +117,19 @@
 				}).then(res=>{
 					console.log(res)
 					if(res.errorCode == 0) {
-						let userInfo = ls.get('userInfo');
+						let userInfo = this.userInfo;
 						userInfo.User_Name = res.data.User_Name;
 						userInfo.User_NickName = res.data.User_NickName;
 						userInfo.User_Email = res.data.User_Email;
-						ls.remove('userInfo');
-						ls.set('userInfo',userInfo);
-						uni.navigateBack({
-							delta: 1
-						})
+						this.setUserInfo(userInfo);
+						uni.showToast({
+							title: '修改成功'
+						});
+						setTimeout(() => {
+							uni.navigateBack({
+								delta: 1
+							})							
+						}, 1500);
 					}
 				})
 			},

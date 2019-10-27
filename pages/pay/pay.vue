@@ -114,12 +114,6 @@
 				<div class="c_method" v-for="(item,index) in pay_arr" @click="chooseType(index)" :key="index">
 					{{item}} <text>￥{{orderInfo.Order_Fyepay}}</text>
 				</div>
-				<!-- <div class="c_method" @click="wechatPay" >
-					微信支付 <text>￥{{orderInfo.Order_Fyepay}}</text>
-				</div>
-				<div class="c_method" @click="aliPay">
-					支付宝支付 <text>￥{{orderInfo.Order_Fyepay}}</text>
-				</div> -->
 			</div>
 		</popup-layer>
 
@@ -133,7 +127,8 @@
 		createOrderCheck,
 		getOrderDetail,
 		orderPay,
-		get_user_info
+		get_user_info,
+		add_template_code
 	} from '../../common/fetch.js';
 	import {
 		pageMixin
@@ -527,11 +522,15 @@
 					delete orderInfo.timestamp
 
 					console.log(provider,orderInfo,'支付数据222222222222222222');
-
+					let prepay_id = orderInfo.package.split('=')[1];
 					uni.requestPayment({
 					...orderInfo,
 						provider,
 						success: function (res) {
+							add_template_code({
+								code: prepay_id,
+								times: 3
+							})
 							console.log('success:' + JSON.stringify(res));
 							_self.paySuccessCall(res)
 						},
