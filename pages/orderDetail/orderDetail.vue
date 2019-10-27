@@ -438,6 +438,7 @@
 								paySign,
 								success: function(res) {
 									// 支付成功后的回调函数
+									_self.paySuccessCall(res)
 								}
 							});
 
@@ -816,7 +817,7 @@
 				// setTimeout(function(){
 				// 	uni.redirectTo({
 				// 		url: '/pages/order/order?index=1'
-				// 	})					
+				// 	})
 				// },1000)
 			},
 			paySuccessCall(){
@@ -922,6 +923,7 @@
 									paySign,
 									success: function(res) {
 										// 支付成功后的回调函数
+										_self.paySuccessCall(res)
 									}
 								});
 

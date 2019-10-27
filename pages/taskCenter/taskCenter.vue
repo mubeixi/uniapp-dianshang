@@ -1,10 +1,13 @@
 <template>
 	<view v-if="pro.img_url">
+		<!-- #ifdef APP-PLUS -->
+<!--				<view class="status_bar" style="background:#353945;"></view>-->
+		<!-- #endif -->
 		<view class="top">
 			<image class="widthTen" src="/static/task/top.png" ></image>
-			<image src="/static/task/left.png" class="goBack" @click="goBack"></image>
-			<view class="titles">任务中心</view>
-			<view class="center">  
+<!--			<image src="/static/task/left.png" class="goBack" @click="goBack"></image>-->
+<!--			<view class="titles">任务中心</view>-->
+			<view class="center">
 				<!-- <image class="widthTen" src="/static/task/center.png" ></image> -->
 				<image class="widthTen" :src="pro.img_url" ></image>
 				<view class="info">
@@ -91,7 +94,7 @@
 				getTaskCenter().then(res=>{
 					this.pro=res.data;
 				},err=>{
-					
+
 				}).catch(e=>{
 					console.log(e)
 				})
@@ -106,7 +109,7 @@
 						url:item.jump_url
 					})
 				}
-				
+
 			},
 			goBack(){
 				goBack();
@@ -127,11 +130,13 @@
 	.goBack{
 		width: 20rpx;
 		height: 30rpx;
+
 		position: absolute;
 		top: 30rpx;
 		left: 20rpx;
 	}
 	.titles{
+
 		color: #FFFFFF;
 		font-size: 32rpx;
 		position: absolute;

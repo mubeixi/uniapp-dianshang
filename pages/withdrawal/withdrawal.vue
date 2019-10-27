@@ -1,9 +1,6 @@
 <template>
 	<view class="all" :style="{'min-height':height+'px'}">
-		<!-- #ifdef APP-PLUS -->
-		<view class="status_bar" style="background-color: rgb(248, 248, 248);"><!-- 这里是状态栏 --></view>
-		<!-- #endif -->
-	
+
 		<!-- <page-title title="提现" rightHidden="true" bgcolor="#ffffff" ></page-title> -->
 		<view class="content">
 			<view class="bank" v-if="isShow" @click="goMethod">
@@ -127,6 +124,9 @@
 							that.isQing=false;
 					}, 4000)
 					if(res.errorCode==0){
+
+						this.getUserWithdrawMethod();
+
 						//提现成功清除金额
 						that.price='';
 						uni.showToast({

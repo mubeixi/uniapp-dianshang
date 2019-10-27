@@ -1,8 +1,6 @@
 <template>
 	<view class="all" :style="{'min-height':height+'px'}">
-		<!-- #ifdef APP-PLUS -->
-		<view class="status_bar" style="background-color: rgb(248, 248, 248);"><!-- 这里是状态栏 --></view>
-		<!-- #endif -->
+
 		<!-- <page-title  title="消息" bgcolor="#ffffff" class="titless"></page-title> -->
 		<view style="height: 30rpx;"></view>
 		<view class="centers" v-for="(item,index) of pro" :key="item" @click="readMsg(item,index)">
@@ -21,7 +19,7 @@
 			<view class="times">
 				{{item.Message_CreateTime}}
 			</view>
-			
+
 			<view class="msg" :class="item.isShow?'':'trans'">
 				{{item.Message_Description}}
 			</view>
@@ -60,14 +58,14 @@
 							this.pro[index].isShow=!this.pro[index].isShow;
 							this.pro[index].is_read=1;
 					},err=>{
-						
+
 					}).catch(e=>{
 						console.log(e)
 					})
 				}else{
 					this.pro[index].isShow=!this.pro[index].isShow;
 				}
-				
+
 			},
 			getUserMessage(){
 				getUserMessage().then(res=>{
@@ -142,13 +140,13 @@ view{
 		width: 652rpx;
 		line-height: 35rpx;
 		overflow: hidden;
-		max-height: 70rpx; 
-		min-height: 35rpx; 
-		overflow: hidden; 
-		transition: max-height ease-out 0.2s; 
+		max-height: 70rpx;
+		min-height: 35rpx;
+		overflow: hidden;
+		transition: max-height ease-out 0.2s;
 	}
 	.trans{
-		max-height: 500rpx; 
+		max-height: 500rpx;
 		transition: max-height ease-in 0.2s;
 	}
 }

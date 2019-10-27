@@ -8,7 +8,7 @@
 			<!-- #ifdef APP-PLUS -->
 			<view class="title">分销中心</view>
 			<!-- #endif -->
-			<div v-if="userInfo.User_ID&&userInfo.Is_Distribute===1">
+			<div v-if="userInfo.User_ID&&userInfo.Is_Distribute==1">
 				<image v-if="userInfo.User_ID" class="msg" src="/static/fenxiao/msg.png" @click="goMsg"></image>
 				<view class="person" >
 					<image style="border-radius: 50%;overflow: hidden" :src="data.disInfo.Shop_Logo||data.disInfo.User_HeadImg"  @click="tofenxiaoshang"></image>
@@ -122,6 +122,7 @@
 	import {pageMixin} from "../../common/mixin";
 	import {getDisInit} from '../../common/fetch.js'
 	import {mapActions,mapState,mapGetters} from 'vuex';
+
 	export default {
 		mixins:[pageMixin],
 		data() {
@@ -179,7 +180,7 @@
 			},
 			//获取分销首页数据
 			getDisInit(){
-				getDisInit({},{errtip:false}).then(res=>{
+				getDisInit({}).then(res=>{
 					this.data=res.data;
 				},err=>{
 

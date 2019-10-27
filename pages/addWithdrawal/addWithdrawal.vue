@@ -1,8 +1,6 @@
 <template>
 	<view>
-		<!-- #ifdef APP-PLUS -->
-		<view class="status_bar" style="background-color: rgb(248, 248, 248);"><!-- 这里是状态栏 --></view>
-		<!-- #endif -->
+
 		<!-- <page-title title="添加提现方式" rightHidden="true" ></page-title> -->
 		<view class="center">
 			<view class="left">
@@ -67,6 +65,7 @@
 				array:[],
 				index:0,//选择提现方式下表
 				data:{
+					Method_ID:'',
 					Method_Type:'',//提现方式类型
 					Method_Name:'',//提现方式名称
 					Account_Name:'',//户名
@@ -89,27 +88,27 @@
 				let data={};
 				if(this.data.Method_Type=="bank_card"){
 					data={
-						Method_Type:this.data.Method_Type,//提现方式类型
-						Method_Name:this.data.Method_Name,//提现方式名称
+						Method_ID:this.data.Method_ID,//提现方式类型
+						//Method_Name:this.data.Method_Name,//提现方式名称
 						Account_Name:this.data.Account_Name,//户名
 						Account_Val:this.data.Account_Val,//账号
-						Bank_Position:this.Bank_Position //开户行
+						Bank_Position:this.data.Bank_Position //开户行
 					}
 				}else if(this.data.Method_Type=="alipay"){
 					data={
-						Method_Type:this.data.Method_Type,//提现方式类型
-						Method_Name:this.data.Method_Name,//提现方式名称
+						Method_ID:this.data.Method_ID,//提现方式类型
+						//Method_Name:this.data.Method_Name,//提现方式名称
 						Account_Name:this.data.Account_Name,//户名
 						Account_Val:this.data.Account_Val//账号
 					}
 				}else{
 					data={
-						Method_Type:this.data.Method_Type,//提现方式类型
-						Method_Name:this.data.Method_Name//提现方式名称
+						Method_ID:this.data.Method_ID,//提现方式类型
+						//Method_Name:this.data.Method_Name//提现方式名称
 					}
 				}
 				let that=this;
-				addUserWithdrawMethod(this.data).then(res=>{
+				addUserWithdrawMethod(data).then(res=>{
 						let User_Method_ID=res.data.User_Method_ID;
 						uni.showModal({
 						    title: res.msg,
@@ -136,7 +135,7 @@
 						    }
 						});
 				},err=>{
-					
+
 				}).catch(e=>{
 					console.log(e)
 				})
@@ -149,6 +148,9 @@
 						//初始化第一个提现类型默认选择的
 						this.data.Method_Type=this.array[0].Method_Type;
 						this.data.Method_Name=this.array[0].Method_Name;
+						this.data.Method_ID=this.array[0].Method_ID;
+
+
 					}
 				}).catch(err=>{
 					console.log(err);
@@ -158,6 +160,7 @@
 				 this.index = e.target.value;
 				 this.data.Method_Type=this.array[this.index].Method_Type;
 				 this.data.Method_Name=this.array[this.index].Method_Name;
+				this.data.Method_ID=this.array[0].Method_ID;
 			}
 		}
 	}

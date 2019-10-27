@@ -75,7 +75,8 @@
                         "appid" : "wxc7ca4f60d7453081",
                         "UniversalLinks" : "https://new401.bafangka.com/"
                     }
-                }
+                },
+                "push" : {}
             },
             "icons" : {
                 "android" : {

@@ -1,8 +1,8 @@
 <template>
 	<view class="all">
 		<view class="top">
-			<image src="/static/task/left.png" class="goBack" @click="goBack"></image>
-			<view class="titles">每日签到</view>
+<!--			<image src="/static/task/left.png" class="goBack" @click="goBack"></image>-->
+<!--			<view class="titles">每日签到</view>-->
 			<view class="yuan" @click="signinMethod">
 				<image src="/static/task/yuan.png"></image>
 				<image src="/static/task/qiandao.png" class="qiandao"></image>
@@ -68,23 +68,23 @@
 							icon:"none"
 						})
 					},err=>{
-						
+
 					}).catch(e=>{
 						console.log(e);
 					})
-				}else{	
+				}else{
 					uni.navigateTo({
 						url:'../person/person'
 					})
 				}
-				
+
 			},
 			getSignin(){
 				getSignin().then(res=>{
 					this.pro=res.data;
 					this.pro.continue_=parseInt(this.pro.continue_);
 				},err=>{
-					
+
 				})
 			},
 			goBack(){
@@ -105,6 +105,7 @@
 		background:linear-gradient(#E74744,#FAB067);
 		position: relative;
 		.goBack{
+
 			width: 20rpx;
 			height: 30rpx;
 			position: absolute;
@@ -114,6 +115,7 @@
 		.titles{
 			color: #FFFFFF;
 			font-size: 32rpx;
+
 			position: absolute;
 			top: 34rpx;
 			left: 310rpx;
@@ -123,6 +125,7 @@
 		.yuan{
 			width: 261rpx;
 			height: 262rpx;
+
 			position: absolute;
 			top: 108rpx;
 			left: 240rpx;

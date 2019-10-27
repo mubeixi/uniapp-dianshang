@@ -1,7 +1,7 @@
 <template>
 	<view class="team" :style="{'min-height':height+'px'}">
 		<!-- #ifdef APP-PLUS -->
-		<view class="status_bar" style="background-color: rgb(248, 248, 248);"><!-- 这里是状态栏 --></view>
+<!--		<view class="status_bar" style="background-color: rgb(248, 248, 248);"></view>-->
 		<!-- #endif -->
 		<!-- <page-title title="财务明细" rightHidden="true" bgcolor="#ffffff"></page-title> -->
 		<view class="nav">
@@ -17,18 +17,18 @@
 		</view>
 		<view class="order" v-for="(item,i) of pro " :key="i">
 			<view>
-				订单号：<text>{{item.Order_ID}}</text>    
+				订单号：<text>{{item.Order_ID}}</text>
 			</view>
 			<view>
-				佣金金额：<text class="price" v-if="index==2">￥{{item.Record_Money}}</text>  
+				佣金金额：<text class="price" v-if="index==2">￥{{item.Record_Money}}</text>
 						<text class="price" v-else>￥{{item.money}}</text>
 			</view>
 			<view>
-				描述：<text v-if="index==2">{{item.Record_Type_desc}}</text>  
-					 <text v-else>{{item.desc}}</text> 
+				描述：<text v-if="index==2">{{item.Record_Type_desc}}</text>
+					 <text v-else>{{item.desc}}</text>
 			</view>
 			<view>
-				时间：<text v-if="index==2">{{item.Order_CreateTime}}</text>    
+				时间：<text v-if="index==2">{{item.Order_CreateTime}}</text>
 					 <text v-else>{{item.Record_CreateTime}}</text>
 			</view>
 		</view>
@@ -84,7 +84,7 @@
 							}
 							this.totalCount=res.totalCount;
 						}
-						
+
 					}).catch(e=>{
 						console.log(e);
 					})

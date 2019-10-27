@@ -219,7 +219,7 @@
         ,{
             "path" : "pages/withdrawalMethod/withdrawalMethod",
             "style" : {
-            	"navigationBarTitleText": "我的提现方式"
+            	"navigationBarTitleText": "提现方式"
             }
         }
         ,{
@@ -245,6 +245,7 @@
             "path" : "pages/taskCenter/taskCenter",
             "style" : {
             	"navigationBarTitleText": "任务中心"
+
             }
         }
         ,{
@@ -256,7 +257,8 @@
 		,{
             "path" : "pages/qiandao/qiandao",
             "style" : {
-            	"navigationBarTitleText": "签到"
+            	"navigationBarTitleText": "每日签到"
+
             }
         }
         ,{
@@ -273,7 +275,12 @@
         }
         ,{
             "path" : "pages/myGift/myGift",
-            "style" : {}
+            "style" : {
+              "navigationBarTitleText": "赠品中心",
+              "app-plus": {
+                "titleNView": false
+              }
+            }
         }
         ,{
             "path" : "pages/setting/setting",
@@ -323,7 +330,7 @@
         ,{
             "path" : "pages/systemMsg/systemMsg",
             "style" : {
-                "navigationBarTitleText": "消息"
+                "navigationBarTitleText": "系统消息"
             }
 		},{
             "path" : "pages/updateUserPsw/updateUserPsw",
@@ -399,6 +406,12 @@
 						}
         }
         ,{
+        "path" : "pages/pay/wx/wx",
+            "style" : {
+                "navigationBarTitleText": "支付宝支付"
+            }
+        },
+        {
             "path" : "pages/jifenCheck/jifenCheck",
             "style" : {}
         }
