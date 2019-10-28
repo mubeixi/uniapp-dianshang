@@ -120,10 +120,10 @@
       getCoupon(couponInfo){
 
         getUserCoupon({coupon_id:couponInfo.Coupon_ID}).then(res=>{
-          getCoupon({pageSize:999}).then(res=>{
+
+          getCoupon({pageSize:999},{errtip:false}).then(res=>{
             this.isAllowCouponList = res.data
           })
-
 
         },err=>{
 
@@ -134,7 +134,7 @@
     async created() {
 
 
-      await getCoupon({pageSize:999}).then(res=>{
+      await getCoupon({pageSize:999},{errtip:false}).then(res=>{
         this.isAllowCouponList = res.data
       })
 
