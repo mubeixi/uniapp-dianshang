@@ -59,7 +59,7 @@
 	import {pageMixin} from "../../common/mixin";
 	import {isWeiXin} from "../../common/tool";
 	import {mapGetters,mapActions} from 'vuex';
-	import {getUserWithdrawMethod,getShopWithdrawMethod,addUserWithdrawMethod} from '../../common/fetch.js'
+	import {getUserWithdrawMethod,getShopWithdrawMethod,addUserWithdrawMethod,login} from '../../common/fetch.js'
 	export default {
 		mixins:[pageMixin],
 		data() {
@@ -89,12 +89,48 @@
 		},
 		methods:{
 			//新增提现方式
-			addInfo(){
+			async addInfo(){
 				//如果用户不存在openid   手机号其他登录
 				if(!this.userInfo.openid){
 					if(this.data.Method_Type=='wx_hongbao'||this.data.Method_Type=='wx_zhuanzhang'){
 						if(isWeiXin()){
-							console.log("1111111111111111")
+								uni.login({
+									success: function (loginRes) {
+										console.log(loginRes);
+										let CODE = loginRes.code
+										login({code:CODE,login_method:'wx_lp'}).then(result=>{
+											if(result.errorCode === 0){
+												_self.loginCall(result.data)
+											}
+											if(result.errorCode === 88001){
+												// 可以通过 wx.getSetting 先查询一下用户是否授权了 "scope.record" 这个 scope
+												wx.getSetting({
+													success(res) {
+														if (res.authSetting['scope.userInfo']) {
+															wx.authorize({
+																scope: 'scope.userInfo',
+																success () {
+								
+																	const lp_raw_data = {...data.detail.userInfo,...result.data}
+																	console.log(lp_raw_data)
+								
+																	login({code:CODE,login_method:'wx_lp',lp_raw_data:JSON.stringify(lp_raw_data)}).then(ret=>{
+																		_self.loginCall(ret.data)
+																	}).catch(err=>{})
+																},
+																fail(){
+																	error('请点击授权登录')
+																}
+															})
+														}else{
+															error('请点击授权登录')
+														}
+													}
+												})
+											}
+										}).catch(e=>{})
+									}
+								});
 						}else{
 							uni.showToast({
 								title:'请在微信公众号或小程序提现',
@@ -180,7 +216,7 @@
 				 this.index = e.target.value;
 				 this.data.Method_Type=this.array[this.index].Method_Type;
 				 this.data.Method_Name=this.array[this.index].Method_Name;
-				 this.data.Method_ID=this.array[0].Method_ID;
+				 this.data.Method_ID=this.array[this.index].Method_ID;
 			}
 		}
 	}
