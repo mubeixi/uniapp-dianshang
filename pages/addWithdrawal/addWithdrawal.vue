@@ -58,8 +58,12 @@
 <script>
 	import {pageMixin} from "../../common/mixin";
 	import {isWeiXin} from "../../common/tool";
-	import {mapGetters,mapActions} from 'vuex';
-	import {getUserWithdrawMethod,getShopWithdrawMethod,addUserWithdrawMethod,login} from '../../common/fetch.js'
+	import {getUserWithdrawMethod,getShopWithdrawMethod,addUserWithdrawMethod,login} from '../../common/fetch.js';
+	import {
+		mapGetters,
+		mapActions,
+		Store
+	} from "vuex";
 	export default {
 		mixins:[pageMixin],
 		data() {
@@ -88,19 +92,23 @@
 			...mapGetters(['userInfo']),
 		},
 		methods:{
+			...mapActions(["getInitData", "setUserInfo"]),
 			//新增提现方式
 			async addInfo(){
 				//如果用户不存在openid   手机号其他登录
 				if(!this.userInfo.openid){
 					if(this.data.Method_Type=='wx_hongbao'||this.data.Method_Type=='wx_zhuanzhang'){
-						if(isWeiXin()){
+						let _this=this;
+						// #ifdef MP-WEIXIN||H5
+						let checkAuth = new Promise(function(resolve,reject){
 								uni.login({
 									success: function (loginRes) {
 										console.log(loginRes);
 										let CODE = loginRes.code
 										login({code:CODE,login_method:'wx_lp'}).then(result=>{
 											if(result.errorCode === 0){
-												_self.loginCall(result.data)
+												_this.setUserInfo(result.data);
+												resolve({});
 											}
 											if(result.errorCode === 88001){
 												// 可以通过 wx.getSetting 先查询一下用户是否授权了 "scope.record" 这个 scope
@@ -109,13 +117,11 @@
 														if (res.authSetting['scope.userInfo']) {
 															wx.authorize({
 																scope: 'scope.userInfo',
-																success () {
-								
+																success () {							
 																	const lp_raw_data = {...data.detail.userInfo,...result.data}
-																	console.log(lp_raw_data)
-								
+																	console.log(lp_raw_data)					
 																	login({code:CODE,login_method:'wx_lp',lp_raw_data:JSON.stringify(lp_raw_data)}).then(ret=>{
-																		_self.loginCall(ret.data)
+																		_this.setUserInfo(result.data);
 																	}).catch(err=>{})
 																},
 																fail(){
@@ -131,13 +137,20 @@
 										}).catch(e=>{})
 									}
 								});
-						}else{
+							});
+
+						checkAuth.then(res=>{console.log('promsie success')},err=>{})
+						// #endif
+							console.log('promsie after')
+						// #ifndef H5||MP-WEIXIN
 							uni.showToast({
 								title:'请在微信公众号或小程序提现',
 								icon:'none'
 							})
 							return;
-						}
+						// #endif
+						
+					
 					}
 				}
 				
