@@ -15,7 +15,7 @@
 				已过期
 			</view>
 		</view>
-		<view style="height: 72rpx;width: 100%;">
+		<view style="height: 102rpx;width: 100%;">
 
 		</view>
 		<view class="center" v-for="(item,index) of data" :key="index">
@@ -133,12 +133,12 @@ view{
 .nav{
 	z-index: 999;
 	position: fixed;
-	top: 86rpx;
+	top: 0rpx;
 	left: 0rpx;
 	width: 750rpx;
 	margin: 0 auto;
-	margin: 20rpx;
-	height: 72rpx;
+	padding: 20rpx 0rpx;
+	height: 102rpx;
 	display: flex;
 	align-items: center;
 	font-size: 30rpx;

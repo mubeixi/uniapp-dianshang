@@ -1,7 +1,7 @@
 <template>
 	<view v-if="pro.img_url">
 		<!-- #ifdef APP-PLUS -->
-<!--				<view class="status_bar" style="background:#353945;"></view>-->
+				<!-- <view class="status_bar" style="background:#2e323c;"></view> -->
 		<!-- #endif -->
 		<view class="top">
 			<image class="widthTen" src="/static/task/top.png" ></image>

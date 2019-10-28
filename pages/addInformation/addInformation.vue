@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view class="all">
 		<!-- #ifdef APP-PLUS -->
 		<view class="status_bar" style="background-color: rgb(248, 248, 248);"><!-- 这里是状态栏 --></view>
 		<!-- #endif -->
@@ -405,7 +405,9 @@
 </script>
 
 <style lang="scss" scoped>
-
+.all{
+	overflow-x: hidden;
+}
 .top{
 	width: 750rpx;
 	padding: 50rpx 83rpx;

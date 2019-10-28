@@ -25,6 +25,7 @@
 		</view>
 
 		<view class="top">
+			
 			<image  class="bgImg" src="/static/blance/bg.jpg" ></image>
 			<!-- #ifdef APP-PLUS -->
 			<image class="back" @click="goBack" src="/static/check/left.png"></image>
@@ -241,6 +242,8 @@ view{
 	/*background-color: #FFFFFF;*/
 	background: #F8F8F8;
 	height: 100vh;
+	width: 750rpx;
+	overflow: hidden;
 }
 	.top{
 		width: 750rpx;
@@ -258,7 +261,7 @@ view{
 			position: absolute;
 			box-shadow:0px 8px 64px 0px rgba(4,0,0,0.14);
 			border-radius:132px;
-			top: 390rpx;
+			bottom: 68rpx;
 			left: 30rpx;
 			display: flex;
 			align-items: center;
@@ -326,7 +329,7 @@ view{
 			left:39rpx ;
 			top: 162rpx;
 			/* #ifdef APP-PLUS */
-			margin-top: var(--status-bar-height);
+			// margin-top: var(--status-bar-height);
 			/* #endif */
 		}
 		.prices{
@@ -340,7 +343,7 @@ view{
 			color: #FFFFFF;
 			font-weight: 200;
 			/* #ifdef APP-PLUS */
-			margin-top: var(--status-bar-height);
+			// margin-top: var(--status-bar-height);
 			/* #endif */
 		}
 		.zhuanchu{

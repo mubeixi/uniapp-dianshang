@@ -17,8 +17,11 @@
 					{{pro.agent_identity}}
 				</view>
 			</view>
-			<view class="juewei" @click="goAddInfo">
-				{{pro.agent_identity ? '立即申请' : '暂不可申请'}}
+			<view  v-if="pro.agent_identity==1&&(pro.agent_identity.tow.is_apply||pro.agent_identity.pro.is_apply||pro.agent_identity.cit.is_apply||pro.agent_identity.cou.is_apply)" class="juewei" @click="goAddInfo">
+				立即申请
+			</view>
+			<view  v-else class="juewei" @click="goAddInfo">
+				暂不可申请
 			</view>
 		</view>
 		<view class="moneySum">
@@ -71,7 +74,7 @@
 					所需金额:
 				</view>
 				<view class="xiangBottomB">
-					¥<text>{{item.Teampro}}</text>
+					¥<text>{{item.Teampro}}</text>(<block v-if="!item.is_apply">暂未达到申请条件</block><block v-if="item.is_apply">已达到申请条件</block>)
 				</view>
 			</view>
 		</view>
