@@ -25,13 +25,17 @@
     },
     data() {
       return {
-        title: {},
+        title: {
+
+        },
       };
     },
     computed: {
       moreData() {
-        return this.title.value.more[0] || {};
-        // if(!this.title || !this.title.value || !this.title.value.more)return {};
+
+        if(!this.title || !this.title.value || !this.title.value.more || !this.title.value.more[0])return {};
+        return this.title.value.more[0];
+
         // return this.title.value.more[0];//this.title.value?this.title.value.more[0]:{}
       },
       style() {
