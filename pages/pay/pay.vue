@@ -109,19 +109,40 @@
 			</div>
 			<div class="submit" @click="submit">去支付</div>
 		</div>
-		<popup-layer ref="popupLayer" :direction="'top'">
-			<div class="iMbx">
-				<div class="c_method" v-for="(item,index) in pay_arr" @click="chooseType(index)" :key="index">
-					{{item}} <text>￥{{orderInfo.Order_Fyepay}}</text>
-				</div>
-			</div>
-		</popup-layer>
+<!--		<popup-layer ref="popupLayer" :direction="'top'">-->
+<!--			<div class="iMbx">-->
+<!--				<div class="c_method" v-for="(item,index) in pay_arr" @click="chooseType(index)" :key="index">-->
+<!--					{{item}} <text>￥{{orderInfo.Order_Fyepay}}</text>-->
+<!--				</div>-->
+<!--			</div>-->
+<!--		</popup-layer>-->
+
+<!--		Order_ID: this.Order_ID,-->
+<!--		pay_type: this.pay_type,-->
+<!--		pay_money: this.orderInfo.Order_Fyepay, // 剩余支付的钱-->
+<!--		use_money: this.user_money , // 使用的余额-->
+<!--		user_pay_password: this.user_pay_password, //余额支付密码-->
+<!--		need_invoice: this.need_invoice,-->
+<!--		invoice_info: this.invoice_info,-->
+<!--		order_remark: this.order_remark-->
+		<pay-components
+				ref="payLayer"
+				:Order_ID="Order_ID"
+				:pay_money="pay_money"
+				:use_money="user_money"
+				:need_invoice="need_invoice"
+				:invoice_info="invoice_info"
+				:order_remark="order_remark"
+				:paySuccessCall="paySuccessCall"
+		/>
 
 	</div>
 </template>
 
 <script>
 	import popupLayer from '../../components/popup-layer/popup-layer.vue'
+	import PayComponents from '../../components/PayComponents.vue';
+
 	import {
 		getAddress,
 		createOrderCheck,
@@ -130,9 +151,7 @@
 		get_user_info,
 		add_template_code
 	} from '../../common/fetch.js';
-	import {
-		pageMixin
-	} from "../../common/mixin";
+	import {pageMixin} from "../../common/mixin";
 	import {
 		ls,
 		GetQueryByString,
@@ -144,7 +163,7 @@
 	export default {
 		mixins: [pageMixin],
 		components: {
-			popupLayer
+			PayComponents
 		},
 		data() {
 			return {
@@ -199,7 +218,6 @@
 		created() {
 
 			// #ifdef H5
-
 			if (isWeiXin()) {
 				this.code = GetQueryByString(location.href, 'code');
 				console.log(this.code)
@@ -212,7 +230,6 @@
 				}
 			}
 			// #endif
-
 		},
 		methods: {
 			// 统一方法
@@ -619,7 +636,7 @@
 						if(this.showDirect && this.orderInfo.Order_Fyepay > 0) {
 							// 需要支付的金额大于0 ，直接弹出支付方式，简化支付流程
 							_self.$nextTick().then(()=>{
-								_self.$refs.popupLayer.show();
+								// _self.$refs.popupLayer.show();
 							})
 
 						}
@@ -716,7 +733,9 @@
 					// 不使用余额支付
 					if (this.orderInfo.Order_Fyepay > 0) {
 						// 待支付金额
-						this.$refs.popupLayer.show();
+						// console.log('去支付了',this.$refs)
+						this.$refs.payLayer.show();
+						//this.$refs.popupLayer.show();
 					} else {
 						// 不使用余额支付，pay_money为要提交的金额
 						this.self_orderPay();
