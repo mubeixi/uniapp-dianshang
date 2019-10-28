@@ -2,7 +2,7 @@
   <div class="goods wrap" id="goods" :style="{paddingLeft:goods.style.wrapmargin+'px',paddingRight:goods.style.wrapmargin+'px'}">
     <div :class="className">
       <ul class="list" >
-        <li  @click="goProductDetail(item.Products_ID,item.is_pintuan)" v-for="(item,idx) in goodsList" class="item" :class="[idx%2==0?'even':'odd',goods.config.radius=='round'?'round':'',goods.config.showmode]" :style="[itemMarginObj(idx)]">
+        <li  @click="goProductDetail(item.Products_ID,item.is_pintuan)" v-for="(item,idx) in goodsList" :key="idx" class="item" :class="[idx%2==0?'even':'odd',goods.config.radius=='round'?'round':'',goods.config.showmode]" :style="[itemMarginObj(idx)]">
           <div class="cover" :style="{width:itemw,height:itemw,backgroundImage:'url('+domainFunc(item.ImgPath)+')'}">
             <div v-show="goods.config.attr && goods.config.attr.tag.show" :class="goods.config.attr.tag.style" v-if="['new','hot'].indexOf(goods.config.attr.tag.style)!=-1" class="tag">
               {{goods.config.attr.tag.style=='hot'?'hot':'new'}}
@@ -53,13 +53,27 @@
           Products_BriefDescription:'商品简介',
           ImgPath:''
         },
-        goods: {},
+        goods: {
+          config:{
+            attr:{
+              title: {},
+              desc: {},
+              price: {},
+              buybtn: {}, //样式1 样式2
+              tag: {} //hot new diy 第三个是图片。 都是放在商品左上角
+            }
+          }
+        },
         fullWidth: 0
       };
     },
     computed: {
       limit(){
-        return this.goods.value.cate_id ? this.goods.value.limit :6
+        if(this.goods.value){
+          return this.goods.value.cate_id ? this.goods.value.limit :20
+        }
+        return 20
+
       },
       isEmpeyInfo() {
         return !this.goods.config.attr.title.show && !this.goods.config.attr.desc.show && !this.goods.config.attr.price.show && !this.goods.config.attr.buybtn.show

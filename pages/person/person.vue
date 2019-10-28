@@ -42,7 +42,7 @@
 				</view>
 				<view class="navList four" @click="goCoupon">
 					<image src="/static/person/youhuijuan.png" mode=""></image>
-					<view style="left: 50rpx;">
+					<view style="left: 50upx;">
 						优惠券
 					</view>
 				</view>
@@ -87,7 +87,7 @@
 			</view>
 		</view>
 		<view class="list">
-			<view class="group" @click="goPintuanOrderlist">
+			<view class="group cell" @click="goPintuanOrderlist">
 				<image src="/static/person/pin.png" class="left"></image>
 				<view class="pintuan">
 					拼团订单
@@ -101,21 +101,21 @@
 				</view>
 				<image src="/static/person/right.png" class="right"></image>
 			</view> -->
-			<view class="bargain" @click="goGift">
+			<view class="bargain cell" @click="goGift">
 				<image src="/static/person/zengpin.png" class="left"></image>
 				<view class="pintuan">
 					赠品中心
 				</view>
 				<image src="/static/person/right.png" class="right"></image>
 			</view>
-			<view class="bargain"  @click="goRenwu">
+			<view class="bargain cell"  @click="goRenwu">
 				<image src="/static/person/renwu.png" class="left"></image>
 				<view class="pintuan">
 					任务中心
 				</view>
 				<image src="/static/person/right.png" class="right"></image>
 			</view>
-			<view class="bargain"  @click="gotoAddresslist" >
+			<view class="bargain cell"  @click="gotoAddresslist" >
 				<image src="/static/person/di.png" class="left"></image>
 				<view class="pintuan">
 					地址管理
@@ -130,7 +130,7 @@
 				<image src="/static/person/right.png" class="right"></image>
 			</view> -->
 
-			<view class="bargain">
+			<view class="bargain cell">
 				<image src="/static/person/tui.png" class="left"></image>
 				<view class="pintuan">
 					退款/售后
@@ -138,7 +138,7 @@
 				<image src="/static/person/right.png" class="right"></image>
 			</view>
 
-			<view class="setting" @click="goSetting">
+			<view class="setting cell" @click="goSetting">
 				<image src="/static/person/she.png" class="left"></image>
 				<view class="pintuan">
 					设置
@@ -146,7 +146,7 @@
 				<image src="/static/person/right.png" class="right"></image>
 			</view>
 		</view>
-		<view style="height: 118rpx;"></view>
+		<view style="height: 118upx;"></view>
 	</view>
 </template>
 
@@ -337,8 +337,8 @@
 .person{
 	background-color: rgb(241, 241, 241);
 	.personTop{
-		width: 750rpx;
-		height: 373rpx;
+		width: 750upx;
+		height: 373upx;
 		position: relative;
 		.bg{
 
@@ -349,41 +349,41 @@
 
 		}
 		.qiandao{
-			width:120rpx;
-			height:45rpx;
+			width:120upx;
+			height:45upx;
 			background:rgb(249, 142, 142);
-			box-shadow:0px 1rpx 6rpx 0px rgba(167,53,50,1);
+			box-shadow:0px 1upx 6upx 0px rgba(167,53,50,1);
 			//opacity:0.45;
-			border-radius:20rpx;
+			border-radius:20upx;
 			position: absolute;
 
-			top: 22rpx;
-			right: 20rpx;
+			top: 22upx;
+			right: 20upx;
 			display: flex;
 			align-items: center;
-			padding: 11rpx 20rpx;
+			padding: 11upx 20upx;
 			justify-content: space-between;
 			box-sizing: border-box;
 			image{
-				width: 22rpx;
-				height: 22rpx;
+				width: 22upx;
+				height: 22upx;
 			}
 			view{
 				color: #FFFFFF;
-				font-size: 24rpx;
+				font-size: 24upx;
 				font-weight:500;
 			}
 		}
 		.personInfo{
 			position: absolute;
-			left: 57rpx;
-			right: 57rpx;
-			top: 80rpx;
-			height: 100rpx;
+			left: 57upx;
+			right: 57upx;
+			top: 80upx;
+			height: 100upx;
 			display: flex;
 			.left{
-				width: 100rpx;
-				height: 100rpx;
+				width: 100upx;
+				height: 100upx;
 				border-radius: 50%;
 				image{
 					width: 100%;
@@ -391,8 +391,8 @@
 				}
 			}
 			.right{
-				margin-left: 19rpx;
-				padding-top: 10rpx;
+				margin-left: 19upx;
+				padding-top: 10upx;
 				.loginBtn{
 					padding:4px 10px;
 					color: white;
@@ -404,218 +404,221 @@
 					transform: translateY(-50%);
 				}
 				.nickName{
-					font-size:30rpx;
-					height: 29rpx;
-					line-height: 29rpx;
+					font-size:30upx;
+					height: 29upx;
+					line-height: 29upx;
 					color: #FFFFFF;
 					font-weight:bold;
 				}
 				.cart{
-					margin-top: 19rpx;
-					font-size: 22rpx;
+					margin-top: 19upx;
+					font-size: 22upx;
 					color: #FFFFFF;
-					//width:136rpx;
-					height:42rpx;
-					line-height: 42rpx;
+					//width:136upx;
+					height:42upx;
+					line-height: 42upx;
 					display: inline-block;//flex;
 					align-items: center;
-					padding-left: 16rpx;
-					padding-right: 12rpx;
+					padding-left: 16upx;
+					padding-right: 12upx;
 					background:rgb(249, 142, 142);
-					border-radius:20rpx;
+					border-radius:20upx;
 					box-sizing: border-box;
 					image{
-						width: 13rpx;
-						height: 20rpx;
-						margin-left: 9rpx;
+						width: 13upx;
+						height: 20upx;
+						margin-left: 9upx;
 					}
 				}
 			}
 		}
 		.nav{
-			width: 711rpx;
-			height: 240rpx;
+			width: 711upx;
+			height: 240upx;
 			background-color: #FFFFFF;
 			position: absolute;
-			top: 233rpx;
-			left: 19rpx;
-			box-shadow:0px 5rpx 12rpx 1rpx rgba(222,71,66,0.41);
-			border-radius:20rpx;
-			padding-top: 67rpx;
-			padding-bottom: 57rpx;
+			top: 233upx;
+			left: 19upx;
+			box-shadow:0px 5upx 12upx 1upx rgba(222,71,66,0.41);
+			border-radius:20upx;
+			padding-top: 67upx;
+			padding-bottom: 57upx;
 			box-sizing: border-box;
 			display: flex;
 			justify-content: space-between;
 			.navList{
-				width: 177rpx;
+				width: 177upx;
 				height: 100%;
 				text-align: center;
 				position: relative;
 				view{
-					font-size: 28rpx;
+					font-size: 28upx;
 					color: #333333;
 					font-weight:500;
 					position: absolute;
-					bottom: 10rpx;
-					left: 60rpx;
+					bottom: 10upx;
+					left: 60upx;
 				}
 			}
 			.first{
 				image{
-					width: 53rpx;
-					height: 60rpx;
+					width: 53upx;
+					height: 60upx;
 				}
 			}
 			.second{
 				image{
-					width: 58rpx;
-					height: 58rpx;
+					width: 58upx;
+					height: 58upx;
 				}
 			}
 			.three{
 				image{
-					width: 56rpx;
-					height: 54rpx;
+					width: 56upx;
+					height: 54upx;
 				}
 			}
 			.four{
 				image{
-					width: 65rpx;
-					height: 46rpx;
+					width: 65upx;
+					height: 46upx;
 				}
 			}
 		}
 	}
 	.order{
-		margin: 140rpx 20rpx 25rpx 20rpx;
-		width: 710rpx;
-		height: 268rpx;
+		margin: 140upx 20upx 25upx 20upx;
+		width: 710upx;
+		height: 268upx;
 		background-color: #FFFFFF;
-		border-radius:20rpx;
+		border-radius:20upx;
 		.orderTop{
-			width: 710rpx;
+			width: 710upx;
 			box-sizing: border-box;
-			height: 70rpx;
-			padding: 0 20rpx;
-			line-height: 70rpx;
+			height: 70upx;
+			padding: 0 20upx;
+			line-height: 70upx;
 			border-bottom: 1px solid #ECE8E8;
 			display: flex;
 			justify-content: space-between;
 			.orderLeft{
-				font-size:28rpx;
+				font-size:28upx;
 				font-weight:bold;
 			}
 			.orderRight{
-				font-size: 26rpx;
+				font-size: 26upx;
 				color: #666666;
 				display: flex;
 				align-items: center;
 				image{
-					width: 17rpx;
-					height: 26rpx;
-					margin-left: 12rpx;
+					width: 17upx;
+					height: 26upx;
+					margin-left: 12upx;
 				}
 			}
 		}
 		.orderCenter{
-			height: 198rpx;
-			padding-top: 42rpx;
-			padding-bottom: 49rpx;
+			height: 198upx;
+			padding-top: 42upx;
+			padding-bottom: 49upx;
 			box-sizing: border-box;
 			display: flex;
 			justify-content: space-between;
 			.orderLast{
-				width: 177.5rpx;
-				height: 107rpx;
+				width: 177.5upx;
+				height: 107upx;
 				text-align: center;
 				position: relative;
 				image{
-					width: 65rpx;
-					height: 65rpx;
+					width: 65upx;
+					height: 65upx;
 				}
 				view{
-					font-size: 26rpx;
+					font-size: 26upx;
 					color: #333333;
 				}
 			}
 		}
 	}
 	.list{
-		width: 710rpx;
-		//height: 533rpx;
+		width: 710upx;
+		//height: 533upx;
 		margin: 0  auto;
 		background-color: #FFFFFF;
-		border-radius:20rpx;
-		padding-left: 22rpx;
-		padding-right: 18rpx;
+		border-radius:20upx;
+		padding-left: 22upx;
+		padding-right: 18upx;
 		box-sizing: border-box;
 		.line{
 			height:1px;
 			background:rgba(236,232,232,1);
 		}
-		&>view{
-			border-bottom: 1px solid rgba(236,232,232,1) ;
+		.cell{
+			border-bottom: 1px solid $wzw-border-color ;
+			&:last-child{
+				border-bottom: none;
+			}
 		}
 		.group{
-			height: 94rpx;
+			height: 94upx;
 			display: flex;
 			align-items: center;
 			image.left{
-				width: 33rpx;
-				height: 31rpx;
-				margin-left: 7rpx;
+				width: 33upx;
+				height: 31upx;
+				margin-left: 7upx;
 			}
 			image.right{
-				width: 17rpx;
-				height: 26rpx;
+				width: 17upx;
+				height: 26upx;
 				margin-left: auto;
-				margin-right: 4rpx;
+				margin-right: 4upx;
 			}
 			.pintuan{
-				margin-left: 13rpx;
-				font-size: 28rpx;
+				margin-left: 13upx;
+				font-size: 28upx;
 				color: #333333;
 			}
 		}
 		.bargain{
-			height: 86rpx;
+			height: 86upx;
 			display: flex;
 			align-items: center;
 			image.left{
-				width: 32rpx;
-				height: 34rpx;
-				margin-left: 7rpx;
+				width: 32upx;
+				height: 34upx;
+				margin-left: 7upx;
 			}
 			image.right{
-				width: 17rpx;
-				height: 26rpx;
+				width: 17upx;
+				height: 26upx;
 				margin-left: auto;
-				margin-right: 4rpx;
+				margin-right: 4upx;
 			}
 			.pintuan{
-				margin-left: 13rpx;
-				font-size: 28rpx;
+				margin-left: 13upx;
+				font-size: 28upx;
 				color: #333333;
 			}
 		}
 		.setting{
-			height: 90rpx;
+			height: 90upx;
 			display: flex;
 			align-items: center;
 			image.left{
-				width: 36rpx;
-				height: 36rpx;
-				margin-left: 7rpx;
+				width: 36upx;
+				height: 36upx;
+				margin-left: 7upx;
 			}
 			image.right{
-				width: 17rpx;
-				height: 26rpx;
+				width: 17upx;
+				height: 26upx;
 				margin-left: auto;
-				margin-right: 4rpx;
+				margin-right: 4upx;
 			}
 			.pintuan{
-				margin-left: 13rpx;
-				font-size: 28rpx;
+				margin-left: 13upx;
+				font-size: 28upx;
 				color: #333333;
 			}
 		}
@@ -624,31 +627,31 @@
 }
 
 .msg{
-	width: 45rpx !important;
-	height: 45rpx !important;
+	width: 45upx !important;
+	height: 45upx !important;
 	position: absolute;
-	top: 22rpx;
-	right: 175rpx;
+	top: 22upx;
+	right: 175upx;
 }
 .onlyMsg{
-	right: 25rpx;
+	right: 25upx;
 }
 .isQian{
-	padding-left: 12rpx !important;
-	padding-right: 12rpx !important;
+	padding-left: 12upx !important;
+	padding-right: 12upx !important;
 }
 
 .jiaobiao{
 		position: absolute;
-		top: -6rpx;
-		right: 42rpx;
-		width: 24rpx;
-		height: 24rpx;
-		padding: 4rpx;
+		top: -6upx;
+		right: 42upx;
+		width: 24upx;
+		height: 24upx;
+		padding: 4upx;
 		border-radius: 50%;
 		background-color: #f43131;
 		border: 1px solid  #F43131;
-		font-size: 24rpx !important;
+		font-size: 24upx !important;
 		display: flex;
 		align-items: center;
 		justify-content: center;

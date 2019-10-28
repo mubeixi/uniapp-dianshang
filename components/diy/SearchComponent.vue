@@ -45,10 +45,15 @@
     },
     computed: {
       placeholderText(){
-        return this.search.value.hot.join(' ')
+          if(this.search.value && this.search.value.hot){
+              return this.search.value.hot.join(' ')
+          }
+
+          return ''
+
       },
       getWrapStyle(){
-        if(this.style.position==='absolute'){
+        if(this.style && this.style.position==='absolute'){
           return {
             backgroundColor:this.style.bgColor,
             // left:this.style.x+'px',
@@ -64,7 +69,10 @@
 
       },
       style() {
-        return this.search.style;
+          if(this.search && this.search.style){
+              return this.search.style
+          }
+        return {};
       },
 
     },
@@ -99,9 +107,9 @@
     width: 100%;
     padding: 10px 0;
     &.absolute{
-      &:hover{
-        border: 1px dashed #298df8;
-      }
+      /*&:hover{*/
+      /*  border: 1px dashed #298df8;*/
+      /*}*/
 
       box-sizing: border-box;
       z-index: 2;

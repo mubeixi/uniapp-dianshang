@@ -1,6 +1,6 @@
 <template>
   <view class="text" @click="go">
-    <view :style="{fontSize:text.style.fontSize+'px',color:text.style.color,backgroundColor:text.style.bgColor,textAlign:text.style.textAlign}"
+    <view v-if="text.style" :style="{fontSize:text.style.fontSize+'px',color:text.style.color,backgroundColor:text.style.bgColor,textAlign:text.style.textAlign}"
          class="text">{{text.value.content}}
     </view>
   </view>
