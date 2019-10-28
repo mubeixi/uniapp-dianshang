@@ -29,7 +29,12 @@
     },
     data() {
       return {
-        swiper: {},
+        swiper: {
+          config:{},
+          value:{
+            list:[]
+          }
+        },
       };
     },
     computed: {
