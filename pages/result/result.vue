@@ -23,11 +23,11 @@
 				<image src="/static/result/bottom.png" v-else style="bottom: 0rpx;"></image>
 			</view>
 		</div></div>
-        <div :style="{color:showShai?'#F43131':''}" @click.stop="change" style="width: 140rpx;">筛选<div class="line"></div></div>
+        <div :style="{color:showShai?'#F43131':''}" @click.stop="change" style="width: 110rpx;text-align: right;">筛选<div class="line"></div></div>
 		<div class="tab" v-if="showShai"   style="width: 40rpx;position: absolute;top: 0rpx;right: 0rpx;">
 
 		</div>
-		<div class="tab" style="width: 40rpx;position: absolute;top: 0rpx;right: 28rpx;" v-else>
+		<div class="tab" style="width: 40rpx;position: absolute;top: 25rpx;right: 28rpx;" v-else>
 			<image src="/static/result/jx1.png" @click="changeCate" v-if="cate==2" class="imgm"></image>
 			<image src="/static/result/jx.png" @click="changeCate" v-else class="imgm"></image>
 		</div>
@@ -53,6 +53,10 @@
 			</view>
 		</div>
     </div>
+	
+	<view style="width: 100%;height: 210rpx;">
+		
+	</view>
 	<div v-if="cate==1" >
 		<div class="cate1">
 			<div class="pro" @click="goProductDetail(item.Products_ID,item.is_pintuan)" v-for="(item,i) of pro" :key="i">
@@ -330,6 +334,8 @@ export default {
 <style scoped lang="scss">
 	.bd{
 		min-height: 1000rpx;
+		width: 750rpx;
+		overflow: hidden;
 	}
     .top {
 		position: relative;
@@ -337,7 +343,11 @@ export default {
         align-items: center;
         padding: 30rpx 20rpx 0;
 		box-sizing: border-box;
-		position: relative;
+		position: fixed;
+		left: 0rpx;
+		top: 0rpx;
+		background-color: #FFFFFF;
+		z-index: 999;
 		.back {
 			width: 23rpx;
 			height: 37rpx;
@@ -370,12 +380,19 @@ export default {
         display: flex;
 		font-size: 30rpx;
         // justify-content: space-around;
-        margin-top: 25px;
         padding:0 20rpx;
+		padding-top: 25rpx;
 		color: #333;
 		position: relative;
-		height: 90rpx;
+		height: 115rpx;
 		align-content: center;
+		position: fixed;
+		top: 94rpx;
+		left: 0rpx;
+		background-color: #FFFFFF;
+		z-index: 999;
+		width: 100%;
+		box-sizing: border-box;
     }
     .tab.checked {
         color: #F43131;

@@ -426,6 +426,11 @@
 
 					disBuy(data).then(res=>{
 						this.paySuccessCall(res)
+					},err=>{
+						uni.showToast({
+							title:res.msg,
+							icon:'none'
+						})
 					}).catch(e=>{
 						console.log(e);
 					})

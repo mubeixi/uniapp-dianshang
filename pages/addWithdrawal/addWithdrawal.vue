@@ -57,6 +57,8 @@
 
 <script>
 	import {pageMixin} from "../../common/mixin";
+	import {isWeiXin} from "../../common/tool";
+	import {mapGetters,mapActions} from 'vuex';
 	import {getUserWithdrawMethod,getShopWithdrawMethod,addUserWithdrawMethod} from '../../common/fetch.js'
 	export default {
 		mixins:[pageMixin],
@@ -82,9 +84,27 @@
 			//获取商城提现方式
 			this.getShopWithdrawMethod();
 		},
+		computed:{
+			...mapGetters(['userInfo']),
+		},
 		methods:{
 			//新增提现方式
 			addInfo(){
+				//如果用户不存在openid   手机号其他登录
+				if(!this.userInfo.openid){
+					if(this.data.Method_Type=='wx_hongbao'||this.data.Method_Type=='wx_zhuanzhang'){
+						if(isWeiXin()){
+							console.log("1111111111111111")
+						}else{
+							uni.showToast({
+								title:'请在微信公众号或小程序提现',
+								icon:'none'
+							})
+							return;
+						}
+					}
+				}
+				
 				let data={};
 				if(this.data.Method_Type=="bank_card"){
 					data={
@@ -160,7 +180,7 @@
 				 this.index = e.target.value;
 				 this.data.Method_Type=this.array[this.index].Method_Type;
 				 this.data.Method_Name=this.array[this.index].Method_Name;
-				this.data.Method_ID=this.array[0].Method_ID;
+				 this.data.Method_ID=this.array[0].Method_ID;
 			}
 		}
 	}

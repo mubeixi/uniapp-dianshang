@@ -279,6 +279,8 @@ export const getJifenProd = (data,options) => fetch('get_jifen_prod',data,option
 export const jifenProdOrder = (data,options) => fetch('jifen_prod_order',data,options);
 // 积分支付
 export const jifenProdDuihuan = (data,options) => fetch('jifen_prod_duihuan', data, options);
+// 获取退款单列表
+export const getBackOrder = (data,options) => fetch('get_back_order', data, options);
 
 // 获取物流
 export const getShipping = (data, options) => fetch('get_shipping', data, options);
@@ -294,6 +296,9 @@ export const depositBalance = (data,options) => fetch('deposit_balance', data, o
 
 // 余额转出
 export const transferBalance = (data,options) => fetch('transfer_balance', data, options);
+// 获取余额充值优惠
+export const getBalance = (data,options) => fetch('get_balance', data, options);
+
 // 实体店消费
 export const storeConsume = (data, options) => fetch('store_consume', data, options);
 // 积分转出

@@ -10,6 +10,9 @@
 			@rightHandle="handle"
 			:hiddenBack="true"
 			:rightHidden="manage" ></page-title>
+			<view style="height: 86rpx;">
+				
+			</view>
 			<div class="content">
 			  <div v-if="total_count>0">
 				<div class="order_msg" >
@@ -356,6 +359,11 @@ export default {
 
 .nav-title {
   background: #fff !important;
+  position: fixed;
+  top: 0rpx;
+  left: 0rpx;
+  z-index: 999;
+  width: 100%;
 }
 .content {
   background: #f3f3f3;

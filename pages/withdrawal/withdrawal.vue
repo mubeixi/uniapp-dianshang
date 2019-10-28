@@ -139,6 +139,8 @@
 							icon:'none'
 						})
 					}
+				},err=>{
+					that.isQing=false;
 				}).catch(e=>{
 					console.log(e)
 				})

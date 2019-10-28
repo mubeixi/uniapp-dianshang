@@ -4,7 +4,7 @@
 			<image src="/static/task/left.png" class="goBack" @click="goBack"></image>
 			<view class="titles">会员等级</view>
 			<scroll-view class="center"  scroll-x="true"  @scroll="goRight">
-				<view class="vipFir " v-for="(item,index) of pro.levels" :key="index">
+				<view class="vipFir " v-for="(item,index) of pro.levels" :key="index"    :style="pro.levels.length==1?'margin-left:45rpx;':''">
 					<image src="/static/task/vip.png" class="allImg"></image>
 					<image src="/static/task/vips.png" class="leftImg"></image>
 					<view class="vipGrade">
