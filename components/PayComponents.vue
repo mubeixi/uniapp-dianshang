@@ -135,6 +135,7 @@ export default {
         if(this.isOpen){
           this.show();
         }
+				console.log(this.use_money)
     },
     methods:{
         // 取消输入支付密码
@@ -171,7 +172,7 @@ export default {
             this.pay_type = name;
             this.close();
             // 判断是否使用了余额，
-            if(this.user_money > 0 || name == 'remainder_pay'){
+            if(this.use_money > 0 || name == 'remainder_pay'){
                 // 使用了 余额支付
                 this.password_input = true;
             }else {
@@ -196,7 +197,7 @@ export default {
                     Order_ID: this.Order_ID,
                     pay_type: this.pay_type,
                     pay_money: this.pay_money, // 剩余支付的钱
-                    use_money: this.user_money , // 使用的余额
+                    use_money: this.use_money , // 使用的余额
                     user_pay_password: this.user_pay_password, //余额支付密码
                     need_invoice: this.need_invoice,
                     invoice_info: this.invoice_info,
