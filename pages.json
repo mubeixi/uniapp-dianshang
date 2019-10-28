@@ -27,7 +27,9 @@
         {
             "path" : "pages/collection/collection",
             "style" : {
-            	"navigationBarTitleText": "收藏列表"
+            	"app-plus": {
+            		"titleNView": false
+            	}
             }
         }
         ,{
@@ -219,7 +221,9 @@
         ,{
             "path" : "pages/withdrawalMethod/withdrawalMethod",
             "style" : {
-            	"navigationBarTitleText": "提现方式"
+            	"app-plus": {
+            		"titleNView": false
+            	}
             }
         }
         ,{

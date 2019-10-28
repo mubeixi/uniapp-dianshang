@@ -20,7 +20,7 @@
 			<view  v-if="pro.agent_identity==1&&(pro.agent_identity.tow.is_apply||pro.agent_identity.pro.is_apply||pro.agent_identity.cit.is_apply||pro.agent_identity.cou.is_apply)" class="juewei" @click="goAddInfo">
 				立即申请
 			</view>
-			<view  v-else class="juewei" @click="goAddInfo">
+			<view  v-else class="juewei">
 				暂不可申请
 			</view>
 		</view>
