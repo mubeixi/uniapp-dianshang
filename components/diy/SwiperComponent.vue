@@ -4,7 +4,7 @@
     <swiper style="height:375upx" class="swiper"
             indicator-color="rgba(255, 255, 255, .3)"
             indicator-active-color="rgba(255, 255, 255, .7)"
-            :indicator-dots="swiper.value.list.length>1" :autoplay="swiper.config.autoplay" :interval="swiper.config.interval|str2num" :duration="1000">
+            :indicator-dots="swiper.value.list.length>1" :autoplay="swiper.config.autoplay" circular="true" :interval="swiper.config.interval|str2num" :duration="500">
 
       <swiper-item @click="go(item)" v-for="(item,idx) in swiper.value.list" :key="idx">
         <image class="swiper-item" style="width: 750upx"  mode="scaleToFill" :src="domainFunc(item.img_src)"></image>
@@ -54,7 +54,7 @@
       domainFunc(url) {
         return domain(url)
       },
-      
+
       // ...mapActions(),
     },
     created() {

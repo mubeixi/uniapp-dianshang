@@ -30,7 +30,7 @@ function setWxConfig(config) {
 }
 
 
-const WX_JSSDK_INIT = (vm) => new Promise((resolve, reject) => {
+export const WX_JSSDK_INIT = (vm) => new Promise((resolve, reject) => {
 
 	if(!isWeiXin())reject(false);
 
@@ -96,7 +96,7 @@ export const pageMixin = {
 	//option为object类型，会序列化上个页面传递的参数
 	//页面的初始化
 	async onLoad(option) {
-		
+
 
 		let owner_id = null,users_id = null
 
@@ -132,9 +132,9 @@ export const pageMixin = {
 				location.search = search
 				// console.log(location.search)
 			}
-				
-			
-		    
+
+
+
 
 
 		}else{
@@ -148,7 +148,7 @@ export const pageMixin = {
 
 		/*owner_id 机制*/
 		owner_id = GetQueryByString(location.href, 'owner_id')
-		
+
 		console.log(owner_id)
 		// #endif
 
@@ -176,7 +176,7 @@ export const pageMixin = {
 			let extConfig = wx.getExtConfigSync ? wx.getExtConfigSync() : {};
 			console.log('extConfig info is',extConfig);
 			users_id = extConfig.users_id;
-			
+
 		}
 
 		//开发环境下，就手动给一下吧
@@ -290,4 +290,33 @@ export const pageMixin = {
 		// #endif
         ...mapActions(['getInitData'])
     }
+}
+
+
+/**
+ * 支付的混合类
+ * @type {{}}
+ */
+export const payMixin = {
+	methods:{
+
+	},
+	created() {
+
+		// #ifdef H5
+
+		if (isWeiXin()) {
+			this.code = GetQueryByString(location.href, 'code');
+			console.log(this.code)
+			if (this.code) {
+
+				this.pay_type = 'wx_mp';//需要手动设置一下
+				// console.log(this.pay_type)
+				// ls.set('code',this.code)
+				this.self_orderPay(1);
+			}
+		}
+		// #endif
+
+	},
 }

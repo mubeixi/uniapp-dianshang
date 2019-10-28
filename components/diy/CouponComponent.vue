@@ -1,5 +1,5 @@
 <template>
-  <div class="coupon coupon-list wrap">
+  <div class="coupon coupon-list wrap" v-if="couponList>0">
     <div v-if="coupon.config.type===1 && couponList.length>0">
       <div v-if="couponList.length<4"  class="list style1 style1flex" >
         <div @click="getCoupon(item)" class="item" v-for="(item,idx) in couponList">
@@ -46,7 +46,7 @@
         </div>
       </div>
     </div>
-    <div v-if="couponList.length<1" class="text-center graytext font12 padding10-r">无可用优惠券</div>
+    <div v-if="couponList.length<1" class="text-center graytext font12 padding10-r"></div>
 
   </div>
 </template>
@@ -120,10 +120,10 @@
       getCoupon(couponInfo){
 
         getUserCoupon({coupon_id:couponInfo.Coupon_ID}).then(res=>{
-          getCoupon({pageSize:999}).then(res=>{
+
+          getCoupon({pageSize:999},{errtip:false}).then(res=>{
             this.isAllowCouponList = res.data
           })
-
 
         },err=>{
 
@@ -134,7 +134,7 @@
     async created() {
 
 
-      await getCoupon({pageSize:999}).then(res=>{
+      await getCoupon({pageSize:999},{errtip:false}).then(res=>{
         this.isAllowCouponList = res.data
       })
 

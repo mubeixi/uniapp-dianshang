@@ -1,0 +1,590 @@
+<template>
+    <view>
+        <view v-show="ifshow" @tap="ableClose" @touchmove.stop.prevent class="pay-mask">
+        </view>
+        <div class="zhezhao" v-if="password_input">
+            <div class="input-wrap">
+                <div>请输入余额支付密码</div>
+                <input type="password" class="input" placeholder="请输入密码" @input="user_password">
+                <div class="btns">
+                    <div @click="cancelInput" class="btn">取消</div>
+                    <div @click="confirmInput" class="btn">确定</div>
+                </div>
+            </div>
+        </div>
+
+        <view ref="popRef"  class="popup-content"   @tap.stop="stopEvent" :style="_location" >
+            <div class="iMbx">
+                <div class="c_method" v-for="(item,index) in initData.pay_arr" @click="chooseType(index)" :key="index">
+                    {{item}} <text>￥{{pay_money}}</text>
+                </div>
+            </div>
+        </view>
+    </view>
+</template>
+
+<script>
+
+import {mapGetters,mapActions} from 'vuex';
+import {toast,error} from "../common";
+import {orderPay} from "../common/fetch";
+// #ifdef H5
+import {WX_JSSDK_INIT} from "../common/mixin";
+// #endif
+
+function noop(){}
+export default {
+    // name: "PayComponents",
+    // Order_ID: this.Order_ID,
+    // pay_type: this.pay_type,
+    // pay_money: this.orderInfo.Order_Fyepay, // 剩余支付的钱
+    // use_money: this.user_money , // 使用的余额
+    // user_pay_password: this.user_pay_password, //余额支付密码
+    // need_invoice: this.need_invoice,
+    // invoice_info: this.invoice_info,
+    // order_remark: this.order_remark
+    props:{
+        //是否自动显示
+        isOpen:{
+            type: Boolean,
+            default: true,
+        },
+        //是否点击蒙层就自动关闭
+        autoClose: {
+            type: Boolean,
+            default: true,
+        },
+        //订单ID，非必填。有的地方就没有Order_ID
+        Order_ID: {
+            type: String
+        },
+        // 剩余支付的钱
+        pay_money:{
+            type:[Number,String],
+            require:true
+        },
+        // 使用的余额
+        use_money:{
+            type:[Number,String],
+            require:true
+        },
+        //额外的信息非必填
+
+        //是否需要发票
+        need_invoice:{
+            type:Number,
+            default:false
+        },
+        //发票信息
+        invoice_info:{
+            type:String
+        },
+        //订单备注
+        order_remark:{
+            type:String
+        },
+        paySuccessCall:{
+            type:Function,
+            default:noop
+        },
+        payErrorCall:{
+            type:Function,
+            default:noop
+        },
+        payCanceCall:{
+            type:Function,
+            default:noop
+        },
+    },
+    data(){
+        return {
+            direction:'top',//强制在底部
+            ifshow: false, // 是否展示,
+            translateValue: -100, // 位移距离
+            user_pay_password:'',//余额支付密码
+            password_input:false,
+            totalMoney: 0, // 应支付金额
+            pay_type: 'remainder_pay', // remainder_pay余额支付，余额补差    wechat 微信支付  ali 支付宝支付
+
+
+        }
+    },
+    computed:{
+        _translate() {
+            const transformObj = {
+                'top': `transform:translateY(${-this.translateValue}%)`,
+                'bottom': `transform:translateY(${this.translateValue}%)`,
+                'left': `transform:translateX(${-this.translateValue}%)`,
+                'right': `transform:translateX(${this.translateValue}%)`
+            };
+            return transformObj[this.direction]
+        },
+        _location() {
+            const positionValue = {
+                'top': 'bottom:0px;width:100%;',
+                'bottom': 'top:0px;width:100%;',
+                'left': 'right:0px;height:100%;',
+                'right': 'left:0px;height:100%;',
+            };
+            return positionValue[this.direction] + this._translate;
+        },
+        ...mapGetters(['initData','userInfo'])
+    },
+    created(){
+        //自动打开
+        if(this.isOpen){
+          this.show();
+        }
+    },
+    methods:{
+        // 取消输入支付密码
+        cancelInput() {
+            this.password_input = false;
+        },
+        // 用户输入密码完毕
+        user_password(e) {
+            this.user_pay_password = e.detail.value;
+        },
+        // 确定输入支付密码
+        confirmInput(e) {
+            this.self_orderPay();
+            this.password_input = false;
+        },
+        show(events) {
+            console.log('唤起支付')
+            this.ifshow = true;
+            this.translateValue = 0;
+
+        },
+        close() {
+            this.ifshow = false;
+            this.translateValue = -100;
+        },
+        ableClose() {
+            if (this.autoClose) {
+                this.close();
+            }
+        },
+        //获取用户支付方式
+        chooseType(name) {
+            console.log('支付方式',name)
+            this.pay_type = name;
+            this.close();
+            // 判断是否使用了余额，
+            if(this.user_money > 0 || name == 'remainder_pay'){
+                // 使用了 余额支付
+                this.password_input = true;
+            }else {
+                // 未使用余额支付, 直接调用
+                this.self_orderPay();
+            }
+        },
+        // 统一方法
+        async self_orderPay(is_forward){
+
+            let _self = this;
+            let payConf = {};
+
+            //不是跳转的
+            if(!is_forward){
+
+                if(this.need_invoice == 1 && this.invoice_info == '') {
+                    toast('发票信息不能为空','none')
+                    return;
+                };
+                payConf = {
+                    Order_ID: this.Order_ID,
+                    pay_type: this.pay_type,
+                    pay_money: this.pay_money, // 剩余支付的钱
+                    use_money: this.user_money , // 使用的余额
+                    user_pay_password: this.user_pay_password, //余额支付密码
+                    need_invoice: this.need_invoice,
+                    invoice_info: this.invoice_info,
+                    order_remark: this.order_remark
+                };
+
+                // 用户选择余额支付
+                if(this.pay_type == 'remainder_pay') {
+
+                    orderPay(payConf,{errtip:false}).then(res=>{
+                        console.log(res)
+                        this.paySuccessCall();
+                    },err=>{
+                        uni.showModal({
+                            title: '提示',
+                            content: err.msg,
+                            showCancel: false
+                        });
+                    }).catch(e=>{
+                        console.log(e)
+                    });
+                    return;
+                }
+
+
+
+            }
+
+            if(this.pay_type === 'unionpay'){
+                error('即将上线')
+                return;
+            }
+
+            if(this.pay_type === 'ali_app'){
+
+
+
+            }
+
+
+            //下面都是微信
+
+            //需要格外有一个code
+
+            // #ifdef H5
+
+            // 微信h5
+            if(this.pay_type === 'wx_h5'){
+                payConf.pay_type = 'wx_h5';
+            }
+
+            //阿里h5
+            if(this.pay_type === 'alipay'){
+                payConf.pay_type = 'alipay';
+            }
+
+            //公众号需要code
+            if(this.pay_type === 'wx_mp'){
+
+                console.log('选择了微信支付的')
+
+                if (!isWeiXin()) {
+                    error('请在微信内打开')
+                    return;
+                }
+
+                let isHasCode = this.code || GetQueryByString('code');
+                if (isHasCode) {
+
+                    //拿到之前的配置
+                    payConf = { ...ls.get('temp_order_info'),
+                        code: isHasCode,
+                        pay_type: 'wx_mp'
+                    }
+
+                } else {
+                    //存上临时的数据
+                    ls.set('temp_order_info', payConf);
+                    //去掉转吧
+                    this.$_init_wxpay_env();
+                    return;
+                }
+            }
+
+            // #endif
+
+
+
+            // #ifdef MP-TOUTIAO
+            // #endif
+
+            // #ifdef MP-WEIXIN
+            payConf.pay_type = 'wx_lp';
+
+            await new Promise((resolve) => {
+                uni.login({
+                    success: function (loginRes) {
+                        console.log(loginRes);
+                        payConf.code = loginRes.code
+                        resolve()
+                    }
+                });
+            })
+            // #endif
+
+            console.log('payConf',payConf)
+            orderPay(payConf).then(res => {
+                console.log(res);
+
+                // #ifdef H5
+
+                // 微信h5
+                if(this.pay_type === 'wx_h5'){
+                    let redirect_url = res.data.mweb_url+'&redirect_url='+urlencode(location.origin+'/fre/pages/order/order?index=2');
+                    location.href = redirect_url;
+                    return;
+                }
+
+                //阿里h5
+                if(this.pay_type === 'alipay'){
+
+                    //公众号麻烦一点
+                    if(isWeiXin()){
+                        let users_id = ls.get('users_id');
+
+                        let fromurl = res.data.arg;//encodeURIComponent(res.data.arg);
+                        let origin = location.origin;
+
+                        fromurl = fromurl.replace(/openapi.alipay.com/,'wangjing666')
+                        console.log(fromurl);
+
+                        let str = origin+`/fre/pages/pay/wx/wx?users_id=${users_id}&formurl=`+encodeURIComponent(fromurl);
+                        let url = str;
+
+                        uni.navigateTo({
+                            url:`/pages/pay/wx/wx?users_id=${users_id}&formurl=`+encodeURIComponent(fromurl)
+                        })
+
+                    }else{
+                        document.write(res.data.arg)
+                        document.getElementById('alipaysubmit').submit()
+                    }
+
+
+                    return;
+
+                }
+
+
+                //下面只能是微信公众号的
+                if(!isWeiXin())return;
+                let { timestamp, nonceStr, signType, paySign} = res.data;
+
+                //直接支付
+                _self.WX_JSSDK_INIT(_self).then((wxEnv) => {
+
+                    //关键字？？package
+                    wxEnv.chooseWXPay({
+                        timestamp,
+                        nonceStr,
+                        package: res.data.package,
+                        signType,
+                        paySign,
+                        success: function(res) {
+                            // 支付成功后的回调函数
+                            _self.paySuccessCall(res)
+                        }
+                    });
+
+                }).catch((e) => {
+                    console.log('支付失败')
+                })
+                return;
+
+                // #endif
+
+
+                let provider = 'wxpay';
+                let orderInfo = {}
+                // #ifdef MP-WEIXIN || MP-BAIDU || MP-TOUTIAO || MP-ALIPAY
+                // #endif
+
+                // #ifdef MP-WEIXIN
+
+                provider = 'wxpay';
+                orderInfo = res.data
+                delete orderInfo.timestamp
+
+                console.log(provider,orderInfo,'支付数据222222222222222222');
+                let prepay_id = orderInfo.package.split('=')[1];
+                uni.requestPayment({
+                    ...orderInfo,
+                    provider,
+                    success: function (res) {
+                        add_template_code({
+                            code: prepay_id,
+                            times: 3
+                        })
+                        console.log('success:' + JSON.stringify(res));
+                        _self.paySuccessCall(res)
+                    },
+                    fail: function (err) {
+                        console.log('fail:' + JSON.stringify(err));
+                        _self.payFailCall(err);
+                    }
+                });
+                return;
+                // #endif
+
+                //app支付，有微信有支付宝
+
+
+
+
+                // #ifdef APP-PLUS
+
+                if(this.pay_type === 'ali_app'){
+
+                    let provider = 'alipay';
+                    let orderInfo = res.data.arg;
+                    console.log('支付宝参数',orderInfo)
+
+                    uni.requestPayment({
+                        provider,
+                        orderInfo, //微信、支付宝订单数据
+                        success: function (res) {
+                            _self.paySuccessCall(res)
+                            console.log('success:' + JSON.stringify(res));
+                        },
+                        fail: function (err) {
+                            console.log('fail:' + JSON.stringify(err));
+                            uni.showModal({
+                                title:'支付错误',
+                                content:JSON.stringify(err)
+                            })
+                        }
+                    });
+
+                    return;
+
+                }
+
+                //app微信
+                if(this.pay_type === 'wxpay'){
+
+                    provider = 'wxpay';
+                    orderInfo = res.data
+                    uni.requestPayment({
+                        provider,
+                        orderInfo, //微信、支付宝订单数据
+                        success: function (res) {
+                            _self.paySuccessCall(res)
+                            console.log('success:' + JSON.stringify(res));
+                        },
+                        fail: function (err) {
+                            console.log('fail:' + JSON.stringify(err));
+                            _self.payFailCall(err);
+                        }
+                    });
+                    return;
+                }
+                // #endif
+
+                //头条的支付  会有微信和支付宝
+                // #ifdef MP-TOUTIAO
+
+
+                provider = 'wxpay';
+                orderInfo = res.data
+                orderInfo.out_order_no = (orderInfo.Order_ID+'')
+                orderInfo.timestamp +='';//string
+                orderInfo.uid += '';
+                orderInfo.trade_time +='';
+                orderInfo.valid_time +='';
+
+                delete orderInfo.Order_ID
+
+                //固定值：1（拉起小程序收银台）开发者如果不希望使用头条小程序收银台，service设置为3/4时，可以直接拉起微信/支付宝进行支付：service=3： 微信API支付，不拉起小程序收银台；service=4： 支付宝API支付，不拉起小程序收银台。其中service=3、4，仅在1.35.0.1+基础库(头条743+)支持
+                uni.requestPayment({
+                    provider,
+                    service:1,
+                    orderInfo, //微信、支付宝订单数据
+                    success: function (res) {
+                        _self.paySuccessCall(res)
+                        console.log('success:' + JSON.stringify(res));
+                    },
+                    fail: function (err) {
+                        console.log('fail:' + JSON.stringify(err));
+                        uni.showModal({
+                            title:'支付错误',
+                            content:JSON.stringify(err)
+                        })
+                    }
+                });
+                return;
+                // #endif
+
+            },err=>{
+                uni.showModal({
+                    title:'提示',
+                    content:'获取支付参数失败:'+err.msg
+                })
+            }).catch(e=>{
+
+            })
+        },
+        stopEvent(event) {},
+    }
+}
+</script>
+
+<style lang="less" scoped>
+    .pay-mask {
+        position: fixed;
+        z-index: 900000;
+        background: rgba(0, 0, 0, .3);
+        height: 100%;
+        width: 100%;
+        top: 0px;
+        left: 0px;
+        overflow: hidden;
+    }
+
+    .popup-content {
+        position: fixed;
+        z-index: 1000000;
+        background: #FFFFFF;
+        transition: all .3s ease;
+        overflow: hidden;
+        /*border-top-left-radius: 20rpx;*/
+        /*border-top-right-radius: 20rpx;*/
+    }
+
+    .iMbx {
+        text-align: center;
+        padding: 0 20rpx;
+        font-size: 28rpx;
+        color: #333;
+
+        .c_method {
+            padding: 37rpx 0;
+            border-bottom: 2rpx solid #E6E6E6;
+        }
+
+        & .c_method:first-child {
+            color: #F43131;
+        }
+
+        & .c_method:nth-last-child(1) {
+            border: none;
+        }
+    }
+
+    .zhezhao {
+        left: 0;
+        top: 0;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,.3);
+        z-index: 1000;
+
+        .input-wrap {
+            background: #fff;
+            color: #000;
+            text-align: center;
+            width: 90%;
+            margin: 400rpx auto;
+            padding: 40rpx 50rpx 30rpx;
+            box-sizing: border-box;
+            font-size: 28rpx;
+            border-radius: 10rpx;
+            .input {
+                margin: 40rpx 0;
+                border: 1px solid #efefef;
+                height: 80rpx;
+                line-height: 80rpx;
+            }
+
+            .btns {
+                display: flex;
+                justify-content: space-around;
+                height: 60rpx;
+                line-height: 60rpx;
+                .btn {
+                    flex: 1;
+                }
+            }
+        }
+    }
+</style>
