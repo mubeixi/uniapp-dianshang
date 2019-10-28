@@ -1,8 +1,5 @@
 <template>
 	<view>
-		<!-- #ifdef APP-PLUS -->
-		<view class="status_bar" style="background-color: rgb(248, 248, 248);"><!-- 这里是状态栏 --></view>
-		<!-- #endif -->
 		<!-- <page-title title="会员充值"></page-title> -->
 		<view class="yue">
 			<image src="/static/blance/recharge.jpg" ></image>
@@ -28,6 +25,9 @@
 				<view class="el-radio" :class="{check:payChannel===idx}"></view>
 			</view>
 		</view>
+		<view class="youhui" v-for="(item,index) of pro.gives " :key="index">
+			{{index+1}}、充值满{{item.deposit_money}}赠送<text>{{item.present_money}}</text>余额
+		</view>
 		<view class="queren" @click="sub">
 			确认
 		</view>
@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import {get_user_info ,depositBalance,add_template_code} from "../../common/fetch";
+import {get_user_info ,depositBalance,add_template_code,getBalance} from "../../common/fetch";
 import {mapGetters} from 'vuex';
 import {error,toast} from "../../common";
 import {
@@ -52,9 +52,11 @@ export default {
 			num:null,
 			payChannel:null,
 			money: '',
+			pro:[]
 		};
 	},
 	onShow(){
+		this.getBalance();
 		get_user_info().then(res=>{
 			this.info = res.data
 		},err=>{}).catch()
@@ -80,6 +82,13 @@ export default {
 		...mapGetters(['initData'])
 	},
 	methods:{
+		getBalance(){
+			getBalance().then(res=>{
+				this.pro=res.data;
+			},err=>{}).catch(e=>{
+				console.log(e)
+			})
+		},
 		changeNun(e){
 
 			this.num = e.detail.value
@@ -569,6 +578,7 @@ view{
 	color: #666666;
 	font-weight: 400;
 	justify-content: space-between;
+	margin-bottom: 20rpx;
 }
 .radio{
 	background-color: #EFEFEF;
@@ -602,5 +612,15 @@ view{
 	font-size: 28rpx;
 	color: #FFFFFF;
 	font-weight:400;
+}
+.youhui{
+	width: 650rpx;
+	margin: 0 auto;
+	font-size: 25rpx;
+	line-height: 40rpx;
+	color: #999999;
+	text{
+		color: red;
+	}
 }
 </style>

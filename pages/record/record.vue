@@ -4,10 +4,18 @@
 		<view class="main" v-for="(item,index) of data" :key="index">
 			<view class="fir">
 				<view class="left">
-					申请区域：
+					申请方式：
 				</view>
 				<view class="right">
-					河南省
+					{{item.Method_Name}}
+				</view>
+			</view>
+			<view class="fir">
+				<view class="left">
+					提现金额：
+				</view>
+				<view class="right">
+					{{item.Record_Total}}
 				</view>
 			</view>
 			<view class="fir">
@@ -15,10 +23,10 @@
                     状态：
 				</view>
 				<view class="rights">
-					已拒绝
+					{{item.Record_Status_desc}}
 				</view>
 				<view class="rightt">
-					信息填写不完整
+					{{item.No_Record_Desc}}
 				</view>
 			</view>
 			<view class="fir">
@@ -26,7 +34,7 @@
 			        时间：
 				</view>
 				<view class="right">
-                    2019-10-08  17:34:12
+                    {{item.Record_CreateTime}}
 				</view>
 			</view>
 		</view>

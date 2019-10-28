@@ -1,7 +1,7 @@
 <template>
     <view v-if="loading">
       <!--  <pagetitle title="提交订单"></pagetitle> -->
-        <view class="address" v-if="orderInfo.is_virtual == 0 && orderInfo.NeedShipping == 1" @click="goAddressList">
+        <view class="address" v-if="orderInfo.is_virtual == 0 " @click="goAddressList">
             <image class="loc_icon" src="/static/location.png" alt="" ></image>
             <view class="add_msg" v-if="addressinfo.Address_Name">
                 <view class="name">收货人：{{addressinfo.Address_Name}} <span>{{addressinfo.Address_Mobile | formatphone}}</span></view>
@@ -28,7 +28,7 @@
 						</view>
 					</block>
         </view>
-        <view class="other" v-if="orderInfo.is_virtual == 0 && orderInfo.NeedShipping == 1">
+        <view class="other" v-if="orderInfo.is_virtual == 0">
             <view class="bd">
                 <view class="o_title" @click="changeShip">
                     <span>运费选择</span>
@@ -232,7 +232,7 @@ export default {
 			return this.addressLoading && this.orderLoading
 		},
 		remindAddress: function(){
-			return this.orderInfo.is_virtual == 0 && this.orderInfo.NeedShipping == 1 && !this.addressinfo.Address_Name
+			return this.orderInfo.is_virtual == 0 && !this.addressinfo.Address_Name
 		},
 		...mapGetters(['userInfo'])
 	},
@@ -267,7 +267,7 @@ export default {
 						return;
 					}
 				}
-				if(this.orderInfo.is_virtual == 0 && this.orderInfo.NeedShipping == 1) {
+				if(this.orderInfo.is_virtual == 0) {
 					if(!this.postData.shipping_id) {
 						uni.showToast({
 							title: '请选择物流',

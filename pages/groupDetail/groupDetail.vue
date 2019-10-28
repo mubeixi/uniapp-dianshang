@@ -991,7 +991,7 @@ export default {
 
     /* 返回按钮和购物车按钮 */
     .top {
-        position: absolute;
+        position: fixed;
         top: 10px;
         padding: 0 10px;
         display: flex;

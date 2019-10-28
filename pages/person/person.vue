@@ -206,6 +206,7 @@
 				})
 			},
 			goVip(){
+				if(!this.$fun.checkIsLogin(1))return;
 				uni.navigateTo({
 					url:'../vipGrade/vipGrade'
 				})
@@ -213,6 +214,12 @@
 			goCoupon(){
 				uni.navigateTo({
 					url:'../coupon/coupon'
+				})
+			},
+			goRefundList(){
+				if(!this.$fun.checkIsLogin(1))return;
+				uni.navigateTo({
+					url:'../refundList/refundList'
 				})
 			},
 			goMsg(){
@@ -225,7 +232,7 @@
 				if(!this.$fun.checkIsLogin(1))return;
 				if(this.isLodnig) return;
 				this.isLodnig=true;
-				if(this.signin==1){
+				if(this.signin==1&&this.show!=2){
 					uni.showToast({
 						title:'今日已签到',
 						icon:"none"
@@ -247,9 +254,11 @@
 						console.log(e);
 					})
 				}else if(this.show==2){
+					this.isLodnig=false;
 					uni.navigateTo({
 						url:'../qiandao/qiandao'
 					})
+					
 				}
 
 			},

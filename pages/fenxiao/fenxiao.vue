@@ -88,10 +88,16 @@
 						爵位晋升
 					</view>
 				</view>
-				<view class="td" @click="goRegion">
+				<view class="td" @click="goRegion" v-if="data.dis_config.Dis_Agent_Type==1">
 					<image src="/static/fenxiao/quyu.png" ></image>
 					<view>
 						区域代理
+					</view>
+				</view>
+				<view class="td"  v-if="data.dis_config.Sha_Agent_Type==1">
+					<image src="/static/fenxiao/quyu.png" ></image>
+					<view>
+						股东
 					</view>
 				</view>
 				<view class="td" style="border-right: 0px;" @click="goLeaderboard">

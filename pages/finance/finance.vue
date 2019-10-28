@@ -15,6 +15,7 @@
 				股东
 			</view>
 		</view>
+		<view style="width: 100%;height: 105rpx;"></view>
 		<view class="order" v-for="(item,i) of pro " :key="i">
 			<view>
 				订单号：<text>{{item.Order_ID}}</text>
@@ -124,6 +125,11 @@
 		margin: 20rpx 70rpx;
 		height: 65rpx;
 		display: flex;
+		position: fixed;
+		background-color: #F8F8F8;
+		z-index: 999;
+		top: 0rpx;
+		left: 0rpx;
 		view{
 			width: 132rpx;
 			height: 65rpx;

@@ -212,6 +212,8 @@ view{
 }
 .boxSizing{
 	background-color: #FFFFFF;
+	width: 750rpx;
+	overflow: hidden;
 }
 	.top{
 		width: 750rpx;
@@ -229,7 +231,7 @@ view{
 			position: absolute;
 			box-shadow:0px 8px 64px 0px rgba(4,0,0,0.14);
 			border-radius:132px;
-			top: 390rpx;
+			bottom: 68rpx;
 			left: 30rpx;
 			display: flex;
 			align-items: center;
@@ -265,6 +267,9 @@ view{
 			position: absolute;
 			left: 24rpx;
 			top: 25rpx;
+			/* #ifdef APP-PLUS */
+			margin-top: var(--status-bar-height);
+			/* #endif */
 		}
 		.titleq{
 			font-size: 36rpx;
@@ -274,6 +279,9 @@ view{
 			position: absolute;
 			left: 70rpx;
 			top: 25rpx;
+			/* #ifdef APP-PLUS */
+			margin-top: var(--status-bar-height);
+			/* #endif */
 		}
 		.dangqian{
 			font-size: 28rpx;
@@ -289,7 +297,7 @@ view{
 			height: 28rpx;
 			position: absolute;
 			left: 53rpx;
-			top: 220rpx;
+			top: 190rpx;
 		}
 		.prices{
 			font-size: 80rpx;
@@ -298,7 +306,7 @@ view{
 			line-height: 61rpx;
 			position: absolute;
 			left: 97rpx;
-			top: 188rpx;
+			top: 158rpx;
 			color: #FFFFFF;
 		}
 		.duihuan{
@@ -306,7 +314,7 @@ view{
 			height: 24rpx;
 			line-height: 24rpx;
 			position: absolute;
-			top: 289rpx;
+			top: 259rpx;
 			left: 53rpx;
 			font-weight:300;
 			color: #FFFFFF;

@@ -27,7 +27,9 @@
         {
             "path" : "pages/collection/collection",
             "style" : {
-            	"navigationBarTitleText": "收藏列表"
+            	"app-plus": {
+            		"titleNView": false
+            	}
             }
         }
         ,{
@@ -75,10 +77,10 @@
         ,{
             "path" : "pages/result/result",
             "style" : {
-            	"navigationBarTitleText": "列表",
-                "app-plus": {
-                  "titleNView": false
-                }
+            	"navigationBarTitleText": "列表"
+                // "app-plus": {
+                //   "titleNView": false
+                // }
             }
         },
         {
@@ -100,10 +102,10 @@
         ,{
             "path" : "pages/order/order",
             "style" : {
-            	"navigationBarTitleText": "我的订单",
-				"app-plus": {
-					"titleNView": false
-				}
+            	"navigationBarTitleText": "我的订单"
+				// "app-plus": {
+				// 	"titleNView": false
+				// }
             }
         }
         ,{
@@ -219,7 +221,9 @@
         ,{
             "path" : "pages/withdrawalMethod/withdrawalMethod",
             "style" : {
-            	"navigationBarTitleText": "提现方式"
+            	"app-plus": {
+            		"titleNView": false
+            	}
             }
         }
         ,{
@@ -244,8 +248,10 @@
         ,{
             "path" : "pages/taskCenter/taskCenter",
             "style" : {
-            	"navigationBarTitleText": "任务中心"
-
+            	"navigationBarTitleText": "任务中心",
+				"app-plus": {
+									"titleNView": false
+								}
             }
         }
         ,{
@@ -276,10 +282,10 @@
         ,{
             "path" : "pages/myGift/myGift",
             "style" : {
-              "navigationBarTitleText": "赠品中心",
-              "app-plus": {
-                "titleNView": false
-              }
+              "navigationBarTitleText": "赠品中心"
+              // "app-plus": {
+              //   "titleNView": false
+              // }
             }
         }
         ,{
@@ -377,7 +383,10 @@
         ,{
             "path" : "pages/integralCenter/integralCenter",
             "style" : {
-                "navigationBarTitleText": "积分中心"
+                "navigationBarTitleText": "积分中心",
+				"app-plus": {
+					"titleNView": false
+				}
             }
         }
         ,{
@@ -414,6 +423,12 @@
         {
             "path" : "pages/jifenCheck/jifenCheck",
             "style" : {}
+        }
+        ,{
+            "path" : "pages/refundList/refundList",
+            "style" : {
+                "navigationBarTitleText": "退款/售后"
+            }
         }
     ],
 	"globalStyle": {

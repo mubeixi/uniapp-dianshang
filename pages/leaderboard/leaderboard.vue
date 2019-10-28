@@ -12,6 +12,9 @@
 				我的好友
 			</view>
 		</view>
+		<view style="height: 95rpx;">
+			
+		</view>
 		<view class="mains">
 			<view class="paiming">
 				<view class="pai1">
@@ -179,6 +182,9 @@
 	display: flex;
 	justify-content: space-between;
 	border-bottom: 1rpx solid #ECE8E8;
+	position: fixed;
+	top: 0rpx;
+	left: 0rpx;
 	view{
 		width: 202rpx;
 		height: 95rpx;
