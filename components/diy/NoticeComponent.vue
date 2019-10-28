@@ -2,7 +2,9 @@
   <view class="notice wrap">
     <view class="flex content" :style="{background:notice.style.bgColor}">
       <view class="funicon icon-gonggao icon" :style="{color:notice.style.iconColor}"></view>
-      <div class="flex1 title" :style="{color:notice.style.color}">{{notice.value.content}}</div>
+      <div class="flex1 title" :style="{color:notice.style.color}">
+        <span :style="{marginLeft: '-' + marginLeft + 'px'}">{{notice.value.content}}</span>
+      </div>
     </view>
   </view>
 </template>
@@ -22,6 +24,9 @@
     data() {
       return {
         number: 0,
+        time:100,
+        marginLeft:0,
+        an:null,
         notice: {},
       };
     },
@@ -43,27 +48,60 @@
     },
     components: {},
     methods: {
-      startMove() {
+      startAn: function(){ // 开始
         let _self = this;
-        setTimeout(function () {
-          if (_self.number === _self.notice.value.list.length - 1) {
-            _self.number = 0;
-          } else {
-            _self.number += 1;
+        const res = uni.getSystemInfoSync();
+        // this.fullWidth = res.screenWidth;
+
+        let width = res.screenWidth;//document.getElementById('canvas').offsetWidth;
+        _self.an = setInterval( function() {
+          if (_self.marginLeft > width) {
+            _self.marginLeft = 0;
           }
-          _self.startMove();
-        }, 2000)
+          _self.marginLeft += 2;
+        } , _self.time);
       },
+      stopAn: function(){ // 停止
+        this.prevLeft = this.marginLeft;
+        this.marginLeft = 0;
+        clearInterval(this.an);
+        this.$emit('on-stop-An');
+      },
+      pauseAn: function(){ // 暂停动画
+        clearInterval(this.an);
+      },
+      itemClick: function( item, e ) {
+        this.$emit('on-item-click',item );
+      },
+      // startMove() {
+      //   let _self = this;
+      //   setTimeout(function () {
+      //     if (_self.number === _self.notice.value.list.length - 1) {
+      //       _self.number = 0;
+      //     } else {
+      //       _self.number += 1;
+      //     }
+      //     _self.startMove();
+      //   }, 2000)
+      // },
 
     },
     mounted() {
       // this.$nextTick().then(res => {
       //   this.startMove()
       // })
+
+
+
     },
     created() {
 
       this.notice = this.confData;
+
+      this.$nextTick(function(){
+        this.startAn();
+      })
+
     }
   }
 </script>
@@ -127,7 +165,10 @@
   .title{
     color: #666;
     font-size: 14px;
-    line-height: 16px;
+    line-height: 20px;
+
+    height: 20px;
+    overflow: hidden;
   }
 
 
