@@ -378,6 +378,7 @@ export default {
                 let provider = 'wxpay';
                 let orderInfo = {}
                 // #ifdef MP-WEIXIN || MP-BAIDU || MP-TOUTIAO || MP-ALIPAY
+
                 // #endif
 
                 // #ifdef MP-WEIXIN
@@ -401,7 +402,7 @@ export default {
                     },
                     fail: function (err) {
                         console.log('fail:' + JSON.stringify(err));
-                        _self.payFailCall(err);
+                        _self.payErrorCall(err);
                     }
                 });
                 return;
@@ -441,7 +442,7 @@ export default {
                 }
 
                 //app微信
-                if(this.pay_type === 'wxpay'){
+                if(this.pay_type === 'wx_app'){
 
                     provider = 'wxpay';
                     orderInfo = res.data
@@ -454,7 +455,7 @@ export default {
                         },
                         fail: function (err) {
                             console.log('fail:' + JSON.stringify(err));
-                            _self.payFailCall(err);
+                            _self.payErrorCall(err);
                         }
                     });
                     return;
