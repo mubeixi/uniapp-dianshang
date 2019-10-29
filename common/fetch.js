@@ -88,6 +88,8 @@ export const chooseShopSkin = (data,options) => fetch('choose_shopskin',data,opt
 //获取商城的配置
 export const getSkinConfig = (data,options) => fetch('get_shophome',data,options)
 
+export const getSkinPreData = (data,options) => fetch('get_skin_data',data,options)
+
 //更新商城的配置
 export const setSkinConfig = (data,options) => fetch('update_shophome',data,options)
 //获取商品列表
