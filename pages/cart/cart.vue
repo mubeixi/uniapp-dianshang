@@ -358,7 +358,7 @@ export default {
 <style scoped lang="scss">
 
 .nav-title {
-  background: #fff !important;
+  background: #F8F8F8 !important;
   position: fixed;
   top: 0rpx;
   left: 0rpx;

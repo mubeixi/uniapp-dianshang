@@ -301,12 +301,6 @@
 			}
         }
         ,{
-            "path" : "pages/beDistributor/beDistributor",
-            "style" : {
-                "navigationBarTitleText": "成为分销商"
-            }
-        }
-        ,{
             "path" : "pages/fenxiaoshang/fenxiaoshang",
             "style" : {
                 "navigationBarTitleText": "分销商信息"
