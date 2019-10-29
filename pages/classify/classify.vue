@@ -33,6 +33,10 @@
 			</scroll-view>
 		</view>
 
+<!--		<div class="space" style="height:60px"></div>-->
+<!--		<div class="safearea"></div>-->
+<!--		<tabbar-components></tabbar-components>-->
+
 	</view>
 </template>
 

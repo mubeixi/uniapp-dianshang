@@ -43,7 +43,9 @@
 	import CubeComponent from "../../components/diy/CubeComponent.vue";
 	import TabComponent from "../../components/diy/TabComponent.vue";
 
-	import {getSkinConfig} from "../../common/fetch";
+	import {getSkinPreData} from "../../common/fetch";
+
+	import {GetQueryByString} from "../../common/tool";
 
 	import {pageMixin} from "../../common/mixin";
 
@@ -63,21 +65,28 @@
 			GoodsComponent,CubeComponent,TabComponent
 		},
 		onLoad() {
-
-
-
+			
 			let _self = this;
+
+			let Skin_ID = GetQueryByString(location.href,'Skin_ID'),Home_ID = GetQueryByString(location.href,'Home_ID');
+
+			if(!Skin_ID && !Home_ID){
+				this.$error('预览参数错误');
+			}
+
+
 			new Promise((resolve,reject) => {
 
 
-				getSkinConfig({}).then(res => {
+				//Skin_ID,
+				getSkinPreData({Home_ID}).then(res => {
 
 					if(res.data.Home_Json){
 						resolve(JSON.parse(res.data.Home_Json))
 					}else{
 						reject(false)
 					}
-
+					
 				}).catch(e=>{
 					console.log('获取首页模板信息失败')
 					console.log(e)
@@ -93,6 +102,7 @@
 				this.templateData = [] //页面数据的二维数组。
 				this.templateList = [] //页面组件的二维数组。
 				// console.log(templateData)
+
 				if (templateData && Array.isArray(templateData[0])) {
 					//多个页面，每个页面是一个数组
 					templateData.map(item => {

@@ -214,9 +214,14 @@
 				</div>
 			</div>
 		</div>
-		<div class="cartSub" @click="skuSub" :class="submit_flag?'':'disabled'">
-			确定
-		</div>
+		<form report-submit @submit="skuSub">
+			<button  formType="submit" class="cartSub" :class="submit_flag?'':'disabled'">
+				确定
+			</button>
+
+
+		</form>
+
 	</popupLayer>
 	<div class="fixed">
 		<div class="leftss">
@@ -237,21 +242,30 @@
 			</div>
 		</div>
 		<div class="rightss">
-			<div class="dan bTitle" @click="myPay">
+			<div class="dan bTitle">
 				<div class="danLeft">
 					<span class="bF">¥</span><span class="bS">{{product.Products_PriceX}}</span>
 				</div>
-				<div class="danRight">
-					单独购买
-				</div>
+				<form report-submit @submit="myPay">
+
+					<button formType="submit" class="danRight">
+						单独购买
+					</button>
+				</form>
+
 			</div>
-			<div class="tuan bTitle" @click="myPin">
+			<div class="tuan bTitle">
 				<div>
 					<span class="bF">¥</span><span class="bS">{{product.pintuan_pricex}}</span>
 				</div>
-				<div class="danRight">
-					一键开团
-				</div>
+				<form report-submit @submit="myPin">
+
+					<button formType="submit" class="danRight">
+						一键开团
+					</button>
+				</form>
+
+
 			</div>
 		</div>
 	</div>
@@ -265,6 +279,7 @@ import {goBack,numberSort,getGroupCountdown,buildSharePath,getProductThumb,ls}  
 import {pageMixin} from "../../common/mixin";
 import {error} from "../../common";
 import {mapState,mapGetters,mapActions} from 'vuex';
+import {add_template_code} from "../../common/fetch";
 
 export default {
 	mixins:[pageMixin],
@@ -654,13 +669,26 @@ export default {
 			})
 		},
 		//拼团
-		myPin(){
+		myPin(e){
+
+			console.log(e);
+			add_template_code({
+				code: e.detail.formId,
+				times: 3
+			})
 			if(!this.$fun.checkIsLogin(1))return;
 			this.postData.active = 'pintuan';
 			this.$refs.cartPopu.show();
 		},
 		//单独购买
-		myPay(){
+		myPay(e){
+
+			console.log(e);
+			add_template_code({
+				code: e.detail.formId,
+				times: 3
+			})
+
 			if(!this.$fun.checkIsLogin(1))return;
 			delete this.postData.active ;
 			this.$refs.cartPopu.show();
@@ -726,7 +754,13 @@ export default {
         		this.postData.qty = this.postData.count;
         	}
         },
-        skuSub(){
+        skuSub(e){
+
+			console.log(e);
+			add_template_code({
+				code: e.detail.formId,
+				times: 3
+			})
         	if(!this.submit_flag) {
         		return ;
         	}
@@ -1463,6 +1497,14 @@ export default {
 				}
 				.danRight{
 					font-size: 26rpx;
+					border-radius: 0;
+					border:none !important;
+					color: white;
+					background: none;
+					display: block;
+					&::after{
+						display: none;
+					}
 				}
 			}
 		}
@@ -1579,6 +1621,8 @@ export default {
 		text-align: center;
 		color: #FFFFFF;
 		margin-top: 30rpx;
+		border-radius: 0;
+		border:none;
 		&.disabled {
 			background: #999;
 		}

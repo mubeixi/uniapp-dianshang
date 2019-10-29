@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<form @submit="formSubmit">
+		<form report-submit="true" @submit="formSubmit">
 		  <view class='xinxi'>
 			<text>收货人</text>
 			<input type="text" name="Address_Name" v-model="address_info.Address_Name" maxlength='20' placeholder="请输入收货人姓名" />
@@ -39,7 +39,7 @@
 			<text>详细地址</text>
 			<input type="text" name="Address_Detailed" :value="address_info.Address_Detailed" maxlength='30' placeholder="请输入详细地址" />
 		  </view>
-		
+
 		  <view class='xinxi set_default'>
 			<checkbox-group name="Address_Is_Default">
 			  <label class="checkbox">
@@ -47,7 +47,7 @@
 			  </label>
 			</checkbox-group>
 		  </view>
-		
+
 		  <button class="tianjia-btn" formType="submit">确定</button>
 		</form>
 	</view>
@@ -58,7 +58,8 @@
 	import utils from '../../common/util.js';
 	import {getAddress,getTown,editAddress,addAddress} from '../../common/fetch.js';
 	import {pageMixin} from "../../common/mixin";
-	
+	import {add_template_code} from "../../common/fetch";
+
 	export default {
 		mixins:[pageMixin],
 		data() {
@@ -66,11 +67,11 @@
 				//用于收货地址展示用
 				    objectMultiArray: [],   //展示数据
 				    multiIndex: [0, 0, 0],  //选择数据
-				
+
 				    //用于收货地址选择用
 				    change_objectMultiArray: [],  //选择数据
 				    change_multiIndex: [0, 0, 0], //改变的收货地址对应列的下标
-				
+
 				    //地址数据
 				    address_info: {
 				      User_ID: 0,
@@ -88,7 +89,7 @@
 					t_arr: [],
 					t_index: 0,
 				    is_first_add: false,   //是否为该用户要添加的第一条收货地址
-				
+
 				    from_page: '' //来源页面  checkout(需设置checkout页面的back_address_id)、addresslist(不需操作)
 			}
 		},
@@ -147,13 +148,13 @@
 					// 处理街道信息
 					this.address_town();
 			  },
-			
+
 			  //选择收货地址
 			  bindMultiPickerColumnChange: function (e) {
 					var column = e.detail.column;  //修改的列
 					var index = e.detail.value;    //选择列的下标（从0开始）
 					var change_multiIndex = 'change_multiIndex[' + column + ']';
-			
+
 					var columnValue = [
 						column == 0 ? index : this.change_multiIndex[0],
 						column == 0 ? 0 : (column == 1 ? index : this.change_multiIndex[1]),
@@ -161,10 +162,16 @@
 					];
 					this.addressChange(columnValue);
 			  },
-			
+
 			  //提交地址
 			  formSubmit: function (e) {
 				  console.log(e)
+
+			  	add_template_code({
+					code: e.detail.formId,
+					times: 3
+				})
+
 				var address_info = e.detail.value;
 				if (!address_info.Address_Name) {
 				  uni.showToast({
@@ -216,7 +223,7 @@
 				}
 				//是否设置为默认地址
 				this.address_info.Address_Is_Default = address_info.Address_Is_Default[0] ? 1 : 0;
-			
+
 				//提交
 				if (this.address_info.Address_ID) {
 				  // 编辑
@@ -238,11 +245,11 @@
 					  });
 					  this.addeditAddress(res)
 				  })
-				  
+
 				  // app.http_req(data, app.globalData.init.api_url, 'POST', this.addeditAddress);
 				}
 			  },
-			
+
 			  //添加、编辑收货地址回调
 			  addeditAddress: function (res) {
 				var that = this;
@@ -288,7 +295,7 @@
 					  uni.navigateBack({
 						delta: 1
 					  });
-					} 
+					}
 				  });
 				} else {
 				  uni.showModal({
@@ -298,7 +305,7 @@
 				  })
 				}
 			  },
-			
+
 			  //编辑地址时，获取地址信息的回调，初始化地址信息
 			  setAddressInfo: function (res) {
 				if (res.errorCode == 0) {
@@ -311,7 +318,7 @@
 			      delete addressInfo['Address_Area_code'];
 			      delete addressInfo['Address_Town_name'];
 			      delete addressInfo['Address_Town_code'];
-			
+
 			      //初始化地址选择数据
 			      let objectMultiArray = [
 			        utils.array_change(area.area[0]['0']),
@@ -339,9 +346,9 @@
 				  })
 				}
 			  },
-			
-			  
-			
+
+
+
 			  //页面加载
 			  load: function () {
 				//如果有Address_ID， 则为编辑
@@ -375,14 +382,14 @@
 								//设是否为第一条收获地址状态
 								if ((res.errorCode == 0 && res.data.length <= 0) || res.errorCode == 2) {
 								  this.is_first_add = true;
-								}															
+								}
 							}
 						}
 					)
 				}
 			  },
 		  },
-		
+
 		  /**
 		   * 生命周期函数--监听页面加载
 		   */
@@ -391,7 +398,7 @@
 		    uni.setNavigationBarTitle({
 				title: options.addressid ? '编辑收货地址' : '新增收货地址'
 			});
-		
+
 		    //有addressid 地址编辑
 		    if (options.addressid) {
 				this.address_info.Address_ID = options.addressid
@@ -400,50 +407,50 @@
 		    if (options.from) {
 				this.from_page = options.from;
 		    }
-		
+
 		    this.load();
 		  },
-		
+
 		  /**
 		   * 生命周期函数--监听页面初次渲染完成
 		   */
 		  onReady: function () {
-		  
+
 		  },
-		
+
 		  /**
 		   * 生命周期函数--监听页面显示
 		   */
 		  onShow: function () {
-		  
+
 		  },
-		
+
 		  /**
 		   * 生命周期函数--监听页面隐藏
 		   */
 		  onHide: function () {
-		  
+
 		  },
-		
+
 		  /**
 		   * 生命周期函数--监听页面卸载
 		   */
 		  onUnload: function () {
-		  
+
 		  },
-		
+
 		  /**
 		   * 页面相关事件处理函数--监听用户下拉动作
 		   */
 		  onPullDownRefresh: function () {
-		  
+
 		  },
-		
+
 		  /**
 		   * 页面上拉触底事件的处理函数
 		   */
 		  onReachBottom: function () {
-		  
+
 		  }
 	}
 </script>
