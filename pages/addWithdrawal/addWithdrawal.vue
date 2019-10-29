@@ -15,6 +15,9 @@
 			</view>
 		</view>
 
+		<form report-submit @submit="addInfo">
+
+
 		<block v-if="data.Method_Type=='bank_card'">
 			<view class="centers">
 				<view class="left">
@@ -49,9 +52,10 @@
 				<input type="text" placeholder="请输入您的支付宝账号" placeholder-style="places" v-model="data.Account_Val">
 			</view>
 		</block>
-		<view class="addInfo" @click="addInfo">
+		<button  formType="submit" class="addInfo">
 			添加
-		</view>
+		</button>
+		</form>
 	</view>
 </template>
 
@@ -64,6 +68,7 @@
 		mapActions,
 		Store
 	} from "vuex";
+	import {add_template_code} from "../../common/fetch";
 	export default {
 		mixins:[pageMixin],
 		data() {
@@ -94,7 +99,13 @@
 		methods:{
 			...mapActions(["getInitData", "setUserInfo"]),
 			//新增提现方式
-			async addInfo(){
+			async addInfo(e){
+
+				console.log(e)
+				add_template_code({
+					code: e.detail.formId,
+					times: 3
+				})
 				//如果用户不存在openid   手机号其他登录
 				if(!this.userInfo.openid){
 					if(this.data.Method_Type=='wx_hongbao'||this.data.Method_Type=='wx_zhuanzhang'){
@@ -117,9 +128,9 @@
 														if (res.authSetting['scope.userInfo']) {
 															wx.authorize({
 																scope: 'scope.userInfo',
-																success () {							
+																success () {
 																	const lp_raw_data = {...data.detail.userInfo,...result.data}
-																	console.log(lp_raw_data)					
+																	console.log(lp_raw_data)
 																	login({code:CODE,login_method:'wx_lp',lp_raw_data:JSON.stringify(lp_raw_data)}).then(ret=>{
 																		_this.setUserInfo(result.data);
 																	}).catch(err=>{})
@@ -138,7 +149,7 @@
 									}
 								});
 							});
-							
+
 						await checkAuth.then(res=>{console.log('promsie success')},err=>{})
 						// #endif
 							console.log('promsie after')
@@ -149,11 +160,11 @@
 							})
 							return;
 						// #endif
-						
-					
+
+
 					}
 				}
-				
+
 				let data={};
 				if(this.data.Method_Type=="bank_card"){
 					data={

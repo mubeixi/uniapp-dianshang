@@ -5,27 +5,30 @@
 				<view class="zhezhaoYue">
 					余额互转
 				</view>
-				<view class="zhezhaoCenter">
-					<view>
-						<image src="/static/check/phone.png"></image>
-						<input type="text" placeholder="请输入对方会员号" v-model="user_no">
+				<form  report-submit @submit="confirm">
+					<view class="zhezhaoCenter">
+						<view>
+							<image src="/static/check/phone.png"></image>
+							<input type="text" placeholder="请输入对方会员号" v-model="user_no">
+						</view>
 					</view>
-				</view>
-				<view class="zhezhaoCenter">
-					<view>
-						<image src="/static/check/money.png"></image>
-						<input type="text" placeholder="请输入转出金额" v-model="money">
+					<view class="zhezhaoCenter">
+						<view>
+							<image src="/static/check/money.png"></image>
+							<input type="text" placeholder="请输入转出金额" v-model="money">
+						</view>
 					</view>
-				</view>
-				<view class="zheButton" @click="confirm">
-					确认转出
-				</view>
+					<button formType="submit" class="zheButton">
+						确认转出
+					</button>
+				</form>
+
 			</view>
 			<image src="/static/check/close.png" class="closeZ" @click="isShow=false"></image>
 		</view>
 
 		<view class="top">
-			
+
 			<image  class="bgImg" src="/static/blance/bg.jpg" ></image>
 			<!-- #ifdef APP-PLUS -->
 			<image class="back" @click="goBack" src="/static/check/left.png"></image>
@@ -99,7 +102,13 @@
 </template>
 
 <script>
-	import {get_user_info,getUserMoneyRecord,getUserChargeRecord,transferBalance} from "../../common/fetch";
+	import {
+		get_user_info,
+		getUserMoneyRecord,
+		getUserChargeRecord,
+		transferBalance,
+		add_template_code
+	} from "../../common/fetch";
 	import {mapActions} from 'vuex';
 	export default {
 		data() {
@@ -133,7 +142,15 @@
 					url:'/pages/vipRecharge/vipRecharge'
 				})
 			},
-			confirm(){
+			confirm(e){
+
+
+				console.log(e)
+				add_template_code({
+					code: e.detail.formId,
+					times: 3
+				})
+
 				if(this.money == '' || isNaN(this.money) || (this.money<0)) {
 					uni.showToast({
 						title: '输入金额有误',
@@ -163,7 +180,7 @@
 							this.info=res.data
 							// 更新用户信息
 							this.setUserInfo(res.data);
-						});						
+						});
 					},1500)
 				},err=>{
 					uni.showToast({
@@ -204,7 +221,7 @@
 				this.charge_records = [];
 				this.records = [];
 				this.moneyMore = false;
-				this.chargeMore = false;  
+				this.chargeMore = false;
 			}
 		},
 		onReachBottom() {

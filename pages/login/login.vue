@@ -544,7 +544,7 @@
 						// #ifdef H5
 						//hack navigateBack无效
 						history.back();
-						rtturn;
+						return;
 						// #endif
 
 					}

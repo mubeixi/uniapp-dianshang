@@ -186,9 +186,11 @@
 				</div>
 			</div>
 		</div>
-		<div class="cartSub" @click="skuSub" :class="submit_flag?'':'disabled'">
+		<form report-submit @submit="skuSub">
+		<button formType="submit" class="cartSub"  :class="submit_flag?'':'disabled'">
 			确定
-		</div>
+		</button>
+		</form>
 	</popupLayer>
   </div>
 </template>
@@ -204,6 +206,7 @@ import { mapGetters, mapActions, Store,mapState } from "vuex";
 import uParse from '@/components/gaoyia-parse/parse.vue'
 import {pageMixin} from "../../common/mixin";
 import {error} from "../../common";
+import {add_template_code} from "../../common/fetch";
 
 
 export default {
@@ -665,7 +668,14 @@ export default {
 				this.postData.qty = this.postData.count;
 			}
 		},
-		skuSub(){
+		skuSub(e){
+
+			console.log(e);
+			add_template_code({
+				code: e.detail.formId,
+				times: 3
+			})
+
 			if(!this.submit_flag) {
 				return ;
 			}
@@ -1363,6 +1373,8 @@ export default {
 		text-align: center;
 		color: #FFFFFF;
 		margin-top: 30rpx;
+		border-radius: 0;
+		border: none;
 		&.disabled {
 			background: #999;
 		}
