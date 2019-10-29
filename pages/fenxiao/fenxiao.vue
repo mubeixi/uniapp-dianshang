@@ -186,7 +186,7 @@
 			},
 			//获取分销首页数据
 			getDisInit(){
-				getDisInit({}).then(res=>{
+				getDisInit({},{errtip:false}).then(res=>{
 					this.data=res.data;
 				},err=>{
 

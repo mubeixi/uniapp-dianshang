@@ -4,10 +4,18 @@
 		<view class="main" v-for="(item,index) of data" :key="index">
 			<view class="fir">
 				<view class="left">
-					申请区域：
+					申请方式：
 				</view>
 				<view class="right">
 					{{item.Method_Name}}
+				</view>
+			</view>
+			<view class="fir">
+				<view class="left">
+					提现金额：
+				</view>
+				<view class="right">
+					{{item.Record_Total}}
 				</view>
 			</view>
 			<view class="fir">

@@ -83,7 +83,11 @@
     },
     data() {
       return {
-        coupon: {},
+        coupon: {
+          value:{
+            list:[]
+          }
+        },
         isAllowCouponList:[]
       };
     },
@@ -95,8 +99,6 @@
         }
 
         let arr = [],confData = this.coupon.value.list;
-
-        console.log(confData,this.isAllowCouponList);
 
         //只有在允许获得的优惠券里面才可以
         for(var coupon of confData){
@@ -133,13 +135,14 @@
     },
     async created() {
 
+      this.coupon = this.confData;
 
-      await getCoupon({pageSize:999},{errtip:false}).then(res=>{
+      getCoupon({pageSize:999},{errtip:false}).then(res=>{
         this.isAllowCouponList = res.data
       })
 
 
-      this.coupon = this.confData;
+
 
 
     }
