@@ -1,9 +1,10 @@
 <template>
   <div>
 	  <!-- #ifdef APP-PLUS -->
-	  <view class="status_bar" style="background-color: rgb(248, 248, 248);"><!-- 这里是状态栏 --></view>
+	 <view class="status_bar" style="background-color: #F8F8F8; z-index: 999;position: fixed;top: 0rpx;left: 0rpx;"></view>
 	  <!-- #endif -->
-	  <page-title title="收藏列表" :rightHidden="rightHidden" @rightHandle="rightHandle"  :right="rightText"></page-title>
+	  <page-title  class="titles" title="收藏列表"  :rightHidden="rightHidden" @rightHandle="rightHandle"  :right="rightText"></page-title>
+	  <view style="height: 105rpx;"></view>
       <div class="pro-list" v-for="(item,index) in collect_list" :key="index">
 		  <div class="mbxa"  v-if="rightClicked" @click="check(index)">
 			  <img :src="checked[index].checked?'/static/checked.png':'/static/uncheck.png'" >
@@ -203,6 +204,15 @@ export default {
 			width: 34rpx;
 			height: 34rpx;
 		}
+	}
+	.titles{
+		position: fixed;
+		top: 0rpx;
+		left: 0rpx;
+		width: 100%;
+		/* #ifdef APP-PLUS */
+			padding-top: var(--status-bar-height);
+		/* #endif */
 	}
     .pro-list {
         display: flex;

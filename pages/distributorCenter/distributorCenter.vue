@@ -157,47 +157,6 @@
 				</block>
 			</block>
 		</view>
-		<!-- <block v-else-if="pro.dis_config.Distribute_Type==2">
-			<view class="line"></view>
-			<view class="pro">
-				<view class="forOf">
-					<view class="imgs">
-						<image src="../../static/detail/sahre3.png"></image>
-					</view>
-					<view class="text">
-						2018夏装新款短袖蕾丝拼接荷叶边波点雪纺连衣裙回单卡十大数据大垃圾袋辣手机掉了多啦少点击
-					</view>
-					<view class="prices">
-						¥<text>584.00</text>
-					</view>
-				</view>
-
-				<view class="forOf">
-					<view class="imgs">
-						<image src="../../static/detail/sahre3.png"></image>
-					</view>
-					<view class="text">
-						2018夏装新款短袖蕾丝拼接荷叶边波点雪纺连衣裙回单卡十大数据大垃圾袋辣手机掉了多啦少点击
-					</view>
-					<view class="prices">
-						¥<text>584.00</text>
-					</view>
-				</view>
-
-				<view class="forOf">
-					<view class="imgs">
-						<image src="../../static/detail/sahre3.png"></image>
-					</view>
-					<view class="text">
-						2018夏装新款短袖蕾丝拼接荷叶边波点雪纺连衣裙回单卡十大数据大垃圾袋辣手机掉了多啦少点击
-					</view>
-					<view class="prices">
-						¥<text>584.00</text>
-					</view>
-				</view>
-			</view>
-		</block> -->
-
 		<block v-else-if="pro.dis_config.Distribute_Type==1&&pro.dis_level[0].Level_LimitType==1">
 			<block v-for="(fo,ind) of pro.dis_level" :key="ind">
 				<view class="line" v-if="ind!=0"></view>
@@ -421,7 +380,7 @@
 						data.code=this.code;
 					}
 				}
-
+				console.log(this.pay_type,"sssssssssssssssss")
 				if(this.pay_type=='remainder_pay'){
 
 					disBuy(data).then(res=>{
@@ -435,6 +394,48 @@
 						console.log(e);
 					})
 
+				}else if(this.pay_type=='ali_app'){
+						
+						disBuy(data).then(res=>{
+							//公众号麻烦一点
+							if(isWeiXin()){
+								let users_id = ls.get('users_id');
+							
+							
+								let fromurl = res.data.arg;//encodeURIComponent(res.data.arg);
+								let origin = location.origin;
+							
+							
+							
+								fromurl = fromurl.replace(/openapi.alipay.com/,'wangjing666')
+								console.log(fromurl);
+							
+								let str = origin+`/fre/pages/pay/wx/wx?users_id=${users_id}&formurl=`+encodeURIComponent(fromurl);
+								let url = str;
+							
+							
+								uni.navigateTo({
+									url:`/pages/pay/wx/wx?users_id=${users_id}&formurl=`+encodeURIComponent(fromurl)
+								})
+							
+								console.log(url)
+								//这样就避免了users_id瞎跳的机制
+								//location.href = url;
+							}else{
+								document.write(res.data.arg)
+								document.getElementById('alipaysubmit').submit()
+							}
+							
+							
+							return;
+						},err=>{
+							uni.showToast({
+								title:res.msg,
+								icon:'none'
+							})
+						}).catch(e=>{
+							console.log(e);
+						})	
 				}else{
 					//不用余额调微信支付
 					this.wechatPay(data);

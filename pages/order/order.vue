@@ -1,7 +1,7 @@
 <template>
     <div>
 		<!-- #ifdef APP-PLUS -->
-		<view class="status_bar" style="background:white;position: fixed;top: 0;z-index: 22"><!-- 这里是状态栏 --></view>
+		<!-- <view class="status_bar" style="background:white;position: fixed;top: 0;z-index: 22"> --><!-- 这里是状态栏 --></view>
 		<!-- #endif -->
 <!--    <page-title title="我的订单" rightHidden="true" class="titless"></page-title>-->
         <div class="navs">
@@ -263,9 +263,8 @@ export default {
 		position: fixed;
 		top:0rpx;
 		/* #ifdef APP-PLUS */
-		top: var(--status-bar-height);//86rpx;
+		// top: var(--status-bar-height);//86rpx;
 		/* #endif */
-
 		left: 0rpx;
 		width: 750rpx;
 		box-sizing: border-box;

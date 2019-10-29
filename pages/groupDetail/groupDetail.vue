@@ -1454,6 +1454,7 @@ export default {
 			.bTitle{
 				color: #fff;
 				text-align: center;
+				padding-top: 10rpx;
 				.bF{
 					font-size: 24rpx;
 				}
