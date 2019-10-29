@@ -430,6 +430,12 @@
                 "navigationBarTitleText": "退款/售后"
             }
         }
+        ,{
+            "path" : "pages/refundDetail/refundDetail",
+            "style" : {
+                "navigationBarTitleText": "退款单详情"
+            }
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

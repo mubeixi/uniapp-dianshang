@@ -172,8 +172,8 @@
 				need_invoice: 0, // 是否需要发票
 				showDirect: false, // 是否直接显示付款方式
 				pay_arr: [], // 支付方式
+				Order_Type:'',
 				user_money: 0,
-				Order_Type: ''
 			}
 		},
 		onLoad(options) {
@@ -608,6 +608,7 @@
 								}
 							}
 						}
+						this.Order_Type=res.data.Order_Type;
 						this.orderInfo = res.data;
 						this.Order_Type = res.data.Order_Type;
 						// pay_money 应该支付的钱

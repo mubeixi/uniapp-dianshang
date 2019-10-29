@@ -79,6 +79,9 @@ ul,li{
 .box-sizing{
 	box-sizing: border-box;
 }
+.overflow{
+	overflow-x: hidden;
+}
 .font12{font-size:12px}
 .font14{font-size : 14px}
 .font16{font-size : 16px}
