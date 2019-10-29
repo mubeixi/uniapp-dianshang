@@ -20,7 +20,7 @@
                       <span class="span">
                         <span>￥</span>{{item.Products_PriceX}}
                       </span>
-                      <span class="button" @click="buy">立即购买</span>
+                      <span class="button">立即购买</span>
                   </div>
            </div>
           </div>
@@ -188,9 +188,6 @@ export default {
 		},
         handle(){
             this.handleShow = !this.handleShow;
-        },
-        buy(){
-            this.$router.push({name:'check'})
         }
     }
 }
