@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<!-- #ifdef APP-PLUS -->
-		<view class="status_bar" style="background-color: rgb(248, 248, 248);"><!-- 这里是状态栏 --></view>
+		<!-- <view class="status_bar" style="background-color: rgb(248, 248, 248);"> --><!-- 这里是状态栏 --></view>
 		<!-- #endif -->
 
 		<div v-if="loading">
@@ -364,6 +364,9 @@ export default {
   left: 0rpx;
   z-index: 999;
   width: 100%;
+  /* #ifdef APP-PLUS */
+	padding-top: var(--status-bar-height);
+  /* #endif */
 }
 .content {
   background: #f3f3f3;
