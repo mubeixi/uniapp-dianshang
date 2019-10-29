@@ -100,7 +100,7 @@
 					if(this.data.Method_Type=='wx_hongbao'||this.data.Method_Type=='wx_zhuanzhang'){
 						let _this=this;
 						// #ifdef MP-WEIXIN||H5
-						let checkAuth = new Promise(function(resolve,reject){
+						let checkAuth =  new Promise(function(resolve,reject){
 								uni.login({
 									success: function (loginRes) {
 										console.log(loginRes);
@@ -138,8 +138,8 @@
 									}
 								});
 							});
-
-						checkAuth.then(res=>{console.log('promsie success')},err=>{})
+							
+						await checkAuth.then(res=>{console.log('promsie success')},err=>{})
 						// #endif
 							console.log('promsie after')
 						// #ifndef H5||MP-WEIXIN

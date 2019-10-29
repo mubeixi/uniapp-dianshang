@@ -146,6 +146,13 @@ export const cancelOrder = (data,options) => fetch('cancel_order', data, options
 export const getOrderNum = (data,options) => fetch('get_order_num', data, options);
 // 获取申请退货退款
 export const getRefund = (data,options) => fetch('get_refund_info', data, options);
+// 取消申请退款
+export const cancelRefund = (data,options) => fetch('cancel_refund', data, options);
+// 获取退款单详情
+export const getBackOrderDetail = (data,options) => fetch('get_back_order_detail', data, options);
+// 用户退款发货
+export const refundSend = (data,options) => fetch('refund_send', data, options);
+
 
 // 支付订单
 export const orderPay = (data,options) => fetch('order_pay', data, options);
