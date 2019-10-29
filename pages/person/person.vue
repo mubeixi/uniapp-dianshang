@@ -147,6 +147,11 @@
 			</view>
 		</view>
 		<view style="height: 118upx;"></view>
+
+<!--		<div class="space" style="height:60px"></div>-->
+<!--		<div class="safearea"></div>-->
+<!--		<tabbar-components></tabbar-components>-->
+
 	</view>
 </template>
 
@@ -258,7 +263,7 @@
 					uni.navigateTo({
 						url:'../qiandao/qiandao'
 					})
-					
+
 				}
 
 			},

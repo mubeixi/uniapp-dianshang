@@ -222,7 +222,14 @@
 				}
 			}
 		},
+		onLoad(){
+
+			this.$fun.checkIsLogin(1);
+
+		},
 		onShow(){
+
+
 			this.reset();
 			get_user_info().then(res=>{
 				this.info = res.data

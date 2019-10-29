@@ -6,7 +6,7 @@
 		<!-- #endif -->
 		<view class="home-wrap">
 
-			<section :ref="item" v-for="(item, index) in templateList[tagIndex]" :key="index" class="section"  :data-name="item" >
+			<section :ref="item" v-for="(item, index) in templateList[tagIndex]" :key="index" class="section" :class="[item]"  :data-name="item" >
 				<base-component v-if="item.indexOf('base') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
 				<swiper-component v-if="item.indexOf('swiper') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
 				<nav-component v-if="item.indexOf('nav') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
@@ -63,16 +63,20 @@
 			GoodsComponent,CubeComponent,TabComponent
 		},
 		onLoad() {
-			
-			
+
+
 
 			let _self = this;
-			new Promise(resolve => {
+			new Promise((resolve,reject) => {
 
 
 				getSkinConfig({}).then(res => {
 
-					resolve(JSON.parse(res.data.Home_Json))
+					if(res.data.Home_Json){
+						resolve(JSON.parse(res.data.Home_Json))
+					}else{
+						reject(false)
+					}
 
 				}).catch(e=>{
 					console.log('获取首页模板信息失败')
@@ -121,7 +125,7 @@
 				}
 
 
-			})
+			},err=>{})
 			.catch(err => {
 				console.log(err)
 			})
@@ -144,6 +148,10 @@
 		/* #endif */
 		.section{
 			position: relative;
+			//搜索框特殊
+			&.search{
+				position:static;
+			}
 		}
 	}
 	/*.content {*/

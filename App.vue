@@ -15,7 +15,6 @@
 
 			ls.set('users_id',APP_USERS_ID);//app里面需要写死打包，不然办法
             // if(isDev){
-
             // }
 
 			// #endif
@@ -26,7 +25,6 @@
                 tt.setStorageSync('users_id', 'wkbq6nc2kc');
             }
             // #endif
-
 
 			// #ifdef H5
 			//ls.set('openid','')
@@ -64,6 +62,19 @@ html,body{
     font-family:-apple-system,'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
 }
 /* #endif */
+
+.space{
+    background: none;
+}
+
+.safearea{
+    position: fixed;
+    width: 750rpx;
+    bottom: 0;
+    height: constant(safe-area-inset-bottom);
+    height: env(safe-area-inset-bottom);
+    background: white;
+}
 
 ul,li{
     list-style:none;

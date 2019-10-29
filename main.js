@@ -21,6 +21,10 @@ Vue.use(Common);
 App.mpType = 'app'
 // 使用pagetitle
 Vue.component('page-title',pagetitle)
+
+import TabbarComponents from './components/TabbarComponents.vue'
+Vue.component('tabbar-components', TabbarComponents)
+
 Vue.prototype.$vm = new Vue();
 const app = new Vue({
     ...App,

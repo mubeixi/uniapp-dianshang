@@ -4,9 +4,16 @@
 			"path": "pages/index/index",
 			"style": {
 				"navigationBarTitleText": "电商",
+                "scrollIndicator" : "none", // 不显示滚动条
 				"app-plus": {
 					"titleNView": false
 				}
+			}
+        },
+        {
+			"path": "pages/index/pre",
+			"style": {
+				"navigationBarTitleText": "预览首页"
 			}
 		},
 		{
