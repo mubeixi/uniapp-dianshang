@@ -109,22 +109,6 @@
 			</div>
 			<div class="submit" @click="submit">去支付</div>
 		</div>
-<!--		<popup-layer ref="popupLayer" :direction="'top'">-->
-<!--			<div class="iMbx">-->
-<!--				<div class="c_method" v-for="(item,index) in pay_arr" @click="chooseType(index)" :key="index">-->
-<!--					{{item}} <text>￥{{orderInfo.Order_Fyepay}}</text>-->
-<!--				</div>-->
-<!--			</div>-->
-<!--		</popup-layer>-->
-
-<!--		Order_ID: this.Order_ID,-->
-<!--		pay_type: this.pay_type,-->
-<!--		pay_money: this.orderInfo.Order_Fyepay, // 剩余支付的钱-->
-<!--		use_money: this.user_money , // 使用的余额-->
-<!--		user_pay_password: this.user_pay_password, //余额支付密码-->
-<!--		need_invoice: this.need_invoice,-->
-<!--		invoice_info: this.invoice_info,-->
-<!--		order_remark: this.order_remark-->
 		<pay-components
 				ref="payLayer"
 				:Order_ID="Order_ID"
@@ -134,6 +118,7 @@
 				:invoice_info="invoice_info"
 				:order_remark="order_remark"
 				:paySuccessCall="paySuccessCall"
+				:payFailCall = "payFailCall"
 		/>
 
 	</div>
@@ -187,7 +172,8 @@
 				need_invoice: 0, // 是否需要发票
 				showDirect: false, // 是否直接显示付款方式
 				pay_arr: [], // 支付方式
-				Order_Type:''
+				Order_Type:'',
+				user_money: 0,
 			}
 		},
 		onLoad(options) {
@@ -337,8 +323,6 @@
 						return;
 					}
 				}
-
-
 
 				// #endif
 
@@ -626,6 +610,7 @@
 						}
 						this.Order_Type=res.data.Order_Type;
 						this.orderInfo = res.data;
+						this.Order_Type = res.data.Order_Type;
 						// pay_money 应该支付的钱
 						// user_money 使用的余额
 						this.pay_money = this.orderInfo.Order_Fyepay;
@@ -667,6 +652,7 @@
 					// this.orderInfo.Order_TotalPrice = money;
 					return;
 				}
+				this.pay_money = Number(this.orderInfo.Order_TotalPrice - money).toFixed(2);
 				this.orderInfo.Order_Fyepay = Number(this.orderInfo.Order_TotalPrice - money).toFixed(2);
 			},
 			// 余额支付开关
@@ -676,9 +662,11 @@
 					this.openMoney = true;
 					this.user_money = Number(this.orderInfo.Order_Yebc).toFixed(2);
 					this.orderInfo.Order_Fyepay = Number(this.orderInfo.Order_TotalPrice - this.user_money).toFixed(2);
+					this.pay_money = Number(this.orderInfo.Order_TotalPrice - this.user_money).toFixed(2);
 				} else {
 					this.openMoney = false;
 					this.orderInfo.Order_Fyepay = Number(this.orderInfo.Order_TotalPrice).toFixed(2);
+					this.pay_money = Number(this.orderInfo.Order_TotalPrice).toFixed(2);
 					this.user_money = 0;
 				}
 			},
@@ -714,6 +702,8 @@
 			},
 			// 去支付
 			submit() {
+				this.$refs.payLayer.show();
+				return;
 				// 发票信息
 				if (this.need_invoice && this.invoice_info == '') {
 					uni.showToast({
