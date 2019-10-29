@@ -305,19 +305,31 @@ export const depositBalance = (data,options) => fetch('deposit_balance', data, o
 
 // 余额转出
 export const transferBalance = (data,options) => fetch('transfer_balance', data, options);
+
 // 获取余额充值优惠
 export const getBalance = (data,options) => fetch('get_balance', data, options);
 
 // 实体店消费
 export const storeConsume = (data, options) => fetch('store_consume', data, options);
+
 // 积分转出
 export const transferIntegral = (data, options) => fetch('transfer_integral', data, options);
+
 // 积分兑换运费
 export const jifenProdShippingPrice = (data, options) => fetch('jifen_prod_shipping_price', data, options);
+
 // 积分兑换订单支付
 export const jifenProdPay = (data, options) => fetch('jifen_prod_pay', data, options);
+
+//普通环境noop就行了
+let add_template_code_FUNC = ()=>{}
+
 // 小程序推送授权码
-export const add_template_code = (data,options) =>fetch('add_template_code', data, options);
+// #ifdef MP-WEIXIN || MP-ALIPAY
+add_template_code_FUNC = (data,option) =>fetch('add_template_code', data, option?option:{errtip:false});
+// #endif
+
+export const add_template_code = add_template_code_FUNC
 
 function get_Appid() {
   return 'xhh';
