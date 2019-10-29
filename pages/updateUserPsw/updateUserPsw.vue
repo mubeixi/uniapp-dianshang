@@ -3,29 +3,33 @@
 		<!-- #ifdef APP-PLUS -->
 		<view class="status_bar" style="background-color: rgb(248, 248, 248);"><!-- 这里是状态栏 --></view>
 		<!-- #endif -->
-	
+
 		<!-- <page-title :title="title" rightHidden="true" bgcolor="#F8F8F8"></page-title> -->
 
 		<block v-if="type != 3">
-			<view v-if="type == 0" class="content">
-				<input type="password" class="item" v-model="curr_psw" placeholder="请输入原始登录密码">
-				<input type="password" class="item" v-model="new_psw" placeholder="请输入新的登录密码">
-				<input type="password" class="item" v-model="check_psw" placeholder="请再次输入新密码">
-			</view>
-			<view v-if="type == 1" class="content">
-				<input type="password" class="item" v-model="curr_psw" placeholder="请输入原始支付密码">
-				<input type="password" class="item" v-model="new_psw" placeholder="请输入新的支付密码">
-				<input type="password" class="item" v-model="check_psw" placeholder="请再次输入新密码">
-			</view>
-			<view class="save" @click="save">保存</view>
+			<form report-submit @submit="save">
+				<view v-if="type == 0" class="content">
+					<input type="password" class="item" v-model="curr_psw" placeholder="请输入原始登录密码">
+					<input type="password" class="item" v-model="new_psw" placeholder="请输入新的登录密码">
+					<input type="password" class="item" v-model="check_psw" placeholder="请再次输入新密码">
+				</view>
+				<view v-if="type == 1" class="content">
+					<input type="password" class="item" v-model="curr_psw" placeholder="请输入原始支付密码">
+					<input type="password" class="item" v-model="new_psw" placeholder="请输入新的支付密码">
+					<input type="password" class="item" v-model="check_psw" placeholder="请再次输入新密码">
+				</view>
+				<button formType="submit"  class="save" >保存</button>
+			</form>
+
 		</block>
 		<block v-else>
+			<form report-submit @submit="confirm">
 			<view class="other">
 				<view class="other-item">
 					您现在的手机号是： {{userInfo.User_Mobile}}
 				</view>
 				<view class="other-item">
-					手机号 
+					手机号
 					<input type="text" v-model="mobile" class="input phone" placeholder="请输入手机号" />
 				</view>
 				<view class="other-item">
@@ -33,8 +37,9 @@
 					<input type="text" v-model="code" class="input code" placeholder="请输入验证码" />
 					<view class="get-msg" @click="getCode">{{countdownStatus?(countdownNum + '秒'):'获取验证码'}}</view>
 				</view>
-				<view class="confirm" @click="confirm">确认修改</view>
+				<button formType="submit"  class="confirm" >确认修改</button>
 			</view>
+			</form>
 		</block>
 	</view>
 </template>
@@ -43,6 +48,7 @@
 	import {updateUserLoginPsw,updateUserPayPsw,updateMobileSms,updateUserMobile} from '../../common/fetch.js';
 	import {ls} from '../../common/tool.js';
 	import {mapGetters} from 'vuex'
+	import {add_template_code} from "../../common/fetch";
 	export default {
 		data() {
 			return {
@@ -71,7 +77,11 @@
 					})
 				},1000)
 			},
-			confirm(){
+			confirm(e){
+				add_template_code({
+					code: e.detail.formId,
+					times: 3
+				})
 				if(!(/^1[3456789]\d{9}$/.test(this.mobile))){
 					uni.showToast({
 						title:'手机号输入错误，请重新输入',
@@ -140,8 +150,14 @@
 					this.startCountdown();
 				})
 			},
-			save(){
-				
+			save(e){
+
+				console.log(e)
+				add_template_code({
+					code: e.detail.formId,
+					times: 3
+				})
+
 				let arg = {
 					curr_psw: this.curr_psw,
 					new_psw: this.new_psw,

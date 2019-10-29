@@ -111,6 +111,10 @@
       /*  border: 1px dashed #298df8;*/
       /*}*/
 
+	  /* #ifdef APP-PLUS */
+	  margin-top: var(--status-bar-height);
+	  /* #endif */
+
       box-sizing: border-box;
       z-index: 2;
     }

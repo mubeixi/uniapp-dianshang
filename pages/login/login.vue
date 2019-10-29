@@ -35,11 +35,11 @@
 				<!-- #ifdef MP-WEIXIN -->
 				<div class="otherLogin mp-weixin">
 					<div class="box" style="margin: 0 30px;">
-						<!-- <i class="funicon icon-weixin font24" ></i> -->
+						 <i @click="weixinlogin" class="funicon icon-weixin font24" ></i>
 						<!--@getuserinfo="weixinlogin" open-type="getUserInfo"-->
-						<button size="mini" type="primary" class="text-center" open-type="getUserInfo"  @getuserinfo="weixinlogin">登录</button>
-						<div class="line10"></div>
-						<button size="mini"  class="text-center" @click="toHome" >暂不登录</button>
+<!--						<button type="primary" class="text-center" open-type="getUserInfo"  @getuserinfo="weixinlogin">登录</button>-->
+<!--						<div class="line10"></div>-->
+<!--						<button class="text-center" @click="toHome" >暂不登录</button>-->
 						<!-- <div class="inline-block flex1 text-center" @click="qqlogin"><i style="color: #2eb1f1;font-size: 32px;margin-top: 2px" class="funicon icon-QQ1" ></i></div> -->
 					</div>
 				</div>
@@ -424,6 +424,7 @@
 				// #endif
 
 				// #ifdef MP-WEIXIN
+
 				uni.login({
 
 					success: function (loginRes) {
@@ -431,6 +432,7 @@
 						let CODE = loginRes.code
 
 						login({code:CODE,login_method:'wx_lp'}).then(result=>{
+
 							if(result.errorCode === 0){
 								_self.loginCall(result.data)
 							}
@@ -445,12 +447,23 @@
 												scope: 'scope.userInfo',
 												success () {
 
-													const lp_raw_data = {...data.detail.userInfo,...result.data}
-													console.log(lp_raw_data)
 
-													login({code:CODE,login_method:'wx_lp',lp_raw_data:JSON.stringify(lp_raw_data)}).then(ret=>{
-														_self.loginCall(ret.data)
-													}).catch(err=>{})
+													let userInfoData = null;
+
+													wx.getUserInfo({
+														lang:'zh_CN',
+														success:function (val) {
+															userInfoData = val;
+
+															const lp_raw_data = {...userInfoData.detail.userInfo,...result.data}
+															console.log(lp_raw_data)
+
+															login({code:CODE,login_method:'wx_lp',lp_raw_data:JSON.stringify(lp_raw_data)}).then(ret=>{
+																_self.loginCall(ret.data)
+															}).catch(err=>{})
+														}
+													})
+
 												},
 												fail(){
 													error('请点击授权登录')
@@ -531,7 +544,7 @@
 						// #ifdef H5
 						//hack navigateBack无效
 						history.back();
-						rtturn;
+						return;
 						// #endif
 
 					}

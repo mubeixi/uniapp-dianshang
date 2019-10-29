@@ -20,7 +20,10 @@
                       <span class="span">
                         <span>￥</span>{{item.Products_PriceX}}
                       </span>
-                      <span class="button" @click="buy">立即购买</span>
+                      <form report-submit @submit="buy">
+                          <button formType="submit" class="button" >立即购买</button>
+                      </form>
+
                   </div>
            </div>
           </div>
@@ -41,6 +44,7 @@
 <script>
 import {getFavouritePro,cancelCollection} from '../../common/fetch.js'
 import {pageMixin} from "../../common/mixin";
+import {add_template_code} from "../../common/fetch";
 
 export default {
 	mixins:[pageMixin],
@@ -48,7 +52,7 @@ export default {
 
     },
 	onLoad(){
-		
+
 	},
 	onShow() {
 		this.getFavouritePro();
@@ -189,7 +193,13 @@ export default {
         handle(){
             this.handleShow = !this.handleShow;
         },
-        buy(){
+        buy(e){
+		    console.log(e);
+            add_template_code({
+                code: e.detail.formId,
+                times: 3
+            })
+
             this.$router.push({name:'check'})
         }
     }

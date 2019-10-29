@@ -96,7 +96,10 @@
 					<view class="info">共{{orderInfo.prod_count}}件商品 总计：<text class="money"><text class="m_icon">￥</text> {{orderInfo.Order_Fyepay}}</text></view>
 					<view class="tips">*本次购物一共可获得{{orderInfo.Integral_Get}}积分</view>
 				</view>
-				<view class="submit" @click="form_submit">提交订单</view>
+				<form report-submit @submit="form_submit">
+					<button formType="submit" class="submit">提交订单</button>
+				</form>
+
 			</view>
 		</view>
         <popup-layer ref="popupRef" :direction="'top'">
@@ -148,6 +151,7 @@ import {goBack} from '../../common/tool.js'
 import {pageMixin} from "../../common/mixin";
 import {check_money_in} from "../../common/util.js";
 import {mapGetters,mapActions} from 'vuex';
+import {add_template_code} from "../../common/fetch";
 export default {
 	mixins:[pageMixin],
     components: {
@@ -254,7 +258,13 @@ export default {
 			})
 		},
 		// 提交订单
-		form_submit() {
+		form_submit(e) {
+
+			console.log(e)
+			add_template_code({
+				code: e.detail.formId,
+				times: 3
+			})
 			if(!this.submited){
 				this.submited = true;
 				if(this.postData.need_invoice == 1 && this.postData.invoice_info == '') {
@@ -275,7 +285,7 @@ export default {
 						});
 						this.submited = false;
 						return;
-					}					
+					}
 				}
 				createOrder(this.postData).then(res=>{
 					if(res.errorCode == 0) {
@@ -713,6 +723,8 @@ export default {
         color: #fff;
         line-height: 100rpx;
 		font-size: 34rpx;
+		border-radius: 0;
+		border:none;
     }
     .totalinfo {
         flex: 1;

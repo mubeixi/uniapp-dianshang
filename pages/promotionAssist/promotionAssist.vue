@@ -2,11 +2,11 @@
 	<view>
 		<view class="banner">
 			<image src="../../static/pop_default.jpg" ></image>
-			<form @submit="submit" >
+			<form report-submit @submit="submit" >
 				<view class="content">
 					<view class="title">推广小助手</view>
 					<view class="item">
-						<view class="sub-title">内容链接</view>	
+						<view class="sub-title">内容链接</view>
 						<input class="website" v-model="postData.wx_url" type="text" placeholder="请在这里粘贴网址">
 					</view>
 					<view class="item">
@@ -42,6 +42,7 @@
 <script>
 	import {pageMixin} from "../../common/mixin";
 	import {addPromotionArticle} from '../../common/fetch.js';
+	import {add_template_code} from "../../common/fetch";
 	export default {
 		mixins:[pageMixin],
 		data() {
@@ -62,7 +63,7 @@
 					wx_url: '', //文章微信原地址
 					link_type: '1', //链接方式  1 商城链接  2 图文链接
 					link_url: '1' , // 链接
-					name: '' , 
+					name: '' ,
 					mobile: '',
 					qq: '',
 					email: ''
@@ -70,7 +71,7 @@
 			}
 		},
 		onLoad(){
-			
+
 		},
 		onShow() {
 			this.arr = this.arr1;
@@ -93,7 +94,12 @@
 				this.index = e.detail.value;
 				this.postData.link_url = e.detail.value;
 			},
-			submit() {
+			submit(e) {
+
+				add_template_code({
+					code: e.detail.formId,
+					times: 3
+				})
 				let isMobileOK = /^1(3|5|6|7|8|9)[0-9]{9}$/.test(this.postData.mobile);
 				let isEmailOK = /^([a-zA-Z0-9_\.\-]+)@([a-zA-Z0-9_\.\-]+)\.([a-zA-Z]{2,4})$/.test(this.postData.email);
 				let isQQ = /[1-9][0-9]{4,10}/.test(this.postData.qq)
@@ -181,7 +187,7 @@
 				line-height: 70rpx;
 				padding-left: 20rpx;
 			}
-			
+
 		}
 	}
 	form .msg input[type='text']{
