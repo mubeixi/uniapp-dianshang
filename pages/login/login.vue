@@ -1,7 +1,7 @@
 <template>
 	<div class="loginSign font16">
 		<!-- #ifdef APP-PLUS -->
-		<view class="status_bar" ><!-- 这里是状态栏 --></view>
+	<!-- 	<view class="status_bar" ></view> -->
 		<!-- #endif -->
 		<ul>
 			<li class="codeContent" v-if="status == 1">

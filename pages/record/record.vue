@@ -52,6 +52,7 @@
 				page:1,
 				pageSize:10,
 				data:[],
+				totalCount:0,
 			};
 		},
 		onLoad() {
@@ -63,21 +64,30 @@
 			});
 		},
 		onShow() {
+			this.data=[];
+			this.page=1;
 			//获取申请记录
 			this.getWithdrawRecordList();
 		},
 		onReachBottom() {
-
+			if(this.totalCount>this.data.length){
+				this.page++;
+				this.getWithdrawRecordList();
+			}
 		},
 		methods:{
 			//获取提现记录
 			getWithdrawRecordList(){
 				let data={
 					page:this.page,
+					pageSize:this.pageSize,
 				}
 				getWithdrawRecordList(data).then(res=>{
 					if(res.errorCode==0){
-						this.data=res.data;
+						this.totalCount=res.totalCount;
+						for(let item of res.data){
+							this.data.push(item);
+						}		
 					}
 				}).catch(e=>{
 					console.log(e)

@@ -76,7 +76,7 @@
 						我的团队
 					</view>
 				</view>
-				<view class="td" style="border-right: 0px;" @click="goFinance">
+				<view class="td"  @click="goFinance">
 					<image src="/static/fenxiao/caiwu.png" ></image>
 					<view>
 						财务明细
@@ -100,7 +100,7 @@
 						股东
 					</view>
 				</view>
-				<view class="td" style="border-right: 0px;" @click="goLeaderboard">
+				<view class="td"  @click="goLeaderboard">
 					<image src="/static/fenxiao/caifu.png" ></image>
 					<view>
 						财富排行榜
@@ -417,7 +417,7 @@
 		top: 0;
 		left: 0;
 		width: 691rpx;
-		height: 668rpx;
+		//height: 668rpx;
 		padding-left: 34rpx;
 		padding-right: 30rpx;
 		padding-top: 1rpx;

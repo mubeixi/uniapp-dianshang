@@ -27,7 +27,7 @@
 
 import {mapGetters,mapActions} from 'vuex';
 import {toast,error} from "../common";
-import {orderPay} from "../common/fetch";
+import {orderPay,add_template_code} from "../common/fetch";
 // #ifdef H5
 import {WX_JSSDK_INIT} from "../common/mixin";
 // #endif

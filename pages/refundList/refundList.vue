@@ -29,8 +29,8 @@
 				<div class="text-right total">共{{item.prod_list.length}}件商品 合计：<span class="price"><span>￥</span> {{item.refund_money_fee}}</span></div>
 				<div class="btn-group">
 					<span style="border: 0rpx;color: red;">{{item.Back_Status_desc}}</span>
-					<span v-if="item.Back_Status==0" @click="cancelOrder(item.prod_list,index)">取消退款</span>
-					<span v-else-if="item.Back_Status==1" @click="">买家发货</span>
+					<span v-if="item.Back_Status==0" @click="cancelRefund(item,index)">取消退款</span>
+					<span v-else-if="item.Back_Status==1" >买家发货</span>
 				</div>
 			</template>
         </div>
@@ -43,7 +43,7 @@
 
 <script>
 // import pagetitle from '@/components/title'
-import {getBackOrder} from '@/common/fetch.js'
+import {getBackOrder,cancelRefund} from '@/common/fetch.js'
 import {pageMixin} from "../../common/mixin";
 import {confirm} from '../../common'
 export default {
@@ -55,6 +55,7 @@ export default {
 			pageSize:5,
 			page:1,
 			totalCount:0,
+			isLoading:false
         }
     },
 	onShow(){
@@ -72,6 +73,23 @@ export default {
 		}
 	},
 	methods:{
+		//取消退款
+		cancelRefund(item,index){
+			if(this.isLoading) return;
+			this.isLoading=true;
+			cancelRefund({Back_ID:item.Back_ID}).then(res=>{
+					uni.showToast({
+						title:res.msg,
+						icon:'none'
+					})
+					this.data.splice(index,1);
+			},err=>{
+				
+			}).catch(e=>{
+				console.log(e);
+			})
+			this.isLoading=false;
+		},
 		getBackOrder(){
 			getBackOrder().then(res=>{
 				this.data=res.data;
@@ -84,7 +102,7 @@ export default {
 		},
 		goDetail(item){
 			uni.navigateTo({
-				url:"../orderDetail/orderDetail?Order_ID="+item.Order_ID+'&pagefrom=order'
+				url:"../refundDetail/refundDetail?Back_ID="+item.Back_ID
 			})
 		},
 		//跳转申请退款 支付   发表评论

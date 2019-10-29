@@ -130,7 +130,7 @@
 				<image src="/static/person/right.png" class="right"></image>
 			</view> -->
 
-			<view class="bargain cell">
+			<view class="bargain cell" @click="goRefundList()">
 				<image src="/static/person/tui.png" class="left"></image>
 				<view class="pintuan">
 					退款/售后
