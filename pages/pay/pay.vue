@@ -173,6 +173,7 @@
 				showDirect: false, // 是否直接显示付款方式
 				pay_arr: [], // 支付方式
 				user_money: 0,
+				Order_Type: ''
 			}
 		},
 		onLoad(options) {
@@ -608,6 +609,7 @@
 							}
 						}
 						this.orderInfo = res.data;
+						this.Order_Type = res.data.Order_Type;
 						// pay_money 应该支付的钱
 						// user_money 使用的余额
 						this.pay_money = this.orderInfo.Order_Fyepay;
@@ -823,7 +825,7 @@
 				toast('支付成功');
 				setTimeout(function () {
 					//拼团订单则跳转到开团成功
-					if(_self.orderInfo.Order_Type === 'pintuan'){
+					if(_self.Order_Type === 'pintuan'){
 						uni.redirectTo({
 							url:'/pages/groupSuccess/groupSuccess?order_id='+_self.Order_ID
 						})
