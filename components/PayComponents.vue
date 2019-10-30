@@ -28,6 +28,7 @@
 import {mapGetters,mapActions} from 'vuex';
 import {toast,error} from "../common";
 import {orderPay,add_template_code} from "../common/fetch";
+import {isWeiXin,ls} from "../common/tool";
 // #ifdef H5
 import {WX_JSSDK_INIT} from "../common/mixin";
 // #endif
@@ -307,6 +308,8 @@ export default {
             orderPay(payConf).then(res => {
                 console.log(res);
 
+                console.log(isWeiXin())
+
                 // #ifdef H5
 
                 // 微信h5
@@ -321,16 +324,17 @@ export default {
 
                     //公众号麻烦一点
                     if(isWeiXin()){
+
                         let users_id = ls.get('users_id');
 
                         let fromurl = res.data.arg;//encodeURIComponent(res.data.arg);
-                        let origin = location.origin;
+                        //let origin = location.origin;
 
                         fromurl = fromurl.replace(/openapi.alipay.com/,'wangjing666')
-                        console.log(fromurl);
 
-                        let str = origin+`/fre/pages/pay/wx/wx?users_id=${users_id}&formurl=`+encodeURIComponent(fromurl);
-                        let url = str;
+
+                        // let str = origin+`/fre/pages/pay/wx/wx?users_id=${users_id}&formurl=`+encodeURIComponent(fromurl);
+                        // let url = str;
 
                         uni.navigateTo({
                             url:`/pages/pay/wx/wx?users_id=${users_id}&formurl=`+encodeURIComponent(fromurl)
