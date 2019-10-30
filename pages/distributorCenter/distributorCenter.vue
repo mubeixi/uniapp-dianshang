@@ -29,15 +29,6 @@
 								</view>
 								<input type="text" placeholder="请输入您的电话" placeholder-style="color: #CAC8C8;" v-model="shenArr.DisplayTelephone" @blur="isTell">
 					</view>
-				<!-- 	<block v-for="(itm,idx) of select_lists" :key="idx" >
-							<view class="section">
-							  <picker :value="itm.index" mode="selector" :range="itm.options"  @change="selectS(idx,$event)">
-								<view class="picker">
-								{{itm.options[itm.index]}}
-								</view>
-							  </picker>
-							</view>
-					 </block> -->
 					 <view class="center" v-for="(itm,idx2) of select_lists" :key="idx2">
 					 			<view class="mbx">
 					 				{{itm.name}}
@@ -397,7 +388,7 @@
 						data.code=this.code;
 					}
 				}
-				
+				console.log(this.pay_type,"ssssssssssssssss")
 				if(this.pay_type=='remainder_pay'){
 
 					disBuy(data).then(res=>{
@@ -414,36 +405,26 @@
 				}else if(this.pay_type=='ali_app'){
 
 						disBuy(data).then(res=>{
-							//公众号麻烦一点
-							if(isWeiXin()){
-								let users_id = ls.get('users_id');
-
-
-								let fromurl = res.data.arg;//encodeURIComponent(res.data.arg);
-								let origin = location.origin;
-
-
-
-								fromurl = fromurl.replace(/openapi.alipay.com/,'wangjing666')
-								console.log(fromurl);
-
-								let str = origin+`/fre/pages/pay/wx/wx?users_id=${users_id}&formurl=`+encodeURIComponent(fromurl);
-								let url = str;
-
-
-								uni.navigateTo({
-									url:`/pages/pay/wx/wx?users_id=${users_id}&formurl=`+encodeURIComponent(fromurl)
-								})
-
-								console.log(url)
-								//这样就避免了users_id瞎跳的机制
-								//location.href = url;
-							}else{
-								document.write(res.data.arg)
-								document.getElementById('alipaysubmit').submit()
-							}
-
-
+							let provider = 'alipay';
+							let orderInfo = res.data.arg;
+							console.log('支付宝参数',orderInfo)
+							
+							uni.requestPayment({
+							    provider,
+							    orderInfo, //微信、支付宝订单数据
+							    success: function (res) {
+							        _self.paySuccessCall(res)
+							        console.log('success:' + JSON.stringify(res));
+							    },
+							    fail: function (err) {
+							        console.log('fail:' + JSON.stringify(err));
+							        uni.showModal({
+							            title:'支付错误',
+							            content:JSON.stringify(err)
+							        })
+							    }
+							});
+							
 							return;
 						},err=>{
 							uni.showToast({

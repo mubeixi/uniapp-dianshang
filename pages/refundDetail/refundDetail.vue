@@ -230,6 +230,7 @@
 			font-weight: 400;
 			border-bottom: 1rpx solid  #EEEEEE;
 			padding: 10rpx 20rpx 10rpx 20rpx;
+			line-height: 60rpx;
 		}
 		
 	

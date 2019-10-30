@@ -266,6 +266,7 @@
 				height: 53rpx;
 				border-radius: 50%;
 				margin-right: 14rpx;
+				overflow: hidden;
 				image{
 					width: 100%;
 					height: 100%;
