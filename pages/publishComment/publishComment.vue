@@ -11,7 +11,7 @@
 				{{Score}}
 			</view>
 		</view>
-		<textarea class="edit"  contenteditable="true" placeholder="宝贝是否满足了你的期待？说说你的使用心得，分享给其他想购买的朋友吧。" placeholder-style="place" v-model="Note">
+		<textarea style="border: 0rpx;" class="edit"  contenteditable="true" placeholder="宝贝是否满足了你的期待？说说你的使用心得，分享给其他想购买的朋友吧。" placeholder-style="place" v-model="Note">
 
 		</textarea>
 
@@ -226,6 +226,7 @@
 		border-radius: 10rpx;
 		margin-top: 20rpx;
 		margin-bottom: 20rpx;
+		font-size: 26rpx;
 	}
 
 	.item {
