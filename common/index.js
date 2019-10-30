@@ -24,6 +24,12 @@ export const toast = (title, icon, image, duration) => {
     })
 }
 
+/**
+ * 根据长度会自动切换模式，优先保障显示所有文字
+ * @param title
+ * @param icon
+ * @param duration
+ */
 export const error = (title, icon, duration) => {
     if(title.length>6){
         //显示所有的问题
