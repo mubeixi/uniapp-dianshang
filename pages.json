@@ -437,6 +437,12 @@
                 "navigationBarTitleText": "退款单详情"
             }
         }
+        ,{
+            "path" : "pages/distributeAgreement/distributeAgreement",
+            "style" : {
+                "navigationBarTitleText": "购买须知"
+            }
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

@@ -16,89 +16,89 @@
 		</view>
 
 		<block v-if="pro.dis_level[0].Level_LimitType==5">
-			<view class="center" v-if="pro.dis_level[0].Distribute_Form.DisplayName==1">
-						<view class="mbx">
-							姓名
-						</view>
-						<input type="text" placeholder="请输入您的姓名" placeholder-style="color: #CAC8C8;" v-model="shenArr.DisplayName">
-			</view>
-			<view class="center" v-if="pro.dis_level[0].Distribute_Form.DisplayTelephone==1">
-						<view class="mbx">
-							电话
-						</view>
-						<input type="text" placeholder="请输入您的电话" placeholder-style="color: #CAC8C8;" v-model="shenArr.DisplayTelephone" @blur="isTell">
-			</view>
-		<!-- 	<block v-for="(itm,idx) of select_lists" :key="idx" >
-					<view class="section">
-					  <picker :value="itm.index" mode="selector" :range="itm.options"  @change="selectS(idx,$event)">
-						<view class="picker">
-						{{itm.options[itm.index]}}
-						</view>
-					  </picker>
+			<block  v-if="pro.dis_config.Level_Form">
+				<view class="center" v-if="pro.dis_level[0].Distribute_Form.DisplayName==1">
+								<view class="mbx">
+									姓名
+								</view>
+								<input type="text" placeholder="请输入您的姓名" placeholder-style="color: #CAC8C8;" v-model="shenArr.DisplayName">
 					</view>
-			 </block> -->
-			 <view class="center" v-for="(itm,idx2) of select_lists" :key="idx2">
-			 			<view class="mbx">
-			 				{{itm.name}}
-			 			</view>
-			 			<view class="haha">
-			 			  <picker :value="itm.index" mode="selector" :range="itm.options"  @change="selectS(idx2,$event)">
+					<view class="center" v-if="pro.dis_level[0].Distribute_Form.DisplayTelephone==1">
+								<view class="mbx">
+									电话
+								</view>
+								<input type="text" placeholder="请输入您的电话" placeholder-style="color: #CAC8C8;" v-model="shenArr.DisplayTelephone" @blur="isTell">
+					</view>
+				<!-- 	<block v-for="(itm,idx) of select_lists" :key="idx" >
+							<view class="section">
+							  <picker :value="itm.index" mode="selector" :range="itm.options"  @change="selectS(idx,$event)">
 								<view class="picker">
 								{{itm.options[itm.index]}}
 								</view>
-			 			  </picker>
-			 			</view>
-			 </view>
-			 <view class="center" v-for="(m,n) of text_lists" :key="n">
-			 			<view class="mbx">
-			 				{{m.Name}}
-			 			</view>
-			 			<input type="text" v-model="m.Value" >
-			 </view>
-			<view class="center" v-if="pro.dis_level[0].Distribute_Form.DisplayLocaltion==1">
-						<view class="mbx">
-							区域选择
-						</view>
-						<view class="haha">
-							<!-- 选择区域 -->
-							<picker mode="multiSelector"  @change="bindMultiPickerChange" @columnchange="bindMultiPickerColumnChange" :value="change_multiIndex" :range="change_objectMultiArray" range-key="name">
-											<view class="picker" style="text-align: center;">
-											  <view v-if="!address_info.Address_Province">选择省份</view>
-											  <view v-else>{{objectMultiArray[0][multiIndex[0]]['name']}}</view>
-											  <view v-if="!address_info.Address_City">选择城市</view>
-											  <view v-else>{{objectMultiArray[1][multiIndex[1]]['name']}}</view>
-											  <view v-if="!address_info.Address_Area">选择地区</view>
-											  <view v-else>{{objectMultiArray[2][multiIndex[2]]['name']}}</view>
-											</view>
-							</picker>
-						</view>
-			</view>
-			<view class="center" v-if="pro.dis_level[0].Distribute_Form.DisplayLocaltion==1">
-						<view class="mbx">
-							选择街道
-						</view>
-						<view class="haha">
-						  <picker mode="selector" @change="t_pickerChange" :range="t_arr" range-key="name" :value="t_index">
-							<view class="picker">
-							<!--  <text style="font-size: 28upx;">街道地址</text> -->
-							  <view v-if="!address_info.Address_Town" style="margin-left: 20upx;width: 300upx;">选择街道</view>
-							  <view v-else style="margin-left: 20upx;width: 300upx;">{{t_arr[t_index]['name']}}</view>
+							  </picker>
 							</view>
-						  </picker>
-						</view>
-			</view>
+					 </block> -->
+					 <view class="center" v-for="(itm,idx2) of select_lists" :key="idx2">
+					 			<view class="mbx">
+					 				{{itm.name}}
+					 			</view>
+					 			<view class="haha">
+					 			  <picker :value="itm.index" mode="selector" :range="itm.options"  @change="selectS(idx2,$event)">
+										<view class="picker">
+										{{itm.options[itm.index]}}
+										</view>
+					 			  </picker>
+					 			</view>
+					 </view>
+					 <view class="center" v-for="(m,n) of text_lists" :key="n">
+					 			<view class="mbx">
+					 				{{m.Name}}
+					 			</view>
+					 			<input type="text" v-model="m.Value" >
+					 </view>
+					<view class="center" v-if="pro.dis_level[0].Distribute_Form.DisplayLocaltion==1">
+								<view class="mbx">
+									区域选择
+								</view>
+								<view class="haha">
+									<!-- 选择区域 -->
+									<picker mode="multiSelector"  @change="bindMultiPickerChange" @columnchange="bindMultiPickerColumnChange" :value="change_multiIndex" :range="change_objectMultiArray" range-key="name">
+													<view class="picker" style="text-align: center;">
+													  <view v-if="!address_info.Address_Province">选择省份</view>
+													  <view v-else>{{objectMultiArray[0][multiIndex[0]]['name']}}</view>
+													  <view v-if="!address_info.Address_City">选择城市</view>
+													  <view v-else>{{objectMultiArray[1][multiIndex[1]]['name']}}</view>
+													  <view v-if="!address_info.Address_Area">选择地区</view>
+													  <view v-else>{{objectMultiArray[2][multiIndex[2]]['name']}}</view>
+													</view>
+									</picker>
+								</view>
+					</view>
+					<view class="center" v-if="pro.dis_level[0].Distribute_Form.DisplayLocaltion==1">
+								<view class="mbx">
+									选择街道
+								</view>
+								<view class="haha">
+								  <picker mode="selector" @change="t_pickerChange" :range="t_arr" range-key="name" :value="t_index">
+									<view class="picker">
+									<!--  <text style="font-size: 28upx;">街道地址</text> -->
+									  <view v-if="!address_info.Address_Town" style="margin-left: 20upx;width: 300upx;">选择街道</view>
+									  <view v-else style="margin-left: 20upx;width: 300upx;">{{t_arr[t_index]['name']}}</view>
+									</view>
+								  </picker>
+								</view>
+					</view>
+			</block>
 
 
-			<view class="checks">
-			<!-- 	<label class="radio" > -->
-					<radio @click="changes" :checked="isAgree" style="transform:scale(0.7)"/><text @click="isXu=true">同意<text  class="checkq" >{{str}}</text></text>
-	<!-- 			</label> -->
+			<view class="checks" v-if="pro.dis_config.Distribute_AgreementOpen">
+					<radio @click="changes" :checked="isAgree" style="transform:scale(0.7)"/><text @click="goDistributeAgreement">同意<text  class="checkq" >{{pro.dis_config.Distribute_AgreementTitle}}</text></text>
 			</view>
 
 			<view class="submits" @click="application">
 				{{textShen}}
 			</view>
-
+<!-- 
 			<view class="zhezhao" v-if="isXu">
 				<view class="zhezhaoText">
 					<image @click="isXu=false" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADEAAAAxCAYAAABznEEcAAAESklEQVRoQ91aTWgdVRT+zsujLaKJINRFdGGC1PpTKLiwFSFYfxpt6yrgDyjcOz4X4kJXVdeiK10Ios/MBEStkI22laeIGlykixbFP9KiiQsXMSJoYlt/yHuf3Omb8PIy82bunZmX1tnOOd/9vnvn3HPPPSMo4JmYmNgyNDS0l+QekjcB2CEi1wC4EsAWAOdIrgBYBHBGRL4XkRPLy8uz09PT/+alIDkAKlrre0g+JiL3A7jCAetPkh8CeCsIgo8BtBwwYC1ibGysOjIy8rCIHAaw02XQBJ85ki8tLCy8OzMzs2qDayXC87w7SL4G4GabQSxtvwPwpO/7X2T1yySiVqtd1mw2XyZZE5FMPlkJxNmRpIjUBwYGnqnX6+fTsFIJeZ53Hcn3AexKAyv6PclvK5XKA5OTkz/1wu4pQmu9m+RHIrK9aIIWeEsAxn3f/yrJJ1FEW8BnImK2yc1+fgewL0lIrAil1IiIzAK4erPZd4y/RHJvEAQL3Zw2iGgH8YnNiIG0CTMxUq1Wb+sO9g0itNavA3giDXCz3pOsB0Gwjt86EVrrfSQ/6cc26joJ7e33bt/3P40w1kSYTDw6Ovo1gBtdB+ij39z8/PyuKLOvidBaKwB+H4nkGoqkFwRByDcSUVFKnRaR622QDxw6EJofP3rcxm2DrQsOyR+CILjBHBpDEVrr/QAaNkzMwAcPHQxdjh095iwkDw7J+4IgaIQilFJHRORBVxGuQjoFOGK85/v+Q2IKmsHBwd9c6oE8JPL4dkz22ZWVlavE87wxkp/brEKnrQsZF58kfiTvFKXUcyLygqsI42dDysY2CyeSzxsRb4vII1kcetlkIZfFxpYHyXeMiJMicqutc5x9L5JlCGhzOCVa61+KPK3GkTWDRdux4y7Ua46XjIi/AGwrYiUijG4hndh5ckoCx7+NCBYpoJeQEgSEw5WyEnE7VgmfUTRf4UoUGhNJAqIRS1iNMCZOAihkd0rKGSUH9qnC8kRa0itri43yRO6MnSYgKdiL+LTCjJ337JRVQFlCwrNTnlOsrYAShFw4xRpgrfURAFb1hKuAgoVcqCfaInJVdq45IG+wr6vsAFjX2HnKys4TQg6cH33f37FWYxtQpZQWkUmbI4hLgR+H74ITd9uB9r3TNwV3f2zmxMY2/t6pHRuX9g1gNA1KqTdEpGYzLf20Tb2LNWT+F7fi7SC/tPsT0adxsXWKWq3WXVNTU1/GfboXfc+O5K8ist+pZxcpNt3TVqv1gYjc0s8ANmMV0j2NSJtgX11dfQXA4/1owJhGCoA3q9Xq04X0sTtn33SSALxackKcA/BUZyco7QtIbcZ3A0T/dgB4VkRMf6CQh+RpAC+W/m9HF1tzaLxXRB4117EALndQc9b0aEj29y+bOKLj4+Nbh4eH9zSbzdtFZKeImNPlte3/nbYC+AfAHwB+JnmG5Jzpky8uLs42Gg3zLtfzH7ywkm5z0j8vAAAAAElFTkSuQmCC" ></image>
@@ -109,21 +109,7 @@
 						1、游客入住酒店后如需升级或者更换房型，需补交升级或者更换的房差费用。
 					</view>
 				</view>
-			</view>
-			<view class="qwe">
-				<view class="imgs">
-					<image src="../../static/default.png"></image>
-				</view>
-				<view class="nickName">
-					小兔子的店
-				</view>
-				<view class="liji">
-					立即加入成为分销商
-				</view>
-				<view class="hahas">
-					立即加入
-				</view>
-			</view>
+			</view> -->
 		</block>
 
 
@@ -172,36 +158,38 @@
 		</block>
 
 		<block v-else-if="pro.dis_config.Distribute_Type==0&&pro.dis_level[0].Level_LimitType==0">
-			<view class="center" v-if="pro.dis_level[0].Distribute_Form.DisplayName==1">
-						<view class="mbx">
-							姓名
-						</view>
-						<input type="text" placeholder="请输入您的姓名" placeholder-style="color: #CAC8C8;" v-model="shenArr.DisplayName">
-			</view>
-			<view class="center" v-if="pro.dis_level[0].Distribute_Form.DisplayTelephone==1">
-						<view class="mbx">
-							电话
-						</view>
-						<input type="text" placeholder="请输入您的电话" placeholder-style="color: #CAC8C8;" v-model="shenArr.DisplayTelephone" @blur="isTell">
-			</view>
-			<view class="center" v-for="(itm,idx) of select_lists" :key="idx">
-						<view class="mbx">
-							{{itm.name}}
-						</view>
-						<view class="haha">
-						  <picker :value="itm.index" mode="selector" :range="itm.options"  @change="selectS(idx,$event)">
-											<view class="picker">
-											{{itm.options[itm.index]}}
-											</view>
-						  </picker>
-						</view>
-			</view>
-			<view class="center" v-for="(m,n1) of text_lists" :key="n1">
-						<view class="mbx">
-							{{m.Name}}
-						</view>
-						<input type="text" v-model="m.Value" :placeholder="'请输入'+m.Name">
-			</view>
+			<block v-if="pro.dis_config.Level_Form">
+				<view class="center" v-if="pro.dis_level[0].Distribute_Form.DisplayName==1">
+							<view class="mbx">
+								姓名
+							</view>
+							<input type="text" placeholder="请输入您的姓名" placeholder-style="color: #CAC8C8;" v-model="shenArr.DisplayName">
+				</view>
+				<view class="center" v-if="pro.dis_level[0].Distribute_Form.DisplayTelephone==1">
+							<view class="mbx">
+								电话
+							</view>
+							<input type="text" placeholder="请输入您的电话" placeholder-style="color: #CAC8C8;" v-model="shenArr.DisplayTelephone" @blur="isTell">
+				</view>
+				<view class="center" v-for="(itm,idx) of select_lists" :key="idx">
+							<view class="mbx">
+								{{itm.name}}
+							</view>
+							<view class="haha">
+							  <picker :value="itm.index" mode="selector" :range="itm.options"  @change="selectS(idx,$event)">
+												<view class="picker">
+												{{itm.options[itm.index]}}
+												</view>
+							  </picker>
+							</view>
+				</view>
+				<view class="center" v-for="(m,n1) of text_lists" :key="n1">
+							<view class="mbx">
+								{{m.Name}}
+							</view>
+							<input type="text" v-model="m.Value" :placeholder="'请输入'+m.Name">
+				</view>
+			</block>
 			<radio-group >
 				<label class="uni-list-cell " v-for="(item, index) in pro.dis_level" :key="index" @click="payFenId(index)">
 					<view>
@@ -210,6 +198,9 @@
 					<view>{{item.Level_Name}}({{item.Level_LimitType==0?'商城总消费':'一次性消费'}}{{item.Level_LimitValue}}元)</view>
 				</label>
 			</radio-group>
+			<view class="checks" v-if="pro.dis_config.Distribute_AgreementOpen">
+				<radio @click="changes" :checked="isAgree" style="transform:scale(0.7)"/><text  @click="goDistributeAgreement">同意<text  class="checkq" >{{pro.dis_config.Distribute_AgreementTitle}}</text></text>
+			</view>
 			<view class="submits" @click="becomeFenxiao">
 				立即购买成为分销商
 			</view>
@@ -259,7 +250,6 @@
 		data() {
 			return {
 				textShen:'立即申请成为分销商',
-				str:'《购买须知》',
 				isXu:false,//是否弹出购买须知
 				isAgree:false,//是否同意
 				pro:[],
@@ -319,6 +309,12 @@
 			this.pay_arr = ls.get('initData').pay_arr;
 		},
 		methods:{
+			//查看须知
+			goDistributeAgreement(){
+				uni.navigateTo({
+					url:'../distributeAgreement/distributeAgreement'
+				})
+			},
 			// 取消输入支付密码
 			cancelInput() {
 				this.password_input = false;
@@ -363,25 +359,32 @@
 					buy_info:{}
 				};
 				data.pay_type=this.pay_type;
-				if(this.pro.dis_config.Reserve_DisplayName==1){
-					data.buy_info.Reserve_DisplayName=this.shenArr.DisplayName;
-				}
-				if(this.pro.dis_config.Reserve_DisplayTelephone==1){
-					data.buy_info.Reserve_DisplayTelephone=this.shenArr.DisplayTelephone;
-				}
-				if(this.select_lists.length>0){
-
-					for(let item of this.select_lists){
-						let arr={};
-						arr[item.name]=item.options[item.index];
-						data.buy_info[item.arrs]=arr;
+				if(this.pro.dis_config.Level_Form){
+					if(this.pro.dis_config.Reserve_DisplayName==1){
+						data.buy_info.Reserve_DisplayName=this.shenArr.DisplayName;
+					}
+					if(this.pro.dis_config.Reserve_DisplayTelephone==1){
+						data.buy_info.Reserve_DisplayTelephone=this.shenArr.DisplayTelephone;
+					}
+					if(this.select_lists.length>0){
+					
+						for(let item of this.select_lists){
+							let arr={};
+							arr[item.name]=item.options[item.index];
+							data.buy_info[item.arrs]=arr;
+						}
+					}
+					if(this.text_lists.length>0){
+						for(let item of this.text_lists){
+							let arr={};
+							arr[item.Name]=item.Value;
+							data.buy_info[item.arrs]=arr;
+						}
 					}
 				}
-				if(this.text_lists.length>0){
-					for(let item of this.text_lists){
-						let arr={};
-						arr[item.Name]=item.Value;
-						data.buy_info[item.arrs]=arr;
+				if(this.pro.dis_config.Distribute_AgreementOpen){
+					if(this.isAgree){
+						data.agent_promise=1;
 					}
 				}
 				data.buy_level_id=this.pro.dis_level[this.current].Level_ID;
@@ -393,7 +396,7 @@
 						data.code=this.code;
 					}
 				}
-				console.log(this.pay_type,"sssssssssssssssss")
+				
 				if(this.pay_type=='remainder_pay'){
 
 					disBuy(data).then(res=>{
@@ -458,38 +461,49 @@
 			},
 			becomeFenxiao(){
 				let arr=true;
-				if(this.pro.dis_level[0].Distribute_Form.DisplayName==1&&this.shenArr.DisplayName==''){
-					uni.showToast({
-						title:"姓名不能为空",
-						icon:'none'
-					})
-					arr=false;
-				}else{
-					if(this.pro.dis_level[0].Distribute_Form.DisplayTelephone==1&&this.shenArr.DisplayTelephone==''){
+				if(this.pro.dis_config.Level_Form){
+					if(this.pro.dis_level[0].Distribute_Form.DisplayName==1&&this.shenArr.DisplayName==''){
 						uni.showToast({
-							title:"电话不能为空",
+							title:"姓名不能为空",
 							icon:'none'
 						})
 						arr=false;
-					}else if(this.pro.dis_level[0].Distribute_Form.DisplayTelephone==1&&!(/^1[3456789]\d{9}$/.test(this.shenArr.DisplayTelephone))){
-						uni.showToast({
-							title:'手机号输入错误，请重新输入',
-							icon:"none"
-						})
-						arr=false;
 					}else{
-						//循环判断输入框
-						if(this.text_lists.length>0){
-							for(let item of this.text_lists){
-								if(item.Value==''){
-									uni.showToast({
-										title:item.Name+'不能为空',
-										icon:"none"
-									})
-									arr=false;
+						if(this.pro.dis_level[0].Distribute_Form.DisplayTelephone==1&&this.shenArr.DisplayTelephone==''){
+							uni.showToast({
+								title:"电话不能为空",
+								icon:'none'
+							})
+							arr=false;
+						}else if(this.pro.dis_level[0].Distribute_Form.DisplayTelephone==1&&!(/^1[3456789]\d{9}$/.test(this.shenArr.DisplayTelephone))){
+							uni.showToast({
+								title:'手机号输入错误，请重新输入',
+								icon:"none"
+							})
+							arr=false;
+						}else{
+							//循环判断输入框
+							if(this.text_lists.length>0){
+								for(let item of this.text_lists){
+									if(item.Value==''){
+										uni.showToast({
+											title:item.Name+'不能为空',
+											icon:"none"
+										})
+										arr=false;
+									}
 								}
 							}
 						}
+					}
+				}
+				if(this.pro.dis_config.Distribute_AgreementOpen){
+					if(!this.isAgree){
+						uni.showToast({
+							title:"未同意须知",
+							icon:'none'
+						})
+						return;
 					}
 				}
 				if(arr){
@@ -518,64 +532,76 @@
 				}
 
 				let arr=true;
-				if(this.pro.dis_level[0].Distribute_Form.DisplayName==1&&this.shenArr.DisplayName==''){
-					uni.showToast({
-						title:"姓名不能为空",
-						icon:'none'
-					})
-					arr=false;
-				}else{
-					if(this.pro.dis_level[0].Distribute_Form.DisplayTelephone==1&&this.shenArr.DisplayTelephone==''){
+				if(this.pro.dis_config.Level_Form){
+					if(this.pro.dis_level[0].Distribute_Form.DisplayName==1&&this.shenArr.DisplayName==''){
 						uni.showToast({
-							title:"电话不能为空",
+							title:"姓名不能为空",
 							icon:'none'
 						})
 						arr=false;
-					}else if(this.pro.dis_level[0].Distribute_Form.DisplayTelephone==1&&!(/^1[3456789]\d{9}$/.test(this.shenArr.DisplayTelephone))){
-						uni.showToast({
-							title:'手机号输入错误，请重新输入',
-							icon:"none"
-						})
-						arr=false;
 					}else{
-						//循环判断输入框
-						if(this.text_lists.length>0){
-							for(let item of this.text_lists){
-								if(item.Value==''){
+						if(this.pro.dis_level[0].Distribute_Form.DisplayTelephone==1&&this.shenArr.DisplayTelephone==''){
+							uni.showToast({
+								title:"电话不能为空",
+								icon:'none'
+							})
+							arr=false;
+						}else if(this.pro.dis_level[0].Distribute_Form.DisplayTelephone==1&&!(/^1[3456789]\d{9}$/.test(this.shenArr.DisplayTelephone))){
+							uni.showToast({
+								title:'手机号输入错误，请重新输入',
+								icon:"none"
+							})
+							arr=false;
+						}else{
+							//循环判断输入框
+							if(this.text_lists.length>0){
+								for(let item of this.text_lists){
+									if(item.Value==''){
+										uni.showToast({
+											title:item.Name+'不能为空',
+											icon:"none"
+										})
+										arr=false;
+									}
+								}
+							}
+						}
+					}
+					//判断地址
+					if(this.pro.dis_level[0].Distribute_Form.DisplayLocaltion==1&&arr){
+						if(JSON.stringify(this.address_info) == "{}"){
+							uni.showToast({
+								title:"地址不能为空",
+								icon:'none'
+							})
+							arr=false;
+						}else{
+							for(let item in this.address_info){
+								if(this.address_info[item]==0){
 									uni.showToast({
-										title:item.Name+'不能为空',
-										icon:"none"
+										title:"地址还没有选择",
+										icon:'none'
 									})
 									arr=false;
 								}
 							}
 						}
+					
 					}
+					
 				}
-				//判断地址
-				if(this.pro.dis_level[0].Distribute_Form.DisplayLocaltion==1&&arr){
-					if(JSON.stringify(this.address_info) == "{}"){
+				
+				if(this.pro.dis_config.Distribute_AgreementOpen){
+					if(!this.isAgree){
 						uni.showToast({
-							title:"地址不能为空",
+							title:"未同意须知",
 							icon:'none'
 						})
-						arr=false;
-					}else{
-						for(let item in this.address_info){
-							if(this.address_info[item]==0){
-								uni.showToast({
-									title:"地址还没有选择",
-									icon:'none'
-								})
-								arr=false;
-							}
-						}
+						return;
 					}
-
 				}
-
 				//是否同意购买须知
-				if(this.isAgree&&arr){
+				if(arr){
 					let apply_info={};
 					if(this.pro.dis_level[0].Distribute_Form.DisplayName==1){
 						apply_info.DisplayName=this.shenArr.DisplayName;
