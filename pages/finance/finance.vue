@@ -65,7 +65,7 @@
 		onReachBottom() {
 			if(this.totalCount>this.pro.length){
 				this.page++;
-				this.change(this.index);
+				this.geDetail();
 			}
 		},
 		methods:{
@@ -73,6 +73,9 @@
 				this.pro=[];
 				this.page=1;
 				this.index=item;
+				this.geDetail();
+			},
+			geDetail(){
 				let data={
 					page:this.page,
 					pageSize:this.pageSize
@@ -85,7 +88,7 @@
 							}
 							this.totalCount=res.totalCount;
 						}
-
+				
 					}).catch(e=>{
 						console.log(e);
 					})

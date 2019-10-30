@@ -155,10 +155,10 @@
 			...mapActions(['getUserInfo']),
 			goDistributor(){
 
-
+					
 				//跳转成为分销商
 				uni.navigateTo({
-					url:'../distributorCenter/distributorCenter'
+					url:'../disAgreementBefore/disAgreementBefore'
 				})
 			},
 			goLogin(){
@@ -180,15 +180,11 @@
 			},
 			//获取分销首页数据
 			getDisInit(){
+				let that=this;
 				getDisInit({},{errtip:false}).then(res=>{
 					this.data=res.data;
+					this.userInfo.Is_Distribute=1;
 				},err=>{
-
-					if(err.errorCode==1){
-						// uni.navigateTo({
-						// 	url:'../distributorCenter/distributorCenter'
-						// })
-					}
 
 				}).catch(err=>{
 					console.log(err)

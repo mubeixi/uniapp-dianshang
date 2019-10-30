@@ -443,6 +443,12 @@
                 "navigationBarTitleText": "购买须知"
             }
         }
+        ,{
+            "path" : "pages/disAgreementBefore/disAgreementBefore",
+            "style" : {
+                "navigationBarTitleText": "成为分销商"
+            }
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

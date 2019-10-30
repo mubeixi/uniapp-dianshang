@@ -156,7 +156,7 @@ view{
 				content: '';
 				display: flex;
 				width: 135rpx;
-				height: 3rpx;
+				height: 4rpx;
 				background-color: #F43131;
 				position: absolute;
 				bottom: 0rpx;
