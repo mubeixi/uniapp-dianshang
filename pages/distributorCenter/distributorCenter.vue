@@ -342,7 +342,7 @@
 					uni.switchTab({
 						url:'../fenxiao/fenxiao'
 					})
-				},1000)
+				},50)
 			},
 			//购买提交信息
 			disBuy(){
@@ -395,29 +395,29 @@
 					})
 
 				}else if(this.pay_type=='ali_app'){
-						
+
 						disBuy(data).then(res=>{
 							//公众号麻烦一点
 							if(isWeiXin()){
 								let users_id = ls.get('users_id');
-							
-							
+
+
 								let fromurl = res.data.arg;//encodeURIComponent(res.data.arg);
 								let origin = location.origin;
-							
-							
-							
+
+
+
 								fromurl = fromurl.replace(/openapi.alipay.com/,'wangjing666')
 								console.log(fromurl);
-							
+
 								let str = origin+`/fre/pages/pay/wx/wx?users_id=${users_id}&formurl=`+encodeURIComponent(fromurl);
 								let url = str;
-							
-							
+
+
 								uni.navigateTo({
 									url:`/pages/pay/wx/wx?users_id=${users_id}&formurl=`+encodeURIComponent(fromurl)
 								})
-							
+
 								console.log(url)
 								//这样就避免了users_id瞎跳的机制
 								//location.href = url;
@@ -425,8 +425,8 @@
 								document.write(res.data.arg)
 								document.getElementById('alipaysubmit').submit()
 							}
-							
-							
+
+
 							return;
 						},err=>{
 							uni.showToast({
@@ -435,7 +435,7 @@
 							})
 						}).catch(e=>{
 							console.log(e);
-						})	
+						})
 				}else{
 					//不用余额调微信支付
 					this.wechatPay(data);
