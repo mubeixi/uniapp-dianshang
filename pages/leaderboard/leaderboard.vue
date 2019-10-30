@@ -215,7 +215,7 @@
 	border-radius:10rpx;
 	.paiming{
 		padding-top: 38rpx;
-		padding-bottom: 20rpx;
+		padding-bottom: 38rpx;
 		padding-left: 33rpx;
 		display: flex;
 		view{
@@ -266,6 +266,7 @@
 				height: 53rpx;
 				border-radius: 50%;
 				margin-right: 14rpx;
+				overflow: hidden;
 				image{
 					width: 100%;
 					height: 100%;
@@ -273,6 +274,8 @@
 			}
 			.nickName{
 				height: 53rpx;
+				width: 180rpx;
+				overflow: hidden;
 				line-height: 53rpx;
 				font-size: 24rpx;
 				color: #777777;

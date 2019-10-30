@@ -174,8 +174,8 @@
 		computed:{
 			...mapGetters(['userInfo']),
 			userLevelText(){
-				if(this.userInfo.Users_Level && this.userInfo.User_Level && this.userInfo.Users_Level[this.userInfo.User_Level]){
-					return this.userInfo.Users_Level[this.userInfo.User_Level].Name
+				if(this.userInfo.User_Level){
+					return this.userInfo.User_Level.level_name
 				}
 				return '普通用户';
 			}

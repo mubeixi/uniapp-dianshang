@@ -73,6 +73,7 @@
 				查看已失效的卷 >
 			</view>
 		</view>
+		<view style="height: 30rpx;"></view>
 	</view>
 </template>
 
@@ -270,7 +271,6 @@
 .lasts{
 	font-size: 20rpx;
 	margin-top: 30rpx;
-	margin-bottom: 30rpx;
 	width: 100%;
 	text-align: center;
 	display: flex;

@@ -453,9 +453,10 @@
 													wx.getUserInfo({
 														lang:'zh_CN',
 														success:function (val) {
+															console.log(val	)
 															userInfoData = val;
 
-															const lp_raw_data = {...userInfoData.detail.userInfo,...result.data}
+															const lp_raw_data = {...userInfoData.userInfo,...result.data}
 															console.log(lp_raw_data)
 
 															login({code:CODE,login_method:'wx_lp',lp_raw_data:JSON.stringify(lp_raw_data)}).then(ret=>{
