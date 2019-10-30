@@ -9,4 +9,10 @@ ios 包名  com.zz.wzw.wzwdianshang
 秘钥 1234
 
 
-
+{
+appid: "__UNI__E5E1B20"
+content: "{"channel":"fff","fiel":"fdsafsa","id":"343"}"
+payload: "{"channel":"fff","fiel":"fdsafsa","id":"343"}"
+title: "网中网电商"
+__UUID__: "androidPushMsg116729578"
+}

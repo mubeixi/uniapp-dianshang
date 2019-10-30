@@ -5,6 +5,26 @@
 	import {APP_USERS_ID,isDev} from "./common/env";
 	// #endif
 
+
+    // #ifdef APP-PLUS
+    import {pushHandle} from "./common/push";
+
+    const  clickFn = (notify)=>{
+        console.log('click',notify)
+
+        pushHandle({type:'click',info:notify})
+
+    }
+
+    const  receiveFn = (notify)=>{
+
+        pushHandle({type:'receive',info:notify})
+    }
+    // #endif
+
+
+
+
     export default {
         //目前只有app端用到了应用的全局onLaunch
 		onLaunch: function(option) {
@@ -12,11 +32,17 @@
 			// #ifdef APP-PLUS
 
             //isDev && ls.clear()
-
 			ls.set('users_id',APP_USERS_ID);//app里面需要写死打包，不然办法
             // if(isDev){
 
             // }
+
+
+            //点击通知
+            plus.push.addEventListener( 'click', clickFn);
+
+            //收到通知
+            plus.push.addEventListener( 'receive', receiveFn);
 
 			// #endif
 
