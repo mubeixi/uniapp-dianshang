@@ -164,6 +164,7 @@
 <style lang="scss" scoped>
 .all{
 	background-color: #FFFFFF;
+	overflow-x: hidden;
 }
 view{
 	box-sizing: border-box;
@@ -408,7 +409,7 @@ view{
 			font-size:46rpx;
 			font-weight:bold;
 			text-align: center;
-			height: 35rpx;
+			height: 30rpx;
 			line-height: 35rpx;
 			margin: 12rpx 0rpx;
 		}

@@ -14,8 +14,8 @@
 			</view>
 		</view>
 		<view class="content">
-			<view class="product" v-for="(item,index) in prod_list" :key="index">
-				<image class="p-img" :src="item.Gift_ImgPath" mode=""></image>
+			<view class="product" v-for="(item,index) in prod_list" :key="index"  @click="exchange(item)">
+				<image class="p-img" :src="item.Gift_ImgPath"></image>
 				<view class="p-title">{{item.Gift_Name}}</view>
 				<view class="p-count">库存 {{item.Gift_Qty}}</view>
 				<view class="p-price">
@@ -128,7 +128,18 @@
 			// 积分兑换
 			exchange(item){	
 				// 判断是否可以兑换
-				if(item.Gift_Qty < 0 || this.userInfo.User_Integral < item.Gift_Integral) {
+				if(item.Gift_Qty <=0) {
+					uni.showToast({
+						title:"当前暂无库存",
+						icon:'none'
+					})
+					return false;
+				}
+				if(this.userInfo.User_Integral < item.Gift_Integral){
+					uni.showToast({
+						title:"您的积分不足",
+						icon:'none'
+					})
 					return false;
 				}
 				// 弹出密码输入框
@@ -251,6 +262,8 @@
 			text-align: center;
 			padding: 50rpx 0 20rpx;
 			font-size: 30rpx;
+			background-color: #fff;
+			border-radius: 20rpx;
 			.btns {
 				display: flex;
 				justify-content: space-around;

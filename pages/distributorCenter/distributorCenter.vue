@@ -214,6 +214,19 @@
 				立即购买成为分销商
 			</view>
 		</block>
+		
+		<view  class="disConfig" v-else-if="pro.dis_config.Distribute_Type==4&&pro.dis_level[0].Level_LimitType==4">
+			<block v-for="(fen,ins) of pro.dis_level" :key="ins">
+				<view class="line" v-if="ins!=0"></view>
+				<view class="fenxiao">
+					{{fen.Level_Name}}<text>(购买商品{{fen.Product_Num}}次)</text>
+				</view>
+				<block v-if="fen.Level_LimitValue[0]==0">
+					<view class="isFenxiao" @click="goResult">
+						进入商城
+					</view>
+				</block>
+		</view>		
 		<popup-layer ref="popupLayer" :direction="'top'">
 			<div class="iMbx">
 				<div class="c_method" v-for="(item,index) in pay_arr" @click="chooseType(index)" :key="index">
