@@ -1,7 +1,7 @@
 <template>
 	<view class="all" v-if="pro.agent_rate">
 		<!-- #ifdef APP-PLUS -->
-<!--		<view class="status_bar" style="background-color: rgb(248, 248, 248);"></view>-->
+		<view class="status_bar" style="background-color: rgb(248, 248, 248);"></view>
 		<!-- #endif -->
 		<!-- <page-title title="区域代理" rightHidden="true"></page-title> -->
 		<view class="top">
@@ -161,6 +161,8 @@
 		margin: 30rpx 0rpx 30rpx 20rpx;
 		height: 83rpx;
 		display: flex;
+		margin-top: 0rpx;
+		padding-top: 30rpx;
 		position: relative;
 		.person{
 			width: 83rpx;

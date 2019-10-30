@@ -63,9 +63,7 @@
 				}
 				uni.showModal({
 				    title: '确定要删除吗？',
-					cancelColor:'#000000',
-					confirmColor:"#000000",
-				    content: '',
+				    content: ' ',
 				    success: function (res) {
 				        if (res.confirm) {
 				           delUserWithdrawMethod(data).then(res=>{
@@ -90,12 +88,10 @@
 			//选中提现方式
 			change(item){
 				if(this.isShow){
+					this.del(item);
 					return;
 				}
 				this.User_Method_ID=item.User_Method_ID;
-				// uni.navigateTo({
-				// 	url:'../withdrawal/withdrawal?User_Method_ID='+this.User_Method_ID
-				// })
 				this.$vm.$emit('fires',this.User_Method_ID)
 				//返回上一页
 				uni.navigateBack({

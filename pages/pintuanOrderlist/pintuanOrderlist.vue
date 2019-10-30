@@ -47,7 +47,7 @@
 				    </div>
 				</div>
 			</block>
-			<div class="total"><view class="ptdesc" v-if="item.teamstatus_desc">{{item.teamstatus_desc}}</view><view> 共{{item.prod_list.length}}件商品 合计：<span class="price"><span>￥</span> {{item.Order_Fyepay}}</span></view></div>
+			<div class="total"><view class="ptdesc" @click="goPintuan(item)" v-if="item.teamstatus_desc">{{item.teamstatus_desc}}</view><view> 共{{item.prod_list.length}}件商品 合计：<span class="price"><span>￥</span> {{item.Order_Fyepay}}</span></view></div>
 			<div class="btn-group" v-if="item.Order_Status==0">
 					<span @click="cancelOrder(item.prod_list,index)">取消订单</span>
 			</div>
@@ -109,6 +109,11 @@ export default {
 		}
 	},
 	methods:{
+		goPintuan(item){
+			uni.navigateTo({
+				url:'../groupJoin/groupJoin?Team_ID='+item.teamid+'&Products_ID='+item.prod_list[0].prod_id
+			})
+		},
 		//确认收货
 		confirmOrder(item){
 			let data={
@@ -398,6 +403,8 @@ export default {
 							color: #fff;
 							border-top-right-radius: 20rpx;
 							border-bottom-right-radius: 20rpx;
+							padding-left: 20rpx;
+							padding-right: 20rpx;
 						}
         }
         .btn-group {

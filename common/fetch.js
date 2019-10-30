@@ -72,8 +72,9 @@ export const login = (data,options) => {
     //获取推荐人id
     let owner_id = ls.get("owner_id")
     if(owner_id){
-      data = {...data,owner_id}
+      owner_id = 0;
     }
+  data = {...data,owner_id}
     return fetch('user_login', data,options)
 }
 

@@ -4,7 +4,12 @@
 	 <view class="status_bar" style="background-color: #F8F8F8; z-index: 999;position: fixed;top: 0rpx;left: 0rpx;"></view>
 	  <!-- #endif -->
 	  <page-title  class="titles" title="收藏列表"  :rightHidden="rightHidden" @rightHandle="rightHandle"  :right="rightText"></page-title>
+	  <!-- #ifdef APP-PLUS -->
+	  <view style="height: 130rpx;"></view>
+	  <!-- #endif -->
+	  <!-- #ifndef APP-PLUS -->
 	  <view style="height: 105rpx;"></view>
+	  <!-- #endif -->
       <div class="pro-list" v-for="(item,index) in collect_list" :key="index">
 		  <div class="mbxa"  v-if="rightClicked" @click="check(index)">
 			  <img :src="checked[index].checked?'/static/checked.png':'/static/uncheck.png'" >
@@ -20,10 +25,10 @@
                       <span class="span">
                         <span>￥</span>{{item.Products_PriceX}}
                       </span>
+
                       <form report-submit @submit="buy">
                           <button formType="submit" class="button" >立即购买</button>
                       </form>
-
                   </div>
            </div>
           </div>
@@ -199,7 +204,6 @@ export default {
                 code: e.detail.formId,
                 times: 3
             })
-
             this.$router.push({name:'check'})
         }
     }

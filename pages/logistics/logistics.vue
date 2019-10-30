@@ -135,7 +135,7 @@
 	background:rgba(255,255,255,1);
 	border-radius:20rpx;
 	margin: 0 auto;
-	margin-top: 40rpx;
+	margin-top: 20rpx;
 	padding-top: 27rpx;
 	padding-left: 32rpx;
 	display: flex;
@@ -203,7 +203,7 @@
 			.tops{
 				font-size: 28rpx;
 				color: #F43131;
-				height: 30rpx;
+				// height: 30rpx;
 				line-height: 30rpx;
 			}
 			.bottoms{

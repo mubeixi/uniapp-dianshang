@@ -46,6 +46,7 @@
 	import {getSkinConfig} from "../../common/fetch";
 
 	import {pageMixin} from "../../common/mixin";
+	import {error} from "../../common";
 
 	export default {
 		mixins:[pageMixin],
@@ -61,6 +62,10 @@
 			BaseComponent,SwiperComponent,NavComponent,VideoComponent,HrComponent,SpaceComponent,
 			TitleComponent,TextComponent,SearchComponent,NoticeComponent,CouponComponent,
 			GoodsComponent,CubeComponent,TabComponent
+		},
+		onShow(){
+			//error('我爱中华人民共和国')
+
 		},
 		onLoad() {
 
