@@ -9,12 +9,12 @@
 				<view class="cardInfo" @click="change(item)" v-if="item.Method_Type=='bank_card'||item.Method_Type=='alipay'">
 					{{item.Method_Name}} （{{item.Account_Val}}）
 					<image src="/static/fenxiao/xuanzhong.png" v-if="User_Method_ID==item.User_Method_ID&&!isShow"></image>
-					<image @click="del(item)" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAeCAYAAADZ7LXbAAAEj0lEQVRIS+2WS2xUVRjH/985tzPTOw9aUohKk4Ip0DZ0ypSFC9EdMaIJEhBJfCzUEI3xRQhsTDRuxKWRRBcoLExEMakSfGx9LIyBTmcgJCqGkZQ2UjqlnWHuPO49f3PuTBWlTaDuDGd17/3O/X7f+Z/XX7BAI+BUMpktJPcS2CQikfluAvD6Xwj4AEYFeMdV6ms5fbrx75SyEKSUyawQ8hCAbRCZI1kUEQNAbAFCagsjIBBJAUgK8A0bjT2Js2f/uClIZWholVHqSwCrYMx+x5hvKUIhpa6UE3UcVavXYd+V42w2Im8JcEkFwUNuPj9+A2Rq/fpkVyKhbGAGQKfjsF6p3NXQ+ritUoJge7VSOS/LloWjtvH5JMXpacRct5dajwCYbfP9XRHXnZjxfelsdZryvECuZTJvAugItbB6k4GILCOwjWRUgC8AXIZSCmRTXrGqwQoWKHJlADwiIjXbl+QsRKyctpMd/WUpZzLjIFNoah6msMlExJYsAvgEmrF5yHUgAVQ4TzZK+q0C5ouwsUkLOShkiiJe+C8ZMyK26kA1K9b283wF1+sdatxcbYGxBYhoRRqKVFu5ogCuyHRvbyqSTEZF5E40GjS12mTSde2yXFqrVnU5Gr0jorWuk5PVSqUaalweHk6DfJdkQGOeT+XzPy+NAHj9/T1BLPY+gDiAFxPZbC6ElDKZ+wX4REhfyB1uLvfTUiG14eH+ujEnBYhrkV3t2ex3IWRuaGizUuqYnWQAO+PZ7KklQwYH+xqOc8KORBvzWHsu98M/IAB8aUE4MBApt7WtFa11vFj8BYVCvdTX1xlx3c6oXabZ7DRWr47Uli/vpjF+TOtL9kipDQ721R3nRDiSxSA+sLMjmz1VSae7jdYfCpDU5FNTV66Md3R1Pa2AJynyeaVWO+TGYncL+Z49dqrkc1253KW5wcE+uVmIl06vCbT+CmSS5AMJslDR+gDJV0TkaLVUes1x3QGt9QiBq04QbG3P5y/cGmTjxtWByEl7+NGYrdfIQlKpfQReBnA07nmve7FYv1FqBORMA3i4c2ys8J8hcaX2CfASRI7GK5U3bkP8+dXlLTAnt+W6Ycf/D+X6e8cnaMyD14ALSa0PgHwVIkduecd7Q0ObA6WOhQekyI746OjpmUymJwJ8TCDORmN3qVj8PbVy5QsU2QPy06rnHXSj0bXU+gjJOadef7z93LmLi+/4dPo+pbWF1Bvk9s6xsbGJTZvcVBDcK0CkWi5/v/z8+fJsOt0TVapHyIloLvdbsbc37iaTmQbZmL56dXRNoVCtDg/3+sactE6Hvr87eeZM8z6ZTafv0Up9Zk2ACoJdbj7/Y+vytnFrJha64he8ckobNvSrtrYTJNuVMTttrhDS2njHAQwAOExyJBApt7XS+MYo+2wNnr3VnKbhkNCPtuyRI8KAjAiwRUT2AvjVD4JHO/L5CyGE3d3t3ooVzxpyvwAdFClZtwKxg7jJRutaIRSxlrVE4O3E1NRhGR/3/koyt25dl4rHnwH5BIEetYgNWgxp7ZE1cwAuGpGPBPggmc1O2f5/AvPcqK1wakZUAAAAAElFTkSuQmCC" class="del" v-else-if="isShow" ></image>
+					<image src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAeCAYAAADZ7LXbAAAEj0lEQVRIS+2WS2xUVRjH/985tzPTOw9aUohKk4Ip0DZ0ypSFC9EdMaIJEhBJfCzUEI3xRQhsTDRuxKWRRBcoLExEMakSfGx9LIyBTmcgJCqGkZQ2UjqlnWHuPO49f3PuTBWlTaDuDGd17/3O/X7f+Z/XX7BAI+BUMpktJPcS2CQikfluAvD6Xwj4AEYFeMdV6ms5fbrx75SyEKSUyawQ8hCAbRCZI1kUEQNAbAFCagsjIBBJAUgK8A0bjT2Js2f/uClIZWholVHqSwCrYMx+x5hvKUIhpa6UE3UcVavXYd+V42w2Im8JcEkFwUNuPj9+A2Rq/fpkVyKhbGAGQKfjsF6p3NXQ+ritUoJge7VSOS/LloWjtvH5JMXpacRct5dajwCYbfP9XRHXnZjxfelsdZryvECuZTJvAugItbB6k4GILCOwjWRUgC8AXIZSCmRTXrGqwQoWKHJlADwiIjXbl+QsRKyctpMd/WUpZzLjIFNoah6msMlExJYsAvgEmrF5yHUgAVQ4TzZK+q0C5ouwsUkLOShkiiJe+C8ZMyK26kA1K9b283wF1+sdatxcbYGxBYhoRRqKVFu5ogCuyHRvbyqSTEZF5E40GjS12mTSde2yXFqrVnU5Gr0jorWuk5PVSqUaalweHk6DfJdkQGOeT+XzPy+NAHj9/T1BLPY+gDiAFxPZbC6ElDKZ+wX4REhfyB1uLvfTUiG14eH+ujEnBYhrkV3t2ex3IWRuaGizUuqYnWQAO+PZ7KklQwYH+xqOc8KORBvzWHsu98M/IAB8aUE4MBApt7WtFa11vFj8BYVCvdTX1xlx3c6oXabZ7DRWr47Uli/vpjF+TOtL9kipDQ721R3nRDiSxSA+sLMjmz1VSae7jdYfCpDU5FNTV66Md3R1Pa2AJynyeaVWO+TGYncL+Z49dqrkc1253KW5wcE+uVmIl06vCbT+CmSS5AMJslDR+gDJV0TkaLVUes1x3QGt9QiBq04QbG3P5y/cGmTjxtWByEl7+NGYrdfIQlKpfQReBnA07nmve7FYv1FqBORMA3i4c2ys8J8hcaX2CfASRI7GK5U3bkP8+dXlLTAnt+W6Ycf/D+X6e8cnaMyD14ALSa0PgHwVIkduecd7Q0ObA6WOhQekyI746OjpmUymJwJ8TCDORmN3qVj8PbVy5QsU2QPy06rnHXSj0bXU+gjJOadef7z93LmLi+/4dPo+pbWF1Bvk9s6xsbGJTZvcVBDcK0CkWi5/v/z8+fJsOt0TVapHyIloLvdbsbc37iaTmQbZmL56dXRNoVCtDg/3+sactE6Hvr87eeZM8z6ZTafv0Up9Zk2ACoJdbj7/Y+vytnFrJha64he8ckobNvSrtrYTJNuVMTttrhDS2njHAQwAOExyJBApt7XS+MYo+2wNnr3VnKbhkNCPtuyRI8KAjAiwRUT2AvjVD4JHO/L5CyGE3d3t3ooVzxpyvwAdFClZtwKxg7jJRutaIRSxlrVE4O3E1NRhGR/3/koyt25dl4rHnwH5BIEetYgNWgxp7ZE1cwAuGpGPBPggmc1O2f5/AvPcqK1wakZUAAAAAElFTkSuQmCC" class="del" v-else-if="isShow" @click="del(item)"></image>
 				</view>
 				<view class="cardInfo" @click="change(item)" v-else>
 					{{item.Method_Name}}
 					<image src="/static/fenxiao/xuanzhong.png" v-if="User_Method_ID==item.User_Method_ID&&!isShow"></image>
-					<image @click="del(item)" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAeCAYAAADZ7LXbAAAEj0lEQVRIS+2WS2xUVRjH/985tzPTOw9aUohKk4Ip0DZ0ypSFC9EdMaIJEhBJfCzUEI3xRQhsTDRuxKWRRBcoLExEMakSfGx9LIyBTmcgJCqGkZQ2UjqlnWHuPO49f3PuTBWlTaDuDGd17/3O/X7f+Z/XX7BAI+BUMpktJPcS2CQikfluAvD6Xwj4AEYFeMdV6ms5fbrx75SyEKSUyawQ8hCAbRCZI1kUEQNAbAFCagsjIBBJAUgK8A0bjT2Js2f/uClIZWholVHqSwCrYMx+x5hvKUIhpa6UE3UcVavXYd+V42w2Im8JcEkFwUNuPj9+A2Rq/fpkVyKhbGAGQKfjsF6p3NXQ+ritUoJge7VSOS/LloWjtvH5JMXpacRct5dajwCYbfP9XRHXnZjxfelsdZryvECuZTJvAugItbB6k4GILCOwjWRUgC8AXIZSCmRTXrGqwQoWKHJlADwiIjXbl+QsRKyctpMd/WUpZzLjIFNoah6msMlExJYsAvgEmrF5yHUgAVQ4TzZK+q0C5ouwsUkLOShkiiJe+C8ZMyK26kA1K9b283wF1+sdatxcbYGxBYhoRRqKVFu5ogCuyHRvbyqSTEZF5E40GjS12mTSde2yXFqrVnU5Gr0jorWuk5PVSqUaalweHk6DfJdkQGOeT+XzPy+NAHj9/T1BLPY+gDiAFxPZbC6ElDKZ+wX4REhfyB1uLvfTUiG14eH+ujEnBYhrkV3t2ex3IWRuaGizUuqYnWQAO+PZ7KklQwYH+xqOc8KORBvzWHsu98M/IAB8aUE4MBApt7WtFa11vFj8BYVCvdTX1xlx3c6oXabZ7DRWr47Uli/vpjF+TOtL9kipDQ721R3nRDiSxSA+sLMjmz1VSae7jdYfCpDU5FNTV66Md3R1Pa2AJynyeaVWO+TGYncL+Z49dqrkc1253KW5wcE+uVmIl06vCbT+CmSS5AMJslDR+gDJV0TkaLVUes1x3QGt9QiBq04QbG3P5y/cGmTjxtWByEl7+NGYrdfIQlKpfQReBnA07nmve7FYv1FqBORMA3i4c2ys8J8hcaX2CfASRI7GK5U3bkP8+dXlLTAnt+W6Ycf/D+X6e8cnaMyD14ALSa0PgHwVIkduecd7Q0ObA6WOhQekyI746OjpmUymJwJ8TCDORmN3qVj8PbVy5QsU2QPy06rnHXSj0bXU+gjJOadef7z93LmLi+/4dPo+pbWF1Bvk9s6xsbGJTZvcVBDcK0CkWi5/v/z8+fJsOt0TVapHyIloLvdbsbc37iaTmQbZmL56dXRNoVCtDg/3+sactE6Hvr87eeZM8z6ZTafv0Up9Zk2ACoJdbj7/Y+vytnFrJha64he8ckobNvSrtrYTJNuVMTttrhDS2njHAQwAOExyJBApt7XS+MYo+2wNnr3VnKbhkNCPtuyRI8KAjAiwRUT2AvjVD4JHO/L5CyGE3d3t3ooVzxpyvwAdFClZtwKxg7jJRutaIRSxlrVE4O3E1NRhGR/3/koyt25dl4rHnwH5BIEetYgNWgxp7ZE1cwAuGpGPBPggmc1O2f5/AvPcqK1wakZUAAAAAElFTkSuQmCC" class="del" v-else-if="isShow"></image>
+					<image src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAeCAYAAADZ7LXbAAAEj0lEQVRIS+2WS2xUVRjH/985tzPTOw9aUohKk4Ip0DZ0ypSFC9EdMaIJEhBJfCzUEI3xRQhsTDRuxKWRRBcoLExEMakSfGx9LIyBTmcgJCqGkZQ2UjqlnWHuPO49f3PuTBWlTaDuDGd17/3O/X7f+Z/XX7BAI+BUMpktJPcS2CQikfluAvD6Xwj4AEYFeMdV6ms5fbrx75SyEKSUyawQ8hCAbRCZI1kUEQNAbAFCagsjIBBJAUgK8A0bjT2Js2f/uClIZWholVHqSwCrYMx+x5hvKUIhpa6UE3UcVavXYd+V42w2Im8JcEkFwUNuPj9+A2Rq/fpkVyKhbGAGQKfjsF6p3NXQ+ritUoJge7VSOS/LloWjtvH5JMXpacRct5dajwCYbfP9XRHXnZjxfelsdZryvECuZTJvAugItbB6k4GILCOwjWRUgC8AXIZSCmRTXrGqwQoWKHJlADwiIjXbl+QsRKyctpMd/WUpZzLjIFNoah6msMlExJYsAvgEmrF5yHUgAVQ4TzZK+q0C5ouwsUkLOShkiiJe+C8ZMyK26kA1K9b283wF1+sdatxcbYGxBYhoRRqKVFu5ogCuyHRvbyqSTEZF5E40GjS12mTSde2yXFqrVnU5Gr0jorWuk5PVSqUaalweHk6DfJdkQGOeT+XzPy+NAHj9/T1BLPY+gDiAFxPZbC6ElDKZ+wX4REhfyB1uLvfTUiG14eH+ujEnBYhrkV3t2ex3IWRuaGizUuqYnWQAO+PZ7KklQwYH+xqOc8KORBvzWHsu98M/IAB8aUE4MBApt7WtFa11vFj8BYVCvdTX1xlx3c6oXabZ7DRWr47Uli/vpjF+TOtL9kipDQ721R3nRDiSxSA+sLMjmz1VSae7jdYfCpDU5FNTV66Md3R1Pa2AJynyeaVWO+TGYncL+Z49dqrkc1253KW5wcE+uVmIl06vCbT+CmSS5AMJslDR+gDJV0TkaLVUes1x3QGt9QiBq04QbG3P5y/cGmTjxtWByEl7+NGYrdfIQlKpfQReBnA07nmve7FYv1FqBORMA3i4c2ys8J8hcaX2CfASRI7GK5U3bkP8+dXlLTAnt+W6Ycf/D+X6e8cnaMyD14ALSa0PgHwVIkduecd7Q0ObA6WOhQekyI746OjpmUymJwJ8TCDORmN3qVj8PbVy5QsU2QPy06rnHXSj0bXU+gjJOadef7z93LmLi+/4dPo+pbWF1Bvk9s6xsbGJTZvcVBDcK0CkWi5/v/z8+fJsOt0TVapHyIloLvdbsbc37iaTmQbZmL56dXRNoVCtDg/3+sactE6Hvr87eeZM8z6ZTafv0Up9Zk2ACoJdbj7/Y+vytnFrJha64he8ckobNvSrtrYTJNuVMTttrhDS2njHAQwAOExyJBApt7XS+MYo+2wNnr3VnKbhkNCPtuyRI8KAjAiwRUT2AvjVD4JHO/L5CyGE3d3t3ooVzxpyvwAdFClZtwKxg7jJRutaIRSxlrVE4O3E1NRhGR/3/koyt25dl4rHnwH5BIEetYgNWgxp7ZE1cwAuGpGPBPggmc1O2f5/AvPcqK1wakZUAAAAAElFTkSuQmCC" class="del" v-else-if="isShow" @click="del(item)"></image>
 				</view>
 			</block>
 		</view>
@@ -63,18 +63,14 @@
 				}
 				uni.showModal({
 				    title: '确定要删除吗？',
-					cancelColor:'#000000',
-					confirmColor:"#000000",
-				    content: '',
+				    content: ' ',
 				    success: function (res) {
 				        if (res.confirm) {
 				           delUserWithdrawMethod(data).then(res=>{
 								uni.showToast({
 									title:res.msg
 								})
-								setTimeout(function(){
-									that.getUserWithdrawMethod();
-								},2000)
+								that.getUserWithdrawMethod();
 				           }).catch(e=>{
 				           	console.log(e)
 				           })
@@ -92,12 +88,10 @@
 			//选中提现方式
 			change(item){
 				if(this.isShow){
+					this.del(item);
 					return;
 				}
 				this.User_Method_ID=item.User_Method_ID;
-				// uni.navigateTo({
-				// 	url:'../withdrawal/withdrawal?User_Method_ID='+this.User_Method_ID
-				// })
 				this.$vm.$emit('fires',this.User_Method_ID)
 				//返回上一页
 				uni.navigateBack({
