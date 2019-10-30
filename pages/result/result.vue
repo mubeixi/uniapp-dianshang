@@ -2,11 +2,18 @@
   <div class="bd" @click="closeShow">
 	  <!-- #ifdef APP-PLUS -->
 	  <!-- 这里是状态栏 -->
-	  <view class="status_bar" ></view>
+	  <!-- <view class="status_bar" ></view> -->
 	  <!-- #endif -->
     <div class="top">
-        <image src="../../static/left.png" class="back" @click="goBack"></image>
+       <!-- #ifndef APP-PLUS -->
+       <!-- <image src="../../static/left.png" class="back" @click="goBack"></image>
 		<input type="text" v-model="inputValue" class="search" @confirm="success"  @click="goSearch" disabled/>
+		<div class="clear" v-if="inputValue">
+			<icon type="clear" class="clears" size="37rpx" @click="close"></icon>
+		</div> -->
+       <!-- #endif -->
+
+		<input type="text" v-model="inputValue" class="searchs" @confirm="success"  @click="goSearch" disabled/>
 		<div class="clear" v-if="inputValue">
 			<icon type="clear" class="clears" size="37rpx" @click="close"></icon>
 		</div>
@@ -361,6 +368,16 @@ export default {
 			font-size: 26rpx;
 			color: #333;
 			margin-left: 41rpx;
+			box-sizing: border-box;
+		}
+		.searchs{
+			width: 710rpx;
+			height: 65rpx;
+			line-height: 65rpx;
+			background: #F4F4F4;
+			padding-left: 39rpx;
+			font-size: 26rpx;
+			color: #333;
 			box-sizing: border-box;
 		}
 		.clear {

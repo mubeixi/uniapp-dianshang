@@ -20,10 +20,10 @@
                       <span class="span">
                         <span>￥</span>{{item.Products_PriceX}}
                       </span>
+
                       <form report-submit @submit="buy">
                           <button formType="submit" class="button" >立即购买</button>
                       </form>
-
                   </div>
            </div>
           </div>
@@ -199,7 +199,6 @@ export default {
                 code: e.detail.formId,
                 times: 3
             })
-
             this.$router.push({name:'check'})
         }
     }
