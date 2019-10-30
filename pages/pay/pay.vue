@@ -1,8 +1,5 @@
 <template>
 	<div>
-		<!-- #ifdef APP-PLUS -->
-		<view class="status_bar" style="background:white;position: fixed;top: 0;z-index: 22"><!-- 这里是状态栏 --></view>
-		<!-- #endif -->
 		<div class="zhezhao" v-if="password_input">
 			<div class="input-wrap">
 				<div>请输入余额支付密码</div>

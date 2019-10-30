@@ -8,7 +8,6 @@ export const setUserInfo = ({commit}, data) => {
 
 export const getInitData = async ({commit, state}) => {
 
-  // console.log('bbbbbbbbbbbbbb')
   let data = state.initData
   if (data) return data;
 

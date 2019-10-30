@@ -12,23 +12,23 @@
 					</view>
 					<view class="times">
 						<image src="/static/check/time.png"></image>
-						{{item.Gift_CreateTime}}
+						{{item.Orders_CreateTime | formatTime}}
 					</view>
 				</view>
 				<view class="last">
-					<image :src="item.Gift_ImgPath" ></image>
+					<image :src="item.Gift_Info.Gift_ImgPath" ></image>
 					<view class="myRight">
 						<view class="titles">
 							<view class="leftM">
-								{{item.Gift_Name}}
+								{{item.Gift_Info.Gift_Name}}
 							</view>
-							<view class="rightM">
-								未发货
+							<view class="rightM" :class="[(item.Orders_Status == 2 || item.Orders_Status == 3)? 'payed': '',item.Orders_Status == 4 ? 'complated': '','rightM']">
+								{{item.Orders_Status|status_desc}}
 							</view>
 						</view>
 						<view class="rty">
 							<image src="/static/check/ji.png" mode=""></image>
-							<text>{{item.Gift_Integral}}</text>
+							<text>{{item.Gift_Info.Gift_Integral}}</text>
 						</view>
 					</view>
 				</view>
@@ -42,6 +42,7 @@
 
 <script>
 	import {jifenProdOrder} from '../../common/fetch.js'
+	import {formatNumber} from '../../common/tool.js'
 	export default {
 		data() {
 			return {
@@ -52,15 +53,34 @@
 		onShow(){
 			this.get_jifen_order();
 		},
+		filters: {
+			status_desc(status){
+				switch (status) {
+					case 1 : return '待支付' ;break;
+					case 2 : return '已付款' ;break;
+					case 3 : return '已发货' ; break;
+					case 4 : return '已完成' ;break;
+				}
+			},
+			formatTime(date) {
+				const year = new Date(date*1000).getFullYear()
+				const month = new Date(date*1000).getMonth() + 1
+				const day = new Date(date*1000).getDate()
+				const hour = new Date(date*1000).getHours()
+				const minute = new Date(date*1000).getMinutes()
+				const second = new Date(date*1000).getSeconds()
+				return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':')
+			}
+		},
 		methods: {
 			get_jifen_order(){
 				jifenProdOrder({errtip: false}).then(res=>{
 					console.log(res)
-					// let old = this.prod_list;
-					// this.prod_list = old.concat(res.data);
-					// if(this.prod_list.length < res.totalCount) {
-					// 	this.hasMore = true;
-					// }
+					let old = this.prod_list;
+					this.prod_list = old.concat(res.data);
+					if(this.prod_list.length < res.totalCount) {
+						this.hasMore = true;
+					}
 				},err=>{
 					uni.showToast({
 						title: err.msg,
@@ -126,6 +146,7 @@ view{
 			padding-top: 16rpx;
 			.rty{
 				margin-top: 30rpx;
+				text-align: left;
 				image{
 					width: 16rpx;
 					height: 17rpx;
@@ -144,7 +165,6 @@ view{
 				justify-content: space-between;
 				.leftM{
 					height: 27rpx;
-					width: 300rpx;
 					overflow: hidden;
 					font-size: 28rpx;
 					line-height: 27rpx;
@@ -161,6 +181,12 @@ view{
 					background-color: #cdcdcd;//#FF5C33已发货颜色  #f8e9e8已完成颜色
 					border-top-left-radius: 114rpx;
 					border-bottom-left-radius: 114rpx;
+				}
+				.payed {
+					background-color: #FF5C33
+				}
+				.complated {
+					background-color: #f8e9e8;
 				}
 			}
 		}
