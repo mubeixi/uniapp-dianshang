@@ -28,6 +28,7 @@
 import {mapGetters,mapActions} from 'vuex';
 import {toast,error} from "../common";
 import {orderPay,add_template_code} from "../common/fetch";
+import {isWeiXin,ls} from "../common/tool";
 // #ifdef H5
 import {WX_JSSDK_INIT} from "../common/mixin";
 // #endif
@@ -98,6 +99,8 @@ export default {
     },
     data(){
         return {
+            timer: null,
+            iftoggle: false,
             direction:'top',//强制在底部
             ifshow: false, // 是否展示,
             translateValue: -100, // 位移距离
@@ -105,37 +108,38 @@ export default {
             password_input:false,
             totalMoney: 0, // 应支付金额
             pay_type: 'remainder_pay', // remainder_pay余额支付，余额补差    wechat 微信支付  ali 支付宝支付
-
-
         }
     },
     computed:{
         _translate() {
             const transformObj = {
                 'top': `transform:translateY(${-this.translateValue}%)`,
-                'bottom': `transform:translateY(${this.translateValue}%)`,
-                'left': `transform:translateX(${-this.translateValue}%)`,
-                'right': `transform:translateX(${this.translateValue}%)`
+                // 'bottom': `transform:translateY(${this.translateValue}%)`,
+                // 'left': `transform:translateX(${-this.translateValue}%)`,
+                // 'right': `transform:translateX(${this.translateValue}%)`
             };
             return transformObj[this.direction]
         },
         _location() {
             const positionValue = {
                 'top': 'bottom:0px;width:100%;',
-                'bottom': 'top:0px;width:100%;',
-                'left': 'right:0px;height:100%;',
-                'right': 'left:0px;height:100%;',
+                // 'bottom': 'top:0px;width:100%;',
+                // 'left': 'right:0px;height:100%;',
+                // 'right': 'left:0px;height:100%;',
             };
             return positionValue[this.direction] + this._translate;
         },
         ...mapGetters(['initData','userInfo'])
     },
     created(){
+        let self = this;
         //自动打开
         if(this.isOpen){
-          this.show();
+          setTimeout(function(){
+              self.show();
+          },100)
         }
-				console.log(this.use_money)
+        //console.log(this.use_money)
     },
     methods:{
         // 取消输入支付密码
@@ -154,12 +158,36 @@ export default {
         show(events) {
             console.log('唤起支付')
             this.ifshow = true;
-            this.translateValue = 0;
+
+            let _open = setTimeout(() => {
+                this.translateValue = 0;
+                _open = null;
+            }, 100)
+
+            let _toggle = setTimeout(() => {
+                this.iftoggle = true;
+                _toggle = null;
+            }, 300);
+
+            //this.translateValue = 0;
 
         },
         close() {
-            this.ifshow = false;
+            // this.ifshow = false;
+            // this.translateValue = -100;
+
+            if (this.timer !== null || !this.iftoggle) {
+                return;
+            }
             this.translateValue = -100;
+            this.timer = setTimeout(() => {
+                this.ifshow = false;
+                this.timer = null;
+                this.iftoggle = false;
+                //this.$emit('closeCallBack', null);
+                //this.$emit('change',false)
+            }, 300);
+
         },
         ableClose() {
             if (this.autoClose) {
@@ -307,6 +335,8 @@ export default {
             orderPay(payConf).then(res => {
                 console.log(res);
 
+                console.log(isWeiXin())
+
                 // #ifdef H5
 
                 // 微信h5
@@ -321,16 +351,17 @@ export default {
 
                     //公众号麻烦一点
                     if(isWeiXin()){
+
                         let users_id = ls.get('users_id');
 
                         let fromurl = res.data.arg;//encodeURIComponent(res.data.arg);
-                        let origin = location.origin;
+                        //let origin = location.origin;
 
                         fromurl = fromurl.replace(/openapi.alipay.com/,'wangjing666')
-                        console.log(fromurl);
 
-                        let str = origin+`/fre/pages/pay/wx/wx?users_id=${users_id}&formurl=`+encodeURIComponent(fromurl);
-                        let url = str;
+
+                        // let str = origin+`/fre/pages/pay/wx/wx?users_id=${users_id}&formurl=`+encodeURIComponent(fromurl);
+                        // let url = str;
 
                         uni.navigateTo({
                             url:`/pages/pay/wx/wx?users_id=${users_id}&formurl=`+encodeURIComponent(fromurl)

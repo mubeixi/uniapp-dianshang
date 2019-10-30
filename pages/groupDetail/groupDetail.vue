@@ -226,7 +226,7 @@
 	<div class="fixed">
 		<div class="leftss">
 			<div class="first" @click="goHome">
-				<div><image class="img" src="/static/detail/home.png" ></image></div>
+				<div><image class="img" src="/static/tabbar/home.png" ></image></div>
 				<div class="txt">首页</div>
 			</div>
 			<div class="first" @click="collect">
@@ -242,31 +242,33 @@
 			</div>
 		</div>
 		<div class="rightss">
+			<form class="form" report-submit @submit="myPay">
 			<div class="dan bTitle">
 				<div class="danLeft">
 					<span class="bF">¥</span><span class="bS">{{product.Products_PriceX}}</span>
 				</div>
-				<form report-submit @submit="myPay">
+				<button formType="submit" class="danRight">
+					单独购买
+				</button>
 
-					<button formType="submit" class="danRight">
-						单独购买
-					</button>
-				</form>
 
 			</div>
+			</form>
+			<form  class="form" report-submit @submit="myPin">
 			<div class="tuan bTitle">
-				<div>
+				<div class="danLeft">
 					<span class="bF">¥</span><span class="bS">{{product.pintuan_pricex}}</span>
 				</div>
-				<form report-submit @submit="myPin">
 
-					<button formType="submit" class="danRight">
-						一键开团
-					</button>
-				</form>
+
+			<button formType="submit" class="danRight">
+				一键开团
+			</button>
+
 
 
 			</div>
+			</form>
 		</div>
 	</div>
   </div>
@@ -1010,11 +1012,11 @@ export default {
 <style scoped lang="scss">
 // 轮播样式
 .uni-padding-wrap{
-	width: 750rpx;
-	height: 750rpx;
+	width: 750upx;
+	height: 750upx;
 	.page-section,.page-section-spacing,.swiper,.uni-swiper-wrapper,.uni-swiper-slides{
-			width: 750rpx;
-			height: 750rpx;
+			width: 750upx;
+			height: 750upx;
 			img{
 				width: 100%;
 				height: 100%;
@@ -1043,11 +1045,11 @@ export default {
     .ticks,.shareinfo {
 		background: #fff;
 		width: 100%;
-		padding: 30rpx 0 60rpx;
+		padding: 30upx 0 60upx;
 		color: #333;
 		z-index: 100;
-		border-top-left-radius: 10rpx;
-		border-top-right-radius: 10rpx;
+		border-top-left-radius: 10upx;
+		border-top-right-radius: 10upx;
     }
     .t_title {
         text-align:center;
@@ -1137,7 +1139,7 @@ export default {
     }
     /* 产品描述部分 start */
     .section1 {
-       height: 100rpx;
+       height: 100upx;
        background-color: #fff;
     }
     .price {
@@ -1174,11 +1176,11 @@ export default {
     /* 领券start */
     .section2 {
 		position: relative;
-        padding-left: 26rpx;
-		padding-top: 20rpx;
-		padding-right: 0rpx;
-		padding-bottom: 20rpx;
-        font-size: 22rpx;
+        padding-left: 26upx;
+		padding-top: 20upx;
+		padding-right: 0upx;
+		padding-bottom: 20upx;
+        font-size: 22upx;
         // display: flex;
         // align-items: center;
         // justify-content: space-between;
@@ -1193,20 +1195,20 @@ export default {
     .right {
         display: flex;
         align-items: center;
-        font-size: 24rpx;
+        font-size: 24upx;
 		color: #666666;
     }
     .right .img{
-        width: 19rpx;
-        height: 30rpx;
-        margin-left: 20rpx;
+        width: 19upx;
+        height: 30upx;
+        margin-left: 20upx;
     }
     /* 领券 end */
     /* 包邮信息等 start */
     .section3 {
         display: flex;
         flex-wrap: wrap;
-        font-size: 22rpx;
+        font-size: 22upx;
         padding: 15px 10px;
         border-bottom: 17px solid #f8f8f8;
         justify-content: space-around;
@@ -1218,14 +1220,14 @@ export default {
         margin-right: 10px;
     }
     .section3 img {
-        width: 30rpx;
-		height: 30rpx;
+        width: 30upx;
+		height: 30upx;
         margin-right: 5px;
     }
     /* 包邮信息等 end */
     /* 评价 start */
     .comment {
-        padding: 30rpx 26rpx;
+        padding: 30upx 26upx;
         border-bottom: 10px solid #f8f8f8;
         background-color: #fff;
     }
@@ -1234,7 +1236,7 @@ export default {
         justify-content: space-between;
     }
     .c_title>span {
-        font-size: 30rpx;
+        font-size: 30upx;
         color: #333;
     }
     .c_content {
@@ -1247,39 +1249,39 @@ export default {
         color: #333;
     }
     .c_content_title>img {
-        width: 70rpx;
-        height: 70rpx;
-        margin-right: 20rpx;
+        width: 70upx;
+        height: 70upx;
+        margin-right: 20upx;
     }
     .user_name {
         flex: 1;
-		font-size: 30rpx;
+		font-size: 30upx;
     }
     .c_time {
-        font-size: 26rpx;
+        font-size: 26upx;
         color: #777;
     }
     .c_content_msg {
-        font-size: 24rpx;
+        font-size: 24upx;
         color: #333;
         line-height: 18px;
         padding: 9px 0;
         border-bottom: 1px solid #f8f8f8;
     }
     .c_content_img img {
-        width: 142rpx;
-        height: 142rpx;
-        margin-right: 20rpx;
+        width: 142upx;
+        height: 142upx;
+        margin-right: 20upx;
     }
     /* 评价 end */
     /* 商品详情 start */
     // .pro_detail {
-    //     padding: 26rpx 26rpx;
+    //     padding: 26upx 26upx;
     //     background-color: #fff;
     // }
     // .p_detail_title {
     //     color: #333;
-    //     font-size: 30rpx;
+    //     font-size: 30upx;
     // }
 
 	.pro_detail {
@@ -1292,9 +1294,9 @@ export default {
 		}
 	}
 	.p_detail_title {
-		padding: 30rpx 20rpx;
+		padding: 30upx 20upx;
 	    color: #333;
-	    font-size: 30rpx;
+	    font-size: 30upx;
 
 	}
     /* 商品详情 end */
@@ -1308,8 +1310,8 @@ export default {
     }
     .section1{
         display: flex;
-        padding-left: 15rpx;
-		padding-right: 15rpx;
+        padding-left: 15upx;
+		padding-right: 15upx;
         align-items: center;
         justify-content: space-between;
         background-color: #F43131;
@@ -1317,15 +1319,15 @@ export default {
         .leftss{
             font-size: 0;
             span.pricef{
-                font-size: 36rpx;
+                font-size: 36upx;
             }
             span.prices{
-                font-size: 50rpx;
+                font-size: 50upx;
                 margin-left: 4px;
                 font-weight: 500;
             }
             span.pricet{
-                font-size: 28rpx;
+                font-size: 28upx;
                 margin-left: 6px;
                 color: #ddd;
                 text-decoration:line-through;
@@ -1334,8 +1336,8 @@ export default {
         .rightss{
 			.countdown{
 				color:#ddd;
-				font-size: 24rpx;
-				line-height: 32rpx;
+				font-size: 24upx;
+				line-height: 32upx;
 				overflow: hidden;
 				margin-bottom: 4px;
 
@@ -1343,8 +1345,8 @@ export default {
 					margin: 0 2px;
 					padding: 0 2px;
 					//width:23px;
-					height:32rpx;
-					line-height: 32rpx;
+					height:32upx;
+					line-height: 32upx;
 					text-align: center;
 					background:linear-gradient(0deg,rgba(12,12,12,1) 0%,rgba(197,195,195,1) 100%);
 					box-shadow:0px 1px 1px 0px rgba(4,0,0,0.5), 0px 1px 1px 0px rgba(255,255,255,0.65);
@@ -1353,16 +1355,16 @@ export default {
 				}
             }
 			.haha{
-				font-size: 24rpx;
-				line-height: 32rpx;
+				font-size: 24upx;
+				line-height: 32upx;
 			}
         }
     }
     .titles{
 		position: relative;
-		padding-right: 150rpx;
+		padding-right: 150upx;
         .title{
-			font-size:28rpx;
+			font-size:28upx;
 			font-family:PingFang SC;
 			font-weight:bold;
 			color:rgba(51,51,51,1);
@@ -1386,7 +1388,7 @@ export default {
     }
     .titlet{
         margin-top: 12px;
-		padding-right: 36rpx;
+		padding-right: 36upx;
         font-size:12px;
         font-family:PingFang SC;
         font-weight:500;
@@ -1397,20 +1399,20 @@ export default {
         margin-bottom: 17px;
         background-color: #fff;
         .pinTitle{
-            font-size:30rpx;
+            font-size:30upx;
             font-family:PingFang SC;
             font-weight:500;
             color:rgba(51,51,51,1);
             line-height:20px;
-            padding:26rpx;
+            padding:26upx;
         }
         .pinCenter{
-                padding: 15rpx 25rpx;
+                padding: 15upx 25upx;
                 display: flex;
                 align-items: center;
                 .image{
-                    width: 100rpx;
-                    height: 100rpx;
+                    width: 100upx;
+                    height: 100upx;
                     border-radius: 50%;
                     overflow: hidden;
                     .img{
@@ -1419,16 +1421,16 @@ export default {
                     }
                 }
                 .info{
-					margin-left: 21rpx;
+					margin-left: 21upx;
                     .nick{
-                        font-size:26rpx;
+                        font-size:26upx;
                         font-family:PingFang SC;
                         font-weight:500;
                         color:rgba(51,51,51,1);
                         line-height:20px;
                     }
                     .message{
-                        font-size:24rpx;
+                        font-size:24upx;
                         font-family:PingFang SC;
                         font-weight:500;
                         color:rgba(110,110,110,1);
@@ -1436,20 +1438,20 @@ export default {
                     }
                 }
                 .cantuan{
-                    width:119rpx;
-                    height:48rpx;
+                    width:119upx;
+                    height:48upx;
                     border:1px solid rgba(244,49,49,1);
                     border-radius:3px;
                     color:  rgba(244,49,49,1);
                     text-align: center;
-                    line-height: 48rpx;
-                    font-size: 26rpx;
+                    line-height: 48upx;
+                    font-size: 26upx;
                     margin-left: auto;
                 }
         }
     }
 	.fixed{
-		height: 98rpx;
+		height: 98upx;
 		display: flex;
 		position: fixed;
 		bottom: 0;
@@ -1458,48 +1460,64 @@ export default {
 		z-index: 9999;
 		.leftss,.rightss{
 			width: 50%;
-			height: 98rpx;
+			height: 98upx;
 			display: flex;
 		}
 		.leftss{
 			.first{
 				width: 33.3%;
-				height: 98rpx;
+				height: 98upx;
 				text-align: center;
-				padding-top: 15rpx;
+				padding-top: 15upx;
 				.img{
-					width: 38rpx;
-					height: 38rpx;
+					width: 38upx;
+					height: 38upx;
 					display: block;
 					margin: 0 auto;
 				}
 				.txt{
-					font-size: 22rpx;
-					margin-top: 10rpx;
+					font-size: 22upx;
+					margin-top: 10upx;
 				}
 			}
 		}
 		.rightss{
+			display:flex;
+			.form{
+				flex:1;
+			}
 			.dan{
-				width: 50%;
+				/*width: 50%;*/
 				background-color: #FA6B27;
 			}
 			.tuan{
-				width: 50%;
+				/*width: 50%;*/
 				background-color: #F43131;
 			}
 			.bTitle{
+				height: 98upx;
+				overflow: hidden;
 				color: #fff;
 				text-align: center;
-				padding-top: 10rpx;
+				padding: 10upx 0;
+				box-sizing: border-box;
+				.danLeft{
+					height: 32upx;
+					//overflow: hidden;
+				}
 				.bF{
-					font-size: 24rpx;
+					font-size: 24upx;
+					line-height: 32upx;
 				}
 				.bS{
-					font-size: 32rpx;
+					font-size: 32upx;
+					line-height: 32upx;
+
 				}
 				.danRight{
-					font-size: 26rpx;
+					font-size: 26upx;
+					/*margin-top: 8upx;*/
+					/*padding-bottom: 10upx;*/
 					border-radius: 0;
 					border:none !important;
 					color: white;
@@ -1514,37 +1532,37 @@ export default {
 	}
 	//规格
 	.cartSku{
-		padding: 0rpx 10rpx;
+		padding: 0upx 10upx;
 		.cartTop{
 			position: relative;
 			display: flex;
-			padding-top: 20rpx;
+			padding-top: 20upx;
 			image{
-				width: 220rpx;
-				height: 220rpx;
+				width: 220upx;
+				height: 220upx;
 			}
 			.cartTitle{
-				margin-left: 20rpx;
-				font-size: 32rpx;
-				width: 420rpx;
+				margin-left: 20upx;
+				font-size: 32upx;
+				width: 420upx;
 				.cartTitles{
-					height: 80rpx;
+					height: 80upx;
 					overflow: hidden;
-					margin-top: 20rpx;
+					margin-top: 20upx;
 				}
 				.addInfo{
-					width: 450rpx;
-					margin-top: 70rpx;
+					width: 450upx;
+					margin-top: 70upx;
 					display: flex;
 					flex-flow: row;
 					justify-content: space-between;
 					align-items: flex-end;
 					.addPrice{
-						font-size: 42rpx;
+						font-size: 42upx;
 						color: #ff4200;
 					}
 					.proSale{
-						font-size: 24rpx;
+						font-size: 24upx;
 						color: #999;
 						justify-content: flex-end;
 					}
@@ -1552,64 +1570,64 @@ export default {
 			}
 		}
 		.cartCenter{
-			margin-top: 20rpx;
+			margin-top: 20upx;
 			.cartAttr{
 				display: flex;
-				padding: 15rpx 0rpx;
+				padding: 15upx 0upx;
 				.sku{
-					font-size: 28rpx;
-					height: 70rpx;
-					line-height: 70rpx;
-					width: 140rpx;
+					font-size: 28upx;
+					height: 70upx;
+					line-height: 70upx;
+					width: 140upx;
 				}
 				.skuValue{
 					display: flex;
 					div{
-						height: 70rpx;
-						line-height: 70rpx;
-						font-size: 28rpx;
-						border-radius: 10rpx;
+						height: 70upx;
+						line-height: 70upx;
+						font-size: 28upx;
+						border-radius: 10upx;
 						color: #000;
 						background-color: #fff;
-						padding-left: 20rpx;
-						padding-right: 20rpx;
-						margin-right: 20rpx;
+						padding-left: 20upx;
+						padding-right: 20upx;
+						margin-right: 20upx;
 						border: 1px solid #ccc;
 					}
 				}
 			}
 		}
 		.numBer{
-			margin-top: 20rpx;
+			margin-top: 20upx;
 			display: flex;
-			padding: 15rpx 0rpx;
+			padding: 15upx 0upx;
 			justify-content: space-between;
 			.numBers{
-				font-size: 28rpx;
-				height: 70rpx;
-				line-height: 70rpx;
-				width: 140rpx;
+				font-size: 28upx;
+				height: 70upx;
+				line-height: 70upx;
+				width: 140upx;
 			}
 			.inputNumber{
 				border: 1px solid #ccc;
-				border-radius: 6rpx;
-				height: 50rpx;
-				margin-right: 50rpx;
+				border-radius: 6upx;
+				height: 50upx;
+				margin-right: 50upx;
 				display: flex;
 				input{
 					color: black;
 					margin: 0 auto;
-					width: 80rpx;
-					height: 50rpx;
+					width: 80upx;
+					height: 50upx;
 					text-align: center;
-					font-size: 24rpx;
-					border-left: 2rpx solid #ccc;
-					border-right: 2rpx solid #ccc;
+					font-size: 24upx;
+					border-left: 2upx solid #ccc;
+					border-right: 2upx solid #ccc;
 				}
 				.clicks{
-					height: 50rpx;
-					line-height: 50rpx;
-					width: 60rpx;
+					height: 50upx;
+					line-height: 50upx;
+					width: 60upx;
 					text-align: center;
 				}
 			}
@@ -1617,13 +1635,13 @@ export default {
 	}
 	.cartSub{
 		width: 100%;
-		height: 90rpx;
+		height: 90upx;
 		background-color: #F43131;
 		font-size:20px;
-		line-height: 90rpx;
+		line-height: 90upx;
 		text-align: center;
 		color: #FFFFFF;
-		margin-top: 30rpx;
+		margin-top: 30upx;
 		border-radius: 0;
 		border:none;
 		&.disabled {
