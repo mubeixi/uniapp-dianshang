@@ -150,7 +150,7 @@
 				position: absolute;
 				bottom: 0rpx;
 				right: 0rpx;
-				height: 3rpx;
+				height: 4rpx;
 				width:132rpx;
 				background-color: #F43131;
 			}
