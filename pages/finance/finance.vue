@@ -15,7 +15,7 @@
 				股东
 			</view>
 		</view>
-		<view style="width: 100%;height: 105rpx;"></view>
+		<view style="width: 100%;height: 105rpx;" ></view>
 		<view class="order" v-for="(item,i) of pro " :key="i">
 			<view>
 				订单号：<text>{{item.Order_ID}}</text>
@@ -119,11 +119,13 @@
 
 <style lang="scss" scoped>
 .team{
-	background-color: #F8F8F8;
+	// background-color: #F8F8F8;
 	box-sizing: border-box;
 	.nav{
-		margin: 20rpx 70rpx;
-		height: 65rpx;
+		padding: 20rpx 70rpx;
+		height: 105rpx;
+		box-sizing: border-box;
+		width: 750rpx;
 		display: flex;
 		position: fixed;
 		background-color: #F8F8F8;

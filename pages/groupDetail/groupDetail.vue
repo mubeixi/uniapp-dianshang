@@ -1028,6 +1028,9 @@ export default {
         position: fixed;
         top: 10px;
         padding: 0 10px;
+    	/* #ifdef APP-PLUS */
+    	padding-top: var(--status-bar-height);
+    	/* #endif */
         display: flex;
         justify-content: space-between;
         z-index: 10;
