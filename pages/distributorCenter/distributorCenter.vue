@@ -217,6 +217,7 @@
 						进入商城
 					</view>
 				</block>
+			</block>	
 		</view>		
 		<popup-layer ref="popupLayer" :direction="'top'">
 			<div class="iMbx">
