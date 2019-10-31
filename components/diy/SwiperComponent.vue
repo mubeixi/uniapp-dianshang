@@ -1,7 +1,10 @@
 <template>
   <view class="swiper wrap fun-preview-swiper" :class="{single:swiper.value.list.length<2}">
 
-    <swiper style="height:375upx" class="swiper"
+    <div v-if="swiper.value.list.length==1" style="height:375upx" @click="go(swiper.value.list[0])">
+      <div class="cover-full" :style="{backgroundImage:'url('+domainFunc(swiper.value.list[0].img_src)+')'}"></div>
+    </div>
+    <swiper v-else style="height:375upx" class="swiper"
             indicator-color="rgba(255, 255, 255, .3)"
             indicator-active-color="rgba(255, 255, 255, .7)"
             :indicator-dots="swiper.value.list.length>1" :autoplay="swiper.config.autoplay" circular="true" :interval="swiper.config.interval|str2num" :duration="500">

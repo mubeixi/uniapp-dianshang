@@ -20,6 +20,10 @@
                 </div>
             </div>
         </view>
+
+        <view v-if="aliPayUrl" class="aliPayUrl">
+            <navigator :url="aliPayUrl"></navigator>
+        </view>
     </view>
 </template>
 
@@ -102,6 +106,7 @@ export default {
     data(){
         return {
             timer: null,
+            aliPayUrl:'',
             iftoggle: false,
             direction:'top',//强制在底部
             ifshow: false, // 是否展示,
@@ -454,7 +459,9 @@ export default {
                         let str = `/fre/pages/pay/wx/wx?users_id=${users_id}&formurl=`+encodeURIComponent(fromurl);
                         let url = location.origin + str;
                         console.log(url)
-                        location.href = url;
+
+                        this.aliPayUrl = url;
+                        //location.href = url;
 
                         // uni.navigateTo({
                         //     url:`/pages/pay/wx/wx?users_id=${users_id}&formurl=`+encodeURIComponent(fromurl)
