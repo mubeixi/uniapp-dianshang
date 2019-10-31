@@ -75,12 +75,19 @@ export const checkIsLogin = (redirect,tip) => {
         if (redirect) {
 
             if(!tip){
+
+				// #ifdef H5
+				ls.set('login_farward_url',location.href);
+				// #endif
                 uni.navigateTo({
                     url: '/pages/login/login'
                 })
                 return;
             }
             confirm({title: '提示', content: '该操作需要登录,请问是否登录?', confirmText: '去登录', cancelText: '暂不登录'}).then(() => {
+                // #ifdef H5
+                ls.set('login_farward_url',location.href);
+                // #endif
                 uni.navigateTo({
                     url: '/pages/login/login'
                 })

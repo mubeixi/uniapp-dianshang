@@ -3,7 +3,7 @@
 		<!-- #ifdef APP-PLUS -->
 		<view class="status_bar" style="background-color: #FF5C33;"><!-- 这里是状态栏 --></view>
 		<!-- #endif -->
-	
+
 		<!-- 	<page-title title="积分兑换" rightHidden="true" bgcolor="#FF5C33"></page-title> -->
 
 		<view class="top">
@@ -19,7 +19,7 @@
 				<view class="p-title">{{item.Gift_Name}}</view>
 				<view class="p-count">库存 {{item.Gift_Qty}}</view>
 				<view class="p-price">
-					<text>{{item.Gift_Integral}}</text> 
+					<text>{{item.Gift_Integral}}</text>
 					<view class="p-buy" :class="item.Gift_Qty==0 || (item.Gift_Integral > userInfo.User_Integral) ? 'nobuy' : ''" @click="exchange(item)">
 						{{item.Gift_Qty > 0 ? (item.Gift_Integral > userInfo.User_Integral ? '积分不足' : '立即兑换') : '已抢光'}}
 					</view>
@@ -32,7 +32,7 @@
 				<view class="btns">
 					<view class="cancel" @click="cancelPsw">取消</view>
 					<view class="confirm" @click="pswConfirm">确定</view>
-				</view>				
+				</view>
 			</view>
 		</view>
 	</view>
@@ -57,7 +57,7 @@
 		onShow(){
 			this.reset();
 			this.get_jifen_prod();
-			
+
 		},
 		onLoad(){
 			uni.getSystemInfo({
@@ -86,7 +86,7 @@
 						this.hasMore = true;
 					}
 				},err=>{
-					
+
 				})
 			},
 			gotoMyExchange(){
@@ -123,10 +123,10 @@
 					uni.showToast({
 						title: res.msg
 					})
-				})					
+				})
 			},
 			// 积分兑换
-			exchange(item){	
+			exchange(item){
 				// 判断是否可以兑换
 				if(item.Gift_Qty <=0) {
 					uni.showToast({
@@ -145,7 +145,7 @@
 				// 弹出密码输入框
 				// 如果不需要物流
 				if(item.Gift_Shipping == 0) {
-					this.psdInput = true;	
+					this.psdInput = true;
 				}else {
 					uni.navigateTo({
 						url: '../jifenCheck/jifenCheck?gift_id=' + item.Gift_ID
@@ -170,7 +170,7 @@
 			margin-left: -360rpx;
 			width: 720rpx;
 			height: 230rpx;
-			background: url(../../static/jifenduihuan/star.png) no-repeat left top;
+			background: url(http://new401.bafangka.com/static/client/jifenduihuan/star.png) no-repeat left top;
 			background-size: cover;
 			.t-title {
 				position: absolute;

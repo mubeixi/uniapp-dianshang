@@ -5,6 +5,32 @@
 	import {APP_USERS_ID,isDev} from "./common/env";
 	// #endif
 
+
+    // #ifdef APP-PLUS
+
+    // 获取客户端标识信息
+    var info = plus.push.getClientInfo();
+    console.log('device plus info ',info);
+
+
+    import {pushHandle} from "./common/push";
+
+    const  clickFn = (notify)=>{
+        console.log('click',notify)
+
+        pushHandle({type:'click',info:notify})
+
+    }
+
+    const  receiveFn = (notify)=>{
+
+        pushHandle({type:'receive',info:notify})
+    }
+    // #endif
+
+
+
+
     export default {
         //目前只有app端用到了应用的全局onLaunch
 		onLaunch: function(option) {
@@ -12,11 +38,17 @@
 			// #ifdef APP-PLUS
 
             //isDev && ls.clear()
-
 			ls.set('users_id',APP_USERS_ID);//app里面需要写死打包，不然办法
             // if(isDev){
 
             // }
+
+
+            //点击通知
+            plus.push.addEventListener( 'click', clickFn);
+
+            //收到通知
+            plus.push.addEventListener( 'receive', receiveFn);
 
 			// #endif
 

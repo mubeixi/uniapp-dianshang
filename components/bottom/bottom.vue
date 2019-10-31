@@ -3,21 +3,21 @@
 		<div class="leftss">
 			<div class="first">
 				<navigator url="/pages/index/index" open-type="switchTab" >
-					<div><image class='img' src="/static/tabbar/home.png" ></image></div>
+					<div><image class='img' src="http://new401.bafangka.com/static/client/tabbar/home.png" ></image></div>
 					<div class="txt">首页</div>
 				</navigator>
 			</div>
 
 			<div class="first" @click="collect">
 				<div>
-					<image class='img'  v-if="collected"  src="/static/tuan/xx.png" ></image>
-					<image class='img'  v-else src="/static/sc.png" ></image>
+					<image class='img'  v-if="collected"  src="http://new401.bafangka.com/static/client/tuan/xx.png" ></image>
+					<image class='img'  v-else src="http://new401.bafangka.com/static/client/sc.png" ></image>
 
 				</div>
 				<div class="txt">收藏</div>
 			</div>
 			<div class="first">
-				<div><image class='img'  src="/static/kf.png" ></image></div>
+				<div><image class='img'  src="http://new401.bafangka.com/static/client/kf.png" ></image></div>
 				<div class="txt">客服</div>
 			</div>
 		</div>
