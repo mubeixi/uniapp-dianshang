@@ -536,7 +536,7 @@
 				setTimeout(function() {
 
 					var pages = getCurrentPages();
-					console.log(pages)
+					console.log('pages is',pages)
 					var currPage = pages[pages.length - 1]; //当前页面
 					var prevPage = pages[pages.length - 2]; //上一个页面
 
@@ -544,9 +544,14 @@
 					if(pages.length<2){
 						// #ifdef H5
 						//hack navigateBack无效
-						history.back();
-						return;
+						// history.back();
+						// return;
 						// #endif
+
+						uni.switchTab({
+							url: '/pages/index/index'
+						})
+						return;
 
 					}
 
