@@ -2,19 +2,19 @@
 	<view class="boxSizing">
 		<view class="zhezhao" v-if="isShow">
 			<view class="zhezhaoView">
-				<image src="http://new401.bafangka.com/static/client/check/close.png" class="closeZ" @click="isShow=false"></image>
+				<image src="https://new401.bafangka.com/static/client/check/close.png" class="closeZ" @click="isShow=false"></image>
 				<view class="zhezhaoYue">
 					余额互转
 				</view>
 				<view class="zhezhaoCenter">
 					<view>
-						<image src="http://new401.bafangka.com/static/client/check/phone.png"></image>
+						<image src="https://new401.bafangka.com/static/client/check/phone.png"></image>
 						<input type="text" placeholder="请输入对方会员号" v-model="user_no">
 					</view>
 				</view>
 				<view class="zhezhaoCenter">
 					<view>
-						<image src="http://new401.bafangka.com/static/client/check/money.png"></image>
+						<image src="https://new401.bafangka.com/static/client/check/money.png"></image>
 						<input type="text" placeholder="请输入转出金额" v-model="integral">
 					</view>
 				</view>
@@ -23,16 +23,19 @@
 				</view>
 			</view>
 		</view>
-		<!-- #ifdef APP-PLUS -->
-		<view class="status_bar" style="background: red;"></view>
-		<!-- #endif -->
+
 		<view class="top">
-			<image  class="bgImg" src="http://new401.bafangka.com/static/client/blance/bg.jpg" ></image>
-			<image class="back" @click="goBack" src="http://new401.bafangka.com/static/client/check/left.png"></image>
+<<<<<<< HEAD
+			<image  class="bgImg" src="https://new401.bafangka.com/static/client/blance/bg.jpg" ></image>
+			<image class="back" @click="goBack" src="https://new401.bafangka.com/static/client/check/left.png"></image>
 			<view class="titleq">
 				积分中心
 			</view>
+			<image class="momo" src="https://new401.bafangka.com/static/client/check/momo.png"></image>
+=======
+			<image  class="bgImg" src="http://new401.bafangka.com/static/client/blance/bg.jpg" ></image>
 			<image class="momo" src="http://new401.bafangka.com/static/client/check/momo.png"></image>
+>>>>>>> upstream/master
 
 			<view class="prices">
 				{{info.User_Integral}}
@@ -45,24 +48,24 @@
 			</view>
 			<view class="bottoms">
 				<view class="lefts qwe" @click="gotojifen">
-					<image src="http://new401.bafangka.com/static/client/check/t3.png" ></image>
+					<image src="https://new401.bafangka.com/static/client/check/t3.png" ></image>
 					<text>积分商城</text>
 				</view>
 				<view class="line">
 				</view>
 				<view class="rights qwe" style="padding-left: 66rpx;" @click="gotoMyExchange">
-					<image src="http://new401.bafangka.com/static/client/check/t4.png" ></image>
+					<image src="https://new401.bafangka.com/static/client/check/t4.png" ></image>
 					<text>我的兑换</text>
 				</view>
 			</view>
 		</view>
 
 		<view class="selects">
-			<image src="http://new401.bafangka.com/static/client/check/qw.png"></image>
+			<image src="https://new401.bafangka.com/static/client/check/qw.png"></image>
 			<view>
 				积分明细
 			</view>
-			<image src="http://new401.bafangka.com/static/client/check/er.png"></image>
+			<image src="https://new401.bafangka.com/static/client/check/er.png"></image>
 		</view>
 
 		<view class="contents">
@@ -299,7 +302,7 @@ view{
 			height: 28rpx;
 			position: absolute;
 			left: 53rpx;
-			top: 190rpx;
+			top: 130rpx;
 		}
 		.prices{
 			font-size: 80rpx;
@@ -308,7 +311,7 @@ view{
 			line-height: 61rpx;
 			position: absolute;
 			left: 97rpx;
-			top: 158rpx;
+			top: 100rpx;
 			color: #FFFFFF;
 		}
 		.duihuan{
@@ -316,7 +319,7 @@ view{
 			height: 24rpx;
 			line-height: 24rpx;
 			position: absolute;
-			top: 259rpx;
+			top: 240rpx;
 			left: 53rpx;
 			font-weight:300;
 			color: #FFFFFF;
@@ -333,7 +336,7 @@ view{
 			background-color: #ff9175;
 			border-radius: 16rpx;
 			position: absolute;
-			top: 187rpx;
+			top: 130rpx;
 			right: 24rpx;
 		}
 

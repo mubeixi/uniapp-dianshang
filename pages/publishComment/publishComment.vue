@@ -2,7 +2,7 @@
 	<view class="all">
 		<!-- <page-title title="发表评论" rightHidden="true" bgcolor="#ffffff"></page-title> -->
 		<view style="height: 40rpx;width: 100%;">
-			
+
 		</view>
 		<view class="rate">
 			<view class="rates">整体评价</view>
@@ -28,7 +28,7 @@
 			<div class="imgs">
 				<view class="shangchuans" v-for="(item,index) of imgs" :key="index"  >
 					<image :src="item"  @click="yulan(index)"></image>
-					<image src="http://new401.bafangka.com/static/client/delimg.png" class="del" @click="delImg(index)"></image>
+					<image src="https://new401.bafangka.com/static/client/delimg.png" class="del" @click="delImg(index)"></image>
 				</view>
 			    <view class="shangchuan" @click="addImg">
 					<view class="heng"></view>

@@ -2,20 +2,20 @@
 	<view class="boxSizing">
 		<view class="zhezhao" v-if="isShow">
 			<view class="zhezhaoView">
-				<image src="http://new401.bafangka.com/static/client/check/close.png" class="closeZ" @click="isShow=false"></image>
+				<image src="https://new401.bafangka.com/static/client/check/close.png" class="closeZ" @click="isShow=false"></image>
 				<view class="zhezhaoYue">
 					余额互转
 				</view>
 				<form  report-submit @submit="confirm">
 					<view class="zhezhaoCenter">
 						<view>
-							<image src="http://new401.bafangka.com/static/client/check/phone.png"></image>
+							<image src="https://new401.bafangka.com/static/client/check/phone.png"></image>
 							<input type="text" placeholder="请输入对方会员号" v-model="user_no">
 						</view>
 					</view>
 					<view class="zhezhaoCenter">
 						<view>
-							<image src="http://new401.bafangka.com/static/client/check/money.png"></image>
+							<image src="https://new401.bafangka.com/static/client/check/money.png"></image>
 							<input type="text" placeholder="请输入转出金额" v-model="money">
 						</view>
 					</view>
@@ -25,18 +25,17 @@
 				</form>
 
 			</view>
-			
+
 		</view>
+
 
 		<view class="top">
 
-			<image  class="bgImg" src="http://new401.bafangka.com/static/client/blance/bg.jpg" ></image>
-			<!-- #ifdef APP-PLUS -->
-			<image class="back" @click="goBack" src="http://new401.bafangka.com/static/client/check/left.png"></image>
+			<image  class="bgImg" src="https://new401.bafangka.com/static/client/blance/bg.jpg" ></image>
+			<!-- <image class="back" @click="goBack" src="http://new401.bafangka.com/static/client/check/left.png"></image>
 			<view class="titleq">
 				余额中心
-			</view>
-			<!-- #endif -->
+			</view> -->
 
 			<view class="dangqian">
 				当前余额（元）
@@ -49,13 +48,13 @@
 			</view>
 			<view class="bottoms">
 				<view class="lefts qwe" @click="goRecharge">
-					<image src="http://new401.bafangka.com/static/client/check/t1.png" ></image>
+					<image src="https://new401.bafangka.com/static/client/check/t1.png" ></image>
 					<text>余额充值</text>
 				</view>
 				<view class="line">
 				</view>
 				<view class="rights qwe" @click="goFacePay">
-					<image src="http://new401.bafangka.com/static/client/check/t2.png" ></image>
+					<image src="https://new401.bafangka.com/static/client/check/t2.png" ></image>
 					<text>实体消费</text>
 				</view>
 			</view>
@@ -352,7 +351,7 @@ view{
 			line-height: 28rpx;
 			position: absolute;
 			left:39rpx ;
-			top: 162rpx;
+			top: 110rpx;
 			/* #ifdef APP-PLUS */
 			// margin-top: var(--status-bar-height);
 			/* #endif */
@@ -364,7 +363,7 @@ view{
 			line-height: 61rpx;
 			position: absolute;
 			left: 39rpx;
-			top: 224rpx;
+			top: 175rpx;
 			color: #FFFFFF;
 			font-weight: 200;
 			/* #ifdef APP-PLUS */
@@ -382,7 +381,7 @@ view{
 			background-color: #ff9175;
 			border-radius: 16rpx;
 			position: absolute;
-			top: 187rpx;
+			top: 130rpx;
 			right: 24rpx;
 		}
 

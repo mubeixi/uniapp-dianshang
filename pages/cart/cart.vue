@@ -18,7 +18,7 @@
 				<div class="order_msg" >
 					<div class="biz_msg">
 					   <div class="mbxa" @click="checkAll">
-							<image class="img" :src="checkAllFlag ? '/static/checked.png' : '/static/uncheck.png'" />
+							<image class="img" :src="checkAllFlag ? 'https://new401.bafangka.com/static/client/checked.png' : 'https://new401.bafangka.com/static/client/uncheck.png'" />
 
 					   </div>
 						<img :src="shop_config.ShopLogo" class="biz_logo" alt />
@@ -28,7 +28,7 @@
 						<block v-for="(attr,attr_id) in pro" :key="attr_id">
 							<div class="pro">
 								<div class="mbxa" @click="change(pro_id,attr_id)">
-									<image class="img" :src="attr.checked ? '/static/checked.png' : '/static/uncheck.png'" />
+									<image class="img" :src="attr.checked ? 'https://new401.bafangka.com/static/client/checked.png' : 'https://new401.bafangka.com/static/client/uncheck.png'" />
 								</div>
 								<img class="pro-img" :src="attr.ImgPath" @click="gotoDetail(pro_id)"/>
 								<div class="pro-msg">
@@ -52,7 +52,7 @@
 				</div>
 			  </div>
 			  <div v-else class="none">
-				<image class="img" src="http://new401.bafangka.com/static/client/box.png" />
+				<image class="img" src="https://new401.bafangka.com/static/client/box.png" />
 				<div><span>购物车空空如也</span><span class="tobuy" @click="gotoBuy">去逛逛</span></div>
 			  </div>
 			  <!-- 猜你喜欢 -->
@@ -71,7 +71,7 @@
 			<!-- 购物车结算 -->
 			<div class="checkout" v-if="!manage">
 			  <div class="mbxa"  @click="checkAll">
-				<image class="img" :src="checkAllFlag ? '/static/checked.png' : '/static/uncheck.png'"  style="margin-right: 17upx;" alt="" />
+				<image class="img" :src="checkAllFlag ? 'https://new401.bafangka.com/static/client/checked.png' : 'https://new401.bafangka.com/static/client/uncheck.png'"  style="margin-right: 17upx;" alt="" />
 					全选
 			  </div>
 			  <div class="total" v-if="handleShow">合计：<span>￥<span>{{totalPrice}}</span></span></div>

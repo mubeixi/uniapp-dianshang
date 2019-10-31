@@ -89,7 +89,7 @@
 			<view class="submits" @click="application">
 				{{textShen}}
 			</view>
-<!-- 
+<!--
 			<view class="zhezhao" v-if="isXu">
 				<view class="zhezhaoText">
 					<image @click="isXu=false" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADEAAAAxCAYAAABznEEcAAAESklEQVRoQ91aTWgdVRT+zsujLaKJINRFdGGC1PpTKLiwFSFYfxpt6yrgDyjcOz4X4kJXVdeiK10Ios/MBEStkI22laeIGlykixbFP9KiiQsXMSJoYlt/yHuf3Omb8PIy82bunZmX1tnOOd/9vnvn3HPPPSMo4JmYmNgyNDS0l+QekjcB2CEi1wC4EsAWAOdIrgBYBHBGRL4XkRPLy8uz09PT/+alIDkAKlrre0g+JiL3A7jCAetPkh8CeCsIgo8BtBwwYC1ibGysOjIy8rCIHAaw02XQBJ85ki8tLCy8OzMzs2qDayXC87w7SL4G4GabQSxtvwPwpO/7X2T1yySiVqtd1mw2XyZZE5FMPlkJxNmRpIjUBwYGnqnX6+fTsFIJeZ53Hcn3AexKAyv6PclvK5XKA5OTkz/1wu4pQmu9m+RHIrK9aIIWeEsAxn3f/yrJJ1FEW8BnImK2yc1+fgewL0lIrAil1IiIzAK4erPZd4y/RHJvEAQL3Zw2iGgH8YnNiIG0CTMxUq1Wb+sO9g0itNavA3giDXCz3pOsB0Gwjt86EVrrfSQ/6cc26joJ7e33bt/3P40w1kSYTDw6Ovo1gBtdB+ij39z8/PyuKLOvidBaKwB+H4nkGoqkFwRByDcSUVFKnRaR622QDxw6EJofP3rcxm2DrQsOyR+CILjBHBpDEVrr/QAaNkzMwAcPHQxdjh095iwkDw7J+4IgaIQilFJHRORBVxGuQjoFOGK85/v+Q2IKmsHBwd9c6oE8JPL4dkz22ZWVlavE87wxkp/brEKnrQsZF58kfiTvFKXUcyLygqsI42dDysY2CyeSzxsRb4vII1kcetlkIZfFxpYHyXeMiJMicqutc5x9L5JlCGhzOCVa61+KPK3GkTWDRdux4y7Ua46XjIi/AGwrYiUijG4hndh5ckoCx7+NCBYpoJeQEgSEw5WyEnE7VgmfUTRf4UoUGhNJAqIRS1iNMCZOAihkd0rKGSUH9qnC8kRa0itri43yRO6MnSYgKdiL+LTCjJ337JRVQFlCwrNTnlOsrYAShFw4xRpgrfURAFb1hKuAgoVcqCfaInJVdq45IG+wr6vsAFjX2HnKys4TQg6cH33f37FWYxtQpZQWkUmbI4hLgR+H74ITd9uB9r3TNwV3f2zmxMY2/t6pHRuX9g1gNA1KqTdEpGYzLf20Tb2LNWT+F7fi7SC/tPsT0adxsXWKWq3WXVNTU1/GfboXfc+O5K8ist+pZxcpNt3TVqv1gYjc0s8ANmMV0j2NSJtgX11dfQXA4/1owJhGCoA3q9Xq04X0sTtn33SSALxackKcA/BUZyco7QtIbcZ3A0T/dgB4VkRMf6CQh+RpAC+W/m9HF1tzaLxXRB4117EALndQc9b0aEj29y+bOKLj4+Nbh4eH9zSbzdtFZKeImNPlte3/nbYC+AfAHwB+JnmG5Jzpky8uLs42Gg3zLtfzH7ywkm5z0j8vAAAAAElFTkSuQmCC" ></image>
@@ -196,7 +196,7 @@
 				立即购买成为分销商
 			</view>
 		</block>
-		
+
 		<view  class="disConfig" v-else-if="pro.dis_config.Distribute_Type==4&&pro.dis_level[0].Level_LimitType==4">
 			<block v-for="(fen,ins) of pro.dis_level" :key="ins">
 				<view class="line" v-if="ins!=0"></view>
@@ -208,8 +208,8 @@
 						进入商城
 					</view>
 				</block>
-			</block>	
-		</view>		
+			</block>
+		</view>
 		<popup-layer ref="popupLayer" :direction="'top'">
 			<div class="iMbx">
 				<div class="c_method" v-for="(item,index) in pay_arr" @click="chooseType(index)" :key="index">
@@ -359,7 +359,7 @@
 						data.buy_info.Reserve_DisplayTelephone=this.shenArr.DisplayTelephone;
 					}
 					if(this.select_lists.length>0){
-					
+
 						for(let item of this.select_lists){
 							let arr={};
 							arr[item.name]=item.options[item.index];
@@ -408,7 +408,7 @@
 							let provider = 'alipay';
 							let orderInfo = res.data.arg;
 							console.log('支付宝参数',orderInfo)
-							
+
 							uni.requestPayment({
 							    provider,
 							    orderInfo, //微信、支付宝订单数据
@@ -424,7 +424,7 @@
 							        })
 							    }
 							});
-							
+
 							return;
 						},err=>{
 							uni.showToast({
@@ -568,11 +568,11 @@
 								}
 							}
 						}
-					
+
 					}
-					
+
 				}
-				
+
 				if(this.pro.dis_config.Distribute_AgreementOpen){
 					if(!this.isAgree){
 						uni.showToast({
@@ -984,7 +984,7 @@
 				// "body": "admin的微商城微商城在线付款，订单编号:71",
 				// "trade_time": 1571652591,
 				// "valid_time": 1571653491,
-				// "notify_url": "http://new401.bafangka.com",
+				// "notify_url": "https://new401.bafangka.com",
 				// "wx_url": "https://wx.tenpay.com/cgi-bin/mmpayweb-bin/checkmweb?prepay_id=wx21180952897263ebe491c4d01231368300&package=2309503405",
 				// "wx_type": "MWEB",
 				// "sign": "6c01d5975dbf55faae4ebfdb71558b62",

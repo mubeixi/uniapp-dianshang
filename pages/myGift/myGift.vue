@@ -40,7 +40,7 @@
 			</view>
 		</view>
 		<view class="defaults" v-if="data.length<=0">
-			<image src="http://new401.bafangka.com/static/client/defaultImg.png" ></image>
+			<image src="https://new401.bafangka.com/static/client/defaultImg.png" ></image>
 		</view>
 	</view>
 </template>

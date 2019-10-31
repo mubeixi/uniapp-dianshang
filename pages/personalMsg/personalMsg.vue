@@ -11,7 +11,7 @@
 					<image :src="User_HeadImg" mode="" @click="changeAvator"></image>
 				</view>
 				<view class="go">
-					<image src="http://new401.bafangka.com/static/clientright.png" mode=""></image>
+					<image src="https://new401.bafangka.com/static/clientright.png" mode=""></image>
 				</view>
 			</view>
 			<view class="item" @click="update(0)">
@@ -20,7 +20,7 @@
 					{{userInfo.User_Name}}
 				</view>
 				<view class="go">
-					<image src="http://new401.bafangka.com/static/clientright.png" mode=""></image>
+					<image src="https://new401.bafangka.com/static/clientright.png" mode=""></image>
 				</view>
 			</view>
 			<view class="item" @click="update(1)">
@@ -29,7 +29,7 @@
 					{{userInfo.User_NickName}}
 				</view>
 				<view class="go">
-					<image src="http://new401.bafangka.com/static/clientright.png" mode=""></image>
+					<image src="https://new401.bafangka.com/static/clientright.png" mode=""></image>
 				</view>
 			</view>
 
@@ -39,7 +39,7 @@
 					{{userInfo.User_Email}}
 				</view>
 				<view class="go">
-					<image src="http://new401.bafangka.com/static/clientright.png" mode=""></image>
+					<image src="https://new401.bafangka.com/static/clientright.png" mode=""></image>
 				</view>
 			</view>
 			<view class="item" @click="update(4)">
@@ -48,7 +48,7 @@
 					{{User_Province_name}}{{User_City_name}}{{User_Area_name}}{{User_Tow_name}}{{User_Address}}
 				</view>
 				<view class="go">
-					<image src="http://new401.bafangka.com/static/clientright.png" mode=""></image>
+					<image src="https://new401.bafangka.com/static/clientright.png" mode=""></image>
 				</view>
 			</view>
 		</view>

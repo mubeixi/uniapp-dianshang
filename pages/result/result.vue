@@ -6,13 +6,13 @@
 	  <!-- #endif -->
     <div class="top">
        <!-- #ifndef APP-PLUS -->
-       <!-- <image src="http://new401.bafangka.com/static/clientleft.png" class="back" @click="goBack"></image>
+       <!-- <image src="https://new401.bafangka.com/static/clientleft.png" class="back" @click="goBack"></image>
 		<input type="text" v-model="inputValue" class="search" @confirm="success"  @click="goSearch" disabled/>
 		<div class="clear" v-if="inputValue">
 			<icon type="clear" class="clears" size="37rpx" @click="close"></icon>
 		</div> -->
        <!-- #endif -->
-
+		<icon type="search" size="34rpx" class="search_icon"/>
 		<input type="text" v-model="inputValue" class="searchs" @confirm="success"  @click="goSearch" disabled/>
 		<div class="clear" v-if="inputValue">
 			<icon type="clear" class="clears" size="37rpx" @click="close"></icon>
@@ -23,11 +23,11 @@
         <div :class="[active == 1 ? 'checked' : '','tab']" @click="getActive(1)">销量<div class="line"></div></div>
         <div :class="[active == 2 ? 'checked' : '','tab']" @click="getActive(2)">价格<div class="line">
 			<view class="xiangshang">
-				<image src="http://new401.bafangka.com/static/client/result/tops.png" v-if="isSheng==1"></image>
-				<image src="http://new401.bafangka.com/static/client/result/top.png" v-else></image>
+				<image src="https://new401.bafangka.com/static/client/result/tops.png" v-if="isSheng==1"></image>
+				<image src="https://new401.bafangka.com/static/client/result/top.png" v-else></image>
 
-				<image src="http://new401.bafangka.com/static/client/result/bottoms.png" v-if="isSheng==2" style="bottom: 0rpx;"></image>
-				<image src="http://new401.bafangka.com/static/client/result/bottom.png" v-else style="bottom: 0rpx;"></image>
+				<image src="https://new401.bafangka.com/static/client/result/bottoms.png" v-if="isSheng==2" style="bottom: 0rpx;"></image>
+				<image src="https://new401.bafangka.com/static/client/result/bottom.png" v-else style="bottom: 0rpx;"></image>
 			</view>
 		</div></div>
         <div :style="{color:showShai?'#F43131':''}" @click.stop="change" style="width: 110rpx;text-align: right;">筛选<div class="line"></div></div>
@@ -35,8 +35,8 @@
 
 		</div>
 		<div class="tab" style="width: 40rpx;position: absolute;top: 25rpx;right: 28rpx;" v-else>
-			<image src="http://new401.bafangka.com/static/client/result/jx1.png" @click="changeCate" v-if="cate==2" class="imgm"></image>
-			<image src="http://new401.bafangka.com/static/client/result/jx.png" @click="changeCate" v-else class="imgm"></image>
+			<image src="https://new401.bafangka.com/static/client/result/jx1.png" @click="changeCate" v-if="cate==2" class="imgm"></image>
+			<image src="https://new401.bafangka.com/static/client/result/jx.png" @click="changeCate" v-else class="imgm"></image>
 		</div>
 
 		<div class="shaixuan" v-if="showShai" @click.stop   catchtouchmove="false">
@@ -78,7 +78,7 @@
 				</div>
 			</div>
 			<div class="defaults" v-if="pro.length<=0">
-				<image src="http://new401.bafangka.com/static/client/defaultImg.png" ></image>
+				<image src="https://new401.bafangka.com/static/client/defaultImg.png" ></image>
 			</div>
 		</div>
 	</div>
@@ -95,7 +95,7 @@
 				</div>
 			</div>
 			<div class="defaults" v-if="pro.length<=0">
-				<image src="http://new401.bafangka.com/static/client/defaultImg.png" ></image>
+				<image src="https://new401.bafangka.com/static/client/defaultImg.png" ></image>
 			</div>
 		</div>
 	</div>
@@ -355,6 +355,11 @@ export default {
 		top: 0rpx;
 		background-color: #FFFFFF;
 		z-index: 999;
+		.search_icon {
+			position: absolute;
+			top: 46rpx;
+			left: 61rpx;
+		}
 		.back {
 			width: 23rpx;
 			height: 37rpx;
