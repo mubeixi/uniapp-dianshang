@@ -257,6 +257,7 @@
 						this.Order_Type=res.data.Order_Type;
 						this.orderInfo = res.data;
 						this.Order_Type = res.data.Order_Type;
+						ls.set('type',this.Order_Type);
 						// pay_money 应该支付的钱
 						// user_money 使用的余额
 						this.pay_money = this.orderInfo.Order_Fyepay;
@@ -471,7 +472,9 @@
 				toast('支付成功');
 				setTimeout(function(){
 					//拼团订单则跳转到开团成功
-					if(_that.Order_Type === 'pintuan'){
+					let type = ls.get('type');
+					ls.remove('type');
+					if(type === 'pintuan'){
 						uni.redirectTo({
 							url:'/pages/groupSuccess/groupSuccess?order_id='+_that.Order_ID
 						})
