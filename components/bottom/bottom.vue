@@ -8,6 +8,7 @@
 				</navigator>
 			</div>
 
+
 			<div class="first" @click="collect">
 				<div>
 					<image class='img'  v-if="collected"  src="http://new401.bafangka.com/static/client/tuan/xx.png" ></image>
