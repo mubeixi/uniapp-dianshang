@@ -16,3 +16,18 @@ payload: "{"channel":"fff","fiel":"fdsafsa","id":"343"}"
 title: "网中网电商"
 __UUID__: "androidPushMsg116729578"
 }
+
+
+{
+  "extEnable": true,
+  "extAppid": "wx57c0d6caade2c2c7",
+  "ext": {
+    "aid": 1,
+    "host": "https://wap.qd101.net",
+    "homePath":"/#/home",
+    "apiBaseUrl": "https://knowledges.qd101.net"
+  },
+  "pages": [
+
+  ]
+}
