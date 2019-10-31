@@ -16,16 +16,16 @@
 		</view>
 
 		<view class="jilu">
-			<view class="chang" v-for="item in pro.continue_" :key="item">
+			<view class="chang" v-for="(item,index) in pro.continue_" :key="index">
 				<image v-if="item<pro.continue" src="/static/task/checked.png" ></image>
 				<image v-else src="/static/task/unchecked.png" ></image>
 				<view>
-					第{{item+1}}天
+					第{{index+1}}天
 				</view>
 			</view>
 		</view>
 		<view class="err">
-			<image src="/static/task/err.png" mode=""></image>
+			<image src="/static/task/err.png" ></image>
 			温馨提示
 		</view>
 		<view class="last" v-if="pro">
