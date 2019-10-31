@@ -6,11 +6,7 @@
 	<!-- 	<page-title title="爵位晋升" rightHidden="true"></page-title> -->
 		<view class="top">
 			<view class="person">
-<<<<<<< HEAD
-				<image src="http://new401.bafangka.com/static/client/fenxiao/person.png"></image>
-=======
 				<image :src="data.disInfo.Shop_Logo"></image>
->>>>>>> upstream/master
 			</view>
 			<view class="nickName">
 				{{data.disInfo.Shop_Name}}

@@ -3,7 +3,7 @@
 		<div class="leftss">
 			<div class="first">
 				<navigator url="/pages/index/index" open-type="switchTab" >
-					<div><image class='img' src="http://new401.bafangka.com/static/client/tabbar/home.png" ></image></div>
+					<div><image class='img' src="/static/tabbar/home.png" ></image></div>
 					<div class="txt">首页</div>
 				</navigator>
 			</div>
