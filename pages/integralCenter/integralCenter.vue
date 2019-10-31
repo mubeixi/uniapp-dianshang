@@ -24,7 +24,7 @@
 			</view>
 		</view>
 		<!-- #ifdef APP-PLUS -->
-		<view class="status_bar" style="background: #ff5c33;"></view>
+		<view class="status_bar" style="background: red;"></view>
 		<!-- #endif -->
 		<view class="top">
 			<image  class="bgImg" src="http://new401.bafangka.com/static/client/blance/bg.jpg" ></image>

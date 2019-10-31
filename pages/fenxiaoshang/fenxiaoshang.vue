@@ -1,10 +1,7 @@
 <template>
 	<view>
-		<!-- #ifdef APP-PLUS -->
-		<page-title title="分销商信息" rightHidden="true" bgcolor="#F8F8F8"></page-title>
-		<!-- #endif -->
 		<view class="user-info">
-			<view class="user-avator">
+			<view class="user-avator" @click="changeAvator">
 				<image :src="Shop_Logo" mode=""></image>
 				<view class="xiangji" ></view>
 			</view>
@@ -49,6 +46,7 @@
 						console.log(this.userDisInfo)
 						this.Shop_Name = this.userDisInfo.Shop_Name;
 						this.Shop_Logo = this.userDisInfo.Shop_Logo;
+						this.Shop_Announce=this.userDisInfo.Shop_Announce;
 
 					}else {
 
