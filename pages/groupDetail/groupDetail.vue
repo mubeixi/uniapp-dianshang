@@ -226,7 +226,7 @@
 	<div class="fixed">
 		<div class="leftss">
 			<div class="first" @click="goHome">
-				<div><image class="img" src="http://new401.bafangka.com/static/client/tabbar/home.png" ></image></div>
+				<div><image class="img" src="/static/tabbar/home.png" ></image></div>
 				<div class="txt">首页</div>
 			</div>
 			<div class="first" @click="collect">
