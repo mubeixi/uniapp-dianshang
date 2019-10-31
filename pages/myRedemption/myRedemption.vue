@@ -3,7 +3,7 @@
 		<!-- <page-title title="我的兑换" bgcolor="#ffffff"></page-title> -->
 		<view style="height: 10rpx;width: 100%;"></view>
 		<template v-if="prod_list.length > 0">
-			<view class="myHa" v-for="(item,index) in prod_list">
+			<view class="myHa" v-for="(item,index) in prod_list" :key="index">
 				<view class="tops">
 					<view>
 						订单编号：{{item.Gift_ID}}
@@ -40,7 +40,7 @@
 
 <script>
 	import {jifenProdOrder} from '../../common/fetch.js'
-	import {formatNumber} from '../../common/tool.js'
+	import {formatTime} from '../../common/filter'
 	export default {
 		data() {
 			return {
@@ -60,15 +60,7 @@
 					case 4 : return '已完成' ;break;
 				}
 			},
-			formatTime(date) {
-				const year = new Date(date*1000).getFullYear()
-				const month = new Date(date*1000).getMonth() + 1
-				const day = new Date(date*1000).getDate()
-				const hour = new Date(date*1000).getHours()
-				const minute = new Date(date*1000).getMinutes()
-				const second = new Date(date*1000).getSeconds()
-				return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':')
-			}
+			formatTime: formatTime
 		},
 		methods: {
 			get_jifen_order(){

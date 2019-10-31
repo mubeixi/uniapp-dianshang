@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<!-- #ifdef APP-PLUS -->
-		<view class="status_bar" style="background:white;position: fixed;top: 0;z-index: 22"></view>
+		<!-- <view class="status_bar" style="background:white;position: fixed;top: 0;z-index: 22"></view> -->
 		<!-- #endif -->
 		<div class="zhezhao" v-if="password_input">
 			<div class="input-wrap">
@@ -18,7 +18,8 @@
 			<span class="state-desc">等待买家付款</span>
 		</div>
 		<view class="address order-id">订单号：{{orderInfo.Order_ID}}</view>
-		<div class="address">
+		<view class="address">下单时间: {{orderInfo.Order_CreateTime | formatTime}}</view>
+		<div class="address" v-if="orderInfo.is_virtual == 0 ">
 			<image class="loc_icon" src="/static/location.png" alt="" />
 			<div class="add_msg">
 				<div class="name">收货人：{{orderInfo.Address_Name}} <span>{{orderInfo.Address_Mobile}}</span></div>
@@ -148,10 +149,10 @@
 			</div>
 			<div class="btn-group" v-else-if="orderInfo.Order_Status==3">
 				<span @click="goLogistics(orderInfo.Order_ID)">查看物流</span>
-				<span @click="goPay(orderInfo.Order_ID)" style="margin-left: 14rpx;">申请退款退货</span>
+				<!-- <span @click="goPay(orderInfo.Order_ID)" style="margin-left: 14rpx;">申请退款退货</span> -->
 			  <span class="active" @click="confirmOrder(orderInfo.Order_ID)">确认收货</span>
 			</div>
-			<div class="btn-group" v-else-if="item.Order_Status==4 && item.Is_Commit == 0">
+			<div class="btn-group" v-else-if="orderInfo.Order_Status==4 && orderInfo.Is_Commit == 0">
 			    <span class="active" @click="goPay(orderInfo.Order_ID)">立即评价</span>
 			</div>
 		</div>
@@ -179,6 +180,7 @@
 
 <script>
 	import popupLayer from '../../components/popup-layer/popup-layer.vue'
+	import {formatTime} from '../../common/filter.js'
 	import {
 		getAddress,
 		createOrderCheck,
@@ -248,7 +250,7 @@
 
 		},
 		filters: {
-
+			formatTime: formatTime
 		},
 		onShow() {
 			this.getOrderDetail();
