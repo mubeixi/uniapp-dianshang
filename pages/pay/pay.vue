@@ -15,11 +15,11 @@
 		</div>
 		<!-- <page-title title="付款" :rightHidden="true" bgcolor="#ffffff"></page-title> -->
 		<div class="state">
-			<image class="img" src="/static/wait.png" />
+			<image class="img" src="http://new401.bafangka.com/static/client/wait.png" />
 			<span class="state-desc">等待买家付款</span>
 		</div>
 		<div class="address">
-			<image class="loc_icon" src="/static/location.png" alt="" />
+			<image class="loc_icon" src="http://new401.bafangka.com/static/client/location.png" alt="" />
 			<div class="add_msg">
 				<div class="name">收货人：{{orderInfo.Address_Name}} <span>{{orderInfo.Address_Mobile}}</span></div>
 				<div class="location">收货地址：{{orderInfo.Address_Province_name}}{{orderInfo.Address_City_name}}{{orderInfo.Address_Area_name}}{{orderInfo.Address_Town_name}}</div>

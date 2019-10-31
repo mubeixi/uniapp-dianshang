@@ -7,6 +7,12 @@
 
 
     // #ifdef APP-PLUS
+
+    // 获取客户端标识信息
+    var info = plus.push.getClientInfo();
+    console.log('device plus info ',info);
+
+
     import {pushHandle} from "./common/push";
 
     const  clickFn = (notify)=>{

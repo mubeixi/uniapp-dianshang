@@ -50,7 +50,7 @@
 				</picker>
 			</view>
 			<view class="images">
-				<image src="/static/fenxiao/chakan.png" ></image>
+				<image src="http://new401.bafangka.com/static/client/fenxiao/chakan.png" ></image>
 			</view>
 		</view>
 		<view class="four">
@@ -58,7 +58,7 @@
 		</view>
 		<view class="five">
 			查看申请记录
-			<image src="/static/fenxiao/chakan.png" ></image>
+			<image src="http://new401.bafangka.com/static/client/fenxiao/chakan.png" ></image>
 		</view>
 	</view>
 </template>

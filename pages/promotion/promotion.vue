@@ -6,7 +6,7 @@
 	<!-- 	<page-title title="爵位晋升" rightHidden="true"></page-title> -->
 		<view class="top">
 			<view class="person">
-				<image src="/static/fenxiao/person.png"></image>
+				<image src="http://new401.bafangka.com/static/client/fenxiao/person.png"></image>
 			</view>
 			<view class="nickName">
 				坚果姑娘
@@ -36,7 +36,7 @@
 			</view>
 			<view class="chakan">
 				查看明细
-				<image src="/static/fenxiao/chakan.png" ></image>
+				<image src="http://new401.bafangka.com/static/client/fenxiao/chakan.png" ></image>
 			</view>
 		</view>
 		<circleTitle title="我的数据"></circleTitle>

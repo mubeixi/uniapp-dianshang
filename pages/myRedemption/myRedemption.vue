@@ -11,7 +11,7 @@
 						订单编号：{{item.Gift_ID}}
 					</view>
 					<view class="times">
-						<image src="/static/check/time.png"></image>
+						<image src="http://new401.bafangka.com/static/client/check/time.png"></image>
 						{{item.Gift_CreateTime}}
 					</view>
 				</view>
@@ -27,7 +27,7 @@
 							</view>
 						</view>
 						<view class="rty">
-							<image src="/static/check/ji.png" mode=""></image>
+							<image src="http://new401.bafangka.com/static/client/check/ji.png" mode=""></image>
 							<text>{{item.Gift_Integral}}</text>
 						</view>
 					</view>
@@ -69,7 +69,7 @@
 				})
 			}
 		}
-		
+
 	}
 </script>
 

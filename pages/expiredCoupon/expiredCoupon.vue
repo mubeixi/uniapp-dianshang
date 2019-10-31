@@ -16,7 +16,7 @@
 			</view>
 		</view>
 		<view style="height: 198rpx;width: 100%;">
-		
+
 		</view> -->
 		<block>
 			<view class="youhuijuan" v-for="(item,index) of pro" :key="index">
@@ -46,7 +46,7 @@
 			</view>
 		</block>
 		<view class="defaults" v-if="pro.length<=0">
-			<image src="/static/defaultImg.png" ></image>
+			<image src="http://new401.bafangka.com/static/client/defaultImg.png" ></image>
 		</view>
 	</view>
 </template>
@@ -90,17 +90,17 @@
 					for(let item of res.data){
 						this.pro.push(item);
 					}
-					
+
 				},err=>{
-					
+
 				}).catch(e=>{
 					console.log(e)
 				})
-				
+
 			}
 		// 	change(item){
 		// 		this.checked=item;
-		
+
 		// 	}
 		}
 	}

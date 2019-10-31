@@ -1,12 +1,12 @@
 <template>
 	<view class="all">
 		<view class="top">
-			<image src="/static/task/left.png" class="goBack" @click="goBack"></image>
+			<image src="http://new401.bafangka.com/static/client/task/left.png" class="goBack" @click="goBack"></image>
 			<view class="titles">会员等级</view>
 			<scroll-view class="center"  scroll-x="true"  @scroll="goRight">
 				<view class="vipFir " v-for="(item,index) of pro.levels" :key="index"    :style="pro.levels.length==1?'margin-left:45rpx;':''">
-					<image src="/static/task/vip.png" class="allImg"></image>
-					<image src="/static/task/vips.png" class="leftImg"></image>
+					<image src="http://new401.bafangka.com/static/client/task/vip.png" class="allImg"></image>
+					<image src="http://new401.bafangka.com/static/client/task/vips.png" class="leftImg"></image>
 					<view class="vipGrade">
 						{{item.level_name}}
 					</view>
@@ -18,7 +18,7 @@
 
 						</view>
 						<view class="tu" :style="{transform: 'rotate('+item.growth_value/item.curlevel.upper_growth*180+'deg)'}">
-						
+
 						</view>
 						<!-- <view class="tu" :style="{transform: 'rotate('+jiaodu+'deg)'}">
 
@@ -34,7 +34,7 @@
 					</view>
 					<!-- <canvas :style="{width:widths+'px'}" canvas-id="firstCanvas" class="canvass"></canvas> -->
 				</view>
-				
+
 			</scroll-view>
 
 		</view>
@@ -73,7 +73,7 @@
 		<view style="height: 20rpx;background-color: #F8F8F8;width: 750rpx;"></view>
 		<view class="lasts">
 			<view class="titles">
-				<image src="/static/fenxiao/wen.png" ></image>
+				<image src="http://new401.bafangka.com/static/client/fenxiao/wen.png" ></image>
 				<view>
 					什么是成长值
 				</view>
@@ -85,7 +85,7 @@
 		<view style="height: 20rpx;background-color: #F8F8F8;width: 750rpx;"></view>
 		<view class="lasts">
 			<view class="titles">
-				<image src="/static/fenxiao/wen.png" ></image>
+				<image src="http://new401.bafangka.com/static/client/fenxiao/wen.png" ></image>
 				<view>
 					如何获得成长值
 				</view>

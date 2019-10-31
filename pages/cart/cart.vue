@@ -11,7 +11,7 @@
 			:hiddenBack="true"
 			:rightHidden="manage" ></page-title>
 			<view style="height: 86rpx;">
-				
+
 			</view>
 			<div class="content">
 			  <div v-if="total_count>0">
@@ -52,7 +52,7 @@
 				</div>
 			  </div>
 			  <div v-else class="none">
-				<image class="img" src="/static/box.png" />
+				<image class="img" src="http://new401.bafangka.com/static/client/box.png" />
 				<div><span>购物车空空如也</span><span class="tobuy" @click="gotoBuy">去逛逛</span></div>
 			  </div>
 			  <!-- 猜你喜欢 -->

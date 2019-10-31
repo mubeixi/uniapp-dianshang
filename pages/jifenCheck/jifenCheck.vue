@@ -2,7 +2,7 @@
     <view v-if="loading">
       <!--  <pagetitle title="提交订单"></pagetitle> -->
         <view class="address" v-if="giftInfo.Gift_Shipping== 1" @click="goAddressList">
-            <image class="loc_icon" src="/static/location.png" alt="" ></image>
+            <image class="loc_icon" src="http://new401.bafangka.com/static/client/location.png" alt="" ></image>
             <view class="add_msg" v-if="addressinfo.Address_Name">
                 <view class="name">收货人：{{addressinfo.Address_Name}} <span>{{addressinfo.Address_Mobile | formatphone}}</span></view>
                 <view class="location">收货地址：{{addressinfo.Address_Province_name}}{{addressinfo.Address_City_name}}{{addressinfo.Address_Area_name}}{{addressinfo.Address_Town_name}}</view>
@@ -10,7 +10,7 @@
 						<view class="add_msg" v-else>
 							<view>暂无收货地址，去添加</view>
 						</view>
-            <image class="right" src="/static/right.png" alt="" ></image>
+            <image class="right" src="http://new401.bafangka.com/static/client/right.png" alt="" ></image>
         </view>
         <view class="order_msg">
 						<img class="pro-img" :src="giftInfo.Gift_ImgPath" alt="">
@@ -25,15 +25,15 @@
                     <span>运费选择</span>
                     <span style="text-align:right; color: #888;" >
 						<span>{{shipping_name?(shipping_name + ' ' + (shipping_price > 0 ? shipping_price : '免运费')):'请选择物流'}}</span>
-                        <image  class="right" src="/static/right.png" alt=""></image>
+                        <image  class="right" src="http://new401.bafangka.com/static/client/right.png" alt=""></image>
                     </span>
                 </view>
             </view>
         </view>
-        
+
 		<view style="height: 100rpx;">
 			<view class="order_total">
-				
+
 				<view class="submit" @click="form_submit">立即兑换</view>
 			</view>
 		</view>
@@ -73,7 +73,7 @@
 				<view class="btns">
 					<view class="cancel" @click="cancelPsw">取消</view>
 					<view class="confirm" @click="pswConfirm">确定</view>
-				</view>				
+				</view>
 			</view>
 		</view>
 		<popup-layer ref="method" :direction="'top'">
@@ -110,7 +110,7 @@ export default {
 					addressinfo: {}, // 收货地址信息
 					orderInfo: {},
 					type: 'shipping',
-					current: '',	
+					current: '',
 					ship_current: 0,
 					shipping_name: '', // 物流信息描述
 					addressLoading: false, // 收货地址信息是否加载完
@@ -118,7 +118,7 @@ export default {
 					submited: false,  // 是否已经提交过，防止重复提交
 					back_address_id: 0,
 					giftInfo: {}, //积分兑换产品，产品信息
-					shipping_company: [], 
+					shipping_company: [],
 					psdInput: false,
 					password: '',
 					address_id: 0,
@@ -147,7 +147,7 @@ export default {
 			this.code = GetQueryByString(location.href, 'code');
 			console.log(this.code)
 			if (this.code) {
-	
+
 				this.pay_type = 'wx_mp';//需要手动设置一下
 				// console.log(this.pay_type)
 				// ls.set('code',this.code)
@@ -157,9 +157,9 @@ export default {
 		// #endif
 	},
 	onLoad(options) {
-		
+
 		this.gift_id = options.gift_id;
-		
+
 		this.jifenProdDetail();
 		// 获取支付方式
 		this.pay_arr = ls.get('initData').pay_arr;
@@ -251,9 +251,9 @@ export default {
 							title: '请选择物流',
 							icon: 'none'
 						});
-						
+
 						return;
-					}					
+					}
 				}
 				if(!this.address_id) {
 					uni.showToast({
@@ -264,7 +264,7 @@ export default {
 				}
 				this.psdInput = true;
 		},
-		
+
 		// 物流改变
 		ShipRadioChange(e) {
 			for(var i in this.shipping_company) {
@@ -273,7 +273,7 @@ export default {
 					break;
 				}
 			};
-			this.shipping_id = e.target.value;	
+			this.shipping_id = e.target.value;
 		},
 		// 选择运费
 		changeShip(){
@@ -290,7 +290,7 @@ export default {
 					this.shipping_name = `${this.shipping_company[i]}`
 				}
 			}
-			
+
 			this.$refs.popupRef.close();
 		},
 		async getAddress(){
@@ -328,7 +328,7 @@ export default {
 				this.back_address_id = 0;
 
 				// 获取用户收货地址，获取订单信息，后台判断运费信息
-				
+
 			},err=>{
 
 			})
@@ -340,7 +340,7 @@ export default {
 			 async pay(is_forward){
 				let _self = this;
 				let payConf = {};
-				
+
 				//不是跳转的
 				if(!is_forward){
 					if(this.need_invoice == 1 && this.invoice_info == '') {
@@ -373,51 +373,51 @@ export default {
 						});
 						return;
 					}
-				
-				
-				
+
+
+
 				}
-				
+
 				if(this.pay_type === 'unionpay'){
 					error('即将上线')
 					return;
 				}
-				
+
 				if(this.pay_type === 'ali_app'){
-				
-				
-				
+
+
+
 				}
-				
-				
+
+
 				//下面都是微信
-				
+
 				//需要格外有一个code
-				
+
 				// #ifdef H5
-				
+
 				// 微信h5
 				if(this.pay_type === 'wx_h5'){
 					payConf.pay_type = 'wx_h5';
 				}
-				
+
 				//阿里h5
 				if(this.pay_type === 'alipay'){
-				
+
 					payConf.pay_type = 'alipay';
 				}
-				
+
 				//公众号需要code
 				if(this.pay_type === 'wx_mp'){
-				
+
 					console.log('选择了微信支付的')
-				
+
 					if (!isWeiXin()) {
 						this.$error('请在微信内打开')
 						return;
 					}
 					let isHasCode = this.code || GetQueryByString('code');
-				
+
 					if (isHasCode) {
 						// payConf.code = isHasCode;
 						//拿到之前的配置
@@ -425,7 +425,7 @@ export default {
 							code: isHasCode,
 							pay_type: 'wx_mp'
 						}
-				
+
 					} else {
 						//存上临时的数据
 						ls.set('temp_order_info', payConf);
@@ -434,17 +434,17 @@ export default {
 						return;
 					}
 				}
-				
-				
-				
+
+
+
 				// #endif
-				
+
 				// #ifdef MP-TOUTIAO
-				
+
 				// #endif
-				
+
 				// #ifdef MP-WEIXIN
-				
+
 				payConf.pay_type = 'wx_lp';
 				console.log(payConf)
 				await new Promise((resolve) => {
@@ -457,22 +457,22 @@ export default {
 					});
 				})
 				// #endif
-				
-				
+
+
 				console.log('payConf',payConf)
 				jifenProdPay(payConf).then(res => {
 					console.log(res);
-				
-				
+
+
 					// #ifdef APP-PLUS
-				
-				
+
+
 					if(this.pay_type === 'ali_app'){
-				
+
 						let provider = 'alipay';
 						let orderInfo = res.data.arg;
 						console.log('支付宝参数',orderInfo)
-				
+
 						uni.requestPayment({
 							provider,
 							orderInfo, //微信、支付宝订单数据
@@ -488,47 +488,47 @@ export default {
 								})
 							}
 						});
-				
+
 						return;
-				
+
 					}
 					// #endif
-				
-				
+
+
 					// #ifdef H5
-				
+
 					// 微信h5
 					if(this.pay_type === 'wx_h5'){
-				
+
 						let redirect_url = res.data.mweb_url+'&redirect_url='+urlencode(location.origin+'/fre/pages/order/order?index=2');
 						location.href = redirect_url;
 						return;
 					}
-				
+
 					//阿里h5
 					if(this.pay_type === 'alipay'){
-				
+
 						//公众号麻烦一点
 						if(isWeiXin()){
 							let users_id = ls.get('users_id');
-				
-				
+
+
 							let fromurl = res.data.arg;//encodeURIComponent(res.data.arg);
 							let origin = location.origin;
-				
-				
-				
+
+
+
 							fromurl = fromurl.replace(/openapi.alipay.com/,'wangjing666')
 							console.log(fromurl);
-				
+
 							let str = origin+`/fre/pages/pay/wx/wx?users_id=${users_id}&formurl=`+encodeURIComponent(fromurl);
 							let url = str;
-				
-				
+
+
 							uni.navigateTo({
 								url:`/pages/pay/wx/wx?users_id=${users_id}&formurl=`+encodeURIComponent(fromurl)
 							})
-				
+
 							console.log(url)
 							//这样就避免了users_id瞎跳的机制
 							//location.href = url;
@@ -536,23 +536,23 @@ export default {
 							document.write(res.data.arg)
 							document.getElementById('alipaysubmit').submit()
 						}
-				
-				
+
+
 						return;
-				
+
 					}
-				
-				
+
+
 					let {
 						timestamp,
 						nonceStr,
 						signType,
 						paySign
 					} = res.data;
-				
+
 					//直接支付
 					_self.WX_JSSDK_INIT(_self).then((wxEnv) => {
-				
+
 						//关键字？？package
 						wxEnv.chooseWXPay({
 							timestamp,
@@ -565,26 +565,26 @@ export default {
 								_self.paySuccessCall(res)
 							}
 						});
-				
+
 					}).catch((e) => {
 						console.log('支付失败')
 					})
-				
+
 					return;
-				
+
 					// #endif
-				
-				
+
+
 					let provider = 'wxpay';
 					let orderInfo = {}
-				
+
 					// #ifdef MP-WEIXIN || MP-BAIDU || MP-TOUTIAO || MP-ALIPAY
-				
-				
+
+
 					// #endif
-				
+
 					// #ifdef MP-TOUTIAO
-				
+
 					provider = 'wxpay';
 					orderInfo = res.data
 					orderInfo.out_order_no = (orderInfo.Order_ID+'')
@@ -592,7 +592,7 @@ export default {
 					orderInfo.uid += '';
 					orderInfo.trade_time +='';
 					orderInfo.valid_time +='';
-				
+
 					//
 					//orderInfo.risk_info = JSON.stringify({ip: '127.0.0.1', device_id: '485737374363263'});
 					//
@@ -602,18 +602,18 @@ export default {
 					// orderInfo.pay_channel = ''
 					// orderInfo.method = ''
 					// orderInfo.trade_no = ''
-				
-				
+
+
 					delete orderInfo.Order_ID
-				
+
 					//固定值：1（拉起小程序收银台）开发者如果不希望使用头条小程序收银台，service设置为3/4时，可以直接拉起微信/支付宝进行支付：service=3： 微信API支付，不拉起小程序收银台；service=4： 支付宝API支付，不拉起小程序收银台。其中service=3、4，仅在1.35.0.1+基础库(头条743+)支持
 					//console.log(orderInfo)
-				
-				
-				
+
+
+
 					uni.requestPayment({
 						provider,
-				
+
 						service:1,//
 						orderInfo, //微信、支付宝订单数据
 						success: function (res) {
@@ -629,13 +629,13 @@ export default {
 						}
 					});
 					// #endif
-				
+
 					// #ifdef MP-WEIXIN
-				
+
 					provider = 'wxpay';
 					orderInfo = res.data
 					delete orderInfo.timestamp
-				
+
 					console.log(provider,orderInfo,'支付数据222222222222222222');
 					let prepay_id = orderInfo.package.split('=')[1];
 					uni.requestPayment({
@@ -655,12 +655,12 @@ export default {
 						}
 					});
 					// #endif
-				
+
 					// #ifdef APP-PLUS
 					provider = 'wxpay';
 					orderInfo = res.data
 					console.log(provider,orderInfo,'支付数据222222222222222222');
-				
+
 					uni.requestPayment({
 						provider,
 						orderInfo, //微信、支付宝订单数据
@@ -674,25 +674,25 @@ export default {
 						}
 					});
 					// #endif
-				
+
 				},err=>{
 					uni.showModal({
 						title:'提示',
 						content:'获取支付参数失败:'+err.msg
 					})
 				}).catch(e=>{
-				
+
 				})
 			},
 			async $_init_wxpay_env() {
-			
+
 				let initData = await this.getInitData()
-			
+
 				let login_methods = initData.login_methods;
 				let component_appid = login_methods.component_appid
-			
+
 				let channel = null;
-			
+
 				//根据服务器返回配置设置channels,只有微信公众号和小程序会用到component_appid
 				//而且状态可以灵活控制 state为1
 				for (var i in login_methods) {
@@ -705,13 +705,13 @@ export default {
 						break;
 					}
 				}
-			
+
 				if (!channel) {
 					this.$error('未开通公众号支付');
 					return false;
 				}
-			
-			
+
+
 				//如果url有code去掉
 				let {
 					origin,
@@ -723,7 +723,7 @@ export default {
 				if (search.indexOf('code') != -1) {
 					let tempArr = search.split('&');
 					for (var i in tempArr) {
-			
+
 						if (i.indexOf('code') === -1) {
 							strArr.push(tempArr[i])
 						}
@@ -732,17 +732,17 @@ export default {
 					if (newSearchStr.idnexOf('?') === -1) {
 						newSearchStr = '?' + newSearchStr
 					}
-			
-			
+
+
 					search = newSearchStr;
-			
+
 				}
-			
-			
+
+
 				let REDIRECT_URI = urlencode(origin + pathname + search + hash);
-			
+
 				let wxAuthUrl = null;
-			
+
 				if (channel.component_appid) {
 					//服务商模式登录
 					wxAuthUrl =
@@ -753,10 +753,10 @@ export default {
 						`https://open.weixin.qq.com/connect/oauth2/authorize?appid=${channel.appid}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect`
 				}
 				console.log(wxAuthUrl)
-			
+
 				window.location.href = wxAuthUrl;
-			
-			
+
+
 			},
 			payFailCall(){
 				uni.showToast({
@@ -764,13 +764,13 @@ export default {
 					icon: 'none',
 					duration: 2000
 				});
-				
+
 			},
 			paySuccessCall(){
-			
+
 				let _self = this;
 				toast('支付成功');
-				
+
 			},
     }
 }
@@ -824,7 +824,7 @@ export default {
 			display: flex;
       padding: 0 40rpx 0 30rpx;
     }
-    
+
     .pro {
         display: flex;
         margin-bottom: 50rpx;
@@ -852,7 +852,7 @@ export default {
 		flex-direction: column;
 		justify-content: space-between;
 	}
-    
+
     .pro-price {
         color: #F43131;
         font-size: 36rpx;
@@ -1037,16 +1037,16 @@ export default {
 		padding: 0 20rpx;
 		font-size: 28rpx;
 		color: #333;
-	
+
 		.c_method {
 			padding: 37rpx 0;
 			border-bottom: 2rpx solid #E6E6E6;
 		}
-	
+
 		& .c_method:first-child {
 			color: #F43131;
 		}
-	
+
 		& .c_method:nth-last-child(1) {
 			border: none;
 		}

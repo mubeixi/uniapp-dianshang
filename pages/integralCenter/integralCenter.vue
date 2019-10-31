@@ -7,13 +7,13 @@
 				</view>
 				<view class="zhezhaoCenter">
 					<view>
-						<image src="/static/check/phone.png"></image>
+						<image src="http://new401.bafangka.com/static/client/check/phone.png"></image>
 						<input type="text" placeholder="请输入对方会员号" v-model="user_no">
 					</view>
 				</view>
 				<view class="zhezhaoCenter">
 					<view>
-						<image src="/static/check/money.png"></image>
+						<image src="http://new401.bafangka.com/static/client/check/money.png"></image>
 						<input type="text" placeholder="请输入转出金额" v-model="integral">
 					</view>
 				</view>
@@ -21,18 +21,18 @@
 					确认转出
 				</view>
 			</view>
-			<image src="/static/check/close.png" class="closeZ" @click="isShow=false"></image>
+			<image src="http://new401.bafangka.com/static/client/check/close.png" class="closeZ" @click="isShow=false"></image>
 		</view>
 
 		<view class="top">
-			<image  class="bgImg" src="/static/blance/bg.jpg" ></image>
-			<image class="back" @click="goBack" src="/static/check/left.png"></image>
+			<image  class="bgImg" src="http://new401.bafangka.com/static/client/blance/bg.jpg" ></image>
+			<image class="back" @click="goBack" src="http://new401.bafangka.com/static/client/check/left.png"></image>
 			<view class="titleq">
 				积分中心
 			</view>
-			<image class="momo" src="/static/check/momo.png"></image>
+			<image class="momo" src="http://new401.bafangka.com/static/client/check/momo.png"></image>
 
-			<view class="prices">	
+			<view class="prices">
 				{{info.User_Integral}}
 			</view>
 			<view class="duihuan">
@@ -42,25 +42,25 @@
 				转出
 			</view>
 			<view class="bottoms">
-				<view class="lefts qwe" @click="gotojifen"> 
-					<image src="/static/check/t3.png" ></image>
+				<view class="lefts qwe" @click="gotojifen">
+					<image src="http://new401.bafangka.com/static/client/check/t3.png" ></image>
 					<text>积分商城</text>
 				</view>
 				<view class="line">
 				</view>
 				<view class="rights qwe" style="padding-left: 66rpx;" @click="gotoMyExchange">
-					<image src="/static/check/t4.png" ></image>
+					<image src="http://new401.bafangka.com/static/client/check/t4.png" ></image>
 					<text>我的兑换</text>
 				</view>
 			</view>
 		</view>
 
 		<view class="selects">
-			<image src="/static/check/qw.png"></image>
+			<image src="http://new401.bafangka.com/static/client/check/qw.png"></image>
 			<view>
 				积分明细
 			</view>
-			<image src="/static/check/er.png"></image>
+			<image src="http://new401.bafangka.com/static/client/check/er.png"></image>
 		</view>
 
 		<view class="contents">
@@ -105,7 +105,7 @@
 			};
 		},
 		computed: {
-			
+
 		},
 		onShow() {
 			this.reset();
@@ -158,7 +158,7 @@
 						get_user_info().then(res=>{
 							this.info = res.data;
 							this.setUserInfo(this.info);
-						},err=>{}).catch()						
+						},err=>{}).catch()
 					},1500)
 				},err=>{
 					this.isClicked = false;

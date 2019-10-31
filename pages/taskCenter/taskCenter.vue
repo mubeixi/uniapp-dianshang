@@ -4,11 +4,11 @@
 				<!-- <view class="status_bar" style="background:#2e323c;"></view> -->
 		<!-- #endif -->
 		<view class="top">
-			<image class="widthTen" src="/static/task/top.png" ></image>
-<!--			<image src="/static/task/left.png" class="goBack" @click="goBack"></image>-->
+			<image class="widthTen" src="http://new401.bafangka.com/static/client/task/top.png" ></image>
+<!--			<image src="http://new401.bafangka.com/static/client/task/left.png" class="goBack" @click="goBack"></image>-->
 <!--			<view class="titles">任务中心</view>-->
 			<view class="center">
-				<!-- <image class="widthTen" src="/static/task/center.png" ></image> -->
+				<!-- <image class="widthTen" src="http://new401.bafangka.com/static/client/task/center.png" ></image> -->
 				<image class="widthTen" :src="pro.img_url" ></image>
 				<view class="info">
 					<image :src="pro.avatar" class="widthTen" ></image>
@@ -18,7 +18,7 @@
 				</view>
 				<view class="vip" v-if="pro.level_name">
 					{{pro.level_name}}
-					<image src="/static/task/right.png"></image>
+					<image src="http://new401.bafangka.com/static/client/task/right.png"></image>
 				</view>
 				<view class="zhangValue">
 					<view :style="{width:(pro.growth_value/pro.upper_growth)*100+'%'}">
@@ -36,7 +36,7 @@
 				</view>
 				<view class="valueM">
 					成长值
-					<image src="/static/task/sanjiao.png"></image>
+					<image src="http://new401.bafangka.com/static/client/task/sanjiao.png"></image>
 				</view>
 			</view>
 		</view>

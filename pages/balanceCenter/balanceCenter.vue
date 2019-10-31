@@ -8,13 +8,13 @@
 				<form  report-submit @submit="confirm">
 					<view class="zhezhaoCenter">
 						<view>
-							<image src="/static/check/phone.png"></image>
+							<image src="http://new401.bafangka.com/static/client/check/phone.png"></image>
 							<input type="text" placeholder="请输入对方会员号" v-model="user_no">
 						</view>
 					</view>
 					<view class="zhezhaoCenter">
 						<view>
-							<image src="/static/check/money.png"></image>
+							<image src="http://new401.bafangka.com/static/client/check/money.png"></image>
 							<input type="text" placeholder="请输入转出金额" v-model="money">
 						</view>
 					</view>
@@ -24,14 +24,14 @@
 				</form>
 
 			</view>
-			<image src="/static/check/close.png" class="closeZ" @click="isShow=false"></image>
+			<image src="http://new401.bafangka.com/static/client/check/close.png" class="closeZ" @click="isShow=false"></image>
 		</view>
 
 		<view class="top">
 
-			<image  class="bgImg" src="/static/blance/bg.jpg" ></image>
+			<image  class="bgImg" src="http://new401.bafangka.com/static/client/blance/bg.jpg" ></image>
 			<!-- #ifdef APP-PLUS -->
-			<image class="back" @click="goBack" src="/static/check/left.png"></image>
+			<image class="back" @click="goBack" src="http://new401.bafangka.com/static/client/check/left.png"></image>
 			<view class="titleq">
 				余额中心
 			</view>
@@ -48,13 +48,13 @@
 			</view>
 			<view class="bottoms">
 				<view class="lefts qwe" @click="goRecharge">
-					<image src="/static/check/t1.png" ></image>
+					<image src="http://new401.bafangka.com/static/client/check/t1.png" ></image>
 					<text>余额充值</text>
 				</view>
 				<view class="line">
 				</view>
 				<view class="rights qwe" @click="goFacePay">
-					<image src="/static/check/t2.png" ></image>
+					<image src="http://new401.bafangka.com/static/client/check/t2.png" ></image>
 					<text>实体消费</text>
 				</view>
 			</view>

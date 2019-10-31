@@ -14,12 +14,12 @@
 			</div>
 		</div>
 		<div class="state" v-if="orderInfo.Order_Status == 1">
-			<image class="img" src="/static/wait.png" />
+			<image class="img" src="http://new401.bafangka.com/static/client/wait.png" />
 			<span class="state-desc">等待买家付款</span>
 		</div>
 		<view class="address order-id">订单号：{{orderInfo.Order_ID}}</view>
 		<div class="address">
-			<image class="loc_icon" src="/static/location.png" alt="" />
+			<image class="loc_icon" src="http://new401.bafangka.com/static/client/location.png" alt="" />
 			<div class="add_msg">
 				<div class="name">收货人：{{orderInfo.Address_Name}} <span>{{orderInfo.Address_Mobile}}</span></div>
 				<div class="location">收货地址：{{orderInfo.Address_Province_name}}{{orderInfo.Address_City_name}}{{orderInfo.Address_Area_name}}{{orderInfo.Address_Town_name}}</div>
@@ -162,14 +162,14 @@
 				</div>
 			</div>
 		</popup-layer>
-		<payComponents 
+		<payComponents
 		ref="payLayer"
-			:isOpen="isOpen" 
-			:Order_ID="Order_ID" 
-			:pay_money="pay_money" 
-			:use_money="user_money" 
-			:need_invoice="need_invoice" 
-			:invoice_info="invoice_info" 
+			:isOpen="isOpen"
+			:Order_ID="Order_ID"
+			:pay_money="pay_money"
+			:use_money="user_money"
+			:need_invoice="need_invoice"
+			:invoice_info="invoice_info"
 			:order_remark="order_remark"
 			:paySuccessCall="paySuccessCall"
 			:payErrorCall = "payFailCall"
@@ -199,12 +199,12 @@
 	} from "../../common/tool";
 	import {error} from "../../common";
 	import PayComponents from '../../components/PayComponents.vue';
-	
+
 	export default {
 		mixins: [pageMixin],
 		components: {
 			popupLayer,PayComponents
-			
+
 		},
 		data() {
 			return {
@@ -474,7 +474,7 @@
 				this.$refs.payLayer.show()
 				return;
 			},
-			
+
 			payFailCall(){
 				uni.showToast({
 					title: '支付失败',

@@ -10,7 +10,7 @@
     <div class="history" v-if="searchAll.length>0">
         <div class="title">
 			<div>搜索历史</div>
-			<div @click="clear" class="dels"><image class="img" src="/static/del.png" /></div>
+			<div @click="clear" class="dels"><image class="img" src="http://new401.bafangka.com/static/client/del.png" /></div>
 		</div>
         <div class="h_content">
             <span v-for="(item,i) of searchAll" :key='i' @click="goSearch(item)">{{item}}</span>

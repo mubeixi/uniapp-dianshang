@@ -73,17 +73,17 @@
 									  <view v-else>{{objectMultiArray[0][multiIndex[0]]['name']}}</view>
 									  <block v-if="current>0">
 									  	<view v-if="!address_info.Address_City">选择城市</view>
-									  	<view v-else>{{objectMultiArray[1][multiIndex[1]]['name']}}</view>								  
-									  </block> 
+									  	<view v-else>{{objectMultiArray[1][multiIndex[1]]['name']}}</view>
+									  </block>
 									  <block v-if="current>1">
 										  <view v-if="!address_info.Address_Area">选择地区</view>
-										  <view v-else>{{objectMultiArray[2][multiIndex[2]]['name']}}</view>	
+										  <view v-else>{{objectMultiArray[2][multiIndex[2]]['name']}}</view>
 									  </block>
 									</view>
 					</picker>
 				</view>
 				<view class="images">
-					<image src="/static/fenxiao/chakan.png" ></image>
+					<image src="http://new401.bafangka.com/static/client/fenxiao/chakan.png" ></image>
 				</view>
 			</view>
 			<view class="threes" v-if="current==3">
@@ -97,11 +97,11 @@
 					  </picker>
 					</view>
 					<view class="images">
-						<image src="/static/fenxiao/chakan.png" ></image>
+						<image src="http://new401.bafangka.com/static/client/fenxiao/chakan.png" ></image>
 					</view>
 			</view>
 		</block>
-		
+
 		<block v-if="isLast">
 			<view class="four" >
 				信息审核中
@@ -113,7 +113,7 @@
 			</view>
 			<view class="five" @click="lookJilu">
 				{{isNext?'返回修改':'查看申请记录'}}
-				<image src="/static/fenxiao/chakan.png" ></image>
+				<image src="http://new401.bafangka.com/static/client/fenxiao/chakan.png" ></image>
 			</view>
 		</block>
 	</view>
@@ -166,7 +166,7 @@
 			};
 		},
 		onShow(){
-			
+
 		},
 		onLoad() {
 
@@ -229,10 +229,10 @@
 							info.area_id=this.address_info.Address_Area;
 							info.town_id=this.address_info.Address_Town;
 						}
-						
-						
+
+
 						agentApply(info).then(res=>{
-							this.isLast=true;	
+							this.isLast=true;
 							this.isAgr=false;
 							uni.showToast({
 								title:res.msg
@@ -354,7 +354,7 @@
 						a_arr
 					  ];
 				}
-				
+
 				this.change_multiIndex = columnValue;
 			  },
 			//选择收货地址
