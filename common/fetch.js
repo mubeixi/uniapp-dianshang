@@ -209,6 +209,9 @@ export const getNobiRecordList = (data, options) => fetch('get_nobi_record_list'
 export const getDisRecordList = (data, options) => fetch('get_dis_record_list', data, options);
 // 获取佣金列表 股东
 export const getShaRecordList = (data, options) => fetch('get_sha_record_list', data, options);
+// 获取佣金列表 区域代理
+export const getAgentRecordList = (data, options) => fetch('get_agent_record_list', data, options);
+
 // 获取爵位晋升
 export const nobiInfo = (data, options) => fetch('nobi_info', data, options);
 //获取分销商信息
@@ -217,6 +220,10 @@ export const getUserDisInfo = (data, options) => fetch('get_user_dis_info', data
 export const updateUserDisInfo = (data, options) => fetch('update_user_dis_info', data, options);
 //获取区域代理
 export const agentInfo = (data, options) => fetch('agent_info', data, options);
+//获取股东
+export const shaInit = (data, options) => fetch('sha_init', data, options);
+
+
 //获取成为分销商配置信息
 export const disApplyInit = (data, options) => fetch('dis_apply_init', data, options);
 

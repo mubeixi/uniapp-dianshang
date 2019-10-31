@@ -257,8 +257,8 @@
             "style" : {
             	"navigationBarTitleText": "任务中心",
 				"app-plus": {
-									"titleNView": false
-								}
+					"titleNView": false
+				}
             }
         }
         ,{
@@ -447,6 +447,12 @@
             "path" : "pages/disAgreementBefore/disAgreementBefore",
             "style" : {
                 "navigationBarTitleText": "成为分销商"
+            }
+        }
+        ,{
+            "path" : "pages/gudong/gudong",
+            "style" : {
+            	"navigationBarTitleText": "股东"
             }
         }
     ],

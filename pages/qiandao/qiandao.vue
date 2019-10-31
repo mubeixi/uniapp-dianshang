@@ -16,11 +16,11 @@
 		</view>
 
 		<view class="jilu">
-			<view class="chang" v-for="item in pro.continue_" :key="item">
+			<view class="chang" v-for="(item,index) in pro.continue_" :key="index">
 				<image v-if="item<pro.continue" src="http://new401.bafangka.com/static/client/task/checked.png" ></image>
 				<image v-else src="http://new401.bafangka.com/static/client/task/unchecked.png" ></image>
 				<view>
-					第{{item+1}}天
+					第{{index+1}}天
 				</view>
 			</view>
 		</view>

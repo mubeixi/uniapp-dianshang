@@ -123,7 +123,8 @@ export default {
 					password: '',
 					address_id: 0,
 					shipping_price: 0, //运费
-					pay_arr: []
+					pay_arr: [],
+					initData: {}
         }
     },
 	filters: {
@@ -136,9 +137,11 @@ export default {
 			}
 		}
 	},
-	onShow() {
+	async	onShow() {
 		this.getAddress();
 		this.getShipping();
+		let initData = await this.getInitData()
+		this.pay_arr = initData.pay_arr;
 	},
 	async created(){
 		let userInfo = this.getUserInfo(true);
@@ -161,8 +164,6 @@ export default {
 		this.gift_id = options.gift_id;
 
 		this.jifenProdDetail();
-		// 获取支付方式
-		this.pay_arr = ls.get('initData').pay_arr;
 	},
 	computed: {
 		loading: function(){
@@ -174,7 +175,7 @@ export default {
 		...mapGetters(['userInfo'])
 	},
   methods: {
-		...mapActions(['getUserInfo']),
+		...mapActions(['getUserInfo','getInitData']),
 		// 物流信息列表
 		getShipping(){
 			getShipping().then(res=>{
@@ -234,7 +235,12 @@ export default {
 			}).then(res=>{
 				this.psdInput = false;
 				this.Order_ID = res.data.Orders_ID;
-				this.$refs.method.show();
+				// 判断是否是待支付状态
+				if(res.data.Order_Status == 1) {
+					this.$refs.method.show();
+				}else if(res.data.Order_Status == 2) {
+					this.paySuccessCall();
+				}
 			},err=>{
 				uni.showToast({
 					title: err.msg,
@@ -767,10 +773,13 @@ export default {
 
 			},
 			paySuccessCall(){
-
 				let _self = this;
-				toast('支付成功');
-
+				uni.showToast({
+					title: '支付成功'
+				})
+				uni.redirectTo({
+					url: '../myRedemption/myRedemption'
+				})
 			},
     }
 }

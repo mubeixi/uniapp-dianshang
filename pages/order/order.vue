@@ -263,7 +263,7 @@ export default {
 		position: fixed;
 		top:0rpx;
 		/* #ifdef APP-PLUS */
-		// top: var(--status-bar-height);//86rpx;
+		// top: var(--status-bar-height);
 		/* #endif */
 		left: 0rpx;
 		width: 750rpx;
@@ -301,12 +301,6 @@ export default {
             border-bottom: 2px solid red;
         }
     }
-	.space{
-		/* #ifdef APP-PLUS */
-		margin-top: var(--status-bar-height);
-		/* #endif */
-
-	}
     .order {
         padding: 0rpx 20rpx;
         background: #fff;
