@@ -13,7 +13,7 @@
 			<view class="page-section-spacing">
 				<swiper class="swiper" circular="true" indicator-dots="indicatorDots" autoplay="autoplay" interval="4000" duration="500" indicator-color="#fff" indicator-active-color="#ff5000">
 					<swiper-item v-for="(item,i) of product.Products_JSON.ImgPath" :key="i">
-						 <img :src="item" >
+						 <img :src="item"  @click="yulan(i)">
 					</swiper-item>
 				</swiper>
 			</view>
@@ -439,6 +439,14 @@ export default {
 	},
     methods: {
 		...mapActions(['getUserInfo']),
+		//轮播图图片预览
+		yulan(index){
+			uni.previewImage({
+				urls: this.product.Products_JSON.ImgPath,
+				indicator:'default',
+				current:index
+			});
+		},
 		toJoinGroup(tid,team){
 			console.log(team)
 			if(!this.$fun.checkIsLogin())return;
