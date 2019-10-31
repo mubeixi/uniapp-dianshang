@@ -469,7 +469,7 @@ export default {
                             //     url:`/pages/pay/wx/wx?users_id=${users_id}&nocestr=`+nocestr
                             // })
 
-                            let str = `/pages/pay/wx/wx?users_id=${users_id}&nocestr=`+nocestr
+                            let str = `/fre/pages/pay/wx/wx?users_id=${users_id}&nocestr=`+nocestr
 
                             let url = location.origin + str;
 
