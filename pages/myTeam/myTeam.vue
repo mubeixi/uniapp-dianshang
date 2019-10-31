@@ -28,7 +28,7 @@
 					{{item.title}}
 				</view>
 				<view>
-					<text>{{item.count}}</text><image src="/static/fenxiao/right.png"></image>
+					<text>{{item.count}}</text><image src="http://new401.bafangka.com/static/client/fenxiao/right.png"></image>
 				</view>
 			</view>
 

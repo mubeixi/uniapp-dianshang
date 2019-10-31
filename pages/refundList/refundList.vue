@@ -35,7 +35,7 @@
 			</template>
         </div>
 		<div class="defaults" v-if="data.length<=0">
-			<image src="/static/defaultImg.png" ></image>
+			<image src="http://new401.bafangka.com/static/client/defaultImg.png" ></image>
 		</div>
 	</div>
 
@@ -84,7 +84,7 @@ export default {
 					})
 					this.data.splice(index,1);
 			},err=>{
-				
+
 			}).catch(e=>{
 				console.log(e);
 			})
@@ -95,7 +95,7 @@ export default {
 				this.data=res.data;
 				this.totalCount=res.totalCount;
 			},err=>{
-				
+
 			}).catch(e=>{
 				console.log(e)
 			})
@@ -122,8 +122,8 @@ export default {
 			}
 
 		},
-	
-	}	
+
+	}
 }
 </script>
 

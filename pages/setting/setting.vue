@@ -2,40 +2,40 @@
 	<view>
 		<view class="list">
 			<view class="bargain group">
-				<image src="/static/person/pin.png" class="left"></image>
+				<image src="http://new401.bafangka.com/static/client/person/pin.png" class="left"></image>
 				<view class="pintuan">
 					关于我们
 				</view>
-				<image src="/static/person/right.png" class="right"></image>
+				<image src="http://new401.bafangka.com/static/client/person/right.png" class="right"></image>
 			</view>
 			<view class="bargain group">
-				<image src="/static/person/pin.png" class="left"></image>
+				<image src="http://new401.bafangka.com/static/client/person/pin.png" class="left"></image>
 				<view class="pintuan">
 					联系我们
 				</view>
-				<image src="/static/person/right.png" class="right"></image>
+				<image src="http://new401.bafangka.com/static/client/person/right.png" class="right"></image>
 			</view>
 
 			<view class="bargain">
-				<image src="/static/person/kan.png" class="left"></image>
+				<image src="http://new401.bafangka.com/static/client/person/kan.png" class="left"></image>
 				<view class="pintuan">
 					版本更新
 				</view>
-				<image src="/static/person/right.png" class="right"></image>
+				<image src="http://new401.bafangka.com/static/client/person/right.png" class="right"></image>
 			</view>
 			<view class="bargain" @click="goGift">
-				<image src="/static/person/zengpin.png" class="left"></image>
+				<image src="http://new401.bafangka.com/static/client/person/zengpin.png" class="left"></image>
 				<view class="pintuan">
 					意见反馈
 				</view>
-				<image src="/static/person/right.png" class="right"></image>
+				<image src="http://new401.bafangka.com/static/client/person/right.png" class="right"></image>
 			</view>
 			<view class="bargain"  @click="goRenwu">
-				<image src="/static/person/renwu.png" class="left"></image>
+				<image src="http://new401.bafangka.com/static/client/person/renwu.png" class="left"></image>
 				<view class="pintuan">
 					清空缓存
 				</view>
-				<image src="/static/person/right.png" class="right"></image>
+				<image src="http://new401.bafangka.com/static/client/person/right.png" class="right"></image>
 			</view>
 
 		</view>

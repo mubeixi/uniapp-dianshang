@@ -6,7 +6,11 @@
 	<!-- 	<page-title title="爵位晋升" rightHidden="true"></page-title> -->
 		<view class="top">
 			<view class="person">
+<<<<<<< HEAD
+				<image src="http://new401.bafangka.com/static/client/fenxiao/person.png"></image>
+=======
 				<image :src="data.disInfo.Shop_Logo"></image>
+>>>>>>> upstream/master
 			</view>
 			<view class="nickName">
 				{{data.disInfo.Shop_Name}}
@@ -36,7 +40,7 @@
 			</view>
 			<view class="chakan" @click="goFinance">
 				查看明细
-				<image src="/static/fenxiao/chakan.png" ></image>
+				<image src="http://new401.bafangka.com/static/client/fenxiao/chakan.png" ></image>
 			</view>
 		</view>
 		<circleTitle title="我的数据"></circleTitle>

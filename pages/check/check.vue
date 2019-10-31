@@ -2,7 +2,7 @@
     <view v-if="loading">
       <!--  <pagetitle title="提交订单"></pagetitle> -->
         <view class="address" v-if="orderInfo.is_virtual == 0 " @click="goAddressList">
-            <image class="loc_icon" src="/static/location.png" alt="" ></image>
+            <image class="loc_icon" src="http://new401.bafangka.com/static/client/location.png" alt="" ></image>
             <view class="add_msg" v-if="addressinfo.Address_Name">
                 <view class="name">收货人：{{addressinfo.Address_Name}} <span>{{addressinfo.Address_Mobile | formatphone}}</span></view>
                 <view class="location">收货地址：{{addressinfo.Address_Province_name}}{{addressinfo.Address_City_name}}{{addressinfo.Address_Area_name}}{{addressinfo.Address_Town_name}}</view>
@@ -10,7 +10,7 @@
 						<view class="add_msg" v-else>
 							<view>暂无收货地址，去添加</view>
 						</view>
-            <image class="right" src="/static/right.png" alt="" ></image>
+            <image class="right" src="http://new401.bafangka.com/static/client/right.png" alt="" ></image>
         </view>
 		<view class="biz_msg">
 			<image :src="orderInfo.ShopLogo" class="biz_logo" alt="" />
@@ -34,7 +34,7 @@
                     <span>运费选择</span>
                     <span style="text-align:right; color: #888;" >
 						<span>{{shipping_name?(shipping_name + ' ' + (orderInfo.Order_Shipping.Price > 0 ? orderInfo.Order_Shipping.Price : '免运费')):'请选择物流'}}</span>
-                        <image  class="right" src="/static/right.png" alt=""></image>
+                        <image  class="right" src="http://new401.bafangka.com/static/client/right.png" alt=""></image>
                     </span>
                 </view>
             </view>
@@ -45,7 +45,7 @@
                     <span>优惠券选择</span>
                     <span style="text-align: right; color: #888;display: flex;align-items: center;">
 						<span >{{couponlist.length>0?(coupon_desc?coupon_desc:'您有优惠券使用'): '暂无可用优惠券'}}</span>
-						<image  src="/static/right.png" class="right" alt=""></image>
+						<image  src="http://new401.bafangka.com/static/client/right.png" class="right" alt=""></image>
 					</span>
                 </view>
             </view>
