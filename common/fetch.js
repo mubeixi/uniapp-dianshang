@@ -322,6 +322,12 @@ export const jifenProdShippingPrice = (data, options) => fetch('jifen_prod_shipp
 // 积分兑换订单支付
 export const jifenProdPay = (data, options) => fetch('jifen_prod_pay', data, options);
 
+
+// 长链接转换短链接
+//export const traslateShorten = (data,option) =>fetch('shorten', data, option);
+
+
+
 //普通环境noop就行了
 let add_template_code_FUNC = ()=>{}
 
@@ -329,6 +335,8 @@ let add_template_code_FUNC = ()=>{}
 // #ifdef MP-WEIXIN || MP-ALIPAY
 add_template_code_FUNC = (data,option) =>fetch('add_template_code', data, option?option:{errtip:false});
 // #endif
+
+
 
 export const add_template_code = add_template_code_FUNC
 
@@ -397,3 +405,5 @@ function ObjectToString(object, arrs) {
   }
   return arrs;
 }
+
+

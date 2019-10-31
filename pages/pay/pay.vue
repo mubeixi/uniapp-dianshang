@@ -205,17 +205,17 @@
 		created() {
 
 			// #ifdef H5
-			if (isWeiXin()) {
-				this.code = GetQueryByString(location.href, 'code');
-				console.log(this.code)
-				if (this.code) {
-
-					this.pay_type = 'wx_mp';//需要手动设置一下
-					// console.log(this.pay_type)
-					// ls.set('code',this.code)
-					this.self_orderPay(1);
-				}
-			}
+			// if (isWeiXin()) {
+			// 	this.code = GetQueryByString(location.href, 'code');
+			// 	console.log(this.code)
+			// 	if (this.code) {
+			//
+			// 		this.pay_type = 'wx_mp';//需要手动设置一下
+			// 		// console.log(this.pay_type)
+			// 		// ls.set('code',this.code)
+			// 		this.self_orderPay(1);
+			// 	}
+			// }
 			// #endif
 		},
 		methods: {
