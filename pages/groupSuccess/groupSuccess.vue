@@ -552,7 +552,7 @@
 
                 let login_methods = initData.login_methods
                 for(var i in login_methods){
-                    if(i!='component_appid' && login_methods[i].type === 'wx_lp' && login_methods[i].authorizer_user_name){
+                    if(i!='component_appid'  && login_methods[i].authorizer_user_name){
                         WX_MINI_ORIGIN_ID = login_methods[i].authorizer_user_name
                         break;
                     }

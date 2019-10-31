@@ -13,7 +13,7 @@
 			</view>
 			<view class="personInfo flex">
 				<view class="left" @click="goPersonMsg">
-					<image style="border-radius: 50%;"  :src="userInfo.User_HeadImg||'/static/default.png'" ></image>
+					<image style="border-radius: 50%;"  :src="userInfo.User_HeadImg||'http://new401.bafangka.com/static/client/default.png'" ></image>
 				</view>
 				<view class="right flex1" :style="{position:!userInfo.User_ID?'relative':'static'}">
 					<view class="font14 loginBtn" v-if="!userInfo.User_ID" plain size="mini" @click="goLogin">登录/注册</view>

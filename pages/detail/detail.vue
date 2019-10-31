@@ -910,7 +910,7 @@ export default {
 
 			let login_methods = initData.login_methods
 			for(var i in login_methods){
-				if(i!='component_appid' && login_methods[i].type === 'wx_lp' && login_methods[i].authorizer_user_name){
+				if(i!='component_appid' && login_methods[i].authorizer_user_name){
 					WX_MINI_ORIGIN_ID = login_methods[i].authorizer_user_name
 					break;
 				}
@@ -996,7 +996,7 @@ export default {
         position: relative;
         width: 720rpx;
         height: 160rpx;
-        // background: url('/static/detail/yhq.png') no-repeat ;
+        // background: url('http://new401.bafangka.com/static/client/detail/yhq.png') no-repeat ;
 		background-color: #FDF1E5;
         background-size: cover;
         margin: 0 auto 30rpx;
