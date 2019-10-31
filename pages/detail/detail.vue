@@ -118,23 +118,22 @@
 			</div>
 			<div class="s_bottom" @click="cancel">取消</div>
 		</div>
-		<scroll-view class="ticks" v-if="type=='ticks'" scroll-y=true  @scrolltolower="goNextPage">
-		    <div class="t_title">
-		        领券
-		        <image src="https://new401.bafangka.com/static/client/detail/x.png"  @click="close" ></image>
-		    </div>
-			<div style="height: 90rpx;">
-
+		<view style="max-height: 1050rpx;">
+			<div class="t_title">
+			    领券
+			    <image src="http://new401.bafangka.com/static/client/detail/x.png"  @click="close" ></image>
 			</div>
-		    <div class="t_content" v-for="(item,i) of couponList" :key="i">
-		        <div class="t_left">
-		            <div class="t_left_t"><span>￥</span><span class="money">{{item.Coupon_Cash}}</span><span>店铺优惠券</span></div>
-		            <div class="t_left_c">{{item.Coupon_Title}}</div>
-		            <div class="t_left_b">有效期{{item.Coupon_StartTime}}-{{item.Coupon_EndTime}}</div>
-		        </div>
-		        <div class="t_right" @click="getMyCoupon(item.Coupon_ID,i)">立即领取</div>
-		    </div>
-		</scroll-view>
+			<scroll-view class="ticks" v-if="type=='ticks'" scroll-y=true  @scrolltolower="goNextPage">
+			    <div class="t_content" v-for="(item,i) of couponList" :key="i">
+			        <div class="t_left">
+			            <div class="t_left_t"><span>￥</span><span class="money">{{item.Coupon_Cash}}</span><span>店铺优惠券</span></div>
+			            <div class="t_left_c">{{item.Coupon_Title}}</div>
+			            <div class="t_left_b">有效期{{item.Coupon_StartTime}}-{{item.Coupon_EndTime}}</div>
+			        </div>
+			        <div class="t_right" @click="getMyCoupon(item.Coupon_ID,i)">立即领取</div>
+			    </div>
+			</scroll-view>
+		</view>
 	</popupLayer>
 	<popupLayer ref="cartPopu" :direction="'top'">
 		<div class="cartSku">
@@ -978,7 +977,7 @@ export default {
 		color: #333;
         text-align:center;
         //margin-bottom: 40rpx;
-		position: fixed;
+		// position: fixed;
 		width: 100%;
 		z-index: 999;
 		height: 90rpx;

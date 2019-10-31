@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<!-- #ifdef APP-PLUS -->
-		<!-- <view class="status_bar" style="background-color: rgb(248, 248, 248);"> --><!-- 这里是状态栏 --></view>
+		<view class="status_bar" style="background-color: #FFFFFF;"></view>
 		<!-- #endif -->
 
 		<div v-if="loading">
@@ -414,13 +414,15 @@ export default {
     .pro-name {
         font-size: 26upx;
         margin-bottom: 18upx;
-				width: 390upx;
-				line-height: 28upx;
-				display: -webkit-box;
-		    -webkit-line-clamp:2;
-		    overflow: hidden;
-		    text-overflow: ellipsis;
-		    -webkit-box-orient: vertical;
+		width: 390upx;
+		line-height: 28upx;
+		height: 56upx;
+		overflow: hidden;
+		display: -webkit-box;
+		-webkit-line-clamp:2;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		-webkit-box-orient: vertical;
     }
     .attr {
     	display: inline-block;
