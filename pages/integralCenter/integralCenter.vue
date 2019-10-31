@@ -2,7 +2,7 @@
 	<view class="boxSizing">
 		<view class="zhezhao" v-if="isShow">
 			<view class="zhezhaoView">
-				<image src="/static/check/close.png" class="closeZ" @click="isShow=false"></image>
+				<image src="http://new401.bafangka.com/static/client/check/close.png" class="closeZ" @click="isShow=false"></image>
 				<view class="zhezhaoYue">
 					余额互转
 				</view>
@@ -22,11 +22,7 @@
 					确认转出
 				</view>
 			</view>
-<<<<<<< HEAD
-			<image src="http://new401.bafangka.com/static/client/check/close.png" class="closeZ" @click="isShow=false"></image>
-=======
 			
->>>>>>> upstream/master
 		</view>
 		
 		<view class="top">
