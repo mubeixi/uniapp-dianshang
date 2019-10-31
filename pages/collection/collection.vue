@@ -227,6 +227,7 @@ export default {
 		top: 0rpx;
 		left: 0rpx;
 		width: 100%;
+		z-index: 999;
 		/* #ifdef APP-PLUS */
 			padding-top: var(--status-bar-height);
 		/* #endif */
