@@ -212,9 +212,9 @@ export const pageMixin = {
 
 		}
 
-		// if(!ls.get('initData')){
-		// 	this.getInitData()
-		// }
+		if(!ls.get('initData')){
+			this.getInitData()
+		}
 
     },
 	// #ifdef MP-WEIXIN || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO
@@ -235,19 +235,14 @@ export const pageMixin = {
 	async created(){
 
 		// #ifdef H5
-		// console.log('JSSDK_INITJSSDK',this.JSSDK_INIT)
-		// console.log('aaaaaaaaaaaaaaa')
+
 		let initData = await this.getInitData()
-		// console.log('cccccccccccccc')
+
 		//页面默认全都是分享出去是首页的
 		if(isWeiXin() && this.JSSDK_INIT){
-			// console.log(44444444444444444)
 
-			// console.log('dddddddddddddddd')
 			await this.WX_JSSDK_INIT(this).then((env)=>{
 
-
-				// console.log('eeeeeeeeeeeeeeeee')
 				this.$wx.onMenuShareTimeline({
 					title: initData.ShopName, // 分享标题
 					link: location.origin, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
@@ -272,9 +267,6 @@ export const pageMixin = {
 
 			})
 		}
-
-		// console.log('fffffffffffffffffffffffffffffff')
-
 
 		// #endif
 

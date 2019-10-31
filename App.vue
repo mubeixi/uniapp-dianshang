@@ -35,8 +35,6 @@
         //目前只有app端用到了应用的全局onLaunch
 		onLaunch: function(option) {
 
-
-
 		    //每次加载都清空全站配置
             ls.remove('initData');
 
