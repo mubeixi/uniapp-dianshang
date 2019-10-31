@@ -172,6 +172,7 @@
 			width: 75rpx;
 			height: 75rpx;
 			border-radius: 50%;
+			overflow: hidden;
 			image{
 				width: 100%;
 				height: 100%;
