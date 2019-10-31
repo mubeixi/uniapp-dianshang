@@ -7,9 +7,11 @@
 				<div style="background-color: #F3F3F3;height: 20rpx;width: 100%;position: absolute;left: 0rpx;"></div>
 				<div style="height: 20rpx;"></div>
 				<div class="bizinfo">
-					<img :src="item.ShopLogo" alt="">
+					<!-- <img :src="item.ShopLogo" alt="">
 					<span class="bizname">{{item.ShopName}}</span>
-					<span class="status">{{item.Order_Status_desc}}</span>
+					<span class="status">{{item.Order_Status_desc}}</span> -->
+					<span class="bizname">订单编号:</span>
+					<span class="status">{{item.Back_Sn}}</span>
 				</div>
 				<block v-for="(i,k) of item.prod_list" :key="k">
 					<div class="pro" @click="goDetail(item)">
@@ -191,7 +193,7 @@ export default {
 			margin-top: 20rpx;
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            // justify-content: space-between;
             width: 100%;
             img {
                 width: 70rpx;
@@ -200,7 +202,7 @@ export default {
                 margin-right: 21rpx;
             }
             .bizname {
-                flex: 1;
+                // flex: 1;
 				font-size: 28rpx;
             }
             .status {

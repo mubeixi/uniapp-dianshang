@@ -59,7 +59,11 @@
 		},
 		onLoad(options) {
 			let that=this;
-			this.index=options.index;
+			if(options.index){
+				this.index=options.index;
+			}else{
+				this.index=0;
+			}
 			uni.getSystemInfo({
 			    success: function (res) {
 			        that.height=res.screenHeight-68;
