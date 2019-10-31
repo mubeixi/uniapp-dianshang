@@ -329,9 +329,12 @@ export const jifenProdShippingPrice = (data, options) => fetch('jifen_prod_shipp
 // 积分兑换订单支付
 export const jifenProdPay = (data, options) => fetch('jifen_prod_pay', data, options);
 
+export const saveTempData  = (data, options) => fetch('save_redis_data', data, options);
+
+export const getTempData = (data, options) => fetch('get_redis_data', data, options);
 
 // 长链接转换短链接
-//export const traslateShorten = (data,option) =>fetch('shorten', data, option);
+export const traslateShorten =saveTempData
 
 
 

@@ -50,7 +50,7 @@
 		left: 0;
 		z-index:0;
 		.cover-full-bg(cover,0,#f2f2f2);
-		background-image: url("http://new401.bafangka.com/uploadfiles/wkbq6nc2kc/image/5daa7f9be1.jpg");
+		background-image: url("https://new401.bafangka.com/uploadfiles/wkbq6nc2kc/image/5daa7f9be1.jpg");
 	}
 
 

@@ -12,7 +12,7 @@
 	  <!-- #endif -->
       <div class="pro-list" v-for="(item,index) in collect_list" :key="index">
 		  <div class="mbxa"  v-if="rightClicked" @click="check(index)">
-			  <img :src="checked[index].checked?'http://new401.bafangka.com/static/client/checked.png':'http://new401.bafangka.com/static/client/uncheck.png'" >
+			  <img :src="checked[index].checked?'https://new401.bafangka.com/static/client/checked.png':'https://new401.bafangka.com/static/client/uncheck.png'" >
 		  </div>
           <div class="pro" @click="goDetail(item)">
             <div class="pros">
@@ -38,7 +38,7 @@
 	  </div>
       <div class="bottom" v-if="rightClicked" >
             <div class="b_left" @click="checkAll">
-				 <img :src="allChecked ? 'http://new401.bafangka.com/static/client/checked.png' : 'http://new401.bafangka.com/static/client/uncheck.png'" >
+				 <img :src="allChecked ? 'https://new401.bafangka.com/static/client/checked.png' : 'https://new401.bafangka.com/static/client/uncheck.png'" >
 				 全选
             </div>
             <div class="b_right" @click="cancelCollection">删除({{totalNum}})</div>

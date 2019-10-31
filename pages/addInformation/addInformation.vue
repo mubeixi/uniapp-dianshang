@@ -83,7 +83,7 @@
 					</picker>
 				</view>
 				<view class="images">
-					<image src="http://new401.bafangka.com/static/client/fenxiao/chakan.png" ></image>
+					<image src="https://new401.bafangka.com/static/client/fenxiao/chakan.png" ></image>
 				</view>
 			</view>
 			<view class="threes" v-if="current==3">
@@ -97,7 +97,7 @@
 					  </picker>
 					</view>
 					<view class="images">
-						<image src="http://new401.bafangka.com/static/client/fenxiao/chakan.png" ></image>
+						<image src="https://new401.bafangka.com/static/client/fenxiao/chakan.png" ></image>
 					</view>
 			</view>
 		</block>
@@ -113,7 +113,7 @@
 			</view>
 			<view class="five" @click="lookJilu">
 				{{isNext?'返回修改':'查看申请记录'}}
-				<image src="http://new401.bafangka.com/static/client/fenxiao/chakan.png" ></image>
+				<image src="https://new401.bafangka.com/static/client/fenxiao/chakan.png" ></image>
 			</view>
 		</block>
 	</view>

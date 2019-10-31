@@ -2,7 +2,7 @@
 	<view>
 		<!-- <page-title title="会员充值"></page-title> -->
 		<view class="yue">
-			<image src="http://new401.bafangka.com/static/client/blance/recharge.jpg" ></image>
+			<image src="https://new401.bafangka.com/static/client/blance/recharge.jpg" ></image>
 			<view class="yueq">
 				余额
 			</view>
