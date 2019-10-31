@@ -12,7 +12,6 @@
 				<div>
 					<image class='img'  v-if="collected"  src="http://new401.bafangka.com/static/client/tuan/xx.png" ></image>
 					<image class='img'  v-else src="http://new401.bafangka.com/static/client/sc.png" ></image>
-
 				</div>
 				<div class="txt">收藏</div>
 			</div>
