@@ -26,7 +26,7 @@
 		data() {
 			return {
 				userDisInfo: {},
-				
+
 				Shop_Name: '',  // 自定义店铺名称
 				Shop_Logo: '',  // 自定义头像
 				Shop_Announce: '' ,//自定义分享与
@@ -39,7 +39,7 @@
 			this.getUserDisInfo();
 		},
 		computed: {
-			
+
 		},
 		methods: {
 			getUserDisInfo() {
@@ -49,9 +49,9 @@
 						console.log(this.userDisInfo)
 						this.Shop_Name = this.userDisInfo.Shop_Name;
 						this.Shop_Logo = this.userDisInfo.Shop_Logo;
-						
+
 					}else {
-						
+
 					}
 				})
 			},
@@ -69,7 +69,7 @@
 					let that=this;
 					uni.chooseImage({
 						count:1,
-						sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有  
+						sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
 						success(res) {
 							that.isSubmit=false;
 							for(let item of res.tempFiles){
@@ -89,16 +89,16 @@
 												//是否可以提交
 												that.isSubmit=true;
 											}
-									});		
-								}	
+									});
+								}
 							}
-							
+
 						},
 						fail(e) {
 							console.log(e);
 						}
 					});
-				
+
 			},
 			// 保存
 			save(){
@@ -123,7 +123,7 @@
 			}
 		},
 		onShow: function(){
-			
+
 		}
 	}
 </script>
@@ -147,7 +147,7 @@
 				left: 0;
 				z-index: 10;
 				border-radius: 60rpx;
-				background: rgba(0,0,0,.4) url(../../static/fenxiao/xj.png) no-repeat center center;
+				background: rgba(0,0,0,.4) url(http://new401.bafangka.com/static/client/fenxiao/xj.png) no-repeat center center;
 				background-size: 42rpx 34rpx;
 			}
 		}

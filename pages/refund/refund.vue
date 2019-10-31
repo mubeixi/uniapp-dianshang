@@ -5,7 +5,7 @@
 		  <!-- #endif -->
 
        <!-- <page-title title="申请退款" rightHidden="true"></page-title> -->
-	
+
         <div class="pro" v-for="(item,index) of refundInfo.refund_prod_list" :key="item">
             <div class="pro-div">
         		<image class="pro-img" :src="item.prod_img" alt="" />
@@ -25,14 +25,14 @@
             <div class="item-left">退款方式</div>
             <div class="item-right" @click="showMethod">
                 <span>仅退款</span>
-                <image class="img" src="/static/right.png" alt="" />
+                <image class="img" src="http://new401.bafangka.com/static/client/right.png" alt="" />
             </div>
         </div> -->
         <div class="item">
             <div class="item-left">退款原因</div>
             <div class="item-right" @click="showReason">
 				<span>{{reasonDes?reasonDes: '请选择'}}</span>
-                <image class="img" src="/static/right.png" alt="" />
+                <image class="img" src="http://new401.bafangka.com/static/client/right.png" alt="" />
             </div>
         </div>
         <!-- <div class="item spe">
@@ -47,7 +47,7 @@
         <div class="imgs">
 			<view class="shangchuans" v-for="(item,index) of imgs" :key="index"  >
 				<image :src="item"  @click="yulan(index)"></image>
-				<image src="/static/delimg.png" class="del" @click="delImg(index)"></image>
+				<image src="http://new401.bafangka.com/static/client/delimg.png" class="del" @click="delImg(index)"></image>
 			</view>
             <view class="shangchuan" @click="addImg">
 				<view class="heng"></view>

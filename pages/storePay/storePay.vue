@@ -2,7 +2,7 @@
 	<view>
 		<!-- <page-title title="会员充值"></page-title> -->
 		<view class="yue">
-			<image src="/static/blance/storePay.jpg" ></image>
+			<image src="http://new401.bafangka.com/static/client/blance/storePay.jpg" ></image>
 			<view class="yueq">
 				余额
 			</view>
@@ -12,11 +12,11 @@
 		</view>
 
 		<view class="inputs">
-			<image src="/static/check/money.png" ></image>
+			<image src="http://new401.bafangka.com/static/client/check/money.png" ></image>
 			<input  type="text" placeholder="请输入消费金额" v-model="money">
 		</view>
 		<view class="inputs">
-			<image src="/static/check/password.png" ></image>
+			<image src="http://new401.bafangka.com/static/client/check/password.png" ></image>
 			<input  type="password" placeholder="请输入支付密码" v-model="passwd">
 		</view>
 		<view class="zhu">
@@ -30,7 +30,7 @@
 
 <script>
 	import {storeConsume,get_user_info} from '../../common/fetch.js';
-	
+
 	export default {
 		data() {
 			return {
@@ -72,7 +72,7 @@
 						this.isClicked = false;
 						uni.navigateBack({
 							delta: 1
-						})						
+						})
 					},1500)
 				},err=>{
 					this.isClicked = false;

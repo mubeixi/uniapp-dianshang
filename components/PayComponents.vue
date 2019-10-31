@@ -20,6 +20,10 @@
                 </div>
             </div>
         </view>
+
+        <view v-if="aliPayUrl" class="aliPayUrl">
+            <navigator :url="aliPayUrl"></navigator>
+        </view>
     </view>
 </template>
 
@@ -28,10 +32,12 @@
 import {mapGetters,mapActions} from 'vuex';
 import {toast,error} from "../common";
 import {orderPay,add_template_code} from "../common/fetch";
-import {isWeiXin,ls} from "../common/tool";
+import {isWeiXin,ls,GetQueryByString,urlencode} from "../common/tool";
 // #ifdef H5
 import {WX_JSSDK_INIT} from "../common/mixin";
 // #endif
+
+
 
 function noop(){}
 export default {
@@ -100,6 +106,7 @@ export default {
     data(){
         return {
             timer: null,
+            aliPayUrl:'',
             iftoggle: false,
             direction:'top',//强制在底部
             ifshow: false, // 是否展示,
@@ -140,8 +147,23 @@ export default {
           },100)
         }
         //console.log(this.use_money)
+
+        // #ifdef H5
+        if (isWeiXin()) {
+            this.code = GetQueryByString(location.href, 'code');
+            console.log(this.code)
+            if (this.code) {
+
+                this.pay_type = 'wx_mp';//需要手动设置一下
+                // console.log(this.pay_type)
+                // ls.set('code',this.code)
+                this.self_orderPay(1);
+            }
+        }
+        // #endif
     },
     methods:{
+        ...mapActions(['getInitData']),
         // 取消输入支付密码
         cancelInput() {
             this.password_input = false;
@@ -207,6 +229,80 @@ export default {
                 // 未使用余额支付, 直接调用
                 this.self_orderPay();
             }
+        },
+        async $_init_wxpay_env() {
+
+            let initData = await this.getInitData()
+
+            let login_methods = initData.login_methods;
+            let component_appid = login_methods.component_appid
+
+            let channel = null;
+
+            //根据服务器返回配置设置channels,只有微信公众号和小程序会用到component_appid
+            //而且状态可以灵活控制 state为1
+            for (var i in login_methods) {
+                // && login_methods[i].state ??状态呢？
+                if (i != 'component_appid' && login_methods[i].state) {
+                    channel = ['wx_mp'].indexOf(login_methods[i].type) === -1 ? { ...login_methods[i]
+                    } : { ...login_methods[i],
+                        component_appid
+                    };
+                    break;
+                }
+            }
+
+            if (!channel) {
+                this.$error('未开通公众号支付');
+                return false;
+            }
+
+
+            //如果url有code去掉
+            let {
+                origin,
+                pathname,
+                search,
+                hash
+            } = window.location;
+            let strArr = []
+            if (search.indexOf('code') != -1) {
+                let tempArr = search.split('&');
+                for (var i in tempArr) {
+
+                    if (i.indexOf('code') === -1) {
+                        strArr.push(tempArr[i])
+                    }
+                }
+                let newSearchStr = strArr.join('&');
+                if (newSearchStr.idnexOf('?') === -1) {
+                    newSearchStr = '?' + newSearchStr
+                }
+
+
+                search = newSearchStr;
+
+            }
+
+
+            let REDIRECT_URI = urlencode(origin + pathname + search + hash);
+
+            let wxAuthUrl = null;
+
+            if (channel.component_appid) {
+                //服务商模式登录
+                wxAuthUrl =
+                    `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${channel.appid}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=snsapi_userinfo&state=STATE&component_appid=${channel.component_appid}#wechat_redirect`;
+            } else {
+                //公众号自己的appid用于登录
+                wxAuthUrl =
+                    `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${channel.appid}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect`
+            }
+            console.log(wxAuthUrl)
+
+            window.location.href = wxAuthUrl;
+
+
         },
         // 统一方法
         async self_orderPay(is_forward){
@@ -360,18 +456,21 @@ export default {
                         fromurl = fromurl.replace(/openapi.alipay.com/,'wangjing666')
 
 
-                        // let str = origin+`/fre/pages/pay/wx/wx?users_id=${users_id}&formurl=`+encodeURIComponent(fromurl);
-                        // let url = str;
+                        let str = `/fre/pages/pay/wx/wx?users_id=${users_id}&formurl=`+encodeURIComponent(fromurl);
+                        let url = location.origin + str;
+                        console.log(url)
 
-                        uni.navigateTo({
-                            url:`/pages/pay/wx/wx?users_id=${users_id}&formurl=`+encodeURIComponent(fromurl)
-                        })
+                        this.aliPayUrl = url;
+                        //location.href = url;
+
+                        // uni.navigateTo({
+                        //     url:`/pages/pay/wx/wx?users_id=${users_id}&formurl=`+encodeURIComponent(fromurl)
+                        // })
 
                     }else{
                         document.write(res.data.arg)
                         document.getElementById('alipaysubmit').submit()
                     }
-
 
                     return;
 
@@ -383,7 +482,7 @@ export default {
                 let { timestamp, nonceStr, signType, paySign} = res.data;
 
                 //直接支付
-                _self.WX_JSSDK_INIT(_self).then((wxEnv) => {
+                WX_JSSDK_INIT(_self).then((wxEnv) => {
 
                     //关键字？？package
                     wxEnv.chooseWXPay({

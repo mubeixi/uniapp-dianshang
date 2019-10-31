@@ -1,11 +1,11 @@
 <template>
 	<view class="all">
 		<view class="top">
-<!--			<image src="/static/task/left.png" class="goBack" @click="goBack"></image>-->
+<!--			<image src="http://new401.bafangka.com/static/client/task/left.png" class="goBack" @click="goBack"></image>-->
 <!--			<view class="titles">每日签到</view>-->
 			<view class="yuan" @click="signinMethod">
-				<image src="/static/task/yuan.png"></image>
-				<image src="/static/task/qiandao.png" class="qiandao"></image>
+				<image src="http://new401.bafangka.com/static/client/task/yuan.png"></image>
+				<image src="http://new401.bafangka.com/static/client/task/qiandao.png" class="qiandao"></image>
 				<view class="qiandaoliji">
 					{{pro.signin?'已经签到':'立即签到'}}
 				</view>
@@ -17,15 +17,15 @@
 
 		<view class="jilu">
 			<view class="chang" v-for="(item,index) in pro.continue_" :key="index">
-				<image v-if="index<pro.continue" src="/static/task/checked.png" ></image>
-				<image v-else src="/static/task/unchecked.png" ></image>
+				<image v-if="item<pro.continue" src="http://new401.bafangka.com/static/client/task/checked.png" ></image>
+				<image v-else src="http://new401.bafangka.com/static/client/task/unchecked.png" ></image>
 				<view>
 					第{{index+1}}天
 				</view>
 			</view>
 		</view>
 		<view class="err">
-			<image src="/static/task/err.png" ></image>
+			<image src="http://new401.bafangka.com/static/client/task/err.png" mode=""></image>
 			温馨提示
 		</view>
 		<view class="last" v-if="pro">

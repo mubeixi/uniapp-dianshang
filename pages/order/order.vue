@@ -70,7 +70,7 @@
 			</template>
         </div>
 		<div class="defaults" v-if="data.length<=0">
-			<image src="/static/defaultImg.png" ></image>
+			<image src="http://new401.bafangka.com/static/client/defaultImg.png" ></image>
 		</div>
 	</div>
 
@@ -128,10 +128,10 @@ export default {
 							icon:'none'
 						})
 				},err=>{
-					
+
 				}).catch(e=>{
 					console.log(e);
-				})				
+				})
 			}).catch(e=>{
 				console.log(e)
 			})

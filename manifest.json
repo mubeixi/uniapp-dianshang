@@ -19,7 +19,8 @@
         "modules" : {
             "OAuth" : {},
             "Payment" : {},
-            "Share" : {}
+            "Share" : {},
+            "Push" : {}
         },
         /* 应用发布信息 */
         "distribute" : {
@@ -76,7 +77,9 @@
                         "UniversalLinks" : "https://new401.bafangka.com/"
                     }
                 },
-                "push" : {}
+                "push" : {
+                    "unipush" : {}
+                }
             },
             "icons" : {
                 "android" : {
