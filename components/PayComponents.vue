@@ -454,7 +454,6 @@ export default {
                         let str = `/fre/pages/pay/wx/wx?users_id=${users_id}&formurl=`+encodeURIComponent(fromurl);
                         let url = location.origin + str;
                         console.log(url)
-
                         location.href = url;
 
                         // uni.navigateTo({
