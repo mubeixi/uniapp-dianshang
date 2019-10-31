@@ -4,6 +4,7 @@
 <!--		<view class="status_bar" style="background-color: rgb(248, 248, 248);"></view>-->
 		<!-- #endif -->
 		<!-- <page-title title="我的团队" rightHidden="true" bgcolor="#ffffff"></page-title> -->
+		<view style="width: 100%;height: 20rpx;"></view>
 		<view class="teamName" v-if="pro.disInfo">
 			<view class="teamImg">
 				<image :src="pro.disInfo.Shop_Logo"></image>
@@ -78,6 +79,7 @@
 	box-sizing: border-box;
 	.teamName{
 		margin: 30rpx 0rpx 30rpx 20rpx;
+		margin-top: 0rpx;
 		display: flex;
 		.teamImg{
 			width: 90rpx;

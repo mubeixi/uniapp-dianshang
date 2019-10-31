@@ -2,6 +2,7 @@
 	<view class="boxSizing">
 		<view class="zhezhao" v-if="isShow">
 			<view class="zhezhaoView">
+				<image src="/static/check/close.png" class="closeZ" @click="isShow=false"></image>
 				<view class="zhezhaoYue">
 					余额互转
 				</view>
@@ -24,7 +25,7 @@
 				</form>
 
 			</view>
-			<image src="/static/check/close.png" class="closeZ" @click="isShow=false"></image>
+			
 		</view>
 
 		<view class="top">
@@ -73,7 +74,7 @@
 			<view class="mingxi" v-for="(item,idx) in charge_records">
 				<view>
 					充值{{item.Amount}} <text v-if="item.present > 0">,系统赠送您{{item.present}}</text>
-					<text style="float: right;">{{item.Status_desc}}</text>
+					<text style="float: right;margin-top: 15rpx;">{{item.Status_desc}}</text>
 				</view>
 				<view class="times">
 					{{item.CreateTime}}
@@ -424,7 +425,7 @@ view{
 		.mingxi{
 			/*height: 115rpx;*/
 			width: 700rpx;
-			padding: 8rpx 0;
+			padding: 20rpx 0;
 			border-bottom: 1rpx solid  #EAEAEA;
 			/*display: flex;*/
 			/*justify-content: space-between;*/
@@ -464,15 +465,17 @@ view{
 		width: 503rpx;
 		height: 564rpx;
 		position: absolute;
-		top: 250rpx;
+		top: 50%;
+		transform: translateY(-50%);
 		left: 123rpx;
 	}
 	.closeZ{
 		width: 47rpx;
 		height: 47rpx;
 		position: absolute;
-		top: 866rpx;
-		left:351rpx ;
+		bottom: -100rpx;
+		transform: translateX(-50%);
+		left: 50%;
 	}
 	.zhezhaoYue{
 		height: 157rpx;

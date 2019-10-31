@@ -106,7 +106,7 @@
 						区域代理
 					</view>
 				</view>
-				<view class="td"  style="border-bottom: 0rpx;"  v-if="data.dis_config.Sha_Agent_Type==1">
+				<view class="td" @click="goGudong"  style="border-bottom: 0rpx;"  v-if="data.dis_config.Sha_Agent_Type==1">
 					<image src="/static/fenxiao/quyu.png" ></image>
 					<view>
 						股东
@@ -223,6 +223,13 @@
 				if(!this.$fun.checkIsDistribute(1,1))return;
 				uni.navigateTo({
 					url:'../promotion/promotion'
+				})
+			},
+			//股东
+			goGudong(){
+				if(!this.$fun.checkIsDistribute(1,1))return;
+				uni.navigateTo({
+					url:'../gudong/gudong'
 				})
 			},
 			//区域代理

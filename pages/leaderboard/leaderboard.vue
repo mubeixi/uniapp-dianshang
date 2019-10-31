@@ -203,7 +203,7 @@
 		bottom: 0rpx;
 		left: 0rpx;
 		width: 202rpx;
-		height: 3rpx;
+		height: 4rpx;
 		background-color: #F43131;
 	}
 }

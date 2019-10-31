@@ -6,13 +6,13 @@
 	<!-- 	<page-title title="爵位晋升" rightHidden="true"></page-title> -->
 		<view class="top">
 			<view class="person">
-				<image :src="data.disInfo.Shop_Logo"></image>
+				<image :src="por.disInfo.Shop_Logo"></image>
 			</view>
 			<view class="nickName">
-				{{data.disInfo.Shop_Name}}
+				{{pro.disInfo.Shop_Name}}
 			</view>
 			<view class="juewei">
-				{{pro.pro_title_name}}爵位
+				立即申请
 			</view>
 		</view>
 		<view class="moneySum">
@@ -22,7 +22,7 @@
 						总佣金
 					</view>
 					<view class="moneyBottom">
-						￥<text>{{pro.total_nobi}}</text>
+						￥<text>{{pro.total_sha}}</text>
 					</view>
 				</view>
 				<view>
@@ -30,7 +30,7 @@
 						已发放佣金
 					</view>
 					<view class="moneyBottom">
-						￥<text>{{pro.total_nobi_send}}</text>
+						￥<text>{{pro.total_sha}}</text>
 					</view>
 				</view>
 			</view>
@@ -56,7 +56,7 @@
 			</view>
 			<view class="myDataTop myDataBottom">
 				<view class="td">
-					¥<text>{{pro.self_buy}}</text>
+					¥<text>{{pro.sha_config.Sha_Rate.Selfpro}}</text>
 				</view>
 				<view class="shu"></view>
 				<view class="td">
@@ -64,7 +64,7 @@
 				</view>
 				<view class="shu"></view>
 				<view class="td">
-					¥<text>{{pro.team_sales}}</text>
+					¥<text>{{pro.sha_config.Sha_Rate.Teampro}}</text>
 				</view>
 			</view>
 		</view>
@@ -117,13 +117,12 @@
 <script>
 	import circleTitle from '../../components/circleTitle/circleTitle.vue'
 	import {pageMixin} from "../../common/mixin";
-	import {nobiInfo,getDisInit} from '../../common/fetch.js'
+	import {shaInit,getDisInit} from '../../common/fetch.js'
 	export default {
 		mixins:[pageMixin],
 		data() {
 			return {
-				pro:[],
-				data:[],
+				pro:[]
 			};
 		},
 		components:{
@@ -133,24 +132,16 @@
 			
 		},
 		onShow() {
-			this.nobiInfo();
-			this.getDisInit();
+			this.shaInit();
 		},
 		methods:{
-			getDisInit(){
-				getDisInit().then(res=>{
-					this.data=res.data;
-				},err=>{
-					
-				})
-			},
 			goFinance(){
 				uni.navigateTo({
-					url:'../finance/finance?index=1'
+					url:'../finance/finance?index=2'
 				})
 			},
-			nobiInfo(){
-				nobiInfo().then(res=>{
+			shaInit(){
+				shaInit().then(res=>{
 					if(res.errorCode==0){
 						this.pro=res.data;
 					}

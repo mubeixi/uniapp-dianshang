@@ -2,6 +2,7 @@
 	<view class="boxSizing">
 		<view class="zhezhao" v-if="isShow">
 			<view class="zhezhaoView">
+				<image src="/static/check/close.png" class="closeZ" @click="isShow=false"></image>
 				<view class="zhezhaoYue">
 					余额互转
 				</view>
@@ -21,9 +22,9 @@
 					确认转出
 				</view>
 			</view>
-			<image src="/static/check/close.png" class="closeZ" @click="isShow=false"></image>
+			
 		</view>
-
+		
 		<view class="top">
 			<image  class="bgImg" src="/static/blance/bg.jpg" ></image>
 			<image class="back" @click="goBack" src="/static/check/left.png"></image>
@@ -404,15 +405,17 @@ view{
 		width: 503rpx;
 		height: 564rpx;
 		position: absolute;
-		top: 250rpx;
+		top: 50%;
+		transform: translateY(-50%);
 		left: 123rpx;
 	}
 	.closeZ{
 		width: 47rpx;
 		height: 47rpx;
 		position: absolute;
-		top: 866rpx;
-		left:351rpx ;
+		bottom: -100rpx;
+		transform: translateX(-50%);
+		left: 50%;
 	}
 	.zhezhaoYue{
 		height: 157rpx;
