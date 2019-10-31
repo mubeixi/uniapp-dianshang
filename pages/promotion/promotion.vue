@@ -36,7 +36,7 @@
 			</view>
 			<view class="chakan" @click="goFinance">
 				查看明细
-				<image src="http://new401.bafangka.com/static/client/fenxiao/chakan.png" ></image>
+				<image src="https://new401.bafangka.com/static/client/fenxiao/chakan.png" ></image>
 			</view>
 		</view>
 		<circleTitle title="我的数据"></circleTitle>
@@ -130,7 +130,7 @@
 			circleTitle
 		},
 		onLoad() {
-			
+
 		},
 		onShow() {
 			this.nobiInfo();
@@ -141,7 +141,7 @@
 				getDisInit().then(res=>{
 					this.data=res.data;
 				},err=>{
-					
+
 				})
 			},
 			goFinance(){

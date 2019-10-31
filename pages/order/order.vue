@@ -1,7 +1,7 @@
 <template>
     <div>
 		<!-- #ifdef APP-PLUS -->
-		<!-- <view class="status_bar" style="background:white;position: fixed;top: 0;z-index: 22"></view>--> 
+		<!-- <view class="status_bar" style="background:white;position: fixed;top: 0;z-index: 22"></view>-->
 		<!-- #endif -->
 <!--    <page-title title="我的订单" rightHidden="true" class="titless"></page-title>-->
         <div class="navs">
@@ -70,7 +70,7 @@
 			</template>
         </div>
 		<div class="defaults" v-if="data.length<=0">
-			<image src="http://new401.bafangka.com/static/client/defaultImg.png" ></image>
+			<image src="https://new401.bafangka.com/static/client/defaultImg.png" ></image>
 		</div>
 	</div>
 

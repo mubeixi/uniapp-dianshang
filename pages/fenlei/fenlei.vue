@@ -10,7 +10,7 @@
                 <span class="name">日用百货</span>
                 <div class="fr">
                     <span class="all">查看全部</span>
-                    <img class="right" src="http://new401.bafangka.com/static/client/fenlei/right.png" alt="">
+                    <img class="right" src="https://new401.bafangka.com/static/client/fenlei/right.png" alt="">
                 </div>
             </div>
             <van-image v-if="activeIndex === 0" src="https://img.yzcdn.cn/vant/apple-1.jpg" />

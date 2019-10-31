@@ -23,32 +23,32 @@
         <!-- 商品保证 -->
         <ul class="second">
             <li>
-                <image class="img" src="http://new401.bafangka.com/static/client/tuan/check.png"/>
+                <image class="img" src="https://new401.bafangka.com/static/client/tuan/check.png"/>
                 全场包邮
             </li>
             <li>
-                <image class="img" src="http://new401.bafangka.com/static/client/tuan/check.png"/>
+                <image class="img" src="https://new401.bafangka.com/static/client/tuan/check.png"/>
                 7天退换
             </li>
             <li>
-                <image class="img" src="http://new401.bafangka.com/static/client/tuan/check.png"/>
+                <image class="img" src="https://new401.bafangka.com/static/client/tuan/check.png"/>
                 48小时发货
             </li>
             <li>
-                <image class="img" src="http://new401.bafangka.com/static/client/tuan/check.png"/>
+                <image class="img" src="https://new401.bafangka.com/static/client/tuan/check.png"/>
                 假一赔十
             </li>
         </ul>
         <!-- 团长 -->
         <div class="three">
             <div class="paySuc">
-                <image class="img" src="http://new401.bafangka.com/static/client/tuan/paySuc.png"/>
+                <image class="img" src="https://new401.bafangka.com/static/client/tuan/paySuc.png"/>
                 支付成功
             </div>
             <ul class="lyl">
                 <li v-for="(user,idx) in join_team_list">
                     <image class="img" :src="user.User_HeadImg" />
-                    <image v-if="user.team_head" src="http://new401.bafangka.com/static/client/tuan/tuanzhang.png" class=" img tuanzhang"/>
+                    <image v-if="user.team_head" src="https://new401.bafangka.com/static/client/tuan/tuanzhang.png" class=" img tuanzhang"/>
                     <span v-if="user.team_head" class="tuanzhang">团长</span>
                 </li>
 
@@ -56,7 +56,7 @@
         </div>
         <!-- 倒计时 -->
         <div class="how">
-            <image class="img" src="http://new401.bafangka.com/static/client/tuan/time.png"/>
+            <image class="img" src="https://new401.bafangka.com/static/client/tuan/time.png"/>
             <span class="my">拼团中，还差<span>{{product.pintuan_people-product.teamnum}}</span>人</span>
         </div>
         <div class="times">
@@ -99,19 +99,19 @@
             <div class="top">拼团规则</div>
             <div class="xiang">
                 <div class="hang">
-                    <image class="img" src="http://new401.bafangka.com/static/client/tuan/ju.png"/>
+                    <image class="img" src="https://new401.bafangka.com/static/client/tuan/ju.png"/>
                     <span>开团或者参加别人的团</span>
                 </div>
                 <div class="hang">
-                    <image class="img" src="http://new401.bafangka.com/static/client/tuan/ju.png"/>
+                    <image class="img" src="https://new401.bafangka.com/static/client/tuan/ju.png"/>
                     <span>在规定的时间内，邀请好友参团</span>
                 </div>
                 <div class="hang">
-                    <image class="img" src="http://new401.bafangka.com/static/client/tuan/ju.png"/>
+                    <image class="img" src="https://new401.bafangka.com/static/client/tuan/ju.png"/>
                     <span>达到拼团人数，分别给团长和团员发货</span>
                 </div>
                 <div class="hang">
-                    <image class="img" src="http://new401.bafangka.com/static/client/tuan/ju.png"/>
+                    <image class="img" src="https://new401.bafangka.com/static/client/tuan/ju.png"/>
                     <span>未达到拼团人数，货款将自动原路返还</span>
                 </div>
             </div>
@@ -120,7 +120,7 @@
         <div class="dianzhang">店长推荐</div>
         <div class="prolist">
             <div class="pro-item" v-for="(item,index) in prodList" :key="index" @click="goProductDetail(item.Products_ID,item.is_pintuan)">
-<!--                <image src="http://new401.bafangka.com/static/client/check/pro1.png" alt="" class="img"/>-->
+<!--                <image src="https://new401.bafangka.com/static/client/check/pro1.png" alt="" class="img"/>-->
                 <img :src="item.ImgPath" alt="" class="img">
                 <div class="item-name">{{item.Products_Name}}</div>
                 <div class="price">
@@ -162,8 +162,8 @@
         <!--分享引导框开始-->
         <div class="hide guide_box" v-show="isShowGuide" @click="isShowGuide=false">
             <div class="mask"></div>
-            <div><image src="http://new401.bafangka.com/static/client/share/guide_point.png"  class="guide_point" /></div>
-            <div><image  src="http://new401.bafangka.com/static/client/share/guide_btn.png"  class="guide_btn"  /></div>
+            <div><image src="https://new401.bafangka.com/static/client/share/guide_point.png"  class="guide_point" /></div>
+            <div><image  src="https://new401.bafangka.com/static/client/share/guide_btn.png"  class="guide_btn"  /></div>
         </div>
         <!--分享引导框结束-->
 

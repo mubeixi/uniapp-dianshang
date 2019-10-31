@@ -11,13 +11,13 @@
 
 			<div class="first" @click="collect">
 				<div>
-					<image class='img'  v-if="collected"  src="http://new401.bafangka.com/static/client/tuan/xx.png" ></image>
-					<image class='img'  v-else src="http://new401.bafangka.com/static/client/sc.png" ></image>
+					<image class='img'  v-if="collected"  src="https://new401.bafangka.com/static/client/tuan/xx.png" ></image>
+					<image class='img'  v-else src="https://new401.bafangka.com/static/client/sc.png" ></image>
 				</div>
 				<div class="txt">收藏</div>
 			</div>
 			<div class="first">
-				<div><image class='img'  src="http://new401.bafangka.com/static/client/kf.png" ></image></div>
+				<div><image class='img'  src="https://new401.bafangka.com/static/client/kf.png" ></image></div>
 				<div class="txt">客服</div>
 			</div>
 		</div>

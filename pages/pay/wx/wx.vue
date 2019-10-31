@@ -4,18 +4,21 @@
 		<!--分享引导框开始-->
 		<div class="hide guide_box"  v-show="isShowGuide" @click="isShowGuide=false">
 			<div class="mask"></div>
-			<div class="guide" ><image class="guideimg" mode="aspectFit" src="http://new401.bafangka.com/static/client/alipay.jpg"  /></div>
-			<div><image  src="http://new401.bafangka.com/static/client/share/guide_point.png"  class="guide_point" /></div>
-<!--			<div><image  src="http://new401.bafangka.com/static/client/share/guide_btn.png"  class="guide_btn"  /></div>-->
+			<div class="guide" ><image class="guideimg" mode="aspectFit" src="https://new401.bafangka.com/static/client/alipay.jpg"  /></div>
+			<div><image  src="https://new401.bafangka.com/static/client/share/guide_point.png"  class="guide_point" /></div>
+<!--			<div><image  src="https://new401.bafangka.com/static/client/share/guide_btn.png"  class="guide_btn"  /></div>-->
 		</div>
 		<!--分享引导框结束-->
 	</view>
 </template>
 
 <script>
-	import {isWeiXin,ls} from "../../../common/tool";
+	import {isWeiXin,ls,GetQueryByString} from "../../../common/tool";
+	import {getTempData} from "../../../common/fetch";
+	import {pageMixin} from "../../../common/mixin";
 
 	export default {
+		mixins:[pageMixin],
 		data() {
 			return {
 				isShowGuide:true,
@@ -24,20 +27,28 @@
 		onLoad(options){
 
 			//字符串进行解密
-			if(!ls.get('is_reload_alipay')){
-				ls.set('is_reload_alipay',1);
-				location.reload()
-				return;
-			}
+			// if(!ls.get('is_reload_alipay')){
+			// 	ls.set('is_reload_alipay',1);
+			// 	location.reload()
+			// 	return;
+			// }
 
-			if(!isWeiXin() && options.formurl){
+			ls.set('users_id',GetQueryByString(location.href,'users_id'));
 
-				let redirect = options.formurl
-				redirect = redirect.replace(/wangjing666/,'openapi.alipay.com')
-				console.log(redirect)
-				document.body.innerHTML = redirect;
-				// document.write(redirect)
-				document.getElementById('alipaysubmit').submit()
+			if(!isWeiXin() && options.nocestr){
+
+				let nocestr = options.nocestr
+
+				getTempData({key:nocestr}).then(res=>{
+
+					document.body.innerHTML = res.data;
+					// document.write(redirect)
+					document.getElementById('alipaysubmit').submit()
+
+				},error=>{})
+				// redirect = redirect.replace(/wangjing666/,'openapi.alipay.com')
+				// console.log(redirect)
+
 			}
 		},
 	}

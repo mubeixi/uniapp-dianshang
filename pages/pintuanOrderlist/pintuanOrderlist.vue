@@ -68,7 +68,7 @@
 			</div>
         </div>
 		<div class="defaults" v-if="data.length<=0">
-			<image src="http://new401.bafangka.com/static/client/defaultImg.png" ></image>
+			<image src="https://new401.bafangka.com/static/client/defaultImg.png" ></image>
 		</div>
 	</div>
 
@@ -110,9 +110,11 @@ export default {
 	},
 	methods:{
 		goPintuan(item){
-			uni.navigateTo({
-				url:'../groupJoin/groupJoin?Team_ID='+item.teamid+'&Products_ID='+item.prod_list[0].prod_id
-			})
+			if(item.teamstatus == 0) {
+				uni.navigateTo({
+					url:'../groupJoin/groupJoin?Team_ID='+item.teamid+'&Products_ID='+item.prod_list[0].prod_id
+				})
+			}
 		},
 		//确认收货
 		confirmOrder(item){
