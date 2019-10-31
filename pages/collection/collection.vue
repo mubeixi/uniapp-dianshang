@@ -5,10 +5,10 @@
 	  <!-- #endif -->
 	  <page-title  class="titles" title="收藏列表"  :rightHidden="rightHidden" @rightHandle="rightHandle"  :right="rightText"></page-title>
 	  <!-- #ifdef APP-PLUS -->
-	  <view style="height: 130rpx;"></view>
+	  <view class="spaces" style="height: 100rpx;"></view>
 	  <!-- #endif -->
 	  <!-- #ifndef APP-PLUS -->
-	  <view style="height: 105rpx;"></view>
+	  <view style="height: 90rpx;"></view>
 	  <!-- #endif -->
       <div class="pro-list" v-for="(item,index) in collect_list" :key="index">
 		  <div class="mbxa"  v-if="rightClicked" @click="check(index)">
@@ -211,6 +211,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
+	.spaces{
+		margin-top: var(--status-bar-height);
+	}
 	.mbxa{
 		display: flex;
 		align-items: center;

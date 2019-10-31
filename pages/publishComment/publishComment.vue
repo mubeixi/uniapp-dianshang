@@ -1,9 +1,9 @@
 <template>
 	<view class="all">
-		<!-- #ifdef APP-PLUS -->
-		<view class="status_bar" style="background-color: rgb(248, 248, 248);"><!-- 这里是状态栏 --></view>
-		<!-- #endif -->
 		<!-- <page-title title="发表评论" rightHidden="true" bgcolor="#ffffff"></page-title> -->
+		<view style="height: 40rpx;width: 100%;">
+			
+		</view>
 		<view class="rate">
 			<view class="rates">整体评价</view>
 			<uni-rate value="5" active-color="#F43131" size='20' @change="show" margin="2"></uni-rate>
@@ -383,7 +383,6 @@
 		width: 710rpx;
 		height: 75rpx;
 		background-color: #FFFFFF;
-		margin-top: 40rpx;
 		display: flex;
 		align-items: center;
 		border-radius: 10rpx;

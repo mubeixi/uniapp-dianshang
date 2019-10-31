@@ -43,7 +43,7 @@
 					</view>
 				</view>
 			</view>
-			<view class="chakan">
+			<view class="chakan"  @click="goFinance">
 				查看明细
 				<image src="/static/fenxiao/chakan.png" ></image>
 			</view>
@@ -135,6 +135,11 @@
 			this.agentInfo();
 		},
 		methods:{
+			goFinance(){
+				uni.navigateTo({
+					url:'../finance/finance?index=3'
+				})
+			},
 			agentInfo(){
 				agentInfo().then(res=>{
 					if(res.errorCode==0){

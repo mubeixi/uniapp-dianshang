@@ -24,7 +24,7 @@
 				<div class="jiaobiao" v-if="orderNum.waitcomment>0">{{orderNum.waitcomment}}</div>
 			</div>
         </div>
-		<view class="space" style="height: 100rpx;width: 100%;">
+		<view style="height: 100rpx;width: 100%;">
 		</view>
         <div class="order" v-for="(item,index) of data" :key="index" v-if="item.prod_list.length>0">
 			<div style="background-color: #F3F3F3;height: 20rpx;width: 100%;position: absolute;left: 0rpx;"></div>
@@ -302,12 +302,6 @@ export default {
             border-bottom: 2px solid red;
         }
     }
-	.space{
-		/* #ifdef APP-PLUS */
-		margin-top: var(--status-bar-height);
-		/* #endif */
-
-	}
     .order {
         padding: 0rpx 20rpx;
         background: #fff;

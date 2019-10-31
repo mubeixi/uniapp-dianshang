@@ -8,11 +8,14 @@
 			<view :class="index==0?'checked':''" @click="change(0)">
 				分销
 			</view>
-			<view :class="index==1?'checked':''" class="marginLeft"  @click="change(1)">
+			<view :class="index==1?'checked':''" @click="change(1)">
 				爵位
 			</view>
 			<view :class="index==2?'checked':''"  @click="change(2)">
 				股东
+			</view>
+			<view :class="index==3?'checked':''"  @click="change(3)">
+				区域代理
 			</view>
 		</view>
 		<view style="width: 100%;height: 105rpx;" ></view>
@@ -38,7 +41,7 @@
 
 <script>
 	import {pageMixin} from "../../common/mixin";
-	import {getNobiRecordList,getDisRecordList,getShaRecordList} from '../../common/fetch.js'
+	import {getNobiRecordList,getDisRecordList,getShaRecordList,getAgentRecordList} from '../../common/fetch.js'
 	export default {
 		mixins:[pageMixin],
 		data() {
@@ -52,10 +55,11 @@
 			};
 		},
 		onShow() {
-			this.change(0);
+			this.change(this.index);
 		},
-		onLoad() {
+		onLoad(options) {
 			let that=this;
+			this.index=options.index;
 			uni.getSystemInfo({
 			    success: function (res) {
 			        that.height=res.screenHeight-68;
@@ -92,7 +96,7 @@
 					}).catch(e=>{
 						console.log(e);
 					})
-				}else if(this.index==1){getNobiRecordList
+				}else if(this.index==1){
 					getNobiRecordList(data).then(res=>{
 						if(res.errorCode==0){
 							for(let item of res.data){
@@ -103,8 +107,19 @@
 					}).catch(e=>{
 						console.log(e);
 					})
-				}else{
+				}else if(this.index==2){
 					getShaRecordList(data).then(res=>{
+						if(res.errorCode==0){
+							for(let item of res.data){
+								this.pro.push(item)
+							}
+							this.totalCount=res.totalCount;
+						}
+					}).catch(e=>{
+						console.log(e);
+					})
+				}else{
+					getAgentRecordList(data).then(res=>{
 						if(res.errorCode==0){
 							for(let item of res.data){
 								this.pro.push(item)
@@ -126,17 +141,20 @@
 	box-sizing: border-box;
 	.nav{
 		padding: 20rpx 70rpx;
+		padding-left: 0rpx;
+		padding-right: 0rpx;
 		height: 105rpx;
 		box-sizing: border-box;
 		width: 750rpx;
 		display: flex;
 		position: fixed;
 		background-color: #F8F8F8;
+		justify-content: space-around;
 		z-index: 999;
 		top: 0rpx;
 		left: 0rpx;
 		view{
-			width: 132rpx;
+			width: 150rpx;
 			height: 65rpx;
 			line-height: 65rpx;
 			font-size: 30rpx;

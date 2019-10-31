@@ -1,9 +1,7 @@
 <template>
 	<view class="all">
-		<!-- #ifdef APP-PLUS -->
-		<view class="status_bar" style="background-color: rgb(248, 248, 248);"><!-- 这里是状态栏 --></view>
-		<!-- #endif -->
 		<!-- <page-title title="我的兑换" bgcolor="#ffffff"></page-title> -->
+		<view style="height: 10rpx;width: 100%;"></view>
 		<template v-if="prod_list.length > 0">
 			<view class="myHa" v-for="(item,index) in prod_list">
 				<view class="tops">
