@@ -4,7 +4,7 @@
 		<page-title title="分销商信息" rightHidden="true" bgcolor="#F8F8F8"></page-title>
 		<!-- #endif -->
 		<view class="user-info">
-			<view class="user-avator">
+			<view class="user-avator" @click="changeAvator">
 				<image :src="Shop_Logo" mode=""></image>
 				<view class="xiangji" ></view>
 			</view>
@@ -12,7 +12,7 @@
 		</view>
 		<view class="content">
 			<view class="c_1"><text>店名</text><input type="text" v-model="Shop_Name"  /></view>
-			<view class="c_2"><text>公告</text><input type="text" v-model="Shop_Announce"  /></view>
+			<view class="c_2"><text>公告</text><textarea v-model="Shop_Announce" class="text-content"></textarea></view>
 		</view>
 		<view class="submit" @click="save">保存</view>
 	</view>
@@ -49,7 +49,7 @@
 						console.log(this.userDisInfo)
 						this.Shop_Name = this.userDisInfo.Shop_Name;
 						this.Shop_Logo = this.userDisInfo.Shop_Logo;
-
+						this.Shop_Announce = this.userDisInfo.Shop_Announce;
 					}else {
 
 					}
@@ -171,28 +171,31 @@
 			align-items: center;
 			margin-bottom: 39rpx;
 			input {
-				width:520rpx;
+				width:600rpx;
 				height:62rpx;
 				border:1rpx solid rgba(231,231,231,1);
 				margin-left: 23rpx;
 				padding-left: 20rpx;
+				box-sizing: border-box;
 			}
 		}
 		.c_2 {
 			display: flex;
 			align-items: center;
-			input {
-				width:520rpx;
+			.text-content {
+				width:600rpx;
 				height:170rpx;
 				border:1rpx solid rgba(231,231,231,1);
 				margin-left: 23rpx;
 				padding-left: 20rpx;
+				padding-top: 20rpx;
+				box-sizing: border-box;
 			}
 		}
 	}
 	.submit {
 		height: 80rpx;
-		width: 620rpx;
+		width: 640rpx;
 		background: #F43131;
 		color: #fff;
 		font-size: 30rpx;
