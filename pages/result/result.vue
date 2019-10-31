@@ -12,7 +12,7 @@
 			<icon type="clear" class="clears" size="37rpx" @click="close"></icon>
 		</div> -->
        <!-- #endif -->
-
+		<icon type="search" size="34rpx" class="search_icon"/>
 		<input type="text" v-model="inputValue" class="searchs" @confirm="success"  @click="goSearch" disabled/>
 		<div class="clear" v-if="inputValue">
 			<icon type="clear" class="clears" size="37rpx" @click="close"></icon>
@@ -355,6 +355,11 @@ export default {
 		top: 0rpx;
 		background-color: #FFFFFF;
 		z-index: 999;
+		.search_icon {
+			position: absolute;
+			top: 46rpx;
+			left: 61rpx;
+		}
 		.back {
 			width: 23rpx;
 			height: 37rpx;

@@ -574,6 +574,7 @@ export default {
 		},
 		//领取优惠券
 		getMyCoupon(item,i){
+			if(!this.$fun.checkIsLogin(1))return;
 			if(this.isLoading==true)return;
 			this.isLoading=true;
 			let data={

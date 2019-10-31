@@ -28,15 +28,14 @@
 
 		</view>
 
+
 		<view class="top">
 
 			<image  class="bgImg" src="https://new401.bafangka.com/static/client/blance/bg.jpg" ></image>
-			<!-- #ifdef APP-PLUS -->
-			<image class="back" @click="goBack" src="https://new401.bafangka.com/static/client/check/left.png"></image>
+			<!-- <image class="back" @click="goBack" src="http://new401.bafangka.com/static/client/check/left.png"></image>
 			<view class="titleq">
 				余额中心
-			</view>
-			<!-- #endif -->
+			</view> -->
 
 			<view class="dangqian">
 				当前余额（元）
@@ -352,7 +351,7 @@ view{
 			line-height: 28rpx;
 			position: absolute;
 			left:39rpx ;
-			top: 162rpx;
+			top: 110rpx;
 			/* #ifdef APP-PLUS */
 			// margin-top: var(--status-bar-height);
 			/* #endif */
@@ -364,7 +363,7 @@ view{
 			line-height: 61rpx;
 			position: absolute;
 			left: 39rpx;
-			top: 224rpx;
+			top: 175rpx;
 			color: #FFFFFF;
 			font-weight: 200;
 			/* #ifdef APP-PLUS */
@@ -382,7 +381,7 @@ view{
 			background-color: #ff9175;
 			border-radius: 16rpx;
 			position: absolute;
-			top: 187rpx;
+			top: 130rpx;
 			right: 24rpx;
 		}
 
