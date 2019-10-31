@@ -110,9 +110,11 @@ export default {
 	},
 	methods:{
 		goPintuan(item){
-			uni.navigateTo({
-				url:'../groupJoin/groupJoin?Team_ID='+item.teamid+'&Products_ID='+item.prod_list[0].prod_id
-			})
+			if(item.teamstatus == 0) {
+				uni.navigateTo({
+					url:'../groupJoin/groupJoin?Team_ID='+item.teamid+'&Products_ID='+item.prod_list[0].prod_id
+				})
+			}
 		},
 		//确认收货
 		confirmOrder(item){

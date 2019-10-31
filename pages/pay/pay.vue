@@ -467,14 +467,13 @@
 				// },1000)
 			},
 			paySuccessCall(){
-
-				let _self = this;
+				let _that = this;
 				toast('支付成功');
-				setTimeout(function () {
+				setTimeout(function(){
 					//拼团订单则跳转到开团成功
-					if(_self.Order_Type === 'pintuan'){
+					if(_that.Order_Type === 'pintuan'){
 						uni.redirectTo({
-							url:'/pages/groupSuccess/groupSuccess?order_id='+_self.Order_ID
+							url:'/pages/groupSuccess/groupSuccess?order_id='+_that.Order_ID
 						})
 					}else{
 						uni.redirectTo({

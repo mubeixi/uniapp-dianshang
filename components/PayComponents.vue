@@ -328,6 +328,10 @@ export default {
                     order_remark: this.order_remark
                 };
 
+                // 如果用户支付金额为0，即全部用余额
+                if(this.pay_money == 0){
+                   this.pay_type = 'remainder_pay'; 
+                }
                 // 用户选择余额支付
                 if(this.pay_type == 'remainder_pay') {
 
@@ -345,6 +349,8 @@ export default {
                     });
                     return;
                 }
+
+                
 
 
 
