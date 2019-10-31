@@ -22,9 +22,10 @@
 					确认转出
 				</view>
 			</view>
-			
 		</view>
-		
+		<!-- #ifdef APP-PLUS -->
+		<view class="status_bar" style="background: red;"></view>
+		<!-- #endif -->
 		<view class="top">
 			<image  class="bgImg" src="http://new401.bafangka.com/static/client/blance/bg.jpg" ></image>
 			<image class="back" @click="goBack" src="http://new401.bafangka.com/static/client/check/left.png"></image>
