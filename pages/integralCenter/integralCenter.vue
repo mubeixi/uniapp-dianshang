@@ -24,7 +24,9 @@
 			</view>
 			
 		</view>
-		
+		<!-- #ifdef APP-PLUS -->
+		<view class="status_bar" style="background: #ff5c33;"></view>
+		<!-- #endif -->
 		<view class="top">
 			<image  class="bgImg" src="/static/blance/bg.jpg" ></image>
 			<image class="back" @click="goBack" src="/static/check/left.png"></image>

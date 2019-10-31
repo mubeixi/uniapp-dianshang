@@ -33,7 +33,9 @@
 			</view>
 		</template>
 		<template v-else>
-			<text class="nodata">未查询到数据</text>
+			<div class="defaults">
+				<image src="/static/defaultImg.png" ></image>
+			</div>
 		</template>
 	</view>
 </template>
@@ -195,4 +197,10 @@ view{
 	color: #666;
 	font-size: 28rpx;
 }
+.defaults{
+		margin: 0 auto;
+		width: 640rpx;
+		height: 480rpx;
+		margin-top: 100rpx;
+	}
 </style>
