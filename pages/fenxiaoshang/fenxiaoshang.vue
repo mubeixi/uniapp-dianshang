@@ -144,7 +144,7 @@
 				left: 0;
 				z-index: 10;
 				border-radius: 60rpx;
-				background: rgba(0,0,0,.4) url(http://new401.bafangka.com/static/client/fenxiao/xj.png) no-repeat center center;
+				background: rgba(0,0,0,.4) url(https://new401.bafangka.com/static/client/fenxiao/xj.png) no-repeat center center;
 				background-size: 42rpx 34rpx;
 			}
 		}

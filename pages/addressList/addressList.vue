@@ -13,8 +13,8 @@
 			  <view class='flex-add default' v-if="item.Address_Is_Default == 1">默认地址</view>
 			</view>
 			<view class="flex-action">
-			  <image src='http://new401.bafangka.com/static/client/address/del.png' @click="deladdress(item.Address_ID)"></image>
-			  <image src='http://new401.bafangka.com/static/client/address/edit.png' @click="addressAddEdit(item.Address_ID)" ></image>
+			  <image src='https://new401.bafangka.com/static/client/address/del.png' @click="deladdress(item.Address_ID)"></image>
+			  <image src='https://new401.bafangka.com/static/client/address/edit.png' @click="addressAddEdit(item.Address_ID)" ></image>
 			</view>
 		  </label>
 		</radio-group>
@@ -22,11 +22,11 @@
 		<view style='height:82rpx;'></view>
 		<view class='tianjia' @click="addressAddEdit('a')">
 		  <view class='jia_img'>
-			<image src='http://new401.bafangka.com/static/client/jia.png'></image>
+			<image src='https://new401.bafangka.com/static/client/jia.png'></image>
 		  </view>
 		  <text>新增个人地址</text>
 		  <view class='go_img'>
-			<image src='http://new401.bafangka.com/static/client/address/go.png'></image>
+			<image src='https://new401.bafangka.com/static/client/address/go.png'></image>
 		  </view>
 		</view>
 	</view>

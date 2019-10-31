@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="banner">
-			<image src="http://new401.bafangka.com/static/clientpop_default.jpg" ></image>
+			<image src="https://new401.bafangka.com/static/clientpop_default.jpg" ></image>
 			<form report-submit @submit="submit" >
 				<view class="content">
 					<view class="title">推广小助手</view>
@@ -18,7 +18,7 @@
 					 <picker mode="selector" :range="arr" :index="index" @change="pickHandle" class="picker">
 						<view>{{arr[index]}}</view>
 						<view class="down">
-							<image src="http://new401.bafangka.com/static/clientgo.png" mode=""></image>
+							<image src="https://new401.bafangka.com/static/clientgo.png" mode=""></image>
 						</view>
 					 </picker>
 					</view>
@@ -198,19 +198,19 @@
 		padding-left: 60rpx;
 	}
 	form .msg input[type='text']:nth-of-type(1) {
-		background: url(http://new401.bafangka.com/static/client/tuiguang/center.png) no-repeat 10rpx center ;
+		background: url(https://new401.bafangka.com/static/client/tuiguang/center.png) no-repeat 10rpx center ;
 		background-size: 40rpx 40rpx;
 	}
 	form .msg input[type='text']:nth-of-type(2) {
-		background: url(http://new401.bafangka.com/static/client/tuiguang/dianhua.png) no-repeat 10rpx center ;
+		background: url(https://new401.bafangka.com/static/client/tuiguang/dianhua.png) no-repeat 10rpx center ;
 		background-size: 40rpx 40rpx;
 	}
 	form .msg input[type='text']:nth-of-type(3) {
-		background: url(http://new401.bafangka.com/static/client/tuiguang/qq.png) no-repeat 10rpx center ;
+		background: url(https://new401.bafangka.com/static/client/tuiguang/qq.png) no-repeat 10rpx center ;
 		background-size: 40rpx 40rpx;
 	}
 	form .msg input[type='text']:nth-of-type(4) {
-		background: url(http://new401.bafangka.com/static/client/tuiguang/youxiang.png) no-repeat 10rpx center ;
+		background: url(https://new401.bafangka.com/static/client/tuiguang/youxiang.png) no-repeat 10rpx center ;
 		background-size: 40rpx 40rpx;
 	}
 	.btns {

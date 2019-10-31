@@ -13,7 +13,7 @@
 					{{pro.disInfo.Shop_Name}}
 				</view>
 				<view class="bottoms" v-if="pro.agent_identity">
-					<image src="http://new401.bafangka.com/static/client/fenxiao/vip.png"></image>
+					<image src="https://new401.bafangka.com/static/client/fenxiao/vip.png"></image>
 					{{pro.agent_identity}}
 				</view>
 			</view>
@@ -45,7 +45,7 @@
 			</view>
 			<view class="chakan"  @click="goFinance">
 				查看明细
-				<image src="http://new401.bafangka.com/static/client/fenxiao/chakan.png" ></image>
+				<image src="https://new401.bafangka.com/static/client/fenxiao/chakan.png" ></image>
 			</view>
 		</view>
 		<circleTitle title="区域代理门槛说明"></circleTitle>

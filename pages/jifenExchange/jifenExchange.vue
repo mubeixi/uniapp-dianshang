@@ -170,7 +170,7 @@
 			margin-left: -360rpx;
 			width: 720rpx;
 			height: 230rpx;
-			background: url(http://new401.bafangka.com/static/client/jifenduihuan/star.png) no-repeat left top;
+			background: url(https://new401.bafangka.com/static/client/jifenduihuan/star.png) no-repeat left top;
 			background-size: cover;
 			.t-title {
 				position: absolute;

@@ -31,8 +31,10 @@
 
 import {mapGetters,mapActions} from 'vuex';
 import {toast,error} from "../common";
-import {orderPay,add_template_code} from "../common/fetch";
+import {orderPay,add_template_code,traslateShorten} from "../common/fetch";
 import {isWeiXin,ls,GetQueryByString,urlencode} from "../common/tool";
+
+
 // #ifdef H5
 import {WX_JSSDK_INIT} from "../common/mixin";
 // #endif
@@ -451,16 +453,37 @@ export default {
                         let users_id = ls.get('users_id');
 
                         let fromurl = res.data.arg;//encodeURIComponent(res.data.arg);
+
+                        //字符串
+                        let nocestr = ''
+                        traslateShorten({data:fromurl}).then(res=>{
+
+                            nocestr = res.data.key;
+                            // uni.navigateTo({
+                            //     url:`/pages/pay/wx/wx?users_id=${users_id}&nocestr=`+nocestr
+                            // })
+
+                            let str = `/pages/pay/wx/wx?users_id=${users_id}&nocestr=`+nocestr
+
+                            let url = location.origin + str;
+
+                            //强制页面刷新
+                            location.href = url;
+
+                        },err=>{
+                            error('获取支付宝支付参数失败');
+
+                        })
                         //let origin = location.origin;
 
-                        fromurl = fromurl.replace(/openapi.alipay.com/,'wangjing666')
-
-
-                        let str = `/fre/pages/pay/wx/wx?users_id=${users_id}&formurl=`+encodeURIComponent(fromurl);
-                        let url = location.origin + str;
-                        console.log(url)
-
-                        this.aliPayUrl = url;
+                        // fromurl = fromurl.replace(/openapi.alipay.com/,'wangjing666')
+                        //
+                        //
+                        // let str = `/fre/pages/pay/wx/wx?users_id=${users_id}&formurl=`+encodeURIComponent(fromurl);
+                        // let url = location.origin + str;
+                        // console.log(url)
+                        //
+                        // this.aliPayUrl = url;
                         //location.href = url;
 
                         // uni.navigateTo({
