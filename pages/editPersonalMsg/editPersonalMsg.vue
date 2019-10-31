@@ -1,14 +1,11 @@
 <template>
 	<view>
-		<!-- #ifdef APP-PLUS -->
-		<view class="status_bar" style="background-color: rgb(248, 248, 248);"><!-- 这里是状态栏 --></view>
-		<!-- #endif -->
-	
+		
 		<!-- 	<page-title :title="title" rightHidden="true" bgcolor="#F8F8F8"></page-title> -->
 
-		<input v-if="type == 0" type="text" v-model="User_Name" class="v_input" placeholder="在此修改" />
-		<input v-if="type == 1" type="text" v-model="User_NickName" class="v_input" placeholder="在此修改" />
-		<input v-if="type == 3" type="text" v-model="User_Email" class="v_input" placeholder="在此修改" />
+		<input v-if="type == 0" type="text" v-model="User_Name" class="v_input" placeholder="修改用户名" />
+		<input v-if="type == 1" type="text" v-model="User_NickName" class="v_input" placeholder="修改昵称" />
+		<input v-if="type == 3" type="text" v-model="User_Email" class="v_input" placeholder="修改邮箱" />
 		<block v-if="type == 4">
 			<view class="area-item">
 				<text class="area-label">请选择省市县</text>
@@ -25,7 +22,7 @@
 			</view>
 			<view class="area-item">
 				<text  class="area-label">请选择街道</text>
-				<picker mode="selector" style="flex:1;" @change="t_pickerChange" :range="t_arr" range-key="name" :value="t_index">
+				<picker mode="selector" @change="t_pickerChange" :range="t_arr" range-key="name" :value="t_index">
 				<view class="picker">
 					<view class="p_item" v-if="!address_info.Address_Town">选择街道</view>
 					<view class="p_item" v-else>{{t_arr[t_index]['name']}}</view>
@@ -256,7 +253,7 @@
 	.area-item {
 		display: flex;
 		align-items: center;
-		padding: 20rpx;
+		padding: 30rpx 20rpx;
 		border-bottom: 1px solid #e3e3e3;
 		font-size: 28rpx;
 		.area-label {

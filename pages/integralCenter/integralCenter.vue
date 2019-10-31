@@ -25,17 +25,8 @@
 		</view>
 
 		<view class="top">
-<<<<<<< HEAD
-			<image  class="bgImg" src="https://new401.bafangka.com/static/client/blance/bg.jpg" ></image>
-			<image class="back" @click="goBack" src="https://new401.bafangka.com/static/client/check/left.png"></image>
-			<view class="titleq">
-				积分中心
-			</view>
-			<image class="momo" src="https://new401.bafangka.com/static/client/check/momo.png"></image>
-=======
 			<image  class="bgImg" src="http://new401.bafangka.com/static/client/blance/bg.jpg" ></image>
 			<image class="momo" src="http://new401.bafangka.com/static/client/check/momo.png"></image>
->>>>>>> upstream/master
 
 			<view class="prices">
 				{{info.User_Integral}}
