@@ -376,18 +376,19 @@
             "path" : "pages/balanceCenter/balanceCenter",
             "style" : {
                 "navigationBarTitleText": "余额中心",
-				"app-plus": {
-					"titleNView": false
-				}
+				"navigationBarBackgroundColor":"#ff5c33",
+				"navigationBarTextStyle":"white"
             }
         }
         ,{
             "path" : "pages/integralCenter/integralCenter",
             "style" : {
                 "navigationBarTitleText": "积分中心",
-				"app-plus": {
-					"titleNView": false
-				}
+				"navigationBarBackgroundColor":"#ff5c33",
+				"navigationBarTextStyle":"white"
+				// "app-plus": {
+				// 	"titleNView": false
+				// }
             }
         }
         ,{

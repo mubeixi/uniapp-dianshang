@@ -23,15 +23,9 @@
 				</view>
 			</view>
 		</view>
-		<!-- #ifdef APP-PLUS -->
-		<view class="status_bar" style="background: red;"></view>
-		<!-- #endif -->
+
 		<view class="top">
 			<image  class="bgImg" src="http://new401.bafangka.com/static/client/blance/bg.jpg" ></image>
-			<image class="back" @click="goBack" src="http://new401.bafangka.com/static/client/check/left.png"></image>
-			<view class="titleq">
-				积分中心
-			</view>
 			<image class="momo" src="http://new401.bafangka.com/static/client/check/momo.png"></image>
 
 			<view class="prices">
@@ -299,7 +293,7 @@ view{
 			height: 28rpx;
 			position: absolute;
 			left: 53rpx;
-			top: 190rpx;
+			top: 130rpx;
 		}
 		.prices{
 			font-size: 80rpx;
@@ -308,7 +302,7 @@ view{
 			line-height: 61rpx;
 			position: absolute;
 			left: 97rpx;
-			top: 158rpx;
+			top: 100rpx;
 			color: #FFFFFF;
 		}
 		.duihuan{
@@ -316,7 +310,7 @@ view{
 			height: 24rpx;
 			line-height: 24rpx;
 			position: absolute;
-			top: 259rpx;
+			top: 240rpx;
 			left: 53rpx;
 			font-weight:300;
 			color: #FFFFFF;
@@ -333,7 +327,7 @@ view{
 			background-color: #ff9175;
 			border-radius: 16rpx;
 			position: absolute;
-			top: 187rpx;
+			top: 130rpx;
 			right: 24rpx;
 		}
 
