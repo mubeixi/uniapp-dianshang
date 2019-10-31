@@ -6,7 +6,7 @@
 	  <!-- #endif -->
     <div class="top">
        <!-- #ifndef APP-PLUS -->
-       <!-- <image src="../../static/left.png" class="back" @click="goBack"></image>
+       <!-- <image src="http://new401.bafangka.com/static/clientleft.png" class="back" @click="goBack"></image>
 		<input type="text" v-model="inputValue" class="search" @confirm="success"  @click="goSearch" disabled/>
 		<div class="clear" v-if="inputValue">
 			<icon type="clear" class="clears" size="37rpx" @click="close"></icon>

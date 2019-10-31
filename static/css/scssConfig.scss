@@ -1,0 +1,65 @@
+$mainColor:#2275FF; $weixinColor:#5EC818;
+
+// 三角形
+@mixin triangle($x, $y, $color, $direction) { border:$x solid transparent; border-#{$direction}-color:$color; border-#{$direction}-width:$y; height:0; width:0;
+}
+
+// 多行省略
+@mixin texthide($link) { -webkit-box-orient:vertical; display:-webkit-box; -webkit-line-clamp:$link; overflow:hidden;
+}
+
+// padding
+$space-x-base:16px; $space-y-base:16px; $spaces:(
+    none: (
+      x: 0,
+      y: 0
+    ),
+    xs: (
+      x: ($space-x-base * 0.25),
+      y: ($space-y-base * 0.25)
+    ),
+    sm: (
+      x: ($space-x-base * 0.5),
+      y: ($space-y-base * 0.5)
+    ),
+    md: (
+      x: $space-x-base,
+      y: $space-y-base
+    ),
+    lg: (
+      x: ($space-x-base * 1.5),
+      y: ($space-y-base * 1.5)
+    ),
+    xl: (
+      x: ($space-x-base * 3),
+      y: ($space-y-base * 3)
+    ),
+    nxs: (
+      x: -($space-x-base * 0.25),
+      y: -($space-y-base * 0.25)
+    ),
+    nsm: (
+      x: -($space-x-base * 0.5),
+      y: -($space-y-base * 0.5)
+    ),
+    nmd: (
+      x: -($space-x-base * 1),
+      y: -($space-y-base * 1)
+    ),
+    nlg: (
+      x: -($space-x-base * 1.5),
+      y: -($space-y-base * 1.5)
+    ),
+    nxl: (
+      x: -($space-x-base * 3),
+      y: -($space-y-base * 3)
+    )
+  );
+
+// @for $i from $value through $spaces { .q-pa-#{$i} { padding:100px;
+//     }
+// }
+
+// @each $name in $spaces { .q-pa-#{$name} { padding:100px;
+//     }
+// }
