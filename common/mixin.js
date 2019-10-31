@@ -212,9 +212,9 @@ export const pageMixin = {
 
 		}
 
-		if(!ls.get('initData')){
-			this.getInitData()
-		}
+		// if(!ls.get('initData')){
+		// 	this.getInitData()
+		// }
 
     },
 	// #ifdef MP-WEIXIN || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO

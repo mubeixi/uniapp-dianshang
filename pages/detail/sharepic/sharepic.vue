@@ -30,6 +30,7 @@
 
 			uni.showToast({
 				position:'top',
+				icon:'none',
 				title:'点击图片后,长按保存'
 			})
 		}
