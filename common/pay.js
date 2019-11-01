@@ -3,6 +3,32 @@ import {isWeiXin} from "./tool";
 import {urlencode} from "./tool";
 import {traslateShorten,add_template_code} from "./fetch";
 
+/**
+ *
+ * @param vm 传this
+ * @param pay_type 支付类型
+ * @param payRequestData orderPay的res
+ *
+ *
+ *
+ */
+
+// 示例
+//
+// do something 下单和余额支付的逻辑自己维护，这里只管拿到了支付参数之后的。
+// 如果在页面中的话，必须设置payScuessCall和payFailCall
+//
+// orderPay(payConf).then(res => {
+//     unipayFunc(_self,_self.pay_type,res);
+// },err=>{
+//     uni.showModal({
+//         title:'提示',
+//         content:'获取支付参数失败:'+err.msg
+//     })
+// }).catch(e=>{
+//
+// })
+//
 
 export const unipayFunc = (vm,pay_type,payRequestData) => {
 
