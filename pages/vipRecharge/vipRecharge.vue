@@ -52,7 +52,8 @@ export default {
 			num:null,
 			payChannel:null,
 			money: '',
-			pro:[]
+			pro:[],
+			pay_type: ''
 		};
 	},
 	onShow(){
@@ -113,7 +114,7 @@ export default {
 				pay_type: this.payChannel,
 				money: this.money
 			};
-
+			this.pay_type = this.payChannel;
 			if(this.pay_type === 'unionpay'){
 				error('即将上线')
 				return;
@@ -197,8 +198,8 @@ export default {
 			console.log('payConf',payConf)
 			let that = this;
 			depositBalance(payConf).then(res => {
-				console.log(res);
-				console.log(that.pay_type,'111')
+
+				console.log(this);
 				// #ifdef APP-PLUS
 
 

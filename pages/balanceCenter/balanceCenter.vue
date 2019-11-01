@@ -407,7 +407,8 @@ view{
 				background-color: #FF5C33;
 				position: absolute;
 				bottom: 0rpx;
-				left: 125rpx;
+				left: 50%;
+				margin-left: -73rpx;
 			}
 		}
 	}
