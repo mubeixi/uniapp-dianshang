@@ -101,12 +101,11 @@
 			</div>
 		</block>
 		<block v-else>
-			<!-- 待发货 -->
-			<div class="other" v-if="orderInfo.is_use_money && orderInfo.is_use_money == 1">
+			<div class="other" v-if="orderInfo.Order_Yebc > 0">
 				<div class="bd">
 					<div class="o_title">
 						<span>使用余额:</span>
-						<span>{{orderInfo.Order_Yebc}}元</span>
+						<span style="color: #888;">{{orderInfo.Order_Yebc}}元</span>
 					</div>
 				</div>
 			</div>
