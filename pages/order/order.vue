@@ -23,7 +23,7 @@
 				<div class="jiaobiao" v-if="orderNum.waitcomment>0">{{orderNum.waitcomment}}</div>
 			</div>
         </div>
-		<view class="space" style="height: 100rpx;width: 100%;">
+		<view class="space-box" style="height: 100rpx;width: 100%;">
 		</view>
         <div class="order" v-for="(item,index) of data" :key="index" >
 			<template v-if="item.prod_list.length>0">

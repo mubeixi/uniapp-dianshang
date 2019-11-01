@@ -64,9 +64,9 @@
 
 					//只需要商户id
 
-					let users_id = ls.get('users_id');
+					//let users_id = ls.get('users_id');
 					ls.clear();
-					ls.set('users_id',users_id);
+					//ls.set('users_id',users_id);
 
 					this.setUserInfo({})
 

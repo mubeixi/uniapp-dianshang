@@ -99,8 +99,8 @@ html,body{
 }
 /* #endif */
 
-.space{
-    background: none;
+.space-box{
+    background-color: none;
 }
 
 .safearea{

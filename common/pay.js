@@ -1,7 +1,9 @@
 import {WX_JSSDK_INIT} from "./mixin";
-import {isWeiXin} from "./tool";
-import {urlencode} from "./tool";
+
+import {isWeiXin,ls,GetQueryByString,urlencode} from "./tool";
 import {traslateShorten,add_template_code} from "./fetch";
+import {toast,error} from "./index";
+import {mapGetters,mapActions} from 'vuex';
 
 /**
  *

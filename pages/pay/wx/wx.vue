@@ -3,9 +3,9 @@
 <!--		请按提示完成支付宝支付-->
 		<!--分享引导框开始-->
 		<div class="hide guide_box"  v-show="isShowGuide" @click="isShowGuide=false">
-			<div class="mask"></div>
-			<div class="guide" ><image class="guideimg" mode="aspectFit" src="https://new401.bafangka.com/static/client/alipay.jpg"  /></div>
-			<div><image  src="https://new401.bafangka.com/static/client/share/guide_point.png"  class="guide_point" /></div>
+<!--			<div class="mask"></div>-->
+			<div class="guide" ><image class="guideimg" mode="aspectFit" src="/static/pay/alipay.jpg"  /></div>
+<!--			<div><image  src="https://new401.bafangka.com/static/client/share/guide_point.png"  class="guide_point" /></div>-->
 <!--			<div><image  src="https://new401.bafangka.com/static/client/share/guide_btn.png"  class="guide_btn"  /></div>-->
 		</div>
 		<!--分享引导框结束-->
