@@ -29,6 +29,7 @@
     // #endif
 
 
+    import {getSystemConf} from "./common/fetch";
 
 
     export default {
@@ -67,6 +68,11 @@
 			// #endif
 
 			console.log('App Launch')
+
+
+            getSystemConf().then(res => {
+                ls.set('initData',res.data)
+            },err=>{}).catch(error=>{})
 		},
 		onShow: function() {
 			// console.log('App Show')
