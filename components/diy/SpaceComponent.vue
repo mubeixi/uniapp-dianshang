@@ -1,13 +1,12 @@
 <template>
-  <view 
-       :style="{height:style.height+'px',backgroundColor:style.bgColor}" class="space">
+  <view :style="{height:style.height+'px',backgroundColor:space.style.bgColor}" class="space">
 
   </view>
 </template>
 <script>
   import {deepCopyStrict} from "../../common/tool";
   const styleDefault = {
-    
+
   }
   export default {
     props: {
@@ -21,7 +20,9 @@
     },
     data() {
       return {
-        space: {},
+        space: {
+          style:{}
+        },
       };
     },
     computed: {
@@ -48,4 +49,5 @@
   .space
     height 0
     width 100%
+
 </style>
