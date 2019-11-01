@@ -3,40 +3,40 @@
 		<view class="top">
 			<image src="https://new401.bafangka.com/static/client/task/left.png" class="goBack" @click="goBack"></image>
 			<view class="titles">会员等级</view>
-			<scroll-view class="center"  scroll-x="true"  @scroll="goRight">
-				<view class="vipFir " v-for="(item,index) of pro.levels" :key="index"    :style="pro.levels.length==1?'margin-left:45rpx;':''">
-					<image src="https://new401.bafangka.com/static/client/task/vip.png" class="allImg"></image>
-					<image src="https://new401.bafangka.com/static/client/task/vips.png" class="leftImg"></image>
-					<view class="vipGrade">
-						{{item.level_name}}
-					</view>
-					<view class="dangqian" v-if="index==0">
-						当前等级
-					</view>
-					<view class="mmp">
-						<view class="da">
-
+			<swiper class="center" :indicator-dots="false" :autoplay="false"  :duration="1000" :current="inds" @change="change">
+				<swiper-item class="vipFir"  v-for="(item,index) of pro.levels" :key="index"  :style="pro.levels.length==1?'margin-left:43rpx;':''">
+				<!-- 		<image src="https://new401.bafangka.com/static/client/task/vip.png" class="allImg"></image> -->
+						<image :src="item.img_url" class="allImg"></image>
+						<image src="https://new401.bafangka.com/static/client/task/vips.png" class="leftImg"></image>
+						<view class="vipGrade">
+							{{item.level_name}}
 						</view>
-						<view class="tu" :style="{transform: 'rotate('+item.growth_value/item.curlevel.upper_growth*180+'deg)'}">
-
+						<view class="dangqian" v-if="index==0">
+							当前等级
 						</view>
-						<!-- <view class="tu" :style="{transform: 'rotate('+jiaodu+'deg)'}">
+						<view class="mmp">
+							<view class="da">
+					
+							</view>
+							<view v-if="item.curlevel.length<=0&&pro.levels.length<=0" class="tu" style="transform:rotate(180deg)">
+							
+							</view>
+							<view v-else class="tu" :style="{transform: 'rotate('+item.growth_value/item.curlevel.upper_growth*180+'deg)'}">
+					
+							</view>
 
-						</view> -->
-						<view class="xiao">
-
+	
+							<view class="xiao">
+					
+							</view>
+							<view class="texts">
+								<view class="posiQ">我的成长值</view>
+								<view class="posiW">{{item.growth_value}}</view>
+								<view class="posiE" v-if="item.curlevel.need_growth">还差{{item.curlevel.need_growth}}升级为{{pro.levels[index+1].level_name}}</view>
+							</view>
 						</view>
-						<view class="texts">
-							<view class="posiQ">我的成长值</view>
-							<view class="posiW">{{item.growth_value}}</view>
-							<view class="posiE" v-if="item.curlevel.need_growth">还差{{item.curlevel.need_growth}}升级为{{pro.levels[index+1].level_name}}</view>
-						</view>
-					</view>
-					<!-- <canvas :style="{width:widths+'px'}" canvas-id="firstCanvas" class="canvass"></canvas> -->
-				</view>
-
-			</scroll-view>
-
+				</swiper-item>
+			</swiper>
 		</view>
 		<view style="height: 220rpx;"></view>
 		<circleTitle :title="tequan.level_name" ></circleTitle>
@@ -111,6 +111,7 @@
 				index:0,//第几个会员等级
 				pro:[],
 				tequan:[],
+				inds:0
 			};
 		},
 		components:{
@@ -123,6 +124,10 @@
 			this.getLevelCenter();
 		},
 		methods:{
+			change(e){
+				this.inds=e.detail.current;
+				this.tequan=this.pro.levels[this.inds];
+			},
 			getLevelCenter(){
 				getLevelCenter().then(res=>{
 					this.pro=res.data;
@@ -198,12 +203,9 @@ view{
 		height: 325rpx;
 		white-space: nowrap;
 		.vipFir{
-			width: 665rpx;
-			height: 325rpx;
+			width: 665rpx !important;
+			height: 325rpx !important;
 			display: inline-block;
-			// position: absolute;
-			// top: 0rpx;
-			// left: 0rpx;
 			position: relative;
 			image.allImg{
 				width: 100%;
