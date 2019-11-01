@@ -219,7 +219,7 @@
 		</popup-layer>
 	</view>
 </template>
-·
+
 <script>
 	import {pageMixin} from "../../common/mixin";
 	import {disApplyInit,getTown,disApply,disBuy,orderPay} from '../../common/fetch.js';
