@@ -42,7 +42,7 @@
 				</view>
 				<view class="navList four" @click="goCoupon">
 					<image src="https://new401.bafangka.com/static/client/person/youhuijuan.png" mode=""></image>
-					<view style="left: 50upx;">
+					<view style="left: 50rpx;">
 						优惠券
 					</view>
 				</view>
@@ -146,7 +146,7 @@
 				<image src="https://new401.bafangka.com/static/client/person/right.png" class="right"></image>
 			</view>
 		</view>
-		<view style="height: 118upx;"></view>
+		<view style="height: 118rpx;"></view>
 
 <!--		<div class="space" style="height:60px"></div>-->
 <!--		<div class="safearea"></div>-->
@@ -351,8 +351,8 @@
 .person{
 	background-color: rgb(241, 241, 241);
 	.personTop{
-		width: 750upx;
-		height: 373upx;
+		width: 750rpx;
+		height: 373rpx;
 		position: relative;
 		.bg{
 
@@ -363,41 +363,41 @@
 
 		}
 		.qiandao{
-			width:120upx;
-			height:45upx;
+			width:120rpx;
+			height:45rpx;
 			background:rgb(249, 142, 142);
-			box-shadow:0px 1upx 6upx 0px rgba(167,53,50,1);
+			box-shadow:0px 1rpx 6rpx 0px rgba(167,53,50,1);
 			//opacity:0.45;
-			border-radius:20upx;
+			border-radius:20rpx;
 			position: absolute;
 
-			top: 22upx;
-			right: 20upx;
+			top: 22rpx;
+			right: 20rpx;
 			display: flex;
 			align-items: center;
-			padding: 11upx 20upx;
+			padding: 11rpx 20rpx;
 			justify-content: space-between;
 			box-sizing: border-box;
 			image{
-				width: 22upx;
-				height: 22upx;
+				width: 22rpx;
+				height: 22rpx;
 			}
 			view{
 				color: #FFFFFF;
-				font-size: 24upx;
+				font-size: 24rpx;
 				font-weight:500;
 			}
 		}
 		.personInfo{
 			position: absolute;
-			left: 57upx;
-			right: 57upx;
-			top: 80upx;
-			height: 100upx;
+			left: 57rpx;
+			right: 57rpx;
+			top: 80rpx;
+			height: 100rpx;
 			display: flex;
 			.left{
-				width: 100upx;
-				height: 100upx;
+				width: 100rpx;
+				height: 100rpx;
 				border-radius: 50%;
 				image{
 					width: 100%;
@@ -405,8 +405,8 @@
 				}
 			}
 			.right{
-				margin-left: 19upx;
-				padding-top: 10upx;
+				margin-left: 19rpx;
+				padding-top: 10rpx;
 				.loginBtn{
 					padding:4px 10px;
 					color: white;
@@ -418,150 +418,150 @@
 					transform: translateY(-50%);
 				}
 				.nickName{
-					font-size:30upx;
-					height: 29upx;
-					line-height: 29upx;
+					font-size:30rpx;
+					height: 29rpx;
+					line-height: 29rpx;
 					color: #FFFFFF;
 					font-weight:bold;
 				}
 				.cart{
-					margin-top: 19upx;
-					font-size: 22upx;
+					margin-top: 19rpx;
+					font-size: 22rpx;
 					color: #FFFFFF;
-					//width:136upx;
-					height:42upx;
-					line-height: 42upx;
+					//width:136rpx;
+					height:42rpx;
+					line-height: 42rpx;
 					display: inline-block;//flex;
 					align-items: center;
-					padding-left: 16upx;
-					padding-right: 12upx;
+					padding-left: 16rpx;
+					padding-right: 12rpx;
 					background:rgb(249, 142, 142);
-					border-radius:20upx;
+					border-radius:20rpx;
 					box-sizing: border-box;
 					image{
-						width: 13upx;
-						height: 20upx;
-						margin-left: 9upx;
+						width: 13rpx;
+						height: 20rpx;
+						margin-left: 9rpx;
 					}
 				}
 			}
 		}
 		.nav{
-			width: 711upx;
-			height: 240upx;
+			width: 711rpx;
+			height: 240rpx;
 			background-color: #FFFFFF;
 			position: absolute;
-			top: 233upx;
-			left: 19upx;
-			box-shadow:0px 5upx 12upx 1upx rgba(222,71,66,0.41);
-			border-radius:20upx;
-			padding-top: 67upx;
-			padding-bottom: 57upx;
+			top: 233rpx;
+			left: 19rpx;
+			box-shadow:0px 5rpx 12rpx 1rpx rgba(222,71,66,0.41);
+			border-radius:20rpx;
+			padding-top: 67rpx;
+			padding-bottom: 57rpx;
 			box-sizing: border-box;
 			display: flex;
 			justify-content: space-between;
 			.navList{
-				width: 177upx;
+				width: 177rpx;
 				height: 100%;
 				text-align: center;
 				position: relative;
 				view{
-					font-size: 28upx;
+					font-size: 28rpx;
 					color: #333333;
 					font-weight:500;
 					position: absolute;
-					bottom: 10upx;
-					left: 60upx;
+					bottom: 10rpx;
+					left: 60rpx;
 				}
 			}
 			.first{
 				image{
-					width: 53upx;
-					height: 60upx;
+					width: 53rpx;
+					height: 60rpx;
 				}
 			}
 			.second{
 				image{
-					width: 58upx;
-					height: 58upx;
+					width: 58rpx;
+					height: 58rpx;
 				}
 			}
 			.three{
 				image{
-					width: 56upx;
-					height: 54upx;
+					width: 56rpx;
+					height: 54rpx;
 				}
 			}
 			.four{
 				image{
-					width: 65upx;
-					height: 46upx;
+					width: 65rpx;
+					height: 46rpx;
 				}
 			}
 		}
 	}
 	.order{
-		margin: 140upx 20upx 25upx 20upx;
-		width: 710upx;
-		height: 268upx;
+		margin: 140rpx 20rpx 25rpx 20rpx;
+		width: 710rpx;
+		height: 268rpx;
 		background-color: #FFFFFF;
-		border-radius:20upx;
+		border-radius:20rpx;
 		.orderTop{
-			width: 710upx;
+			width: 710rpx;
 			box-sizing: border-box;
-			height: 70upx;
-			padding: 0 20upx;
-			line-height: 70upx;
+			height: 70rpx;
+			padding: 0 20rpx;
+			line-height: 70rpx;
 			border-bottom: 1px solid #ECE8E8;
 			display: flex;
 			justify-content: space-between;
 			.orderLeft{
-				font-size:28upx;
+				font-size:28rpx;
 				font-weight:bold;
 			}
 			.orderRight{
-				font-size: 26upx;
+				font-size: 26rpx;
 				color: #666666;
 				display: flex;
 				align-items: center;
 				image{
-					width: 17upx;
-					height: 26upx;
-					margin-left: 12upx;
+					width: 17rpx;
+					height: 26rpx;
+					margin-left: 12rpx;
 				}
 			}
 		}
 		.orderCenter{
-			height: 198upx;
-			padding-top: 42upx;
-			padding-bottom: 49upx;
+			height: 198rpx;
+			padding-top: 42rpx;
+			padding-bottom: 49rpx;
 			box-sizing: border-box;
 			display: flex;
 			justify-content: space-between;
 			.orderLast{
-				width: 177.5upx;
-				height: 107upx;
+				width: 177.5rpx;
+				height: 107rpx;
 				text-align: center;
 				position: relative;
 				image{
-					width: 65upx;
-					height: 65upx;
+					width: 65rpx;
+					height: 65rpx;
 				}
 				view{
-					font-size: 26upx;
+					font-size: 26rpx;
 					color: #333333;
 				}
 			}
 		}
 	}
 	.list{
-		width: 710upx;
-		//height: 533upx;
+		width: 710rpx;
+		//height: 533rpx;
 		margin: 0  auto;
 		background-color: #FFFFFF;
-		border-radius:20upx;
-		padding-left: 22upx;
-		padding-right: 18upx;
+		border-radius:20rpx;
+		padding-left: 22rpx;
+		padding-right: 18rpx;
 		box-sizing: border-box;
 		.line{
 			height:1px;
@@ -574,65 +574,65 @@
 			}
 		}
 		.group{
-			height: 94upx;
+			height: 94rpx;
 			display: flex;
 			align-items: center;
 			image.left{
-				width: 33upx;
-				height: 31upx;
-				margin-left: 7upx;
+				width: 33rpx;
+				height: 31rpx;
+				margin-left: 7rpx;
 			}
 			image.right{
-				width: 17upx;
-				height: 26upx;
+				width: 17rpx;
+				height: 26rpx;
 				margin-left: auto;
-				margin-right: 4upx;
+				margin-right: 4rpx;
 			}
 			.pintuan{
-				margin-left: 13upx;
-				font-size: 28upx;
+				margin-left: 13rpx;
+				font-size: 28rpx;
 				color: #333333;
 			}
 		}
 		.bargain{
-			height: 86upx;
+			height: 86rpx;
 			display: flex;
 			align-items: center;
 			image.left{
-				width: 32upx;
-				height: 34upx;
-				margin-left: 7upx;
+				width: 32rpx;
+				height: 34rpx;
+				margin-left: 7rpx;
 			}
 			image.right{
-				width: 17upx;
-				height: 26upx;
+				width: 17rpx;
+				height: 26rpx;
 				margin-left: auto;
-				margin-right: 4upx;
+				margin-right: 4rpx;
 			}
 			.pintuan{
-				margin-left: 13upx;
-				font-size: 28upx;
+				margin-left: 13rpx;
+				font-size: 28rpx;
 				color: #333333;
 			}
 		}
 		.setting{
-			height: 90upx;
+			height: 90rpx;
 			display: flex;
 			align-items: center;
 			image.left{
-				width: 36upx;
-				height: 36upx;
-				margin-left: 7upx;
+				width: 36rpx;
+				height: 36rpx;
+				margin-left: 7rpx;
 			}
 			image.right{
-				width: 17upx;
-				height: 26upx;
+				width: 17rpx;
+				height: 26rpx;
 				margin-left: auto;
-				margin-right: 4upx;
+				margin-right: 4rpx;
 			}
 			.pintuan{
-				margin-left: 13upx;
-				font-size: 28upx;
+				margin-left: 13rpx;
+				font-size: 28rpx;
 				color: #333333;
 			}
 		}
@@ -641,31 +641,31 @@
 }
 
 .msg{
-	width: 45upx !important;
-	height: 45upx !important;
+	width: 45rpx;
+	height: 45rpx;
 	position: absolute;
-	top: 22upx;
-	right: 175upx;
+	top: 22rpx;
+	right: 175rpx;
 }
 .onlyMsg{
-	right: 25upx;
+	right: 25rpx;
 }
 .isQian{
-	padding-left: 12upx !important;
-	padding-right: 12upx !important;
+	padding-left: 12rpx !important;
+	padding-right: 12rpx !important;
 }
 
 .jiaobiao{
 		position: absolute;
-		top: -6upx;
-		right: 42upx;
-		width: 24upx;
-		height: 24upx;
-		padding: 4upx;
+		top: -6rpx;
+		right: 42rpx;
+		width: 24rpx;
+		height: 24rpx;
+		padding: 4rpx;
 		border-radius: 50%;
 		background-color: #f43131;
 		border: 1px solid  #F43131;
-		font-size: 24upx !important;
+		font-size: 24rpx !important;
 		display: flex;
 		align-items: center;
 		justify-content: center;

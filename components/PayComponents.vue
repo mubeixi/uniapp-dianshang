@@ -94,7 +94,7 @@ export default {
             type:String
         },
         paySuccessCall:{
-            type:Function,
+            //type:Function,
             default:noop
         },
         payErrorCall:{
@@ -439,11 +439,13 @@ export default {
             console.log('payConf',payConf)
             orderPay(payConf).then(res => {
 
-                unipayFunc(_self,_self.pay_type,res);
-
+                console.log(this.paySuccessCall);
                 console.log(res);
 
-                console.log(isWeiXin())
+                //console.log(isWeiXin())
+                unipayFunc(this,this.pay_type,res);
+
+
 
                 // // #ifdef H5
                 //
