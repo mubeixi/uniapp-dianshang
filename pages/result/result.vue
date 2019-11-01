@@ -23,11 +23,11 @@
         <div :class="[active == 1 ? 'checked' : '','tab']" @click="getActive(1)">销量<div class="line"></div></div>
         <div :class="[active == 2 ? 'checked' : '','tab']" @click="getActive(2)">价格<div class="line">
 			<view class="xiangshang">
-				<image src="https://new401.bafangka.com/static/client/result/tops.png" v-if="isSheng==1"></image>
-				<image src="https://new401.bafangka.com/static/client/result/top.png" v-else></image>
+				<image class="image" src="https://new401.bafangka.com/static/client/result/tops.png" v-if="isSheng==1"></image>
+				<image class="image" src="https://new401.bafangka.com/static/client/result/top.png" v-else></image>
 
-				<image src="https://new401.bafangka.com/static/client/result/bottoms.png" v-if="isSheng==2" style="bottom: 0rpx;"></image>
-				<image src="https://new401.bafangka.com/static/client/result/bottom.png" v-else style="bottom: 0rpx;"></image>
+				<image class="image" src="https://new401.bafangka.com/static/client/result/bottoms.png" v-if="isSheng==2" style="bottom: 0rpx;"></image>
+				<image class="image" src="https://new401.bafangka.com/static/client/result/bottom.png" v-else style="bottom: 0rpx;"></image>
 			</view>
 		</div></div>
         <div :style="{color:showShai?'#F43131':''}" @click.stop="change" style="width: 110rpx;text-align: right;">筛选<div class="line"></div></div>
@@ -43,17 +43,17 @@
 			<view class="priceInterval">价格区间(元)</view>
 			<view class="inputPrice">
 				<input type="number" placeholder="最低价" placeholder-style="color:#999999;font-size:26rpx;" v-model="minPrice">
-				<view>—</view>
+				<view class="view">—</view>
 				<input type="number" placeholder="最高价"  placeholder-style="color:#999999;font-size:26rpx;" v-model="maxPrice">
 			</view>
 			<view class="priceInterval">是否包邮</view>
 			<view class="isShipping">
-				<span :class="isShipping==1?'checked':''" @click="shipping(0)">是</span>
-				<span :class="isShipping==2?'checked':''" @click="shipping(1)">否</span>
+				<span class="span" :class="isShipping==1?'checked':''" @click="shipping(0)">是</span>
+				<span class="span" :class="isShipping==2?'checked':''" @click="shipping(1)">否</span>
 			</view>
 			<view class="submit">
-				<view class="reset" @click="reset">重置</view>
-				<view class="sure" @click="sureSearch">确定</view>
+				<view class="view reset" @click="reset">重置</view>
+				<view class="view sure" @click="sureSearch">确定</view>
 			</view>
 			<view class="zhao" @click="closeShow" catchtouchmove="false">
 
@@ -89,8 +89,8 @@
 				<div class="pro_desc">
 					<div class="title">{{item.Products_Name}}</div>
 					<div class="price">
-						<span class="n_price"><text>￥</text>{{item.Products_PriceX}}</span>
-						<span class="o_price"><text>￥</text>{{item.Products_PriceY}}</span>
+						<span class="n_price"><text class="text">￥</text>{{item.Products_PriceX}}</span>
+						<span class="o_price"><text class="text">￥</text>{{item.Products_PriceY}}</span>
 					</div>
 				</div>
 			</div>
@@ -469,7 +469,7 @@ export default {
 				.price {
 					margin-top: 21rpx;
 				}
-				.price text {
+				.price .text {
 					font-size: 24rpx;
 					font-style: normal;
 				}
@@ -520,7 +520,7 @@ export default {
 				.price {
 					margin-top: 21rpx;
 				}
-				.price text {
+				.price .text {
 					font-size: 20rpx;
 					font-style: normal;
 				}
@@ -570,7 +570,7 @@ export default {
 		.inputPrice{
 			display: flex;
 			margin-bottom: 50rpx;
-			view{
+			.view{
 				width:29rpx;
 				height:55rpx;
 				line-height: 55rpx;
@@ -592,7 +592,7 @@ export default {
 		.isShipping{
 			display: flex;
 			margin-bottom: 100rpx;
-			span{
+			.span{
 				width:110rpx;
 				height:55rpx;
 				background:#D6D6D6;
@@ -614,7 +614,7 @@ export default {
 			height: 80rpx;
 			padding-left: 0rpx;
 			padding-right: 0rpx;
-			view{
+			.view{
 				width: 50%;
 				height: 80rpx;
 				line-height: 80rpx;
@@ -654,7 +654,7 @@ export default {
 		position: absolute;
 		top: 10rpx;
 		right: 40rpx;
-		image{
+		.image{
 			width: 14rpx;
 			height: 9rpx;
 			position: absolute;

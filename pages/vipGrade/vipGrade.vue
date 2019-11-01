@@ -44,7 +44,7 @@
 			<view class="floats" v-for="(mb,mx) of tequan.basic" :key="mx">
 				<view class="floatm">
 					<view class="imgs">
-						<image :src="mb.img_url" ></image>
+						<image class="image" :src="mb.img_url" ></image>
 					</view>
 						{{mb.name}}
 				</view>
@@ -73,7 +73,7 @@
 		<view style="height: 20rpx;background-color: #F8F8F8;width: 750rpx;"></view>
 		<view class="lasts">
 			<view class="titles">
-				<image src="https://new401.bafangka.com/static/client/fenxiao/wen.png" ></image>
+				<image class="image" src="https://new401.bafangka.com/static/client/fenxiao/wen.png" ></image>
 				<view>
 					什么是成长值
 				</view>
@@ -85,7 +85,7 @@
 		<view style="height: 20rpx;background-color: #F8F8F8;width: 750rpx;"></view>
 		<view class="lasts">
 			<view class="titles">
-				<image src="https://new401.bafangka.com/static/client/fenxiao/wen.png" ></image>
+				<image class="image" src="https://new401.bafangka.com/static/client/fenxiao/wen.png" ></image>
 				<view>
 					如何获得成长值
 				</view>
@@ -170,8 +170,6 @@
 .all{
 	background-color: #FFFFFF;
 	overflow-x: hidden;
-}
-view{
 	box-sizing: border-box;
 }
 .top{
@@ -207,7 +205,7 @@ view{
 			height: 325rpx !important;
 			display: inline-block;
 			position: relative;
-			image.allImg{
+			.allImg{
 				width: 100%;
 				height: 100%;
 			}
@@ -252,7 +250,7 @@ view{
 	display: flex;
 	box-sizing: border-box;
 	white-space: nowrap;
-	image{
+	.image{
 		width: 100%;
 		height: 100%;
 	}
@@ -272,7 +270,7 @@ view{
 			flex-wrap: wrap;
 			justify-content: center;
 		}
-		view.imgs{
+		.imgs{
 			width: 78rpx;
 			height: 78rpx;
 			border-radius: 50%;
@@ -329,7 +327,7 @@ view{
 }
 .lasts{
 	padding: 35rpx 0rpx 35rpx 18rpx;
-	image{
+	.image{
 		width: 34rpx;
 		height: 34rpx;
 		margin-right: 16rpx;

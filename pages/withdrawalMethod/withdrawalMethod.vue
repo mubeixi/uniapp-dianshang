@@ -119,8 +119,6 @@
 <style scoped lang="scss">
 .all{
 	background-color: #f8f8f8;
-}
-view,div{
 	box-sizing: border-box;
 }
 .content{

@@ -4,7 +4,7 @@
 		<div class="search-wrap">
 			<icon type="search" size="34rpx" class="search_icon"/>
 			<input type="text" class="search-input" name="search" v-model="inputValue" @confirm="success"  confirm-type='search' focus="focus" autofocus="autofocus">
-			<span @click="close">取消</span>
+			<span @click="close" class="span">取消</span>
 		</div>
     </form>
     <div class="history" v-if="searchAll.length>0">
@@ -13,7 +13,7 @@
 			<div @click="clear" class="dels"><image class="img" src="https://new401.bafangka.com/static/client/del.png" /></div>
 		</div>
         <div class="h_content">
-            <span v-for="(item,i) of searchAll" :key='i' @click="goSearch(item)">{{item}}</span>
+            <span class="span" v-for="(item,i) of searchAll" :key='i' @click="goSearch(item)">{{item}}</span>
         </div>
     </div>
   </div>
@@ -119,7 +119,7 @@ export default {
 			top: 46rpx;
 			left: 61rpx;
 		}
-		span{
+		.span{
 			font-size: 30rpx;
 			color: #333333;
 		}
@@ -151,7 +151,7 @@ export default {
 	.dels{
 		width: 40rpx;
 	}
-    .h_content span {
+    .h_content .span {
         float:left;
         background: rgba(245, 245, 245, 1);
         border-radius: 10px;

@@ -27,8 +27,8 @@
 			<div class="item noborder">上传照片(最多9张)</div>
 			<div class="imgs">
 				<view class="shangchuans" v-for="(item,index) of imgs" :key="index"  >
-					<image :src="item"  @click="yulan(index)"></image>
-					<image src="https://new401.bafangka.com/static/client/delimg.png" class="del" @click="delImg(index)"></image>
+					<image class="image" :src="item"  @click="yulan(index)"></image>
+					<image src="https://new401.bafangka.com/static/client/delimg.png" class="del image" @click="delImg(index)"></image>
 				</view>
 			    <view class="shangchuan" @click="addImg">
 					<view class="heng"></view>
@@ -175,11 +175,9 @@
 </script>
 
 <style lang="scss" scoped>
-	view{
-		box-sizing: border-box;
-	}
 	.all{
 		background-color: #F8F8F8;
+		box-sizing: border-box;
 	}
 	.edit{
 		box-sizing: border-box;
@@ -335,7 +333,7 @@
 		position: relative;
 		margin-right: 28rpx;
 		margin-bottom: 28rpx;
-		image{
+		.image{
 			width: 100%;
 			height: 100%;
 		}

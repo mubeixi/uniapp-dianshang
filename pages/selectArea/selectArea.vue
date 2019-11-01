@@ -7,19 +7,19 @@
 		<view class="top">
 			<view class="first">
 				<view class="circleQ">
-					<view></view>
+					<view class="view"></view>
 				</view>
 				<view class="lineQ lineW">
 
 				</view>
 				<view class="circleQ">
-					<view></view>
+					<view class="view"></view>
 				</view>
 				<view class="lineQ">
 
 				</view>
 				<view class="circleQ circleW">
-					<view></view>
+					<view class="view"></view>
 				</view>
 			</view>
 			<view class="second">
@@ -39,18 +39,18 @@
 				<!-- 选择区域 -->
 				<picker mode="multiSelector"  @change="bindMultiPickerChange" @columnchange="bindMultiPickerColumnChange" :value="change_multiIndex" :range="change_objectMultiArray" range-key="name">
 								<view class="picker">
-								  <view class="quyu">选择区域</view>
-								  <view v-if="!address_info.Address_Province">选择省份</view>
-								  <view v-else>{{objectMultiArray[0][multiIndex[0]]['name']}}</view>
-								  <view v-if="!address_info.Address_City">选择城市</view>
-								  <view v-else>{{objectMultiArray[1][multiIndex[1]]['name']}}</view>
-								  <view v-if="!address_info.Address_Area">选择地区</view>
-								  <view v-else>{{objectMultiArray[2][multiIndex[2]]['name']}}</view>
+								  <view class="view quyu">选择区域</view>
+								  <view class="view" v-if="!address_info.Address_Province">选择省份</view>
+								  <view class="view"  v-else>{{objectMultiArray[0][multiIndex[0]]['name']}}</view>
+								  <view class="view"  v-if="!address_info.Address_City">选择城市</view>
+								  <view class="view"  v-else>{{objectMultiArray[1][multiIndex[1]]['name']}}</view>
+								  <view class="view"  v-if="!address_info.Address_Area">选择地区</view>
+								  <view class="view"  v-else>{{objectMultiArray[2][multiIndex[2]]['name']}}</view>
 								</view>
 				</picker>
 			</view>
 			<view class="images">
-				<image src="https://new401.bafangka.com/static/client/fenxiao/chakan.png" ></image>
+				<image class="image" src="https://new401.bafangka.com/static/client/fenxiao/chakan.png" ></image>
 			</view>
 		</view>
 		<view class="four">
@@ -58,7 +58,7 @@
 		</view>
 		<view class="five">
 			查看申请记录
-			<image src="https://new401.bafangka.com/static/client/fenxiao/chakan.png" ></image>
+			<image class="image" src="https://new401.bafangka.com/static/client/fenxiao/chakan.png" ></image>
 		</view>
 	</view>
 </template>
@@ -160,7 +160,7 @@
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			view{
+			.view{
 				width: 15rpx;
 				height: 15rpx;
 				background-color: #F43131;
@@ -169,7 +169,7 @@
 		}
 		.circleW{
 			border: 1px solid #999999;
-			view{
+			.view{
 				background-color: #999999;
 			}
 		}
@@ -210,7 +210,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		view.haha{
+		.haha{
 			font-size: 30rpx;
 			color: #333333;
 			//margin-right: 42rpx;
@@ -219,7 +219,7 @@
 			width: 16rpx;
 			height: 88rpx;
 			line-height: 88rpx;
-			image{
+			.image{
 				width: 16rpx;
 				height: 25rpx;
 			}
@@ -247,12 +247,12 @@
 	font-size:24rpx;
 	font-weight:500;
 	color:rgba(153,153,153,1);
-	image{
+	.image{
 		width: 12rpx;
 		height: 20rpx;
 		margin-left: 10rpx;
 	}
 }
-.picker view{width: 160rpx;font-size: 28rpx; line-height:90rpx;height:90rpx; margin-right: 10rpx;}
+.picker .view{width: 160rpx;font-size: 28rpx; line-height:90rpx;height:90rpx; margin-right: 10rpx;}
 .picker{display: flex;.quyu{width: 120rpx;}}
 </style>

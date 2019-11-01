@@ -2,7 +2,7 @@
 	<view class="overflow">
 		<view class="tops">
 				<view class="imgs box-sizing">
-					<image :src="prod_list.prod_img" ></image>
+					<image class="image" :src="prod_list.prod_img" ></image>
 				</view>
 				<view class="textRight box-sizing">
 					<view class="topText">
@@ -58,10 +58,10 @@
 		<block v-if="!isFahuo">
 			<view class="orderFa" style="margin-top: 40rpx;">
 				<view class="inputs">
-					<input type="text" placeholder="请输入物流名称" v-model="shipping">
+					<input class="input" type="text" placeholder="请输入物流名称" v-model="shipping">
 				</view>
 				<view class="inputs" style="margin-top: 30rpx;">
-					<input type="number" placeholder="请输入物流单号" v-model="shippingID">
+					<input class="input" type="number" placeholder="请输入物流单号" v-model="shippingID">
 				</view>
 				<view class="submits" @click="refundSend">
 					确认发货
@@ -149,7 +149,7 @@
 		.imgs{
 			width: 200rpx;
 			height: 200rpx;
-			image{
+			.image{
 				width: 100%;
 				height: 100%;
 			}
@@ -247,7 +247,7 @@
 			height: 60rpx;
 			box-sizing: border-box;
 			margin: 0 auto;
-			input{
+			.input{
 				width: 100%;
 				height: 40rpx;
 				border:1rpx solid #CCCCCC;

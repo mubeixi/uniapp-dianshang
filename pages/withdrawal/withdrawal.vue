@@ -20,8 +20,8 @@
 				提现金额
 			</view>
 			<view class="inputMoney">
-				<view>
-					¥  <input type="number" v-model="price">
+				<view class="input-money-inner">
+					¥  <input class="input-money-input" type="number" v-model="price">
 				</view>
 			</view>
 			<view class="canTi">
@@ -36,8 +36,8 @@
 
 			</view>
 			<view class="tishi">
-				<image src="https://new401.bafangka.com/static/client/fenxiao/tishi.png" ></image>
-				<view>
+				<image class="tishi-image" src="https://new401.bafangka.com/static/client/fenxiao/tishi.png" ></image>
+				<view class="tishi-view">
 					申请提现后，系统会自动扣除您提现的2.00%的手续费，10.00%转入您的会员余额，88%店主会将钱打入您的账号；若全部转入余额则不扣除手续费。
 				</view>
 			</view>
@@ -45,7 +45,7 @@
 				立即提现
 			</view>
 			<view class="lishi" @click="goRecord">
-				历史提现 <image src="https://new401.bafangka.com/static/client/fenxiao/right.png" ></image>
+				历史提现 <image class="lishi-image" src="https://new401.bafangka.com/static/client/fenxiao/right.png" ></image>
 			</view>
 		</view>
 	</view>
@@ -197,8 +197,6 @@
 	background-color: #f8f8f8;
 	width: 750rpx;
 	overflow: hidden;
-}
-view,div{
 	box-sizing: border-box;
 }
 .content{
@@ -254,12 +252,12 @@ view,div{
 		font-size: 48rpx;
 		color: #333333;
 		padding-bottom: 30rpx;
-		view{
+		.input-money-inner{
 			height: 35rpx;
 			line-height: 35rpx;
 			display: flex;
 			align-items: center;
-			input{
+			.input-money-input{
 				margin-left: 20rpx;
 				height: 35rpx;
 				width: 600rpx;
@@ -294,13 +292,13 @@ view,div{
 		margin-right: 33rpx;
 		width: 645rpx;
 		display: flex;
-		image{
+		.tishi-image{
 			width: 22rpx;
 			height: 22rpx;
 			margin-right: 10rpx;
 			margin-top: 5rpx;
 		}
-		view{
+		.tishi-view{
 			width: 613rpx;
 			font-size: 20rpx;
 			color: #999999;
@@ -328,7 +326,7 @@ view,div{
 		color: #999999;
 		display: flex;
 		align-items: center;
-		image{
+		.lishi-image{
 			width: 12rpx;
 			height: 20rpx;
 			margin-left: 6rpx;

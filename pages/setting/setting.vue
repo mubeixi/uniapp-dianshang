@@ -39,9 +39,9 @@
 			</view>
 
 		</view>
-		<div class="margin15">
+		<view class="margin15">
 			<button @click="logoutFunc" type="warn">退出登录</button>
-		</div>
+		</view>
 
 	</view>
 </template>
@@ -95,19 +95,19 @@
 			height:1px;
 			background:rgba(236,232,232,1);
 		}
-		&>view{
+		.bargain{
 			border-bottom: 1px solid rgba(236,232,232,1) ;
 		}
 		.group{
 			height: 94rpx;
 			display: flex;
 			align-items: center;
-			image.left{
+			.left{
 				width: 33rpx;
 				height: 31rpx;
 				margin-left: 7rpx;
 			}
-			image.right{
+			.right{
 				width: 17rpx;
 				height: 26rpx;
 				margin-left: auto;
@@ -125,12 +125,12 @@
 			padding-right: 18rpx;
 			display: flex;
 			align-items: center;
-			image.left{
+			.left{
 				width: 32rpx;
 				height: 34rpx;
 				margin-left: 7rpx;
 			}
-			image.right{
+			.right{
 				width: 17rpx;
 				height: 26rpx;
 				margin-left: auto;
@@ -146,12 +146,12 @@
 			height: 90rpx;
 			display: flex;
 			align-items: center;
-			image.left{
+			.left{
 				width: 36rpx;
 				height: 36rpx;
 				margin-left: 7r4px;
 			}
-			image.right{
+			.right{
 				width: 17rpx;
 				height: 26rpx;
 				margin-left: auto;

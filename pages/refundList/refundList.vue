@@ -25,11 +25,11 @@
 						</div>
 					</div>
 				</block>
-				<div class="text-right total">共{{item.prod_list.length}}件商品 合计：<span class="price"><span>￥</span> {{item.refund_money_fee}}</span></div>
+				<div class="text-right total">共{{item.prod_list.length}}件商品 合计：<span class="price"><span class="p-span">￥</span> {{item.refund_money_fee}}</span></div>
 				<div class="btn-group">
-					<span style="border: 0rpx;color: red;">{{item.Back_Status_desc}}</span>
-					<span v-if="item.Back_Status==0" @click="cancelRefund(item,index)">取消退款</span>
-					<span v-else-if="item.Back_Status==1" >买家发货</span>
+					<span class="span" style="border: 0rpx;color: red;">{{item.Back_Status_desc}}</span>
+					<span class="span" v-if="item.Back_Status==0" @click="cancelRefund(item,index)">取消退款</span>
+					<span class="span" v-else-if="item.Back_Status==1" >买家发货</span>
 				</div>
 			</template>
         </div>
@@ -194,12 +194,12 @@ export default {
             align-items: center;
             // justify-content: space-between;
             width: 100%;
-            img {
-                width: 70rpx;
-                height: 70rpx;
-                border-radius: 50%;
-                margin-right: 21rpx;
-            }
+            // img {
+            //     width: 70rpx;
+            //     height: 70rpx;
+            //     border-radius: 50%;
+            //     margin-right: 21rpx;
+            // }
             .bizname {
                 // flex: 1;
 				font-size: 28rpx;
@@ -266,7 +266,7 @@ export default {
             .price {
                 color: red;
                 font-size: 30rpx;
-                span{
+                .p-span{
 					font-size: 24rpx;
 				}
             }
@@ -274,7 +274,7 @@ export default {
         .btn-group {
             text-align: right;
 			margin-bottom: 30rpx;
-            span {
+            .span {
                 display: inline-block;
                 //width: 150rpx;
 				padding: 0rpx 24rpx;

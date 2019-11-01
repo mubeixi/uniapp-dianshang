@@ -14,7 +14,7 @@
                 <div class="pro-name">{{item.prod_name}}</div>
                 <div class="attr" v-if="item.attr_info"><span>{{item.attr_info.attr_name}}</span></div>
 								<div class="attr" v-else style="background-color:#fff;"><span></span></div>
-                <div class="pro-price"><span>￥</span>{{item.refund_money_fee}} <span class="amount">x{{item.prod_count}}</span></div>
+                <div class="pro-price"><span class="span">￥</span>{{item.refund_money_fee}} <span class="span amount">x{{item.prod_count}}</span></div>
             </div>
         </div>
 		<div style="height: 20rpx;width: 100%;background-color: #F3F3F3;">
@@ -46,8 +46,8 @@
         <div class="item noborder">上传凭证</div>
         <div class="imgs">
 			<view class="shangchuans" v-for="(item,index) of imgs" :key="index"  >
-				<image :src="item"  @click="yulan(index)"></image>
-				<image src="https://new401.bafangka.com/static/client/delimg.png" class="del" @click="delImg(index)"></image>
+				<image class="image" :src="item"  @click="yulan(index)"></image>
+				<image class="image" src="https://new401.bafangka.com/static/client/delimg.png" class="del" @click="delImg(index)"></image>
 			</view>
             <view class="shangchuan" @click="addImg">
 				<view class="heng"></view>
@@ -297,7 +297,7 @@ export default {
 		position: relative;
 		margin-right: 28rpx;
 		margin-bottom: 28rpx;
-		image{
+		.image{
 			width: 100%;
 			height: 100%;
 		}
@@ -379,7 +379,7 @@ export default {
         color: #F43131;
     	font-size: 36rpx;
     }
-    .pro-price span {
+    .pro-price .span {
         font-size: 24rpx;
         font-style: normal;
     }

@@ -4,8 +4,8 @@
 <!--			<image src="https://new401.bafangka.com/static/client/task/left.png" class="goBack" @click="goBack"></image>-->
 <!--			<view class="titles">每日签到</view>-->
 			<view class="yuan" @click="signinMethod">
-				<image src="https://new401.bafangka.com/static/client/task/yuan.png"></image>
-				<image src="https://new401.bafangka.com/static/client/task/qiandao.png" class="qiandao"></image>
+				<image class="image" src="https://new401.bafangka.com/static/client/task/yuan.png"></image>
+				<image src="https://new401.bafangka.com/static/client/task/qiandao.png" class="qiandao image"></image>
 				<view class="qiandaoliji">
 					{{pro.signin?'已经签到':'立即签到'}}
 				</view>
@@ -17,15 +17,15 @@
 
 		<view class="jilu">
 			<view class="chang" v-for="(item,index) in pro.continue_" :key="index">
-				<image v-if="item<pro.continue" src="https://new401.bafangka.com/static/client/task/checked.png" ></image>
-				<image v-else src="https://new401.bafangka.com/static/client/task/unchecked.png" ></image>
-				<view>
+				<image class="image" v-if="item<pro.continue" src="https://new401.bafangka.com/static/client/task/checked.png" ></image>
+				<image class="image"  v-else src="https://new401.bafangka.com/static/client/task/unchecked.png" ></image>
+				<view class="view">
 					第{{index+1}}天
 				</view>
 			</view>
 		</view>
 		<view class="err">
-			<image src="https://new401.bafangka.com/static/client/task/err.png" mode=""></image>
+			<image class="image" src="https://new401.bafangka.com/static/client/task/err.png" mode=""></image>
 			温馨提示
 		</view>
 		<view class="last" v-if="pro">
@@ -96,9 +96,7 @@
 
 <style lang="scss" scoped>
 .all{
-	view{
-		box-sizing: border-box;
-	}
+	box-sizing: border-box;
 	.top{
 		width:750rpx;
 		height:447rpx;
@@ -145,7 +143,7 @@
 				top:85rpx ;
 				left: 107rpx;
 			}
-			image{
+			.image{
 				width: 100%;
 				height: 100%;
 			}
@@ -178,11 +176,11 @@
 			margin-bottom: 53rpx;
 			margin-right: 25rpx;
 			position: relative;
-			image{
+			.image{
 				width: 100%;
 				height: 100%;
 			}
-			view{
+			.view{
 				width: 107rpx;
 				height: 45rpx;
 				line-height: 45rpx;
@@ -202,7 +200,7 @@
 		color: #999999;
 		display: flex;
 		align-items: center;
-		image{
+		.image{
 			width: 22rpx;
 			height: 23rpx;
 			margin-right: 9rpx;

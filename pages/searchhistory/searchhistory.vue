@@ -3,13 +3,13 @@
     <div class="history">
         <div class="title">搜索历史</div>
         <div class="h_content">
-            <span>连衣裙</span>
-            <span>中秋月饼</span>
-            <span>奶茶咖啡店</span>
-            <span>乐高积木</span>
-            <span>鲜花干湿分离</span>
-            <span>波力海苔</span>
-            <span>纯牛奶</span>
+            <span class="span">连衣裙</span>
+            <span class="span">中秋月饼</span>
+            <span class="span">奶茶咖啡店</span>
+            <span class="span">乐高积木</span>
+            <span class="span">鲜花干湿分离</span>
+            <span class="span">波力海苔</span>
+            <span class="span">纯牛奶</span>
         </div>
     </div>
   </div>
@@ -47,7 +47,7 @@ export default {
         line-height: 26px;
         text-align: left;
     }
-    .h_content span {
+    .h_content .span {
         float:left;
         margin: 5px;
         background: rgba(245, 245, 245, 1);

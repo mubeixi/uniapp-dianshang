@@ -1,8 +1,8 @@
 <template>
-	<view>
+	<view class="all">
 		<!-- <page-title title="会员充值"></page-title> -->
 		<view class="yue">
-			<image src="https://new401.bafangka.com/static/client/blance/storePay.jpg" ></image>
+			<image class="image" src="https://new401.bafangka.com/static/client/blance/storePay.jpg" ></image>
 			<view class="yueq">
 				余额
 			</view>
@@ -12,12 +12,12 @@
 		</view>
 
 		<view class="inputs">
-			<image src="https://new401.bafangka.com/static/client/check/money.png" ></image>
-			<input  type="text" placeholder="请输入消费金额" v-model="money">
+			<image class="image" src="https://new401.bafangka.com/static/client/check/money.png" ></image>
+			<input class="input"  type="text" placeholder="请输入消费金额" v-model="money">
 		</view>
 		<view class="inputs">
-			<image src="https://new401.bafangka.com/static/client/check/password.png" ></image>
-			<input  type="password" placeholder="请输入支付密码" v-model="passwd">
+			<image class="image" src="https://new401.bafangka.com/static/client/check/password.png" ></image>
+			<input class="input" type="password" placeholder="请输入支付密码" v-model="passwd">
 		</view>
 		<view class="zhu">
 			注：若通过注册页面成为会员的用户，原支付密码与登录密码一致；否则，支付密码为“123456”
@@ -92,7 +92,7 @@
 </script>
 
 <style lang="scss" scoped>
-view{
+.all{
 	box-sizing: border-box;
 }
 .yue{
@@ -101,7 +101,7 @@ view{
 	margin: 0 auto;
 	margin-top: 44rpx;
 	position: relative;
-	image{
+	.image{
 		width: 100%;
 		height: 100%;
 	}
@@ -136,11 +136,11 @@ view{
 	display: flex;
 	align-items: center;
 
-	image{
+	.image{
 		width: 34rpx;
 		height: 40rpx;
 	}
-	input{
+	.input{
 		margin-left: 19rpx;
 		width: 100%;
 		height: 101rpx;

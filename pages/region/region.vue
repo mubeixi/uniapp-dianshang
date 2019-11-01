@@ -2,14 +2,14 @@
 	<view class="all" v-if="pro.agent_rate">
 		<view class="top">
 			<view class="person">
-				<image :src="pro.disInfo.Shop_Logo"></image>
+				<image class="image" :src="pro.disInfo.Shop_Logo"></image>
 			</view>
 			<view class="nickName">
 				<view class="tops">
 					{{pro.disInfo.Shop_Name}}
 				</view>
 				<view class="bottoms" v-if="pro.agent_identity">
-					<image src="https://new401.bafangka.com/static/client/fenxiao/vip.png"></image>
+					<image class="image" src="https://new401.bafangka.com/static/client/fenxiao/vip.png"></image>
 					{{pro.agent_identity}}
 				</view>
 			</view>
@@ -22,26 +22,26 @@
 		</view>
 		<view class="moneySum">
 			<view class="money">
-				<view>
-					<view class="moneyTop">
+				<view class="m-view">
+					<view class="moneyTop m-view">
 						总佣金
 					</view>
-					<view class="moneyBottom">
-						￥<text>{{pro.total_agent}}</text>
+					<view class="moneyBottom m-view">
+						￥<text class="text">{{pro.total_agent}}</text>
 					</view>
 				</view>
-				<view>
-					<view class="moneyTop">
+				<view class="m-view">
+					<view class="moneyTop m-view">
 						已发放佣金{{pro.total_agent}}
 					</view>
-					<view class="moneyBottom">
-						￥<text>{{pro.total_agent}}</text>
+					<view class="moneyBottom m-view">
+						￥<text class="text">{{pro.total_agent}}</text>
 					</view>
 				</view>
 			</view>
 			<view class="chakan"  @click="goFinance">
 				查看明细
-				<image src="https://new401.bafangka.com/static/client/fenxiao/chakan.png" ></image>
+				<image class="image" src="https://new401.bafangka.com/static/client/fenxiao/chakan.png" ></image>
 			</view>
 		</view>
 		<circleTitle title="区域代理门槛说明"></circleTitle>
@@ -54,13 +54,13 @@
 					申请条件:
 				</view>
 				<view class="xiangRight">
-					<view v-if="item.Level>0">
+					<view v-if="item.Level>0" class="view">
 						分销商等级:{{item.Level_name}}
 					</view>
-					<view v-if="item.Protitle>0">
+					<view v-if="item.Protitle>0" class="view">
 						爵位等级:{{item.Level_name}}
 					</view>
-					<view >
+					<view  class="view">
 						个人消费额:{{item.Selfpro}}
 					</view>
 				</view>
@@ -70,7 +70,7 @@
 					所需金额:
 				</view>
 				<view class="xiangBottomB">
-					¥<text>{{item.Teampro}}</text>(<block v-if="!item.is_apply">暂未达到申请条件</block><block v-if="item.is_apply">已达到申请条件</block>)
+					¥<text class="text">{{item.Teampro}}</text>(<block v-if="!item.is_apply">暂未达到申请条件</block><block v-if="item.is_apply">已达到申请条件</block>)
 				</view>
 			</view>
 		</view>
@@ -79,36 +79,36 @@
 		<circleTitle title="收益介绍"></circleTitle>
 		<view class="shouyi">
 			<view class="tt">
-				<view>
+				<view class="view">
 					省
 				</view>
-				<view>
+				<view class="view">
 					市
 				</view>
-				<view>
+				<view class="view">
 					县/区
 				</view>
-				<view class="rightZ">
+				<view class="rightZ view">
 					乡/镇
 				</view>
 			</view>
 			<view class="tt ts">
-				<view>
+				<view class="view">
 					{{pro.agent_rate.pro.Province}}%
 				</view>
-				<view>
+				<view class="view">
 					{{pro.agent_rate.cit.Province}}%
 				</view>
-				<view>
+				<view class="view">
 					{{pro.agent_rate.cou.Province}}%
 				</view>
-				<view class="rightZ">
+				<view class="rightZ view">
 					{{pro.agent_rate.tow.Province}}%
 				</view>
 			</view>
 		</view>
 		<view class="guize">
-			<text>*</text>当平台设置区域代理发放的总佣金为100元时，省、市、县/区、乡/镇分别获得20元、30元、40元、10元。
+			<text class="text">*</text>当平台设置区域代理发放的总佣金为100元时，省、市、县/区、乡/镇分别获得20元、30元、40元、10元。
 		</view>
 	</view>
 </template>
@@ -170,7 +170,7 @@
 			height: 83rpx;
 			border-radius: 50%;
 			overflow: hidden;
-			image{
+			.image{
 				width: 100%;
 				height: 100%;
 			}
@@ -194,7 +194,7 @@
 				margin-top: 14rpx;
 				font-size: 22rpx;
 				color: #666666;
-				image{
+				.image{
 					width: 25rpx;
 					height: 23rpx;
 					margin-right: 6rpx;
@@ -231,10 +231,10 @@
 			display: flex;
 			padding-top: 30rpx;
 			box-sizing: border-box;
-			& view:first-child{
+			& .m-view:first-child{
 				border-right: 1rpx solid #E7E7E7;
 			}
-			view{
+			.m-view{
 				height: 74rpx;
 				width: 355rpx;
 				text-align: center;
@@ -250,7 +250,7 @@
 					line-height: 28rpx;
 					font-size:24rpx;
 					color: #F43131;
-					text{
+					.text{
 						font-size: 36rpx;
 						font-weight: bold;
 					}
@@ -263,7 +263,7 @@
 			text-align: center;
 			font-size: 24rpx;
 			color: #999999;
-			image{
+			.image{
 				width: 12rpx;
 				height: 20rpx;
 				margin-left: 14rpx;
@@ -301,7 +301,7 @@
 				line-height: 50rpx;
 			}
 			.xiangRight{
-				view{
+				.view{
 					font-size: 24rpx;
 					color: #666666;
 					height: 50rpx;
@@ -322,7 +322,7 @@
 			.xiangBottomB{
 				font-size: 24rpx;
 				color: #F43131;
-				text{
+				.text{
 					font-size: 32rpx;
 				}
 			}
@@ -339,7 +339,7 @@
 			height: 95rpx;
 			display: flex;
 			background-color: #E3E2E2;
-			view{
+			.view{
 				width: 177rpx;
 				height: 95rpx;
 				line-height: 95rpx;
@@ -355,7 +355,7 @@
 		}
 		.ts{
 			background-color: #FFFFFF;
-			view{
+			.view{
 				font-size: 30rpx !important;
 				color: #F43131 !important;
 				font-weight: bold;
@@ -369,7 +369,7 @@
 		font-size: 24rpx;
 		color: #666666;
 		margin-bottom: 100rpx;
-		text{
+		.text{
 			color: #F43131;
 		}
 	}

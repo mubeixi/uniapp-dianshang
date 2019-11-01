@@ -18,10 +18,10 @@
 				</view>
 				<view class="vip" v-if="pro.level_name">
 					{{pro.level_name}}
-					<image src="https://new401.bafangka.com/static/client/task/right.png"></image>
+					<image class="image" src="https://new401.bafangka.com/static/client/task/right.png"></image>
 				</view>
 				<view class="zhangValue">
-					<view :style="{width:(pro.growth_value/pro.upper_growth)*100+'%'}">
+					<view class="view" :style="{width:(pro.growth_value/pro.upper_growth)*100+'%'}">
 
 					</view>
 				</view>
@@ -36,14 +36,14 @@
 				</view>
 				<view class="valueM">
 					成长值
-					<image src="https://new401.bafangka.com/static/client/task/sanjiao.png"></image>
+					<image class="image" src="https://new401.bafangka.com/static/client/task/sanjiao.png"></image>
 				</view>
 			</view>
 		</view>
 		<view style="height: 60rpx;"></view>
 		<circleTitle title="我的特权"></circleTitle>
 		<view class="myPrivilege">
-			<view v-for="(i,j) of pro.basic" :key="j">
+			<view class="view" v-for="(i,j) of pro.basic" :key="j">
 				{{j+1}}、{{i.name}}
 			</view>
 		</view>
@@ -54,7 +54,7 @@
 
 		<view class="ruhe">
 			<view class="td" v-for="(it,ind) of pro.obtain" :key="ind">
-				<image :src="it.img_url"></image>
+				<image class="image" :src="it.img_url"></image>
 				<view class="mbx">
 					<view class="tops">
 						{{it.name}}
@@ -123,7 +123,7 @@
 	width: 750rpx;
 	height: 404rpx;
 	position: relative;
-	image.widthTen{
+	.widthTen{
 		width: 100%;
 		height: 100%;
 	}
@@ -182,7 +182,7 @@
 			font-size: 20rpx;
 			color: #FFFFFF;
 			text-align: center;
-			image{
+			.image{
 				width: 10rpx;
 				height: 17rpx;
 				margin-left: 6rpx;
@@ -196,7 +196,7 @@
 			position: absolute;
 			top: 115rpx;
 			left: 302rpx;
-			view{
+			.view{
 				background-color: #FFFFFF;
 				height: 10rpx;
 			}
@@ -243,7 +243,7 @@
 			position: absolute;
 			top: 240rpx;
 			left: 61rpx;
-			image{
+			.image{
 				width: 8rpx;
 				height: 12rpx;
 				margin-left: 8rpx;
@@ -255,7 +255,7 @@
 	margin: 0 auto;
 	width: 710rpx;
 	margin-bottom: 30rpx;
-	view{
+	.view{
 		font-size: 24rpx;
 		color: #666666;
 		height: 50rpx;
@@ -279,7 +279,7 @@
 		&:last-child{
 			border-bottom: 0rpx;
 		}
-		image{
+		.image{
 			width: 65rpx;
 			height: 65rpx;
 			margin-left: 21rpx;

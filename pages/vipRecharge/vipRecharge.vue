@@ -1,8 +1,8 @@
 <template>
-	<view>
+	<view class="all">
 		<!-- <page-title title="会员充值"></page-title> -->
 		<view class="yue">
-			<image src="https://new401.bafangka.com/static/client/blance/recharge.jpg" ></image>
+			<image class="yue-image" src="https://new401.bafangka.com/static/client/blance/recharge.jpg" ></image>
 			<view class="yueq">
 				余额
 			</view>
@@ -26,7 +26,7 @@
 			</view>
 		</view>
 		<view class="youhui" v-for="(item,index) of pro.gives " :key="index">
-			{{index+1}}、充值满{{item.deposit_money}}赠送<text>{{item.present_money}}</text>余额
+			{{index+1}}、充值满{{item.deposit_money}}赠送<text class="youhui-text">{{item.present_money}}</text>余额
 		</view>
 		<view class="queren" @click="sub">
 			确认
@@ -532,7 +532,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-view{
+.all{
 	box-sizing: border-box;
 }
 .yue{
@@ -541,7 +541,7 @@ view{
 	margin: 0 auto;
 	margin-top: 44rpx;
 	position: relative;
-	image{
+	.yue-image{
 		width: 100%;
 		height: 100%;
 	}
@@ -639,7 +639,7 @@ view{
 	font-size: 25rpx;
 	line-height: 40rpx;
 	color: #999999;
-	text{
+	.youhui-text{
 		color: red;
 	}
 }
