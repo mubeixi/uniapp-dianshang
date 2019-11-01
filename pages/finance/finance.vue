@@ -5,16 +5,16 @@
 		<!-- #endif -->
 		<!-- <page-title title="财务明细" rightHidden="true" bgcolor="#ffffff"></page-title> -->
 		<view class="nav">
-			<view :class="index==0?'checked':''" @click="change(0)">
+			<view class="views" :class="index==0?'checked':''" @click="change(0)">
 				分销
 			</view>
-			<view :class="index==1?'checked':''" @click="change(1)">
+			<view class="views" :class="index==1?'checked':''" @click="change(1)">
 				爵位
 			</view>
-			<view :class="index==2?'checked':''"  @click="change(2)">
+			<view class="views" :class="index==2?'checked':''"  @click="change(2)">
 				股东
 			</view>
-			<view :class="index==3?'checked':''"  @click="change(3)">
+			<view class="views" :class="index==3?'checked':''"  @click="change(3)">
 				区域代理
 			</view>
 		</view>
@@ -157,7 +157,7 @@
 		z-index: 999;
 		top: 0rpx;
 		left: 0rpx;
-		view{
+		.views{
 			width: 150rpx;
 			height: 65rpx;
 			line-height: 65rpx;
@@ -166,7 +166,7 @@
 			text-align: center;
 			position: relative;
 		}
-		view.checked{
+		.checked{
 			&:after{
 				content: '';
 				position: absolute;

@@ -5,10 +5,10 @@
 		<!-- #endif -->
 		<!-- <page-title title="财富排行榜" rightHidden="true" ></page-title> -->
 		<view class="all">
-			<view :class="index==0?'checked':''" @click="change(0)">
+			<view class="hahas" :class="index==0?'checked':''" @click="change(0)">
 				总部分销商
 			</view>
-			<view  :class="index==1?'checked':''"   @click="change(1)">
+			<view class="hahas"  :class="index==1?'checked':''"   @click="change(1)">
 				我的好友
 			</view>
 		</view>
@@ -185,7 +185,7 @@
 	position: fixed;
 	top: 0rpx;
 	left: 0rpx;
-	view{
+	.hahas{
 		width: 202rpx;
 		height: 95rpx;
 		line-height: 95rpx;
@@ -218,7 +218,7 @@
 		padding-bottom: 38rpx;
 		padding-left: 33rpx;
 		display: flex;
-		view{
+		.pai1,.pai2,.pai3{
 			font-size: 28rpx;
 			height: 26rpx;
 			line-height: 26rpx;

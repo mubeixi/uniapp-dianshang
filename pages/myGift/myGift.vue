@@ -5,13 +5,13 @@
 		<!-- #endif -->
 		<!-- <page-title  title="我的赠品" bgcolor="#ffffff" class="titless"></page-title> -->
 		<view class="nav">
-			<view :class="checked==0?'checked':''" @click="change(0)">
+			<view class="ins" :class="checked==0?'checked':''" @click="change(0)">
 				未领取
 			</view>
-			<view :class="checked==1?'checked':''" @click="change(1)">
+			<view class="ins" :class="checked==1?'checked':''" @click="change(1)">
 				已领取
 			</view>
-			<view :class="checked==2?'checked':''" @click="change(2)">
+			<view class="ins" :class="checked==2?'checked':''" @click="change(2)">
 				已过期
 			</view>
 		</view>
@@ -144,7 +144,7 @@ view{
 	font-size: 30rpx;
 	color: #333333;
 	background: #f8f8f8;
-	view{
+	.ins{
 		width: 236rpx;
 		height: 72rpx;
 		line-height: 72rpx;
@@ -186,7 +186,7 @@ view{
 		width: 710rpx;
 		padding: 20rpx;
 		display: flex;
-		view.tupian{
+		.tupian{
 			width: 184rpx;
 			height: 184rpx;
 			image{

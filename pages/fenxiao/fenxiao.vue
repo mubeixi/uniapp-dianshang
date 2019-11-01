@@ -65,50 +65,50 @@
 			<image src="https://new401.bafangka.com/static/client/fenxiao/background.png" class="back"></image>
 			<view class="zhezhao">
 				<view class="td" @click="goErweima">
-					<image src="https://new401.bafangka.com/static/client/fenxiao/erweima.png" ></image>
-					<view>
+					<image class="imgs" src="https://new401.bafangka.com/static/client/fenxiao/erweima.png" ></image>
+					<view class="views">
 						二维码
 					</view>
 				</view>
 				<view class="td"  @click="goMyTeam">
-					<image src="https://new401.bafangka.com/static/client/fenxiao/wode.png" ></image>
-					<view>
+					<image  class="imgs" src="https://new401.bafangka.com/static/client/fenxiao/wode.png" ></image>
+					<view class="views">
 						我的团队
 					</view>
 				</view>
 				<view class="td"  @click="goFinance" style="border-right: 0rpx;">
-					<image src="https://new401.bafangka.com/static/client/fenxiao/caiwu.png" ></image>
-					<view>
+					<image  class="imgs" src="https://new401.bafangka.com/static/client/fenxiao/caiwu.png" ></image>
+					<view class="views">
 						财务明细
 					</view>
 				</view>
 				<view class="td" @click="goPromotion">
-					<image src="https://new401.bafangka.com/static/client/fenxiao/juewei.png" ></image>
-					<view>
+					<image  class="imgs" src="https://new401.bafangka.com/static/client/fenxiao/juewei.png" ></image>
+					<view class="views">
 						爵位晋升
 					</view>
 				</view>
 				<view class="td"  @click="goLeaderboard">
-					<image src="https://new401.bafangka.com/static/client/fenxiao/caifu.png" ></image>
-					<view>
+					<image  class="imgs" src="https://new401.bafangka.com/static/client/fenxiao/caifu.png" ></image>
+					<view class="views">
 						财富排行榜
 					</view>
 				</view>
 				<view class="td" style="border-right: 0rpx;" @click="goAssist" >
-					<image src="https://new401.bafangka.com/static/client/fenxiao/tuiguang.png" ></image>
-					<view>
+					<image  class="imgs" src="https://new401.bafangka.com/static/client/fenxiao/tuiguang.png" ></image>
+					<view class="views">
 						推广小助手
 					</view>
 				</view>
 				<view class="td" @click="goRegion" style="border-bottom: 0rpx;" v-if="data.dis_config.Dis_Agent_Type==1">
-					<image src="https://new401.bafangka.com/static/client/fenxiao/quyu.png" ></image>
-					<view>
+					<image  class="imgs" src="https://new401.bafangka.com/static/client/fenxiao/quyu.png" ></image>
+					<view class="views">
 						区域代理
 					</view>
 				</view>
 				<view class="td" @click="goGudong"  style="border-bottom: 0rpx;"  v-if="data.dis_config.Sha_Agent_Type==1">
-					<image src="https://new401.bafangka.com/static/client/fenxiao/quyu.png" ></image>
-					<view>
+					<image  class="imgs" src="https://new401.bafangka.com/static/client/fenxiao/quyu.png" ></image>
+					<view class="views">
 						股东
 					</view>
 				</view>
@@ -304,7 +304,7 @@
 		}
 
 	}
-	view.nickName{
+	.nickName{
 				font-size: 28rpx;
 				height: 27rpx;
 				line-height: 27rpx;
@@ -336,13 +336,13 @@
 		box-shadow:0px 0px 27rpx 0px rgba(244,49,49,0.46);
 		border-radius:10rpx;
 		display: flex;
-		view.left,view.right{
+		.left,view.right{
 			width: 50%;
 			margin-top: 42rpx;
 			margin-bottom: 41rpx;
 			text-align: center;
 		}
-		view.left{
+		.left{
 			border-right: 1px solid #E7E7E7;
 		}
 		.salesSum{
@@ -430,12 +430,12 @@
 			border-bottom: 1px dotted #D3D3D3;
 			text-align: center;
 			box-sizing: border-box;
-			image{
+			.imgs{
 				width: 95rpx;
 				height: 95rpx;
 				margin-top: 44rpx;
 			}
-			view{
+			.views{
 				height:25rpx;
 				line-height: 25rpx;
 				font-size:26rpx;

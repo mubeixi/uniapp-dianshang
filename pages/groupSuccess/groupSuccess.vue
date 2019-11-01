@@ -22,19 +22,19 @@
         </div>
         <!-- 商品保证 -->
         <ul class="second">
-            <li>
+            <li class="lis">
                 <image class="img" src="https://new401.bafangka.com/static/client/tuan/check.png"/>
                 全场包邮
             </li>
-            <li>
+            <li class="lis">
                 <image class="img" src="https://new401.bafangka.com/static/client/tuan/check.png"/>
                 7天退换
             </li>
-            <li>
+            <li class="lis">
                 <image class="img" src="https://new401.bafangka.com/static/client/tuan/check.png"/>
                 48小时发货
             </li>
-            <li>
+            <li class="lis">
                 <image class="img" src="https://new401.bafangka.com/static/client/tuan/check.png"/>
                 假一赔十
             </li>
@@ -46,7 +46,7 @@
                 支付成功
             </div>
             <ul class="lyl">
-                <li v-for="(user,idx) in join_team_list">
+                <li class="liq" v-for="(user,idx) in join_team_list">
                     <image class="img" :src="user.User_HeadImg" />
                     <image v-if="user.team_head" src="https://new401.bafangka.com/static/client/tuan/tuanzhang.png" class=" img tuanzhang"/>
                     <span v-if="user.team_head" class="tuanzhang">团长</span>
@@ -57,7 +57,7 @@
         <!-- 倒计时 -->
         <div class="how">
             <image class="img" src="https://new401.bafangka.com/static/client/tuan/time.png"/>
-            <span class="my">拼团中，还差<span>{{product.pintuan_people-product.teamnum}}</span>人</span>
+            <span class="my">拼团中，还差<span class="spans">{{product.pintuan_people-product.teamnum}}</span>人</span>
         </div>
         <div class="times">
             <div class="line"></div>
@@ -100,19 +100,19 @@
             <div class="xiang">
                 <div class="hang">
                     <image class="img" src="https://new401.bafangka.com/static/client/tuan/ju.png"/>
-                    <span>开团或者参加别人的团</span>
+                    <span class="spana">开团或者参加别人的团</span>
                 </div>
                 <div class="hang">
                     <image class="img" src="https://new401.bafangka.com/static/client/tuan/ju.png"/>
-                    <span>在规定的时间内，邀请好友参团</span>
+                    <span class="spana">在规定的时间内，邀请好友参团</span>
                 </div>
                 <div class="hang">
                     <image class="img" src="https://new401.bafangka.com/static/client/tuan/ju.png"/>
-                    <span>达到拼团人数，分别给团长和团员发货</span>
+                    <span class="spana">达到拼团人数，分别给团长和团员发货</span>
                 </div>
                 <div class="hang">
                     <image class="img" src="https://new401.bafangka.com/static/client/tuan/ju.png"/>
-                    <span>未达到拼团人数，货款将自动原路返还</span>
+                    <span class="spana">未达到拼团人数，货款将自动原路返还</span>
                 </div>
             </div>
         </div>
@@ -662,7 +662,7 @@
                 padding-right: 12px;
                 position: relative;
 
-                div.top {
+                .top {
                     width: 100%;
                     font-size: 26rpx;
                     font-family: PingFang SC;
@@ -671,7 +671,7 @@
                     line-height: 21px;
                 }
 
-                div.bottom {
+                .bottom {
                     margin-top: 40rpx;
                     @media screen and (max-width: 371px) {
                         margin-top: 0;
@@ -726,7 +726,7 @@
                 margin-right: 4px;
             }
 
-            li {
+            .lis {
                 display: flex;
                 align-items: center;
             }
@@ -763,7 +763,7 @@
                     border-radius: 50%;
                 }
 
-                li {
+                .liq {
                     margin-right: 11px;
                     width: 95rpx;
                     height: 95rpx;
@@ -778,7 +778,7 @@
                         left: -11px;
                     }
 
-                    span.tuanzhang {
+                    .tuanzhang {
                         width: 26px;
                         font-size: 10px;
                         font-family: PingFang SC;
@@ -808,7 +808,7 @@
                 color: #333;
                 margin-left: 8px;
 
-                span {
+                .spans {
                     color: #F43131;
                     margin: 0 5px;
                 }
@@ -841,7 +841,7 @@
                     font-size: 30rpx;
                 }
 
-                span.num {
+                .num {
                     background-color: #484848;
                     border-radius: 2px;
                     display: inline-block;
@@ -854,7 +854,7 @@
                     text-align: center;
                 }
 
-                span.lines {
+                .lines {
                     //width: 6px;
                     padding: 0 4rpx;
                     display: inline-block;
@@ -950,7 +950,7 @@
                         height: 11px;
                     }
 
-                    span {
+                    .spana {
                         margin-left: 8px;
                         font-size: 24rpx;
                         color: #333333;

@@ -20,7 +20,7 @@
 					<!-- 	<view class="gengduo">查看更多></view> -->
 					</view>
 					<view v-if="foods.Category_Img" class="imgTop">
-						<img :src="foods.Category_Img">
+						<img  class="imgs" :src="foods.Category_Img">
 					</view>
 					<view :id="i==0?'first':''" class="nav-right-item" v-for="(item,i) in foods.child" :key="i" @click="cart(item)">
 						<image :src="item.Category_Img" />
@@ -267,7 +267,7 @@
 	width: 100%;
 	height: 150rpx;
 	margin-bottom: 20rpx;
-	img{
+	.imgs{
 		width: 100%;
 		height: 100%;
 	}

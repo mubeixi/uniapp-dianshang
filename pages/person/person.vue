@@ -8,8 +8,8 @@
 			<image class="bg" src="https://new401.bafangka.com/static/client/person/top.png"  ></image>
 			<image :class="userInfo.User_ID&&show>=0?'':'onlyMsg'"  class="msg" src="https://new401.bafangka.com/static/client/fenxiao/msg.png" @click="goMsg"></image>
 			<view class="qiandao" v-if="userInfo.User_ID&&show>=0"  :class="signin?'isQian':''" @click="signinMethod">
-				<image src="https://new401.bafangka.com/static/client/person/qiandao.png"></image>
-				<view>{{signin?'已签到':'签到'}}</view>
+				<image class="imgg" src="https://new401.bafangka.com/static/client/person/qiandao.png"></image>
+				<view class="viewl">{{signin?'已签到':'签到'}}</view>
 			</view>
 			<view class="personInfo flex">
 				<view class="left" @click="goPersonMsg">
@@ -23,26 +23,26 @@
 			</view>
 			<view class="nav">
 				<view class="navList first" @click="goBalance">
-					<image src="https://new401.bafangka.com/static/client/person/yue.png" mode=""></image>
-					<view>
+					<image class="imgr" src="https://new401.bafangka.com/static/client/person/yue.png" mode=""></image>
+					<view class="viewr">
 						余额
 					</view>
 				</view>
 				<view class="navList second" @click="goIntegral">
-					<image src="https://new401.bafangka.com/static/client/person/jifen.png" mode=""></image>
-					<view>
+					<image class="imgr" src="https://new401.bafangka.com/static/client/person/jifen.png" mode=""></image>
+					<view  class="viewr">
 						积分
 					</view>
 				</view>
 				<view class="navList three" @click="goCollection">
-					<image src="https://new401.bafangka.com/static/client/person/shoucang.png" mode=""></image>
-					<view>
+					<image class="imgr" src="https://new401.bafangka.com/static/client/person/shoucang.png" mode=""></image>
+					<view  class="viewr">
 						收藏
 					</view>
 				</view>
 				<view class="navList four" @click="goCoupon">
-					<image src="https://new401.bafangka.com/static/client/person/youhuijuan.png" mode=""></image>
-					<view style="left: 50rpx;">
+					<image class="imgr" src="https://new401.bafangka.com/static/client/person/youhuijuan.png" mode=""></image>
+					<view  class="viewr" style="left: 50upx;">
 						优惠券
 					</view>
 				</view>
@@ -57,29 +57,29 @@
 			</view>
 			<view class="orderCenter">
 				<view class="orderLast" @click="goOrder(1)">
-						<image src="https://new401.bafangka.com/static/client/person/pay.png"></image>
-						<view>
+						<image class="zxc" src="https://new401.bafangka.com/static/client/person/pay.png"></image>
+						<view class="views">
 							待付款
 						</view>
 						<view class="jiaobiao" v-if="orderNum.waitpay>0">{{orderNum.waitpay}}</view>
 				</view>
 				<view class="orderLast" @click="goOrder(2)">
-						<image src="https://new401.bafangka.com/static/client/person/fa.png"></image>
-						<view>
+						<image class="zxc" src="https://new401.bafangka.com/static/client/person/fa.png"></image>
+						<view class="views">
 							待发货
 						</view>
 						<div class="jiaobiao" v-if="orderNum.waitsend>0">{{orderNum.waitsend}}</div>
 				</view>
 				<view class="orderLast" @click="goOrder(3)">
-						<image src="https://new401.bafangka.com/static/client/person/shou.png"></image>
-						<view>
+						<image class="zxc" src="https://new401.bafangka.com/static/client/person/shou.png"></image>
+						<view class="views">
 							待收货
 						</view>
 						<div class="jiaobiao" v-if="orderNum.waitconfirm>0">{{orderNum.waitconfirm}}</div>
 				</view>
 				<view class="orderLast" @click="goOrder(4)">
-						<image src="https://new401.bafangka.com/static/client/person/ping.png"></image>
-						<view>
+						<image class="zxc" src="https://new401.bafangka.com/static/client/person/ping.png"></image>
+						<view class="views">
 							待评价
 						</view>
 						<div class="jiaobiao" v-if="orderNum.waitcomment>0">{{orderNum.waitcomment}}</div>
@@ -355,12 +355,8 @@
 		height: 373rpx;
 		position: relative;
 		.bg{
-
-		}
-		image{
 			width: 100%;
 			height: 100%;
-
 		}
 		.qiandao{
 			width:120rpx;
@@ -378,11 +374,11 @@
 			padding: 11rpx 20rpx;
 			justify-content: space-between;
 			box-sizing: border-box;
-			image{
-				width: 22rpx;
-				height: 22rpx;
+			.imgg{
+				width: 22upx;
+				height: 22upx;
 			}
-			view{
+			.viewl{
 				color: #FFFFFF;
 				font-size: 24rpx;
 				font-weight:500;
@@ -465,8 +461,8 @@
 				height: 100%;
 				text-align: center;
 				position: relative;
-				view{
-					font-size: 28rpx;
+				.viewr{
+					font-size: 28upx;
 					color: #333333;
 					font-weight:500;
 					position: absolute;
@@ -475,27 +471,27 @@
 				}
 			}
 			.first{
-				image{
-					width: 53rpx;
-					height: 60rpx;
+				.imgr{
+					width: 53upx;
+					height: 60upx;
 				}
 			}
 			.second{
-				image{
-					width: 58rpx;
-					height: 58rpx;
+				.imgr{
+					width: 58upx;
+					height: 58upx;
 				}
 			}
 			.three{
-				image{
-					width: 56rpx;
-					height: 54rpx;
+				.imgr{
+					width: 56upx;
+					height: 54upx;
 				}
 			}
 			.four{
-				image{
-					width: 65rpx;
-					height: 46rpx;
+				.imgr{
+					width: 65upx;
+					height: 46upx;
 				}
 			}
 		}
@@ -543,12 +539,12 @@
 				height: 107rpx;
 				text-align: center;
 				position: relative;
-				image{
-					width: 65rpx;
-					height: 65rpx;
+				.zxc{
+					width: 65upx;
+					height: 65upx;
 				}
-				view{
-					font-size: 26rpx;
+				.views{
+					font-size: 26upx;
 					color: #333333;
 				}
 			}
@@ -577,14 +573,14 @@
 			height: 94rpx;
 			display: flex;
 			align-items: center;
-			image.left{
-				width: 33rpx;
-				height: 31rpx;
-				margin-left: 7rpx;
+			.left{
+				width: 33upx;
+				height: 31upx;
+				margin-left: 7upx;
 			}
-			image.right{
-				width: 17rpx;
-				height: 26rpx;
+			.right{
+				width: 17upx;
+				height: 26upx;
 				margin-left: auto;
 				margin-right: 4rpx;
 			}
@@ -598,14 +594,14 @@
 			height: 86rpx;
 			display: flex;
 			align-items: center;
-			image.left{
-				width: 32rpx;
-				height: 34rpx;
-				margin-left: 7rpx;
+			.left{
+				width: 32upx;
+				height: 34upx;
+				margin-left: 7upx;
 			}
-			image.right{
-				width: 17rpx;
-				height: 26rpx;
+			.right{
+				width: 17upx;
+				height: 26upx;
 				margin-left: auto;
 				margin-right: 4rpx;
 			}
@@ -619,14 +615,14 @@
 			height: 90rpx;
 			display: flex;
 			align-items: center;
-			image.left{
-				width: 36rpx;
-				height: 36rpx;
-				margin-left: 7rpx;
+			.left{
+				width: 36upx;
+				height: 36upx;
+				margin-left: 7upx;
 			}
-			image.right{
-				width: 17rpx;
-				height: 26rpx;
+			.right{
+				width: 17upx;
+				height: 26upx;
 				margin-left: auto;
 				margin-right: 4rpx;
 			}

@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="banner">
-			<image src="https://new401.bafangka.com/static/clientpop_default.jpg" ></image>
+			<image class="src" src="https://new401.bafangka.com/static/clientpop_default.jpg" ></image>
 			<form report-submit @submit="submit" >
 				<view class="content">
 					<view class="title">推广小助手</view>
@@ -162,7 +162,7 @@
 	.banner {
 		width: 100%;
 		height: 400rpx;
-		image {
+		.src {
 			width: 100%;
 			height: 100%;
 		}
@@ -219,7 +219,7 @@
 		align-items: center;
 		margin-top: 40rpx;
 		color: #fff;
-		button {
+		.submit,.share {
 			background: #F43131;
 			color: #fff;
 			width: 200rpx;

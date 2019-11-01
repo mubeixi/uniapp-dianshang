@@ -7,15 +7,15 @@
 					余额互转
 				</view>
 				<view class="zhezhaoCenter">
-					<view>
-						<image src="https://new401.bafangka.com/static/client/check/phone.png"></image>
-						<input type="text" placeholder="请输入对方会员号" v-model="user_no">
+					<view class="views">
+						<image  class="imgs" src="https://new401.bafangka.com/static/client/check/phone.png"></image>
+						<input  class="inputs"  type="text" placeholder="请输入对方会员号" v-model="user_no">
 					</view>
 				</view>
 				<view class="zhezhaoCenter">
-					<view>
-						<image src="https://new401.bafangka.com/static/client/check/money.png"></image>
-						<input type="text" placeholder="请输入转出金额" v-model="integral">
+					<view  class="views">
+						<image  class="imgs"  src="https://new401.bafangka.com/static/client/check/money.png"></image>
+						<input class="inputs" type="text" placeholder="请输入转出金额" v-model="integral">
 					</view>
 				</view>
 				<view class="zheButton" @click="confirm">
@@ -52,11 +52,11 @@
 		</view>
 
 		<view class="selects">
-			<image src="https://new401.bafangka.com/static/client/check/qw.png"></image>
-			<view>
+			<image class="image" src="https://new401.bafangka.com/static/client/check/qw.png"></image>
+			<view class="vies">
 				积分明细
 			</view>
-			<image src="https://new401.bafangka.com/static/client/check/er.png"></image>
+			<image class="image" src="https://new401.bafangka.com/static/client/check/er.png"></image>
 		</view>
 
 		<view class="contents">
@@ -220,7 +220,7 @@ view{
 			width: 114%;
 			height: 100%;
 		}
-		view.bottoms{
+		.bottoms{
 			width: 690rpx;
 			height: 133rpx;
 			background-color: #fff;
@@ -242,7 +242,7 @@ view{
 				height:50rpx;
 				background:rgba(240,239,240,1);
 			}
-			view.qwe{
+			.qwe{
 				// width: 278rpx;
 				height: 58rpx;
 				line-height: 58rpx;
@@ -342,11 +342,11 @@ view{
 		margin-top: 48rpx;
 		margin-bottom: 40rpx;
 		justify-content: center;
-		image{
+		.image{
 			width: 20rpx;
 			height: 20rpx;
 		}
-		view{
+		.vies{
 			margin-left: 20rpx;
 			margin-right: 20rpx;
 			font-size: 32rpx;
@@ -424,17 +424,17 @@ view{
 		width: 100%;
 		margin-top: 13rpx;
 		padding: 0rpx 52rpx;
-		view{
+		.views{
 			height: 90rpx;
 			display: flex;
 			align-items: center;
-			input{
+			.inputs{
 				border-bottom: 1rpx solid #F4F4F4;
 				font-size: 24rpx;
 				margin-left: 16rpx;
 			}
 		}
-		image{
+		.imgs{
 			width: 25rpx;
 			height: 37rpx;
 		}
