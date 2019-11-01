@@ -13,14 +13,14 @@
 						{{item.Orders_CreateTime | formatTime}}
 					</view>
 				</view>
-				<view class="last">
+				<view class="last" @click="toBuy(item)">
 					<image :src="item.Gift_Info.Gift_ImgPath" ></image>
 					<view class="myRight">
 						<view class="titles">
 							<view class="leftM">
 								{{item.Gift_Info.Gift_Name}}
 							</view>
-							<view class="rightM" :class="[(item.Orders_Status == 2 || item.Orders_Status == 3)? 'payed': '',item.Orders_Status == 4 ? 'complated': '','rightM']">
+							<view class="rightM" :class="[(item.Orders_Status == 2 || item.Orders_Status == 3)? 'payed': '',item.Orders_Status == 4 ? 'complated': '','rightM']" >
 								{{item.Orders_Status|status_desc}}
 							</view>
 						</view>
@@ -79,6 +79,14 @@
 						icon: 'none'
 					})
 				})
+			},
+			// 待支付的可以去支付
+			toBuy(item){
+				if(item.Orders_Status == 1) {
+					uni.navigateTo({
+						url: '../jifenCheck/jifenCheck?gift_id=' + item.Gift_ID
+					})
+				}
 			}
 		}
 
