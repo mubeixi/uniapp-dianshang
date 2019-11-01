@@ -127,7 +127,9 @@
 		mixins:[pageMixin],
 		data() {
 			return {
+
 				data:{
+					dis_config:{},
 					total_sales:'',
 					total_income:'',
 					balance:''
