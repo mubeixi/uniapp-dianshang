@@ -712,7 +712,7 @@ return;
 		font-size: 28rpx;
 		display: flex;
 		align-items: center;
-		border-top: 30rpx solid #FFF3F3F3;
+		border-top: 30rpx solid #F3F3F3;
 
 		.img {
 			width: 60rpx;
@@ -735,8 +735,8 @@ return;
 		display: flex;
 		align-items: center;
 		padding: 40rpx 38rpx 40rpx 28rpx;
-		border-top: 30rpx solid #FFF3F3F3;
-		border-bottom: 20rpx solid #FFF3F3F3;
+		border-top: 30rpx solid #F3F3F3;
+		border-bottom: 20rpx solid #F3F3F3;
 	}
 
 

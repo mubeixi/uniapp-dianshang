@@ -403,12 +403,10 @@
 					})
 
 				}else if(this.pay_type=='ali_app'){
-
 						disBuy(data).then(res=>{
 							let provider = 'alipay';
 							let orderInfo = res.data.arg;
 							console.log('支付宝参数',orderInfo)
-
 							uni.requestPayment({
 							    provider,
 							    orderInfo, //微信、支付宝订单数据
@@ -424,7 +422,6 @@
 							        })
 							    }
 							});
-
 							return;
 						},err=>{
 							uni.showToast({
@@ -861,7 +858,15 @@
 				}))
 
 				// #endif
-
+				// 微信h5
+				if(this.pay_type === 'wx_h5'){
+					payConf.pay_type = 'wx_h5';
+				}
+				
+				//阿里h5
+				if(this.pay_type === 'alipay'){
+					payConf.pay_type = 'alipay';
+				}
 				// console.log('payConf is', payConf)
 				// orderPay(payConf).then(res => {
 
@@ -877,6 +882,69 @@
 
 
 					// #ifdef H5
+					// 微信h5
+					if(this.pay_type === 'wx_h5'){
+					    let redirect_url = res.data.mweb_url+'&redirect_url='+urlencode(location.origin+'/fre/pages/order/order?index=2');
+					    location.href = redirect_url;
+					    return;
+					}
+					
+					//阿里h5
+					if(this.pay_type === 'alipay'){
+					
+					    //公众号麻烦一点
+					    if(isWeiXin()){
+					
+					        let users_id = ls.get('users_id');
+					
+					        let fromurl = res.data.arg;//encodeURIComponent(res.data.arg);
+					
+					        //字符串
+					        let nocestr = ''
+					        traslateShorten({data:fromurl}).then(res=>{
+					
+					            nocestr = res.data.key;
+					            // uni.navigateTo({
+					            //     url:`/pages/pay/wx/wx?users_id=${users_id}&nocestr=`+nocestr
+					            // })
+					
+					            let str = `/fre/pages/pay/wx/wx?users_id=${users_id}&nocestr=`+nocestr
+					
+					            let url = location.origin + str;
+					
+					            //强制页面刷新
+					            location.href = url;
+					
+					        },err=>{
+					            error('获取支付宝支付参数失败');
+					
+					        })
+					        //let origin = location.origin;
+					
+					        // fromurl = fromurl.replace(/openapi.alipay.com/,'wangjing666')
+					        //
+					        //
+					        // let str = `/fre/pages/pay/wx/wx?users_id=${users_id}&formurl=`+encodeURIComponent(fromurl);
+					        // let url = location.origin + str;
+					        // console.log(url)
+					        //
+					        // this.aliPayUrl = url;
+					        //location.href = url;
+					
+					        // uni.navigateTo({
+					        //     url:`/pages/pay/wx/wx?users_id=${users_id}&formurl=`+encodeURIComponent(fromurl)
+					        // })
+					
+					    }else{
+					        document.write(res.data.arg)
+					        document.getElementById('alipaysubmit').submit()
+					    }
+					
+					    return;
+					
+					}
+					
+					
 					let {
 						timestamp,
 						nonceStr,
