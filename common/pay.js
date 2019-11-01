@@ -36,6 +36,91 @@ export const unipayFunc = (vm,pay_type,payRequestData) => {
 
 
     let _self = vm,res = payRequestData
+
+
+    let provider = 'wxpay';
+    let orderInfo = {}
+
+
+
+    //头条的支付  会有微信和支付宝
+    // #ifdef MP-TOUTIAO
+
+    let service = 1;
+
+    // if(pay_type === 'ali_app'){
+    //     provider = 'alipay';
+    //     service = 4;
+    // }
+    //
+    // if(pay_type === 'wx_h5'){
+    //     provider = 'wxpay';
+    //     service = 3;
+    // }
+
+    orderInfo = res.data
+
+    //orderInfo.out_order_no = (orderInfo.Order_ID+'')
+    // orderInfo.timestamp +='';//string
+    // orderInfo.uid += '';
+    // orderInfo.trade_time +='';
+    // orderInfo.valid_time +='';
+    //
+    delete orderInfo.Order_ID
+
+    let conf = { provider,
+        service,
+        orderInfo};
+    console.log(conf)
+
+    //固定值：1（拉起小程序收银台）开发者如果不希望使用头条小程序收银台，service设置为3/4时，可以直接拉起微信/支付宝进行支付：service=3： 微信API支付，不拉起小程序收银台；service=4： 支付宝API支付，不拉起小程序收银台。其中service=3、4，仅在1.35.0.1+基础库(头条743+)支持
+    uni.requestPayment({
+        provider,
+        _debug:1,
+        service,
+        orderInfo, //微信、支付宝订单数据
+        getOrderStatus(res) {
+            let { out_order_no } = res;
+            console.log('out_order_no is '+out_order_no);
+            return new Promise(function(resolve, reject) {
+                // 商户前端根据 out_order_no 请求商户后端查询微信支付订单状态
+
+                setTimeout(function(){
+                    resolve({ code: 0});
+                },500)
+                // tt.request({
+                //     url: "<your-backend-url>",
+                //     success(res) {
+                //         // 商户后端查询的微信支付状态，通知收银台支付结果
+                //         // | 1 | 2 | 3 | 9
+                //         resolve({ code: 0});
+                //     },
+                //     fail(err) {
+                //         reject(err);
+                //     }
+                // });
+            });
+        },
+        success: function (res) {
+            _self.paySuccessCall(res)
+            console.log('success:' + JSON.stringify(res));
+        },
+        complete:function(res){
+            console.log('fail:' + JSON.stringify(res));
+            console.log(_self,_self.paySuccessCall)
+        },
+        fail: function (err) {
+            console.log('fail:' + JSON.stringify(err));
+            // uni.showModal({
+            //     title:'支付错误',
+            //     content:JSON.stringify(err)
+            // })
+        }
+    });
+    return;
+    // #endif
+
+
     // #ifdef H5
 
     // 微信h5
@@ -129,8 +214,7 @@ export const unipayFunc = (vm,pay_type,payRequestData) => {
     // #endif
 
 
-    let provider = 'wxpay';
-    let orderInfo = {}
+
     // #ifdef MP-WEIXIN || MP-BAIDU || MP-TOUTIAO || MP-ALIPAY
 
     // #endif
@@ -216,38 +300,6 @@ export const unipayFunc = (vm,pay_type,payRequestData) => {
     }
     // #endif
 
-    //头条的支付  会有微信和支付宝
-    // #ifdef MP-TOUTIAO
 
-
-    provider = 'wxpay';
-    orderInfo = res.data
-    orderInfo.out_order_no = (orderInfo.Order_ID+'')
-    orderInfo.timestamp +='';//string
-    orderInfo.uid += '';
-    orderInfo.trade_time +='';
-    orderInfo.valid_time +='';
-
-    delete orderInfo.Order_ID
-
-    //固定值：1（拉起小程序收银台）开发者如果不希望使用头条小程序收银台，service设置为3/4时，可以直接拉起微信/支付宝进行支付：service=3： 微信API支付，不拉起小程序收银台；service=4： 支付宝API支付，不拉起小程序收银台。其中service=3、4，仅在1.35.0.1+基础库(头条743+)支持
-    uni.requestPayment({
-        provider,
-        service:1,
-        orderInfo, //微信、支付宝订单数据
-        success: function (res) {
-            _self.paySuccessCall(res)
-            console.log('success:' + JSON.stringify(res));
-        },
-        fail: function (err) {
-            console.log('fail:' + JSON.stringify(err));
-            // uni.showModal({
-            //     title:'支付错误',
-            //     content:JSON.stringify(err)
-            // })
-        }
-    });
-    return;
-    // #endif
 
 }
