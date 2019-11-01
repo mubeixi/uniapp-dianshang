@@ -84,10 +84,6 @@
 			<view class="mingxi" v-for="(item,idx) in records">
 				<view class="note">
 					{{item.Note}}
-					{{item.Note}}
-					{{item.Note}}
-					{{item.Note}}
-					{{item.Note}}
 				</view>
 				<view class="times">
 					{{item.CreateTime}}
@@ -267,7 +263,6 @@ view{
 	background: #F8F8F8;
 	height: 100vh;
 	width: 750rpx;
-	overflow: hidden;
 }
 	.top{
 		width: 750rpx;
@@ -412,7 +407,7 @@ view{
 				background-color: #FF5C33;
 				position: absolute;
 				bottom: 0rpx;
-				left: 127rpx;
+				left: 125rpx;
 			}
 		}
 	}

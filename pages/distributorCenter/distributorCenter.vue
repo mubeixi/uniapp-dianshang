@@ -4,7 +4,7 @@
 		<view class="zhezhao" v-if="password_input">
 			<view class="input-wrap">
 				<view>请输入余额支付密码</view>
-				<input type="password" placeholder="请输入密码" @blur="user_password">
+				<input type="password" placeholder="请输入密码" v-model="user_pay_password" @blur="user_password">
 				<view class="btns">
 					<view @click="cancelInput" class="btn">取消</view>
 					<view @click="confirmInput" class="btn">确定</view>
@@ -227,6 +227,7 @@
 	import utils from '../../common/util.js';
 	import popupLayer from '../../components/popup-layer/popup-layer.vue'
 	import {mapGetters,mapActions} from 'vuex';
+	import {unipayFunc} from '../../common/pay.js'
 	import {
 		ls,
 		GetQueryByString,
@@ -346,7 +347,7 @@
 				},50)
 			},
 			//购买提交信息
-			disBuy(){
+			async disBuy(){
 				let data={
 					buy_info:{}
 				};
@@ -381,6 +382,30 @@
 				}
 				data.buy_level_id=this.pro.dis_level[this.current].Level_ID;
 				data.buy_info=JSON.stringify(data.buy_info);
+				let _that=this;
+				// #ifdef MP-WEIXIN
+					if(!this.userInfo.openid){
+						await new Promise((resolve => {
+							uni.login({
+								success: function (loginRes) {
+									_that.code = loginRes.code
+									resolve()
+								}
+							});
+						}))
+					}
+				// #endif
+				// #ifdef H5
+					await new Promise((resolve => {
+						uni.login({
+							success: function (loginRes) {
+								_that.code = loginRes.code
+								resolve()
+							}
+						});
+					}))
+				// #endif
+				
 				if(this.pay_type=='remainder_pay'){
 					data.user_pay_password=this.user_pay_password;
 				}else{
@@ -388,11 +413,11 @@
 						data.code=this.code;
 					}
 				}
-				console.log(this.pay_type,"ssssssssssssssss")
+				
 				if(this.pay_type=='remainder_pay'){
-
+				
 					disBuy(data).then(res=>{
-						this.paySuccessCall(res)
+							this.paySuccessCall(res)
 					},err=>{
 						uni.showToast({
 							title:res.msg,
@@ -401,43 +426,57 @@
 					}).catch(e=>{
 						console.log(e);
 					})
-
-				}else if(this.pay_type=='ali_app'){
-
-						disBuy(data).then(res=>{
-							let provider = 'alipay';
-							let orderInfo = res.data.arg;
-							console.log('支付宝参数',orderInfo)
-
-							uni.requestPayment({
-							    provider,
-							    orderInfo, //微信、支付宝订单数据
-							    success: function (res) {
-							        _self.paySuccessCall(res)
-							        console.log('success:' + JSON.stringify(res));
-							    },
-							    fail: function (err) {
-							        console.log('fail:' + JSON.stringify(err));
-							        uni.showModal({
-							            title:'支付错误',
-							            content:JSON.stringify(err)
-							        })
-							    }
-							});
-
-							return;
-						},err=>{
-							uni.showToast({
-								title:res.msg,
-								icon:'none'
-							})
-						}).catch(e=>{
-							console.log(e);
-						})
 				}else{
-					//不用余额调微信支付
-					this.wechatPay(data);
+					disBuy(data).then(res=>{
+						unipayFunc(this,this.pay_type,res);
+					},err=>{
+						uni.showToast({
+							title:res.msg,
+							icon:'none'
+						})
+					}).catch(e=>{
+						console.log(e);
+					})
 				}
+				
+				
+				
+				
+				
+
+				// }else if(this.pay_type=='ali_app'){
+				// 		disBuy(data).then(res=>{
+				// 			let provider = 'alipay';
+				// 			let orderInfo = res.data.arg;
+				// 			console.log('支付宝参数',orderInfo)
+				// 			uni.requestPayment({
+				// 			    provider,
+				// 			    orderInfo, //微信、支付宝订单数据
+				// 			    success: function (res) {
+				// 			        _self.paySuccessCall(res)
+				// 			        console.log('success:' + JSON.stringify(res));
+				// 			    },
+				// 			    fail: function (err) {
+				// 			        console.log('fail:' + JSON.stringify(err));
+				// 			        uni.showModal({
+				// 			            title:'支付错误',
+				// 			            content:JSON.stringify(err)
+				// 			        })
+				// 			    }
+				// 			});
+				// 			return;
+				// 		},err=>{
+				// 			uni.showToast({
+				// 				title:res.msg,
+				// 				icon:'none'
+				// 			})
+				// 		}).catch(e=>{
+				// 			console.log(e);
+				// 		})
+				// }else{
+				// 	//不用余额调微信支付
+				// 	this.wechatPay(data);
+				// }
 
 
 			},
@@ -861,7 +900,15 @@
 				}))
 
 				// #endif
-
+				// 微信h5
+				if(this.pay_type === 'wx_h5'){
+					payConf.pay_type = 'wx_h5';
+				}
+				
+				//阿里h5
+				if(this.pay_type === 'alipay'){
+					payConf.pay_type = 'alipay';
+				}
 				// console.log('payConf is', payConf)
 				// orderPay(payConf).then(res => {
 
@@ -877,6 +924,69 @@
 
 
 					// #ifdef H5
+					// 微信h5
+					if(this.pay_type === 'wx_h5'){
+					    let redirect_url = res.data.mweb_url+'&redirect_url='+urlencode(location.origin+'/fre/pages/order/order?index=2');
+					    location.href = redirect_url;
+					    return;
+					}
+					
+					//阿里h5
+					if(this.pay_type === 'alipay'){
+					
+					    //公众号麻烦一点
+					    if(isWeiXin()){
+					
+					        let users_id = ls.get('users_id');
+					
+					        let fromurl = res.data.arg;//encodeURIComponent(res.data.arg);
+					
+					        //字符串
+					        let nocestr = ''
+					        traslateShorten({data:fromurl}).then(res=>{
+					
+					            nocestr = res.data.key;
+					            // uni.navigateTo({
+					            //     url:`/pages/pay/wx/wx?users_id=${users_id}&nocestr=`+nocestr
+					            // })
+					
+					            let str = `/fre/pages/pay/wx/wx?users_id=${users_id}&nocestr=`+nocestr
+					
+					            let url = location.origin + str;
+					
+					            //强制页面刷新
+					            location.href = url;
+					
+					        },err=>{
+					            error('获取支付宝支付参数失败');
+					
+					        })
+					        //let origin = location.origin;
+					
+					        // fromurl = fromurl.replace(/openapi.alipay.com/,'wangjing666')
+					        //
+					        //
+					        // let str = `/fre/pages/pay/wx/wx?users_id=${users_id}&formurl=`+encodeURIComponent(fromurl);
+					        // let url = location.origin + str;
+					        // console.log(url)
+					        //
+					        // this.aliPayUrl = url;
+					        //location.href = url;
+					
+					        // uni.navigateTo({
+					        //     url:`/pages/pay/wx/wx?users_id=${users_id}&formurl=`+encodeURIComponent(fromurl)
+					        // })
+					
+					    }else{
+					        document.write(res.data.arg)
+					        document.getElementById('alipaysubmit').submit()
+					    }
+					
+					    return;
+					
+					}
+					
+					
 					let {
 						timestamp,
 						nonceStr,

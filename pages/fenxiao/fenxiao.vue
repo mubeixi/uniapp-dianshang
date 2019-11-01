@@ -127,7 +127,6 @@
 		mixins:[pageMixin],
 		data() {
 			return {
-
 				data:{
 					total_sales:'',
 					total_income:'',
