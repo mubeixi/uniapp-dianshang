@@ -332,7 +332,7 @@ export default {
 
                 // 如果用户支付金额为0，即全部用余额
                 if(this.pay_money == 0){
-                   this.pay_type = 'remainder_pay'; 
+                   this.pay_type = 'remainder_pay';
                 }
                 // 用户选择余额支付
                 if(this.pay_type == 'remainder_pay') {
@@ -352,7 +352,7 @@ export default {
                     return;
                 }
 
-                
+
 
 
 
@@ -589,10 +589,10 @@ export default {
                         },
                         fail: function (err) {
                             console.log('fail:' + JSON.stringify(err));
-                            uni.showModal({
-                                title:'支付错误',
-                                content:JSON.stringify(err)
-                            })
+                            // uni.showModal({
+                            //     title:'支付错误',
+                            //     content:JSON.stringify(err)
+                            // })
                         }
                     });
 
@@ -646,10 +646,10 @@ export default {
                     },
                     fail: function (err) {
                         console.log('fail:' + JSON.stringify(err));
-                        uni.showModal({
-                            title:'支付错误',
-                            content:JSON.stringify(err)
-                        })
+                        // uni.showModal({
+                        //     title:'支付错误',
+                        //     content:JSON.stringify(err)
+                        // })
                     }
                 });
                 return;
