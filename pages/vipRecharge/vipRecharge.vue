@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import {get_user_info ,depositBalance,add_template_code,getBalance} from "../../common/fetch";
+import {get_user_info ,depositBalance,add_template_code,getBalance,traslateShorten} from "../../common/fetch";
 import {mapGetters} from 'vuex';
 import {error,toast} from "../../common";
 import {
@@ -195,9 +195,10 @@ export default {
 
 
 			console.log('payConf',payConf)
+			let that = this;
 			depositBalance(payConf).then(res => {
 				console.log(res);
-
+				console.log(that.pay_type,'111')
 				// #ifdef APP-PLUS
 
 
@@ -238,41 +239,59 @@ export default {
 					location.href = redirect_url;
 					return;
 				}
-
+				console.log(this.pay_type);
 				//阿里h5
 				if(this.pay_type === 'alipay'){
-
+					console.log('result')
 					//公众号麻烦一点
-					if(isWeiXin()){
-						let users_id = ls.get('users_id');
+                    if(isWeiXin()){
 
+                        let users_id = ls.get('users_id');
 
-						let fromurl = res.data.arg;//encodeURIComponent(res.data.arg);
-						let origin = location.origin;
+                        let fromurl = res.data.arg;//encodeURIComponent(res.data.arg);
 
+                        //字符串
+                        let nocestr = ''
+                        traslateShorten({data:fromurl}).then(res=>{
 
+                            nocestr = res.data.key;
+                            // uni.navigateTo({
+                            //     url:`/pages/pay/wx/wx?users_id=${users_id}&nocestr=`+nocestr
+                            // })
 
-						fromurl = fromurl.replace(/openapi.alipay.com/,'wangjing666')
-						console.log(fromurl);
+                            let str = `/fre/pages/pay/wx/wx?users_id=${users_id}&nocestr=`+nocestr
 
-						let str = origin+`/fre/pages/pay/wx/wx?users_id=${users_id}&formurl=`+encodeURIComponent(fromurl);
-						let url = str;
+                            let url = location.origin + str;
 
+                            //强制页面刷新
+                            location.href = url;
 
-						uni.navigateTo({
-							url:`/pages/pay/wx/wx?users_id=${users_id}&formurl=`+encodeURIComponent(fromurl)
-						})
+                        },err=>{
+                            error('获取支付宝支付参数失败');
 
-						console.log(url)
-						//这样就避免了users_id瞎跳的机制
-						//location.href = url;
-					}else{
-						document.write(res.data.arg)
-						document.getElementById('alipaysubmit').submit()
-					}
+                        })
+                        //let origin = location.origin;
 
+                        // fromurl = fromurl.replace(/openapi.alipay.com/,'wangjing666')
+                        //
+                        //
+                        // let str = `/fre/pages/pay/wx/wx?users_id=${users_id}&formurl=`+encodeURIComponent(fromurl);
+                        // let url = location.origin + str;
+                        // console.log(url)
+                        //
+                        // this.aliPayUrl = url;
+                        //location.href = url;
 
-					return;
+                        // uni.navigateTo({
+                        //     url:`/pages/pay/wx/wx?users_id=${users_id}&formurl=`+encodeURIComponent(fromurl)
+                        // })
+
+                    }else{
+                        document.write(res.data.arg)
+                        document.getElementById('alipaysubmit').submit()
+                    }
+
+                    return;
 
 				}
 
