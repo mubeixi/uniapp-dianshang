@@ -49,6 +49,7 @@
 				height: 0,
 				psdInput: false,
 				Gift_ID: 0,
+				isClicked: false, // 防止重复点击
 			}
 		},
 		computed: {
@@ -71,6 +72,7 @@
 				this.prod_list = [];
 				this.page = 1;
 				this.hasMore = false;
+				this.isClicked = false;
 			},
 			// getShipping(){
 			// 	getShipping().then(res=>{
@@ -90,9 +92,13 @@
 				})
 			},
 			gotoMyExchange(){
-				uni.navigateTo({
-					url: '../myRedemption/myRedemption'
-				})
+				if(!this.isClicked) {
+					this.isClicked = true;
+					uni.navigateTo({
+						url: '../myRedemption/myRedemption'
+					})
+					return;
+				}
 			},
 			cancelPsw(){
 				this.psdInput = false;
