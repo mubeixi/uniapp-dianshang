@@ -95,7 +95,7 @@
 				<div class="bd">
 					<div class="o_title  words">
 						<span>买家留言</span>
-						<input class="msg c8" :placeholder="orderInfo.Order_Remark" @blur="remarkHandle">
+						<input class="inpu msg c8" :placeholder="orderInfo.Order_Remark" @blur="remarkHandle">
 					</div>
 				</div>
 			</div>
@@ -696,7 +696,7 @@
 	}
 
 	.words {
-		input {
+		.inpu {
 			border: 0;
 			margin-left: 20rpx;
 			flex: 1;

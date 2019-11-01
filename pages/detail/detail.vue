@@ -153,10 +153,10 @@
 						{{item.sku}}
 					</div>
 					<div class="skuValue" v-if="gift == 0">
-						<div :class="check_attr[item.sku]==index?'skuCheck':''" @click="selectAttr(index,item.sku)"  v-for="(mbx,index) of item.val" :key="index">{{mbx}}</div>
+						<div class="skuview" :class="check_attr[item.sku]==index?'skuCheck':''" @click="selectAttr(index,item.sku)"  v-for="(mbx,index) of item.val" :key="index">{{mbx}}</div>
 					</div>
 					<div class="skuValue" v-else>
-						<div :class="skuval[i]==index?'skuCheck':'unablechoose'"  v-for="(mbx,index) of item.val" :key="index">{{mbx}}</div>
+						<div class="skuview" :class="skuval[i]==index?'skuCheck':'unablechoose'"  v-for="(mbx,index) of item.val" :key="index">{{mbx}}</div>
 					</div>
 					<!-- <div class="skuValue" v-else>
 						<div :class="skuval[0]==index?'skuCheck':''"  v-for="(mbx,index) of item" :key="index">{{mbx}}</div>
@@ -170,7 +170,7 @@
 				<div class="inputNumber">
 						<div class="clicks" @click="delNum">-</div>
 						<!--v-enter-number-->
-						<input  type="number" v-model="postData.qty"  disabled>
+						<input class="inputq"  type="number" v-model="postData.qty"  disabled>
 						<div class="clicks" @click="addNum">+</div>
 				</div>
 			</div>
@@ -180,7 +180,7 @@
 				</div>
 				<div class="inputNumber">
 						<div class="clicks">-</div>
-						<input  type="number" value="1"  disabled>
+						<input class="inputq"  type="number" value="1"  disabled>
 						<div class="clicks">+</div>
 				</div>
 			</div>
@@ -1310,7 +1310,7 @@ export default {
 				}
 				.skuValue{
 					display: flex;
-					div{
+					.skuview{
 						height: 70rpx;
 						line-height: 70rpx;
 						font-size: 28rpx;
@@ -1345,7 +1345,7 @@ export default {
 				height: 50rpx;
 				margin-right: 50rpx;
 				display: flex;
-				input{
+				.inputq{
 					color: black;
 					margin: 0 auto;
 					width: 80rpx;

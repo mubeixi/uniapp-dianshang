@@ -4,7 +4,7 @@
 		<view class="zhezhao" v-if="password_input">
 			<view class="input-wrap">
 				<view>请输入余额支付密码</view>
-				<input type="password" placeholder="请输入密码" v-model="user_pay_password" @blur="user_password">
+				<input class="inputpass" type="password" placeholder="请输入密码" v-model="user_pay_password" @blur="user_password">
 				<view class="btns">
 					<view @click="cancelInput" class="btn">取消</view>
 					<view @click="confirmInput" class="btn">确定</view>
@@ -21,13 +21,13 @@
 								<view class="mbx">
 									姓名
 								</view>
-								<input type="text" placeholder="请输入您的姓名" placeholder-style="color: #CAC8C8;" v-model="shenArr.DisplayName">
+								<input class="inputa" type="text" placeholder="请输入您的姓名" placeholder-style="color: #CAC8C8;" v-model="shenArr.DisplayName">
 					</view>
 					<view class="center" v-if="pro.dis_level[0].Distribute_Form.DisplayTelephone==1">
 								<view class="mbx">
 									电话
 								</view>
-								<input type="text" placeholder="请输入您的电话" placeholder-style="color: #CAC8C8;" v-model="shenArr.DisplayTelephone" @blur="isTell">
+								<input class="inputa" type="text" placeholder="请输入您的电话" placeholder-style="color: #CAC8C8;" v-model="shenArr.DisplayTelephone" @blur="isTell">
 					</view>
 					 <view class="center" v-for="(itm,idx2) of select_lists" :key="idx2">
 					 			<view class="mbx">
@@ -45,7 +45,7 @@
 					 			<view class="mbx">
 					 				{{m.Name}}
 					 			</view>
-					 			<input type="text" v-model="m.Value" >
+					 			<input class="inputa" type="text" v-model="m.Value" >
 					 </view>
 					<view class="center" v-if="pro.dis_level[0].Distribute_Form.DisplayLocaltion==1">
 								<view class="mbx">
@@ -110,7 +110,7 @@
 			<block v-for="(fen,ins) of pro.dis_level" :key="ins">
 				<view class="line" v-if="ins!=0"></view>
 				<view class="fenxiao">
-					{{fen.Level_Name}}<text>({{fen.Level_LimitValue[0]==0?'购买任意商品':'购买以下任意商品'}})</text>
+					{{fen.Level_Name}}<text class=".textq">({{fen.Level_LimitValue[0]==0?'购买任意商品':'购买以下任意商品'}})</text>
 				</view>
 				<block v-if="fen.Level_LimitValue[0]==0">
 					<view class="isFenxiao" @click="goResult">
@@ -138,7 +138,7 @@
 			<block v-for="(fo,ind) of pro.dis_level" :key="ind">
 				<view class="line" v-if="ind!=0"></view>
 				<view class="fenxiao">
-					{{fo.Level_Name}}<text>({{fo.Level_LimitValue[0]==0?'商城总消费':'一次性消费'}}<text>{{fo.Level_LimitValue[1]}}</text>)</text>
+					{{fo.Level_Name}}<text class="textq">({{fo.Level_LimitValue[0]==0?'商城总消费':'一次性消费'}}<text class="textw">{{fo.Level_LimitValue[1]}}</text>)</text>
 				</view>
 				<block>
 					<view class="isFenxiao" @click="goResult">
@@ -154,13 +154,13 @@
 							<view class="mbx">
 								姓名
 							</view>
-							<input type="text" placeholder="请输入您的姓名" placeholder-style="color: #CAC8C8;" v-model="shenArr.DisplayName">
+							<input class="inputa" type="text" placeholder="请输入您的姓名" placeholder-style="color: #CAC8C8;" v-model="shenArr.DisplayName">
 				</view>
 				<view class="center" v-if="pro.dis_level[0].Distribute_Form.DisplayTelephone==1">
 							<view class="mbx">
 								电话
 							</view>
-							<input type="text" placeholder="请输入您的电话" placeholder-style="color: #CAC8C8;" v-model="shenArr.DisplayTelephone" @blur="isTell">
+							<input class="inputa" type="text" placeholder="请输入您的电话" placeholder-style="color: #CAC8C8;" v-model="shenArr.DisplayTelephone" @blur="isTell">
 				</view>
 				<view class="center" v-for="(itm,idx) of select_lists" :key="idx">
 							<view class="mbx">
@@ -178,7 +178,7 @@
 							<view class="mbx">
 								{{m.Name}}
 							</view>
-							<input type="text" v-model="m.Value" :placeholder="'请输入'+m.Name">
+							<input  class="inputa" type="text" v-model="m.Value" :placeholder="'请输入'+m.Name">
 				</view>
 			</block>
 			<radio-group >
@@ -201,7 +201,7 @@
 			<block v-for="(fen,ins) of pro.dis_level" :key="ins">
 				<view class="line" v-if="ins!=0"></view>
 				<view class="fenxiao">
-					{{fen.Level_Name}}<text>(购买商品{{fen.Product_Num}}次)</text>
+					{{fen.Level_Name}}<text class="textq">(购买商品{{fen.Product_Num}}次)</text>
 				</view>
 				<block v-if="fen.Level_LimitValue[0]==0">
 					<view class="isFenxiao" @click="goResult">
@@ -1295,10 +1295,10 @@ view{
 	margin-top: 30upx;
 	margin-left: 20upx;
 	font-size: 30upx;
-	text{
+	.textq{
 		font-size: 24upx;
 		color: #666666;
-		text{
+		.textw{
 			font-size: 28upx;
 			color: #F43131;
 		}
@@ -1333,7 +1333,7 @@ view{
 	padding-bottom: 0upx;
 	.forOf{
 		width: 345upx;
-		view.imgs{
+		.imgs{
 			width: 345upx;
 			height: 345upx;
 			image{
@@ -1390,7 +1390,7 @@ view{
 		font-size: 30upx;
 		color: #333333;
 	}
-	input{
+	.inputa{
 		width: 600upx;
 		font-size: 28upx;
 	}
@@ -1565,7 +1565,7 @@ view.haha{
 			box-sizing: border-box;
 			font-size: 28upx;
 
-			input {
+			.inputpass {
 				margin: 40upx 0;
 				border: 1px solid #efefef;
 			}

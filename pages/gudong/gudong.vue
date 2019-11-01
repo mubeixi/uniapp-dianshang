@@ -107,7 +107,7 @@
 		</view>
 		<circleTitle title="名词解释"></circleTitle>
 		<view class="noun">
-			<view v-for="(i,j) of pro.noun_desc" :key="j">
+			<view class="viewq" v-for="(i,j) of pro.noun_desc" :key="j">
 				{{j+1}}、{{i}}
 			</view>
 		</view>
@@ -294,22 +294,21 @@
 			width: 710rpx;
 			background-color: #F4F4F4;
 			display: flex;
-			view{
-				//border: 1px solid #E7E7E7;
-				border-right:1px solid #E7E7E7;
-				border-bottom: 1px solid #E7E7E7;
-			}
 			.names{
 				width: 98rpx;
 				height: 80rpx;
 				line-height: 80rpx;
 				text-align: center;
+				border-right:1px solid #E7E7E7;
+				border-bottom: 1px solid #E7E7E7;
 			}
 			.zishen{
 				width: 153rpx;
 				height: 80rpx;
 				line-height: 80rpx;
 				text-align: center;
+				border-right:1px solid #E7E7E7;
+				border-bottom: 1px solid #E7E7E7;
 			}
 			.rightZ{
 				border-right: 0rpx;
@@ -327,7 +326,7 @@
 		margin-left: 21rpx;
 		margin-right: 19rpx;
 		margin-bottom: 50rpx;
-		view{
+		.viewq{
 			font-size: 26rpx;
 			color: #666666;
 			line-height: 50rpx;

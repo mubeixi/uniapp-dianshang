@@ -5,11 +5,11 @@
 		<template v-if="prod_list.length > 0">
 			<view class="myHa" v-for="(item,index) in prod_list" :key="index">
 				<view class="tops">
-					<view>
+					<view class="views">
 						订单编号：{{item.Gift_ID}}
 					</view>
-					<view class="times">
-						<image src="https://new401.bafangka.com/static/client/check/time.png"></image>
+					<view class="views times">
+						<image class="imgs" src="https://new401.bafangka.com/static/client/check/time.png"></image>
 						{{item.Orders_CreateTime | formatTime}}
 					</view>
 				</view>
@@ -25,8 +25,8 @@
 							</view>
 						</view>
 						<view class="rty">
-							<image src="https://new401.bafangka.com/static/client/check/ji.png" mode=""></image>
-							<text>{{item.Gift_Info.Gift_Integral}}</text>
+							<image class="image" src="https://new401.bafangka.com/static/client/check/ji.png" mode=""></image>
+							<text class="texts">{{item.Gift_Info.Gift_Integral}}</text>
 						</view>
 					</view>
 				</view>
@@ -115,7 +115,7 @@ view{
 		justify-content: space-between;
 		font-size: 26rpx;
 		color: #888888;
-		view{
+		.views{
 			height: 25rpx;
 			line-height: 25rpx;
 		}
@@ -124,7 +124,7 @@ view{
 			line-height: 19rpx;
 			margin-top: 6rpx;
 		}
-		image{
+		.imgs{
 			width: 17rpx;
 			height: 17rpx;
 			margin-right: 10rpx;
@@ -147,11 +147,11 @@ view{
 			.rty{
 				margin-top: 30rpx;
 				text-align: left;
-				image{
+				.image{
 					width: 16rpx;
 					height: 17rpx;
 				}
-				text{
+				.texts{
 					margin-left: 6rpx;
 					color: #FE6444;
 					font-size: 32rpx;

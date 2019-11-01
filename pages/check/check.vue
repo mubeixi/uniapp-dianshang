@@ -82,7 +82,7 @@
             <view class="bd">
                 <view class="o_title  words">
                     <span>买家留言</span>
-                    <input type="text"  @blur="remarkConfirm" placeholder="请填写留言内容">
+                    <input class="inputs" type="text"  @blur="remarkConfirm" placeholder="请填写留言内容">
                 </view>
             </view>
         </view>
@@ -666,7 +666,7 @@ export default {
         align-items: center;
         justify-content: space-between;
         font-size: 28rpx;
-		input {
+		.inputs{
 			font-size: 24rpx;
 		}
     }
@@ -687,7 +687,7 @@ export default {
     .words {
         justify-content: flex-start;
     }
-    .words input {
+    .words .inputs {
         border: 0;
         margin-left: 20rpx;
 		flex: 1;

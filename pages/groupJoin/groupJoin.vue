@@ -22,19 +22,19 @@
         </div>
         <!-- 商品保证 -->
         <ul class="second">
-            <li>
+            <li class="lis">
                 <image class="img" src="https://new401.bafangka.com/static/client/tuan/check.png"/>
                 全场包邮
             </li>
-            <li>
+            <li class="lis">
                 <image class="img" src="https://new401.bafangka.com/static/client/tuan/check.png"/>
                 7天退换
             </li>
-            <li>
+            <li class="lis">
                 <image class="img" src="https://new401.bafangka.com/static/client/tuan/check.png"/>
                 48小时发货
             </li>
-            <li>
+            <li class="lis">
                 <image class="img" src="https://new401.bafangka.com/static/client/tuan/check.png"/>
                 假一赔十
             </li>
@@ -47,7 +47,7 @@
 <!--            </div>-->
             <div class="padding10-r"></div>
             <ul class="lyl">
-                <li v-for="(user,idx) in join_team_list">
+                <li class="liq" v-for="(user,idx) in join_team_list">
                     <image class="img" :src="user.User_HeadImg" />
                     <image v-if="user.team_head" src="https://new401.bafangka.com/static/client/tuan/tuanzhang.png" class=" img tuanzhang"/>
                     <span v-if="user.team_head" class="tuanzhang">团长</span>
@@ -58,7 +58,7 @@
         <!-- 倒计时 -->
         <div class="how">
             <image class="img" src="https://new401.bafangka.com/static/client/tuan/time.png"/>
-            <span class="my">拼团中，还差<span>{{product.pintuan_people-product.teamnum}}</span>人</span>
+            <span class="my">拼团中，还差<span class="spans">{{product.pintuan_people-product.teamnum}}</span>人</span>
         </div>
         <div class="times">
             <div class="line"></div>
@@ -190,7 +190,7 @@
                             {{i}}
                         </div>
                         <div class="skuValue">
-                            <div :class="check_attr[i]==index?'skuCheck':''" @click="selectAttr(index,i)"  v-for="(mbx,index) of item" :key="index">{{mbx}}</div>
+                            <div class="divs" :class="check_attr[i]==index?'skuCheck':''" @click="selectAttr(index,i)"  v-for="(mbx,index) of item" :key="index">{{mbx}}</div>
                         </div>
                     </div>
                 </div>
@@ -201,7 +201,7 @@
                     <div class="inputNumber">
                         <div class="clicks" @click="delNum">-</div>
                         <!--					v-enter-number-->
-                        <input  type="number" v-model="postData.qty"  disabled>
+                        <input class="inputs"  type="number" v-model="postData.qty"  disabled>
                         <div class="clicks" @click="addNum">+</div>
                     </div>
                 </div>
@@ -792,6 +792,7 @@
         padding: 30rpx 0 0;
         color: #333;
         font-size: 12px;
+		text-align: center;
     }
     .shareinfo>div {
         text-align: center;
@@ -806,9 +807,6 @@
         height: 38px;
         display: block;
         margin: 0 auto 5px;
-    }
-    .s_top>div:nth-child(1) {
-        /*margin-right: 60px;*/
     }
     .s_bottom {
         position: relative;
@@ -853,7 +851,7 @@
                 padding-right: 12px;
                 position: relative;
 
-                div.top {
+                .top {
                     width: 100%;
                     font-size: 26rpx;
                     font-family: PingFang SC;
@@ -862,7 +860,7 @@
                     line-height: 21px;
                 }
 
-                div.bottom {
+                .bottom {
                     margin-top: 40rpx;
                     @media screen and (max-width: 371px) {
                         margin-top: 0;
@@ -917,7 +915,7 @@
                 margin-right: 4px;
             }
 
-            li {
+            .lis {
                 display: flex;
                 align-items: center;
             }
@@ -954,7 +952,7 @@
                     border-radius: 50%;
                 }
 
-                li {
+                .liq{
                     margin-right: 11px;
                     width: 95rpx;
                     height: 95rpx;
@@ -969,7 +967,7 @@
                         left: -11px;
                     }
 
-                    span.tuanzhang {
+                    .tuanzhang {
                         width: 26px;
                         font-size: 10px;
                         font-family: PingFang SC;
@@ -999,7 +997,7 @@
                 color: #333;
                 margin-left: 8px;
 
-                span {
+                .spans {
                     color: #F43131;
                     margin: 0 5px;
                 }
@@ -1033,7 +1031,7 @@
                     font-size: 30rpx;
                 }
 
-                span.num {
+                .num {
                     background-color: #484848;
                     border-radius: 2px;
                     display: inline-block;
@@ -1046,7 +1044,7 @@
                     text-align: center;
                 }
 
-                span.lines {
+                .lines {
                     //width: 6px;
                     padding: 0 4rpx;
                     display: inline-block;
@@ -1271,7 +1269,7 @@
                 }
                 .skuValue{
                     display: flex;
-                    div{
+                    .divs{
                         height: 70rpx;
                         line-height: 70rpx;
                         font-size: 28rpx;
@@ -1303,7 +1301,7 @@
                 height: 50rpx;
                 margin-right: 50rpx;
                 display: flex;
-                input{
+                .inputs{
                     color: black;
                     margin: 0 auto;
                     width: 80rpx;

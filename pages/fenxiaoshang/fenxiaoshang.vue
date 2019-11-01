@@ -2,13 +2,13 @@
 	<view>
 		<view class="user-info">
 			<view class="user-avator" @click="changeAvator">
-				<image :src="Shop_Logo" mode=""></image>
+				<image  class="imgs" :src="Shop_Logo" mode=""></image>
 				<view class="xiangji" ></view>
 			</view>
 			<view class="change" @click="changeAvator">更换头像</view>
 		</view>
 		<view class="content">
-			<view class="c_1"><text>店名</text><input type="text" v-model="Shop_Name"  /></view>
+			<view class="c_1"><text>店名</text><input class="inputs" type="text" v-model="Shop_Name"  /></view>
 			<view class="c_2"><text>公告</text><textarea v-model="Shop_Announce" class="text-content"></textarea></view>
 		</view>
 		<view class="submit" @click="save">保存</view>
@@ -148,7 +148,7 @@
 				background-size: 42rpx 34rpx;
 			}
 		}
-		image {
+		.imgs{
 			width: 100%;
 			height: 100%;
 			border-radius: 60rpx;
@@ -167,7 +167,7 @@
 			display: flex;
 			align-items: center;
 			margin-bottom: 39rpx;
-			input {
+			.inputs{
 				width:600rpx;
 				height:62rpx;
 				border:1rpx solid rgba(231,231,231,1);

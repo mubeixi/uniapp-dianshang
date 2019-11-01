@@ -39,13 +39,13 @@
 				<view class="haha">
 					姓名
 				</view>
-				<input type="text" placeholder="请输入您的姓名" placeholder-class="place" v-model="arr.apply_name">
+				<input class="inputs" type="text" placeholder="请输入您的姓名" placeholder-class="place" v-model="arr.apply_name">
 			</view>
 			<view class="three">
 				<view class="haha">
 					电话
 				</view>
-				<input type="number" placeholder="请输入您的电话" placeholder-class="place" v-model="arr.apply_mobile" @blur="isTell">
+				<input  class="inputs" type="number" placeholder="请输入您的电话" placeholder-class="place" v-model="arr.apply_mobile" @blur="isTell">
 			</view>
 			<view class="three">
 				<view class="haha">
@@ -54,7 +54,7 @@
 				<radio-group @change="radioChange" class="myRadio">
 						<view v-for="(item, index) in items" :key="item.value" class="myRadioQ">
 							<view>
-								<radio :value="item.value" :checked="index === current" />
+								<radio class="radio" :value="item.value" :checked="index === current" />
 							</view>
 							<view class="mbx">{{item.name}}</view>
 						</view>
@@ -470,12 +470,12 @@
 		border-bottom: 1px solid #E7E7E7;
 		display: flex;
 		align-items: center;
-		view.haha{
+		.haha{
 			font-size: 30rpx;
 			color: #333333;
 			margin-right: 42rpx;
 		}
-		input{
+		.inputs{
 			height: 88rpx;
 			line-height: 88rpx;
 			font-size: 28rpx;
@@ -492,7 +492,7 @@
 				height: 88rpx;
 				display: flex;
 				margin-right: 17rpx;
-				radio{
+				.radio{
 					transform:scale(0.7);
 				}
 				.mbx{
@@ -541,7 +541,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		view.haha{
+		.haha{
 			font-size: 30rpx;
 			color: #333333;
 			//margin-right: 42rpx;
