@@ -8,15 +8,15 @@
 				</view>
 				<form  report-submit @submit="confirm">
 					<view class="zhezhaoCenter">
-						<view>
-							<image src="https://new401.bafangka.com/static/client/check/phone.png"></image>
-							<input type="text" placeholder="请输入对方会员号" v-model="user_no">
+						<view class="views">
+							<image class="imgs" src="https://new401.bafangka.com/static/client/check/phone.png"></image>
+							<input class="inputs" type="text" placeholder="请输入对方会员号" v-model="user_no">
 						</view>
 					</view>
 					<view class="zhezhaoCenter">
-						<view>
-							<image src="https://new401.bafangka.com/static/client/check/money.png"></image>
-							<input type="text" placeholder="请输入转出金额" v-model="money">
+						<view class="views">
+							<image class="imgs" src="https://new401.bafangka.com/static/client/check/money.png"></image>
+							<input class="inputs" type="text" placeholder="请输入转出金额" v-model="money">
 						</view>
 					</view>
 					<button formType="submit" class="zheButton">
@@ -61,10 +61,10 @@
 		</view>
 
 		<view class="selects">
-			<view @click="current='charge'" :class="{checked:current=='charge'}">
+			<view class="qwes" @click="current='charge'" :class="{checked:current=='charge'}">
 				充值记录
 			</view>
-			<view @click="current='money'"  :class="{checked:current=='money'}">
+			<view class="qwes" @click="current='money'"  :class="{checked:current=='money'}">
 				资金流水
 			</view>
 		</view>
@@ -273,7 +273,7 @@ view{
 			width: 114%;
 			height: 100%;
 		}
-		view.bottoms{
+		.bottoms{
 			width: 690rpx;
 			height: 133rpx;
 			background-color: #fff;
@@ -388,7 +388,7 @@ view{
 		width: 750rpx;
 		background-color: #FFFFFF;
 		display: flex;
-		view{
+		.qwes{
 			width: 375rpx;
 			height: 110rpx;
 			line-height: 110rpx;
@@ -484,17 +484,17 @@ view{
 		width: 100%;
 		margin-top: 13rpx;
 		padding: 0rpx 52rpx;
-		view{
+		.views{
 			height: 90rpx;
 			display: flex;
 			align-items: center;
-			input{
+			.inputs{
 				border-bottom: 1rpx solid #F4F4F4;
 				font-size: 24rpx;
 				margin-left: 16rpx;
 			}
 		}
-		image{
+		.imgs{
 			width: 25rpx;
 			height: 37rpx;
 		}

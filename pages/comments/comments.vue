@@ -52,7 +52,7 @@
 							{{i}}
 						</div>
 						<div class="skuValue">
-							<div :class="check_attr[i]==index?'skuCheck':''" @click="selectAttr(index,i)"  v-for="(mbx,index) of item" :key="index">{{mbx}}</div>
+							<div class="haihong" :class="check_attr[i]==index?'skuCheck':''" @click="selectAttr(index,i)"  v-for="(mbx,index) of item" :key="index">{{mbx}}</div>
 						</div>
 					</div>
 				</div>
@@ -62,7 +62,7 @@
 					</div>
 					<div class="inputNumber">
 							<div class="clicks" @click="delNum">-</div>
-							<input v-enter-number type="number" v-model="postData.qty"  disabled>
+							<input class="inputs" v-enter-number type="number" v-model="postData.qty"  disabled>
 							<div class="clicks" @click="addNum">+</div>
 					</div>
 				</div>
@@ -487,7 +487,7 @@ export default {
 				}
 				.skuValue{
 					display: flex;
-					div{
+					.haihong{
 						height: 70rpx;
 						line-height: 70rpx;
 						font-size: 28rpx;
@@ -519,7 +519,7 @@ export default {
 				height: 50rpx;
 				margin-right: 50rpx;
 				display: flex;
-				input{
+				.inputs{
 					color: black;
 					margin: 0 auto;
 					width: 80rpx;

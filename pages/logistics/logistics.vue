@@ -46,7 +46,7 @@
 				<view class="center" v-if="index==0">
 					<view class="lefts">
 						<view class="tops">
-							<view></view>
+							<view class="views"></view>
 						</view>
 						<view class="bottoms" v-if="(index+1)<pro.list.length"> 
 							
@@ -64,7 +64,7 @@
 				<view class="center" v-else>
 					<view class="lefts">
 						<view class="tops unBgcolor">
-							<view></view>
+							<view class="views"></view>
 						</view>
 						<view class="bottoms" v-if="(index+1)<pro.list.length">
 							
@@ -182,7 +182,7 @@
 				display: flex;
 				align-items: center;
 				justify-content: center;
-				view{
+				.views{
 					width: 16rpx;
 					height: 16rpx;
 					background-color: #F43131;
@@ -219,7 +219,7 @@
 		}
 		.unBgcolor{
 			background-color: #ECECEC !important;
-			&>view{
+			.views{
 				background-color: #AFAFAF !important;
 			}	
 		}

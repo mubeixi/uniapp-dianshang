@@ -1,13 +1,13 @@
 <template>
 	<view>
 <!-- 		<view class="nav">
-			<view :class="checked==0?'checked':''" @click="change(0)">
+			<view class="views" :class="checked==0?'checked':''" @click="change(0)">
 				全部
 			</view>
-			<view :class="checked==1?'checked':''" @click="change(1)">
+			<view class="views" :class="checked==1?'checked':''" @click="change(1)">
 				已领取
 			</view>
-			<view :class="checked==2?'checked':''" @click="change(2)">
+			<view class="views" :class="checked==2?'checked':''" @click="change(2)">
 				已过期
 			</view>
 		</view>
@@ -163,7 +163,7 @@
 	align-items: center;
 	font-size: 30rpx;
 	color: #333333;
-	view{
+	.views{
 		width: 236rpx;
 		height: 72rpx;
 		line-height: 72rpx;

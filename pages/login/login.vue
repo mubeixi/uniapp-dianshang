@@ -104,11 +104,11 @@
 				<div class="searchNewPass editSearchPassword" v-if="loginStatus === 3">
 					<label class="inputLable flex line20">
 						<span>验证码</span>
-						<input type="text" placeholder="请输入验证码" :value="verificationCode" @input="substr" />
+						<input class="ins" type="text" placeholder="请输入验证码" :value="verificationCode" @input="substr" />
 					</label>
 					<label class="inputLable flex">
 						<span>新密码</span>
-						<input type="password" placeholder="请输入新密码" v-model="newPassword" />
+						<input class="ins" type="password" placeholder="请输入新密码" v-model="newPassword" />
 
 					</label>
 

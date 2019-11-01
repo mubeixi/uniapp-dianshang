@@ -23,13 +23,13 @@
 				<view class="left">
 					户名
 				</view>
-				<input type="text" placeholder="请输入您的户名" placeholder-style="places" v-model="data.Account_Name">
+				<input class="inputs" type="text" placeholder="请输入您的户名" placeholder-style="places" v-model="data.Account_Name">
 			</view>
 			<view class="centers">
 				<view class="left">
 					账号
 				</view>
-				<input type="text" placeholder="请输入您的银行卡卡号" placeholder-style="places" v-model="data.Account_Val">
+				<input class="inputs" type="text" placeholder="请输入您的银行卡卡号" placeholder-style="places" v-model="data.Account_Val">
 			</view>
 			<!-- <view class="centers">
 				<view class="left">
@@ -43,13 +43,13 @@
 				<view class="left">
 					昵称
 				</view>
-				<input type="text" placeholder="请输入您的昵称" placeholder-style="places" v-model="data.Account_Name">
+				<input class="inputs" type="text" placeholder="请输入您的昵称" placeholder-style="places" v-model="data.Account_Name">
 			</view>
 			<view class="centers">
 				<view class="left">
 					账号
 				</view>
-				<input type="text" placeholder="请输入您的支付宝账号" placeholder-style="places" v-model="data.Account_Val">
+				<input class="inputs" type="text" placeholder="请输入您的支付宝账号" placeholder-style="places" v-model="data.Account_Val">
 			</view>
 		</block>
 		<button  formType="submit" class="addInfo">
@@ -287,7 +287,7 @@
 		font-size: 28rpx;
 		color: #333333;
 	}
-	input{
+	.inputs{
 		width: 570rpx;
 		color: #333333;
 		font-size: 24rpx;

@@ -1,8 +1,8 @@
 <template>
   <div style="position:relative;background-color:#f8f8f8">
     <div class="top">
-        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADoAAAA6CAYAAADhu0ooAAADb0lEQVRogeWbz0sbQRTHv2CoNyE91lO9hYKI8V4RT578BWI8SJSsJz2JB5EWo7Q2oERaU2kToQkVstAQBP23aptf+/v1sDMljVo12Zld3C+8S4hv5iMvM2/evAHEKALgBYARABMApgEkACQBpJgl2WfT7Dsj7G8igubkmZ4BiAGYArAKQOnSVpmPGPMZGEUBjANYQfdwd9kK8x2VxHKrBgBMwg1DrwE7LcXGGpBCxtQHII7ewrOXsI6zOQhVFMCcD4CdNgeB4fwS7krpNyS3JJuTp3oFOb/Fx1qKzc0TjQYA6D4b7RVyOAAQD7XhbiGHEMxw/V8YDz0WMopgLTwPtSQesRr3IRhbSLc2hwfus3E/JjgzM/OmXq//JKarq6uLHvzF74McgA8Zz8LCwm6j0fjFIavVaqVHn6u4J12clA25vLy832q1aozRUVVV9cj35F2QUUheZdfW1t5pmtbgkKVS6dxD/ykAz28DfS0TcmNj44Ou600iIsdxnEKhUBQwzngnZD/EnCdvtc3NzUPDMDQGaZ+enp4JGmuFsf1VTBbk9vZ21jRNnUFax8fHXwWPGWsHnZIBmU6nP1qWZRAR2bZtZjKZzxLGneKQEUjYUg4ODnK2bZtERJZlGXt7e59k/HMZWwRwK29CBzs6Ovpi27ZFRGSapr6zs5OVBMltEHDLjMIGOTk5Kdi2bRMRGYahbW1tHUqGVBgjJkQNUCgUvjmOYxMR6breWl9fz/gAqTBGTItwXiwWvzuO4xARaZrWUBTlvU+QCmNEwmvH5XK5TEQOEVGr1aonk8l9HyEVxuhtolCpVH7w5LzZbP5OJBJpnyEVuOdU7/Lby8vLCw5Zr9ev5+fn3wYAUmGMYkBrtdr17OxsoEA9Dd1qtVppD93FxcXdAIAmAQGLkaqqKl+MNE2rBWUxErK9lEql86BtL8IShnw+X+SwQUgYhKaAuVzujGdHfqeAwpP6bDYbiKQ+NMc0ICQHbyBEpZTQFMcAn8ud+XxeSrkTcIu9vhWwHceRVsAGQnIlAYTokgl4GteGY/dBAiG6CAZCcrXPFYpmDa5QtN9whaKhiisULXJcoWh65ApFGytXH9wN2a/G5DFIaExu15NvNe+UjMcDd55C/FA/vH8OcuPQHDRF4Fbe2h/4LOHmA58l/PvAZxCCHvj8AdgT4IeWfoOhAAAAAElFTkSuQmCC" @click="goBack" >
-        <img src="data:image/png;base64,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" class="cart" >
+        <img class="myImg" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADoAAAA6CAYAAADhu0ooAAADb0lEQVRogeWbz0sbQRTHv2CoNyE91lO9hYKI8V4RT578BWI8SJSsJz2JB5EWo7Q2oERaU2kToQkVstAQBP23aptf+/v1sDMljVo12Zld3C+8S4hv5iMvM2/evAHEKALgBYARABMApgEkACQBpJgl2WfT7Dsj7G8igubkmZ4BiAGYArAKQOnSVpmPGPMZGEUBjANYQfdwd9kK8x2VxHKrBgBMwg1DrwE7LcXGGpBCxtQHII7ewrOXsI6zOQhVFMCcD4CdNgeB4fwS7krpNyS3JJuTp3oFOb/Fx1qKzc0TjQYA6D4b7RVyOAAQD7XhbiGHEMxw/V8YDz0WMopgLTwPtSQesRr3IRhbSLc2hwfus3E/JjgzM/OmXq//JKarq6uLHvzF74McgA8Zz8LCwm6j0fjFIavVaqVHn6u4J12clA25vLy832q1aozRUVVV9cj35F2QUUheZdfW1t5pmtbgkKVS6dxD/ykAz28DfS0TcmNj44Ou600iIsdxnEKhUBQwzngnZD/EnCdvtc3NzUPDMDQGaZ+enp4JGmuFsf1VTBbk9vZ21jRNnUFax8fHXwWPGWsHnZIBmU6nP1qWZRAR2bZtZjKZzxLGneKQEUjYUg4ODnK2bZtERJZlGXt7e59k/HMZWwRwK29CBzs6Ovpi27ZFRGSapr6zs5OVBMltEHDLjMIGOTk5Kdi2bRMRGYahbW1tHUqGVBgjJkQNUCgUvjmOYxMR6breWl9fz/gAqTBGTItwXiwWvzuO4xARaZrWUBTlvU+QCmNEwmvH5XK5TEQOEVGr1aonk8l9HyEVxuhtolCpVH7w5LzZbP5OJBJpnyEVuOdU7/Lby8vLCw5Zr9ev5+fn3wYAUmGMYkBrtdr17OxsoEA9Dd1qtVppD93FxcXdAIAmAQGLkaqqKl+MNE2rBWUxErK9lEql86BtL8IShnw+X+SwQUgYhKaAuVzujGdHfqeAwpP6bDYbiKQ+NMc0ICQHbyBEpZTQFMcAn8ud+XxeSrkTcIu9vhWwHceRVsAGQnIlAYTokgl4GteGY/dBAiG6CAZCcrXPFYpmDa5QtN9whaKhiisULXJcoWh65ApFGytXH9wN2a/G5DFIaExu15NvNe+UjMcDd55C/FA/vH8OcuPQHDRF4Fbe2h/4LOHmA58l/PvAZxCCHvj8AdgT4IeWfoOhAAAAAElFTkSuQmCC" @click="goBack" >
+        <img class="myImg cart" src="data:image/png;base64,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"  >
     </div>
 
 
@@ -13,7 +13,7 @@
 			<view class="page-section-spacing">
 				<swiper class="swiper" circular="true" indicator-dots="indicatorDots" autoplay="autoplay" interval="4000" duration="500" indicator-color="#fff" indicator-active-color="#ff5000">
 					<swiper-item v-for="(item,i) of product.Products_JSON.ImgPath" :key="i">
-						 <img :src="item"  @click="yulan(i)">
+						 <img class="imgs" :src="item"  @click="yulan(i)">
 					</swiper-item>
 				</swiper>
 			</view>
@@ -29,7 +29,7 @@
         </div>
         <div class="rightss">
             <div class="countdown">
-               <span>{{countdown.d}}</span>天<span>{{countdown.h}}</span>小时<span>{{countdown.m}}</span>分<span>{{countdown.s}}</span>后结束
+               <span class="spans">{{countdown.d}}</span>天<span class="spans">{{countdown.h}}</span>小时<span class="spans">{{countdown.m}}</span>分<span class="spans">{{countdown.s}}</span>后结束
             </div>
             <div class="haha">
                 已团{{product.pintuan_flag}}件  {{product.pintuan_people}}人团
@@ -97,7 +97,7 @@
         <block v-for="(item,index) of commit" :key="item">
         	<div class="c_content" v-if="!item.ImgPath">
         	    <div class="c_content_title">
-        	        <img :src="item.User_HeadImg" alt="">
+        	        <img class="imggs" :src="item.User_HeadImg" alt="">
         	        <span class="user_name">{{item.User_NickName}}</span>
         	        <span class="c_time">{{item.CreateTime}}</span>
         	    </div>
@@ -106,7 +106,7 @@
         	</div>
         	<div class="c_content" v-else>
         	    <div class="c_content_title">
-        	        <img :src="item.User_HeadImg" alt="">
+        	        <img  class="imggs" :src="item.User_HeadImg" alt="">
         	        <span class="user_name">{{item.User_NickName}}</span>
         	        <span class="c_time">{{item.CreateTime}}</span>
         	    </div>
@@ -168,7 +168,7 @@
     	<scroll-view class="ticks" v-if="type=='ticks'" scroll-y=true  @scrolltolower="goNextPage">
     	    <div class="t_title">
     	        领券
-    	        <image src="https://new401.bafangka.com/static/client/detail/x.png"  @click="close" ></image>
+    	        <image  class="imgg" src="https://new401.bafangka.com/static/client/detail/x.png"  @click="close" ></image>
     	    </div>
     	    <div class="t_content" v-for="(item,i) of couponList" :key="i">
     	        <div class="t_left">
@@ -198,7 +198,7 @@
 						{{i}}
 					</div>
 					<div class="skuValue">
-						<div :class="check_attr[i]==index?'skuCheck':''" @click="selectAttr(index,i)"  v-for="(mbx,index) of item" :key="index">{{mbx}}</div>
+						<div class="divs" :class="check_attr[i]==index?'skuCheck':''" @click="selectAttr(index,i)"  v-for="(mbx,index) of item" :key="index">{{mbx}}</div>
 					</div>
 				</div>
 			</div>
@@ -209,7 +209,7 @@
 				<div class="inputNumber">
 						<div class="clicks" @click="delNum">-</div>
 <!--					v-enter-number-->
-						<input  type="number" v-model="postData.qty"  disabled>
+						<input class="inputs"  type="number" v-model="postData.qty"  disabled>
 						<div class="clicks" @click="addNum">+</div>
 				</div>
 			</div>
@@ -1025,7 +1025,7 @@ export default {
 	.page-section,.page-section-spacing,.swiper,.uni-swiper-wrapper,.uni-swiper-slides{
 			width: 750upx;
 			height: 750upx;
-			img{
+			.imgs{
 				width: 100%;
 				height: 100%;
 			}
@@ -1046,7 +1046,7 @@ export default {
         z-index: 10;
         width: 95%;
     }
-    .top img{
+    .top .myImg{
         width: 30px;
         height: 30px;
     }
@@ -1256,7 +1256,7 @@ export default {
         font-size: 15px;
         color: #333;
     }
-    .c_content_title>img {
+    .c_content_title>.imggs {
         width: 70upx;
         height: 70upx;
         margin-right: 20upx;
@@ -1326,15 +1326,15 @@ export default {
         color: #fff;
         .leftss{
             font-size: 0;
-            span.pricef{
+            .pricef{
                 font-size: 36upx;
             }
-            span.prices{
+            .prices{
                 font-size: 50upx;
                 margin-left: 4px;
                 font-weight: 500;
             }
-            span.pricet{
+            .pricet{
                 font-size: 28upx;
                 margin-left: 6px;
                 color: #ddd;
@@ -1349,7 +1349,7 @@ export default {
 				overflow: hidden;
 				margin-bottom: 4px;
 
-				span{
+				.spans{
 					margin: 0 2px;
 					padding: 0 2px;
 					//width:23px;
@@ -1590,7 +1590,7 @@ export default {
 				}
 				.skuValue{
 					display: flex;
-					div{
+					.divs{
 						height: 70upx;
 						line-height: 70upx;
 						font-size: 28upx;
@@ -1622,7 +1622,7 @@ export default {
 				height: 50upx;
 				margin-right: 50upx;
 				display: flex;
-				input{
+				.inputs{
 					color: black;
 					margin: 0 auto;
 					width: 80upx;

@@ -12,7 +12,7 @@
 	  <!-- #endif -->
       <div class="pro-list" v-for="(item,index) in collect_list" :key="index">
 		  <div class="mbxa"  v-if="rightClicked" @click="check(index)">
-			  <img :src="checked[index].checked?'https://new401.bafangka.com/static/client/checked.png':'https://new401.bafangka.com/static/client/uncheck.png'" >
+			  <img class="imgs" :src="checked[index].checked?'https://new401.bafangka.com/static/client/checked.png':'https://new401.bafangka.com/static/client/uncheck.png'" >
 		  </div>
           <div class="pro" @click="goDetail(item)">
             <div class="pros">
@@ -23,7 +23,7 @@
                   <div class="collection"><span>{{item.favourite_count}}</span>人收藏</div>
                   <div class="btn">
                       <span class="span">
-                        <span>￥</span>{{item.Products_PriceX}}
+                        <span class="spans">￥</span>{{item.Products_PriceX}}
                       </span>
 
                       <form report-submit @submit="buy">
@@ -217,7 +217,7 @@ export default {
 	.mbxa{
 		display: flex;
 		align-items: center;
-		img{
+		.imgs{
 			width: 34rpx;
 			height: 34rpx;
 		}
@@ -277,7 +277,7 @@ export default {
         color: #F43131;
 		font-size: 36rpx;
     }
-    .btn span.span span{
+    .btn .span .spans{
         font-style: normal;
         font-size: 24rpx;
     }
