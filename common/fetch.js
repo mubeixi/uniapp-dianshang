@@ -173,6 +173,9 @@ export const delAddress = (data, options) => fetch('del_address', data, options)
 export const getDisInit = (data, options) => fetch('get_dis_init', data, options);
 // 获取团队对应等级人数
 export const getDisTeamCount = (data, options) => fetch('get_dis_team_count', data, options);
+// 获取团队对应等级人数
+export const getDisTeamList = (data, options) => fetch('get_dis_team_list', data, options);
+
 // 获取用户提现方式
 export const getUserWithdrawMethod = (data, options) => fetch('get_user_withdraw_method', data, options);
 // 用户新增提现方式

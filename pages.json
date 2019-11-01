@@ -456,6 +456,12 @@
             	"navigationBarTitleText": "股东"
             }
         }
+        ,{
+            "path" : "pages/myTeamNumber/myTeamNumber",
+            "style" : {
+            	"navigationBarTitleText": "我的会员"
+            }
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

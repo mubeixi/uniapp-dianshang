@@ -1,7 +1,6 @@
 <template>
     <div>
 <!--    <page-title title="我的订单" rightHidden="true" class="titless"></page-title>-->
-		<view style="height: 20rpx;width: 100%;background-color: #F8F8F8;"></view>
         <div class="order" v-for="(item,index) of data" :key="index" >
 			<template v-if="item.prod_list.length>0">
 				<div style="background-color: #F3F3F3;height: 20rpx;width: 100%;position: absolute;left: 0rpx;"></div>
