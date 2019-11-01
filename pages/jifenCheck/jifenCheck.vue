@@ -831,7 +831,7 @@ export default {
     /* 订单信息 start */
     .order_msg {
 			display: flex;
-      padding: 0 40rpx 0 30rpx;
+      padding: 30rpx 40rpx 30rpx 30rpx;
     }
 
     .pro {
@@ -884,7 +884,7 @@ export default {
     }
     .other .bd {
         padding-bottom: 30rpx;
-        border-bottom: 2rpx solid #efefef;
+        border-bottom: 2rpx solid $wzw-border-color;
     }
     .o_title {
         display: flex;
