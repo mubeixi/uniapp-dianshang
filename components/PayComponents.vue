@@ -37,9 +37,9 @@ import {isWeiXin,ls,GetQueryByString,urlencode} from "../common/tool";
 
 // #ifdef H5
 import {WX_JSSDK_INIT} from "../common/mixin";
-import {unipayFunc} from "../common/pay";
-// #endif
 
+// #endif
+import {unipayFunc} from "../common/pay";
 
 
 function noop(){}

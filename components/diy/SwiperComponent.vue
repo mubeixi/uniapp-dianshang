@@ -1,17 +1,22 @@
 <template>
-  <view class="swiper wrap fun-preview-swiper" :class="{single:swiper.value.list.length<2}">
-
-    <div v-if="swiper.value.list.length==1" style="height:375upx" @click="go(swiper.value.list[0])">
-      <div class="cover-full" :style="{backgroundImage:'url('+domainFunc(swiper.value.list[0].img_src)+')'}"></div>
+  <view class="swiper wrap fun-preview-swiper" >
+<!--      :class="{single:swiper.value.list.length<2}"-->
+<!-- style="height:375upx" -->
+<!--      @load="HandleImgLoad"-->
+      <!--      :style="[getSingleStyle()]"-->
+    <div v-if="swiper.value.list.length==1"  @click="go(swiper.value.list[0])" class="single" style="display: flex;" >
+		<image mode="widthFix"  style="width: 750upx;vertical-align: top;"  :src="domainFunc(swiper.value.list[0].img_src)"/>
+      <!-- <div class="cover-full" :style="{backgroundImage:'url('+domainFunc(swiper.value.list[0].img_src)+')'}"></div> -->
     </div>
-    <swiper v-else style="height:375upx" class="swiper"
+	<!-- style="height:375upx" -->
+    <swiper v-else  class="swiper" style="height:375upx"
             indicator-color="rgba(255, 255, 255, .3)"
             indicator-active-color="rgba(255, 255, 255, .7)"
             :indicator-dots="swiper.value.list.length>1" :autoplay="swiper.config.autoplay" circular="true" :interval="swiper.config.interval|str2num" :duration="500">
 
       <swiper-item @click="go(item)" v-for="(item,idx) in swiper.value.list" :key="idx">
-        <image class="swiper-item" style="width: 750upx"  mode="scaleToFill" :src="domainFunc(item.img_src)"></image>
-<!--        <view class="swiper-item cover-full" :style="{backgroundImage:'url('+domainFunc(item.img_src)+')'}"></view>-->
+<!--        <image mode="widthFix" class="swiper-item" style="width: 750upx;vertical-align: top;"  :src="domainFunc(item.img_src)"></image>-->
+        <view class="swiper-item cover-full" :style="{backgroundImage:'url('+domainFunc(item.img_src)+')'}"></view>
       </swiper-item>
     </swiper>
 
@@ -32,6 +37,9 @@
     },
     data() {
       return {
+          singleW:null,
+          singleH:null,
+          fullWidth:null,
         swiper: {
           config:{},
           value:{
@@ -56,6 +64,23 @@
     },
     components: {},
     methods: {
+    getSingleStyle(){
+
+        console.log(this.singleH,this.singleW)
+        if(this.singleH && this.singleW){
+            let h = this.fullWidth*this.singleH/this.singleW;
+            let w = this.fullWidth;
+            console.log({height:h+'px',width:w+'px'})
+            return {height:h+'px',width:w+'px'}
+        }
+        return {}
+    },
+    HandleImgLoad(e){
+        console.log(e)
+        this.singleW = e.detail.width;
+        this.singleH = e.detail.height;
+
+    },
       go(item){
         this.$fun.linkTo(item)
       },
@@ -67,6 +92,9 @@
     },
     created() {
 
+        const res = uni.getSystemInfoSync();
+        this.fullWidth = res.screenWidth;
+
       this.swiper = this.confData;
     }
   }
@@ -76,6 +104,15 @@
 <style scoped lang="less">
   @import "../../static/css/app.less";
 
+	.single{
+        image{
+            // width: auto !important;
+            //height: auto;
+            // position: absolute;
+        }
+    }
+
+  //image{will-change: transform}
   .el-carousel__item h3 {
     color: #475669;
     font-size: 14px;
@@ -96,5 +133,10 @@
     .cover-full-bg(cover, 50%);
     /*height: 100%;*/
   }
+
+
+  /*swiper {*/
+  /*    height: 100%;*/
+  /*}*/
 
 </style>
