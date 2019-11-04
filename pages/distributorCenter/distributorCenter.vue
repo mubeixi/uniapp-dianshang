@@ -212,7 +212,7 @@
 		</view>
 		<popup-layer ref="popupLayer" :direction="'top'">
 			<div class="iMbx">
-				<div class="c_method" v-for="(item,index) in pay_arr" @click="chooseType(index)" :key="index">
+				<div class="c_method" v-for="(item,index) in initData.pay_arr" @click="chooseType(index)" :key="index">
 					{{item}} <text>￥{{pay_money}}</text>
 				</div>
 			</div>
@@ -274,7 +274,7 @@
 			};
 		},
 		computed:{
-			...mapGetters(['userInfo']),
+			...mapGetters(['initData','userInfo'])
 		},
 		onLoad() {
 			//如果用户手机号登录获取code
@@ -299,9 +299,11 @@
 			  utils.array_change(area.area[0]['0,1,35'])
 			];
 			//获取支付方式
-			this.pay_arr = ls.get('initData').pay_arr;
+			let initData =this.getInitData()
+			this.pay_arr =initData.pay_arr;
 		},
 		methods:{
+			...mapActions(['getInitData']),
 			//查看须知
 			goDistributeAgreement(){
 				uni.navigateTo({
