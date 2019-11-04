@@ -212,6 +212,7 @@
 		padding: 0rpx 30rpx;
 		display: flex;
 		align-items: center;
+		box-sizing: border-box;
 		.bankCard{
 			width: 50rpx;
 			height: 50rpx;

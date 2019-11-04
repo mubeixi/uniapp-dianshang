@@ -126,6 +126,7 @@
 	margin-top: 40rpx;
 	width: 710rpx;
 	.cardInfo{
+		box-sizing: border-box;
 		width: 710rpx;
 		height: 75rpx;
 		line-height: 75rpx;

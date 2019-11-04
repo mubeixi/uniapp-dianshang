@@ -152,8 +152,24 @@
 
 						await checkAuth.then(res=>{console.log('promsie success')},err=>{})
 						// #endif
-							console.log('promsie after')
-						// #ifndef H5||MP-WEIXIN
+						
+						// #ifdef APP-PLUS
+						uni.login({
+						  provider: 'weixin',
+						  success: function (loginRes) {
+						
+						  	login({login_method:'wx_app',...loginRes.authResult}).then(res=>{
+						  		uni.navigateTo({
+									url:'../withdrawalMethod/withdrawalMethod'
+								})
+							}).catch(e=>{
+						
+							})
+						    console.log(JSON.stringify(loginRes.authResult));
+						  }
+						});
+						// #endif
+						// #ifndef H5||MP-WEIXIN||APP-PLUS
 							uni.showToast({
 								title:'请在微信公众号或小程序提现',
 								icon:'none'

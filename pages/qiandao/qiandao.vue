@@ -137,8 +137,8 @@
 				left: 75rpx;
 			}
 			.qiandao{
-				width: 46rpx;
-				height: 46rpx;
+				width: 46rpx !important;
+				height: 46rpx !important;
 				position: absolute;
 				top:85rpx ;
 				left: 107rpx;
