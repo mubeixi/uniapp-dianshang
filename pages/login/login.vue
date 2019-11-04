@@ -155,6 +155,10 @@
 		GetQueryByString
 	} from "../../common/tool";
 
+	// #ifdef APP-PLUS
+	import {bindUserClientId} from "../../common/fetch";
+	// #endif
+
 	// import {
 	//   login,
 	//   // resetPwd,
@@ -168,6 +172,8 @@
 	import {
 		login,getSmsCode
 	} from "../../common/fetch";
+
+	import {ls} from "../../common/tool";
 
 	import {
 		toast,
@@ -531,6 +537,16 @@
 			},
 			loginCall(userData){
 				this.setUserInfo(userData);
+
+				// #ifdef APP-PLUS
+				//注册设备
+				let clientid = ls.get('user_client_id')
+				if(clientid){
+					console.log("注册设备",clientid,userData)
+					bindUserClientId({uuid:clientid,action:'save'},{errtip:false}).then(res=>{console.log('注册设备成功')},err=>{}).catch(error=>{})
+				}
+				// #endif
+
 
 				//toast('登录成功', 'success')
 				setTimeout(function() {

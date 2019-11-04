@@ -62,6 +62,13 @@
 			logoutFunc(){
 				confirm({title:'操作提示',content:'是否退出登录'}).then(res=>{
 
+
+					// #ifdef APP-PLUS
+					//取消设备绑定
+					console.log("取消设备绑定")
+					bindUserClientId({action:'clear'},{errtip:false}).then(res=>{console.log('注册取消绑定成功')},err=>{}).catch(error=>{})
+					// #endif
+
 					//只需要商户id
 
 					//let users_id = ls.get('users_id');

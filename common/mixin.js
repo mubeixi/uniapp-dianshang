@@ -42,7 +42,7 @@ export const WX_JSSDK_INIT = (vm) => new Promise((resolve, reject) => {
 	getJsSign({
 		url:location.href.split('#')[0],
 		//debug : process.env.NODE_ENV === 'production' ? false : true
-	}).then((res) => {
+	},{errtip:false}).then((res) => {
 		if(res.errorCode === 0){
 
 			let config = res.data;

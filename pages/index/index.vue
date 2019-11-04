@@ -63,7 +63,7 @@
 			GoodsComponent,CubeComponent,TabComponent
 		},
 		onShow(){
-			//error('我爱中华人民共和国')
+
 
 		},
 		onLoad() {
