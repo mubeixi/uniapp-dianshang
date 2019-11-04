@@ -46,7 +46,7 @@
 	import {pageMixin} from "../../common/mixin";
 	import {uploadImages,ls} from '../../common/tool.js'
 	import {uploadImage,comment} from '../../common/fetch.js'
-	import {uniRate} from "../../components/uni-rate/uni-rate.vue"
+	import uniRate from "../../components/uni-rate/uni-rate.vue"
 	export default {
 		mixins:[pageMixin],
 		components: {uniRate},

@@ -622,10 +622,14 @@ export default {
 					this.isLoading=false;
 					this.page=1;
 					this.couponList.splice(i, 1);
+					if(this.couponList.length<=0){
+						this.$refs.popupLayer.close();
+					}
 			}).catch(e=>{
 				console.log(e)
 				this.isLoading=false;
 			})
+			
 			//this.getCoupon();
 		},
 		//获取可领取的优惠券
