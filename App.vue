@@ -5,32 +5,25 @@
 	import {APP_USERS_ID,isDev} from "./common/env";
 	// #endif
 
-
     // #ifdef APP-PLUS
 
-    // 获取客户端标识信息
-    var info = plus.push.getClientInfo();
-    console.log('device plus info ',info);
+    //import {bindUserClientId} from "./common/fetch";
 
-
-    import {pushHandle} from "./common/push";
-
-    const  clickFn = (notify)=>{
-        console.log('click',notify)
-
-        pushHandle({type:'click',info:notify})
-
-    }
-
-    const  receiveFn = (notify)=>{
-
-        pushHandle({type:'receive',info:notify})
-    }
+    import Push from './common/push';
+    // import {pushHandle} from "./common/push";
+    //
+    // const  clickFn = (notify)=>{
+    //     console.log('click',notify)
+    //     pushHandle({type:'click',info:notify})
+    //
+    // }
+    //
+    // const  receiveFn = (notify)=>{
+    //     pushHandle({type:'receive',info:notify})
+    // }
     // #endif
 
-
     import {getSystemConf} from "./common/fetch";
-
 
     export default {
         //目前只有app端用到了应用的全局onLaunch
@@ -47,12 +40,38 @@
 
             // }
 
+            // 获取客户端标识信息
+            var info = plus.push.getClientInfo();
 
-            //点击通知
-            plus.push.addEventListener( 'click', clickFn);
+            let interval = null;
 
-            //收到通知
-            plus.push.addEventListener( 'receive', receiveFn);
+            if(info.clientid){
+                console.log('device plus info ',info);
+                ls.set('user_client_id',info.clientid)
+                //bindUserClientId({uuid:info.clientid},{errtil:false}).then(res=>{console.log('注册设备成功')},err=>{}).catch(error=>{})
+            }else{
+                interval = setInterval(function(){
+                    console.log('获取cid ing')
+                    info = plus.push.getClientInfo();
+                    if(info.clientid){
+                        console.log('获取cid success',info)
+                        // console.log();
+                        ls.set('user_client_id',info.clientid)
+                        clearInterval(interval);
+                        //bindUserClientId({uuid:info.clientid},{errtil:false}).then(res=>{console.log('注册设备成功')},err=>{}).catch(error=>{})
+                    }
+                },50)
+            }
+
+
+            //监听
+            Push.pushListener();
+
+            // //点击通知
+            // plus.push.addEventListener( 'click', clickFn);
+            //
+            // //收到通知
+            // plus.push.addEventListener( 'receive', receiveFn);
 
 			// #endif
 
@@ -68,8 +87,7 @@
 			// #endif
 
 			console.log('App Launch')
-
-
+			
             getSystemConf().then(res => {
                 ls.set('initData',res.data)
             },err=>{}).catch(error=>{})

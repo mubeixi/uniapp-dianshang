@@ -205,7 +205,9 @@ import { mapGetters, mapActions, Store,mapState } from "vuex";
 import uParse from '@/components/gaoyia-parse/parse.vue'
 import {pageMixin} from "../../common/mixin";
 import {error} from "../../common";
+
 import {add_template_code} from "../../common/fetch";
+
 
 
 export default {
@@ -671,7 +673,7 @@ export default {
 		skuSub(e){
 
 			console.log(e);
-			
+
 			if(!this.submit_flag) {
 				return ;
 			}
@@ -689,7 +691,7 @@ export default {
 				code: e.detail.formId,
 				times: 3
 			})
-			
+
 			updateCart(this.postData).then(res=>{
 				if(res.errorCode == 0) {
 					if(this.postData.cart_key == 'CartList') {
