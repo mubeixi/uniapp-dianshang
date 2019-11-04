@@ -130,6 +130,7 @@
 
 				data:{
 					dis_config:{},
+					disInfo:{},
 					total_sales:'',
 					total_income:'',
 					balance:''
