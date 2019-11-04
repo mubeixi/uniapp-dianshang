@@ -153,10 +153,8 @@
 
 		},
 		methods:{
-			...mapActions(['getUserInfo']),
+			...mapActions(['getUserInfo','setUserInfo']),
 			goDistributor(){
-
-
 				//跳转成为分销商
 				uni.navigateTo({
 					url:'../disAgreementBefore/disAgreementBefore'
