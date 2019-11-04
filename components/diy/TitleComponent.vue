@@ -1,13 +1,13 @@
 <template>
-  <view class="title" :style="{color:title.style.color,backgroundColor:title.style.bgColor,paddingLeft:title.style.padding+'px',paddingRight:title.style.padding+'px',paddingTop:title.style.paddingc+'px',paddingBottom:title.style.paddingc+'px'}">
+  <view class="title" :style="{color:style.color,backgroundColor:style.bgColor,paddingLeft:style.padding+'px',paddingRight:style.padding+'px',paddingTop:style.paddingc+'px',paddingBottom:style.paddingc+'px'}">
     <!-- <view class="text">{{title.value.title}}</view>
     <view class="small">{{title.value.small}}</view>
     <view class="more" @click="go(moreData)">{{moreData.title}}</view> -->
     <div class="flex">
       <img class="icon" :style="{marginRight:10+'px'}" :src="domainFunc(title.config.icon)" />
-      <div class="flex1" :style="{textAlign:title.style.textAlign}">
-        <div class="text" :style="{fontSize:title.style.fontSize+'px'}">{{title.value.title}}</div>
-        <div class="small"  :style="{fontSize:title.style.fontSize-4+'px'}">{{title.value.small}}</div>
+      <div class="flex1" :style="{textAlign:style.textAlign}">
+        <div class="text" :style="{fontSize:style.fontSize+'px'}">{{title.value.title}}</div>
+        <div class="small"  :style="{fontSize:style.fontSize-4+'px'}">{{title.value.small}}</div>
       </div>
       <view class="more" @click="go(moreData)">{{moreData.title}}</view>
     </div>
@@ -20,6 +20,10 @@
   const styleDefault = {
     color: '#333',
     bgColor: '#fff',
+    paddingc:10,
+    padding:10,
+    fontSize:16,
+    textAlign:'left'
   };
 
   export default {
