@@ -118,7 +118,7 @@
 			</div>
 			<div class="s_bottom" @click="cancel">取消</div>
 		</div>
-		<view style="max-height: 1050rpx;">
+		<view style="max-height: 1050rpx;" v-else>
 			<div class="t_title">
 			    领券
 			    <image src="http://new401.bafangka.com/static/client/detail/x.png"  @click="close" ></image>
