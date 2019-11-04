@@ -29,16 +29,23 @@
         //目前只有app端用到了应用的全局onLaunch
 		onLaunch: function(option) {
 
+
+            // #ifdef MP-WEIXIN
+            //小程序需要拿这个
+            //都拿一下覆盖吧
+            let extConfig = wx.getExtConfigSync ? wx.getExtConfigSync() : {};
+            console.log('extConfig info is',extConfig);
+            let users_id = extConfig.users_id;
+            ls.set('users_id',users_id);
+            // #endif
+
+
 		    //每次加载都清空全站配置
             ls.remove('initData');
 
 			// #ifdef APP-PLUS
 
-            //isDev && ls.clear()
 			ls.set('users_id',APP_USERS_ID);//app里面需要写死打包，不然办法
-            // if(isDev){
-
-            // }
 
             // 获取客户端标识信息
             var info = plus.push.getClientInfo();
@@ -87,7 +94,7 @@
 			// #endif
 
 			console.log('App Launch')
-			
+
             getSystemConf().then(res => {
                 ls.set('initData',res.data)
             },err=>{}).catch(error=>{})
