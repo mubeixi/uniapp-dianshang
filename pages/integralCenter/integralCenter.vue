@@ -4,7 +4,7 @@
 			<view class="zhezhaoView">
 				<image src="https://new401.bafangka.com/static/client/check/close.png" class="closeZ" @click="isShow=false"></image>
 				<view class="zhezhaoYue">
-					余额互转
+					积分互转
 				</view>
 				<view class="zhezhaoCenter">
 					<view class="views">
@@ -15,7 +15,7 @@
 				<view class="zhezhaoCenter">
 					<view  class="views">
 						<image  class="imgs"  src="https://new401.bafangka.com/static/client/check/money.png"></image>
-						<input class="inputs" type="text" placeholder="请输入转出金额" v-model="integral">
+						<input class="inputs" type="text" placeholder="请输入转出积分" v-model="integral">
 					</view>
 				</view>
 				<view class="zheButton" @click="confirm">

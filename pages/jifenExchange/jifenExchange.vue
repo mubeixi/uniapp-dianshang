@@ -50,6 +50,7 @@
 				psdInput: false,
 				Gift_ID: 0,
 				isClicked: false, // 防止重复点击
+				isChanged: false, //防止兑换重复点击
 			}
 		},
 		computed: {
@@ -73,6 +74,7 @@
 				this.page = 1;
 				this.hasMore = false;
 				this.isClicked = false;
+				this.isChanged = false;
 			},
 			// getShipping(){
 			// 	getShipping().then(res=>{
@@ -92,13 +94,12 @@
 				})
 			},
 			gotoMyExchange(){
-				if(!this.isClicked) {
-					this.isClicked = true;
-					uni.navigateTo({
-						url: '../myRedemption/myRedemption'
-					})
-					return;
-				}
+				if(this.isClicked) {return;}
+				this.isClicked = true;
+				uni.navigateTo({
+					url: '../myRedemption/myRedemption'
+				})
+				return;
 			},
 			cancelPsw(){
 				this.psdInput = false;
@@ -133,12 +134,15 @@
 			},
 			// 积分兑换
 			exchange(item){
+				if(this.isChanged) {return;}
+				this.isChanged = true;
 				// 判断是否可以兑换
 				if(item.Gift_Qty <=0) {
 					uni.showToast({
 						title:"当前暂无库存",
 						icon:'none'
 					})
+					this.isChanged = false;
 					return false;
 				}
 				if(this.userInfo.User_Integral < item.Gift_Integral){
@@ -146,12 +150,14 @@
 						title:"您的积分不足",
 						icon:'none'
 					})
+					this.isChanged = false;
 					return false;
 				}
 				// 弹出密码输入框
 				// 如果不需要物流
 				if(item.Gift_Shipping == 0) {
 					this.psdInput = true;
+					this.isChanged = false;
 				}else {
 					uni.navigateTo({
 						url: '../jifenCheck/jifenCheck?gift_id=' + item.Gift_ID
