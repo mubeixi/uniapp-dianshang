@@ -146,7 +146,7 @@
 
 <script>
 import popupLayer from '../../components/popup-layer/popup-layer.vue';
-import {getAddress,getCart,createOrderCheck,createOrder} from '../../common/fetch.js';
+import {getAddress,getCart,createOrderCheck,createOrder,get_user_info} from '../../common/fetch.js';
 import {goBack} from '../../common/tool.js'
 import {pageMixin} from "../../common/mixin";
 import {check_money_in} from "../../common/util.js";
@@ -218,6 +218,15 @@ export default {
 		}
 	},
 	onShow() {
+		if(JSON.stringify(this.userInfo) != "{}"){
+			get_user_info().then(res=>{
+				this.setUserInfo(res.data);
+			},err=>{
+				
+			}).catch(e=>{
+				console.log(e)
+			})
+		}
 		this.getAddress();
 		this.createOrderCheck();
 	},
@@ -241,7 +250,7 @@ export default {
 		...mapGetters(['userInfo'])
 	},
   methods: {
-		...mapActions(['getUserInfo']),
+		...mapActions(['getUserInfo','setUserInfo']),
 		goback(){
 			goBack();
 		},
