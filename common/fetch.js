@@ -339,19 +339,21 @@ export const getTempData = (data, options) => fetch('get_redis_data', data, opti
 // 长链接转换短链接
 export const traslateShorten =saveTempData
 
-
+export const bindUserClientId = (data, options) => fetch('user_uuid_set', data, options);
 
 //普通环境noop就行了
-let add_template_code_FUNC = ()=>{}
+//let add_template_code = ()=>{}
 
 // 小程序推送授权码
-// #ifdef MP-WEIXIN || MP-ALIPAY
-add_template_code_FUNC = (data,option) =>fetch('add_template_code', data, option?option:{errtip:false});
-// #endif
+
+export const add_template_code = (data,option) =>{
+  // #ifdef MP-WEIXIN || MP-ALIPAY
+  return fetch('add_template_code', data, option?option:{errtip:false})
+  // #endif
+};
 
 
 
-export const add_template_code = add_template_code_FUNC
 
 function get_Appid() {
   return 'xhh';
