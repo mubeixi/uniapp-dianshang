@@ -1,5 +1,5 @@
 <template>
-  <view class="title" :style="{color:title.style.color,backgroundColor:title.style.bgColor,paddingLeft:title.style.padding+'px',paddingRight:title.style.padding+'px',paddingTop:title.style.paddingc+'px',paddingBottom:title.style.paddingc+'px'}">
+  <view class="title" :style="{color:style.color,backgroundColor:style.bgColor,paddingLeft:style.padding+'px',paddingRight:style.padding+'px',paddingTop:style.paddingc+'px',paddingBottom:style.paddingc+'px'}">
     <!-- <view class="text">{{title.value.title}}</view>
     <view class="small">{{title.value.small}}</view>
     <view class="more" @click="go(moreData)">{{moreData.title}}</view> -->
@@ -20,6 +20,10 @@
   const styleDefault = {
     color: '#333',
     bgColor: '#fff',
+    paddingc:10,
+    padding:10,
+    fontSize:16,
+    textAlign:'left'
   };
 
   export default {
