@@ -8,12 +8,24 @@
 	<!-- 轮播 -->
 	<view class="uni-padding-wrap">
 		<view class="page-section swiper">
-			<view class="page-section-spacing">
+			<view class="page-section-spacing" v-if="(product.video_url && showVideo)">
+				<video class="video" @play="play" @pause="pause" :src="product.video_url" auto-pause-if-navigate show-mute-btn="true" muted bindfullscreenchange="changeHiddenBtns" :poster="product.cover_url?product.cover_url:''" show-center-play-btn	 controls>
+				</video>
+				<view class="change-btn" v-if="isShowBtn">
+					<view  :class="[showVideo?'active':'','shipin']" @click="change_view(1)">视频</view>
+					<view  :class="[showVideo?'':'active','tupian']" @click="change_view(2)">图片</view>
+				</view>
+			</view>
+			<view class="page-section-spacing" v-else>
 				<swiper class="swiper" circular="true" indicator-dots="indicatorDots" autoplay="autoplay" interval="4000" duration="500" indicator-color="#fff" indicator-active-color="#ff5000">
 					<swiper-item v-for="(item,i) of product.Products_JSON.ImgPath" :key="i">
 						 <img :src="item"  @click="yulan(i)">
 					</swiper-item>
 				</swiper>
+				<view class="change-btn" v-if="product.video_url">
+					<view  :class="[showVideo?'active':'','shipin']" @click="change_view(1)">视频</view>
+					<view  :class="[showVideo?'':'active','tupian']" @click="change_view(2)">图片</view>
+				</view>
 			</view>
 		</view>
 	</view>
@@ -251,7 +263,9 @@ export default {
 			recieve: false,  //是否是赠品，赠品按钮显示 立即领取
 			gift_atr_str: '', //赠品属性,
 			canSubmit: true,
-			isLoading:false
+			isLoading:false,
+			showVideo: true, // 是否展示视频
+			isShowBtn: true, //是否显示视频图片切换按钮
         }
     },
     components: {
@@ -344,6 +358,24 @@ export default {
 				}
 			},
     methods: {
+		// 开始播放事件
+		play(){
+			console.log('haha')
+			this.isShowBtn = false;
+		},
+		// 暂停播放事件
+		pause(){
+			console.log('hehe')
+			this.isShowBtn = true;
+		},
+		// type 1为视频，2为图片
+		change_view(type){
+			if(type == 1) {
+				this.showVideo = true;
+			}else {
+				this.showVideo = false;
+			}
+		},
 		formatRichTexts(html){
 			if(!html) return;
 			let newContent= html.replace(/<img[^>]*>/gi,function(match,capture){
@@ -934,12 +966,40 @@ export default {
 		width: 750rpx;
 		height: 750rpx;
 		.page-section,.page-section-spacing,.swiper,.uni-swiper-wrapper,.uni-swiper-slides{
-				width: 750rpx;
-				height: 750rpx;
-				img{
-					width: 100%;
-					height: 100%;
+			position: relative;
+			width: 750rpx;
+			height: 750rpx;
+			img{
+				width: 100%;
+				height: 100%;
+			}
+			.video {
+				width: 100%;
+				height: 100%;
+			}
+			.change-btn {
+				position: absolute;
+				bottom: 50rpx;
+				left: 50%;
+				transform: translateX(-50%);
+				display: flex;
+				width: 240rpx;
+				justify-content: space-between;
+				z-index: 10;
+				.shipin,
+				.tupian {
+					text-align: center;
+					border-radius: 10px;
+					color: #fff;
+					box-sizing: border-box;
+					font-size: 28rpx;
+					padding: 5px 10px;
+					background: rgba(255, 0, 0 ,.5);
 				}
+				.active {
+					background: rgb(255, 102, 0);
+				}
+			}
 		}
 	}
     /* 返回按钮和购物车按钮 */
