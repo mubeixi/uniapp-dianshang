@@ -4,7 +4,7 @@
 		<!-- 这里是状态栏 -->
 		<view class="status_bar" style="position: fixed;background-color: white;top:0;left:0;z-index: 99;"></view>
 		<!-- #endif -->
-		<view class="home-wrap">
+		<view class="home-wrap"  :style="{background:system.bgcolor}">
 
 			<section :ref="item" v-for="(item, index) in templateList[tagIndex]" :key="index" class="section" :class="[item]"  :data-name="item" >
 				<base-component v-if="item.indexOf('base') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
@@ -153,6 +153,7 @@
 		/*overflow-x: hidden;*/
 		background: #f2f2f2;
 		position: relative;
+		min-height: 100vh;
 		/* #ifdef APP-PLUS */
 		padding-top: var(--status-bar-height);
 		/* #endif */

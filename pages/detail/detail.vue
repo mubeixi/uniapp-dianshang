@@ -671,11 +671,7 @@ export default {
 		skuSub(e){
 
 			console.log(e);
-			add_template_code({
-				code: e.detail.formId,
-				times: 3
-			})
-
+			
 			if(!this.submit_flag) {
 				return ;
 			}
@@ -689,6 +685,11 @@ export default {
 					return;
 				}
 			}
+			add_template_code({
+				code: e.detail.formId,
+				times: 3
+			})
+			
 			updateCart(this.postData).then(res=>{
 				if(res.errorCode == 0) {
 					if(this.postData.cart_key == 'CartList') {
