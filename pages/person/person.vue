@@ -179,13 +179,13 @@
 		},
 		onShow() {
 			if(JSON.stringify(this.userInfo) != "{}"){
-				// get_user_info().then(res=>{
-				// 	this.setUserInfo(res.data);
-				// },err=>{
+				get_user_info().then(res=>{
+					this.setUserInfo(res.data);
+				},err=>{
 					
-				// }).catch(e=>{
-				// 	console.log(e)
-				// })
+				}).catch(e=>{
+					console.log(e)
+				})
 			}
 			this.getOrderNum();
 			this.judgeSignin();

@@ -670,6 +670,9 @@ export default {
 		},
 		// 检查产品是否已收藏
 		checkProdCollected() {
+			if(!this.$fun.checkIsLogin()){
+				return
+			}
 			checkProdCollected({prod_id: this.Products_ID}).then(res => {
 				if(res.errorCode == 0) {
 					this.isCollected = res.data.is_favourite == 1
