@@ -92,6 +92,8 @@
 			};
 		},
 		onShow() {
+			this.pro=[];
+			this.page=1;
 			this.getUserReceivedCoupon();
 		},
 		onReachBottom() {
