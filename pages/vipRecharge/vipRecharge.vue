@@ -486,8 +486,10 @@ export default {
 						strArr.push(tempArr[i])
 					}
 				}
+
 				let newSearchStr = strArr.join('&');
-				if (newSearchStr.idnexOf('?') === -1) {
+
+				if (newSearchStr.indexOf('?') === -1) {
 					newSearchStr = '?' + newSearchStr
 				}
 
