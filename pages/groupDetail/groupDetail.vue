@@ -893,8 +893,6 @@ export default {
 					return;
 				}
 
-
-
 				this.product = res.data;
 
 				this.postData.count = res.data.Products_Count;
@@ -902,7 +900,6 @@ export default {
 					this.product.skujosn = typeof res.data.skujosn ==='string' ?JSON.parse(res.data.skujosn):res.data.skujosn;
 					this.product.skuvaljosn = typeof res.data.skuvaljosn === 'string' ?JSON.parse(res.data.skuvaljosn):res.data.skuvaljosn;
 				}
-
 
 				//this.stampCount()
 				//开发时候一直倒计时太乱了
@@ -914,7 +911,6 @@ export default {
 
 				let path = 'pages/groupDetail/groupDetail?Products_ID='+this.Products_ID;
 				let front_url = this.initData.front_url;
-
 
 				this.WX_JSSDK_INIT(this).then((wxEnv)=>{
 
@@ -945,9 +941,6 @@ export default {
 				})
 
 				// #endif
-
-
-
         	}).catch(e=>{
         		console.log(e)
         	})

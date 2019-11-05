@@ -18,6 +18,7 @@
               <div v-show="goods.config.attr.price.show" class="price"><span class="sign">￥</span>{{item.Products_PriceX}}
               </div>
             </div>
+<!--            <div class="stamp">距离开始还有</div>-->
             <div v-show="goods.config.attr.buybtn.show" class="buybtn" :class="'theme'+goods.config.attr.buybtn.style">
               {{goods.config.attr.buybtn.text||'购买'}}
             </div>
@@ -32,6 +33,7 @@
   import {getProductList} from "../../common/fetch";
   import {domain} from "../../common/filter";
   import {goProductDetail} from "../../common";
+  import {getGroupCountdown} from "../../common/tool";
 
   export default {
     props: {
