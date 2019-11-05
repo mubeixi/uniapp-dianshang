@@ -470,6 +470,11 @@
 					"navigationBarTitleText": "自定义"
 				}
 			}
+        },{
+            "path" : "pages/spikeDetail/spikeDetail",
+            "style" : {
+            	"navigationBarTitleText": "限时秒杀"
+            }
         }
     ],
 	"globalStyle": {

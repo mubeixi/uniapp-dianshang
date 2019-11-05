@@ -90,6 +90,7 @@
             <span style="margin-right:20rpx;">共<span>{{orderInfo.total_count}}</span>件商品</span>
             <span>小计：<span>￥</span><span class="money">{{orderInfo.Order_TotalPrice}}</span></span>
         </view> -->
+		<view style="height:100rpx;">
 			<view class="order_total">
 				<view class="totalinfo">
 					<view class="info">共{{orderInfo.prod_count}}件商品 总计：<text class="money"><text class="m_icon">￥</text> {{orderInfo.Order_Fyepay}}</text></view>
@@ -98,8 +99,8 @@
 				<form report-submit @submit="form_submit">
 					<button formType="submit" class="submit">提交订单</button>
 				</form>
-
-			</view>		
+			</view>	
+		</view>	
         <popup-layer ref="popupRef" :direction="'top'">
         	<view class="bMbx" v-if="type=='shipping'">
         		<view class="fMbx">运费选择</view>
@@ -188,7 +189,6 @@ export default {
 						cart_buy: '',
 						shipping_id: 0,
 						address_id: '',
-						is_full_reduction: '',// 是否使用满减功能
 						coupon_id: '',
 						use_integral: 0, // 用于抵扣的积分数
 						use_money: 0,  // 余额支付金额
@@ -354,6 +354,7 @@ export default {
 		},
 		// 发票开关
 		faPiaoChange(e) {
+
 			this.faPiaoChecked = e.detail.value;
 			if(this.faPiaoChecked) {
 				this.postData.need_invoice = 1;
@@ -363,25 +364,24 @@ export default {
 		},
 		// 发票抬头输入完成
 		faPiaoConfirm(e) {
+			//#ifdef H5
+			uni.pageScrollTo({
+				scrollTop: 0,
+				duration: 200
+			});
+			//#endif
 			let invoice_info = e.detail.value;
 
 			this.postData.invoice_info = invoice_info;
 		},
 		// 余额支付输入完成
 		confirm_user_money(e){
-			// // 用户可用余额
-			// let user_money = Number(this.userInfo.User_Money);
-			// // 用户输入的金额
-			// // let input_money = Number(e.detail.value);
-			// var input_money = e.detail.value.length == 0 ? '' : e.detail.value;
-			// console.log(user_money,input_money)
-			// if (!check_money_in(input_money)) {
-			//     input_money = input_money.length > 0 ? '' : input_money.slice(0, -1);
-			// };
-			// this.postData.use_money = input_money ? input_money : 0;
-			// console.log(input_money, this.postData)
-
-			// return;
+			//#ifdef H5
+			uni.pageScrollTo({
+				scrollTop: 0,
+				duration: 200
+			});
+			//#endif
 			let input_money = e.detail.value;
 			// let user_money = this.userInfo.User_Money;
 			// 用户的金额和订单金额比较，取较小的那个与用户输入金额比较
@@ -410,6 +410,12 @@ export default {
 		},
 		// 留言
 		remarkConfirm(e) {
+			//#ifdef H5
+			uni.pageScrollTo({
+				scrollTop: 0,
+				duration: 200
+			});
+			//#endif
 			this.postData.order_remark = e.detail.value;
 		},
 		// 优惠券改变
@@ -433,14 +439,6 @@ export default {
 			};
 			this.postData.shipping_id = e.target.value;
 		},
-		// get_User_Info(){
-		// 	get_user_info({User_ID:this.User_ID,Users_ID:this.Users_ID}).then(res => {
-		// 		if(res.errorCode == 0) {
-		// 			this.userInfo = res.data;
-		// 		}
-		// 		this.userLoading = true;
-		// 	})
-		// },
 		changeCoupon(){
 			this.type = 'coupon';
 			if(this.couponlist.length == 0) {return;}

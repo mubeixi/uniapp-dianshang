@@ -147,7 +147,7 @@
 			    <span class="active" @click="goPay(orderInfo.Order_ID)">申请退款</span>
 			</div>
 			<div class="btn-group" v-else-if="orderInfo.Order_Status==3">
-				<span @click="goLogistics(orderInfo.Order_ID)">查看物流</span>
+				<span @click="goLogistics(orderInfo)">查看物流</span>
 				<!-- <span @click="goPay(orderInfo.Order_ID)" style="margin-left: 14rpx;">申请退款退货</span> -->
 			  <span class="active" @click="confirmOrder(orderInfo.Order_ID)">确认收货</span>
 			</div>
@@ -278,10 +278,19 @@
 
 		},
 		methods: {
-			goLogistics(Order_ID){
+			goLogistics(orderInfo){
+				let {
+					shipping_id,
+					express,
+					prod_img
+				} = {
+					shipping_id: orderInfo.Order_ShippingID,
+					express: orderInfo.Order_Shipping.Express,
+					prod_img: orderInfo.prod_list[0].prod_img
+				}
 				//跳转物流追踪
 				uni.navigateTo({
-					url:'../logistics/logistics?Order_ID='+Order_ID
+					url:'../logistics/logistics?shipping_id='+shipping_id + '&express=' + express + '&prod_img=' + prod_img
 				})
 			},
 			//取消订单
@@ -402,6 +411,12 @@
 			},
 			// 用户重新更改了余额
 			moneyInputHandle(e) {
+				//#ifdef H5
+				uni.pageScrollTo({
+					scrollTop: 0,
+					duration: 200
+				});
+				//#endif
 				var money = e.detail.value;
 				this.user_money = Number(money).toFixed(2);
 				if (this.user_money < 0 || isNaN(this.user_money)) {
@@ -442,11 +457,23 @@
 			},
 			// 留言
 			remarkHandle(e) {
+				//#ifdef H5
+				uni.pageScrollTo({
+					scrollTop: 0,
+					duration: 200
+				});
+				//#endif
 				let remark = e.detail.value;
 				this.order_remark = remark;
 			},
 			// 发票信息修改
 			invoiceHandle(e) {
+				//#ifdef H5
+				uni.pageScrollTo({
+					scrollTop: 0,
+					duration: 200
+				});
+				//#endif
 				let invoice = e.detail.value;
 				this.invoice_info = invoice;
 				if(this.openInvoice) {

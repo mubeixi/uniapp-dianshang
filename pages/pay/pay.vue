@@ -279,6 +279,12 @@
 			},
 			// 用户重新更改了余额
 			moneyInputHandle(e) {
+				//#ifdef H5
+				uni.pageScrollTo({
+					scrollTop: 0,
+					duration: 200
+				});
+				//#endif
 				var money = e.detail.value;
 				this.user_money = Number(money).toFixed(2);
 				if (this.user_money < 0 || isNaN(this.user_money)) {
@@ -319,11 +325,23 @@
 			},
 			// 留言
 			remarkHandle(e) {
+				//#ifdef H5
+				uni.pageScrollTo({
+					scrollTop: 0,
+					duration: 200
+				});
+				//#endif
 				let remark = e.detail.value;
 				this.order_remark = remark;
 			},
 			// 发票信息修改
 			invoiceHandle(e) {
+				//#ifdef H5
+				uni.pageScrollTo({
+					scrollTop: 0,
+					duration: 200
+				});
+				//#endif
 				let invoice = e.detail.value;
 				this.invoice_info = invoice;
 				if(this.openInvoice) {
