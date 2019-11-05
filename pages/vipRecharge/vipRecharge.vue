@@ -36,7 +36,7 @@
 
 <script>
 import {get_user_info ,depositBalance,add_template_code,getBalance,traslateShorten} from "../../common/fetch";
-import {mapGetters} from 'vuex';
+import {mapGetters,mapActions} from 'vuex';
 import {error,toast} from "../../common";
 import {
 		ls,
@@ -83,6 +83,7 @@ export default {
 		...mapGetters(['initData'])
 	},
 	methods:{
+		 ...mapActions(['getInitData']),
 		getBalance(){
 			getBalance().then(res=>{
 				this.pro=res.data;
