@@ -65,7 +65,7 @@
 			GoodsComponent,CubeComponent,TabComponent
 		},
 		onLoad() {
-			
+
 			let _self = this;
 
 			let Home_ID = GetQueryByString(location.href,'Home_ID');
@@ -86,7 +86,7 @@
 					}else{
 						reject(false)
 					}
-					
+
 				}).catch(e=>{
 					console.log('获取首页模板信息失败')
 					console.log(e)
@@ -97,6 +97,10 @@
 
 				let templateData = mixinData.plugin;
 				this.system = mixinData.system;
+
+                uni.setNavigationBarTitle({
+                    title:mixinData.system.title
+                })
 
 				//存储页面数据
 				this.templateData = [] //页面数据的二维数组。
