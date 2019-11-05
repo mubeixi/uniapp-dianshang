@@ -6,8 +6,8 @@
 
 		<view class="personTop">
 			<image class="bg" src="https://new401.bafangka.com/static/client/person/top.png"  ></image>
-			<image :class="userInfo.User_ID&&show>=0?'':'onlyMsg'"  class="msg" src="https://new401.bafangka.com/static/client/fenxiao/msg.png" @click="goMsg"></image>
-			<view class="qiandao" v-if="userInfo.User_ID&&show>=0"  :class="signin?'isQian':''" @click="signinMethod">
+			<image :class="userInfo.User_ID&&show>0?'':'onlyMsg'"  class="msg" src="https://new401.bafangka.com/static/client/fenxiao/msg.png" @click="goMsg"></image>
+			<view class="qiandao" v-if="userInfo.User_ID&&show>0"  :class="signin?'isQian':''" @click="signinMethod">
 				<image class="imgg" src="https://new401.bafangka.com/static/client/person/qiandao.png"></image>
 				<view class="viewl">{{signin?'已签到':'签到'}}</view>
 			</view>
@@ -18,7 +18,7 @@
 				<view class="right flex1" :style="{position:!userInfo.User_ID?'relative':'static'}">
 					<view class="font14 loginBtn" v-if="!userInfo.User_ID" plain size="mini" @click="goLogin">登录/注册</view>
 					<view v-if="userInfo.User_ID" @click="goPersonMsg" class="nickName">{{userInfo.User_NickName||(userInfo.User_No?('用户'+userInfo.User_No):'暂无昵称')}}</view>
-					<view v-if="userInfo.User_ID" @click="goVip" class="cart">{{userLevelText}}<image src="https://new401.bafangka.com/static/client/person/rightCart.png" ></image></view>
+					<view v-if="userInfo.User_ID" @click="goVip" class="cart">{{userLevelText()}}<image src="https://new401.bafangka.com/static/client/person/rightCart.png" ></image></view>
 				</view>
 			</view>
 			<view class="nav">
@@ -158,7 +158,7 @@
 <script>
 	import {pageMixin} from "../../common/mixin";
 	import {mapGetters,mapActions} from 'vuex';
-	import { judgeSignin,signin,getOrderNum } from "../../common/fetch.js"
+	import { judgeSignin,signin,getOrderNum,get_user_info} from "../../common/fetch.js"
 	export default {
 		mixins:[pageMixin],
 		data() {
@@ -173,22 +173,31 @@
 		},
 		computed:{
 			...mapGetters(['userInfo']),
-			userLevelText(){
-				if(this.userInfo.User_Level){
-					return this.userInfo.User_Level.level_name
-				}
-				return '普通用户';
-			}
-
 		},
 		onLoad(){
 
 		},
 		onShow() {
+			if(JSON.stringify(this.userInfo) != "{}"){
+				get_user_info().then(res=>{
+					this.setUserInfo(res.data);
+				},err=>{
+					
+				}).catch(e=>{
+					console.log(e)
+				})
+			}
 			this.getOrderNum();
 			this.judgeSignin();
 		},
 		methods:{
+			...mapActions(['setUserInfo']),
+			userLevelText(){
+				if(this.userInfo&&this.userInfo.User_Level){
+					return this.userInfo.User_Level.level_name
+				}
+				return '普通用户';
+			},
 			goIntegral(){
 				if(!this.$fun.checkIsLogin(1))return;
 				uni.navigateTo({

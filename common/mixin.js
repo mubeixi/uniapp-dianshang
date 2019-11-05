@@ -42,7 +42,7 @@ export const WX_JSSDK_INIT = (vm) => new Promise((resolve, reject) => {
 	getJsSign({
 		url:location.href.split('#')[0],
 		//debug : process.env.NODE_ENV === 'production' ? false : true
-	}).then((res) => {
+	},{errtip:false}).then((res) => {
 		if(res.errorCode === 0){
 
 			let config = res.data;
@@ -126,16 +126,8 @@ export const pageMixin = {
 				}else{
 					search = search.replace(/\?/,'?users_id='+users_id+'&')
 				}
-
-				// console.log(search)
-
 				location.search = search
-				// console.log(location.search)
 			}
-
-
-
-
 
 		}else{
 		    uni.showModal({
@@ -155,8 +147,6 @@ export const pageMixin = {
 
 		// #ifdef MP-WEIXIN || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO
 
-
-
 		/*users_id*/
 		users_id = option.users_id
 
@@ -171,14 +161,22 @@ export const pageMixin = {
 
 
 		// #ifdef MP-WEIXIN
-		//如果没有的话，就从小程序的远程配置里面拿吧
-		if(!users_id){
-			let extConfig = wx.getExtConfigSync ? wx.getExtConfigSync() : {};
-			console.log('extConfig info is',extConfig);
-			users_id = extConfig.users_id;
-			ls.set('users_id',users_id);
 
-		}
+		// app lanuch里面已经有了
+		//都拿一下覆盖吧
+		// let extConfig = wx.getExtConfigSync ? wx.getExtConfigSync() : {};
+		// console.log('extConfig info is',extConfig);
+		// users_id = extConfig.users_id;
+		// ls.set('users_id',users_id);
+
+		//如果没有的话，就从小程序的远程配置里面拿吧
+		// if(!users_id){
+		// 	let extConfig = wx.getExtConfigSync ? wx.getExtConfigSync() : {};
+		// 	console.log('extConfig info is',extConfig);
+		// 	users_id = extConfig.users_id;
+		// 	ls.set('users_id',users_id);
+		//
+		// }
 
 		//开发环境下，就手动给一下吧
 		// && process.env.NODE_ENV != 'production'

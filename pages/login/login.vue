@@ -35,6 +35,12 @@
 				<!-- #ifdef MP-WEIXIN -->
 				<div class="otherLogin mp-weixin">
 					<div class="box" style="margin: 0 30px;">
+
+<!--						<div class="inline-block flex1 text-center" v-for="(channel,idx) in channels">-->
+<!--							<i v-if="channel.type=='wx_mp'" @click="weixinlogin(channel)" class="funicon icon-weixin"></i>-->
+<!--							<i v-if="channel.type=='qq'" @click="qqlogin(channel)" style="color: #2eb1f1;font-size: 32px;margin-top: 2px" class="funicon icon-QQ1"></i>-->
+<!--						</div>-->
+
 						 <i @click="weixinlogin" class="funicon icon-weixin font24" ></i>
 						<!--@getuserinfo="weixinlogin" open-type="getUserInfo"-->
 <!--						<button type="primary" class="text-center" open-type="getUserInfo"  @getuserinfo="weixinlogin">登录</button>-->
@@ -155,6 +161,10 @@
 		GetQueryByString
 	} from "../../common/tool";
 
+	// #ifdef APP-PLUS
+	import {bindUserClientId} from "../../common/fetch";
+	// #endif
+
 	// import {
 	//   login,
 	//   // resetPwd,
@@ -168,6 +178,8 @@
 	import {
 		login,getSmsCode
 	} from "../../common/fetch";
+
+	import {ls} from "../../common/tool";
 
 	import {
 		toast,
@@ -531,6 +543,16 @@
 			},
 			loginCall(userData){
 				this.setUserInfo(userData);
+
+				// #ifdef APP-PLUS
+				//注册设备
+				let clientid = ls.get('user_client_id')
+				if(clientid){
+					console.log("注册设备",clientid,userData)
+					bindUserClientId({uuid:clientid,action:'save'},{errtip:false}).then(res=>{console.log('注册设备成功')},err=>{}).catch(error=>{})
+				}
+				// #endif
+
 
 				//toast('登录成功', 'success')
 				setTimeout(function() {

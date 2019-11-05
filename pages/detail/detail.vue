@@ -217,7 +217,9 @@ import { mapGetters, mapActions, Store,mapState } from "vuex";
 import uParse from '@/components/gaoyia-parse/parse.vue'
 import {pageMixin} from "../../common/mixin";
 import {error} from "../../common";
+
 import {add_template_code} from "../../common/fetch";
+
 
 
 export default {
@@ -588,6 +590,9 @@ export default {
 		},
 		// 检查产品是否已收藏
 		checkProdCollected() {
+			if(!this.$fun.checkIsLogin()){
+				return
+			}
 			checkProdCollected({prod_id: this.Products_ID}).then(res => {
 				if(res.errorCode == 0) {
 					this.isCollected = res.data.is_favourite == 1
@@ -622,10 +627,14 @@ export default {
 					this.isLoading=false;
 					this.page=1;
 					this.couponList.splice(i, 1);
+					if(this.couponList.length<=0){
+						this.$refs.popupLayer.close();
+					}
 			}).catch(e=>{
 				console.log(e)
 				this.isLoading=false;
 			})
+			
 			//this.getCoupon();
 		},
 		//获取可领取的优惠券
@@ -703,7 +712,7 @@ export default {
 		skuSub(e){
 
 			console.log(e);
-			
+
 			if(!this.submit_flag) {
 				return ;
 			}
@@ -721,7 +730,7 @@ export default {
 				code: e.detail.formId,
 				times: 3
 			})
-			
+
 			updateCart(this.postData).then(res=>{
 				if(res.errorCode == 0) {
 					if(this.postData.cart_key == 'CartList') {

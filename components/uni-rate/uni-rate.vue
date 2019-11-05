@@ -25,11 +25,11 @@
 </template>
 
 <script>
-import uniIcons from '../uni-icons/uni-icons.vue'
+import UniIcons from '../uni-icons/uni-icons.vue'
 export default {
   name: 'UniRate',
   components: {
-    uniIcons
+    UniIcons
   },
   props: {
     isFill: {
