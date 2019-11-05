@@ -22,7 +22,9 @@
 		mixins:[pageMixin],
 		data() {
 			return {
-				pro:[],
+				pro:{
+					dis_config:''
+				},
 			};
 		},
 		onLoad(){
