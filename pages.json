@@ -468,6 +468,10 @@
             	"navigationBarTitleText": "限时秒杀"
             }
         }
+        ,{
+            "path" : "pages/gift/gift",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

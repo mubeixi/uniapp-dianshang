@@ -74,15 +74,51 @@ export default {
 					obj[i] = this.initData.pay_arr[i]
 				}
 			}
-			console.log(obj)
-			// arr = this.initData.pay_arr.map((item,idx)=>{
-			// 	if(idx!='remainder_pay')return item
-			// })
 			return obj
 		},
 		...mapGetters(['initData'])
 	},
+	created(){
+        let self = this;
+        //自动打开
+        if(this.isOpen){
+          setTimeout(function(){
+              self.show();
+          },100)
+        }
+        //console.log(this.use_money)
+
+        // #ifdef H5
+        if (isWeiXin()) {
+            this.code = GetQueryByString(location.href, 'code');
+            if (this.code) {
+
+                this.pay_type = 'wx_mp';//需要手动设置一下
+                // console.log(this.pay_type)
+                // ls.set('code',this.code)
+                this.self_orderPay(1);
+            }
+        }
+        // #endif
+    },
 	methods:{
+		show(events) {
+            console.log('唤起支付')
+            this.ifshow = true;
+
+            let _open = setTimeout(() => {
+                this.translateValue = 0;
+                _open = null;
+            }, 100)
+
+            let _toggle = setTimeout(() => {
+                this.iftoggle = true;
+                _toggle = null;
+            }, 300);
+
+            //this.translateValue = 0;
+
+        },
 		getBalance(){
 			getBalance().then(res=>{
 				this.pro=res.data;
