@@ -71,7 +71,7 @@ export const getSystemConf = (data,options) => fetch('shopconfig', data,options)
 export const login = (data,options) => {
     //获取推荐人id
     let owner_id = ls.get("owner_id")
-    if(owner_id){
+    if(!owner_id){
       owner_id = 0;
     }
   data = {...data,owner_id}
@@ -90,6 +90,8 @@ export const chooseShopSkin = (data,options) => fetch('choose_shopskin',data,opt
 export const getSkinConfig = (data,options) => fetch('get_shophome',data,options)
 
 export const getSkinPreData = (data,options) => fetch('get_skin_data',data,options)
+
+export const getDiySkinConfig = (data, options) => fetch('get_makeup_home_data', data, options)
 
 //更新商城的配置
 export const setSkinConfig = (data,options) => fetch('update_shophome',data,options)
