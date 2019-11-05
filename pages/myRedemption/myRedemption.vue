@@ -6,7 +6,7 @@
 			<view class="myHa" v-for="(item,index) in prod_list" :key="index">
 				<view class="tops">
 					<view class="views">
-						订单编号：{{item.Gift_ID}}
+						兑换单号：{{item.Orders_ID}}
 					</view>
 					<view class="views times">
 						<image class="imgs" src="https://new401.bafangka.com/static/client/check/time.png"></image>
@@ -85,6 +85,12 @@
 				if(item.Orders_Status == 1) {
 					uni.navigateTo({
 						url: '../jifenCheck/jifenCheck?gift_id=' + item.Gift_ID
+					})
+				};
+				// 已发货物流追踪
+				if(item.Orders_Status == 3) {
+					uni.navigateTo({
+						url: '../logistics/logistics?Order_ID=' + item.Orders_ID
 					})
 				}
 			}

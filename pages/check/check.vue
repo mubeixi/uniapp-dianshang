@@ -90,7 +90,6 @@
             <span style="margin-right:20rpx;">共<span>{{orderInfo.total_count}}</span>件商品</span>
             <span>小计：<span>￥</span><span class="money">{{orderInfo.Order_TotalPrice}}</span></span>
         </view> -->
-		<view style="height: 100rpx;">
 			<view class="order_total">
 				<view class="totalinfo">
 					<view class="info">共{{orderInfo.prod_count}}件商品 总计：<text class="money"><text class="m_icon">￥</text> {{orderInfo.Order_Fyepay}}</text></view>
@@ -100,8 +99,7 @@
 					<button formType="submit" class="submit">提交订单</button>
 				</form>
 
-			</view>
-		</view>
+			</view>		
         <popup-layer ref="popupRef" :direction="'top'">
         	<view class="bMbx" v-if="type=='shipping'">
         		<view class="fMbx">运费选择</view>
@@ -204,7 +202,7 @@ export default {
 					// remindAddress: false, // 提醒添加收货地址
 					submited: false,  // 是否已经提交过，防止重复提交
 					back_address_id: 0,
-
+					gift: '',//有可能是赠品
         }
     },
 	filters: {
@@ -229,6 +227,10 @@ export default {
 		this.postData.cart_key = options.cart_key;
 		if(options.cart_buy){
 			this.postData.cart_buy = options.cart_buy;
+		}
+		// 如果是赠品，
+		if(options.gift) {
+			this.gift = options.gift;
 		}
 	},
 	computed: {
@@ -289,6 +291,11 @@ export default {
 				}
 				createOrder(this.postData).then(res=>{
 					if(res.errorCode == 0) {
+						if(this.gift) {
+							uni.redirectTo({
+								url: '../myGift/myGift'
+							})
+						}
 						// 如果order_totalPrice <= 0  直接跳转 订单列表页
 						if(res.data.Order_Status != 1) {
 							// 直接跳转订单列表页
