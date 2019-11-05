@@ -130,7 +130,8 @@
         ,{
             "path" : "pages/person/person",
             "style" : {
-            	"navigationBarTitleText": "个人中心",
+                "navigationBarTitleText": "个人中心",
+                "navigationStyle":"custom",
 				"app-plus": {
 					"titleNView": false
 				}
