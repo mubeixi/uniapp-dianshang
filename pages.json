@@ -462,6 +462,12 @@
             	"navigationBarTitleText": "我的会员"
             }
         }
+        ,{
+            "path" : "pages/spikeDetail/spikeDetail",
+            "style" : {
+            	"navigationBarTitleText": "限时秒杀"
+            }
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
