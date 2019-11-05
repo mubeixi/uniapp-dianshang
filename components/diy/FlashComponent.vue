@@ -189,11 +189,10 @@
           }
 
           let param = {pageSize: limit};//cate_id.length===0 && limit ? limit : 900}
-          if (cate_id.length>0) {
-            param.Cate_ID = cate_id.join(',')
-          } else {
-            param.Products_ID = list.join(',')
-          }
+
+          //拼团
+          param.flashsale_flag = 1;
+          param.Products_ID = list.join(',')
 
           getProductList(param).then(res => {
             this.goodsList = res.data
