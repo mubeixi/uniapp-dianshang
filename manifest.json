@@ -164,7 +164,7 @@
             "disableHostCheck" : true,
             "proxy" : {
                 "/api" : {
-                    "target" : "http://new401.bafangka.com/api",
+                    "target" : "https://new401.bafangka.com/api",
                     "changeOrigin" : true,
                     "secure" : false,
                     "pathRewrite" : {
