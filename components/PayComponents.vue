@@ -278,7 +278,7 @@ export default {
                     }
                 }
                 let newSearchStr = strArr.join('&');
-                if (newSearchStr.idnexOf('?') === -1) {
+                if (newSearchStr.indexOf('?') === -1) {
                     newSearchStr = '?' + newSearchStr
                 }
 

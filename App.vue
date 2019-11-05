@@ -84,9 +84,7 @@
 
             //头条的需要写入一下
             // #ifdef MP-TOUTIAO
-            if(isDev){
-                tt.setStorageSync('users_id', 'wkbq6nc2kc');
-            }
+            ls.set('users_id',APP_USERS_ID);
             // #endif
 
 			// #ifdef H5
