@@ -170,12 +170,13 @@ export const pageMixin = {
 		// ls.set('users_id',users_id);
 
 		//如果没有的话，就从小程序的远程配置里面拿吧
+		
+		//防止退出登录后拿不到
 		// if(!users_id){
 		// 	let extConfig = wx.getExtConfigSync ? wx.getExtConfigSync() : {};
 		// 	console.log('extConfig info is',extConfig);
 		// 	users_id = extConfig.users_id;
 		// 	ls.set('users_id',users_id);
-		//
 		// }
 
 		//开发环境下，就手动给一下吧

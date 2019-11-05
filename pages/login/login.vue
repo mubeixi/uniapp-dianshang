@@ -36,17 +36,14 @@
 				<div class="otherLogin mp-weixin">
 					<div class="box" style="margin: 0 30px;">
 
-<!--						<div class="inline-block flex1 text-center" v-for="(channel,idx) in channels">-->
-<!--							<i v-if="channel.type=='wx_mp'" @click="weixinlogin(channel)" class="funicon icon-weixin"></i>-->
-<!--							<i v-if="channel.type=='qq'" @click="qqlogin(channel)" style="color: #2eb1f1;font-size: 32px;margin-top: 2px" class="funicon icon-QQ1"></i>-->
-<!--						</div>-->
+						<div class="inline-block flex1 text-center" v-for="(channel,idx) in channels">
 
-						 <i @click="weixinlogin" class="funicon icon-weixin font24" ></i>
-						<!--@getuserinfo="weixinlogin" open-type="getUserInfo"-->
-<!--						<button type="primary" class="text-center" open-type="getUserInfo"  @getuserinfo="weixinlogin">登录</button>-->
-<!--						<div class="line10"></div>-->
-<!--						<button class="text-center" @click="toHome" >暂不登录</button>-->
-						<!-- <div class="inline-block flex1 text-center" @click="qqlogin"><i style="color: #2eb1f1;font-size: 32px;margin-top: 2px" class="funicon icon-QQ1" ></i></div> -->
+							<button v-if="channel.type=='wx_lp'" size="mini" type="primary" class="text-center" open-type="getUserInfo"  @getuserinfo="weixinlogin">登录</button>
+							<!-- <i v-if="channel.type=='wx_lp'" @click="weixinlogin" class="funicon icon-weixin font24" ></i> -->
+							<!-- <i v-if="channel.type=='wx_mp'" @click="weixinlogin(channel)" class="funicon icon-weixin"></i>
+							<i v-if="channel.type=='qq'" @click="qqlogin(channel)" style="color: #2eb1f1;font-size: 32px;margin-top: 2px" class="funicon icon-QQ1"></i> -->
+						</div>
+
 					</div>
 				</div>
 				<!-- #endif -->
@@ -454,10 +451,12 @@
 								// 可以通过 wx.getSetting 先查询一下用户是否授权了 "scope.record" 这个 scope
 								wx.getSetting({
 									success(res) {
-										if (res.authSetting['scope.userInfo']) {
+										if (!res.authSetting['scope.userInfo']) {
 											wx.authorize({
 												scope: 'scope.userInfo',
-												success () {
+												success (res) {
+													console.log(res)
+
 
 
 													let userInfoData = null;
@@ -478,16 +477,36 @@
 													})
 
 												},
-												fail(){
-													error('请点击授权登录')
+												fail(err){
+													console.log(err)
+													error('请点击授权登录1')
 												}
 											})
 										}else{
-											error('请点击授权登录')
+
+											let userInfoData = null;
+
+											wx.getUserInfo({
+												lang:'zh_CN',
+												success:function (val) {
+													console.log(val	)
+													userInfoData = val;
+
+													const lp_raw_data = {...userInfoData.userInfo,...result.data}
+													console.log(lp_raw_data)
+
+													login({code:CODE,login_method:'wx_lp',lp_raw_data:JSON.stringify(lp_raw_data)}).then(ret=>{
+														_self.loginCall(ret.data)
+													}).catch(err=>{})
+												}
+											})
+											//console.log(res)
+											//error('请点击授权登录2')
 										}
 									}
 								})
 							}
+
 						}).catch(e=>{})
 					}
 				});
