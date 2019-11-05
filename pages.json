@@ -463,6 +463,14 @@
             	"navigationBarTitleText": "我的会员"
             }
         }
+        ,{
+            "path" : "pages/page/page",
+            "style" : {
+				"style" : {
+					"navigationBarTitleText": "自定义"
+				}
+			}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
