@@ -2,7 +2,6 @@
   <div style="position:relative;background-color:#f8f8f8">
     <div class="top">
         <img class="myImg" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADoAAAA6CAYAAADhu0ooAAADb0lEQVRogeWbz0sbQRTHv2CoNyE91lO9hYKI8V4RT578BWI8SJSsJz2JB5EWo7Q2oERaU2kToQkVstAQBP23aptf+/v1sDMljVo12Zld3C+8S4hv5iMvM2/evAHEKALgBYARABMApgEkACQBpJgl2WfT7Dsj7G8igubkmZ4BiAGYArAKQOnSVpmPGPMZGEUBjANYQfdwd9kK8x2VxHKrBgBMwg1DrwE7LcXGGpBCxtQHII7ewrOXsI6zOQhVFMCcD4CdNgeB4fwS7krpNyS3JJuTp3oFOb/Fx1qKzc0TjQYA6D4b7RVyOAAQD7XhbiGHEMxw/V8YDz0WMopgLTwPtSQesRr3IRhbSLc2hwfus3E/JjgzM/OmXq//JKarq6uLHvzF74McgA8Zz8LCwm6j0fjFIavVaqVHn6u4J12clA25vLy832q1aozRUVVV9cj35F2QUUheZdfW1t5pmtbgkKVS6dxD/ykAz28DfS0TcmNj44Ou600iIsdxnEKhUBQwzngnZD/EnCdvtc3NzUPDMDQGaZ+enp4JGmuFsf1VTBbk9vZ21jRNnUFax8fHXwWPGWsHnZIBmU6nP1qWZRAR2bZtZjKZzxLGneKQEUjYUg4ODnK2bZtERJZlGXt7e59k/HMZWwRwK29CBzs6Ovpi27ZFRGSapr6zs5OVBMltEHDLjMIGOTk5Kdi2bRMRGYahbW1tHUqGVBgjJkQNUCgUvjmOYxMR6breWl9fz/gAqTBGTItwXiwWvzuO4xARaZrWUBTlvU+QCmNEwmvH5XK5TEQOEVGr1aonk8l9HyEVxuhtolCpVH7w5LzZbP5OJBJpnyEVuOdU7/Lby8vLCw5Zr9ev5+fn3wYAUmGMYkBrtdr17OxsoEA9Dd1qtVppD93FxcXdAIAmAQGLkaqqKl+MNE2rBWUxErK9lEql86BtL8IShnw+X+SwQUgYhKaAuVzujGdHfqeAwpP6bDYbiKQ+NMc0ICQHbyBEpZTQFMcAn8ud+XxeSrkTcIu9vhWwHceRVsAGQnIlAYTokgl4GteGY/dBAiG6CAZCcrXPFYpmDa5QtN9whaKhiisULXJcoWh65ApFGytXH9wN2a/G5DFIaExu15NvNe+UjMcDd55C/FA/vH8OcuPQHDRF4Fbe2h/4LOHmA58l/PvAZxCCHvj8AdgT4IeWfoOhAAAAAElFTkSuQmCC" @click="goBack" >
-        <img class="myImg cart" src="data:image/png;base64,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"  >
     </div>
 
 
@@ -22,30 +21,32 @@
     <!-- 产品信息描述 -->
     <div class="section1">
         <div class="leftss">
-            <span class="pricef">¥</span>
-            <span class="prices">{{product.Products_PriceX}}</span>
-            <span class="pricet">¥ {{product.Products_PriceY}}</span>
-
+			秒杀
         </div>
         <div class="rightss">
             <div class="countdown">
-               <span class="spans">{{countdown.d}}</span>天<span class="spans">{{countdown.h}}</span>小时<span class="spans">{{countdown.m}}</span>分<span class="spans">{{countdown.s}}</span>后结束
-            </div>
-            <div class="haha">
-                已团{{product.pintuan_flag}}件  {{product.pintuan_people}}人团
+               距开始还有:<span class="spans">{{countdown.d}}</span>天<span class="spans">{{countdown.h}}</span>时<span class="spans">{{countdown.m}}</span>分<span class="spans">{{countdown.s}}</span>秒
             </div>
         </div>
     </div>
-    <!-- 领券 -->
     <div class="section2" >
         <div class="titles">
             <div class="title">{{product.Products_Name}}</div>
-			<span class="share" @click="showTick" data-type="share">分享此产品</span>
-        </div>
-        <div class="titlet">
-           {{product.Products_BriefDescription}}
         </div>
     </div>
+	<view class="prices">
+		<view class="price">
+			<text class="leftPrice">
+				秒杀价<text class="rmb">¥<text class="priceX">89.90</text></text>
+			</text>
+			<text class="rightPrice">
+				￥169.90
+			</text>
+		</view>
+		<view class="btn">
+			库存160
+		</view>
+	</view>
     <!-- 包邮等信息 -->
     <div class="section3">
         <span>
@@ -68,24 +69,11 @@
     <!-- 小伙伴在拼团 -->
     <div class="pintuan">
         <div class="pinTitle">
-            小伙伴在开团
+            活动介绍
         </div>
-        <div class="pinCenter" v-for="(team,idx) in teamList">
-            <div class="image">
-                <image :src="team.User_HeadImg" class="img" />
-            </div>
-            <div class="info">
-                <div class="nick">
-                    {{team.User_NickName}}
-                </div>
-                <div class="message">
-                    还差{{product.pintuan_people-team.teamnum}}人，剩余{{team.addtime|endtime}}
-                </div>
-            </div>
-            <div class="cantuan" @click="toJoinGroup(team.id,team)">
-                去参团
-            </div>
-        </div>
+		<div class="mbxtext">
+			此处为活动介绍，请输入介绍相关文案，此处为活动介绍，请输入介绍相关文案此处为活动介绍，请输入介绍相关文案，此处为活动介绍，请输入介绍相关文案此处为活动介绍，请输入介绍相关文案，此处为活动介绍，请输入介绍相关文案此处为活动介绍，请输入介绍相关文案
+		</div>
     </div>
     <!-- 评价 -->
     <!-- 评价 -->
@@ -172,7 +160,7 @@
     	    </div>
     	    <div class="t_content" v-for="(item,i) of couponList" :key="i">
     	        <div class="t_left">
-    	            <div class="t_left_t"><span>￥</span><span class="money">{{item.Coupon_Cash}}</span><span>{{item.Coupon_Subject}}</span></div>
+    	            <div class="t_left_t"><span>￥</span><span class="money">{{item.Coupon_Cash}}</span><span>{{item.Coupon_Title}}</span></div>
     	            <div class="t_left_c">{{item.Coupon_Description}}</div>
     	            <div class="t_left_b">有效期{{item.Coupon_StartTime}}-{{item.Coupon_EndTime}}</div>
     	        </div>
@@ -223,6 +211,10 @@
 		</form>
 
 	</popupLayer>
+	<div class="errorMsg">
+		<image src="/static/error.png" class="errImg"></image>
+		活动尚未开始
+	</div>
 	<div class="fixed">
 		<div class="leftss">
 			<div class="first" @click="goHome">
@@ -244,29 +236,16 @@
 		<div class="rightss">
 			<form class="form" report-submit @submit="myPay">
 			<div class="dan bTitle">
-				<div class="danLeft">
-					<span class="bF">¥</span><span class="bS">{{product.Products_PriceX}}</span>
-				</div>
 				<button formType="submit" class="danRight">
-					单独购买
+					零售价购买
 				</button>
-
-
 			</div>
 			</form>
 			<form  class="form" report-submit @submit="myPin">
 			<div class="tuan bTitle">
-				<div class="danLeft">
-					<span class="bF">¥</span><span class="bS">{{product.pintuan_pricex}}</span>
-				</div>
-
-
-			<button formType="submit" class="danRight">
-				一键开团
-			</button>
-
-
-
+				<button formType="submit" class="danRight">
+					立即预约
+				</button>
 			</div>
 			</form>
 		</div>
@@ -1150,7 +1129,7 @@ export default {
     }
     /* 产品描述部分 start */
     .section1 {
-       height: 100upx;
+       height: 70rpx;
        background-color: #fff;
     }
     .price {
@@ -1195,7 +1174,6 @@ export default {
         // display: flex;
         // align-items: center;
         // justify-content: space-between;
-        border-bottom: 1px solid #ece8e8;
         background-color: #fff;
     }
     .section2 .btn {
@@ -1221,7 +1199,8 @@ export default {
         flex-wrap: wrap;
         font-size: 22upx;
         padding: 15px 10px;
-        border-bottom: 17px solid #f8f8f8;
+		padding-top: 35rpx;
+        border-bottom: 20rpx solid #f8f8f8;
         justify-content: space-around;
         background-color: #fff;
     }
@@ -1328,7 +1307,8 @@ export default {
         background-color: #F43131;
         color: #fff;
         .leftss{
-            font-size: 0;
+            font-size: 36rpx;
+			color: #FFFFFF;
             .pricef{
                 font-size: 36upx;
             }
@@ -1347,19 +1327,20 @@ export default {
         .rightss{
 			.countdown{
 				color:#ddd;
-				font-size: 24upx;
-				line-height: 32upx;
+				font-size: 24rpx;
+				line-height: 37rpx;
 				overflow: hidden;
-				margin-bottom: 4px;
-
+				height: 37rpx;
 				.spans{
 					margin: 0 2px;
 					padding: 0 2px;
-					//width:23px;
-					height:32upx;
+					height:37rpx;
+					width: 37rpx;
 					line-height: 32upx;
 					text-align: center;
-					background:linear-gradient(0deg,rgba(12,12,12,1) 0%,rgba(197,195,195,1) 100%);
+					background:#FFFFFF;
+					color: #F43131;
+					font-size: 26rpx;
 					box-shadow:0px 1px 1px 0px rgba(4,0,0,0.5), 0px 1px 1px 0px rgba(255,255,255,0.65);
 					display: inline-block;
 
@@ -1373,13 +1354,14 @@ export default {
     }
     .titles{
 		position: relative;
-		padding-right: 150upx;
         .title{
 			font-size:28upx;
 			font-family:PingFang SC;
 			font-weight:bold;
 			color:rgba(51,51,51,1);
-			line-height:22px;
+			line-height:34rpx;
+			height: 68rpx;
+			overflow: hidden;
 		}
 
 		.share {
@@ -1407,62 +1389,26 @@ export default {
         line-height:20px;
     }
     .pintuan{
-        margin-bottom: 17px;
+        margin-bottom: 20rpx;
         background-color: #fff;
+		padding:30rpx 27rpx  30rpx 19rpx;
         .pinTitle{
-            font-size:30upx;
+            font-size:28rpx;
             font-family:PingFang SC;
             font-weight:500;
             color:rgba(51,51,51,1);
             line-height:20px;
-            padding:26upx;
         }
-        .pinCenter{
-                padding: 15upx 25upx;
-                display: flex;
-                align-items: center;
-                .image{
-                    width: 100upx;
-                    height: 100upx;
-                    border-radius: 50%;
-                    overflow: hidden;
-                    .img{
-                        width: 100%;
-                        height: 100%;
-                    }
-                }
-                .info{
-					margin-left: 21upx;
-                    .nick{
-                        font-size:26upx;
-                        font-family:PingFang SC;
-                        font-weight:500;
-                        color:rgba(51,51,51,1);
-                        line-height:20px;
-                    }
-                    .message{
-                        font-size:24upx;
-                        font-family:PingFang SC;
-                        font-weight:500;
-                        color:rgba(110,110,110,1);
-                        line-height:20px;
-                    }
-                }
-                .cantuan{
-                    width:119upx;
-                    height:48upx;
-                    border:1px solid rgba(244,49,49,1);
-                    border-radius:3px;
-                    color:  rgba(244,49,49,1);
-                    text-align: center;
-                    line-height: 48upx;
-                    font-size: 26upx;
-                    margin-left: auto;
-                }
-        }
+        .mbxtext{
+			margin-top: 21rpx;
+			font-size: 22rpx;
+			color: #888888;
+			line-height: 36rpx;
+		}
+		
     }
 	.fixed{
-		height: 98upx;
+		height: 98rpx;
 		display: flex;
 		position: fixed;
 		bottom: 0;
@@ -1526,9 +1472,7 @@ export default {
 
 				}
 				.danRight{
-					font-size: 26upx;
-					/*margin-top: 8upx;*/
-					/*padding-bottom: 10upx;*/
+					font-size: 30upx;
 					border-radius: 0;
 					border:none !important;
 					color: white;
@@ -1662,5 +1606,63 @@ export default {
 	.skuCheck{
 		color: #fff !important;
 		background-color: #ff4200 !important;
+	}
+	.prices{
+		width: 750rpx;
+		box-sizing: border-box;
+		height: 50rpx;
+		padding-left: 20rpx;
+		padding-right: 21rpx;
+		display: flex;
+		justify-content: space-between;
+		background-color: #FFFFFF;
+		.btn{
+			font-size: 22rpx;
+			color: #666666;
+			height: 50rpx;
+			line-height: 50rpx;
+		}
+		.price{
+			height: 27rpx;
+			margin-top: 0rpx !important;
+				.leftPrice{
+					font-size: 22rpx;
+					color: #777777;
+					.rmb{
+						color: #F43131;
+						font-size: 24rpx;
+						margin-left: 5rpx;
+						margin-right: 5rpx;
+					}
+					.priceX{
+						font-size: 30rpx;
+						color: #F43131;
+						font-weight: bold;
+					}
+				}
+				.rightPrice{
+					font-size: 24rpx;
+					color: #B4B4B4;
+					text-decoration:line-through;
+					margin-left: 23rpx;
+				}
+		}
+	}
+	.errorMsg{
+		width: 750rpx;
+		height: 44rpx;
+		background-color: #F7F6BD;
+		display: flex;
+		align-items: center;
+		padding-left: 21rpx;
+		position: fixed;
+		bottom: 98rpx;
+		color: #F43131;
+		font-size: 20rpx;
+		.errImg{
+			width: 19rpx;
+			height: 19rpx;
+			margin-right: 12rpx;
+		}
 	}
 </style>

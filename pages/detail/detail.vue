@@ -138,8 +138,8 @@
 			<scroll-view class="ticks" v-if="type=='ticks'" scroll-y=true  @scrolltolower="goNextPage">
 			    <div class="t_content" v-for="(item,i) of couponList" :key="i">
 			        <div class="t_left">
-			            <div class="t_left_t"><span>￥</span><span class="money">{{item.Coupon_Cash}}</span><span>店铺优惠券</span></div>
-			            <div class="t_left_c">{{item.Coupon_Title}}</div>
+			            <div class="t_left_t"><span>￥</span><span class="money">{{item.Coupon_Cash}}</span><span>店铺优惠券<text v-if="item.Coupon_UseArea==0">(实体店)</text></span></div>
+			            <div class="t_left_c">{{item.Coupon_Subject}}</div>
 			            <div class="t_left_b">有效期{{item.Coupon_StartTime}}-{{item.Coupon_EndTime}}</div>
 			        </div>
 			        <div class="t_right" @click="getMyCoupon(item.Coupon_ID,i)">立即领取</div>
