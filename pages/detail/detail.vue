@@ -532,7 +532,7 @@ export default {
 			updateCart(this.postData).then(res=>{
 				if(res.errorCode == 0) {
 					uni.navigateTo({
-						url: '../check/check?cart_key=DirectBuy'
+						url: '../check/check?cart_key=DirectBuy&gift=gift'
 					})
 				}else {
 					uni.showToast({
@@ -547,13 +547,13 @@ export default {
 		judgeReceiveGift(){
 			judgeReceiveGift({gift: this.gift}).then(res=>{
 				console.log(res)
-				if(res.data.errorCode ==0){
+				if(res.errorCode ==0){
 					console.log('22')
 					let arr = res.data.skuval;
 					this.gift_atr_str = res.data.skuval;
 					this.skuval = arr.split(';');
 
-				}else if(res.data.errorCode == 1) {
+				}else if(res.errorCode == 1) {
 					console.log('res')
 					uni.showModal({
 						title: res.data.msg,
@@ -755,7 +755,7 @@ export default {
 		},
 		addNum(){
 			if (this.postData.qty < this.postData.count) {
-				this.postData.qty += 1;
+				this.postData.qty = Number(this.postData.qty) + 1;
 			}else {
 			    uni.showToast({
 					title: '购买数量不能大于库存量',
@@ -1347,6 +1347,10 @@ export default {
 					height: 80rpx;
 					overflow: hidden;
 					margin-top: 20rpx;
+					text-overflow: ellipsis;
+					display: -webkit-box;
+					-webkit-line-clamp: 2;
+					-webkit-box-orient: vertical;
 				}
 				.addInfo{
 					width: 450rpx;

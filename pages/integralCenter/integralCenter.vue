@@ -147,7 +147,6 @@
 						title: res.msg,
 						duration:1500
 					});
-					this.isShow = false;
 					setTimeout(()=>{
 						this.isClicked = false;
 						this.setUserInfo({});
@@ -163,6 +162,7 @@
 						icon: 'none'
 					})
 				});
+				this.isShow = false;
 			},
 			// 重置，防止重复
 			reset(){
