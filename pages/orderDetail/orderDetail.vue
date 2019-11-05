@@ -147,7 +147,7 @@
 			    <span class="active" @click="goPay(orderInfo.Order_ID)">申请退款</span>
 			</div>
 			<div class="btn-group" v-else-if="orderInfo.Order_Status==3">
-				<span @click="goLogistics(orderInfo.Order_ID)">查看物流</span>
+				<span @click="goLogistics(orderInfo)">查看物流</span>
 				<!-- <span @click="goPay(orderInfo.Order_ID)" style="margin-left: 14rpx;">申请退款退货</span> -->
 			  <span class="active" @click="confirmOrder(orderInfo.Order_ID)">确认收货</span>
 			</div>
@@ -278,10 +278,19 @@
 
 		},
 		methods: {
-			goLogistics(Order_ID){
+			goLogistics(orderInfo){
+				let {
+					shipping_id,
+					express,
+					prod_img
+				} = {
+					shipping_id: orderInfo.Order_ShippingID,
+					express: orderInfo.Order_Shipping.Express,
+					prod_img: orderInfo.prod_list[0].prod_img
+				}
 				//跳转物流追踪
 				uni.navigateTo({
-					url:'../logistics/logistics?Order_ID='+Order_ID
+					url:'../logistics/logistics?shipping_id='+shipping_id + '&express=' + express + '&prod_img=' + prod_img
 				})
 			},
 			//取消订单

@@ -92,12 +92,19 @@
 		data(){
 			return {
 				height:1000,//获取手机屏幕高度
-				Order_ID:0,
 				pro:[],
 			};
 		},
 		onLoad(options) {
-			this.Order_ID=options.Order_ID;
+			console.log(options)
+			let {
+				express,
+				prod_img,
+				shipping_id
+			} = options ;
+			this.express = express;
+			this.prod_img = prod_img;
+			this.shipping_id = shipping_id;
 			let that=this;
 			uni.getSystemInfo({
 			    success: function (res) {
@@ -111,7 +118,9 @@
 		methods:{
 			getOrderExpress(){
 				let data={
-					Order_ID:this.Order_ID
+					shipping_id: this.shipping_id,
+					express: this.express,
+					prod_img: this.prod_img
 				}
 				getOrderExpress(data).then(res=>{
 					this.pro=res.data;
@@ -167,12 +176,10 @@
 	padding: 45rpx 0rpx 0rpx 42rpx;
 	margin: 0 auto;
 	.center{
-		height: 136rpx;
 		width: 626rpx;
 		display: flex;
 		.lefts{
 			width: 32rpx;
-			height: 136rpx;
 			position: relative;
 			.tops{
 				width: 32rpx;
@@ -191,7 +198,7 @@
 			}
 			.bottoms{
 				width: 4rpx;
-				height: 104rpx;
+				height: 100%;
 				background-color: #ECECEC;
 				position: absolute;
 				top: 32rpx;
