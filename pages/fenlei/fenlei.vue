@@ -53,15 +53,15 @@ export default {
 		   window.groupStam = setInterval(this.stampCount,1000)
 	    },
 		stampCount(){
-			let rt  = {};
-			let computedStamp = getGroupCountdown()
-			if(computedStamp){
-				rt = computedStamp
-			}else{
-				//如果不对，就清空
-				window.clearInterval(window.groupStam)
-			}
-			this.countdown = rt
+				let rt  = {};
+				let computedStamp = getGroupCountdown()
+				if(computedStamp){
+					rt = computedStamp
+				}else{
+					//如果不对，就清空
+					window.clearInterval(window.groupStam)
+				}
+				this.countdown = rt
 		}
   }
 }
