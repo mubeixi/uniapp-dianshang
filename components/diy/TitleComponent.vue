@@ -19,7 +19,7 @@
 
   const styleDefault = {
     color: '#333',
-    bgColor: '#fff',
+    bgColor: '',
     paddingc:10,
     padding:10,
     fontSize:16,
