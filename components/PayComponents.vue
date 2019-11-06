@@ -271,12 +271,15 @@ export default {
             let strArr = []
             if (search.indexOf('code') != -1) {
                 let tempArr = search.split('&');
-                for (var i in tempArr) {
+                for (var i of tempArr) {
 
-                    if (i.indexOf('code') === -1) {
-                        strArr.push(tempArr[i])
+                    console.log(i,i.indexOf('code') === -1, i.indexOf('state') === -1,i.indexOf('appid')===-1)
+                    //过滤多余的参数
+                    if (i.indexOf('code') === -1 && i.indexOf('state') === -1 && i.indexOf('appid')===-1) {
+                        strArr.push(i)
                     }
                 }
+                console.log(strArr);
                 let newSearchStr = strArr.join('&');
                 if (newSearchStr.indexOf('?') === -1) {
                     newSearchStr = '?' + newSearchStr
@@ -398,13 +401,16 @@ export default {
                 }
 
                 let isHasCode = this.code || GetQueryByString('code');
-                if (isHasCode) {
+                //已经用过的code不再用
+                if (isHasCode &&isHasCode!=ls.get('isUseCode')) {
 
                     //拿到之前的配置
                     payConf = { ...ls.get('temp_order_info'),
                         code: isHasCode,
                         pay_type: 'wx_mp'
                     }
+
+                    ls.set("isUseCode",isHasCode);
 
                 } else {
                     //存上临时的数据
