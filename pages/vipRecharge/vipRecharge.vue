@@ -129,6 +129,10 @@ export default {
 				};
 			}
 			this.pay_type = this.payChannel;
+			payConf = {
+				pay_type: this.payChannel,
+				money: this.money
+			};
 			if(this.pay_type === 'unionpay'){
 				error('即将上线')
 				return;
