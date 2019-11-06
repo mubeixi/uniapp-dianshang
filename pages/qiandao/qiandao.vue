@@ -17,7 +17,7 @@
 
 		<view class="jilu">
 			<view class="chang" v-for="(item,index) in pro.continue_" :key="index">
-				<image class="image" v-if="item<pro.continue" src="https://new401.bafangka.com/static/client/task/checked.png" ></image>
+				<image class="image" v-if="index<pro.continue" src="https://new401.bafangka.com/static/client/task/checked.png" ></image>
 				<image class="image"  v-else src="https://new401.bafangka.com/static/client/task/unchecked.png" ></image>
 				<view class="view">
 					第{{index+1}}天

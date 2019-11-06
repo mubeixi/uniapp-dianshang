@@ -8,6 +8,11 @@
               {{goods.config.attr.tag.style=='hot'?'hot':'new'}}
             </div>
             <div v-show="goods.config.attr.tag.show" v-else class="tag img"><img :src="goods.config.attr.tag.img|domain"/></div>
+
+            <div v-if="goods.config.style!=3" class="stamp">距{{item.countdown.is_start?'结束 ':'开始 '}}<span class="countdown_tag">{{item.countdown.d}}</span>天<span class="countdown_tag">{{item.countdown.h}}</span>时<span class="countdown_tag">{{item.countdown.m}}</span>分<span class="countdown_tag">{{item.countdown.s}}</span>秒<span class="count" v-if="goods.config.style==1">秒杀库存{{item.Products_Count}}</span></div>
+
+            <span class="count" v-if="goods.config.style==3">库存{{item.Products_Count}}</span>
+
           </div>
           <div class="info" :style="{width:goods.config.style==2?itemw:''}" :class="{empyInfo:isEmpeyInfo}">
             <div class="left">
@@ -15,12 +20,15 @@
               <div v-show="goods.config.attr.desc.show" class="font12 graytext desc">
                 {{item.Products_BriefDescription||'暂无介绍'}}
               </div>
-              <div v-show="goods.config.attr.price.show" class="price"><span class="sign">￥</span>{{item.Products_PriceX}}
+              <div v-show="goods.config.attr.price.show" class="price"><span class="graytext2 font12">秒杀价 </span><span class="sign">￥</span><span style="font-weight: 600">{{item.Products_PriceX}}</span><span class="graytext2 market-price font12"> ￥{{item.Products_PriceX}} </span>
               </div>
             </div>
-<!--            <div class="stamp">距离开始还有</div>-->
-            <div v-show="goods.config.attr.buybtn.show" class="buybtn" :class="'theme'+goods.config.attr.buybtn.style">
-              {{goods.config.attr.buybtn.text||'购买'}}
+            <div v-if="goods.config.style==3" class="stamp">距{{item.countdown.is_start?'结束 ':'开始 '}}<span class="countdown_tag">{{item.countdown.d}}</span>天<span class="countdown_tag">{{item.countdown.h}}</span>时<span class="countdown_tag">{{item.countdown.m}}</span>分<span class="countdown_tag">{{item.countdown.s}}</span>秒</div>
+            <div>
+              <span class="count" v-if="goods.config.style==2">库存{{item.Products_Count}}</span>
+              <div v-show="goods.config.attr.buybtn.show" class="buybtn" :class="'theme'+goods.config.attr.buybtn.style">
+                {{item.countdown.is_start?'立即购买':'立即预订'}}
+              </div>
             </div>
           </div>
         </li>
@@ -33,7 +41,9 @@
   import {getProductList} from "../../common/fetch";
   import {domain} from "../../common/filter";
   import {goProductDetail} from "../../common";
-  import {getGroupCountdown} from "../../common/tool";
+  import {getCountdownFunc} from "../../common/tool";
+
+
 
   export default {
     props: {
@@ -179,6 +189,8 @@
         deep: true,
         handler(val) {
 
+          let _self = this;
+
           if (!val) return;
           let {list = [], cate_id=[], limit} = val;
 
@@ -199,6 +211,7 @@
           getProductList(param).then(res => {
             this.goodsList = res.data
 
+
           })
 
         }
@@ -207,6 +220,38 @@
     },
     components: {},
     methods: {
+      stampFunc(){
+
+
+        for(var item of this.goodsList){
+          // let start_timeStamp = item.pintuan_start_time,end_timeStamp = item.pintuan_end_time;
+          let data = getCountdownFunc({start_timeStamp:item.pintuan_start_time,end_timeStamp:item.pintuan_end_time})
+          this.$set(item,'countdown',data);
+        }
+        // let start_timeStamp = item.pintuan_start_time,end_timeStamp = item.pintuan_end_time;
+        //
+        // let data = getCountdownFunc({start_timeStamp,end_timeStamp}),rt = null;
+        // console.log(data)
+        // switch (type) {
+        //   case 'd':
+        //     rt = data.d;
+        //     break;
+        //   case 'h':
+        //     rt = data.h;
+        //     break;
+        //   case 'm':
+        //     rt = data.m;
+        //     break;
+        //   case 's':
+        //     rt = data.s;
+        //     break;
+        //   case 'is_start':
+        //     rt = data.is_start?'结束':'开始';
+        //     break;
+        // }
+
+        // return rt;
+      },
       goProductDetail,
       goDetail(goods){
         console.log(goods)
@@ -286,6 +331,9 @@
       console.log(this.fullWidth)
 
       this.goods = this.confData;
+
+      setInterval(this.stampFunc,1000)
+
     }
 
   }
@@ -385,6 +433,76 @@
       }
     }
   }
+
+  .market-price{
+    text-decoration: line-through;
+    padding-left: 10px;
+  }
+
+
+  //在cover里面的
+  .cover{
+    .stamp{
+      font-size: 12px;
+      background: rgba(0,0,0,.5);
+      padding: 6px;
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      color: #fff;
+      .countdown_tag{
+        background: #F43131;
+        color: white;
+        padding: 0 2px;
+      }
+      .count{
+        float: right;
+      }
+    }
+  }
+
+  .style3{
+    .count{
+      font-size: 12px;
+      background: rgba(0,0,0,.5);
+      padding: 2px;
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      color: #fff;
+
+    }
+  }
+
+  .style2{
+    .count{
+      font-size: 12px;
+      color: #999;
+      /*background: rgba(0,0,0,.5);*/
+      /*padding: 2px;*/
+      /*position: absolute;*/
+      /*right: 0;*/
+      /*bottom: 0;*/
+      /*color: #fff;*/
+
+    }
+  }
+
+  //在info里面的
+  .info{
+    .stamp{
+      font-size: 12px;
+      margin: 6px 0 10px;
+      color: #666;
+      .countdown_tag{
+        background: #F43131;
+        color: white;
+        padding: 0 2px;
+      }
+    }
+  }
+
 
   .round {
     border-radius: 2%;

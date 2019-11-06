@@ -427,3 +427,40 @@ export const getGroupCountdown = ({end_timeStamp = 1571221631,current = (new Dat
 //     return {h,m,s}
 //
 // }
+
+
+
+export const getCountdownFunc = ({start_timeStamp,end_timeStamp,current = (new Date()).getTime()} = {}) => {
+
+    let {d=0,h=0,m=0,s=0} = {};
+
+
+    //时间戳格式转换
+    current = parseInt(current/1000)
+
+    // console.log(end_timeStamp,current)
+    let countTime = 0,is_start = false;
+
+
+    //还没开始
+    if(start_timeStamp>current && end_timeStamp>current){
+        console.log('还没开始')
+        countTime = start_timeStamp-current;
+
+    }else if(end_timeStamp>current && start_timeStamp<current){
+        //还在进行中
+        //console.log('还在进行中')
+        is_start = true;
+        countTime = end_timeStamp-current;
+    }else{
+        console.warn('活动信息无效');
+        // throw "活动信息无效";
+    }
+
+    d = parseInt(countTime/(60*60*24))
+    h = parseInt((countTime-d*60*60*24)/(60*60))
+    m = parseInt((countTime-d*60*60*24-h*60*60)/60)
+    s = countTime-d*60*60*24-h*60*60-m*60
+
+    return {d,h,m,s,is_start}
+}

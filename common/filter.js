@@ -24,6 +24,10 @@ export const formatTime = function(date) {
   const second = new Date(date*1000).getSeconds()
   return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':')
 }
+
+
+
+
 export default [
   {
     name: 'num2px',
@@ -31,6 +35,39 @@ export default [
       if (val.indexOf('px') == -1) return `${val}px`;
       return val;
     },
+  },
+  {
+    name:'formStampTime',
+    //开始和结束的时间戳
+    /**
+     *
+     * @param startTimeStamp
+     * @param endTimeStamp
+     * @param type 需要返回的对象
+     */
+    methods:(start_timeStamp,end_timeStamp,type)=>{
+
+      let data = getCountdownFunc({start_timeStamp,end_timeStamp}),rt = null;
+      console.log(data)
+      switch (type) {
+        case 'd':
+          rt = data.d;
+          break;
+        case 'h':
+          rt = data.h;
+          break;
+        case 'm':
+          rt = data.m;
+          break;
+        case 's':
+          rt = data.s;
+          break;
+        case 'is_start':
+          rt = data.is_start?'结束':'开始';
+          break;
+      }
+      return rt;
+    }
   },
   {
     name:'cutstr',
