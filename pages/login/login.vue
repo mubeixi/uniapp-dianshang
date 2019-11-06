@@ -585,14 +585,14 @@
 					if(pages.length<2){
 						// #ifdef H5
 						//hack navigateBack无效
-						// history.back();
-						// return;
+						history.back();
+						return;
 						// #endif
 
-						uni.switchTab({
-							url: '/pages/index/index'
-						})
-						return;
+						// uni.switchTab({
+						// 	url: '/pages/index/index'
+						// })
+						// return;
 
 					}
 
