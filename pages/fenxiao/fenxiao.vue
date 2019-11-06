@@ -120,7 +120,7 @@
 
 <script>
 	import {pageMixin} from "../../common/mixin";
-	import {getDisInit} from '../../common/fetch.js'
+	import {getDisInit,get_user_info} from '../../common/fetch.js'
 	import {mapActions,mapState,mapGetters} from 'vuex';
 
 	export default {
@@ -145,8 +145,18 @@
 
 		},
 		async onShow() {
+			if(JSON.stringify(this.userInfo) != "{}"){
+				get_user_info().then(res=>{
+					this.setUserInfo(res.data);
+				},err=>{
+					
+				}).catch(e=>{
+					console.log(e)
+				})
+			}
 			//获取分销首页
 			this.getDisInit();
+			
 
 			//this.userInfo = await this.getUserInfo();
 		},

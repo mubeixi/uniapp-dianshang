@@ -1,10 +1,10 @@
 <template>
   <div style="position:relative;">
 
-    <view class="top">
+    <cover-view class="top">
         <cover-image class="imgm" src="/static/back.png" @click="goBack" ></cover-image>
         <cover-image class="imgm cart" src="/static/cart.png" @click="goCart" ></cover-image>
-    </view>
+    </cover-view>
 	<!-- 轮播 -->
 	<view class="uni-padding-wrap">
 		<view class="page-section swiper">
