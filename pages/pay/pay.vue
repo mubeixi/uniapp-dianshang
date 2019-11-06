@@ -448,6 +448,7 @@
 
 
 				let REDIRECT_URI = urlencode(origin + pathname + search + hash);
+				console.log(REDIRECT_URI);
 
 				let wxAuthUrl = null;
 

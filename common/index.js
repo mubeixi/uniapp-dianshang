@@ -147,6 +147,18 @@ export const goProductDetail = (id,is_group) => {
 
 const tabbarRouter = ['/pages/index/index', '/pages/classify/classify', '/pages/groupSuccess/groupSuccess', '/pages/cart/cart', '/pages/person/person'];
 
+const isHasTabbarRouter = (link)=>{
+    for(var item of tabbarRouter){
+        console.log(item,link,item.indexOf(link));
+        //反的了。。
+        if(item.indexOf(link)!=-1 || link.indexOf(item)!=-1){
+            console.log('has');
+            return true;
+        }
+    }
+    return false;
+}
+
 export const fun = {
     confirm,
     checkIsLogin,
@@ -156,9 +168,12 @@ export const fun = {
     linkTo: (linkObj) => {
 
         let {link, linkType} = linkObj;
+        if(link[0]!='/'){
+            link = '/'+link;
+        }
         console.log('跳转link:' + link + '===type:' + linkType)
         //除了这些页面之外，其他都走普通跳转
-        if (tabbarRouter.indexOf(link) != -1) {
+        if (isHasTabbarRouter(link)) {
 
             uni.switchTab({
                 url: link
