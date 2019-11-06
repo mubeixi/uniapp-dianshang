@@ -33,7 +33,7 @@
 					<view class="button">
 						<view class="sku">{{item.attr_txt}}</view>
 						<view class="chakan" v-if="checked==0" @click="goDetail(item)">立即申请</view>
-						<view class="chakan" v-else-if="checked==1">查看订单</view>
+						<view class="chakan" v-else-if="checked==1" @click="goGiftDetail(item)">查看订单</view>
 					</view>
 					<view class="youxiao" v-if="checked!=1">{{item.valid_scope}}</view>
 				</view>
@@ -84,6 +84,11 @@
 			}
 		},
 		methods:{
+			goGiftDetail(item){
+				uni.navigateTo({
+					url:'../giftDetail/giftDetail?Order_ID='+item.order_id
+				})
+			},
 			//去详情页
 			goDetail(item){
 				uni.navigateTo({

@@ -483,6 +483,12 @@
             "path" : "pages/gift/gift",
             "style" : {}
         }
+        ,{
+            "path" : "pages/giftDetail/giftDetail",
+            "style" : {
+            	"navigationBarTitleText": "订单详情"
+            }
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
