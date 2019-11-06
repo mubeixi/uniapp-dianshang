@@ -21,6 +21,8 @@
 				<goods-component v-if="item.indexOf('goods') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
 				<cube-component v-if="item.indexOf('cube') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
 				<tab-component v-if="item.indexOf('tab') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
+				<group-component v-if="item.indexOf('group') !== -1" :confData="templateData[tagIndex][index]" :index="index"  />
+				<flash-component v-if="item.indexOf('flash') !== -1" :confData="templateData[tagIndex][index]" :index="index"  />
 			</section>
 		</view>
 	</view>
@@ -42,6 +44,8 @@
 	import GoodsComponent from "../../components/diy/GoodsComponent.vue";
 	import CubeComponent from "../../components/diy/CubeComponent.vue";
 	import TabComponent from "../../components/diy/TabComponent.vue";
+	import GroupComponent from "../../components/diy/GroupComponent";
+	import FlashComponent from "../../components/diy/FlashComponent";
 
 	import {getSkinPreData} from "../../common/fetch";
 
@@ -62,10 +66,10 @@
 		components:{
 			BaseComponent,SwiperComponent,NavComponent,VideoComponent,HrComponent,SpaceComponent,
 			TitleComponent,TextComponent,SearchComponent,NoticeComponent,CouponComponent,
-			GoodsComponent,CubeComponent,TabComponent
+			GoodsComponent,CubeComponent,TabComponent,FlashComponent,GroupComponent
 		},
 		onLoad() {
-			
+
 			let _self = this;
 
 			let Skin_ID = GetQueryByString(location.href,'Skin_ID'),Home_ID = GetQueryByString(location.href,'Home_ID');
@@ -86,7 +90,7 @@
 					}else{
 						reject(false)
 					}
-					
+
 				}).catch(e=>{
 					console.log('获取首页模板信息失败')
 					console.log(e)

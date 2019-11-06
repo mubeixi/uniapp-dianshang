@@ -130,7 +130,9 @@
         ,{
             "path" : "pages/person/person",
             "style" : {
-            	"navigationBarTitleText": "个人中心",
+                "navigationBarTitleText": "个人中心",
+				"navigationBarBackgroundColor":"#f81111",
+				"navigationBarTextStyle":"white",
 				"app-plus": {
 					"titleNView": false
 				}
@@ -140,6 +142,8 @@
             "path" : "pages/fenxiao/fenxiao",
             "style" : {
             	"navigationBarTitleText": "分销中心",
+				"navigationBarBackgroundColor":"#f81111",
+				"navigationBarTextStyle":"white",
 				"app-plus": {
 					"titleNView": false
 				}
@@ -463,6 +467,13 @@
             }
         }
         ,{
+            "path" : "pages/page/page",
+            "style" : {
+				"style" : {
+					"navigationBarTitleText": "自定义"
+				}
+			}
+        },{
             "path" : "pages/spikeDetail/spikeDetail",
             "style" : {
             	"navigationBarTitleText": "限时秒杀"

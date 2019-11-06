@@ -18,6 +18,7 @@
               <div v-show="goods.config.attr.price.show" class="price"><span class="sign">￥</span>{{item.Products_PriceX}}
               </div>
             </div>
+<!--            <div class="stamp">距离开始还有</div>-->
             <div v-show="goods.config.attr.buybtn.show" class="buybtn" :class="'theme'+goods.config.attr.buybtn.style">
               {{goods.config.attr.buybtn.text||'购买'}}
             </div>
@@ -32,6 +33,7 @@
   import {getProductList} from "../../common/fetch";
   import {domain} from "../../common/filter";
   import {goProductDetail} from "../../common";
+  import {getGroupCountdown} from "../../common/tool";
 
   export default {
     props: {
@@ -189,11 +191,10 @@
           }
 
           let param = {pageSize: limit};//cate_id.length===0 && limit ? limit : 900}
-          if (cate_id.length>0) {
-            param.Cate_ID = cate_id.join(',')
-          } else {
-            param.Products_ID = list.join(',')
-          }
+
+          //拼团
+          param.pintuan_flag = 1;
+          param.Products_ID = list.join(',')
 
           getProductList(param).then(res => {
             this.goodsList = res.data

@@ -5,7 +5,7 @@
 				<image class="imgs" src="https://new401.bafangka.com/uploadfiles/wkbq6nc2kc/image/20191031170410175.jpg"></image>
 				<view class="times">
 					<view class="countdown">
-						距离开始还有 : 1天<text class="time">1</text>时<text class="time">1</text>分<text class="time">1</text>秒
+						距离开始还有 : {{countdown.d}}天<text class="time">{{countdown.h}}</text>时<text class="time">{{countdown.m}}</text>分<text class="time">{{countdown.s}}</text>秒
 					</view>
 					<view class="stock">
 						秒杀库存120
@@ -33,7 +33,7 @@
 </template>
 
 <script>
-
+import {getGroupCountdown}  from '../../common/tool.js'
 import {pageMixin} from "../../common/mixin";
 export default {
 	mixins:[pageMixin],
@@ -42,11 +42,27 @@ export default {
   },
   data() {
     return {
-
+		countdown:{d:0,h:0,m:0,s:0},
     }
   },
+  onShow() {
+  	this.getDetail();
+  },
   methods: {
-
+	    getDetail(){
+		   window.groupStam = setInterval(this.stampCount,1000)
+	    },
+		stampCount(){
+			let rt  = {};
+			let computedStamp = getGroupCountdown()
+			if(computedStamp){
+				rt = computedStamp
+			}else{
+				//如果不对，就清空
+				window.clearInterval(window.groupStam)
+			}
+			this.countdown = rt
+		}
   }
 }
 </script>

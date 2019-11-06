@@ -36,7 +36,7 @@
 
 <script>
 import {get_user_info ,depositBalance,add_template_code,getBalance,traslateShorten} from "../../common/fetch";
-import {mapGetters} from 'vuex';
+import {mapGetters,mapActions} from 'vuex';
 import {error,toast} from "../../common";
 import {
 		ls,
@@ -79,46 +79,23 @@ export default {
 		...mapGetters(['initData'])
 	},
 	created(){
-        let self = this;
-        //自动打开
-        if(this.isOpen){
-          setTimeout(function(){
-              self.show();
-          },100)
-        }
-        //console.log(this.use_money)
-
+        
         // #ifdef H5
         if (isWeiXin()) {
             this.code = GetQueryByString(location.href, 'code');
+            console.log(this.code)
             if (this.code) {
 
                 this.pay_type = 'wx_mp';//需要手动设置一下
                 // console.log(this.pay_type)
                 // ls.set('code',this.code)
-                this.self_orderPay(1);
+                this.sub(1);
             }
         }
         // #endif
     },
 	methods:{
-		show(events) {
-            console.log('唤起支付')
-            this.ifshow = true;
-
-            let _open = setTimeout(() => {
-                this.translateValue = 0;
-                _open = null;
-            }, 100)
-
-            let _toggle = setTimeout(() => {
-                this.iftoggle = true;
-                _toggle = null;
-            }, 300);
-
-            //this.translateValue = 0;
-
-        },
+		 ...mapActions(['getInitData']),
 		getBalance(){
 			getBalance().then(res=>{
 				this.pro=res.data;
@@ -130,26 +107,27 @@ export default {
 
 			this.num = e.detail.value
 		},
-		async	sub(){
-			let reg = /^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/
-			if (!reg.test(this.num)) {
-				error('充值金额最多2位小数')
-				this.num = null;
-				return
-			}
-
-			if(!this.payChannel){
-				error('支付渠道必选')
-				return;
-			}
-			console.log(this.payChannel)
-
+		async	sub(is_forword){
 			let _self = this;
 			let payConf = {};
-			payConf = {
-				pay_type: this.payChannel,
-				money: this.money
-			};
+			if(!is_forword) {
+				let reg = /^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/
+				if (!reg.test(this.num)) {
+					error('充值金额最多2位小数')
+					this.num = null;
+					return
+				}
+
+				if(!this.payChannel){
+					error('支付渠道必选')
+					return;
+				}
+				console.log(this.payChannel)		
+				payConf = {
+					pay_type: this.payChannel,
+					money: this.money
+				};
+			}
 			this.pay_type = this.payChannel;
 			if(this.pay_type === 'unionpay'){
 				error('即将上线')
@@ -521,8 +499,10 @@ export default {
 						strArr.push(tempArr[i])
 					}
 				}
+
 				let newSearchStr = strArr.join('&');
-				if (newSearchStr.idnexOf('?') === -1) {
+
+				if (newSearchStr.indexOf('?') === -1) {
 					newSearchStr = '?' + newSearchStr
 				}
 

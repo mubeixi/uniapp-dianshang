@@ -7,14 +7,14 @@ export const APP_USERS_ID = 'wkbq6nc2kc';
 
 // #ifdef H5
 console.log('NODE_ENV is '+isDev);
-export const apiBaseUrl = isDev?'':'http://www.gogo.com';//h5调试为了跨域https://new401.bafangka.com
+export const apiBaseUrl = isDev?'':'https://new401.bafangka.com';//h5调试为了跨域
 // #endif
 
 // #ifndef H5
-export const apiBaseUrl = 'http://www.gogo.com';
+export const apiBaseUrl = 'https://new401.bafangka.com';
 // #endif
 
-export const staticUrl = 'http://www.gogo.com';
+export const staticUrl = 'https://new401.bafangka.com';
 
 export const apiKey = '458f_$#@$*!fdjisdJDFHUk4%%653154%^@#(FSD#$@0-T';
 

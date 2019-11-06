@@ -60,19 +60,21 @@
 				totalCount:0,//一共多少条数据
 			};
 		},
-		onLoad() {
+		onLoad(options) {
 			let that=this;
 			uni.getSystemInfo({
 			    success: function (res) {
 			        that.height=res.screenHeight-68;
 			    }
 			});
+			if(options.checked) {
+				this.checked = options.checked;
+			}
 		},
 		onShow() {
 			// 重置
 			this.data = [];
 			this.page = 1;
-			this.checked = 0;
 			this.getGiftList();
 		},
 		onReachBottom(){

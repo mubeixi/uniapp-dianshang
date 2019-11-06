@@ -248,7 +248,7 @@ export default {
 					// 不需要运费，可以在本页面完成
 					createOrder(this.postData).then(res=>{
 						uni.navigateTo({
-							url: '../myGift/myGift'
+							url: '../myGift/myGift?checked=1'
 						})
 					})
 				}else if(this.orderInfo.Order_Fyepay > 0) {

@@ -4,7 +4,8 @@
 		<!-- 这里是状态栏 -->
 		<view class="status_bar" style="position: fixed;background-color: white;top:0;left:0;z-index: 99;"></view>
 		<!-- #endif -->
-		<view class="home-wrap" :style="{background:system.bgcolor}">
+		<view class="home-wrap"  :style="{background:system.bgcolor}">
+
 			<section :ref="item" v-for="(item, index) in templateList[tagIndex]" :key="index" class="section" :class="[item]"  :data-name="item" >
 				<base-component v-if="item.indexOf('base') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
 				<swiper-component v-if="item.indexOf('swiper') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
@@ -46,10 +47,11 @@
 	import GroupComponent from "../../components/diy/GroupComponent";
 	import FlashComponent from "../../components/diy/FlashComponent";
 
-	import {getSkinConfig} from "../../common/fetch";
+	import {getDiySkinConfig} from "../../common/fetch";
+
+	import {GetQueryByString} from "../../common/tool";
 
 	import {pageMixin} from "../../common/mixin";
-	import {error} from "../../common";
 
 	export default {
 		mixins:[pageMixin],
@@ -66,19 +68,22 @@
 			TitleComponent,TextComponent,SearchComponent,NoticeComponent,CouponComponent,
 			GoodsComponent,CubeComponent,TabComponent,FlashComponent,GroupComponent
 		},
-		onShow(){
-
-
-		},
 		onLoad() {
 
-
-
 			let _self = this;
+
+			let Home_ID = GetQueryByString(location.href,'Home_ID');
+
+			if(!Home_ID){
+				this.$error('Home_ID参数错误');
+			}
+
+
 			new Promise((resolve,reject) => {
 
 
-				getSkinConfig({}).then(res => {
+				//Skin_ID,
+				getDiySkinConfig({Home_ID}).then(res => {
 
 					if(res.data.Home_Json){
 						resolve(JSON.parse(res.data.Home_Json))
@@ -97,10 +102,15 @@
 				let templateData = mixinData.plugin;
 				this.system = mixinData.system;
 
+                uni.setNavigationBarTitle({
+                    title:mixinData.system.title
+                })
+
 				//存储页面数据
 				this.templateData = [] //页面数据的二维数组。
 				this.templateList = [] //页面组件的二维数组。
 				// console.log(templateData)
+
 				if (templateData && Array.isArray(templateData[0])) {
 					//多个页面，每个页面是一个数组
 					templateData.map(item => {
@@ -136,15 +146,6 @@
 			},err=>{})
 			.catch(err => {
 				console.log(err)
-			})
-
-
-
-		},
-		async created(){
-			let initData = await this.getInitData()
-			uni.setNavigationBarTitle({
-				title:initData.ShopName
 			})
 
 		},

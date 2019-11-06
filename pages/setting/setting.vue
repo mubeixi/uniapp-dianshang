@@ -71,9 +71,16 @@
 
 					//只需要商户id
 
-					//let users_id = ls.get('users_id');
+					let users_id = ls.get('users_id');
+					
 					ls.clear();
-					//ls.set('users_id',users_id);
+
+					// #ifdef MP-TOUTIAO || MP-WEIXIN
+					//头条小程序，还没有ext.json机制，需要走这里。
+					//微信小程序，因为重新启动会覆盖，所以这里也没有必要清除掉了。
+					ls.set('users_id',users_id);
+					// #endif
+					
 
 					this.setUserInfo({})
 

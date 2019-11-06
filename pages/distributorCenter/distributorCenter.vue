@@ -396,36 +396,36 @@
 					}
 				// #endif
 				// #ifdef H5
-				
+
 				// 微信h5
 				if(this.pay_type === 'wx_h5'){
 				    data.pay_type = 'wx_h5';
 				}
-				
+
 				//阿里h5
 				if(this.pay_type === 'alipay'){
 				    data.pay_type = 'alipay';
 				}
-				
+
 				//公众号需要code
 				if(this.pay_type === 'wx_mp'){
-				
+
 				    console.log('选择了微信支付的')
-				
+
 				    if (!isWeiXin()) {
 				        error('请在微信内打开')
 				        return;
 				    }
-				
+
 				    let isHasCode = this.code || GetQueryByString('code');
 				    if (isHasCode) {
-				
+
 				        //拿到之前的配置
 				        data = { ...ls.get('temp_order_info'),
 				            code: isHasCode,
 				            pay_type: 'wx_mp'
 				        }
-				
+
 				    } else {
 				        //存上临时的数据
 				        ls.set('temp_order_info', data);
@@ -434,10 +434,10 @@
 				        return;
 				    }
 				}
-				
+
 				// #endif
-				
-				
+
+
 				if(this.pay_type=='remainder_pay'){
 					data.user_pay_password=this.user_pay_password;
 				}else{
@@ -445,9 +445,9 @@
 						data.code=this.code;
 					}
 				}
-				
+
 				if(this.pay_type=='remainder_pay'){
-				
+
 					disBuy(data).then(res=>{
 							this.paySuccessCall(res)
 					},err=>{
@@ -470,11 +470,11 @@
 						console.log(e);
 					})
 				}
-				
-				
-				
-				
-				
+
+
+
+
+
 
 				// }else if(this.pay_type=='ali_app'){
 				// 		disBuy(data).then(res=>{
@@ -840,7 +840,7 @@
 						}
 					}
 					let newSearchStr = strArr.join('&');
-					if (newSearchStr.idnexOf('?') === -1) {
+					if (newSearchStr.indexOf('?') === -1) {
 						newSearchStr = '?' + newSearchStr
 					}
 
@@ -936,7 +936,7 @@
 				if(this.pay_type === 'wx_h5'){
 					payConf.pay_type = 'wx_h5';
 				}
-				
+
 				//阿里h5
 				if(this.pay_type === 'alipay'){
 					payConf.pay_type = 'alipay';
@@ -962,39 +962,39 @@
 					    location.href = redirect_url;
 					    return;
 					}
-					
+
 					//阿里h5
 					if(this.pay_type === 'alipay'){
-					
+
 					    //公众号麻烦一点
 					    if(isWeiXin()){
-					
+
 					        let users_id = ls.get('users_id');
-					
+
 					        let fromurl = res.data.arg;//encodeURIComponent(res.data.arg);
-					
+
 					        //字符串
 					        let nocestr = ''
 					        traslateShorten({data:fromurl}).then(res=>{
-					
+
 					            nocestr = res.data.key;
 					            // uni.navigateTo({
 					            //     url:`/pages/pay/wx/wx?users_id=${users_id}&nocestr=`+nocestr
 					            // })
-					
+
 					            let str = `/fre/pages/pay/wx/wx?users_id=${users_id}&nocestr=`+nocestr
-					
+
 					            let url = location.origin + str;
-					
+
 					            //强制页面刷新
 					            location.href = url;
-					
+
 					        },err=>{
 					            error('获取支付宝支付参数失败');
-					
+
 					        })
 					        //let origin = location.origin;
-					
+
 					        // fromurl = fromurl.replace(/openapi.alipay.com/,'wangjing666')
 					        //
 					        //
@@ -1004,21 +1004,21 @@
 					        //
 					        // this.aliPayUrl = url;
 					        //location.href = url;
-					
+
 					        // uni.navigateTo({
 					        //     url:`/pages/pay/wx/wx?users_id=${users_id}&formurl=`+encodeURIComponent(fromurl)
 					        // })
-					
+
 					    }else{
 					        document.write(res.data.arg)
 					        document.getElementById('alipaysubmit').submit()
 					    }
-					
+
 					    return;
-					
+
 					}
-					
-					
+
+
 					let {
 						timestamp,
 						nonceStr,
@@ -1575,7 +1575,7 @@ view.haha{
 // 			}
 // 		}
 // 	}
-	
+
 	.zhezhao {
 	    left: 0;
 	    top: 0;
@@ -1584,7 +1584,7 @@ view.haha{
 	    height: 100%;
 	    background: rgba(0,0,0,.3);
 	    z-index: 1000;
-	
+
 	    .input-wrap {
 	        background: #fff;
 	        color: #000;
@@ -1601,7 +1601,7 @@ view.haha{
 	            height: 80rpx;
 	            line-height: 80rpx;
 	        }
-	
+
 	        .btns {
 	            display: flex;
 	            justify-content: space-around;

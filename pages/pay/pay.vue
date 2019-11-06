@@ -437,7 +437,7 @@
 						}
 					}
 					let newSearchStr = strArr.join('&');
-					if (newSearchStr.idnexOf('?') === -1) {
+					if (newSearchStr.indexOf('?') === -1) {
 						newSearchStr = '?' + newSearchStr
 					}
 
@@ -492,13 +492,13 @@
 							url:'/pages/groupSuccess/groupSuccess?order_id='+_that.Order_ID
 						})
 					}else{
-						if(this.pagefrom == 'check') {
+						if(pagefrom == 'check') {
 							uni.redirectTo({
 								url:'/pages/order/order?index=2'
 							})
-						}else if(this.pagefrom == 'gift') {
+						}else if(pagefrom == 'gift') {
 							uni.redirectTo({
-								url: '/pages/myGift/myGift'
+								url: '/pages/myGift/myGift?checked=1'
 							})
 						}
 					}
