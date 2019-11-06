@@ -33,7 +33,7 @@
 					<view class="button">
 						<view class="sku">{{item.attr_txt}}</view>
 						<view class="chakan" v-if="checked==0" @click="goDetail(item)">立即申请</view>
-						<view class="chakan" v-else-if="checked==1">查看订单</view>
+						<view class="chakan" v-else-if="checked==1" @click="goGiftDetail(item)">查看订单</view>
 					</view>
 					<view class="youxiao" v-if="checked!=1">{{item.valid_scope}}</view>
 				</view>
@@ -60,19 +60,21 @@
 				totalCount:0,//一共多少条数据
 			};
 		},
-		onLoad() {
+		onLoad(options) {
 			let that=this;
 			uni.getSystemInfo({
 			    success: function (res) {
 			        that.height=res.screenHeight-68;
 			    }
 			});
+			if(options.checked) {
+				this.checked = options.checked;
+			}
 		},
 		onShow() {
 			// 重置
 			this.data = [];
 			this.page = 1;
-			this.checked = 0;
 			this.getGiftList();
 		},
 		onReachBottom(){
@@ -82,6 +84,11 @@
 			}
 		},
 		methods:{
+			goGiftDetail(item){
+				uni.navigateTo({
+					url:'../giftDetail/giftDetail?Order_ID='+item.order_id
+				})
+			},
 			//去详情页
 			goDetail(item){
 				uni.navigateTo({

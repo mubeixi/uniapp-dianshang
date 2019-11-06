@@ -74,14 +74,26 @@ export default {
 					obj[i] = this.initData.pay_arr[i]
 				}
 			}
-			console.log(obj)
-			// arr = this.initData.pay_arr.map((item,idx)=>{
-			// 	if(idx!='remainder_pay')return item
-			// })
 			return obj
 		},
 		...mapGetters(['initData'])
 	},
+	created(){
+        
+        // #ifdef H5
+        if (isWeiXin()) {
+            this.code = GetQueryByString(location.href, 'code');
+            console.log(this.code)
+            if (this.code) {
+
+                this.pay_type = 'wx_mp';//需要手动设置一下
+                // console.log(this.pay_type)
+                // ls.set('code',this.code)
+                this.sub(1);
+            }
+        }
+        // #endif
+    },
 	methods:{
 		 ...mapActions(['getInitData']),
 		getBalance(){
@@ -95,27 +107,32 @@ export default {
 
 			this.num = e.detail.value
 		},
-		async	sub(){
-			let reg = /^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/
-			if (!reg.test(this.num)) {
-				error('充值金额最多2位小数')
-				this.num = null;
-				return
-			}
-
-			if(!this.payChannel){
-				error('支付渠道必选')
-				return;
-			}
-			console.log(this.payChannel)
-
+		async	sub(is_forword){
 			let _self = this;
 			let payConf = {};
+			if(!is_forword) {
+				let reg = /^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/
+				if (!reg.test(this.num)) {
+					error('充值金额最多2位小数')
+					this.num = null;
+					return
+				}
+
+				if(!this.payChannel){
+					error('支付渠道必选')
+					return;
+				}
+				console.log(this.payChannel)		
+				payConf = {
+					pay_type: this.payChannel,
+					money: this.money
+				};
+			}
+			this.pay_type = this.payChannel;
 			payConf = {
 				pay_type: this.payChannel,
 				money: this.money
 			};
-			this.pay_type = this.payChannel;
 			if(this.pay_type === 'unionpay'){
 				error('即将上线')
 				return;

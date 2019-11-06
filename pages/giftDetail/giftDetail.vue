@@ -1,31 +1,7 @@
 <template>
 	<div>
-		<!-- #ifdef APP-PLUS -->
-		<!-- <view class="status_bar" style="background:white;position: fixed;top: 0;z-index: 22"></view> -->
-		<!-- #endif -->
-		<div class="zhezhao" v-if="password_input">
-			<div class="input-wrap">
-				<div>请输入余额支付密码</div>
-				<input type="password" class="input" placeholder="请输入密码" @blur="user_password">
-				<div class="btns">
-					<div @click="cancelInput" class="btn">取消</div>
-					<div @click="confirmInput" class="btn">确定</div>
-				</div>
-			</div>
-		</div>
-		<div class="state" v-if="orderInfo.Order_Status == 1">
-			<image class="img" src="https://new401.bafangka.com/static/client/wait.png" />
-			<span class="state-desc">等待买家付款</span>
-		</div>
 		<view class="address order-id">订单号：{{orderInfo.Order_ID}}</view>
 		<view class="address">下单时间: {{orderInfo.Order_CreateTime | formatTime}}</view>
-		<div class="address" v-if="orderInfo.is_virtual == 0 ">
-			<image class="loc_icon" src="https://new401.bafangka.com/static/client/location.png" alt="" />
-			<div class="add_msg">
-				<div class="name">收货人：{{orderInfo.Address_Name}} <span>{{orderInfo.Address_Mobile}}</span></div>
-				<div class="location">收货地址：{{orderInfo.Address_Province_name}}{{orderInfo.Address_City_name}}{{orderInfo.Address_Area_name}}{{orderInfo.Address_Town_name}}</div>
-			</div>
-		</div>
 		<div class="order_msg">
 			<div class="biz_msg">
 				<image :src="orderInfo.ShopLogo" class="biz_logo" alt="" />
@@ -52,30 +28,14 @@
 				</div>
 			</div>
 		</div>
-		<div class="other">
-			<div class="bd">
-				<div class="o_title">
-					<span>优惠券选择</span>
-					<span class="c8">{{orderInfo.Coupon_Money}}元优惠券</span>
-				</div>
-			</div>
-		</div>
-		<div class="other">
-			<div class="bd">
-				<div class="o_title">
-					<span>积分抵扣</span>
-					<span class="c8">{{orderInfo.Integral_Money}}</span>
-				</div>
-			</div>
-		</div>
 		<block  v-if="orderInfo.Order_Status == 1">
-			<div class="other" v-if="orderInfo.is_use_money && orderInfo.is_use_money == 1">
+			<!-- <div class="other" v-if="orderInfo.is_use_money && orderInfo.is_use_money == 1">
 				<div class="bd">
 					<div class="o_title">
 						<span>是否使用余额</span>
 						<switch :checked="moneyChecked" size='25px' color="#04B600" @change="moneyChange" />
 					</div>
-					<!-- <div class="o_desc c8">{{orderInfo.Order_Yebc}}</div> -->
+				
 					<input type="number" v-if="openMoney" :value="user_money" :disabled="!openMoney" :placeholder="orderInfo.Order_Yebc"
 					@blur="moneyInputHandle" />
 				</div>
@@ -85,12 +45,10 @@
 					<div class="o_title">
 						<span>是否开具发票</span>
 						<switch :checked="invoiceChecked" size='25px' color="#04B600" @change="invoiceChange" />
-					</div>
-					<!-- <div class="o_desc c8">{{orderInfo.Order_InvoiceInfo}}</div> -->
 					<input type="text" v-if="openInvoice" :value="invoice_info" :disabled="!openInvoice" :placeholder="orderInfo.Order_InvoiceInfo"
 					@blur="invoiceHandle" />
 				</div>
-			</div>
+			</div> -->
 			<div class="other">
 				<div class="bd">
 					<div class="o_title  words">
@@ -101,7 +59,7 @@
 			</div>
 		</block>
 		<block v-else>
-			<div class="other" v-if="orderInfo.Order_Yebc > 0">
+			<!-- <div class="other" v-if="orderInfo.Order_Yebc > 0">
 				<div class="bd">
 					<div class="o_title">
 						<span>使用余额:</span>
@@ -116,7 +74,7 @@
 						<span>{{orderInfo.Order_InvoiceInfo}}</span>
 					</div>
 				</div>
-			</div>
+			</div> -->
 			<div class="other">
 				<div class="bd">
 					<div class="o_title  words">
@@ -136,44 +94,17 @@
 				<div class="info">共{{orderInfo.prod_list.length}}件商品 总计：<span class="mbxa">￥<span>{{orderInfo.Order_Fyepay}}</span></span></div>
 				<div class="tips">*本次购物一共可获得{{orderInfo.Integral_Get}}积分</div>
 			</div>
-			<div class="btn-group" v-if="orderInfo.Order_Status==0">
-				<span @click="cancelOrder(orderInfo.Order_ID)">取消订单</span>
+			<div class="btn-group" v-if="orderInfo.Order_Status==2">
+			    <span class="active">等待卖家发货</span>
 			</div>
-			<div class="btn-group" v-if="orderInfo.Order_Status==1">
-					<span @click="cancelOrder(orderInfo.Order_ID)">取消订单</span>
-					<span class="active" @click="submit">立即付款</span>
+			<div class="btn-group" v-if="orderInfo.Order_Status==3">
+			   <span @click="goLogistics(orderInfo)">查看物流</span>
+			   <span class="active" @click="confirmOrder(orderInfo.Order_ID)">确认收货</span>
 			</div>
-			<div class="btn-group" v-else-if="orderInfo.Order_Status==2">
-			    <span class="active" @click="goPay(orderInfo.Order_ID)">申请退款</span>
-			</div>
-			<div class="btn-group" v-else-if="orderInfo.Order_Status==3">
-				<span @click="goLogistics(orderInfo)">查看物流</span>
-				<!-- <span @click="goPay(orderInfo.Order_ID)" style="margin-left: 14rpx;">申请退款退货</span> -->
-			  <span class="active" @click="confirmOrder(orderInfo.Order_ID)">确认收货</span>
-			</div>
-			<div class="btn-group" v-else-if="orderInfo.Order_Status==4 && orderInfo.Is_Commit == 0">
+			<div class="btn-group" v-if="orderInfo.Order_Status==4 && orderInfo.Is_Commit == 0">
 			    <span class="active" @click="goPay(orderInfo.Order_ID)">立即评价</span>
 			</div>
 		</div>
-		<popup-layer ref="popupLayer" :direction="'top'">
-			<div class="iMbx">
-				<div class="c_method" v-for="(item,index) in pay_arr" @click="chooseType(index)" :key="index">
-					{{item}} <text>￥{{orderInfo.Order_Fyepay}}</text>
-				</div>
-			</div>
-		</popup-layer>
-		<payComponents
-		ref="payLayer"
-			:isOpen="isOpen"
-			:Order_ID="Order_ID"
-			:pay_money="pay_money"
-			:use_money="user_money"
-			:need_invoice="need_invoice"
-			:invoice_info="invoice_info"
-			:order_remark="order_remark"
-			:paySuccessCall="paySuccessCall"
-			:payErrorCall = "payFailCall"
-		></payComponents>
 	</div>
 </template>
 
@@ -237,16 +168,6 @@
 			if (options.Order_ID) {
 				this.Order_ID = options.Order_ID;
 			}
-			if(options.pagefrom =='check'){
-				this.showDirect = true;
-			}
-			if(options.pagefrom == 'order') {
-				// 来自订单列表页
-				this.pageFromOrder = true;
-			}
-			// 获取支付方式
-			this.pay_arr = ls.get('initData').pay_arr;
-
 		},
 		filters: {
 			formatTime: formatTime

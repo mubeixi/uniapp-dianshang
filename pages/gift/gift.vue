@@ -1,15 +1,14 @@
 <template>
     <view v-if="loading">
-      <!--  <pagetitle title="提交订单"></pagetitle> -->
         <view class="address" v-if="orderInfo.is_virtual == 0 " @click="goAddressList">
             <image class="loc_icon" src="https://new401.bafangka.com/static/client/location.png" alt="" ></image>
             <view class="add_msg" v-if="addressinfo.Address_Name">
                 <view class="name">收货人：{{addressinfo.Address_Name}} <span>{{addressinfo.Address_Mobile | formatphone}}</span></view>
                 <view class="location">收货地址：{{addressinfo.Address_Province_name}}{{addressinfo.Address_City_name}}{{addressinfo.Address_Area_name}}{{addressinfo.Address_Town_name}}</view>
             </view>
-						<view class="add_msg" v-else>
-							<view>暂无收货地址，去添加</view>
-						</view>
+				<view class="add_msg" v-else>
+					<view>暂无收货地址，去添加</view>
+				</view>
             <image class="right" src="https://new401.bafangka.com/static/client/right.png" alt="" ></image>
         </view>
 		<view class="biz_msg">
@@ -17,16 +16,16 @@
 			<span class="biz_name">{{orderInfo.ShopName}}</span>
 		</view>
         <view class="order_msg">
-					<block  v-for="(pro,pro_id) in orderInfo.CartList" :key="pro_id">
-						<view class="pro" v-for="(attr,attr_id) in pro" :key="attr_id">
-							<img class="pro-img" :src="attr.ImgPath" alt="">
-							<view class="pro-msg">
-								<view class="pro-name">{{attr.ProductsName}}</view>
-								<view class="attr" v-if="attr.Productsattrstrval"><span>{{attr.Productsattrstrval}}</span></view>
-								<view class="pro-price"><span>￥</span>{{attr.ProductsPriceX}} <span class="amount">x<span class="num">{{attr.Qty}}</span></span></view>
-							</view>
-						</view>
-					</block>
+			<block  v-for="(pro,pro_id) in orderInfo.CartList" :key="pro_id">
+				<view class="pro" v-for="(attr,attr_id) in pro" :key="attr_id">
+					<img class="pro-img" :src="attr.ImgPath" alt="">
+					<view class="pro-msg">
+						<view class="pro-name">{{attr.ProductsName}}</view>
+						<view class="attr" v-if="attr.Productsattrstrval"><span>{{attr.Productsattrstrval}}</span></view>
+						<view class="pro-price"><span>￥</span>{{attr.ProductsPriceX}} <span class="amount">x<span class="num">{{attr.Qty}}</span></span></view>
+					</view>
+				</view>
+			</block>
         </view>
         <view class="other" v-if="orderInfo.is_virtual == 0">
             <view class="bd">
@@ -39,26 +38,6 @@
                 </view>
             </view>
         </view>
-        <view class="other" v-if="couponlist.length > 0">
-            <view class="bd">
-                <view class="o_title" @click="changeCoupon">
-                    <span>优惠券选择</span>
-                    <span style="text-align: right; color: #888;display: flex;align-items: center;">
-						<span >{{couponlist.length>0?(coupon_desc?coupon_desc:'您有优惠券使用'): '暂无可用优惠券'}}</span>
-						<image  src="https://new401.bafangka.com/static/client/right.png" class="right" alt=""></image>
-					</span>
-                </view>
-            </view>
-        </view>
-        <view class="other" v-if="orderInfo.max_diyong_intergral > 0">
-            <view class="bd">
-                <view class="o_title">
-                    <span>是否参与积分抵扣</span>
-                    <switch :checked="intergralChecked" color="#04B600" @change="intergralSwitchChange" />
-                </view>
-                <view class="o_de" v-if="intergralChecked">您当前共有 <text>{{userInfo.User_Integral}}</text>积分，每<text>{{orderInfo.Integral_Buy}}</text>积分可以抵扣<text>1</text>元，本次可使用<text>{{orderInfo.max_diyong_intergral}}</text>积分,总共可抵<text>{{orderInfo.max_Integral_Money}}</text>元</view>
-            </view>
-        </view>
         <view class="other" v-if="orderInfo.is_use_money == 1">
             <view class="bd">
                 <view class="o_title">
@@ -69,16 +48,7 @@
                 <input v-if="userMoneyChecked" @focus="postData.use_money = 0" v-model.number="postData.use_money" class="o_desc" placeholder="请输入金额" type="number" @blur="confirm_user_money">
             </view>
         </view>
-        <view class="other">
-            <view class="bd">
-                <view class="o_title">
-                    <span>是否开具发票</span>
-					<switch :checked="faPiaoChecked" color="#04B600" @change="faPiaoChange" />
-                </view>
-				<input v-if="faPiaoChecked"  @blur="faPiaoConfirm" type="text" class="o_desc" placeholder="请输入发票抬头和纳税人识别号" />
-            </view>
-        </view>
-        <view class="other">
+		<view class="other">
             <view class="bd">
                 <view class="o_title  words">
                     <span>买家留言</span>
@@ -86,10 +56,6 @@
                 </view>
             </view>
         </view>
-        <!-- <view class="total">
-            <span style="margin-right:20rpx;">共<span>{{orderInfo.total_count}}</span>件商品</span>
-            <span>小计：<span>￥</span><span class="money">{{orderInfo.Order_TotalPrice}}</span></span>
-        </view> -->
 		<view style="height:100rpx;">
 			<view class="order_total">
 				<view class="totalinfo">
@@ -97,7 +63,7 @@
 					<view class="tips">*本次购物一共可获得{{orderInfo.Integral_Get}}积分</view>
 				</view>
 				<form report-submit @submit="form_submit">
-					<button formType="submit" class="submit">提交订单</button>
+					<button formType="submit" class="submit">确定领取</button>
 				</form>
 			</view>	
 		</view>	
@@ -113,15 +79,6 @@
 					</radio-group>
         		</view>
         	</view>
-			<scroll-view style="height:430rpx;width:95%;"  scroll-y="true" class="bMbx" v-if="type=='coupon'">
-				<view class="fMbx scroll-view-item">优惠券选择</view>
-				<view class="iMbx scroll-view-item" v-for="(coupon,i) in orderInfo.coupon_list" :key="i">
-					满{{coupon.Coupon_Condition}} - {{coupon.Coupon_Cash > 0 ? coupon.Coupon_Cash : coupon.Coupon_Discount}}
-					<radio-group @change="radioChange">
-						<radio :value="coupon.Coupon_ID" :checked="i===current" style="float:right;" color="#F43131"/>
-					</radio-group>
-				</view>
-			</scroll-view>
         	<view class="sure" @click="closeMethod">
         		确定
         	</view>
@@ -192,7 +149,6 @@ export default {
 						coupon_id: '',
 						use_integral: 0, // 用于抵扣的积分数
 						use_money: 0,  // 余额支付金额
-						invoice_info: '',  // 发票抬头
 						order_remark: '', // 买家留言
 					},
 					Order_ID: 0,
@@ -202,6 +158,7 @@ export default {
 					// remindAddress: false, // 提醒添加收货地址
 					submited: false,  // 是否已经提交过，防止重复提交
 					back_address_id: 0,
+					gift: '',//有可能是赠品
         }
     },
 	filters: {
@@ -225,7 +182,7 @@ export default {
 			})
 		}
 		this.getAddress();
-		this.createOrderCheck();
+		// this.createOrderCheck();
 	},
 	async created(){
 		let userInfo = this.getUserInfo(true);
@@ -235,6 +192,10 @@ export default {
 		this.postData.cart_key = options.cart_key;
 		if(options.cart_buy){
 			this.postData.cart_buy = options.cart_buy;
+		}
+		// 如果是赠品，
+		if(options.gift) {
+			this.gift = options.gift;
 		}
 	},
 	computed: {
@@ -273,16 +234,6 @@ export default {
 			})
 			if(!this.submited){
 				this.submited = true;
-				if(this.postData.need_invoice == 1 && this.postData.invoice_info == '') {
-					this.submited = false;
-					if(this.postData.invoice_info == '') {
-						uni.showToast({
-							title: '发票信息不能为空',
-							icon:  'none'
-						})
-						return;
-					}
-				}
 				if(this.orderInfo.is_virtual == 0) {
 					if(!this.postData.shipping_id) {
 						uni.showToast({
@@ -293,36 +244,37 @@ export default {
 						return;
 					}
 				}
-				createOrder(this.postData).then(res=>{
-					if(res.errorCode == 0) {
-						// 如果order_totalPrice <= 0  直接跳转 订单列表页
-						if(res.data.Order_Status != 1) {
-							// 直接跳转订单列表页
-							uni.redirectTo({
-								url: '../order/order'
-							});
-							return ;
-						}
-						this.Order_ID = res.data.Order_ID;
-						uni.redirectTo({
-							url: '../pay/pay?Order_ID='+ res.data.Order_ID+'&pagefrom=check'
+				if(this.orderInfo.Order_Fyepay == 0) {
+					// 不需要运费，可以在本页面完成
+					createOrder(this.postData).then(res=>{
+						uni.navigateTo({
+							url: '../myGift/myGift?checked=1'
 						})
-					}else {
-						uni.showToast({
-							title: res.data.msg,
-							icon: 'none'
-						});
-						this.submited = false;
-					}
-					this.submited = false;
-				}).catch(e=>{
-					console.log(e)
-					uni.showToast({
-							title: e.msg,
-							icon: 'none'
 					})
-					this.submited = false;
-				});
+				}else if(this.orderInfo.Order_Fyepay > 0) {
+					createOrder(this.postData).then(res=>{
+						if(res.errorCode == 0) {
+							this.Order_ID = res.data.Order_ID;
+							uni.redirectTo({
+								url: '../pay/pay?Order_ID='+ res.data.Order_ID+'&pagefrom=gift'
+							})
+						}else {
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none'
+							});
+							this.submited = false;
+						}
+						this.submited = false;
+					}).catch(e=>{
+						console.log(e)
+						uni.showToast({
+								title: e.msg,
+								icon: 'none'
+						})
+						this.submited = false;
+					});
+				}
 			}
 		},
 		// 积分抵扣开关
@@ -355,10 +307,10 @@ export default {
 		// 发票抬头输入完成
 		faPiaoConfirm(e) {
 			//#ifdef H5
-			// uni.pageScrollTo({
-			// 	scrollTop: 0,
-			// 	duration: 200
-			// });
+			uni.pageScrollTo({
+				scrollTop: 0,
+				duration: 200
+			});
 			//#endif
 			let invoice_info = e.detail.value;
 
@@ -367,10 +319,10 @@ export default {
 		// 余额支付输入完成
 		confirm_user_money(e){
 			//#ifdef H5
-			// uni.pageScrollTo({
-			// 	scrollTop: 0,
-			// 	duration: 200
-			// });
+			uni.pageScrollTo({
+				scrollTop: 0,
+				duration: 200
+			});
 			//#endif
 			let input_money = e.detail.value;
 			// let user_money = this.userInfo.User_Money;
@@ -401,10 +353,10 @@ export default {
 		// 留言
 		remarkConfirm(e) {
 			//#ifdef H5
-			// uni.pageScrollTo({
-			// 	scrollTop: 0,
-			// 	duration: 200
-			// });
+			uni.pageScrollTo({
+				scrollTop: 0,
+				duration: 200
+			});
 			//#endif
 			this.postData.order_remark = e.detail.value;
 		},
@@ -489,11 +441,11 @@ export default {
 						}
 					}
 					this.postData.address_id = this.addressinfo.Address_ID;
+					// 获取用户收货地址，获取订单信息，后台判断运费信息
+					this.createOrderCheck();
 				}
 				this.back_address_id = 0;
 
-				// 获取用户收货地址，获取订单信息，后台判断运费信息
-				this.createOrderCheck();
 			},err=>{
 
 			})

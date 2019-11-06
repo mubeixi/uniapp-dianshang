@@ -48,7 +48,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="other">
+		<div class="other" v-if="pagefrom != 'gift'">
 			<div class="bd">
 				<div class="o_title">
 					<span>优惠券选择</span>
@@ -56,7 +56,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="other">
+		<div class="other" v-if="pagefrom != 'gift'">
 			<div class="bd">
 				<div class="o_title">
 					<span>积分抵扣</span>
@@ -75,7 +75,7 @@
 				 @blur="moneyInputHandle" />
 			</div>
 		</div>
-		<div class="other">
+		<div class="other" v-if="pagefrom != 'gift'">
 			<div class="bd">
 				<div class="o_title">
 					<span>是否开具发票</span>
@@ -167,19 +167,20 @@
 				openInvoice: true, // 是否开启了发票
 				order_remark: '', // 留言
 				need_invoice: 0, // 是否需要发票
-				showDirect: false, // 是否直接显示付款方式
 				pay_arr: [], // 支付方式
 				Order_Type:'',
 				user_money: 0,
+				pagefrom: 'check', // 页面来源，支付成功跳转路径不同
 			}
 		},
 		onLoad(options) {
 			if (options.Order_ID) {
 				this.Order_ID = options.Order_ID;
 			}
-			if(options.pagefrom =='check'){
-				this.showDirect = true;
+			if(options.pagefrom){
+				this.pagefrom = options.pagefrom;
 			}
+
 			// 获取支付方式
 			this.pay_arr = ls.get('initData').pay_arr;
 
@@ -200,19 +201,16 @@
 			}
 		},
 		created() {
-
 			// #ifdef H5
-			// if (isWeiXin()) {
-			// 	this.code = GetQueryByString(location.href, 'code');
-			// 	console.log(this.code)
-			// 	if (this.code) {
-			//
-			// 		this.pay_type = 'wx_mp';//需要手动设置一下
-			// 		// console.log(this.pay_type)
-			// 		// ls.set('code',this.code)
-			// 		this.self_orderPay(1);
-			// 	}
-			// }
+			if (isWeiXin()) {
+				this.code = GetQueryByString(location.href, 'code');
+				if (this.code) {
+					this.pay_type = 'wx_mp';//需要手动设置一下
+					// console.log(this.pay_type)
+					// ls.set('code',this.code)
+					this.self_orderPay(1);
+				}
+			}
 			// #endif
 		},
 		methods: {
@@ -258,6 +256,7 @@
 						this.orderInfo = res.data;
 						this.Order_Type = res.data.Order_Type;
 						ls.set('type',this.Order_Type);
+						ls.set('pagefrom', this.pagefrom);
 						// pay_money 应该支付的钱
 						// user_money 使用的余额
 						this.pay_money = this.orderInfo.Order_Fyepay;
@@ -267,23 +266,17 @@
 						this.openInvoice = this.orderInfo.Order_NeedInvoice > 0;
 						this.invoice_info = this.orderInfo.Order_InvoiceInfo;
 						this.order_remark = this.orderInfo.Order_Remark;
-						if(this.showDirect && this.orderInfo.Order_Fyepay > 0) {
-							// 需要支付的金额大于0 ，直接弹出支付方式，简化支付流程
-							_self.$nextTick().then(()=>{
-								// _self.$refs.popupLayer.show();
-							})
-
-						}
+						
 					}
 				})
 			},
 			// 用户重新更改了余额
 			moneyInputHandle(e) {
 				//#ifdef H5
-				uni.pageScrollTo({
-					scrollTop: 0,
-					duration: 200
-				});
+				// uni.pageScrollTo({
+				// 	scrollTop: 0,
+				// 	duration: 200
+				// });
 				//#endif
 				var money = e.detail.value;
 				this.user_money = Number(money).toFixed(2);
@@ -326,10 +319,10 @@
 			// 留言
 			remarkHandle(e) {
 				//#ifdef H5
-				uni.pageScrollTo({
-					scrollTop: 0,
-					duration: 200
-				});
+				// uni.pageScrollTo({
+				// 	scrollTop: 0,
+				// 	duration: 200
+				// });
 				//#endif
 				let remark = e.detail.value;
 				this.order_remark = remark;
@@ -337,10 +330,10 @@
 			// 发票信息修改
 			invoiceHandle(e) {
 				//#ifdef H5
-				uni.pageScrollTo({
-					scrollTop: 0,
-					duration: 200
-				});
+				// uni.pageScrollTo({
+				// 	scrollTop: 0,
+				// 	duration: 200
+				// });
 				//#endif
 				let invoice = e.detail.value;
 				this.invoice_info = invoice;
@@ -492,15 +485,23 @@
 				setTimeout(function(){
 					//拼团订单则跳转到开团成功
 					let type = ls.get('type');
+					let pagefrom = ls.get('pagefrom');
+					ls.remove('pagefrom');
 					ls.remove('type');
 					if(type === 'pintuan'){
 						uni.redirectTo({
 							url:'/pages/groupSuccess/groupSuccess?order_id='+_that.Order_ID
 						})
 					}else{
-						uni.redirectTo({
-							url:'/pages/order/order?index=2'
-						})
+						if(pagefrom == 'check') {
+							uni.redirectTo({
+								url:'/pages/order/order?index=2'
+							})
+						}else if(pagefrom == 'gift') {
+							uni.redirectTo({
+								url: '/pages/myGift/myGift?checked=1'
+							})
+						}
 					}
 				},50)
 			},

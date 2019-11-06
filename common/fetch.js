@@ -338,6 +338,9 @@ export const saveTempData  = (data, options) => fetch('save_redis_data', data, o
 
 export const getTempData = (data, options) => fetch('get_redis_data', data, options);
 
+// 获取礼品物流信息
+export const get_ship_gift = (data,options) => fetch('get_ship_gift', data, options);
+
 // 长链接转换短链接
 export const traslateShorten =saveTempData
 
