@@ -449,7 +449,7 @@ export const getCountdownFunc = ({start_timeStamp,end_timeStamp,current = (new D
 
     }else if(end_timeStamp>current && start_timeStamp<current){
         //还在进行中
-        console.log('还在进行中')
+        //console.log('还在进行中')
         is_start = true;
         countTime = end_timeStamp-current;
     }else{
