@@ -576,6 +576,23 @@
 				//toast('登录成功', 'success')
 				setTimeout(function() {
 
+
+					// #ifdef H5
+					//hack navigateBack无效
+					if(history.length>1){
+						history.back();
+
+					}else{
+						uni.switchTab({
+							url: '/pages/index/index'
+						})
+					}
+
+					return;
+
+					// #endif
+
+
 					var pages = getCurrentPages();
 					console.log('pages is',pages)
 					var currPage = pages[pages.length - 1]; //当前页面
@@ -583,16 +600,13 @@
 
 					//只有登陆页的话
 					if(pages.length<2){
-						// #ifdef H5
-						//hack navigateBack无效
-						// history.back();
-						// return;
-						// #endif
 
-						uni.switchTab({
-							url: '/pages/index/index'
-						})
-						return;
+
+
+						// uni.switchTab({
+						// 	url: '/pages/index/index'
+						// })
+						// return;
 
 					}
 
