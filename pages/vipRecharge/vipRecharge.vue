@@ -28,7 +28,7 @@
 		<view class="youhui" v-for="(item,index) of pro.gives " :key="index">
 			{{index+1}}、充值满{{item.deposit_money}}赠送<text class="youhui-text">{{item.present_money}}</text>余额
 		</view>
-		<view class="queren" @click="sub">
+		<view class="queren" @click="confirm">
 			确认
 		</view>
 	</view>
@@ -107,10 +107,14 @@ export default {
 
 			this.num = e.detail.value
 		},
+		confirm(){
+			this.sub();
+		},
 		async	sub(is_forword){
 			let _self = this;
 			let payConf = {};
 			if(!is_forword) {
+				console.log('222')
 				let reg = /^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/
 				if (!reg.test(this.num)) {
 					error('充值金额最多2位小数')
