@@ -1,10 +1,12 @@
 <template>
   <div style="position:relative;">
 	  
-	<view class="top">
-		<image class="imgm" src="/static/back.png" @click="goBack" ></image>
-		<image class="imgm cart" src="/static/cart.png" @click="goCart" ></image>
-	</view>
+	<!-- #ifndef APP-PLUS -->
+		<view class="top">
+			<image class="imgm" src="/static/back.png" @click="goBack" ></image>
+			<image class="imgm cart" src="/static/cart.png" @click="goCart" ></image>
+		</view>
+	<!-- #endif -->
 	<!-- 轮播 -->
 	<view class="uni-padding-wrap">
 		<view class="page-section swiper">
