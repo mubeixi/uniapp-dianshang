@@ -184,7 +184,9 @@
 				if(this.isNext){
 					this.isNext=false;
 				}else{
-
+					uni.navigateTo({
+						url:'../regionRecord/regionRecord?index=1'
+					})
 				}
 			},
 			nextStep(){
