@@ -182,7 +182,7 @@
 				get_user_info().then(res=>{
 					this.setUserInfo(res.data);
 				},err=>{
-					
+
 				}).catch(e=>{
 					console.log(e)
 				})
@@ -289,9 +289,7 @@
 			},
 			...mapActions(['getUserInfo']),
 			goLogin(){
-				uni.navigateTo({
-					url:'../login/login'
-				})
+				this.$fun.checkIsLogin(1)
 			},
 			goPintuanOrderlist(){
 				uni.navigateTo({

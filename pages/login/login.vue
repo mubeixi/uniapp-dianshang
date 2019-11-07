@@ -574,74 +574,71 @@
 
 
 				//toast('登录成功', 'success')
-				setTimeout(function() {
+				// #ifdef H5
+				//微信登录才这么走
 
 
-					// #ifdef H5
-					//微信登录才这么走
+
+				if(GetQueryByString(location.href,'code')){
 					let login_farward_url = ls.get('login_farward_url');
-					alert(login_farward_url);
 
-					if(GetQueryByString('code')){
-
-						if(login_farward_url){
-							location.href = login_farward_url;
-						}else{
-							uni.switchTab({
-								url: '/pages/index/index'
-							})
-						}
+					if(login_farward_url){
+						location.href = login_farward_url;
 					}else{
-
-						//不是微信登录
-						if(history.length>1){
-							history.back();
-						}else{
-							uni.switchTab({
-								url: '/pages/index/index'
-							})
-						}
+						uni.switchTab({
+							url: '/pages/index/index'
+						})
 					}
-					// location.href = ls.get('login_farward_url');//没办法
-					// //alert(history.length);
-					// //hack navigateBack无效
-					// if(history.length>1){
-					// 	history.back();
-					//
-					// }else{
-					// 	uni.switchTab({
-					// 		url: '/pages/index/index'
-					// 	})
-					// }
+				}else{
 
-					return;
-
-					// #endif
-
-
-					var pages = getCurrentPages();
-					console.log('pages is',pages)
-					var currPage = pages[pages.length - 1]; //当前页面
-					var prevPage = pages[pages.length - 2]; //上一个页面
-
-					//只有登陆页的话
-					if(pages.length<2){
-
-
-
-						// uni.switchTab({
-						// 	url: '/pages/index/index'
-						// })
-						// return;
-
+					//不是微信登录
+					if(history.length>1){
+						history.back();
+					}else{
+						uni.switchTab({
+							url: '/pages/index/index'
+						})
 					}
+				}
+				// location.href = ls.get('login_farward_url');//没办法
+				// //alert(history.length);
+				// //hack navigateBack无效
+				// if(history.length>1){
+				// 	history.back();
+				//
+				// }else{
+				// 	uni.switchTab({
+				// 		url: '/pages/index/index'
+				// 	})
+				// }
 
-					uni.navigateBack()
+				return;
+
+				// #endif
+
+
+				var pages = getCurrentPages();
+				console.log('pages is',pages)
+				var currPage = pages[pages.length - 1]; //当前页面
+				var prevPage = pages[pages.length - 2]; //上一个页面
+
+				//只有登陆页的话
+				if(pages.length<2){
+
+
 
 					// uni.switchTab({
 					// 	url: '/pages/index/index'
 					// })
-				}, 200)
+					// return;
+
+				}
+
+				uni.navigateBack()
+
+				// uni.switchTab({
+				// 	url: '/pages/index/index'
+				// })
 			}
 
 		},
