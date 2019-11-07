@@ -11,8 +11,11 @@
 			<view class="nickName">
 				{{pro.disInfo.Shop_Name}}
 			</view>
-			<view class="juewei">
+			<view  v-if="pro.sha_config.Sha_Agent_Type==1&&pro.sha_config.is_apply" class="juewei"  @click="goGudong">
 				立即申请
+			</view>
+			<view  v-else class="juewei" @click="goGudong">
+				暂不可申请
 			</view>
 		</view>
 		<view class="moneySum">
@@ -36,79 +39,37 @@
 			</view>
 			<view class="chakan" @click="goFinance">
 				查看明细
-				<image src="/static/fenxiao/chakan.png" ></image>
+				<image class="image" src="https://new401.bafangka.com/static/client/fenxiao/chakan.png" ></image>
 			</view>
 		</view>
-		<circleTitle title="我的数据"></circleTitle>
-		<view class="myData">
-			<view class="myDataTop">
-				<view class="td">
-					自身消费额
+		<circleTitle title="股东门槛说明"></circleTitle>
+		<view class="xiang">
+			<view class="xiangCenter">
+				<view class="xiangLeft">
+					申请条件:
 				</view>
-				<view class="shu"></view>
-				<view class="td">
-					自身销售额
-				</view>
-				<view class="shu"></view>
-				<view class="td">
-					团队销售额
-				</view>
-			</view>
-			<view class="myDataTop myDataBottom">
-				<view class="td">
-					¥<text>{{pro.sha_config.Sha_Rate.Selfpro}}</text>
-				</view>
-				<view class="shu"></view>
-				<view class="td">
-					¥<text>{{pro.self_sales}}</text>
-				</view>
-				<view class="shu"></view>
-				<view class="td">
-					¥<text>{{pro.sha_config.Sha_Rate.Teampro}}</text>
+				<view class="xiangRight">
+					<view  class="view" v-if="pro.sha_config.Sha_Rate.sha.Level>0">
+						分销商等级:{{pro.sha_config.Sha_Rate.sha.Level_name}}
+					</view>
+					<view  class="view" v-if="pro.sha_config.Sha_Rate.sha.Protitle>0">
+						爵位等级:{{pro.sha_config.Sha_Rate.sha.Protitle_name}}
+					</view>
+					<view  class="view">
+						个人消费额:{{pro.sha_config.Sha_Rate.sha.Selfpro}}
+					</view>
+					<view  class="view">
+						团队销售额:{{pro.sha_config.Sha_Rate.sha.Teampro}}
+					</view>
 				</view>
 			</view>
-		</view>
-		<circleTitle title="爵位晋升说明"></circleTitle>
-		<view class="description">
-			<view class="t1">
-				<view class="names">
-					名称
+			<view class="xiangBottom">
+				<view class="xiangBottomT">
+					所需金额:
 				</view>
-				<view class="zishen">
-					自身消费额
+				<view class="xiangBottomB">
+					¥<text class="text">{{pro.sha_config.Sha_Rate.sha.price}}</text>(<block v-if="!pro.sha_config.is_apply">暂未达到申请条件</block><block v-if="pro.sha_config.is_apply">已达到申请条件</block>)
 				</view>
-				<view class="zishen">
-					自身销售额
-				</view>
-				<view class="zishen">
-					团队销售额
-				</view>
-				<view class="zishen rightZ">
-					奖励百分比
-				</view>
-			</view>
-			<view class="t1 t2"  v-for="(item,index) of pro.Pro_Title_Level"  :key="item">
-				<view class="names">
-					{{item.Name}}
-				</view>
-				<view class="zishen">
-					￥{{item.Consume}}
-				</view>
-				<view class="zishen">
-					￥{{item.Sales_Self}}
-				</view>
-				<view class="zishen">
-					￥{{item.Sales_Group}}
-				</view>
-				<view class="zishen rightZ">
-					{{item.Bonus}}%
-				</view>
-			</view>
-		</view>
-		<circleTitle title="名词解释"></circleTitle>
-		<view class="noun">
-			<view class="viewq" v-for="(i,j) of pro.noun_desc" :key="j">
-				{{j+1}}、{{i}}
 			</view>
 		</view>
 	</view>
@@ -135,6 +96,11 @@
 			this.shaInit();
 		},
 		methods:{
+			goGudong(){
+				uni.navigateTo({
+					url:'../addGudong/addGudong'
+				})
+			},
 			goFinance(){
 				uni.navigateTo({
 					url:'../finance/finance?index=2'
@@ -330,6 +296,64 @@
 			font-size: 26rpx;
 			color: #666666;
 			line-height: 50rpx;
+		}
+	}
+.xiang{
+		width: 710rpx;
+		margin: 0 auto;
+		margin-bottom: 25rpx;
+		border-radius: 20rpx;
+		padding: 25rpx 34rpx 33rpx 34rpx;
+		background-color: #FFFFFF;
+		box-sizing: border-box;
+		.xiangTop{
+			width:186rpx;
+			height:56rpx;
+			line-height: 56rpx;
+			background:rgba(255,242,242,1);
+			border-radius:28rpx;
+			margin: 0 auto;
+			font-size: 30rpx;
+			color: #333333;
+			text-align: center;
+		}
+		.xiangCenter{
+			width: 642rpx;
+			display: flex;
+			margin-top: 24rpx;
+			.xiangLeft{
+				font-size: 28rpx;
+				color: #333333;
+				margin-right: 10rpx;
+				height: 50rpx;
+				line-height: 50rpx;
+			}
+			.xiangRight{
+				.view{
+					font-size: 24rpx;
+					color: #666666;
+					height: 50rpx;
+					line-height: 50rpx;
+				}
+			}
+		}
+		.xiangBottom{
+			display: flex;
+			margin-top: 34rpx;
+			height: 27rpx;
+			line-height: 27rpx;
+			.xiangBottomT{
+				font-size: 28rpx;
+				color: #333333;
+				margin-right: 10rpx;
+			}
+			.xiangBottomB{
+				font-size: 24rpx;
+				color: #F43131;
+				.text{
+					font-size: 32rpx;
+				}
+			}
 		}
 	}
 </style>

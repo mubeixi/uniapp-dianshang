@@ -1,16 +1,16 @@
 <template>
   <div style="position:relative;">
 
-    <view class="top">
+    <cover-view class="top">
         <cover-image class="imgm" src="/static/back.png" @click="goBack" ></cover-image>
         <cover-image class="imgm cart" src="/static/cart.png" @click="goCart" ></cover-image>
-    </view>
+    </cover-view>
 	<!-- 轮播 -->
 	<view class="uni-padding-wrap">
 		<view class="page-section swiper">
 			<view class="page-section-spacing" v-if="(product.video_url && showVideo)">
-				<video class="video" @play="play" @pause="pause" :src="product.video_url"  show-mute-btn="true" muted bindfullscreenchange="changeHiddenBtns" :poster="product.cover_url?product.cover_url:''" show-center-play-btn	 controls>
-				</video>
+				<!-- <video class="video" @play="play" @pause="pause" :src="product.video_url"  show-mute-btn="true" muted bindfullscreenchange="changeHiddenBtns" :poster="product.cover_url?product.cover_url:''" show-center-play-btn	 controls>
+				</video> -->
 				<view class="change-btn" v-if="isShowBtn">
 					<cover-view  :class="[showVideo?'active':'','shipin']" @click="change_view(1)">视频</cover-view>
 					<cover-view  :class="[showVideo?'':'active','tupian']" @click="change_view(2)">图片</cover-view>
