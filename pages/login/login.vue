@@ -578,15 +578,41 @@
 
 
 					// #ifdef H5
-					//hack navigateBack无效
-					if(history.length>1){
-						history.back();
+					//微信登录才这么走
+					let login_farward_url = ls.get('login_farward_url');
+					alert(login_farward_url);
 
+					if(GetQueryByString('code')){
+
+						if(login_farward_url){
+							location.href = login_farward_url;
+						}else{
+							uni.switchTab({
+								url: '/pages/index/index'
+							})
+						}
 					}else{
-						uni.switchTab({
-							url: '/pages/index/index'
-						})
+
+						//不是微信登录
+						if(history.length>1){
+							history.back();
+						}else{
+							uni.switchTab({
+								url: '/pages/index/index'
+							})
+						}
 					}
+					// location.href = ls.get('login_farward_url');//没办法
+					// //alert(history.length);
+					// //hack navigateBack无效
+					// if(history.length>1){
+					// 	history.back();
+					//
+					// }else{
+					// 	uni.switchTab({
+					// 		url: '/pages/index/index'
+					// 	})
+					// }
 
 					return;
 
