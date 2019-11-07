@@ -1,19 +1,23 @@
 <template>
   <div style="position:relative;">
-
-    <cover-view class="top">
-        <cover-image class="imgm" src="/static/back.png" @click="goBack" ></cover-image>
-        <cover-image class="imgm cart" src="/static/cart.png" @click="goCart" ></cover-image>
-    </cover-view>
+	  
+	<view class="top">
+		<image class="imgm" src="/static/back.png" @click="goBack" ></image>
+		<image class="imgm cart" src="/static/cart.png" @click="goCart" ></image>
+	</view>
 	<!-- 轮播 -->
 	<view class="uni-padding-wrap">
 		<view class="page-section swiper">
 			<view class="page-section-spacing" v-if="(product.video_url && showVideo)">
-				<!-- <video class="video" @play="play" @pause="pause" :src="product.video_url"  show-mute-btn="true" muted bindfullscreenchange="changeHiddenBtns" :poster="product.cover_url?product.cover_url:''" show-center-play-btn	 controls>
-				</video> -->
-				<view class="change-btn" v-if="isShowBtn">
-					<cover-view  :class="[showVideo?'active':'','shipin']" @click="change_view(1)">视频</cover-view>
-					<cover-view  :class="[showVideo?'':'active','tupian']" @click="change_view(2)">图片</cover-view>
+				<video class="video" @play="play" @pause="pause" :src="product.video_url"  show-mute-btn="true" muted bindfullscreenchange="changeHiddenBtns" :poster="product.cover_url?product.cover_url:''" show-center-play-btn	 controls>
+					<!-- #ifdef APP-PLUS -->
+					<!-- <cover-image v-if="showVideo" class="imgms" src="/static/back.png" @click="goBack" ></cover-image>
+					<cover-image v-if="showVideo" class="carts" src="/static/cart.png" @click="goCart" ></cover-image> -->
+					<!-- #endif -->
+				</video>
+				<view class="change-btn" >
+					<cover-view  v-if="showVideo" :class="[showVideo?'active':'','shipin']" @click="change_view(1)">视频</cover-view>
+					<cover-view  v-if="showVideo"  :class="[showVideo?'':'active','tupian']" @click="change_view(2)">图片</cover-view>
 				</view>
 			</view>
 			<view class="page-section-spacing" v-else>
@@ -292,7 +296,7 @@ export default {
 	},
 	// #endif
 	onLoad: function (option) {
-
+		
 		this.Products_ID = option.Products_ID;
 		this.postData.prod_id = option.Products_ID;
 		this.checkProdCollected();
@@ -314,7 +318,34 @@ export default {
 		addProductViews({prod_id:this.Products_ID}).then().catch()
 	 },
 	onShow(){
-
+		// #ifdef APP-PLUS
+		var icon = plus.nativeObj.View.getViewById("icon");
+		var icons = plus.nativeObj.View.getViewById("icons");
+		console.log(icon,"sssssssssssssssssssssss")
+		if(icon&&icons){
+			icon.show();
+			icons.show();
+		}else{
+			this.createtab();
+			this.createtabs();
+		}	
+		// #endif
+	},
+	onUnload(){
+		// #ifdef APP-PLUS
+			var icon = plus.nativeObj.View.getViewById("icon");
+			var icons = plus.nativeObj.View.getViewById("icons");
+			icon.hide();
+			icons.hide();
+		// #endif
+	},
+	onHide(){
+		// #ifdef APP-PLUS
+			var icon = plus.nativeObj.View.getViewById("icon");
+			var icons = plus.nativeObj.View.getViewById("icons");
+			icon.hide();
+			icons.hide();
+		// #endif
 	},
 	computed:{
 	...mapState(['initData'])
@@ -359,6 +390,50 @@ export default {
 				}
 			},
     methods: {
+		createtab: function(){
+		        // 设置水平居中位置
+				var bitmap = new plus.nativeObj.Bitmap('bmp1');
+		        var view = new plus.nativeObj.View('icon', {
+		            top: '30px',
+		            left: '10px',
+		            width: '30px',
+		            height: '30px'
+		        });
+		        view.drawBitmap('/static/back.png', {
+		            top: '0px',
+		            left: '0px',
+		            width: '100%',
+		            height: '100%'
+		        });
+		        view.addEventListener("click", function(e) {
+		           uni.navigateBack({
+		               delta: 1
+		           });
+		        }, false);
+		        view.show();
+		    },
+			createtabs: function(){
+			        // 设置水平居中位置
+					var bitmap = new plus.nativeObj.Bitmap('bmp2');
+			        var view = new plus.nativeObj.View('icons', {
+			            top: '30px',
+			            right: '10px',
+			            width: '30px',
+			            height: '30px'
+			        });
+			        view.drawBitmap('/static/cart.png', {
+			            top: '0px',
+			            left: '0px',
+			            width: '100%',
+			            height: '100%'
+			        });
+			        view.addEventListener("click", function(e) {
+			          uni.switchTab({
+			          	url: '../cart/cart'
+			          })
+			        }, false);
+			        view.show();
+			    },
 		// 开始播放事件
 		play(){
 			this.isShowBtn = false;
@@ -1027,10 +1102,24 @@ export default {
         z-index: 10;
         width: 95%;
     }
-    .top .imgm{
+    .imgm{
         width: 30px;
         height: 30px;
     }
+	.imgms{
+		width: 30px;
+		height: 30px;
+		position: absolute;
+		top: 30px;
+		left: 10px;
+	}
+	.carts{
+		width: 30px;
+		height: 30px;
+		position: absolute;
+		top: 30px;
+		right: 10px !important;
+	}
     .ticks,.shareinfo {
         background: #fff;
         width: 100%;
