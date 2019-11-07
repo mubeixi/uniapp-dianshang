@@ -14,7 +14,7 @@
 			<view  v-if="pro.sha_config.Sha_Agent_Type==1&&pro.sha_config.is_apply" class="juewei"  @click="goGudong">
 				立即申请
 			</view>
-			<view  v-else class="juewei" @click="goGudong">
+			<view  v-else class="juewei" >
 				暂不可申请
 			</view>
 		</view>
