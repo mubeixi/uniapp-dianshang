@@ -91,6 +91,7 @@
 			width: 90rpx;
 			height: 90rpx;
 			border-radius: 50%;
+			overflow: hidden;
 			image{
 				width: 100%;
 				height: 100%;
