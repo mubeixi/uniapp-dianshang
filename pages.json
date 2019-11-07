@@ -489,6 +489,18 @@
             	"navigationBarTitleText": "订单详情"
             }
         }
+        ,{
+            "path" : "pages/addGudong/addGudong",
+            "style" : {
+            	"navigationBarTitleText": "股东申请"
+            }
+        }
+        ,{
+            "path" : "pages/regionRecord/regionRecord",
+            "style" : {
+            	"navigationBarTitleText": "申请记录"
+            }
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

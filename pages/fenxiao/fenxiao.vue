@@ -107,7 +107,7 @@
 					</view>
 				</view>
 				<view class="td" @click="goGudong"  style="border-bottom: 0rpx;"  v-if="data.dis_config.Sha_Agent_Type==1">
-					<image  class="imgs" src="https://new401.bafangka.com/static/client/fenxiao/quyu.png" ></image>
+					<image  class="imgs" src="/static/gudong.jpg" ></image>
 					<view class="views">
 						股东
 					</view>

@@ -13,7 +13,7 @@
 					{{pro.agent_identity}}
 				</view>
 			</view>
-			<view  v-if="pro.agent_identity==1&&(pro.agent_identity.tow.is_apply||pro.agent_identity.pro.is_apply||pro.agent_identity.cit.is_apply||pro.agent_identity.cou.is_apply)" class="juewei" @click="goAddInfo">
+			<view  v-if="pro.agent_rate.Agentenable==1&&(pro.agent_rate.tow.is_apply||pro.agent_rate.pro.is_apply||pro.agent_rate.cit.is_apply||pro.agent_rate.cou.is_apply)" class="juewei" @click="goAddInfo">
 				立即申请
 			</view>
 			<view  v-else class="juewei">
@@ -63,6 +63,9 @@
 					<view  class="view">
 						个人消费额:{{item.Selfpro}}
 					</view>
+					<view  class="view">
+						团队销售额:{{item.Teampro}}
+					</view>
 				</view>
 			</view>
 			<view class="xiangBottom">
@@ -70,7 +73,7 @@
 					所需金额:
 				</view>
 				<view class="xiangBottomB">
-					¥<text class="text">{{item.Teampro}}</text>(<block v-if="!item.is_apply">暂未达到申请条件</block><block v-if="item.is_apply">已达到申请条件</block>)
+					¥<text class="text">{{item.Provincepro}}</text>(<block v-if="!item.is_apply">暂未达到申请条件</block><block v-if="item.is_apply">已达到申请条件</block>)
 				</view>
 			</view>
 		</view>
