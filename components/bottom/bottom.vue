@@ -22,7 +22,7 @@
 			</div>
 		</div>
 		<div class="rightss">
-			<block v-if="!recieve">
+			<block v-if="!(recieve || isVirtual)">
 				<div class="dan bTitle" @click="addCart">
 						{{first}}
 				</div>
@@ -30,7 +30,7 @@
 						{{second}}
 				</div>
 			</block>
-			<div class="all" @click="lingqu" :class="canSubmit?'':'disable'" v-else>立即领取</div>
+			<div class="all" @click="lingqu" :class="canSubmit?'':'disable'" v-else>{{isVirtual ? '立即购买' : '立即领取'}}</div>
 		</div>
 	</div>
 </template>
@@ -55,8 +55,12 @@
 				type: Boolean,
 				default: false
 			},
-			// 详情页 没有购物车和立即购买按钮，只有 立即领取
+			// 详情页 没有购物车和立即购买按钮，只有 立即领取,虚拟产品，也是只有一个按钮，显示立即购买
 			recieve: {
+				type: Boolean,
+				default: false
+			},
+			isVirtual: {
 				type: Boolean,
 				default: false
 			},

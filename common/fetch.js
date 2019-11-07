@@ -235,6 +235,10 @@ export const disApplyInit = (data, options) => fetch('dis_apply_init', data, opt
 //申请成为分销商
 export const disApply = (data, options) => fetch('dis_apply', data, options);
 
+//获取区域代理申请记录
+export const getAgentApply = (data, options) => fetch('get_agent_apply', data, options);
+//获取股东申请记录
+export const getShaApply = (data, options) => fetch('get_sha_apply', data, options);
 //购买分销商
 export const disBuy = (data, options) => fetch('dis_buy', data, options);
 //用户获取系统消息
@@ -250,6 +254,9 @@ export const getSignin = (data, options) => fetch('get_signin', data, options);
 
 //申请成为区域代理
 export const agentApply = (data, options) => fetch('agent_apply', data, options);
+//申请成为股东
+export const shaApply = (data, options) => fetch('sha_apply', data, options);
+
 //获取订单物流追踪
 export const getOrderExpress = (data, options) => fetch('get_order_express', data, options);
 //获取任务中心数据

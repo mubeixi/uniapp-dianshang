@@ -38,6 +38,22 @@
                 </view>
             </view>
         </view>
+		<view class="other" v-if="orderInfo.is_virtual == 1">
+			<view class="bd">
+                <view class="o_title  words">
+                    <span>购买人姓名</span>
+                    <input class="inputs" type="text" v-model="user_name"  placeholder="请填写姓名">
+                </view>
+            </view>
+		</view>
+		<view class="other" v-if="orderInfo.is_virtual == 1">
+			<view class="bd">
+                <view class="o_title  words">
+                    <span>购买人手机号</span>
+                    <input class="inputs" type="text" v-model="user_mobile"  placeholder="请填写手机号码">
+                </view>
+            </view>
+		</view>
         <view class="other" v-if="orderInfo.is_use_money == 1">
             <view class="bd">
                 <view class="o_title">
@@ -159,6 +175,8 @@ export default {
 					submited: false,  // 是否已经提交过，防止重复提交
 					back_address_id: 0,
 					gift: '',//有可能是赠品
+					user_name: '',
+					user_mobile: ''
         }
     },
 	filters: {
@@ -243,6 +261,26 @@ export default {
 						this.submited = false;
 						return;
 					}
+				}
+				if(this.orderInfo.is_virtual == 1) {
+					if(!this.user_name) {
+						uni.showToast({
+							title: '请填写购买人姓名',
+							icon: 'none'
+						});
+						this.submited = false;
+						return;
+					};
+					if(!this.user_mobile) {
+						uni.showToast({
+							title: '请填写购买人手机号',
+							icon: 'none'
+						});
+						this.submited = false;
+						return;
+					};
+					this.postData.user_name = this.user_name;
+					this.postData.user_mobile = this.user_mobile;
 				}
 				if(this.orderInfo.Order_Fyepay == 0) {
 					// 不需要运费，可以在本页面完成

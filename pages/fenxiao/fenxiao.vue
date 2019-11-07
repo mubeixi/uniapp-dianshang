@@ -107,7 +107,7 @@
 					</view>
 				</view>
 				<view class="td" @click="goGudong"  style="border-bottom: 0rpx;"  v-if="data.dis_config.Sha_Agent_Type==1">
-					<image  class="imgs" src="https://new401.bafangka.com/static/client/fenxiao/quyu.png" ></image>
+					<image  class="imgs" src="/static/gudong.jpg" ></image>
 					<view class="views">
 						股东
 					</view>
@@ -120,7 +120,7 @@
 
 <script>
 	import {pageMixin} from "../../common/mixin";
-	import {getDisInit} from '../../common/fetch.js'
+	import {getDisInit,get_user_info} from '../../common/fetch.js'
 	import {mapActions,mapState,mapGetters} from 'vuex';
 
 	export default {
@@ -145,8 +145,18 @@
 
 		},
 		async onShow() {
+			if(JSON.stringify(this.userInfo) != "{}"){
+				get_user_info().then(res=>{
+					this.setUserInfo(res.data);
+				},err=>{
+					
+				}).catch(e=>{
+					console.log(e)
+				})
+			}
 			//获取分销首页
 			this.getDisInit();
+			
 
 			//this.userInfo = await this.getUserInfo();
 		},
