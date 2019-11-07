@@ -1,5 +1,6 @@
 // #ifdef APP-PLUS
 import {toast} from "./index";
+import {fun} from "./index";
 
 class Push {
 
@@ -7,28 +8,31 @@ class Push {
         var _this = this;
         plus.push.addEventListener("click", function (msg) {
             console.log('click event ',msg)
-            // switch (msg.payload) {
-            //     case "LocalMSG":
-            //         toast('点击本地创建消息启动：')
-            //         break;
-            //     default:
-            //         toast('点击离线推送消息启动：')
-            //         break;
-            // }
-            // if (msg.payload) {
-            //     _this.handle(msg);
-            // }
+            switch (msg.payload) {
+                case "LocalMSG":
+                    toast('点击本地创建消息启动：')
+                    break;
+                default:
+                    toast('点击离线推送消息启动：')
+                    break;
+            }
+            if (msg.payload) {
+                _this.handle(msg);
+            }
         }, false);
         plus.push.addEventListener("receive", function (msg) {
             console.log('receive event ',msg)
-            // if (msg.aps) {
-            //     // Apple APNS message
-            //     toast('接收到在线APNS消息')
-            // } else {
-            //    toast('接收到在线透传消息')
-            // }
+            if (msg.aps) {
+                // Apple APNS message
+                console.log('接收到在线APNS消息')
+                return;
+            } else {
+                console.log('接收到在线透传消息')
+            }
+
             if (plus.os.name == 'iOS') {
-                if (msg.payload) {
+                //如果是自己模拟的消息，没有这个,因为local是自己加的参数
+                if (msg.payload && typeof msg.payload !='string') {
                     _this.notificationMessage(msg);
                 }
             } else {
@@ -44,12 +48,49 @@ class Push {
 
     static handle = function(msg) {
         var _this = this;
+
+        console.log('click handle:',msg)
         //清除ios推送小红点
         _this.cancelPushClear();
+
+        let payloadStr = msg.payload, payload = null;
+        if(!payloadStr){
+            return;
+        }
+        payload = JSON.parse(payloadStr);
+        console.log("handle arugment is:",payload)
+        // {
+        //     "action": "redirect",
+        //     "channel": "moneychange",
+        //     "content": "转出余额1",
+        //     "ext": {
+        //     "path": "pages/balanceCenter/balanceCenter?users_id=wkbq6nc2kc"
+        // },
+        //     "time": 1573111452,
+        //     "title": "余额变动",
+        //     "user_id": 48,
+        //     "local": 1
+        // }
+
+        switch (payload.action) {
+            case 'redirect':
+                let path = payload.ext.path;
+                if(path[0]!='/'){path = '/'+path}
+                //用这个就不怕是switchTab了
+                fun.linkTo({link:path, linkType:'pushAction'});
+                break
+
+
+        }
+
+
+
     }
 
     static notificationMessage = function(msg){
-        var content = '您有订单需要处理';//你要展示的提示
+
+        var content = msg.payload.content?msg.payload.content:'收到消息';//你要展示的提示
+
         var _this = this;
         var jsonData = '';
         switch(plus.os.name) {
@@ -68,9 +109,9 @@ class Push {
      * @param {Object} msg
      * @param {Object} content
      */
-    static createLocalPushMsg = function(str, jsonData,content) {
+    static createLocalPushMsg = function(content, jsonData) {
         //创建一个符合你自己要显示推送通知
-        this.createMessage(str, jsonData);
+        this.createMessage(content, jsonData);
     }
 
 
@@ -80,16 +121,23 @@ class Push {
      * @param {Object} jsonData
      * @param {Object} options
      */
-    static createMessage = function(str, jsonData, options) {
+    static createMessage = function(str, jsonData) {
         switch(plus.os.name) {
             case "Android":
                 jsonData = jsonData;
                 break;
             case "iOS":
-                jsonData = jsonData.eid;
+                // 、、.eid
+                jsonData = jsonData;
                 break;
         }
-        plus.push.createMessage(str, jsonData, options);
+
+        jsonData.local = 1;//本地模拟的
+
+        var options = {cover:false};
+
+        console.log('手动添加到通知中心的数据是',jsonData)
+        plus.push.createMessage(str, JSON.stringify(jsonData), options);
     }
 
 
