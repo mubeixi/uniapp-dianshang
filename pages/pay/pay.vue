@@ -15,7 +15,7 @@
 			<image class="img" src="https://new401.bafangka.com/static/client/wait.png" />
 			<span class="state-desc">等待买家付款</span>
 		</div>
-		<div class="address">
+		<div class="address" v-if="orderInfo.Order_IsVirtual == 0">
 			<image class="loc_icon" src="https://new401.bafangka.com/static/client/location.png" alt="" />
 			<div class="add_msg">
 				<div class="name">收货人：{{orderInfo.Address_Name}} <span>{{orderInfo.Address_Mobile}}</span></div>

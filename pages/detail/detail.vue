@@ -102,7 +102,7 @@
 
 	</div>
     <div style="height:60px;background: white;"></div>
-	<bottom @cartHandle="addCart" @directHandle="directBuy" @goGet="lingqu" @collect="collect" :collected="isCollected" :recieve="recieve" :canSubmit="canSubmit"></bottom>
+	<bottom @cartHandle="addCart" @directHandle="directBuy" @goGet="lingqu" @collect="collect" :collected="isCollected" :recieve="recieve" :isVirtual="isVirtual" :canSubmit="canSubmit"></bottom>
 	<popupLayer ref="popupLayer" :direction="'top'" >
 		<div class="shareinfo" v-if="type=='share'">
 			<div class="s_top">
@@ -266,6 +266,7 @@ export default {
 			isLoading:false,
 			showVideo: true, // 是否展示视频
 			isShowBtn: true, //是否显示视频图片切换按钮
+			isVirtual: false, // 是否虚拟产品
         }
     },
     components: {
@@ -509,6 +510,10 @@ export default {
 		},
 		// 立即领取
 		lingqu(){
+			if(this.isVirtual) {
+				this.directBuy();
+				return;
+			}
 			this.postData.cart_key = 'DirectBuy';
 			// 领取礼物
 			this.postData.atrid_str = this.gift_atr_str;
@@ -838,6 +843,7 @@ export default {
 			await getProductDetail(data).then(res=>{
 				product = res.data
 				this.product = res.data;
+				this.isVirtual = res.data.Products_IsVirtual == 1; 
 				this.postData.count = res.data.Products_Count;
 				if(res.data.skujosn) {
 					let skujosn = res.data.skujosn;

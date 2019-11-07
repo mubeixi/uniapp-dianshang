@@ -19,7 +19,7 @@
 		</div>
 		<view class="address order-id">订单号：{{orderInfo.Order_ID}}</view>
 		<view class="address">下单时间: {{orderInfo.Order_CreateTime | formatTime}}</view>
-		<div class="address" v-if="orderInfo.is_virtual == 0 ">
+		<div class="address" v-if="orderInfo.Order_IsVirtual == 0 ">
 			<image class="loc_icon" src="https://new401.bafangka.com/static/client/location.png" alt="" />
 			<div class="add_msg">
 				<div class="name">收货人：{{orderInfo.Address_Name}} <span>{{orderInfo.Address_Mobile}}</span></div>
@@ -41,7 +41,7 @@
 			</div>
 		</div>
 
-		<div class="other">
+		<div class="other" v-if="orderInfo.Order_IsVirtual == 0">
 			<div class="bd">
 				<div class="o_title">
 					<span>运费选择</span>
@@ -52,6 +52,22 @@
 				</div>
 			</div>
 		</div>
+		<view class="other" v-if="orderInfo.Order_IsVirtual == 1">
+			<view class="bd">
+                <view class="o_title">
+                    <span>购买人姓名</span>
+                    <span class="c8">{{user_name}}</span>
+                </view>
+            </view>
+		</view>
+		<view class="other" v-if="orderInfo.Order_IsVirtual == 1">
+			<view class="bd">
+                <view class="o_title">
+                    <span>购买人手机号</span>
+                   <span class="c8">{{user_mobile}}</span>
+                </view>
+            </view>
+		</view>
 		<div class="other">
 			<div class="bd">
 				<div class="o_title">
@@ -231,6 +247,8 @@
 				pay_arr: [], // 支付方式
 				isOpen: false, //是否自动弹出
 				user_money: 0,
+				user_name: '',
+				user_mobile: ''
 			}
 		},
 		onLoad(options) {
@@ -399,6 +417,8 @@
 						this.openInvoice = this.orderInfo.Order_NeedInvoice > 0;
 						this.invoice_info = this.orderInfo.Order_InvoiceInfo;
 						this.order_remark = this.orderInfo.Order_Remark;
+						this.user_name = this.orderInfo.Address_Name;
+						this.user_mobile = this.orderInfo.Address_Mobile;
 						if(this.showDirect && this.orderInfo.Order_Fyepay > 0) {
 							// 需要支付的金额大于0 ，直接弹出支付方式，简化支付流程
 							_self.$nextTick().then(()=>{
