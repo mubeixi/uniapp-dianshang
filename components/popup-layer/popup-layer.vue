@@ -84,6 +84,7 @@
 				return;
 			},
 			show(events) {
+				console.log('显示popup')
 				this.ifshow = true;
 				let _open = setTimeout(() => {
 					this.translateValue = 0;
