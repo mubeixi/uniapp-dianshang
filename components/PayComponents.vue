@@ -19,6 +19,7 @@
                     {{item}} <text>￥{{pay_money}}</text>
                 </div>
             </div>
+            <div class="safearea-box2"></div>
         </view>
 
         <view v-if="aliPayUrl" class="aliPayUrl">
@@ -94,7 +95,7 @@ export default {
             type:String
         },
         paySuccessCall:{
-            //type:Function,
+            // type:Function,
             default:noop
         },
         payErrorCall:{
@@ -143,6 +144,11 @@ export default {
     },
     created(){
         let self = this;
+
+        setTimeout(function(){
+            console.log('paySuccessCall is 3333333333',self,self.paySuccessCall)
+        },2000)
+
         //自动打开
         if(this.isOpen){
           setTimeout(function(){
@@ -343,7 +349,7 @@ export default {
 
                     orderPay(payConf,{errtip:false}).then(res=>{
                         console.log(res)
-                        this.paySuccessCall();
+                        _self.paySuccessCall();
                     },err=>{
                         uni.showModal({
                             title: '提示',
@@ -484,6 +490,13 @@ export default {
         overflow: hidden;
         /*border-top-left-radius: 20rpx;*/
         /*border-top-right-radius: 20rpx;*/
+    }
+
+    .safearea-box2{
+        height: constant(safe-area-inset-bottom);
+        height: env(safe-area-inset-bottom);
+        width: 100%;
+        background: white;
     }
 
     .iMbx {

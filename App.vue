@@ -5,6 +5,8 @@
 	import {APP_USERS_ID,isDev} from "./common/env";
 	// #endif
 
+
+
     // #ifdef APP-PLUS
 
     //import {bindUserClientId} from "./common/fetch";
@@ -37,6 +39,12 @@
             console.log('extConfig info is',extConfig);
             let users_id = extConfig.users_id;
             ls.set('users_id',users_id);
+            // #endif
+
+            //头条的需要写入一下
+            // #ifdef MP-TOUTIAO
+            console.log('APP_USERS_ID is ',APP_USERS_ID)
+            ls.set('users_id',APP_USERS_ID);
             // #endif
 
 
@@ -82,10 +90,7 @@
 
 			// #endif
 
-            //头条的需要写入一下
-            // #ifdef MP-TOUTIAO
-            ls.set('users_id',APP_USERS_ID);
-            // #endif
+
 
 			// #ifdef H5
 			//ls.set('openid','')
@@ -113,10 +118,19 @@
 /* #ifdef MP */
 page{
     /*background: #f8f8f8;*/
-    /*padding-bottom: constant(safe-area-inset-bottom);*/
-    /*padding-bottom: env(safe-area-inset-bottom);*/
+    padding-bottom: constant(safe-area-inset-bottom);
+    padding-bottom: env(safe-area-inset-bottom);
     font-size: 16px;
     font-family:-apple-system,'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
+}
+.safearea-box{
+    height: constant(safe-area-inset-bottom);
+    height: env(safe-area-inset-bottom);
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 2;
+    background: white;
 }
 /* #endif */
 
