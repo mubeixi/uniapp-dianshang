@@ -287,7 +287,7 @@
 			// #ifdef MP-TOUTIAO
 			this.$store.commit('SET_PAY_TEMP_OBJ',this);
 			// #endif
-			
+
 			// #ifdef H5
 
 			if (isWeiXin()) {
@@ -540,10 +540,57 @@
 				// 	})
 				// },1000)
 			},
-			paySuccessCall(){
+			paySuccessCall(res){
+
+				var _that = this;
+				console.log('支付成功回调',res)
+				if(res && res.code && res.code==2){
+					_that.payFailCall()
+					return;
+				}
+
+				if(res && res.code && res.code==1){
+					toast('用户取消支付','none')
+					return;
+				}
+
+				if(res && res.code && res.code==9){
+					uni.showModal({
+						title: '提示',
+						content: '是否完成支付',
+						cancelText:'未完成',
+						confirmText:'已支付',
+						success: function (res) {
+							if (res.confirm) {
+
+								uni.redirectTo({
+									url:'/pages/order/order?index=2'
+								})
+
+							} else if (res.cancel) {
+
+
+
+							}
+						}
+					});
+					return;
+				}
+
+				//0：支付成功 1：支付超时 2：支付失败 3：支付关闭 4：支付取消 9：订单状态开发者自行获取
+
+				if(res && res.code && res.code==4){
+					toast('用户取消支付','none')
+					return;
+				}
+
+
 				uni.redirectTo({
 					url:'/pages/order/order?index=2'
 				})
+
+
+
 			},
 			// 取消输入支付密码
 			cancelInput() {
