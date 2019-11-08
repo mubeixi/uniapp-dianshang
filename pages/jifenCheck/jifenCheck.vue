@@ -31,28 +31,22 @@
             </view>
         </view>
 
-		<view style="height: 100rpx;">
-			<view class="order_total">
+<!--		<popup-layer ref="dialog" :direction="'top'">-->
+<!--			<div style="padding: 0rpx 10rpx;">-->
+<!--				666666666666666666666666666666666666666-->
+<!--			</div>-->
+<!--		</popup-layer>-->
 
-				<view class="submit" @click="form_submit">立即兑换</view>
+		<popup-layer ref="popMethod" :direction="'top'">
+			<view class="iMbx">
+				<view class="c_method" v-for="(item,index) in pay_arr" @click="chooseType(index)" :key="index">
+					{{item}} <text>￥{{shipping_price}}</text>
+				</view>
 			</view>
-		</view>
-        <popup-layer ref="popupRef" :direction="'top'">
-        	<view class="bMbx" v-if="type=='shipping'">
-        		<view class="fMbx">请选择物流公司</view>
-        		<view class="iMbx" v-for="(ship,shipid) in shipping_company" :key="shipid">
-        			<view>
-        				{{ship}}
-        			</view>
-					<radio-group @change="ShipRadioChange">
-						<radio :value="shipid" :checked="shipid==ship_current" style="float:right;" color="#F43131"/>
-					</radio-group>
-        		</view>
-        	</view>
-        	<view class="sure" @click="closeMethod">
-        		确定
-        	</view>
-        </popup-layer>
+		</popup-layer>
+
+
+
 		<view class="remind-wrap" v-if="remindAddress">
 			<view class="remind-add">
 				<view class="text-align-center mb20">新建收货地址</view>
@@ -76,13 +70,32 @@
 				</view>
 			</view>
 		</view>
-		<popup-layer ref="popMethod" :direction="'top'">
-			<view class="iMbx">
-				<view class="c_method" v-for="(item,index) in pay_arr" @click="chooseType(index)" :key="index">
-					{{item}} <text>￥{{shipping_price}}</text>
+
+		<popup-layer ref="popupRef" :direction="'top'">
+			<view class="bMbx" v-if="type=='shipping'">
+				<view class="fMbx">请选择物流公司</view>
+				<view class="iMbx" v-for="(ship,shipid) in shipping_company" :key="shipid">
+					<view>
+						{{ship}}
+					</view>
+					<radio-group @change="ShipRadioChange">
+						<radio :value="shipid" :checked="shipid==ship_current" style="float:right;" color="#F43131"/>
+					</radio-group>
 				</view>
 			</view>
+			<view class="sure" @click="closeMethod">
+				确定
+			</view>
 		</popup-layer>
+
+		<view class="order_total">
+			<view class="submit" @click="form_submit">立即兑换</view>
+		</view>
+
+
+
+
+
     </view>
 </template>
 
@@ -240,7 +253,7 @@ export default {
 				// 判断是否是待支付状态
 				if(res.data.Order_Status == 1) {
 					console.log('222')
-					console.log(this.$refs.popMethod)
+					//console.log(this.$refs.dialog)
 					this.$refs.popMethod.show();
 				}else if(res.data.Order_Status == 2) {
 					this.paySuccessCall();
@@ -943,7 +956,7 @@ export default {
         display: flex;
         align-items: center;
         background: #fff;
-        z-index: 100;
+        /*z-index: 100;*/
     }
     .submit {
         width: 100%;
