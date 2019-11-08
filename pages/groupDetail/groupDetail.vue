@@ -1,5 +1,5 @@
 <template>
-  <div style="position:relative;background-color:#f8f8f8">
+  <div style="position:relative;background-color:#f8f8f8" class="wrap">
     <div class="top">
        <image class="imgm" src="/static/back.png" @click="goBack" ></image>
        <image class="imgm cart" src="/static/cart.png" @click="goCart" ></image>
@@ -1014,6 +1014,12 @@ export default {
 </script>
 
 <style scoped lang="scss">
+	/* #ifdef MP-WEIXIN || MP-TOUTIAO */
+	.wrap{
+		padding-bottom: constant(safe-area-inset-bottom);
+		padding-bottom: env(safe-area-inset-bottom);
+	}
+	/* #endif */
 // 轮播样式
 .uni-padding-wrap{
 	width: 750upx;
