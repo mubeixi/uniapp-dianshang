@@ -380,7 +380,7 @@ export default {
 			height: 65rpx;
 			line-height: 65rpx;
 			background: #F4F4F4;
-			padding-left: 39rpx;
+			padding-left: 80rpx;
 			font-size: 26rpx;
 			color: #333;
 			box-sizing: border-box;
