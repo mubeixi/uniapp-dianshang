@@ -227,6 +227,7 @@ export default {
 			this.psdInput = false;
 		},
 		pswConfirm(){
+			if(!this.password) {return;}
 			jifenProdDuihuan({
 				Gift_ID: this.gift_id,
 				password: this.password,
