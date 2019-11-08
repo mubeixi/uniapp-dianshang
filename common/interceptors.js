@@ -29,6 +29,9 @@ export const ajax = (url,method,data,options)=>{
 
   console.log('ajax action is '+data.act);
 
+	// #ifdef MP-TOUTIAO
+		  console.log(data)
+	// #endif
 
 
   let URL = ENV.apiBaseUrl+url;
@@ -50,6 +53,10 @@ export const ajax = (url,method,data,options)=>{
               error('服务器去旅行了')
           }
           let res = ret.data;
+		  
+		  // #ifdef MP-TOUTIAO
+		  console.log(res)
+		  // #endif
 
 		 
 

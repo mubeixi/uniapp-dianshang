@@ -1,5 +1,5 @@
 <template>
-  <div style="position:relative;background-color:#f8f8f8" class="wrap">
+  <div style="position:relative;background-color:#f8f8f8" class="wrap" v-show="product.Products_ID">
     <div class="top">
        <image class="imgm" src="/static/back.png" @click="goBack" ></image>
        <image class="imgm cart" src="/static/cart.png" @click="goCart" ></image>
@@ -158,10 +158,12 @@
 				</div>
 				<!-- #endif -->
 
+				<!-- #ifndef MP-TOUTIAO -->
 				<div class="flex1" @click="shareFunc('pic')">
 					<image class='img' src="https://new401.bafangka.com/static/client/detail/share2.png" alt=""></image>
 					<div>分享海报</div>
 				</div>
+				<!-- #endif -->
     		</div>
     		<div class="s_bottom" @click="cancel">取消</div>
     	</div>
@@ -271,6 +273,7 @@
 			</form>
 		</div>
 	</div>
+  	<div class="safearea-box"></div>
   </div>
 </template>
 
@@ -1014,12 +1017,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-	/* #ifdef MP-WEIXIN || MP-TOUTIAO */
-	.wrap{
-		padding-bottom: constant(safe-area-inset-bottom);
-		padding-bottom: env(safe-area-inset-bottom);
-	}
-	/* #endif */
+
 // 轮播样式
 .uni-padding-wrap{
 	width: 750upx;
@@ -1465,6 +1463,10 @@ export default {
 		display: flex;
 		position: fixed;
 		bottom: 0;
+		/* #ifdef MP */
+		bottom: constant(safe-area-inset-bottom);
+		bottom: env(safe-area-inset-bottom);
+		/* #endif */
 		width: 100%;
 		background-color: #F8F8F8;
 		z-index: 9999;

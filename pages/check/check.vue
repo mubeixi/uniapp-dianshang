@@ -115,8 +115,10 @@
 				<form report-submit @submit="form_submit">
 					<button formType="submit" class="submit">提交订单</button>
 				</form>
-			</view>	
-		</view>	
+			</view>
+			<div class="safearea-box"></div>
+		</view>
+
         <popup-layer ref="popupRef" :direction="'top'">
         	<view class="bMbx" v-if="type=='shipping'">
         		<view class="fMbx">运费选择</view>
@@ -237,7 +239,7 @@ export default {
 			get_user_info().then(res=>{
 				this.setUserInfo(res.data);
 			},err=>{
-				
+
 			}).catch(e=>{
 				console.log(e)
 			})
@@ -567,6 +569,10 @@ export default {
 <style scoped lang="scss">
     .wrap {
         background: #fff;
+		/* #ifdef MP */
+		padding-bottom: constant(safe-area-inset-bottom);
+		padding-bottom: env(safe-area-inset-bottom);
+		/* #endif */
     }
     /* 收货地址 start */
     .address {
@@ -752,6 +758,10 @@ export default {
         height: 100rpx;
         position: fixed;
         bottom: 0;
+		/* #ifdef MP */
+		bottom: constant(safe-area-inset-bottom);
+		bottom: env(safe-area-inset-bottom);
+		/* #endif */
         width: 100%;
         display: flex;
         align-items: center;
