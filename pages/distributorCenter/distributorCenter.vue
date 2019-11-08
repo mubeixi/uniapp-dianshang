@@ -338,13 +338,56 @@
 
 				this.disBuy();
 			},
-			paySuccessCall(){
+			paySuccessCall(res){
+
+				var _that = this;
+				console.log('支付成功回调',res)
+				if(res && res.code && res.code==2){
+
+					return;
+				}
+
+				if(res && res.code && res.code==1){
+					toast('用户取消支付','none')
+					return;
+				}
+
+				if(res && res.code && res.code==9){
+					uni.showModal({
+						title: '提示',
+						content: '是否完成支付',
+						cancelText:'未完成',
+						confirmText:'已支付',
+						success: function (res) {
+							if (res.confirm) {
+								toast('成为经销商');
+								uni.switchTab({
+									url:'../fenxiao/fenxiao'
+								})
+
+							} else if (res.cancel) {
+
+
+
+							}
+						}
+					});
+					return;
+				}
+
+				//0：支付成功 1：支付超时 2：支付失败 3：支付关闭 4：支付取消 9：订单状态开发者自行获取
+
+				if(res && res.code && res.code==4){
+					toast('用户取消支付','none')
+					return;
+				}
+
+
+
 				toast('成为经销商');
-				setTimeout(function () {
-					uni.switchTab({
-						url:'../fenxiao/fenxiao'
-					})
-				},50)
+				uni.switchTab({
+					url:'../fenxiao/fenxiao'
+				})
 			},
 			//购买提交信息
 			async disBuy(){
@@ -796,14 +839,14 @@
 							this.address_town();
 			},
 			async $_init_wxpay_env() {
-			
+
 			    let initData = await this.getInitData()
-			
+
 			    let login_methods = initData.login_methods;
 			    let component_appid = login_methods.component_appid
-			
+
 			    let channel = null;
-			
+
 			    //根据服务器返回配置设置channels,只有微信公众号和小程序会用到component_appid
 			    //而且状态可以灵活控制 state为1
 			    for (var i in login_methods) {
@@ -816,13 +859,13 @@
 			            break;
 			        }
 			    }
-			
+
 			    if (!channel) {
 			        this.$error('未开通公众号支付');
 			        return false;
 			    }
-			
-			
+
+
 			    //如果url有code去掉
 			    let {
 			        origin,
@@ -834,7 +877,7 @@
 			    if (search.indexOf('code') != -1) {
 			        let tempArr = search.split('&');
 			        for (var i of tempArr) {
-			
+
 			            console.log(i,i.indexOf('code') === -1, i.indexOf('state') === -1,i.indexOf('appid')===-1)
 			            //过滤多余的参数
 			            if (i.indexOf('code') === -1 && i.indexOf('state') === -1 && i.indexOf('appid')===-1) {
@@ -846,17 +889,17 @@
 			        if (newSearchStr.indexOf('?') === -1) {
 			            newSearchStr = '?' + newSearchStr
 			        }
-			
-			
+
+
 			        search = newSearchStr;
-			
+
 			    }
-			
-			
+
+
 			    let REDIRECT_URI = urlencode(origin + pathname + search + hash);
-			
+
 			    let wxAuthUrl = null;
-			
+
 			    if (channel.component_appid) {
 			        //服务商模式登录
 			        wxAuthUrl =
@@ -867,71 +910,71 @@
 			            `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${channel.appid}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect`
 			    }
 			    console.log(wxAuthUrl)
-			
+
 			    window.location.href = wxAuthUrl;
-			
-			
+
+
 			},
 			async self_orderPay(is_forward){
-			
+
 			    let _self = this;
 			    let payConf = {};
-			
+
 			    //不是跳转的
 			    if(!is_forward){
 						return;
 			    }
-			
+
 			    if(this.pay_type === 'unionpay'){
 			        error('即将上线')
 			        return;
 			    }
-			
+
 			    if(this.pay_type === 'ali_app'){
-			
-			
-			
+
+
+
 			    }
-			
-			
+
+
 			    //下面都是微信
-			
+
 			    //需要格外有一个code
-			
+
 			    // #ifdef H5
-			
+
 			    // 微信h5
 			    if(this.pay_type === 'wx_h5'){
 			        payConf.pay_type = 'wx_h5';
 			    }
-			
+
 			    //阿里h5
 			    if(this.pay_type === 'alipay'){
 			        payConf.pay_type = 'alipay';
 			    }
-			
+
 			    //公众号需要code
 			    if(this.pay_type === 'wx_mp'){
-			
+
 			        console.log('选择了微信支付的')
-			
+
 			        if (!isWeiXin()) {
 			            error('请在微信内打开')
 			            return;
 			        }
-			
+
 			        let isHasCode = this.code || GetQueryByString('code');
 			        //已经用过的code不再用
 			        if (isHasCode &&isHasCode!=ls.get('isUseCode')) {
-			
+
 			            //拿到之前的配置
 			            payConf = { ...ls.get('temp_order_info'),
 			                code: isHasCode,
 			                pay_type: 'wx_mp'
 			            }
-			
+
 			            ls.set("isUseCode",isHasCode);
-			
+
 			        } else {
 			            //存上临时的数据
 			            ls.set('temp_order_info', payConf);
@@ -940,17 +983,17 @@
 			            return;
 			        }
 			    }
-			
+
 			    // #endif
-			
-			
-			
+
+
+
 			    // #ifdef MP-TOUTIAO
 			    // #endif
-			
+
 			    // #ifdef MP-WEIXIN
 			    payConf.pay_type = 'wx_lp';
-			
+
 			    await new Promise((resolve) => {
 			        uni.login({
 			            success: function (loginRes) {
@@ -962,7 +1005,7 @@
 			    })
 			    // #endif
 				this.disBuy();
-			   
+
 			},
 			disApplyInit(){
 				disApplyInit().then(res=>{
@@ -1078,7 +1121,7 @@
 			    this.code = GetQueryByString(location.href, 'code');
 			    console.log(this.code)
 			    if (this.code) {
-			
+
 			        this.pay_type = 'wx_mp';//需要手动设置一下
 			        // console.log(this.pay_type)
 			        // ls.set('code',this.code)

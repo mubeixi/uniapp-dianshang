@@ -110,6 +110,8 @@ export const unipayFunc = (vm,pay_type,payRequestData) => {
         },
         fail: function (err) {
             console.log('fail:' + JSON.stringify(err));
+
+            _self.payFailCall(res)
             // uni.showModal({
             //     title:'支付错误',
             //     content:JSON.stringify(err)

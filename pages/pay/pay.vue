@@ -500,6 +500,63 @@
 					return;
 				}
 
+				if(res && res.code && res.code==1){
+					toast('用户取消支付','none')
+					return;
+				}
+
+				if(res && res.code && res.code==9){
+					uni.showModal({
+						title: '提示',
+						content: '是否完成支付',
+						cancelText:'未完成',
+						confirmText:'已支付',
+						success: function (res) {
+							if (res.confirm) {
+
+								if(type === 'pintuan'){
+									url:'/pages/pintuanOrderlist/pintuanOrderlist?index=2'
+								}else{
+									if(pagefrom == 'check') {
+										uni.redirectTo({
+											url:'/pages/order/order?index=2'
+										})
+									}else if(pagefrom == 'gift') {
+										uni.redirectTo({
+											url: '/pages/myGift/myGift?checked=1'
+										})
+									}
+								}
+
+							} else if (res.cancel) {
+
+								if(type === 'pintuan'){
+									url:'/pages/pintuanOrderlist/pintuanOrderlist?index=1'
+								}else{
+									if(pagefrom == 'check') {
+										uni.redirectTo({
+											url:'/pages/order/order?index=1'
+										})
+									}else if(pagefrom == 'gift') {
+										uni.redirectTo({
+											url: '/pages/myGift/myGift?checked=0'
+										})
+									}
+								}
+
+							}
+						}
+					});
+					return;
+				}
+
+				//0：支付成功 1：支付超时 2：支付失败 3：支付关闭 4：支付取消 9：订单状态开发者自行获取
+
+				if(res && res.code && res.code==4){
+					toast('用户取消支付','none')
+					return;
+				}
+
 				toast('支付成功');
 
 				//拼团订单则跳转到开团成功
