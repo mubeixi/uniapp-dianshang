@@ -495,7 +495,7 @@
 
 				var _that = this;
 				console.log('支付成功回调',res)
-				if(res.code && res.code==2){
+				if(res && res.code && res.code==2){
 					_that.payFailCall()
 					return;
 				}
