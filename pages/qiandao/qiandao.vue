@@ -1,5 +1,5 @@
 <template>
-	<view class="all">
+	<view class="all" v-if="pro">
 		<view class="top">
 <!--			<image src="https://new401.bafangka.com/static/client/task/left.png" class="goBack" @click="goBack"></image>-->
 <!--			<view class="titles">每日签到</view>-->
@@ -15,9 +15,9 @@
 			</view>
 		</view>
 
-		<view class="jilu">
-			<view class="chang" v-for="(item,index) in pro.continue_" :key="index">
-				<image class="image" v-if="index<pro.continue" src="https://new401.bafangka.com/static/client/task/checked.png" ></image>
+		<view class="jilu" >
+			<view class="chang" v-for="(item,index) in continue_" :key="index">
+				<image class="image" v-if="index<continues" src="https://new401.bafangka.com/static/client/task/checked.png" ></image>
 				<image class="image"  v-else src="https://new401.bafangka.com/static/client/task/unchecked.png" ></image>
 				<view class="view">
 					第{{index+1}}天
@@ -42,7 +42,9 @@
 		mixins:[pageMixin],
 		data() {
 			return {
-				pro:''
+				continue_:[],
+				continues:0,
+				pro:null
 			};
 		},
 		onLoad() {
@@ -82,7 +84,10 @@
 			getSignin(){
 				getSignin().then(res=>{
 					this.pro=res.data;
-					this.pro.continue_=parseInt(this.pro.continue_);
+					let tempArr = [];
+					tempArr.length = parseInt(res.data.continue_);
+					this.continue_= tempArr;
+					this.continues= parseInt(res.data.continue);
 				},err=>{
 
 				})

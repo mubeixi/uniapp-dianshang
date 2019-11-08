@@ -55,7 +55,7 @@
 					<span @click="cancelOrder(item.prod_list,index)">取消订单</span>
 					<span class="active" @click="goPay(item)">立即付款</span>
 			</div>
-			<div class="btn-group" v-else-if="item.Order_Status==2">
+			<div class="btn-group" v-else-if="item.Order_Status==2&&item.teamstatus==1">
 			    <span class="active" @click="goPay(item)">申请退款</span>
 			</div>
 			<div class="btn-group" v-else-if="item.Order_Status==3">

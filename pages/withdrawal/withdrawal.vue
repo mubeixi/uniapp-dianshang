@@ -320,7 +320,7 @@
 	}
 	.lishi{
 		height: 21rpx;
-		width: 106rpx;
+		// width: 106rpx;
 		margin-top: 25rpx;
 		margin-left: 565rpx;
 		font-size: 22rpx;
