@@ -38,6 +38,9 @@ export const unipayFunc = (vm,pay_type,payRequestData) => {
     let _self = vm,res = payRequestData
 
 
+
+
+
     let provider = 'wxpay';
     let orderInfo = {}
 
@@ -82,17 +85,7 @@ export const unipayFunc = (vm,pay_type,payRequestData) => {
                 setTimeout(function(){
                     resolve({ code: 0});
                 },500)
-                // tt.request({
-                //     url: "<your-backend-url>",
-                //     success(res) {
-                //         // 商户后端查询的微信支付状态，通知收银台支付结果
-                //         // | 1 | 2 | 3 | 9
-                //         resolve({ code: 0});
-                //     },
-                //     fail(err) {
-                //         reject(err);
-                //     }
-                // });
+
             });
         },
         success: function (res) {
@@ -236,7 +229,7 @@ export const unipayFunc = (vm,pay_type,payRequestData) => {
         },
         fail: function (err) {
             console.log('fail:' + JSON.stringify(err));
-            _self.payErrorCall(err);
+            _self.payFailCall(err);
         }
     });
     return;
@@ -289,7 +282,7 @@ export const unipayFunc = (vm,pay_type,payRequestData) => {
             },
             fail: function (err) {
                 console.log('fail:' + JSON.stringify(err));
-                _self.payErrorCall(err);
+                _self.payFailCall(err);
             }
         });
         return;

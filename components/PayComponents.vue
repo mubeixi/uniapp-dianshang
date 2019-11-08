@@ -94,18 +94,22 @@ export default {
         order_remark:{
             type:String
         },
-        paySuccessCall:{
-            // type:Function,
-            default:noop
-        },
-        payErrorCall:{
-            type:Function,
-            default:noop
-        },
-        payCanceCall:{
-            type:Function,
-            default:noop
-        },
+
+		// #ifndef MP-TOUTIAO
+		paySuccessCall:{
+		    // type:Function,
+		    default:noop
+		},
+        payFailCall:{
+		    type:Function,
+		    default:noop
+		},
+		payCanceCall:{
+		    type:Function,
+		    default:noop
+		},
+		// #endif
+
     },
     data(){
         return {
@@ -119,6 +123,12 @@ export default {
             password_input:false,
             totalMoney: 0, // 应支付金额
             pay_type: 'remainder_pay', // remainder_pay余额支付，余额补差    wechat 微信支付  ali 支付宝支付
+			// #ifdef MP-TOUTIAO
+			paySuccessCall:null,
+			payErrorCall:null,
+			payCanceCall:null
+			// #endif
+
         }
     },
     computed:{
@@ -142,12 +152,22 @@ export default {
         },
         ...mapGetters(['initData','userInfo'])
     },
+    onLoad(){
+
+    },
     created(){
         let self = this;
 
-        setTimeout(function(){
-            console.log('paySuccessCall is 3333333333',self,self.paySuccessCall)
-        },2000)
+        // #ifdef MP-TOUTIAO
+        self.paySuccessCall = self.$store.state.payTempObj.paySuccessCall
+        self.payFailCall = self.$store.state.payTempObj.payFailCall
+        self.payCanceCall = self.$store.state.payTempObj.payCanceCall
+        // #endif
+
+
+        console.log('paySuccessCall is 3333333333',self.paySuccessCall)
+
+
 
         //自动打开
         if(this.isOpen){
@@ -187,7 +207,7 @@ export default {
             this.password_input = false;
         },
         show(events) {
-            console.log('唤起支付')
+
             this.ifshow = true;
 
             let _open = setTimeout(() => {
