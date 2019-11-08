@@ -1,6 +1,6 @@
 <template>
-  <div style="position:relative;">
-	  
+  <div style="position:relative;" class="wrap">
+
 	<!-- #ifndef APP-PLUS -->
 		<view class="top">
 			<image class="imgm" src="/static/back.png" @click="goBack" ></image>
@@ -109,6 +109,7 @@
 	</div>
     <div style="height:60px;background: white;"></div>
 	<bottom @cartHandle="addCart" @directHandle="directBuy" @goGet="lingqu" @collect="collect" :collected="isCollected" :recieve="recieve" :isVirtual="isVirtual" :canSubmit="canSubmit"></bottom>
+  	<div class="safearea-box"></div>
 	<popupLayer ref="popupLayer" :direction="'top'" >
 		<div class="shareinfo" v-if="type=='share'">
 			<div class="s_top">
@@ -135,7 +136,7 @@
 					<div>分享海报</div>
 				</div>
 				<!-- #endif -->
-				
+
 
 			</div>
 			<div class="s_bottom" @click="cancel">取消</div>
@@ -213,6 +214,7 @@
 		</button>
 		</form>
 	</popupLayer>
+
   </div>
 </template>
 <script>
@@ -229,8 +231,6 @@ import {pageMixin} from "../../common/mixin";
 import {error} from "../../common";
 
 import {add_template_code} from "../../common/fetch";
-
-
 
 export default {
 	mixins:[pageMixin],
@@ -302,7 +302,7 @@ export default {
 	},
 	// #endif
 	onLoad: function (option) {
-		
+
 		this.Products_ID = option.Products_ID;
 		this.postData.prod_id = option.Products_ID;
 		this.checkProdCollected();
@@ -334,7 +334,7 @@ export default {
 		}else{
 			this.createtab();
 			this.createtabs();
-		}	
+		}
 		// #endif
 	},
 	onUnload(){
@@ -718,7 +718,7 @@ export default {
 				console.log(e)
 				this.isLoading=false;
 			})
-			
+
 			//this.getCoupon();
 		},
 		//获取可领取的优惠券
@@ -924,7 +924,7 @@ export default {
 			await getProductDetail(data).then(res=>{
 				product = res.data
 				this.product = res.data;
-				this.isVirtual = res.data.Products_IsVirtual == 1; 
+				this.isVirtual = res.data.Products_IsVirtual == 1;
 				this.postData.count = res.data.Products_Count;
 				if(res.data.skujosn) {
 					let skujosn = res.data.skujosn;
@@ -1053,6 +1053,8 @@ export default {
 </script>
 
 <style scoped lang="scss" >
+
+
 	/* 轮播图样式 */
 	.uni-padding-wrap{
 		width: 750rpx;

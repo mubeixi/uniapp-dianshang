@@ -5,7 +5,9 @@
 		</view>
 		<view v-show="ifshow" ref="popRef"  class="popup-content"   @tap.stop="stopEvent" :style="_location">
 			<slot></slot>
+			<div class="safearea-box2"></div>
 		</view>
+
 	</view>
 </template>
 
@@ -119,7 +121,7 @@
 	}
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 	.popup-layer {
 		position: fixed;
 		z-index: 999999;
@@ -140,5 +142,12 @@
 		// border:1px solid red;
 		border-top-left-radius: 20rpx;
 		border-top-right-radius: 20rpx;
+
+	}
+	.safearea-box2{
+		height: constant(safe-area-inset-bottom);
+		height: env(safe-area-inset-bottom);
+		width: 100%;
+		background: white;
 	}
 </style>

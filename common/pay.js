@@ -60,12 +60,6 @@ export const unipayFunc = (vm,pay_type,payRequestData) => {
 
     orderInfo = res.data
 
-    //orderInfo.out_order_no = (orderInfo.Order_ID+'')
-    // orderInfo.timestamp +='';//string
-    // orderInfo.uid += '';
-    // orderInfo.trade_time +='';
-    // orderInfo.valid_time +='';
-    //
     delete orderInfo.Order_ID
 
     let conf = { provider,
@@ -102,12 +96,14 @@ export const unipayFunc = (vm,pay_type,payRequestData) => {
             });
         },
         success: function (res) {
-            _self.paySuccessCall(res)
             console.log('success:' + JSON.stringify(res));
+            console.log(_self.paySuccessCall)
+            _self.paySuccessCall(res)
+
         },
         complete:function(res){
-            console.log('fail:' + JSON.stringify(res));
-            console.log(_self,_self.paySuccessCall)
+            console.log('complete:' + JSON.stringify(res));
+            console.log(_self.paySuccessCall)
         },
         fail: function (err) {
             console.log('fail:' + JSON.stringify(err));

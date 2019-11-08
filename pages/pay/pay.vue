@@ -106,6 +106,7 @@
 			</div>
 			<div class="submit" @click="submit">去支付</div>
 		</div>
+		<div class="safearea-box"></div>
 		<pay-components
 				ref="payLayer"
 				:Order_ID="Order_ID"
@@ -266,7 +267,7 @@
 						this.openInvoice = this.orderInfo.Order_NeedInvoice > 0;
 						this.invoice_info = this.orderInfo.Order_InvoiceInfo;
 						this.order_remark = this.orderInfo.Order_Remark;
-						
+
 					}
 				})
 			},
@@ -724,6 +725,10 @@ return;
 <style scoped lang="scss">
 	.wrap {
 		background: #fff;
+		/* #ifdef MP */
+		padding-bottom: constant(safe-area-inset-bottom);
+		padding-bottom: env(safe-area-inset-bottom);
+		/* #endif */
 	}
 
 	.state {
@@ -934,6 +939,10 @@ return;
 		height: 100rpx;
 		position: fixed;
 		bottom: 0;
+		/* #ifdef MP */
+		bottom: constant(safe-area-inset-bottom);
+		bottom: env(safe-area-inset-bottom);
+		/* #endif */
 		width: 100%;
 		display: flex;
 		align-items: center;

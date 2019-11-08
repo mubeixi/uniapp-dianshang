@@ -118,10 +118,19 @@
 /* #ifdef MP */
 page{
     /*background: #f8f8f8;*/
-    /*padding-bottom: constant(safe-area-inset-bottom);*/
-    /*padding-bottom: env(safe-area-inset-bottom);*/
+    padding-bottom: constant(safe-area-inset-bottom);
+    padding-bottom: env(safe-area-inset-bottom);
     font-size: 16px;
     font-family:-apple-system,'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
+}
+.safearea-box{
+    height: constant(safe-area-inset-bottom);
+    height: env(safe-area-inset-bottom);
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 2;
+    background: white;
 }
 /* #endif */
 

@@ -1,5 +1,5 @@
 <template>
-  <div style="position:relative;background-color:#f8f8f8" v-show="product.Products_ID">
+  <div style="position:relative;background-color:#f8f8f8" class="wrap" v-show="product.Products_ID">
     <div class="top">
        <image class="imgm" src="/static/back.png" @click="goBack" ></image>
        <image class="imgm cart" src="/static/cart.png" @click="goCart" ></image>
@@ -273,6 +273,7 @@
 			</form>
 		</div>
 	</div>
+  	<div class="safearea-box"></div>
   </div>
 </template>
 
@@ -1016,6 +1017,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
 // 轮播样式
 .uni-padding-wrap{
 	width: 750upx;
@@ -1461,6 +1463,10 @@ export default {
 		display: flex;
 		position: fixed;
 		bottom: 0;
+		/* #ifdef MP */
+		bottom: constant(safe-area-inset-bottom);
+		bottom: env(safe-area-inset-bottom);
+		/* #endif */
 		width: 100%;
 		background-color: #F8F8F8;
 		z-index: 9999;

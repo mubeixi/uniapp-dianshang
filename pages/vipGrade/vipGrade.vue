@@ -246,7 +246,7 @@
 	padding-left: 40rpx;
 	padding-right: 40rpx;
 	width: 750rpx;
-	height: 150rpx;
+	// height: 150rpx;
 	display: flex;
 	box-sizing: border-box;
 	white-space: nowrap;
@@ -256,7 +256,7 @@
 	}
 	.floats{
 		width: 120rpx;
-		height: 120rpx;
+		// height: 120rpx;
 		text-align: center;
 		font-size: 26rpx;
 		margin-right: 60rpx;
