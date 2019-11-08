@@ -263,6 +263,7 @@ view{
 	background: #F8F8F8;
 	height: 100vh;
 	width: 750rpx;
+	overflow-x: hidden;
 }
 	.top{
 		width: 750rpx;
