@@ -8,12 +8,15 @@ export const ajax = (url,method,data,options)=>{
   if(!data)data={}
 
 
-  let {tip='',mask=false,timelen=2000,errtip = true} = options;
+  let {tip='',mask=true,timelen=2000,errtip = true} = options;
 
-  uni.showLoading({
-    title: tip||'loading',
-    mask:mask
-  })
+  if(tip){
+    uni.showLoading({
+      title: tip,
+      mask:mask
+    })
+  }
+
 
 
   let token
@@ -75,10 +78,14 @@ export const ajax = (url,method,data,options)=>{
       },
       complete:()=>{
         // console.log(res)
-        uni.hideLoading()
-        // setTimeout(function(){
-        //   uni.hideLoading()
-        // },500)
+        if(tip){
+        setTimeout(function(){
+            uni.hideLoading()
+        },500)
+         
+        }
+        
+        
       }
     })
 

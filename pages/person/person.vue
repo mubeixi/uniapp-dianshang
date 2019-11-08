@@ -179,7 +179,7 @@
 		},
 		onShow() {
 			if(JSON.stringify(this.userInfo) != "{}"){
-				get_user_info().then(res=>{
+				get_user_info({},{tip:'',errtip:false}).then(res=>{
 					this.setUserInfo(res.data);
 				},err=>{
 
