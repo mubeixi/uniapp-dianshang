@@ -128,10 +128,14 @@
 				</div>
 				<!-- #endif -->
 
+
+				<!-- #ifndef MP-TOUTIAO -->
 				<div class="flex1" @click="shareFunc('pic')">
 					<image class='img' src="https://new401.bafangka.com/static/client/detail/share2.png" alt=""></image>
 					<div>分享海报</div>
 				</div>
+				<!-- #endif -->
+				
 
 			</div>
 			<div class="s_bottom" @click="cancel">取消</div>

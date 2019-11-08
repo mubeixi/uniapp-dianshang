@@ -1,9 +1,9 @@
 <template>
 	<view>
 		<view v-show="ifshow" @tap="ableClose" @touchmove.stop.prevent class="popup-layer" >
-			
+
 		</view>
-		<view ref="popRef"  class="popup-content"   @tap.stop="stopEvent" :style="_location">
+		<view v-show="ifshow" ref="popRef"  class="popup-content"   @tap.stop="stopEvent" :style="_location">
 			<slot></slot>
 		</view>
 	</view>
@@ -23,7 +23,7 @@
 			},
 			direction: {
 				type: String,
-				default: 'bottom', // 方向  top，bottom，left，right 
+				default: 'bottom', // 方向  top，bottom，left，right
 			},
 			autoClose: {
 				type: Boolean,
@@ -73,7 +73,7 @@
 				}else{
 					this.close();
 				}
-			}	
+			}
 		},
 		methods: {
 			stopMove(event){
