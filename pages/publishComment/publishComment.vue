@@ -149,8 +149,10 @@
 				};
 				let that=this;
 				uni.chooseImage({
-					count:3,
-					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+					count:1,
+					// #ifndef MP-TOUTIAO
+						sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+					// #endif
 					success(res) {
 						that.isSubmit=false;
 						for(let item of res.tempFiles){

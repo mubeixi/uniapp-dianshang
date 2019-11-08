@@ -72,22 +72,48 @@
 							for(let item of res.tempFiles){
 								that.Shop_Logo = item.path;
 								that.imgs.push(item.path);
-								for(var i in that.imgs){
-									//上传图片
-									uni.uploadFile({
-											url: staticUrl+'/api/little_program/shopconfig.php',
-											filePath: that.imgs[i],
-											name: 'image',
-											formData: data,
-											success: (uploadFileRes) => {
-												console.log(uploadFileRes)
-												uploadFileRes =	JSON.parse(uploadFileRes.data)
-												that.tem_Shop_Logo = uploadFileRes.data.path;
-												//是否可以提交
-												that.isSubmit=true;
-											}
-									});
-								}
+									
+									// #ifdef MP-TOUTIAO
+									let fileCTX = tt.getFileSystemManager()
+									console.log(fileCTX);
+									fileCTX.readFile({
+										filePath:res.tempFilePaths[0],
+										encoding:'base64',
+										success(ret) {
+											let imgs='data:image/jpeg;base64,'+ret.data;
+										   uploadImage({'image':imgs}).then(result=>{
+													that.tem_Shop_Logo=result.data.path;
+										   },err=>{
+											   
+										   }).catch(e=>{
+											   
+										   })
+										},
+										fail(ret) {
+										  console.log(ret,`run fail`);
+										},
+										complete(ret) {
+										  console.log(`run done`);
+										}
+									})
+									// #endif
+									// #ifndef MP-TOUTIAO
+										//上传图片
+										uni.uploadFile({
+												url: staticUrl+'/api/little_program/shopconfig.php',
+												filePath: that.imgs[i],
+												name: 'image',
+												formData: data,
+												success: (uploadFileRes) => {
+													console.log(uploadFileRes)
+													uploadFileRes =	JSON.parse(uploadFileRes.data)
+													that.tem_Shop_Logo = uploadFileRes.data.path;
+													//是否可以提交
+													that.isSubmit=true;
+												}
+										});
+									// #endif
+							
 							}
 
 						},
