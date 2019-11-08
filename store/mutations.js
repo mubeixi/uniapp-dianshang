@@ -1,6 +1,11 @@
 import {toast,} from "../common";
 import {ls} from "../common/tool";
 
+export const SET_PAY_TEMP_OBJ = function (state, value) {
+  state.payTempObj = value;
+};
+
+
 export const SET_USER_INFO = function (state, value) {
   state.userInfo = value;
   ls.set('userInfo',value);

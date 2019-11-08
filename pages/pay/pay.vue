@@ -107,16 +107,17 @@
 		</div>
 		<div class="safearea-box"></div>
 		<pay-components
-				ref="payLayer"
-				:Order_ID="Order_ID"
-				:pay_money="pay_money"
-				:use_money="user_money"
-				:need_invoice="need_invoice"
-				:invoice_info="invoice_info"
-				:order_remark="order_remark"
-				:paySuccessCall="paySuccessCall"
-				:payFailCall = "payFailCall"
+			ref="payLayer"
+			:Order_ID="Order_ID"
+			:pay_money="pay_money"
+			:use_money="user_money"
+			:need_invoice="need_invoice"
+			:invoice_info="invoice_info"
+			:order_remark="order_remark"
+			:paySuccessCall="paySuccessCall"
+			:payFailCall = "payFailCall"
 		/>
+
 
 	</div>
 </template>
@@ -149,6 +150,8 @@
 		},
 		data() {
 			return {
+				funvm:null,
+				paySuccessCallFn:null,
 				code: '',
 				JSSDK_INIT: false,
 				show: false, // 遮罩层
@@ -202,6 +205,9 @@
 			}
 		},
 		created() {
+
+			this.$store.commit('SET_PAY_TEMP_OBJ',this);
+
 			// #ifdef H5
 			if (isWeiXin()) {
 				this.code = GetQueryByString(location.href, 'code');
@@ -481,30 +487,32 @@
 				// },1000)
 			},
 			paySuccessCall(){
-				let _that = this;
+				var _that = this;
 				toast('支付成功');
-				setTimeout(function(){
-					//拼团订单则跳转到开团成功
-					let type = ls.get('type');
-					let pagefrom = ls.get('pagefrom');
-					ls.remove('pagefrom');
-					ls.remove('type');
-					if(type === 'pintuan'){
+
+				//拼团订单则跳转到开团成功
+				let type = ls.get('type');
+				let pagefrom = ls.get('pagefrom');
+				ls.remove('pagefrom');
+				ls.remove('type');
+				if(type === 'pintuan'){
+					uni.redirectTo({
+						url:'/pages/groupSuccess/groupSuccess?order_id='+_that.Order_ID
+					})
+				}else{
+					if(pagefrom == 'check') {
 						uni.redirectTo({
-							url:'/pages/groupSuccess/groupSuccess?order_id='+_that.Order_ID
+							url:'/pages/order/order?index=2'
 						})
-					}else{
-						if(pagefrom == 'check') {
-							uni.redirectTo({
-								url:'/pages/order/order?index=2'
-							})
-						}else if(pagefrom == 'gift') {
-							uni.redirectTo({
-								url: '/pages/myGift/myGift?checked=1'
-							})
-						}
+					}else if(pagefrom == 'gift') {
+						uni.redirectTo({
+							url: '/pages/myGift/myGift?checked=1'
+						})
 					}
-				},50)
+				}
+				// setTimeout(function(){
+				//
+				// },50)
 			},
 			// 用户选择 微信支付
 			async wechatPay() {
