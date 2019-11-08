@@ -1,5 +1,5 @@
 <template>
-  <div style="position:relative;">
+  <div style="position:relative;" class="wrap">
 	  
 	<!-- #ifndef APP-PLUS -->
 		<view class="top">
@@ -1049,6 +1049,13 @@ export default {
 </script>
 
 <style scoped lang="scss" >
+	/* #ifdef MP-WEIXIN || MP-TOUTIAO */
+	.wrap{
+		padding-bottom: constant(safe-area-inset-bottom);
+		padding-bottom: env(safe-area-inset-bottom);
+	}
+	/* #endif */
+
 	/* 轮播图样式 */
 	.uni-padding-wrap{
 		width: 750rpx;
