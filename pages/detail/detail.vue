@@ -625,6 +625,9 @@ export default {
 		},
 		// 赠品
 		judgeReceiveGift(){
+			if(!this.$fun.checkIsLogin()){
+				return
+			}
 			judgeReceiveGift({gift: this.gift}).then(res=>{
 				console.log(res)
 				if(res.errorCode ==0){
@@ -988,6 +991,9 @@ export default {
 			this.postData.cart_key = 'CartList';
 		},
 		directBuy(){
+			if(!this.$fun.checkIsLogin(1,1)){
+				return;
+			}
 			this.$refs.cartPopu.show();
 			this.postData.cart_key = 'DirectBuy'
 		},

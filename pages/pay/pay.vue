@@ -82,15 +82,14 @@
 					<switch :checked="invoiceChecked" size='25px' color="#04B600" @change="invoiceChange" />
 				</div>
 				<!-- <div class="o_desc c8">{{orderInfo.Order_InvoiceInfo}}</div> -->
-				<input type="text" v-if="openInvoice" :value="invoice_info" :disabled="!openInvoice" :placeholder="orderInfo.Order_InvoiceInfo"
-				 @blur="invoiceHandle" />
+				<input type="text" v-if="openInvoice" v-model="invoice_info" :disabled="!openInvoice" />
 			</div>
 		</div>
 		<div class="other">
 			<div class="bd">
 				<div class="o_title  words">
 					<span>买家留言</span>
-					<input class="msg c8" :placeholder="orderInfo.Order_Remark" @blur="remarkHandle">
+					<input class="msg c8" v-model="order_remark" >
 				</div>
 			</div>
 		</div>
@@ -165,6 +164,7 @@
 				password_input: false,
 				openMoney: true, //是否开启了余额功能
 				openInvoice: true, // 是否开启了发票
+				invoice_info: '',
 				order_remark: '', // 留言
 				need_invoice: 0, // 是否需要发票
 				pay_arr: [], // 支付方式

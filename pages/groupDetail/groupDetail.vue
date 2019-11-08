@@ -242,7 +242,7 @@
 			</div>
 		</div>
 		<div class="rightss">
-			<form class="form" report-submit @submit="myPay">
+			<form class="form" report-submit @click="myPay">
 			<div class="dan bTitle">
 				<div class="danLeft">
 					<span class="bF">¥</span><span class="bS">{{product.Products_PriceX}}</span>
@@ -254,7 +254,7 @@
 
 			</div>
 			</form>
-			<form  class="form" report-submit @submit="myPin">
+			<form  class="form" report-submit @click="myPin">
 			<div class="tuan bTitle">
 				<div class="danLeft">
 					<span class="bF">¥</span><span class="bS">{{product.pintuan_pricex}}</span>
