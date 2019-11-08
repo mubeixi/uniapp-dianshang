@@ -3,7 +3,8 @@
 		<view v-show="ifshow" @tap="ableClose" @touchmove.stop.prevent class="popup-layer" >
 
 		</view>
-		<view v-show="ifshow" ref="popRef"  class="popup-content"   @tap.stop="stopEvent" :style="_location">
+<!--		v-show="ifshow"-->
+		<view ref="popRef"  class="popup-content"   @tap.stop="stopEvent" :style="_location">
 			<slot></slot>
 			<div class="safearea-box2"></div>
 		</view>
@@ -84,6 +85,7 @@
 				return;
 			},
 			show(events) {
+				console.log('show popup')
 				this.ifshow = true;
 				let _open = setTimeout(() => {
 					this.translateValue = 0;
@@ -95,6 +97,7 @@
 				}, 300);
 			},
 			close() {
+				console.log('close popup')
 				if (this.timer !== null || !this.iftoggle) {
 					return;
 				}
@@ -137,7 +140,7 @@
 		position: fixed;
 		z-index: 1000000;
 		background: #FFFFFF;
-		transition: all .3s ease;
+		/*transition: all .3s ease;*/
 		overflow: hidden;
 		// border:1px solid red;
 		border-top-left-radius: 20rpx;

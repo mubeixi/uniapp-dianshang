@@ -283,6 +283,10 @@
 		},
 		created() {
 
+			// #ifdef MP-TOUTIAO
+			this.$store.commit('SET_PAY_TEMP_OBJ',this);
+			// #endif
+			
 			// #ifdef H5
 
 			if (isWeiXin()) {

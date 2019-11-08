@@ -31,28 +31,22 @@
             </view>
         </view>
 
-		<view style="height: 100rpx;">
-			<view class="order_total">
+<!--		<popup-layer ref="dialog" :direction="'top'">-->
+<!--			<div style="padding: 0rpx 10rpx;">-->
+<!--				666666666666666666666666666666666666666-->
+<!--			</div>-->
+<!--		</popup-layer>-->
 
-				<view class="submit" @click="form_submit">立即兑换</view>
+		<popup-layer ref="popMethod" :direction="'top'">
+			<view class="iMbx">
+				<view class="c_method" v-for="(item,index) in pay_arr" @click="chooseType(index)" :key="index">
+					{{item}} <text>￥{{shipping_price}}</text>
+				</view>
 			</view>
-		</view>
-        <popup-layer ref="popupRef" :direction="'top'">
-        	<view class="bMbx" v-if="type=='shipping'">
-        		<view class="fMbx">请选择物流公司</view>
-        		<view class="iMbx" v-for="(ship,shipid) in shipping_company" :key="shipid">
-        			<view>
-        				{{ship}}
-        			</view>
-					<radio-group @change="ShipRadioChange">
-						<radio :value="shipid" :checked="shipid==ship_current" style="float:right;" color="#F43131"/>
-					</radio-group>
-        		</view>
-        	</view>
-        	<view class="sure" @click="closeMethod">
-        		确定
-        	</view>
-        </popup-layer>
+		</popup-layer>
+
+
+
 		<view class="remind-wrap" v-if="remindAddress">
 			<view class="remind-add">
 				<view class="text-align-center mb20">新建收货地址</view>
@@ -71,18 +65,37 @@
 			<view class="input-box">
 				<input type="password" class="input-psw" v-model="password" placeholder="请输入支付密码"/>
 				<view class="btns">
-					<view class="cancel" @click="cancelPsw">取消</view>
-					<view class="confirm" @click="pswConfirm">确定</view>
+					<view class="cancel btn" @click="cancelPsw">取消</view>
+					<view class="confirm btn" @click="pswConfirm">确定</view>
 				</view>
 			</view>
 		</view>
-		<popup-layer ref="method" :direction="'top'">
-			<div class="iMbx">
-				<div class="c_method" v-for="(item,index) in pay_arr" @click="chooseType(index)" :key="index">
-					{{item}} <text>￥{{shipping_price}}</text>
-				</div>
-			</div>
+
+		<popup-layer ref="popupRef" :direction="'top'">
+			<view class="bMbx" v-if="type=='shipping'">
+				<view class="fMbx">请选择物流公司</view>
+				<view class="iMbx" v-for="(ship,shipid) in shipping_company" :key="shipid">
+					<view>
+						{{ship}}
+					</view>
+					<radio-group @change="ShipRadioChange">
+						<radio :value="shipid" :checked="shipid==ship_current" style="float:right;" color="#F43131"/>
+					</radio-group>
+				</view>
+			</view>
+			<view class="sure" @click="closeMethod">
+				确定
+			</view>
 		</popup-layer>
+
+		<view class="order_total">
+			<view class="submit" @click="form_submit">立即兑换</view>
+		</view>
+
+
+
+
+
     </view>
 </template>
 
@@ -111,6 +124,7 @@ export default {
 					orderInfo: {},
 					type: 'shipping',
 					current: '',
+					shipping_id: '',
 					ship_current: 0,
 					shipping_name: '', // 物流信息描述
 					addressLoading: false, // 收货地址信息是否加载完
@@ -232,13 +246,15 @@ export default {
 				Gift_ID: this.gift_id,
 				password: this.password,
 				Address_ID: this.address_id,
-				Shipping_ID: this.shipping_id
+				Shipping_ID:this.shipping_id
 			}).then(res=>{
 				this.psdInput = false;
 				this.Order_ID = res.data.Orders_ID;
 				// 判断是否是待支付状态
 				if(res.data.Order_Status == 1) {
-					this.$refs.method.show();
+					console.log('222')
+					//console.log(this.$refs.dialog)
+					this.$refs.popMethod.show();
 				}else if(res.data.Order_Status == 2) {
 					this.paySuccessCall();
 				}
@@ -940,7 +956,7 @@ export default {
         display: flex;
         align-items: center;
         background: #fff;
-        z-index: 100;
+        /*z-index: 100;*/
     }
     .submit {
         width: 100%;
@@ -1091,6 +1107,9 @@ export default {
 				display: flex;
 				justify-content: space-around;
 				line-height: 60rpx;
+				.btn {
+					flex: 1;
+				}
 			}
 			.input-psw {
 				border: 1px solid #efefef;

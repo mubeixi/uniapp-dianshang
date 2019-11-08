@@ -1,9 +1,10 @@
 import {WX_JSSDK_INIT} from "./mixin";
 
 import {isWeiXin,ls,GetQueryByString,urlencode} from "./tool";
-import {traslateShorten,add_template_code} from "./fetch";
+import {traslateShorten,add_template_code,confirmOrderPayStatus} from "./fetch";
 import {toast,error} from "./index";
 import {mapGetters,mapActions} from 'vuex';
+
 
 /**
  *
@@ -36,6 +37,9 @@ export const unipayFunc = (vm,pay_type,payRequestData) => {
 
 
     let _self = vm,res = payRequestData
+
+
+
 
 
     let provider = 'wxpay';
@@ -79,20 +83,19 @@ export const unipayFunc = (vm,pay_type,payRequestData) => {
             return new Promise(function(resolve, reject) {
                 // 商户前端根据 out_order_no 请求商户后端查询微信支付订单状态
 
-                setTimeout(function(){
-                    resolve({ code: 0});
-                },500)
-                // tt.request({
-                //     url: "<your-backend-url>",
-                //     success(res) {
-                //         // 商户后端查询的微信支付状态，通知收银台支付结果
-                //         // | 1 | 2 | 3 | 9
-                //         resolve({ code: 0});
-                //     },
-                //     fail(err) {
-                //         reject(err);
-                //     }
-                // });
+
+                confirmOrderPayStatus({order_no:out_order_no}).then(res=>{
+                    if(res.data){
+                        resolve({ code: 0});
+                    }else{
+                        resolve({ code: 2});
+                    }
+
+                },err=>{})
+                // setTimeout(function(){
+                //
+                // },500)
+
             });
         },
         success: function (res) {
@@ -236,7 +239,7 @@ export const unipayFunc = (vm,pay_type,payRequestData) => {
         },
         fail: function (err) {
             console.log('fail:' + JSON.stringify(err));
-            _self.payErrorCall(err);
+            _self.payFailCall(err);
         }
     });
     return;
@@ -289,7 +292,7 @@ export const unipayFunc = (vm,pay_type,payRequestData) => {
             },
             fail: function (err) {
                 console.log('fail:' + JSON.stringify(err));
-                _self.payErrorCall(err);
+                _self.payFailCall(err);
             }
         });
         return;

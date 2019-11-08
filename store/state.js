@@ -1,4 +1,5 @@
 export default {
   userInfo:null,
-  initData:null
+  initData:null,
+  payTempObj:{}
 };

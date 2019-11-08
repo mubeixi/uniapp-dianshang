@@ -35,7 +35,7 @@
 						<span>是否使用余额</span>
 						<switch :checked="moneyChecked" size='25px' color="#04B600" @change="moneyChange" />
 					</div>
-				
+
 					<input type="number" v-if="openMoney" :value="user_money" :disabled="!openMoney" :placeholder="orderInfo.Order_Yebc"
 					@blur="moneyInputHandle" />
 				</div>
@@ -185,6 +185,12 @@
 			}
 		},
 		created() {
+
+
+			// #ifdef MP-TOUTIAO
+			this.$store.commit('SET_PAY_TEMP_OBJ',this);
+			// #endif
+			
 
 			// #ifdef H5
 
