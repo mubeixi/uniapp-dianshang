@@ -5,6 +5,8 @@
 	import {APP_USERS_ID,isDev} from "./common/env";
 	// #endif
 
+
+
     // #ifdef APP-PLUS
 
     //import {bindUserClientId} from "./common/fetch";
@@ -37,6 +39,12 @@
             console.log('extConfig info is',extConfig);
             let users_id = extConfig.users_id;
             ls.set('users_id',users_id);
+            // #endif
+
+            //头条的需要写入一下
+            // #ifdef MP-TOUTIAO
+            console.log('APP_USERS_ID is ',APP_USERS_ID)
+            ls.set('users_id',APP_USERS_ID);
             // #endif
 
 
@@ -82,10 +90,7 @@
 
 			// #endif
 
-            //头条的需要写入一下
-            // #ifdef MP-TOUTIAO
-            ls.set('users_id',APP_USERS_ID);
-            // #endif
+
 
 			// #ifdef H5
 			//ls.set('openid','')

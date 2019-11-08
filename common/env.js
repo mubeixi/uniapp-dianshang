@@ -1,7 +1,7 @@
 // export const apiBaseUrl = 'http://www.qiyeban.com';
 export const isDev = process.env.NODE_ENV === 'production' ? false : true;
 
-// #ifdef APP-PLUS
+// #ifdef APP-PLUS || MP-TOUTIAO
 export const APP_USERS_ID = 'wkbq6nc2kc';
 // #endif
 
