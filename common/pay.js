@@ -1,9 +1,10 @@
 import {WX_JSSDK_INIT} from "./mixin";
 
 import {isWeiXin,ls,GetQueryByString,urlencode} from "./tool";
-import {traslateShorten,add_template_code} from "./fetch";
+import {traslateShorten,add_template_code,confirmOrderPayStatus} from "./fetch";
 import {toast,error} from "./index";
 import {mapGetters,mapActions} from 'vuex';
+
 
 /**
  *
@@ -82,9 +83,18 @@ export const unipayFunc = (vm,pay_type,payRequestData) => {
             return new Promise(function(resolve, reject) {
                 // 商户前端根据 out_order_no 请求商户后端查询微信支付订单状态
 
-                setTimeout(function(){
-                    resolve({ code: 0});
-                },500)
+
+                confirmOrderPayStatus({order_no:out_order_no}).then(res=>{
+                    if(res.data){
+                        resolve({ code: 0});
+                    }else{
+                        resolve({ code: 2});
+                    }
+
+                },err=>{})
+                // setTimeout(function(){
+                //
+                // },500)
 
             });
         },

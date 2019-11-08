@@ -480,14 +480,26 @@
 					icon: 'none',
 					duration: 2000
 				});
+
+
+					// uni.redirectTo({
+					// 	url: '/pages/order/order?index=1'
+					// })
 				// setTimeout(function(){
 				// 	uni.redirectTo({
 				// 		url: '/pages/order/order?index=1'
 				// 	})
 				// },1000)
 			},
-			paySuccessCall(){
+			paySuccessCall(res){
+
 				var _that = this;
+				console.log('支付成功回调',res)
+				if(res.code && res.code==2){
+					_that.payFailCall()
+					return;
+				}
+
 				toast('支付成功');
 
 				//拼团订单则跳转到开团成功
