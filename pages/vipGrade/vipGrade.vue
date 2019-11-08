@@ -22,7 +22,6 @@
 							
 							</view>
 							<view v-else class="tu" :style="{transform: 'rotate('+item.growth_value/item.curlevel.upper_growth*180+'deg)'}">
-					
 							</view>
 
 	
@@ -32,7 +31,7 @@
 							<view class="texts">
 								<view class="posiQ">我的成长值</view>
 								<view class="posiW">{{item.growth_value}}</view>
-								<view class="posiE" v-if="item.curlevel.need_growth">还差{{item.curlevel.need_growth}}升级为{{pro.levels[index+1].level_name}}</view>
+								<view class="posiE" v-if="item.curlevel.need_growth&&item.curlevel.need_growth>0">还差{{item.curlevel.need_growth}}升级为{{pro.levels[index+1].level_name}}</view>
 							</view>
 						</view>
 				</swiper-item>
