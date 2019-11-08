@@ -1,6 +1,6 @@
 import {error, fun} from "./index";
 import { staticUrl } from './env.js';
-import {get_Users_ID,GET_ENV} from "./fetch";
+import {get_Users_ID,GET_ENV,uploadImage} from "./fetch";
 
 
 export const formatTime = date => {
@@ -262,29 +262,57 @@ export const uploadImages=(formData,imgs)=>{
 	let that=this;
 	formData.env=GET_ENV();
 	for(let i=0;i<imgs.length;i++){
-		uni.uploadFile({
-				url: staticUrl+'/api/little_program/shopconfig.php',
-				filePath: imgs[i],
-				name: 'image',
-				formData: formData,
-				success: (uploadFileRes) => {
-					sum++;
-					let msg=JSON.parse(uploadFileRes.data);
-					console.log(msg)
-					arr.push(msg.data.path);
-					if(sum==imgs.length){
-						uni.showToast({
-							title:msg.msg
-						})
-						if(msg.errorCode==0){
-
-						}else{
-
-						}
-
-					}
+		// #ifdef MP-TOUTIAO
+			let fileCTX = tt.getFileSystemManager()
+			console.log(fileCTX);
+			fileCTX.readFile({
+				filePath:imgs[i],
+				encoding:'base64',
+				success(ret) {
+					console.log("222222222222222222")
+					let imgs='data:image/jpeg;base64,'+ret.data;
+					uploadImage({'image':imgs}).then(result=>{	 
+						console.log("33333333333333333333333333333333333333")
+						 arr.push(result.data.path);
+					   },err=>{
+						   
+					   }).catch(e=>{
+						   
+					   })
+				},
+				fail(ret) {
+				  console.log(ret,`run fail`);
+				},
+				complete(ret) {
+				  console.log(`run done`);
 				}
-		})
+			})
+		// #endif
+		// #ifndef MP-TOUTIAO
+			uni.uploadFile({
+					url: staticUrl+'/api/little_program/shopconfig.php',
+					filePath: imgs[i],
+					name: 'image',
+					formData: formData,
+					success: (uploadFileRes) => {
+						sum++;
+						let msg=JSON.parse(uploadFileRes.data);
+						console.log(msg)
+						arr.push(msg.data.path);
+						if(sum==imgs.length){
+							uni.showToast({
+								title:msg.msg
+							})
+							if(msg.errorCode==0){
+			
+							}else{
+			
+							}
+			
+						}
+					}
+			})
+		// #endif
 	}
 	console.log(arr)
 	return arr;
