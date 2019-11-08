@@ -38,6 +38,7 @@
 import {get_user_info ,depositBalance,add_template_code,getBalance,traslateShorten} from "../../common/fetch";
 import {mapGetters,mapActions} from 'vuex';
 import {error,toast} from "../../common";
+import {unipayFunc} from '../../common/pay.js'
 import {
 		ls,
 		GetQueryByString,
@@ -215,15 +216,14 @@ export default {
 				});
 			})
 			// #endif
-
-
 			console.log('payConf',payConf)
 			let that = this;
 			depositBalance(payConf).then(res => {
 
 				console.log(this);
+				unipayFunc(this,this.pay_type,res);
 				// #ifdef APP-PLUS
-
+				return;
 
 				if(this.pay_type === 'ali_app'){
 

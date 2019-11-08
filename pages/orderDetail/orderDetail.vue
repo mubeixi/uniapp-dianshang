@@ -161,7 +161,9 @@
 			</div>
 			<div class="btn-group" v-else-if="orderInfo.Order_Status==2">
 				<span class="active" v-if="orderInfo.teamstatus==0">拼团中</span>
-			    <span class="active" @click="goPay(orderInfo.Order_ID)" v-else>申请退款</span>
+				<block v-else>
+			    	<span class="active" @click="goPay(orderInfo.Order_ID)" v-if="orderInfo.Order_Type != 'gift'">申请退款</span>
+				</block>
 			</div>
 			<div class="btn-group" v-else-if="orderInfo.Order_Status==3">
 				<span @click="goLogistics(orderInfo)">查看物流</span>

@@ -105,6 +105,7 @@ import {getAddress,jifenProdDetail,getShipping,jifenProdDuihuan,jifenProdShippin
 import {pageMixin} from "../../common/mixin";
 import {check_money_in} from "../../common/util.js";
 import {mapGetters,mapActions} from 'vuex';
+import {unipayFunc} from '../../common/pay.js'
 import {
 		ls,
 		GetQueryByString,
@@ -486,7 +487,8 @@ export default {
 				jifenProdPay(payConf).then(res => {
 					console.log(res);
 
-
+					unipayFunc(this,this.pay_type,res);
+					return;
 					// #ifdef APP-PLUS
 
 
