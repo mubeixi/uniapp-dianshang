@@ -3,9 +3,7 @@
     <div class="top">
         <image class="imgm" src="/static/back.png" @click="goBack" ></image>
         <image class="imgm cart" src="/static/cart.png" @click="goCart" ></image>
-	</div>
-
-
+    </div>
 
 	<!-- 轮播 -->
 	<view class="uni-padding-wrap">
@@ -21,18 +19,13 @@
 	</view>
     <!-- 产品信息描述 -->
     <div class="section1">
-        <div class="leftss">
-			秒杀
+        <div class="leftss" style="display: flex;align-items: center;">
+			<image class="limits" src="/static/limit.png"></image>
         </div>
         <div class="rightss">
             <div class="countdown">
                距开始还有 : <span class="spanss">{{countdown.d}}</span>天<span class="spans">{{countdown.h}}</span>时<span class="spans">{{countdown.m}}</span>分<span class="spans">{{countdown.s}}</span>秒
             </div>
-        </div>
-    </div>
-    <div class="section2" >
-        <div class="titles">
-            <div class="title">{{product.Products_Name}}</div>
         </div>
     </div>
 	<view class="prices">
@@ -48,6 +41,11 @@
 			库存160
 		</view>
 	</view>
+	<div class="section2" >
+	    <div class="titles">
+	        <div class="title">{{product.Products_Name}}</div>
+	    </div>
+	</div>
     <!-- 包邮等信息 -->
     <div class="section3">
         <span>
@@ -212,10 +210,6 @@
 		</form>
 
 	</popupLayer>
-	<div class="errorMsg">
-		<image src="/static/error.png" class="errImg"></image>
-		活动尚未开始
-	</div>
 	<div class="fixed">
 		<div class="leftss">
 			<div class="first" @click="goHome">
@@ -1130,7 +1124,7 @@ export default {
     }
     /* 产品描述部分 start */
     .section1 {
-       height: 70rpx;
+       height: 83rpx;
        background-color: #fff;
     }
     .price {
@@ -1339,11 +1333,12 @@ export default {
 					width: 37rpx;
 					line-height: 32upx;
 					text-align: center;
-					background:#FFFFFF;
-					color: #F43131;
+					background:#333333;
+					color: #FFFFFF;
 					font-size: 26rpx;
 					box-shadow:0px 1px 1px 0px rgba(4,0,0,0.5), 0px 1px 1px 0px rgba(255,255,255,0.65);
 					display: inline-block;
+
 				}
 				.spanss{
 					margin: 0 2px;
@@ -1627,6 +1622,7 @@ export default {
 		display: flex;
 		justify-content: space-between;
 		background-color: #FFFFFF;
+		margin-top: 31rpx;
 		.btn{
 			font-size: 22rpx;
 			color: #666666;
@@ -1705,5 +1701,9 @@ export default {
 		position: absolute;
 		top: 30px;
 		right: 10px !important;
+	}
+	.limits{
+		width: 152rpx;
+		height: 48rpx;
 	}
 </style>

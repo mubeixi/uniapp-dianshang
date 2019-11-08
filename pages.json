@@ -501,6 +501,12 @@
             	"navigationBarTitleText": "申请记录"
             }
         }
+        ,{
+            "path" : "pages/limitDetail/limitDetail",
+            "style" : {
+            	"navigationBarTitleText": "限时抢购"
+            }
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
