@@ -353,6 +353,8 @@ export const traslateShorten =saveTempData
 
 export const bindUserClientId = (data, options) => fetch('user_uuid_set', data, options);
 
+export const confirmOrderPayStatus = (data, options) => fetch('judge_ispay', data, options);
+
 //普通环境noop就行了
 //let add_template_code = ()=>{}
 

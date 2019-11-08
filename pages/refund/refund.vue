@@ -210,8 +210,12 @@ export default {
 				});
 				return;
 			}
+			let arr=[];
+			for(let item of this.arr){
+				arr.push(item[0])
+			}
 			orderRefund({
-				image_path: JSON.stringify(this.arr),
+				image_path: JSON.stringify(arr),
 				reason_id: this.reason_id,
 				refund_desc: this.refund_desc,
 				Order_ID: this.Order_ID
@@ -250,8 +254,10 @@ export default {
 			};
 			let that=this;
 			uni.chooseImage({
-				count:5,
+				count:1,
+				// #ifndef MP-TOUTIAO
 				sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+				// #endif
 				success(res) {
 					that.isSubmit=false;
 					for(let item of res.tempFiles){

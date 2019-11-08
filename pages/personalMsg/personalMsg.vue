@@ -57,7 +57,7 @@
 
 <script>
 	import {mapGetters,mapActions} from 'vuex';
-	import {GET_ENV,get_Users_ID,upDateUserInfo,get_user_info} from '../../common/fetch.js';
+	import {GET_ENV,get_Users_ID,upDateUserInfo,get_user_info,uploadImage} from '../../common/fetch.js';
 	import { staticUrl } from '../../common/env.js';
 	export default {
 		data() {
@@ -110,45 +110,94 @@
 					let that=this;
 					uni.chooseImage({
 						count:1,
+						// #ifndef MP-TOUTIAO
 						sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+						// #endif
 						success(res) {
 							for(let item of res.tempFiles){
 								that.User_head = item.path;
 								that.imgs.push(item.path);
-								for(var i in that.imgs){
-									//上传图片
-									uni.uploadFile({
-											url: staticUrl+'/api/little_program/shopconfig.php',
-											filePath: that.imgs[i],
-											name: 'image',
-											formData: data,
-											success: (uploadFileRes) => {
-												console.log(uploadFileRes)
-												uploadFileRes =	JSON.parse(uploadFileRes.data)
-												that.tem_Shop_Logo = uploadFileRes.data.path;
-												upDateUserInfo({
-													User_HeadImg: that.tem_Shop_Logo,
-												}).then(res=>{
-													console.log(res)
-													if(res.errorCode == 0){
-														uni.showToast({
-															title: '修改成功',
-															icon: 'success'
-														});
-														that.User_HeadImg = res.data.User_HeadImg;
-														that.userInfo.User_HeadImg = res.data.User_HeadImg;
-														that.setUserInfo(that.userInfo);
-													}else {
-														uni.showToast({
-															title: res.msg,
-															icon: 'none'
-														})
-													}
-												})
-											}
-									});
+							}					
+							// #ifdef MP-TOUTIAO
+							let fileCTX = tt.getFileSystemManager()
+							console.log(fileCTX);
+							fileCTX.readFile({
+								filePath:res.tempFilePaths[0],
+								encoding:'base64',
+								success(ret) {
+									let imgs='data:image/jpeg;base64,'+ret.data;
+								   uploadImage({'image':imgs}).then(result=>{
+				
+									   upDateUserInfo({
+									   	User_HeadImg: result.data.path,
+									   }).then(res=>{
+									   	console.log(res)
+									   	if(res.errorCode == 0){
+									   		uni.showToast({
+									   			title: '修改成功',
+									   			icon: 'success'
+									   		});
+									   		that.User_HeadImg = res.data.User_HeadImg;
+									   		that.userInfo.User_HeadImg = res.data.User_HeadImg;
+									   		that.setUserInfo(that.userInfo);
+									   	}else {
+									   		uni.showToast({
+									   			title: res.msg,
+									   			icon: 'none'
+									   		})
+									   	}
+									   })
+								   },err=>{
+									   
+								   }).catch(e=>{
+									   
+								   })
+								},
+								fail(ret) {
+								  console.log(ret,`run fail`);
+								},
+								complete(ret) {
+								  console.log(`run done`);
 								}
-							}
+							})
+							// #endif
+							
+							// #ifndef MP-TOUTIAO
+								//上传图片
+								uni.uploadFile({
+										url: staticUrl+'/api/little_program/shopconfig.php',
+										filePath: that.imgs[0],
+										name: 'image',
+										formData: data,
+										success: (uploadFileRes) => {
+											console.log(uploadFileRes)
+											uploadFileRes =	JSON.parse(uploadFileRes.data)
+											that.tem_Shop_Logo = uploadFileRes.data.path;
+											upDateUserInfo({
+												User_HeadImg: that.tem_Shop_Logo,
+											}).then(res=>{
+												console.log(res)
+												if(res.errorCode == 0){
+													uni.showToast({
+														title: '修改成功',
+														icon: 'success'
+													});
+													that.User_HeadImg = res.data.User_HeadImg;
+													that.userInfo.User_HeadImg = res.data.User_HeadImg;
+													that.setUserInfo(that.userInfo);
+												}else {
+													uni.showToast({
+														title: res.msg,
+														icon: 'none'
+													})
+												}
+											})
+										}
+								});
+							// #endif
+							// for(var i in that.imgs){
+								
+							// }
 
 						},
 						fail(e) {
