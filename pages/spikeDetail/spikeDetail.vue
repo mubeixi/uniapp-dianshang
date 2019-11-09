@@ -1,5 +1,5 @@
 <template>
-  <div style="position:relative;background-color:#f8f8f8">
+  <div style="position:relative;background-color:#f8f8f8" v-if="product">
     <div class="top">
         <image class="imgm" src="/static/back.png" @click="goBack" ></image>
         <image class="imgm cart" src="/static/cart.png" @click="goCart" ></image>
@@ -24,11 +24,16 @@
         <div class="leftss">
 			秒杀
         </div>
-        <div class="rightss">
+        <div class="rightss" v-if="isKai">
             <div class="countdown">
-               距开始还有 : <span class="spanss">{{countdown.d}}</span>天<span class="spans">{{countdown.h}}</span>时<span class="spans">{{countdown.m}}</span>分<span class="spans">{{countdown.s}}</span>秒
+               距结束还有 : <span class="spanss">{{countdown.d}}</span>天<span class="spans">{{countdown.h}}</span>时<span class="spans">{{countdown.m}}</span>分<span class="spans">{{countdown.s}}</span>秒
             </div>
         </div>
+		<div class="rightss" v-if="!isKai">
+		    <div class="countdown">
+		       距开始还有 : <span class="spanss">{{countdown.d}}</span>天<span class="spans">{{countdown.h}}</span>时<span class="spans">{{countdown.m}}</span>分<span class="spans">{{countdown.s}}</span>秒
+		    </div>
+		</div>
     </div>
     <div class="section2" >
         <div class="titles">
@@ -38,14 +43,14 @@
 	<view class="prices">
 		<view class="price">
 			<text class="leftPrice">
-				秒杀价<text class="rmb">¥<text class="priceX">89.90</text></text>
+				秒杀价<text class="rmb">¥<text class="priceX">{{product.attr_json.price}}</text></text>
 			</text>
 			<text class="rightPrice">
-				￥169.90
+				￥{{product.Products_PriceX}}
 			</text>
 		</view>
 		<view class="btn">
-			库存160
+			库存{{product.attr_json.count}}
 		</view>
 	</view>
     <!-- 包邮等信息 -->
@@ -70,10 +75,10 @@
     <!-- 小伙伴在拼团 -->
     <div class="pintuan">
         <div class="pinTitle">
-            活动介绍
+            {{product.name}}
         </div>
 		<div class="mbxtext">
-			此处为活动介绍，请输入介绍相关文案，此处为活动介绍，请输入介绍相关文案此处为活动介绍，请输入介绍相关文案，此处为活动介绍，请输入介绍相关文案此处为活动介绍，请输入介绍相关文案，此处为活动介绍，请输入介绍相关文案此处为活动介绍，请输入介绍相关文案
+			{{product.label}}
 		</div>
     </div>
     <!-- 评价 -->
@@ -178,8 +183,8 @@
 				<div class="cartTitle">
 					<div class="cartTitles">{{product.Products_Name}}</div>
 					<div class="addInfo">
-						<div class="addPrice">{{product.Products_PriceX}}元</div>
-						<div class="proSale">库存{{postData.count}}</div>
+							<div class="addPrice" >{{product.attr_json.price}}元</div>
+							<div class="proSale">库存{{product.attr_json.count}}</div>
 					</div>
 				</div>
 			</div>
@@ -209,12 +214,10 @@
 			<button  formType="submit" class="cartSub" :class="submit_flag?'':'disabled'">
 				确定
 			</button>
-
-
 		</form>
 
 	</popupLayer>
-	<div class="errorMsg">
+	<div class="errorMsg" v-if="!isKai">
 		<image src="/static/error.png" class="errImg"></image>
 		活动尚未开始
 	</div>
@@ -237,20 +240,31 @@
 			</div>
 		</div>
 		<div class="rightss">
-			<form class="form" report-submit @submit="myPay">
-			<div class="dan bTitle">
-				<button formType="submit" class="danRight">
-					零售价购买
-				</button>
-			</div>
-			</form>
-			<form  class="form" report-submit @submit="myPin">
-			<div class="tuan bTitle">
-				<button formType="submit" class="danRight">
-					立即预约
-				</button>
-			</div>
-			</form>
+			<block v-if="!isKai">
+				<form class="form" report-submit @submit="myPays">
+				<div class="dan bTitle">
+					<button formType="submit" class="danRight">
+						零售价购买
+					</button>
+				</div>
+				</form>
+				<form  class="form" report-submit  @submit="flashsaleReserve">
+				<div class="tuan bTitle">
+					<button formType="submit" class="danRight">
+						立即预约
+					</button>
+				</div>
+				</form>
+			</block>
+			<block v-if="isKai">
+				<form class="form" report-submit @submit="myPay">
+				<div class="dan bTitle" style="background-color: #F43131;">
+					<button formType="submit" class="danRight">
+						立即抢购
+					</button>
+				</div>
+				</form>
+			</block>
 		</div>
 	</div>
   </div>
@@ -258,7 +272,7 @@
 
 <script>
 import popupLayer from '../../components/popup-layer/popup-layer.vue'
-import {getProductDetail,getCommit,updateCart,addCollection,getCoupon,getUserCoupon,cancelCollection,checkProdCollected,getPintuanTeam,addProductViews,getProductSharePic} from '../../common/fetch.js'
+import {flashsaleReserve,flashsaleDetail,getCommit,updateCart,addCollection,getCoupon,getUserCoupon,cancelCollection,checkProdCollected,getPintuanTeam,addProductViews,getProductSharePic} from '../../common/fetch.js'
 import {goBack,numberSort,getGroupCountdown,buildSharePath,getProductThumb,ls}  from '../../common/tool.js'
 import {pageMixin} from "../../common/mixin";
 import {error} from "../../common";
@@ -281,6 +295,7 @@ export default {
 			product:'',//商品结果
 			commit:[],//获取评论
 			Products_ID: 0 ,
+			flashsale_id:0,//秒杀商品id
 			count:1,//商品数量
 			skuF:1,//规格详情
 			checkAttr: {} , // 选择的属性
@@ -292,6 +307,8 @@ export default {
 			pageSize:10,//优惠券页
 			totalCount:0,//优惠券个数
 			countdown:{d:0,h:0,m:0,s:0},
+			isKai:true,//是否开始秒杀
+			isLoading:false,
 			postData: {
 			    prod_id: 0,    //产品ID  在 onLoad中赋值
 			    atrid_str: '',    //选择属性  1；2   数字从小到大
@@ -328,31 +345,17 @@ export default {
 	computed:{
 		...mapGetters(['userInfo']),
 		...mapState(['initData'])
-		// countdown(){
-		// 	if(this.product || !this.product.pintuan_end_time)return {};
-		//
-		// 	let computedStamp = getGroupCountdown({start_timeStamp:this.product.pintuan_end_time})
-		// 	if(computedStamp){
-		// 		return computedStamp
-		// 	}
-		//
-		// 	return {}
-		//
-		// }
 	},
 	onLoad: function (option) {
 		  this.Products_ID = option.Products_ID;
+		  this.flashsale_id = option.flashsale_id;
 		  this.checkProdCollected();
 	},
 	onShow() {
-		this.getDetail(this.Products_ID);
+		this.getDetail(this.flashsale_id);
 		this.getCommit(this.Products_ID);
 
 		addProductViews({prod_id:this.Products_ID}).then().catch()
-
-		//获取正在拼团的团队
-		this.getPintuanTeamList(this.Products_ID)
-
 
 	},
 	filters: {
@@ -428,30 +431,6 @@ export default {
 				indicator:'default',
 				current:index
 			});
-		},
-		toJoinGroup(tid,team){
-			console.log(team)
-			if(!this.$fun.checkIsLogin())return;
-
-			for(var usr of team.join_user){
-				console.log(usr)
-				if(this.userInfo.User_ID == usr){
-
-					this.$fun.confirm({title:'操作提示',content:'您已经参加该团,是否继续查看?'}).then(res=>{
-						uni.navigateTo({
-							url:"/pages/groupJoin/groupJoin?Team_ID="+tid+"&Products_ID="+this.Products_ID
-						})
-					},err=>{
-
-					})
-					return;
-				}
-			}
-
-
-			uni.navigateTo({
-				url:"/pages/groupJoin/groupJoin?Team_ID="+tid+"&Products_ID="+this.Products_ID
-			})
 		},
 		async shareFunc(channel) {
 
@@ -544,24 +523,9 @@ export default {
 							url: '/pages/detail/sharepic/sharepic'
 						})
 					}, 200)
-					// uni.previewImage({
-					// 	urls: [sharePic],
-					// 	indicator:'default',
-					// 	current:0
-					// });
 					break;
 			}
 
-		},
-		getPintuanTeamList(id){
-			getPintuanTeam({prod_id:id},{errtip:false}).then(res=>{
-				if(res.errorCode === 0){
-					this.teamList = res.data.splice(0,3)
-				}
-
-			}).catch(e=>{
-
-			})
 		},
 		formatRichTexts(html){
 			if(!html) return;
@@ -669,11 +633,47 @@ export default {
 			console.log(e);
 			add_template_code({
 				code: e.detail.formId,
-				times: 3
+				times: 1
 			})
 			if(!this.$fun.checkIsLogin(1))return;
 			this.postData.active = 'pintuan';
 			this.$refs.cartPopu.show();
+		},
+		//秒杀预约
+		flashsaleReserve(e){
+			if(this.isLoading){
+				return;
+			}
+			this.isLoading=true;
+			add_template_code({
+				code: e.detail.formId,
+				times: 1
+			})
+			if(!this.$fun.checkIsLogin(1))return;
+			let data={
+				flashsale_id:this.flashsale_id
+			}
+			flashsaleReserve(data).then(res=>{
+				uni.showToast({
+					title:res.msg,
+					icon:'none'
+				})
+				this.isLoading=false;
+			},err=>{
+				uni.showToast({
+					title:res.msg,
+					icon:'none'
+				})
+				this.isLoading=false;
+			}).catch(e=>{
+				this.isLoading=false;
+			})
+		},
+		myPays(){
+			//零售价购买
+			uni.navigateTo({
+				url:'../detail/detail?Products_ID='+this.Products_ID
+			})
 		},
 		//单独购买
 		myPay(e){
@@ -681,7 +681,7 @@ export default {
 			console.log(e);
 			add_template_code({
 				code: e.detail.formId,
-				times: 3
+				times: 1
 			})
 
 			if(!this.$fun.checkIsLogin(1))return;
@@ -754,7 +754,7 @@ export default {
 			console.log(e);
 			add_template_code({
 				code: e.detail.formId,
-				times: 3
+				times: 1
 			})
         	if(!this.submit_flag) {
         		return ;
@@ -790,15 +790,29 @@ export default {
         	this.$refs.cartPopu.close();
         },
         addNum(){
-        	if (this.postData.qty < this.postData.count) {
-				this.postData.qty = parseInt(this.postData.qty) + 1;
-        	}else {
-        	    uni.showToast({
-        			title: '购买数量不能大于库存量',
-        	        icon: 'none',
-        	    });
-        		this.postData.qty = this.postData.count;
-        	}
+			if(this.isKai){
+				if (this.postData.qty < this.product.attr_json.count) {
+					this.postData.qty = parseInt(this.postData.qty) + 1;
+				}else {
+				    uni.showToast({
+						title: '购买数量不能大于库存量',
+				        icon: 'none',
+				    });
+					this.postData.qty = this.product.attr_json.count;
+				}
+			}else{
+				if (this.postData.qty < this.postData.count) {
+					this.postData.qty = parseInt(this.postData.qty) + 1;
+				}else {
+				    uni.showToast({
+						title: '购买数量不能大于库存量',
+				        icon: 'none',
+				    });
+					this.postData.qty = this.product.attr_json.count;
+				}
+			}
+			
+        	
         },
         delNum(){
         	if (this.postData.qty > 1) {
@@ -835,17 +849,32 @@ export default {
 			})
         },
 		stampCount(){
-
 			let rt  = {};
-			if(this.product && this.product.pintuan_end_time){
-				let computedStamp = getGroupCountdown({end_timeStamp:this.product.pintuan_end_time})
-				if(computedStamp){
-					rt = computedStamp
-				}else{
-					//如果不对，就清空
-					window.clearInterval(window.groupStam)
-				}
+			let times=new Date().getTime();
+			if(times<this.product.start_time*1000){
+					this.isKai=false;
+					if(this.product && this.product.end_time){
+						let computedStamp = getGroupCountdown({end_timeStamp:this.product.start_time})
+						if(computedStamp){
+							rt = computedStamp
+						}else{
+							//如果不对，就清空
+							window.clearInterval(window.groupStam)
+						}
+					}
+			}else{
+				this.isKai=true;
+					if(this.product && this.product.end_time){
+						let computedStamp = getGroupCountdown({end_timeStamp:this.product.end_time})
+						if(computedStamp){
+							rt = computedStamp
+						}else{
+							//如果不对，就清空
+							window.clearInterval(window.groupStam)
+						}
+					}
 			}
+			
 
 			//console.log(rt)
 
@@ -853,30 +882,18 @@ export default {
 		},
 		getDetail(item){
         	let data={
-        		prod_id:item,
+        		flashsale_id:item,
         		Users_ID:'wkbq6nc2kc'
         	}
         	let _self = this;
 			let product = null;
 
-			getProductDetail(data).then(res=>{
+			flashsaleDetail(data).then(res=>{
 
         		console.log(res)
 				if(res.errorCode != 0){
 					return;
 				}
-
-				if(!res.data.is_pintuan){
-					error('不是拼团产品');
-					let linkObj = {link:'/pages/index/index',linkType:'default'};
-					setTimeout(function(){
-						_self.$fun.linkTo(linkObj)
-					},100)
-					return;
-				}
-
-
-
 				this.product = res.data;
 
 				this.postData.count = res.data.Products_Count;
@@ -1334,6 +1351,8 @@ export default {
 				line-height: 37rpx;
 				overflow: hidden;
 				height: 37rpx;
+				display: flex;
+				align-items: center;
 				.spans{
 					margin: 0 2px;
 					padding: 0 2px;
