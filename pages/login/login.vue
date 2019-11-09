@@ -307,6 +307,8 @@
 				if (mobile == "" || !mobile)
 					return error("请先填入手机号");
 				let event = undefined;
+				if(this.countdownStatus)return;
+				this.countdownStatus=true;
 				return getSmsCode({mobile})
 					.then(() => toast("发送短信成功",'success'))
 					.then(() => this.startCountdown());
