@@ -97,13 +97,14 @@ export default {
         }
     },
 	onShow(){
+		
+	},
+	onLoad(option){
+		this.index=option.index;
 		this.data=[];
 		this.page=1;
 		this._getOrder();
 		this.getOrderNum();
-	},
-	onLoad(option){
-		this.index=option.index;
 	},
 	onReachBottom(){
 		if(this.data.length<this.totalCount){
