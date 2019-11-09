@@ -777,7 +777,7 @@ export default {
 			if (attr_val) {
 				this.postData.count = attr_val.Property_count;   //选择属性的库存
 				this.postData.showimg = typeof attr_val.Attr_Image != 'undefined' && attr_val.Attr_Image != '' ? attr_val.Attr_Image : this.product.Products_JSON['ImgPath'][0];// 选择属性的图片
-				this.postData.productDetail_price = attr_val.Supply_Price?attr_val.Supply_Price:this.product.Products_PriceY; // 选择属性的价格
+				this.postData.productDetail_price = attr_val.Attr_Price?attr_val.Attr_Price:this.product.Products_PriceX; // 选择属性的价格
 				this.submit_flag = (!this.check_attr || Object.getOwnPropertyNames(this.check_attr).length != Object.getOwnPropertyNames(this.product.skujosn).length) ? false : true;
 			}
 			//判断属性库存
@@ -928,7 +928,7 @@ export default {
 			await getProductDetail(data).then(res=>{
 				product = res.data
 				this.product = res.data;
-				this.postData.productDetail_price =this.product.Products_PriceY;
+				this.postData.productDetail_price =this.product.Products_PriceX;
 				this.isVirtual = res.data.Products_IsVirtual == 1;
 				this.postData.count = res.data.Products_Count;
 				if(res.data.skujosn) {
