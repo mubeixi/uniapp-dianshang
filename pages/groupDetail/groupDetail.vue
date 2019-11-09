@@ -189,7 +189,7 @@
 				<div class="cartTitle">
 					<div class="cartTitles">{{product.Products_Name}}</div>
 					<div class="addInfo">
-						<div class="addPrice">{{product.Products_PriceX}}元</div>
+						<div class="addPrice">{{postData.Products_PriceX}}元</div>
 						<div class="proSale">库存{{postData.count}}</div>
 					</div>
 				</div>
@@ -322,7 +322,9 @@ export default {
 			    qty: 1,           //购买数量
 			    cart_key: 'DirectBuy',     //购物车类型   CartList（加入购物车）、DirectBuy（立即购买）、PTCartList（不能加入购物车）
 					active: 'pintuan',   //拼团时候选，不是拼团不选
+				Products_PriceX: ''
 			},
+			isPin:false,
 			isCollected: false, // 该产品是否已收藏
         }
     },
@@ -686,7 +688,8 @@ export default {
 		},
 		//拼团
 		myPin(e){
-
+			this.isPin=true;
+			this.postData.Products_PriceX=this.product.pintuan_pricex;
 			console.log(e);
 			add_template_code({
 				code: e.detail.formId,
@@ -698,7 +701,8 @@ export default {
 		},
 		//单独购买
 		myPay(e){
-
+			this.isPin=false;
+			this.postData.Products_PriceX=this.product.Products_PriceX;
 			console.log(e);
 			add_template_code({
 				code: e.detail.formId,
@@ -750,7 +754,11 @@ export default {
         	if (attr_val) {
         		this.postData.count = attr_val.Property_count;   //选择属性的库存
         		this.postData.showimg = typeof attr_val.Attr_Image != 'undefined' && attr_val.Attr_Image != '' ? attr_val.Attr_Image : this.product.Products_JSON['ImgPath'][0];// 选择属性的图片
-        		this.productDetail_price = attr_val.Txt_PriceSon; // 选择属性的价格
+        		if(this.isPin){
+					this.postData.Products_PriceX = attr_val.pt_pricex;
+				}else{
+					this.postData.Products_PriceX = attr_val.Attr_Price; // 选择属性的价格
+				}
         		this.submit_flag = (!this.check_attr || Object.getOwnPropertyNames(this.check_attr).length != Object.getOwnPropertyNames(this.product.skujosn).length) ? false : true;
         	}
         	//判断属性库存
@@ -886,7 +894,7 @@ export default {
 				if(res.errorCode != 0){
 					return;
 				}
-
+				
 				if(!res.data.is_pintuan){
 					error('不是拼团产品');
 					let linkObj = {link:'/pages/index/index',linkType:'default'};
@@ -897,7 +905,7 @@ export default {
 				}
 
 				this.product = res.data;
-
+				this.postData.Products_PriceX=this.product.Products_PriceX;
 				this.postData.count = res.data.Products_Count;
 				if(res.data.skujosn) {
 					this.product.skujosn = typeof res.data.skujosn ==='string' ?JSON.parse(res.data.skujosn):res.data.skujosn;
