@@ -101,7 +101,7 @@
 										//上传图片
 										uni.uploadFile({
 												url: staticUrl+'/api/little_program/shopconfig.php',
-												filePath: that.imgs[i],
+												filePath: that.imgs[0],
 												name: 'image',
 												formData: data,
 												success: (uploadFileRes) => {

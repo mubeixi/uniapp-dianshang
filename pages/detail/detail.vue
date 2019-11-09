@@ -165,7 +165,7 @@
 				<div class="cartTitle">
 					<div class="cartTitles">{{product.Products_Name}}</div>
 					<div class="addInfo">
-						<div class="addPrice">{{product.Products_PriceX}}元</div>
+						<div class="addPrice">{{postData.productDetail_price}}元</div>
 						<div class="proSale">库存{{postData.count}}</div>
 					</div>
 				</div>
@@ -262,6 +262,7 @@ export default {
 			    showimg: '',      //选择属性的图片(用产品图片代替)
 			    qty: 1,           //购买数量
 			    cart_key: '',     //购物车类型   CartList（加入购物车）、DirectBuy（立即购买）、PTCartList（不能加入购物车）
+				productDetail_price: 0
 			},
 			submit_flag: true, //提交按钮
 			page:1,//优惠券页
@@ -776,7 +777,7 @@ export default {
 			if (attr_val) {
 				this.postData.count = attr_val.Property_count;   //选择属性的库存
 				this.postData.showimg = typeof attr_val.Attr_Image != 'undefined' && attr_val.Attr_Image != '' ? attr_val.Attr_Image : this.product.Products_JSON['ImgPath'][0];// 选择属性的图片
-				this.productDetail_price = attr_val.Txt_PriceSon; // 选择属性的价格
+				this.postData.productDetail_price = attr_val.Supply_Price?attr_val.Supply_Price:this.product.Products_PriceY; // 选择属性的价格
 				this.submit_flag = (!this.check_attr || Object.getOwnPropertyNames(this.check_attr).length != Object.getOwnPropertyNames(this.product.skujosn).length) ? false : true;
 			}
 			//判断属性库存
@@ -927,6 +928,7 @@ export default {
 			await getProductDetail(data).then(res=>{
 				product = res.data
 				this.product = res.data;
+				this.postData.productDetail_price =this.product.Products_PriceY;
 				this.isVirtual = res.data.Products_IsVirtual == 1;
 				this.postData.count = res.data.Products_Count;
 				if(res.data.skujosn) {
