@@ -94,13 +94,15 @@ export default {
         }
     },
 	onShow(){
-		this.data=[];
-		this.page=1;
-		this._getOrder();
-		this.getOrderNum();
+		// this.data=[];
+		// this.page=1;
+		// this._getOrder();
+		// this.getOrderNum();
 	},
 	onLoad(option){
 		this.index=option.index;
+		this._getOrder();
+		this.getOrderNum();
 	},
 	onReachBottom(){
 		if(this.data.length<this.totalCount){
