@@ -55,11 +55,11 @@
             </ul>
         </div>
         <!-- 倒计时 -->
-        <div class="how">
+        <div class="how" v-if="product.teamstatus!=1">
             <image class="img" src="https://new401.bafangka.com/static/client/tuan/time.png"/>
             <span class="my">拼团中，还差<span class="spans">{{product.pintuan_people-product.teamnum}}</span>人</span>
         </div>
-        <div class="times">
+        <div class="times" v-if="product.teamstatus!=1">
             <div class="line"></div>
             <div class="text">
                 剩余
@@ -75,7 +75,7 @@
             <div class="line"></div>
         </div>
         <!--查看订单 -->
-        <div class="dingdan">
+        <div class="dingdan" v-if="product.teamstatus!=1">
 
             <!-- #ifdef MP-WEIXIN || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO -->
             <button @click="goOrderDetail" class="vanButton">查看订单</button>
@@ -88,6 +88,16 @@
             <span class="vanButton invi" @click="inviteFunc">邀请好友</span>
             <!-- #endif -->
         </div>
+		<div class="dingdan" v-if="product.teamstatus==1">
+		
+		            <!-- #ifdef MP-WEIXIN || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO -->
+		            <button @click="goOrderDetail" class="vanButton" style="margin-left: 125rpx;">查看订单</button>
+		            <!-- #endif -->
+		
+		            <!-- #ifdef H5 || APP-PLUS -->
+		            <span @click="goOrderDetail" class="vanButton"  style="margin-left: 125rpx;">查看订单</span>
+		            <!-- #endif -->
+		 </div>
 <!--        <div class="liji">-->
 <!--            <div class="vanButton">立即参团</div>-->
 <!--        </div>-->

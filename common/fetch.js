@@ -100,6 +100,12 @@ export const getProductCategory = (data,options) => fetch('pro_cate',data,option
 
 //获取详情页
 export const getProductDetail = (data,options) => fetch('prod_detail',data,options)
+//获取秒杀详情页
+export const flashsaleDetail = (data,options) => fetch('flashsale_detail',data,options)
+//秒杀预约
+export const flashsaleReserve = (data,options) => fetch('flashsale_reserve',data,options)
+
+
 //获取评论详情
 export const getCommit = (data,options) => fetch('get_commit',data,options)
 //获取搜索结果
