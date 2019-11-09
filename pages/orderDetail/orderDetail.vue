@@ -645,7 +645,6 @@
 		align-items: center;
 		padding: 40rpx 38rpx 40rpx 28rpx;
 		border-top: 30rpx solid #F3F3F3;
-		border-bottom: 20rpx solid #F3F3F3;
 		font-size: 28rpx;
 	}
 	// 订单号
