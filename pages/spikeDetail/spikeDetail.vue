@@ -347,15 +347,15 @@ export default {
 		...mapState(['initData'])
 	},
 	onLoad: function (option) {
-		  this.Products_ID = option.Products_ID;
+		  // this.Products_ID = option.Products_ID;
 		  this.flashsale_id = option.flashsale_id;
-		  this.checkProdCollected();
+		  // this.checkProdCollected();
 	},
 	onShow() {
 		this.getDetail(this.flashsale_id);
-		this.getCommit(this.Products_ID);
-
-		addProductViews({prod_id:this.Products_ID}).then().catch()
+		// this.getCommit(this.Products_ID);
+		// this.checkProdCollected();
+		
 
 	},
 	filters: {
@@ -890,13 +890,16 @@ export default {
 
 			flashsaleDetail(data).then(res=>{
 
-        		console.log(res)
+        		
 				if(res.errorCode != 0){
 					return;
 				}
 				this.product = res.data;
-
+				this.Products_ID = res.data.Products_ID;
 				this.postData.count = res.data.Products_Count;
+				this.getCommit(this.Products_ID);
+				this.checkProdCollected();
+				addProductViews({prod_id:this.Products_ID}).then().catch();
 				if(res.data.skujosn) {
 					this.product.skujosn = typeof res.data.skujosn ==='string' ?JSON.parse(res.data.skujosn):res.data.skujosn;
 					this.product.skuvaljosn = typeof res.data.skuvaljosn === 'string' ?JSON.parse(res.data.skuvaljosn):res.data.skuvaljosn;
