@@ -4,7 +4,7 @@
 		<!-- <page-title title="提现" rightHidden="true" bgcolor="#ffffff" ></page-title> -->
 		<view class="content">
 			<view class="bank" v-if="isShow" @click="goMethod">
-				<image src="https://new401.bafangka.com/static/client/fenxiao/zhaoshang.png" class="bankCard"></image>
+				<image :src="initData.ShopLogo" class="bankCard"></image>
 				<view class="bankName" v-if="data.Method_Type=='bank_card'||data.Method_Type=='alipay'">
 					{{data.Method_Name}}({{data.Account_Val}})
 				</view>
@@ -53,6 +53,7 @@
 
 <script>
 	import {pageMixin} from "../../common/mixin";
+	import {mapGetters,mapActions} from 'vuex';
 	import {getUserWithdrawMethod,withdrawApply} from '../../common/fetch.js'
 	export default {
 		mixins:[pageMixin],
@@ -77,6 +78,9 @@
 			        that.height=res.screenHeight-68;
 			    }
 			});
+		},
+		computed:{
+			...mapGetters(['initData']),
 		},
 		onShow() {
 			//获取我的提现方式
