@@ -144,7 +144,7 @@
 				console.log(e)
 				add_template_code({
 					code: e.detail.formId,
-					times: 3
+					times: 1
 				})
 
 				if(this.money == '' || isNaN(this.money) || (this.money<0)) {

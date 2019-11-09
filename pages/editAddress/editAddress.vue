@@ -169,7 +169,7 @@
 
 			  	add_template_code({
 					code: e.detail.formId,
-					times: 3
+					times: 1
 				})
 
 				var address_info = e.detail.value;

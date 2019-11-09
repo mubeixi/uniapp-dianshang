@@ -376,7 +376,7 @@
                         return;
                     }
                 }
-								this.postData.teamid = this.Team_ID;
+								this.postData.active_id = this.Team_ID;
 								this.postData.prod_id = this.Prod_ID;
                 console.log(this.postData)
                 updateCart(this.postData).then(res=>{

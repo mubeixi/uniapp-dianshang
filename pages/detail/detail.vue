@@ -313,7 +313,7 @@ export default {
 		// 是否是赠品，赠品不能选择属性
 		if(option.gift) {
 			this.gift = option.gift;
-			this.postData.record_id = option.gift;
+			this.postData.active_id = option.gift;
 			this.postData.active = 'gift';
 			this.judgeReceiveGift();
 			this.recieve = true;
@@ -815,7 +815,7 @@ export default {
 			}
 			add_template_code({
 				code: e.detail.formId,
-				times: 3
+				times: 1
 			})
 
 			updateCart(this.postData).then(res=>{
