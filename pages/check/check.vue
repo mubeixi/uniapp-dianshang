@@ -289,7 +289,7 @@ export default {
 			console.log(e)
 			add_template_code({
 				code: e.detail.formId,
-				times: 3
+				times: 1
 			})
 			if(!this.submited){
 				this.submited = true;

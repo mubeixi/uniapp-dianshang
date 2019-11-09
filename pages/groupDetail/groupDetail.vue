@@ -690,7 +690,7 @@ export default {
 			console.log(e);
 			add_template_code({
 				code: e.detail.formId,
-				times: 3
+				times: 1
 			})
 			if(!this.$fun.checkIsLogin(1))return;
 			this.postData.active = 'pintuan';
@@ -702,7 +702,7 @@ export default {
 			console.log(e);
 			add_template_code({
 				code: e.detail.formId,
-				times: 3
+				times: 1
 			})
 
 			if(!this.$fun.checkIsLogin(1))return;
@@ -775,7 +775,7 @@ export default {
 			console.log(e);
 			add_template_code({
 				code: e.detail.formId,
-				times: 3
+				times: 1
 			})
         	if(!this.submit_flag) {
         		return ;

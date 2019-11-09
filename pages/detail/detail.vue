@@ -815,7 +815,7 @@ export default {
 			}
 			add_template_code({
 				code: e.detail.formId,
-				times: 3
+				times: 1
 			})
 
 			updateCart(this.postData).then(res=>{
