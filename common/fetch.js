@@ -361,6 +361,9 @@ export const bindUserClientId = (data, options) => fetch('user_uuid_set', data, 
 
 export const confirmOrderPayStatus = (data, options) => fetch('judge_ispay', data, options);
 
+//秒杀列表
+export const getFlashSaleList = (data, options) => fetch('get_flashsale', data, options)
+
 //普通环境noop就行了
 //let add_template_code = ()=>{}
 
