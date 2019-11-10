@@ -72,97 +72,111 @@
 
 
 		},
+
+		async onPullDownRefresh(){
+			await this.$_init()
+			uni.stopPullDownRefresh()
+		},
 		onLoad() {
 
 
 
-			let _self = this;
-			new Promise((resolve,reject) => {
 
-
-				getSkinConfig({}).then(res => {
-
-					if(res.data.Home_Json){
-						resolve(JSON.parse(res.data.Home_Json))
-					}else{
-						reject(false)
-					}
-
-				}).catch(e=>{
-					console.log('获取首页模板信息失败')
-					console.log(e)
-				})
-
-			})
-			.then(mixinData => {
-
-				let templateData = mixinData.plugin;
-				this.system = mixinData.system;
-
-				//存储页面数据
-				this.templateData = [] //页面数据的二维数组。
-				this.templateList = [] //页面组件的二维数组。
-				// console.log(templateData)
-				if (templateData && Array.isArray(templateData[0])) {
-					//多个页面，每个页面是一个数组
-					templateData.map(item => {
-						this.templateData.push(item)
-						this.templateList.push([])
-					})
-				} else if (
-						templateData &&
-						!Array.isArray(templateData[0]) &&
-						templateData.length > 0
-				) {
-					//单纯是一个对象的时候？？
-					this.templateData = [templateData]
-					this.templateList = [[]]
-				} else {
-					this.templateData = [[]]
-					this.templateList = [[]]
-				}
-				// this.templateData = templateData
-				//存储页面组件templateList
-				for (let i = 0; i < this.templateData.length; i++) {
-					if (
-							this.templateData[i] &&
-							this.templateData[i] !== []
-					) {
-						this.templateData[i].map(m => {
-							this.templateList[i].push(m.tag)
-						})
-					}
-				}
-
-
-			},err=>{})
-			.catch(err => {
-				console.log(err)
-			})
 
 
 
 		},
 		async created(){
-			let initData = await this.getInitData()
-			uni.setNavigationBarTitle({
-				title:initData.ShopName
-			})
+			this.$_init()
+
+			// let initData = await this.getInitData()
+			// uni.setNavigationBarTitle({
+			// 	title:initData.ShopName
+			// })
 
 		},
 		methods: {
 
+			$_init(){
+				let _self = this;
+				new Promise((resolve,reject) => {
+
+
+					getSkinConfig({}).then(res => {
+
+						if(res.data.Home_Json){
+							resolve(JSON.parse(res.data.Home_Json))
+						}else{
+							reject(false)
+						}
+
+					}).catch(e=>{
+						console.log('获取首页模板信息失败')
+						console.log(e)
+					})
+
+				})
+						.then(mixinData => {
+
+							let templateData = mixinData.plugin;
+							this.system = mixinData.system;
+
+							uni.setNavigationBarTitle({
+								title:mixinData.system.title
+							})
+
+							//存储页面数据
+							this.templateData = [] //页面数据的二维数组。
+							this.templateList = [] //页面组件的二维数组。
+							// console.log(templateData)
+							if (templateData && Array.isArray(templateData[0])) {
+								//多个页面，每个页面是一个数组
+								templateData.map(item => {
+									this.templateData.push(item)
+									this.templateList.push([])
+								})
+							} else if (
+									templateData &&
+									!Array.isArray(templateData[0]) &&
+									templateData.length > 0
+							) {
+								//单纯是一个对象的时候？？
+								this.templateData = [templateData]
+								this.templateList = [[]]
+							} else {
+								this.templateData = [[]]
+								this.templateList = [[]]
+							}
+							// this.templateData = templateData
+							//存储页面组件templateList
+							for (let i = 0; i < this.templateData.length; i++) {
+								if (
+										this.templateData[i] &&
+										this.templateData[i] !== []
+								) {
+									this.templateData[i].map(m => {
+										this.templateList[i].push(m.tag)
+									})
+								}
+							}
+
+
+						},err=>{})
+						.catch(err => {
+							console.log(err)
+						})
+			}
 		}
 	}
 </script>
 
 <style lang="less" scope="scope">
 	.home-wrap{
-		width: 750upx;
+		width: 750rpx;
 		/*overflow-x: hidden;*/
-		background: #f2f2f2;
+		background: #f8f8f8;
 		position: relative;
-		min-height: 100vh;
+		//min-height: 100vh;
 		/* #ifdef APP-PLUS */
 		padding-top: var(--status-bar-height);
 		/* #endif */

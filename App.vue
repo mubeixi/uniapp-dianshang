@@ -115,9 +115,14 @@
 @import "./static/css/app.less";
 @import "./static/css/icon.css";
 
+/* #ifdef APP-PLUS */
+page{
+	background: #f8f8f8;
+}
+/* #endif */
 /* #ifdef MP */
 page{
-    /*background: #f8f8f8;*/
+    background: #f8f8f8;
     padding-bottom: constant(safe-area-inset-bottom);
     padding-bottom: env(safe-area-inset-bottom);
     font-size: 16px;
