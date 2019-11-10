@@ -8,7 +8,7 @@ export const ajax = (url,method,data,options)=>{
   if(!data)data={}
 
 
-  let {tip='',mask=true,timelen=2000,errtip = true} = options;
+  let {tip='',mask=false,timelen=2000,errtip = true} = options;
 
   if(tip){
     uni.showLoading({
@@ -56,12 +56,12 @@ export const ajax = (url,method,data,options)=>{
               error('服务器去旅行了')
           }
           let res = ret.data;
-		  
+
 		  // #ifdef MP-TOUTIAO
 		  console.log(res)
 		  // #endif
 
-		 
+
 
           if(hookErrorCode.indexOf(res.errorCode) != -1){
               resolve(res)
@@ -82,10 +82,10 @@ export const ajax = (url,method,data,options)=>{
         setTimeout(function(){
             uni.hideLoading()
         },500)
-         
+
         }
-        
-        
+
+
       }
     })
 

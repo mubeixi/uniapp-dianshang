@@ -29,7 +29,7 @@
   </div>
 </template>
 <script>
-  import {getProductList} from "../../common/fetch";
+  import {getProductList,getFlashSaleList} from "../../common/fetch";
   import {domain} from "../../common/filter";
   import {goProductDetail} from "../../common";
 

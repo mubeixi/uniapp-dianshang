@@ -10,9 +10,9 @@
                         </div>
                         <div v-show="goods.config.attr.tag.show" v-else class="tag img"><img :src="goods.config.attr.tag.img|domain"/></div>
 
-                        <div v-if="goods.config.style!=3" class="stamp">距{{item.countdown.is_start?'结束 ':'开始 '}}<span class="countdown_tag">{{item.countdown.d}}</span>天<span class="countdown_tag">{{item.countdown.h}}</span>时<span class="countdown_tag">{{item.countdown.m}}</span>分<span class="countdown_tag">{{item.countdown.s}}</span>秒<span class="count" v-if="goods.config.style==1">秒杀库存{{item.Products_Count}}</span></div>
+                        <div v-if="goods.config.style!=3" class="stamp">距{{item.countdown.is_start?'结束':'开始'}}<span class="countdown_tag">{{item.countdown.d}}</span>天<span class="countdown_tag">{{item.countdown.h}}</span>时<span class="countdown_tag">{{item.countdown.m}}</span>分<span class="countdown_tag">{{item.countdown.s}}</span>秒<span class="count" v-if="goods.config.style==1">秒杀库存{{item.Products_Count}}</span></div>
 
-                        <span class="count" v-if="goods.config.style==3">库存{{item.Products_Count}}</span>
+                        <span class="count" v-if="goods.config.style==3">库存{{item.attr_json.count}}</span>
 
                     </div>
                     <div class="info" :style="{width:goods.config.style==2?itemw:''}" :class="{empyInfo:isEmpeyInfo}">
@@ -24,7 +24,7 @@
                             <div v-show="goods.config.attr.price.show" class="price"><span class="graytext2 font12">秒杀价 </span><span class="sign">￥</span><span style="font-weight: 600">{{item.Products_PriceX}}</span><span class="graytext2 market-price font12"> ￥{{item.Products_PriceX}} </span>
                             </div>
                         </div>
-                        <div v-if="goods.config.style==3" class="stamp">距{{item.countdown.is_start?'结束 ':'开始 '}}<span class="countdown_tag">{{item.countdown.d}}</span>天<span class="countdown_tag">{{item.countdown.h}}</span>时<span class="countdown_tag">{{item.countdown.m}}</span>分<span class="countdown_tag">{{item.countdown.s}}</span>秒</div>
+                        <div v-if="goods.config.style==3" class="stamp">距{{item.countdown.is_start?'结束':'开始'}}<span class="countdown_tag">{{item.countdown.d}}</span>天<span class="countdown_tag">{{item.countdown.h}}</span>时<span class="countdown_tag">{{item.countdown.m}}</span>分<span class="countdown_tag">{{item.countdown.s}}</span>秒</div>
                         <div>
                             <span class="count" v-if="goods.config.style==2">库存{{item.Products_Count}}</span>
                             <div v-show="goods.config.attr.buybtn.show" class="buybtn" :class="'theme'+goods.config.attr.buybtn.style">
@@ -113,7 +113,7 @@
 
                 if (this.goods.config.style === 3) {
                     //内边不是乘以3 而是1
-                    return 140+'px';
+                    return 200+'rpx';
                 }
 
                 if (this.goods.config.style === 4) {
@@ -137,7 +137,8 @@
 
                 if (this.goods.config.style === 3) {
                     //内边不是乘以3 而是1
-                    num = 140
+                    num = 200
+                    return num*ratio +'rpx';
                 }
 
                 if (this.goods.config.style === 1) {
@@ -226,7 +227,7 @@
 
                 for(var item of this.goodsList){
                     // let start_timeStamp = item.pintuan_start_time,end_timeStamp = item.pintuan_end_time;
-                    let data = getCountdownFunc({start_timeStamp:item.pintuan_start_time,end_timeStamp:item.pintuan_end_time})
+                    let data = getCountdownFunc({start_timeStamp:item.start_time,end_timeStamp:item.end_time})
                     this.$set(item,'countdown',data);
                 }
                 // let start_timeStamp = item.pintuan_start_time,end_timeStamp = item.pintuan_end_time;
@@ -455,7 +456,7 @@
         .stamp{
             font-size: 12px;
             background: rgba(0,0,0,.5);
-            padding: 6px;
+            padding: 6px 0;
             position: absolute;
             left: 0;
             right: 0;

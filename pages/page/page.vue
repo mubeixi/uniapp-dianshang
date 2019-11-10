@@ -1,8 +1,8 @@
 <template>
-	<view style="position: relative;">
+	<view style="position: relative;" v-show="system.title">
 		<!-- #ifdef APP-PLUS -->
 		<!-- 这里是状态栏 -->
-		<view class="status_bar" style="position: fixed;background-color: white;top:0;left:0;z-index: 99;"></view>
+<!--		<view class="status_bar" style="position: fixed;background-color: white;top:0;left:0;z-index: 99;"></view>-->
 		<!-- #endif -->
 		<view class="home-wrap"  :style="{background:system.bgcolor}">
 
@@ -55,6 +55,8 @@
 
 	import {pageMixin} from "../../common/mixin";
 
+
+
 	export default {
 		mixins:[pageMixin],
 		data() {
@@ -70,11 +72,21 @@
 			TitleComponent,TextComponent,SearchComponent,NoticeComponent,CouponComponent,
 			GoodsComponent,CubeComponent,TabComponent,FlashComponent,GroupComponent,KillComponent
 		},
-		onLoad() {
+		onLoad(options) {
 
 			let _self = this;
 
-			let Home_ID = GetQueryByString(location.href,'Home_ID');
+
+
+			let Home_ID = options.Home_ID;
+
+			// #ifdef H5
+			if(!Home_ID && GetQueryByString(location.href,'Home_ID')){
+				Home_ID = GetQueryByString(location.href,'Home_ID');
+			}
+			// #endif
+
+
 
 			if(!Home_ID){
 				this.$error('Home_ID参数错误');
@@ -85,7 +97,7 @@
 
 
 				//Skin_ID,
-				getDiySkinConfig({Home_ID}).then(res => {
+				getDiySkinConfig({Home_ID},{tip:'loading',mask:true}).then(res => {
 
 					if(res.data.Home_Json){
 						resolve(JSON.parse(res.data.Home_Json))
@@ -165,7 +177,7 @@
 		position: relative;
 		min-height: 100vh;
 		/* #ifdef APP-PLUS */
-		padding-top: var(--status-bar-height);
+		/*padding-top: var(--status-bar-height);*/
 		/* #endif */
 		.section{
 			position: relative;
