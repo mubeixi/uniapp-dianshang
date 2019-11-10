@@ -132,6 +132,7 @@ export const checkIsDistribute = (redirect,tip) => {
 
     return true;
 }
+
 /**
  * 根据拼团跳转不同的页面
  * @param id

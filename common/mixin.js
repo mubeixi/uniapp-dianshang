@@ -244,7 +244,7 @@ export const pageMixin = {
 
 				this.$wx.onMenuShareTimeline({
 					title: initData.ShopName, // 分享标题
-					link: location.origin, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+					link: initData.front_url, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
 					imgUrl: domain(initData.ShareLogo), // 分享图标
 					success: function() {
 						// 用户点击了分享后执行的回调函数
@@ -254,7 +254,7 @@ export const pageMixin = {
 				//两种方式都可以
 				this.$wx.onMenuShareAppMessage({
 					title: initData.ShopName, // 分享标题
-					link: location.origin, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+					link: initData.front_url, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
 					imgUrl: domain(initData.ShareLogo), // 分享图标
 					desc: initData.ShareIntro,
 					type: 'link', // 分享类型,music、video或link，不填默认为link

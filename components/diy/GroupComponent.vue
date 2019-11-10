@@ -1,5 +1,6 @@
 <template>
   <div class="goods wrap" id="goods" :style="{paddingLeft:goods.style.wrapmargin+'px',paddingRight:goods.style.wrapmargin+'px'}">
+    <image class="bgimg" src="/static/group_bg.png"></image>
     <div :class="className">
       <ul class="list" >
         <li  @click="goProductDetail(item.Products_ID,item.is_pintuan)" v-for="(item,idx) in goodsList" :key="idx" class="item" :class="[idx%2==0?'even':'odd',goods.config.radius=='round'?'round':'',goods.config.showmode]" :style="[itemMarginObj(idx)]">
@@ -339,12 +340,21 @@
   }
 </script>
 
-
 <style scoped lang="less">
   @import "../../static/css/app.less";
 
   .wrap{
     background: #f8f8f8;
+    padding-top: 110rpx;
+    position: relative;
+  }
+
+  .bgimg{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 750rpx;
+    height: 282rpx;
   }
   //无边框白底 有边框白底 无边框透明底
   /*'noborder-bgwhite','border-bgwhite','noborder-nobg'*/
