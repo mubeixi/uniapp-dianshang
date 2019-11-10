@@ -1,5 +1,5 @@
 <template>
-  <div style="position:relative;background-color:#f8f8f8" class="wrap" v-show="product.Products_ID">
+  <div style="position:relative;background-color:#f8f8f8" class="wrap" >
     <div class="top">
        <image class="imgm" src="/static/back.png" @click="goBack" ></image>
        <image class="imgm cart" src="/static/cart.png" @click="goCart" ></image>
@@ -894,7 +894,7 @@ export default {
 				if(res.errorCode != 0){
 					return;
 				}
-				
+
 				if(!res.data.is_pintuan){
 					error('不是拼团产品');
 					let linkObj = {link:'/pages/index/index',linkType:'default'};
@@ -1028,11 +1028,11 @@ export default {
 
 // 轮播样式
 .uni-padding-wrap{
-	width: 750upx;
-	height: 750upx;
+	width: 750rpx;
+	height: 750rpx;
 	.page-section,.page-section-spacing,.swiper,.uni-swiper-wrapper,.uni-swiper-slides{
-			width: 750upx;
-			height: 750upx;
+			width: 750rpx;
+			height: 750rpx;
 			.imgs{
 				width: 100%;
 				height: 100%;
@@ -1061,11 +1061,11 @@ export default {
     .ticks,.shareinfo {
 		background: #fff;
 		width: 100%;
-		padding: 30upx 0 60upx;
+		padding: 30rpx 0 60rpx;
 		color: #333;
 		z-index: 100;
-		border-top-left-radius: 10upx;
-		border-top-right-radius: 10upx;
+		border-top-left-radius: 10rpx;
+		border-top-right-radius: 10rpx;
     }
     .t_title {
         text-align:center;
@@ -1155,7 +1155,7 @@ export default {
     }
     /* 产品描述部分 start */
     .section1 {
-       height: 100upx;
+       height: 100rpx;
        background-color: #fff;
     }
     .price {
@@ -1192,11 +1192,11 @@ export default {
     /* 领券start */
     .section2 {
 		position: relative;
-        padding-left: 26upx;
-		padding-top: 20upx;
-		padding-right: 0upx;
-		padding-bottom: 20upx;
-        font-size: 22upx;
+        padding-left: 26rpx;
+		padding-top: 20rpx;
+		padding-right: 0rpx;
+		padding-bottom: 20rpx;
+        font-size: 22rpx;
         // display: flex;
         // align-items: center;
         // justify-content: space-between;
@@ -1211,20 +1211,20 @@ export default {
     .right {
         display: flex;
         align-items: center;
-        font-size: 24upx;
+        font-size: 24rpx;
 		color: #666666;
     }
     .right .img{
-        width: 19upx;
-        height: 30upx;
-        margin-left: 20upx;
+        width: 19rpx;
+        height: 30rpx;
+        margin-left: 20rpx;
     }
     /* 领券 end */
     /* 包邮信息等 start */
     .section3 {
         display: flex;
         flex-wrap: wrap;
-        font-size: 22upx;
+        font-size: 22rpx;
         padding: 15px 10px;
         border-bottom: 17px solid #f8f8f8;
         justify-content: space-around;
@@ -1236,14 +1236,14 @@ export default {
         margin-right: 10px;
     }
     .section3 img {
-        width: 30upx;
-		height: 30upx;
+        width: 30rpx;
+		height: 30rpx;
         margin-right: 5px;
     }
     /* 包邮信息等 end */
     /* 评价 start */
     .comment {
-        padding: 30upx 26upx;
+        padding: 30rpx 26rpx;
         border-bottom: 10px solid #f8f8f8;
         background-color: #fff;
     }
@@ -1252,7 +1252,7 @@ export default {
         justify-content: space-between;
     }
     .c_title>span {
-        font-size: 30upx;
+        font-size: 30rpx;
         color: #333;
     }
     .c_content {
@@ -1265,39 +1265,39 @@ export default {
         color: #333;
     }
     .c_content_title>.imggs {
-        width: 70upx;
-        height: 70upx;
-        margin-right: 20upx;
+        width: 70rpx;
+        height: 70rpx;
+        margin-right: 20rpx;
     }
     .user_name {
         flex: 1;
-		font-size: 30upx;
+		font-size: 30rpx;
     }
     .c_time {
-        font-size: 26upx;
+        font-size: 26rpx;
         color: #777;
     }
     .c_content_msg {
-        font-size: 24upx;
+        font-size: 24rpx;
         color: #333;
         line-height: 18px;
         padding: 9px 0;
         border-bottom: 1px solid #f8f8f8;
     }
     .c_content_img img {
-        width: 142upx;
-        height: 142upx;
-        margin-right: 20upx;
+        width: 142rpx;
+        height: 142rpx;
+        margin-right: 20rpx;
     }
     /* 评价 end */
     /* 商品详情 start */
     // .pro_detail {
-    //     padding: 26upx 26upx;
+    //     padding: 26rpx 26rpx;
     //     background-color: #fff;
     // }
     // .p_detail_title {
     //     color: #333;
-    //     font-size: 30upx;
+    //     font-size: 30rpx;
     // }
 
 	.pro_detail {
@@ -1310,9 +1310,9 @@ export default {
 		}
 	}
 	.p_detail_title {
-		padding: 30upx 20upx;
+		padding: 30rpx 20rpx;
 	    color: #333;
-	    font-size: 30upx;
+	    font-size: 30rpx;
 
 	}
     /* 商品详情 end */
@@ -1326,8 +1326,8 @@ export default {
     }
     .section1{
         display: flex;
-        padding-left: 15upx;
-		padding-right: 15upx;
+        padding-left: 15rpx;
+		padding-right: 15rpx;
         align-items: center;
         justify-content: space-between;
         background-color: #F43131;
@@ -1335,15 +1335,15 @@ export default {
         .leftss{
             font-size: 0;
             .pricef{
-                font-size: 36upx;
+                font-size: 36rpx;
             }
             .prices{
-                font-size: 50upx;
+                font-size: 50rpx;
                 margin-left: 4px;
                 font-weight: 500;
             }
             .pricet{
-                font-size: 28upx;
+                font-size: 28rpx;
                 margin-left: 6px;
                 color: #ddd;
                 text-decoration:line-through;
@@ -1352,8 +1352,8 @@ export default {
         .rightss{
 			.countdown{
 				color:#ddd;
-				font-size: 24upx;
-				line-height: 32upx;
+				font-size: 24rpx;
+				line-height: 32rpx;
 				overflow: hidden;
 				margin-bottom: 4px;
 
@@ -1361,8 +1361,8 @@ export default {
 					margin: 0 2px;
 					padding: 0 2px;
 					//width:23px;
-					height:32upx;
-					line-height: 32upx;
+					height:32rpx;
+					line-height: 32rpx;
 					text-align: center;
 					background:linear-gradient(0deg,rgba(12,12,12,1) 0%,rgba(197,195,195,1) 100%);
 					box-shadow:0px 1px 1px 0px rgba(4,0,0,0.5), 0px 1px 1px 0px rgba(255,255,255,0.65);
@@ -1371,16 +1371,16 @@ export default {
 				}
             }
 			.haha{
-				font-size: 24upx;
-				line-height: 32upx;
+				font-size: 24rpx;
+				line-height: 32rpx;
 			}
         }
     }
     .titles{
 		position: relative;
-		padding-right: 150upx;
+		padding-right: 150rpx;
         .title{
-			font-size:28upx;
+			font-size:28rpx;
 			font-family:PingFang SC;
 			font-weight:bold;
 			color:rgba(51,51,51,1);
@@ -1404,7 +1404,7 @@ export default {
     }
     .titlet{
         margin-top: 12px;
-		padding-right: 36upx;
+		padding-right: 36rpx;
         font-size:12px;
         font-family:PingFang SC;
         font-weight:500;
@@ -1415,20 +1415,20 @@ export default {
         margin-bottom: 17px;
         background-color: #fff;
         .pinTitle{
-            font-size:30upx;
+            font-size:30rpx;
             font-family:PingFang SC;
             font-weight:500;
             color:rgba(51,51,51,1);
             line-height:20px;
-            padding:26upx;
+            padding:26rpx;
         }
         .pinCenter{
-                padding: 15upx 25upx;
+                padding: 15rpx 25rpx;
                 display: flex;
                 align-items: center;
                 .image{
-                    width: 100upx;
-                    height: 100upx;
+                    width: 100rpx;
+                    height: 100rpx;
                     border-radius: 50%;
                     overflow: hidden;
                     .img{
@@ -1437,16 +1437,16 @@ export default {
                     }
                 }
                 .info{
-					margin-left: 21upx;
+					margin-left: 21rpx;
                     .nick{
-                        font-size:26upx;
+                        font-size:26rpx;
                         font-family:PingFang SC;
                         font-weight:500;
                         color:rgba(51,51,51,1);
                         line-height:20px;
                     }
                     .message{
-                        font-size:24upx;
+                        font-size:24rpx;
                         font-family:PingFang SC;
                         font-weight:500;
                         color:rgba(110,110,110,1);
@@ -1454,20 +1454,20 @@ export default {
                     }
                 }
                 .cantuan{
-                    width:119upx;
-                    height:48upx;
+                    width:119rpx;
+                    height:48rpx;
                     border:1px solid rgba(244,49,49,1);
                     border-radius:3px;
                     color:  rgba(244,49,49,1);
                     text-align: center;
-                    line-height: 48upx;
-                    font-size: 26upx;
+                    line-height: 48rpx;
+                    font-size: 26rpx;
                     margin-left: auto;
                 }
         }
     }
 	.fixed{
-		height: 98upx;
+		height: 98rpx;
 		display: flex;
 		position: fixed;
 		bottom: 0;
@@ -1480,24 +1480,24 @@ export default {
 		z-index: 9999;
 		.leftss,.rightss{
 			width: 50%;
-			height: 98upx;
+			height: 98rpx;
 			display: flex;
 		}
 		.leftss{
 			.first{
 				width: 33.3%;
-				height: 98upx;
+				height: 98rpx;
 				text-align: center;
-				padding-top: 15upx;
+				padding-top: 15rpx;
 				.img{
-					width: 38upx;
-					height: 38upx;
+					width: 38rpx;
+					height: 38rpx;
 					display: block;
 					margin: 0 auto;
 				}
 				.txt{
-					font-size: 22upx;
-					margin-top: 10upx;
+					font-size: 22rpx;
+					margin-top: 10rpx;
 				}
 			}
 		}
@@ -1515,29 +1515,29 @@ export default {
 				background-color: #F43131;
 			}
 			.bTitle{
-				height: 98upx;
+				height: 98rpx;
 				overflow: hidden;
 				color: #fff;
 				text-align: center;
-				padding: 10upx 0;
+				padding: 10rpx 0;
 				box-sizing: border-box;
 				.danLeft{
-					height: 32upx;
+					height: 32rpx;
 					//overflow: hidden;
 				}
 				.bF{
-					font-size: 24upx;
-					line-height: 32upx;
+					font-size: 24rpx;
+					line-height: 32rpx;
 				}
 				.bS{
-					font-size: 32upx;
-					line-height: 32upx;
+					font-size: 32rpx;
+					line-height: 32rpx;
 
 				}
 				.danRight{
-					font-size: 26upx;
-					/*margin-top: 8upx;*/
-					/*padding-bottom: 10upx;*/
+					font-size: 26rpx;
+					/*margin-top: 8rpx;*/
+					/*padding-bottom: 10rpx;*/
 					border-radius: 0;
 					border:none !important;
 					color: white;
@@ -1552,37 +1552,38 @@ export default {
 	}
 	//规格
 	.cartSku{
-		padding: 0upx 10upx;
+		padding: 0rpx 10rpx;
 		.cartTop{
 			position: relative;
 			display: flex;
-			padding-top: 20upx;
+			padding-top: 20rpx;
 			image{
-				width: 220upx;
-				height: 220upx;
+				width: 220rpx;
+				height: 220rpx;
 			}
 			.cartTitle{
-				margin-left: 20upx;
-				font-size: 32upx;
-				width: 420upx;
+				margin-left: 20rpx;
+				font-size: 32rpx;
+				width: 420rpx;
 				.cartTitles{
-					height: 80upx;
+					height: 80rpx;
+					line-height: 40rpx;
 					overflow: hidden;
-					margin-top: 20upx;
+					margin-top: 20rpx;
 				}
 				.addInfo{
-					width: 450upx;
-					margin-top: 70upx;
+					width: 450rpx;
+					margin-top: 70rpx;
 					display: flex;
 					flex-flow: row;
 					justify-content: space-between;
 					align-items: flex-end;
 					.addPrice{
-						font-size: 42upx;
+						font-size: 42rpx;
 						color: #ff4200;
 					}
 					.proSale{
-						font-size: 24upx;
+						font-size: 24rpx;
 						color: #999;
 						justify-content: flex-end;
 					}
@@ -1590,64 +1591,64 @@ export default {
 			}
 		}
 		.cartCenter{
-			margin-top: 20upx;
+			margin-top: 20rpx;
 			.cartAttr{
 				display: flex;
-				padding: 15upx 0upx;
+				padding: 15rpx 0rpx;
 				.sku{
-					font-size: 28upx;
-					height: 70upx;
-					line-height: 70upx;
-					width: 140upx;
+					font-size: 28rpx;
+					height: 70rpx;
+					line-height: 70rpx;
+					width: 140rpx;
 				}
 				.skuValue{
 					display: flex;
 					.divs{
-						height: 70upx;
-						line-height: 70upx;
-						font-size: 28upx;
-						border-radius: 10upx;
+						height: 70rpx;
+						line-height: 70rpx;
+						font-size: 28rpx;
+						border-radius: 10rpx;
 						color: #000;
 						background-color: #fff;
-						padding-left: 20upx;
-						padding-right: 20upx;
-						margin-right: 20upx;
+						padding-left: 20rpx;
+						padding-right: 20rpx;
+						margin-right: 20rpx;
 						border: 1px solid #ccc;
 					}
 				}
 			}
 		}
 		.numBer{
-			margin-top: 20upx;
+			margin-top: 20rpx;
 			display: flex;
-			padding: 15upx 0upx;
+			padding: 15rpx 0rpx;
 			justify-content: space-between;
 			.numBers{
-				font-size: 28upx;
-				height: 70upx;
-				line-height: 70upx;
-				width: 140upx;
+				font-size: 28rpx;
+				height: 70rpx;
+				line-height: 70rpx;
+				width: 140rpx;
 			}
 			.inputNumber{
 				border: 1px solid #ccc;
-				border-radius: 6upx;
-				height: 50upx;
-				margin-right: 50upx;
+				border-radius: 6rpx;
+				height: 50rpx;
+				margin-right: 50rpx;
 				display: flex;
 				.inputs{
 					color: black;
 					margin: 0 auto;
-					width: 80upx;
-					height: 50upx;
+					width: 80rpx;
+					height: 50rpx;
 					text-align: center;
-					font-size: 24upx;
-					border-left: 2upx solid #ccc;
-					border-right: 2upx solid #ccc;
+					font-size: 24rpx;
+					border-left: 2rpx solid #ccc;
+					border-right: 2rpx solid #ccc;
 				}
 				.clicks{
-					height: 50upx;
-					line-height: 50upx;
-					width: 60upx;
+					height: 50rpx;
+					line-height: 50rpx;
+					width: 60rpx;
 					text-align: center;
 				}
 			}
@@ -1655,13 +1656,13 @@ export default {
 	}
 	.cartSub{
 		width: 100%;
-		height: 90upx;
+		height: 90rpx;
 		background-color: #F43131;
 		font-size:20px;
-		line-height: 90upx;
+		line-height: 90rpx;
 		text-align: center;
 		color: #FFFFFF;
-		margin-top: 30upx;
+		margin-top: 30rpx;
 		border-radius: 0;
 		border:none;
 		&.disabled {
