@@ -190,6 +190,40 @@
 			this.getOrderNum();
 			this.judgeSignin();
 		},
+		async onPullDownRefresh(){
+
+			if(JSON.stringify(this.userInfo) != "{}"){
+
+				await get_user_info({},{tip:'',errtip:false}).then(res=>{
+					this.setUserInfo(res.data);
+				},err=>{
+
+				}).catch(e=>{
+					console.log(e)
+				})
+
+				await getOrderNum({Order_Type:this.Order_Type}).then(res=>{
+					this.orderNum=res.data;
+					console.log(res)
+				}).catch(e=>{
+					console.log(e)
+				});
+
+				await judgeSignin({},{errtip:false}).then(res=>{
+					this.show=res.data.show;
+					this.signin=res.data.signin;
+				},err=>{
+
+				}).catch(e=>{
+					console.log(e)
+				});
+
+			}
+
+
+
+			uni.stopPullDownRefresh()
+		},
 		methods:{
 			...mapActions(['setUserInfo']),
 			userLevelText(){
