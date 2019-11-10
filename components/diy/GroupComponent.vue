@@ -10,7 +10,7 @@
             </div>
             <div v-show="goods.config.attr.tag.show" v-else class="tag img"><img :src="goods.config.attr.tag.img|domain"/></div>
 
-            <div v-if="goods.config.style!=3" class="stamp">距{{item.countdown.is_start?'结束':'开始'}}<span class="countdown_tag">{{item.countdown.d}}</span>天<span class="countdown_tag">{{item.countdown.h}}</span>时<span class="countdown_tag">{{item.countdown.m}}</span>分<span class="countdown_tag">{{item.countdown.s}}</span>秒<span class="count" v-if="goods.config.style==1">拼团库存{{item.Products_Count}}</span></div>
+            <div v-if="goods.config.style!=3" class="stamp">距{{item.countdown.is_start?'结束':'开始'}}<span class="countdown_tag2">{{item.countdown.d}}</span>天<span class="countdown_tag">{{item.countdown.h}}</span>时<span class="countdown_tag">{{item.countdown.m}}</span>分<span class="countdown_tag">{{item.countdown.s}}</span>秒<span class="count" v-if="goods.config.style==1">拼团库存{{item.Products_Count}}</span></div>
 
             <span class="count" v-if="goods.config.style==3">库存{{item.Products_Count}}</span>
 
@@ -21,11 +21,12 @@
               <div v-show="goods.config.attr.desc.show" class="font12 graytext desc">
                 {{item.Products_BriefDescription||'暂无介绍'}}
               </div>
-              <div v-show="goods.config.attr.price.show" class="price"><span class="graytext2 font12">拼团价 </span><span class="sign">￥</span><span style="font-weight: 600">{{item.Products_PriceX}}</span><span class="graytext2 market-price font12"> ￥{{item.Products_PriceX}} </span>
+              <div v-if="goods.config.style!=1" v-show="goods.config.attr.price.show" class="price"><span class="graytext2 font12">拼团价 </span><span class="sign">￥</span><span style="font-weight: 600">{{item.Products_PriceX}}</span><span class="graytext2 market-price font12"> ￥{{item.Products_PriceX}} </span>
               </div>
             </div>
-            <div v-if="goods.config.style==3" class="stamp">距{{item.countdown.is_start?'结束':'开始'}}<span class="countdown_tag">{{item.countdown.d}}</span>天<span class="countdown_tag">{{item.countdown.h}}</span>时<span class="countdown_tag">{{item.countdown.m}}</span>分<span class="countdown_tag">{{item.countdown.s}}</span>秒</div>
-            <div>
+            <div v-if="goods.config.style==3" class="stamp">距{{item.countdown.is_start?'结束':'开始'}}<span class="countdown_tag2">{{item.countdown.d}}</span>天<span class="countdown_tag">{{item.countdown.h}}</span>时<span class="countdown_tag">{{item.countdown.m}}</span>分<span class="countdown_tag">{{item.countdown.s}}</span>秒</div>
+            <div class="bottom-box">
+              <div v-if="goods.config.style==1" v-show="goods.config.attr.price.show" class="price"><span class="graytext2 font12">秒杀价 </span><span class="sign">￥</span><span style="font-weight: 600">{{item.Products_PriceX}}</span><span class="graytext2 market-price font12"> ￥{{item.Products_PriceX}} </span></div>
               <span class="count" v-if="goods.config.style==2">库存{{item.Products_Count}}</span>
               <div v-show="goods.config.attr.buybtn.show" class="buybtn" :class="'theme'+goods.config.attr.buybtn.style">
                 {{goods.config.attr.buybtn.text||'立即参团'}}

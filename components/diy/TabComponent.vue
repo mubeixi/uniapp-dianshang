@@ -27,12 +27,17 @@
                 <div v-show="tab.config.attr.desc.show" class="font12 graytext desc">
                   {{item.Products_BriefDescription||'暂无介绍'}}
                 </div>
+<!--                <div v-show="tab.config.attr.price.show" class="price"><span class="sign">￥</span>{{item.Products_PriceX}}-->
+<!--                </div>-->
+              </div>
+              <div class="bottom-box">
                 <div v-show="tab.config.attr.price.show" class="price"><span class="sign">￥</span>{{item.Products_PriceX}}
                 </div>
+                <div v-show="tab.config.attr.buybtn.show" class="buybtn" :class="'theme'+tab.config.attr.buybtn.style">
+                  {{tab.config.attr.buybtn.text||'购买'}}
+                </div>
               </div>
-              <div v-show="tab.config.attr.buybtn.show" class="buybtn" :class="'theme'+tab.config.attr.buybtn.style">
-                {{tab.config.attr.buybtn.text||'购买'}}
-              </div>
+
             </div>
           </li>
 
@@ -149,7 +154,10 @@
         //
         if (this.tab.config.style === 3) {
           //内边不是乘以3 而是1
-          num = 140;
+          num = 200;
+
+          return num*ratio +'rpx';
+
         }
 
         if (this.tab.config.style === 4) {
@@ -181,7 +189,9 @@
 
 
         if (this.tab.config.style === 3) {
-          return 140 + 'px';
+          //return 140 + 'px';
+
+          return 200+'rpx'
         }
 
         //内边不是乘以3 而是1
@@ -195,6 +205,8 @@
           return (full -  this.tab.style.wrapmargin * 2 - this.tab.style.margin * 1) / 2 + 'px';
 
         }
+
+
 
         if (this.tab.config.style === 4) {
           return full / 3 + 'px';
