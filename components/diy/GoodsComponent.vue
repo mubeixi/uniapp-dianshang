@@ -9,18 +9,23 @@
             </div>
             <div v-show="goods.config.attr.tag.show" v-else class="tag img"><img :src="goods.config.attr.tag.img|domain"/></div>
           </div>
-          <div class="info" :style="{width:goods.config.style==2?itemw:''}" :class="{empyInfo:isEmpeyInfo}">
+          <div class="info" :style="{width:(goods.config.style==2 || goods.config.style==4 )?itemw:''}" :class="{empyInfo:isEmpeyInfo}">
             <div class="left">
               <div v-show="goods.config.attr.title.show" class="title">{{item.Products_Name}}</div>
               <div v-show="goods.config.attr.desc.show" class="font12 graytext desc">
                 {{item.Products_BriefDescription||'暂无介绍'}}
               </div>
+<!--              <div v-show="goods.config.attr.price.show" class="price"><span class="sign">￥</span>{{item.Products_PriceX}}-->
+<!--              </div>-->
+            </div>
+            <div class="bottom-box">
               <div v-show="goods.config.attr.price.show" class="price"><span class="sign">￥</span>{{item.Products_PriceX}}
               </div>
+              <div v-show="goods.config.attr.buybtn.show" class="buybtn" :class="'theme'+goods.config.attr.buybtn.style">
+                {{goods.config.attr.buybtn.text||'购买'}}
+              </div>
             </div>
-            <div v-show="goods.config.attr.buybtn.show" class="buybtn" :class="'theme'+goods.config.attr.buybtn.style">
-              {{goods.config.attr.buybtn.text||'购买'}}
-            </div>
+
           </div>
         </li>
       </ul>
@@ -100,7 +105,8 @@
 
         if (this.goods.config.style === 3) {
           //内边不是乘以3 而是1
-          return 140+'px';
+          //return 140+'px';
+          return 200+'rpx';
         }
 
         if (this.goods.config.style === 4) {
@@ -124,7 +130,10 @@
 
         if (this.goods.config.style === 3) {
           //内边不是乘以3 而是1
-          num = 140
+          num = 200
+
+          return num*ratio +'rpx';
+
         }
 
         if (this.goods.config.style === 1) {

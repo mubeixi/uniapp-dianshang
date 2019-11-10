@@ -75,10 +75,8 @@ export const WX_JSSDK_INIT = (vm) => new Promise((resolve, reject) => {
 })
 // #endif
 
-
-// #ifdef MP-WEIXIN || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO
 import {buildSharePath} from "./tool";
-// #endif
+
 /**
  *
  * @type {{methods, onLoad(*): (undefined), mounted(): void}}
@@ -170,7 +168,7 @@ export const pageMixin = {
 		// ls.set('users_id',users_id);
 
 		//如果没有的话，就从小程序的远程配置里面拿吧
-		
+
 		//防止退出登录后拿不到
 		// if(!users_id){
 		// 	let extConfig = wx.getExtConfigSync ? wx.getExtConfigSync() : {};
@@ -244,7 +242,7 @@ export const pageMixin = {
 
 				this.$wx.onMenuShareTimeline({
 					title: initData.ShopName, // 分享标题
-					link: initData.front_url, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+					link: buildSharePath(initData.front_url), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
 					imgUrl: domain(initData.ShareLogo), // 分享图标
 					success: function() {
 						// 用户点击了分享后执行的回调函数
@@ -254,7 +252,7 @@ export const pageMixin = {
 				//两种方式都可以
 				this.$wx.onMenuShareAppMessage({
 					title: initData.ShopName, // 分享标题
-					link: initData.front_url, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+					link: buildSharePath(initData.front_url), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
 					imgUrl: domain(initData.ShareLogo), // 分享图标
 					desc: initData.ShareIntro,
 					type: 'link', // 分享类型,music、video或link，不填默认为link

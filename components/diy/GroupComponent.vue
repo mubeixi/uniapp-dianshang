@@ -1,7 +1,7 @@
 <template>
   <div class="goods wrap" id="goods" :style="{paddingLeft:goods.style.wrapmargin+'px',paddingRight:goods.style.wrapmargin+'px'}">
     <image class="bgimg" src="/static/group_bg.png"></image>
-    <div :class="className">
+    <div :class="className" class="listbox">
       <ul class="list" >
         <li  @click="goProductDetail(item.Products_ID,item.is_pintuan)" v-for="(item,idx) in goodsList" :key="idx" class="item" :class="[idx%2==0?'even':'odd',goods.config.radius=='round'?'round':'',goods.config.showmode]" :style="[itemMarginObj(idx)]">
           <div class="cover" :style="{width:itemw,height:itemH,backgroundSize:goods.config.fill?goods.config.fill:'cover',backgroundImage:'url('+domainFunc(item.ImgPath)+')'}">
@@ -10,7 +10,7 @@
             </div>
             <div v-show="goods.config.attr.tag.show" v-else class="tag img"><img :src="goods.config.attr.tag.img|domain"/></div>
 
-            <div v-if="goods.config.style!=3" class="stamp">距{{item.countdown.is_start?'结束 ':'开始 '}}<span class="countdown_tag">{{item.countdown.d}}</span>天<span class="countdown_tag">{{item.countdown.h}}</span>时<span class="countdown_tag">{{item.countdown.m}}</span>分<span class="countdown_tag">{{item.countdown.s}}</span>秒<span class="count" v-if="goods.config.style==1">秒杀库存{{item.Products_Count}}</span></div>
+            <div v-if="goods.config.style!=3" class="stamp">距{{item.countdown.is_start?'结束':'开始'}}<span class="countdown_tag2">{{item.countdown.d}}</span>天<span class="countdown_tag">{{item.countdown.h}}</span>时<span class="countdown_tag">{{item.countdown.m}}</span>分<span class="countdown_tag">{{item.countdown.s}}</span>秒<span class="count" v-if="goods.config.style==1">拼团库存{{item.Products_Count}}</span></div>
 
             <span class="count" v-if="goods.config.style==3">库存{{item.Products_Count}}</span>
 
@@ -21,14 +21,15 @@
               <div v-show="goods.config.attr.desc.show" class="font12 graytext desc">
                 {{item.Products_BriefDescription||'暂无介绍'}}
               </div>
-              <div v-show="goods.config.attr.price.show" class="price"><span class="graytext2 font12">秒杀价 </span><span class="sign">￥</span><span style="font-weight: 600">{{item.Products_PriceX}}</span><span class="graytext2 market-price font12"> ￥{{item.Products_PriceX}} </span>
+              <div v-if="goods.config.style!=1" v-show="goods.config.attr.price.show" class="price"><span class="graytext2 font12">拼团价 </span><span class="sign">￥</span><span style="font-weight: 600">{{item.Products_PriceX}}</span><span class="graytext2 market-price font12"> ￥{{item.Products_PriceX}} </span>
               </div>
             </div>
-            <div v-if="goods.config.style==3" class="stamp">距{{item.countdown.is_start?'结束 ':'开始 '}}<span class="countdown_tag">{{item.countdown.d}}</span>天<span class="countdown_tag">{{item.countdown.h}}</span>时<span class="countdown_tag">{{item.countdown.m}}</span>分<span class="countdown_tag">{{item.countdown.s}}</span>秒</div>
-            <div>
+            <div v-if="goods.config.style==3" class="stamp">距{{item.countdown.is_start?'结束':'开始'}}<span class="countdown_tag2">{{item.countdown.d}}</span>天<span class="countdown_tag">{{item.countdown.h}}</span>时<span class="countdown_tag">{{item.countdown.m}}</span>分<span class="countdown_tag">{{item.countdown.s}}</span>秒</div>
+            <div class="bottom-box">
+              <div v-if="goods.config.style==1" v-show="goods.config.attr.price.show" class="price"><span class="graytext2 font12">秒杀价 </span><span class="sign">￥</span><span style="font-weight: 600">{{item.Products_PriceX}}</span><span class="graytext2 market-price font12"> ￥{{item.Products_PriceX}} </span></div>
               <span class="count" v-if="goods.config.style==2">库存{{item.Products_Count}}</span>
               <div v-show="goods.config.attr.buybtn.show" class="buybtn" :class="'theme'+goods.config.attr.buybtn.style">
-                {{item.countdown.is_start?'立即购买':'立即预订'}}
+                {{goods.config.attr.buybtn.text||'立即参团'}}
               </div>
             </div>
           </div>
@@ -113,7 +114,7 @@
 
         if (this.goods.config.style === 3) {
           //内边不是乘以3 而是1
-          return 140+'px';
+          return 200+'rpx';
         }
 
         if (this.goods.config.style === 4) {
@@ -137,7 +138,8 @@
 
         if (this.goods.config.style === 3) {
           //内边不是乘以3 而是1
-          num = 140
+          num = 200
+          return num*ratio +'rpx';
         }
 
         if (this.goods.config.style === 1) {
@@ -355,7 +357,15 @@
     left: 0;
     width: 750rpx;
     height: 282rpx;
+    z-index: 0;
   }
+
+  .listbox{
+    position: relative;
+    z-index: 2;
+  }
+
+
   //无边框白底 有边框白底 无边框透明底
   /*'noborder-bgwhite','border-bgwhite','noborder-nobg'*/
   .noborder-bgwhite{
@@ -455,7 +465,7 @@
     .stamp{
       font-size: 12px;
       background: rgba(0,0,0,.5);
-      padding: 6px;
+      padding: 6px 0;
       position: absolute;
       left: 0;
       right: 0;
@@ -464,7 +474,7 @@
       .countdown_tag{
         background: #F43131;
         color: white;
-        padding: 0 2px;
+        /*padding: 0 2px;*/
       }
       .count{
         float: right;
@@ -508,7 +518,7 @@
       .countdown_tag{
         background: #F43131;
         color: white;
-        padding: 0 2px;
+        /*padding: 0 2px;*/
       }
     }
   }
