@@ -4,6 +4,7 @@
 			"path": "pages/index/index",
 			"style": {
 				"navigationBarTitleText": "电商",
+				"enablePullDownRefresh":true,
                 "scrollIndicator" : "none", // 不显示滚动条
 				"app-plus": {
 					"titleNView": false
@@ -26,6 +27,7 @@
 			"path" : "pages/cart/cart",
 			"style" : {
 				"navigationBarTitleText": "购物车",
+				"scrollIndicator" : "none", // 不显示滚动条
                 "app-plus": {
                   "titleNView": false
                 }
@@ -124,12 +126,15 @@
 		{
 		    "path" : "pages/classify/classify",
 		    "style" : {
+				"scrollIndicator" : "none", // 不显示滚动条
 		    	"navigationBarTitleText": "分类"
 		    }
 		}
         ,{
             "path" : "pages/person/person",
             "style" : {
+				"enablePullDownRefresh":true,
+				"scrollIndicator" : "none", // 不显示滚动条
                 "navigationBarTitleText": "个人中心",
 				"navigationBarBackgroundColor":"#f81111",
 				"navigationBarTextStyle":"white",
