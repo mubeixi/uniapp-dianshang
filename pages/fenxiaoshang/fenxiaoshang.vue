@@ -16,7 +16,7 @@
 </template>
 
 <script>
-	import {getUserDisInfo,updateUserDisInfo,uploadImage,GET_ENV,get_Users_ID} from '../../common/fetch.js';
+	import {getUserDisInfo,updateUserDisInfo,uploadImage,GET_ENV,get_Users_ID,get_User_ID,createToken} from '../../common/fetch.js';
 	import {uploadImages} from '../../common/tool.js'
 	import { staticUrl } from '../../common/env.js';
 	export default {
@@ -55,14 +55,21 @@
 			// 更换头像
 			changeAvator(){
 				let _this = this;
-					let data={
-						'timestamp':'1502263578',
-						'sign':'DA1525TR85D6S5A9E5236FDSWD52F147WA',
-						'sortToken':1,
-						'act':'upload_image',
-						'env': GET_ENV(),
-						'Users_ID': get_Users_ID()
-					};
+					// let data={
+					// 	'timestamp':'1502263578',
+					// 	'sign':'DA1525TR85D6S5A9E5236FDSWD52F147WA',
+					// 	'sortToken':1,
+					// 	'act':'upload_image',
+					// 	'env': GET_ENV(),
+					// 	'Users_ID': get_Users_ID()
+					// };
+					let param = {act:'upload_image'};
+					param.User_ID = get_User_ID();
+					param.Users_ID = get_Users_ID();
+					param.env = GET_ENV();
+
+					let data = createToken(param);
+
 					let that=this;
 					uni.chooseImage({
 						count:1,
