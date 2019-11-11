@@ -102,6 +102,9 @@ export const getProductCategory = (data,options) => fetch('pro_cate',data,option
 export const getProductDetail = (data,options) => fetch('prod_detail',data,options)
 //获取秒杀详情页
 export const flashsaleDetail = (data,options) => fetch('flashsale_detail',data,options)
+//获取秒杀详情页
+export const spikeProdDetail = (data,options) => fetch('spike_prod_detail',data,options)
+
 //秒杀预约
 export const flashsaleReserve = (data,options) => fetch('flashsale_reserve',data,options)
 
