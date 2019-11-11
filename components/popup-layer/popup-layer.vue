@@ -3,8 +3,8 @@
 		<view v-show="ifshow" @tap="ableClose" @touchmove.stop.prevent class="popup-layer" >
 
 		</view>
-<!--		v-show="ifshow"-->
-		<view ref="popRef"  class="popup-content"   @tap.stop="stopEvent" :style="_location">
+<!--		-->
+		<view ref="popRef" v-show="ifshow"  class="popup-content"   @tap.stop="stopEvent" :style="_location">
 			<slot></slot>
 			<div class="safearea-box2"></div>
 		</view>
@@ -64,7 +64,7 @@
 		},
 		mounted(){
 			if(this.showPop){
-				// console.log(222);
+				console.log(22222222222222222);
 				this.show();
 			}
 		},
