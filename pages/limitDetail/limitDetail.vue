@@ -117,7 +117,7 @@
         </block>
     </div>
     <!-- 商品详情 -->
-    <div class="pro_detail">
+    <div class="pro_detail" v-if="isLoad">
         <div class="p_detail_title">商品详情</div>
     	<!-- <div v-html="product.Products_Description" class="p_detail_des"></div> -->
 <!--    	<rich-text :nodes="product.Products_Description|formatRichText" class="p_detail_des"></rich-text>-->
@@ -267,7 +267,7 @@ export default {
 			// #ifdef APP-PLUS
 			wxMiniOriginId:'',
 			// #endif
-
+			isLoad:fase,
 			JSSDK_INIT:false,//自己有分享的业务
 			type: '', // 优惠券内容， 分享内容
             shareShow: false,
@@ -340,10 +340,10 @@ export default {
 	},
 	onLoad: function (option) {
 		  this.spike_good_id=option.spikeGoodId;
-
+		 this._init_func();
 	},
 	onShow() {
-		this.getDetail(this.spike_good_id);
+		// this.getDetail(this.spike_good_id);
 	},
 	filters: {
 		endtime(timeStamp){
@@ -411,6 +411,17 @@ export default {
 	},
     methods: {
 		...mapActions(['getUserInfo']),
+		async _init_func(){
+
+			await this.getDetail(this.spike_good_id);
+			await this.getCommit(this.Products_ID);
+
+			await this.checkProdCollected();
+			await addProductViews({prod_id:this.Products_ID}).then().catch()
+
+			this.isLoad = true;
+
+		},
 		//轮播图图片预览
 		yulan(index){
 			uni.previewImage({
@@ -851,12 +862,6 @@ export default {
 				this.product = res.data;
 				this.postData.productDetail_price=res.data.price;
 				this.Products_ID=res.data.Products_ID;
-				//获取评论
-				this.getCommit(this.Products_ID);
-				//检查是否收藏
-				this.checkProdCollected();
-				//增加商品浏览次数
-				addProductViews({prod_id:this.Products_ID}).then().catch()
 				this.postData.count = res.data.Products_Count;
 				if(res.data.skujosn) {
 					this.product.skujosn = typeof res.data.skujosn ==='string' ?JSON.parse(res.data.skujosn):res.data.skujosn;
