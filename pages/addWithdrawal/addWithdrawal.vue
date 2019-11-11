@@ -107,79 +107,79 @@
 					times: 1
 				})
 				//如果用户不存在openid   手机号其他登录
-				if(!this.userInfo.openid){
-					if(this.data.Method_Type=='wx_hongbao'||this.data.Method_Type=='wx_zhuanzhang'){
-						let _this=this;
-						// #ifdef MP-WEIXIN||H5
-						let checkAuth =  new Promise(function(resolve,reject){
-								uni.login({
-									success: function (loginRes) {
-										console.log(loginRes);
-										let CODE = loginRes.code
-										login({code:CODE,login_method:'wx_lp'}).then(result=>{
-											if(result.errorCode === 0){
-												_this.setUserInfo(result.data);
-												resolve({});
-											}
-											if(result.errorCode === 88001){
-												// 可以通过 wx.getSetting 先查询一下用户是否授权了 "scope.record" 这个 scope
-												wx.getSetting({
-													success(res) {
-														if (res.authSetting['scope.userInfo']) {
-															wx.authorize({
-																scope: 'scope.userInfo',
-																success () {
-																	const lp_raw_data = {...data.detail.userInfo,...result.data}
-																	console.log(lp_raw_data)
-																	login({code:CODE,login_method:'wx_lp',lp_raw_data:JSON.stringify(lp_raw_data)}).then(ret=>{
-																		_this.setUserInfo(result.data);
-																	}).catch(err=>{})
-																},
-																fail(){
-																	error('请点击授权登录')
-																}
-															})
-														}else{
-															error('请点击授权登录')
-														}
-													}
-												})
-											}
-										}).catch(e=>{})
-									}
-								});
-							});
-
-						await checkAuth.then(res=>{console.log('promsie success')},err=>{})
-						// #endif
-						
-						// #ifdef APP-PLUS
-						uni.login({
-						  provider: 'weixin',
-						  success: function (loginRes) {
-						
-						  	login({login_method:'wx_app',...loginRes.authResult}).then(res=>{
-						  		uni.navigateTo({
-									url:'../withdrawalMethod/withdrawalMethod'
-								})
-							}).catch(e=>{
-						
-							})
-						    console.log(JSON.stringify(loginRes.authResult));
-						  }
-						});
-						// #endif
-						// #ifndef H5||MP-WEIXIN||APP-PLUS
-							uni.showToast({
-								title:'请在微信公众号或小程序提现',
-								icon:'none'
-							})
-							return;
-						// #endif
-
-
-					}
-				}
+				// if(!this.userInfo.openid){
+				// 	if(this.data.Method_Type=='wx_hongbao'||this.data.Method_Type=='wx_zhuanzhang'){
+				// 		let _this=this;
+				// 		// #ifdef MP-WEIXIN||H5
+				// 		let checkAuth =  new Promise(function(resolve,reject){
+				// 				uni.login({
+				// 					success: function (loginRes) {
+				// 						console.log(loginRes);
+				// 						let CODE = loginRes.code
+				// 						login({code:CODE,login_method:'wx_lp'}).then(result=>{
+				// 							if(result.errorCode === 0){
+				// 								_this.setUserInfo(result.data);
+				// 								resolve({});
+				// 							}
+				// 							if(result.errorCode === 88001){
+				// 								// 可以通过 wx.getSetting 先查询一下用户是否授权了 "scope.record" 这个 scope
+				// 								wx.getSetting({
+				// 									success(res) {
+				// 										if (res.authSetting['scope.userInfo']) {
+				// 											wx.authorize({
+				// 												scope: 'scope.userInfo',
+				// 												success () {
+				// 													const lp_raw_data = {...data.detail.userInfo,...result.data}
+				// 													console.log(lp_raw_data)
+				// 													login({code:CODE,login_method:'wx_lp',lp_raw_data:JSON.stringify(lp_raw_data)}).then(ret=>{
+				// 														_this.setUserInfo(result.data);
+				// 													}).catch(err=>{})
+				// 												},
+				// 												fail(){
+				// 													error('请点击授权登录')
+				// 												}
+				// 											})
+				// 										}else{
+				// 											error('请点击授权登录')
+				// 										}
+				// 									}
+				// 								})
+				// 							}
+				// 						}).catch(e=>{})
+				// 					}
+				// 				});
+				// 			});
+				//
+				// 		await checkAuth.then(res=>{console.log('promsie success')},err=>{})
+				// 		// #endif
+				//
+				// 		// #ifdef APP-PLUS
+				// 		uni.login({
+				// 		  provider: 'weixin',
+				// 		  success: function (loginRes) {
+				//
+				// 		  	login({login_method:'wx_app',...loginRes.authResult}).then(res=>{
+				// 		  		uni.navigateTo({
+				// 					url:'../withdrawalMethod/withdrawalMethod'
+				// 				})
+				// 			}).catch(e=>{
+				//
+				// 			})
+				// 		    console.log(JSON.stringify(loginRes.authResult));
+				// 		  }
+				// 		});
+				// 		// #endif
+				// 		// #ifndef H5||MP-WEIXIN||APP-PLUS
+				// 			uni.showToast({
+				// 				title:'请在微信公众号或小程序提现',
+				// 				icon:'none'
+				// 			})
+				// 			return;
+				// 		// #endif
+				//
+				//
+				// 	}
+				// }
 
 				let data={};
 				if(this.data.Method_Type=="bank_card"){
