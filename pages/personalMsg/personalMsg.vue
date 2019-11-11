@@ -57,8 +57,11 @@
 
 <script>
 	import {mapGetters,mapActions} from 'vuex';
-	import {GET_ENV,get_Users_ID,upDateUserInfo,get_user_info,uploadImage} from '../../common/fetch.js';
+
+
+	import {GET_ENV,get_Users_ID,upDateUserInfo,get_user_info,uploadImage,createToken} from '../../common/fetch';
 	import { staticUrl } from '../../common/env.js';
+
 	export default {
 		data() {
 			return {
@@ -99,14 +102,23 @@
 			// 更换头像
 			changeAvator(){
 				let _this = this;
-					let data={
-						'timestamp':'1502263578',
-						'sign':'DA1525TR85D6S5A9E5236FDSWD52F147WA',
-						'sortToken':1,
-						'act':'upload_image',
-						'env': GET_ENV(),
-						'Users_ID': get_Users_ID()
-					};
+					// let data={
+					// 	'timestamp':'1502263578',
+					// 	'sign':'DA1525TR85D6S5A9E5236FDSWD52F147WA',
+					// 	'sortToken':1,
+					// 	'act':'upload_image',
+					// 	'env': GET_ENV(),
+					// 	'Users_ID': get_Users_ID()
+					// };
+
+					let param = {act:'upload_image'};
+					param.User_ID = get_User_ID();
+					param.Users_ID = get_Users_ID();   //Users_ID  写死
+					// param.appid = get_Appid();
+					param.env = GET_ENV();
+
+					let data = createToken(param);
+
 					let that=this;
 					uni.chooseImage({
 						count:1,
@@ -117,7 +129,7 @@
 							for(let item of res.tempFiles){
 								that.User_head = item.path;
 								that.imgs.push(item.path);
-							}					
+							}
 							// #ifdef MP-TOUTIAO
 							let fileCTX = tt.getFileSystemManager()
 							console.log(fileCTX);
@@ -127,7 +139,7 @@
 								success(ret) {
 									let imgs='data:image/jpeg;base64,'+ret.data;
 								   uploadImage({'image':imgs}).then(result=>{
-				
+
 									   upDateUserInfo({
 									   	User_HeadImg: result.data.path,
 									   }).then(res=>{
@@ -148,9 +160,9 @@
 									   	}
 									   })
 								   },err=>{
-									   
+
 								   }).catch(e=>{
-									   
+
 								   })
 								},
 								fail(ret) {
@@ -161,12 +173,16 @@
 								}
 							})
 							// #endif
-							
+
+
+
 							// #ifndef MP-TOUTIAO
+								let filePath = res.tempFilePaths[0];
+								console.log(filePath);
 								//上传图片
 								uni.uploadFile({
 										url: staticUrl+'/api/little_program/shopconfig.php',
-										filePath: that.imgs[0],
+										filePath: filePath,
 										name: 'image',
 										formData: data,
 										success: (uploadFileRes) => {
@@ -196,7 +212,7 @@
 								});
 							// #endif
 							// for(var i in that.imgs){
-								
+
 							// }
 
 						},
