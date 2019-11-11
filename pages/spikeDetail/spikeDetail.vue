@@ -317,7 +317,7 @@ export default {
 			    showimg: '',      //选择属性的图片(用产品图片代替)
 			    qty: 1,           //购买数量
 			    cart_key: 'DirectBuy',     //购物车类型   CartList（加入购物车）、DirectBuy（立即购买）、PTCartList（不能加入购物车）
-					active: 'pintuan',   //拼团时候选，不是拼团不选
+				active: 'flashsale',   //拼团时候选，不是拼团不选
 			},
 			isCollected: false, // 该产品是否已收藏
         }
@@ -636,7 +636,6 @@ export default {
 				times: 1
 			})
 			if(!this.$fun.checkIsLogin(1))return;
-			this.postData.active = 'pintuan';
 			this.$refs.cartPopu.show();
 		},
 		//秒杀预约
@@ -685,7 +684,7 @@ export default {
 			})
 
 			if(!this.$fun.checkIsLogin(1))return;
-			delete this.postData.active ;
+			// delete this.postData.active ;
 			this.$refs.cartPopu.show();
 		},
 		//返回首页

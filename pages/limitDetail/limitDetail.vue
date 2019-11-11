@@ -22,23 +22,33 @@
         <div class="leftss" style="display: flex;align-items: center;">
 			<image class="limits" src="/static/limit.png"></image>
         </div>
-        <div class="rightss">
-            <div class="countdown">
-               距开始还有 : <span class="spanss">{{countdown.d}}</span>天<span class="spans">{{countdown.h}}</span>时<span class="spans">{{countdown.m}}</span>分<span class="spans">{{countdown.s}}</span>秒
-            </div>
-        </div>
+<!--        <div class="rightss">-->
+<!--            <div class="countdown">-->
+<!--               距开始还有 : <span class="spanss">{{countdown.d}}</span>天<span class="spans">{{countdown.h}}</span>时<span class="spans">{{countdown.m}}</span>分<span class="spans">{{countdown.s}}</span>秒-->
+<!--            </div>-->
+<!--        </div>-->
+		<div class="rightss" v-if="isKai">
+			<div class="countdown">
+				距结束还有 : <span class="spanss">{{countdown.d}}</span>天<span class="spans">{{countdown.h}}</span>时<span class="spans">{{countdown.m}}</span>分<span class="spans">{{countdown.s}}</span>秒
+			</div>
+		</div>
+		<div class="rightss" v-if="!isKai">
+			<div class="countdown">
+				距开始还有 : <span class="spanss">{{countdown.d}}</span>天<span class="spans">{{countdown.h}}</span>时<span class="spans">{{countdown.m}}</span>分<span class="spans">{{countdown.s}}</span>秒
+			</div>
+		</div>
     </div>
 	<view class="prices">
 		<view class="price">
 			<text class="leftPrice">
-				秒杀价<text class="rmb">¥<text class="priceX">89.90</text></text>
+				秒杀价<text class="rmb">¥<text class="priceX">{{product.price}}</text></text>
 			</text>
 			<text class="rightPrice">
-				￥169.90
+				￥{{product.Products_PriceX}}
 			</text>
 		</view>
 		<view class="btn">
-			库存160
+			库存{{product.Products_Count}}
 		</view>
 	</view>
 	<div class="section2" >
@@ -67,11 +77,11 @@
     </div>
     <!-- 小伙伴在拼团 -->
     <div class="pintuan">
-        <div class="pinTitle">
-            活动介绍
-        </div>
+		<div class="pinTitle">
+			{{product.name}}
+		</div>
 		<div class="mbxtext">
-			此处为活动介绍，请输入介绍相关文案，此处为活动介绍，请输入介绍相关文案此处为活动介绍，请输入介绍相关文案，此处为活动介绍，请输入介绍相关文案此处为活动介绍，请输入介绍相关文案，此处为活动介绍，请输入介绍相关文案此处为活动介绍，请输入介绍相关文案
+			{{product.label}}
 		</div>
     </div>
     <!-- 评价 -->
@@ -207,8 +217,6 @@
 			<button  formType="submit" class="cartSub" :class="submit_flag?'':'disabled'">
 				确定
 			</button>
-
-
 		</form>
 
 	</popupLayer>
@@ -231,17 +239,10 @@
 			</div>
 		</div>
 		<div class="rightss">
-			<form class="form" report-submit @submit="myPay">
-			<div class="dan bTitle">
-				<button formType="submit" class="danRight">
-					零售价购买
-				</button>
-			</div>
-			</form>
 			<form  class="form" report-submit @submit="myPin">
 			<div class="tuan bTitle">
 				<button formType="submit" class="danRight">
-					立即预约
+					立即抢购
 				</button>
 			</div>
 			</form>
@@ -252,7 +253,7 @@
 
 <script>
 import popupLayer from '../../components/popup-layer/popup-layer.vue'
-import {getProductDetail,getCommit,updateCart,addCollection,getCoupon,getUserCoupon,cancelCollection,checkProdCollected,getPintuanTeam,addProductViews,getProductSharePic} from '../../common/fetch.js'
+import {spikeProdDetail,getCommit,updateCart,addCollection,getCoupon,getUserCoupon,cancelCollection,checkProdCollected,getPintuanTeam,addProductViews,getProductSharePic} from '../../common/fetch.js'
 import {goBack,numberSort,getGroupCountdown,buildSharePath,getProductThumb,ls}  from '../../common/tool.js'
 import {pageMixin} from "../../common/mixin";
 import {error} from "../../common";
@@ -282,10 +283,12 @@ export default {
 			check_attr: {},
 			couponList:[],//优惠券列表
 			submit_flag: true, //提交按钮
+			isKai:true,//是否开始
 			page:1,//优惠券页
 			pageSize:10,//优惠券页
 			totalCount:0,//优惠券个数
 			countdown:{d:0,h:0,m:0,s:0},
+			spike_good_id:0,
 			postData: {
 			    prod_id: 0,    //产品ID  在 onLoad中赋值
 			    atrid_str: '',    //选择属性  1；2   数字从小到大
@@ -294,7 +297,7 @@ export default {
 			    showimg: '',      //选择属性的图片(用产品图片代替)
 			    qty: 1,           //购买数量
 			    cart_key: 'DirectBuy',     //购物车类型   CartList（加入购物车）、DirectBuy（立即购买）、PTCartList（不能加入购物车）
-					active: 'pintuan',   //拼团时候选，不是拼团不选
+					active: 'spike',   //拼团时候选，不是拼团不选
 			},
 			isCollected: false, // 该产品是否已收藏
         }
@@ -335,19 +338,11 @@ export default {
 		// }
 	},
 	onLoad: function (option) {
-		  this.Products_ID = option.Products_ID;
-		  this.checkProdCollected();
+		  this.spike_good_id=option.spikeGoodId;
+
 	},
 	onShow() {
-		this.getDetail(this.Products_ID);
-		this.getCommit(this.Products_ID);
-
-		addProductViews({prod_id:this.Products_ID}).then().catch()
-
-		//获取正在拼团的团队
-		this.getPintuanTeamList(this.Products_ID)
-
-
+		this.getDetail(this.spike_good_id);
 	},
 	filters: {
 		endtime(timeStamp){
@@ -547,16 +542,6 @@ export default {
 			}
 
 		},
-		getPintuanTeamList(id){
-			getPintuanTeam({prod_id:id},{errtip:false}).then(res=>{
-				if(res.errorCode === 0){
-					this.teamList = res.data.splice(0,3)
-				}
-
-			}).catch(e=>{
-
-			})
-		},
 		formatRichTexts(html){
 			if(!html) return;
 			let newContent= html.replace(/<img[^>]*>/gi,function(match,capture){
@@ -666,7 +651,6 @@ export default {
 				times: 1
 			})
 			if(!this.$fun.checkIsLogin(1))return;
-			this.postData.active = 'pintuan';
 			this.$refs.cartPopu.show();
 		},
 		//单独购买
@@ -754,6 +738,7 @@ export default {
         		return ;
         	}
         	this.postData.prod_id = this.Products_ID;
+			this.postData.active_id=this.product.id;
         	if(this.postData.atr_str==''||this.postData.atrid_str==''){
         		if(this.product.skujosn){
         			wx.showToast({
@@ -829,50 +814,53 @@ export default {
 			})
         },
 		stampCount(){
-
 			let rt  = {};
-			if(this.product && this.product.pintuan_end_time){
-				let computedStamp = getGroupCountdown({end_timeStamp:this.product.pintuan_end_time})
-				if(computedStamp){
-					rt = computedStamp
-				}else{
-					//如果不对，就清空
-					window.clearInterval(window.groupStam)
+			let times=new Date().getTime();
+			if(times<this.product.start_time*1000){
+				this.isKai=false;
+				if(this.product && this.product.end_time){
+					let computedStamp = getGroupCountdown({end_timeStamp:this.product.start_time})
+					if(computedStamp){
+						rt = computedStamp
+					}else{
+						//如果不对，就清空
+						window.clearInterval(window.groupStam)
+					}
+				}
+			}else{
+				this.isKai=true;
+				if(this.product && this.product.end_time){
+					let computedStamp = getGroupCountdown({end_timeStamp:this.product.end_time})
+					if(computedStamp){
+						rt = computedStamp
+					}else{
+						//如果不对，就清空
+						window.clearInterval(window.groupStam)
+					}
 				}
 			}
-
-			//console.log(rt)
-
 			this.countdown = rt
 		},
 		getDetail(item){
         	let data={
-        		prod_id:item,
-        		Users_ID:'wkbq6nc2kc'
+				spike_good_id:item
         	}
         	let _self = this;
 			let product = null;
 
-			getProductDetail(data).then(res=>{
-
+			spikeProdDetail(data).then(res=>{
         		console.log(res)
 				if(res.errorCode != 0){
 					return;
 				}
-
-				if(!res.data.is_pintuan){
-					error('不是拼团产品');
-					let linkObj = {link:'/pages/index/index',linkType:'default'};
-					setTimeout(function(){
-						_self.$fun.linkTo(linkObj)
-					},100)
-					return;
-				}
-
-
-
 				this.product = res.data;
-
+				this.Products_ID=res.data.Products_ID;
+				//获取评论
+				this.getCommit(this.Products_ID);
+				//检查是否收藏
+				this.checkProdCollected();
+				//增加商品浏览次数
+				addProductViews({prod_id:this.Products_ID}).then().catch()
 				this.postData.count = res.data.Products_Count;
 				if(res.data.skujosn) {
 					this.product.skujosn = typeof res.data.skujosn ==='string' ?JSON.parse(res.data.skujosn):res.data.skujosn;
@@ -1328,6 +1316,8 @@ export default {
 				line-height: 37rpx;
 				overflow: hidden;
 				height: 37rpx;
+				display: flex;
+				align-items: center;
 				.spans{
 					margin: 0 2px;
 					padding: 0 2px;
