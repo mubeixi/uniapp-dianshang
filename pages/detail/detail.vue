@@ -93,7 +93,7 @@
         </block>
     </div>
     <!-- 商品详情 -->
-    <div class="pro_detail">
+    <div class="pro_detail" v-if="isLoad">
         <div class="p_detail_title">商品详情</div>
 		<!-- #ifdef H5||APP-PLUS -->
 		<div v-html="formatRichTexts(product.Products_Description)" class="p_detail_des"></div>
@@ -222,7 +222,7 @@ import bottom from '../../components/bottom/bottom'
 import popupLayer from '../../components/popup-layer/popup-layer.vue'
 import {getProductDetail,getCommit,updateCart,addCollection,getCoupon,getUserCoupon,checkProdCollected,cancelCollection,judgeReceiveGift,getProductSharePic,addProductViews} from '../../common/fetch.js';
 import {goBack,numberSort,getProductThumb}  from '../../common/tool.js'
-import {buildSharePath,ls} from "../../common/tool";
+import {buildSharePath, isWeiXin, ls} from "../../common/tool";
 
 import { mapGetters, mapActions, Store,mapState } from "vuex";
 
@@ -236,6 +236,7 @@ export default {
 	mixins:[pageMixin],
     data(){
         return {
+			isLoad:false,
 			// #ifdef APP-PLUS
         	wxMiniOriginId:'',
 			// #endif
@@ -306,24 +307,16 @@ export default {
 
 		this.Products_ID = option.Products_ID;
 		this.postData.prod_id = option.Products_ID;
-		this.checkProdCollected();
 
-		this.getDetail(this.Products_ID);
-		this.getCommit(this.Products_ID);
-		this.getCoupon();//获取可领取的优惠券
-		// 是否是赠品，赠品不能选择属性
-		if(option.gift) {
-			this.gift = option.gift;
-			this.postData.active_id = option.gift;
-			this.postData.active = 'gift';
-			this.judgeReceiveGift();
-			this.recieve = true;
-		}
+		this._init_func(option)
 
 		this.$refs.cartPopu.close();
 
-		addProductViews({prod_id:this.Products_ID}).then().catch()
 	 },
+
+	// mounted(){
+	//
+	// },
 	onShow(){
 		// #ifdef APP-PLUS
 		var icon = plus.nativeObj.View.getViewById("icon");
@@ -397,6 +390,30 @@ export default {
 				}
 			},
     methods: {
+		async _init_func(option){
+
+			await this.getDetail(this.Products_ID);
+
+			// 是否是赠品，赠品不能选择属性
+			if(option.gift) {
+				this.gift = option.gift;
+				this.postData.active_id = option.gift;
+				this.postData.active = 'gift';
+				await this.judgeReceiveGift();
+				this.recieve = true;
+			}
+
+			await this.getCommit(this.Products_ID);
+
+			await this.checkProdCollected();
+
+			await this.getCoupon();//获取可领取的优惠券
+
+			await addProductViews({prod_id:this.Products_ID}).then().catch()
+
+			this.isLoad = true;
+
+		},
 		createtab: function(){
 		        // 设置水平居中位置
 				var bitmap = new plus.nativeObj.Bitmap('bmp1');
@@ -953,6 +970,8 @@ export default {
 
             //let _self = this;
 			// #ifdef H5
+
+			if(!isWeiXin())return;
 
 			let path = 'pages/detail/detail?Products_ID='+this.Products_ID;
 			let front_url = this.initData.front_url;
