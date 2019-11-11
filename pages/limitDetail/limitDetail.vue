@@ -186,7 +186,7 @@
 				<div class="cartTitle">
 					<div class="cartTitles">{{product.Products_Name}}</div>
 					<div class="addInfo">
-						<div class="addPrice">{{product.Products_PriceX}}元</div>
+						<div class="addPrice">{{product.price}}元</div>
 						<div class="proSale">库存{{postData.count}}</div>
 					</div>
 				</div>
@@ -644,12 +644,6 @@ export default {
 		},
 		//拼团
 		myPin(e){
-
-			console.log(e);
-			add_template_code({
-				code: e.detail.formId,
-				times: 1
-			})
 			if(!this.$fun.checkIsLogin(1))return;
 			this.$refs.cartPopu.show();
 		},
@@ -738,7 +732,7 @@ export default {
         		return ;
         	}
         	this.postData.prod_id = this.Products_ID;
-			this.postData.active_id=this.product.id;
+			this.postData.active_id=this.product.spike_good_id;
         	if(this.postData.atr_str==''||this.postData.atrid_str==''){
         		if(this.product.skujosn){
         			wx.showToast({
@@ -920,27 +914,6 @@ export default {
         	this.$refs.cartPopu.show();
         	console.log('cart')
         	this.postData.cart_key = 'CartList';
-        },
-        directBuy(){
-        	this.$refs.cartPopu.show();
-        	this.postData.cart_key = 'DirectBuy'
-        	let arg = {
-        		Users_ID: 'wkbq6nc2kc',
-        		User_ID: 3,
-        		cart_key: this.cart_key,
-        		prod_id:  this.Products_ID,
-        		qty: 1,
-        		// atr_str: "颜色:黑色;尺寸:大号;",
-        		// atrid_str: "1;3",
-        	}
-        	updateCart(arg).then(res=>{
-        		console.log(res)
-        		if(res.errorCode == 0) {
-        			uni.navigateTo({
-        				url: '../check/check?cart_key=DirectBuy'
-        			})
-        		}
-        	})
         },
         gotoComments(){
             uni.navigateTo({
