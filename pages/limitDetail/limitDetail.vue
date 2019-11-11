@@ -186,7 +186,7 @@
 				<div class="cartTitle">
 					<div class="cartTitles">{{product.Products_Name}}</div>
 					<div class="addInfo">
-						<div class="addPrice">{{product.price}}元</div>
+						<div class="addPrice">{{postData.productDetail_price}}元</div>
 						<div class="proSale">库存{{postData.count}}</div>
 					</div>
 				</div>
@@ -298,6 +298,7 @@ export default {
 			    qty: 1,           //购买数量
 			    cart_key: 'DirectBuy',     //购物车类型   CartList（加入购物车）、DirectBuy（立即购买）、PTCartList（不能加入购物车）
 					active: 'spike',   //拼团时候选，不是拼团不选
+				productDetail_price:0
 			},
 			isCollected: false, // 该产品是否已收藏
         }
@@ -701,7 +702,7 @@ export default {
         	if (attr_val) {
         		this.postData.count = attr_val.Property_count;   //选择属性的库存
         		this.postData.showimg = typeof attr_val.Attr_Image != 'undefined' && attr_val.Attr_Image != '' ? attr_val.Attr_Image : this.product.Products_JSON['ImgPath'][0];// 选择属性的图片
-        		this.productDetail_price = attr_val.Txt_PriceSon; // 选择属性的价格
+				this.postData.productDetail_price = attr_val.xs_pricex; // 选择属性的价格
         		this.submit_flag = (!this.check_attr || Object.getOwnPropertyNames(this.check_attr).length != Object.getOwnPropertyNames(this.product.skujosn).length) ? false : true;
         	}
         	//判断属性库存
@@ -848,6 +849,7 @@ export default {
 					return;
 				}
 				this.product = res.data;
+				this.postData.productDetail_price=res.data.price;
 				this.Products_ID=res.data.Products_ID;
 				//获取评论
 				this.getCommit(this.Products_ID);
