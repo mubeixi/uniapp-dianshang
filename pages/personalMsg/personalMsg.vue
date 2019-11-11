@@ -59,9 +59,8 @@
 	import {mapGetters,mapActions} from 'vuex';
 
 
-	import {GET_ENV,get_Users_ID,upDateUserInfo,get_user_info,uploadImage,createToken} from '../../common/fetch';
+	import {GET_ENV,get_User_ID,get_Users_ID,upDateUserInfo,get_user_info,uploadImage,createToken} from '../../common/fetch';
 	import { staticUrl } from '../../common/env.js';
-
 	export default {
 		data() {
 			return {
@@ -113,7 +112,7 @@
 
 					let param = {act:'upload_image'};
 					param.User_ID = get_User_ID();
-					param.Users_ID = get_Users_ID();   //Users_ID  写死
+					param.Users_ID = get_Users_ID();
 					// param.appid = get_Appid();
 					param.env = GET_ENV();
 
