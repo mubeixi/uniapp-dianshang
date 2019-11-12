@@ -35,7 +35,7 @@
 </template>
 <script>
   import {getProductList} from "../../common/fetch";
-  import {domain} from "../../common/filter";
+  import {domain, lazyImgUrl} from "../../common/filter";
   import {goProductDetail} from "../../common";
 
   export default {
@@ -281,7 +281,7 @@
       },
       domainFunc(url) {
         if(!url){
-          return 'http://www.qiyeban.com/uploadfiles/wkbq6nc2kc/image/20190930095641111.png';//展位图替换掉吧。。
+          return lazyImgUrl;//展位图替换掉吧。。
         }
 
         return domain(url)

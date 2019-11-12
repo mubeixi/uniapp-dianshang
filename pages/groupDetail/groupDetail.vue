@@ -8,12 +8,12 @@
 
 
 	<!-- 轮播 -->
-	<view class="uni-padding-wrap">
+	<view class="uni-padding-wrap"  style="background: #f2f2f2;">
 		<view class="page-section swiper">
 			<view class="page-section-spacing">
 				<swiper class="swiper" circular="true" indicator-dots="indicatorDots" autoplay="autoplay" interval="4000" duration="500" indicator-color="#fff" indicator-active-color="#ff5000">
 					<swiper-item v-for="(item,i) of product.Products_JSON.ImgPath" :key="i">
-						 <img class="imgs" :src="item"  @click="yulan(i)">
+						 <img class="imgs" :src="item|lazyimg"  @click="yulan(i)">
 					</swiper-item>
 				</swiper>
 			</view>
@@ -299,7 +299,7 @@ export default {
             shareShow: false,
 			teamList:[],//正在开团的列表
             ticksShow: false,
-			product:'',//商品结果
+			product:{Products_JSON:{ImgPath:[]}},//商品结果
 			commit:[],//获取评论
 			Products_ID: 0 ,
 			count:1,//商品数量

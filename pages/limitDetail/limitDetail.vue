@@ -273,7 +273,7 @@ export default {
             shareShow: false,
 			teamList:[],//正在开团的列表
             ticksShow: false,
-			product:'',//商品结果
+			product:{},//商品结果
 			commit:[],//获取评论
 			Products_ID: 0 ,
 			count:1,//商品数量

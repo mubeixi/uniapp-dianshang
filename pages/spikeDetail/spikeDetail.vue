@@ -1,5 +1,5 @@
 <template>
-  <div style="position:relative;background-color:#f8f8f8" v-if="product">
+  <div style="position:relative;background-color:#f8f8f8">
     <div class="top">
         <image class="imgm" src="/static/back.png" @click="goBack" ></image>
         <image class="imgm cart" src="/static/cart.png" @click="goCart" ></image>
@@ -292,7 +292,7 @@ export default {
             shareShow: false,
 			teamList:[],//正在开团的列表
             ticksShow: false,
-			product:'',//商品结果
+			product:{},//商品结果
 			commit:[],//获取评论
 			Products_ID: 0 ,
 			flashsale_id:0,//秒杀商品id
@@ -355,7 +355,7 @@ export default {
 		this.getDetail(this.flashsale_id);
 		// this.getCommit(this.Products_ID);
 		// this.checkProdCollected();
-		
+
 
 	},
 	filters: {
@@ -811,8 +811,8 @@ export default {
 					this.postData.qty = this.product.attr_json.count;
 				}
 			}
-			
-        	
+
+
         },
         delNum(){
         	if (this.postData.qty > 1) {
@@ -874,7 +874,7 @@ export default {
 						}
 					}
 			}
-			
+
 
 			//console.log(rt)
 
@@ -890,7 +890,7 @@ export default {
 
 			flashsaleDetail(data).then(res=>{
 
-        		
+
 				if(res.errorCode != 0){
 					return;
 				}
