@@ -183,8 +183,8 @@
 				<div class="cartTitle">
 					<div class="cartTitles">{{product.Products_Name}}</div>
 					<div class="addInfo">
-							<div class="addPrice" >{{product.attr_json.price}}元</div>
-							<div class="proSale">库存{{product.attr_json.count}}</div>
+							<div class="addPrice" >{{postData.productDetail_price}}元</div>
+							<div class="proSale">库存{{postData.count}}</div>
 					</div>
 				</div>
 			</div>
@@ -318,6 +318,7 @@ export default {
 			    qty: 1,           //购买数量
 			    cart_key: 'DirectBuy',     //购物车类型   CartList（加入购物车）、DirectBuy（立即购买）、PTCartList（不能加入购物车）
 				active: 'flashsale',   //拼团时候选，不是拼团不选
+                productDetail_price:0
 			},
 			isCollected: false, // 该产品是否已收藏
         }
@@ -349,13 +350,13 @@ export default {
 	onLoad: function (option) {
 		  // this.Products_ID = option.Products_ID;
 		  this.flashsale_id = option.flashsale_id;
+		  this._init_func();
 		  // this.checkProdCollected();
 	},
 	onShow() {
-		this.getDetail(this.flashsale_id);
+		//this.getDetail(this.flashsale_id);
 		// this.getCommit(this.Products_ID);
 		// this.checkProdCollected();
-		
 
 	},
 	filters: {
@@ -424,6 +425,21 @@ export default {
 	},
     methods: {
 		...mapActions(['getUserInfo']),
+		async _init_func(){
+			await this.getDetail(this.flashsale_id)
+					.then(id=>{
+						this.getCommit(id);
+						this.checkProdCollected(id);
+						addProductViews({prod_id:id}).then().catch();
+					})
+			// await this.getCommit(this.Products_ID);
+			//
+			// await this.checkProdCollected();
+			// await addProductViews({prod_id:this.Products_ID}).then().catch()
+
+			this.isLoad = true;
+
+		},
 		//轮播图图片预览
 		yulan(index){
 			uni.previewImage({
@@ -615,11 +631,11 @@ export default {
 			}
 		},
 		// 检查产品是否已收藏
-		checkProdCollected() {
+		checkProdCollected(item) {
 			if(!this.$fun.checkIsLogin()){
 				return
 			}
-			checkProdCollected({prod_id: this.Products_ID}).then(res => {
+			checkProdCollected({prod_id: item}).then(res => {
 				if(res.errorCode == 0) {
 					this.isCollected = res.data.is_favourite == 1
 				}
@@ -727,7 +743,7 @@ export default {
         	if (attr_val) {
         		this.postData.count = attr_val.Property_count;   //选择属性的库存
         		this.postData.showimg = typeof attr_val.Attr_Image != 'undefined' && attr_val.Attr_Image != '' ? attr_val.Attr_Image : this.product.Products_JSON['ImgPath'][0];// 选择属性的图片
-        		this.productDetail_price = attr_val.Txt_PriceSon; // 选择属性的价格
+        		this.postData.productDetail_price = attr_val.Attr_Price; // 选择属性的价格
         		this.submit_flag = (!this.check_attr || Object.getOwnPropertyNames(this.check_attr).length != Object.getOwnPropertyNames(this.product.skujosn).length) ? false : true;
         	}
         	//判断属性库存
@@ -881,78 +897,79 @@ export default {
 			this.countdown = rt
 		},
 		getDetail(item){
-        	let data={
-        		flashsale_id:item,
-        		Users_ID:'wkbq6nc2kc'
-        	}
-        	let _self = this;
-			let product = null;
-
-			flashsaleDetail(data).then(res=>{
-
-        		
-				if(res.errorCode != 0){
-					return;
+        	return  new Promise((resolve, reject) =>{
+				let data={
+					flashsale_id:item,
+					Users_ID:'wkbq6nc2kc'
 				}
-				this.product = res.data;
-				this.Products_ID = res.data.Products_ID;
-				this.postData.count = res.data.Products_Count;
-				this.getCommit(this.Products_ID);
-				this.checkProdCollected();
-				addProductViews({prod_id:this.Products_ID}).then().catch();
-				if(res.data.skujosn) {
-					this.product.skujosn = typeof res.data.skujosn ==='string' ?JSON.parse(res.data.skujosn):res.data.skujosn;
-					this.product.skuvaljosn = typeof res.data.skuvaljosn === 'string' ?JSON.parse(res.data.skuvaljosn):res.data.skuvaljosn;
-				}
+				let _self = this;
+				let product = null;
+
+				flashsaleDetail(data).then(res=>{
 
 
-				//this.stampCount()
-				//开发时候一直倒计时太乱了
-				window.groupStam = setInterval(this.stampCount,1000)
+					if(res.errorCode != 0){
+						return;
+					}
+					this.product = res.data;
+					this.Products_ID = res.data.Products_ID;
+					this.postData.count = res.data.attr_json.count;
+					this.postData.productDetail_price=res.data.attr_json.price;
+					if(res.data.skujosn) {
+						this.product.skujosn = typeof res.data.skujosn ==='string' ?JSON.parse(res.data.skujosn):res.data.skujosn;
+						this.product.skuvaljosn = typeof res.data.skuvaljosn === 'string' ?JSON.parse(res.data.skuvaljosn):res.data.skuvaljosn;
+					}
 
-				product = res.data
+					resolve(res.data.Products_ID);
 
-				// #ifdef H5
+					//this.stampCount()
+					//开发时候一直倒计时太乱了
+					window.groupStam = setInterval(this.stampCount,1000)
 
-				let path = 'pages/groupDetail/groupDetail?Products_ID='+this.Products_ID;
-				let front_url = this.initData.front_url;
+					product = res.data
+
+					// #ifdef H5
+
+					let path = 'pages/spikeDetail/spikeDetail?flashsale_id='+this.flashsale_id;
+					let front_url = this.initData.front_url;
 
 
-				this.WX_JSSDK_INIT(this).then((wxEnv)=>{
+					this.WX_JSSDK_INIT(this).then((wxEnv)=>{
 
-					this.$wx.onMenuShareTimeline({
-						title: '#网中网#'+product.Products_Name, // 分享标题
-						link: front_url+buildSharePath(path), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-						imgUrl: product.ImgPath, // 分享图标
-						success: function() {
-							// 用户点击了分享后执行的回调函数
-						}
-					});
+						this.$wx.onMenuShareTimeline({
+							title: '#网中网#'+product.Products_Name, // 分享标题
+							link: front_url+buildSharePath(path), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+							imgUrl: product.ImgPath, // 分享图标
+							success: function() {
+								// 用户点击了分享后执行的回调函数
+							}
+						});
 
-					//两种方式都可以
-					wxEnv.onMenuShareAppMessage({
-						title: '#网中网#'+product.Products_Name, // 分享标题
-						link: front_url+buildSharePath(path), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-						imgUrl: product.ImgPath, // 分享图标
-						desc: product.Products_BriefDescription||'好物推荐',
-						type: 'link', // 分享类型,music、video或link，不填默认为link
-						// dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
-						success: function() {
-							// 用户点击了分享后执行的回调函数
-						}
-					});
+						//两种方式都可以
+						wxEnv.onMenuShareAppMessage({
+							title: '#网中网#'+product.Products_Name, // 分享标题
+							link: front_url+buildSharePath(path), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+							imgUrl: product.ImgPath, // 分享图标
+							desc: product.Products_BriefDescription||'好物推荐',
+							type: 'link', // 分享类型,music、video或link，不填默认为link
+							// dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+							success: function() {
+								// 用户点击了分享后执行的回调函数
+							}
+						});
 
-				}).catch(()=>{
-					console.log('不是微信环境')
+					}).catch(()=>{
+						console.log('不是微信环境')
+					})
+
+					// #endif
+
+
+
+				}).catch(e=>{
+					console.log(e)
 				})
-
-				// #endif
-
-
-
-        	}).catch(e=>{
-        		console.log(e)
-        	})
+			})
         },
         addCart(){
         	this.$refs.cartPopu.show();
