@@ -274,7 +274,7 @@
 				color: #333333;
 			}
 			.shu{
-				width: 1rpx;
+				width: 1px;
 				height: 95rpx;
 				background-color: #E7E7E7;
 			}

@@ -6,7 +6,7 @@
 	<!-- 	<page-title title="爵位晋升" rightHidden="true"></page-title> -->
 		<view class="top">
 			<view class="person">
-				<image :src="por.disInfo.Shop_Logo"></image>
+				<image class="headimg" :src="pro.disInfo.Shop_Logo"></image>
 			</view>
 			<view class="nickName">
 				{{pro.disInfo.Shop_Name}}
@@ -83,14 +83,17 @@
 		mixins:[pageMixin],
 		data() {
 			return {
-				pro:[]
+				pro:{
+					sha_config:{sha:{}},
+					disInfo:{}
+				}
 			};
 		},
 		components:{
 			circleTitle
 		},
 		onLoad() {
-			
+
 		},
 		onShow() {
 			this.shaInit();
@@ -129,7 +132,8 @@
 			width: 75rpx;
 			height: 75rpx;
 			border-radius: 50%;
-			image{
+			.headimg{
+				border-radius: 50%;
 				width: 100%;
 				height: 100%;
 			}

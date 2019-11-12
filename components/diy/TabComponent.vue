@@ -248,6 +248,7 @@
       goDetail(goods){
         console.log(goods)
         // Products_ID=243
+
         let linkObj = {link:'/pages/detail/detail?Products_ID='+goods.Products_ID,linkType:'default'};
 
         this.$fun.linkTo(linkObj)

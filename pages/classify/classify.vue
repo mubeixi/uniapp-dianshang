@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view class="wrap">
 
 		<view class="search-wrap" @click="goSearch">
 			<icon type="search" size="34rpx" class="search_icon"/>
@@ -157,6 +157,9 @@
 </script>
 
 <style scoped lang="scss">
+	.wrap{
+		background: white;
+	}
 	.page-body {
 		display: flex;
 		background: #fff;
@@ -282,6 +285,7 @@
 		font-size: 30rpx;
 		padding: 30rpx 20rpx 25rpx 20rpx;
 		box-sizing: border-box;
+		background: white;
 		.search-input {
 			float: left;
 			width: 710rpx;

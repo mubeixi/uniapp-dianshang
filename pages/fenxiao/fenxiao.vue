@@ -94,19 +94,22 @@
 						财富排行榜
 					</view>
 				</view>
-				<view class="td" style="border-right: 0rpx;" @click="goAssist" >
+				<!-- #ifndef MP ||APP-PLUS -->
+				<view class="td"  @click="goAssist" >
 					<image  class="imgs" src="https://new401.bafangka.com/static/client/fenxiao/tuiguang.png" ></image>
 					<view class="views">
 						推广小助手
 					</view>
 				</view>
-				<view class="td" @click="goRegion" style="border-bottom: 0rpx;" v-if="data.dis_config.Dis_Agent_Type==1">
+				<!-- #endif -->
+
+				<view class="td" @click="goRegion"  v-if="data.dis_config.Dis_Agent_Type==1">
 					<image  class="imgs" src="https://new401.bafangka.com/static/client/fenxiao/quyu.png" ></image>
 					<view class="views">
 						区域代理
 					</view>
 				</view>
-				<view class="td" @click="goGudong"  style="border-bottom: 0rpx;"  v-if="data.dis_config.Sha_Agent_Type==1">
+				<view class="td" @click="goGudong"    v-if="data.dis_config.Sha_Agent_Type==1">
 					<image  class="imgs" src="/static/gudong.jpg" ></image>
 					<view class="views">
 						股东
@@ -149,14 +152,14 @@
 				get_user_info().then(res=>{
 					this.setUserInfo(res.data);
 				},err=>{
-					
+
 				}).catch(e=>{
 					console.log(e)
 				})
 			}
 			//获取分销首页
 			this.getDisInit();
-			
+
 
 			//this.userInfo = await this.getUserInfo();
 		},

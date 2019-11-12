@@ -5,8 +5,6 @@
        <image class="imgm cart" src="/static/cart.png" @click="goCart" ></image>
     </div>
 
-
-
 	<!-- 轮播 -->
 	<view class="uni-padding-wrap"  style="background: #f2f2f2;">
 		<view class="page-section swiper">
@@ -19,13 +17,13 @@
 			</view>
 		</view>
 	</view>
+
     <!-- 产品信息描述 -->
     <div class="section1">
         <div class="leftss">
             <span class="pricef">¥</span>
             <span class="prices">{{product.Products_PriceX}}</span>
             <span class="pricet">¥ {{product.Products_PriceY}}</span>
-
         </div>
         <div class="rightss">
             <div class="countdown">
@@ -36,6 +34,7 @@
             </div>
         </div>
     </div>
+
     <!-- 领券 -->
     <div class="section2" >
         <div class="titles">
@@ -285,11 +284,13 @@ import {pageMixin} from "../../common/mixin";
 import {error} from "../../common";
 import {mapState,mapGetters,mapActions} from 'vuex';
 import {add_template_code} from "../../common/fetch";
+import {isWeiXin} from "../../common/tool";
 
 export default {
 	mixins:[pageMixin],
     data(){
         return {
+			groupStam:false,
 			// #ifdef APP-PLUS
 			wxMiniOriginId:'',
 			// #endif
@@ -368,6 +369,8 @@ export default {
 		  this.checkProdCollected();
 	},
 	onShow() {
+
+		console.log(this.product);
 		this.getDetail(this.Products_ID);
 		this.getCommit(this.Products_ID);
 
@@ -872,7 +875,7 @@ export default {
 					rt = computedStamp
 				}else{
 					//如果不对，就清空
-					window.clearInterval(window.groupStam)
+					clearInterval(this.groupStam)
 				}
 			}
 
@@ -914,12 +917,13 @@ export default {
 
 				//this.stampCount()
 				//开发时候一直倒计时太乱了
-				window.groupStam = setInterval(this.stampCount,1000)
+				this.groupStam = setInterval(this.stampCount,1000)
 
 				product = res.data
 
 				// #ifdef H5
 
+				if(!isWeiXin())return;
 				let path = 'pages/groupDetail/groupDetail?Products_ID='+this.Products_ID;
 				let front_url = this.initData.front_url;
 
