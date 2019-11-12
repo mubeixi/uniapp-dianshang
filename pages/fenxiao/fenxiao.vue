@@ -94,7 +94,7 @@
 						财富排行榜
 					</view>
 				</view>
-				<view class="td" @click="goRegion"  v-if="data.dis_config.Dis_Agent_Type==1">
+				<view class="td" @click="goRegion" style="border-right: 0px;"  v-if="data.dis_config.Dis_Agent_Type==1">
 					<image  class="imgs" src="https://new401.bafangka.com/static/client/fenxiao/quyu.png" ></image>
 					<view class="views">
 						区域代理
