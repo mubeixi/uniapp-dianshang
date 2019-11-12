@@ -4,7 +4,7 @@
 		<view class="status_bar" style="background-color: #FFFFFF;"></view>
 		<!-- #endif -->
 
-		<div v-if="loading">
+		<div>
 			<page-title class="nav-title" title="购物车"
 			:right="handleShow ? '管理' : '取消'"
 			@rightHandle="handle"
