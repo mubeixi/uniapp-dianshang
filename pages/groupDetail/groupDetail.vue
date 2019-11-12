@@ -233,7 +233,7 @@
 			</div>
 			<div class="first" @click="collect">
 				<div>
-					<image class="img" v-if="isCollected"  src=/static/detail/favorite-a.png" ></image>
+					<image class="img" v-if="isCollected"  src="/static/detail/favorite-a.png" ></image>
 					<image class="img" v-else src="/static/detail/favorite.png" ></image>
 				</div>
 				<div class="txt">收藏</div>

@@ -155,24 +155,6 @@
         }
         return 'auto';
       },
-      // itemw() {
-      //   let full = this.fullWidth;
-      //
-      //   if(this.goods.config.showmode == 'border-bgwhite'){
-      //     full -= 4;//4个边框
-      //   }
-      //
-      //   if (this.goods.config.style === 2) {
-      //     //内边不是乘以3 而是1
-      //     return (full - this.goods.style.wrapmargin * 2 - this.goods.style.margin * 1) / 2 + 'px';
-      //   }
-      //
-      //   if (this.goods.config.style === 4) {
-      //     return full / 3 + 'px';
-      //   }
-      //   return 'auto';
-      //
-      // },
       className() {
         //利用这样的方式，传入className box +style1/2/3/4
         return 'style' + this.goods.config.style+' box'
@@ -205,7 +187,6 @@
             return;
           }
 
-
           this.goodsList = createEmptyArray(list.length,{countdown:{}})//空对象
 
           let param = {pageSize: limit};//cate_id.length===0 && limit ? limit : 900}
@@ -215,7 +196,10 @@
           param.Products_ID = list.join(',')
 
           getProductList(param).then(res => {
-            this.goodsList = res.data
+            this.goodsList = res.data.map(item=>{
+              item.countdown = {}
+              return item
+            })
 
 
           })
@@ -468,7 +452,7 @@
     .stamp{
       font-size: 12px;
       background: rgba(0,0,0,.5);
-      padding: 6px 0;
+      padding: 6px 2px;
       position: absolute;
       left: 0;
       right: 0;

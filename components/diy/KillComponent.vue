@@ -156,24 +156,7 @@
                 }
                 return 'auto';
             },
-            // itemw() {
-            //   let full = this.fullWidth;
-            //
-            //   if(this.goods.config.showmode == 'border-bgwhite'){
-            //     full -= 4;//4个边框
-            //   }
-            //
-            //   if (this.goods.config.style === 2) {
-            //     //内边不是乘以3 而是1
-            //     return (full - this.goods.style.wrapmargin * 2 - this.goods.style.margin * 1) / 2 + 'px';
-            //   }
-            //
-            //   if (this.goods.config.style === 4) {
-            //     return full / 3 + 'px';
-            //   }
-            //   return 'auto';
-            //
-            // },
+
             className() {
                 //利用这样的方式，传入className box +style1/2/3/4
                 return 'style' + this.goods.config.style+' box'
@@ -215,7 +198,11 @@
                     param.Products_ID = list.join(',')
 
                     getFlashSaleList(param).then(res => {
-                        this.goodsList = res.data
+
+                        this.goodsList = res.data.map(item=>{
+                            item.countdown = {}
+                            return item
+                        })
 
 
                     })
