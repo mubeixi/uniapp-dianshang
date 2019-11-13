@@ -2,7 +2,7 @@
 	<view class="all">
 		<!-- <page-title title="会员充值"></page-title> -->
 		<view class="yue">
-			<image class="image" src="https://new401.bafangka.com/static/client/blance/storePay.jpg" ></image>
+			<image class="image" :src="'/static/client/blance/storePay.jpg'|domain" ></image>
 			<view class="yueq">
 				余额
 			</view>
@@ -12,11 +12,11 @@
 		</view>
 
 		<view class="inputs">
-			<image class="image" src="https://new401.bafangka.com/static/client/check/money.png" ></image>
+			<image class="image" :src="'/static/client/check/money.png'|domain" ></image>
 			<input class="input"  type="text" placeholder="请输入消费金额" v-model="money">
 		</view>
 		<view class="inputs">
-			<image class="image" src="https://new401.bafangka.com/static/client/check/password.png" ></image>
+			<image class="image" :src="'/static/client/check/password.png'|domain" ></image>
 			<input class="input" type="password" placeholder="请输入支付密码" v-model="passwd">
 		</view>
 		<view class="zhu">

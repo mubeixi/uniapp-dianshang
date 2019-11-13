@@ -3,7 +3,7 @@
 		<view class="user-info">
 			<view class="user-avator" @click="changeAvator">
 				<image  class="imgs" :src="Shop_Logo" mode=""></image>
-				<view class="xiangji" ></view>
+				<view class="xiangji" :style="{backgroundImage:'url('+fun.domainFn('/static/client/fenxiao/xj.png')+')'}" ></view>
 			</view>
 			<view class="change" @click="changeAvator">更换头像</view>
 		</view>
@@ -79,7 +79,7 @@
 							for(let item of res.tempFiles){
 								that.Shop_Logo = item.path;
 								that.imgs.push(item.path);
-									
+
 									// #ifdef MP-TOUTIAO
 									let fileCTX = tt.getFileSystemManager()
 									console.log(fileCTX);
@@ -91,9 +91,9 @@
 										   uploadImage({'image':imgs}).then(result=>{
 													that.tem_Shop_Logo=result.data.path;
 										   },err=>{
-											   
+
 										   }).catch(e=>{
-											   
+
 										   })
 										},
 										fail(ret) {
@@ -120,7 +120,7 @@
 												}
 										});
 									// #endif
-							
+
 							}
 
 						},
@@ -177,7 +177,9 @@
 				left: 0;
 				z-index: 10;
 				border-radius: 60rpx;
-				background: rgba(0,0,0,.4) url(https://new401.bafangka.com/static/client/fenxiao/xj.png) no-repeat center center;
+				background-color: rgba(0,0,0,.4);
+				background-repeat: no-repeat;
+				background-position: center center;
 				background-size: 42rpx 34rpx;
 			}
 		}

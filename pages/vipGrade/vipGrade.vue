@@ -1,13 +1,13 @@
 <template>
 	<view class="all">
 		<view class="top">
-			<image src="https://new401.bafangka.com/static/client/task/left.png" class="goBack" @click="goBack"></image>
+			<image :src="'/static/client/task/left.png'|domain" class="goBack" @click="goBack"></image>
 			<view class="titles">会员等级</view>
 			<swiper class="center" :indicator-dots="false" :autoplay="false"  :duration="1000" :current="inds" @change="change">
 				<swiper-item class="vipFir"  v-for="(item,index) of pro.levels" :key="index"  :style="pro.levels.length==1?'margin-left:43rpx;':''">
-				<!-- 		<image src="https://new401.bafangka.com/static/client/task/vip.png" class="allImg"></image> -->
+				<!-- 		<image :src="'/static/client/task/vip.png" class="allImg"></image> -->
 						<image :src="item.img_url" class="allImg"></image>
-						<image src="https://new401.bafangka.com/static/client/task/vips.png" class="leftImg"></image>
+						<image :src="'/static/client/task/vips.png'|domain" class="leftImg"></image>
 						<view class="vipGrade">
 							{{item.level_name}}
 						</view>
@@ -16,17 +16,17 @@
 						</view>
 						<view class="mmp">
 							<view class="da">
-					
+
 							</view>
 							<view v-if="item.curlevel.length<=0&&pro.levels.length<=0" class="tu" style="transform:rotate(180deg)">
-							
+
 							</view>
 							<view v-else class="tu" :style="{transform: 'rotate('+item.growth_value/item.curlevel.upper_growth*180+'deg)'}">
 							</view>
 
-	
+
 							<view class="xiao">
-					
+
 							</view>
 							<view class="texts">
 								<view class="posiQ">我的成长值</view>
@@ -72,7 +72,7 @@
 		<view style="height: 20rpx;background-color: #F8F8F8;width: 750rpx;"></view>
 		<view class="lasts">
 			<view class="titles">
-				<image class="image" src="https://new401.bafangka.com/static/client/fenxiao/wen.png" ></image>
+				<image class="image" :src="'/static/client/fenxiao/wen.png'|domain" ></image>
 				<view>
 					什么是成长值
 				</view>
@@ -84,7 +84,7 @@
 		<view style="height: 20rpx;background-color: #F8F8F8;width: 750rpx;"></view>
 		<view class="lasts">
 			<view class="titles">
-				<image class="image" src="https://new401.bafangka.com/static/client/fenxiao/wen.png" ></image>
+				<image class="image" :src="'/static/client/fenxiao/wen.png'|domain" ></image>
 				<view>
 					如何获得成长值
 				</view>

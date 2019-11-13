@@ -4,12 +4,12 @@
 		<view class="status_bar" style="background: #f81111;"><!-- 这里是状态栏 --></view>
 		<!-- #endif -->
 		<view class="top">
-			<image src="https://new401.bafangka.com/static/client/fenxiao/top.png"></image>
+			<image :src="'/static/client/fenxiao/top.png'|domain"></image>
 			<!-- #ifdef APP-PLUS -->
 			<view class="title">分销中心</view>
 			<!-- #endif -->
 			<div v-if="userInfo.User_ID&&userInfo.Is_Distribute==1">
-				<image v-if="userInfo.User_ID" class="msg" src="https://new401.bafangka.com/static/client/fenxiao/msg.png" @click="goMsg"></image>
+				<image v-if="userInfo.User_ID" class="msg" :src="'/static/client/fenxiao/msg.png'|domain" @click="goMsg"></image>
 				<view class="person" >
 					<image style="border-radius: 50%;overflow: hidden" :src="data.disInfo.Shop_Logo||data.disInfo.User_HeadImg"  @click="tofenxiaoshang"></image>
 				</view>
@@ -62,40 +62,40 @@
 		</view>
 		<view v-else style="height: 25px;"></view>
 		<view class="last">
-			<image src="https://new401.bafangka.com/static/client/fenxiao/background.png" class="back"></image>
+			<image :src="'/static/client/fenxiao/background.png'|domain" class="back"></image>
 			<view class="zhezhao">
 				<view class="td" @click="goErweima">
-					<image class="imgs" src="https://new401.bafangka.com/static/client/fenxiao/erweima.png" ></image>
+					<image class="imgs" :src="'/static/client/fenxiao/erweima.png'|domain" ></image>
 					<view class="views">
 						二维码
 					</view>
 				</view>
 				<view class="td"  @click="goMyTeam">
-					<image  class="imgs" src="https://new401.bafangka.com/static/client/fenxiao/wode.png" ></image>
+					<image  class="imgs" :src="'/static/client/fenxiao/wode.png'|domain" ></image>
 					<view class="views">
 						我的团队
 					</view>
 				</view>
 				<view class="td"  @click="goFinance" style="border-right: 0px;">
-					<image  class="imgs" src="https://new401.bafangka.com/static/client/fenxiao/caiwu.png" ></image>
+					<image  class="imgs" :src="'/static/client/fenxiao/caiwu.png'|domain" ></image>
 					<view class="views">
 						财务明细
 					</view>
 				</view>
 				<view class="td" @click="goPromotion">
-					<image  class="imgs" src="https://new401.bafangka.com/static/client/fenxiao/juewei.png" ></image>
+					<image  class="imgs" :src="'/static/client/fenxiao/juewei.png'|domain" ></image>
 					<view class="views">
 						爵位晋升
 					</view>
 				</view>
 				<view class="td"  @click="goLeaderboard"  >
-					<image  class="imgs" src="https://new401.bafangka.com/static/client/fenxiao/caifu.png" ></image>
+					<image  class="imgs" :src="'/static/client/fenxiao/caifu.png'|domain" ></image>
 					<view class="views">
 						财富排行榜
 					</view>
 				</view>
 				<view class="td" @click="goRegion" style="border-right: 0px;"  v-if="data.dis_config.Dis_Agent_Type==1">
-					<image  class="imgs" src="https://new401.bafangka.com/static/client/fenxiao/quyu.png" ></image>
+					<image  class="imgs" :src="'/static/client/fenxiao/quyu.png'|domain" ></image>
 					<view class="views">
 						区域代理
 					</view>
@@ -108,7 +108,7 @@
 				</view>
 				<!-- #ifndef MP ||APP-PLUS -->
 				<view class="td"  @click="goAssist" style="border-bottom: 0px;">
-					<image  class="imgs" src="https://new401.bafangka.com/static/client/fenxiao/tuiguang.png" ></image>
+					<image  class="imgs" :src="'/static/client/fenxiao/tuiguang.png'|domain" ></image>
 					<view class="views">
 						推广小助手
 					</view>
@@ -276,7 +276,9 @@
 </script>
 
 <style lang="scss" scoped>
-.all{background-color: #F2F2F2;}
+.all{
+	background-color: #f8f8f8;
+}
 .top{
 	width: 750rpx;
 	height: 400rpx;

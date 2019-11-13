@@ -28,7 +28,7 @@
 			<div class="imgs">
 				<view class="shangchuans" v-for="(item,index) of imgs" :key="index"  >
 					<image class="image" :src="item"  @click="yulan(index)"></image>
-					<image src="https://new401.bafangka.com/static/client/delimg.png" class="del image" @click="delImg(index)"></image>
+					<image :src="'/static/client/delimg.png'|domain" class="del image" @click="delImg(index)"></image>
 				</view>
 			    <view class="shangchuan" @click="addImg">
 					<view class="heng"></view>

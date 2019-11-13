@@ -91,7 +91,7 @@
     <div class="comment">
         <div class="c_title">
             <span>评价</span>
-            <div class="right" @click="gotoComments">查看全部 <image class="img" src="https://new401.bafangka.com/static/client/detail/right.png" alt="" /></div>
+            <div class="right" @click="gotoComments">查看全部 <image class="img" :src="'/static/client/detail/right.png'|domain" alt="" /></div>
         </div>
         <block v-for="(item,index) of commit" :key="item">
         	<div class="c_content" v-if="!item.ImgPath">
@@ -143,23 +143,23 @@
     		<div class="s_top">
 				<!-- #ifdef APP-PLUS -->
 				<div class="flex1" @click="shareFunc('wx')">
-					<image class='img' src="https://new401.bafangka.com/static/client/detail/share1.png" alt=""></image>
+					<image class='img' :src="'/static/client/detail/share1.png'|domain" alt=""></image>
 					<div>发送好友</div>
 				</div>
 				<div class="flex1" @click="shareFunc('wxtimeline')">
-					<image class='img' src="https://new401.bafangka.com/static/client/detail/sahre3.png" alt=""></image>
+					<image class='img' :src="'/static/client/detail/sahre3.png'|domain" alt=""></image>
 					<div>朋友圈</div>
 				</div>
 				<!--只有配置了这个参数的app，才有分享到小程序选项-->
 				<div class="flex1" @click="shareFunc('wxmini')" v-if="wxMiniOriginId">
-					<img class='img' src="https://new401.bafangka.com/static/client/detail/share4.png" alt="">
+					<img class='img' :src="'/static/client/detail/share4.png'|domain" alt="">
 					<div>微信小程序</div>
 				</div>
 				<!-- #endif -->
 
 				<!-- #ifndef MP-TOUTIAO -->
 				<div class="flex1" @click="shareFunc('pic')">
-					<image class='img' src="https://new401.bafangka.com/static/client/detail/share2.png" alt=""></image>
+					<image class='img' :src="'/static/client/detail/share2.png'|domain" alt=""></image>
 					<div>分享海报</div>
 				</div>
 				<!-- #endif -->
@@ -169,9 +169,9 @@
     	<scroll-view class="ticks" v-if="type=='ticks'" scroll-y=true  @scrolltolower="goNextPage">
     	    <div class="t_title">
     	        领券
-    	        <image  class="imgg" src="https://new401.bafangka.com/static/client/detail/x.png"  @click="close" ></image>
+    	        <image  class="imgg" :src="'/static/client/detail/x.png'|domain"  @click="close" ></image>
     	    </div>
-    	    <div class="t_content" v-for="(item,i) of couponList" :key="i">
+    	    <div class="t_content" v-for="(item,i) of couponList" :key="i" :style="{backgroundImage: 'url('+fun.domainFn('/static/client/detail/yhq.png')+')'}">
     	        <div class="t_left">
     	            <div class="t_left_t"><span>￥</span><span class="money">{{item.Coupon_Cash}}</span><span>{{item.Coupon_Subject}}</span></div>
     	            <div class="t_left_c">{{item.Coupon_Description}}</div>
@@ -1083,7 +1083,7 @@ export default {
         position: relative;
         width: 355px;
         height: 80px;
-        background: url('https://new401.bafangka.com/static/client/detail/yhq.png') no-repeat ;
+		background-repeat: no-repeat;
         background-size: cover;
         margin: 0 auto 15px;
         padding: 10px 0 14px 20px;

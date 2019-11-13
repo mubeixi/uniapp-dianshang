@@ -279,9 +279,14 @@
 
   .list {
 
+
     white-space: nowrap;
     overflow-x: scroll;
     overflow-y: hidden;
+
+    &::-webkit-scrollbar{
+      display: none;
+    }
 
     .item {
 

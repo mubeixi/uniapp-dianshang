@@ -25,14 +25,14 @@
             <div class="item-left">退款方式</div>
             <div class="item-right" @click="showMethod">
                 <span>仅退款</span>
-                <image class="img" src="https://new401.bafangka.com/static/client/right.png" alt="" />
+                <image class="img" :src="'/static/client/right.png" alt="" />
             </div>
         </div> -->
         <div class="item">
             <div class="item-left">退款原因</div>
             <div class="item-right" @click="showReason">
 				<span>{{reasonDes?reasonDes: '请选择'}}</span>
-                <image class="img" src="https://new401.bafangka.com/static/client/right.png" alt="" />
+                <image class="img" :src="'/static/client/right.png'|domain" alt="" />
             </div>
         </div>
         <!-- <div class="item spe">
@@ -47,7 +47,7 @@
         <div class="imgs">
 			<view class="shangchuans" v-for="(item,index) of imgs" :key="index"  >
 				<image class="image" :src="item"  @click="yulan(index)"></image>
-				<image class="image del" src="https://new401.bafangka.com/static/client/delimg.png" @click="delImg(index)"></image>
+				<image class="image del" :src="'/static/client/delimg.png'|domain" @click="delImg(index)"></image>
 			</view>
             <view class="shangchuan" @click="addImg">
 				<view class="heng"></view>

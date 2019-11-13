@@ -1,7 +1,7 @@
 <template>
     <view v-if="loading">
         <view class="address" v-if="orderInfo.is_virtual == 0 " @click="goAddressList">
-            <image class="loc_icon" src="https://new401.bafangka.com/static/client/location.png" alt="" ></image>
+            <image class="loc_icon" :src="'/static/client/location.png'|domain" alt="" ></image>
             <view class="add_msg" v-if="addressinfo.Address_Name">
                 <view class="name">收货人：{{addressinfo.Address_Name}} <span>{{addressinfo.Address_Mobile | formatphone}}</span></view>
                 <view class="location">收货地址：{{addressinfo.Address_Province_name}}{{addressinfo.Address_City_name}}{{addressinfo.Address_Area_name}}{{addressinfo.Address_Town_name}}</view>
@@ -9,7 +9,7 @@
 				<view class="add_msg" v-else>
 					<view>暂无收货地址，去添加</view>
 				</view>
-            <image class="right" src="https://new401.bafangka.com/static/client/right.png" alt="" ></image>
+            <image class="right" :src="'/static/client/right.png'|domain" alt="" ></image>
         </view>
 		<view class="biz_msg">
 			<image :src="orderInfo.ShopLogo" class="biz_logo" alt="" />
@@ -33,7 +33,7 @@
                     <span>运费选择</span>
                     <span style="text-align:right; color: #888;" >
 						<span>{{shipping_name?(shipping_name + ' ' + (orderInfo.Order_Shipping.Price > 0 ? orderInfo.Order_Shipping.Price : '免运费')):'请选择物流'}}</span>
-                        <image  class="right" src="https://new401.bafangka.com/static/client/right.png" alt=""></image>
+                        <image  class="right" :src="'/static/client/right.png'|domain" alt=""></image>
                     </span>
                 </view>
             </view>
@@ -81,8 +81,8 @@
 				<form report-submit @submit="form_submit">
 					<button formType="submit" class="submit">确定领取</button>
 				</form>
-			</view>	
-		</view>	
+			</view>
+		</view>
         <popup-layer ref="popupRef" :direction="'top'">
         	<view class="bMbx" v-if="type=='shipping'">
         		<view class="fMbx">运费选择</view>
@@ -194,7 +194,7 @@ export default {
 			get_user_info().then(res=>{
 				this.setUserInfo(res.data);
 			},err=>{
-				
+
 			}).catch(e=>{
 				console.log(e)
 			})

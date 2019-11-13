@@ -11,7 +11,7 @@
 				<view class="bankName" v-else>
 					{{data.Method_Name}}
 				</view>
-				<image src="https://new401.bafangka.com/static/client/fenxiao/right.png"  class="right"></image>
+				<image :src="'/static/client/fenxiao/right.png'|domain"  class="right"></image>
 			</view>
 			<view class="bank guanli" @click="guanWithdrawal" v-else>
 				+ 管理提现方式
@@ -36,7 +36,7 @@
 
 			</view>
 			<view class="tishi">
-				<image class="tishi-image" src="https://new401.bafangka.com/static/client/fenxiao/tishi.png" ></image>
+				<image class="tishi-image" :src="'/static/client/fenxiao/tishi.png'|domain" ></image>
 				<view class="tishi-view">
 					申请提现后，系统会自动扣除您提现的2.00%的手续费，10.00%转入您的会员余额，88%店主会将钱打入您的账号；若全部转入余额则不扣除手续费。
 				</view>
@@ -45,7 +45,7 @@
 				立即提现
 			</view>
 			<view class="lishi" @click="goRecord">
-				历史提现 <image class="lishi-image" src="https://new401.bafangka.com/static/client/fenxiao/right.png" ></image>
+				历史提现 <image class="lishi-image" :src="'/static/client/fenxiao/right.png'|domain" ></image>
 			</view>
 		</view>
 	</view>
