@@ -6,11 +6,9 @@ export const domain = (url) => {
   if (url.indexOf('http') == -1) return staticUrl+url;
   return url;
 }
-export const imgdomain = (url) => {
-  if(!url)return '';
-  if (url.indexOf('http') == -1) return 'http'+url;
-  return url;
-}
+
+
+
 export const formatNumber = n => {
   n = n.toString()
   return n[1] ? n : '0' + n
@@ -93,8 +91,5 @@ export default [
   {
     name:'domain',
     methods: domain
-  },{
-    name:'imgdomain',
-    methods: imgdomain
   }
 ];
