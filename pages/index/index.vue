@@ -74,7 +74,7 @@
 		},
 
 		async onPullDownRefresh(){
-			await this.$_init()
+			// await this.$_init()
 			uni.stopPullDownRefresh()
 		},
 		onLoad() {
