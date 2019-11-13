@@ -6,7 +6,7 @@
 	  <!-- #endif -->
     <div class="top">
        <!-- #ifndef APP-PLUS -->
-       <!-- <image src="https://new401.bafangka.com/static/clientleft.png" class="back" @click="goBack"></image>
+       <!-- <image :src="'/static/clientleft.png" class="back" @click="goBack"></image>
 		<input type="text" v-model="inputValue" class="search" @confirm="success"  @click="goSearch" disabled/>
 		<div class="clear" v-if="inputValue">
 			<icon type="clear" class="clears" size="37rpx" @click="close"></icon>
@@ -23,11 +23,11 @@
         <div :class="[active == 1 ? 'checked' : '','tab']" @click="getActive(1)">销量<div class="line"></div></div>
         <div class="pricebox" :class="[active == 2 ? 'checked' : '','tab']" @click="getActive(2)"><span class="padding4-c">价格</span>
 			<view class="xiangshang">
-				<image class="image" src="https://new401.bafangka.com/static/client/result/tops.png" v-if="isSheng==1"></image>
-				<image class="image" src="https://new401.bafangka.com/static/client/result/top.png" v-else></image>
+				<image class="image" :src="'/static/client/result/tops.png'|domain" v-if="isSheng==1"></image>
+				<image class="image" :src="'/static/client/result/top.png'|domain" v-else></image>
 
-				<image class="image" src="https://new401.bafangka.com/static/client/result/bottoms.png" v-if="isSheng==2" style="	bottom: 0rpx;"></image>
-				<image class="image" src="https://new401.bafangka.com/static/client/result/bottom.png" v-else style="bottom: 0rpx;"></image>
+				<image class="image" :src="'/static/client/result/bottoms.png'|domain" v-if="isSheng==2" style="	bottom: 0rpx;"></image>
+				<image class="image" :src="'/static/client/result/bottom.png'|domain" v-else style="bottom: 0rpx;"></image>
 			</view>
 			<div class="line">
 			</div>
@@ -36,8 +36,8 @@
 		<div :class="[active == 3 ? 'checked' : '','tab']" class="filterbox">
 			<div class="filter" :style="{color:showShai?'#F43131':''}" @click.stop="change">筛选</div>
 			<template v-show="!showShai">
-				<image src="https://new401.bafangka.com/static/client/result/jx1.png" @click="changeCate" v-if="cate==2" class="imgm sorttype"></image>
-				<image src="https://new401.bafangka.com/static/client/result/jx.png" @click="changeCate" v-else class="imgm sorttype"></image>
+				<image :src="'/static/client/result/jx1.png'|domain" @click="changeCate" v-if="cate==2" class="imgm sorttype"></image>
+				<image :src="'/static/client/result/jx.png'|domain" @click="changeCate" v-else class="imgm sorttype"></image>
 			</template>
 
 			<div class="line"></div>
@@ -83,7 +83,7 @@
 				</div>
 			</div>
 			<div class="defaults" v-if="pro.length<=0">
-				<image src="https://new401.bafangka.com/static/client/defaultImg.png" ></image>
+				<image :src="'/static/client/defaultImg.png'|domain" ></image>
 			</div>
 		</div>
 	</div>
@@ -100,7 +100,7 @@
 				</div>
 			</div>
 			<div class="defaults" v-if="pro.length<=0">
-				<image src="https://new401.bafangka.com/static/client/defaultImg.png" ></image>
+				<image :src="'/static/client/defaultImg.png'|domain" ></image>
 			</div>
 		</div>
 	</div>

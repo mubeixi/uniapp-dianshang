@@ -70,7 +70,7 @@
 			</template>
         </div>
 		<div class="defaults" v-if="data.length<=0">
-			<image src="https://new401.bafangka.com/static/client/defaultImg.png" ></image>
+			<image :src="'/static/client/defaultImg.png'|domain" ></image>
 		</div>
 	</div>
 
@@ -97,7 +97,7 @@ export default {
         }
     },
 	onShow(){
-		
+
 	},
 	onLoad(option){
 		this.index=option.index;

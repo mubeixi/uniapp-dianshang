@@ -30,7 +30,7 @@
 			<view class="content" v-for="(item,index) of pro " :key="index" v-if="index==0">
 				<view class="contentLeft" >
 					<view class="ming">
-						<image src="https://new401.bafangka.com/static/client/fenxiao/first.png" ></image>
+						<image :src="'/static/client/fenxiao/first.png'|domain" ></image>
 					</view>
 					<view class="info">
 						<image :src="item.Shop_Logo" ></image>
@@ -49,7 +49,7 @@
 			<view class="content" v-else-if="index==1">
 				<view class="contentLeft">
 					<view class="ming">
-						<image src="https://new401.bafangka.com/static/client/fenxiao/second.png" ></image>
+						<image :src="'/static/client/fenxiao/second.png'|domain" ></image>
 					</view>
 					<view class="info">
 							<image :src="item.Shop_Logo" ></image>
@@ -68,7 +68,7 @@
 			<view class="content" v-else-if="index==2">
 				<view class="contentLeft">
 					<view class="ming">
-						<image src="https://new401.bafangka.com/static/client/fenxiao/three.png" ></image>
+						<image :src="'/static/client/fenxiao/three.png'|domain" ></image>
 					</view>
 					<view class="info">
 							<image :src="item.Shop_Logo" ></image>

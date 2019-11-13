@@ -36,7 +36,7 @@
 			</view>
 			<view class="chakan" @click="goFinance">
 				查看明细
-				<image src="https://new401.bafangka.com/static/client/fenxiao/chakan.png" ></image>
+				<image :src="'/static/client/fenxiao/chakan.png'|domain" ></image>
 			</view>
 		</view>
 		<circleTitle title="我的数据"></circleTitle>

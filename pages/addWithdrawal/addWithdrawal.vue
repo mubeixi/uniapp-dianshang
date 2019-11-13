@@ -7,11 +7,11 @@
 				提现方式
 			</view>
 			<view class="right">
-				<!-- 中国银行 <image src="https://new401.bafangka.com/static/client/right.png"></image> -->
+				<!-- 中国银行 <image :src="'/static/client/right.png'|domain"></image> -->
 				<picker @change="bindPickerChange" :value="index" :range="array" range-key="Method_Name" >
 				    <view class="uni-input">{{array[index].Method_Name}}</view>
 				</picker>
-				<image src="https://new401.bafangka.com/static/client/right.png"></image>
+				<image :src="'/static/client/right.png'|domain"></image>
 			</view>
 		</view>
 

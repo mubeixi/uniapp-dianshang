@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="banner">
-			<image class="src" src="https://new401.bafangka.com/static/clientpop_default.jpg" ></image>
+			<image class="src" :src="'/static/clientpop_default.jpg'|domain" ></image>
 			<form report-submit @submit="submit" >
 				<view class="content">
 					<view class="title">推广小助手</view>
@@ -18,7 +18,7 @@
 					 <picker mode="selector" :range="arr" :index="index" @change="pickHandle" class="picker">
 						<view>{{arr[index]}}</view>
 						<view class="down">
-							<image src="https://new401.bafangka.com/static/clientgo.png" mode=""></image>
+							<image :src="'/static/clientgo.png'|domain" mode=""></image>
 						</view>
 					 </picker>
 					</view>
