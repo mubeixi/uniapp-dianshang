@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<!-- #ifdef APP-PLUS -->
-		<view class="status_bar" style="background-color: #FFFFFF;"></view>
+<!--		<view class="status_bar" style="background-color: #FFFFFF;"></view>-->
 		<!-- #endif -->
 		<!-- <page-title  title="失效优惠券" bgcolor="#f8f8f8" class="titless"></page-title> -->
 <!-- 		<view class="nav">
@@ -107,6 +107,9 @@
 </script>
 
 <style lang="scss" scoped>
+	page{
+		background-color: red !important;
+	}
 	.defaults{
 			margin: 0 auto;
 			width: 640rpx;

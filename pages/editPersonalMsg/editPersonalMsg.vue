@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view class="bgColor-white">
 		
 		<!-- 	<page-title :title="title" rightHidden="true" bgcolor="#F8F8F8"></page-title> -->
 
@@ -229,10 +229,14 @@
 </script>
 
 <style scoped lang="scss">
+	.bgColor-white{
+		height: 100vh;
+		padding-top: 20px;
+	}
 	.v_input {
 		border: 1px solid #efefef;
 		width: 90%;
-		margin: 40rpx auto;
+		margin: 0 auto;
 		height: 80rpx;
 		line-height: 80rpx;
 		font-size: 30rpx;
