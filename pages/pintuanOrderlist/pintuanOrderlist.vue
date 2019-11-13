@@ -63,7 +63,7 @@
 				<span @click="goPay(item)" style="margin-left: 14rpx;">申请退款退货</span>
 			  <span class="active" @click="confirmOrder(item)">确认收货</span>
 			</div>
-			<div class="btn-group" v-else-if="item.Order_Status==4 && item.Is_Commit == 0">
+			<div class="btn-group" v-else-if="item.Order_Status==4 && item.Is_Commit == 0&&item.teamstatus!=4">
 			  <span class="active" @click="goPay(item)">立即评价</span>
 			</div>
         </div>
