@@ -173,7 +173,7 @@
 <style lang="less" scope="scope">
 	.home-wrap{
 		width: 750rpx;
-		/*overflow-x: hidden;*/
+		overflow-x: hidden;
 		background: #f8f8f8;
 		position: relative;
 		//min-height: 100vh;

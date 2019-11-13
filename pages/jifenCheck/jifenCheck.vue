@@ -2,7 +2,7 @@
     <view v-if="loading">
       <!--  <pagetitle title="提交订单"></pagetitle> -->
         <view class="address" v-if="giftInfo.Gift_Shipping== 1" @click="goAddressList">
-            <image class="loc_icon" src="https://new401.bafangka.com/static/client/location.png" alt="" ></image>
+            <image class="loc_icon" :src="'/static/client/location.png'|domain" alt="" ></image>
             <view class="add_msg" v-if="addressinfo.Address_Name">
                 <view class="name">收货人：{{addressinfo.Address_Name}} <span>{{addressinfo.Address_Mobile | formatphone}}</span></view>
                 <view class="location">收货地址：{{addressinfo.Address_Province_name}}{{addressinfo.Address_City_name}}{{addressinfo.Address_Area_name}}{{addressinfo.Address_Town_name}}</view>
@@ -10,7 +10,7 @@
 						<view class="add_msg" v-else>
 							<view>暂无收货地址，去添加</view>
 						</view>
-            <image class="right" src="https://new401.bafangka.com/static/client/right.png" alt="" ></image>
+            <image class="right" :src="'/static/client/right.png'|domain" alt="" ></image>
         </view>
         <view class="order_msg">
 						<img class="pro-img" :src="giftInfo.Gift_ImgPath" alt="">
@@ -25,7 +25,7 @@
                     <span>运费选择</span>
                     <span style="text-align:right; color: #888;" >
 						<span>{{shipping_name?(shipping_name + ' ' + (shipping_price > 0 ? shipping_price : '免运费')):'请选择物流'}}</span>
-                        <image  class="right" src="https://new401.bafangka.com/static/client/right.png" alt=""></image>
+                        <image  class="right" :src="'/static/client/right.png'|domain" alt=""></image>
                     </span>
                 </view>
             </view>

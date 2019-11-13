@@ -5,8 +5,8 @@
 		<div class="hide guide_box"  v-show="isShowGuide" @click="isShowGuide=false">
 <!--			<div class="mask"></div>-->
 			<div class="guide" ><image class="guideimg" mode="aspectFit" src="/static/pay/alipay.jpg"  /></div>
-<!--			<div><image  src="https://new401.bafangka.com/static/client/share/guide_point.png"  class="guide_point" /></div>-->
-<!--			<div><image  src="https://new401.bafangka.com/static/client/share/guide_btn.png"  class="guide_btn"  /></div>-->
+<!--			<div><image  :src="'/static/client/share/guide_point.png'|domain"  class="guide_point" /></div>-->
+<!--			<div><image  :src="'/static/client/share/guide_btn.png'|domain"  class="guide_btn"  /></div>-->
 		</div>
 		<!--分享引导框结束-->
 	</view>

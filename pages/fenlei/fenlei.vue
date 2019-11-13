@@ -2,7 +2,7 @@
 	 <view>
 		<view class="list">
 			<view class="imgViews">
-				<image class="imgs" src="https://new401.bafangka.com/uploadfiles/wkbq6nc2kc/image/20191031170410175.jpg"></image>
+				<image class="imgs" :src="'/uploadfiles/wkbq6nc2kc/image/20191031170410175.jpg'|domain"></image>
 				<view class="times">
 					<view class="countdown">
 						距离开始还有 : {{countdown.d}}天<text class="time">{{countdown.h}}</text>时<text class="time">{{countdown.m}}</text>分<text class="time">{{countdown.s}}</text>秒
@@ -174,7 +174,7 @@ export default {
 				}
 		}
 	}
-	
+
 }
 
 </style>
