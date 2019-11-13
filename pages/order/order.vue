@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="haihong">
 		<!-- #ifdef APP-PLUS -->
 		<!-- <view class="status_bar" style="background:white;position: fixed;top: 0;z-index: 22"></view>-->
 		<!-- #endif -->
@@ -260,6 +260,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
+	.haihong{
+		background-color: #ffffff !important;
+	}
 	.titless{
 		position: fixed;
 		top: 0rpx;

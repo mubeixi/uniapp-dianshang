@@ -138,7 +138,9 @@ page{
     background: white;
 }
 /* #endif */
-
+.bgColor-white{
+    background-color: #FFFFFF !important;
+}
 /* #ifdef H5 */
 /*'Hiragino Sans GB',*/
 html,body{

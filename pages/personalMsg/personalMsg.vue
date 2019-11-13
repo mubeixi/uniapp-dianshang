@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view class="bgColor-white">
 
 
 		<!-- <page-title title="个人信息" rightHidden="true" bgcolor="#F8F8F8"></page-title> -->
@@ -228,6 +228,9 @@
 </script>
 
 <style scoped lang="scss">
+	.bgColor-white{
+		height: 100vh;
+	}
 	.msg {
 		padding: 0 22rpx;
 		.item {
