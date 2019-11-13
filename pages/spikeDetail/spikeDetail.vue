@@ -357,11 +357,6 @@ export default {
 		//this.getDetail(this.flashsale_id);
 		// this.getCommit(this.Products_ID);
 		// this.checkProdCollected();
-<<<<<<< HEAD
-=======
-
->>>>>>> d9cf6b3571fc93858a5cbb4df7e4996f4e45e407
-
 	},
 	filters: {
 		endtime(timeStamp){
