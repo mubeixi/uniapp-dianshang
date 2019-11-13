@@ -68,7 +68,7 @@
                 </view>
             </view>
 		</view>
-		<div class="other">
+		<div class="other" v-if="orderInfo.Order_Type=='pintuan'||orderInfo.Order_Type=='shop'">
 			<div class="bd">
 				<div class="o_title">
 					<span>优惠券选择</span>

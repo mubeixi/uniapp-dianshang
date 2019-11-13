@@ -94,6 +94,20 @@
 				</view>
 				<image src="https://new401.bafangka.com/static/client/person/right.png" class="right"></image>
 			</view>
+			<view class="group cell" @click="goOrder('spike')">
+				<image src="/static/limitOrder.png" class="left"></image>
+				<view class="pintuan">
+					限时抢购订单
+				</view>
+				<image src="https://new401.bafangka.com/static/client/person/right.png" class="right"></image>
+			</view>
+			<view class="group cell" @click="goOrder('flashsale')">
+				<image src="/static/spikeOrder.png" class="left"></image>
+				<view class="pintuan">
+					秒杀订单
+				</view>
+				<image src="https://new401.bafangka.com/static/client/person/right.png" class="right"></image>
+			</view>
 			<!-- <view class="bargain">
 				<image src="https://new401.bafangka.com/static/client/person/kan.png" class="left"></image>
 				<view class="pintuan">

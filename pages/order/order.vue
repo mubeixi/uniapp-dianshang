@@ -100,7 +100,13 @@ export default {
 		
 	},
 	onLoad(option){
-		this.index=option.index;
+		if(option.index<=4){
+			this.index=option.index;
+		}else{
+			this.index=0;
+			this.Order_Type=option.index;
+		}
+
 		this.data=[];
 		this.page=1;
 		this._getOrder();
