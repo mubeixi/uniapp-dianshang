@@ -267,7 +267,7 @@ export default {
 			// #ifdef APP-PLUS
 			wxMiniOriginId:'',
 			// #endif
-			isLoad:fase,
+			isLoad:false,
 			JSSDK_INIT:false,//自己有分享的业务
 			type: '', // 优惠券内容， 分享内容
             shareShow: false,
@@ -343,7 +343,7 @@ export default {
 		 this._init_func();
 	},
 	onShow() {
-		// this.getDetail(this.spike_good_id);
+		//this.getDetail(this.spike_good_id);
 	},
 	filters: {
 		endtime(timeStamp){
@@ -412,12 +412,16 @@ export default {
     methods: {
 		...mapActions(['getUserInfo']),
 		async _init_func(){
-
-			await this.getDetail(this.spike_good_id);
-			await this.getCommit(this.Products_ID);
-
-			await this.checkProdCollected();
-			await addProductViews({prod_id:this.Products_ID}).then().catch()
+			await this.getDetail(this.spike_good_id)
+					.then(id=>{
+						this.getCommit(id);
+						this.checkProdCollected(id);
+						addProductViews({prod_id:id}).then().catch();
+					})
+					// await this.getCommit(this.Products_ID);
+					//
+					// await this.checkProdCollected();
+					// await addProductViews({prod_id:this.Products_ID}).then().catch()
 
 			this.isLoad = true;
 
@@ -642,11 +646,11 @@ export default {
 			}
 		},
 		// 检查产品是否已收藏
-		checkProdCollected() {
+		checkProdCollected(item) {
 			if(!this.$fun.checkIsLogin()){
 				return
 			}
-			checkProdCollected({prod_id: this.Products_ID}).then(res => {
+			checkProdCollected({prod_id: item}).then(res => {
 				if(res.errorCode == 0) {
 					this.isCollected = res.data.is_favourite == 1
 				}
@@ -848,74 +852,80 @@ export default {
 			this.countdown = rt
 		},
 		getDetail(item){
-        	let data={
-				spike_good_id:item
-        	}
-        	let _self = this;
-			let product = null;
-
-			spikeProdDetail(data).then(res=>{
-        		console.log(res)
-				if(res.errorCode != 0){
-					return;
+        	return  new Promise((resolve, reject)=>{
+				let data={
+					spike_good_id:item
 				}
-				this.product = res.data;
-				this.postData.productDetail_price=res.data.price;
-				this.Products_ID=res.data.Products_ID;
-				this.postData.count = res.data.Products_Count;
-				if(res.data.skujosn) {
-					this.product.skujosn = typeof res.data.skujosn ==='string' ?JSON.parse(res.data.skujosn):res.data.skujosn;
-					this.product.skuvaljosn = typeof res.data.skuvaljosn === 'string' ?JSON.parse(res.data.skuvaljosn):res.data.skuvaljosn;
-				}
+				let _self = this;
+				let product = null;
+
+				spikeProdDetail(data).then(res=>{
+					console.log(res)
+					if(res.errorCode != 0){
+						return;
+					}
+					this.product = res.data;
+					this.postData.productDetail_price=res.data.price;
+					this.Products_ID=res.data.Products_ID;
+
+					this.postData.count = res.data.Products_Count;
+					if(res.data.skujosn) {
+						this.product.skujosn = typeof res.data.skujosn ==='string' ?JSON.parse(res.data.skujosn):res.data.skujosn;
+						this.product.skuvaljosn = typeof res.data.skuvaljosn === 'string' ?JSON.parse(res.data.skuvaljosn):res.data.skuvaljosn;
+					}
 
 
-				//this.stampCount()
-				//开发时候一直倒计时太乱了
-				window.groupStam = setInterval(this.stampCount,1000)
-
-				product = res.data
-
-				// #ifdef H5
-
-				let path = 'pages/groupDetail/groupDetail?Products_ID='+this.Products_ID;
-				let front_url = this.initData.front_url;
+					resolve(res.data.Products_ID);
 
 
-				this.WX_JSSDK_INIT(this).then((wxEnv)=>{
+					//this.stampCount()
+					//开发时候一直倒计时太乱了
+					window.groupStam = setInterval(this.stampCount,1000)
 
-					this.$wx.onMenuShareTimeline({
-						title: '#网中网#'+product.Products_Name, // 分享标题
-						link: front_url+buildSharePath(path), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-						imgUrl: product.ImgPath, // 分享图标
-						success: function() {
-							// 用户点击了分享后执行的回调函数
-						}
-					});
+					product = res.data
 
-					//两种方式都可以
-					wxEnv.onMenuShareAppMessage({
-						title: '#网中网#'+product.Products_Name, // 分享标题
-						link: front_url+buildSharePath(path), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-						imgUrl: product.ImgPath, // 分享图标
-						desc: product.Products_BriefDescription||'好物推荐',
-						type: 'link', // 分享类型,music、video或link，不填默认为link
-						// dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
-						success: function() {
-							// 用户点击了分享后执行的回调函数
-						}
-					});
+					// #ifdef H5
 
-				}).catch(()=>{
-					console.log('不是微信环境')
+					let path = 'pages/limitDetail/limitDetail?spikeGoodId='+this.spike_good_id;
+					let front_url = this.initData.front_url;
+
+
+					this.WX_JSSDK_INIT(this).then((wxEnv)=>{
+
+						this.$wx.onMenuShareTimeline({
+							title: '#网中网#'+product.Products_Name, // 分享标题
+							link: front_url+buildSharePath(path), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+							imgUrl: product.ImgPath, // 分享图标
+							success: function() {
+								// 用户点击了分享后执行的回调函数
+							}
+						});
+
+						//两种方式都可以
+						wxEnv.onMenuShareAppMessage({
+							title: '#网中网#'+product.Products_Name, // 分享标题
+							link: front_url+buildSharePath(path), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+							imgUrl: product.ImgPath, // 分享图标
+							desc: product.Products_BriefDescription||'好物推荐',
+							type: 'link', // 分享类型,music、video或link，不填默认为link
+							// dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+							success: function() {
+								// 用户点击了分享后执行的回调函数
+							}
+						});
+
+					}).catch(()=>{
+						console.log('不是微信环境')
+					})
+
+					// #endif
+
+
+
+				}).catch(e=>{
+					console.log(e)
 				})
-
-				// #endif
-
-
-
-        	}).catch(e=>{
-        		console.log(e)
-        	})
+			})
         },
         addCart(){
         	this.$refs.cartPopu.show();
