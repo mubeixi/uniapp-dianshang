@@ -25,8 +25,8 @@
 		</view>
 
 		<view class="top">
-			<image  class="bgImg" src="http://new401.bafangka.com/static/client/blance/bg.jpg" ></image>
-			<image class="momo" src="http://new401.bafangka.com/static/client/check/momo.png"></image>
+			<image  class="bgImg" src="https://new401.bafangka.com/static/client/blance/bg.jpg" ></image>
+			<image class="momo" src="https://new401.bafangka.com/static/client/check/momo.png"></image>
 
 			<view class="prices">
 				{{info.User_Integral}}

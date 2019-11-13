@@ -38,7 +38,7 @@
   </view>
 </template>
 <script>
-  import {domain} from "../../common/filter";
+  import {domainFn} from "../../common/filter";
 import {getProductCountInfo} from "../../common/fetch";
 
   export default {
@@ -82,7 +82,7 @@ import {getProductCountInfo} from "../../common/fetch";
 
     methods: {
       domainFunc(url) {
-        return domain(url)
+        return domainFn(url)
       },
 
     },

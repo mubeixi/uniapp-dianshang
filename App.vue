@@ -200,6 +200,9 @@ ul,li{
 .flex{display : flex}
 .flex1{flex : 1}
 
+.padding4-c{padding :0  4px}
+
+
 .padding10{padding : 10px}
 .padding10-c{padding : 0 10px}
 .padding10-r{padding : 10px 0}

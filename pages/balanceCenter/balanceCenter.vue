@@ -32,7 +32,7 @@
 		<view class="top">
 
 			<image  class="bgImg" src="https://new401.bafangka.com/static/client/blance/bg.jpg" ></image>
-			<!-- <image class="back" @click="goBack" src="http://new401.bafangka.com/static/client/check/left.png"></image>
+			<!-- <image class="back" @click="goBack" src="https://new401.bafangka.com/static/client/check/left.png"></image>
 			<view class="titleq">
 				余额中心
 			</view> -->
