@@ -2,7 +2,7 @@
   <div class="goods wrap" id="goods" :style="{paddingLeft:goods.style.wrapmargin+'px',paddingRight:goods.style.wrapmargin+'px'}">
     <div :class="className">
       <ul class="list" >
-        <li  @click="goProductDetail(item.Products_ID,item.is_pintuan)" v-for="(item,idx) in goodsList" :key="idx" class="item" :class="[idx%2==0?'even':'odd',goods.config.radius=='round'?'round':'',goods.config.showmode]" :style="[itemMarginObj(idx)]">
+        <li  @click="goDetail(item)" v-for="(item,idx) in goodsList" :key="idx" class="item" :class="[idx%2==0?'even':'odd',goods.config.radius=='round'?'round':'',goods.config.showmode]" :style="[itemMarginObj(idx)]">
           <div class="cover" :style="{width:itemw,height:itemH,backgroundSize:goods.config.fill?goods.config.fill:'cover',backgroundImage:'url('+domainFunc(item.ImgPath)+')'}">
             <div v-show="goods.config.attr && goods.config.attr.tag.show" :class="goods.config.attr.tag.style" v-if="['new','hot'].indexOf(goods.config.attr.tag.style)!=-1" class="tag">
               {{goods.config.attr.tag.style=='hot'?'hot':'new'}}
@@ -149,24 +149,6 @@
         }
         return 'auto';
       },
-      // itemw() {
-      //   let full = this.fullWidth;
-      //
-      //   if(this.goods.config.showmode == 'border-bgwhite'){
-      //     full -= 4;//4个边框
-      //   }
-      //
-      //   if (this.goods.config.style === 2) {
-      //     //内边不是乘以3 而是1
-      //     return (full - this.goods.style.wrapmargin * 2 - this.goods.style.margin * 1) / 2 + 'px';
-      //   }
-      //
-      //   if (this.goods.config.style === 4) {
-      //     return full / 3 + 'px';
-      //   }
-      //   return 'auto';
-      //
-      // },
       className() {
         //利用这样的方式，传入className box +style1/2/3/4
         return 'style' + this.goods.config.style+' box'

@@ -8,7 +8,7 @@
     <div class="tabs-panel" >
       <div class="box" :class="[className]" :style="{paddingLeft:tab.style.wrapmargin+'px',paddingRight:tab.style.wrapmargin+'px'}">
         <ul class="list"  >
-          <li v-for="(item,idx) in goodsList" @click="goProductDetail(item.Products_ID,item.is_pintuan)" class="item"
+          <li v-for="(item,idx) in goodsList" @click="goDetail(item)" class="item"
               :class="[idx%2==0?'even':'odd',tab.config.radius=='round'?'round':'',tab.config.showmode]"
               :style="[itemMarginObj(idx)]"
           >
