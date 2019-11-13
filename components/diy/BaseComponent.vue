@@ -94,11 +94,7 @@ import {getProductCountInfo} from "../../common/fetch";
         console.log(res)
 
         this.info = res.data
-        // ShopLogo: "https://new401.bafangka.com/static/api/images/user/face.jpg"
-        // ShopName: "admin的微商城"
-        // description: ""
-        // prod_isnew_total: 7
-        // prod_total: 9
+
       })
     }
   }

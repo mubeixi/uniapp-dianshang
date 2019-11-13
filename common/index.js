@@ -162,7 +162,10 @@ const isHasTabbarRouter = (link)=>{
     return false;
 }
 
+import {domainFn} from "./filter";
+
 export const fun = {
+    domainFn,
     confirm,
     checkIsLogin,
     goProductDetail,

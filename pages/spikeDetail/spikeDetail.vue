@@ -1055,7 +1055,7 @@ export default {
         position: relative;
         width: 355px;
         height: 80px;
-        background: url('https://new401.bafangka.com/static/client/detail/yhq.png') no-repeat ;
+        background-repeat: no-repeat ;
         background-size: cover;
         margin: 0 auto 15px;
         padding: 10px 0 14px 20px;

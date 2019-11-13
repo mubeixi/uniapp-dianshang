@@ -169,7 +169,8 @@
     	        领券
     	        <image  class="imgg" :src="'/static/client/detail/x.png'|domain"  @click="close" ></image>
     	    </div>
-    	    <div class="t_content" v-for="(item,i) of couponList" :key="i">
+
+			<div class="t_content" v-for="(item,i) of couponList" :key="i" :style="{backgroundImage:'url('+fun.domainFn('/static/client/detail/yhq.png')+')'}">
     	        <div class="t_left">
     	            <div class="t_left_t"><span>￥</span><span class="money">{{item.Coupon_Cash}}</span><span>{{item.Coupon_Title}}</span></div>
     	            <div class="t_left_c">{{item.Coupon_Description}}</div>
@@ -1013,7 +1014,7 @@ export default {
         position: relative;
         width: 355px;
         height: 80px;
-        background: url('https://new401.bafangka.com/static/client/detail/yhq.png') no-repeat ;
+        background-repeat: no-repeat ;
         background-size: cover;
         margin: 0 auto 15px;
         padding: 10px 0 14px 20px;

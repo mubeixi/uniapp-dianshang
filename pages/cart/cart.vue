@@ -73,7 +73,7 @@
 			<!-- 购物车结算 -->
 			<div class="checkout" v-if="!manage">
 			  <div class="mbxa"  @click="checkAll">
-				<image class="img" :src="checkAllFlag ? 'https://new401.bafangka.com/static/client/checked.png' : 'https://new401.bafangka.com/static/client/uncheck.png'"  style="margin-right: 17rpx;" alt="" />
+				<image class="img" :src="(checkAllFlag ? '/static/client/checked.png' : '/static/client/uncheck.png')|domain"  style="margin-right: 17rpx;" alt="" />
 					全选
 			  </div>
 			  <div class="total" v-if="handleShow">合计：<span>￥<span>{{totalPrice}}</span></span></div>

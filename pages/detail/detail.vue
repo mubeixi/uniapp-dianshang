@@ -1193,7 +1193,6 @@ export default {
         position: relative;
         width: 720rpx;
         height: 160rpx;
-        // background: url('https://new401.bafangka.com/static/client/detail/yhq.png') no-repeat ;
 		background-color: #FDF1E5;
         background-size: cover;
         margin: 0 auto 30rpx;
