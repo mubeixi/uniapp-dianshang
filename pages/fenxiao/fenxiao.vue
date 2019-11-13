@@ -76,7 +76,7 @@
 						我的团队
 					</view>
 				</view>
-				<view class="td"  @click="goFinance" style="border-right: 0rpx;">
+				<view class="td"  @click="goFinance" style="border-right: 0px;">
 					<image  class="imgs" src="https://new401.bafangka.com/static/client/fenxiao/caiwu.png" ></image>
 					<view class="views">
 						财务明细
@@ -88,30 +88,32 @@
 						爵位晋升
 					</view>
 				</view>
-				<view class="td"  @click="goLeaderboard">
+				<view class="td"  @click="goLeaderboard"  >
 					<image  class="imgs" src="https://new401.bafangka.com/static/client/fenxiao/caifu.png" ></image>
 					<view class="views">
 						财富排行榜
 					</view>
 				</view>
-				<view class="td" style="border-right: 0rpx;" @click="goAssist" >
-					<image  class="imgs" src="https://new401.bafangka.com/static/client/fenxiao/tuiguang.png" ></image>
-					<view class="views">
-						推广小助手
-					</view>
-				</view>
-				<view class="td" @click="goRegion" style="border-bottom: 0rpx;" v-if="data.dis_config.Dis_Agent_Type==1">
+				<view class="td" @click="goRegion" style="border-right: 0px;"  v-if="data.dis_config.Dis_Agent_Type==1">
 					<image  class="imgs" src="https://new401.bafangka.com/static/client/fenxiao/quyu.png" ></image>
 					<view class="views">
 						区域代理
 					</view>
 				</view>
-				<view class="td" @click="goGudong"  style="border-bottom: 0rpx;"  v-if="data.dis_config.Sha_Agent_Type==1">
+				<view class="td" @click="goGudong"  style="border-bottom: 0px;"  v-if="data.dis_config.Sha_Agent_Type==1">
 					<image  class="imgs" src="/static/gudong.jpg" ></image>
 					<view class="views">
 						股东
 					</view>
 				</view>
+				<!-- #ifndef MP ||APP-PLUS -->
+				<view class="td"  @click="goAssist" style="border-bottom: 0px;">
+					<image  class="imgs" src="https://new401.bafangka.com/static/client/fenxiao/tuiguang.png" ></image>
+					<view class="views">
+						推广小助手
+					</view>
+				</view>
+				<!-- #endif -->
 			</view>
 		</view>
 		<view style="height: 50rpx;"></view>
@@ -149,14 +151,14 @@
 				get_user_info().then(res=>{
 					this.setUserInfo(res.data);
 				},err=>{
-					
+
 				}).catch(e=>{
 					console.log(e)
 				})
 			}
 			//获取分销首页
 			this.getDisInit();
-			
+
 
 			//this.userInfo = await this.getUserInfo();
 		},

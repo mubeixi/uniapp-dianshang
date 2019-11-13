@@ -10,7 +10,7 @@
             </div>
             <div v-show="goods.config.attr.tag.show" v-else class="tag img"><img :src="goods.config.attr.tag.img|domain"/></div>
 
-            <div v-if="goods.config.style!=3" class="stamp">距{{item.countdown.is_start?'结束':'开始'}}<span class="countdown_tag2">{{item.countdown.d}}</span>天<span class="countdown_tag">{{item.countdown.h}}</span>时<span class="countdown_tag">{{item.countdown.m}}</span>分<span class="countdown_tag">{{item.countdown.s}}</span>秒<span class="count" v-if="goods.config.style==1">拼团库存{{item.Products_Count}}</span></div>
+            <div v-if="goods.config.style!=3" class="stamp">距{{item.countdown.is_start?'结束':'开始'}}<span class="countdown_tag2">{{item.countdown.d|zero}}</span>天<span class="countdown_tag">{{item.countdown.h|zero}}</span>时<span class="countdown_tag">{{item.countdown.m|zero}}</span>分<span class="countdown_tag">{{item.countdown.s|zero}}</span>秒<span class="count" v-if="goods.config.style==1">拼团库存{{item.Products_Count}}</span></div>
 
             <span class="count" v-if="goods.config.style==3">库存{{item.Products_Count}}</span>
 
@@ -24,7 +24,7 @@
               <div v-if="goods.config.style!=1" v-show="goods.config.attr.price.show" class="price"><span class="graytext2 font12">拼团价 </span><span class="sign">￥</span><span style="font-weight: 600">{{item.Products_PriceX}}</span><span class="graytext2 market-price font12"> ￥{{item.Products_PriceX}} </span>
               </div>
             </div>
-            <div v-if="goods.config.style==3" class="stamp">距{{item.countdown.is_start?'结束':'开始'}}<span class="countdown_tag2">{{item.countdown.d}}</span>天<span class="countdown_tag">{{item.countdown.h}}</span>时<span class="countdown_tag">{{item.countdown.m}}</span>分<span class="countdown_tag">{{item.countdown.s}}</span>秒</div>
+            <div v-if="goods.config.style==3" class="stamp">距{{item.countdown.is_start?'结束':'开始'}}<span class="countdown_tag2">{{item.countdown.d|zero}}</span>天<span class="countdown_tag">{{item.countdown.h|zero}}</span>时<span class="countdown_tag">{{item.countdown.m|zero}}</span>分<span class="countdown_tag">{{item.countdown.s|zero}}</span>秒</div>
             <div class="bottom-box">
               <div v-if="goods.config.style==1" v-show="goods.config.attr.price.show" class="price"><span class="graytext2 font12">秒杀价 </span><span class="sign">￥</span><span style="font-weight: 600">{{item.Products_PriceX}}</span><span class="graytext2 market-price font12"> ￥{{item.Products_PriceX}} </span></div>
               <span class="count" v-if="goods.config.style==2">库存{{item.Products_Count}}</span>
@@ -41,9 +41,9 @@
 </template>
 <script>
   import {getProductList} from "../../common/fetch";
-  import {domain} from "../../common/filter";
+  import {domain,lazyImgUrl} from "../../common/filter";
   import {goProductDetail} from "../../common";
-  import {getCountdownFunc} from "../../common/tool";
+  import {getCountdownFunc,createEmptyArray} from "../../common/tool";
 
 
 
@@ -155,24 +155,6 @@
         }
         return 'auto';
       },
-      // itemw() {
-      //   let full = this.fullWidth;
-      //
-      //   if(this.goods.config.showmode == 'border-bgwhite'){
-      //     full -= 4;//4个边框
-      //   }
-      //
-      //   if (this.goods.config.style === 2) {
-      //     //内边不是乘以3 而是1
-      //     return (full - this.goods.style.wrapmargin * 2 - this.goods.style.margin * 1) / 2 + 'px';
-      //   }
-      //
-      //   if (this.goods.config.style === 4) {
-      //     return full / 3 + 'px';
-      //   }
-      //   return 'auto';
-      //
-      // },
       className() {
         //利用这样的方式，传入className box +style1/2/3/4
         return 'style' + this.goods.config.style+' box'
@@ -205,6 +187,8 @@
             return;
           }
 
+          this.goodsList = createEmptyArray(list.length,{countdown:{}})//空对象
+
           let param = {pageSize: limit};//cate_id.length===0 && limit ? limit : 900}
 
           //拼团
@@ -212,7 +196,10 @@
           param.Products_ID = list.join(',')
 
           getProductList(param).then(res => {
-            this.goodsList = res.data
+            this.goodsList = res.data.map(item=>{
+              item.countdown = {}
+              return item
+            })
 
 
           })
@@ -321,7 +308,7 @@
       },
       domainFunc(url) {
         if(!url){
-          return 'http://www.qiyeban.com/uploadfiles/wkbq6nc2kc/image/20190930095641111.png';//展位图替换掉吧。。
+          return lazyImgUrl;//展位图替换掉吧。。
         }
 
         return domain(url)
@@ -465,7 +452,7 @@
     .stamp{
       font-size: 12px;
       background: rgba(0,0,0,.5);
-      padding: 6px 0;
+      padding: 6px 2px;
       position: absolute;
       left: 0;
       right: 0;

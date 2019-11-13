@@ -5,27 +5,25 @@
        <image class="imgm cart" src="/static/cart.png" @click="goCart" ></image>
     </div>
 
-
-
 	<!-- 轮播 -->
-	<view class="uni-padding-wrap">
+	<view class="uni-padding-wrap"  style="background: #f2f2f2;">
 		<view class="page-section swiper">
 			<view class="page-section-spacing">
 				<swiper class="swiper" circular="true" indicator-dots="indicatorDots" autoplay="autoplay" interval="4000" duration="500" indicator-color="#fff" indicator-active-color="#ff5000">
 					<swiper-item v-for="(item,i) of product.Products_JSON.ImgPath" :key="i">
-						 <img class="imgs" :src="item"  @click="yulan(i)">
+						 <img class="imgs" :src="item|lazyimg"  @click="yulan(i)">
 					</swiper-item>
 				</swiper>
 			</view>
 		</view>
 	</view>
+
     <!-- 产品信息描述 -->
     <div class="section1">
         <div class="leftss">
             <span class="pricef">¥</span>
             <span class="prices">{{product.Products_PriceX}}</span>
             <span class="pricet">¥ {{product.Products_PriceY}}</span>
-
         </div>
         <div class="rightss">
             <div class="countdown">
@@ -36,6 +34,7 @@
             </div>
         </div>
     </div>
+
     <!-- 领券 -->
     <div class="section2" >
         <div class="titles">
@@ -228,18 +227,18 @@
 	<div class="fixed">
 		<div class="leftss">
 			<div class="first" @click="goHome">
-				<div><image class="img" src="/static/tabbar/home.png" ></image></div>
+				<div><image class="img" src="/static/detail/home.png" ></image></div>
 				<div class="txt">首页</div>
 			</div>
 			<div class="first" @click="collect">
 				<div>
-					<image class="img" v-if="isCollected"  src="https://new401.bafangka.com/static/client/tuan/xx.png" ></image>
-					<image class="img" v-else src="https://new401.bafangka.com/static/client/sc.png" ></image>
+					<image class="img" v-if="isCollected"  src="/static/detail/favorite-a.png" ></image>
+					<image class="img" v-else src="/static/detail/favorite.png" ></image>
 				</div>
 				<div class="txt">收藏</div>
 			</div>
 			<div class="first">
-				<div><image class="img" src="https://new401.bafangka.com/static/client/kf.png" ></image></div>
+				<div><image class="img" src="/static/detail/kefu.png" ></image></div>
 				<div class="txt">客服</div>
 			</div>
 		</div>
@@ -285,11 +284,13 @@ import {pageMixin} from "../../common/mixin";
 import {error} from "../../common";
 import {mapState,mapGetters,mapActions} from 'vuex';
 import {add_template_code} from "../../common/fetch";
+import {isWeiXin} from "../../common/tool";
 
 export default {
 	mixins:[pageMixin],
     data(){
         return {
+			groupStam:false,
 			// #ifdef APP-PLUS
 			wxMiniOriginId:'',
 			// #endif
@@ -299,7 +300,7 @@ export default {
             shareShow: false,
 			teamList:[],//正在开团的列表
             ticksShow: false,
-			product:'',//商品结果
+			product:{Products_JSON:{ImgPath:[]}},//商品结果
 			commit:[],//获取评论
 			Products_ID: 0 ,
 			count:1,//商品数量
@@ -368,6 +369,8 @@ export default {
 		  this.checkProdCollected();
 	},
 	onShow() {
+
+		console.log(this.product);
 		this.getDetail(this.Products_ID);
 		this.getCommit(this.Products_ID);
 
@@ -872,7 +875,7 @@ export default {
 					rt = computedStamp
 				}else{
 					//如果不对，就清空
-					window.clearInterval(window.groupStam)
+					clearInterval(this.groupStam)
 				}
 			}
 
@@ -914,12 +917,13 @@ export default {
 
 				//this.stampCount()
 				//开发时候一直倒计时太乱了
-				window.groupStam = setInterval(this.stampCount,1000)
+				this.groupStam = setInterval(this.stampCount,1000)
 
 				product = res.data
 
 				// #ifdef H5
 
+				if(!isWeiXin())return;
 				let path = 'pages/groupDetail/groupDetail?Products_ID='+this.Products_ID;
 				let front_url = this.initData.front_url;
 

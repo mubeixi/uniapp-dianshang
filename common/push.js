@@ -122,6 +122,10 @@ class Push {
      * @param {Object} options
      */
     static createMessage = function(str, jsonData) {
+
+        var options = {cover:false};
+
+
         switch(plus.os.name) {
             case "Android":
                 jsonData = jsonData;
@@ -134,7 +138,7 @@ class Push {
 
         jsonData.local = 1;//本地模拟的
 
-        var options = {cover:false};
+
 
         console.log('手动添加到通知中心的数据是',jsonData)
         plus.push.createMessage(str, JSON.stringify(jsonData), options);

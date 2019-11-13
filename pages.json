@@ -481,7 +481,10 @@
         },{
             "path" : "pages/spikeDetail/spikeDetail",
             "style" : {
-            	"navigationBarTitleText": "限时秒杀"
+            	"navigationBarTitleText": "限时秒杀",
+                 "app-plus": {
+                 	"titleNView": false
+                 }
             }
         }
         ,{
@@ -509,7 +512,10 @@
         ,{
             "path" : "pages/limitDetail/limitDetail",
             "style" : {
-            	"navigationBarTitleText": "限时抢购"
+            	"navigationBarTitleText": "限时抢购",
+                 "app-plus": {
+                  "titleNView": false
+                 }
             }
         }
     ],

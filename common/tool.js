@@ -271,13 +271,13 @@ export const uploadImages=(formData,imgs)=>{
 				success(ret) {
 					console.log("222222222222222222")
 					let imgs='data:image/jpeg;base64,'+ret.data;
-					uploadImage({'image':imgs}).then(result=>{	 
+					uploadImage({'image':imgs}).then(result=>{
 						console.log("33333333333333333333333333333333333333")
 						 arr.push(result.data.path);
 					   },err=>{
-						   
+
 					   }).catch(e=>{
-						   
+
 					   })
 				},
 				fail(ret) {
@@ -304,11 +304,11 @@ export const uploadImages=(formData,imgs)=>{
 								title:msg.msg
 							})
 							if(msg.errorCode==0){
-			
+
 							}else{
-			
+
 							}
-			
+
 						}
 					}
 			})
@@ -491,4 +491,25 @@ export const getCountdownFunc = ({start_timeStamp,end_timeStamp,current = (new D
     s = countTime-d*60*60*24-h*60*60-m*60
 
     return {d,h,m,s,is_start}
+}
+
+/**
+ * 快速创建空数组
+ * @param len
+ * @param item
+ * @return {[]}
+ */
+export const createEmptyArray = (len,item)=>{
+    if(item === undefined ){
+        item = ''
+    }
+
+    let tempArr = [];
+
+    for(var i =0;i<len;i++){
+        tempArr[i] = item
+    }
+
+    console.log('createEmptyArray is ',JSON.stringify(tempArr))
+    return tempArr;
 }
