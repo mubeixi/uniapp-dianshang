@@ -15,7 +15,7 @@
 </template>
 <script>
   import {deepCopyStrict} from "../../common/tool";
-    import {domain} from "../../common/filter";
+    import {domainFn} from "../../common/filter";
 
   const styleDefault = {
     color: '#333',
@@ -65,7 +65,7 @@
           return 'http://www.qiyeban.com/uploadfiles/wkbq6nc2kc/image/20190930095641111.png';//展位图替换掉吧。。
         }
 
-        return domain(url)
+        return domainFn(url)
       },
       go(item){
         this.$fun.linkTo(item)

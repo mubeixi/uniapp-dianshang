@@ -42,7 +42,7 @@
 </template>
 <script>
     import {getProductList,getFlashSaleList} from "../../common/fetch";
-    import {domain, lazyImgUrl} from "../../common/filter";
+    import {domainFn, lazyImgUrl} from "../../common/filter";
     import {goProductDetail} from "../../common";
     import {getCountdownFunc,createEmptyArray} from "../../common/tool";
 
@@ -307,14 +307,14 @@
                 let obj = JSON.parse(jsonstr);
                 if (!obj || !obj.ImgPath || obj.ImgPath.length < 1) return '';
 
-                return domain(obj.ImgPath[0])
+                return domainFn(obj.ImgPath[0])
             },
             domainFunc(url) {
                 if(!url){
                     return lazyImgUrl;//展位图替换掉吧。。
                 }
 
-                return domain(url)
+                return domainFn(url)
             },
 
         },

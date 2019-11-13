@@ -1,18 +1,16 @@
-
 import {apiBaseUrl,staticUrl} from "./env";
 
-export const domain = (url) => {
+export const domainFn = (url) => {
   if(!url)return '';
   if (url.indexOf('http') == -1) return staticUrl+url;
   return url;
 }
 
-
-
 export const formatNumber = n => {
   n = n.toString()
   return n[1] ? n : '0' + n
 }
+
 export const formatTime = function(date) {
   const year = new Date(date*1000).getFullYear()
   const month = new Date(date*1000).getMonth() + 1
@@ -90,6 +88,6 @@ export default [
   },
   {
     name:'domain',
-    methods: domain
+    methods: domainFn
   }
 ];

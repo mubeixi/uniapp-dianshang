@@ -13,7 +13,7 @@
   </div>
 </template>
 <script>
-  import {domain} from "../../common/filter";
+  import {domainFn} from "../../common/filter";
   import {getRowColSpan} from "../../common/tool/MagicCube";
 
   export default {
@@ -121,12 +121,12 @@
         };
         // if(area.bgimg){
         //   console.log(333)
-        //   styleObj.backgroundImage = 'url('+domain(area.bgimg)+')';
+        //   styleObj.backgroundImage = 'url('+domainFn(area.bgimg)+')';
         // }
         return styleObj
       },
       domainFunc(url) {
-        return domain(url)
+        return domainFn(url)
       },
 
     },
