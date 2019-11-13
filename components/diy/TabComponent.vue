@@ -78,7 +78,7 @@
   </div>
 </template>
 <script>
-  import {domain} from "../../common/filter";
+  import {domain, lazyImgUrl} from "../../common/filter";
   import {getProductList} from "../../common/fetch";
   import {goProductDetail} from "../../common";
 
@@ -248,6 +248,7 @@
       goDetail(goods){
         console.log(goods)
         // Products_ID=243
+
         let linkObj = {link:'/pages/detail/detail?Products_ID='+goods.Products_ID,linkType:'default'};
 
         this.$fun.linkTo(linkObj)
@@ -345,7 +346,7 @@
       },
       domainFunc(url) {
         if(!url){
-          return 'http://www.qiyeban.com/uploadfiles/wkbq6nc2kc/image/20190930095641111.png';//展位图替换掉吧。。
+          return lazyImgUrl;//展位图替换掉吧。。
         }
 
         return domain(url)

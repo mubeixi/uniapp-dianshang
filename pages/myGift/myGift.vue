@@ -18,7 +18,7 @@
 		<view style="height: 102rpx;width: 100%;">
 
 		</view>
-		<view class="center" v-for="(item,index) of data" :key="index">
+		<view class="center" v-for="(item,index) of data" :key="index" @click="handleClick(item)">
 			<view class="tops">
 				{{item.gift_name}}
 			</view>
@@ -32,8 +32,8 @@
 					</view>
 					<view class="button">
 						<view class="sku">{{item.attr_txt}}</view>
-						<view class="chakan" v-if="checked==0" @click="goDetail(item)">立即申请</view>
-						<view class="chakan" v-else-if="checked==1" @click="goGiftDetail(item)">查看订单</view>
+						<view class="chakan" v-if="checked==0" >立即申请</view>
+						<view class="chakan" v-else-if="checked==1" >查看订单</view>
 					</view>
 					<view class="youxiao" v-if="checked!=1">{{item.valid_scope}}</view>
 				</view>
@@ -84,6 +84,14 @@
 			}
 		},
 		methods:{
+			handleClick(item){
+				if(this.checked==0){
+					this.goDetail(item)
+				}
+				if(this.checked == 1){
+					this.goGiftDetail(item)
+				}
+			},
 			goGiftDetail(item){
 				uni.navigateTo({
 					url:'../giftDetail/giftDetail?Order_ID='+item.order_id

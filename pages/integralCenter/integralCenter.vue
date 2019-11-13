@@ -104,6 +104,9 @@
 
 		},
 		onShow() {
+
+		},
+		created(){
 			this.reset();
 			this.userIntegralRecord();
 			get_user_info().then(res=>{

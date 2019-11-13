@@ -88,12 +88,12 @@
 				console.log('show popup')
 				this.ifshow = true;
 
-				this.translateValue = 0;
-				let _open = null;
-				// let _open = setTimeout(() => {
-				// 	this.translateValue = 0;
-				// 	_open = null;
-				// }, 10)
+
+
+				let _open = setTimeout(() => {
+					this.translateValue = 0;
+					_open = null;
+				}, 100)
 				let _toggle = setTimeout(() => {
 					this.iftoggle = true;
 					_toggle = null;
@@ -111,7 +111,7 @@
 					this.iftoggle = false;
 					this.$emit('closeCallBack', null);
 					this.$emit('change',false)
-				}, 10);
+				}, 100);
 			},
 			ableClose() {
 				if (this.autoClose) {

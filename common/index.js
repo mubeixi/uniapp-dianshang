@@ -140,7 +140,9 @@ export const checkIsDistribute = (redirect,tip) => {
  */
 export const goProductDetail = (id,is_group) => {
     if(!id)return;
-    let path = is_group ? '/pages/groupDetail/groupDetail':'/pages/detail/detail';//根据不同路径跳转
+
+    let path = '/pages/detail/detail';
+    //let path = is_group ? '/pages/groupDetail/groupDetail':'/pages/detail/detail';//根据不同路径跳转
     uni.navigateTo({
         url:path+'?Products_ID='+id
     })

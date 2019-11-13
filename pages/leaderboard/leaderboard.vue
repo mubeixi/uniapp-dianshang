@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view class="wrap">
 		<!-- #ifdef APP-PLUS -->
 <!--		<view class="status_bar" style="background-color: rgb(248, 248, 248);"></view>-->
 		<!-- #endif -->
@@ -12,9 +12,9 @@
 				我的好友
 			</view>
 		</view>
-		<view style="height: 95rpx;">
+<!--		<view style="height: 95rpx;">-->
 
-		</view>
+<!--		</view>-->
 		<view class="mains">
 			<view class="paiming">
 				<view class="pai1">
@@ -174,6 +174,10 @@
 	view,div{
 		box-sizing: border-box;
 	}
+.wrap{
+	padding-top: 95rpx;
+	background: white;
+}
 .all{
 	height: 95rpx;
 	width: 750rpx;

@@ -8,7 +8,7 @@
 		</view>
 	<!-- #endif -->
 	<!-- 轮播 -->
-	<view class="uni-padding-wrap">
+	<view class="uni-padding-wrap" style="background: #f2f2f2;">
 		<view class="page-section swiper">
 			<view class="page-section-spacing" v-if="(product.video_url && showVideo)">
 				<video class="video" @play="play" @pause="pause" :src="product.video_url"  show-mute-btn="true" muted bindfullscreenchange="changeHiddenBtns" :poster="product.cover_url?product.cover_url:''" show-center-play-btn	 controls>
@@ -25,7 +25,7 @@
 			<view class="page-section-spacing" v-else>
 				<swiper class="swiper" circular="true" indicator-dots="indicatorDots" autoplay="autoplay" interval="4000" duration="500" indicator-color="#fff" indicator-active-color="#ff5000">
 					<swiper-item v-for="(item,i) of product.Products_JSON.ImgPath" :key="i">
-						 <img :src="item"  @click="yulan(i)">
+						 <img :src="item|lazyimg"  @click="yulan(i)">
 					</swiper-item>
 				</swiper>
 				<view class="change-btn" v-if="product.video_url">
@@ -244,7 +244,7 @@ export default {
             type: '', // 优惠券内容， 分享内容
             shareShow: false,
             ticksShow: false,
-			product:'',//商品结果
+			product:{Products_JSON:{ImgPath:[]}},//商品结果
 			commit:'',//获取评论
 			Products_ID: 0 ,
 			count:1,//商品数量

@@ -335,8 +335,8 @@
 		width: 710rpx;
 		margin: 0 auto;
 		margin-bottom: 25rpx;
-		border-top: 1rpx solid  #D4D4D4;
-		border-left: 1rpx solid #D4D4D4;
+		border-top: 2rpx solid  #eee;
+		border-left: 2rpx solid #eee;
 		.tt{
 			width: 710rpx;
 			height: 95rpx;
@@ -349,11 +349,11 @@
 				text-align: center;
 				font-size: 26rpx;
 				color: #333333;
-				border-right:1px solid #D4D4D4;
-				border-bottom: 1px solid #D4D4D4;
+				border-right: 2rpx solid #eee;
+				border-bottom: 2rpx solid #eee;
 			}
 			.rightZ{
-				border-right: 0rpx;
+				/*border-right: 0rpx;*/
 			}
 		}
 		.ts{

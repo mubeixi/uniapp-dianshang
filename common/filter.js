@@ -26,9 +26,21 @@ export const formatTime = function(date) {
 }
 
 
-
+export const lazyImgUrl = 'https://new401.bafangka.com/uploadfiles/wkbq6nc2kc/image/20191112154310111.jpg'
 
 export default [
+  {
+    name:'zero',
+    methods:(val)=>{
+      return val?val:0
+    }
+  },
+  {
+    name:'lazyimg',
+    methods:(val)=>{
+      return val?val:'lazyImgUrl'
+    }
+  },
   {
     name: 'num2px',
     methods: (val) => {

@@ -1,5 +1,5 @@
 <template>
-  <div style="position:relative;background-color:#f8f8f8" v-if="product">
+  <div style="position:relative;background-color:#f8f8f8">
     <div class="top">
         <image class="imgm" src="/static/back.png" @click="goBack" ></image>
         <image class="imgm cart" src="/static/cart.png" @click="goCart" ></image>
@@ -224,18 +224,18 @@
 	<div class="fixed">
 		<div class="leftss">
 			<div class="first" @click="goHome">
-				<div><image class="img" src="/static/tabbar/home.png" ></image></div>
+				<div><image class="img" src="/static/detail/home.png" ></image></div>
 				<div class="txt">首页</div>
 			</div>
 			<div class="first" @click="collect">
 				<div>
-					<image class="img" v-if="isCollected"  src="https://new401.bafangka.com/static/client/tuan/xx.png" ></image>
-					<image class="img" v-else src="https://new401.bafangka.com/static/client/sc.png" ></image>
+					<image class="img" v-if="isCollected"  src="/static/detail/favorite-a.png" ></image>
+					<image class="img" v-else src="/static/detail/favorite.png" ></image>
 				</div>
 				<div class="txt">收藏</div>
 			</div>
 			<div class="first">
-				<div><image class="img" src="https://new401.bafangka.com/static/client/kf.png" ></image></div>
+				<div><image class="img" src="/static/detail/kefu.png" ></image></div>
 				<div class="txt">客服</div>
 			</div>
 		</div>
@@ -292,7 +292,7 @@ export default {
             shareShow: false,
 			teamList:[],//正在开团的列表
             ticksShow: false,
-			product:'',//商品结果
+			product:{},//商品结果
 			commit:[],//获取评论
 			Products_ID: 0 ,
 			flashsale_id:0,//秒杀商品id
@@ -355,7 +355,7 @@ export default {
 		this.getDetail(this.flashsale_id);
 		// this.getCommit(this.Products_ID);
 		// this.checkProdCollected();
-		
+
 
 	},
 	filters: {
@@ -811,8 +811,8 @@ export default {
 					this.postData.qty = this.product.attr_json.count;
 				}
 			}
-			
-        	
+
+
         },
         delNum(){
         	if (this.postData.qty > 1) {
@@ -874,7 +874,7 @@ export default {
 						}
 					}
 			}
-			
+
 
 			//console.log(rt)
 
@@ -890,7 +890,7 @@ export default {
 
 			flashsaleDetail(data).then(res=>{
 
-        		
+
 				if(res.errorCode != 0){
 					return;
 				}

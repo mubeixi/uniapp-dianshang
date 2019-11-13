@@ -145,7 +145,7 @@
 				show: false, // 遮罩层
 				wl_show: false, // 物流选择
 				postData: {},
-				orderInfo: '',
+				orderInfo: {},
 				addressInfo: '',
 				Order_ID: 0,
 				totalMoney: 0, // 应支付金额
