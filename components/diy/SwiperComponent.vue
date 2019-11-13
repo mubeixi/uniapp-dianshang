@@ -23,7 +23,7 @@
   </view>
 </template>
 <script>
-  import {domain} from "../../common/filter";
+  import {domainFn} from "../../common/filter";
 
   export default {
     props: {
@@ -85,7 +85,7 @@
         this.$fun.linkTo(item)
       },
       domainFunc(url) {
-        return domain(url)
+        return domainFn(url)
       },
 
       // ...mapActions(),

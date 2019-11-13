@@ -5,10 +5,10 @@
 		<!-- #endif -->
 
 		<view class="personTop">
-			<image class="bg" src="https://new401.bafangka.com/static/client/person/top.png"  ></image>
-			<image :class="userInfo.User_ID&&show>0?'':'onlyMsg'"  class="msg" src="https://new401.bafangka.com/static/client/fenxiao/msg.png" @click="goMsg"></image>
+			<image class="bg" :src="'/static/client/person/top.png'|domain"  ></image>
+			<image :class="userInfo.User_ID&&show>0?'':'onlyMsg'"  class="msg" :src="'/static/client/fenxiao/msg.png'|domain" @click="goMsg"></image>
 			<view class="qiandao" v-if="userInfo.User_ID&&show>0"  :class="signin?'isQian':''" @click="signinMethod">
-				<image class="imgg" src="https://new401.bafangka.com/static/client/person/qiandao.png"></image>
+				<image class="imgg" :src="'/static/client/person/qiandao.png'|domain"></image>
 				<view class="viewl">{{signin?'已签到':'签到'}}</view>
 			</view>
 			<view class="personInfo flex">
@@ -18,12 +18,12 @@
 				<view class="right flex1" :style="{position:!userInfo.User_ID?'relative':'static'}">
 					<view class="font14 loginBtn" v-if="!userInfo.User_ID" plain size="mini" @click="goLogin">登录/注册</view>
 					<view v-if="userInfo.User_ID" @click="goPersonMsg" class="nickName">{{userInfo.User_NickName||(userInfo.User_No?('用户'+userInfo.User_No):'暂无昵称')}}</view>
-					<view v-if="userInfo.User_ID" @click="goVip" class="cart">{{userLevelText()}}<image src="https://new401.bafangka.com/static/client/person/rightCart.png" ></image></view>
+					<view v-if="userInfo.User_ID" @click="goVip" class="cart">{{userLevelText()}}<image :src="'/static/client/person/rightCart.png'|domain" ></image></view>
 				</view>
 			</view>
 			<view class="nav">
 				<view class="navList first" @click="goBalance">
-					<image class="imgr" src="https://new401.bafangka.com/static/client/person/yue.png" mode=""></image>
+					<image class="imgr" :src="'/static/client/person/yue.png'|domain" mode=""></image>
 					<view class="viewr">
 						余额
 					</view>

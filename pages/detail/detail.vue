@@ -144,7 +144,7 @@
 		<view style="max-height: 1050rpx;" v-else>
 			<div class="t_title">
 			    领券
-			    <image src="http://new401.bafangka.com/static/client/detail/x.png"  @click="close" ></image>
+			    <image src="https://new401.bafangka.com/static/client/detail/x.png"  @click="close" ></image>
 			</div>
 			<scroll-view class="ticks" v-if="type=='ticks'" scroll-y=true  @scrolltolower="goNextPage">
 			    <div class="t_content" v-for="(item,i) of couponList" :key="i">
