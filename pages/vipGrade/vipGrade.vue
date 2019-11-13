@@ -1,8 +1,6 @@
 <template>
 	<view class="all">
 		<view class="top">
-			<image :src="'/static/client/task/left.png'|domain" class="goBack" @click="goBack"></image>
-			<view class="titles">会员等级</view>
 			<swiper class="center" :indicator-dots="false" :autoplay="false"  :duration="1000" :current="inds" @change="change">
 				<swiper-item class="vipFir"  v-for="(item,index) of pro.levels" :key="index"  :style="pro.levels.length==1?'margin-left:43rpx;':''">
 				<!-- 		<image :src="'/static/client/task/vip.png" class="allImg"></image> -->
@@ -173,7 +171,7 @@
 }
 .top{
 	width:750rpx;
-	height:300rpx;
+	height:200rpx;
 	background:rgba(64,61,61,1);
 	position: relative;
 	.goBack{
@@ -194,7 +192,7 @@
 	}
 	.center{
 		position: absolute;
-		top: 117rpx;
+		top: 60rpx;
 		left: 3rpx;
 		width: 750rpx;
 		height: 325rpx;

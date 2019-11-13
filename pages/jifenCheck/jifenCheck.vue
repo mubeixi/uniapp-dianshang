@@ -1117,8 +1117,9 @@ export default {
 				border: 1px solid #efefef;
 				width: 80%;
 				margin: 0 auto 40rpx;
-				line-height: 80rpx;
-				height: 80rpx;
+				height: 20px;
+				line-height: 20px;
+				padding: 10px 0px;
 			}
 		}
 	}

@@ -185,7 +185,7 @@
 										name: 'image',
 										formData: data,
 										success: (uploadFileRes) => {
-											console.log(uploadFileRes)
+											console.log(uploadFileRes,'ssssssssss')
 											uploadFileRes =	JSON.parse(uploadFileRes.data)
 											that.tem_Shop_Logo = uploadFileRes.data.path;
 											upDateUserInfo({
