@@ -276,7 +276,9 @@
 </script>
 
 <style lang="scss" scoped>
-.all{background-color: #F2F2F2;}
+.all{
+	background-color: #f8f8f8;
+}
 .top{
 	width: 750rpx;
 	height: 400rpx;
