@@ -50,7 +50,7 @@
 				<!-- 包邮等信息 -->
 				<div class="section3" v-if="product.Products_Promise.length > 0">
 						<span v-for="(item,index) in product.Products_Promise" v-if="item.name" :key="index">
-								<image class="img" src="https://new401.bafangka.com/static/client/detail/dh.png" alt="" />
+								<image class="img" :src="'/static/client/detail/dh.png'|domain" alt="" />
 								<span>{{item.name}}</span>
 						</span>
 				</div>
@@ -58,14 +58,14 @@
     <!-- 领券 -->
     <div class="section2" @click="showTick" data-type="ticks"  v-if="couponList.length>0">
         <div class="btn">领券</div>
-        <div class="right" >店铺优惠券 <image class="img" src="https://new401.bafangka.com/static/client/detail/right.png" alt="" /></div>
+        <div class="right" >店铺优惠券 <image class="img" :src="'/static/client/detail/right.png'|domain" alt="" /></div>
     </div>
 
     <!-- 评价 -->
     <div class="comment">
         <div class="c_title">
             <span>评价</span>
-            <div class="right" @click="gotoComments">查看全部  <image style="width: 19rpx;height: 30rpx;margin-left: 20rpx;" src="https://new401.bafangka.com/static/client/detail/right.png" alt="" /></div>
+            <div class="right" @click="gotoComments">查看全部  <image style="width: 19rpx;height: 30rpx;margin-left: 20rpx;" :src="'/static/client/detail/right.png'|domain" alt="" /></div>
         </div>
         <block v-for="(item,index) of commit" :key="item">
         	<div class="c_content" v-if="!item.ImgPath">
@@ -115,16 +115,16 @@
 			<div class="s_top">
 				<!-- #ifdef APP-PLUS -->
 				<div class="flex1" @click="shareFunc('wx')">
-					<image class='img' src="https://new401.bafangka.com/static/client/detail/share1.png" alt=""></image>
+					<image class='img' :src="'/static/client/detail/share1.png'|domain" alt=""></image>
 					<div>发送好友</div>
 				</div>
 				<div class="flex1" @click="shareFunc('wxtimeline')">
-					<image class='img' src="https://new401.bafangka.com/static/client/detail/sahre3.png" alt=""></image>
+					<image class='img' :src="'/static/client/detail/sahre3.png'|domain" alt=""></image>
 					<div>朋友圈</div>
 				</div>
 				<!--只有配置了这个参数的app，才有分享到小程序选项-->
 				<div class="flex1" @click="shareFunc('wxmini')" v-if="wxMiniOriginId">
-					<img class='img' src="https://new401.bafangka.com/static/client/detail/share4.png" alt="">
+					<img class='img' :src="'/static/client/detail/share4.png'|domain" alt="">
 					<div>微信小程序</div>
 				</div>
 				<!-- #endif -->
@@ -132,7 +132,7 @@
 
 				<!-- #ifndef MP-TOUTIAO -->
 				<div class="flex1" @click="shareFunc('pic')">
-					<image class='img' src="https://new401.bafangka.com/static/client/detail/share2.png" alt=""></image>
+					<image class='img' :src="'/static/client/detail/share2.png'|domain" alt=""></image>
 					<div>分享海报</div>
 				</div>
 				<!-- #endif -->
@@ -144,7 +144,7 @@
 		<view style="max-height: 1050rpx;" v-else>
 			<div class="t_title">
 			    领券
-			    <image src="http://new401.bafangka.com/static/client/detail/x.png"  @click="close" ></image>
+			    <image :src="'/static/client/detail/x.png'|domain"  @click="close" ></image>
 			</div>
 			<scroll-view class="ticks" v-if="type=='ticks'" scroll-y=true  @scrolltolower="goNextPage">
 			    <div class="t_content" v-for="(item,i) of couponList" :key="i">
@@ -1193,7 +1193,6 @@ export default {
         position: relative;
         width: 720rpx;
         height: 160rpx;
-        // background: url('https://new401.bafangka.com/static/client/detail/yhq.png') no-repeat ;
 		background-color: #FDF1E5;
         background-size: cover;
         margin: 0 auto 30rpx;

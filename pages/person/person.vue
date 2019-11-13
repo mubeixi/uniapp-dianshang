@@ -5,43 +5,43 @@
 		<!-- #endif -->
 
 		<view class="personTop">
-			<image class="bg" src="https://new401.bafangka.com/static/client/person/top.png"  ></image>
-			<image :class="userInfo.User_ID&&show>0?'':'onlyMsg'"  class="msg" src="https://new401.bafangka.com/static/client/fenxiao/msg.png" @click="goMsg"></image>
+			<image class="bg" :src="'/static/client/person/top.png'|domain"  ></image>
+			<image :class="userInfo.User_ID&&show>0?'':'onlyMsg'"  class="msg" :src="'/static/client/fenxiao/msg.png'|domain" @click="goMsg"></image>
 			<view class="qiandao" v-if="userInfo.User_ID&&show>0"  :class="signin?'isQian':''" @click="signinMethod">
-				<image class="imgg" src="https://new401.bafangka.com/static/client/person/qiandao.png"></image>
+				<image class="imgg" :src="'/static/client/person/qiandao.png'|domain"></image>
 				<view class="viewl">{{signin?'已签到':'签到'}}</view>
 			</view>
 			<view class="personInfo flex">
 				<view class="left" @click="goPersonMsg">
-					<image style="border-radius: 50%;"  :src="userInfo.User_HeadImg||'https://new401.bafangka.com/static/client/default.png'" ></image>
+					<image style="border-radius: 50%;"  :src="(userInfo.User_HeadImg||'/static/client/default.png')|domain" ></image>
 				</view>
 				<view class="right flex1" :style="{position:!userInfo.User_ID?'relative':'static'}">
 					<view class="font14 loginBtn" v-if="!userInfo.User_ID" plain size="mini" @click="goLogin">登录/注册</view>
 					<view v-if="userInfo.User_ID" @click="goPersonMsg" class="nickName">{{userInfo.User_NickName||(userInfo.User_No?('用户'+userInfo.User_No):'暂无昵称')}}</view>
-					<view v-if="userInfo.User_ID" @click="goVip" class="cart">{{userLevelText()}}<image src="https://new401.bafangka.com/static/client/person/rightCart.png" ></image></view>
+					<view v-if="userInfo.User_ID" @click="goVip" class="cart">{{userLevelText()}}<image :src="'/static/client/person/rightCart.png'|domain" ></image></view>
 				</view>
 			</view>
 			<view class="nav">
 				<view class="navList first" @click="goBalance">
-					<image class="imgr" src="https://new401.bafangka.com/static/client/person/yue.png" mode=""></image>
+					<image class="imgr" :src="'/static/client/person/yue.png'|domain" mode=""></image>
 					<view class="viewr">
 						余额
 					</view>
 				</view>
 				<view class="navList second" @click="goIntegral">
-					<image class="imgr" src="https://new401.bafangka.com/static/client/person/jifen.png" mode=""></image>
+					<image class="imgr" :src="'/static/client/person/jifen.png'|domain" mode=""></image>
 					<view  class="viewr">
 						积分
 					</view>
 				</view>
 				<view class="navList three" @click="goCollection">
-					<image class="imgr" src="https://new401.bafangka.com/static/client/person/shoucang.png" mode=""></image>
+					<image class="imgr" :src="'/static/client/person/shoucang.png'|domain" mode=""></image>
 					<view  class="viewr">
 						收藏
 					</view>
 				</view>
 				<view class="navList four" @click="goCoupon">
-					<image class="imgr" src="https://new401.bafangka.com/static/client/person/youhuijuan.png" mode=""></image>
+					<image class="imgr" :src="'/static/client/person/youhuijuan.png'|domain" mode=""></image>
 					<view  class="viewr" style="left: 50upx;">
 						优惠券
 					</view>
@@ -52,33 +52,33 @@
 			<view class="orderTop">
 					<view class="orderLeft">商城订单</view>
 					<view class="orderRight" @click="goOrder(0)">
-						全部订单<image src="https://new401.bafangka.com/static/client/person/right.png" ></image>
+						全部订单<image :src="'/static/client/person/right.png'|domain" ></image>
 					</view>
 			</view>
 			<view class="orderCenter">
 				<view class="orderLast" @click="goOrder(1)">
-						<image class="zxc" src="https://new401.bafangka.com/static/client/person/pay.png"></image>
+						<image class="zxc" :src="'/static/client/person/pay.png'|domain"></image>
 						<view class="views">
 							待付款
 						</view>
 						<view class="jiaobiao" v-if="orderNum.waitpay>0">{{orderNum.waitpay}}</view>
 				</view>
 				<view class="orderLast" @click="goOrder(2)">
-						<image class="zxc" src="https://new401.bafangka.com/static/client/person/fa.png"></image>
+						<image class="zxc" :src="'/static/client/person/fa.png'|domain"></image>
 						<view class="views">
 							待发货
 						</view>
 						<div class="jiaobiao" v-if="orderNum.waitsend>0">{{orderNum.waitsend}}</div>
 				</view>
 				<view class="orderLast" @click="goOrder(3)">
-						<image class="zxc" src="https://new401.bafangka.com/static/client/person/shou.png"></image>
+						<image class="zxc" :src="'/static/client/person/shou.png'|domain"></image>
 						<view class="views">
 							待收货
 						</view>
 						<div class="jiaobiao" v-if="orderNum.waitconfirm>0">{{orderNum.waitconfirm}}</div>
 				</view>
 				<view class="orderLast" @click="goOrder(4)">
-						<image class="zxc" src="https://new401.bafangka.com/static/client/person/ping.png"></image>
+						<image class="zxc" :src="'/static/client/person/ping.png'|domain"></image>
 						<view class="views">
 							待评价
 						</view>
@@ -88,62 +88,76 @@
 		</view>
 		<view class="list">
 			<view class="group cell" @click="goPintuanOrderlist">
-				<image src="https://new401.bafangka.com/static/client/person/pin.png" class="left"></image>
+				<image :src="'/static/client/person/pin.png'|domain" class="left"></image>
 				<view class="pintuan">
 					拼团订单
 				</view>
+				<image :src="'/static/client/person/right.png'|domain" class="right"></image>
+			</view>
+			<view class="group cell" @click="goOrder('spike')">
+				<image src="/static/limitOrder.png" class="left"></image>
+				<view class="pintuan">
+					限时抢购订单
+				</view>
+				<image src="https://new401.bafangka.com/static/client/person/right.png" class="right"></image>
+			</view>
+			<view class="group cell" @click="goOrder('flashsale')">
+				<image src="/static/spikeOrder.png" class="left"></image>
+				<view class="pintuan">
+					秒杀订单
+				</view>
 				<image src="https://new401.bafangka.com/static/client/person/right.png" class="right"></image>
 			</view>
 			<!-- <view class="bargain">
-				<image src="https://new401.bafangka.com/static/client/person/kan.png" class="left"></image>
+				<image :src="'/client/person/kan.png'|domain" class="left"></image>
 				<view class="pintuan">
 					砍价订单
 				</view>
-				<image src="https://new401.bafangka.com/static/client/person/right.png" class="right"></image>
+				<image :src="'/static/client/person/right.png'|domain" class="right"></image>
 			</view> -->
 			<view class="bargain cell" @click="goGift">
-				<image src="https://new401.bafangka.com/static/client/person/zengpin.png" class="left"></image>
+				<image :src="'/static/client/person/zengpin.png'|domain" class="left"></image>
 				<view class="pintuan">
 					赠品中心
 				</view>
-				<image src="https://new401.bafangka.com/static/client/person/right.png" class="right"></image>
+				<image :src="'/static/client/person/right.png'|domain" class="right"></image>
 			</view>
 			<view class="bargain cell"  @click="goRenwu">
-				<image src="https://new401.bafangka.com/static/client/person/renwu.png" class="left"></image>
+				<image :src="'/static/client/person/renwu.png'|domain" class="left"></image>
 				<view class="pintuan">
 					任务中心
 				</view>
-				<image src="https://new401.bafangka.com/static/client/person/right.png" class="right"></image>
+				<image :src="'/static/client/person/right.png'|domain" class="right"></image>
 			</view>
 			<view class="bargain cell"  @click="gotoAddresslist" >
-				<image src="https://new401.bafangka.com/static/client/person/di.png" class="left"></image>
+				<image :src="'/static/client/person/di.png'|domain" class="left"></image>
 				<view class="pintuan">
 					地址管理
 				</view>
-				<image src="https://new401.bafangka.com/static/client/person/right.png" class="right"></image>
+				<image :src="'/static/client/person/right.png'|domain" class="right"></image>
 			</view>
 			<!-- <view class="bargain">
-				<image src="https://new401.bafangka.com/static/client/person/wo.png" class="left"></image>
+				<image :src="'/static/client/person/wo.png'|domain" class="left"></image>
 				<view class="pintuan">
 					我的预约
 				</view>
-				<image src="https://new401.bafangka.com/static/client/person/right.png" class="right"></image>
+				<image :src="'/static/client/person/right.png'|domain" class="right"></image>
 			</view> -->
 
 			<view class="bargain cell" @click="goRefundList()">
-				<image src="https://new401.bafangka.com/static/client/person/tui.png" class="left"></image>
+				<image :src="'/static/client/person/tui.png'|domain" class="left"></image>
 				<view class="pintuan">
 					退款/售后
 				</view>
-				<image src="https://new401.bafangka.com/static/client/person/right.png" class="right"></image>
+				<image :src="'/static/client/person/right.png'|domain" class="right"></image>
 			</view>
 
 			<view class="setting cell" @click="goSetting">
-				<image src="https://new401.bafangka.com/static/client/person/she.png" class="left"></image>
+				<image :src="'/static/client/person/she.png'|domain" class="left"></image>
 				<view class="pintuan">
 					设置
 				</view>
-				<image src="https://new401.bafangka.com/static/client/person/right.png" class="right"></image>
+				<image :src="'/static/client/person/right.png'|domain" class="right"></image>
 			</view>
 		</view>
 		<view style="height: 118rpx;"></view>

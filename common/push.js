@@ -10,10 +10,10 @@ class Push {
             console.log('click event ',msg)
             switch (msg.payload) {
                 case "LocalMSG":
-                    toast('点击本地创建消息启动：')
+                    //toast('点击本地创建消息启动：')
                     break;
                 default:
-                    toast('点击离线推送消息启动：')
+                    //toast('点击离线推送消息启动：')
                     break;
             }
             if (msg.payload) {

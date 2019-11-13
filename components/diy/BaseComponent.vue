@@ -38,7 +38,7 @@
   </view>
 </template>
 <script>
-  import {domain} from "../../common/filter";
+  import {domainFn} from "../../common/filter";
 import {getProductCountInfo} from "../../common/fetch";
 
   export default {
@@ -82,7 +82,7 @@ import {getProductCountInfo} from "../../common/fetch";
 
     methods: {
       domainFunc(url) {
-        return domain(url)
+        return domainFn(url)
       },
 
     },
@@ -94,11 +94,7 @@ import {getProductCountInfo} from "../../common/fetch";
         console.log(res)
 
         this.info = res.data
-        // ShopLogo: "https://new401.bafangka.com/static/api/images/user/face.jpg"
-        // ShopName: "admin的微商城"
-        // description: ""
-        // prod_isnew_total: 7
-        // prod_total: 9
+
       })
     }
   }

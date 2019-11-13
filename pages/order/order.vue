@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="haihong">
 		<!-- #ifdef APP-PLUS -->
 		<!-- <view class="status_bar" style="background:white;position: fixed;top: 0;z-index: 22"></view>-->
 		<!-- #endif -->
@@ -70,7 +70,7 @@
 			</template>
         </div>
 		<div class="defaults" v-if="data.length<=0">
-			<image src="https://new401.bafangka.com/static/client/defaultImg.png" ></image>
+			<image :src="'/static/client/defaultImg.png'|domain" ></image>
 		</div>
 	</div>
 
@@ -97,10 +97,16 @@ export default {
         }
     },
 	onShow(){
-		
+
 	},
 	onLoad(option){
-		this.index=option.index;
+		if(option.index<=4){
+			this.index=option.index;
+		}else{
+			this.index=0;
+			this.Order_Type=option.index;
+		}
+
 		this.data=[];
 		this.page=1;
 		this._getOrder();
@@ -254,6 +260,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
+	.haihong{
+		background-color: #ffffff !important;
+	}
 	.titless{
 		position: fixed;
 		top: 0rpx;

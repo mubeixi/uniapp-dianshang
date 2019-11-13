@@ -7,7 +7,8 @@
 		<!-- 	<page-title title="积分兑换" rightHidden="true" bgcolor="#FF5C33"></page-title> -->
 
 		<view class="top">
-			<view class="img-wrap">
+
+			<view class="img-wrap" :style="{backgroundImage:'url('+fun.domainFn('/static/client/jifenduihuan/star.png')+')'}">
 				<view class="t-title">我的积分</view>
 				<view class="t-amount">{{userInfo.User_Integral}}</view>
 				<view class="my-change" @click="gotoMyExchange">我的兑换</view>
@@ -182,7 +183,8 @@
 			margin-left: -360rpx;
 			width: 720rpx;
 			height: 230rpx;
-			background: url(https://new401.bafangka.com/static/client/jifenduihuan/star.png) no-repeat left top;
+			background-repeat:  no-repeat;
+			background-position: left top;
 			background-size: cover;
 			.t-title {
 				position: absolute;

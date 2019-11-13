@@ -2,7 +2,7 @@
 	<view class="all">
 		<!-- <page-title title="会员充值"></page-title> -->
 		<view class="yue">
-			<image class="yue-image" src="https://new401.bafangka.com/static/client/blance/recharge.jpg" ></image>
+			<image class="yue-image" :src="'/static/client/blance/recharge.jpg'|domain" ></image>
 			<view class="yueq">
 				余额
 			</view>
@@ -80,7 +80,7 @@ export default {
 		...mapGetters(['initData'])
 	},
 	created(){
-        
+
         // #ifdef H5
         if (isWeiXin()) {
             this.code = GetQueryByString(location.href, 'code');
@@ -127,7 +127,7 @@ export default {
 					error('支付渠道必选')
 					return;
 				}
-				console.log(this.payChannel)		
+				console.log(this.payChannel)
 				payConf = {
 					pay_type: this.payChannel,
 					money: this.money

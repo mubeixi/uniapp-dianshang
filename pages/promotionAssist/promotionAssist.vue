@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="banner">
-			<image class="src" src="https://new401.bafangka.com/static/clientpop_default.jpg" ></image>
+			<image class="src" :src="'/static/clientpop_default.jpg'|domain" ></image>
 			<form report-submit @submit="submit" >
 				<view class="content">
 					<view class="title">推广小助手</view>
@@ -18,16 +18,16 @@
 					 <picker mode="selector" :range="arr" :index="index" @change="pickHandle" class="picker">
 						<view>{{arr[index]}}</view>
 						<view class="down">
-							<image src="https://new401.bafangka.com/static/clientgo.png" mode=""></image>
+							<image :src="'/static/clientgo.png'|domain" mode=""></image>
 						</view>
 					 </picker>
 					</view>
 					<view class="item msg">
 						<view class="sub-title">联系方式</view>
-						<input type="text" v-model="postData.name" placeholder="请在此输入你的姓名" />
-						<input type="text" v-model="postData.mobile" placeholder="请在此输入你的电话" />
-						<input type="text" v-model="postData.qq" placeholder="请在此输入你的QQ" />
-						<input type="text" v-model="postData.email" placeholder="请在此输入你的邮箱" />
+						<input class="input" type="text" v-model="postData.name" placeholder="请在此输入你的姓名" />
+						<input class="input" type="text" v-model="postData.mobile" placeholder="请在此输入你的电话" />
+						<input class="input" type="text" v-model="postData.qq" placeholder="请在此输入你的QQ" />
+						<input class="input" type="text" v-model="postData.email" placeholder="请在此输入你的邮箱" />
 						<view class="btns">
 							<button class="submit" form-type="submit">提交</button>
 							<button class="share">转发详情</button>
@@ -190,29 +190,30 @@
 
 		}
 	}
-	form .msg input[type='text']{
+
+	.msg .input{
 		border: 1px solid #efefef;
 		margin: 20rpx 0;
 		height: 70rpx;
 		line-height: 70rpx;
 		padding-left: 60rpx;
 	}
-	form .msg input[type='text']:nth-of-type(1) {
-		background: url(https://new401.bafangka.com/static/client/tuiguang/center.png) no-repeat 10rpx center ;
-		background-size: 40rpx 40rpx;
-	}
-	form .msg input[type='text']:nth-of-type(2) {
-		background: url(https://new401.bafangka.com/static/client/tuiguang/dianhua.png) no-repeat 10rpx center ;
-		background-size: 40rpx 40rpx;
-	}
-	form .msg input[type='text']:nth-of-type(3) {
-		background: url(https://new401.bafangka.com/static/client/tuiguang/qq.png) no-repeat 10rpx center ;
-		background-size: 40rpx 40rpx;
-	}
-	form .msg input[type='text']:nth-of-type(4) {
-		background: url(https://new401.bafangka.com/static/client/tuiguang/youxiang.png) no-repeat 10rpx center ;
-		background-size: 40rpx 40rpx;
-	}
+	/*form .msg input[type='text']:nth-of-type(1) {*/
+	/*	background: url(/static/client/tuiguang/center.png) no-repeat 10rpx center ;*/
+	/*	background-size: 40rpx 40rpx;*/
+	/*}*/
+	/*form .msg input[type='text']:nth-of-type(2) {*/
+	/*	background: url(/static/client/tuiguang/dianhua.png) no-repeat 10rpx center ;*/
+	/*	background-size: 40rpx 40rpx;*/
+	/*}*/
+	/*form .msg input[type='text']:nth-of-type(3) {*/
+	/*	background: url(/static/client/tuiguang/qq.png) no-repeat 10rpx center ;*/
+	/*	background-size: 40rpx 40rpx;*/
+	/*}*/
+	/*form .msg input[type='text']:nth-of-type(4) {*/
+	/*	background: url(/static/client/tuiguang/youxiang.png) no-repeat 10rpx center ;*/
+	/*	background-size: 40rpx 40rpx;*/
+	/*}*/
 	.btns {
 		display: flex;
 		justify-content: space-around;

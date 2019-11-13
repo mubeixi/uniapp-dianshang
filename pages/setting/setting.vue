@@ -2,40 +2,40 @@
 	<view>
 		<view class="list">
 			<view class="bargain group">
-				<image src="https://new401.bafangka.com/static/client/person/pin.png" class="left"></image>
+				<image :src="'/static/client/person/pin.png'|domain" class="left"></image>
 				<view class="pintuan">
 					关于我们
 				</view>
-				<image src="https://new401.bafangka.com/static/client/person/right.png" class="right"></image>
+				<image :src="'/static/client/person/right.png'|domain" class="right"></image>
 			</view>
 			<view class="bargain group">
-				<image src="https://new401.bafangka.com/static/client/person/pin.png" class="left"></image>
+				<image :src="'/static/client/person/pin.png'|domain" class="left"></image>
 				<view class="pintuan">
 					联系我们
 				</view>
-				<image src="https://new401.bafangka.com/static/client/person/right.png" class="right"></image>
+				<image :src="'/static/client/person/right.png'|domain" class="right"></image>
 			</view>
 
 			<view class="bargain">
-				<image src="https://new401.bafangka.com/static/client/person/kan.png" class="left"></image>
+				<image :src="'/static/client/person/kan.png'|domain" class="left"></image>
 				<view class="pintuan">
 					版本更新
 				</view>
-				<image src="https://new401.bafangka.com/static/client/person/right.png" class="right"></image>
+				<image :src="'/static/client/person/right.png'|domain" class="right"></image>
 			</view>
 			<view class="bargain" @click="goGift">
-				<image src="https://new401.bafangka.com/static/client/person/zengpin.png" class="left"></image>
+				<image :src="'/static/client/person/zengpin.png'|domain" class="left"></image>
 				<view class="pintuan">
 					意见反馈
 				</view>
-				<image src="https://new401.bafangka.com/static/client/person/right.png" class="right"></image>
+				<image :src="'/static/client/person/right.png'|domain" class="right"></image>
 			</view>
 			<view class="bargain"  @click="goRenwu">
-				<image src="https://new401.bafangka.com/static/client/person/renwu.png" class="left"></image>
+				<image :src="'/static/client/person/renwu.png'|domain" class="left"></image>
 				<view class="pintuan">
 					清空缓存
 				</view>
-				<image src="https://new401.bafangka.com/static/client/person/right.png" class="right"></image>
+				<image :src="'/static/client/person/right.png'|domain" class="right"></image>
 			</view>
 
 		</view>
@@ -72,7 +72,7 @@
 					//只需要商户id
 
 					let users_id = ls.get('users_id');
-					
+
 					ls.clear();
 
 					// #ifdef MP-TOUTIAO || MP-WEIXIN
@@ -80,7 +80,7 @@
 					//微信小程序，因为重新启动会覆盖，所以这里也没有必要清除掉了。
 					ls.set('users_id',users_id);
 					// #endif
-					
+
 
 					this.setUserInfo({})
 

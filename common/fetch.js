@@ -226,6 +226,8 @@ export const getShaRecordList = (data, options) => fetch('get_sha_record_list', 
 // 获取佣金列表 区域代理
 export const getAgentRecordList = (data, options) => fetch('get_agent_record_list', data, options);
 
+export const getDistributeWxQrcode = (data, options) => fetch('get_distribute_wxqrcode', data, options);
+
 // 获取爵位晋升
 export const nobiInfo = (data, options) => fetch('nobi_info', data, options);
 //获取分销商信息

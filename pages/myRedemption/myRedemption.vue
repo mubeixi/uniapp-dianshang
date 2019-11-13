@@ -9,7 +9,7 @@
 						兑换单号：{{item.Orders_ID}}
 					</view>
 					<view class="views times">
-						<image class="imgs" src="https://new401.bafangka.com/static/client/check/time.png"></image>
+						<image class="imgs" :src="'/static/client/check/time.png'|domain"></image>
 						{{item.Orders_CreateTime | formatTime}}
 					</view>
 				</view>
@@ -25,7 +25,7 @@
 							</view>
 						</view>
 						<view class="rty">
-							<image class="image" src="https://new401.bafangka.com/static/client/check/ji.png" mode=""></image>
+							<image class="image" :src="'/static/client/check/ji.png'|domain" mode=""></image>
 							<text class="texts">{{item.Gift_Info.Gift_Integral}}</text>
 						</view>
 					</view>

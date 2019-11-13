@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view class="bgColor-white">
 
 
 		<!-- <page-title title="个人信息" rightHidden="true" bgcolor="#F8F8F8"></page-title> -->
@@ -11,7 +11,7 @@
 					<image :src="User_HeadImg" mode="" @click="changeAvator"></image>
 				</view>
 				<view class="go">
-					<image src="https://new401.bafangka.com/static/clientright.png" mode=""></image>
+					<image :src="'/static/clientright.png'|domain" mode=""></image>
 				</view>
 			</view>
 			<view class="item" @click="update(0)">
@@ -20,7 +20,7 @@
 					{{userInfo.User_Name}}
 				</view>
 				<view class="go">
-					<image src="https://new401.bafangka.com/static/clientright.png" mode=""></image>
+					<image :src="'/static/clientright.png'|domain" mode=""></image>
 				</view>
 			</view>
 			<view class="item" @click="update(1)">
@@ -29,7 +29,7 @@
 					{{userInfo.User_NickName}}
 				</view>
 				<view class="go">
-					<image src="https://new401.bafangka.com/static/clientright.png" mode=""></image>
+					<image :src="'/static/clientright.png'|domain" mode=""></image>
 				</view>
 			</view>
 
@@ -39,7 +39,7 @@
 					{{userInfo.User_Email}}
 				</view>
 				<view class="go">
-					<image src="https://new401.bafangka.com/static/clientright.png" mode=""></image>
+					<image :src="'/static/clientright.png'|domain" mode=""></image>
 				</view>
 			</view>
 			<view class="item" @click="update(4)">
@@ -48,7 +48,7 @@
 					{{User_Province_name}}{{User_City_name}}{{User_Area_name}}{{User_Tow_name}}{{User_Address}}
 				</view>
 				<view class="go">
-					<image src="https://new401.bafangka.com/static/clientright.png" mode=""></image>
+					<image :src="'/static/clientright.png'|domain" mode=""></image>
 				</view>
 			</view>
 		</view>
@@ -185,7 +185,7 @@
 										name: 'image',
 										formData: data,
 										success: (uploadFileRes) => {
-											console.log(uploadFileRes)
+											console.log(uploadFileRes,'ssssssssss')
 											uploadFileRes =	JSON.parse(uploadFileRes.data)
 											that.tem_Shop_Logo = uploadFileRes.data.path;
 											upDateUserInfo({
@@ -228,6 +228,9 @@
 </script>
 
 <style scoped lang="scss">
+	.bgColor-white{
+		height: 100vh;
+	}
 	.msg {
 		padding: 0 22rpx;
 		.item {

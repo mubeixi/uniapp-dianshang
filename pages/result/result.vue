@@ -6,7 +6,7 @@
 	  <!-- #endif -->
     <div class="top">
        <!-- #ifndef APP-PLUS -->
-       <!-- <image src="https://new401.bafangka.com/static/clientleft.png" class="back" @click="goBack"></image>
+       <!-- <image :src="'/static/clientleft.png" class="back" @click="goBack"></image>
 		<input type="text" v-model="inputValue" class="search" @confirm="success"  @click="goSearch" disabled/>
 		<div class="clear" v-if="inputValue">
 			<icon type="clear" class="clears" size="37rpx" @click="close"></icon>
@@ -21,47 +21,52 @@
     <div class="tabs">
         <div :class="[active == 0 ? 'checked' : '','tab']" @click="getActive(0)" >默认<div class="line"></div></div>
         <div :class="[active == 1 ? 'checked' : '','tab']" @click="getActive(1)">销量<div class="line"></div></div>
-        <div :class="[active == 2 ? 'checked' : '','tab']" @click="getActive(2)">价格<div class="line">
+        <div class="pricebox" :class="[active == 2 ? 'checked' : '','tab']" @click="getActive(2)"><span class="padding4-c">价格</span>
 			<view class="xiangshang">
-				<image class="image" src="https://new401.bafangka.com/static/client/result/tops.png" v-if="isSheng==1"></image>
-				<image class="image" src="https://new401.bafangka.com/static/client/result/top.png" v-else></image>
+				<image class="image" :src="'/static/client/result/tops.png'|domain" v-if="isSheng==1"></image>
+				<image class="image" :src="'/static/client/result/top.png'|domain" v-else></image>
 
-				<image class="image" src="https://new401.bafangka.com/static/client/result/bottoms.png" v-if="isSheng==2" style="bottom: 0rpx;"></image>
-				<image class="image" src="https://new401.bafangka.com/static/client/result/bottom.png" v-else style="bottom: 0rpx;"></image>
+				<image class="image" :src="'/static/client/result/bottoms.png'|domain" v-if="isSheng==2" style="	bottom: 0rpx;"></image>
+				<image class="image" :src="'/static/client/result/bottom.png'|domain" v-else style="bottom: 0rpx;"></image>
 			</view>
-		</div></div>
-        <div :style="{color:showShai?'#F43131':''}" @click.stop="change" style="width: 110rpx;text-align: right;">筛选<div class="line"></div></div>
-		<div class="tab" v-if="showShai"   style="width: 40rpx;position: absolute;top: 0rpx;right: 0rpx;">
-
-		</div>
-		<div class="tab" style="width: 40rpx;position: absolute;top: 25rpx;right: 28rpx;" v-else>
-			<image src="https://new401.bafangka.com/static/client/result/jx1.png" @click="changeCate" v-if="cate==2" class="imgm"></image>
-			<image src="https://new401.bafangka.com/static/client/result/jx.png" @click="changeCate" v-else class="imgm"></image>
+			<div class="line">
+			</div>
 		</div>
 
-		<div class="shaixuan" v-if="showShai" @click.stop   catchtouchmove="false">
-			<view class="priceInterval">价格区间(元)</view>
-			<view class="inputPrice">
-				<input type="number" placeholder="最低价" placeholder-style="color:#999999;font-size:26rpx;" v-model="minPrice">
-				<view class="view">—</view>
-				<input type="number" placeholder="最高价"  placeholder-style="color:#999999;font-size:26rpx;" v-model="maxPrice">
-			</view>
-			<view class="priceInterval">是否包邮</view>
-			<view class="isShipping">
-				<span class="span" :class="isShipping==1?'checked':''" @click="shipping(0)">是</span>
-				<span class="span" :class="isShipping==2?'checked':''" @click="shipping(1)">否</span>
-			</view>
-			<view class="submit">
-				<view class="view reset" @click="reset">重置</view>
-				<view class="view sure" @click="sureSearch">确定</view>
-			</view>
-			<view class="zhao" @click="closeShow" catchtouchmove="false">
+		<div :class="[active == 3 ? 'checked' : '','tab']" class="filterbox">
+			<div class="filter" :style="{color:showShai?'#F43131':''}" @click.stop="change">筛选</div>
+			<template v-show="!showShai">
+				<image :src="'/static/client/result/jx1.png'|domain" @click="changeCate" v-if="cate==2" class="imgm sorttype"></image>
+				<image :src="'/static/client/result/jx.png'|domain" @click="changeCate" v-else class="imgm sorttype"></image>
+			</template>
 
-			</view>
+			<div class="line"></div>
 		</div>
+		<!--position: absolute;top: 25rpx;right: 28rpx;position: absolute;top: 0rpx;right: 0rpx;-->
+
     </div>
+  <div class="shaixuan" v-if="showShai" @click.stop   catchtouchmove="false">
+		  <view class="priceInterval">价格区间(元)</view>
+		  <view class="inputPrice">
+			  <input type="number" placeholder="最低价" placeholder-style="color:#999999;font-size:26rpx;" v-model="minPrice">
+			  <view class="view">—</view>
+			  <input type="number" placeholder="最高价"  placeholder-style="color:#999999;font-size:26rpx;" v-model="maxPrice">
+		  </view>
+		  <view class="priceInterval">是否包邮</view>
+		  <view class="isShipping">
+			  <span class="span" :class="isShipping==1?'checked':''" @click="shipping(0)">是</span>
+			  <span class="span" :class="isShipping==2?'checked':''" @click="shipping(1)">否</span>
+		  </view>
+		  <view class="submit">
+			  <view class="view reset" @click="reset">重置</view>
+			  <view class="view sure" @click="sureSearch">确定</view>
+		  </view>
+		  <view class="zhao" @click="closeShow" catchtouchmove="false">
 
-	<view style="width: 100%;height: 210rpx;">
+		  </view>
+	  </div>
+
+	<view style="width: 100%;height: 210rpx;background: white;">
 
 	</view>
 	<div v-if="cate==1" >
@@ -78,7 +83,7 @@
 				</div>
 			</div>
 			<div class="defaults" v-if="pro.length<=0">
-				<image src="https://new401.bafangka.com/static/client/defaultImg.png" ></image>
+				<image :src="'/static/client/defaultImg.png'|domain" ></image>
 			</div>
 		</div>
 	</div>
@@ -95,7 +100,7 @@
 				</div>
 			</div>
 			<div class="defaults" v-if="pro.length<=0">
-				<image src="https://new401.bafangka.com/static/client/defaultImg.png" ></image>
+				<image :src="'/static/client/defaultImg.png'|domain" ></image>
 			</div>
 		</div>
 	</div>
@@ -340,9 +345,10 @@ export default {
 
 <style scoped lang="scss">
 	.bd{
-		min-height: 1000rpx;
+		min-height: 100vh;
 		width: 750rpx;
 		overflow: hidden;
+		background: white;
 	}
     .top {
 		position: relative;
@@ -423,24 +429,50 @@ export default {
         background: #F43131;
     }
     .tab {
-        //flex: 1;
+        flex: 1;
 		//width: 180rpx;
-		width: 180rpx;
+		/*width: 180rpx;*/
 		height: 60rpx;
+		line-height: 60rpx;
         text-align: center;
 		margin-bottom: 20rpx;
 		position: relative;
+		.line{
+			position: absolute;
+			left: 50%;
+			transform: translateX(-50%);
+		}
+
+		&.pricebox{
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+		&.filterbox{
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			.filter{
+				display: block;
+				line-height: 60rpx;
+				padding-right: 6px;
+			}
+
+		}
+
     }
-    .tab image {
+    .tab .sorttype {
+
         height: 34rpx;
         width: 40rpx;
         //margin-left: 10rpx;
-        vertical-align: middle;
+        //vertical-align: middle;
     }
     .tab .line {
         width: 100rpx;
         height: 4rpx;
-        margin: 20rpx auto 0 ;
+		bottom: -20rpx;
+        //margin: 20rpx auto 0 ;
     }
 	.cate1 {
 		.pro{
@@ -550,11 +582,11 @@ export default {
 	.shaixuan{
 		box-sizing: border-box;
 		position: absolute;
-		top: 70rpx;
+		top: 210rpx;
 		width: 750rpx;
 		background-color: #FFFFFF;
 		z-index: 999;
-		padding-top: 10rpx;
+		padding-top: 20rpx;
 		left: 0rpx;
 		view{
 			padding-left: 20rpx;
@@ -649,16 +681,15 @@ export default {
 		margin-top: 100rpx;
 	}
 	.xiangshang{
-		width: 14rpx;
-		height: 25rpx;
-		position: absolute;
-		top: 10rpx;
-		right: 40rpx;
+		width: 7px;
+		height: 12px;
 		.image{
-			width: 14rpx;
-			height: 9rpx;
-			position: absolute;
-			left: 0rpx;
+			width: 7px;
+			height: 4px;
+			display: block;
+			&:last-child{
+				margin-top: 2px;
+			}
 		}
 	}
 </style>

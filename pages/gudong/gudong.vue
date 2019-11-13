@@ -39,7 +39,7 @@
 			</view>
 			<view class="chakan" @click="goFinance">
 				查看明细
-				<image class="image" src="https://new401.bafangka.com/static/client/fenxiao/chakan.png" ></image>
+				<image class="image" :src="'/static/client/fenxiao/chakan.png'|domain" ></image>
 			</view>
 		</view>
 		<circleTitle title="股东门槛说明"></circleTitle>

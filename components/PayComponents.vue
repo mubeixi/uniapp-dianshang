@@ -561,8 +561,11 @@ export default {
             .input {
                 margin: 40rpx 0;
                 border: 1px solid #efefef;
-                height: 80rpx;
-                line-height: 80rpx;
+                /*height: 80rpx;*/
+                /*line-height: 80rpx;*/
+                height: 20px;
+                line-height: 20px;
+                padding: 10px 0px;
             }
 
             .btns {

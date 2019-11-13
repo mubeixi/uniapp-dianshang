@@ -138,7 +138,9 @@ page{
     background: white;
 }
 /* #endif */
-
+.bgColor-white{
+    background-color: #FFFFFF !important;
+}
 /* #ifdef H5 */
 /*'Hiragino Sans GB',*/
 html,body{
@@ -197,6 +199,9 @@ ul,li{
 
 .flex{display : flex}
 .flex1{flex : 1}
+
+.padding4-c{padding :0  4px}
+
 
 .padding10{padding : 10px}
 .padding10-c{padding : 0 10px}

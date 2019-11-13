@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="haihong">
 		<!-- #ifdef APP-PLUS -->
 		<!-- <view class="status_bar" style="background:white;position: fixed;top: 0;z-index: 22"> --></view>
 		<!-- #endif -->
@@ -63,12 +63,12 @@
 				<span @click="goPay(item)" style="margin-left: 14rpx;">申请退款退货</span>
 			  <span class="active" @click="confirmOrder(item)">确认收货</span>
 			</div>
-			<div class="btn-group" v-else-if="item.Order_Status==4 && item.Is_Commit == 0">
+			<div class="btn-group" v-else-if="item.Order_Status==4 && item.Is_Commit == 0&&item.teamstatus!=4">
 			  <span class="active" @click="goPay(item)">立即评价</span>
 			</div>
         </div>
 		<div class="defaults" v-if="data.length<=0">
-			<image src="https://new401.bafangka.com/static/client/defaultImg.png" ></image>
+			<image :src="'/static/client/defaultImg.png'|domain" ></image>
 		</div>
 	</div>
 
@@ -255,6 +255,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
+	.haihong{
+		background-color: #FFFFFF !important;
+	}
 	.titless{
 		position: fixed;
 		top: 0rpx;
