@@ -41,7 +41,7 @@
 				当前余额（元）
 			</view>
 			<view class="prices">
-				{{info.User_Money}}
+				{{Money}}
 			</view>
 			<view class="zhuanchu" @click="isShow=true">
 				转出
@@ -93,11 +93,11 @@
 <!--				</view>-->
 			</view>
 		</view>
-
 	</view>
 </template>
 
 <script>
+	import TweenLite from 'gsap'
 	import {
 		get_user_info,
 		getUserMoneyRecord,
@@ -120,8 +120,20 @@
 				moneyPage: 1,  // 资金流水分页
 				pageSize: 10,
 				moneyMore: false,  //资金流水是否还有更多
-				chargeMore: false  // 充值记录是否还有更多
+				chargeMore: false  ,// 充值记录是否还有更多
+				Umoney: 0,
+				s_money: 0
 			};
+		},
+		computed: {
+			Money: function(){
+				return Number(this.Umoney).toFixed(2)
+			}
+		},
+		watch: {
+			s_money: function(newVal, oldVal){
+					TweenLite.to(this.$data, 0.5, {Umoney: newVal})
+			}
 		},
 		methods:{
 			...mapActions(['setUserInfo']),
@@ -173,7 +185,8 @@
 					setTimeout(()=>{
 						// 重新获取积分信息
 						get_user_info().then(res=>{
-							this.info=res.data
+							this.info=res.data;
+							this.s_money = res.data.User_Money;
 							// 更新用户信息
 							this.setUserInfo(res.data);
 						});
@@ -246,6 +259,7 @@
 			this.reset();
 			get_user_info().then(res=>{
 				this.info = res.data
+				this.s_money = res.data.User_Money;
 			},err=>{}).catch()
 			this.get_user_money_record();
 			this.get_user_charge_record();

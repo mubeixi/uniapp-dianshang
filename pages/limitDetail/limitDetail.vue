@@ -170,7 +170,7 @@
     	        <image  class="imgg" :src="'/static/client/detail/x.png'|domain"  @click="close" ></image>
     	    </div>
 
-			<div class="t_content" v-for="(item,i) of couponList" :key="i" :style="{backgroundImage:'url('+fun.domainFn('/static/client/detail/yhq.png')+')'}">
+			<div class="t_content" v-for="(item,i) of couponList" :key="i" :style="{backgroundImage:'url('+$fun.domainFn('/static/client/detail/yhq.png')+')'}">
     	        <div class="t_left">
     	            <div class="t_left_t"><span>￥</span><span class="money">{{item.Coupon_Cash}}</span><span>{{item.Coupon_Title}}</span></div>
     	            <div class="t_left_c">{{item.Coupon_Description}}</div>
@@ -1599,13 +1599,13 @@ export default {
 	.prices{
 		width: 750rpx;
 		box-sizing: border-box;
-		height: 50rpx;
+		height: 82rpx;
 		padding-left: 20rpx;
-		padding-right: 21rpx;
+		padding-right: 22rpx;
 		display: flex;
 		justify-content: space-between;
 		background-color: #FFFFFF;
-		margin-top: 31rpx;
+		padding-top: 32rpx;
 		.btn{
 			font-size: 22rpx;
 			color: #666666;

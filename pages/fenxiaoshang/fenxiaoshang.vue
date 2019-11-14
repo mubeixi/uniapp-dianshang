@@ -3,7 +3,7 @@
 		<view class="user-info">
 			<view class="user-avator" @click="changeAvator">
 				<image  class="imgs" :src="Shop_Logo" mode=""></image>
-				<view class="xiangji" :style="{backgroundImage:'url('+fun.domainFn('/static/client/fenxiao/xj.png')+')'}" ></view>
+				<view class="xiangji" :style="{backgroundImage:'url('+$fun.domainFn('/static/client/fenxiao/xj.png')+')'}" ></view>
 			</view>
 			<view class="change" @click="changeAvator">更换头像</view>
 		</view>
