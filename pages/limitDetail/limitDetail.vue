@@ -170,7 +170,7 @@
     	        <image  class="imgg" :src="'/static/client/detail/x.png'|domain"  @click="close" ></image>
     	    </div>
 
-			<div class="t_content" v-for="(item,i) of couponList" :key="i" :style="{backgroundImage:'url('+fun.domainFn('/static/client/detail/yhq.png')+')'}">
+			<div class="t_content" v-for="(item,i) of couponList" :key="i" :style="{backgroundImage:'url('+$fun.domainFn('/static/client/detail/yhq.png')+')'}">
     	        <div class="t_left">
     	            <div class="t_left_t"><span>￥</span><span class="money">{{item.Coupon_Cash}}</span><span>{{item.Coupon_Title}}</span></div>
     	            <div class="t_left_c">{{item.Coupon_Description}}</div>

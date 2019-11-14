@@ -8,7 +8,7 @@
 
 		<view class="top">
 
-			<view class="img-wrap" :style="{backgroundImage:'url('+fun.domainFn('/static/client/jifenduihuan/star.png')+')'}">
+			<view class="img-wrap" :style="{backgroundImage:'url('+$fun.domainFn('/static/client/jifenduihuan/star.png')+')'}">
 				<view class="t-title">我的积分</view>
 				<view class="t-amount">{{userInfo.User_Integral}}</view>
 				<view class="my-change" @click="gotoMyExchange">我的兑换</view>
