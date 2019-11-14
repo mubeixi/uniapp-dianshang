@@ -41,7 +41,7 @@
 	<view class="prices">
 		<view class="price">
 			<text class="leftPrice">
-				秒杀价<text class="rmb">¥<text class="priceX">{{product.price}}</text></text>
+				<text class="rmb">¥<text class="priceX">{{product.price}}</text></text>
 			</text>
 			<text class="rightPrice">
 				￥{{product.Products_PriceX}}
@@ -75,16 +75,8 @@
             <span>正品保证</span>
         </span>
     </div>
-    <!-- 小伙伴在拼团 -->
-    <div class="pintuan">
-		<div class="pinTitle">
-			{{product.name}}
-		</div>
-		<div class="mbxtext">
-			{{product.label}}
-		</div>
-    </div>
-    <!-- 评价 -->
+
+
     <!-- 评价 -->
     <div class="comment">
         <div class="c_title">
@@ -1144,7 +1136,7 @@ export default {
 		position: relative;
         padding-left: 26upx;
 		padding-top: 20upx;
-		padding-right: 0upx;
+		padding-right: 20upx;
 		padding-bottom: 20upx;
         font-size: 22upx;
         // display: flex;
@@ -1302,7 +1294,7 @@ export default {
         }
         .rightss{
 			.countdown{
-				color:#ddd;
+				color:#FFFFFF;
 				font-size: 24rpx;
 				line-height: 37rpx;
 				overflow: hidden;
@@ -1349,7 +1341,7 @@ export default {
 			font-weight:bold;
 			color:rgba(51,51,51,1);
 			line-height:34rpx;
-			height: 68rpx;
+			max-height: 68rpx;
 			overflow: hidden;
 		}
 

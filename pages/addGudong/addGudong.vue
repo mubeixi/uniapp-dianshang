@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view class="myall">
 		<view style="height: 10px;width: 100%;"></view>
 		<view class="three">
 			<view class="haha">
@@ -81,6 +81,10 @@
 </script>
 
 <style lang="scss" scoped>
+	.myall{
+		background-color: #FFFFFF !important;
+		min-height: 100vh;
+	}
 .three{
 		height: 88rpx;
 		line-height: 88rpx;

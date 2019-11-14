@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view class="myall">
 
 		<!-- <page-title title="添加提现方式" rightHidden="true" ></page-title> -->
 		<view class="center">
@@ -263,6 +263,10 @@
 </script>
 
 <style lang="scss" scoped>
+	.myall{
+		background-color: #FFFFFF !important;
+		min-height: 100vh;
+	}
 .center{
 	margin-top: 19rpx;
 	width: 710rpx;

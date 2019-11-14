@@ -4,7 +4,9 @@
 		<view class="status_bar"></view>
 		<view class="space-div"></view>
 		<!-- #endif -->
-
+		<!-- #ifndef APP-PLUS -->
+		<view class="spaceDiv"></view>
+		<!-- #endif -->
 		<page-title class="nav-title" title="购物车"
 		:right="handleShow ? '管理' : '取消'"
 		@rightHandle="handle"
@@ -360,7 +362,8 @@ export default {
 
 <style scoped lang="scss">
 .wrap{
-
+	background-color: #F8F8F8 !important;
+	min-height: 100vh;
 	/* #ifdef APP-PLUS */
 	//padding-top: var(--status-bar-height);
 	/* #endif */
@@ -397,7 +400,7 @@ export default {
 	margin-top: 86rpx;
 	/* #endif */
 	padding-top: 30rpx;
-	margin-bottom: 160rpx;
+	padding-bottom: 160rpx;
 
 }
 .cartbox{
