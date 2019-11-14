@@ -14,7 +14,9 @@
 			<!-- #ifdef APP-PLUS -->
 			<view style="" class="space-div"></view>
 			<!-- #endif -->
-
+			<!-- #ifndef APP-PLUS -->
+			<view style="" class="spaceDiv"></view>
+			<!-- #endif -->
 			<div class="content">
 			  <div v-if="total_count>0">
 				<div class="order_msg" >
@@ -382,6 +384,10 @@ export default {
 }
 .space-div{
 	padding-top: var(--status-bar-height);
+	height: 86rpx;
+	background: white;
+}
+.spaceDiv{
 	height: 86rpx;
 	background: white;
 }
