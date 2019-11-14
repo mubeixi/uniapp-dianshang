@@ -233,6 +233,7 @@ view{
 		width: 750rpx;
 		height: 537rpx;
 		position: relative;
+		background-color: #FFFFFF;
 		.bgImg{
 			margin-top: -50rpx;
 			width: 114%;

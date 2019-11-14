@@ -18,7 +18,7 @@
 				区域代理
 			</view>
 		</view>
-		<view style="width: 100%;height: 105rpx;" ></view>
+		<view style="width: 100%;height: 105rpx;background-color: #FFFFFF;" ></view>
 		<view class="order" v-for="(item,i) of pro " :key="i">
 			<view>
 				订单号：<text>{{item.Order_ID}}</text>
