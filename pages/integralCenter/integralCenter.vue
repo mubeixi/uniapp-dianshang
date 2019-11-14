@@ -29,7 +29,7 @@
 			<image class="momo" :src="'/static/client/check/momo.png'|domain"></image>
 
 			<view class="prices">
-				{{info.User_Integral}}
+				{{intergatal}}
 			</view>
 			<view class="duihuan">
 				积分可在积分商城里兑换产品
@@ -84,6 +84,7 @@
 </template>
 
 <script>
+	import TweenLite from 'gsap'
 	import {mapGetters,mapActions} from 'vuex'
 	import {userIntegralRecord,transferIntegral,get_user_info} from '../../common/fetch.js';
 	export default {
@@ -98,19 +99,28 @@
 				integral: '',
 				info: {},
 				isClicked: false , // 是否已经点击过
+				U_intergatal: 0,
+				user_intergatal: 0 , // 积分，用于监听
 			};
 		},
 		computed: {
-
+			intergatal: function(){
+				return	parseInt(this.U_intergatal)	 
+			}
+		},
+		watch: {
+			user_intergatal: function(newVal,oldVal){
+				TweenLite.to(this.$data, 0.5, {U_intergatal: newVal})
+			}
 		},
 		onShow() {
-
-		},
-		created(){
 			this.reset();
 			this.userIntegralRecord();
+		},
+		created(){
 			get_user_info().then(res=>{
 				this.info = res.data
+				this.user_intergatal = res.data.User_Integral;
 			},err=>{}).catch()
 		},
 		// 下拉加载
@@ -155,6 +165,7 @@
 						this.setUserInfo({});
 						get_user_info().then(res=>{
 							this.info = res.data;
+							this.user_intergatal = res.data.User_Integral;
 							this.setUserInfo(this.info);
 						},err=>{}).catch()
 					},1500)
@@ -169,7 +180,7 @@
 			},
 			// 重置，防止重复
 			reset(){
-				this.recordList = [];
+				//this.recordList = [];
 				this.page = 1;
 				this.hasMore = false;
 			},
@@ -190,8 +201,12 @@
 			},
 			userIntegralRecord(){
 				userIntegralRecord({page:this.page,pageSize:this.pageSize},{errtip: false}).then(res=>{
-					let oldlist = this.recordList;
-					this.recordList = oldlist.concat(res.data);
+					if(this.page != 1) {
+						let oldlist = this.recordList;
+						this.recordList = oldlist.concat(res.data);
+					}else {
+						this.recordList = res.data;
+					}
 					if(res.totalCount > this.recordList.length) {
 						this.hasMore = true;
 					}
@@ -218,6 +233,7 @@ view{
 		width: 750rpx;
 		height: 537rpx;
 		position: relative;
+		background-color: #FFFFFF;
 		.bgImg{
 			margin-top: -50rpx;
 			width: 114%;

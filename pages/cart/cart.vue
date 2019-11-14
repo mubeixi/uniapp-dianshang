@@ -388,6 +388,10 @@ export default {
 	height: 86rpx;
 	background: white;
 }
+.spaceDiv{
+	height: 86rpx;
+	background: white;
+}
 .content {
 	/* #ifdef H5 */
 	margin-top: 86rpx;

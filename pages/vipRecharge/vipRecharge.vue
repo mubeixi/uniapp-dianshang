@@ -544,13 +544,15 @@ export default {
 			});
 		},
 		paySuccessCall(){
-
 			let _self = this;
 			uni.showToast({
 				title: '支付成功'
-			})
+			});
+			uni.navigateBack({
+				delta: 1
+			});
+			return;
 		},
-
 	}
 }
 </script>

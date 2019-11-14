@@ -13,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "gsap": "^3.0.1",
     "weixin-js-sdk": "^1.4.0-test"
   }
 }

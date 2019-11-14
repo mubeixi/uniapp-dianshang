@@ -4,12 +4,13 @@
 	 <view class="status_bar" style="background-color: #F8F8F8; z-index: 999;position: fixed;top: 0rpx;left: 0rpx;"></view>
 	  <!-- #endif -->
 	  <page-title  class="titles" title="收藏列表"  :rightHidden="rightHidden" @rightHandle="rightHandle"  :right="rightText"></page-title>
-	  <!-- #ifdef APP-PLUS -->
-	  <view class="spaces" style="height: 100rpx;"></view>
-	  <!-- #endif -->
-	  <!-- #ifndef APP-PLUS -->
-	  <view style="height: 90rpx;"></view>
-	  <!-- #endif -->
+      <!-- #ifdef APP-PLUS -->
+      <view style="" class="space-div"></view>
+      <!-- #endif -->
+      <!-- #ifndef APP-PLUS -->
+      <view style="" class="spaceDiv"></view>
+      <!-- #endif -->
+
       <div class="pro-list" v-for="(item,index) in collect_list" :key="index">
 		  <div class="mbxa"  v-if="rightClicked" @click="check(index)">
 			  <img class="imgs" :src="(checked[index].checked?'/static/client/checked.png':'/static/client/uncheck.png')|domain" >
@@ -334,4 +335,13 @@ export default {
 		height: 480rpx;
 		margin-top: 100rpx;
 	}
+    .space-div{
+        padding-top: var(--status-bar-height);
+        height: 86rpx;
+        background: white;
+    }
+    .spaceDiv{
+        height: 86rpx;
+        background: white;
+    }
 </style>
