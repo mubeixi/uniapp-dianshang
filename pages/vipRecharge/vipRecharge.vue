@@ -560,12 +560,14 @@ export default {
 <style lang="scss" scoped>
 .all{
 	box-sizing: border-box;
+	min-height: 100vh;
+	background-color: #FFFFFF !important;
 }
 .yue{
 	width: 650rpx;
 	height: 300rpx;
 	margin: 0 auto;
-	margin-top: 44rpx;
+	padding-top: 44rpx;
 	position: relative;
 	.yue-image{
 		width: 100%;

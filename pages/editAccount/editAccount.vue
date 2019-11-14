@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view class="myall">
 		<!-- #ifdef APP-PLUS -->
 <!--		<view class="status_bar" style="background-color: rgb(248, 248, 248);"></view>-->
 		<!-- #endif -->
@@ -61,6 +61,10 @@
 </script>
 
 <style scoped lang="scss">
+	.myall{
+		background-color: #FFFFFF !important;
+		min-height: 100vh;
+	}
 	.wrap {
 		padding: 25rpx 22rpx 0;
 	}

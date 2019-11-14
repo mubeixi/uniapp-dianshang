@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="myall">
 <!--    <page-title title="我的订单" rightHidden="true" class="titless"></page-title>-->
         <div class="order" v-for="(item,index) of data" :key="index" >
 			<template v-if="item.prod_list.length>0">
@@ -127,6 +127,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
+	.myall{
+		min-height: 100vh;
+		background-color: #FFFFFF !important;
+	}
 	.titless{
 		position: fixed;
 		top: 0rpx;
@@ -273,7 +277,7 @@ export default {
         }
         .btn-group {
             text-align: right;
-			margin-bottom: 30rpx;
+			padding-bottom: 30rpx;
             .span {
                 display: inline-block;
                 //width: 150rpx;

@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view class="myAll">
 		<!-- #ifdef APP-PLUS -->
 <!--		<view class="status_bar" style="background-color: #FFFFFF;"></view>-->
 		<!-- #endif -->
@@ -107,14 +107,15 @@
 </script>
 
 <style lang="scss" scoped>
-	page{
-		background-color: red !important;
+	.myAll{
+		background-color: #FFFFFF !important;
+		min-height: 100vh;
 	}
 	.defaults{
 			margin: 0 auto;
 			width: 640rpx;
 			height: 480rpx;
-			margin-top: 100rpx;
+			padding-top: 100rpx;
 		}
 .titless{
 		position: fixed;

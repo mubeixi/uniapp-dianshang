@@ -102,6 +102,8 @@
 <style lang="scss" scoped>
 .all{
 	box-sizing: border-box;
+	min-height: 100vh;
+	background-color: #FFFFFF !important;
 	.top{
 		width:750rpx;
 		height:447rpx;

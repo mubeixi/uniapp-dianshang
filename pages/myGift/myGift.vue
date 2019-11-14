@@ -1,5 +1,5 @@
 <template>
-	<view class="all" :style="{'min-height':height+'px'}">
+	<view class="all">
 		<!-- #ifdef APP-PLUS -->
 <!--		<view class="status_bar" style="background-color: rgb(248, 248, 248);"></view>-->
 		<!-- #endif -->
@@ -133,7 +133,8 @@
 
 <style lang="scss" scoped>
 .all{
-	background-color: #F8F8F8;
+	background-color: #ffffff !important;
+	min-height:100vh;
 }
 view{
 	box-sizing: border-box;
