@@ -204,8 +204,12 @@
 					page: this.moneyPage,
 					pageSize: this.pageSize
 				}).then(res=>{
-					let old = this.records;
-					this.records = old.concat(res.data);
+					if(this.moneyPage != 1) {
+						let old = this.records;
+						this.records = old.concat(res.data);
+					}else {
+						this.records = res.data;
+					}
 					if(this.records.length < res.totalCount) {
 						this.moneyMore = true;
 					}
@@ -216,8 +220,12 @@
 					page: this.chargePage,
 					pageSize: this.pageSize
 				}).then(res=>{
-					let old = this.charge_records;
-					this.charge_records = old.concat(res.data);
+					if(this.chargePage != 1) {
+						let old = this.charge_records;
+						this.charge_records = old.concat(res.data);
+					}else {
+						this.charge_records = res.data;
+					}
 					if(this.charge_records.length > res.totalCount) {
 						this.chargeMore = true;
 					}
@@ -227,8 +235,8 @@
 			reset(){
 				this.chargePage = 1;
 				this.moneyPage = 1;
-				this.charge_records = [];
-				this.records = [];
+				// this.charge_records = [];
+				// this.records = [];
 				this.moneyMore = false;
 				this.chargeMore = false;
 			}

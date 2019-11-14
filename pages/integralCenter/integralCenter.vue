@@ -114,11 +114,10 @@
 			}
 		},
 		onShow() {
-
-		},
-		created(){
 			this.reset();
 			this.userIntegralRecord();
+		},
+		created(){
 			get_user_info().then(res=>{
 				this.info = res.data
 				this.user_intergatal = res.data.User_Integral;
@@ -181,7 +180,7 @@
 			},
 			// 重置，防止重复
 			reset(){
-				this.recordList = [];
+				//this.recordList = [];
 				this.page = 1;
 				this.hasMore = false;
 			},
@@ -202,8 +201,12 @@
 			},
 			userIntegralRecord(){
 				userIntegralRecord({page:this.page,pageSize:this.pageSize},{errtip: false}).then(res=>{
-					let oldlist = this.recordList;
-					this.recordList = oldlist.concat(res.data);
+					if(this.page != 1) {
+						let oldlist = this.recordList;
+						this.recordList = oldlist.concat(res.data);
+					}else {
+						this.recordList = res.data;
+					}
 					if(res.totalCount > this.recordList.length) {
 						this.hasMore = true;
 					}
