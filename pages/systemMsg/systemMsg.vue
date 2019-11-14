@@ -1,5 +1,5 @@
 <template>
-	<view class="all" :style="{'min-height':height+'px'}">
+	<view class="all">
 
 		<!-- <page-title  title="消息" bgcolor="#ffffff" class="titless"></page-title> -->
 		<view style="height: 30rpx;"></view>

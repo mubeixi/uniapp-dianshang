@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view class="myall">
 			<view class="centers" v-for="(item,index) of pro " :key="index">
 				<view class="imgs">
 					<image :src="item.User_HeadImg" ></image>
@@ -70,7 +70,10 @@
 </script>
 
 <style lang="scss" scoped>
-
+.myall{
+	background-color: #FFFFFF !important;
+	min-height: 100vh;
+}
 .centers{
 	width: 710rpx;
 	margin: 0 auto;

@@ -1,5 +1,5 @@
 <template>
-	<view class="all" :style="{'min-height':height+'px'}">
+	<view class="all">
 		<!-- #ifdef APP-PLUS -->
 		<view class="status_bar" style="background: #fff" ><!-- 这里是状态栏 --></view>
 		<!-- #endif -->
@@ -120,6 +120,7 @@
 .all{
 	background-color: #f8f8f8;
 	box-sizing: border-box;
+	min-height: 100vh;
 }
 .content{
 	margin: 0 auto;

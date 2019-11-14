@@ -1,5 +1,5 @@
 <template>
-	<view class="team" :style="{'min-height':height+'px'}">
+	<view class="team" >
 		<!-- #ifdef APP-PLUS -->
 <!--		<view class="status_bar" style="background-color: rgb(248, 248, 248);"></view>-->
 		<!-- #endif -->
@@ -141,8 +141,10 @@
 
 <style lang="scss" scoped>
 .team{
-	// background-color: #F8F8F8;
+	background-color: #F8F8F8 !important;
+	min-height:100vh;
 	box-sizing: border-box;
+
 	.nav{
 		padding: 20rpx 70rpx;
 		padding-left: 0rpx;

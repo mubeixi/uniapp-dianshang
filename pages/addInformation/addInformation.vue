@@ -409,6 +409,8 @@
 <style lang="scss" scoped>
 .all{
 	overflow-x: hidden;
+	background-color: #FFFFFF !important;
+	min-height: 100vh;
 }
 .top{
 	width: 750rpx;

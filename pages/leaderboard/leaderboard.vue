@@ -103,6 +103,8 @@
 					¥<text>{{item.Total_Income}}</text>
 				</view>
 			</view>
+
+			<view class="contents" v-if="rank_config==0&&index==0">总部排行未公开</view>
 		</view>
 	</view>
 </template>
@@ -120,7 +122,8 @@
 				isFriend:0,
 				pro:[],
 				myInfo:'',
-				totalCount:0
+				totalCount:0,
+				rank_config:0,
 			};
 		},
 		onShow() {
@@ -161,6 +164,7 @@
 						}
 						this.totalCount=res.totalCount;
 						this.myInfo=res.data.my_rank;
+						this.rank_config=res.data.rank_config.HIncomelist_Open;
 					}
 				}).catch(e=>{
 					console.log(e)
@@ -176,7 +180,8 @@
 	}
 .wrap{
 	padding-top: 95rpx;
-	background: white;
+	background: white !important;
+	min-height: 100vh;
 }
 .all{
 	height: 95rpx;
@@ -238,6 +243,12 @@
 			width: 207rpx;
 			text-align: center;
 		}
+	}
+	.contents{
+		height: 52px;
+		line-height: 52px;
+		font-size: 16px;
+		text-align: center;
 	}
 	.content{
 		width: 690rpx;

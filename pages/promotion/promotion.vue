@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view class="myall">
 		<!-- #ifdef APP-PLUS -->
 <!--		<view class="status_bar" style="background-color: rgb(248, 248, 248);"></view>-->
 		<!-- #endif -->
@@ -163,8 +163,14 @@
 </script>
 
 <style lang="scss" scoped>
+	.myall{
+		background-color: #FFFFFF !important;
+		min-height: 100vh;
+	}
 	.top{
 		margin: 30rpx 0rpx 30rpx 20rpx;
+		margin-top:0rpx;
+		padding-top:30rpx;
 		height: 75rpx;
 		display: flex;
 		position: relative;
@@ -336,7 +342,7 @@
 		width:710rpx ;
 		margin-left: 21rpx;
 		margin-right: 19rpx;
-		margin-bottom: 50rpx;
+		padding-bottom: 50rpx;
 		.vivi{
 			font-size: 26rpx;
 			color: #666666;

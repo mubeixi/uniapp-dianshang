@@ -1,5 +1,5 @@
 <template>
-	<view class="all" :style="{'min-height':height+'px'}">
+	<view class="all" >
 
 		<!-- <page-title title="提现" rightHidden="true" bgcolor="#ffffff" ></page-title> -->
 		<view class="content">
@@ -200,6 +200,7 @@
 .all{
 	background-color: #f8f8f8;
 	width: 750rpx;
+	min-height: 100vh;
 	overflow: hidden;
 	box-sizing: border-box;
 }
