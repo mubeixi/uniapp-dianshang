@@ -117,12 +117,13 @@
 
 /* #ifdef APP-PLUS */
 page{
-	background: #f8f8f8;
+	background: red;//#f8f8f8;
 }
 /* #endif */
+
 /* #ifdef MP */
 page{
-    background: #f8f8f8;
+    background: red;//#f8f8f8;
     padding-bottom: constant(safe-area-inset-bottom);
     padding-bottom: env(safe-area-inset-bottom);
     font-size: 16px;
@@ -144,11 +145,15 @@ page{
 /* #ifdef H5 */
 /*'Hiragino Sans GB',*/
 html,body{
+    background: red;//#f8f8f8;
     font-size: 16px;
     font-family:-apple-system,'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
 }
 /* #endif */
 
+.bgwhite{
+    background: white;
+}
 .space-box{
     background-color: none;
 }
