@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view class="myall">
 		<form report-submit="true" @submit="formSubmit">
 		  <view class='xinxi'>
 			<text>收货人</text>
@@ -456,6 +456,10 @@
 </script>
 
 <style scoped lang="scss">
+	.myall{
+		background-color: #FFFFFF !important;
+		min-height: 100vh;
+	}
 	div,view{
 		box-sizing: content-box;
 	}

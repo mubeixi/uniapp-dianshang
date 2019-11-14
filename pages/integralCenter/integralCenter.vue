@@ -228,6 +228,8 @@ view{
 	background-color: #FFFFFF;
 	width: 750rpx;
 	overflow: hidden;
+	min-height: 100vh;
+	background-color: #FFFFFF !important;
 }
 	.top{
 		width: 750rpx;

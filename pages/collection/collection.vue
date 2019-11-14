@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="all">
 	  <!-- #ifdef APP-PLUS -->
 	 <view class="status_bar" style="background-color: #F8F8F8; z-index: 999;position: fixed;top: 0rpx;left: 0rpx;"></view>
 	  <!-- #endif -->
@@ -212,6 +212,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
+    .all{
+        background-color: #FFFFFF;
+        min-height: 100vh;
+    }
 	.spaces{
 		margin-top: var(--status-bar-height);
 	}

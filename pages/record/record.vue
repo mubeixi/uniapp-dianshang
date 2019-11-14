@@ -1,5 +1,5 @@
 <template>
-	<view class="all" :style="{'min-height':height+'px'}">
+	<view class="all" >
 		<!-- <page-title title="申请记录" rightHidden="true" bgcolor="#ffffff"></page-title> -->
 		<view class="main" v-for="(item,index) of data" :key="index">
 			<view class="fir">
@@ -100,6 +100,7 @@
 <style lang="scss" scoped>
 	.all{
 		background-color: #f8f8f8;
+		min-height: 100vh;
 	}
 	.main{
 		width: 710rpx;

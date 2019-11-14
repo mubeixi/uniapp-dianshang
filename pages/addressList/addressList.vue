@@ -1,6 +1,6 @@
 <template>
 
-	<view>
+	<view class="myall">
 		<radio-group class="radio-group" @change="radioChange">
 		  <label class="radio" :class="!check_flag ? 'no-redio' : ''" v-for="item in addresslist" :key="">
 			<radio :value="item.Address_ID" color="#F43131" :checked="item.Address_ID == check_address_id" v-if="check_flag" :disabled="!check_flag"/>
@@ -179,6 +179,10 @@
 </script>
 
 <style scoped lang="scss">
+	.myall{
+		background-color: #FFFFFF !important;
+		min-height: 100vh;
+	}
 .radio{width: 750rpx;padding: 20rpx 0; overflow: hidden; display: flex; flex-flow: row;align-items:center;border-bottom: 15rpx #f4f4f4 solid;}
 .radio radio{ width: 14%; text-align: center; }
 

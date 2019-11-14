@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view class="myall">
 		<view class="top">
 
 			<image class="back" :src="'/static/client/fenxiao/top.png'|domain" ></image>
@@ -109,6 +109,10 @@
 </script>
 
 <style lang="scss" scoped>
+	.myall{
+		background-color: #FFFFFF !important;
+		min-height: 100vh;
+	}
 .top{
 	width: 750rpx;
 	height: 233rpx;

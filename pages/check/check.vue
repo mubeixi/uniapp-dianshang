@@ -598,7 +598,7 @@ export default {
 		}
     }
 	.container{
-		margin-bottom: 60px;
+		padding-bottom: 60px;
 	}
     .loc_icon {
         width: 41rpx;

@@ -1,5 +1,5 @@
 <template>
-	<view class="all" :style="{'min-height':height+'px'}">
+	<view class="all">
 
 		<!-- <page-title  title="消息" bgcolor="#ffffff" class="titless"></page-title> -->
 		<view style="height: 30rpx;"></view>
@@ -87,6 +87,7 @@
 .all{
 	background-color: #F8F8F8;
 	box-sizing: border-box;
+	min-height: 100vh;
 }
 .centers{
 	margin: 0 auto;

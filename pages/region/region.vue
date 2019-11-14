@@ -371,7 +371,7 @@
 		margin-right: 52rpx;
 		font-size: 24rpx;
 		color: #666666;
-		margin-bottom: 100rpx;
+		padding-bottom: 100rpx;
 		.text{
 			color: #F43131;
 		}

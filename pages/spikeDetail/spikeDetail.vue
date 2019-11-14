@@ -22,7 +22,7 @@
     <!-- 产品信息描述 -->
     <div class="section1">
         <div class="leftss">
-			秒杀
+			{{product.label}}
         </div>
         <div class="rightss" v-if="isKai">
             <div class="countdown">
@@ -75,10 +75,10 @@
     <!-- 小伙伴在拼团 -->
     <div class="pintuan">
         <div class="pinTitle">
-            {{product.name}}
+            活动介绍
         </div>
 		<div class="mbxtext">
-			{{product.label}}
+			{{product.description}}
 		</div>
     </div>
     <!-- 评价 -->
@@ -1185,7 +1185,7 @@ export default {
 		position: relative;
         padding-left: 26upx;
 		padding-top: 20upx;
-		padding-right: 0upx;
+		padding-right: 20upx;
 		padding-bottom: 20upx;
         font-size: 22upx;
         // display: flex;
@@ -1343,7 +1343,7 @@ export default {
         }
         .rightss{
 			.countdown{
-				color:#ddd;
+				color:#FFFFFF;
 				font-size: 24rpx;
 				line-height: 37rpx;
 				overflow: hidden;
@@ -1389,7 +1389,7 @@ export default {
 			font-weight:bold;
 			color:rgba(51,51,51,1);
 			line-height:34rpx;
-			height: 68rpx;
+			max-height: 68rpx;
 			overflow: hidden;
 		}
 

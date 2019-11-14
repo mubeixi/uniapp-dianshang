@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view class="myall">
 		<view class="user-info">
 			<view class="user-avator" @click="changeAvator">
 				<image  class="imgs" :src="Shop_Logo" mode=""></image>
@@ -159,6 +159,10 @@
 </script>
 
 <style scoped lang="scss">
+	.myall{
+		background-color: #FFFFFF !important;
+		min-height: 100vh;
+	}
 	.user-info {
 		padding-top: 47rpx;
 		text-align: center;
