@@ -11,93 +11,96 @@
 			</div>
 		</div>
 		<!-- <page-title title="付款" :rightHidden="true" bgcolor="#ffffff"></page-title> -->
-		<div class="state">
+		<div class="state bgwhite">
 			<image class="img" :src="'/static/client/wait.png'|domain" />
 			<span class="state-desc">等待买家付款</span>
 		</div>
-		<div class="address" v-if="orderInfo.Order_IsVirtual == 0">
+		<div class="address bgwhite" v-if="orderInfo.Order_IsVirtual == 0">
 			<image class="loc_icon" :src="'/static/client/location.png'|domain" alt="" />
 			<div class="add_msg">
 				<div class="name">收货人：{{orderInfo.Address_Name}} <span>{{orderInfo.Address_Mobile}}</span></div>
 				<div class="location">收货地址：{{orderInfo.Address_Province_name}}{{orderInfo.Address_City_name}}{{orderInfo.Address_Area_name}}{{orderInfo.Address_Town_name}}</div>
 			</div>
 		</div>
-		<div class="order_msg">
-			<div class="biz_msg">
-				<image :src="orderInfo.ShopLogo" class="biz_logo" alt="" />
-				<span class="biz_name">{{orderInfo.ShopName}}</span>
-			</div>
-			<div class="pro" v-for="(pro,pro_id) in orderInfo.prod_list" :key="pro_id">
-				<image class="pro-img" :src="pro.prod_img" alt="" />
-				<div class="pro-msg">
-					<div class="pro-name">{{pro.prod_name}}</div>
-					<div class="attr" v-if="pro.attr_info"><span>{{pro.attr_info.attr_name}}</span></div>
-					<div class="pro-price"><span>￥</span>{{pro.prod_price}} <span class="amount">x<span class="num">{{pro.prod_count}}</span></span></div>
+		<div class="container bgwhite">
+			<div class="order_msg">
+				<div class="biz_msg">
+					<image :src="orderInfo.ShopLogo" class="biz_logo" alt="" />
+					<span class="biz_name">{{orderInfo.ShopName}}</span>
+				</div>
+				<div class="pro" v-for="(pro,pro_id) in orderInfo.prod_list" :key="pro_id">
+					<image class="pro-img" :src="pro.prod_img" alt="" />
+					<div class="pro-msg">
+						<div class="pro-name">{{pro.prod_name}}</div>
+						<div class="attr" v-if="pro.attr_info"><span>{{pro.attr_info.attr_name}}</span></div>
+						<div class="pro-price"><span>￥</span>{{pro.prod_price}} <span class="amount">x<span class="num">{{pro.prod_count}}</span></span></div>
+					</div>
 				</div>
 			</div>
-		</div>
 
-		<div class="other">
-			<div class="bd">
-				<div class="o_title">
-					<span>运费选择</span>
-					<span style="text-align:right;" class="c8">
+			<div class="other">
+				<div class="bd">
+					<div class="o_title">
+						<span>运费选择</span>
+						<span style="text-align:right;" class="c8">
 						<span>{{orderInfo.Order_Shipping.Express}}</span>
 						<span> {{orderInfo.Order_Shipping.Price > 0 ? (' 运费：' + orderInfo.Order_Shipping.Price) : ' 免运费'}}</span>
 					</span>
+					</div>
 				</div>
 			</div>
-		</div>
-		<div class="other" v-if="pagefrom != 'gift'">
-			<div class="bd">
-				<div class="o_title">
-					<span>优惠券选择</span>
-					<span class="c8">{{orderInfo.Coupon_Money}}元优惠券</span>
+			<div class="other" v-if="pagefrom != 'gift'">
+				<div class="bd">
+					<div class="o_title">
+						<span>优惠券选择</span>
+						<span class="c8">{{orderInfo.Coupon_Money}}元优惠券</span>
+					</div>
 				</div>
 			</div>
-		</div>
-		<div class="other" v-if="pagefrom != 'gift'">
-			<div class="bd">
-				<div class="o_title">
-					<span>积分抵扣</span>
-					<span class="c8">{{orderInfo.Integral_Money}}</span>
+			<div class="other" v-if="pagefrom != 'gift'">
+				<div class="bd">
+					<div class="o_title">
+						<span>积分抵扣</span>
+						<span class="c8">{{orderInfo.Integral_Money}}</span>
+					</div>
 				</div>
 			</div>
-		</div>
-		<div class="other" v-if="orderInfo.is_use_money && orderInfo.is_use_money == 1">
-			<div class="bd">
-				<div class="o_title">
-					<span>是否使用余额</span>
-					<switch :checked="moneyChecked" size='25px' color="#04B600" @change="moneyChange" />
-				</div>
-				<!-- <div class="o_desc c8">{{orderInfo.Order_Yebc}}</div> -->
-				<input type="number" v-if="openMoney" :value="user_money" :disabled="!openMoney" :placeholder="orderInfo.Order_Yebc"
-				 @blur="moneyInputHandle" />
-			</div>
-		</div>
-		<div class="other" v-if="pagefrom != 'gift'">
-			<div class="bd">
-				<div class="o_title">
-					<span>是否开具发票</span>
-					<switch :checked="invoiceChecked" size='25px' color="#04B600" @change="invoiceChange" />
-				</div>
-				<!-- <div class="o_desc c8">{{orderInfo.Order_InvoiceInfo}}</div> -->
-				<input type="text" v-if="openInvoice" v-model="invoice_info" :disabled="!openInvoice" />
-			</div>
-		</div>
-		<div class="other">
-			<div class="bd">
-				<div class="o_title  words">
-					<span>买家留言</span>
-					<input class="msg c8" v-model="order_remark" >
+			<div class="other" v-if="orderInfo.is_use_money && orderInfo.is_use_money == 1">
+				<div class="bd">
+					<div class="o_title">
+						<span>是否使用余额</span>
+						<switch :checked="moneyChecked" size='25px' color="#04B600" @change="moneyChange" />
+					</div>
+					<!-- <div class="o_desc c8">{{orderInfo.Order_Yebc}}</div> -->
+					<input type="number" v-if="openMoney" :value="user_money" :disabled="!openMoney" :placeholder="orderInfo.Order_Yebc"
+						   @blur="moneyInputHandle" />
 				</div>
 			</div>
+			<div class="other" v-if="pagefrom != 'gift'">
+				<div class="bd">
+					<div class="o_title">
+						<span>是否开具发票</span>
+						<switch :checked="invoiceChecked" size='25px' color="#04B600" @change="invoiceChange" />
+					</div>
+					<!-- <div class="o_desc c8">{{orderInfo.Order_InvoiceInfo}}</div> -->
+					<input type="text" v-if="openInvoice" v-model="invoice_info" :disabled="!openInvoice" />
+				</div>
+			</div>
+			<div class="other">
+				<div class="bd">
+					<div class="o_title  words">
+						<span>买家留言</span>
+						<input class="msg c8" v-model="order_remark" >
+					</div>
+				</div>
+			</div>
+			<div class="total">
+				<span>共<span>{{orderInfo.prod_list.length}}</span>件商品</span>
+				<span class="mbx">小计：<span class="money moneys">￥</span><span class="money">{{orderInfo.Order_Fyepay}}</span></span>
+			</div>
 		</div>
-		<div class="total">
-			<span>共<span>{{orderInfo.prod_list.length}}</span>件商品</span>
-			<span class="mbx">小计：<span class="money moneys">￥</span><span class="money">{{orderInfo.Order_Fyepay}}</span></span>
-		</div>
-		<div style="height:100px;background:#efefef;"></div>
+
+		<div style="height:100px;background:#f8f8f8;"></div>
 		<div class="order_total">
 			<div class="totalinfo">
 				<div class="info">共{{orderInfo.prod_list.length}}件商品 总计：<span class="mbxa">￥<span>{{orderInfo.Order_Fyepay}}</span></span></div>
@@ -813,7 +816,7 @@ return;
 		font-size: 28rpx;
 		display: flex;
 		align-items: center;
-		border-top: 30rpx solid #F3F3F3;
+		border-top: 30rpx solid #f8f8f8;
 
 		.img {
 			width: 60rpx;
@@ -996,7 +999,7 @@ return;
 		display: flex;
 		justify-content: flex-end;
 		align-items: center;
-		margin: 40rpx 0;
+		padding: 40rpx 0;
 		font-size: 24rpx;
 		padding-right: 44rpx;
 	}

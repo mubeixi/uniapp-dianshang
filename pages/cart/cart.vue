@@ -2,85 +2,86 @@
 	<div class="wrap">
 		<!-- #ifdef APP-PLUS -->
 		<view class="status_bar"></view>
+		<view class="space-div"></view>
 		<!-- #endif -->
 
-		<div>
-			<page-title class="nav-title" title="购物车"
-			:right="handleShow ? '管理' : '取消'"
-			@rightHandle="handle"
-			bgcolor="#ffffff"
-			:hiddenBack="true"
-			:rightHidden="manage" ></page-title>
-			<!-- #ifdef APP-PLUS -->
-			<view style="" class="space-div"></view>
-			<!-- #endif -->
+		<page-title class="nav-title" title="购物车"
+		:right="handleShow ? '管理' : '取消'"
+		@rightHandle="handle"
+		bgcolor="#ffffff"
+		:hiddenBack="true"
+		:rightHidden="manage" ></page-title>
 
-			<div class="content">
-			  <div v-if="total_count>0">
-				<div class="order_msg" >
-					<div class="biz_msg">
-					   <div class="mbxa" @click="checkAll">
-							<image class="img" :src="(checkAllFlag ? '/static/client/checked.png' : '/static/client/uncheck.png')|domain" />
 
-					   </div>
-						<img :src="shop_config.ShopLogo" class="biz_logo" alt />
-						<text class="biz_name">{{shop_config.ShopName}}</text>
-					</div>
-					<block  v-for="(pro,pro_id) in CartList" :key="pro_id">
-						<block v-for="(attr,attr_id) in pro" :key="attr_id">
-							<div class="pro">
-								<div class="mbxa" @click="change(pro_id,attr_id)">
-									<image class="img" :src="(attr.checked ? '/static/client/checked.png' : '/static/client/uncheck.png')|domain" />
+		<div class="content">
+		  <div class="cartbox" v-if="total_count>0">
+			<div class="order_msg" >
+				<div class="biz_msg">
+				   <div class="mbxa" @click="checkAll">
+						<image class="img" :src="(checkAllFlag ? '/static/client/checked.png' : '/static/client/uncheck.png')|domain" />
+
+				   </div>
+					<img :src="shop_config.ShopLogo" class="biz_logo" alt />
+					<text class="biz_name">{{shop_config.ShopName}}</text>
+				</div>
+				<block  v-for="(pro,pro_id) in CartList" :key="pro_id">
+					<block v-for="(attr,attr_id) in pro" :key="attr_id">
+						<div class="pro">
+							<div class="mbxa" @click="change(pro_id,attr_id)">
+								<image class="img" :src="(attr.checked ? '/static/client/checked.png' : '/static/client/uncheck.png')|domain" />
+							</div>
+							<img class="pro-img" :src="attr.ImgPath" @click="gotoDetail(pro_id)"/>
+							<div class="pro-msg">
+								<div class="pro-name" @click="gotoDetail(pro_id)">{{attr.ProductsName}}</div>
+								<div class="attr" v-if="attr.Productsattrstrval">
+									<!-- <span v-for="(item,index) in attr.Productsattrstrval" :key="index">{{item}}</span> -->
+									<span>{{attr.Productsattrstrval}}</span>
 								</div>
-								<img class="pro-img" :src="attr.ImgPath" @click="gotoDetail(pro_id)"/>
-								<div class="pro-msg">
-									<div class="pro-name" @click="gotoDetail(pro_id)">{{attr.ProductsName}}</div>
-									<div class="attr" v-if="attr.Productsattrstrval">
-										<!-- <span v-for="(item,index) in attr.Productsattrstrval" :key="index">{{item}}</span> -->
-										<span>{{attr.Productsattrstrval}}</span>
-									</div>
-									<div class="pro-price">
-										<span class="span">￥</span>{{attr.ProductsPriceX}}
-										<span class="amount">
-										  <span class="plus" :class="attr.Qty == 1 ? 'disabled' : ''" @click="updateCart(pro_id,attr_id,-1)">-</span>
-										  <span class="num">{{attr.Qty}}</span>
-										  <span class="plus" @click="updateCart(pro_id,attr_id,1)">+</span>
-										</span>
-									</div>
+								<div class="pro-price">
+									<span class="span">￥</span>{{attr.ProductsPriceX}}
+									<span class="amount">
+									  <span class="plus" :class="attr.Qty == 1 ? 'disabled' : ''" @click="updateCart(pro_id,attr_id,-1)">-</span>
+									  <span class="num">{{attr.Qty}}</span>
+									  <span class="plus" @click="updateCart(pro_id,attr_id,1)">+</span>
+									</span>
 								</div>
 							</div>
-						</block>
+						</div>
 					</block>
-				</div>
-			  </div>
-			  <div v-else class="none">
-				<image class="img" :src="'/static/client/box.png'|domain" />
-				<div><span>购物车空空如也</span><span class="tobuy" @click="gotoBuy">去逛逛</span></div>
-			  </div>
-			  <!-- 猜你喜欢 -->
+				</block>
+			</div>
+		  </div>
+		  <div v-else class="none">
+			<image class="img" :src="'/static/client/box.png'|domain" />
+			<div><span>购物车空空如也</span><span class="tobuy" @click="gotoBuy">去逛逛</span></div>
+		  </div>
+		  <!-- 猜你喜欢 -->
+		  <div class=" container">
 			  <div class="fenge"><span class="red"></span><span class="caini">猜你喜欢</span><span class="red"></span></div>
 			  <div class="prolist">
-				<div class="pro-item" v-for="(item,index) in prodList" :key="index" @click="goProductDetail(item.Products_ID,item.is_pintuan)" >
-				  <img :src="item.ImgPath" alt="">
-				  <div class="item-name">{{item.Products_Name}}</div>
-				  <div class="price">
-					<span class="n_price"><span>￥</span>{{item.Products_PriceX}}</span>
-					<span class="o_price"><span>￥</span>{{item.Products_PriceY}}</span>
+				  <div class="pro-item" v-for="(item,index) in prodList" :key="index" @click="goProductDetail(item.Products_ID,item.is_pintuan)" >
+					  <img :src="item.ImgPath" alt="">
+					  <div class="item-name">{{item.Products_Name}}</div>
+					  <div class="price">
+						  <span class="n_price"><span>￥</span>{{item.Products_PriceX}}</span>
+						  <span class="o_price"><span>￥</span>{{item.Products_PriceY}}</span>
+					  </div>
 				  </div>
-				</div>
 			  </div>
-			</div>
-			<!-- 购物车结算 -->
-			<div class="checkout" v-if="!manage">
-			  <div class="mbxa"  @click="checkAll">
-				<image class="img" :src="(checkAllFlag ? '/static/client/checked.png' : '/static/client/uncheck.png')|domain"  style="margin-right: 17rpx;" alt="" />
-					全选
-			  </div>
-			  <div class="total" v-if="handleShow">合计：<span>￥<span>{{totalPrice}}</span></span></div>
-			  <div class="checkbtn" @click="submit">{{handleShow?'结算':'删除'}} </div>
-			</div>
-		   <!-- <tabs style="background:#F3F3F3;"></tabs> -->
+		  </div>
+
 		</div>
+		<!-- 购物车结算 -->
+		<div class="checkout" v-if="!manage">
+		  <div class="mbxa"  @click="checkAll">
+			<image class="img" :src="(checkAllFlag ? '/static/client/checked.png' : '/static/client/uncheck.png')|domain"  style="margin-right: 17rpx;" alt="" />
+				全选
+		  </div>
+		  <div class="total" v-if="handleShow">合计：<span>￥<span>{{totalPrice}}</span></span></div>
+		  <div class="checkbtn" @click="submit">{{handleShow?'结算':'删除'}} </div>
+		</div>
+	   <!-- <tabs style="background:#F3F3F3;"></tabs> -->
+
   </div>
 </template>
 
@@ -360,7 +361,9 @@ export default {
 <style scoped lang="scss">
 .wrap{
 
+	/* #ifdef APP-PLUS */
 	//padding-top: var(--status-bar-height);
+	/* #endif */
 }
 .status_bar{
 	position: fixed;
@@ -370,7 +373,7 @@ export default {
 	background: white;
 }
 .nav-title {
-	/*background: #fff !important;*/
+
 	position: fixed;
 	top: 0rpx;
 	left: 0rpx;
@@ -386,8 +389,15 @@ export default {
 	background: white;
 }
 .content {
-	padding: 20rpx 20rpx 160rpx;
+	/* #ifdef H5 */
+	margin-top: 86rpx;
+	/* #endif */
+	padding-top: 30rpx;
+	margin-bottom: 160rpx;
 
+}
+.cartbox{
+	margin: 0 30rpx;
 }
 .van-checkbox {
   margin-right: 5px;
@@ -397,7 +407,7 @@ export default {
         padding: 20rpx 19rpx 0px;
         background: #fff;
         overflow: hidden;
-        margin-bottom: 20px;
+        //margin-bottom: 20px;
     }
     .biz_msg {
         display: flex;
@@ -498,11 +508,17 @@ export default {
 		}
     }
     /* 订单信息 end */
+
+
     /* 猜你喜欢 */
+	.container{
+		margin-top: 30rpx;
+		padding: 0 20rpx;
+	}
     .fenge {
       text-align: center;
-      margin: 60rpx 0 30rpx;
-	  font-size: 0rpx;
+      padding: 30rpx 0;
+
 	  display: flex;
 	  justify-content: center;
 	  align-items: center;

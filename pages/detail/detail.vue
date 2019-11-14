@@ -62,7 +62,7 @@
     </div>
 
     <!-- 评价 -->
-    <div class="comment">
+    <div class="comment bgwhite">
         <div class="c_title">
             <span>评价</span>
             <div class="right" @click="gotoComments">查看全部  <image style="width: 19rpx;height: 30rpx;margin-left: 20rpx;" :src="'/static/client/detail/right.png'|domain" alt="" /></div>
@@ -94,7 +94,7 @@
     </div>
     <!-- 商品详情 -->
     <div class="pro_detail" v-if="isLoad">
-        <div class="p_detail_title">商品详情</div>
+        <div class="p_detail_title bgwhite">商品详情</div>
 		<!-- #ifdef H5||APP-PLUS -->
 		<div v-html="formatRichTexts(product.Products_Description)" class="p_detail_des"></div>
 		<!-- #endif -->
