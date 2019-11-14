@@ -1599,13 +1599,13 @@ export default {
 	.prices{
 		width: 750rpx;
 		box-sizing: border-box;
-		height: 50rpx;
+		height: 82rpx;
 		padding-left: 20rpx;
-		padding-right: 21rpx;
+		padding-right: 22rpx;
 		display: flex;
 		justify-content: space-between;
 		background-color: #FFFFFF;
-		margin-top: 31rpx;
+		padding-top: 32rpx;
 		.btn{
 			font-size: 22rpx;
 			color: #666666;
