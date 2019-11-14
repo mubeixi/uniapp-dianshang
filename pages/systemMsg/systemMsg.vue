@@ -87,6 +87,7 @@
 .all{
 	background-color: #F8F8F8;
 	box-sizing: border-box;
+	min-height: 100vh;
 }
 .centers{
 	margin: 0 auto;

@@ -1,5 +1,5 @@
 <template>
-	<view :height="height + 'px'">
+	<view class="all">
 		<!-- #ifdef APP-PLUS -->
 		<view class="status_bar" style="background-color: #FF5C33;"><!-- 这里是状态栏 --></view>
 		<!-- #endif -->
@@ -47,7 +47,6 @@
 			return {
 				prod_list: [],
 				hasMore: false,
-				height: 0,
 				psdInput: false,
 				Gift_ID: 0,
 				isClicked: false, // 防止重复点击
@@ -63,11 +62,7 @@
 
 		},
 		onLoad(){
-			uni.getSystemInfo({
-				success: res=>{
-					this.height = res.screenHeight;
-				}
-			})
+
 		},
 		methods: {
 			reset(){
@@ -171,6 +166,11 @@
 </script>
 
 <style scoped lang="scss">
+	.all{
+		min-height: 100vh;
+		background-color: #FFFFFF !important;
+
+	}
 	.top {
 		position: relative;
 		height: 210rpx;

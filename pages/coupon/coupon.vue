@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view class="myall">
 <!-- 		<view class="nav">
 			<view class="views" :class="checked==0?'checked':''" @click="change(0)">
 				全部
@@ -145,6 +145,10 @@
 </script>
 
 <style lang="scss" scoped>
+	.myall{
+		background-color: #FFFFFF !important;
+		min-height: 100vh;
+	}
 .titless{
 		position: fixed;
 		top: 0rpx;
@@ -272,7 +276,7 @@
 
 .lasts{
 	font-size: 20rpx;
-	margin-top: 30rpx;
+	padding-top: 30rpx;
 	width: 100%;
 	text-align: center;
 	display: flex;

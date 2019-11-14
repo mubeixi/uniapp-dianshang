@@ -262,6 +262,7 @@ export default {
 <style scoped lang="scss">
 	.haihong{
 		background-color: #ffffff !important;
+		min-height: 100vh;
 	}
 	.titless{
 		position: fixed;
@@ -390,7 +391,7 @@ export default {
        }
         .total {
             font-size: 24rpx;
-            margin: 40rpx 0rpx;
+            padding: 40rpx 0rpx;
 			margin-right: 15rpx;
             .price {
                 color: red;

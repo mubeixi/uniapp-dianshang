@@ -1,5 +1,5 @@
 <template>
-	<view v-if="pro.img_url">
+	<view v-if="pro.img_url" class="myall">
 		<!-- #ifdef APP-PLUS -->
 				<view class="status_bar" style="background:#2e323c;"></view>
 		<!-- #endif -->
@@ -119,6 +119,10 @@
 </script>
 
 <style lang="scss" scoped>
+.myall{
+	min-height: 100vh;
+	background-color: #FFFFFF !important;
+}
 .top{
 	width: 750rpx;
 	height: 404rpx;
