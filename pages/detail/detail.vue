@@ -1270,13 +1270,14 @@ export default {
     }
     /* 产品描述部分 start */
     .section1 {
+		background: white;
         padding: 0 20rpx 20rpx;
         border-bottom: 20rpx solid #efefef;
 		padding-bottom: 0rpx;
     }
     .price {
-        margin-top: 38rpx;
-		margin-bottom: 29rpx;
+        padding-top: 38rpx;
+		padding-bottom: 29rpx;
     }
     .price .mm {
         font-size: 20rpx;
