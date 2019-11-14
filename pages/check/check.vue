@@ -1,7 +1,7 @@
 <template>
     <view v-if="loading">
       <!--  <pagetitle title="提交订单"></pagetitle> -->
-        <view class="address" v-if="orderInfo.is_virtual == 0 " @click="goAddressList">
+        <view class="address bgwhite" v-if="orderInfo.is_virtual == 0 " @click="goAddressList">
             <image class="loc_icon" :src="'/static/client/location.png'|domain" alt="" ></image>
             <view class="add_msg" v-if="addressinfo.Address_Name">
                 <view class="name">收货人：{{addressinfo.Address_Name}} <span>{{addressinfo.Address_Mobile | formatphone}}</span></view>
@@ -12,125 +12,144 @@
 						</view>
             <image class="right" :src="'/static/client/right.png'|domain" alt="" ></image>
         </view>
-		<view class="biz_msg">
-			<image :src="orderInfo.ShopLogo" class="biz_logo" alt="" />
-			<span class="biz_name">{{orderInfo.ShopName}}</span>
-		</view>
-        <view class="order_msg">
-					<block  v-for="(pro,pro_id) in orderInfo.CartList" :key="pro_id">
-						<view class="pro" v-for="(attr,attr_id) in pro" :key="attr_id">
-							<img class="pro-img" :src="attr.ImgPath" alt="">
-							<view class="pro-msg">
-								<view class="pro-name">{{attr.ProductsName}}</view>
-								<view class="attr" v-if="attr.Productsattrstrval"><span>{{attr.Productsattrstrval}}</span></view>
-								<view class="pro-price"><span>￥</span>{{attr.ProductsPriceX}} <span class="amount">x<span class="num">{{attr.Qty}}</span></span></view>
-							</view>
+
+		<div class="container bgwhite">
+			<view class="biz_msg">
+				<image :src="orderInfo.ShopLogo" class="biz_logo" alt="" />
+				<span class="biz_name">{{orderInfo.ShopName}}</span>
+			</view>
+			<view class="order_msg">
+				<block  v-for="(pro,pro_id) in orderInfo.CartList" :key="pro_id">
+					<view class="pro" v-for="(attr,attr_id) in pro" :key="attr_id">
+						<img class="pro-img" :src="attr.ImgPath" alt="">
+						<view class="pro-msg">
+							<view class="pro-name">{{attr.ProductsName}}</view>
+							<view class="attr" v-if="attr.Productsattrstrval"><span>{{attr.Productsattrstrval}}</span></view>
+							<view class="pro-price"><span>￥</span>{{attr.ProductsPriceX}} <span class="amount">x<span class="num">{{attr.Qty}}</span></span></view>
 						</view>
-					</block>
-        </view>
-        <view class="other" v-if="orderInfo.is_virtual == 0">
-            <view class="bd">
-                <view class="o_title" @click="changeShip">
-                    <span>运费选择</span>
-                    <span style="text-align:right; color: #888;" >
+					</view>
+				</block>
+			</view>
+			<view class="other" v-if="orderInfo.is_virtual == 0">
+				<view class="bd">
+					<view class="o_title" @click="changeShip">
+						<span>运费选择</span>
+						<span style="text-align:right; color: #888;" >
 						<span>{{shipping_name?(shipping_name + ' ' + (orderInfo.Order_Shipping.Price > 0 ? orderInfo.Order_Shipping.Price : '免运费')):'请选择物流'}}</span>
                         <image  class="right" :src="'/static/client/right.png'|domain" alt=""></image>
                     </span>
-                </view>
-            </view>
-        </view>
-		<view class="other" v-if="orderInfo.is_virtual == 1">
-			<view class="bd">
-                <view class="o_title  words">
-                    <span>购买人姓名</span>
-                    <input class="inputs" type="text" v-model="user_name"  placeholder="请填写姓名">
-                </view>
-            </view>
-		</view>
-		<view class="other" v-if="orderInfo.is_virtual == 1">
-			<view class="bd">
-                <view class="o_title  words">
-                    <span>购买人手机号</span>
-                    <input class="inputs" type="text" v-model="user_mobile"  placeholder="请填写手机号码">
-                </view>
-            </view>
-		</view>
-        <view class="other" v-if="couponlist.length > 0">
-            <view class="bd">
-                <view class="o_title" @click="changeCoupon">
-                    <span>优惠券选择</span>
-                    <span style="text-align: right; color: #888;display: flex;align-items: center;">
+					</view>
+				</view>
+			</view>
+			<view class="other" v-if="orderInfo.is_virtual == 1">
+				<view class="bd">
+					<view class="o_title  words">
+						<span>购买人姓名</span>
+						<input class="inputs" type="text" v-model="user_name"  placeholder="请填写姓名">
+					</view>
+				</view>
+			</view>
+			<view class="other" v-if="orderInfo.is_virtual == 1">
+				<view class="bd">
+					<view class="o_title  words">
+						<span>购买人手机号</span>
+						<input class="inputs" type="text" v-model="user_mobile"  placeholder="请填写手机号码">
+					</view>
+				</view>
+			</view>
+			<view class="other" v-if="couponlist.length > 0">
+				<view class="bd">
+					<view class="o_title" @click="changeCoupon">
+						<span>优惠券选择</span>
+						<span style="text-align: right; color: #888;display: flex;align-items: center;">
 						<span >{{couponlist.length>0?(coupon_desc?coupon_desc:'您有优惠券使用'): '暂无可用优惠券'}}</span>
 						<image  :src="'/static/client/right.png'|domain" class="right" alt=""></image>
 					</span>
-                </view>
-            </view>
-        </view>
-        <view class="other" v-if="orderInfo.max_diyong_intergral > 0">
-            <view class="bd">
-                <view class="o_title">
-                    <span>是否参与积分抵扣</span>
-                    <switch :checked="intergralChecked" color="#04B600" @change="intergralSwitchChange" />
-                </view>
-                <view class="o_de" v-if="intergralChecked">您当前共有 <text>{{userInfo.User_Integral}}</text>积分，每<text>{{orderInfo.Integral_Buy}}</text>积分可以抵扣<text>1</text>元，本次可使用<text>{{orderInfo.max_diyong_intergral}}</text>积分,总共可抵<text>{{orderInfo.max_Integral_Money}}</text>元</view>
-            </view>
-        </view>
-        <view class="other" v-if="orderInfo.is_use_money == 1">
-            <view class="bd">
-                <view class="o_title">
-                    <span>是否使用余额</span>
-                    <switch :checked="userMoneyChecked" color="#04B600" @change="userMoneyChange" />
-                </view>
-				<view class="o_de">您当前最多使用余额: <text>{{userInfo.User_Money < orderInfo.Order_TotalPrice ? userInfo.User_Money : orderInfo.Order_TotalPrice}}</text></view>
-                <input v-if="userMoneyChecked" @focus="postData.use_money = 0" v-model.number="postData.use_money" class="o_desc" placeholder="请输入金额" type="number" @blur="confirm_user_money">
-            </view>
-        </view>
-        <view class="other">
-            <view class="bd">
-                <view class="o_title">
-                    <span>是否开具发票</span>
-					<switch :checked="faPiaoChecked" color="#04B600" @change="faPiaoChange" />
-                </view>
-				<input v-if="faPiaoChecked"  @blur="faPiaoConfirm" type="text" class="o_desc" placeholder="请输入发票抬头和纳税人识别号" />
-            </view>
-        </view>
-        <view class="other">
-            <view class="bd">
-                <view class="o_title  words">
-                    <span>买家留言</span>
-                    <input class="inputs" type="text"  @blur="remarkConfirm" placeholder="请填写留言内容">
-                </view>
-            </view>
-        </view>
-        <!-- <view class="total">
-            <span style="margin-right:20rpx;">共<span>{{orderInfo.total_count}}</span>件商品</span>
-            <span>小计：<span>￥</span><span class="money">{{orderInfo.Order_TotalPrice}}</span></span>
-        </view> -->
-		<view style="height:100rpx;">
-			<view class="order_total">
-				<view class="totalinfo">
-					<view class="info">共{{orderInfo.prod_count}}件商品 总计：<text class="money"><text class="m_icon">￥</text> {{orderInfo.Order_Fyepay}}</text></view>
-					<view class="tips">*本次购物一共可获得{{orderInfo.Integral_Get}}积分</view>
+					</view>
 				</view>
-				<form report-submit @submit="form_submit">
-					<button formType="submit" class="submit">提交订单</button>
-				</form>
 			</view>
-			<div class="safearea-box"></div>
-		</view>
+			<view class="other" v-if="orderInfo.max_diyong_intergral > 0">
+				<view class="bd">
+					<view class="o_title">
+						<span>是否参与积分抵扣</span>
+						<switch :checked="intergralChecked" color="#04B600" @change="intergralSwitchChange" />
+					</view>
+					<view class="o_de" v-if="intergralChecked">您当前共有 <text>{{userInfo.User_Integral}}</text>积分，每<text>{{orderInfo.Integral_Buy}}</text>积分可以抵扣<text>1</text>元，本次可使用<text>{{orderInfo.max_diyong_intergral}}</text>积分,总共可抵<text>{{orderInfo.max_Integral_Money}}</text>元</view>
+				</view>
+			</view>
+			<view class="other" v-if="orderInfo.is_use_money == 1">
+				<view class="bd">
+					<view class="o_title">
+						<span>是否使用余额</span>
+						<switch :checked="userMoneyChecked" color="#04B600" @change="userMoneyChange" />
+					</view>
+					<view class="o_de">您当前最多使用余额: <text>{{userInfo.User_Money < orderInfo.Order_TotalPrice ? userInfo.User_Money : orderInfo.Order_TotalPrice}}</text></view>
+					<input v-if="userMoneyChecked" @focus="postData.use_money = 0" v-model.number="postData.use_money" class="o_desc" placeholder="请输入金额" type="number" @blur="confirm_user_money">
+				</view>
+			</view>
+			<view class="other">
+				<view class="bd">
+					<view class="o_title">
+						<span>是否开具发票</span>
+						<switch :checked="faPiaoChecked" color="#04B600" @change="faPiaoChange" />
+					</view>
+					<input v-if="faPiaoChecked"  @blur="faPiaoConfirm" type="text" class="o_desc" placeholder="请输入发票抬头和纳税人识别号" />
+				</view>
+			</view>
+			<view class="other">
+				<view class="bd">
+					<view class="o_title  words">
+						<span>买家留言</span>
+						<input class="inputs" type="text"  @blur="remarkConfirm" placeholder="请填写留言内容">
+					</view>
+				</view>
+			</view>
+			<!-- <view class="total">
+                <span style="margin-right:20rpx;">共<span>{{orderInfo.total_count}}</span>件商品</span>
+                <span>小计：<span>￥</span><span class="money">{{orderInfo.Order_TotalPrice}}</span></span>
+            </view> -->
 
-        <popup-layer ref="popupRef" :direction="'top'">
-        	<view class="bMbx" v-if="type=='shipping'">
-        		<view class="fMbx">运费选择</view>
-        		<view class="iMbx" v-for="(ship,shipid) in orderInfo.shipping_company" :key="shipid">
-        			<view>
-        				{{ship}}
-        			</view>
+
+
+			<view class="remind-wrap" v-if="remindAddress">
+				<view class="remind-add">
+					<view class="text-align-center mb20">新建收货地址</view>
+					<view class="remind_desc">
+						您还没有收货地址，请先添加一个新的收货地址
+					</view>
+					<view class="remind_btns text-align-center">
+						<view class="text-align-center fl1" @click="goback">返回</view>
+						<view class="text-align-center fl1 confirm" @click="goEditAdd">
+							新建
+						</view>
+					</view>
+				</view>
+			</view>
+		</div>
+
+		<view class="order_total">
+			<view class="totalinfo">
+				<view class="info">共{{orderInfo.prod_count}}件商品 总计：<text class="money"><text class="m_icon">￥</text> {{orderInfo.Order_Fyepay}}</text></view>
+				<view class="tips">*本次购物一共可获得{{orderInfo.Integral_Get}}积分</view>
+			</view>
+			<form report-submit @submit="form_submit">
+				<button formType="submit" class="submit">提交订单</button>
+			</form>
+		</view>
+		<div class="safearea-box"></div>
+
+		<popup-layer ref="popupRef" :direction="'top'">
+			<view class="bMbx" v-if="type=='shipping'">
+				<view class="fMbx">运费选择</view>
+				<view class="iMbx" v-for="(ship,shipid) in orderInfo.shipping_company" :key="shipid">
+					<view>
+						{{ship}}
+					</view>
 					<radio-group @change="ShipRadioChange">
 						<radio :value="shipid" :checked="shipid==ship_current" style="float:right;" color="#F43131"/>
 					</radio-group>
-        		</view>
-        	</view>
+				</view>
+			</view>
 			<scroll-view style="height:430rpx;width:95%;"  scroll-y="true" class="bMbx" v-if="type=='coupon'">
 				<view class="fMbx scroll-view-item">优惠券选择</view>
 				<view class="iMbx scroll-view-item" v-for="(coupon,i) in orderInfo.coupon_list" :key="i">
@@ -140,24 +159,11 @@
 					</radio-group>
 				</view>
 			</scroll-view>
-        	<view class="sure" @click="closeMethod">
-        		确定
-        	</view>
-        </popup-layer>
-		<view class="remind-wrap" v-if="remindAddress">
-			<view class="remind-add">
-				<view class="text-align-center mb20">新建收货地址</view>
-				<view class="remind_desc">
-					您还没有收货地址，请先添加一个新的收货地址
-				</view>
-				<view class="remind_btns text-align-center">
-					<view class="text-align-center fl1" @click="goback">返回</view>
-					<view class="text-align-center fl1 confirm" @click="goEditAdd">
-						新建
-					</view>
-				</view>
+			<view class="sure" @click="closeMethod">
+				确定
 			</view>
-		</view>
+		</popup-layer>
+
     </view>
 </template>
 
@@ -580,8 +586,7 @@ export default {
         display: flex;
         align-items: center;
         padding: 44rpx 38rpx 45rpx;
-        // border-top: 30rpx solid #F3F3F3;
-        border-bottom: 20rpx solid #F3F3F3;
+        border-bottom: 20rpx solid #f8f8f8;
 		.add_msg {
 			flex: 1;
 			font-size: 28rpx;
@@ -592,6 +597,9 @@ export default {
 		    margin-left: 34rpx;
 		}
     }
+	.container{
+		margin-bottom: 60px;
+	}
     .loc_icon {
         width: 41rpx;
         height: 51rpx;
