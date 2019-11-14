@@ -192,10 +192,10 @@
     }
 
     box-sizing: border-box;
-    border: 1px #f2f2f2 solid;
+    //border: 1px #f2f2f2 solid;
 
     /*background: rgba(63, 142, 243, 0.1);*/
-    box-sizing: border-box;
+    //box-sizing: border-box;
     /*z-index: 2;*/
 
     &:hover {
@@ -225,8 +225,8 @@
     position: relative;
     min-height: 20px;
     overflow: hidden;
-    .border();
-    /*box-sizing: border-box;*/
+    //.border();
+
 
     .row {
       /*box-sizing: border-box;*/
