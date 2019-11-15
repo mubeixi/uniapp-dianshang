@@ -25,12 +25,14 @@
     // }
     // #endif
 
-    import {getSystemConf} from "./common/fetch";
+    import {getSystemConf,upUserLog} from "./common/fetch";
 
     export default {
         //目前只有app端用到了应用的全局onLaunch
 		onLaunch: function(option) {
 
+
+            upUserLog({},{errtip:false}).then().catch()
 
             // #ifdef MP-WEIXIN
             //小程序需要拿这个
