@@ -27,10 +27,24 @@
 
     import {getSystemConf} from "./common/fetch";
 
+	// #ifndef H5
+	import {upUserLog} from "./common/fetch";
+    import {checkIsLogin} from "./common";
+    // #endif
+
+
     export default {
         //目前只有app端用到了应用的全局onLaunch
 		onLaunch: function(option) {
 
+			// #ifndef H5
+			if(checkIsLogin()){
+				upUserLog({},{errtip:false}).then(res=>{
+				    console.log('success',res)
+				},err=>{console.log('error',err)}).catch(e=>{console.log('catch',e)})
+			}
+
+			// #endif
 
             // #ifdef MP-WEIXIN
             //小程序需要拿这个
@@ -93,6 +107,7 @@
 
 
 			// #ifdef H5
+			alert(222)
 			//ls.set('openid','')
 			// #endif
 
@@ -103,10 +118,10 @@
             },err=>{}).catch(error=>{})
 		},
 		onShow: function() {
-			// console.log('App Show')
+			console.log('App Show')
 		},
 		onHide: function() {
-			// console.log('App Hide')
+			console.log('App Hide')
 		}
 	}
 </script>

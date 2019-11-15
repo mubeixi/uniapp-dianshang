@@ -7,15 +7,15 @@
 		<view class="wrap">
 			<view class="item" @click="update(3)">
 				<view>修改手机号码</view>
-				<image :src="'/static/clientright.png'|domain" mode=""></image>
+				<image :src="'/static/client/right.png'|domain" mode=""></image>
 			</view>
 			<view class="item" @click="update(0)">
 				<view>修改登录密码</view>
-				<image :src="'/static/clientright.png'|domain" mode=""></image>
+				<image :src="'/static/client/right.png'|domain" mode=""></image>
 			</view>
 			<view class="item" @click="update(1)">
 				<view>修改支付密码</view>
-				<image :src="'/static/clientright.png'|domain" mode=""></image>
+				<image :src="'/static/client/right.png'|domain" mode=""></image>
 			</view>
 		</view>
 		<view class="btn" @click="logoutFunc">退出登录</view>

@@ -47,7 +47,7 @@
 </template>
 
 <script>
-	import {confirm} from "../../common";
+	import {confirm, fun} from "../../common";
 	import {ls} from "../../common/tool";
 	import {mapActions} from 'vuex';
 
@@ -81,12 +81,18 @@
 					ls.set('users_id',users_id);
 					// #endif
 
+					// #ifdef H5
+
+					// #endif
+
 
 					this.setUserInfo({})
 
-					uni.switchTab({
-						url:'/pages/index/index'
-					})
+					setTimeout(function () {
+						uni.switchTab({
+							url:'/pages/index/index'
+						})
+					},200)
 
 				}).catch(()=>{
 

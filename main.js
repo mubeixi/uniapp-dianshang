@@ -12,6 +12,7 @@ Vue.use(Common);
 
 
 
+
 //加入mixin
 // import {defaultMixin,aidMixin} from "./common/mixin";
 // Vue.mixin(defaultMixin)

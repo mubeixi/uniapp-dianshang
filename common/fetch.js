@@ -239,9 +239,7 @@ export const agentInfo = (data, options) => fetch('agent_info', data, options);
 //获取股东
 export const shaInit = (data, options) => fetch('sha_init', data, options);
 
-
 export const getSpikeProd = (data, options) => fetch('get_spike_prod', data, options)
-
 
 //获取成为分销商配置信息
 export const disApplyInit = (data, options) => fetch('dis_apply_init', data, options);
@@ -371,6 +369,13 @@ export const confirmOrderPayStatus = (data, options) => fetch('judge_ispay', dat
 
 //秒杀列表
 export const getFlashSaleList = (data, options) => fetch('get_flashsale', data, options)
+
+//写入用户日志
+export const upUserLog = (data, options) => {
+  console.log('上报用户信息',data,options)
+  return fetch('write_user_log', data, options)
+}
+
 
 //普通环境noop就行了
 //let add_template_code = ()=>{}
