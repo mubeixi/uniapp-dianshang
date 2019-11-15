@@ -41,7 +41,7 @@
 					<div class="cartTitle">
 						<div class="cartTitles">{{product.Products_Name}}</div>
 						<div class="addInfo">
-							<div class="addPrice">{{product.Products_PriceX}}元</div>
+							<div class="addPrice">{{postData.productDetail_price}}元</div>
 							<div class="proSale">库存{{postData.count}}</div>
 						</div>
 					</div>
@@ -117,6 +117,7 @@ export default {
 			    showimg: '',      //选择属性的图片(用产品图片代替)
 			    qty: 1,           //购买数量
 			    cart_key: '',     //购物车类型   CartList（加入购物车）、DirectBuy（立即购买）、PTCartList（不能加入购物车）
+				productDetail_price: 0
 			},
 			submit_flag: true, //提交按钮
 			isCollected: false, // 该产品是否已收藏
@@ -188,7 +189,7 @@ export default {
 			if (attr_val) {
 				this.postData.count = attr_val.Property_count;   //选择属性的库存
 				this.postData.showimg = typeof attr_val.Attr_Image != 'undefined' && attr_val.Attr_Image != '' ? attr_val.Attr_Image : this.product.Products_JSON['ImgPath'][0];// 选择属性的图片
-				this.productDetail_price = attr_val.Txt_PriceSon; // 选择属性的价格
+				this.postData.productDetail_price = attr_val.Attr_Price?attr_val.Attr_Price:this.product.Products_PriceX; // 选择属性的价格
 				this.submit_flag = (!this.check_attr || Object.getOwnPropertyNames(this.check_attr).length != Object.getOwnPropertyNames(this.product.skujosn).length) ? false : true;
 			}
 			//判断属性库存
@@ -311,6 +312,7 @@ export default {
 				console.log(res)
 				this.product = res.data;
 				this.postData.count = res.data.Products_Count;
+				this.postData.productDetail_price =this.product.Products_PriceX;
 				if(res.data.skujosn) {
 					this.product.skujosn = JSON.parse(res.data.skujosn);
 					this.product.skuvaljosn = JSON.parse(res.data.skuvaljosn);
@@ -491,7 +493,7 @@ export default {
 					.haihong{
 						height: 70rpx;
 						line-height: 70rpx;
-						font-size: 28rpx;
+						font-size: 14px;
 						border-radius: 10rpx;
 						color: #000;
 						background-color: #fff;

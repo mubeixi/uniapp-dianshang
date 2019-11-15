@@ -1520,10 +1520,10 @@ export default {
 				.skuValue{
 					display: flex;
 					.divs{
-						height: 70rpx;
-						line-height: 70rpx;
-						font-size: 28rpx;
-						border-radius: 10rpx;
+						height: 70upx;
+						line-height: 70upx;
+						font-size: 14px;
+						border-radius: 10upx;
 						color: #000;
 						background-color: #fff;
 						padding-left: 20rpx;
