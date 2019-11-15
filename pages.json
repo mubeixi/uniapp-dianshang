@@ -304,12 +304,7 @@
               // }
             }
         }
-        ,{
-            "path" : "pages/setting/setting",
-            "style" : {
-				"navigationBarTitleText": "系统设置"
-			}
-        }
+
         ,{
             "path" : "pages/detail/sharepic/sharepic",
             "style" : {

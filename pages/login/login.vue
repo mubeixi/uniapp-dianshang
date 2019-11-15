@@ -575,17 +575,22 @@
 				}
 				// #endif
 
+
+
 				//手动绑定一下
 				upUserLog({},{errtip:false}).then(res=>{
-					ls.set('is_send_usrlog',1)
+					// #ifdef H5
+					sessionStorage.setItem('is_send_usrlog',1)
+					// #endif
 				},err=>{console.log('error',err)}).catch(e=>{console.log('catch',e)})
+
+
 
 
 
 				//toast('登录成功', 'success')
 				// #ifdef H5
 				//微信登录才这么走
-
 
 
 				if(GetQueryByString(location.href,'code')){
