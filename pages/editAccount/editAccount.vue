@@ -47,6 +47,13 @@
 					let users_id = ls.get('users_id');
 					ls.clear();
 					ls.set('users_id',users_id);
+
+					// #ifdef H5
+					console.log('清空is_send_usrlog')
+					sessionStorage.removeItem('is_send_usrlog')
+					// #endif
+
+
 					this.setUserInfo({})
 					uni.switchTab({
 						url:'/pages/index/index'

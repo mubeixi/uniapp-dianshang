@@ -240,6 +240,13 @@ export const pageMixin = {
 
 		let initData = await this.getInitData()
 
+		if(checkIsLogin() && !sessionStorage.getItem('is_send_usrlog')){
+			upUserLog({},{errtip:false}).then(res=>{
+				sessionStorage.setItem('is_send_usrlog',1)
+			},err=>{console.log('error',err)}).catch(e=>{console.log('catch',e)})
+		}
+
+
 		//页面默认全都是分享出去是首页的
 		if(isWeiXin() && this.JSSDK_INIT){
 
@@ -271,11 +278,7 @@ export const pageMixin = {
 		}
 
 
-		if(checkIsLogin() && !ls.get('is_send_usrlog')){
-			upUserLog({},{errtip:false}).then(res=>{
-				ls.set('is_send_usrlog',1)
-			},err=>{console.log('error',err)}).catch(e=>{console.log('catch',e)})
-		}
+
 
 
 		// #endif
