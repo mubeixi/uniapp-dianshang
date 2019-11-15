@@ -1,7 +1,7 @@
 import {login} from "./fetch";
 import {ls,GetQueryByString,isWeiXin} from "./tool";
 import {domainFn} from "./filter";
-import {error} from "./index";
+import {checkIsLogin, error} from "./index";
 import {get_Users_ID} from "./fetch";
 import { mapGetters, mapActions, Store } from "vuex";
 
@@ -18,9 +18,14 @@ export const defaultMixin = {
 
 }
 
+
+
 // #ifdef H5
 import {getJsSign} from "./fetch";
 import wx from 'weixin-js-sdk';
+
+//上报用户信息
+import {upUserLog} from "./fetch";
 
 
 
@@ -264,6 +269,14 @@ export const pageMixin = {
 
 			})
 		}
+
+
+		if(checkIsLogin() && !ls.get('is_send_usrlog')){
+			upUserLog({},{errtip:false}).then(res=>{
+				ls.set('is_send_usrlog',1)
+			},err=>{console.log('error',err)}).catch(e=>{console.log('catch',e)})
+		}
+
 
 		// #endif
 

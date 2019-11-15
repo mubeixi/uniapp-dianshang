@@ -161,6 +161,7 @@
 	// #ifdef APP-PLUS
 	import {bindUserClientId} from "../../common/fetch";
 	// #endif
+	import {upUserLog} from "../../common/fetch";
 
 	// import {
 	//   login,
@@ -573,6 +574,12 @@
 					bindUserClientId({uuid:clientid,action:'save'},{errtip:false}).then(res=>{console.log('注册设备成功')},err=>{}).catch(error=>{})
 				}
 				// #endif
+
+				//手动绑定一下
+				upUserLog({},{errtip:false}).then(res=>{
+					ls.set('is_send_usrlog',1)
+				},err=>{console.log('error',err)}).catch(e=>{console.log('catch',e)})
+
 
 
 				//toast('登录成功', 'success')
