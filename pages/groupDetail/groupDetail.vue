@@ -1610,7 +1610,7 @@ export default {
 					.divs{
 						height: 70rpx;
 						line-height: 70rpx;
-						font-size: 28rpx;
+						font-size: 14px;
 						border-radius: 10rpx;
 						color: #000;
 						background-color: #fff;

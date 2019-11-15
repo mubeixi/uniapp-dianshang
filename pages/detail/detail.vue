@@ -1317,6 +1317,7 @@ export default {
 	.sold{
 		height: 50rpx;
 		line-height: 50rpx;
+		padding-bottom: 10px;
 	}
     .sold span {
         color: #999;
@@ -1515,7 +1516,7 @@ export default {
 					.skuview{
 						height: 70rpx;
 						line-height: 70rpx;
-						font-size: 28rpx;
+						font-size: 14px;
 						border-radius: 10rpx;
 						color: #000;
 						background-color: #fff;

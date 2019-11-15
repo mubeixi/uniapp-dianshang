@@ -1569,7 +1569,7 @@ export default {
 					.divs{
 						height: 70upx;
 						line-height: 70upx;
-						font-size: 28upx;
+						font-size: 14px;
 						border-radius: 10upx;
 						color: #000;
 						background-color: #fff;
