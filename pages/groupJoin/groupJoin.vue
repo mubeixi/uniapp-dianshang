@@ -1234,6 +1234,7 @@
                 width: 420rpx;
                 .cartTitles{
                     height: 80rpx;
+                    line-height: 40rpx;
                     overflow: hidden;
                     margin-top: 20rpx;
                 }

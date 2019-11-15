@@ -1475,10 +1475,7 @@ export default {
 					height: 80rpx;
 					overflow: hidden;
 					margin-top: 20rpx;
-					text-overflow: ellipsis;
-					display: -webkit-box;
-					-webkit-line-clamp: 2;
-					-webkit-box-orient: vertical;
+					line-height: 40rpx;
 				}
 				.addInfo{
 					width: 450rpx;
