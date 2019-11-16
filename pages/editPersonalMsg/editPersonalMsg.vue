@@ -1,6 +1,6 @@
 <template>
 	<view class="bgColor-white">
-		
+
 		<!-- 	<page-title :title="title" rightHidden="true" bgcolor="#F8F8F8"></page-title> -->
 
 		<input v-if="type == 0" type="text" v-model="User_Name" class="v_input" placeholder="修改用户名" />
@@ -44,7 +44,9 @@
 	import {upDateUserInfo,getTown} from '../../common/fetch.js';
 	import {ls} from "../../common/tool.js";
 	import {mapGetters,mapActions} from 'vuex'
+	import {pageMixin} from "../../common/mixin";
 	export default {
+		mixins:[pageMixin],
 		data() {
 			return {
 				type: 0,
@@ -58,10 +60,10 @@
 				User_Area: '',
 				User_Tow: '',
 				User_Address: '',
-				
+
 				objectMultiArray: [],   //展示数据
 				multiIndex: [0, 0, 0],  //选择数据
-								
+
 				//用于收货地址选择用
 				change_objectMultiArray: [],  //选择数据
 				change_multiIndex: [0, 0, 0], //改变的收货地址对应列的下标
@@ -100,7 +102,7 @@
 							icon: 'none'
 						});
 						return;
-					}					
+					}
 				}
 				upDateUserInfo({
 					User_Name: this.User_Name,
@@ -125,7 +127,7 @@
 						setTimeout(() => {
 							uni.navigateBack({
 								delta: 1
-							})							
+							})
 						}, 1500);
 					}
 				})
@@ -184,13 +186,13 @@
 					// 处理街道信息
 					this.address_town();
 			  },
-			
+
 			  //选择收货地址
 			  bindMultiPickerColumnChange: function (e) {
 					var column = e.detail.column;  //修改的列
 					var index = e.detail.value;    //选择列的下标（从0开始）
 					var change_multiIndex = 'change_multiIndex[' + column + ']';
-			
+
 					var columnValue = [
 						column == 0 ? index : this.change_multiIndex[0],
 						column == 0 ? 0 : (column == 1 ? index : this.change_multiIndex[1]),
@@ -221,10 +223,10 @@
 				uni.navigateBack({
 					delta: 1
 				})
-			}		
+			}
 		},
-		
-		
+
+
 	}
 </script>
 

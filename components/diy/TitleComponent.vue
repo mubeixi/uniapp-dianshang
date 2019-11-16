@@ -1,5 +1,5 @@
 <template>
-  <view class="title" :style="{color:style.color,backgroundColor:style.bgColor,paddingLeft:style.padding+'px',paddingRight:style.padding+'px',paddingTop:style.paddingc+'px',paddingBottom:style.paddingc+'px'}">
+  <view class="title" :style="{color:style.color,background:style.bgColor,paddingLeft:style.padding+'px',paddingRight:style.padding+'px',paddingTop:style.paddingc+'px',paddingBottom:style.paddingc+'px'}">
     <!-- <view class="text">{{title.value.title}}</view>
     <view class="small">{{title.value.small}}</view>
     <view class="more" @click="go(moreData)">{{moreData.title}}</view> -->
@@ -14,8 +14,8 @@
   </view>
 </template>
 <script>
-  import {deepCopyStrict} from "../../common/tool";
-    import {domainFn} from "../../common/filter";
+  import {mixinStyle} from "../../common/tool";
+  import {domainFn} from "../../common/filter";
 
   const styleDefault = {
     color: '#333',
@@ -52,7 +52,7 @@
         // return this.title.value.more[0];//this.title.value?this.title.value.more[0]:{}
       },
       style() {
-        return deepCopyStrict(styleDefault, this.title.style);
+        return mixinStyle(styleDefault, this.title.style);
       },
     },
     watch: {

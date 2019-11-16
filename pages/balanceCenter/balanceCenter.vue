@@ -98,6 +98,7 @@
 
 <script>
 	import TweenLite from 'gsap'
+	import {pageMixin} from "../../common/mixin";
 	import {
 		get_user_info,
 		getUserMoneyRecord,
@@ -107,6 +108,7 @@
 	} from "../../common/fetch";
 	import {mapActions} from 'vuex';
 	export default {
+		mixins:[pageMixin],
 		data() {
 			return {
 				isShow:false,

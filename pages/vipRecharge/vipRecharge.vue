@@ -45,8 +45,10 @@ import {
 		isWeiXin,
 		urlencode
 	} from "../../common/tool";
+import {pageMixin} from "../../common/mixin";
 
 export default {
+	mixins:[pageMixin],
 	data() {
 		return {
 			info:{},

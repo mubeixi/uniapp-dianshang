@@ -66,7 +66,9 @@
 <script>
 	import area from '../../common/area.js';
 	import utils from '../../common/util.js';
+	import {pageMixin} from "../../common/mixin";
 	export default {
+		mixins:[pageMixin],
 		data() {
 			return {
 				change_objectMultiArray: [],  //选择数据

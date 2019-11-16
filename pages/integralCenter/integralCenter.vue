@@ -87,7 +87,9 @@
 	import TweenLite from 'gsap'
 	import {mapGetters,mapActions} from 'vuex'
 	import {userIntegralRecord,transferIntegral,get_user_info} from '../../common/fetch.js';
+	import {pageMixin} from "../../common/mixin";
 	export default {
+		mixins:[pageMixin],
 		data() {
 			return {
 				isShow:false,
@@ -105,7 +107,7 @@
 		},
 		computed: {
 			intergatal: function(){
-				return	parseInt(this.U_intergatal)	 
+				return	parseInt(this.U_intergatal)
 			}
 		},
 		watch: {
