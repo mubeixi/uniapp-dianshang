@@ -1,5 +1,5 @@
 <template>
-  <view  class="nav wrap"  :style="{backgroundColor:style.bgColor}">
+  <view  class="nav wrap"  :style="{background:style.bgColor}">
     <view  class="box style1" v-if="nav.value.list">
       <view class="list" :class="displayStyle" :style="{display:nav.value.list.length<6?'flex':'block'}">
         <view @click="go(item)" v-for="(item,idx) in nav.value.list" :key="idx" class="item"

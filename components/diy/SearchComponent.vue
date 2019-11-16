@@ -55,7 +55,7 @@
       getWrapStyle(){
         if(this.style && this.style.position==='absolute'){
           return {
-            backgroundColor:this.style.bgColor,
+            background:this.style.bgColor,
             // left:this.style.x+'px',
             top:this.style.y+'px',
             position:'absolute'
@@ -63,7 +63,7 @@
         }
 
         return {
-          backgroundColor:this.style.bgColor,
+          background:this.style.bgColor,
           position:'inherit'
         }
 

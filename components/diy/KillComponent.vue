@@ -1,5 +1,5 @@
 <template>
-    <div class="goods wrap" id="goods" :style="{paddingLeft:goods.style.wrapmargin+'px',paddingRight:goods.style.wrapmargin+'px'}">
+    <div class="goods wrap" id="goods" :style="{background:goods.style.bgColor,paddingLeft:goods.style.wrapmargin+'px',paddingRight:goods.style.wrapmargin+'px'}">
 <!--        <image class="bgimg" src="/static/group_bg.png"></image>-->
         <div :class="className">
             <ul class="list" >

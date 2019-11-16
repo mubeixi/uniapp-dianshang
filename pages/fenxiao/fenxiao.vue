@@ -129,7 +129,6 @@
 		mixins:[pageMixin],
 		data() {
 			return {
-
 				data:{
 					dis_config:{},
 					disInfo:{},
@@ -147,8 +146,8 @@
 
 		},
 		async onShow() {
-			if(JSON.stringify(this.userInfo) != "{}"){
-				get_user_info().then(res=>{
+			if(JSON.stringify(this.userInfo) == "{}"){
+				get_user_info({},{errtip: false}).then(res=>{
 					this.setUserInfo(res.data);
 				},err=>{
 

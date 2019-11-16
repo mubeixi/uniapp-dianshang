@@ -58,23 +58,21 @@ export const getUserInfo = async({commit, state},through) => {
   }
 
   if(through){
-    uni.navigateTo({
-      url: '/pages/login/login'
-    })
+      //则本地没有用户信息，提示用户是否需要登录。
+
+      await confirm({title: '提示', content: '需要登录,请问是否登录?', confirmText: '去登录', cancelText: '暂不登录'}).then(() => {
+
+          //要替换掉navigateTo，不然登录页面回退就尴尬了
+          uni.navigateTo({
+              url:'/pages/login/login'
+          })
+
+      }).catch(() => {
+
+      })
   }
 
-  //则本地没有用户信息，提示用户是否需要登录。
 
-  await confirm({title: '提示', content: '需要登录,请问是否登录?', confirmText: '去登录', cancelText: '暂不登录'}).then(() => {
-
-    //要替换掉navigateTo，不然登录页面回退就尴尬了
-    uni.navigateTo({
-      url:'/pages/login/login'
-    })
-
-  }).catch(() => {
-
-  })
 
   return {}
 

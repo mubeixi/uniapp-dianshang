@@ -1,5 +1,5 @@
 <template>
-  <div class="coupon coupon-list wrap" v-if="couponList>0">
+  <div class="coupon coupon-list wrap" v-if="couponList>0" :style="{background:coupon.style.bgColor}">
     <div v-if="coupon.config.type===1 && couponList.length>0">
       <div v-if="couponList.length<4"  class="list style1 style1flex" >
         <div @click="getCoupon(item)" class="item" v-for="(item,idx) in couponList">

@@ -1,5 +1,5 @@
 <template>
-  <div class="goods wrap" id="goods" :style="{paddingLeft:goods.style.wrapmargin+'px',paddingRight:goods.style.wrapmargin+'px'}">
+  <div class="goods wrap" id="goods" :style="{background:goods.style.bgColor,paddingLeft:goods.style.wrapmargin+'px',paddingRight:goods.style.wrapmargin+'px'}">
     <div :class="className">
       <ul class="list" >
         <li  @click="goDetail(item)" v-for="(item,idx) in goodsList" :key="idx" class="item" :class="[idx%2==0?'even':'odd',goods.config.radius=='round'?'round':'',goods.config.showmode]" :style="[itemMarginObj(idx)]">

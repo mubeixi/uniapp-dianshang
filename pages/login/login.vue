@@ -51,7 +51,16 @@
 				<!-- #ifdef APP-PLUS -->
 				<div class="otherLogin">
 					<div class="flex box" style="width: 100px;text-align: center;margin: 0 auto;">
-						<div class="inline-block flex1 text-center" @click="weixinlogin"><i class="funicon icon-weixin"></i></div>
+						<div class="inline-block flex1 text-center" v-for="(channel,idx) in channels">
+
+<!--							<button  size="mini" type="primary" class="text-center" open-type="getUserInfo"  @getuserinfo="weixinlogin">登录</button>-->
+							<!-- <i v-if="channel.type=='wx_lp'" @click="weixinlogin" class="funicon icon-weixin font24" ></i> -->
+							<!-- <i v-if="channel.type=='wx_mp'" @click="weixinlogin(channel)" class="funicon icon-weixin"></i>
+							<i v-if="channel.type=='qq'" @click="qqlogin(channel)" style="color: #2eb1f1;font-size: 32px;margin-top: 2px" class="funicon icon-QQ1"></i> -->
+							<div v-if="channel.type=='wx_app'" class="inline-block flex1 text-center" @click="weixinlogin"><i class="funicon icon-weixin"></i></div>
+						</div>
+
+
 					</div>
 				</div>
 				<!-- #endif -->
