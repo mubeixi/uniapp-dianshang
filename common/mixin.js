@@ -113,6 +113,7 @@ export const pageMixin = {
 			let old_users_id = ls.get('users_id')
 			if(old_users_id && old_users_id!=users_id){
 				console.log('清空本地配置和登录信息')
+				ls.set('users_id',users_id);
 				this.setUserInfo({})
 				getSystemConf({}).then(res=>{
 					this.setInitData(res.data)
@@ -120,7 +121,7 @@ export const pageMixin = {
 
 			}
 
-			ls.set('users_id',users_id);
+
 
 		}else{
 		    users_id = ls.get('users_id');
@@ -186,14 +187,14 @@ export const pageMixin = {
     },
 
 	async created(){
-		console.log('让你等')
-
-		await new Promise(resolve => {
-			setTimeout(function () {
-				console.log('等到了')
-				resolve(false)
-			},5000)
-		})
+		// console.log('让你等')
+		//
+		// await new Promise(resolve => {
+		// 	setTimeout(function () {
+		// 		console.log('等到了')
+		// 		resolve(false)
+		// 	},5000)
+		// })
 
 		//根据配置决定是否刷新配置
 		let initData = await this.getInitData(this.refreshInit)

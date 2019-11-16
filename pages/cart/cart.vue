@@ -363,7 +363,7 @@ export default {
 <style scoped lang="scss">
 .wrap{
 	background-color: #F8F8F8 !important;
-	min-height: 100vh;
+	min-height: 100%;
 	/* #ifdef APP-PLUS */
 	//padding-top: var(--status-bar-height);
 	/* #endif */

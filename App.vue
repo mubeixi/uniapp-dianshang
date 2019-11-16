@@ -50,23 +50,28 @@
             // 获取客户端标识信息绑定设备
             var info = plus.push.getClientInfo();
             let interval = null;
-            if(info.clientid){
-                console.log('device plus info ',info);
-                ls.set('user_client_id',info.clientid)
-            }else{
-                interval = setInterval(function(){
-                    console.log('获取cid ing')
-                    info = plus.push.getClientInfo();
-                    if(info.clientid){
-                        console.log('获取cid success',info)
-                        ls.set('user_client_id',info.clientid)
-                        clearInterval(interval);
-                    }
-                },50)
+            if(info){
+                if(info.clientid){
+                    console.log('device plus info ',info);
+                    ls.set('user_client_id',info.clientid)
+                }else{
+                    interval = setInterval(function(){
+                        console.log('获取cid ing')
+                        info = plus.push.getClientInfo();
+                        if(info.clientid){
+                            console.log('获取cid success',info)
+                            ls.set('user_client_id',info.clientid)
+                            clearInterval(interval);
+                        }
+                    },50)
+                }
+                //监听
+                Push.pushListener();
             }
 
-            //监听
-            Push.pushListener();
+
+
+
 
 			// #endif
 
