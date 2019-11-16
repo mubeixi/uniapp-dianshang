@@ -19,7 +19,9 @@
 	import {getUserDisInfo,updateUserDisInfo,uploadImage,GET_ENV,get_Users_ID,get_User_ID,createToken} from '../../common/fetch.js';
 	import {uploadImages} from '../../common/tool.js'
 	import { staticUrl } from '../../common/env.js';
+	import {pageMixin} from "../../common/mixin";
 	export default {
+		mixins:[pageMixin],
 		data() {
 			return {
 				userDisInfo: {},

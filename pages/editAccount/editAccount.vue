@@ -26,7 +26,9 @@
 	import {mapActions} from 'vuex'
 	import {confirm} from "../../common";
 	import {ls} from "../../common/tool";
+	import {pageMixin} from "../../common/mixin";
 	export default {
+		mixins:[pageMixin],
 		data() {
 			return {
 

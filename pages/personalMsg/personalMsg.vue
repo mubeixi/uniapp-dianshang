@@ -61,7 +61,9 @@
 
 	import {GET_ENV,get_User_ID,get_Users_ID,upDateUserInfo,get_user_info,uploadImage,createToken} from '../../common/fetch';
 	import { staticUrl } from '../../common/env.js';
+	import {pageMixin} from "../../common/mixin";
 	export default {
+		mixins:[pageMixin],
 		data() {
 			return {
 				imgs: [],

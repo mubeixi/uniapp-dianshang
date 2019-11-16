@@ -43,7 +43,9 @@
 <script>
 	import {jifenProdOrder} from '../../common/fetch.js'
 	import {formatTime} from '../../common/filter'
+	import {pageMixin} from "../../common/mixin";
 	export default {
+		mixins:[pageMixin],
 		data() {
 			return {
 				prod_list: [],

@@ -42,7 +42,9 @@
 <script>
 	import {getJifenProd,jifenProdDuihuan,getShipping} from '../../common/fetch.js'
 	import {mapGetters} from 'vuex'
+	import {pageMixin} from "../../common/mixin";
 	export default {
+		mixins:[pageMixin],
 		data() {
 			return {
 				prod_list: [],

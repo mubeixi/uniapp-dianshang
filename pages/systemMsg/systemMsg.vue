@@ -30,7 +30,9 @@
 <script>
 	import {getUserMessage,readUserMessage} from '../../common/fetch.js';
 		import {mapGetters,mapActions} from 'vuex';
+	import {pageMixin} from "../../common/mixin";
 	export default {
+		mixins:[pageMixin],
 		data() {
 			return {
 				height:1000,//

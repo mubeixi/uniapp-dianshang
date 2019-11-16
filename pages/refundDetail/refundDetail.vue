@@ -18,7 +18,7 @@
 					</view>
 				</view>
 		</view>
-		
+
 		<view class="centers">
 			<view class="td">
 				退款编号：{{pro.Back_ID}}
@@ -46,7 +46,7 @@
 					</view>
 				</view>
 				<view class="lines">
-					
+
 				</view>
 				<block v-for="(item,index) of pro.back_detail" :key="index">
 					<view class="reason">
@@ -66,14 +66,16 @@
 				<view class="submits" @click="refundSend">
 					确认发货
 				</view>
-			</view>	
+			</view>
 		</block>
 	</view>
 </template>
 
 <script>
 	import {getBackOrderDetail,refundSend} from '../../common/fetch.js'
+	import {pageMixin} from "../../common/mixin";
 	export default {
+		mixins:[pageMixin],
 		data() {
 			return {
 				Back_ID:0,//退款单ID
@@ -127,7 +129,7 @@
 					this.pro=res.data;
 					this.prod_list=res.data.prod_list[0];
 				},err=>{
-					
+
 				}).catch(e=>{console.log(e)})
 			}
 		}
@@ -174,7 +176,7 @@
 				justify-content: space-between;
 			}
 		}
-		
+
 	}
 	.centers{
 		width: 710rpx;
@@ -232,8 +234,8 @@
 			padding: 10rpx 20rpx 10rpx 20rpx;
 			line-height: 60rpx;
 		}
-		
-	
+
+
 	}
 	.orderFa{
 		width: 710rpx;

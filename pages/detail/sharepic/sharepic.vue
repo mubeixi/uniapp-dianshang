@@ -9,8 +9,10 @@
 <script>
 	import {ls} from "../../../common/tool";
 	import {toast} from "../../../common";
+	import {pageMixin} from "../../../common/mixin";
 
 	export default {
+		mixins:[pageMixin],
 		data() {
 			return {
 				info:{}

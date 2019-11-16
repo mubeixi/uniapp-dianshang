@@ -30,8 +30,10 @@
 
 <script>
 	import {storeConsume,get_user_info} from '../../common/fetch.js';
+	import {pageMixin} from "../../common/mixin";
 
 	export default {
+		mixins:[pageMixin],
 		data() {
 			return {
 				info: {},

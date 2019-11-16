@@ -45,7 +45,9 @@
 	import {ls} from '../../common/tool.js';
 	import {mapGetters} from 'vuex'
 	import {add_template_code} from "../../common/fetch";
+	import {pageMixin} from "../../common/mixin";
 	export default {
+		mixins:[pageMixin],
 		data() {
 			return {
 				type: 0,
