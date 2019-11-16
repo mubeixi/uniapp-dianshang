@@ -156,6 +156,8 @@
 				funvm:null,
 				paySuccessCallFn:null,
 				code: '',
+				//禁用更新initData,因为需要自己刷新
+				refreshInit:false,
 				JSSDK_INIT: false,
 				show: false, // 遮罩层
 				wl_show: false, // 物流选择

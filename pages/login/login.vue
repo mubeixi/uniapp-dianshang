@@ -204,7 +204,7 @@
 		mixins: [pageMixin],
 		data() {
 			return {
-				initData: {},
+				refreshInit:false,
 				channels:[],
 				froms: '', //跳转过来的路由
 				status: 1, // 页面状态 1: 登录注册； 2：密码登陆； 3： 找回密码； 4：输入验证码； 5：设置新密码； 6:修改密码
@@ -543,9 +543,7 @@
 				this.isShowWeiXin = isWeiXin()
 				// #endif
 
-				let initData = await this.getInitData()
-
-				this.initData = initData;
+				let initData = await this.getInitData(1)
 
 				let login_methods = initData.login_methods;
 				let component_appid = login_methods.component_appid
@@ -666,7 +664,7 @@
 
 		},
 		created() {
-			this.initDataFn();
+
 
 			// #ifdef H5
 			if (isWeiXin()) {
@@ -680,13 +678,13 @@
 						if(res.errorCode === 0){
 							this.loginCall(res.data)
 						}
-
-
 					})
 					return;
 				}
 			}
 			// #endif
+
+			this.initDataFn();
 
 		}
 	};

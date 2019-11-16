@@ -1,31 +1,14 @@
 <script>
     import {ls} from "./common/tool";
+    import {getSystemConf} from "./common/fetch";
 
 	// #ifdef APP-PLUS || MP-TOUTIAO
 	import {APP_USERS_ID,isDev} from "./common/env";
 	// #endif
 
-
-
     // #ifdef APP-PLUS
-
-    //import {bindUserClientId} from "./common/fetch";
-
     import Push from './common/push';
-    // import {pushHandle} from "./common/push";
-    //
-    // const  clickFn = (notify)=>{
-    //     console.log('click',notify)
-    //     pushHandle({type:'click',info:notify})
-    //
-    // }
-    //
-    // const  receiveFn = (notify)=>{
-    //     pushHandle({type:'receive',info:notify})
-    // }
     // #endif
-
-    import {getSystemConf} from "./common/fetch";
 
 	// #ifndef H5
 	import {upUserLog} from "./common/fetch";
@@ -34,8 +17,10 @@
 
 
     export default {
-        //目前只有app端用到了应用的全局onLaunch
+        //目前只有app和小程序用到了应用的全局onLaunch，h5环境下这里不执行的
 		onLaunch: function(option) {
+
+            console.log('App Launch')
 
 			// #ifndef H5
 			if(checkIsLogin()){
@@ -43,79 +28,55 @@
 				    console.log('success',res)
 				},err=>{console.log('error',err)}).catch(e=>{console.log('catch',e)})
 			}
-
 			// #endif
 
             // #ifdef MP-WEIXIN
-            //小程序需要拿这个
-            //都拿一下覆盖吧
+            //小程序需要拿这个，都拿一下覆盖吧
             let extConfig = wx.getExtConfigSync ? wx.getExtConfigSync() : {};
             console.log('extConfig info is',extConfig);
             let users_id = extConfig.users_id;
             ls.set('users_id',users_id);
             // #endif
 
+
             //头条的需要写入一下
             // #ifdef MP-TOUTIAO
-            console.log('APP_USERS_ID is ',APP_USERS_ID)
             ls.set('users_id',APP_USERS_ID);
             // #endif
 
-
-		    //每次加载都清空全站配置
-            ls.remove('initData');
-
 			// #ifdef APP-PLUS
-
 			ls.set('users_id',APP_USERS_ID);//app里面需要写死打包，不然办法
 
-            // 获取客户端标识信息
+            // 获取客户端标识信息绑定设备
             var info = plus.push.getClientInfo();
-
             let interval = null;
-
             if(info.clientid){
                 console.log('device plus info ',info);
                 ls.set('user_client_id',info.clientid)
-                //bindUserClientId({uuid:info.clientid},{errtil:false}).then(res=>{console.log('注册设备成功')},err=>{}).catch(error=>{})
             }else{
                 interval = setInterval(function(){
                     console.log('获取cid ing')
                     info = plus.push.getClientInfo();
                     if(info.clientid){
                         console.log('获取cid success',info)
-                        // console.log();
                         ls.set('user_client_id',info.clientid)
                         clearInterval(interval);
-                        //bindUserClientId({uuid:info.clientid},{errtil:false}).then(res=>{console.log('注册设备成功')},err=>{}).catch(error=>{})
                     }
                 },50)
             }
 
-
             //监听
             Push.pushListener();
 
-            // //点击通知
-            // plus.push.addEventListener( 'click', clickFn);
-            //
-            // //收到通知
-            // plus.push.addEventListener( 'receive', receiveFn);
-
 			// #endif
 
 
-
-			// #ifdef H5
-			alert(222)
-			//ls.set('openid','')
-			// #endif
-
-			console.log('App Launch')
-
+            //每次加载都清空全站配置
+            ls.remove('initData');
             getSystemConf().then(res => {
                 ls.set('initData',res.data)
             },err=>{}).catch(error=>{})
+
 		},
 		onShow: function() {
 			console.log('App Show')

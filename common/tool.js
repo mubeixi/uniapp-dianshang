@@ -58,9 +58,9 @@ export const GetQueryByString = (str, name) => {
 
 
 export const ls = {
-    set(key, val) {
+    set(key, val,cover) {
 
-        if(!val && (val!=0 || val!= false))return false;
+        if(!cover && !val && (val!=0 || val!= false))return false;
 
         return  uni.setStorageSync(key, val)
     },
