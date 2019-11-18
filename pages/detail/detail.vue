@@ -1039,7 +1039,7 @@ export default {
         cancel(){
             this.$refs.popupLayer.close();
         },
-				...mapActions(['getUserInfo'])
+		...mapActions(['getUserInfo'])
 
     },
 	async created(){
