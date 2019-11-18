@@ -1,6 +1,6 @@
 <template>
 	<view class="wrap">
-		<view class="bg"></view>
+		<view class="bg" :style="{backgroundImage:'url('+domainFunc('/uploadfiles/wkbq6nc2kc/image/5daa7f9be1.jpg')+')'}"></view>
 		<view class="moneybox font14">分销佣金<span class="font14" style="color: #f43838">￥</span><span class="money">{{info.money}}</span></view>
 		<view class="imgbox" @click="preview"><image class="img" :src="info.img_url"></image></view>
 	</view>
@@ -10,6 +10,7 @@
 	import {ls} from "../../../common/tool";
 	import {toast} from "../../../common";
 	import {pageMixin} from "../../../common/mixin";
+	import {domainFn} from "../../../common/filter";
 
 	export default {
 		mixins:[pageMixin],
@@ -19,6 +20,9 @@
 			};
 		},
 		methods:{
+			domainFunc(url){
+				return domainFn((url))
+			},
 			preview(){
 				uni.previewImage({
 					urls: [this.info.img_url],
@@ -52,7 +56,7 @@
 		left: 0;
 		z-index:0;
 		.cover-full-bg(cover,0,#f2f2f2);
-		background-image: url("https://new401.bafangka.com/uploadfiles/wkbq6nc2kc/image/5daa7f9be1.jpg");
+		//background-image: url("");
 	}
 
 

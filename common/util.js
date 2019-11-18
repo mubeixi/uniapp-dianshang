@@ -328,7 +328,7 @@ function check_money_in (money) {
 }
 //------------ 收货地址函数 -------------
 //数组转化
-function array_change(arr) {
+export const array_change = function (arr) {
   var array = [];
   // console.log('utls')
   // console.log(arr)
@@ -339,7 +339,7 @@ function array_change(arr) {
 }
 
 //获取数组下标  用于收货地址选择的显示
-function get_arr_index(arr, id) {
+export const get_arr_index = function (arr, id) {
   for (var i in arr) {
     if (arr[i]['id'] == id) {
       return i;

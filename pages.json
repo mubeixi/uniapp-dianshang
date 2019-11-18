@@ -513,6 +513,10 @@
                  }
             }
         }
+        ,{
+            "path" : "pages/empty/empty",
+            "style" : {}
+        }
     ],
 
 	"globalStyle": {

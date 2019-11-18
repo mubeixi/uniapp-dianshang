@@ -139,6 +139,8 @@ export const getOrder = (data,options) => fetch('get_order',data,options);
 // 删除购物车产品
 export const delCart = (data,options) => fetch('del_cart',data,options)
 
+export const getStoreList = (data,options) => fetch('get_store_list',data,options)
+
 // 获取可领取的优惠券
 export const getCoupon = (data,options) => fetch('get_unaccalimed_coupon',data,options);
 // 用户领取优惠券
