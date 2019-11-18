@@ -2,7 +2,7 @@
 export const isDev = process.env.NODE_ENV === 'production' ? false : true;
 
 // #ifdef APP-PLUS || MP-TOUTIAO
-export const APP_USERS_ID = 'wkbq6nc2kc';//'ebxjt7h587';
+export const APP_USERS_ID = 'ebxjt7h587';//'ebxjt7h587  wkbq6nc2kc';
 // #endif
 
 // #ifdef H5

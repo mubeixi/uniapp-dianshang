@@ -514,6 +514,7 @@
             }
         }
     ],
+
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "网中网",

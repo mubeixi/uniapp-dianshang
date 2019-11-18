@@ -139,7 +139,12 @@
             "urlCheck" : false,
             "postcss" : false
         },
-        "usingComponents" : true
+        "usingComponents" : true,
+        "permission" : {
+            "scope.userLocation" : {
+                "desc" : "你的位置信息将用于为您就近匹配门店"
+            }
+        }
     },
     "mp-alipay" : {
         "usingComponents" : true

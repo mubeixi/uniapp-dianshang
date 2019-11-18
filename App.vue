@@ -35,17 +35,29 @@
             let extConfig = wx.getExtConfigSync ? wx.getExtConfigSync() : {};
             console.log('extConfig info is',extConfig);
             let users_id = extConfig.users_id;
+            //切换的时候清空资料
+            if(ls.get('users_id') && users_id != ls.get('users_id')){
+                ls.set('userInfo',{})
+                ls.set('user_id','',1)
+            }
+
             ls.set('users_id',users_id);
             // #endif
 
 
             //头条的需要写入一下
-            // #ifdef MP-TOUTIAO
+            // #ifdef MP-TOUTIAO || APP-PLUS
+
+            //清空一下
+            if(ls.get('users_id') && APP_USERS_ID != ls.get('users_id')){
+                ls.set('userInfo',{})
+                ls.set('user_id','',1)
+            }
             ls.set('users_id',APP_USERS_ID);
             // #endif
 
 			// #ifdef APP-PLUS
-			ls.set('users_id',APP_USERS_ID);//app里面需要写死打包，不然办法
+
 
             // 获取客户端标识信息绑定设备
             var info = plus.push.getClientInfo();
@@ -68,10 +80,6 @@
                 //监听
                 Push.pushListener();
             }
-
-
-
-
 
 			// #endif
 

@@ -53,6 +53,8 @@
 	import {pageMixin} from "../../common/mixin";
 	import {error} from "../../common";
 
+	import {getLocationFn} from "../../common/tool/location";
+
 	export default {
 		mixins:[pageMixin],
 		data() {
@@ -71,6 +73,7 @@
 		onShow(){
 
 
+
 		},
 
 		async onPullDownRefresh(){
@@ -79,15 +82,11 @@
 		},
 		onLoad() {
 
-
-
-
-
-
-
 		},
 		async created(){
 			this.$_init()
+
+			this.get_user_location()
 
 			// let initData = await this.getInitData()
 			// uni.setNavigationBarTitle({
@@ -96,7 +95,23 @@
 
 		},
 		methods: {
+			async get_user_location(){
+				//真实环境不跑下面逻辑，供参考
+				return;
+				let localInfo = null;
 
+				await getLocationFn.then(res=>{
+					if(res.code===0){
+						localInfo = res.data
+					}
+				},err=>{
+					console.log(err)
+					error('获取位置信息失败:'+err.msg)
+				})
+
+				console.log('获取到的位置信息',localInfo)
+
+			},
 			$_init(){
 				let _self = this;
 				new Promise((resolve,reject) => {
