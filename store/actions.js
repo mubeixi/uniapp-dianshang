@@ -24,6 +24,7 @@ export const getInitData = async ({commit, state},refresh) => {
       }
 
     }
+    return {}
   }
 
 

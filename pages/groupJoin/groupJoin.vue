@@ -278,7 +278,7 @@
         },
         computed:{
             ...mapState(['initData']),
-						...mapGetters(['userInfo'])
+            ...mapGetters(['userInfo'])
         },
         onLoad(options) {
             this.Prod_ID = options.Products_ID;

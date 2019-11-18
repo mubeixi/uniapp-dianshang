@@ -330,6 +330,8 @@ export default {
 			this.createtabs();
 		}
 		// #endif
+
+		console.log(32333333333333333,this.initData)
 	},
 	onUnload(){
 		// #ifdef APP-PLUS
@@ -348,7 +350,7 @@ export default {
 		// #endif
 	},
 	computed:{
-	...mapState(['initData'])
+		...mapState(['initData'])
 	},
 	filters: {
 				/**
