@@ -1,5 +1,5 @@
 <template>
-  <view :style="{height:style.height+'px',backgroundColor:space.style.bgColor?space.style.bgColor:'#f2f2f2'}" class="space">
+  <view :style="{height:style.height+'px',background:space.style.bgColor}" class="space">
 
   </view>
 </template>

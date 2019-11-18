@@ -9,6 +9,7 @@ import {post,get,ajax} from './interceptors.js';
 import {isWeiXin} from "./tool";
 
 export const GET_ENV = ()=>{
+
 	// #ifdef APP-PLUS
 	return 'app'
 	// #endif

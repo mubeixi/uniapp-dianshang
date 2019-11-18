@@ -1,10 +1,9 @@
 <template>
-  <div class="cube wrap">
+  <div class="cube wrap" :style="{background:cube.style.bgColor}">
     <div class="box" :style="{width:fullW+'px'}">
       <div class="postion-wrap" :style="[getWrapStyle()]">
         <!--所有热区用绝对定位实现-->
-        <div @click="go(area)" class="active" :data-idx="area.IDX" :style="[getAreaStyle(area)]"
-             v-for="(area,aidx) in cube.value.list">
+        <div @click="go(area)" class="active" :data-idx="area.IDX" :style="[getAreaStyle(area)]" v-for="(area,aidx) in cube.value.list">
           <div class="mask" :style="{backgroundImage:'url('+domainFunc(area.bgimg)+')'}"></div>
         </div>
       </div>

@@ -58,9 +58,9 @@ export const GetQueryByString = (str, name) => {
 
 
 export const ls = {
-    set(key, val) {
+    set(key, val,cover) {
 
-        if(!val && (val!=0 || val!= false))return false;
+        if(!cover && !val && (val!=0 || val!= false))return false;
 
         return  uni.setStorageSync(key, val)
     },
@@ -217,17 +217,28 @@ export const arrayUnique = (arr)=>{
   return res;
 }
 
+/**
+ * 对象=>字符串=>对象
+ * 一般用于console.log立即显示（有时候虽然在前面打印，但是会由于引用的问题，打印的不是即时结果)
+ * 同时可以用于简单粗暴的避免引用传递的对象copy，但是注意这种写法只保留值，会丢失方法
+ * @param obj
+ */
+export const objTranslate = obj=>JSON.parse(JSON.stringify(obj))
 
 export function mixinStyle(defaultStyle, style) {
+
+
   if(!defaultStyle)defaultStyle={};
   if(!style)style={};
 
   let rt = objTranslate(defaultStyle)
+    console.log(rt)
   for(var i in style){
     if(!style.hasOwnProperty(i))continue;
     rt[i] = style[i]
 
   }
+  console.log(333333333333333333333333333333,rt)
   return rt;
 }
 

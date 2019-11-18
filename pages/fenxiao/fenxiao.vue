@@ -129,7 +129,6 @@
 		mixins:[pageMixin],
 		data() {
 			return {
-
 				data:{
 					dis_config:{},
 					disInfo:{},
@@ -147,8 +146,8 @@
 
 		},
 		async onShow() {
-			if(JSON.stringify(this.userInfo) != "{}"){
-				get_user_info().then(res=>{
+			if(JSON.stringify(this.userInfo) == "{}"){
+				get_user_info({},{errtip: false}).then(res=>{
 					this.setUserInfo(res.data);
 				},err=>{
 
@@ -185,6 +184,8 @@
 			},
 			// 去分销商页面
 			tofenxiaoshang(){
+
+				if(!this.$fun.checkIsLogin(1,1))return;
 				if(!this.$fun.checkIsDistribute(1,1))return;
 				uni.navigateTo({
 					url: '../fenxiaoshang/fenxiaoshang'
@@ -204,6 +205,7 @@
 			},
 			//去提现
 			tixian(){
+				if(!this.$fun.checkIsLogin(1,1))return;
 				if(!this.$fun.checkIsDistribute(1,1))return;
 				uni.navigateTo({
 					url:'../withdrawal/withdrawal'
@@ -211,6 +213,7 @@
 			},
 			//推广小助手
 			goAssist(){
+				if(!this.$fun.checkIsLogin(1,1))return;
 				if(!this.$fun.checkIsDistribute(1,1))return;
 				uni.navigateTo({
 					url:'../promotionAssist/promotionAssist'
@@ -218,6 +221,7 @@
 			},
 			//自定义分享
 			goShare(){
+				if(!this.$fun.checkIsLogin(1,1))return;
 				if(!this.$fun.checkIsDistribute(1,1))return;
 				uni.navigateTo({
 					url:'../customizeShare/customizeShare'
@@ -225,6 +229,7 @@
 			},
 			//财富排行榜
 			goLeaderboard(){
+				if(!this.$fun.checkIsLogin(1,1))return;
 				if(!this.$fun.checkIsDistribute(1,1))return;
 				uni.navigateTo({
 					url:'../leaderboard/leaderboard'
@@ -232,6 +237,7 @@
 			},
 			//爵位晋升
 			goPromotion(){
+				if(!this.$fun.checkIsLogin(1,1))return;
 				if(!this.$fun.checkIsDistribute(1,1))return;
 				uni.navigateTo({
 					url:'../promotion/promotion'
@@ -239,6 +245,7 @@
 			},
 			//股东
 			goGudong(){
+				if(!this.$fun.checkIsLogin(1,1))return;
 				if(!this.$fun.checkIsDistribute(1,1))return;
 				uni.navigateTo({
 					url:'../gudong/gudong'
@@ -246,6 +253,7 @@
 			},
 			//区域代理
 			goFinance(){
+				if(!this.$fun.checkIsLogin(1,1))return;
 				if(!this.$fun.checkIsDistribute(1,1))return;
 				uni.navigateTo({
 					url:'../finance/finance'
@@ -259,6 +267,7 @@
 			},
 			//我的团队
 			goMyTeam(){
+				if(!this.$fun.checkIsLogin(1,1))return;
 				if(!this.$fun.checkIsDistribute(1,1))return;
 				uni.navigateTo({
 					url:'../myTeam/myTeam'
@@ -266,6 +275,7 @@
 			},
 			//二维码
 			goErweima(){
+				if(!this.$fun.checkIsLogin(1,1))return;
 				if(!this.$fun.checkIsDistribute(1,1))return;
 				uni.navigateTo({
 					url:'../erweima/erweima'

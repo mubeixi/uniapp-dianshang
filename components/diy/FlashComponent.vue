@@ -1,5 +1,5 @@
 <template>
-  <div class="goods wrap" id="goods" :style="{paddingLeft:goods.style.wrapmargin+'px',paddingRight:goods.style.wrapmargin+'px'}">
+  <div class="goods wrap" id="goods" :style="{background:goods.style.bgColor,paddingLeft:goods.style.wrapmargin+'px',paddingRight:goods.style.wrapmargin+'px',}">
     <image class="bgimg" src="/static/spike_bg.jpg"></image>
     <div class="stampbox">距{{countdown.is_start?'结束':'开始'}}还有: <span class="countdown_tag">{{countdown.d}}</span>天<span class="countdown_tag">{{countdown.h}}</span>时<span class="countdown_tag">{{countdown.m}}</span>分<span class="countdown_tag">{{countdown.s}}</span>秒</div>
 

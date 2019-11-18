@@ -1,6 +1,6 @@
 <template>
-  <div class="coupon coupon-list wrap" v-if="couponList>0">
-    <div v-if="coupon.config.type===1 && couponList.length>0">
+  <div class="coupon coupon-list wrap" v-if="couponList.length>0" :style="{background:coupon.style.bgColor}">
+    <div v-if="coupon.config.type==1 && couponList.length>0">
       <div v-if="couponList.length<4"  class="list style1 style1flex" >
         <div @click="getCoupon(item)" class="item" v-for="(item,idx) in couponList">
           <p class="title">满{{item.Coupon_Condition}}享</p>
@@ -17,7 +17,7 @@
       </div>
     </div>
 
-    <div class="list style2"  v-if="coupon.config.type=== 2 && couponList.length>0">
+    <div class="list style2"  v-if="coupon.config.type== 2 && couponList.length>0">
       <div @click="getCoupon(item)" class="item" v-for="(item,idx) in couponList">
         <div class="c">
           <p v-if="item.Coupon_UseType == 0">满￥{{item.Coupon_Condition}} {{item.Coupon_Discount+'折'}}</p>
@@ -25,7 +25,7 @@
         </div>
       </div>
     </div>
-    <div class="list style3"  v-if="coupon.config.type=== 3 && couponList.length>0">
+    <div class="list style3"  v-if="coupon.config.type== 3 && couponList.length>0">
       <div @click="getCoupon(item)" class="item" v-for="(item,idx) in couponList">
         <div class="c">
           <p v-if="item.Coupon_UseType == 0">满￥{{item.Coupon_Condition}} {{item.Coupon_Discount+'折'}}</p>
@@ -36,7 +36,7 @@
         </div>
       </div>
     </div>
-    <div class="list style4"  v-if="coupon.config.type=== 4 && couponList.length>0">
+    <div class="list style4"  v-if="coupon.config.type== 4 && couponList.length>0">
       <div @click="getCoupon(item)" class="item" v-for="(item,idx) in couponList">
         <div class="c">
           <div class="cwrap">
@@ -46,7 +46,9 @@
         </div>
       </div>
     </div>
-    <div v-if="couponList.length<1" class="text-center graytext font12 padding10-r"></div>
+    <div v-if="couponList.length<1" class="text-center graytext font12 padding10-r">
+      <!--没有优惠券-->
+    </div>
 
   </div>
 </template>

@@ -1,7 +1,7 @@
-import {login} from "./fetch";
+import {getSystemConf, login} from "./fetch";
 import {ls,GetQueryByString,isWeiXin} from "./tool";
 import {domainFn} from "./filter";
-import {checkIsLogin, error} from "./index";
+import {checkIsLogin, error, fun} from "./index";
 import {get_Users_ID} from "./fetch";
 import { mapGetters, mapActions, Store } from "vuex";
 
@@ -27,15 +27,12 @@ import wx from 'weixin-js-sdk';
 //上报用户信息
 import {upUserLog} from "./fetch";
 
-
-
 function setWxConfig(config) {
 	console.log('wx seting',config)
 	wx.config(config);
 }
 
-
-export const WX_JSSDK_INIT = (vm) => new Promise((resolve, reject) => {
+export const WX_JSSDK_INIT = (vm,jsApiListList) => new Promise((resolve, reject) => {
 
 	if(!isWeiXin())reject(false);
 
@@ -53,7 +50,7 @@ export const WX_JSSDK_INIT = (vm) => new Promise((resolve, reject) => {
 			let config = res.data;
 			//线上环境，听服务器的，本地的一律调试
 			let debug = false;//process.env.NODE_ENV === 'production'?config.debug?true:false:true
-			let jsApiList = ['onMenuShareAppMessage','onMenuShareTimeline'];
+			let jsApiList = jsApiListList?jsApiListList:['onMenuShareAppMessage','onMenuShareTimeline','openLocation','getLocation'];
 			// ['chooseImage', 'previewImage', 'uploadImage', 'openLocation','getLocation', 'chooseWXPay', 'getSystemInfo', 'onMenuShareAppMessage','onMenuShareTimeline','scanQRCode'];
 			let {noncestr,timestamp,appId,signature} = config;
 
@@ -89,6 +86,8 @@ import {buildSharePath} from "./tool";
 export const pageMixin = {
 	data: function () {
 		return {
+			//是否需要刷新配置，可以实现页面级配置
+			refreshInit:false,
 			// #ifdef H5
 			JSSDK_READY:false,
 			JSSDK_INIT:true,//是否需要微信签名
@@ -100,24 +99,36 @@ export const pageMixin = {
 	//页面的初始化
 	async onLoad(option) {
 
-
 		let owner_id = null,users_id = null
-
 		// #ifdef H5
 
 		/*商户id机制*/
 		users_id = GetQueryByString(location.href, 'users_id')
-		console.log(owner_id)
-
 		//如果连接里面已经有了，就不需要搞事
 		if(users_id){
-		    ls.set('users_id',users_id);
-		    // console.log('this page users_id is '+users_id)
-		    //return;
+
+
+
+			//比较新旧users_id
+			//只有h5有这个问题，app和小程序都是有单独分配的
+			let old_users_id = ls.get('users_id')
+
+			ls.set('users_id',users_id);
+
+			if(old_users_id && old_users_id!=users_id){
+				console.log('清空本地配置和登录信息')
+				this.setUserInfo({})
+				getSystemConf({}).then(res=>{
+					this.setInitData(res.data)
+				})
+
+			}
+
+
+
 		}else{
 		    users_id = ls.get('users_id');
 		}
-
 
 		if (users_id) {
 
@@ -143,16 +154,13 @@ export const pageMixin = {
 
 		/*owner_id 机制*/
 		owner_id = GetQueryByString(location.href, 'owner_id')
-
 		console.log(owner_id)
 		// #endif
-
 
 		// #ifdef MP-WEIXIN || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO
 
 		/*users_id*/
 		users_id = option.users_id
-
 		//如果连接里面已经有了，就不需要搞事
 		if(users_id){
 			ls.set('users_id',users_id);
@@ -160,39 +168,7 @@ export const pageMixin = {
 			users_id = ls.get('users_id');
 		}
 
-
-
-
-		// #ifdef MP-WEIXIN
-
-		// app lanuch里面已经有了
-		//都拿一下覆盖吧
-		// let extConfig = wx.getExtConfigSync ? wx.getExtConfigSync() : {};
-		// console.log('extConfig info is',extConfig);
-		// users_id = extConfig.users_id;
-		// ls.set('users_id',users_id);
-
-		//如果没有的话，就从小程序的远程配置里面拿吧
-
-		//防止退出登录后拿不到
-		// if(!users_id){
-		// 	let extConfig = wx.getExtConfigSync ? wx.getExtConfigSync() : {};
-		// 	console.log('extConfig info is',extConfig);
-		// 	users_id = extConfig.users_id;
-		// 	ls.set('users_id',users_id);
-		// }
-
-		//开发环境下，就手动给一下吧
-		// && process.env.NODE_ENV != 'production'
-		//ext.json机制已经生效，注释2019.10.31
-		// if(!users_id){
-		// 	users_id = 'wkbq6nc2kc';
-		// 	ls.set('users_id',users_id);
-		// }
-		// #endif
-
 		if (!users_id){
-
 			uni.showModal({
 				title: '提示',
 				content: '缺少商户id',
@@ -205,47 +181,37 @@ export const pageMixin = {
 		owner_id = option.owner_id
 		// #endif
 
-
-
 		//如果连接里面已经有了，就不需要搞事
-		if(owner_id || owner_id===0 || owner_id==='0'){
+		if(owner_id || owner_id==0){
 			ls.set('owner_id',owner_id);
 			console.log('this page owner_id is '+owner_id)
-
 		}
 
-		if(!ls.get('initData')){
-			this.getInitData()
-		}
 
     },
-	// #ifdef MP-WEIXIN || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO
-	onShareAppMessage(){
 
-		let initData = ls.get('initData')
-		let path = '/pages/index/index';
-		let shareObj = {
-			title: initData.ShopName,
-			desc:initData.ShareIntro,
-			imageUrl:domainFn(initData.ShareLogo),
-			path: buildSharePath(path)
-		};
-		return shareObj
-
-	},
-	// #endif
 	async created(){
+		// console.log('让你等')
+		//
+		// await new Promise(resolve => {
+		// 	setTimeout(function () {
+		// 		console.log('等到了')
+		// 		resolve(false)
+		// 	},5000)
+		// })
+
+		//根据配置决定是否刷新配置
+		let initData = await this.getInitData(this.refreshInit)
+		// console.log('get initdata',initData)
+		// this.initData = initData;
 
 		// #ifdef H5
-
-		let initData = await this.getInitData()
 
 		if(checkIsLogin() && !sessionStorage.getItem('is_send_usrlog')){
 			upUserLog({},{errtip:false}).then(res=>{
 				sessionStorage.setItem('is_send_usrlog',1)
 			},err=>{console.log('error',err)}).catch(e=>{console.log('catch',e)})
 		}
-
 
 		//页面默认全都是分享出去是首页的
 		if(isWeiXin() && this.JSSDK_INIT){
@@ -276,27 +242,31 @@ export const pageMixin = {
 
 			})
 		}
-
-
-
-
-
 		// #endif
-
-
 
 	},
     mounted() {
-
-
-
     },
     methods:{
 		// #ifdef H5
 		WX_JSSDK_INIT,
 		// #endif
-        ...mapActions(['getInitData'])
-    }
+        ...mapActions(['getInitData','setUserInfo','getUserInfo','setInitData'])
+    },
+	// #ifdef MP-WEIXIN || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO
+	onShareAppMessage(){
+
+		let initData = this.getInitData()
+		let path = '/pages/index/index';
+		let shareObj = {
+			title: initData.ShopName,
+			desc:initData.ShareIntro,
+			imageUrl:domainFn(initData.ShareLogo),
+			path: buildSharePath(path)
+		};
+		return shareObj
+	},
+	// #endif
 }
 
 

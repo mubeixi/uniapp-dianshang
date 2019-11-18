@@ -31,6 +31,7 @@ export const toast = (title, icon, image, duration) => {
  * @param duration
  */
 export const error = (title, icon, duration) => {
+    if(!title)return;
     if(title.length>6){
         //显示所有的问题
         toast(title, 'none', '', duration)
@@ -108,6 +109,9 @@ export const checkIsLogin = (redirect,tip) => {
  * @return {boolean}
  */
 export const checkIsDistribute = (redirect,tip) => {
+
+    //需要先确认是否已经登录了。。。。。
+
     let userInfo = store.state.userInfo || ls.get('userInfo')
     console.log(userInfo)
     if (userInfo.Is_Distribute !=1 ) {
