@@ -96,8 +96,17 @@
 		},
 		methods: {
 			async get_user_location(){
+				console.log('让你等就等')
+				await new Promise((resolve, reject) => {
+					setTimeout(function () {
+						console.log('等到了')
+						resolve(false)
+					},2000)
+				})
+
+				console.log('没等到就跑了')
 				//真实环境不跑下面逻辑，供参考
-				return;
+				//return;
 				let localInfo = null;
 
 				await getLocationFn.then(res=>{

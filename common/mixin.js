@@ -32,7 +32,7 @@ function setWxConfig(config) {
 	wx.config(config);
 }
 
-export const WX_JSSDK_INIT = (vm) => new Promise((resolve, reject) => {
+export const WX_JSSDK_INIT = (vm,jsApiListList) => new Promise((resolve, reject) => {
 
 	if(!isWeiXin())reject(false);
 
@@ -50,7 +50,7 @@ export const WX_JSSDK_INIT = (vm) => new Promise((resolve, reject) => {
 			let config = res.data;
 			//线上环境，听服务器的，本地的一律调试
 			let debug = false;//process.env.NODE_ENV === 'production'?config.debug?true:false:true
-			let jsApiList = ['onMenuShareAppMessage','onMenuShareTimeline'];
+			let jsApiList = jsApiListList?jsApiListList:['onMenuShareAppMessage','onMenuShareTimeline','openLocation','getLocation'];
 			// ['chooseImage', 'previewImage', 'uploadImage', 'openLocation','getLocation', 'chooseWXPay', 'getSystemInfo', 'onMenuShareAppMessage','onMenuShareTimeline','scanQRCode'];
 			let {noncestr,timestamp,appId,signature} = config;
 
