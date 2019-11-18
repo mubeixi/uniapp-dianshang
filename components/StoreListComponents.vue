@@ -39,7 +39,7 @@
                 <div class="row-content">
                     <div class="filter">
                         <div class="filter-item">
-                            <input placeholder="请输入门店名称" v-model="stores_name" />
+                            <input placeholder="请输入门店名称" v-model="stores_name"  @input="bindStore"/>
                         </div>
                     </div>
                 </div>
@@ -50,25 +50,27 @@
                 门店列表
             </div>
             <div class="lists">
-                <checkbox-group @change="checkboxChange">
-                    <label class="item padding10" v-for="(store,idx) in stores" :key="idx">
-                        <view class="checkbox">
-                            <checkbox :vlaue="store.Stores_ID" />
-                        </view>
-                        <image class="logo" :src="store.Stores_ImgPath|domain" />
-                        <view class="info">
-                            <div class="line10 flex flex-between">
-                                <div class="font14">{{store.Stores_Name}} [{{store.Stores_ID}}]</div>
-                                <div class="distance">{{store.distance||33}}m</div>
-                            </div>
-                            <div class="font12 graytext">{{store.Stores_Province_name}}{{store.Stores_City_name}}{{store.Stores_Area_name}}{{store.Stores_Address}}</div>
-                        </view>
-                    </label>
-                </checkbox-group>
+               <scroll-view  scroll-y="true" class="scroll-Y" >
+                   <radio-group @change="checkboxChange">
+                       <label class="item padding10" v-for="(store,idx) in stores" :key="idx">
+                           <view class="checkbox">
+                               <radio :vlaue="store.Stores_ID"  />
+                           </view>
+                           <image class="logo" :src="store.Stores_ImgPath|domain" />
+                           <view class="info">
+                               <div class="line10 flex flex-between">
+                                   <div class="font14">{{store.Stores_Name}} [{{store.Stores_ID}}]</div>
+                                   <div class="distance">{{store.distance||33}}m</div>
+                               </div>
+                               <div class="font12 graytext">{{store.Stores_Province_name}}{{store.Stores_City_name}}{{store.Stores_Area_name}}{{store.Stores_Address}}</div>
+                           </view>
+                       </label>
+                   </radio-group>
 
-                <div >
+                   <div >
 
-                </div>
+                   </div>
+               </scroll-view>
             </div>
             <button size="large" class="subbtn">确定</button>
             <div style="height: 46px;background: white;"></div>
@@ -137,9 +139,13 @@
             }
         },
         methods: {
+            bindStore(){
+                this.loadInfo();
+            },
             loadInfo(){
                 let postData = {
-                    size:999,
+                    pageSize:10000,
+                    size:1,
                     province:this.province.id,
                     city:this.city.id,
                     area:this.area.id,
@@ -147,17 +153,17 @@
                 }
                 getStoreList(emptyObject(postData)).then(res => {
 
-                    this.stores = this.stores.concat(res.data)
-                    this.stores = this.stores.concat(res.data)
-                    this.stores = this.stores.concat(res.data)
-                    this.stores = this.stores.concat(res.data)
-                    this.stores = this.stores.concat(res.data)
-                    this.stores = this.stores.concat(res.data)
-                    this.stores = this.stores.concat(res.data)
-                    this.stores = this.stores.concat(res.data)
-                    this.stores = this.stores.concat(res.data)
-                    this.stores = this.stores.concat(res.data)
-                    this.stores = this.stores.concat(res.data)
+                    this.stores = res.data;
+                    // this.stores = this.stores.concat(res.data)
+                    // this.stores = this.stores.concat(res.data)
+                    // this.stores = this.stores.concat(res.data)
+                    // this.stores = this.stores.concat(res.data)
+                    // this.stores = this.stores.concat(res.data)
+                    // this.stores = this.stores.concat(res.data)
+                    // this.stores = this.stores.concat(res.data)
+                    // this.stores = this.stores.concat(res.data)
+                    // this.stores = this.stores.concat(res.data)
+                    // this.stores = this.stores.concat(res.data)
                 })
             },
             bindProvinceChange(e){
@@ -223,12 +229,14 @@
             province:{
                 handler(val){
                     this.city_list = City.getCityList(this.province.id)
+                    this.city={};
                     this.loadInfo()
                 }
             },
             city:{
                 handler(val){
                     this.area_list = City.getAreaList(this.province.id,this.city.id)
+                    this.area={}
                     this.loadInfo()
                 }
             },
@@ -324,7 +332,7 @@
 
 .popup-layer {
     position: fixed;
-    z-index: 999999;
+    z-index: 888;
     background: rgba(0, 0, 0, .5);
     height: 100%;
     width: 100%;
@@ -335,7 +343,7 @@
 
 .popup-content {
     position: fixed;
-    z-index: 1000000;
+    z-index: 888;
     background: #FFFFFF;
     transition: all .3s ease;
     overflow: hidden;
@@ -351,4 +359,8 @@
     width: 100%;
     background: white;
 }
+    .scroll-Y{
+        height: 270px;
+        padding-bottom: 46px;
+    }
 </style>
