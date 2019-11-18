@@ -120,10 +120,9 @@ export default {
 		hasMore: true, // 是否还有产品
 		postData: {
 		  cart_key: 'CartList',
-		  prod_id: '',
+		  prod_id: 0,
 		  qty: 0,
-		  atr_str: '',
-		  atrid_str: ''
+		  attr_id: 0
 		},
 		checkAllFlag: false,
 		totalPrice: 0,
@@ -279,8 +278,7 @@ export default {
 	updateCart(pro_id,attr_id,num){
 		this.postData.prod_id = pro_id;
 		this.postData.qty = num;
-		this.postData.atrid_str = attr_id;
-		this.postData.atr_str = this.CartList[pro_id][attr_id]['Productsattrstrval']?this.CartList[pro_id][attr_id]['Productsattrstrval']:'';
+		this.postData.attr_id = attr_id;
 		if(this.CartList[pro_id][attr_id]['Qty'] == 1 && num == -1) {
 			uni.showToast({
 				title: '购买数量不能小于1',
