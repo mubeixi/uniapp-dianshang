@@ -128,6 +128,7 @@
 <script>
 	import popupLayer from '../../components/popup-layer/popup-layer.vue'
 	import PayComponents from '../../components/PayComponents.vue';
+	import {mapActions,mapGetters} from 'vuex';
 
 	import {
 		getAddress,
@@ -191,7 +192,7 @@
 			}
 
 			// 获取支付方式
-			this.pay_arr = ls.get('initData').pay_arr;
+			this.pay_arr = this.initData.pay_arr;
 
 		},
 		filters: {
@@ -202,6 +203,7 @@
 			// this.get_user_info();// 获取用于可用余额
 		},
 		computed: {
+			...mapGetters(['initData']),
 			invoiceChecked() {
 				return this.openInvoice;
 			},
@@ -226,7 +228,7 @@
 			// #endif
 		},
 		methods: {
-
+			//...mapActions(['getInitData']),
 			//获取用户支付方式
 			chooseType(name) {
 				console.log('支付方式',name)

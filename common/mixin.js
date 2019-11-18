@@ -88,7 +88,6 @@ export const pageMixin = {
 		return {
 			//是否需要刷新配置，可以实现页面级配置
 			refreshInit:false,
-			initData:{},
 			// #ifdef H5
 			JSSDK_READY:false,
 			JSSDK_INIT:true,//是否需要微信签名
@@ -108,12 +107,16 @@ export const pageMixin = {
 		//如果连接里面已经有了，就不需要搞事
 		if(users_id){
 
+
+
 			//比较新旧users_id
 			//只有h5有这个问题，app和小程序都是有单独分配的
 			let old_users_id = ls.get('users_id')
+
+			ls.set('users_id',users_id);
+
 			if(old_users_id && old_users_id!=users_id){
 				console.log('清空本地配置和登录信息')
-				ls.set('users_id',users_id);
 				this.setUserInfo({})
 				getSystemConf({}).then(res=>{
 					this.setInitData(res.data)
@@ -184,6 +187,7 @@ export const pageMixin = {
 			console.log('this page owner_id is '+owner_id)
 		}
 
+
     },
 
 	async created(){
@@ -198,6 +202,8 @@ export const pageMixin = {
 
 		//根据配置决定是否刷新配置
 		let initData = await this.getInitData(this.refreshInit)
+		// console.log('get initdata',initData)
+		// this.initData = initData;
 
 		// #ifdef H5
 
@@ -250,7 +256,7 @@ export const pageMixin = {
 	// #ifdef MP-WEIXIN || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO
 	onShareAppMessage(){
 
-		let initData = ls.get('initData')
+		let initData = this.getInitData()
 		let path = '/pages/index/index';
 		let shareObj = {
 			title: initData.ShopName,

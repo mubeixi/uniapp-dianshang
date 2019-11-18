@@ -1,5 +1,6 @@
 <template>
-  <view class="title" :style="{color:style.color,background:style.bgColor,paddingLeft:style.padding+'px',paddingRight:style.padding+'px',paddingTop:style.paddingc+'px',paddingBottom:style.paddingc+'px'}">
+  <view class="title"
+        :style="{color:style.color,background:style.bgColor,paddingLeft:style.padding+'px',paddingRight:style.padding+'px',paddingTop:style.paddingc+'px',paddingBottom:style.paddingc+'px'}">
     <!-- <view class="text">{{title.value.title}}</view>
     <view class="small">{{title.value.small}}</view>
     <view class="more" @click="go(moreData)">{{moreData.title}}</view> -->
@@ -52,6 +53,8 @@
         // return this.title.value.more[0];//this.title.value?this.title.value.more[0]:{}
       },
       style() {
+
+        if(!this.title.style) return styleDefault;
         return mixinStyle(styleDefault, this.title.style);
       },
     },

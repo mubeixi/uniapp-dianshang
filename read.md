@@ -1,11 +1,13 @@
 网中网商城  __UNI__E5E1B20
-
+com.zz.wzw.wzwdianshang
 wkbq6nc2kc
 
 
 "name" : "紫砂壶",
 "appid" : "__UNI__0C11EAA",
 "description" : "紫砂壶",
+
+com.zz.wzw.edaozsh
 
 users_id=ebxjt7h587
 
