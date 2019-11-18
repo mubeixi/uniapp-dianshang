@@ -244,6 +244,7 @@
 <style lang="scss" scoped>
 .wrap{
     width: 750rpx;
+    background: white;
     overflow-x: hidden;
 }
 .lists{
@@ -324,7 +325,7 @@
 .popup-layer {
     position: fixed;
     z-index: 999999;
-    background: rgba(0, 0, 0, .3);
+    background: rgba(0, 0, 0, .5);
     height: 100%;
     width: 100%;
     top: 0px;
