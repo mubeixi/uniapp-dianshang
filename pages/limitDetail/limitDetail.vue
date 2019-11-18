@@ -284,8 +284,7 @@ export default {
 			spike_good_id:0,
 			postData: {
 			    prod_id: 0,    //产品ID  在 onLoad中赋值
-			    atrid_str: '',    //选择属性  1；2   数字从小到大
-			    atr_str: '',      //选择属性名称
+			    attr_id: 0,    //选择属性id
 			    count: 0,         //选择属性的库存
 			    showimg: '',      //选择属性的图片(用产品图片代替)
 			    qty: 1,           //购买数量
@@ -704,10 +703,9 @@ export default {
         	var attr_val = this.product.skuvaljosn[check_attrid];   //选择属性对应的属性值
         	//数组转化为字符串
         	check_attrnames = check_attrnames.join(';');
-        	this.postData.atr_str = check_attrnames;
-        	this.postData.atrid_str = check_attrid;
         	//属性判断
         	if (attr_val) {
+        		this.postData.attr_id = attr_val.Product_Attr_ID;   //选择属性的id
         		this.postData.count = attr_val.Property_count;   //选择属性的库存
         		this.postData.showimg = typeof attr_val.Attr_Image != 'undefined' && attr_val.Attr_Image != '' ? attr_val.Attr_Image : this.product.Products_JSON['ImgPath'][0];// 选择属性的图片
 				this.postData.productDetail_price = attr_val.xs_pricex; // 选择属性的价格
@@ -742,7 +740,7 @@ export default {
         	}
         	this.postData.prod_id = this.Products_ID;
 			this.postData.active_id=this.product.spike_good_id;
-        	if(this.postData.atr_str==''||this.postData.atrid_str==''){
+        	if(this.postData.attr_id==0){
         		if(this.product.skujosn){
         			wx.showToast({
         			    title: '您还没有选择规格',
