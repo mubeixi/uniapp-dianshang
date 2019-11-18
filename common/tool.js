@@ -524,3 +524,18 @@ export const createEmptyArray = (len,item)=>{
     console.log('createEmptyArray is ',JSON.stringify(tempArr))
     return tempArr;
 }
+
+
+export const emptyObject = (obj, strice) => {
+    for (var prop in obj) {
+        if (obj[prop] === '' || obj[prop] === undefined || obj[prop] === null || obj[prop] === 'null' || obj[prop] === 'undefined') {
+            if (strice) {
+                vant.showMsg('参数' + prop + '不能为空');
+                console.log('参数' + prop + '不能为空');
+                return false;
+            }
+            delete obj[prop];
+        }
+    }
+    return obj;
+};

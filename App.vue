@@ -193,6 +193,7 @@ ul,li{
 
 .flex{display : flex}
 .flex1{flex : 1}
+.flex-between{justify-content: space-between}
 
 .padding4-c{padding :0  4px}
 
@@ -201,10 +202,13 @@ ul,li{
 .padding10-c{padding : 0 10px}
 .padding10-r{padding : 10px 0}
 
+.padding15{padding : 15px}
+.padding15-c{padding : 0 15px}
+.padding15-r{padding : 15px 0}
+
 
 .margin15{
     margin: 15px;
-
 }
 
 //titleView为custom或者false时专用，让状态栏显示出来（对于商品详情页等需要显示的则不需要)
