@@ -61,7 +61,7 @@
 		  <div class=" container">
 			  <div class="fenge"><span class="red"></span><span class="caini">猜你喜欢</span><span class="red"></span></div>
 			  <div class="prolist">
-				  <div class="pro-item" v-for="(item,index) in prodList" :key="index" @click="goProductDetail(item.Products_ID,item.is_pintuan)" >
+				  <div class="pro-item" v-for="(item,index) in prodList" :key="index" @click="gotoDetail(item.Products_ID)" >
 					  <img :src="item.ImgPath" alt="">
 					  <div class="item-name">{{item.Products_Name}}</div>
 					  <div class="price">

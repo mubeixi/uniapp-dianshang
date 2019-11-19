@@ -71,7 +71,7 @@
 	</view>
 	<div v-if="cate==1" >
 		<div class="cate1">
-			<div class="pro" @click="goProductDetail(item.Products_ID,item.is_pintuan)" v-for="(item,i) of pro" :key="i">
+			<div class="pro" @click="gotoDetail(item.Products_ID)" v-for="(item,i) of pro" :key="i">
 				<image :src="item.ImgPath"   class="pro-img"></image>
 				<div class="pro_desc">
 					<div class="title">{{item.Products_Name}}</div>
@@ -89,7 +89,7 @@
 	</div>
     <div v-else>
 		<div class="cate2" >
-			<div class="pro" @click="goProductDetail(item.Products_ID,item.is_pintuan)" v-for="(item,i) of pro" :key="i">
+			<div class="pro" @click="gotoDetail(item.Products_ID)" v-for="(item,i) of pro" :key="i">
 				<image :src="item.ImgPath" alt=""  class="pro-img"></image>
 				<div class="pro_desc">
 					<div class="title">{{item.Products_Name}}</div>
@@ -324,7 +324,7 @@ export default {
 	  },
       gotoDetail(item){
           uni.navigateTo({
-          			  url:'../detail/detail?Products_ID='+item.Products_ID
+          			  url:'../detail/detail?Products_ID='+item
           })
       },
 	  changeCate(){
