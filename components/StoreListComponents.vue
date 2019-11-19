@@ -38,12 +38,13 @@
                 <div class="row-label graytext">门店:</div>
                 <div class="row-content">
                     <div class="filter">
-                        <div class="filter-item">
-                            <input placeholder="请输入门店名称" v-model="stores_name"  @input="bindStore"/>
+                        <div class="filter-item" style="border: 1px solid #D2D2D2">
+                            <input placeholder="请输入门店名称" v-model="stores_name"  class="inputs"/>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="search" @click="loadInfo">搜索</div>
             <div class="space-box"></div>
             <div class="label-title">
                 <div class="line"></div>
@@ -51,7 +52,7 @@
             </div>
             <div class="lists">
                <scroll-view  scroll-y="true" class="scroll-Y" >
-                   <radio-group @change="checkboxChange">
+                   <radio-group>
                        <label class="item padding10" v-for="(store,idx) in stores" :key="idx">
                            <view class="checkbox">
                                <radio :vlaue="store.Stores_ID"  />
@@ -60,7 +61,7 @@
                            <view class="info">
                                <div class="line10 flex flex-between">
                                    <div class="font14">{{store.Stores_Name}} [{{store.Stores_ID}}]</div>
-                                   <div class="distance">{{store.distance||33}}m</div>
+                                   <div class="distance" v-if="store.distance">{{store.distance}}m</div>
                                </div>
                                <div class="font12 graytext">{{store.Stores_Province_name}}{{store.Stores_City_name}}{{store.Stores_Area_name}}{{store.Stores_Address}}</div>
                            </view>
@@ -139,9 +140,6 @@
             }
         },
         methods: {
-            bindStore(){
-                this.loadInfo();
-            },
             loadInfo(){
                 let postData = {
                     pageSize:10000,
@@ -230,16 +228,21 @@
                 handler(val){
                     this.city_list = City.getCityList(this.province.id)
                     this.city={};
-                    this.loadInfo()
+                    // this.loadInfo()
                 }
             },
             city:{
                 handler(val){
                     this.area_list = City.getAreaList(this.province.id,this.city.id)
-                    this.area={}
-                    this.loadInfo()
+                    this.area={};
+                    // this.loadInfo()
                 }
             },
+            area:{
+                handler(val) {
+                    // this.loadInfo()
+                }
+            }
         },
         created()
         {
@@ -348,7 +351,7 @@
     transition: all .3s ease;
     overflow: hidden;
     width: 750rpx;
-    top: 30%;
+    top: 15%;
     /*border-top-left-radius: 20rpx;*/
     /*border-top-right-radius: 20rpx;*/
 
@@ -360,7 +363,26 @@
     background: white;
 }
     .scroll-Y{
-        height: 270px;
+        height: 322px;
         padding-bottom: 46px;
+    }
+    .search{
+        width:170rpx;
+        height:25px;
+        line-height: 25px;
+        text-align: center;
+        background:rgba(244,49,49,1);
+        color: #FFFFFF;
+        font-size: 12px;
+        box-sizing: border-box;
+        margin: 0 auto;
+        margin-top: 32rpx;
+        margin-bottom: 30rpx;
+    }
+    .inputs{
+        font-size: 10px;
+        height: 25px;
+        text-align: left;
+        padding-left: 10px;
     }
 </style>
