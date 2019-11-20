@@ -2,25 +2,25 @@
 	<view class="myall">
 		<form report-submit="true" @submit="formSubmit">
 		  <view class='xinxi'>
-			<text>收货人</text>
-			<input type="text" name="Address_Name" v-model="address_info.Address_Name" maxlength='20' placeholder="请输入收货人姓名" />
+			<text class="text">收货人</text>
+			<input type="text" class="input" name="Address_Name" v-model="address_info.Address_Name" maxlength='20' placeholder="请输入收货人姓名" />
 		  </view>
 		  <view class='xinxi'>
-			<text>联系电话</text>
-			<input type="number" name="Address_Mobile" v-model="address_info.Address_Mobile" maxlength="11" placeholder="请输入联系电话" />
+			<text class="text">联系电话</text>
+			<input type="number" class="input"  name="Address_Mobile" v-model="address_info.Address_Mobile" maxlength="11" placeholder="请输入联系电话" />
 		  </view>
 		  <view class='dizhi'>
 			<view class="section">
 			  <picker mode="multiSelector"  @change="bindMultiPickerChange" @columnchange="bindMultiPickerColumnChange" :value="change_multiIndex" :range="change_objectMultiArray" range-key="name">
-				<view class="picker">
-				  <text>收货地址</text>
-				  <view v-if="!address_info.Address_Province">选择省份</view>
-				  <view v-else>{{objectMultiArray[0][multiIndex[0]]['name']}}</view>
-				  <view v-if="!address_info.Address_City">选择城市</view>
-				  <view v-else>{{objectMultiArray[1][multiIndex[1]]['name']}}</view>
-				  <view v-if="!address_info.Address_Area">选择地区</view>
-				  <view v-else>{{objectMultiArray[2][multiIndex[2]]['name']}}</view>
-				</view>
+					<view class="picker">
+						<text class="text">收货地址</text>
+						<view class="view" v-if="!address_info.Address_Province">选择省份</view>
+						<view class="view"  v-else>{{objectMultiArray[0][multiIndex[0]]['name']}}</view>
+						<view class="view"  v-if="!address_info.Address_City">选择城市</view>
+						<view class="view"  v-else>{{objectMultiArray[1][multiIndex[1]]['name']}}</view>
+						<view class="view"  v-if="!address_info.Address_Area">选择地区</view>
+						<view class="view"  v-else>{{objectMultiArray[2][multiIndex[2]]['name']}}</view>
+					</view>
 			  </picker>
 			</view>
 		  </view>
@@ -28,22 +28,22 @@
 			<view class="section">
 			  <picker mode="selector" @change="t_pickerChange" :range="t_arr" range-key="name" :value="t_index">
 				<view class="picker">
-				  <text style="">街道地址</text>
-				  <view v-if="!address_info.Address_Town">选择街道</view>
-				  <view v-else>{{t_arr[t_index]['name']}}</view>
+				  <text class="text">街道地址</text>
+				  <view class="view"  v-if="!address_info.Address_Town">选择街道</view>
+				  <view class="view"  v-else>{{t_arr[t_index]['name']}}</view>
 				</view>
 			  </picker>
 			</view>
 		 </view>
 		  <view class='xinxi'>
-			<text>详细地址</text>
-			<input type="text" name="Address_Detailed" :value="address_info.Address_Detailed" maxlength='30' placeholder="请输入详细地址" />
+			<text class="text">详细地址</text>
+			<input type="text" class="input"  name="Address_Detailed" :value="address_info.Address_Detailed" maxlength='30' placeholder="请输入详细地址" />
 		  </view>
 
 		  <view class='xinxi set_default'>
 			<checkbox-group name="Address_Is_Default">
-			  <label class="checkbox">
-				<checkbox value="1" :checked="address_info.Address_Is_Default == 1 || is_first_add" :disabled="is_first_add" />设置默认地址
+			  <label class="checkbox label">
+				<checkbox class="checkbox" value="1" :checked="address_info.Address_Is_Default == 1 || is_first_add" :disabled="is_first_add" />设置默认地址
 			  </label>
 			</checkbox-group>
 		  </view>
@@ -464,18 +464,18 @@
 		box-sizing: content-box;
 	}
 .xinxi{width: 710rpx; padding:0  20rpx; border-bottom:1px #f4f4f4 solid; overflow: hidden; margin-bottom: 20rpx;}
-.xinxi text{float: left;width: 140rpx; font-size: 28rpx; line-height:90rpx;}
-.xinxi input{width: 570rpx; float: left;font-size: 28rpx; line-height:90rpx;height:90rpx;}
+.xinxi .text{float: left;width: 140rpx; font-size: 28rpx; line-height:90rpx;}
+.xinxi .input{width: 570rpx; float: left;font-size: 28rpx; line-height:90rpx;height:90rpx;}
 .tianjia-btn{width: 710rpx; margin: 50rpx 20rpx 20rpx; color:#fff;background:#F43131;border-radius: 8rpx;}
 .dizhi{width: 710rpx; padding:0  20rpx; border-bottom:1px #f4f4f4 solid; overflow: hidden; margin-bottom: 20rpx;}
 .dizhi , .xiangzhen {width: 710rpx; padding:0 20rpx; border-bottom:1px #f4f4f4 solid; overflow: hidden; margin-bottom: 20rpx;}
-.xiangzhen text{float: left;width: 140rpx; font-size: 28rpx; line-height:90rpx;}
-.dizhi text{float: left;width: 140rpx; font-size: 28rpx; line-height:90rpx;}
-.dizhi input{width: 180rpx; float: left;font-size: 28rpx; line-height:90rpx;height:90rpx; margin-right: 10rpx;}
-.picker view{width: 180rpx; float: left;font-size: 28rpx; line-height:90rpx;height:90rpx; margin-right: 10rpx;}
+.xiangzhen .text{float: left;width: 140rpx; font-size: 28rpx; line-height:90rpx;}
+.dizhi .text{float: left;width: 140rpx; font-size: 28rpx; line-height:90rpx;}
+.dizhi .input{width: 180rpx; float: left;font-size: 28rpx; line-height:90rpx;height:90rpx; margin-right: 10rpx;}
+.picker .view{width: 180rpx; float: left;font-size: 28rpx; line-height:90rpx;height:90rpx; margin-right: 10rpx;}
 
 
 .set_default {border-bottom: none;}
-.set_default label{font-size:28rpx;}
-.set_default label checkbox{transform:scale(.7);position: relative;top:-2px;}
+.set_default .label{font-size:28rpx;}
+.set_default .label .checkbox{transform:scale(.7);position: relative;top:-2px;}
 </style>
