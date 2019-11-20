@@ -106,6 +106,13 @@
 						股东
 					</view>
 				</view>
+				<view class="td" @click="goMyVip"  style="border-bottom: 0px;" >
+					<image  class="imgs" src="/static/gudong.jpg" ></image>
+					<view class="views">
+						我的会员
+					</view>
+				</view>
+			
 				<!-- #ifndef MP ||APP-PLUS -->
 				<view class="td"  @click="goAssist" style="border-bottom: 0px;">
 					<image  class="imgs" :src="'/static/client/fenxiao/tuiguang.png'|domain" ></image>
@@ -166,6 +173,11 @@
 		},
 		methods:{
 			...mapActions(['getUserInfo','setUserInfo']),
+			goMyVip(){
+				uni.navigateTo({
+					url:'../myVip/myVip'
+				})
+			},
 			goDistributor(){
 				//跳转成为分销商
 				uni.navigateTo({
