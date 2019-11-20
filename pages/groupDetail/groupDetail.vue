@@ -22,8 +22,8 @@
     <div class="section1">
         <div class="leftss">
             <span class="pricef">¥</span>
-            <span class="prices">{{product.Products_PriceX}}</span>
-            <span class="pricet">¥ {{product.Products_PriceY}}</span>
+            <span class="prices">{{product.pintuan_pricex}}</span>
+            <span class="pricet">¥ {{product.Products_PriceX}}</span>
         </div>
         <div class="rightss">
             <div class="countdown">
