@@ -36,6 +36,11 @@ export default {
   components: {
 
   },
+    onLoad(options){
+	  if(options.keyword){
+	      this.inputValue = options.keyword
+      }
+    },
   onShow(){
 	const than = this;       // 注意this的指向
 		uni.getStorage({
@@ -48,7 +53,7 @@ export default {
   methods: {
 	  goSearch(item){
 		  uni.navigateTo({
-		  			  url:'../result/result?inputValue='+item
+		  	url:'../result/result?inputValue='+item
 		  })
 	  },
 	  success(){

@@ -48,7 +48,7 @@
             <span v-if="product.Products_Sales">月销{{product.Products_Sales}}</span>
         </div>
 				<!-- 包邮等信息 -->
-				<div class="section3" v-if="product.Products_Promise.length > 0">
+				<div class="section3" v-if="product.Products_Promise && product.Products_Promise.length > 0">
 						<span v-for="(item,index) in product.Products_Promise" v-if="item.name" :key="index">
 								<image class="img" :src="'/static/client/detail/dh.png'|domain" alt="" />
 								<span>{{item.name}}</span>
@@ -309,13 +309,20 @@ export default {
 
 		this._init_func(option)
 
-		this.$refs.cartPopu.close();
+
+
 
 	 },
 
-	// mounted(){
-	//
-	// },
+	mounted(){
+		let _self = this
+		this.$nextTick().then(res=>{
+			if(_self.$refs.cartPopu){
+				_self.$refs.cartPopu.close()
+			}
+
+		})
+	},
 	onShow(){
 		// #ifdef APP-PLUS
 		var icon = plus.nativeObj.View.getViewById("icon");
@@ -991,9 +998,6 @@ export default {
 
 			// #endif
 
-
-
-
 		},
 		addCart(){
 			this.$refs.cartPopu.show();
@@ -1025,18 +1029,6 @@ export default {
 
     },
 	async created(){
-
-// #ifdef H5
-
-
-		console.log(location.href,'进入产品详情页面进入产品详情页面进入产品详情页面进入产品详情页面进入产品详情页面进入产品详情页面进入产品详情页面')
-		let UserInfo = this.getUserInfo()
-// #endif
-		// this.checkProdCollected();
-		// this.getCommit(this.Products_ID);
-		// this.getCoupon();//获取可领取的优惠券
-		// //商品信息
-		// this.getDetail(this.Products_ID);
 
 
 		let initData = await this.getInitData();

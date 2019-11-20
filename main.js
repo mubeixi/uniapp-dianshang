@@ -11,7 +11,18 @@ import {GetQueryByString, ls} from "./common/tool";
 Vue.use(Common);
 
 
+// #ifdef H5
+// var fundebug = require("fundebug-javascript");
+// fundebug.apikey = "d9ecce9bd55749ebd486148b15e172c36198bb3ce03d0946d5969557f58f2985";
 
+import * as fundebug from "fundebug-javascript";
+import fundebugVue from "fundebug-vue";
+fundebug.init({
+    apikey: "d9ecce9bd55749ebd486148b15e172c36198bb3ce03d0946d5969557f58f2985"
+})
+fundebugVue(fundebug, Vue);
+require('fundebug-revideo');
+// #endif
 
 //加入mixin
 // import {defaultMixin,aidMixin} from "./common/mixin";

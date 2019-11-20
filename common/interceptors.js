@@ -32,8 +32,8 @@ export const ajax = (url,method,data,options)=>{
 
   console.log('ajax action is '+data.act);
 
-	// #ifdef MP-TOUTIAO
-		  console.log(data)
+	// #ifdef MP-TOUTIAO || APP-PLUS
+  console.log(data)
 	// #endif
 
 
@@ -57,7 +57,7 @@ export const ajax = (url,method,data,options)=>{
           }
           let res = ret.data;
 
-		  // #ifdef MP-TOUTIAO
+		  // #ifdef MP-TOUTIAO || APP-PLUS
 		  console.log(res)
 		  // #endif
 

@@ -13,14 +13,9 @@ const failOpt = {
     'notFound':{code:-1,msg:'获取位置失败'}
 }
 
-export class LocationClass {
+export const getLocation = ()=>{
 
-    // latitude = null
-    // longitude = null
-
-
-
-    static getLocation = new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
 
         try{
             // #ifdef APP-PLUS
@@ -64,6 +59,7 @@ export class LocationClass {
                         resolve({code:0,data:{latitude:res.latitude,longitude:res.longitude}})
 
                     },function(error){
+
                         let msg = ''
                         switch(error.code)
                         {
@@ -105,12 +101,17 @@ export class LocationClass {
         }catch(e){
             reject({code:-1,msg:'程序错误:'+e.message})
         }
-
-
     })
+}
+
+export class LocationClass {
+
+    // latitude = null
+    // longitude = null
+    getLocation
 
 
 
 }
 
-export const getLocationFn = LocationClass.getLocation
+

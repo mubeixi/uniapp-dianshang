@@ -180,6 +180,7 @@
             "treeShaking" : {
                 "enable" : true
             }
-        }
+        },
+        "title" : " "
     }
 }

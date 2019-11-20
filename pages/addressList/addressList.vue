@@ -13,8 +13,8 @@
 			  <view class='flex-add default' v-if="item.Address_Is_Default == 1">默认地址</view>
 			</view>
 			<view class="flex-action">
-			  <image :src="'/client/address/del.png'|domain" @click="deladdress(item.Address_ID)"></image>
-			  <image :src="'/client/address/edit.png'|domain" @click="addressAddEdit(item.Address_ID)" ></image>
+			  <image :src="'/static/client/address/del.png'|domain" @click="deladdress(item.Address_ID)"></image>
+			  <image :src="'/static/client/address/edit.png'|domain" @click="addressAddEdit(item.Address_ID)" ></image>
 			</view>
 		  </label>
 		</radio-group>
@@ -22,11 +22,11 @@
 		<view style='height:82rpx;'></view>
 		<view class='tianjia' @click="addressAddEdit('a')">
 		  <view class='jia_img'>
-			<image :src="'/client/jia.png'|domain"></image>
+			<image :src="'/static/client/jia.png'|domain"></image>
 		  </view>
 		  <text>新增个人地址</text>
 		  <view class='go_img'>
-			<image :src="'/client/address/go.png'|domain"></image>
+			<image :src="'/static/client/address/go.png'|domain"></image>
 		  </view>
 		</view>
 	</view>

@@ -28,7 +28,7 @@
 			    </div>
 			    <div class="c_content_msg">{{item.Note}}</div>
 			    <div class="c_content_img">
-					<block v-for="(i,j) of item.ImgPath">
+					<block v-for="(i,j) of item.ImgPath" :key="i">
 						 <img :src="i"  @click="yulan(index,j)">
 					</block>
 			    </div>
