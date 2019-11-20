@@ -154,7 +154,7 @@ export const pageMixin = {
 
 		/*owner_id 机制*/
 		owner_id = GetQueryByString(location.href, 'owner_id')
-		console.log(owner_id)
+		//console.log(owner_id)
 		// #endif
 
 		// #ifdef MP-WEIXIN || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO
