@@ -521,7 +521,7 @@
 
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "网中网",
+		"navigationBarTitleText": " ",
 		"navigationBarBackgroundColor": "#FFFFFF",
 		//#ifdef H5
 		//去掉网页里的顶部导航栏
