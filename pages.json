@@ -523,6 +523,12 @@
                 "navigationBarTitleText": "领取优惠券"
             }
         }
+        ,{
+            "path" : "pages/myVip/myVip",
+            "style" : {
+                "navigationBarTitleText": "我的会员"
+            }
+        }
     ],
 
 	"globalStyle": {
