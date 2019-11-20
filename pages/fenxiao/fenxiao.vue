@@ -76,7 +76,13 @@
 						我的团队
 					</view>
 				</view>
-				<view class="td"  @click="goFinance" style="border-right: 0px;">
+				<view class="td" @click="goMyVip"  style="border-right: 0px;" >
+					<image  class="imgs" src="/static/gudong.jpg" ></image>
+					<view class="views">
+						我的会员
+					</view>
+				</view>
+				<view class="td"  @click="goFinance" >
 					<image  class="imgs" :src="'/static/client/fenxiao/caiwu.png'|domain" ></image>
 					<view class="views">
 						财务明细
@@ -88,30 +94,25 @@
 						爵位晋升
 					</view>
 				</view>
-				<view class="td"  @click="goLeaderboard"  >
+				<view class="td"  @click="goLeaderboard" style="border-right: 0px;">
 					<image  class="imgs" :src="'/static/client/fenxiao/caifu.png'|domain" ></image>
 					<view class="views">
 						财富排行榜
 					</view>
 				</view>
-				<view class="td" @click="goRegion" style="border-right: 0px;"  v-if="data.dis_config.Dis_Agent_Type==1">
+				<view class="td" @click="goRegion"   v-if="data.dis_config.Dis_Agent_Type==1">
 					<image  class="imgs" :src="'/static/client/fenxiao/quyu.png'|domain" ></image>
 					<view class="views">
 						区域代理
 					</view>
 				</view>
-				<view class="td" @click="goGudong"  style="border-bottom: 0px;"  v-if="data.dis_config.Sha_Agent_Type==1">
+				<view class="td" @click="goGudong"  v-if="data.dis_config.Sha_Agent_Type==1">
 					<image  class="imgs" src="/static/gudong.jpg" ></image>
 					<view class="views">
 						股东
 					</view>
 				</view>
-				<view class="td" @click="goMyVip"  style="border-bottom: 0px;" >
-					<image  class="imgs" src="/static/gudong.jpg" ></image>
-					<view class="views">
-						我的会员
-					</view>
-				</view>
+				
 			
 				<!-- #ifndef MP ||APP-PLUS -->
 				<view class="td"  @click="goAssist" style="border-bottom: 0px;">
