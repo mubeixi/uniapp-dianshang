@@ -13,8 +13,6 @@
 		bgcolor="#ffffff"
 		:hiddenBack="true"
 		:rightHidden="manage" ></page-title>
-
-
 		<div class="content">
 		  <div class="cartbox" v-if="total_count>0">
 			<div class="order_msg" >
@@ -393,11 +391,11 @@ export default {
 }
 .spaceDiv{
 	height: 86rpx;
-	background: white;
+	background: #f8f8f8;
 }
 .content {
-	/* #ifdef H5 */
-	margin-top: 86rpx;
+	/* #ifndef H5 */
+	/*margin-top: 86rpx;*/
 	/* #endif */
 	padding-top: 30rpx;
 	padding-bottom: 160rpx;
