@@ -152,16 +152,14 @@
 		onLoad() {
 
 		},
-		async onShow() {
-			if(JSON.stringify(this.userInfo) == "{}"){
-				get_user_info({},{errtip: false}).then(res=>{
-					this.setUserInfo(res.data);
-				},err=>{
+		onShow() {
+			get_user_info({},{errtip: false}).then(res=>{
+				this.setUserInfo(res.data);
+			},err=>{
 
-				}).catch(e=>{
-					console.log(e)
-				})
-			}
+			}).catch(e=>{
+				console.log(e)
+			})
 			//获取分销首页
 			this.getDisInit();
 

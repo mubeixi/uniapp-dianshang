@@ -53,7 +53,7 @@
 	import {pageMixin} from "../../common/mixin";
 	import {error} from "../../common";
 
-	import {getLocationFn} from "../../common/tool/location";
+	import {getLocation} from "../../common/tool/location";
 
 	export default {
 		mixins:[pageMixin],
@@ -86,7 +86,7 @@
 		async created(){
 			this.$_init()
 
-			this.get_user_location()
+			// this.get_user_location()
 
 			// let initData = await this.getInitData()
 			// uni.setNavigationBarTitle({
@@ -108,6 +108,9 @@
 				//真实环境不跑下面逻辑，供参考
 				//return;
 				let localInfo = null;
+
+				let getLocationFn = getLocation()
+
 
 				await getLocationFn.then(res=>{
 					if(res.code===0){

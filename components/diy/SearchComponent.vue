@@ -48,7 +48,6 @@
           if(this.search.value && this.search.value.hot){
               return this.search.value.hot.join(' ')
           }
-
           return ''
 
       },
@@ -89,7 +88,8 @@
     components: {},
     methods: {
       toSearch(){
-        this.$fun.linkTo({link:'/pages/search/search',linkType:'default'})
+          let path = '/pages/search/search?keyword='+this.placeholderText
+        this.$fun.linkTo({link:path,linkType:'default'})
       }
     },
     mounted(){
