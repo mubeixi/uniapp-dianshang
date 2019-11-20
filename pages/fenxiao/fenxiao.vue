@@ -145,7 +145,7 @@
 		onLoad() {
 
 		},
-		async onShow() {
+		onShow() {
 			if(JSON.stringify(this.userInfo) == "{}"){
 				get_user_info({},{errtip: false}).then(res=>{
 					this.setUserInfo(res.data);
