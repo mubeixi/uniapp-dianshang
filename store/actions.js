@@ -1,6 +1,6 @@
 import {getSystemConf} from "../common/fetch";
 import {ls} from "../common/tool";
-import {confirm} from "../common";
+import {checkIsLogin, confirm, fun} from "../common";
 
 export const setUserInfo = ({commit}, data) => {
   commit('SET_USER_INFO', data);
@@ -52,11 +52,13 @@ export const getUserInfo = async({commit, state},through) => {
   //从ls中获取
   if (!data) {
     let data2 = ls.get('userInfo')
-    if (data2) {
+
+    if (data2 && JSON.stringify(data2)!='{}') {
       commit('SET_USER_INFO', data2);
       return data2
     }
   }
+
 
   if(through){
       //则本地没有用户信息，提示用户是否需要登录。
@@ -64,9 +66,11 @@ export const getUserInfo = async({commit, state},through) => {
       await confirm({title: '提示', content: '需要登录,请问是否登录?', confirmText: '去登录', cancelText: '暂不登录'}).then(() => {
 
           //要替换掉navigateTo，不然登录页面回退就尴尬了
-          uni.navigateTo({
-              url:'/pages/login/login'
-          })
+          // uni.navigateTo({
+          //     url:'/pages/login/login'
+          // })
+          //用这个可以记录登陆前页面
+          fun.checkIsLogin(1)
 
       }).catch(() => {
 
@@ -75,7 +79,7 @@ export const getUserInfo = async({commit, state},through) => {
 
 
 
-  return {}
+  //return {}
 
 };
 

@@ -483,7 +483,9 @@
         }
         ,{
             "path" : "pages/gift/gift",
-            "style" : {}
+            "style" : {
+              "navigationBarTitleText": "赠品"
+            }
         }
         ,{
             "path" : "pages/giftDetail/giftDetail",
