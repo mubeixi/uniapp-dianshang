@@ -243,7 +243,11 @@
 				textShen:'立即申请成为分销商',
 				isXu:false,//是否弹出购买须知
 				isAgree:false,//是否同意
-				pro:[],
+				pro:{
+					dis_level:[{}],
+					dis_config:{},
+					Dis_Agreement_btn:{}
+				},
 				change_objectMultiArray: [],  //选择数据
 				address_info:{},
 				objectMultiArray: [],   //展示数据

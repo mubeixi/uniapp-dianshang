@@ -23,7 +23,11 @@
 		data() {
 			return {
 				pro:{
-					dis_config:''
+					dis_config:{
+						Dis_Agreement_btn:{
+							btn_name:''
+						}
+					}
 				},
 			};
 		},
