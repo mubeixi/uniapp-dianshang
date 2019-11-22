@@ -152,6 +152,9 @@ export const getExpiredCoupon = (data,options) => fetch('get_expired_coupon', da
 // 提交订单
 export const createOrder = (data,options) => fetch('create_order', data,options);
 
+// 提交订单
+export const getWithdrawConfig = (data,options) => fetch('get_withdraw_config', data,options);
+
 // 上传图片
 export const uploadImage = (data,options) => fetch('upload_image', data,options);
 // 获取订单详情
