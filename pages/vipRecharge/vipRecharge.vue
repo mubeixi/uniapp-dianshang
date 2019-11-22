@@ -11,7 +11,7 @@
 			</view>
 		</view>
 
-		<input  class="inputs" @input="changeNun" v-model="money" type="number" step="2" placeholder="请输入充值金额">
+		<input  class="inputs" v-model="money" type="number" placeholder="请输入充值金额">
 		<view class="line"></view>
 		<view class="payMethod">
 			支付方式
@@ -52,7 +52,6 @@ export default {
 	data() {
 		return {
 			info:{},
-			num:null,
 			payChannel:null,
 			money: '',
 			pro:[],
@@ -106,10 +105,6 @@ export default {
 				console.log(e)
 			})
 		},
-		changeNun(e){
-
-			this.num = e.detail.value
-		},
 		confirm(){
 			this.sub();
 		},
@@ -117,14 +112,17 @@ export default {
 			let _self = this;
 			let payConf = {};
 			if(!is_forword) {
-				console.log('222')
+				if(!this.money) {
+					error('充值金额不能为空');
+					return;
+				}
 				let reg = /^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/
-				if (!reg.test(this.num)) {
+				if (!reg.test(this.money)) {
 					error('充值金额最多2位小数')
-					this.num = null;
+					this.money = null;
 					return
 				}
-
+				ls.set('recharge_money',this.money);
 				if(!this.payChannel){
 					error('支付渠道必选')
 					return;
@@ -132,13 +130,13 @@ export default {
 				console.log(this.payChannel)
 				payConf = {
 					pay_type: this.payChannel,
-					money: this.money
+					money: this.money || ls.get('recharge_money')
 				};
 			}
 			this.pay_type = this.payChannel;
 			payConf = {
 				pay_type: this.payChannel,
-				money: this.money
+				money: this.money || ls.get('recharge_money')
 			};
 			if(this.pay_type === 'unionpay'){
 				error('即将上线')
@@ -539,6 +537,9 @@ export default {
 
 		},
 		payFailCall(){
+		 	if(ls.get('money')) {
+		 		this.money = ls.get('recharge_money')
+			};
 			uni.showToast({
 				title: '支付失败',
 				icon: 'none',

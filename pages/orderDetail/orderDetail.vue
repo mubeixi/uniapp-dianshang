@@ -92,7 +92,7 @@
 						<switch :checked="moneyChecked" size='25px' color="#04B600" @change="moneyChange" />
 					</div>
 					<!-- <div class="o_desc c8">{{orderInfo.Order_Yebc}}</div> -->
-					<input type="number" v-if="openMoney" :value="user_money" :disabled="!openMoney" :placeholder="orderInfo.Order_Yebc"
+					<input type="number" v-if="openMoney" v-model="user_money"  :disabled="!openMoney" :placeholder="orderInfo.Order_Yebc"
 					@blur="moneyInputHandle" />
 				</div>
 			</div>
@@ -147,11 +147,51 @@
 			<span class="mbx">小计：<span class="money moneys">￥</span><span class="money">{{orderInfo.Order_Fyepay}}</span></span>
 		</div> -->
 		<div style="height:100px;background:#efefef;"></div>
+		<popup-layer ref="popupMX" :direction="'top'">
+			<view class="mxdetail">
+				<view class="mxtitle">明细</view>
+				<view class="mxitem" v-if="orderInfo.user_curagio_money > 0">会员折扣 <text class="num">-{{orderInfo.user_curagio_money}}</text></view>
+				<view class="mxitem" v-if="orderInfo.Manjian_Cash > 0">满减 <text class="num">-{{orderInfo.Manjian_Cash}}</text></view>
+				<view class="mxitem" v-if="orderInfo.Coupon_Money > 0">优惠券 <text class="num">-{{orderInfo.Coupon_Money}}</text></view>
+				<view class="mxitem" v-if="orderInfo.Integral_Money > 0">积分抵用 <text class="num">-{{orderInfo.Integral_Money}}</text></view>
+				<view class="mxitem" v-if="user_money > 0">余额 <text class="num">-{{user_money}}</text></view>
+				<view class="mxitem" v-if="orderInfo.Order_Shipping.Price > 0">运费 <text class="num">+{{orderInfo.Order_Shipping.Price}}</text></view>
+			</view>
+			<div class="order_total">
+				<div class="totalinfo">
+					<div class="info">共{{orderInfo.prod_list.length}}件商品 总计：<span class="mbxa">￥<span>{{orderInfo.Order_Fyepay}}</span></span></div>
+					<div class="tips">*本次购物一共可获得{{orderInfo.Integral_Get}}积分</div>
+				</div>
+				<view class="mx" @click="seeDetail">明细 <image class="image slidedown" src="../../static/top.png"></image></view>
+				<div class="btn-group" v-if="orderInfo.Order_Status==0">
+					<span @click="cancelOrder(orderInfo.Order_ID)">取消订单</span>
+				</div>
+				<div class="btn-group" v-if="orderInfo.Order_Status==1">
+					<span @click="cancelOrder(orderInfo.Order_ID)">取消订单</span>
+					<span class="active" @click="submit">立即付款</span>
+				</div>
+				<div class="btn-group" v-else-if="orderInfo.Order_Status==2">
+					<span class="active" v-if="orderInfo.teamstatus==0">拼团中</span>
+					<block v-else>
+						<span class="active" @click="goPay(orderInfo.Order_ID)" v-if="orderInfo.Order_Type != 'gift'">申请退款</span>
+					</block>
+				</div>
+				<div class="btn-group" v-else-if="orderInfo.Order_Status==3">
+					<span @click="goLogistics(orderInfo)">查看物流</span>
+					<!-- <span @click="goPay(orderInfo.Order_ID)" style="margin-left: 14rpx;">申请退款退货</span> -->
+					<span class="active" @click="confirmOrder(orderInfo.Order_ID)">确认收货</span>
+				</div>
+				<div class="btn-group" v-else-if="orderInfo.Order_Status==4 && orderInfo.Is_Commit == 0">
+					<span class="active" @click="goPay(orderInfo.Order_ID)">立即评价</span>
+				</div>
+			</div>
+		</popup-layer>
 		<div class="order_total">
 			<div class="totalinfo">
 				<div class="info">共{{orderInfo.prod_list.length}}件商品 总计：<span class="mbxa">￥<span>{{orderInfo.Order_Fyepay}}</span></span></div>
 				<div class="tips">*本次购物一共可获得{{orderInfo.Integral_Get}}积分</div>
 			</div>
+			<view class="mx" @click="seeDetail">明细 <image class="image" src="../../static/top.png"></image></view>
 			<div class="btn-group" v-if="orderInfo.Order_Status==0">
 				<span @click="cancelOrder(orderInfo.Order_ID)">取消订单</span>
 			</div>
@@ -251,7 +291,8 @@
 				isOpen: false, //是否自动弹出
 				user_money: 0,
 				user_name: '',
-				user_mobile: ''
+				user_mobile: '',
+				isSlide: false
 			}
 		},
 		onLoad(options) {
@@ -303,6 +344,16 @@
 
 		},
 		methods: {
+			//查看明细
+			seeDetail(){
+				if(!this.isSlide) {
+					this.$refs.popupMX.show();
+				}else {
+					this.$refs.popupMX.close();
+				}
+				this.isSlide = !this.isSlide;
+			},
+			//物流追踪
 			goLogistics(orderInfo){
 				let {
 					shipping_id,
@@ -462,6 +513,7 @@
 					});
 					this.user_money = this.orderInfo.Order_TotalPrice;
 					// this.orderInfo.Order_TotalPrice = money;
+					this.orderInfo.Order_Fyepay = 0.00;
 					return;
 				}
 				this.orderInfo.Order_Fyepay = Number(this.orderInfo.Order_TotalPrice - money).toFixed(2);
@@ -618,7 +670,22 @@
 	.wrap {
 		background: #fff;
 	}
-
+	.mxdetail {
+		font-size: 28rpx;
+		line-height: 80rpx;
+		padding: 40rpx 30rpx;
+		margin-bottom: 100rpx;
+		.mxtitle {
+			font-size: 28rpx;
+			border-bottom: 1px solid #eaeaea;
+		}
+		.mxitem {
+			border-bottom: 1px solid #eaeaea;
+			.num {
+				float: right;
+			}
+		}
+	}
 	.state {
 		padding: 20rpx 28rpx;
 		font-size: 28rpx;
@@ -835,6 +902,18 @@
 		background: #fff;
 		z-index: 100;
 		justify-content: space-around;
+		.mx {
+			font-size: 22rpx;
+			margin-right: 10rpx;
+			.image {
+				width: 20rpx;
+				height: 20rpx;
+				margin-left: 10rpx;
+			}
+			.slidedown {
+				transform: rotate(180deg);
+			}
+		}
 	}
 
 	.submit {

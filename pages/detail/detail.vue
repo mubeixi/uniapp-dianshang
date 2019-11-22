@@ -259,7 +259,7 @@ export default {
 			    prod_id: 0,    //产品ID  在 onLoad中赋值
 			    attr_id: 0,    //选择属性id
 			    count: 0,         //选择属性的库存
-			    showimg: '',      //选择属性的图片(用产品图片代替)
+			    // showimg: '',      //选择属性的图片(用产品图片代替)
 			    qty: 1,           //购买数量
 			    cart_key: '',     //购物车类型   CartList（加入购物车）、DirectBuy（立即购买）、PTCartList（不能加入购物车）
 				productDetail_price: 0
@@ -784,7 +784,7 @@ export default {
 			if (attr_val) {
 				this.postData.attr_id = attr_val.Product_Attr_ID;   //选择属性的id
 				this.postData.count = attr_val.Property_count;   //选择属性的库存
-				this.postData.showimg = typeof attr_val.Attr_Image != 'undefined' && attr_val.Attr_Image != '' ? attr_val.Attr_Image : this.product.Products_JSON['ImgPath'][0];// 选择属性的图片
+				// this.postData.showimg = typeof attr_val.Attr_Image != 'undefined' && attr_val.Attr_Image != '' ? attr_val.Attr_Image : this.product.Products_JSON['ImgPath'][0];// 选择属性的图片
 				this.postData.productDetail_price = attr_val.Attr_Price?attr_val.Attr_Price:this.product.Products_PriceX; // 选择属性的价格
 				this.submit_flag = (!this.check_attr || Object.getOwnPropertyNames(this.check_attr).length != Object.getOwnPropertyNames(this.product.skujosn).length) ? false : true;
 			}

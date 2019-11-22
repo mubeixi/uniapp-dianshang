@@ -47,7 +47,7 @@
 						</div>
 					</div>
 				</block>
-				<div class="text-right total">共{{item.prod_list.length}}件商品 合计：<span class="price"><span>￥</span> {{item.Order_TotalPrice}}</span></div>
+				<div class="text-right total">共{{item.prod_list.length}}件商品 合计：<span class="price"><span>￥</span> {{item.Order_Fyepay}}</span></div>
 				<div class="btn-group" v-if="item.Order_Status==0">
 					<span @click="cancelOrder(item.prod_list,index)">取消订单</span>
 				</div>
@@ -97,7 +97,9 @@ export default {
         }
     },
 	onShow(){
-
+		// 放在onshow中防止详情页支付完成跳转过来，订单状态未改变
+		this._getOrder();
+		this.getOrderNum();
 	},
 	onLoad(option){
 		if(option.index<=4){
@@ -109,8 +111,7 @@ export default {
 
 		this.data=[];
 		this.page=1;
-		this._getOrder();
-		this.getOrderNum();
+
 	},
 	onReachBottom(){
 		if(this.data.length<this.totalCount){
