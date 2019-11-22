@@ -1,7 +1,7 @@
 <template>
 	<view class="all" >
 		<!-- <page-title title="申请记录" rightHidden="true" bgcolor="#ffffff"></page-title> -->
-		<view class="main" v-for="(item,index) of data" :key="index">
+		<view class="main" v-for="(item,ind) of data" :key="ind">
 			<block v-if="index==1">
 				<view class="fir">
 					<view class="left">
