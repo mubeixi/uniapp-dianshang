@@ -132,12 +132,33 @@
 				<view class="info">共{{orderInfo.prod_count}}件商品 总计：<text class="money"><text class="m_icon">￥</text> {{orderInfo.Order_Fyepay}}</text></view>
 				<view class="tips">*本次购物一共可获得{{orderInfo.Integral_Get}}积分</view>
 			</view>
+			<view class="mx" @click="seeDetail">明细 <image class="image" src="../../static/top.png"></image></view>
 			<form report-submit @submit="form_submit">
 				<button formType="submit" class="submit">提交订单</button>
 			</form>
 		</view>
 		<div class="safearea-box"></div>
-
+		<popup-layer ref="popupMX" :direction="'top'">
+			<view class="mxdetail">
+				<view class="mxtitle">明细</view>
+				<view class="mxitem" v-if="orderInfo.user_curagio_money > 0">会员折扣 <text class="num">-{{orderInfo.user_curagio_money}}</text></view>
+				<view class="mxitem" v-if="orderInfo.Manjian_Cash > 0">满减 <text class="num">-{{orderInfo.Manjian_Cash}}</text></view>
+				<view class="mxitem" v-if="orderInfo.Coupon_Money > 0">优惠券 <text class="num">-{{orderInfo.Coupon_Money}}</text></view>
+				<view class="mxitem" v-if="orderInfo.Integral_Money > 0">积分抵用 <text class="num">-{{orderInfo.Integral_Money}}</text></view>
+				<view class="mxitem" v-if="orderInfo.Order_Yebc > 0">余额 <text class="num">-{{orderInfo.Order_Yebc}}</text></view>
+				<view class="mxitem" v-if="orderInfo.Order_Shipping.Price > 0">运费 <text class="num">+{{orderInfo.Order_Shipping.Price}}</text></view>
+			</view>
+			<view class="order_total">
+				<view class="totalinfo">
+					<view class="info">共{{orderInfo.prod_count}}件商品 总计：<text class="money"><text class="m_icon">￥</text> {{orderInfo.Order_Fyepay}}</text></view>
+					<view class="tips">*本次购物一共可获得{{orderInfo.Integral_Get}}积分</view>
+				</view>
+				<view class="mx" @click="seeDetail">明细 <image class="image slidedown" src="../../static/top.png"></image></view>
+				<form report-submit @submit="form_submit">
+					<button formType="submit" class="submit">提交订单</button>
+				</form>
+			</view>
+		</popup-layer>
 		<popup-layer ref="popupRef" :direction="'top'">
 			<view class="bMbx" v-if="type=='shipping'">
 				<view class="fMbx">运费选择</view>
@@ -227,7 +248,8 @@ export default {
 					submited: false,  // 是否已经提交过，防止重复提交
 					back_address_id: 0,
 					user_name: '',
-					user_mobile: ''
+					user_mobile: '',
+					isSlide: false, //查看明细是否已经弹出
         }
     },
 	filters: {
@@ -277,6 +299,15 @@ export default {
 		goback(){
 			goBack();
 		},
+	  //查看明细
+	  seeDetail(){
+			if(!this.isSlide) {
+				this.$refs.popupMX.show();
+			}else {
+				this.$refs.popupMX.close();
+			}
+			this.isSlide = !this.isSlide;
+	  },
 		// 跳转地址列表页
 		goAddressList(){
 			uni.navigateTo({
@@ -580,6 +611,22 @@ export default {
 		padding-bottom: env(safe-area-inset-bottom);
 		/* #endif */
     }
+	.mxdetail {
+		font-size: 28rpx;
+		line-height: 80rpx;
+		padding: 40rpx 30rpx;
+		margin-bottom: 100rpx;
+		.mxtitle {
+			font-size: 28rpx;
+			border-bottom: 1px solid #eaeaea;
+		}
+		.mxitem {
+			border-bottom: 1px solid #eaeaea;
+			.num {
+				float: right;
+			}
+		}
+	}
     /* 收货地址 start */
     .address {
         /* margin: 15px 0 10px; */
@@ -775,6 +822,18 @@ export default {
         align-items: center;
         background: #fff;
         z-index: 100;
+		.mx {
+			font-size: 22rpx;
+			margin-right: 10rpx;
+			.image {
+				width: 20rpx;
+				height: 20rpx;
+				margin-left: 10rpx;
+			}
+			.slidedown {
+				transform: rotate(180deg);
+			}
+		}
     }
     .submit {
         width: 270rpx;
@@ -788,7 +847,7 @@ export default {
     }
     .totalinfo {
         flex: 1;
-        padding-left: 93rpx;
+        text-align: center;
 		line-height: 30rpx;
     }
     .info {

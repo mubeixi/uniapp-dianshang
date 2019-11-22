@@ -72,7 +72,7 @@
 						<switch :checked="moneyChecked" size='25px' color="#04B600" @change="moneyChange" />
 					</div>
 					<!-- <div class="o_desc c8">{{orderInfo.Order_Yebc}}</div> -->
-					<input type="number" v-if="openMoney" :value="user_money" :disabled="!openMoney" :placeholder="orderInfo.Order_Yebc"
+					<input type="number" v-if="openMoney" v-model="user_money"  :disabled="!openMoney" :placeholder="orderInfo.Order_Yebc"
 						   @blur="moneyInputHandle" />
 				</div>
 			</div>
@@ -101,11 +101,31 @@
 		</div>
 
 		<div style="height:100px;background:#f8f8f8;"></div>
+		<popup-layer ref="popupMX" :direction="'top'">
+			<view class="mxdetail">
+				<view class="mxtitle">明细</view>
+				<view class="mxitem" v-if="orderInfo.user_curagio_money > 0">会员折扣 <text class="num">-{{orderInfo.user_curagio_money}}</text></view>
+				<view class="mxitem" v-if="orderInfo.Manjian_Cash > 0">满减 <text class="num">-{{orderInfo.Manjian_Cash}}</text></view>
+				<view class="mxitem" v-if="orderInfo.Coupon_Money > 0">优惠券 <text class="num">-{{orderInfo.Coupon_Money}}</text></view>
+				<view class="mxitem" v-if="orderInfo.Integral_Money > 0">积分抵用 <text class="num">-{{orderInfo.Integral_Money}}</text></view>
+				<view class="mxitem" v-if="user_money > 0">余额 <text class="num">-{{user_money}}</text></view>
+				<view class="mxitem" v-if="orderInfo.Order_Shipping.Price > 0">运费 <text class="num">+{{orderInfo.Order_Shipping.Price}}</text></view>
+			</view>
+			<view class="order_total">
+				<div class="totalinfo">
+					<div class="info">共{{orderInfo.prod_list.length}}件商品 总计：<span class="mbxa">￥<span>{{orderInfo.Order_Fyepay}}</span></span></div>
+					<div class="tips">*本次购物一共可获得{{orderInfo.Integral_Get}}积分</div>
+				</div>
+				<view class="mx" @click="seeDetail">明细 <image class="image slidedown" src="../../static/top.png"></image></view>
+				<div class="submit" @click="submit">去支付</div>
+			</view>
+		</popup-layer>
 		<div class="order_total">
 			<div class="totalinfo">
 				<div class="info">共{{orderInfo.prod_list.length}}件商品 总计：<span class="mbxa">￥<span>{{orderInfo.Order_Fyepay}}</span></span></div>
 				<div class="tips">*本次购物一共可获得{{orderInfo.Integral_Get}}积分</div>
 			</div>
+			<view class="mx" @click="seeDetail">明细 <image class="image" src="../../static/top.png"></image></view>
 			<div class="submit" @click="submit">去支付</div>
 		</div>
 		<div class="safearea-box"></div>
@@ -150,7 +170,8 @@
 	export default {
 		mixins: [pageMixin],
 		components: {
-			PayComponents
+			PayComponents,
+			popupLayer
 		},
 		data() {
 			return {
@@ -181,6 +202,7 @@
 				Order_Type:'',
 				user_money: 0,
 				pagefrom: 'check', // 页面来源，支付成功跳转路径不同
+				isSlide: false
 			}
 		},
 		onLoad(options) {
@@ -242,6 +264,15 @@
 					// 未使用余额支付, 直接调用
 					this.self_orderPay();
 				}
+			},
+			//查看明细
+			seeDetail(){
+				if(!this.isSlide) {
+					this.$refs.popupMX.show();
+				}else {
+					this.$refs.popupMX.close();
+				}
+				this.isSlide = !this.isSlide;
 			},
 			// 订单详情
 			getOrderDetail() {
@@ -310,6 +341,7 @@
 					});
 					this.user_money = this.orderInfo.Order_TotalPrice;
 					// this.orderInfo.Order_TotalPrice = money;
+					this.orderInfo.Order_Fyepay = 0.00
 					return;
 				}
 				this.pay_money = Number(this.orderInfo.Order_TotalPrice - money).toFixed(2);
@@ -814,7 +846,22 @@ return;
 		padding-bottom: env(safe-area-inset-bottom);
 		/* #endif */
 	}
-
+	.mxdetail {
+		font-size: 28rpx;
+		line-height: 80rpx;
+		padding: 40rpx 30rpx;
+		margin-bottom: 100rpx;
+		.mxtitle {
+			font-size: 28rpx;
+			border-bottom: 1px solid #eaeaea;
+		}
+		.mxitem {
+			border-bottom: 1px solid #eaeaea;
+			.num {
+				float: right;
+			}
+		}
+	}
 	.state {
 		padding: 20rpx 28rpx;
 		font-size: 28rpx;
@@ -1032,6 +1079,18 @@ return;
 		align-items: center;
 		background: #fff;
 		z-index: 100;
+		.mx {
+			font-size: 22rpx;
+			margin-right: 10rpx;
+			.image {
+				width: 20rpx;
+				height: 20rpx;
+				margin-left: 10rpx;
+			}
+			.slidedown {
+				transform: rotate(180deg);
+			}
+		}
 	}
 
 	.submit {
