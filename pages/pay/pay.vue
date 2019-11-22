@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div v-if="isGetOrder">
 		<div class="zhezhao" v-if="password_input">
 			<div class="input-wrap">
 				<div>请输入余额支付密码</div>
@@ -131,6 +131,7 @@
 		<div class="safearea-box"></div>
 		<pay-components
 			ref="payLayer"
+			:isOpen = "isOpen"
 			:Order_ID="Order_ID"
 			:pay_money="pay_money"
 			:use_money="user_money"
@@ -202,7 +203,8 @@
 				Order_Type:'',
 				user_money: 0,
 				pagefrom: 'check', // 页面来源，支付成功跳转路径不同
-				isSlide: false
+				isSlide: false, // 明细是否已经打开
+				isGetOrder: false, // orderinfo 数据是否已拿到，防止页面报错
 			}
 		},
 		onLoad(options) {
@@ -231,6 +233,9 @@
 			},
 			moneyChecked() {
 				return this.openMoney;
+			},
+			isOpen(){
+				return this.orderInfo.Order_Fyepay == 0 ? false : true
 			}
 		},
 		created() {
@@ -311,7 +316,7 @@
 						this.openInvoice = this.orderInfo.Order_NeedInvoice > 0;
 						this.invoice_info = this.orderInfo.Order_InvoiceInfo;
 						this.order_remark = this.orderInfo.Order_Remark;
-
+						this.isGetOrder = true;
 					}
 				})
 			},
@@ -341,7 +346,8 @@
 					});
 					this.user_money = this.orderInfo.Order_TotalPrice;
 					// this.orderInfo.Order_TotalPrice = money;
-					this.orderInfo.Order_Fyepay = 0.00
+					this.orderInfo.Order_Fyepay = 0.00;
+					this.pay_money = 0.00;
 					return;
 				}
 				this.pay_money = Number(this.orderInfo.Order_TotalPrice - money).toFixed(2);
@@ -406,6 +412,11 @@
 			},
 			// 去支付
 			submit() {
+				// 如果用户全部使用了余额支付，就不要走弹窗再选择支付方式了,直接输入密码
+				if(this.pay_money == 0) {
+					this.password_input = true;
+					return;
+				}
 				this.$refs.payLayer.show();
 				return;
 				// 发票信息
@@ -513,9 +524,9 @@
 
 
 			},
-			payFailCall(){
+			payFailCall(err){
 				uni.showToast({
-					title: '支付失败',
+					title: err.msg ? err.msg : '支付失败',
 					icon: 'none',
 					duration: 2000
 				});
@@ -831,7 +842,20 @@ return;
 			},
 			// 确定输入支付密码
 			confirmInput(e) {
-				this.self_orderPay();
+				orderPay({
+					Order_ID: this.Order_ID,
+					pay_type: 'remainder_pay',
+					pay_money: this.pay_money,
+					use_money: this.user_money,
+					user_pay_password: this.user_pay_password,
+                    need_invoice: this.need_invoice,
+					invoice_info: this.invoice_info,
+					order_remark: this.order_remark
+				}).then((res)=>{
+					this.paySuccessCall(res)
+				},(err)=>{
+					this.payFailCall(err)
+				});
 				this.password_input = false;
 			}
 		}
