@@ -302,7 +302,6 @@
 								}
 							}
 						}
-						this.Order_Type=res.data.Order_Type;
 						this.orderInfo = res.data;
 						this.Order_Type = res.data.Order_Type;
 						ls.set('type',this.Order_Type);
@@ -544,6 +543,11 @@
 			paySuccessCall(res){
 
 				var _that = this;
+				let Order_Type = ls.get('type');
+				let pagefrom = ls.get('pagefrom');
+				ls.remove('pagefrom');
+				ls.remove('type');
+				
 				console.log('支付成功回调',res)
 				if(res && res.code && res.code==2){
 					_that.payFailCall()
@@ -564,7 +568,7 @@
 						success: function (res) {
 							if (res.confirm) {
 
-								if(type === 'pintuan'){
+								if(Order_Type === 'pintuan'){
 									url:'/pages/pintuanOrderlist/pintuanOrderlist?index=2'
 								}else{
 									if(pagefrom == 'check') {
@@ -580,7 +584,7 @@
 
 							} else if (res.cancel) {
 
-								if(type === 'pintuan'){
+								if(Order_Type === 'pintuan'){
 									url:'/pages/pintuanOrderlist/pintuanOrderlist?index=1'
 								}else{
 									if(pagefrom == 'check') {
@@ -610,18 +614,15 @@
 				toast('支付成功');
 
 				//拼团订单则跳转到开团成功
-				let type = ls.get('type');
-				let pagefrom = ls.get('pagefrom');
-				ls.remove('pagefrom');
-				ls.remove('type');
-				if(type === 'pintuan'){
+				
+				if(Order_Type === 'pintuan'){
 					uni.redirectTo({
 						url:'/pages/groupSuccess/groupSuccess?order_id='+_that.Order_ID
 					})
 				}else{
 					if(pagefrom == 'check') {
 						uni.redirectTo({
-							url:'/pages/order/order?index=2'
+							url:'/pages/order/order?index=2&Order_Type='+Order_Type
 						})
 					}else if(pagefrom == 'gift') {
 						uni.redirectTo({

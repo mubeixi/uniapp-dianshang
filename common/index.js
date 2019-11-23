@@ -122,7 +122,7 @@ export const checkIsDistribute = (redirect,tip) => {
                 })
                 return;
             }
-            confirm({title: '提示', content: '该操作需要是分销商,请问是否成为分销商?', confirmText: '成为分销商', cancelText: '暂不成为'}).then(() => {
+            confirm({title: '提示', content: '该操作需要是分销商,请问是否成为分销商?', confirmText: '确定', cancelText: '暂不成为'}).then(() => {
                 uni.navigateTo({
                     url: '/pages/distributorCenter/distributorCenter'
                 })

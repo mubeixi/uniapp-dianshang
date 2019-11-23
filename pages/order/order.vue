@@ -86,14 +86,14 @@ export default {
     data(){
         return {
             index: 0,
-			data:[],
-			pageSize:5,
-			page:1,
-			totalCount:0,
-			orderNum:'',//订单状态角标数
-			isQing:false,
-			Order_Type: 'shop,gift' , //请求的订单类型
-			isLoading:false,
+						data:[],
+						pageSize:5,
+						page:1,
+						totalCount:0,
+						orderNum:'',//订单状态角标数
+						isQing:false,
+						Order_Type: 'shop' , //请求的订单类型
+						isLoading:false,
         }
     },
 	onShow(){
@@ -108,7 +108,10 @@ export default {
 			this.index=0;
 			this.Order_Type=option.index;
 		}
-
+		// 判断订单类型，有可能是 限时抢购spike、秒杀 flashsale 和普通订单 shop
+		if(option.Order_Type) {
+			this.Order_Type = option.Order_Type;
+		}
 		this.data=[];
 		this.page=1;
 

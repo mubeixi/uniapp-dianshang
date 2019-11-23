@@ -209,7 +209,10 @@
 					this.data=res.data;
 					this.userInfo.Is_Distribute=1;
 				},err=>{
-
+					uni.showToast({
+						title: res.msg,
+						icon:  'none'
+					})
 				}).catch(err=>{
 					console.log(err)
 				})
