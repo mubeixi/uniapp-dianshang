@@ -117,6 +117,7 @@
 				if (this.autoClose) {
 					this.close();
 				}
+				this.$emit('maskClicked',true);
 			},
 			stopEvent(event) {},
 			doSome(){

@@ -101,7 +101,7 @@
 		</div>
 
 		<div style="height:100px;background:#f8f8f8;"></div>
-		<popup-layer ref="popupMX" :direction="'top'">
+		<popup-layer ref="popupMX" :direction="'top'" @maskClicked="handClicked">
 			<view class="mxdetail">
 				<view class="mxtitle">明细</view>
 				<view class="mxitem" v-if="orderInfo.user_curagio_money > 0">会员折扣 <text class="num">-{{orderInfo.user_curagio_money}}</text></view>
@@ -278,6 +278,9 @@
 					this.$refs.popupMX.close();
 				}
 				this.isSlide = !this.isSlide;
+			},
+			handClicked(){
+				this.isSlide = false;
 			},
 			// 订单详情
 			getOrderDetail() {
@@ -874,11 +877,11 @@ return;
 	.mxdetail {
 		font-size: 28rpx;
 		line-height: 80rpx;
-		padding: 40rpx 30rpx;
+		padding: 20rpx 30rpx;
 		margin-bottom: 100rpx;
 		.mxtitle {
 			font-size: 28rpx;
-			border-bottom: 1px solid #eaeaea;
+			text-align: center;
 		}
 		.mxitem {
 			border-bottom: 1px solid #eaeaea;
