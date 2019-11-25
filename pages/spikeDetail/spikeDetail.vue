@@ -785,7 +785,8 @@ export default {
         	}).catch(e=>{
 				console.log(e)
 				uni.showToast({
-					title: e.msg
+					title: e.msg,
+					icon: 'none'
 				})
 			})
         	//确定加入购物车

@@ -529,6 +529,17 @@
                 "navigationBarTitleText": "我的会员"
             }
         }
+        ,{
+            "path" : "pages/selectChannel/selectChannel",
+            "style" : {
+							"navigationBarTitleText": "选择渠道"
+						}
+        },{
+				    "path" : "pages/storeSettled/storeSettled",
+				    "style" : {
+							"navigationBarTitleText": "门店入驻"
+						}
+				}
     ],
 
 	"globalStyle": {
