@@ -127,36 +127,27 @@
 			</view>
 		</div>
 
-		<view class="order_total">
+		<view class="order_total" :style="{'z-index':zIndex}">
 			<view class="totalinfo">
 				<view class="info">共{{orderInfo.prod_count}}件商品 总计：<text class="money"><text class="m_icon">￥</text> {{orderInfo.Order_Fyepay}}</text></view>
 				<view class="tips">*本次购物一共可获得{{orderInfo.Integral_Get}}积分</view>
 			</view>
-			<view class="mx" @click="seeDetail">明细 <image class="image" src="../../static/top.png"></image></view>
+			<view class="mx" @click="seeDetail">明细 <image class="image" :class="isSlide?'slidedown': ''" src="../../static/top.png"></image></view>
 			<form report-submit @submit="form_submit">
 				<button formType="submit" class="submit">提交订单</button>
 			</form>
 		</view>
 		<div class="safearea-box"></div>
-		<popup-layer ref="popupMX" :direction="'top'" @maskClicked="handClicked">
+		<popup-layer ref="popupMX" :direction="'top'" @maskClicked="handClicked" :bottomHeight="bottomHeight">
 			<view class="mxdetail">
 				<view class="mxtitle">明细</view>
+				<view class="mxitem">产品 <text class="num">+{{Order_TotalAmount}}</text></view>
 				<view class="mxitem" v-if="orderInfo.user_curagio_money > 0">会员折扣 <text class="num">-{{orderInfo.user_curagio_money}}</text></view>
 				<view class="mxitem" v-if="orderInfo.Manjian_Cash > 0">满减 <text class="num">-{{orderInfo.Manjian_Cash}}</text></view>
 				<view class="mxitem" v-if="orderInfo.Coupon_Money > 0">优惠券 <text class="num">-{{orderInfo.Coupon_Money}}</text></view>
 				<view class="mxitem" v-if="orderInfo.Integral_Money > 0">积分抵用 <text class="num">-{{orderInfo.Integral_Money}}</text></view>
 				<view class="mxitem" v-if="orderInfo.Order_Yebc > 0">余额 <text class="num">-{{orderInfo.Order_Yebc}}</text></view>
 				<view class="mxitem" v-if="orderInfo.Order_Shipping.Price > 0">运费 <text class="num">+{{orderInfo.Order_Shipping.Price}}</text></view>
-			</view>
-			<view class="order_total">
-				<view class="totalinfo">
-					<view class="info">共{{orderInfo.prod_count}}件商品 总计：<text class="money"><text class="m_icon">￥</text> {{orderInfo.Order_Fyepay}}</text></view>
-					<view class="tips">*本次购物一共可获得{{orderInfo.Integral_Get}}积分</view>
-				</view>
-				<view class="mx" @click="seeDetail">明细 <image class="image slidedown" src="../../static/top.png"></image></view>
-				<form report-submit @submit="form_submit">
-					<button formType="submit" class="submit">提交订单</button>
-				</form>
 			</view>
 		</popup-layer>
 		<popup-layer ref="popupRef" :direction="'top'">
@@ -250,6 +241,8 @@ export default {
 					user_name: '',
 					user_mobile: '',
 					isSlide: false, //查看明细是否已经弹出
+					bottomHeight: 0, // 弹出层从哪里开始弹出，默认是0，明细从提交按钮上部50px
+					zIndex: 99999
         }
     },
 	filters: {
@@ -302,14 +295,20 @@ export default {
 	  //查看明细
 	  seeDetail(){
 			if(!this.isSlide) {
+				this.bottomHeight = 50;
+				this.zIndex = 9999999;
 				this.$refs.popupMX.show();
 			}else {
+				this.bottomHeight = 0;
+				this.zIndex = 99999;
 				this.$refs.popupMX.close();
 			}
 			this.isSlide = !this.isSlide;
 	  },
 		handClicked(){
 			this.isSlide = false;
+			this.zIndex = 99999;
+			this.bottomHeight = 0;
 		},
 		// 跳转地址列表页
 		goAddressList(){
@@ -618,7 +617,6 @@ export default {
 		font-size: 28rpx;
 		line-height: 80rpx;
 		padding: 20rpx 30rpx;
-		margin-bottom: 100rpx;
 		.mxtitle {
 			font-size: 28rpx;
 			text-align: center;
@@ -813,7 +811,7 @@ export default {
     /* 订单其他信息 end */
     /* 提交订单 */
     .order_total {
-        height: 100rpx;
+        height: 50px;
         position: fixed;
         bottom: 0;
 		/* #ifdef MP */
@@ -824,7 +822,6 @@ export default {
         display: flex;
         align-items: center;
         background: #fff;
-        z-index: 100;
 		.mx {
 			font-size: 22rpx;
 			margin-right: 10rpx;
@@ -843,15 +840,15 @@ export default {
         background: #F43131;
         text-align: center;
         color: #fff;
-        line-height: 100rpx;
-		font-size: 34rpx;
-		border-radius: 0;
-		border:none;
+        line-height: 50px;
+				font-size: 34rpx;
+				border-radius: 0;
+				border:none;
     }
     .totalinfo {
         flex: 1;
         text-align: center;
-		line-height: 30rpx;
+				line-height: 30rpx;
     }
     .info {
         font-size: 24rpx;
