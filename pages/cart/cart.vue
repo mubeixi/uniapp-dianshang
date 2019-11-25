@@ -59,7 +59,7 @@
 		  <div class=" container">
 			  <div class="fenge"><span class="red"></span><span class="caini">猜你喜欢</span><span class="red"></span></div>
 			  <div class="prolist">
-				  <div class="pro-item" v-for="(item,index) in prodList" :key="index" @click="goProductDetail(item.Products_ID,item.is_pintuan)" >
+				  <div class="pro-item" v-for="(item,index) in prodList" :key="index" @click="gotoDetail(item.Products_ID)" >
 					  <img :src="item.ImgPath" alt="">
 					  <div class="item-name">{{item.Products_Name}}</div>
 					  <div class="price">
@@ -118,10 +118,9 @@ export default {
 		hasMore: true, // 是否还有产品
 		postData: {
 		  cart_key: 'CartList',
-		  prod_id: '',
+		  prod_id: 0,
 		  qty: 0,
-		  atr_str: '',
-		  atrid_str: ''
+		  attr_id: 0
 		},
 		checkAllFlag: false,
 		totalPrice: 0,
@@ -277,8 +276,7 @@ export default {
 	updateCart(pro_id,attr_id,num){
 		this.postData.prod_id = pro_id;
 		this.postData.qty = num;
-		this.postData.atrid_str = attr_id;
-		this.postData.atr_str = this.CartList[pro_id][attr_id]['Productsattrstrval']?this.CartList[pro_id][attr_id]['Productsattrstrval']:'';
+		this.postData.attr_id = attr_id;
 		if(this.CartList[pro_id][attr_id]['Qty'] == 1 && num == -1) {
 			uni.showToast({
 				title: '购买数量不能小于1',

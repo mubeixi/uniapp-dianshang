@@ -31,6 +31,10 @@
 			autoClose: {
 				type: Boolean,
 				default: true,
+			},
+			bottomHeight: {
+				type: Number || string,
+				default: 0
 			}
 		},
 		data() {
@@ -54,7 +58,7 @@
 			},
 			_location() {
 				const positionValue = {
-					'top': 'bottom:0px;width:100%;',
+					'top': `bottom:${this.bottomHeight}px;width:100%;`,
 					'bottom': 'top:0px;width:100%;',
 					'left': 'right:0px;height:100%;',
 					'right': 'left:0px;height:100%;',
@@ -117,6 +121,7 @@
 				if (this.autoClose) {
 					this.close();
 				}
+				this.$emit('maskClicked',true);
 			},
 			stopEvent(event) {},
 			doSome(){

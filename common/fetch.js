@@ -152,6 +152,9 @@ export const getExpiredCoupon = (data,options) => fetch('get_expired_coupon', da
 // 提交订单
 export const createOrder = (data,options) => fetch('create_order', data,options);
 
+// 提交订单
+export const getWithdrawConfig = (data,options) => fetch('get_withdraw_config', data,options);
+
 // 上传图片
 export const uploadImage = (data,options) => fetch('upload_image', data,options);
 // 获取订单详情
@@ -235,6 +238,9 @@ export const getDistributeWxQrcode = (data, options) => fetch('get_distribute_wx
 export const nobiInfo = (data, options) => fetch('nobi_info', data, options);
 //获取分销商信息
 export const getUserDisInfo = (data, options) => fetch('get_user_dis_info', data, options);
+//获取分销商信息
+export const getDisUserList = (data, options) => fetch('get_dis_user_list', data, options);
+
 //修改分销商分享语 店名  头像信息
 export const updateUserDisInfo = (data, options) => fetch('update_user_dis_info', data, options);
 //获取区域代理

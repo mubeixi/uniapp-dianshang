@@ -57,23 +57,11 @@
 	    </div>
 	</div>
     <!-- 包邮等信息 -->
-    <div class="section3">
-        <span>
-            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABsAAAAbCAYAAACN1PRVAAAEs0lEQVRIiZ1WW2xUVRQ9LSC0pbS0hkc74tBMmBnvnbPX5gaQRAiJwoekMfpl/PWBkVdiQoIStcngn0QIECmJWI0hxGiCMRpfBB8oogiFSqHVpJIKtB06M/fuPeXz+tFpQifDtGX93n322nevfdY+xlRAJh6vHyNaXQBeUuCYMp8X4IYCw8J8S5gvCfNxH9gZWLvOd5ymSvnKIvS8OVnXtQHRbmE+K8BFAX4IgM8FOCrAu0J0RIg+FeZTynxegQtClPaJVg9Eo/OmRTRkbZ1Y+2wAnBGgW4neD4Cn7gBRdZwl+VRq4WgstiAHNA677uJcMvmwAhuF6IACvytwSYhezqdSCysSjcZiC4R5hwLXBDhZAJ4MEonmT4yZVbETxlTlgEZhXi/MJwToF6K0WLuo7IGbnlcrRNsV6BWi9+5Yu3wqknKkY0StQpQW5l4hSv+XSDRPDtqwYbYQPaPMVwXoHLM2MhOSUgSJRLMAHQL0CbB1kobC/Igw/6TAVwHRivvIXzUYidRk4vH60JhqY4wZI2pV5o+U+XwBWBUaU20y8Xi9ArsE6M4TbQqNqZopUyYerxeiLT7R9qznNUwUkCNiAc4I88FMPN5ifGsfVeCCAl33c09CY6p8YJWOT+6BEGic+DbiOPMF2KtATz6VesIUmJ9X4EJgbXtHsQUzwZC1ixToEuBXdV0b3pUjNKZKAQjzWWFOmwDoEuZTOSA6U6LTxsz2U6nnBOiTlSu3XHGcB0pjCp63VJm/FuazRoBuAU6q6y6eKZnvOLHiYH076roPlYsJgUYBOpX5lil63JG7ez0dDFlbp8Brynw1sLY9vIcEoefVCrBHma8bBUYConcy8Xj9pCBjqrNtbQ2htXVl/8raNQJcLB2KUgxEo/OEaJsA/UaBYQEO50oOZNvaGnxgpwB7CswtkwoBGgPmfQr0+NauMRWuS7h2bU1AtFuZ/zUCXBHmz0p9LPS8WiV6VcZdZf+Eq4TGVBesbRfmy8L8ZmlHSpH1vIYCcEiAYSPMJ4To+6zjLJtEZkxVsGLFg0K0TYFrAfBh3trlo9ZGBPhYge/EdZOViIwxRl13sQJfKPOfppjsD7X28XLucbOlpTYAXhDgL2E+LkCHMF8W4JXp7C1x3aQAPwfM+0wulVqvzJcEOHSX1UxCGIvNDYieFuZuGde4Ux1nyVREg5FITdEKrxSAzeMOzZxW4LeiYZYVO/S8OT6wWYFjeaJN01k/o0SOAKe1KIExRcNU4JwwnyjVbhKhMbN8x2kKyzhFKYJEolmIDgrQk7V2XThR3N+x2NwAeDFg/scH9galC2+GKBrwVgH6yk6s7zhNAuxV5l4B3sokk0vvh2jQcZqEaFvxynSO3msRi7WLhCgtQJ8CXflUyhtxnPnTIQkjkZrA2rgA+wXoF6BzSnP3HadJrN0hQK8AvwjQUbB25W2i1nwqtXDI2rqBaHTeTc+rzQGNhWRyqRA5CuwSolMy/ljquE3UOr1WRCI1WaLHlOiAAD3Ft+M3AhwVojfE2h0B8LoAhxX4slhUTwB8kAc2TuUq5VA14jhLFNgYAG8L848KDCrzdQH6FRgQ5hsKnBNgf2Bt+x3PW9ZRYQH/DyS2ZcSf28uXAAAAAElFTkSuQmCC" alt="">
-            <span>假一赔十</span>
-        </span>
-        <span>
-            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABsAAAAbCAYAAACN1PRVAAAEs0lEQVRIiZ1WW2xUVRQ9LSC0pbS0hkc74tBMmBnvnbPX5gaQRAiJwoekMfpl/PWBkVdiQoIStcngn0QIECmJWI0hxGiCMRpfBB8oogiFSqHVpJIKtB06M/fuPeXz+tFpQifDtGX93n322nevfdY+xlRAJh6vHyNaXQBeUuCYMp8X4IYCw8J8S5gvCfNxH9gZWLvOd5ymSvnKIvS8OVnXtQHRbmE+K8BFAX4IgM8FOCrAu0J0RIg+FeZTynxegQtClPaJVg9Eo/OmRTRkbZ1Y+2wAnBGgW4neD4Cn7gBRdZwl+VRq4WgstiAHNA677uJcMvmwAhuF6IACvytwSYhezqdSCysSjcZiC4R5hwLXBDhZAJ4MEonmT4yZVbETxlTlgEZhXi/MJwToF6K0WLuo7IGbnlcrRNsV6BWi9+5Yu3wqknKkY0StQpQW5l4hSv+XSDRPDtqwYbYQPaPMVwXoHLM2MhOSUgSJRLMAHQL0CbB1kobC/Igw/6TAVwHRivvIXzUYidRk4vH60JhqY4wZI2pV5o+U+XwBWBUaU20y8Xi9ArsE6M4TbQqNqZopUyYerxeiLT7R9qznNUwUkCNiAc4I88FMPN5ifGsfVeCCAl33c09CY6p8YJWOT+6BEGic+DbiOPMF2KtATz6VesIUmJ9X4EJgbXtHsQUzwZC1ixToEuBXdV0b3pUjNKZKAQjzWWFOmwDoEuZTOSA6U6LTxsz2U6nnBOiTlSu3XHGcB0pjCp63VJm/FuazRoBuAU6q6y6eKZnvOLHiYH076roPlYsJgUYBOpX5lil63JG7ez0dDFlbp8Brynw1sLY9vIcEoefVCrBHma8bBUYConcy8Xj9pCBjqrNtbQ2htXVl/8raNQJcLB2KUgxEo/OEaJsA/UaBYQEO50oOZNvaGnxgpwB7CswtkwoBGgPmfQr0+NauMRWuS7h2bU1AtFuZ/zUCXBHmz0p9LPS8WiV6VcZdZf+Eq4TGVBesbRfmy8L8ZmlHSpH1vIYCcEiAYSPMJ4To+6zjLJtEZkxVsGLFg0K0TYFrAfBh3trlo9ZGBPhYge/EdZOViIwxRl13sQJfKPOfppjsD7X28XLucbOlpTYAXhDgL2E+LkCHMF8W4JXp7C1x3aQAPwfM+0wulVqvzJcEOHSX1UxCGIvNDYieFuZuGde4Ux1nyVREg5FITdEKrxSAzeMOzZxW4LeiYZYVO/S8OT6wWYFjeaJN01k/o0SOAKe1KIExRcNU4JwwnyjVbhKhMbN8x2kKyzhFKYJEolmIDgrQk7V2XThR3N+x2NwAeDFg/scH9galC2+GKBrwVgH6yk6s7zhNAuxV5l4B3sokk0vvh2jQcZqEaFvxynSO3msRi7WLhCgtQJ8CXflUyhtxnPnTIQkjkZrA2rgA+wXoF6BzSnP3HadJrN0hQK8AvwjQUbB25W2i1nwqtXDI2rqBaHTeTc+rzQGNhWRyqRA5CuwSolMy/ljquE3UOr1WRCI1WaLHlOiAAD3Ft+M3AhwVojfE2h0B8LoAhxX4slhUTwB8kAc2TuUq5VA14jhLFNgYAG8L848KDCrzdQH6FRgQ5hsKnBNgf2Bt+x3PW9ZRYQH/DyS2ZcSf28uXAAAAAElFTkSuQmCC" alt="">
-            <span>包邮</span>
-        </span>
-        <span>
-            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABsAAAAbCAYAAACN1PRVAAAEs0lEQVRIiZ1WW2xUVRQ9LSC0pbS0hkc74tBMmBnvnbPX5gaQRAiJwoekMfpl/PWBkVdiQoIStcngn0QIECmJWI0hxGiCMRpfBB8oogiFSqHVpJIKtB06M/fuPeXz+tFpQifDtGX93n322nevfdY+xlRAJh6vHyNaXQBeUuCYMp8X4IYCw8J8S5gvCfNxH9gZWLvOd5ymSvnKIvS8OVnXtQHRbmE+K8BFAX4IgM8FOCrAu0J0RIg+FeZTynxegQtClPaJVg9Eo/OmRTRkbZ1Y+2wAnBGgW4neD4Cn7gBRdZwl+VRq4WgstiAHNA677uJcMvmwAhuF6IACvytwSYhezqdSCysSjcZiC4R5hwLXBDhZAJ4MEonmT4yZVbETxlTlgEZhXi/MJwToF6K0WLuo7IGbnlcrRNsV6BWi9+5Yu3wqknKkY0StQpQW5l4hSv+XSDRPDtqwYbYQPaPMVwXoHLM2MhOSUgSJRLMAHQL0CbB1kobC/Igw/6TAVwHRivvIXzUYidRk4vH60JhqY4wZI2pV5o+U+XwBWBUaU20y8Xi9ArsE6M4TbQqNqZopUyYerxeiLT7R9qznNUwUkCNiAc4I88FMPN5ifGsfVeCCAl33c09CY6p8YJWOT+6BEGic+DbiOPMF2KtATz6VesIUmJ9X4EJgbXtHsQUzwZC1ixToEuBXdV0b3pUjNKZKAQjzWWFOmwDoEuZTOSA6U6LTxsz2U6nnBOiTlSu3XHGcB0pjCp63VJm/FuazRoBuAU6q6y6eKZnvOLHiYH076roPlYsJgUYBOpX5lil63JG7ez0dDFlbp8Brynw1sLY9vIcEoefVCrBHma8bBUYConcy8Xj9pCBjqrNtbQ2htXVl/8raNQJcLB2KUgxEo/OEaJsA/UaBYQEO50oOZNvaGnxgpwB7CswtkwoBGgPmfQr0+NauMRWuS7h2bU1AtFuZ/zUCXBHmz0p9LPS8WiV6VcZdZf+Eq4TGVBesbRfmy8L8ZmlHSpH1vIYCcEiAYSPMJ4To+6zjLJtEZkxVsGLFg0K0TYFrAfBh3trlo9ZGBPhYge/EdZOViIwxRl13sQJfKPOfppjsD7X28XLucbOlpTYAXhDgL2E+LkCHMF8W4JXp7C1x3aQAPwfM+0wulVqvzJcEOHSX1UxCGIvNDYieFuZuGde4Ux1nyVREg5FITdEKrxSAzeMOzZxW4LeiYZYVO/S8OT6wWYFjeaJN01k/o0SOAKe1KIExRcNU4JwwnyjVbhKhMbN8x2kKyzhFKYJEolmIDgrQk7V2XThR3N+x2NwAeDFg/scH9galC2+GKBrwVgH6yk6s7zhNAuxV5l4B3sokk0vvh2jQcZqEaFvxynSO3msRi7WLhCgtQJ8CXflUyhtxnPnTIQkjkZrA2rgA+wXoF6BzSnP3HadJrN0hQK8AvwjQUbB25W2i1nwqtXDI2rqBaHTeTc+rzQGNhWRyqRA5CuwSolMy/ljquE3UOr1WRCI1WaLHlOiAAD3Ft+M3AhwVojfE2h0B8LoAhxX4slhUTwB8kAc2TuUq5VA14jhLFNgYAG8L848KDCrzdQH6FRgQ5hsKnBNgf2Bt+x3PW9ZRYQH/DyS2ZcSf28uXAAAAAElFTkSuQmCC" alt="">
-            <span>7天包退</span>
-        </span>
-        <span>
-            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABsAAAAbCAYAAACN1PRVAAAEs0lEQVRIiZ1WW2xUVRQ9LSC0pbS0hkc74tBMmBnvnbPX5gaQRAiJwoekMfpl/PWBkVdiQoIStcngn0QIECmJWI0hxGiCMRpfBB8oogiFSqHVpJIKtB06M/fuPeXz+tFpQifDtGX93n322nevfdY+xlRAJh6vHyNaXQBeUuCYMp8X4IYCw8J8S5gvCfNxH9gZWLvOd5ymSvnKIvS8OVnXtQHRbmE+K8BFAX4IgM8FOCrAu0J0RIg+FeZTynxegQtClPaJVg9Eo/OmRTRkbZ1Y+2wAnBGgW4neD4Cn7gBRdZwl+VRq4WgstiAHNA677uJcMvmwAhuF6IACvytwSYhezqdSCysSjcZiC4R5hwLXBDhZAJ4MEonmT4yZVbETxlTlgEZhXi/MJwToF6K0WLuo7IGbnlcrRNsV6BWi9+5Yu3wqknKkY0StQpQW5l4hSv+XSDRPDtqwYbYQPaPMVwXoHLM2MhOSUgSJRLMAHQL0CbB1kobC/Igw/6TAVwHRivvIXzUYidRk4vH60JhqY4wZI2pV5o+U+XwBWBUaU20y8Xi9ArsE6M4TbQqNqZopUyYerxeiLT7R9qznNUwUkCNiAc4I88FMPN5ifGsfVeCCAl33c09CY6p8YJWOT+6BEGic+DbiOPMF2KtATz6VesIUmJ9X4EJgbXtHsQUzwZC1ixToEuBXdV0b3pUjNKZKAQjzWWFOmwDoEuZTOSA6U6LTxsz2U6nnBOiTlSu3XHGcB0pjCp63VJm/FuazRoBuAU6q6y6eKZnvOLHiYH076roPlYsJgUYBOpX5lil63JG7ez0dDFlbp8Brynw1sLY9vIcEoefVCrBHma8bBUYConcy8Xj9pCBjqrNtbQ2htXVl/8raNQJcLB2KUgxEo/OEaJsA/UaBYQEO50oOZNvaGnxgpwB7CswtkwoBGgPmfQr0+NauMRWuS7h2bU1AtFuZ/zUCXBHmz0p9LPS8WiV6VcZdZf+Eq4TGVBesbRfmy8L8ZmlHSpH1vIYCcEiAYSPMJ4To+6zjLJtEZkxVsGLFg0K0TYFrAfBh3trlo9ZGBPhYge/EdZOViIwxRl13sQJfKPOfppjsD7X28XLucbOlpTYAXhDgL2E+LkCHMF8W4JXp7C1x3aQAPwfM+0wulVqvzJcEOHSX1UxCGIvNDYieFuZuGde4Ux1nyVREg5FITdEKrxSAzeMOzZxW4LeiYZYVO/S8OT6wWYFjeaJN01k/o0SOAKe1KIExRcNU4JwwnyjVbhKhMbN8x2kKyzhFKYJEolmIDgrQk7V2XThR3N+x2NwAeDFg/scH9galC2+GKBrwVgH6yk6s7zhNAuxV5l4B3sokk0vvh2jQcZqEaFvxynSO3msRi7WLhCgtQJ8CXflUyhtxnPnTIQkjkZrA2rgA+wXoF6BzSnP3HadJrN0hQK8AvwjQUbB25W2i1nwqtXDI2rqBaHTeTc+rzQGNhWRyqRA5CuwSolMy/ljquE3UOr1WRCI1WaLHlOiAAD3Ft+M3AhwVojfE2h0B8LoAhxX4slhUTwB8kAc2TuUq5VA14jhLFNgYAG8L848KDCrzdQH6FRgQ5hsKnBNgf2Bt+x3PW9ZRYQH/DyS2ZcSf28uXAAAAAElFTkSuQmCC" alt="">
-            <span>正品保证</span>
-        </span>
+    <div class="section3" v-if="product.Products_Promise && product.Products_Promise.length > 0">
+    		<span v-for="(item,index) in product.Products_Promise" v-if="item.name" :key="index">
+    				<image class="img" :src="'/static/client/detail/dh.png'|domain" alt="" />
+    				<span>{{item.name}}</span>
+    		</span>
     </div>
 
 
@@ -284,8 +272,7 @@ export default {
 			spike_good_id:0,
 			postData: {
 			    prod_id: 0,    //产品ID  在 onLoad中赋值
-			    atrid_str: '',    //选择属性  1；2   数字从小到大
-			    atr_str: '',      //选择属性名称
+			    attr_id: 0,    //选择属性id
 			    count: 0,         //选择属性的库存
 			    showimg: '',      //选择属性的图片(用产品图片代替)
 			    qty: 1,           //购买数量
@@ -704,10 +691,9 @@ export default {
         	var attr_val = this.product.skuvaljosn[check_attrid];   //选择属性对应的属性值
         	//数组转化为字符串
         	check_attrnames = check_attrnames.join(';');
-        	this.postData.atr_str = check_attrnames;
-        	this.postData.atrid_str = check_attrid;
         	//属性判断
         	if (attr_val) {
+        		this.postData.attr_id = attr_val.Product_Attr_ID;   //选择属性的id
         		this.postData.count = attr_val.Property_count;   //选择属性的库存
         		this.postData.showimg = typeof attr_val.Attr_Image != 'undefined' && attr_val.Attr_Image != '' ? attr_val.Attr_Image : this.product.Products_JSON['ImgPath'][0];// 选择属性的图片
 				this.postData.productDetail_price = attr_val.xs_pricex; // 选择属性的价格
@@ -742,7 +728,7 @@ export default {
         	}
         	this.postData.prod_id = this.Products_ID;
 			this.postData.active_id=this.product.spike_good_id;
-        	if(this.postData.atr_str==''||this.postData.atrid_str==''){
+        	if(this.postData.attr_id==0){
         		if(this.product.skujosn){
         			wx.showToast({
         			    title: '您还没有选择规格',
@@ -1162,26 +1148,26 @@ export default {
     }
     /* 领券 end */
     /* 包邮信息等 start */
-    .section3 {
-        display: flex;
-        flex-wrap: wrap;
-        font-size: 22rpx;
-        padding: 15px 10px;
-		padding-top: 35rpx;
-        border-bottom: 20rpx solid #f8f8f8;
-        justify-content: space-around;
-        background-color: #fff;
-    }
-    .section3>span {
-        display: flex;
-        align-items: center;
-        margin-right: 10px;
-    }
-    .section3 img {
-        width: 30rpx;
-		height: 30rpx;
-        margin-right: 5px;
-    }
+  //   .section3 {
+  //       display: flex;
+  //       flex-wrap: wrap;
+  //       font-size: 22rpx;
+  //       padding: 15px 10px;
+		// padding-top: 35rpx;
+  //       border-bottom: 20rpx solid #f8f8f8;
+  //       justify-content: space-around;
+  //       background-color: #fff;
+  //   }
+  //   .section3>span {
+  //       display: flex;
+  //       align-items: center;
+  //       margin-right: 10px;
+  //   }
+  //   .section3 img {
+  //       width: 30rpx;
+		// height: 30rpx;
+  //       margin-right: 5px;
+  //   }
     /* 包邮信息等 end */
     /* 评价 start */
     .comment {
@@ -1520,10 +1506,10 @@ export default {
 				.skuValue{
 					display: flex;
 					.divs{
-						height: 70rpx;
-						line-height: 70rpx;
-						font-size: 28rpx;
-						border-radius: 10rpx;
+						height: 70upx;
+						line-height: 70upx;
+						font-size: 14px;
+						border-radius: 10upx;
 						color: #000;
 						background-color: #fff;
 						padding-left: 20rpx;
@@ -1681,5 +1667,30 @@ export default {
 	.limits{
 		width: 152rpx;
 		height: 48rpx;
+	}
+	.section3 {
+	    display: flex;
+	    flex-wrap: wrap;
+	    font-size: 0rpx;
+		padding-left: 20rpx;
+		padding-right: 20rpx;
+				// padding: 30rpx 0;
+	    // padding: 30rpx 20rpx;
+	    // border-bottom: 20rpx solid #efefef;
+	}
+	.section3>span {
+	    display: flex;
+	    align-items: center;
+	    // margin-right: 20rpx;
+				margin: 20rpx 20rpx 20rpx 0;
+				span{
+					font-size: 24rpx;
+					color: #333333;
+				}
+	}
+	.section3 .img {
+	    width: 28rpx;
+		height: 28rpx;
+	    margin-right: 10rpx;
 	}
 </style>

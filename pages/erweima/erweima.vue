@@ -16,7 +16,7 @@
 
 
 			<view class="putong">
-				普通分销商
+				{{disInfo.Level_Name}}
 			</view>
 		</view>
 		<div class="line15"></div>

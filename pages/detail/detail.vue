@@ -257,10 +257,9 @@ export default {
 			postData: {
 			    act: 'add_cart',
 			    prod_id: 0,    //产品ID  在 onLoad中赋值
-			    atrid_str: '',    //选择属性  1；2   数字从小到大
-			    atr_str: '',      //选择属性名称
+			    attr_id: 0,    //选择属性id
 			    count: 0,         //选择属性的库存
-			    showimg: '',      //选择属性的图片(用产品图片代替)
+			    // showimg: '',      //选择属性的图片(用产品图片代替)
 			    qty: 1,           //购买数量
 			    cart_key: '',     //购物车类型   CartList（加入购物车）、DirectBuy（立即购买）、PTCartList（不能加入购物车）
 				productDetail_price: 0
@@ -273,7 +272,7 @@ export default {
 			gift: 0, //赠品id
 			skuval: [], // 赠品带过来的产品属性
 			recieve: false,  //是否是赠品，赠品按钮显示 立即领取
-			gift_atr_str: '', //赠品属性,
+			gift_attr_id: '', //赠品属性id,
 			canSubmit: true,
 			isLoading:false,
 			showVideo: true, // 是否展示视频
@@ -624,22 +623,7 @@ export default {
 			}
 			this.postData.cart_key = 'DirectBuy';
 			// 领取礼物
-			this.postData.atrid_str = this.gift_atr_str;
-			var arr = [];
-			if(this.product.skujosn){
-				for(var i in this.product.skujosn){
-					for(var j in this.product.skujosn[i]){
-						if(this.skuval.indexOf(this.product.skujosn[i])){
-							arr[i] = this.product.skujosn[i][j];
-						}
-					}
-				}
-			}
-			var str = '';
-			for(var i in arr){
-				str += i + ':' + arr[i] + ';'
-			}
-			this.postData.atr_str = str;
+			this.postData.attr_id = this.gift_attr_id;
 			updateCart(this.postData).then(res=>{
 				if(res.errorCode == 0) {
 					uni.navigateTo({
@@ -663,9 +647,8 @@ export default {
 				console.log(res)
 				if(res.errorCode ==0){
 					console.log('22')
-					let arr = res.data.skuval;
-					this.gift_atr_str = res.data.skuval;
-					this.skuval = arr.split(';');
+					this.gift_attr_id = res.data.attr_id;
+					this.skuval = res.data.skuval.split(';');
 
 				}else if(res.errorCode == 1) {
 					console.log('res')
@@ -797,12 +780,11 @@ export default {
 			var attr_val = this.product.skuvaljosn[check_attrid];   //选择属性对应的属性值
 			//数组转化为字符串
 			check_attrnames = check_attrnames.join(';');
-			this.postData.atr_str = check_attrnames;
-			this.postData.atrid_str = check_attrid;
 			//属性判断
 			if (attr_val) {
+				this.postData.attr_id = attr_val.Product_Attr_ID;   //选择属性的id
 				this.postData.count = attr_val.Property_count;   //选择属性的库存
-				this.postData.showimg = typeof attr_val.Attr_Image != 'undefined' && attr_val.Attr_Image != '' ? attr_val.Attr_Image : this.product.Products_JSON['ImgPath'][0];// 选择属性的图片
+				// this.postData.showimg = typeof attr_val.Attr_Image != 'undefined' && attr_val.Attr_Image != '' ? attr_val.Attr_Image : this.product.Products_JSON['ImgPath'][0];// 选择属性的图片
 				this.postData.productDetail_price = attr_val.Attr_Price?attr_val.Attr_Price:this.product.Products_PriceX; // 选择属性的价格
 				this.submit_flag = (!this.check_attr || Object.getOwnPropertyNames(this.check_attr).length != Object.getOwnPropertyNames(this.product.skujosn).length) ? false : true;
 			}
@@ -831,7 +813,7 @@ export default {
 				return ;
 			}
 			this.postData.prod_id = this.Products_ID;
-			if(this.postData.atr_str==''||this.postData.atrid_str==''){
+			if(this.postData.attr_id==0){
 				if(this.product.skujosn){
 					wx.showToast({
 					    title: '您还没有选择规格',
@@ -1311,6 +1293,7 @@ export default {
 	.sold{
 		height: 50rpx;
 		line-height: 50rpx;
+		padding-bottom: 10px;
 	}
     .sold span {
         color: #999;
@@ -1506,7 +1489,7 @@ export default {
 					.skuview{
 						height: 70rpx;
 						line-height: 70rpx;
-						font-size: 28rpx;
+						font-size: 14px;
 						border-radius: 10rpx;
 						color: #000;
 						background-color: #fff;

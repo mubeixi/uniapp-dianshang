@@ -47,7 +47,7 @@
 						</div>
 					</div>
 				</block>
-				<div class="text-right total">共{{item.prod_list.length}}件商品 合计：<span class="price"><span>￥</span> {{item.Order_TotalPrice}}</span></div>
+				<div class="text-right total">共{{item.prod_list.length}}件商品 合计：<span class="price"><span>￥</span> {{item.Order_Fyepay}}</span></div>
 				<div class="btn-group" v-if="item.Order_Status==0">
 					<span @click="cancelOrder(item.prod_list,index)">取消订单</span>
 				</div>
@@ -86,18 +86,20 @@ export default {
     data(){
         return {
             index: 0,
-			data:[],
-			pageSize:5,
-			page:1,
-			totalCount:0,
-			orderNum:'',//订单状态角标数
-			isQing:false,
-			Order_Type: 'shop,gift' , //请求的订单类型
-			isLoading:false,
+						data:[],
+						pageSize:5,
+						page:1,
+						totalCount:0,
+						orderNum:'',//订单状态角标数
+						isQing:false,
+						Order_Type: 'shop' , //请求的订单类型
+						isLoading:false,
         }
     },
 	onShow(){
-
+		// 放在onshow中防止详情页支付完成跳转过来，订单状态未改变
+		this._getOrder();
+		this.getOrderNum();
 	},
 	onLoad(option){
 		if(option.index<=4){
@@ -106,11 +108,13 @@ export default {
 			this.index=0;
 			this.Order_Type=option.index;
 		}
-
+		// 判断订单类型，有可能是 限时抢购spike、秒杀 flashsale 和普通订单 shop
+		if(option.Order_Type) {
+			this.Order_Type = option.Order_Type;
+		}
 		this.data=[];
 		this.page=1;
-		this._getOrder();
-		this.getOrderNum();
+
 	},
 	onReachBottom(){
 		if(this.data.length<this.totalCount){

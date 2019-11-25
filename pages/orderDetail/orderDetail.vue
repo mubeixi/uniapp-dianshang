@@ -17,8 +17,10 @@
 			<image class="img" :src="'/static/client/wait.png'|domain" />
 			<span class="state-desc">等待买家付款</span>
 		</div>
-		<view class="address order-id">订单号：{{orderInfo.Order_ID}}</view>
-		<view class="address">下单时间: {{orderInfo.Order_CreateTime | formatTime}}</view>
+		<view class="address order-id">
+			<view>订单号：{{orderInfo.Order_ID}}</view>
+			<view>下单时间: {{orderInfo.Order_CreateTime | formatTime}}</view>
+		</view>
 		<div class="address" v-if="orderInfo.Order_IsVirtual == 0 ">
 			<image class="loc_icon" :src="'/static/client/location.png'|domain" alt="" />
 			<div class="add_msg">
@@ -92,7 +94,7 @@
 						<switch :checked="moneyChecked" size='25px' color="#04B600" @change="moneyChange" />
 					</div>
 					<!-- <div class="o_desc c8">{{orderInfo.Order_Yebc}}</div> -->
-					<input type="number" v-if="openMoney" :value="user_money" :disabled="!openMoney" :placeholder="orderInfo.Order_Yebc"
+					<input type="number" v-if="openMoney" v-model="user_money"  :disabled="!openMoney" :placeholder="orderInfo.Order_Yebc"
 					@blur="moneyInputHandle" />
 				</div>
 			</div>
@@ -147,11 +149,24 @@
 			<span class="mbx">小计：<span class="money moneys">￥</span><span class="money">{{orderInfo.Order_Fyepay}}</span></span>
 		</div> -->
 		<div style="height:100px;background:#efefef;"></div>
+		<popup-layer ref="popupMX" :direction="'top'" @maskClicked="handClicked" :bottomHeight="50">
+			<view class="mxdetail">
+				<view class="mxtitle">明细</view>
+				<view class="mxitem">产品 <text class="num">+{{Order_TotalAmount}}</text></view>
+				<view class="mxitem" v-if="orderInfo.user_curagio_money > 0">会员折扣 <text class="num">-{{orderInfo.user_curagio_money}}</text></view>
+				<view class="mxitem" v-if="orderInfo.Manjian_Cash > 0">满减 <text class="num">-{{orderInfo.Manjian_Cash}}</text></view>
+				<view class="mxitem" v-if="orderInfo.Coupon_Money > 0">优惠券 <text class="num">-{{orderInfo.Coupon_Money}}</text></view>
+				<view class="mxitem" v-if="orderInfo.Integral_Money > 0">积分抵用 <text class="num">-{{orderInfo.Integral_Money}}</text></view>
+				<view class="mxitem" v-if="user_money > 0">余额 <text class="num">-{{user_money}}</text></view>
+				<view class="mxitem" v-if="orderInfo.Order_Shipping.Price > 0">运费 <text class="num">+{{orderInfo.Order_Shipping.Price}}</text></view>
+			</view>
+		</popup-layer>
 		<div class="order_total">
 			<div class="totalinfo">
 				<div class="info">共{{orderInfo.prod_list.length}}件商品 总计：<span class="mbxa">￥<span>{{orderInfo.Order_Fyepay}}</span></span></div>
 				<div class="tips">*本次购物一共可获得{{orderInfo.Integral_Get}}积分</div>
 			</div>
+			<view class="mx" @click="seeDetail">明细 <image class="image" :class="isSlide?'slidedown':''" src="../../static/top.png"></image></view>
 			<div class="btn-group" v-if="orderInfo.Order_Status==0">
 				<span @click="cancelOrder(orderInfo.Order_ID)">取消订单</span>
 			</div>
@@ -251,7 +266,8 @@
 				isOpen: false, //是否自动弹出
 				user_money: 0,
 				user_name: '',
-				user_mobile: ''
+				user_mobile: '',
+				isSlide: false
 			}
 		},
 		onLoad(options) {
@@ -303,6 +319,19 @@
 
 		},
 		methods: {
+			//查看明细
+			seeDetail(){
+				if(!this.isSlide) {
+					this.$refs.popupMX.show();
+				}else {
+					this.$refs.popupMX.close();
+				}
+				this.isSlide = !this.isSlide;
+			},
+			handClicked(){
+				this.isSlide = false;
+			},
+			//物流追踪
 			goLogistics(orderInfo){
 				let {
 					shipping_id,
@@ -462,6 +491,7 @@
 					});
 					this.user_money = this.orderInfo.Order_TotalPrice;
 					// this.orderInfo.Order_TotalPrice = money;
+					this.orderInfo.Order_Fyepay = 0.00;
 					return;
 				}
 				this.orderInfo.Order_Fyepay = Number(this.orderInfo.Order_TotalPrice - money).toFixed(2);
@@ -618,7 +648,21 @@
 	.wrap {
 		background: #fff;
 	}
-
+	.mxdetail {
+		font-size: 28rpx;
+		line-height: 80rpx;
+		padding: 20rpx 30rpx;
+		.mxtitle {
+			font-size: 28rpx;
+			text-align: center;
+		}
+		.mxitem {
+			border-bottom: 1px solid #eaeaea;
+			.num {
+				float: right;
+			}
+		}
+	}
 	.state {
 		padding: 20rpx 28rpx;
 		font-size: 28rpx;
@@ -653,6 +697,7 @@
 	// 订单号
 	.order-id {
 		border-bottom: none;
+		justify-content: space-between;
 	}
 	.loc_icon {
 		width: 41rpx;
@@ -826,15 +871,27 @@
 	/* 订单其他信息 end */
 	/* 提交订单 */
 	.order_total {
-		height: 100rpx;
+		height: 50px;
 		position: fixed;
 		bottom: 0;
 		width: 100%;
 		display: flex;
 		align-items: center;
 		background: #fff;
-		z-index: 100;
+		z-index: 9999999;
 		justify-content: space-around;
+		.mx {
+			font-size: 22rpx;
+			margin-right: 10rpx;
+			.image {
+				width: 20rpx;
+				height: 20rpx;
+				margin-left: 10rpx;
+			}
+			.slidedown {
+				transform: rotate(180deg);
+			}
+		}
 	}
 
 	.submit {
@@ -842,7 +899,7 @@
 		background: #F43131;
 		text-align: center;
 		color: #fff;
-		line-height: 100rpx;
+		line-height: 50px;
 	}
 
 	.totalinfo {

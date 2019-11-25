@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div v-if="isGetOrder">
 		<div class="zhezhao" v-if="password_input">
 			<div class="input-wrap">
 				<div>请输入余额支付密码</div>
@@ -72,7 +72,7 @@
 						<switch :checked="moneyChecked" size='25px' color="#04B600" @change="moneyChange" />
 					</div>
 					<!-- <div class="o_desc c8">{{orderInfo.Order_Yebc}}</div> -->
-					<input type="number" v-if="openMoney" :value="user_money" :disabled="!openMoney" :placeholder="orderInfo.Order_Yebc"
+					<input type="number" v-if="openMoney" v-model="user_money"  :disabled="!openMoney" :placeholder="orderInfo.Order_Yebc"
 						   @blur="moneyInputHandle" />
 				</div>
 			</div>
@@ -101,16 +101,30 @@
 		</div>
 
 		<div style="height:100px;background:#f8f8f8;"></div>
-		<div class="order_total">
+		<popup-layer ref="popupMX" :direction="'top'" @maskClicked="handClicked" :bottomHeight="50">
+			<view class="mxdetail">
+				<view class="mxtitle">明细</view>
+				<view class="mxitem">产品 <text class="num">+{{Order_TotalAmount}}</text></view>
+				<view class="mxitem" v-if="orderInfo.user_curagio_money > 0">会员折扣 <text class="num">-{{orderInfo.user_curagio_money}}</text></view>
+				<view class="mxitem" v-if="orderInfo.Manjian_Cash > 0">满减 <text class="num">-{{orderInfo.Manjian_Cash}}</text></view>
+				<view class="mxitem" v-if="orderInfo.Coupon_Money > 0">优惠券 <text class="num">-{{orderInfo.Coupon_Money}}</text></view>
+				<view class="mxitem" v-if="orderInfo.Integral_Money > 0">积分抵用 <text class="num">-{{orderInfo.Integral_Money}}</text></view>
+				<view class="mxitem" v-if="user_money > 0">余额 <text class="num">-{{user_money}}</text></view>
+				<view class="mxitem" v-if="orderInfo.Order_Shipping.Price > 0">运费 <text class="num">+{{orderInfo.Order_Shipping.Price}}</text></view>
+			</view>
+		</popup-layer>
+		<div class="order_total" :style="{'z-index': zIndex}">
 			<div class="totalinfo">
 				<div class="info">共{{orderInfo.prod_list.length}}件商品 总计：<span class="mbxa">￥<span>{{orderInfo.Order_Fyepay}}</span></span></div>
 				<div class="tips">*本次购物一共可获得{{orderInfo.Integral_Get}}积分</div>
 			</div>
+			<view class="mx" @click="seeDetail">明细 <image class="image" :class="isSlide?'slidedown':''" src="../../static/top.png"></image></view>
 			<div class="submit" @click="submit">去支付</div>
 		</div>
 		<div class="safearea-box"></div>
 		<pay-components
 			ref="payLayer"
+			:isOpen = "isOpen"
 			:Order_ID="Order_ID"
 			:pay_money="pay_money"
 			:use_money="user_money"
@@ -150,7 +164,8 @@
 	export default {
 		mixins: [pageMixin],
 		components: {
-			PayComponents
+			PayComponents,
+			popupLayer
 		},
 		data() {
 			return {
@@ -181,6 +196,9 @@
 				Order_Type:'',
 				user_money: 0,
 				pagefrom: 'check', // 页面来源，支付成功跳转路径不同
+				isSlide: false, // 明细是否已经打开
+				isGetOrder: false, // orderinfo 数据是否已拿到，防止页面报错
+				zIndex: 999
 			}
 		},
 		onLoad(options) {
@@ -209,6 +227,9 @@
 			},
 			moneyChecked() {
 				return this.openMoney;
+			},
+			isOpen(){
+				return this.orderInfo.Order_Fyepay == 0 ? false : true
 			}
 		},
 		created() {
@@ -243,6 +264,23 @@
 					this.self_orderPay();
 				}
 			},
+			//查看明细
+			seeDetail(){
+				if(!this.isSlide) {
+					this.zIndex = 9999999;
+					this.$refs.popupMX.show();
+				}else {
+					this.$refs.popupMX.close();
+					setTimeout(()=>{
+						this.zIndex = 99999;
+					},500)
+				}
+				this.isSlide = !this.isSlide;
+			},
+			handClicked(){
+				this.zIndex = 99999;
+				this.isSlide = false;
+			},
 			// 订单详情
 			getOrderDetail() {
 
@@ -266,7 +304,6 @@
 								}
 							}
 						}
-						this.Order_Type=res.data.Order_Type;
 						this.orderInfo = res.data;
 						this.Order_Type = res.data.Order_Type;
 						ls.set('type',this.Order_Type);
@@ -280,7 +317,7 @@
 						this.openInvoice = this.orderInfo.Order_NeedInvoice > 0;
 						this.invoice_info = this.orderInfo.Order_InvoiceInfo;
 						this.order_remark = this.orderInfo.Order_Remark;
-
+						this.isGetOrder = true;
 					}
 				})
 			},
@@ -310,6 +347,8 @@
 					});
 					this.user_money = this.orderInfo.Order_TotalPrice;
 					// this.orderInfo.Order_TotalPrice = money;
+					this.orderInfo.Order_Fyepay = 0.00;
+					this.pay_money = 0.00;
 					return;
 				}
 				this.pay_money = Number(this.orderInfo.Order_TotalPrice - money).toFixed(2);
@@ -374,6 +413,11 @@
 			},
 			// 去支付
 			submit() {
+				// 如果用户全部使用了余额支付，就不要走弹窗再选择支付方式了,直接输入密码
+				if(this.pay_money == 0) {
+					this.password_input = true;
+					return;
+				}
 				this.$refs.payLayer.show();
 				return;
 				// 发票信息
@@ -481,9 +525,9 @@
 
 
 			},
-			payFailCall(){
+			payFailCall(err){
 				uni.showToast({
-					title: '支付失败',
+					title: err.msg ? err.msg : '支付失败',
 					icon: 'none',
 					duration: 2000
 				});
@@ -501,6 +545,11 @@
 			paySuccessCall(res){
 
 				var _that = this;
+				let Order_Type = ls.get('type');
+				let pagefrom = ls.get('pagefrom');
+				ls.remove('pagefrom');
+				ls.remove('type');
+
 				console.log('支付成功回调',res)
 				if(res && res.code && res.code==2){
 					_that.payFailCall()
@@ -521,7 +570,7 @@
 						success: function (res) {
 							if (res.confirm) {
 
-								if(type === 'pintuan'){
+								if(Order_Type === 'pintuan'){
 									url:'/pages/pintuanOrderlist/pintuanOrderlist?index=2'
 								}else{
 									if(pagefrom == 'check') {
@@ -537,7 +586,7 @@
 
 							} else if (res.cancel) {
 
-								if(type === 'pintuan'){
+								if(Order_Type === 'pintuan'){
 									url:'/pages/pintuanOrderlist/pintuanOrderlist?index=1'
 								}else{
 									if(pagefrom == 'check') {
@@ -567,18 +616,15 @@
 				toast('支付成功');
 
 				//拼团订单则跳转到开团成功
-				let type = ls.get('type');
-				let pagefrom = ls.get('pagefrom');
-				ls.remove('pagefrom');
-				ls.remove('type');
-				if(type === 'pintuan'){
+
+				if(Order_Type === 'pintuan'){
 					uni.redirectTo({
 						url:'/pages/groupSuccess/groupSuccess?order_id='+_that.Order_ID
 					})
 				}else{
 					if(pagefrom == 'check') {
 						uni.redirectTo({
-							url:'/pages/order/order?index=2'
+							url:'/pages/order/order?index=2&Order_Type='+Order_Type
 						})
 					}else if(pagefrom == 'gift') {
 						uni.redirectTo({
@@ -799,7 +845,20 @@ return;
 			},
 			// 确定输入支付密码
 			confirmInput(e) {
-				this.self_orderPay();
+				orderPay({
+					Order_ID: this.Order_ID,
+					pay_type: 'remainder_pay',
+					pay_money: this.pay_money,
+					use_money: this.user_money,
+					user_pay_password: this.user_pay_password,
+                    need_invoice: this.need_invoice,
+					invoice_info: this.invoice_info,
+					order_remark: this.order_remark
+				}).then((res)=>{
+					this.paySuccessCall(res)
+				},(err)=>{
+					this.payFailCall(err)
+				});
 				this.password_input = false;
 			}
 		}
@@ -814,7 +873,21 @@ return;
 		padding-bottom: env(safe-area-inset-bottom);
 		/* #endif */
 	}
-
+	.mxdetail {
+		font-size: 28rpx;
+		line-height: 80rpx;
+		padding: 20rpx 30rpx;
+		.mxtitle {
+			font-size: 28rpx;
+			text-align: center;
+		}
+		.mxitem {
+			border-bottom: 1px solid #eaeaea;
+			.num {
+				float: right;
+			}
+		}
+	}
 	.state {
 		padding: 20rpx 28rpx;
 		font-size: 28rpx;
@@ -1020,7 +1093,7 @@ return;
 	/* 订单其他信息 end */
 	/* 提交订单 */
 	.order_total {
-		height: 100rpx;
+		height: 50px;
 		position: fixed;
 		bottom: 0;
 		/* #ifdef MP */
@@ -1031,7 +1104,18 @@ return;
 		display: flex;
 		align-items: center;
 		background: #fff;
-		z-index: 100;
+		.mx {
+			font-size: 22rpx;
+			margin-right: 10rpx;
+			.image {
+				width: 20rpx;
+				height: 20rpx;
+				margin-left: 10rpx;
+			}
+			.slidedown {
+				transform: rotate(180deg);
+			}
+		}
 	}
 
 	.submit {
@@ -1039,7 +1123,7 @@ return;
 		background: #F43131;
 		text-align: center;
 		color: #fff;
-		line-height: 100rpx;
+		line-height: 50px;
 	}
 
 	.totalinfo {
