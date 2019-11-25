@@ -164,6 +164,11 @@
 				<view class="pintuan">进货渠道</view>	
 				<image :src="'/static/client/person/right.png'|domain" class="right"></image>
 			</view>
+			<view class="setting cell" @click="goStock">
+				<image :src="'/static/client/person/she.png'|domain" class="left"></image>
+				<view class="pintuan">进货</view>	
+				<image :src="'/static/client/person/right.png'|domain" class="right"></image>
+			</view>
 		</view>
 		<view style="height: 118rpx;"></view>
 
@@ -245,6 +250,11 @@
 		},
 		methods:{
 			...mapActions(['setUserInfo']),
+			goStock(){
+				uni.navigateTo({
+					url: '../stock/stock'
+				})
+			},
 			goNew(){
 				uni.navigateTo({
 					url: '../storeSettled/storeSettled'

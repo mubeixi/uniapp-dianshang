@@ -270,8 +270,10 @@
 					this.zIndex = 9999999;
 					this.$refs.popupMX.show();
 				}else {
-					this.zIndex = 99999;
 					this.$refs.popupMX.close();
+					setTimeout(()=>{
+						this.zIndex = 99999;
+					},500)
 				}
 				this.isSlide = !this.isSlide;
 			},
@@ -547,7 +549,7 @@
 				let pagefrom = ls.get('pagefrom');
 				ls.remove('pagefrom');
 				ls.remove('type');
-				
+
 				console.log('支付成功回调',res)
 				if(res && res.code && res.code==2){
 					_that.payFailCall()
@@ -614,7 +616,7 @@
 				toast('支付成功');
 
 				//拼团订单则跳转到开团成功
-				
+
 				if(Order_Type === 'pintuan'){
 					uni.redirectTo({
 						url:'/pages/groupSuccess/groupSuccess?order_id='+_that.Order_ID

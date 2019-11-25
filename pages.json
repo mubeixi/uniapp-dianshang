@@ -540,6 +540,12 @@
 							"navigationBarTitleText": "门店入驻"
 						}
 				}
+        ,{
+            "path" : "pages/stock/stock",
+            "style" : {
+							"navigationBarTitleText": "进货"
+						}
+        }
     ],
 
 	"globalStyle": {

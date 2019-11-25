@@ -126,16 +126,17 @@
 				</view>
 			</view>
 		</div>
-
-		<view class="order_total" :style="{'z-index':zIndex}">
-			<view class="totalinfo">
-				<view class="info">共{{orderInfo.prod_count}}件商品 总计：<text class="money"><text class="m_icon">￥</text> {{orderInfo.Order_Fyepay}}</text></view>
-				<view class="tips">*本次购物一共可获得{{orderInfo.Integral_Get}}积分</view>
+		<view style="height: 50px;">
+			<view class="order_total" :style="{'z-index':zIndex}">
+				<view class="totalinfo">
+					<view class="info">共{{orderInfo.prod_count}}件商品 总计：<text class="money"><text class="m_icon">￥</text> {{orderInfo.Order_Fyepay}}</text></view>
+					<view class="tips">*本次购物一共可获得{{orderInfo.Integral_Get}}积分</view>
+				</view>
+				<view class="mx" @click="seeDetail">明细 <image class="image" :class="isSlide?'slidedown': ''" src="../../static/top.png"></image></view>
+				<form report-submit @submit="form_submit">
+					<button formType="submit" class="submit">提交订单</button>
+				</form>
 			</view>
-			<view class="mx" @click="seeDetail">明细 <image class="image" :class="isSlide?'slidedown': ''" src="../../static/top.png"></image></view>
-			<form report-submit @submit="form_submit">
-				<button formType="submit" class="submit">提交订单</button>
-			</form>
 		</view>
 		<div class="safearea-box"></div>
 		<popup-layer ref="popupMX" :direction="'top'" @maskClicked="handClicked" :bottomHeight="bottomHeight">
@@ -299,9 +300,11 @@ export default {
 				this.zIndex = 9999999;
 				this.$refs.popupMX.show();
 			}else {
-				this.bottomHeight = 0;
-				this.zIndex = 99999;
 				this.$refs.popupMX.close();
+				setTimeout(()=>{
+					this.zIndex = 99999;
+					this.bottomHeight = 0;
+				},500)
 			}
 			this.isSlide = !this.isSlide;
 	  },
@@ -811,7 +814,6 @@ export default {
     /* 订单其他信息 end */
     /* 提交订单 */
     .order_total {
-        height: 50px;
         position: fixed;
         bottom: 0;
 		/* #ifdef MP */
