@@ -118,6 +118,7 @@ export const pageMixin = {
 			if(old_users_id && old_users_id!=users_id){
 				console.log('清空本地配置和登录信息')
 				this.setUserInfo({})
+
 				getSystemConf({}).then(res=>{
 					this.setInitData(res.data)
 				})
