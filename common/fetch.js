@@ -387,6 +387,20 @@ export const upUserLog = (data, options) => {
   return fetch('write_user_log', data, options)
 }
 
+//进货单相关处理
+export const getStorePurchaseApply = (data, options) => fetch('get_store_pifa_apply_order', data, options);
+
+export const changeStoreApplyChannel = (data, options) => fetch('store_pifa_order_change_wholesaler', data, options);
+
+
+export const updateStoreApplyGoodsNum = (data, options) => fetch('store_pifa_order_edit', data, options);
+
+export const cancalStorePurchaseApply = (data, options) => fetch('store_pifa_order_recall', data, options);
+
+export const subStorePurchaseApply = (data, options) => fetch('store_pifa_order_submit', data, options);
+
+export const delStorePurchaseApply = (data, options) => fetch('store_pifa_order_del', data, options);
+
 
 //普通环境noop就行了
 //let add_template_code = ()=>{}

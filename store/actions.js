@@ -5,9 +5,11 @@ import {checkIsLogin, confirm, fun} from "../common";
 export const setUserInfo = ({commit}, data) => {
   commit('SET_USER_INFO', data);
 };
+
 export const setInitData = ({commit}, data) => {
   commit('SET_INIT_DATA', data);
 };
+
 
 export const getInitData = async ({commit, state},refresh) => {
 
