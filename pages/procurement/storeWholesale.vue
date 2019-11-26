@@ -20,22 +20,14 @@
                         </div>
                         <div class="info flex flex-between">
                             <div class="flex1 flex store-info">
-                                <div class="store-pic" :style="{backgroundImage:'url('+apply.supplier_img+')'}"></div>
-                                <div class="store-title">{{apply.supplier_name}}</div>
+                                <div class="store-pic" :style="{backgroundImage:'url('+apply.Stores_ImgPath+')'}"></div>
+                                <div class="store-title">{{apply.Stores_Name}}</div>
                                 <div class="action">
-                                    <span @click="showStore(apply.store)" class="action-item">查看信息</span>
-<!--                                    <span class="padding4-c">/</span>-->
-<!--                                    <span class="action-item" @click="changeChannel(apply)">修改渠道</span>-->
+                                    <span @click="showStore(apply.Order_Store)" class="action-item">查看信息</span>
                                 </div>
                             </div>
                             <span class="status-text">{{apply.Order_Status_desc}}</span>
-<!--                            <el-tooltip v-if="apply.reason" class="" effect="dark" :content="apply.reason"-->
-<!--                                        placement="top">-->
-<!--                                <i class="el-icon-warning-outline danger-color padding10-c"></i>-->
-<!--                            </el-tooltip>-->
-
                         </div>
-
                     </div>
                     <block v-if="apply && apply.prod_list">
                         <div class="goods-list" >
@@ -44,7 +36,7 @@
                                 <div class="c">
                                     <div class="title line10">{{item.prod_name}}</div>
                                     <div class="line10 flex flex-between graytext font14 flex-vertical-center">
-                                        <div class="spec-key">{{item.attr_info.attr_name}}</div>
+                                        <div class="spec-key">{{item.attr_info.attr_name||'无规格'}}</div>
                                         <div class="numbox font16"><span class="font14">x</span>{{item.prod_count}}</div>
                                     </div>
                                     <div class="font14"><span class="danger-color">￥<span class="price-num font16">{{item.prod_price}}</span></span></div>
@@ -57,43 +49,67 @@
                     </div>
                     <div class="actions text-center" >
                         <block v-if="inArray(apply.Order_Status,[21])">
-                            <button size="mini" @click="cancelApply(apply,idx1)" class="acion-btn" type="warn">驳回</button>
-<!--                            <button size="mini" @click="cancelApply(apply,idx1)" class="acion-btn" type="warn">修改数量</button>-->
+                            <button size="mini" @click="openRefuseDialog(apply,idx1)" class="acion-btn" type="warn">驳回</button>
                             <button size="mini" @click="cancelApply(apply,idx1)" class="acion-btn">出库</button>
                         </block>
-<!--                        <block v-if="inArray(apply.Order_Status,[22])">-->
-<!--                            <button size="mini" class="acion-btn line8" type="danger">确认收货</button>-->
-<!--                            <div @click="showLogistics(apply)" class="font12 graytext2 logistics">查看物流</div>-->
-<!--                        </block>-->
-<!--                        <block v-if="inArray(apply.Order_Status,[23,25])">-->
-<!--                            <button size="mini" @click="submitAplly(apply,idx1)" class="acion-btn" type="danger">提交进货单-->
-<!--                            </button>-->
-<!--                        </block>-->
                     </div>
                 </div>
             </div>
 
         </div>
+
+        <wzw-dialog ref="storeInfo">
+            <div class="storeInfoDialog">
+                <div class="title text-center line15 font16">门店信息</div>
+                <div class="row">
+                    <div class="label">门店名称:</div>
+                    <div class="text">{{storeInfo.Stores_Name}}</div>
+                </div>
+                <div class="row">
+                    <div class="label">门店电话:</div>
+                    <div class="text">{{storeInfo.Stores_Telephone}}</div>
+                </div>
+                <div class="row">
+                    <div class="label">门店地址:</div>
+                    <div class="text">{{storeInfo.Stores_Province_name}}{{storeInfo.Stores_City_name}}{{storeInfo.Stores_Area_name}}{{storeInfo.Stores_Address}}</div>
+                </div>
+            </div>
+        </wzw-dialog>
+
+        <wzw-dialog ref="refuseApply">
+            <div class="refuseApplyDialog">
+                <textarea class="reason" @input="bingReasonInput" placeholder-style="color:#999" placeholder="请输入驳回原因" auto-height />
+                <div class="control">
+                    <div @click="cancelRefuseApply" class="action-btn btn-cancel">取消</div>
+                    <div @click="refuseApply" class="btn-sub action-btn">确定</div>
+                </div>
+
+            </div>
+        </wzw-dialog>
     </div>
 </template>
 
 <script>
     import {pageMixin} from "../../common/mixin";
     import {mapGetters} from "vuex";
-    import {getStorePurchaseSales} from "../../common/fetch";
+    import {getStorePurchaseSales,getStoreList,refuseStorePurchaseApply} from "../../common/fetch";
     import {error} from "../../common";
+    import {findArrayIdx} from "../../common/tool";
 
 
     export default {
         mixins: [pageMixin],
-        name: "Apply",
+        name: "storeWholesale",
         data() {
             return {
-
                 applys: [],
+                stores:[],
+                storeInfo:{},
                 tabidx:0,
+                activeApply:null,
                 order_status_arr:[null,21,22,23,24,25],
                 order_status:null,
+                reason:'',
                 paginate:{
                     page:1,
                     finish:false,
@@ -106,6 +122,43 @@
           ...mapGetters(['Stores_ID'])
         },
         methods:{
+            cancelRefuseApply(){
+                this.$refs.refuseApply.close()
+            },
+            openRefuseDialog(apply){
+                this.activeApply = apply
+                this.$refs.refuseApply.show()
+            },
+            refuseApply(){
+
+                console.log(this.reason)
+                if(!this.reason){
+                    error('请填写理由')
+                    return;
+                }
+                refuseStorePurchaseApply({order_id:this.activeApply.Order_ID,reason:this.reason},{tip:'处理中'}).then(res=>{
+                    this.$refs.refuseApply.close()
+                    this.activeApply = null
+                    this.reason = ''
+                    apply.Order_Status = 23
+                    apply.Order_Status_desc = '已驳回'
+
+                },err=>{})
+            },
+            bingReasonInput(e){
+                this.reason = e.detail.value
+            },
+            showStore(store_id){
+                console.log(store_id)
+                let idx = findArrayIdx(this.stores,{Stores_ID:store_id})
+                console.log(idx)
+                if(idx!==false){
+                    this.storeInfo = this.stores[idx]
+                    this.$refs.storeInfo.show()
+                }else{
+                    error('店铺信息错误')
+                }
+            },
             changIndex(idx){
                 this.tabidx = idx
                 this.paginate.page = 1
@@ -159,6 +212,10 @@
         created(){
             console.log(this.$store.state)
             this.loadInfo()
+
+            getStoreList({pageSize:999}).then(res=>{
+                this.stores = res.data
+            })
         }
     }
 </script>
@@ -275,6 +332,7 @@
                     flex:1;
                     padding: 0 0 0 10px;
                     .title{
+                        font-size: 14px;
                         height: 40px;
                         line-height: 20px;
                         color: #333;
@@ -312,6 +370,60 @@
 
         }
 
+    }
+}
+
+.storeInfoDialog{
+    width: 560rpx;
+    box-sizing: border-box;
+    padding: 10px;
+    font-size: 14px;
+    .row{
+        display: flex;
+        margin-bottom: 8px;
+        .label{
+            color: #999;
+            width: 70px;
+        }
+        .text{
+            flex: 1;
+            color: #444;
+        }
+    }
+}
+
+.refuseApplyDialog{
+    width: 560rpx;
+    box-sizing: border-box;
+    padding: 15px;
+    font-size: 14px;
+    .reason{
+        font-size: 14px;
+        min-height: 200px;
+        border: 1px solid #E3E3E3;
+        line-height: 1.4;
+        height: auto;
+        width: auto;
+        padding: 10px;
+    }
+    .control{
+        margin-top: 15px;
+        display: flex;
+        justify-content: center;
+        .action-btn{
+            width: 70px;
+            height: 36px;
+            line-height: 36px;
+            font-size: 14px;
+            text-align: center;
+            color: #666;
+            background: #e9e9e9;
+            &.btn-sub{
+                background: $wzw-primary-color;
+                color: white;
+                margin-left: 10px;
+            }
+        }
     }
 }
 </style>

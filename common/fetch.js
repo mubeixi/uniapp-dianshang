@@ -395,6 +395,11 @@ export const getStorePurchaseSales = (data, options) => fetch('get_store_pifa_as
 //进货单相关处理
 export const getStorePurchaseApply = (data, options) => fetch('get_store_pifa_apply_order', data, options);
 
+//驳回进货请求
+
+export const refuseStorePurchaseApply = (data, options) => fetch('store_pifa_order_reject', data, options);
+
+
 export const changeStoreApplyChannel = (data, options) => fetch('store_pifa_order_change_wholesaler', data, options);
 
 
