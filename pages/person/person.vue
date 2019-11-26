@@ -152,13 +152,7 @@
 				<image :src="'/static/client/person/right.png'|domain" class="right"></image>
 			</view>
 
-			<view class="setting cell" @click="goSetting">
-				<image :src="'/static/client/person/she.png'|domain" class="left"></image>
-				<view class="pintuan">
-					设置
-				</view>
-				<image :src="'/static/client/person/right.png'|domain" class="right"></image>
-			</view>
+
 			<view class="setting cell" @click="goNew" v-if="Stores_ID">
 				<image :src="'/static/client/person/she.png'|domain" class="left"></image>
 				<view class="pintuan">进货渠道</view>
@@ -169,6 +163,14 @@
 				<view class="pintuan">进货</view>
 				<image :src="'/static/client/person/right.png'|domain" class="right"></image>
 			</view>
+			<view class="setting cell" @click="goSetting">
+				<image :src="'/static/client/person/she.png'|domain" class="left"></image>
+				<view class="pintuan">
+					设置
+				</view>
+				<image :src="'/static/client/person/right.png'|domain" class="right"></image>
+			</view>
+
 		</view>
 		<view style="height: 118rpx;"></view>
 

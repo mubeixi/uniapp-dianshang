@@ -275,6 +275,16 @@ export const getSignin = (data, options) => fetch('get_signin', data, options);
 
 //申请成为区域代理
 export const agentApply = (data, options) => fetch('agent_apply', data, options);
+//区域代理支付
+export const agentApplyPay = (data, options) => fetch('agent_apply_pay', data, options);
+//股东支付
+export const shaApplyPay = (data, options) => fetch('sha_apply_pay', data, options);
+
+//取消代理申请
+export const cancelAgentApply = (data, options) => fetch('cancel_agent_apply', data, options);
+//取消股东申请
+export const cancelShaApply = (data, options) => fetch('cancel_sha_apply', data, options);
+
 //申请成为股东
 export const shaApply = (data, options) => fetch('sha_apply', data, options);
 
@@ -389,6 +399,11 @@ export const upUserLog = (data, options) => {
   console.log('上报用户信息',data,options)
   return fetch('write_user_log', data, options)
 }
+
+
+
+//获取批发的订单
+export const getStorePurchaseSales = (data, options) => fetch('get_store_pifa_assign_order', data, options);
 
 //进货单相关处理
 export const getStorePurchaseApply = (data, options) => fetch('get_store_pifa_apply_order', data, options);

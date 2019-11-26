@@ -15,7 +15,7 @@
                 <div class="item" v-for="(apply,idx1) in applys" :key="idx1">
                     <div class="head">
                         <div class="status flex flex-between ">
-                            <div class="order-no">进货单号: {{apply.Order_ID}}</div>
+                            <div class="order-no">订单号: {{apply.Order_ID}}</div>
                             <image class="icon-delete"  @click="delApply(apply,idx1)" v-if="inArray(apply.Order_Status,[21,23,25])" src="/static/store/icon-del.png"></image>
                         </div>
                         <div class="info flex flex-between">
@@ -37,44 +37,38 @@
                         </div>
 
                     </div>
-                    <div class="purchases"
-                         v-if="apply && apply.prod_list"
-                         cellspacing="0">
-                        <div class="goods-list" v-for="(item,idx2) in apply.prod_list">
-                            <div class="goods">
+                    <block v-if="apply && apply.prod_list">
+                        <div class="goods-list" >
+                            <div class="goods" v-for="(item,idx2) in apply.prod_list">
                                 <div class="l" :style="{backgroundImage:'url('+item.prod_img+')'}"></div>
                                 <div class="c">
                                     <div class="title line10">{{item.prod_name}}</div>
-                                    <div class="flex flex-between graytext font14 flex-vertical-center">
+                                    <div class="line10 flex flex-between graytext font14 flex-vertical-center">
                                         <div class="spec-key">{{item.attr_info.attr_name}}</div>
                                         <div class="numbox font16"><span class="font14">x</span>{{item.prod_count}}</div>
                                     </div>
                                     <div class="font14"><span class="danger-color">￥<span class="price-num font16">{{item.prod_price}}</span></span></div>
                                 </div>
-
                             </div>
                         </div>
-                    </div>
+                    </block>
                     <div class="price-box">
-                        <div class="text-center">
-                            <div class="total line6">总计:<span class="danger-color">￥<span class="total_num font18">{{apply.Order_TotalPrice}}</span></span>
-                            </div>
-                            <div class="postage font14 graytext">(含运费￥{{apply.Order_Shipping.Price}})</div>
-                        </div>
+                        总计:<span class="danger-color">￥<span class="total_num font16">{{apply.Order_TotalPrice}}</span></span>
                     </div>
                     <div class="actions text-center" >
-                        <div v-if="inArray(apply.Order_Status,[21])">
-                            <button @click="cancelApply(apply,idx1)" class="acion-btn" type="danger">撤回进货单
-                            </button>
-                        </div>
-                        <div v-if="inArray(apply.Order_Status,[22])">
-                            <button class="acion-btn line8" type="danger">确认收货</button>
-                            <div @click="showLogistics(apply)" class="font12 graytext2 logistics">查看物流</div>
-                        </div>
-                        <div v-if="inArray(apply.Order_Status,[23,25])">
-                            <button @click="submitAplly(apply,idx1)" class="acion-btn" type="danger">提交进货单
-                            </button>
-                        </div>
+                        <block v-if="inArray(apply.Order_Status,[21])">
+                            <button size="mini" @click="cancelApply(apply,idx1)" class="acion-btn" type="warn">驳回</button>
+<!--                            <button size="mini" @click="cancelApply(apply,idx1)" class="acion-btn" type="warn">修改数量</button>-->
+                            <button size="mini" @click="cancelApply(apply,idx1)" class="acion-btn">出库</button>
+                        </block>
+<!--                        <block v-if="inArray(apply.Order_Status,[22])">-->
+<!--                            <button size="mini" class="acion-btn line8" type="danger">确认收货</button>-->
+<!--                            <div @click="showLogistics(apply)" class="font12 graytext2 logistics">查看物流</div>-->
+<!--                        </block>-->
+<!--                        <block v-if="inArray(apply.Order_Status,[23,25])">-->
+<!--                            <button size="mini" @click="submitAplly(apply,idx1)" class="acion-btn" type="danger">提交进货单-->
+<!--                            </button>-->
+<!--                        </block>-->
                     </div>
                 </div>
             </div>
@@ -86,7 +80,7 @@
 <script>
     import {pageMixin} from "../../common/mixin";
     import {mapGetters} from "vuex";
-    import {getStorePurchaseApply} from "../../common/fetch";
+    import {getStorePurchaseSales} from "../../common/fetch";
     import {error} from "../../common";
 
 
@@ -126,7 +120,7 @@
             async loadInfo(){
 
                 if(this.paginate.finish)return;
-                await getStorePurchaseApply({...this.paginate,order_status:this.order_status,store_id:this.Stores_ID}).then(res=>{
+                await getStorePurchaseSales({...this.paginate,order_status:this.order_status,store_id:this.Stores_ID}).then(res=>{
 
                     this.paginate.totalCount = res.totalCount
 
@@ -263,59 +257,58 @@
                 }
             }
         }
-        .purchases{
-
-            .goods-list{
-
-                &:last-child{
-                    .goods{
-                        border-bottom: none;
-                    }
-
+        .goods-list{
+            border-bottom: 1px solid #EDEDED;
+            .goods{
+                display: flex;
+                align-items: center;
+                padding: 10px;
+                .l{
+                    width: 100px;
+                    height: 100px;
+                    background-size: cover;
+                    background-repeat: no-repeat;
+                    background-color: #f2f2f2;
+                    background-position: center;
                 }
-                .goods{
-                    display: flex;
-                    align-items: center;
-                    padding: 10px;
-                    border-bottom: 1px solid #EDEDED;
-
-                    .l{
-                        width: 100px;
-                        height: 100px;
-                        background-size: cover;
-                        background-repeat: no-repeat;
-                        background-color: #f2f2f2;
-                        background-position: center;
+                .c{
+                    flex:1;
+                    padding: 0 0 0 10px;
+                    .title{
+                        height: 40px;
+                        line-height: 20px;
+                        color: #333;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
                     }
-                    .c{
-                        flex:1;
-                        padding: 0 0 0 10px;
-                        .spec-key{
-                            background: #FFF5F5;
-                            font-size: 12px;
-                            padding: 6px 10px;
-                            color: #666666;
-                        }
-                        .numbox{
-                            color: #333333
-                        }
+                    .spec-key{
+                        background: #FFF5F5;
+                        font-size: 12px;
+                        padding: 6px 10px;
+                        color: #666666;
                     }
+                    .numbox{
+                        color: #333333
+                    }
+                }
 
-                }
             }
-            .price-box{
-                width: 226px;
-                border-left: 1px solid #EDEDED;
-                border-right: 1px solid #EDEDED;
-                /*flex-grow: 1*/
-                /*height: 100%;*/
+
+
+        }
+        .price-box{
+            text-align: right;
+            padding: 10px;
+            font-size: 14px;
+        }
+        .actions{
+            text-align: right;
+            padding: 0 10px;
+            .acion-btn{
+                margin-bottom: 10px;
+                margin-left: 10px;
             }
-            .actions{
-                width: 184px;
-                .logistics{
-                    cursor: pointer;
-                }
-            }
+
 
         }
 

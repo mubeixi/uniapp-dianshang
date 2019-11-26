@@ -6,6 +6,7 @@
       "style": {
         "enablePullDownRefresh": true,
         "scrollIndicator": "none",
+        // 不显示滚动条
         "app-plus": {
           "titleNView": false
         }
@@ -88,6 +89,9 @@
       "path": "pages/result/result",
       "style": {
         "navigationBarTitleText": "列表"
+        // "app-plus": {
+        //   "titleNView": false
+        // }
       }
     },
     {
@@ -110,6 +114,9 @@
       "path": "pages/order/order",
       "style": {
         "navigationBarTitleText": "我的订单"
+        // "app-plus": {
+        // 	"titleNView": false
+        // }
       }
     },
     {
@@ -295,6 +302,9 @@
       "path": "pages/myGift/myGift",
       "style": {
         "navigationBarTitleText": "赠品中心"
+        // "app-plus": {
+        //   "titleNView": false
+        // }
       }
     },
     {
@@ -385,6 +395,9 @@
         "navigationBarTitleText": "积分中心",
         "navigationBarBackgroundColor": "#ff5c33",
         "navigationBarTextStyle": "white"
+        // "app-plus": {
+        // 	"titleNView": false
+        // }
       }
     },
     {
@@ -553,18 +566,6 @@
       "path": "pages/procurement/storeWholesale",
       "style": {
         "navigationBarTitleText": "批发订单"
-      }
-    },
-    {
-      "path": "pages/regionPay/regionPay",
-      "style": {
-        "navigationBarTitleText": "区域代理支付"
-      }
-    },
-    {
-      "path": "pages/gudongPay/gudongPay",
-      "style": {
-        "navigationBarTitleText": "股东支付"
       }
     }
   ],
