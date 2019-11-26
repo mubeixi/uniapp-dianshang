@@ -34,7 +34,7 @@
 		</template>
 		<template v-else>
 			<div class="defaults">
-				<image src="/static/defaultImg.png" ></image>
+				<image :src="'/static/client/defaultImg.png'|domain" ></image>
 			</div>
 		</template>
 	</view>

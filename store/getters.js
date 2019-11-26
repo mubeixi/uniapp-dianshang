@@ -1,6 +1,15 @@
 
 import {ls} from "../common/tool";
 
+export const Stores_ID = function (state, value) {
+    if(!state.Stores_ID){
+        if(ls.get('Stores_ID'))return ls.get('Stores_ID')
+        //error('用户信息为空')
+        return null;
+    }
+    return state.Stores_ID;
+};
+
 export const userInfo = function (state, value) {
     if(!state.userInfo){
         if(ls.get('userInfo'))return ls.get('userInfo')

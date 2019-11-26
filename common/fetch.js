@@ -387,13 +387,34 @@ export const bindUserClientId = (data, options) => fetch('user_uuid_set', data, 
 export const confirmOrderPayStatus = (data, options) => fetch('judge_ispay', data, options);
 
 //秒杀列表
-export const getFlashSaleList = (data, options) => fetch('get_flashsale', data, options)
+export const getFlashSaleList = (data, options) => fetch('get_flashsale', data, options);
 
+//门店入驻申请
+export const userStoreApply = (data, options) => fetch('user_store_apply', data, options);
 //写入用户日志
 export const upUserLog = (data, options) => {
   console.log('上报用户信息',data,options)
   return fetch('write_user_log', data, options)
 }
+
+
+
+//获取批发的订单
+export const getStorePurchaseSales = (data, options) => fetch('get_store_pifa_assign_order', data, options);
+
+//进货单相关处理
+export const getStorePurchaseApply = (data, options) => fetch('get_store_pifa_apply_order', data, options);
+
+export const changeStoreApplyChannel = (data, options) => fetch('store_pifa_order_change_wholesaler', data, options);
+
+
+export const updateStoreApplyGoodsNum = (data, options) => fetch('store_pifa_order_edit', data, options);
+
+export const cancalStorePurchaseApply = (data, options) => fetch('store_pifa_order_recall', data, options);
+
+export const subStorePurchaseApply = (data, options) => fetch('store_pifa_order_submit', data, options);
+
+export const delStorePurchaseApply = (data, options) => fetch('store_pifa_order_del', data, options);
 
 
 //普通环境noop就行了

@@ -13,7 +13,7 @@
 
       <div class="pro-list" v-for="(item,index) in collect_list" :key="index">
 		  <div class="mbxa"  v-if="rightClicked" @click="check(index)">
-			  <img class="imgs" :src="(checked[index].checked?'/static/client/checked.png':'/static/client/uncheck.png')|domain" >
+			  <img class="imgs" :src="checked[index].checked?checked_img_url:uncheck_img_url" >
 		  </div>
           <div class="pro" @click="goDetail(item)">
             <div class="pros">
@@ -39,7 +39,7 @@
 	  </div>
       <div class="bottom" v-if="rightClicked" >
             <div class="b_left" @click="checkAll">
-				 <img :src="(allChecked ? '/static/client/checked.png' : '/static/client/uncheck.png')|domain" >
+				 <img :src="allChecked ? checked_img_url : uncheck_img_url" >
 				 全选
             </div>
             <div class="b_right" @click="cancelCollection">删除({{totalNum}})</div>
@@ -51,6 +51,8 @@
 import {getFavouritePro,cancelCollection} from '../../common/fetch.js'
 import {pageMixin} from "../../common/mixin";
 import {add_template_code} from "../../common/fetch";
+import {domainFn} from "../../common/filter";
+
 
 export default {
 	mixins:[pageMixin],
@@ -61,11 +63,16 @@ export default {
 
 	},
 	onShow() {
+
+        this.checked_img_url = domainFn(this.checked_img_url)
+        this.uncheck_img_url = domainFn(this.uncheck_img_url)
 		this.getFavouritePro();
 	},
 
     data(){
         return {
+            checked_img_url:'/static/client/checked.png',
+            uncheck_img_url:'/static/client/uncheck.png',
             // checked: false,
 			checked: [],
 			Users_ID: 'wkbq6nc2kc',
@@ -103,6 +110,7 @@ export default {
 
 	},
     methods: {
+
 		//跳转详情
 		goDetail(item){
 			    uni.navigateTo({

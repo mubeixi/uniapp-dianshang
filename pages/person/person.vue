@@ -152,6 +152,17 @@
 				<image :src="'/static/client/person/right.png'|domain" class="right"></image>
 			</view>
 
+
+			<view class="setting cell" @click="goNew" v-if="Stores_ID">
+				<image :src="'/static/client/person/she.png'|domain" class="left"></image>
+				<view class="pintuan">进货渠道</view>
+				<image :src="'/static/client/person/right.png'|domain" class="right"></image>
+			</view>
+			<view class="setting cell" @click="goStock" v-if="Stores_ID">
+				<image :src="'/static/client/person/she.png'|domain" class="left"></image>
+				<view class="pintuan">进货</view>
+				<image :src="'/static/client/person/right.png'|domain" class="right"></image>
+			</view>
 			<view class="setting cell" @click="goSetting">
 				<image :src="'/static/client/person/she.png'|domain" class="left"></image>
 				<view class="pintuan">
@@ -159,16 +170,7 @@
 				</view>
 				<image :src="'/static/client/person/right.png'|domain" class="right"></image>
 			</view>
-			<view class="setting cell" @click="goNew">
-				<image :src="'/static/client/person/she.png'|domain" class="left"></image>
-				<view class="pintuan">进货渠道</view>	
-				<image :src="'/static/client/person/right.png'|domain" class="right"></image>
-			</view>
-			<view class="setting cell" @click="goStock">
-				<image :src="'/static/client/person/she.png'|domain" class="left"></image>
-				<view class="pintuan">进货</view>	
-				<image :src="'/static/client/person/right.png'|domain" class="right"></image>
-			</view>
+
 		</view>
 		<view style="height: 118rpx;"></view>
 
@@ -181,7 +183,7 @@
 
 <script>
 	import {pageMixin} from "../../common/mixin";
-	import {mapGetters,mapActions} from 'vuex';
+	import {mapGetters,mapActions, mapState} from 'vuex';
 	import { judgeSignin,signin,getOrderNum,get_user_info} from "../../common/fetch.js"
 	export default {
 		mixins:[pageMixin],
@@ -197,6 +199,7 @@
 		},
 		computed:{
 			...mapGetters(['userInfo']),
+			...mapState(['Stores_ID'])
 		},
 		onLoad(){
 
@@ -252,12 +255,12 @@
 			...mapActions(['setUserInfo']),
 			goStock(){
 				uni.navigateTo({
-					url: '../stock/stock'
+					url: '../procurement/stock'
 				})
 			},
 			goNew(){
 				uni.navigateTo({
-					url: '../storeSettled/storeSettled'
+					url: '../procurement/storeSettled'
 				})
 			},
 			userLevelText(){

@@ -184,9 +184,11 @@
 				})
 			},
 			goLogin(){
-				uni.navigateTo({
-					url:'../login/login'
-				})
+				//直接跳转取登录
+				this.$fun.checkIsLogin(1)
+				// uni.navigateTo({
+				// 	url:'../login/login'
+				// })
 			},
 			goMsg(){
 				uni.navigateTo({

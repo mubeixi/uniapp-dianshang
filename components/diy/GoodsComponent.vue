@@ -406,5 +406,4 @@
 
     @import "goods.less";
 
-
 </style>

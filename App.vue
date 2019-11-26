@@ -81,6 +81,7 @@
                 Push.pushListener();
             }
 
+            Push.cancelPushClear()
 			// #endif
 
 
@@ -176,6 +177,8 @@ ul,li{
 .font12{font-size:12px}
 .font14{font-size : 14px}
 .font16{font-size : 16px}
+.font18{font-size : 18px}
+.font20{font-size : 20px}
 .font24{font-size : 24px}
 .font36{font-size : 24px}
 
@@ -194,6 +197,7 @@ ul,li{
 .flex{display : flex}
 .flex1{flex : 1}
 .flex-between{justify-content: space-between}
+.flex-vertical-center{align-items: center}
 
 .padding4-c{padding :0  4px}
 
@@ -219,5 +223,12 @@ ul,li{
 }
 
 
+
+
 /*每个页面公共css */
+</style>
+<style lang="scss">
+.danger-color{
+    color: $wzw-primary-color;
+}
 </style>
