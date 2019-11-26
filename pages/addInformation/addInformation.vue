@@ -124,27 +124,28 @@
 	import area from '../../common/area.js';
 	import utils from '../../common/util.js';
 	import {getTown,agentApply} from '../../common/fetch.js';
+	import {fun} from "../../common";
 	export default {
 		mixins:[pageMixin],
 		data() {
 			return {
 				isNext:false,
 				items:[
-					{
-						name:'省级',
-						value:'pro'
-					},{
-						name:'市级',
-						value:'cit'
-					},
-					{
-						name:'县/区',
-						value:'cou'
-					},
-					{
-						name:'镇',
-						value:'tow'
-					}
+					// {
+					// 	name:'省级',
+					// 	value:'pro'
+					// },{
+					// 	name:'市级',
+					// 	value:'cit'
+					// },
+					// {
+					// 	name:'县/区',
+					// 	value:'cou'
+					// },
+					// {
+					// 	name:'镇',
+					// 	value:'tow'
+					// }
 				],
 				isLast:false,
 				objectMultiArray: [],   //展示数据
@@ -168,7 +169,32 @@
 		onShow(){
 
 		},
-		onLoad() {
+		onLoad(options) {
+			this.items=[];
+			if(options.pro==1){
+				this.items.push({
+					name:'省级',
+					value:'pro'
+				})
+			}
+			if(options.cit==1){
+				this.items.push({
+					name:'市级',
+					value:'cit'
+				})
+			}
+			if(options.cou==1){
+				this.items.push({
+					name:'县/区',
+					value:'cou'
+				})
+			}
+			if(options.tow==1){
+				this.items.push({
+					name:'镇',
+					value:'tow'
+				})
+			}
 
 		},
 		methods:{
@@ -239,6 +265,11 @@
 							uni.showToast({
 								title:res.msg
 							})
+							setTimeout(function () {
+								uni.navigateTo({
+									url:'../region/region'
+								})
+							},1000)
 						},err=>{
 							this.isAgr=false;
 						}).catch(e=>{
