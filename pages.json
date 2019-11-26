@@ -536,13 +536,13 @@
 							"navigationBarTitleText": "选择渠道"
 						}
         },{
-				    "path" : "pages/storeSettled/storeSettled",
+				    "path" : "pages/procurement/storeSettled",
 				    "style" : {
 							"navigationBarTitleText": "门店入驻"
 						}
 				}
         ,{
-            "path" : "pages/stock/stock",
+            "path" : "pages/procurement/stock",
             "style" : {
 							"navigationBarTitleText": "进货"
 						}

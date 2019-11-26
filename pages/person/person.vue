@@ -252,12 +252,12 @@
 			...mapActions(['setUserInfo']),
 			goStock(){
 				uni.navigateTo({
-					url: '../stock/stock'
+					url: '../procurement/stock'
 				})
 			},
 			goNew(){
 				uni.navigateTo({
-					url: '../storeSettled/storeSettled'
+					url: '../procurement/storeSettled'
 				})
 			},
 			userLevelText(){
