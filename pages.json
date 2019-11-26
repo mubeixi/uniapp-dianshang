@@ -546,6 +546,18 @@
 							"navigationBarTitleText": "进货"
 						}
         }
+        ,{
+            "path" : "pages/regionPay/regionPay",
+            "style" : {
+            	"navigationBarTitleText": "区域代理支付"
+            }
+        }
+        ,{
+            "path" : "pages/gudongPay/gudongPay",
+            "style" : {
+            	"navigationBarTitleText": "股东支付"
+            }
+        }
     ],
 
 	"globalStyle": {

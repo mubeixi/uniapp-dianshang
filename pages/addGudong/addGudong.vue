@@ -26,6 +26,7 @@
 <script>
 	import {pageMixin} from "../../common/mixin";
 	import {shaApply} from '../../common/fetch.js'
+	import {fun} from "../../common";
 	export default {
 		mixins:[pageMixin],
 		data() {
@@ -64,6 +65,11 @@
 						title:res.msg,
 						icon:'none'
 					})
+					setTimeout(function () {
+						uni.navigateTo({
+							url:'../gudong/gudong'
+						})
+					},1000)
 				},err=>{}).catch(e=>{
 					console.log(e)
 				})

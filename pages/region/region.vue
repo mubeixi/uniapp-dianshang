@@ -10,10 +10,15 @@
 				</view>
 				<view class="bottoms" v-if="pro.agent_identity">
 					<image class="image" :src="'/static/client/fenxiao/vip.png'|domain"></image>
-					{{pro.agent_identity}}
+					<template v-for="(item,index) of  pro.agent_identity">
+						<span style="margin-right: 4px">{{item.area_name}}</span>
+					</template>
 				</view>
 			</view>
-			<view  v-if="pro.agent_rate.Agentenable==1&&(pro.agent_rate.tow.is_apply||pro.agent_rate.pro.is_apply||pro.agent_rate.cit.is_apply||pro.agent_rate.cou.is_apply)" class="juewei" @click="goAddInfo">
+			<view  v-if="pro.waiting_pay_apply.Order_ID" @click="goPay(pro.waiting_pay_apply.Order_ID)" class="juewei">
+				立即支付
+			</view>
+			<view  v-else-if="pro.agent_rate.Agentenable==1&&(pro.agent_rate.tow.is_apply||pro.agent_rate.pro.is_apply||pro.agent_rate.cit.is_apply||pro.agent_rate.cou.is_apply)" class="juewei" @click="goAddInfo">
 				立即申请
 			</view>
 			<view  v-else class="juewei">
@@ -124,7 +129,9 @@
 		mixins:[pageMixin],
 		data() {
 			return {
-				pro:[],
+				pro:{
+					waiting_pay_apply:{}
+				},
 			};
 		},
 		components:{
@@ -134,6 +141,11 @@
 			this.agentInfo();
 		},
 		methods:{
+			goPay(id){
+				uni.navigateTo({
+					url:'../regionPay/regionPay?id='+id
+				})
+			},
 			goFinance(){
 				uni.navigateTo({
 					url:'../finance/finance?index=3'
@@ -149,8 +161,22 @@
 				})
 			},
 			goAddInfo(){
+				let pro=0,cit=0,cou=0,tow=0
+				if(this.pro.agent_rate.pro.is_apply){
+					pro=1
+				}
+				if(this.pro.agent_rate.cit.is_apply){
+					cit=1
+				}
+				if(this.pro.agent_rate.cou.is_apply){
+					cou=1
+				}
+				if(this.pro.agent_rate.tow.is_apply){
+					tow=1
+				}
+
 				uni.navigateTo({
-					url:'../addInformation/addInformation'
+					url:'../addInformation/addInformation?pro='+pro+'&cit='+cit+'&cou='+cou+'&tow='+tow
 				})
 			}
 		}
