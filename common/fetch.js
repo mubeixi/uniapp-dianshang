@@ -387,6 +387,11 @@ export const upUserLog = (data, options) => {
   return fetch('write_user_log', data, options)
 }
 
+
+
+//获取批发的订单
+export const getStorePurchaseSales = (data, options) => fetch('get_store_pifa_assign_order', data, options);
+
 //进货单相关处理
 export const getStorePurchaseApply = (data, options) => fetch('get_store_pifa_apply_order', data, options);
 

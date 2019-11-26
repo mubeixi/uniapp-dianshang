@@ -559,6 +559,12 @@
     {
       "path": "pages/procurement/storeApply",
       "style": {
+        "navigationBarTitleText": "进货订单"
+      }
+    },
+    {
+      "path": "pages/procurement/storeWholesale",
+      "style": {
         "navigationBarTitleText": "批发订单"
       }
     }
