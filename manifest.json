@@ -1,5 +1,5 @@
 {
-    "name" : "网中网商城",
+    "name" : "新零售",
     "appid" : "__UNI__E5E1B20",
     "description" : "网中网商城",
     "versionName" : "1.0.0",
@@ -161,8 +161,8 @@
             "mode" : "history",
             "base" : "fre"
         },
-        "async": {
-            "timeout": 10000 //避免容易出现网络不给力的情况，默认3秒
+        "async" : {
+            "timeout" : 10000 //避免容易出现网络不给力的情况，默认3秒
         },
         "publicPath" : "/fre/",
         "devServer" : {
