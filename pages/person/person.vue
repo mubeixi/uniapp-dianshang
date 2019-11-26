@@ -159,12 +159,12 @@
 				</view>
 				<image :src="'/static/client/person/right.png'|domain" class="right"></image>
 			</view>
-			<view class="setting cell" @click="goNew" v-if="userInfo.bind_stores.Stores_ID && userInfo.bind_stores.Stores_ID > 0">
+			<view class="setting cell" @click="goNew" v-if="Stores_ID">
 				<image :src="'/static/client/person/she.png'|domain" class="left"></image>
 				<view class="pintuan">进货渠道</view>
 				<image :src="'/static/client/person/right.png'|domain" class="right"></image>
 			</view>
-			<view class="setting cell" @click="goStock" v-if="userInfo.bind_stores.Stores_ID && userInfo.bind_stores.Stores_ID > 0">
+			<view class="setting cell" @click="goStock" v-if="Stores_ID">
 				<image :src="'/static/client/person/she.png'|domain" class="left"></image>
 				<view class="pintuan">进货</view>
 				<image :src="'/static/client/person/right.png'|domain" class="right"></image>
@@ -181,7 +181,7 @@
 
 <script>
 	import {pageMixin} from "../../common/mixin";
-	import {mapGetters,mapActions} from 'vuex';
+	import {mapGetters,mapActions, mapState} from 'vuex';
 	import { judgeSignin,signin,getOrderNum,get_user_info} from "../../common/fetch.js"
 	export default {
 		mixins:[pageMixin],
@@ -197,6 +197,7 @@
 		},
 		computed:{
 			...mapGetters(['userInfo']),
+			...mapState(['Stores_ID'])
 		},
 		onLoad(){
 
