@@ -123,7 +123,7 @@
 
 <script>
 import popupLayer from '../../components/popup-layer/popup-layer.vue';
-import {uploadImage,getRefund,orderRefund} from '../../common/fetch.js'
+import {uploadImage,getRefund,orderRefund,GET_ENV,get_Users_ID,get_User_ID,createToken} from '../../common/fetch.js'
 import {pageMixin} from "../../common/mixin";
 import {uploadImages,ls} from '../../common/tool.js'
 
@@ -245,13 +245,19 @@ export default {
 			this.imgs.splice(index, 1);
 		},
 		addImg(){
-			let data={
-				'Users_ID': ls.get('users_id'),
-				'timestamp':'1502263578',
-				'sign':'DA1525TR85D6S5A9E5236FDSWD52F147WA',
-				'sortToken':1,
-				'act':'upload_image'
-			};
+			// let data={
+			// 	'Users_ID': ls.get('users_id'),
+			// 	'timestamp':'1502263578',
+			// 	'sign':'DA1525TR85D6S5A9E5236FDSWD52F147WA',
+			// 	'sortToken':1,
+			// 	'act':'upload_image'
+			// };
+			let param = {act:'upload_image'};
+			param.User_ID = get_User_ID();
+			param.Users_ID = get_Users_ID();
+			param.env = GET_ENV();
+
+			let data = createToken(param);
 			let that=this;
 			uni.chooseImage({
 				count:1,
