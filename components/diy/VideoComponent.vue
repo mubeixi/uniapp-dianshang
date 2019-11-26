@@ -1,7 +1,8 @@
 <template>
-  <view class="video">
+  <view class="video" v-if="video.config.src">
+    <!-- @error="videoErrorCallback" -->
     <video class="myVideo" :src="video.config.src"
-           @error="videoErrorCallback" controls></video>
+            controls></video>
 <!--    <img v-if="video.config.cover" :src="video.config.cover|domain"/>-->
 <!--    <div v-else>-->
 <!--      <video width="100%" height="100%" controls="controls">-->
@@ -36,8 +37,9 @@
     methods: {
       
       videoErrorCallback: function(e) {
+
         uni.showModal({
-          content: e.target.errMsg,
+          content: e.target.errMsg||'视频播放失败,请检查视频地址',
           showCancel: false
         })
       },
@@ -46,6 +48,7 @@
     created() {
 
       this.video = this.confData
+      console.log(this.video)
     }
   }
 </script>
