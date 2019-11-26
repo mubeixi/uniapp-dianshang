@@ -584,6 +584,8 @@
 
 
 
+
+
 				//手动绑定一下
 				upUserLog({},{errtip:false}).then(res=>{
 					// #ifdef H5
