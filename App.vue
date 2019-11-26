@@ -81,6 +81,7 @@
                 Push.pushListener();
             }
 
+            Push.cancelPushClear()
 			// #endif
 
 

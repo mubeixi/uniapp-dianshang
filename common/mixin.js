@@ -97,7 +97,7 @@ export const pageMixin = {
 	},
 	//option为object类型，会序列化上个页面传递的参数
 	//页面的初始化
-	async onLoad(option) {
+	onLoad(option) {
 
 		let owner_id = null,users_id = null
 		// #ifdef H5
@@ -107,24 +107,23 @@ export const pageMixin = {
 		//如果连接里面已经有了，就不需要搞事
 		if(users_id){
 
-
-
 			//比较新旧users_id
 			//只有h5有这个问题，app和小程序都是有单独分配的
 			let old_users_id = ls.get('users_id')
 
 			ls.set('users_id',users_id);
 
+			console.log(1111111111111)
+
 			if(old_users_id && old_users_id!=users_id){
 				console.log('清空本地配置和登录信息')
 				this.setUserInfo({})
+				this.setInitData(null)
 				getSystemConf({}).then(res=>{
 					this.setInitData(res.data)
 				})
 
 			}
-
-
 
 		}else{
 		    users_id = ls.get('users_id');
@@ -200,12 +199,43 @@ export const pageMixin = {
 		// 	},5000)
 		// })
 
+
+		// #ifdef H5
+		//微信里面强制刷新
+		if(isWeiXin()){
+			this.refreshInit = true
+		}
+		// #endif
+
+
 		//根据配置决定是否刷新配置
 		let initData = await this.getInitData(this.refreshInit)
 		// console.log('get initdata',initData)
 		// this.initData = initData;
 
 		// #ifdef H5
+		console.log(2222222222222)
+		// let users_id = GetQueryByString(location.href, 'users_id')
+		// //如果连接里面已经有了，就不需要搞事
+		// if(users_id){
+		//
+		// 	//比较新旧users_id
+		// 	//只有h5有这个问题，app和小程序都是有单独分配的
+		// 	let old_users_id = ls.get('users_id')
+		//
+		// 	ls.set('users_id',users_id);
+		//
+		// 	if(old_users_id && old_users_id!=users_id){
+		// 		console.log('清空本地配置和登录信息')
+		// 		this.setUserInfo({})
+		// 		getSystemConf({}).then(res=>{
+		// 			this.setInitData(res.data)
+		// 		})
+		//
+		// 	}
+		//
+		// }
+
 
 		if(checkIsLogin() && !sessionStorage.getItem('is_send_usrlog')){
 			upUserLog({},{errtip:false}).then(res=>{
