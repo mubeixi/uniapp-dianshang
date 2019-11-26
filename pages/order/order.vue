@@ -98,6 +98,7 @@ export default {
     },
 	onShow(){
 		// 放在onshow中防止详情页支付完成跳转过来，订单状态未改变
+		this.data = [];
 		this._getOrder();
 		this.getOrderNum();
 	},

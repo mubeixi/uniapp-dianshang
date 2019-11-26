@@ -205,13 +205,13 @@
 				  });
 				  return false;
 				}
-				if (!this.address_info.Address_Town) {
-				      uni.showToast({
-				        title: '请选择街道',
-				        icon: 'none'
-				      });
-				      return false;
-				}
+				// if (!this.address_info.Address_Town) {
+				//       uni.showToast({
+				//         title: '请选择街道',
+				//         icon: 'none'
+				//       });
+				//       return false;
+				// }
 				if (!address_info.Address_Detailed) {
 				  uni.showToast({
 					title: '请填写详细的地址',
