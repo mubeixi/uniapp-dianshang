@@ -54,7 +54,7 @@
 				<radio-group @change="radioChange" class="myRadio">
 						<view v-for="(item, index) in items" :key="item.value" class="myRadioQ">
 							<view>
-								<radio class="radio" :value="item.value" :checked="index === current" />
+								<radio class="radio" :value="item.value" :checked="index === currents" />
 							</view>
 							<view class="mbx">{{item.name}}</view>
 						</view>
@@ -156,6 +156,7 @@
 				change_multiIndex: [0, 0, 0], //改变的收货地址对应列的下标
 				address_info:{},
 				current:0,
+				currents:0,
 				// 街道信息
 				t_arr: [],
 				t_index: 0,
@@ -293,6 +294,19 @@
 					this.isNext=true;
 					this.multiIndex=[0, 0, 0];
 					this.change_multiIndex=[0, 0, 0];
+					if(this.items[this.currents].value=='pro'){
+						this.current=0
+					}
+					if(this.items[this.currents].value=='cit'){
+						this.current=1
+					}
+					if(this.items[this.currents].value=='cou'){
+						this.current=2
+					}
+					if(this.items[this.currents].value=='tow'){
+						this.current=3
+					}
+
 					if(this.current==3){
 						this.objectMultiArray = [
 						  utils.array_change(area.area[0]['0']),
@@ -428,7 +442,7 @@
 			radioChange: function(evt) {
 				for (let i = 0; i < this.items.length; i++) {
 					if (this.items[i].value === evt.target.value) {
-						this.current = i;
+						this.currents = i;
 						break;
 					}
 				}
