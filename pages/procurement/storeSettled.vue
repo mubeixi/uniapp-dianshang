@@ -9,19 +9,19 @@
         <view class="item">
             <view class="item-left">联系电话</view>
             <view class="item-input">
-                <input type="text" v-model="store_mobile" placeholder="请输入联系电话" placeholder-style="color:#CAC8C8"/>
+                <input type="text" v-model="store_mobile" maxlength="11" placeholder="请输入联系电话" placeholder-style="color:#CAC8C8"/>
             </view>
         </view>
         <view class="item">
             <view class="item-left">门店地址</view>
-            <picker mode="multiSelector"  @change="bindMultiPickerChange" @columnchange="bindMultiPickerColumnChange" :value="change_multiIndex" :range="change_objectMultiArray" range-key="name">
+            <picker class="pick" mode="multiSelector"  @change="bindMultiPickerChange" @columnchange="bindMultiPickerColumnChange" :value="change_multiIndex" :range="change_objectMultiArray" range-key="name">
                 <view class="picker">
                     <view class="view" v-if="!address_info.Address_Province">选择省份</view>
-                    <view class="view"  v-else>{{objectMultiArray[0][multiIndex[0]]['name']}}</view>
+                    <view class="view choosed"  v-else>{{objectMultiArray[0][multiIndex[0]]['name']}}</view>
                     <view class="view"  v-if="!address_info.Address_City">选择城市</view>
-                    <view class="view"  v-else>{{objectMultiArray[1][multiIndex[1]]['name']}}</view>
+                    <view class="view choosed"  v-else>{{objectMultiArray[1][multiIndex[1]]['name']}}</view>
                     <view class="view"  v-if="!address_info.Address_Area">选择地区</view>
-                    <view class="view"  v-else>{{objectMultiArray[2][multiIndex[2]]['name']}}</view>
+                    <view class="view choosed"  v-else>{{objectMultiArray[2][multiIndex[2]]['name']}}</view>
                     <image :src="'/static/client/person/right.png'|domain" class="right"></image>
                 </view>
             </picker>
@@ -45,7 +45,7 @@
                     <image class="image" :src="item"  @click="yulan(index)"></image>
                     <image :src="'/static/client/delimg.png'|domain" class="del image" @click="delImg(index)"></image>
                 </view>
-                <view class="shangchuan" @click="addImg">
+                <view class="shangchuan" @click="addImg" v-if="arr.length == 0">
                     <view class="heng"></view>
                     <view class="shu"></view>
                 </view>
@@ -110,15 +110,41 @@
         methods: {
             // 入驻
             settled: function(){
+							this.store_province = this.address_info.Address_Province;
+							this.store_city = this.address_info.Address_City;
+							this.store_area = this.address_info.Address_Area;
+							if((this.store_name && this.store_mobile && this.store_address && this.store_province && this.store_city && this.store_area ) == '') {
+								uni.showToast({
+									title: '请完善资料再次提交',
+									icon: 'none'
+								});
+								return;
+							}
+							if(this.arr.length == 0) {
+								uni.showToast({
+									title: '请上传门店图片',
+									icon: 'none'
+								});
+								return;
+							}
+							this.store_image = this.arr[0][0];
                 userStoreApply({
                     store_name: this.store_name,
                     store_mobile: this.store_mobile,
                     store_address: this.store_address,
-                    store_image: this.arr[0][0],
+                    store_image: this.store_image,
                     store_province: this.store_province,
                     store_city: this.store_city,
                     store_area: this.store_area
-                })
+                }).then(res=>{
+									uni.showToast({
+										title: res.msg
+									})
+								}).catch(err=>{
+									uni.showToast({
+										title: res.msg
+									})
+								})
             },
             //处理省市区联动信息
             addressChange: function (columnValue) {
@@ -228,7 +254,7 @@
 
                     },
                     fail(e) {
-                        console.log(e);
+                     
                     }
                 })
             },
@@ -268,7 +294,7 @@
             width: 18rpx;
             height: 27rpx;
         }
-        picker {
+        .pick {
             flex: 1;
         }
         .picker {
@@ -278,6 +304,9 @@
             color: #CAC8C8;
             margin-left: 28rpx;
             justify-content: space-between;
+						.choosed {
+							color: #333;
+						}
         }
     }
     .addImg {

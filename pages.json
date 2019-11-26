@@ -3,6 +3,7 @@
 		{
 			"path": "pages/index/index",
 			"style": {
+				"navigationBarTitleText": "电商",
 				"enablePullDownRefresh":true,
                 "scrollIndicator" : "none", // 不显示滚动条
 				"app-plus": {
@@ -544,8 +545,8 @@
         ,{
             "path" : "pages/procurement/stock",
             "style" : {
-							"navigationBarTitleText": "进货"
-						}
+              "navigationBarTitleText": "进货"
+            }
         }
     ],
 
