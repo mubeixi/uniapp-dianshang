@@ -7,13 +7,17 @@ export const SET_PAY_TEMP_OBJ = function (state, value) {
 
 // export const SET_STORES_ID = function (state, value) {
 //   state.Stores_ID = value;
-// };
-
+//
 
 export const SET_USER_INFO = function (state, value) {
+
   state.userInfo = value
-  if(value.bind_stores){
+
+  if(value && value.bind_stores && value.bind_stores.Stores_ID){
     state.Stores_ID = value.bind_stores.Stores_ID
+    ls.set('Stores_ID',state.Stores_ID)
+  }else{
+    ls.set('Stores_ID',null,1)
   }
   ls.set('userInfo',value);
   //要覆盖，不然有时候user_id删不掉
