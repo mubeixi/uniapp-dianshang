@@ -3,13 +3,13 @@
 		<view class="item">
 			<view class="item-left">门店名称</view>
 			<view class="item-input">
-				<input type="text" value="" placeholder="请输入门店名称" placeholder-style="color:#CAC8C8"/>
+				<input type="text" v-model="store_name" placeholder="请输入门店名称" placeholder-style="color:#CAC8C8"/>
 			</view>
 		</view>
 		<view class="item">
 			<view class="item-left">联系电话</view>
 			<view class="item-input">
-				<input type="text" value="" placeholder="请输入联系电话" placeholder-style="color:#CAC8C8"/>
+				<input type="text" v-model="store_mobile" placeholder="请输入联系电话" placeholder-style="color:#CAC8C8"/>
 			</view>
 		</view>
 		<view class="item">
@@ -35,7 +35,7 @@
 		<view class="item">
 			<view class="item-left">详细地址</view>
 			<view class="item-input">
-				<input type="text" value="" placeholder="请输入详细地址" placeholder-style="color:#CAC8C8"/>
+				<input type="text" v-model="store_address" placeholder="请输入详细地址" placeholder-style="color:#CAC8C8"/>
 			</view>
 		</view>
 		<view class="addImg">
@@ -51,7 +51,7 @@
 					</view>
 				</view>
 		</view>
-		
+		<view class="submit">立即入驻</view>
 	</view>
 </template>
 
@@ -60,6 +60,7 @@
 	import utils from '../../common/util.js';
 	import {uploadImage,comment,GET_ENV,get_Users_ID,get_User_ID,createToken} from '../../common/fetch.js'
 	import {uploadImages,ls} from '../../common/tool.js'
+	import {userStoreApply} from '../../common/fetch.js'
 	export default {
 		data() {
 			return {
@@ -68,7 +69,7 @@
 				//用于收货地址展示用
 				objectMultiArray: [],   //展示数据
 				multiIndex: [0, 0, 0],  //选择数据
-		
+
 				//用于收货地址选择用
 				change_objectMultiArray: [],  //选择数据
 				change_multiIndex: [0, 0, 0], //改变的收货地址对应列的下标
@@ -85,6 +86,10 @@
 				  Address_Detailed: '',
 				  Address_Is_Default: 0  //是否为默认地址
 				},
+				store_name: '',
+				store_mobile: '',
+				store_address: '',
+				store_image: ''
 			}
 		},
 		onLoad: function(){
@@ -159,7 +164,7 @@
 					var column = e.detail.column;  //修改的列
 					var index = e.detail.value;    //选择列的下标（从0开始）
 					var change_multiIndex = 'change_multiIndex[' + column + ']';
-			
+
 					var columnValue = [
 						column == 0 ? index : this.change_multiIndex[0],
 						column == 0 ? 0 : (column == 1 ? index : this.change_multiIndex[1]),
@@ -185,7 +190,7 @@
 				param.User_ID = get_User_ID();
 				param.Users_ID = get_Users_ID();
 				param.env = GET_ENV();
-			
+
 				let data = createToken(param);
 				let that=this;
 				uni.chooseImage({
@@ -205,7 +210,7 @@
 							//是否可以提交
 							that.isSubmit=true;
 						}
-			
+
 					},
 					fail(e) {
 						console.log(e);
@@ -312,7 +317,18 @@
 			position: absolute;
 			top: 35rpx;
 			left: 72rpx;
-	
+
 		}
+	}
+	.submit {
+		position: fixed;
+		bottom: 0;
+		width: 100%;
+		height: 65rpx;
+		line-height: 65rpx;
+		text-align: center;
+		color: #fff;
+		background-color: #f43131;
+		border-radius: 10rpx;
 	}
 </style>

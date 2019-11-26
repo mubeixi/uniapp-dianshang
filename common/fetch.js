@@ -377,8 +377,10 @@ export const bindUserClientId = (data, options) => fetch('user_uuid_set', data, 
 export const confirmOrderPayStatus = (data, options) => fetch('judge_ispay', data, options);
 
 //秒杀列表
-export const getFlashSaleList = (data, options) => fetch('get_flashsale', data, options)
+export const getFlashSaleList = (data, options) => fetch('get_flashsale', data, options);
 
+//门店入驻申请
+export const userStoreApply = (data, options) => fetch('user_store_apply', data, options);
 //写入用户日志
 export const upUserLog = (data, options) => {
   console.log('上报用户信息',data,options)

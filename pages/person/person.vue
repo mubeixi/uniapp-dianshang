@@ -159,14 +159,14 @@
 				</view>
 				<image :src="'/static/client/person/right.png'|domain" class="right"></image>
 			</view>
-			<view class="setting cell" @click="goNew">
+			<view class="setting cell" @click="goNew" v-if="userInfo.bind_stores.Stores_ID && userInfo.bind_stores.Stores_ID > 0">
 				<image :src="'/static/client/person/she.png'|domain" class="left"></image>
-				<view class="pintuan">进货渠道</view>	
+				<view class="pintuan">进货渠道</view>
 				<image :src="'/static/client/person/right.png'|domain" class="right"></image>
 			</view>
-			<view class="setting cell" @click="goStock">
+			<view class="setting cell" @click="goStock" v-if="userInfo.bind_stores.Stores_ID && userInfo.bind_stores.Stores_ID > 0">
 				<image :src="'/static/client/person/she.png'|domain" class="left"></image>
-				<view class="pintuan">进货</view>	
+				<view class="pintuan">进货</view>
 				<image :src="'/static/client/person/right.png'|domain" class="right"></image>
 			</view>
 		</view>
