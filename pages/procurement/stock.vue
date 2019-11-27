@@ -31,7 +31,7 @@
                 <view class="pro-count">月销{{item.Products_Sales}}</view>
             </view>
         </view>
-        <view style="height:90rpx;">
+        <view style="height:90rpx;" v-if="total_cart_count > 0">
             <view class="check" :style="{'z-index': zIndex}">
                 <view class="check-msg" @click="showSelected">已选取<text class="num">{{total_cart_count}}</text>/{{total_pro_count}}个普通商品 <image class="img" :class="isClicked?'turn':''" src="/static/top.png"></image></view>
                 <view class="submit">提交进货单</view>
@@ -46,7 +46,7 @@
                 <view class="skulist" v-for="item in prosku.skujosn_new">
                     <view class="sku-name">{{item.sku}}</view>
                     <view class="sku-item">
-                        <view class="sku" :class="check_attr[item.sku]==index?'active':''" @click="selectAttr(index,item.sku)"  v-for="(attr,index) of item.val">{{attr}}</view>
+                        <view :class="[check_attr[item.sku]==index?'active':'','sku']" @click="selectAttr(index,item.sku)"  v-for="(attr,index) of item.val">{{attr}}</view>
                     </view>
                 </view>
                 <view class="skulist">
@@ -69,15 +69,15 @@
             <view class="sku-content">
                 <view class="skulist">
                     <view class="sku-name">门店名称：</view>
-                    <view class="sku-item">硅谷广场店</view>
+                    <view class="sku-item">{{storeInfo.Stores_Name}}</view>
                 </view>
                 <view class="skulist">
                     <view class="sku-name">门店电话：</view>
-                    <view class="sku-item">0371-8888888</view>
+                    <view class="sku-item">{{storeInfo.mobile}}</view>
                 </view>
                 <view class="skulist">
                     <view class="sku-name">门店地址：</view>
-                    <view class="sku-item" style="flex:1;">郑州市金水区文化路东风路硅谷广场一楼<image class="img" src="/static/local.png"></image></view>
+                    <view class="sku-item" style="flex:1;">{{storeInfo.Stores_Province_name}}{{}}<image class="img" src="/static/local.png"></image></view>
                 </view>
                 <view class="skulist">
                     <view class="sku-name">门店距离：</view>
@@ -97,7 +97,7 @@
                             <view class="proMsg">
                                 <view class="proName">
                                     <view class="name">{{attr.ProductsName}}</view>
-                                    <image class="del"  @click="del(pro_id,attr)" src="/static/del.png"></image>
+                                    <image class="del"  @click="del(pro_id,attr_id)" src="/static/del.png"></image>
                                 </view>
                                 <view class="attrInfo">
                                     <view>{{attr.Productsattrstrval}}</view>
@@ -122,7 +122,7 @@
 
 <script>
     import popupLayer from '../../components/popup-layer/popup-layer.vue'
-    import {getPifaStoreProd, updateCart,getCart,delCart} from '../../common/fetch'
+    import {getPifaStoreProd, updateCart,getCart,delCart,getStoreList} from '../../common/fetch'
     import {mapGetters} from 'vuex'
     import {numberSort} from '../../common/tool'
     export default {
@@ -151,6 +151,7 @@
                 cartList: '',
                 total_pro_count: '', // 总共的产品数
                 total_cart_count: '', // 购物车中的产品数
+								storeInfo: '' , // 门店信息
             }
         },
         components: {
@@ -172,12 +173,7 @@
         },
         methods: {
             //  删除购物车中的产品
-            del(pro_id,attr){
-                let attr_id = '';
-                // {"1":["1","5"],"2":[]}
-                if(attr.Productsattrkeystrval) {
-                    attr_id = attr.Productsattrkeystrval.Attr_ID + ''
-                };
+            del(pro_id,attr_id){
                 let obj = {}
                 obj = {
                     [pro_id]: [attr_id]
@@ -201,6 +197,10 @@
                     console.log(res)
                     this.cartList = res.data.CartList;
                     this.total_cart_count = res.data.total_count;
+										if(this.total_cart_count == 0) {
+											this.isClicked = false;
+											this.$refs.detail.close();
+										}
                 })
             },
             // 选择属性
@@ -252,7 +252,6 @@
                 this.check_attr = check_attr;
                 this.check_attrid_arr = check_attrid_arr;
                 this.submit_flag = (!this.check_attr || Object.getOwnPropertyNames(this.check_attr).length != Object.getOwnPropertyNames(this.prosku.skujosn).length) ? false : true;
-
             },
             // 搜索
             search(){
@@ -275,12 +274,24 @@
             },
             methodHandle(type){
               this.type = type;
+							if(this.type == 1) {
+								// 进货记录
+							}else {
+								// 门店信息
+								getStoreList({
+									stores_id: this.Stores_ID
+								}).then(res=>{
+									this.storeInfo = res.data[0]
+								})
+								this.methodHandle = true;
+							}
             },
             handClicked(){
                 this.isClicked = false;
                 this.zIndex = 100;
             },
             showSelected(){
+								if(this.total_cart_count == 0) return;
                 if(!this.isClicked) {
                     this.zIndex = 9999999;
                     this.$refs.detail.show();
@@ -364,6 +375,7 @@
                     });
                     this.isHidden = true;
                     this.showSku = false;
+										this.get_cart();
                     return;
                 })
             }
