@@ -16,7 +16,7 @@
                     <div class="head">
                         <div class="status flex flex-between ">
                             <div class="order-no">订单号: {{apply.Order_ID}}</div>
-                            <image class="icon-delete"  @click="delApply(apply,idx1)" v-if="inArray(apply.Order_Status,[21,23,25])" src="/static/store/icon-del.png"></image>
+<!--                            <image class="icon-delete"  @click="delApply(apply,idx1)" v-if="inArray(apply.Order_Status,[21,23,25])" src="/static/store/icon-del.png"></image>-->
                         </div>
                         <div class="info flex flex-between">
                             <div class="flex1 flex store-info">

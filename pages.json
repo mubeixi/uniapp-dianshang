@@ -113,6 +113,24 @@
       }
     },
     {
+      "path": "pages/order/checkChannel",
+      "style": {
+        "navigationBarTitleText": "核销方式"
+      }
+    },
+    {
+      "path": "pages/order/checkByCode",
+      "style": {
+        "navigationBarTitleText": "券码核销"
+      }
+    },
+    {
+      "path": "pages/order/checkOrderInfo",
+      "style": {
+        "navigationBarTitleText": "核销"
+      }
+    },
+    {
       "path": "pages/refund/refund",
       "style": {
         "navigationBarTitleText": "申请退款"
@@ -561,7 +579,7 @@
         "navigationBarTitleText": "发货-批发订单"
       }
     },{
-      "path": "pages/regionPay/regionPay", 
+      "path": "pages/regionPay/regionPay",
       "style": {
         "navigationBarTitleText": "区域代理支付"
       }

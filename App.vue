@@ -229,6 +229,6 @@ ul,li{
 </style>
 <style lang="scss">
 .danger-color{
-    color: $wzw-primary-color;
+    color: $wzw-primary-color !important;
 }
 </style>
