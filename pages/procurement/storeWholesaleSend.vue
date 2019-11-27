@@ -1,22 +1,12 @@
 <template>
     <div class="wrap">
-        <div class="navs">
-            <div class="nav-item" :class="tabidx===0?'active':''" @click="changIndex(0)">全部</div>
-            <div class="nav-item" :class="tabidx===1?'active':''" @click="changIndex(1)">待处理</div>
-            <div class="nav-item" :class="tabidx===2?'active':''" @click="changIndex(2)">已出库</div>
-            <div class="nav-item" :class="tabidx===3?'active':''" @click="changIndex(3)">已驳回</div>
-            <div class="nav-item" :class="tabidx===4?'active':''" @click="changIndex(4)">已完成</div>
-            <div class="nav-item" :class="tabidx===5?'active':''" @click="changIndex(5)">已撤回</div>
-        </div>
-        <view class="space-box">
-        </view>
         <div class="container">
             <div class="lists">
-                <div class="item" v-for="(apply,idx1) in applys" :key="idx1">
+                <div class="item" >
                     <div class="head">
                         <div class="status flex flex-between ">
                             <div class="order-no">订单号: {{apply.Order_ID}}</div>
-                            <image class="icon-delete"  @click="delApply(apply,idx1)" v-if="inArray(apply.Order_Status,[21,23,25])" src="/static/store/icon-del.png"></image>
+<!--                            <image class="icon-delete"  @click="delApply(apply,idx1)" v-if="inArray(apply.Order_Status,[21,23,25])" src="/static/store/icon-del.png"></image>-->
                         </div>
                         <div class="info flex flex-between">
                             <div class="flex1 flex store-info">
@@ -26,7 +16,8 @@
                                     <span @click="showStore(apply.Order_Store)" class="action-item">查看信息</span>
                                 </div>
                             </div>
-                            <span class="status-text">{{apply.Order_Status_desc}}</span>
+<!--                            {{apply.Order_Status_desc}}-->
+                            <span class="status-text"></span>
                         </div>
                     </div>
                     <block v-if="apply && apply.prod_list">
@@ -47,17 +38,39 @@
                     <div class="price-box">
                         总计:<span class="danger-color">￥<span class="total_num font16">{{apply.Order_TotalPrice}}</span></span>
                     </div>
-                    <div class="actions text-center" >
-                        <block v-if="inArray(apply.Order_Status,[21])">
-                            <button size="mini" @click="openRefuseDialog(apply,idx1)" class="acion-btn" type="warn">驳回</button>
-                            <button size="mini" @click="handleApply(apply,idx1)" class="acion-btn">出库</button>
-                        </block>
-                    </div>
+
                 </div>
             </div>
 
         </div>
-
+        <div class="sendbox">
+            <div class="title"><span class="tip"></span><span class="text">发货信息</span></div>
+            <div class="row">
+                <div class="label">需要物流</div>
+                <div class="form-item" style="text-align: right">
+                    <switch checked @change="changeNeedShipping" color="#F43131" style="transform:scale(0.9)" />
+                </div>
+            </div>
+            <div class="row" v-show="is_need_shipping">
+                <div class="label">配送方式</div>
+                <div class="form-item express">
+                    <picker @change="bindPickerChange" :value="exprss_index" :range="exprss_list">
+                        <view class="uni-input">{{exprss_list[exprss_index]}}</view> <view class="funicon icon-fanhui icon" ></view>
+                    </picker>
+                </div>
+            </div>
+            <div class="row" v-show="is_need_shipping">
+                <div class="label">快递单号</div>
+                <input v-model="ShippingID" class="form-item" placeholder="请输入快递单号" />
+            </div>
+            <div class="row" v-show="is_need_shipping">
+                <div class="label">运费</div>
+                <input type="number" step="0.01" v-model="Express_Price" class="form-item" placeholder="请输入运费" />
+            </div>
+        </div>
+        <div class="subbox">
+            <button @click="subFn" class="subbtn" type="warn">立即发货</button>
+        </div>
         <wzw-dialog ref="storeInfo">
             <div class="storeInfoDialog">
                 <div class="title text-center line15 font16">门店信息</div>
@@ -75,7 +88,6 @@
                 </div>
             </div>
         </wzw-dialog>
-
         <wzw-dialog ref="refuseApply">
             <div class="refuseApplyDialog">
                 <textarea class="reason" @input="bingReasonInput" placeholder-style="color:#999" placeholder="请输入驳回原因" auto-height />
@@ -92,9 +104,9 @@
 <script>
     import {pageMixin} from "../../common/mixin";
     import {mapGetters} from "vuex";
-    import {getStorePurchaseSales,getStoreList,refuseStorePurchaseApply} from "../../common/fetch";
-    import {error} from "../../common";
-    import {findArrayIdx} from "../../common/tool";
+    import {getStorePurchaseSales,getStoreList,getShipping,sendStorePurchaseApply} from "../../common/fetch";
+    import {error, toast} from "../../common";
+    import {emptyObject, findArrayIdx} from "../../common/tool";
 
 
     export default {
@@ -102,13 +114,16 @@
         name: "storeWholesale",
         data() {
             return {
-                applys: [],
-                stores:[],
+                apply: {},
+                apply_id:'',
+                is_need_shipping:1,
+                exprss_index:0,
+                exprss_id_list:[],
+                exprss_list:[],
                 storeInfo:{},
-                tabidx:0,
-                activeApply:null,
-                order_status_arr:[null,21,22,23,24,25],
-                order_status:null,
+                ShippingID:'',
+                Express_Price:'',
+                stores:[],
                 reason:'',
                 paginate:{
                     page:1,
@@ -118,40 +133,52 @@
                 }
             }
         },
+        onLoad(options){
+            this.apply_id = options.apply_id
+        },
         computed:{
           ...mapGetters(['Stores_ID'])
         },
         methods:{
-            handleApply(apply,idx){
-                uni.navigateTo({
-                    url:`/pages/procurement/storeWholesaleSend?apply_id=${apply.Order_ID}`
-                })
-            },
-            cancelRefuseApply(){
-                this.$refs.refuseApply.close()
-            },
-            openRefuseDialog(apply){
-                this.activeApply = apply
-                this.$refs.refuseApply.show()
-            },
-            refuseApply(){
+            subFn(){
 
-                console.log(this.reason)
-                if(!this.reason){
-                    error('请填写理由')
-                    return;
+                let postData = null
+                if(this.is_need_shipping){
+                    postData = {
+                        is_need_shipping:this.is_need_shipping,
+                        Express_Price:this.ShippingID,
+                        ShippingID:this.ShippingID,
+                        Express:this.exprss_list[this.exprss_index],
+                        store_id:this.Stores_ID,
+                        order_id:this.apply_id
+                    }
+                }else{
+                    postData = {
+                        is_need_shipping:this.is_need_shipping,
+                        store_id:this.Stores_ID,
+                        order_id:this.apply_id
+                    }
                 }
-                refuseStorePurchaseApply({order_id:this.activeApply.Order_ID,reason:this.reason},{tip:'处理中'}).then(res=>{
-                    this.$refs.refuseApply.close()
-                    this.activeApply = null
-                    this.reason = ''
-                    apply.Order_Status = 23
-                    apply.Order_Status_desc = '已驳回'
 
+                if(!emptyObject(postData)){
+                    return
+                }
+
+                sendStorePurchaseApply(postData).then(res=>{
+                    toast('操作成功')
+                    setTimeout(function(){
+                        uni.navigateTo({
+                            url:'/pages/procurement/storeWholesale'
+                        })
+                    },1000)
                 },err=>{})
+
             },
-            bingReasonInput(e){
-                this.reason = e.detail.value
+            bindPickerChange(e){
+              this.exprss_index = e.detail.value
+            },
+            changeNeedShipping(e){
+                this.is_need_shipping = e.detail.value?1:0
             },
             showStore(store_id){
                 console.log(store_id)
@@ -164,51 +191,33 @@
                     error('店铺信息错误')
                 }
             },
-            changIndex(idx){
-                this.tabidx = idx
-                this.paginate.page = 1
-                this.paginate.finish = false
-
-                this.order_status = this.order_status_arr[idx]
-                this.loadInfo()
+            cancelRefuseApply(){
+                this.$refs.refuseApply.close()
+            },
+            openRefuseDialog(apply){
+                this.activeApply = apply
+                this.$refs.refuseApply.show()
             },
             inArray(val,arr){
                 return arr.indexOf(val)!=-1
             },
             async loadInfo(){
 
-                if(this.paginate.finish)return;
-                await getStorePurchaseSales({...this.paginate,order_status:this.order_status,store_id:this.Stores_ID},{tip:'加载中'}).then(res=>{
+                await getStorePurchaseSales({store_id:this.Stores_ID}).then(res=>{
 
-                    this.paginate.totalCount = res.totalCount
+                     for(var item of res.data){
+                         if(this.apply_id == item.Order_ID){
+                             for(var goods of item.prod_list){
+                                 if(goods.attr_info){
+                                     goods.attr_info = JSON.parse(goods.attr_info)
+                                 }
+                             }
+                             this.apply = item
+                             break;
+                         }
+                     }
 
 
-
-
-                    let rt = res.data.map(item=>{
-
-                        for(var goods of item.prod_list){
-                            if(goods.attr_info){
-                                goods.attr_info = JSON.parse(goods.attr_info)
-                            }
-                        }
-                        return {...item}
-                    })
-
-                    console.log(this.paginate.page)
-                    if(this.paginate.page===1){
-                        this.applys = rt
-                    }else{
-                        this.applys = this.applys.concat(rt)
-                    }
-
-                    //长度为0停止了
-                    if(res.data.length===0){
-                        this.paginate.finish = true
-                        return;
-                    }
-
-                    this.paginate.page ++
                 },err=>{
 
                 })
@@ -224,6 +233,11 @@
 
             getStoreList({pageSize:999}).then(res=>{
                 this.stores = res.data
+            })
+
+            getShipping({pageSize:999}).then(res=>{
+                this.exprss_list = Object.values(res.data)
+                this.exprss_id_list = Object.keys(res.data)
             })
         }
     }
@@ -258,16 +272,14 @@
         border-bottom: 2px solid $wzw-primary-color;
     }
 }
-
 .space-box {
     height: 50px;
     width: 100%;
     background: white;
 }
-
 .lists{
     .item{
-        margin: 10px 15px 10px;
+        margin: 15px;
         background: white;
         border-radius: 4px;
         overflow: hidden;
@@ -381,7 +393,6 @@
 
     }
 }
-
 .storeInfoDialog{
     width: 560rpx;
     box-sizing: border-box;
@@ -400,7 +411,6 @@
         }
     }
 }
-
 .refuseApplyDialog{
     width: 560rpx;
     box-sizing: border-box;
@@ -432,6 +442,71 @@
                 color: white;
                 margin-left: 10px;
             }
+        }
+    }
+}
+.subbox{
+    margin: 70px 0;
+    .subbtn{
+        border-radius: 0;
+    }
+}
+
+.sendbox{
+    margin: 10px;
+    background: white;
+    .title{
+        border-bottom: 1px solid #eee;
+        display: flex;
+        align-items: center;
+        padding: 10px 0;
+        .tip{
+            display: inline-block;
+            width: 4px;
+            height: 16px;
+            background: $wzw-primary-color;
+            border-radius: 2px;
+            margin: 0 10px;
+        }
+        .text{
+
+        }
+    }
+    .row{
+
+        margin: 0 10px;
+        display: flex;
+        align-items: center;
+        height: 32px;
+        line-height: 32px;
+        border-bottom: 1px solid #eee;
+        padding: 10px 0;
+        .label{
+            width: 90px;
+            color: #666;
+        }
+        .form-item{
+            color: #444;
+            flex: 1;
+            .radio{
+                margin-right: 8px;
+                font-size: 14px;
+            }
+            &.express{
+                text-align: right;
+                color: #666;
+                .uni-input{
+                    display: inline-block;
+                }
+                .icon-fanhui{
+                    margin-left: 10px;
+                    display: inline-block;
+                    transform: rotate(180deg);
+                }
+            }
+        }
+        &:last-child{
+            border-bottom: none;
         }
     }
 }

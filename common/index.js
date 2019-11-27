@@ -10,6 +10,9 @@ import store from '../store';
 import {ls} from "./tool";
 // const i18n = require('i18n');
 
+//引入组件
+import ModelComponents from "../components/ModelComponents";
+Vue.component('wzw-dialog',ModelComponents)
 //重写uni部分
 require('./uni');
 

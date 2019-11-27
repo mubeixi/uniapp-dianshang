@@ -556,7 +556,12 @@
       }
     },
     {
-      "path": "pages/regionPay/regionPay",
+      "path": "pages/procurement/storeWholesaleSend",
+      "style": {
+        "navigationBarTitleText": "发货-批发订单"
+      }
+    },{
+      "path": "pages/regionPay/regionPay", 
       "style": {
         "navigationBarTitleText": "区域代理支付"
       }
@@ -567,6 +572,8 @@
         "navigationBarTitleText": "股东支付"
       }
     }
+
+
   ],
   "globalStyle": {
     "navigationBarTextStyle": "black",
