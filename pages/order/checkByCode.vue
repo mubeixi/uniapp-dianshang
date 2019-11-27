@@ -16,25 +16,18 @@
         name: "checkByCode",
         data(){
             return {
-                Order_ID:'',
                 Order_Code:''
             }
         },
         methods:{
             subFn(){
-                let Order_ID = this.order_id
-                if(!Order_ID){
-                    Order_ID = 88
-                }
+                let Order_Code = this.Order_Code
+               
                 uni.navigateTo({
-                    url:'/pages/order/checkOrderInfo?Order_ID='+Order_ID
+                    url:'/pages/order/checkOrderInfo?Order_Code='+Order_Code
                 })
             },
-            scanFn(){
-                checkOrderByCode({Order_Code:this.Order_Code}).then(res=>{
-                    confirm()
-                })
-            }
+            
         }
     }
 </script>
