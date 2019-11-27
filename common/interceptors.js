@@ -62,11 +62,17 @@ export const ajax = (url,method,data,options)=>{
 		  // #endif
 
 
+          console.log(res)
 
-          if(hookErrorCode.indexOf(res.errorCode) != -1){
+          if(res.hasOwnProperty('errorCode') && hookErrorCode.indexOf(res.errorCode) != -1){
               resolve(res)
           }else{
-              if(errtip)error(res.msg)
+              if(res.hasOwnProperty('errorCode') && res.msg){
+                  if(errtip)error(res.msg)
+              }else{
+                  error('请求未成功')
+              }
+
               reject(res)
           }
 
