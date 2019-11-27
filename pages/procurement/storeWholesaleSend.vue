@@ -28,9 +28,20 @@
                                     <div class="title line10">{{item.prod_name}}</div>
                                     <div class="line10 flex flex-between graytext font14 flex-vertical-center">
                                         <div class="spec-key">{{item.attr_info.attr_name||'无规格'}}</div>
-                                        <div class="numbox font16"><span class="font14">x</span>{{item.prod_count}}</div>
+                                        <div class="numbox font16">
+
+
+                                        </div>
                                     </div>
-                                    <div class="font14"><span class="danger-color">￥<span class="price-num font16">{{item.prod_price}}</span></span></div>
+                                    <div class="flex flex-between">
+                                        <div class="font14"><span class="danger-color">￥<span class="price-num font16">{{item.prod_price}}</span></span></div>
+                                        <div class="inputNumber" @click="setCurrentGoods(item)">
+                                            <div class="clicks" @click="minusFn(item)">-</div>
+                                            <input class="inputq"  type="number" :value="item.prod_count" @blur="setValFn" >
+                                            <div class="clicks" @click="plusFn(item)">+</div>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -104,7 +115,7 @@
 <script>
     import {pageMixin} from "../../common/mixin";
     import {mapGetters} from "vuex";
-    import {getStorePurchaseSales,getStoreList,getShipping,sendStorePurchaseApply} from "../../common/fetch";
+    import {getStorePurchaseSales,getStoreList,getShipping,sendStorePurchaseApply,updateStoreApplyGoodsNum} from "../../common/fetch";
     import {error, toast} from "../../common";
     import {emptyObject, findArrayIdx} from "../../common/tool";
 
@@ -116,6 +127,7 @@
             return {
                 apply: {},
                 apply_id:'',
+                currentGoods:null,
                 is_need_shipping:1,
                 exprss_index:0,
                 exprss_id_list:[],
@@ -140,6 +152,66 @@
           ...mapGetters(['Stores_ID'])
         },
         methods:{
+            setCurrentGoods(obj){
+              this.currentGoods = obj
+            },
+            setValFn(e){
+
+                if(!this.currentGoods){
+                    error('请选择需要修改的商品')
+                    return;
+                }
+                //这种骚操作需要看是不是兼容
+                let goods = this.currentGoods
+                console.log(e.detail .value)
+
+
+
+                let Attr_ID = null
+                if(goods.attr_info && goods.attr_info.attr_val){
+                    Attr_ID  = goods.attr_info.attr_val.Product_Attr_ID
+                }
+                let newVal = e.target.value,oldVal = goods.prod_count
+
+                //如果设置失败，数量要变回来
+                this.updateGoodsStock(this.apply.Order_ID,goods.prod_id,Attr_ID,e.target.value,function(){
+                    goods.prod_count = newVal
+                },function(){
+                    console.log('errorerror')
+                    e.target.value = oldVal
+                })
+            },
+            plusFn(goods){
+
+                let Attr_ID = null
+                if(goods.attr_info && goods.attr_info.attr_val){
+                    Attr_ID  = goods.attr_info.attr_val.Product_Attr_ID
+                }
+                this.updateGoodsStock(this.apply.Order_ID,goods.prod_id,Attr_ID,goods.prod_count+1,function(){goods.prod_count++})
+            },
+
+            minusFn(goods){
+                let Attr_ID = null
+                if(goods.attr_info && goods.attr_info.attr_val){
+                    Attr_ID  = goods.attr_info.attr_val.Product_Attr_ID
+                }
+                this.updateGoodsStock(this.apply.Order_ID,goods.prod_id,Attr_ID,goods.prod_count-1,function(){goods.prod_count--})
+            },
+
+            async updateGoodsStock(order_id,prod_id,attr_id,modify_prod_count,call,errcall){
+
+
+                await updateStoreApplyGoodsNum({order_id,prod_id,attr_id,modify_prod_count,store_id:this.Stores_ID}).then(res=>{
+                    console.log('success')
+                    call && call()
+                },err=>{
+                    console.log('error')
+                    errcall && errcall()
+                })
+
+
+
+            },
             subFn(){
 
                 let postData = null
@@ -244,6 +316,28 @@
 </script>
 
 <style lang="scss" scoped>
+    .inputNumber{
+        border: 1px solid #ccc;
+        border-radius: 6rpx;
+        height: 50rpx;
+        display: flex;
+        .inputq{
+            color: black;
+            margin: 0 auto;
+            width: 80rpx;
+            height: 50rpx;
+            text-align: center;
+            font-size: 24rpx;
+            border-left: 2rpx solid #ccc;
+            border-right: 2rpx solid #ccc;
+        }
+        .clicks{
+            height: 50rpx;
+            line-height: 50rpx;
+            width: 60rpx;
+            text-align: center;
+        }
+    }
 .navs {
     z-index: 2;
     position: fixed;
