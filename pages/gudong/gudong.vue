@@ -11,7 +11,15 @@
 			<view class="nickName">
 				{{pro.disInfo.Shop_Name}}
 			</view>
-			<view  v-if="pro.sha_config.Sha_Agent_Type==1&&pro.is_apply" class="juewei"  @click="goGudong">
+
+
+			<view  v-if="pro.disInfo.Enable_Sha==1" class="juewei">
+				股东
+			</view>
+			<view  v-else-if="pro.waiting_pay_apply.Order_ID" class="juewei"  @click="goGudongPay(pro.waiting_pay_apply.Order_ID)">
+				立即支付
+			</view>
+			<view  v-else-if="pro.sha_config.Sha_Agent_Type==1&&pro.is_apply" class="juewei"  @click="goGudong">
 				立即申请
 			</view>
 			<view  v-else class="juewei" >
@@ -68,7 +76,7 @@
 					所需金额:
 				</view>
 				<view class="xiangBottomB">
-					¥<text class="text">{{pro.sha_config.Sha_Rate.sha.price}}</text>(<block v-if="!pro.sha_config.is_apply">暂未达到申请条件</block><block v-if="pro.sha_config.is_apply">已达到申请条件</block>)
+					¥<text class="text">{{pro.sha_config.Sha_Rate.sha.price}}</text>(<block v-if="!pro.is_apply">暂未达到申请条件</block><block v-if="pro.is_apply">已达到申请条件</block>)
 				</view>
 			</view>
 		</view>
@@ -99,6 +107,11 @@
 			this.shaInit();
 		},
 		methods:{
+			goGudongPay(index){
+				uni.navigateTo({
+					url:'../gudongPay/gudongPay?id='+index
+				})
+			},
 			goGudong(){
 				uni.navigateTo({
 					url:'../addGudong/addGudong'

@@ -3,7 +3,7 @@
         <view class="item">
             <view class="item-left">门店名称</view>
             <view class="item-input">
-                <input type="text" v-model="store_name" placeholder="请输入门店名称" placeholder-style="color:#CAC8C8"/>
+                <input type="text" v-model="store_name" placeholder="将作为您的登录账号" placeholder-style="color:#CAC8C8"/>
             </view>
         </view>
         <view class="item">
@@ -254,7 +254,7 @@
 
                     },
                     fail(e) {
-                     
+
                     }
                 })
             },

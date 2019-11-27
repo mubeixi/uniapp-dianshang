@@ -5,21 +5,21 @@
 			<view class="c-item">
 				<view class="item-left">进货渠道</view>
 				<view class="item-right" @click="changeChannel">
-					<text>{{channelName}}</text>	
+					<text>{{channelName}}</text>
 					<image :src="'/static/client/person/right.png'|domain" class="right"></image>
 				</view>
 			</view>
 			<view class="c-item">
 				<view class="item-left">门店编号</view>
-				<view class="item-input"><input type="text" value="" placeholder="请输入门店编号" placeholder-style="color: #c9c9c9;" /></view>
+				<view class="item-input"><input type="text" v-model="purchase_store_sn" placeholder="请输入门店编号" placeholder-style="color: #c9c9c9;" /></view>
 			</view>
 		</view>
-		<view class="search">搜索</view>
-		<popupLayer ref="searchLayer" :direction="'top'">
+		<view class="search" @click="goPurchase">搜索</view>
+		<popupLayer ref="searchLayer" :direction="'top'" @maskClicked="maskClicked">
 			<view class="search-title">选择渠道</view>
 			<view class="search-content">
 				<view class="search-item" @click="changeItem(1)">
-					<view>门店进货</view>	
+					<view>门店进货</view>
 					<view class="box" v-if="selectitem == 2"></view>
 					<view v-if="selectitem == 1">
 						<image class="image" src="../../static/selected.png" mode=""></image>
@@ -46,7 +46,8 @@
 		},
 		data() {
 			return {
-				selectitem: 1
+				selectitem: 1,
+				purchase_store_sn: ''
 			}
 		},
 		computed: {
@@ -55,6 +56,15 @@
 			}
 		},
 		methods: {
+			goPurchase(){
+				uni.navigateTo({
+					url: '../procurement/stock?purchase_store_sn=' + this.purchase_store_sn
+				})
+			},
+			// 用户只是点击了遮罩
+			maskClicked(){
+				this.selectitem = this.selectitem;
+			},
 			changeChannel(){
 				this.$refs.searchLayer.show();
 			},
@@ -141,6 +151,7 @@
 			padding: 25rpx 0;
 			font-size: 28rpx;
 			.image {
+				display: block;
 				width: 22px;
 				height: 22px;
 			}

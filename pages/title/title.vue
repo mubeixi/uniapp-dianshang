@@ -2,7 +2,16 @@
 	  <div class="component-wrap" :style="{backgroundColor: bgcolor}">
 		  <img class="img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAlCAMAAACeRoI0AAAAvVBMVEVHcEwzMzMzMzM2NjY1NTUwMDAxMTEzMzMyMjIxMTEzMzMtLS0zMzMyMjIrKyszMzMzMzMzMzMyMjIzMzMuLi4zMzMxMTEyMjIzMzMyMjIyMjIxMTEsLCwzMzMyMjIyMjIyMjIzMzMzMzMvLy8yMjIyMjIyMjIzMzMzMzMyMjIzMzMzMzMxMTE1NTUuLi4zMzMzMzMyMjIzMzMyMjIyMjIzMzMxMTEyMjIuLi4xMTExMTEzMzM0NDQyMjIzMzPVDEorAAAAPnRSTlMAfM0TGCCB/v0VzhHPyxIUg37Q0xbSc3XUcdVtF9jWa99vGRtlZ9vcHtrZaRodHN3eenl2e3h3wSFjYmSeYZ0V3m0AAAC1SURBVCjPddPHEsIwEANQ0yH0Fjqh997r/v9noWTggrw5Pnky9lo25v9LZ0WkQJwLg+PEEQdcJM5nwCHiVAl8Yq6CD8SVMvhC3K6Da8TRJthl7ookGsSDDrhPvFqAW8TDOdgj3kzAS+L1VCQ5Jp5twSPi2A78ZO6BH8TmilO+mM3NX/+2BMH/75ZA2Y+6f/W86nzUearzV+9LvV+1D9/+HC1B0LezLfD7ubcESp/V/qvv5fe+PtJeIwkJchrWAAAAAElFTkSuQmCC"  @click="goBack" v-show="!hiddenBack">
 		  {{title}}
-          <view v-if="dot" class="dotted"></view>
+          <view v-if="dot" class="dotted">
+              <view class="dotlist" @click="changeMethod">
+                    <view class="circle"></view><view class="circle"></view><view class="circle"></view>
+              </view>
+              <view class="methods" v-if="isShowMethod">
+                  <view class="method" @click="method(1)">进货记录</view>
+                  <view class="method" @click="method(2)">门店信息</view>
+              </view>
+
+          </view>
 		  <span v-else class="right" @click="rightHandle" v-show="!rightHidden">{{right}}</span>
 	  </div>
 </template>
@@ -37,14 +46,35 @@ export default {
         dot: {
             type: Boolean,
             default: false
-        }
+        },
 	},
+    data: function() {
+	    return {
+            isShowMethod: false,
+            timeid: ''
+        }
+    },
     methods: {
         goBack(){
             uni.navigateBack(1);
         },
         rightHandle(){
             this.$emit('rightHandle')
+        },
+        changeMethod(){
+            this.isShowMethod = !this.isShowMethod;
+            if(this.timeid) {
+                clearTimeout(this.timeid)
+            };
+            if(this.isShowMethod) {
+                this.timeid = setTimeout(()=>{
+                    this.isShowMethod = false;
+                },3000)
+            }
+        },
+        method(type) {
+            this.$emit('methodHandle',type);
+            this.isShowMethod = false;
         }
     },
     computed: {
@@ -63,6 +93,7 @@ export default {
         font-size: 32rpx;
         color: #333;
         text-align: center;
+        z-index: 100;
         .img {
             position: absolute;
             top: 9rpx;
@@ -79,7 +110,39 @@ export default {
         }
         .dotted {
             position: absolute;
-            
+            top: 50%;
+            right: 20rpx;
+            transform: translateY(-50%);
+            .dotlist {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 20rpx 0 20rpx 20rpx;
+                .circle {
+                    width:8px;
+                    height:8px;
+                    background:rgba(153,153,153,1);
+                    border-radius:50%;
+                    margin-right: 5rpx;
+                }
+            }
+            .methods {
+                position: absolute;
+                top: 50rpx;
+                right: 0;
+                background: #666;
+                color: #fff;
+                height: 130rpx;
+                width: 167rpx;
+                font-size: 24rpx;
+                z-index: 1000;
+                .method {
+                    line-height: 65rpx;
+                }
+                .method:nth-child(1) {
+                    border-bottom: 2rpx dotted #fff;
+                }
+            }
         }
     }
 </style>

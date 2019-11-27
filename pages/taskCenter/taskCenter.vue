@@ -63,8 +63,11 @@
 						{{it.desc}}
 					</view>
 				</view>
-				<view class="submit" @click="goJump(it)">
+				<view class="submit" @click="goJump(it)"  v-if="it.done==0">
 					去完成
+				</view>
+				<view class="submit submitMbx"   v-if="it.done==1">
+					已完成
 				</view>
 			</view>
 		</view>
@@ -317,6 +320,9 @@
 			text-align: center;
 			margin-left: auto;
 			margin-right: 20rpx;
+		}
+		.submitMbx{
+			background-color: #dedede !important;
 		}
 	}
 }
