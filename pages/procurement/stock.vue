@@ -33,7 +33,7 @@
         </view>
         <view style="height:90rpx;">
             <view class="check" :style="{'z-index': zIndex}">
-                <view class="check-msg" @click="showSelected">已选取<text class="num">3</text>/500个普通商品 <image class="img" :class="isClicked?'turn':''" src="/static/top.png"></image></view>
+                <view class="check-msg" @click="showSelected">已选取<text class="num">{{total_cart_count}}</text>/{{total_pro_count}}个普通商品 <image class="img" :class="isClicked?'turn':''" src="/static/top.png"></image></view>
                 <view class="submit">提交进货单</view>
             </view>
         </view>
@@ -88,29 +88,33 @@
         <!--	明细	-->
         <popup-layer ref="detail"  @maskClicked="handClicked" :direction="'top'" :bottomHeight="45">
             <view class="mxdetail">
-                <view class="product">
-                    <view class="proImg">
-                        <image src="/static/pro.png" class="img"></image>
-                    </view>
-                    <view class="proMsg">
-                        <view class="proName">
-                            <view class="name">2018夏装新款短袖蕾丝拼接荷叶边波点雪纺连衣裙仙女裙时尚...</view>
-                            <image class="del" src="/static/del.png"></image>
-                        </view>
-                        <view class="attrInfo">
-                            <view>白色;S码</view>
-                        </view>
-                        <view class="proPrice">
-                            <view class="newPrice">￥<text class="number">169.00</text></view>
-                            <view class="oldPrice">￥199.00</view>
-                            <view class="amount">
-                                <view class="icon">-</view>
-                                <view class="num">12</view>
-                                <view class="icon">+</view>
+                <template v-for="(pro,pro_id) in cartList">
+                    <template v-for="(attr,attr_id) in pro">
+                        <view class="product">
+                            <view class="proImg">
+                                <image :src="attr.ImgPath" class="img"></image>
+                            </view>
+                            <view class="proMsg">
+                                <view class="proName">
+                                    <view class="name">{{attr.ProductsName}}</view>
+                                    <image class="del"  @click="del(pro_id,attr)" src="/static/del.png"></image>
+                                </view>
+                                <view class="attrInfo">
+                                    <view>{{attr.Productsattrstrval}}</view>
+                                </view>
+                                <view class="proPrice">
+                                    <view class="newPrice">￥<text class="number">{{attr.ProductsPriceX}}</text></view>
+                                    <view class="oldPrice">￥{{attr.ProductsPriceY}}</view>
+                                    <view class="amount">
+                                        <view class="icon">-</view>
+                                        <view class="num">{{attr.Qty}}</view>
+                                        <view class="icon">+</view>
+                                    </view>
+                                </view>
                             </view>
                         </view>
-                    </view>
-                </view>
+                    </template>
+                </template>
             </view>
         </popup-layer>
     </view>
@@ -118,8 +122,8 @@
 
 <script>
     import popupLayer from '../../components/popup-layer/popup-layer.vue'
-    import {getPifaStoreProd} from '../../common/fetch'
-    import {mapState} from 'vuex'
+    import {getPifaStoreProd, updateCart,getCart,delCart} from '../../common/fetch'
+    import {mapGetters} from 'vuex'
     import {numberSort} from '../../common/tool'
     export default {
         data() {
@@ -144,13 +148,16 @@
                     productDetail_price: 0
                 },
                 prod_name: '', // 根据产品名称搜索
+                cartList: '',
+                total_pro_count: '', // 总共的产品数
+                total_cart_count: '', // 购物车中的产品数
             }
         },
         components: {
             popupLayer
         },
         computed: {
-            ...mapState['Stores_ID'],
+            ...mapGetters(['Stores_ID']),
             isScroll(){
                 return this.isHidden ? 'auto' : 'hidden'
             },
@@ -161,9 +168,41 @@
                 this.purchase_store_sn = options.purchase_store_sn;
                 this.getProlist();
             }
-
+            this.get_cart();
         },
         methods: {
+            //  删除购物车中的产品
+            del(pro_id,attr){
+                let attr_id = '';
+                // {"1":["1","5"],"2":[]}
+                if(attr.Productsattrkeystrval) {
+                    attr_id = attr.Productsattrkeystrval.Attr_ID + ''
+                };
+                let obj = {}
+                obj = {
+                    [pro_id]: [attr_id]
+                }
+                console.log(obj)
+                delCart({
+                    cart_key: 'CartList',
+                    prod_attr: JSON.stringify(obj)
+                }).then(res=>{
+                    uni.showToast({
+                        title: res.msg
+                    })
+                    this.get_cart();
+                })
+            },
+            // 商品添加到了购物车中，获取购物车产品
+            get_cart(){
+                getCart({
+                    cart_key: 'CartList'
+                }).then(res=>{
+                    console.log(res)
+                    this.cartList = res.data.CartList;
+                    this.total_cart_count = res.data.total_count;
+                })
+            },
             // 选择属性
             selectAttr(index,i){
                 var value_index = index; //选择的属性值索引
@@ -231,6 +270,7 @@
                     store_id: this.Stores_ID
                 }).then(res=>{
                     this.prolist = res.data;
+                    this.total_pro_count = res.totalCount;
                 })
             },
             methodHandle(type){
@@ -304,6 +344,28 @@
             },
             confirm(){
                 console.log(this.postData)
+                if(!this.postData.attr_id) {
+                    uni.showToast({
+                        title: '请选择规格',
+                        icon: 'none'
+                    });
+                    return;
+                }
+                updateCart({
+                    cart_key: 'CartList',
+                    prod_id: this.postData.prod_id,
+                    qty: this.postData.qty,
+                    attr_id: this.postData.attr_id,
+                    active: 'store_pifa',
+                    active_id:  this.Stores_ID + '_' + this.prosku.Stores_ID
+                }).then(res=>{
+                    uni.showToast({
+                        title: res.msg
+                    });
+                    this.isHidden = true;
+                    this.showSku = false;
+                    return;
+                })
             }
         }
     }
