@@ -526,11 +526,50 @@ export const createEmptyArray = (len,item)=>{
 }
 
 
+
+
+/**
+ * 查看对象1中的所有属性在obj2中都有
+ * @param obj1
+ * @param obj2
+ */
+export const compare_obj = (obj1,obj2) => {
+    for (var i in obj1){
+        if(!obj1.hasOwnProperty(i))continue;
+        if(!obj2.hasOwnProperty(i) || obj1[i]!=obj2[i]){
+            return false
+        }
+    }
+    return true
+
+}
+
+/**
+ * 从指定的数组(对象组成的数组)，根据键值和值找到下标
+ * @param arr
+ * @param key
+ * @param val
+ * @param full 是否返回值和下标，默认只返回下标
+ */
+export const findArrayIdx = (arr, key_val_arr, full)=>{
+
+    for (var i in arr){
+        if(typeof arr[i] !='object')continue
+        //用来比较对象
+        if(compare_obj(key_val_arr,arr[i])){
+            if(!full) return i;
+            return {val:arr[i],idx:i}
+        }
+
+    }
+    return false
+}
+
 export const emptyObject = (obj, strice) => {
     for (var prop in obj) {
         if (obj[prop] === '' || obj[prop] === undefined || obj[prop] === null || obj[prop] === 'null' || obj[prop] === 'undefined') {
             if (strice) {
-                vant.showMsg('参数' + prop + '不能为空');
+               error('参数' + prop + '不能为空');
                 console.log('参数' + prop + '不能为空');
                 return false;
             }
