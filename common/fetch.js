@@ -401,6 +401,7 @@ export const upUserLog = (data, options) => {
 }
 
 
+export const checkOrderByCode = (data, options) => fetch('system_consumption_order', data, options);
 
 //获取批发的订单
 export const getStorePurchaseSales = (data, options) => fetch('get_store_pifa_assign_order', data, options);

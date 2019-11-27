@@ -19,7 +19,6 @@ export const defaultMixin = {
 }
 
 
-
 // #ifdef H5
 import {getJsSign} from "./fetch";
 import wx from 'weixin-js-sdk';
@@ -326,4 +325,93 @@ export const payMixin = {
 		// #endif
 
 	},
+}
+
+
+
+/**
+ * 扫描二维码
+ */
+
+export const scanMixin = {
+	data(){
+		return {
+			originData:''//扫码得到的原始数据，格式  act##dataString 其中dataString可能是单独的值或者 name::val;;name::val;;name::val;;name::val这样的键值对
+		}
+	},
+	methods:{
+		/**
+		 *唤起不同终端的二维码，并且返回返回内容
+		 * @param needResult 是由微信处理还是自定义业务 微信wap专用
+		 * @param onlyFromCamera 是否只允许摄像头扫描 微信wap之外可以用
+		 * @param barCode  支持条码扫描 微信wap专用
+		 * @param qrCode 支持二维码 微信wap专用
+		 * @return {Promise<unknown>}
+		 */
+		openScanFn({needResult=1,onlyFromCamera=true,barCode=1,qrCode=1}){
+
+			return new Promise((resolve, reject) => {
+
+				// #ifdef H5
+				if(!isWeiXin()){
+					reject('请在微信中打开此页面')
+				}
+
+				let scanType = []
+				if(barCode)scanType.push('barCode')
+				if(qrCode)scanType.push('qrCode')
+
+				WX_JSSDK_INIT(this).then(wxEnv=>{
+					wxEnv.scanQRCode({
+						needResult, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+						scanType, // 可以指定扫二维码还是一维码，默认二者都有
+						success: function (res) {
+							var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+							resolve(result)
+						},
+						fail:function(err){
+							reject(err)
+						}
+					});
+				})
+				// #endif
+
+				// #ifndef H5
+				// 只允许通过相机扫码
+				uni.scanCode({
+					onlyFromCamera,
+					success: function (res) {
+						console.log('条码类型：' + res.scanType);
+						console.log('条码内容：' + res.result);
+
+						resolve(res.result)
+					},
+					fail:function(err){
+						reject(err)
+					}
+				});
+				// #endif
+
+
+
+			})
+		},
+		translateQrData(origin){
+			if(!origin){
+				error('信息为空');
+				return;
+			}
+
+			const dataArr = origin.split('##')
+			let act = dataArr[0];
+			const valArr = dataArr[1].split(';;')
+
+			let valObj = {}
+			for(var valStr of valArr){
+				let tempArr = valStr.split('::')
+				valObj[tempArr[0]] = tempArr[1]
+			}
+			return {act,params:valObj}
+		}
+	}
 }
