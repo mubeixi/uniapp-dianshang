@@ -526,19 +526,7 @@ export const createEmptyArray = (len,item)=>{
 }
 
 
-export const emptyObject = (obj, strice) => {
-    for (var prop in obj) {
-        if (obj[prop] === '' || obj[prop] === undefined || obj[prop] === null || obj[prop] === 'null' || obj[prop] === 'undefined') {
-            if (strice) {
-                vant.showMsg('参数' + prop + '不能为空');
-                console.log('参数' + prop + '不能为空');
-                return false;
-            }
-            delete obj[prop];
-        }
-    }
-    return obj;
-};
+
 
 /**
  * 查看对象1中的所有属性在obj2中都有
@@ -576,3 +564,17 @@ export const findArrayIdx = (arr, key_val_arr, full)=>{
     }
     return false
 }
+
+export const emptyObject = (obj, strice) => {
+    for (var prop in obj) {
+        if (obj[prop] === '' || obj[prop] === undefined || obj[prop] === null || obj[prop] === 'null' || obj[prop] === 'undefined') {
+            if (strice) {
+               error('参数' + prop + '不能为空');
+                console.log('参数' + prop + '不能为空');
+                return false;
+            }
+            delete obj[prop];
+        }
+    }
+    return obj;
+};

@@ -567,7 +567,15 @@
       "style": {
         "navigationBarTitleText": "批发订单"
       }
+    },
+    {
+      "path": "pages/procurement/storeWholesaleSend",
+      "style": {
+        "navigationBarTitleText": "发货-批发订单"
+      }
     }
+
+
   ],
   "globalStyle": {
     "navigationBarTextStyle": "black",
