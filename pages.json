@@ -589,10 +589,14 @@
       "style": {
         "navigationBarTitleText": "股东支付"
       }
+    },
+	{
+		"path" : "pages/productMy/productMy",
+		"style": {
+		  "navigationBarTitleText": "我的产品"
+		}
     }
-
-
-  ],
+   ],
   "globalStyle": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": " ",
