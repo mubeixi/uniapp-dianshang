@@ -104,7 +104,7 @@
 		<popup-layer ref="popupMX" :direction="'top'" @maskClicked="handClicked" :bottomHeight="50">
 			<view class="mxdetail">
 				<view class="mxtitle">明细</view>
-				<view class="mxitem">产品 <text class="num">+{{Order_TotalAmount}}</text></view>
+				<view class="mxitem">产品 <text class="num">+{{orderInfo.Order_TotalAmount}}</text></view>
 				<view class="mxitem" v-if="orderInfo.user_curagio_money > 0">会员折扣 <text class="num">-{{orderInfo.user_curagio_money}}</text></view>
 				<view class="mxitem" v-if="orderInfo.Manjian_Cash > 0">满减 <text class="num">-{{orderInfo.Manjian_Cash}}</text></view>
 				<view class="mxitem" v-if="orderInfo.Coupon_Money > 0">优惠券 <text class="num">-{{orderInfo.Coupon_Money}}</text></view>

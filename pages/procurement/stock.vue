@@ -14,8 +14,8 @@
         @methodHandle="methodHandle"></page-title>
 
         <view class="search-wrap">
-            <icon type="search" size="34rpx" class="search_icon"/>
-            <input type="text" class="input" placeholder="请输入商品关键词" placeholder-style="color:#bebdbd;">
+            <icon type="search" size="34rpx" class="search_icon" @click="search"/>
+            <input type="text" class="input" placeholder="请输入商品关键词" @confirm="search" v-model="prod_name" placeholder-style="color:#bebdbd;">
         </view>
         <view class="prolist">
             <view class="pro" v-for="item in prolist">
@@ -143,6 +143,7 @@
                     qty: 1,           //购买数量
                     productDetail_price: 0
                 },
+                prod_name: '', // 根据产品名称搜索
             }
         },
         components: {
@@ -212,7 +213,17 @@
                 this.check_attr = check_attr;
                 this.check_attrid_arr = check_attrid_arr;
                 this.submit_flag = (!this.check_attr || Object.getOwnPropertyNames(this.check_attr).length != Object.getOwnPropertyNames(this.prosku.skujosn).length) ? false : true;
-               
+
+            },
+            // 搜索
+            search(){
+                getPifaStoreProd({
+                    purchase_store_sn: this.purchase_store_sn,
+                    store_id: this.Stores_ID,
+                    prod_name: this.prod_name,
+                }).then(res=>{
+                    this.prolist = res.data;
+                })
             },
             getProlist(){
                 getPifaStoreProd({
@@ -270,6 +281,7 @@
             },
             add(item){
                 console.log(item)
+                this.postData.prod_id = item.Products_ID;
                 if(item.skujosn) {
                     let skujosn = item.skujosn;
                     let skujosn_new = [];
