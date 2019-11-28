@@ -74,7 +74,7 @@
     }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
     .popup-layer {
         position: fixed;
         z-index: 99;

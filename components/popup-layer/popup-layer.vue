@@ -146,6 +146,7 @@
 
 	.popup-content {
 		position: fixed;
+		left: 0;
 		z-index: 1000000;
 		background: #FFFFFF;
 		transition: all .3s ease;

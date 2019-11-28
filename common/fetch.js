@@ -391,15 +391,21 @@ export const getFlashSaleList = (data, options) => fetch('get_flashsale', data, 
 
 //门店入驻申请
 export const userStoreApply = (data, options) => fetch('user_store_apply', data, options);
-
+//获取门店补货产品
 export const getPifaStoreProd = (data, options) => fetch('get_pifa_store_prod', data, options);
+
+//统计门店总价值
+export const getStoreProdMoney = (data, options) => fetch('get_store_prod_money', data, options);
+
+
+//获取门店在售商品
+export const getSelfStoreProd = (data, options) => fetch('get_self_store_prod', data, options);
 
 //写入用户日志
 export const upUserLog = (data, options) => {
   console.log('上报用户信息',data,options)
   return fetch('write_user_log', data, options)
 }
-
 
 export const checkOrderByCode = (data, options) => fetch('system_consumption_order', data, options);
 
@@ -426,6 +432,13 @@ export const cancalStorePurchaseApply = (data, options) => fetch('store_pifa_ord
 export const subStorePurchaseApply = (data, options) => fetch('store_pifa_order_submit', data, options);
 
 export const delStorePurchaseApply = (data, options) => fetch('store_pifa_order_del', data, options);
+
+
+
+
+
+
+
 
 
 //普通环境noop就行了
