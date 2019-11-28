@@ -1,66 +1,66 @@
 <template>
 	<view class="wrap">
-		<div class="rotate-box">
+<!--		<div class="rotate-box">-->
 
-			<div class="item"  :style="getStyle(0)">
-				<div class="goods">
-					<image class="pic" :src="(itemList[0].img||img_url)" />
-					<div class="name">{{itemList[0].name}}</div>
-				</div>
-			</div>
-			<div class="item"  :style="getStyle(1)">
-				<div class="goods">
-					<image class="pic" :src="(itemList[1].img||img_url)" />
-					<div class="name">{{itemList[1].name}}</div>
-				</div>
-			</div>
-			<div class="item"  :style="getStyle(2)">
-				<div class="goods">
-					<image class="pic" :src="(itemList[2].img||img_url)" />
-					<div class="name">{{itemList[2].name}}</div>
-				</div>
-			</div>
-			<div class="item"  :style="getStyle(7)">
-				<div class="goods">
-					<image class="pic" :src="(itemList[7].img||img_url)" />
-					<div class="name">{{itemList[7].name}}</div>
-				</div>
-			</div>
-			<div class="item" @click="startFn">
-				<div class="goods start-btn">
-					<div class="name">立即抽奖</div>
-				</div>
-			</div>
+<!--			<div class="item"  :style="getStyle(0)">-->
+<!--				<div class="goods">-->
+<!--					<image class="pic" :src="(itemList[0].img||img_url)" />-->
+<!--					<div class="name">{{itemList[0].name}}</div>-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="item"  :style="getStyle(1)">-->
+<!--				<div class="goods">-->
+<!--					<image class="pic" :src="(itemList[1].img||img_url)" />-->
+<!--					<div class="name">{{itemList[1].name}}</div>-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="item"  :style="getStyle(2)">-->
+<!--				<div class="goods">-->
+<!--					<image class="pic" :src="(itemList[2].img||img_url)" />-->
+<!--					<div class="name">{{itemList[2].name}}</div>-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="item"  :style="getStyle(7)">-->
+<!--				<div class="goods">-->
+<!--					<image class="pic" :src="(itemList[7].img||img_url)" />-->
+<!--					<div class="name">{{itemList[7].name}}</div>-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="item" @click="startFn">-->
+<!--				<div class="goods start-btn">-->
+<!--					<div class="name">立即抽奖</div>-->
+<!--				</div>-->
+<!--			</div>-->
 
-			<div class="item"  :style="getStyle(3)">
-				<div class="goods">
-					<image class="pic" :src="(itemList[3].img||img_url)" />
-					<div class="name">{{itemList[3].name}}</div>
-				</div>
-			</div>
-			<div class="item"  :style="getStyle(6)">
-				<div class="goods">
-					<image class="pic" :src="(itemList[6].img||img_url)" />
-					<div class="name">{{itemList[6].name}}</div>
-				</div>
-			</div>
-			<div class="item"  :style="getStyle(5)">
-				<div class="goods">
-					<image class="pic" :src="(itemList[5].img||img_url)" />
-					<div class="name">{{itemList[5].name}}</div>
-				</div>
-			</div>
-			<div class="item"  :style="getStyle(4)">
-				<div class="goods">
-					<image class="pic" :src="(itemList[4].img||img_url)" />
-					<div class="name">{{itemList[4].name}}</div>
-				</div>
-			</div>
-
-
+<!--			<div class="item"  :style="getStyle(3)">-->
+<!--				<div class="goods">-->
+<!--					<image class="pic" :src="(itemList[3].img||img_url)" />-->
+<!--					<div class="name">{{itemList[3].name}}</div>-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="item"  :style="getStyle(6)">-->
+<!--				<div class="goods">-->
+<!--					<image class="pic" :src="(itemList[6].img||img_url)" />-->
+<!--					<div class="name">{{itemList[6].name}}</div>-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="item"  :style="getStyle(5)">-->
+<!--				<div class="goods">-->
+<!--					<image class="pic" :src="(itemList[5].img||img_url)" />-->
+<!--					<div class="name">{{itemList[5].name}}</div>-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="item"  :style="getStyle(4)">-->
+<!--				<div class="goods">-->
+<!--					<image class="pic" :src="(itemList[4].img||img_url)" />-->
+<!--					<div class="name">{{itemList[4].name}}</div>-->
+<!--				</div>-->
+<!--			</div>-->
 
 
-		</div>
+
+
+<!--		</div>-->
 	</view>
 </template>
 

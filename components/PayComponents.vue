@@ -163,11 +163,7 @@ export default {
         self.payFailCall = self.$store.state.payTempObj.payFailCall
         self.payCanceCall = self.$store.state.payTempObj.payCanceCall
         // #endif
-
-
-        console.log('paySuccessCall is 3333333333',self.paySuccessCall)
-
-
+        // console.log('paySuccessCall is 3333333333',self.paySuccessCall)
 
         //自动打开
         if(this.isOpen){
