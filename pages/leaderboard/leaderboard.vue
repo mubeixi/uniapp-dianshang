@@ -194,6 +194,7 @@
 	position: fixed;
 	top: 0rpx;
 	left: 0rpx;
+	background-color: #FFFFFF;
 	.hahas{
 		width: 202rpx;
 		height: 95rpx;

@@ -7,7 +7,7 @@ export const APP_USERS_ID = 'wkbq6nc2kc';//'ebxjt7h587  wkbq6nc2kc';
 
 // #ifdef H5
 console.log('NODE_ENV is '+isDev);
-export const apiBaseUrl = isDev?'':'https://new401.bafangka.com';//h5调试为了跨域
+export const apiBaseUrl = isDev?'':'https://new401.bafangka.com';//h5调试为了跨域https://new401.bafangka.com
 // #endif
 
 // #ifndef H5

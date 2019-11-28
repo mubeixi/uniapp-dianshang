@@ -578,3 +578,15 @@ export const emptyObject = (obj, strice) => {
     }
     return obj;
 };
+
+
+/**
+ * 批量创建数组
+ */
+export const createTmplArray = (item,len)=>{
+    let rt = []
+    for(var i=0;i<len;i++){
+        rt.push(objTranslate(item))
+    }
+    return rt
+}
