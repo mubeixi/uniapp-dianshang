@@ -529,7 +529,9 @@
     },
     {
       "path": "pages/empty/empty",
-      "style": {}
+      "style": {
+        "navigationBarTitleText": "empty"
+      }
     },
     {
       "path": "pages/couponReceive/couponReceive",
@@ -588,6 +590,12 @@
       "path": "pages/gudongPay/gudongPay",
       "style": {
         "navigationBarTitleText": "股东支付"
+      }
+    },
+    {
+      "path": "pages/marketing/rotate",
+      "style": {
+        "navigationBarTitleText": "大转盘"
       }
     }
 
