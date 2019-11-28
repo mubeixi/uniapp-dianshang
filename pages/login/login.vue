@@ -670,7 +670,7 @@
 		//   })
 		// },
 		onShow(){
-
+			this.setUserInfo({});
 		},
 		created() {
 
