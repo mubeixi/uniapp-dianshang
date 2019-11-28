@@ -348,8 +348,9 @@ export const scanMixin = {
 		 * @param qrCode 支持二维码 微信wap专用
 		 * @return {Promise<unknown>}
 		 */
-		openScanFn({needResult=1,onlyFromCamera=true,barCode=1,qrCode=1}){
+		openScanFn(needResult,onlyFromCamera,barCode,qrCode){
 
+			console.log(arguments)
 			return new Promise((resolve, reject) => {
 
 				// #ifdef H5
@@ -377,6 +378,7 @@ export const scanMixin = {
 				// #endif
 
 				// #ifndef H5
+				console.log('手机扫码')
 				// 只允许通过相机扫码
 				uni.scanCode({
 					onlyFromCamera,
@@ -403,6 +405,10 @@ export const scanMixin = {
 			}
 
 			const dataArr = origin.split('##')
+			if(dataArr.length<2){
+				error('信息有误');
+				return;
+			}
 			let act = dataArr[0];
 			const valArr = dataArr[1].split(';;')
 

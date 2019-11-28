@@ -2,8 +2,9 @@
     import {ls} from "./common/tool";
     import {getSystemConf} from "./common/fetch";
 
-	// #ifdef APP-PLUS || MP-TOUTIAO
-	import {APP_USERS_ID,isDev} from "./common/env";
+    import {isDev} from "./common/env";
+    // #ifdef APP-PLUS || MP-TOUTIAO
+	import {APP_USERS_ID} from "./common/env";
 	// #endif
 
     // #ifdef APP-PLUS
@@ -97,7 +98,17 @@
 		},
 		onHide: function() {
 			console.log('App Hide')
-		}
+		},
+        //后期可以接自定义的错误上报
+        onError:function(err){
+            console.log(err)
+            if(isDev){
+                uni.showModal({
+                    title:'错误',
+                    content:JSON.stringify(err)
+                })
+            }
+        }
 	}
 </script>
 
@@ -105,130 +116,8 @@
 @import "./static/css/app.less";
 @import "./static/css/icon.css";
 
-/* #ifdef APP-PLUS */
-page{
-	background: #f8f8f8;
-}
-/* #endif */
 
-/* #ifdef MP */
-page{
-    background: #f8f8f8;
-    padding-bottom: constant(safe-area-inset-bottom);
-    padding-bottom: env(safe-area-inset-bottom);
-    font-size: 16px;
-    font-family:-apple-system,'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
-}
-.safearea-box{
-    height: constant(safe-area-inset-bottom);
-    height: env(safe-area-inset-bottom);
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    z-index: 2;
-    background: white;
-}
-/* #endif */
-.bgColor-white{
-    background-color: #FFFFFF !important;
-}
-/* #ifdef H5 */
-/*'Hiragino Sans GB',*/
-html,body{
-    background: #f8f8f8;
-    font-size: 16px;
-    font-family:-apple-system,'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
-}
-/* #endif */
-
-.bgwhite{
-    background: white;
-}
-.space-box{
-    background-color: none;
-}
-
-.safearea{
-    position: fixed;
-    width: 750rpx;
-    bottom: 0;
-    height: constant(safe-area-inset-bottom);
-    height: env(safe-area-inset-bottom);
-    background: white;
-}
-
-ul,li{
-    list-style:none;
-    .reset
-}
-
-.inline{
-    display: inline;
-}
-.inline-block{
-    display: inline-block;
-}
-.box-sizing{
-	box-sizing: border-box;
-}
-.overflow{
-	overflow-x: hidden;
-}
-.font12{font-size:12px}
-.font14{font-size : 14px}
-.font16{font-size : 16px}
-.font18{font-size : 18px}
-.font20{font-size : 20px}
-.font24{font-size : 24px}
-.font36{font-size : 24px}
-
-.line6{margin-bottom : 6px !important}
-.line4{margin-bottom : 4px !important}
-.line8{margin-bottom : 8px !important}
-.line10{margin-bottom : 10px !important}
-.line15{margin-bottom : 15px !important}
-.line20{margin-bottom : 20px !important}
-
-.graytext{color : #666 !important}
-.graytext2{color : #999 !important}
-
-.text-center{text-align : center}
-
-.flex{display : flex}
-.flex1{flex : 1}
-.flex-between{justify-content: space-between}
-.flex-vertical-center{align-items: center}
-
-.padding4-c{padding :0  4px}
-
-
-.padding10{padding : 10px}
-.padding10-c{padding : 0 10px}
-.padding10-r{padding : 10px 0}
-
-.padding15{padding : 15px}
-.padding15-c{padding : 0 15px}
-.padding15-r{padding : 15px 0}
-
-
-.margin15{
-    margin: 15px;
-}
-
-//titleView为custom或者false时专用，让状态栏显示出来（对于商品详情页等需要显示的则不需要)
-.status_bar {
-      height: var(--status-bar-height);
-      width: 100%;
-	  background: none;
-}
-
-
-
-
-/*每个页面公共css */
 </style>
 <style lang="scss">
-.danger-color{
-    color: $wzw-primary-color !important;
-}
+
 </style>
