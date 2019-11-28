@@ -394,8 +394,6 @@ export const userStoreApply = (data, options) => fetch('user_store_apply', data,
 
 export const getPifaStoreProd = (data, options) => fetch('get_pifa_store_prod', data, options);
 
-export const getStoreList = (data,options) => fetch('get_store_list', data,options);
-
 //写入用户日志
 export const upUserLog = (data, options) => {
   console.log('上报用户信息',data,options)
