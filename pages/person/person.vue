@@ -153,12 +153,12 @@
 			</view>
 
 
-			<view class="setting cell" @click="goNew" v-if="Stores_ID">
+			<view class="setting cell" @click="goNew" v-if="!Stores_ID">
 				<image :src="'/static/client/person/she.png'|domain" class="left"></image>
-				<view class="pintuan">进货渠道</view>
+				<view class="pintuan">门店入驻</view>
 				<image :src="'/static/client/person/right.png'|domain" class="right"></image>
 			</view>
-			<view class="setting cell" @click="goStock" >
+			<view class="setting cell" @click="goStock" v-else>
 				<image :src="'/static/client/person/she.png'|domain" class="left"></image>
 				<view class="pintuan">进货</view>
 				<image :src="'/static/client/person/right.png'|domain" class="right"></image>

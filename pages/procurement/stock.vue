@@ -33,8 +33,8 @@
         </view>
         <view style="height:90rpx;" v-if="total_cart_count > 0">
             <view class="check" :style="{'z-index': zIndex}">
-                <view class="check-msg" @click="showSelected">已选取<text class="num">{{total_cart_count}}</text>/{{total_pro_count}}个普通商品 <image class="img" :class="isClicked?'turn':''" src="/static/top.png"></image></view>
-                <view class="submit">提交进货单</view>
+                <view class="check-msg" @click="showSelected">已选取<text class="num">{{total_cart_count}}</text>个普通商品 <image class="img" :class="isClicked?'turn':''" src="/static/top.png"></image></view>
+                <view class="submit" @click="submit">提交进货单</view>
             </view>
         </view>
         <!--  遮罩层	-->
@@ -54,7 +54,7 @@
                     <view class="sku-item">
                         <view class="handle" @click="minus">-</view>
                         <view class="pro-num">{{postData.qty}}</view>
-                        <view class="handle" @click="increase">+</view>
+                        <view class="handle" @click="plus">+</view>
                     </view>
                 </view>
                 <view class="sku-btns">
@@ -77,7 +77,7 @@
                 </view>
                 <view class="skulist">
                     <view class="sku-name">门店地址：</view>
-                    <view class="sku-item" style="flex:1;">{{storeInfo.Stores_Province_name}}{{}}<image class="img" src="/static/local.png"></image></view>
+                    <view class="sku-item" style="flex:1;">{{storeInfo.Stores_Province_name}}{{storeInfo.Stores_City_name}}{{storeInfo.Stores_Area_name}}{{storeInfo.Stores_Address}}<image class="img" src="/static/local.png"></image></view>
                 </view>
                 <view class="skulist">
                     <view class="sku-name">门店距离：</view>
@@ -106,9 +106,9 @@
                                     <view class="newPrice">￥<text class="number">{{attr.ProductsPriceX}}</text></view>
                                     <view class="oldPrice">￥{{attr.ProductsPriceY}}</view>
                                     <view class="amount">
-                                        <view class="icon">-</view>
+                                        <view class="icon" @click="reduce(pro_id,attr_id)">-</view>
                                         <view class="num">{{attr.Qty}}</view>
-                                        <view class="icon">+</view>
+                                        <view class="icon" @click="increase(pro_id,attr_id)">+</view>
                                     </view>
                                 </view>
                             </view>
@@ -122,7 +122,7 @@
 
 <script>
     import popupLayer from '../../components/popup-layer/popup-layer.vue'
-    import {getPifaStoreProd, updateCart,getCart,delCart,getStoreList} from '../../common/fetch'
+    import {getPifaStoreProd, updateCart,getCart,delCart,getStoreList,createOrder} from '../../common/fetch'
     import {mapGetters} from 'vuex'
     import {numberSort} from '../../common/tool'
     export default {
@@ -151,7 +151,8 @@
                 cartList: '',
                 total_pro_count: '', // 总共的产品数
                 total_cart_count: '', // 购物车中的产品数
-								storeInfo: '' , // 门店信息
+								storeInfo: '' , // 门店信息,
+								active_id: ''
             }
         },
         components: {
@@ -164,14 +165,81 @@
             },
 
         },
+				onShow(){
+					this.get_cart();
+				},
         onLoad(options){
             if(options.purchase_store_sn) {
                 this.purchase_store_sn = options.purchase_store_sn;
                 this.getProlist();
             }
-            this.get_cart();
         },
         methods: {
+						// 提交进货单
+						submit(){
+							console.log(this.cartList)
+							let obj = {}
+							for(let i in this.cartList){
+								for(let j in this.cartList[i]){
+									if(obj[i]) {
+										obj[i].push(j)
+									}else {
+										obj[i] = [j]
+									}
+								}
+							} 
+							createOrder({
+								cart_key: 'CartList',
+								cart_buy: obj && JSON.stringify(obj)
+							}).then(res=>{
+								uni.showToast({
+									title: res.msg
+								});
+								setTimeout(()=>{
+									uni.navigateTo({
+										url: '../procurement/purchaseRecords'
+									})
+								},1500)
+							})
+						},
+            // 更新购物车中产品的数量，数量-1
+            reduce(pro_id,attr_id) {
+							updateCart({
+									cart_key: 'CartList',
+									prod_id: pro_id,
+									qty: -1,
+									attr_id: attr_id,
+									active: 'store_pifa',
+									active_id:  this.active_id
+							}).then(res=>{
+									uni.showToast({
+											title: res.msg
+									});
+									this.isHidden = true;
+									this.showSku = false;
+									this.get_cart();
+									return;
+							})
+            },
+            // 数量加1
+            increase(pro_id,attr_id){
+							updateCart({
+									cart_key: 'CartList',
+									prod_id: this.postData.prod_id,
+									qty: 1,
+									attr_id: this.postData.attr_id,
+									active: 'store_pifa',
+									active_id:  this.active_id
+							}).then(res=>{
+									uni.showToast({
+											title: res.msg
+									});
+									this.isHidden = true;
+									this.showSku = false;
+									this.get_cart();
+									return;
+							})
+            },
             //  删除购物车中的产品
             del(pro_id,attr_id){
                 let obj = {}
@@ -249,6 +317,7 @@
                     this.submit_flag =  false;
                     return false;
                 }
+								this.check_attr = {};
                 this.check_attr = check_attr;
                 this.check_attrid_arr = check_attrid_arr;
                 this.submit_flag = (!this.check_attr || Object.getOwnPropertyNames(this.check_attr).length != Object.getOwnPropertyNames(this.prosku.skujosn).length) ? false : true;
@@ -270,12 +339,16 @@
                 }).then(res=>{
                     this.prolist = res.data;
                     this.total_pro_count = res.totalCount;
+										this.active_id = this.Stores_ID + '_' + res.Stores_ID
                 })
             },
             methodHandle(type){
               this.type = type;
 							if(this.type == 1) {
 								// 进货记录
+								uni.navigateTo({
+									url: '../procurement/purchaseRecords'
+								})
 							}else {
 								// 门店信息
 								getStoreList({
@@ -283,7 +356,8 @@
 								}).then(res=>{
 									this.storeInfo = res.data[0]
 								})
-								this.methodHandle = true;
+								this.isHidden = false;
+								this.isShowStoreMsg = true;
 							}
             },
             handClicked(){
@@ -307,8 +381,9 @@
             hiddenMask(){
                 this.isHidden = true;
                 this.showSku = false;
+								this.isShowStoreMsg = false;
             },
-            increase(){
+            plus(){
                 if (this.postData.qty < this.postData.count) {
                     this.postData.qty = Number(this.postData.qty) + 1;
                 }else {
@@ -368,7 +443,7 @@
                     qty: this.postData.qty,
                     attr_id: this.postData.attr_id,
                     active: 'store_pifa',
-                    active_id:  this.Stores_ID + '_' + this.prosku.Stores_ID
+                    active_id:  this.active_id
                 }).then(res=>{
                     uni.showToast({
                         title: res.msg
@@ -417,12 +492,12 @@
             border-top-right-radius: 10rpx;
         }
         .sku-content {
-            padding: 40rpx 0 34rpx 40rpx;
+            padding: 40rpx 46rpx 34rpx 40rpx;
             background-color: #fff;
             border-bottom-left-radius: 10rpx;
             border-bottom-right-radius: 10rpx;
             .skulist {
-                margin-bottom: 34rpx;
+                margin-bottom: 30rpx;
                 display: flex;
                 align-items: center;
                 .sku-name {

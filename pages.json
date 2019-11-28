@@ -567,6 +567,12 @@
         "navigationBarTitleText": "进货订单"
       }
     },
+		{
+		  "path": "pages/procurement/purchaseRecords",
+		  "style": {
+		    "navigationBarTitleText": "进货记录"
+		  }
+		},
     {
       "path": "pages/procurement/storeWholesale",
       "style": {
