@@ -162,6 +162,7 @@
 			},
 			getSelfStoreProd(){
 				if(this.loading)return
+				this.checkedData=this.checked
 				this.loading=true
 				let data={
 					store_id:this.Stores_ID,
@@ -181,7 +182,6 @@
 				}
 				getSelfStoreProd(data).then(res=>{
 					this.productMy = this.productMy.concat(res.data)
-					this.checkedData=this.checked
 					this.checked = [];
 					for(let i in this.productMy) {
 						this.checked.push({
