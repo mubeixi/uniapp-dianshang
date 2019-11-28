@@ -1,7 +1,7 @@
 <template>
     <div class="wrap">
         <div class="input-box">
-            <input confirm-type="done" class="input" type="digit" placeholder="请输入消费券码" />
+            <input confirm-type="done" v-model="Order_Code" class="input" type="digit" placeholder="请输入消费券码" />
         </div>
         <button type="warn" class="sub" @click="subFn">核销</button>
     </div>
@@ -22,12 +22,12 @@
         methods:{
             subFn(){
                 let Order_Code = this.Order_Code
-               
+
                 uni.navigateTo({
                     url:'/pages/order/checkOrderInfo?Order_Code='+Order_Code
                 })
             },
-            
+
         }
     }
 </script>
@@ -43,13 +43,16 @@
     padding: 40rpx 20rpx;
     .input-box{
         height: 180rpx;
-        line-height: 180rpx;
+
+        box-sizing: border-box;
         border: 1px solid $wzw-primary-color;
         border-radius: 10rpx;
         .input{
-            height: 180rpx;
-            padding: 0 20rpx;
-            font-size: 30px;
+            margin: 39rpx 0;
+            padding: 20rpx;
+            font-size: 50rpx;
+            line-height: 60rpx;
+            height: 60rpx;
             font-weight: 300;
             color: #555;
             &::placeholder{

@@ -1,25 +1,28 @@
 <template>
-    <div class="myall">
+    <div class="myall" v-show="orderInfo.Order_ID">
 
-        <div class="container">
+        <div class="container" >
             <div class="lists">
                 <div class="item" >
 
                     <div class="goods-list" >
-                        <div class="goods" v-for="(item,idx2) in orderInfo.prod_list">
-                            <div class="l" :style="{backgroundImage:'url('+item.prod_img+')'}"></div>
-                            <div class="c">
-                                <div class="title line10">{{item.prod_name}}</div>
-                                <div class="line10 flex flex-between graytext font14 flex-vertical-center">
-                                    <div class="spec-key">{{item.attr_info.attr_name||'无规格'}}</div>
-                                    <div class="numbox font16">
-                                        x{{item.prod_count}}
+                        <block v-if="orderInfo.prod_list">
+                            <div class="goods" v-for="(item,idx2) in orderInfo.prod_list">
+                                <div class="l" :style="{backgroundImage:'url('+item.prod_img+')'}"></div>
+                                <div class="c">
+                                    <div class="title line10">{{item.prod_name}}</div>
+                                    <div class="line10 flex flex-between graytext font14 flex-vertical-center">
+                                        <div class="spec-key">{{item.attr_info.attr_name||'无规格'}}</div>
+                                        <div class="numbox font16">
+                                            x{{item.prod_count}}
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="font14"><span class="danger-color">￥<span class="price-num font16">{{item.prod_price}}</span></span></div>
+                                    <div class="font14"><span class="danger-color">￥<span class="price-num font16">{{item.prod_price}}</span></span></div>
 
+                                </div>
                             </div>
-                        </div>
+                        </block>
+
                     </div>
 
                 </div>
@@ -41,6 +44,7 @@
         <div class="infobox">
             <div class="title"><span class="tip"></span><span class="text">订单信息</span></div>
             <div class="row"><div class="label">订单号</div><div class="form-item">{{orderInfo.Order_ID}}</div></div>
+            <div class="row"><div class="label">订单状态</div><div class="form-item" :style="{color:orderInfo.Order_Status!=2?'red':''}">{{orderInfo.Order_Status_desc}}</div></div>
             <div class="row"><div class="label">总价</div><div class="form-item">￥{{orderInfo.Order_TotalAmount}}</div></div>
             <div class="row"><div class="label">优惠</div><div class="form-item">￥{{orderInfo.Coupon_Money}}</div></div>
             <div class="row"><div class="label">实付</div><div class="form-item danger-color">￥{{orderInfo.Order_Fyepay}}</div></div>
@@ -78,7 +82,7 @@
         isWeiXin,
         urlencode
     } from "../../common/tool";
-    import {error,confirm} from "../../common";
+    import {error, confirm, toast} from "../../common";
     import PayComponents from '../../components/PayComponents.vue';
 
     export default {
@@ -130,7 +134,7 @@
         },
         created() {
 
-           
+
 
         },
         methods: {
@@ -138,32 +142,43 @@
 
                 let confirmConf = {title:'操作提示',confirmText:'继续核销',showCancel:true,cancelText:'回到首页'}
                 await checkOrderByCode({Order_Code:this.Order_Code}).then(res=>{
-                    confirmConf.conteont = '核销成功'
+                    confirmConf.content = '核销成功'
                 }).catch(err=>{
-                    
+
                 })
 
                 if(!confirmConf.conteont)return;
 
                 confirm({confirmConf}).then(res=>{
-                    uni.navigateTo({
-                        url:'/pages/order/checkChannel'
-                    })
+
+                    toast('核销成功')
+                    setTimeout(function () {
+                        uni.navigateTo({
+                            url:'/pages/order/checkChannel'
+                        })
+                    },1000)
+
                 }).catch(err=>{
                     uni.switchTab({
                         url:'/pages/index/index'
                     })
                 })
             },
-        
+
             // 订单详情
             getOrderDetail() {
 
                 let _self = this;
                 getOrderDetail({
                     Order_Code: this.Order_Code,
-                }).then(res => {
+                },{tip:'努力加载中'}).then(res => {
                     console.log(res)
+                    if(res.data.Order_Status!=2){
+
+                        confirm({title:'操作提示',content:'该订单状态不符:'+res.data.Order_Status_desc}).then(res=>{
+
+                        }).catch(err=>{})
+                    }
                     if (res.errorCode == 0) {
                         for (var i in res.data) {
                             if (i == 'Order_Shipping') {
@@ -194,7 +209,7 @@
     .wrap {
         background: #fff;
     }
-    
+
     .lists{
         .item{
             margin: 15px;

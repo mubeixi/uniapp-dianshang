@@ -1,6 +1,12 @@
 <template>
     <div class="wrap">
-        <image @click="scanFn" v-if="iswx" class="scan" src="/static/check_by_scan.jpg" />
+		<!-- #ifndef H5 -->
+		<image @click="scanFn" class="scan" src="/static/check_by_scan.jpg" />
+		<!-- #endif -->
+		<!-- #ifdef H5 -->
+		<image @click="scanFn" v-if="iswx" class="scan" src="/static/check_by_scan.jpg" />
+		<!-- #endif -->
+
         <image @click="toCode" class="code" src="/static/check_by_code.jpg" />
     </div>
 </template>
@@ -8,6 +14,7 @@
 <script>
     import {isWeiXin} from "../../common/tool";
     import {scanMixin} from "../../common/mixin";
+    import {error} from "../../common";
 
     export default {
         mixins:[scanMixin],
@@ -24,7 +31,23 @@
               })
             },
             scanFn(){
-                this.openScanFn()
+
+				let _self = this
+                this.openScanFn(1,true,1,1).then(origin=>{
+					let rt = _self.translateQrData(origin)
+					console.log('识别结果',rt)
+
+                    //params默认空对象不报错
+                    let {act,params={}} = rt
+
+					if(act ==='IsVirtualOrderCheck' && params.Order_Code){
+						uni.navigateTo({
+                            url:'/pages/order/checkOrderInfo?Order_Code='+params.Order_Code
+                        })
+					}else{
+						error('参数有误')
+					}
+				})
             }
         }
     }

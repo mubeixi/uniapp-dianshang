@@ -14,7 +14,7 @@
 import QRCode from "./qrcode.js"
 let qrcode
 export default {
-	name: "tki-qrcode",
+	name: "wzw-qrcode",
 	props: {
 		cid: {
 			type: String,
