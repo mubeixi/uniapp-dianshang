@@ -10,6 +10,7 @@
             <div class="label-title">
                 <div class="line"></div>
                 筛选条件
+
             </div>
             <div class="row">
                 <div class="row-label graytext">地区:</div>
@@ -46,9 +47,10 @@
             </div>
             <div class="search" @click="loadInfo">搜索</div>
             <div class="space-box"></div>
-            <div class="label-title">
+            <div class="label-title" style="justify-content: space-between;">
                 <div class="line"></div>
-                门店列表
+                <div>门店列表</div>
+                <div @click="get_user_location" class="graytext font14 flex1 text-right padding10-c"><span class="funicon icon-dingwei font14"></span>离我最近</div>
             </div>
             <div class="lists">
                <scroll-view  scroll-y="true" class="scroll-Y" >
@@ -85,6 +87,7 @@
     import {City} from "../common/city";
     import {get_arr_index} from "../common/util";
     import {emptyObject} from "../common/tool";
+    import {getLocation} from "../common/tool/location";
 
     export default {
         name: "StoreListComponents",
@@ -101,7 +104,7 @@
                 city_list:[],
                 area_list:[],
                 stores: [],
-                ifshow: true, // 是否展示,
+                ifshow: false, // 是否展示,
                 translateValue: -100, // 位移距离
             }
         },
@@ -140,6 +143,33 @@
             }
         },
         methods: {
+            async get_user_location(){
+                // console.log('让你等就等')
+                // await new Promise((resolve, reject) => {
+                //     setTimeout(function () {
+                //         console.log('等到了')
+                //         resolve(false)
+                //     },2000)
+                // })
+                //
+                // console.log('没等到就跑了')
+                //真实环境不跑下面逻辑，供参考
+                //return;
+                let localInfo = null;
+
+
+                await getLocation().then(res=>{
+                    if(res.code===0){
+                        localInfo = res.data
+                    }
+                },err=>{
+                    console.log(err)
+                    error('获取位置信息失败:'+err.msg)
+                })
+
+                console.log('获取到的位置信息',localInfo)
+
+            },
             loadInfo(){
                 let postData = {
                     pageSize:10000,
@@ -187,7 +217,6 @@
                 console.log('show popup')
                 this.ifshow = true;
 
-
                 let _open = setTimeout(() => {
                     this.translateValue = 0;
                     _open = null;
@@ -224,6 +253,9 @@
 
         },
         watch:{
+            getLocationFn(){
+
+            },
             province:{
                 handler(val){
                     this.city_list = City.getCityList(this.province.id)
@@ -299,6 +331,7 @@
     line-height: 14px;
     display: flex;
     align-items: center;
+
     .line{
         margin: 0px 10px;
         width: 2px;
