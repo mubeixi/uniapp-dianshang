@@ -151,8 +151,6 @@
 				</view>
 				<image :src="'/static/client/person/right.png'|domain" class="right"></image>
 			</view>
-
-
 			<view class="setting cell" @click="goNew" v-if="Stores_ID">
 				<image :src="'/static/client/person/she.png'|domain" class="left"></image>
 				<view class="pintuan">进货渠道</view>

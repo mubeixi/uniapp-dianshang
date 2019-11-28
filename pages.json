@@ -529,7 +529,9 @@
     },
     {
       "path": "pages/empty/empty",
-      "style": {}
+      "style": {
+        "navigationBarTitleText": "empty"
+      }
     },
     {
       "path": "pages/couponReceive/couponReceive",
@@ -578,7 +580,8 @@
       "style": {
         "navigationBarTitleText": "发货-批发订单"
       }
-    },{
+    },
+    {
       "path": "pages/regionPay/regionPay",
       "style": {
         "navigationBarTitleText": "区域代理支付"
@@ -590,13 +593,19 @@
         "navigationBarTitleText": "股东支付"
       }
     },
-	{
-		"path" : "pages/productMy/productMy",
-		"style": {
-		  "navigationBarTitleText": "我的产品"
-		}
+    {
+      "path": "pages/marketing/rotate",
+      "style": {
+        "navigationBarTitleText": "大转盘"
+      }
+    },
+    {
+      "path": "pages/productMy/productMy",
+      "style": {
+        "navigationBarTitleText": "我的产品"
+      }
     }
-   ],
+  ],
   "globalStyle": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": " ",

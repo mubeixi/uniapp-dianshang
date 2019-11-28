@@ -17,6 +17,14 @@
 				<view>修改支付密码</view>
 				<image :src="'/static/client/right.png'|domain" mode=""></image>
 			</view>
+			<view class="item" v-if="isDev" @click="goOrderCheck">
+				<view>核销</view>
+				<image :src="'/static/client/right.png'|domain" mode=""></image>
+			</view>
+			<view class="item" v-if="isDev" @click="goRotate">
+				<view>大转盘</view>
+				<image :src="'/static/client/right.png'|domain" mode=""></image>
+			</view>
 		</view>
 		<view class="btn" @click="logoutFunc">退出登录</view>
 	</view>
@@ -27,23 +35,35 @@
 	import {confirm} from "../../common";
 	import {ls} from "../../common/tool";
 	import {pageMixin} from "../../common/mixin";
+	import {isDev} from "../../common/env";
+
 	export default {
 		mixins:[pageMixin],
 		data() {
 			return {
-
+				isDev
 			}
 		},
 		methods: {
-			...mapActions(['setUserInfo']),
-				// 修改信息
-				update(type){
-					console.log('asdf')
-					// type 0 表示修改登录，1，修改支付
-					uni.navigateTo({
-						url: '../updateUserPsw/updateUserPsw?type='+type
-					})
-				},
+			goOrderCheck(){
+				uni.navigateTo({
+					url:'/pages/order/checkChannel'
+				})
+			},
+			goRotate(){
+				uni.navigateTo({
+					url:'/pages/marketing/rotate'
+				})
+			},
+
+			// 修改信息
+			update(type){
+				console.log('asdf')
+				// type 0 表示修改登录，1，修改支付
+				uni.navigateTo({
+					url: '../updateUserPsw/updateUserPsw?type='+type
+				})
+			},
 			logoutFunc(){
 				confirm({title:'操作提示',content:'是否退出登录'}).then(res=>{
 					let users_id = ls.get('users_id');
@@ -65,6 +85,7 @@
 
 				})
 			},
+			...mapActions(['setUserInfo']),
 		}
 	}
 </script>
