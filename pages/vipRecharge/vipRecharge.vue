@@ -11,7 +11,7 @@
 			</view>
 		</view>
 
-		<input  class="inputs" v-model="money" type="number" placeholder="请输入充值金额">
+		<input  class="inputs" v-model="money" type="digit" placeholder="请输入充值金额">
 		<view class="line"></view>
 		<view class="payMethod">
 			支付方式
