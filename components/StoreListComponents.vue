@@ -363,6 +363,7 @@
         }
         .info{
             flex:1;
+			margin-left: 6px;
         }
     }
 }
@@ -475,4 +476,7 @@
         text-align: left;
         padding-left: 10px;
     }
+	.uni-input{
+		font-size: 12px;
+	}
 </style>
