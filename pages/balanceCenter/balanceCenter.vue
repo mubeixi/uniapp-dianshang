@@ -97,7 +97,8 @@
 </template>
 
 <script>
-	import TweenLite from 'gsap'
+	// import TweenLite from 'gsap'
+	import "../../common/tool/TweenMax.min.js"
 	import {pageMixin} from "../../common/mixin";
 	import {
 		get_user_info,
@@ -134,7 +135,9 @@
 		},
 		watch: {
 			s_money: function(newVal, oldVal){
-					TweenLite.to(this.$data, 0.5, {Umoney: newVal})
+					var newValue = parseInt(newVal)
+				console.log(newValue)
+					TweenLite.to(this.$data, 0.5, {Umoney: newValue})
 			}
 		},
 		methods:{
