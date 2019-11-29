@@ -43,8 +43,8 @@
 			<view class="prices">
 				{{Money}}
 			</view>
-			<view class="zhuanchu" @click="isShow=true">
-				转出
+			<view class="zhuanchu" @click="goWithdraw" v-if="initData.remainder_withdraw==1">
+				提现
 			</view>
 			<view class="bottoms">
 				<view class="lefts qwe" @click="goRecharge">
@@ -53,9 +53,9 @@
 				</view>
 				<view class="line">
 				</view>
-				<view class="rights qwe" @click="goFacePay">
+				<view class="rights qwe" @click="goFacePay" >
 					<image :src="'/static/client/check/t2.png'|domain" ></image>
-					<text>实体消费</text>
+					<text>余额转出</text>
 				</view>
 			</view>
 		</view>
@@ -107,7 +107,7 @@
 		transferBalance,
 		add_template_code
 	} from "../../common/fetch";
-	import {mapActions} from 'vuex';
+	import {mapActions,mapGetters} from 'vuex';
 	export default {
 		mixins:[pageMixin],
 		data() {
@@ -129,6 +129,7 @@
 			};
 		},
 		computed: {
+			...mapGetters(['initData']),
 			Money: function(){
 				return Number(this.Umoney).toFixed(2)
 			}
@@ -142,10 +143,16 @@
 		},
 		methods:{
 			...mapActions(['setUserInfo']),
-			goFacePay(){
+			goWithdraw(){
 				uni.navigateTo({
-					url:'/pages/storePay/storePay'
+					url:'../withdrawal/withdrawal?form=2'
 				})
+			},
+			goFacePay(){
+				this.isShow=true
+				// uni.navigateTo({
+				// 	url:'/pages/storePay/storePay'
+				// })
 			},
 			goBack(){
 			    uni.navigateBack(1);
@@ -264,6 +271,7 @@
 		onLoad(){
 
 			this.$fun.checkIsLogin(1);
+			this.initData=this.getInitData()
 
 		},
 		onShow(){
