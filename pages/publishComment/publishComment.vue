@@ -30,7 +30,7 @@
 					<image class="image" :src="item"  @click="yulan(index)"></image>
 					<image :src="'/static/client/delimg.png'|domain" class="del image" @click="delImg(index)"></image>
 				</view>
-			    <view class="shangchuan" @click="addImg">
+			    <view class="shangchuan" @click="addImg"  v-if="arr.length<9">
 					<view class="heng"></view>
 					<view class="shu"></view>
 				</view>
@@ -140,13 +140,6 @@
 				this.arr.splice(index, 1);
 			},
 			addImg(){
-				// let data={
-				// 	'Users_ID': ls.get('users_id'),
-				// 	'timestamp':'1502263578',
-				// 	'sign':'DA1525TR85D6S5A9E5236FDSWD52F147WA',
-				// 	'sortToken':1,
-				// 	'act':'upload_image'
-				// };
 				let param = {act:'upload_image'};
 				param.User_ID = get_User_ID();
 				param.Users_ID = get_Users_ID();
@@ -339,7 +332,7 @@
 		height:146rpx;
 		border:1px solid rgba(186,186,186,1);
 		position: relative;
-		margin-right: 28rpx;
+		margin-right: 20rpx;
 		margin-bottom: 28rpx;
 		.image{
 			width: 100%;
