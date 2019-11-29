@@ -6,60 +6,65 @@
 		    <view class="nav-item" :class="index==0?'active':''" @click="changIndex(0)">全部</view>
 		    <view class="nav-item" :class="index==1?'active':''" @click="changIndex(1)">
 				待付款
-				<!-- <view class="jiaobiao" v-if="orderNum.waitpay>0">{{orderNum.waitpay}}</view> -->
+				<view class="jiaobiao" v-if="orderNum.waitpay>0">{{orderNum.waitpay}}</view>
 			</view>
 		    <view class="nav-item" :class="index==2?'active':''" @click="changIndex(2)">
 				待发货
-				<!-- <view class="jiaobiao" v-if="orderNum.waitsend>0">{{orderNum.waitsend}}</view> -->
+				<view class="jiaobiao" v-if="orderNum.waitsend>0">{{orderNum.waitsend}}</view>
 			</view>
 		    <view class="nav-item" :class="index==3?'active':''" @click="changIndex(3)">
 				待收货
-				<!-- <view class="jiaobiao" v-if="orderNum.waitconfirm>0">{{orderNum.waitconfirm}}</view> -->
+				<view class="jiaobiao" v-if="orderNum.waitconfirm>0">{{orderNum.waitconfirm}}</view>
 			</view>
 		    <view class="nav-item" :class="index==4?'active':''" @click="changIndex(4)">
 				待评价
-				<!-- <view class="jiaobiao" v-if="orderNum.waitcomment>0">{{orderNum.waitcomment}}</view> -->
+				<view class="jiaobiao" v-if="orderNum.waitcomment>0">{{orderNum.waitcomment}}</view>
 			</view>
 		</view>
 		<view class="space-box" style="height: 100rpx;width: 100%;background-color: #F8F8F8;">
 		</view>
 		
-		<view class="marginAuto">
+		<view class="marginAuto" v-for="(item,index) of pro" :key="index" >
 			<view class="orderTop">
 				<view style="color: #777777;">
-					订单号：SN123456789
+					订单号：{{item.Order_ID}}
 				</view>
 				<view style="color: #F43131;">
-					待付款
+					{{item.Order_Status_desc}}
 				</view>
 			</view>
-			<view class="blockDiv">
-				<view class="imgDiv">
-					<image class="imgHund" src="/static/pro.png"></image>
+			<block v-for="(i,k) of item.prod_list" :key="k">
+				<view class="blockDiv">
+					<view class="imgDiv">
+						<image class="imgHund" :src="i.prod_img"></image>
+					</view>
+					<view class="textRight" >
+						<view class="productName">
+							{{i.prod_name}}
+						</view>
+						<view class="bottomDiv">
+							<view class="skuCount" v-if="i.attr_info">
+								{{i.attr_info.attr_name}}
+							</view>
+							<view  v-else>
+								
+							</view>
+							<view class="allPrice">
+								×{{i.prod_count}}
+							</view>
+						</view>
+						<view class="buttonLast">
+							<view class="viewFont">
+								¥<span class="spanFont">{{i.prod_price}}</span>
+							</view>
+							<view>
+								<span class="spanJu">拒单</span>
+								<span class="spanFa" @click="goFa(item.Order_ID)">去发货</span>
+							</view>
+						</view>
+					</view>
 				</view>
-				<view class="textRight" >
-					<view class="productName">
-						2018夏装新款短袖蕾丝拼接荷叶边波点雪纺连衣裙女时尚名媛...
-					</view>
-					<view class="bottomDiv">
-						<view class="skuCount">
-							规格库存
-						</view>
-						<view class="allPrice">
-							×5
-						</view>
-					</view>
-					<view class="buttonLast">
-						<view class="viewFont">
-							¥<span class="spanFont">351</span>
-						</view>
-						<view>
-							<span class="spanJu">拒单</span>
-							<span class="spanFa">去发货</span>
-						</view>
-					</view>
-				</view>
-			</view>
+			</block>
 		</view>
 		
 		
@@ -72,26 +77,88 @@
 <script>
 	import {domainFn} from "../../common/filter";
 	import {mapGetters} from 'vuex'
+	import {getOrder,getOrderNum} from '@/common/fetch.js'
 	export default {
 		data() {
 			return {
-				index:0
+				index:0,
+				pro:[],
+				page:1,
+				pageSize:10,
+				totalCount:0,
+				orderNum:""
 			};
 		},
 		computed: {
 		    ...mapGetters(['Stores_ID']),		
 		},
 		onShow() {
-
+			this.pro=[]
+			this._getOrder();
+			this.getOrderNum();
 		},
 		onLoad() {
 	
 		},
-		onReachBottom() {
-		
+		onReachBottom(){
+			if(this.pro.length<this.totalCount){
+				this.page++;
+				this._getOrder();
+			}
 		},
 		methods:{
-			
+			goFa(id){
+				//发货 订单id
+				uni.navigateTo({
+					url:"../procurement/retailOrderShip?id="+id
+				})
+			},
+			_getOrder(){
+				let data={
+					Order_Store:this.Stores_ID,
+					page:this.page,
+					pageSize:this.pageSize
+				}
+				if(this.index>0){
+					data.Order_Status=this.index
+				}
+				getOrder(data,{noUid:true}).then(res=>{
+					for(var i in res.data) {
+						for(var m in res.data[i]){
+							if(m == 'prod_list'){
+								for(var j in res.data[i][m]) {
+										for( var k in res.data[i][m][j]) {
+											if(k == 'attr_info') {
+												if(res.data[i][m][j][k]){
+													res.data[i][m][j][k] = JSON.parse(res.data[i][m][j][k])
+												}
+											}
+										}
+									}
+							}
+						}
+					}
+					for(let item of res.data){
+						this.pro.push(item)
+					}
+					this.totalCount=res.totalCount;
+				}).catch(e=>{})
+			},
+			getOrderNum(){
+				getOrderNum({Order_Store:this.Stores_ID},{noUid:true}).then(res=>{
+					this.orderNum=res.data;
+					console.log(res)
+				}).catch(e=>{
+					console.log(e)
+				})
+			},
+			changIndex(i){
+				this.pro=[];
+				this.index=i;
+				this.page=1;
+				this._getOrder();
+				this.getOrderNum();
+			}
 		}
 	}
 </script>
@@ -149,13 +216,14 @@
 	justify-content: space-between;
 }
 .skuCount{
-	width: 150rpx;
 	height: 50rpx;
 	background-color: #FFF2F1;
 	font-size: 13px;
 	color: #666666;
 	text-align: center;
 	line-height: 50rpx;
+	padding-left: 5px;
+	padding-right: 5px;
 }
 .allPrice{
 	font-size: 30rpx;
