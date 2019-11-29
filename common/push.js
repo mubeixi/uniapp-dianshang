@@ -1,6 +1,7 @@
 // #ifdef APP-PLUS
 import {toast} from "./index";
 import {fun} from "./index";
+import {isDev} from "./env";
 
 class Push {
 
@@ -29,6 +30,14 @@ class Push {
             } else {
                 console.log('接收到在线透传消息')
             }
+
+            if(isDev){
+                uni.showModal({
+                    title:'收到推送',
+                    content:'receive event '+JSON.stringify(msg)
+                })
+            }
+
 
             if (plus.os.name == 'iOS') {
                 //如果是自己模拟的消息，没有这个,因为local是自己加的参数

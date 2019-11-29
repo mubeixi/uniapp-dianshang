@@ -53,7 +53,7 @@
 	import {pageMixin} from "../../common/mixin";
 	import {error} from "../../common";
 
-	import {getLocation} from "../../common/tool/location";
+
 
 	export default {
 		mixins:[pageMixin],
@@ -95,35 +95,7 @@
 
 		},
 		methods: {
-			async get_user_location(){
-				console.log('让你等就等')
-				await new Promise((resolve, reject) => {
-					setTimeout(function () {
-						console.log('等到了')
-						resolve(false)
-					},2000)
-				})
 
-				console.log('没等到就跑了')
-				//真实环境不跑下面逻辑，供参考
-				//return;
-				let localInfo = null;
-
-				let getLocationFn = getLocation()
-
-
-				await getLocationFn.then(res=>{
-					if(res.code===0){
-						localInfo = res.data
-					}
-				},err=>{
-					console.log(err)
-					error('获取位置信息失败:'+err.msg)
-				})
-
-				console.log('获取到的位置信息',localInfo)
-
-			},
 			$_init(){
 				let _self = this;
 				new Promise((resolve,reject) => {
