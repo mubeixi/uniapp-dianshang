@@ -10,7 +10,6 @@
             <div class="label-title">
                 <div class="line"></div>
                 筛选条件
-
             </div>
             <div class="row">
                 <div class="row-label graytext">地区:</div>
@@ -54,28 +53,37 @@
             </div>
             <div class="lists">
                <scroll-view  scroll-y="true" class="scroll-Y" >
-                   <radio-group>
-                       <label class="item padding10" v-for="(store,idx) in stores" :key="idx">
-                           <view class="checkbox">
-                               <radio :vlaue="store.Stores_ID"  />
-                           </view>
-                           <image class="logo" :src="store.Stores_ImgPath|domain" />
-                           <view class="info">
-                               <div class="line10 flex flex-between">
-                                   <div class="font14">{{store.Stores_Name}} [{{store.Stores_ID}}]</div>
-                                   <div class="distance" v-if="store.distance">{{store.distance}}m</div>
-                               </div>
-                               <div class="font12 graytext">{{store.Stores_Province_name}}{{store.Stores_City_name}}{{store.Stores_Area_name}}{{store.Stores_Address}}</div>
-                           </view>
-                       </label>
-                   </radio-group>
+                   <block v-if="stores.length>0">
+                       <radio-group @change="radioChange">
+                           <label class="item padding10" v-for="(store,idx) in stores" :key="idx">
+                               <view class="checkbox">
+                                   <radio :value="idx"  />
+                               </view>
+                               <image class="logo" :src="store.Stores_ImgPath|domain" />
+                               <view class="info">
+                                   <div class="line10 flex flex-between">
+                                       <div class="font14">{{store.Stores_Name}} [{{store.Stores_ID}}]</div>
+                                       <div class="distance font12 graytext" v-if="store.distance">{{store.distance|distanceFn}}km</div>
+                                   </div>
+                                   <div class="font12 graytext">{{store.Stores_Province_name}}{{store.Stores_City_name}}{{store.Stores_Area_name}}{{store.Stores_Address}}</div>
+                               </view>
+                           </label>
+                       </radio-group>
+                   </block>
+
+                   <block v-if="stores.length==0">
+                       <div class="graytext padding15 text-center font14">
+                           暂时没有合适的店铺
+                       </div>
+                   </block>
+
 
                    <div >
 
                    </div>
                </scroll-view>
             </div>
-            <button size="large" class="subbtn">确定</button>
+            <button size="large" class="subbtn" @click="subFn">确定</button>
             <div style="height: 46px;background: white;"></div>
             <div class="safearea-box2"></div>
         </view>
@@ -88,11 +96,16 @@
     import {get_arr_index} from "../common/util";
     import {emptyObject} from "../common/tool";
     import {getLocation} from "../common/tool/location";
+    import {error} from "../common";
 
     export default {
         name: "StoreListComponents",
         data() {
             return {
+                prod_ids:[],//根据商品筛选门店
+                lat:null,
+                lng:null,
+                select_info:null,
                 stores_name:'',
                 province:{},
                 province_idx:'',
@@ -142,7 +155,27 @@
                 return '';//positionValue[this.direction] + this._translate;
             }
         },
+        filters:{
+            distanceFn:function(val){
+                if(val){
+                    return parseInt(val*100/1000)/100
+                }
+
+                return val
+            }
+        },
         methods: {
+            radioChange(e){
+                console.log(e)
+                this.select_info = this.stores[e.detail.value]
+            },
+            subFn(){
+                if(!this.select_info){
+                    error('门店必选')
+                    return;
+                }
+              this.$emit('callFn',this.select_info)
+            },
             async get_user_location(){
                 // console.log('让你等就等')
                 // await new Promise((resolve, reject) => {
@@ -162,22 +195,36 @@
                     if(res.code===0){
                         localInfo = res.data
                     }
-                },err=>{
+                }).catch(err=>{
                     console.log(err)
                     error('获取位置信息失败:'+err.msg)
                 })
 
                 console.log('获取到的位置信息',localInfo)
 
+                this.lat = localInfo.latitude
+                this.lng = localInfo.longitude
+
+                this.loadInfo()
+
             },
             loadInfo(){
                 let postData = {
                     pageSize:10000,
-                    size:1,
+                    page:1,
                     province:this.province.id,
                     city:this.city.id,
                     area:this.area.id,
                     stores_name:this.stores_name,
+                }
+
+                if(this.prod_ids.length>0){
+                    postData.prod_id = this.prod_ids.join(',')
+                }
+
+                if(this.lat && this.lng){
+                    postData.lat = this.lat
+                    postData.lng = this.lng
                 }
                 getStoreList(emptyObject(postData)).then(res => {
 
@@ -213,7 +260,16 @@
                 console.log(event);
                 return;
             },
-            show(events) {
+            show(prod_ids) {
+
+                if(prod_ids){
+                    this.prod_ids = prod_ids
+                }else{
+                    this.prod_ids = []
+                }
+
+                this.loadInfo()
+
                 console.log('show popup')
                 this.ifshow = true;
 
@@ -222,15 +278,15 @@
                     _open = null;
                 }, 100)
                 let _toggle = setTimeout(() => {
-                    this.iftoggle = true;
+                    // this.iftoggle = true;
                     _toggle = null;
                 }, 300);
             },
             close() {
                 console.log('close popup')
-                if (this.timer !== null || !this.iftoggle) {
-                    return;
-                }
+                // if (this.timer !== null || !this.iftoggle) {
+                //     return;
+                // }
                 this.translateValue = -100;
                 this.timer = setTimeout(() => {
                     this.ifshow = false;
@@ -241,6 +297,7 @@
                 }, 100);
             },
             ableClose() {
+                console.log(this.autoClose)
                 if (this.autoClose) {
                     this.close();
                 }
@@ -279,7 +336,7 @@
         created()
         {
             this.province_list = City.getProvinceList()
-            this.loadInfo()
+
         }
     }
 </script>

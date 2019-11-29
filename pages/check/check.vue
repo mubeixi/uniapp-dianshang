@@ -1,8 +1,8 @@
 <template>
     <view v-if="loading">
       <!--  <pagetitle title="提交订单"></pagetitle> -->
-        <div class="top">
-            <div class="tabs">
+        <div class="top" v-if="orderInfo.all_has_stores">
+            <div class="tabs" >
                 <div class="tabs-item" :class="{active:tabIdx==0}" @click="tabIdx=0">快递发货</div>
                 <div class="tabs-item" :class="{active:tabIdx==1}" @click="tabIdx=1">到店自提</div>
             </div>
@@ -29,7 +29,7 @@
                     <image :src="orderInfo.ShopLogo" class="biz_logo" alt="" />
                     <span class="biz_name">{{orderInfo.ShopName}}</span>
                 </div>
-                <div class="graytext2 font14">批量选择门店</div>
+                <div v-if="tabIdx==1" @click="multipleSelectStore" class="graytext2 font14">批量选择门店</div>
 			</view>
 			<view class="order_msg">
 				<block  v-for="(pro,pro_id) in orderInfo.CartList" :key="pro_id">
@@ -42,8 +42,8 @@
                                 <view class="pro-price"><span>￥</span>{{attr.ProductsPriceX}} <span class="amount">x<span class="num">{{attr.Qty}}</span></span></view>
                             </view>
                         </view>
-                        <div class="store-box" @click="openStores(prod_id,attr_id)">
-                            <div class="store-name">{{attr.store_name||'选择门店'}}</div>
+                        <div v-if="tabIdx==1" class="store-box" @click="openStores(pro_id,attr_id)">
+                            <div class="store-name">{{attr.store.Stores_Name||'选择门店'}}</div>
                             <div class="funicon icon-fanhui icon"></div>
                         </div>
                         <div class="goods-hr"></div>
@@ -130,8 +130,6 @@
                 <span>小计：<span>￥</span><span class="money">{{orderInfo.Order_TotalPrice}}</span></span>
             </view> -->
 
-
-
 			<view class="remind-wrap" v-if="remindAddress">
 				<view class="remind-add">
 					<view class="text-align-center mb20">新建收货地址</view>
@@ -197,7 +195,7 @@
 				确定
 			</view>
 		</popup-layer>
-        <store-list-components ref="stroeComp" />
+        <store-list-components ref="stroeComp" @callFn="bindStores" />
     </view>
 </template>
 
@@ -218,7 +216,7 @@ export default {
     },
     data(){
         return {
-            tabIdx:1,
+            tabIdx:0,
             show: false, // 遮罩层
             wl_show: false, // 物流选择
             checked: true,
@@ -267,7 +265,8 @@ export default {
             user_mobile: '',
             isSlide: false, //查看明细是否已经弹出
             bottomHeight: 0, // 弹出层从哪里开始弹出，默认是0，明细从提交按钮上部50px
-            zIndex: 99999
+            zIndex: 3,
+			setStoreMode:''
         }
     },
 	filters: {
@@ -313,8 +312,29 @@ export default {
 		...mapGetters(['userInfo'])
 	},
   methods: {
+	  bindStores(storeInfo){
+	  	if(this.setStoreMode==='all'){
+	  		//居然是对象醉了
+	  		for(var i in this.orderInfo.CartList){
+	  			for(var j in this.orderInfo.CartList[i]){
+					this.orderInfo.CartList[i][j].store = storeInfo
+				}
+			}
+		}else{
+	  		let tempArr = this.setStoreMode.split('::'),prod_id=tempArr[0],attr_id=tempArr[1];
+			this.orderInfo.CartList[prod_id][attr_id].store = storeInfo
+		}
+		  this.$refs.stroeComp.close()
+	  },
+	  multipleSelectStore(){
+		  this.setStoreMode = 'all'
+		  let ids = Object.keys(this.orderInfo.CartList)
+		  this.$refs.stroeComp.show(ids)
+	  },
       openStores(prod_id,attr_id){
-          this.$refs.stroeComp.show()
+		  this.setStoreMode = prod_id+'::'+attr_id
+		  let ids = [prod_id]
+          this.$refs.stroeComp.show(ids)
       },
 		...mapActions(['getUserInfo','setUserInfo']),
 		goback(){
@@ -614,6 +634,12 @@ export default {
 		createOrderCheck(){
 			createOrderCheck(this.postData).then(res=>{
 				if(res.errorCode == 0){
+
+					for(var i in res.data.CartList){
+						for(var j in res.data.CartList[i]){
+							res.data.CartList[i][j].store = {}
+						}
+					}
 					this.orderInfo = res.data;
 					this.couponlist = res.data.coupon_list;
 					this.orderLoading = true;
