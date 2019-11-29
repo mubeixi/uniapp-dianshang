@@ -51,7 +51,11 @@
                 ]
             },
             /* ios打包配置 */
-            "ios" : {},
+            "ios" : {
+                "privacyDescription" : {
+                    "NSLocationAlwaysAndWhenInUseUsageDescription" : "为了为您匹配更精准的信息，需要获取您的位置"
+                }
+            },
             /* SDK配置 */
             "sdkConfigs" : {
                 "payment" : {

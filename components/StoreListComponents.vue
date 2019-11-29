@@ -46,34 +46,44 @@
             </div>
             <div class="search" @click="loadInfo">搜索</div>
             <div class="space-box"></div>
-            <div class="label-title">
+            <div class="label-title" style="justify-content: space-between;">
                 <div class="line"></div>
-                门店列表
+                <div>门店列表</div>
+                <div @click="get_user_location" class="graytext font14 flex1 text-right padding10-c"><span class="funicon icon-dingwei font14"></span>离我最近</div>
             </div>
             <div class="lists">
                <scroll-view  scroll-y="true" class="scroll-Y" >
-                   <radio-group>
-                       <label class="item padding10" v-for="(store,idx) in stores" :key="idx">
-                           <view class="checkbox">
-                               <radio :vlaue="store.Stores_ID"  />
-                           </view>
-                           <image class="logo" :src="store.Stores_ImgPath|domain" />
-                           <view class="info">
-                               <div class="line10 flex flex-between">
-                                   <div class="font14">{{store.Stores_Name}} [{{store.Stores_ID}}]</div>
-                                   <div class="distance" v-if="store.distance">{{store.distance}}m</div>
-                               </div>
-                               <div class="font12 graytext">{{store.Stores_Province_name}}{{store.Stores_City_name}}{{store.Stores_Area_name}}{{store.Stores_Address}}</div>
-                           </view>
-                       </label>
-                   </radio-group>
+                   <block v-if="stores.length>0">
+                       <radio-group @change="radioChange">
+                           <label class="item padding10" v-for="(store,idx) in stores" :key="idx">
+                               <view class="checkbox">
+                                   <radio :value="idx"  />
+                               </view>
+                               <image class="logo" :src="store.Stores_ImgPath|domain" />
+                               <view class="info">
+                                   <div class="line10 flex flex-between">
+                                       <div class="font14">{{store.Stores_Name}} [{{store.Stores_ID}}]</div>
+                                       <div class="distance font12 graytext" v-if="store.distance">{{store.distance|distanceFn}}km</div>
+                                   </div>
+                                   <div class="font12 graytext">{{store.Stores_Province_name}}{{store.Stores_City_name}}{{store.Stores_Area_name}}{{store.Stores_Address}}</div>
+                               </view>
+                           </label>
+                       </radio-group>
+                   </block>
+
+                   <block v-if="stores.length==0">
+                       <div class="graytext padding15 text-center font14">
+                           暂时没有合适的店铺
+                       </div>
+                   </block>
+
 
                    <div >
 
                    </div>
                </scroll-view>
             </div>
-            <button size="large" class="subbtn">确定</button>
+            <button size="large" class="subbtn" @click="subFn">确定</button>
             <div style="height: 46px;background: white;"></div>
             <div class="safearea-box2"></div>
         </view>
@@ -85,11 +95,17 @@
     import {City} from "../common/city";
     import {get_arr_index} from "../common/util";
     import {emptyObject} from "../common/tool";
+    import {getLocation} from "../common/tool/location";
+    import {error} from "../common";
 
     export default {
         name: "StoreListComponents",
         data() {
             return {
+                prod_ids:[],//根据商品筛选门店
+                lat:null,
+                lng:null,
+                select_info:null,
                 stores_name:'',
                 province:{},
                 province_idx:'',
@@ -101,7 +117,7 @@
                 city_list:[],
                 area_list:[],
                 stores: [],
-                ifshow: true, // 是否展示,
+                ifshow: false, // 是否展示,
                 translateValue: -100, // 位移距离
             }
         },
@@ -139,15 +155,76 @@
                 return '';//positionValue[this.direction] + this._translate;
             }
         },
+        filters:{
+            distanceFn:function(val){
+                if(val){
+                    return parseInt(val*100/1000)/100
+                }
+
+                return val
+            }
+        },
         methods: {
+            radioChange(e){
+                console.log(e)
+                this.select_info = this.stores[e.detail.value]
+            },
+            subFn(){
+                if(!this.select_info){
+                    error('门店必选')
+                    return;
+                }
+              this.$emit('callFn',this.select_info)
+            },
+            async get_user_location(){
+                // console.log('让你等就等')
+                // await new Promise((resolve, reject) => {
+                //     setTimeout(function () {
+                //         console.log('等到了')
+                //         resolve(false)
+                //     },2000)
+                // })
+                //
+                // console.log('没等到就跑了')
+                //真实环境不跑下面逻辑，供参考
+                //return;
+                let localInfo = null;
+
+
+                await getLocation().then(res=>{
+                    if(res.code===0){
+                        localInfo = res.data
+                    }
+                }).catch(err=>{
+                    console.log(err)
+                    error('获取位置信息失败:'+err.msg)
+                })
+
+                console.log('获取到的位置信息',localInfo)
+
+                this.lat = localInfo.latitude
+                this.lng = localInfo.longitude
+
+                this.loadInfo()
+
+            },
             loadInfo(){
                 let postData = {
                     pageSize:10000,
-                    size:1,
+                    page:1,
                     province:this.province.id,
                     city:this.city.id,
                     area:this.area.id,
                     stores_name:this.stores_name,
+                }
+
+                if(this.prod_ids.length>0){
+                    postData.prod_id = this.prod_ids.join(',')
+                }
+
+                if(this.lat && this.lng){
+                    postData.lat = this.lat
+                    postData.lng = this.lng
                 }
                 getStoreList(emptyObject(postData)).then(res => {
 
@@ -183,25 +260,33 @@
                 console.log(event);
                 return;
             },
-            show(events) {
+            show(prod_ids) {
+
+                if(prod_ids){
+                    this.prod_ids = prod_ids
+                }else{
+                    this.prod_ids = []
+                }
+
+                this.loadInfo()
+
                 console.log('show popup')
                 this.ifshow = true;
-
 
                 let _open = setTimeout(() => {
                     this.translateValue = 0;
                     _open = null;
                 }, 100)
                 let _toggle = setTimeout(() => {
-                    this.iftoggle = true;
+                    // this.iftoggle = true;
                     _toggle = null;
                 }, 300);
             },
             close() {
                 console.log('close popup')
-                if (this.timer !== null || !this.iftoggle) {
-                    return;
-                }
+                // if (this.timer !== null || !this.iftoggle) {
+                //     return;
+                // }
                 this.translateValue = -100;
                 this.timer = setTimeout(() => {
                     this.ifshow = false;
@@ -212,6 +297,7 @@
                 }, 100);
             },
             ableClose() {
+                console.log(this.autoClose)
                 if (this.autoClose) {
                     this.close();
                 }
@@ -224,6 +310,9 @@
 
         },
         watch:{
+            getLocationFn(){
+
+            },
             province:{
                 handler(val){
                     this.city_list = City.getCityList(this.province.id)
@@ -247,7 +336,7 @@
         created()
         {
             this.province_list = City.getProvinceList()
-            this.loadInfo()
+
         }
     }
 </script>
@@ -274,6 +363,7 @@
         }
         .info{
             flex:1;
+			margin-left: 6px;
         }
     }
 }
@@ -299,6 +389,7 @@
     line-height: 14px;
     display: flex;
     align-items: center;
+
     .line{
         margin: 0px 10px;
         width: 2px;
@@ -385,4 +476,7 @@
         text-align: left;
         padding-left: 10px;
     }
+	.uni-input{
+		font-size: 12px;
+	}
 </style>

@@ -316,7 +316,7 @@ export const addProductViews = (data,options) => fetch('prod_views', data, optio
 export const getPintuanTeam = (data,options) => fetch('get_pintuan_team', data, options);
 
 //更新用户信息
-export const updateUserInfo = (data, options) => fetch('update_user_info', data, options);
+export const upDateUserInfo = (data, options) => fetch('update_user_info', data, options);
 
 // 修改登录密码
 export const updateUserLoginPsw = (data,options) => fetch('update_user_login_psw',data,options);
