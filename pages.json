@@ -569,6 +569,12 @@
         "navigationBarTitleText": "进货订单"
       }
     },
+		{
+		  "path": "pages/procurement/purchaseRecords",
+		  "style": {
+		    "navigationBarTitleText": "进货记录"
+		  }
+		},
     {
       "path": "pages/procurement/storeWholesale",
       "style": {
@@ -604,7 +610,19 @@
       "style": {
         "navigationBarTitleText": "我的产品"
       }
-    }
+    },
+	{
+		"path" : "pages/procurement/storePerson",
+		"style": {
+		  "navigationBarTitleText": "资料修改"
+		}
+	},
+	{
+		"path" : "pages/procurement/storePersonEdit",
+		"style": {
+		  "navigationBarTitleText": "修改信息"
+		}
+	}
   ],
   "globalStyle": {
     "navigationBarTextStyle": "black",

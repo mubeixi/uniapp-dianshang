@@ -53,6 +53,7 @@
 			};
 		},
 		onShow(){
+			this.prod_list = [];
 			this.get_jifen_order();
 		},
 		filters: {

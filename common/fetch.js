@@ -155,6 +155,7 @@ export const createOrder = (data,options) => fetch('create_order', data,options)
 // 提交订单
 export const getWithdrawConfig = (data,options) => fetch('get_withdraw_config', data,options);
 
+
 // 上传图片
 export const uploadImage = (data,options) => fetch('upload_image', data,options);
 // 获取订单详情
@@ -315,7 +316,7 @@ export const addProductViews = (data,options) => fetch('prod_views', data, optio
 export const getPintuanTeam = (data,options) => fetch('get_pintuan_team', data, options);
 
 //更新用户信息
-export const upDateUserInfo = (data, options) => fetch('update_user_info', data, options);
+export const updateUserInfo = (data, options) => fetch('update_user_info', data, options);
 
 // 修改登录密码
 export const updateUserLoginPsw = (data,options) => fetch('update_user_login_psw',data,options);
@@ -398,8 +399,19 @@ export const getPifaStoreProd = (data, options) => fetch('get_pifa_store_prod', 
 export const getStoreProdMoney = (data, options) => fetch('get_store_prod_money', data, options);
 
 
+//获取门店信息
+export const getStoreDetail = (data, options) => fetch('get_store_detail', data, options);
+
+//门店发送验证码
+export const updateStoreMobileSms = (data, options) => fetch('update_store_mobile_sms', data, options);
+
+//门店更新号码
+export const updateStoreMobile = (data, options) => fetch('update_store_mobile', data, options);
+
 //获取门店在售商品
 export const getSelfStoreProd = (data, options) => fetch('get_self_store_prod', data, options);
+//修改门店信息
+export const updateStoreInfo = (data, options) => fetch('update_store_info', data, options);
 
 //写入用户日志
 export const upUserLog = (data, options) => {
