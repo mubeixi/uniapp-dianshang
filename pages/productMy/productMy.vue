@@ -33,7 +33,7 @@
 					<image class="imgHund" src="/static/zai.png"></image>
 				</view>
 				<view class="font-13">
-					退货/取消
+					{{is_refund && is_fourth?'取消':'退货'}}
 				</view>
 			</view>
 			
@@ -61,7 +61,10 @@
 							规格库存
 						</view>
 						<view class="allPrice">
-							总价值：<span class="span1">¥</span><span class="span2">{{item.prod_money}}</span>
+							<view v-if="!(is_refund&&is_fourth)">
+								总价值：<span class="span1">¥</span><span class="span2">{{item.prod_money}}</span>
+							</view>
+							<view v-else class="back-btn" @click="apply_back">申请退货</view>
 						</view>
 					</view>
 				</view>
@@ -79,13 +82,43 @@
 		
 		
 		<!--  遮罩层	-->
-		<view class="mask" :hidden="!showSum" @click="hiddenMask"></view>
-		<!--  属性弹窗	-->
+		<view class="mask" :hidden="isHiddenMask" @click="hiddenMask"></view>
+		<!--  产品属性弹窗	-->
+		<view class="sku-pop" v-if="showSku">
+		    <view class="sku-title">选择商品属性</view>
+		    <view class="sku-content">
+		        <view class="skulist" v-for="item in prosku.skujosn_new">
+		            <view class="sku-name">{{item.sku}}</view>
+		            <view class="sku-item">
+		                <view :class="[check_attr[item.sku]==index?'active':'','sku']" @click="selectAttr(index,item.sku)"  v-for="(attr,index) of item.val">{{attr}}</view>
+		            </view>
+		        </view>
+		        <view class="skulist">
+		            <view class="sku-name">数量</view>
+		            <view class="sku-item">
+		                <view class="handle" @click="minus">-</view>
+		                <view class="pro-num">{{postData.qty}}</view>
+		                <view class="handle" @click="plus">+</view>
+		            </view>
+		        </view>
+		        <view class="sku-btns">
+		            <view class="cancel btn" @click="cancel">取消</view>
+		            <view class="confirm btn" @click="confirm" >确定</view>
+		        </view>
+		    </view>
+		</view>
+		<!--  价值弹窗	-->
 		<view class="sku-pop" v-if="showSum">
 		    <view class="sku-title">您查看的商品总价值为</view>
 			<view class="priceSum">
 				¥<span class="span">{{prod_money}}</span>
 			</view>
+		</view>
+		<view style="height:90rpx;" v-if="index == 4">
+		    <view class="check" :style="{'z-index': zIndex}">
+		        <view class="check-msg" @click="showSelected">已选取<text class="num">{{total_cart_count}}</text>个普通商品 <image class="img" :class="isClicked?'turn':''" src="/static/top.png"></image></view>
+		        <view class="submit" @click="submit">发起退货</view>
+		    </view>
 		</view>
 	</view>
 </template>
@@ -108,8 +141,12 @@
 				checked:[],
 				checkedData:[],
 				loading:false,
-				showSum:false,//遮罩层
-				prod_money:0
+				isHiddenMask: true, // 是否隐藏遮罩
+				showSum:false,// 总价值弹窗
+				prod_money:0,
+				showSku: false,
+				is_refund: false, // 是否是退货状态
+				is_fourth: false, // 是否是第四个状态
 			};
 		},
 		computed: {
@@ -129,8 +166,16 @@
 			}
 		},
 		methods:{
+			// 申请退货
+			apply_back(){
+				this.isHiddenMask = false;
+				this.showSku = true;
+			},
+			// 点击遮罩
 			hiddenMask(){
-				this.showSum=false
+				this.isHiddenMask = true;
+				this.showSku = false;
+				this.showSum = false
 			},
 			allSum(){
 				let arr=[];
@@ -154,8 +199,9 @@
 					this.prod_money=res.data.prod_money
 				}).catch(e=>{
 					console.log(e)
-				})
+				});
 				this.showSum=true
+				this.isHiddenMask = false;
 			},
 			checkedSelect(index){
 				this.checked[index].checked=!this.checked[index].checked;
@@ -204,6 +250,12 @@
 				this.page=1
 				this.index=index
 				this.getSelfStoreProd();
+				if(index != 4) {
+					this.is_refund = false;
+				}else {
+					this.is_fourth = true;
+					this.is_refund = !this.is_refund;
+				}
 			}
 		}
 	}
@@ -359,7 +411,7 @@
 			text-align: center;
 		}
 		.priceSum{
-			margin-top: 34rpx;
+			margin: 34rpx auto;
 			width: 420rpx;
 			text-align: center;
 			height: 28rpx;
@@ -373,4 +425,150 @@
 		}
 		
     }
+		.sku-pop {
+		    position: absolute;
+		    top: 50%;
+		    left: 50%;
+		    z-index: 10000;
+		    width: 526rpx;
+		    transform: translate(-50%,-50%);
+		    border-radius: 10rpx;
+		    .sku-title {
+		        height: 60rpx;
+		        line-height: 60rpx;
+		        background-color: #f6f6f6;
+		        color: #333;
+		        font-size: 24rpx;
+		        text-align: center;
+		        border-top-left-radius: 10rpx;
+		        border-top-right-radius: 10rpx;
+		    }
+		    .sku-content {
+		        padding: 40rpx 46rpx 34rpx 40rpx;
+		        background-color: #fff;
+		        border-bottom-left-radius: 10rpx;
+		        border-bottom-right-radius: 10rpx;
+		        .skulist {
+		            margin-bottom: 30rpx;
+		            display: flex;
+		            align-items: center;
+		            .sku-name {
+		                color: #333;
+		                font-size: 24rpx;
+		                margin-right:26rpx;
+		            }
+		            .sku-item {
+		                display: flex;
+		                align-items: center;
+		                color: #666;
+		                /*flex: 1;*/
+		                .img {
+		                    width: 27rpx;
+		                    height: 32rpx;
+		                }
+		                .sku {
+		                    width: 80rpx;
+		                    height: 46rpx;
+		                    line-height: 46rpx;
+		                    text-align: center;
+		                    background-color: #f6f6f6;
+		                    color: #666;
+		                    font-size: 24rpx;
+		                    margin-right: 13rpx;
+		                    border-radius: 5rpx;
+		                }
+		                .active {
+		                    background-color: $wzw-primary-color;
+		                    color: #fff;
+		                }
+		                .handle {
+		                    width: 50rpx;
+		                    height: 45rpx;
+		                    line-height: 45rpx;
+		                    text-align: center;
+		                    font-size: 32rpx;
+		                    color: #777;
+		                    background: #f6f6f6;
+		                }
+		                .pro-num {
+		                    margin: 0 15rpx;
+		                    font-size: 24rpx;
+		                    color: #777;
+		                }
+		            }
+		        }
+		        .sku-btns {
+		            display: flex;
+		            justify-content: center;
+		            align-items: center;
+		            margin-top: 60rpx;
+		            .btn {
+		                width: 130rpx;
+		                height: 50rpx;
+		                text-align: center;
+		                line-height: 50rpx;
+		                font-size: 24rpx;
+		            }
+		            .cancel {
+		                background: #e9e9e9;
+		                color: #666;
+		                margin-right: 25rpx;
+		            }
+		            .confirm {
+		                background-color: $wzw-primary-color;
+		                color: #fff;
+		            }
+		        }
+		    }
+		}
+		.back-btn {
+			height: 50rpx;
+			width: 130rpx;
+			text-align: center;
+			background-color: $wzw-primary-color;
+			color: #fff;
+			border-radius: 25rpx;
+			line-height: 50rpx;
+		}
+		.check {
+		    position: fixed;
+		    bottom: 0;
+		    width: 100%;
+		    height: 90rpx;
+		    display: flex;
+		    line-height: 90rpx;
+		    font-size: 24rpx;
+		    color: #333;
+		    background-color: #fff;
+		    box-shadow: 0px 0px 22px 0px rgba(4,0,0,0.12);
+		    .check-msg {
+		        flex: 1;
+		        display: flex;
+		        align-items: center;
+		        justify-content: center;
+		        font-size: 24rpx;
+		        color: #333;
+		        .num {
+		            color: $wzw-primary-color;
+		            fong-size: 28rpx;
+		        }
+		        .img {
+		            width: 17rpx;
+		            height: 14rpx;
+		            margin-left: 12rpx;
+		        }
+		        .turn {
+		            transform: rotate(180deg);
+		        }
+		    }
+		    .submit {
+		        width: 210rpx;
+		        height: 100%;
+		        line-height: 90rpx;
+		        background: $wzw-primary-color;
+		        font-size: 28rpx;
+		        color: #fff;
+		        text-align: center;
+		    }
+		}
 </style>
