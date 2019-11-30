@@ -227,6 +227,7 @@
 				}
 				num.myqty--;
 				pro.prod_stock++;
+				num.Property_count ++;
 			},
 			addNumber(num,pro){
 				let my=num.Product_Attr_ID;
@@ -234,6 +235,7 @@
 				if(num.myqty<numbers){
 					num.myqty++;
 					pro.prod_stock--;
+					num.Property_count --;
 					return
 				}
 				uni.showToast({
