@@ -119,29 +119,29 @@
 		    </view>
 		</view>
 		<!--	明细	-->
-		<popup-layer ref="detail"  @maskClicked="handClicked" :direction="'top'" :bottomHeight="45">
+		<popup-layer ref="detail"  @maskClicked="handClicked" :direction="'top'" :bottomHeight="45" >
 		    <view class="mxdetail">
-		        <template v-for="(pro,pro_id) in cartList">
-		            <template v-for="(attr,attr_id) in pro">
-		                <view class="product">
+		        <template v-for="(pro,pro_id) of productMy">
+		            <template v-for="(attr,attr_id) in pro.skuvaljosn">
+		                <view class="product" v-if="attr.myqty>0">
 		                    <view class="proImg">
-		                        <image :src="attr.ImgPath" class="img"></image>
+		                        <image :src="attr.Attr_Image" class="img"></image>
 		                    </view>
 		                    <view class="proMsg">
 		                        <view class="proName">
-		                            <view class="name">{{attr.ProductsName}}</view>
-		                            <image class="del"  @click="del(pro_id,attr_id)" src="/static/del.png"></image>
+		                            <view class="name">{{pro.Products_Name}}</view>
+		                            <image class="del"  @click="delList(pro_id,attr.myqty,attr_id)" src="/static/del.png"></image>
 		                        </view>
 		                        <view class="attrInfo">
-		                            <view>{{attr.Productsattrstrval}}</view>
+		                            <view>{{attr.check_attrnames}}</view>
 		                        </view>
 		                        <view class="proPrice">
-		                            <view class="newPrice">￥<text class="number">{{attr.ProductsPriceX}}</text></view>
-		                            <view class="oldPrice">￥{{attr.ProductsPriceY}}</view>
+		                            <view class="newPrice">￥<text class="number">{{pro.Products_PriceX}}</text></view>
+		                            <view class="oldPrice">￥{{pro.Products_PriceY}}</view>
 		                            <view class="amount">
-		                                <view class="icon" @click="reduce(pro_id,attr_id)">-</view>
-		                                <view class="num">{{attr.Qty}}</view>
-		                                <view class="icon" @click="increase(pro_id,attr_id)">+</view>
+		                                <view class="icon" @click="delNumber(attr,pro)">-</view>
+		                                <view class="num">{{attr.myqty}}</view>
+		                                <view class="icon" @click="addNumber(attr,pro)">+</view>
 		                            </view>
 		                        </view>
 		                    </view>
@@ -194,6 +194,7 @@
 				amount: 0 , // 用户要退货的总数量
 				prosku_index: 0, //产品在数组中的索引，用于修改产品库存数量
 				check_attrid:'',//选中的商品规格1;2;3
+				check_attrnames:"",//选中的商品名称
 			};
 		},
 		components: {
@@ -216,13 +217,46 @@
 			}
 		},
 		methods:{
+			delNumber(num,pro){
+				if(num.myqty==1){
+					uni.showToast({
+					    title: '数量最少为1，您可以删除',
+					    icon: 'none'
+					})
+					return
+				}
+				num.myqty--;
+				pro.prod_stock++;
+			},
+			addNumber(num,pro){
+				let my=num.Product_Attr_ID;
+				let numbers=pro.sku_stock[my]
+				if(num.myqty<numbers){
+					num.myqty++;
+					pro.prod_stock--;
+					return
+				}
+				uni.showToast({
+					title: '该规格已经没有库存',
+					icon: 'none'
+				})
+				
+			},
+			handClicked(){
+				 this.$refs.detail.close();
+			},
+			delList(index,qty,attr_id){
+				this.productMy[index].skuvaljosn[attr_id].myqty=0
+				this.productMy[index].prod_stock+=qty
+				this.amount-=qty
+			},
 			// 取消退货
 			cancel(){
 				this.isHiddenMask = true;
 				this.showSku = false;
 			},
 			showSelected(){
-								if(this.total_cart_count == 0) return;
+				if(this.total_cart_count == 0) return;
 			    if(!this.isClicked) {
 			        this.zIndex = 9999999;
 			        this.$refs.detail.show();
@@ -249,6 +283,11 @@
 				}
 				this.productMy[this.prosku_index].prod_stock-=this.postData.qty
 				this.productMy[this.prosku_index].skuvaljosn[this.check_attrid].Property_count-=this.postData.qty
+				//存选中商品的属性名
+				this.productMy[this.prosku_index].skuvaljosn[this.check_attrid].check_attrnames=this.check_attrnames
+				//存选中商品的规格数量
+				this.productMy[this.prosku_index].skuvaljosn[this.check_attrid].myqty+=this.postData.qty
+				
 				// 确认以后，该产品改属性的库存减少 qty个，
 				this.amount += this.postData.qty;
 				this.isHiddenMask = true;
@@ -291,6 +330,7 @@
 			    var check_attrid = [];
 			    var check_attrname = [];
 			    var check_attrnames = [];
+				var check_name=[]
 			    for (var i in check_attr) {
 			        var attr_id = check_attr[i];
 			        check_attrid.push(attr_id);
@@ -304,7 +344,13 @@
 			        var attr_id = check_attrid[i];
 			        var attr_name = check_attrname[attr_id];
 			        check_attrnames.push(attr_name + ':' + this.prosku.skujosn[attr_name][attr_id]);
+					check_name.push(this.prosku.skujosn[attr_name][attr_id])
 			    }
+				let mySku='';
+				for(let item of check_name){
+					mySku+=item+";"
+				}
+				mySku=mySku.substring(0,mySku.length-1)
 			    check_attrid = check_attrid.join(';');
 			    var attr_val = this.prosku.skuvaljosn[check_attrid];   //选择属性对应的属性值
 			    //数组转化为字符串
@@ -331,6 +377,7 @@
 					console.log(check_attrid);
 					//存取1；2；3
 					this.check_attrid=check_attrid;
+					this.check_attrnames=mySku;
 					console.log(check_attrid_arr);
 			    this.check_attr = check_attr;
 			    this.check_attrid_arr = check_attrid_arr;
@@ -427,6 +474,13 @@
 					}
 					this.totalCount=res.totalCount
 					this.loading=false
+					
+					for(let item of this.productMy){
+						if(!item.skuvaljosn) return
+						for(let i in item.skuvaljosn){
+							item.skuvaljosn[i].myqty=0
+						}
+					}
 				}).catch(e=>{
 					this.loading=false
 				})
@@ -759,6 +813,93 @@
 		        font-size: 28rpx;
 		        color: #fff;
 		        text-align: center;
+		    }
+		}
+		.mxdetail {
+		    padding: 20rpx;
+		    .product {
+		        display: flex;
+		        margin-bottom: 40rpx;
+		        .proImg {
+		            width: 190rpx;
+		            height: 190rpx;
+		            .img {
+		                width: 100%;
+		                height: 100%;
+		            }
+		        }
+		        .proMsg {
+		            flex: 1;
+		            margin-left: 20rpx;
+		            .proName {
+		                overflow: hidden;
+		                margin-bottom: 20rpx;
+		                .name {
+		                    width: 440rpx;
+		                    word-wrap: break-word;
+		                    font-size: 24rpx;
+		                    float: left;
+		                }
+		                .del {
+		                    float: right;
+		                    width: 26rpx;
+		                    height: 31rpx;
+		                    margin-left: 34rpx;
+		                }
+		            }
+		            .attrInfo {
+		                display: inline-block;
+		                padding: 12rpx 16rpx;
+		                background-color: #FFF5F5;
+		                color: #666;
+		                font-size: 22rpx;
+		                border-radius: 5rpx;
+		                margin-bottom: 24rpx;
+		            }
+		            .proPrice {
+		                display: flex;
+		                justify-content: space-between;
+		                align-items: center;
+		                .newPrice {
+		                    font-size: 24rpx;
+		                    color: $wzw-primary-color;
+		                    .number {
+		                        font-size: 30rpx;
+		                    }
+		                }
+		                .oldPrice {
+		                    flex: 1;
+		                    color: #afafaf;
+		                    font-size: 24rpx;
+		                    text-decoration: line-through;
+		                    margin-left: 20rpx;
+		                }
+		                .amount {
+		                    display: flex;
+		                    height: 45rpx;
+		                    line-height: 45rpx;
+		                    width: 160rpx;
+		                    border: 2rpx solid #D1D1D1;
+		                    box-sizing: border-box;
+		                    .icon {
+		                        font-size: 32rpx;
+		                        color: #777;
+		                        width: 43rpx;
+		                        display: flex;
+		                        justify-content: center;
+		                        align-items: center;
+		                    }
+		                    .num {
+		                        flex: 1;
+		                        color: #777;
+		                        font-size: 24rpx;
+		                        text-align: center;
+		                        border-left: 2rpx solid #d1d1d1;
+		                        border-right: 2rpx solid #d1d1d1;
+		                    }
+		                }
+		            }
+		        }
 		    }
 		}
 </style>
