@@ -154,6 +154,7 @@
 </template>
 
 <script>
+	import popupLayer from '../../components/popup-layer/popup-layer.vue'
 	import {domainFn} from "../../common/filter";
 	import {mapGetters} from 'vuex'
 	import {numberSort} from '../../common/tool.js'
@@ -192,7 +193,11 @@
 				submit_flag: false, //提交按钮是否可以用
 				amount: 0 , // 用户要退货的总数量
 				prosku_index: 0, //产品在数组中的索引，用于修改产品库存数量
+				check_attrid:'',//选中的商品规格1;2;3
 			};
+		},
+		components: {
+		    popupLayer
 		},
 		computed: {
 		    ...mapGetters(['Stores_ID']),		
@@ -216,14 +221,25 @@
 				this.isHiddenMask = true;
 				this.showSku = false;
 			},
+			showSelected(){
+								if(this.total_cart_count == 0) return;
+			    if(!this.isClicked) {
+			        this.zIndex = 9999999;
+			        this.$refs.detail.show();
+			    }else {
+			        this.$refs.detail.close();
+			        setTimeout(()=>{
+			            this.zIndex = 100;
+			        },500)
+			    }
+			    this.isClicked = !this.isClicked;
+			},
 			// 确认退货
-			confirm(prosku){
-				this.productMy[this.prosku_index]
+			confirm(prosku){		
 				console.log(prosku);
-				console.log(this.prosku_index);
-				
-				return;
+				console.log(this.prosku_index);//产品下表
 				if(!this.submit_flag) {return;}
+				
 				if(!this.postData.attr_id) {
 				    uni.showToast({
 				        title: '请选择规格',
@@ -231,6 +247,8 @@
 				    });
 				    return;
 				}
+				this.productMy[this.prosku_index].prod_stock-=this.postData.qty
+				this.productMy[this.prosku_index].skuvaljosn[this.check_attrid].Property_count-=this.postData.qty
 				// 确认以后，该产品改属性的库存减少 qty个，
 				this.amount += this.postData.qty;
 				this.isHiddenMask = true;
@@ -311,6 +329,8 @@
 					this.check_attr = {};
 					console.log(check_attr);
 					console.log(check_attrid);
+					//存取1；2；3
+					this.check_attrid=check_attrid;
 					console.log(check_attrid_arr);
 			    this.check_attr = check_attr;
 			    this.check_attrid_arr = check_attrid_arr;
