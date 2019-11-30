@@ -84,7 +84,8 @@
 </template>
 
 <script>
-	import TweenLite from 'gsap'
+	// import TweenLite from 'gsap'
+	import "../../common/tool/TweenMax.min.js"
 	import {mapGetters,mapActions} from 'vuex'
 	import {userIntegralRecord,transferIntegral,get_user_info} from '../../common/fetch.js';
 	import {pageMixin} from "../../common/mixin";
