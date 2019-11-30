@@ -12,6 +12,14 @@
 			</view>
 			<view class="fir">
 				<view class="left">
+					提现来源：
+				</view>
+				<view class="right">
+					{{item.Record_From}}
+				</view>
+			</view>
+			<view class="fir">
+				<view class="left">
 					提现金额：
 				</view>
 				<view class="right">

@@ -83,11 +83,12 @@
 					Account_Val:'',//账号
 					Bank_Position:'',//开户行
 				},
+				withdraw_from:1
 
 			};
 		},
-		onLoad() {
-
+		onLoad(options) {
+			this.withdraw_from=options.form
 		},
 		onShow() {
 			//获取商城提现方式
@@ -206,30 +207,41 @@
 				let that=this;
 				addUserWithdrawMethod(data).then(res=>{
 						let User_Method_ID=res.data.User_Method_ID;
-						uni.showModal({
-						    title: res.msg,
-							confirmText:'提现方式',
-							cancelText:'立即提现',
-							cancelColor:'#000000',
-							confirmColor:"#000000",
-						    content: '',
-						    success: function (res) {
-						        if (res.confirm) {
-						           // uni.navigateTo({
-						           // 	url:'../withdrawalMethod/withdrawalMethod?User_Method_ID='+User_Method_ID
-						           // })
-								   that.$vm.$emit('fir',User_Method_ID)
-								   //返回上一页
-								   uni.navigateBack({
-								     delta: 1
-								   });
-						        } else if (res.cancel) {
-						            uni.navigateTo({
-						            	url:'../withdrawal/withdrawal?User_Method_ID='+User_Method_ID
-						            })
-						        }
-						    }
+						uni.showToast({
+							title: res.msg,
+							icon:'success'
 						});
+						setTimeout(function() {
+							that.$vm.$emit('fir',User_Method_ID)
+							//返回上一页
+							uni.navigateBack({
+							  delta: 1
+							});
+						}, 1000)
+						// uni.showModal({
+						//     title: res.msg,
+						// 	confirmText:'提现方式',
+						// 	cancelText:'立即提现',
+						// 	cancelColor:'#000000',
+						// 	confirmColor:"#000000",
+						//     content: '',
+						//     success: function (res) {
+						//         if (res.confirm) {
+						//            // uni.navigateTo({
+						//            // 	url:'../withdrawalMethod/withdrawalMethod?User_Method_ID='+User_Method_ID
+						//            // })
+						// 		   that.$vm.$emit('fir',User_Method_ID)
+						// 		   //返回上一页
+						// 		   uni.navigateBack({
+						// 		     delta: 1
+						// 		   });
+						//         } else if (res.cancel) {
+						//             uni.navigateTo({
+						//             	url:'../withdrawal/withdrawal?User_Method_ID='+User_Method_ID+"&form="+that.withdraw_from
+						//             })
+						//         }
+						//     }
+						//});
 				},err=>{
 
 				}).catch(e=>{

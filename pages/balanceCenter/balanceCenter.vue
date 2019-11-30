@@ -43,8 +43,8 @@
 			<view class="prices">
 				{{Money}}
 			</view>
-			<view class="zhuanchu" @click="isShow=true">
-				转出
+			<view class="zhuanchu" @click="goWithdraw" v-if="initData.remainder_withdraw==1">
+				提现
 			</view>
 			<view class="bottoms">
 				<view class="lefts qwe" @click="goRecharge">
@@ -53,18 +53,18 @@
 				</view>
 				<view class="line">
 				</view>
-				<view class="rights qwe" @click="goFacePay">
+				<view class="rights qwe" @click="goFacePay" >
 					<image :src="'/static/client/check/t2.png'|domain" ></image>
-					<text>实体消费</text>
+					<text>余额转出</text>
 				</view>
 			</view>
 		</view>
 
 		<view class="selects">
-			<view class="qwes" @click="current='charge'" :class="{checked:current=='charge'}">
+			<view class="qwes" @click="changeCurrent('charge')" :class="{checked:current=='charge'}">
 				充值记录
 			</view>
-			<view class="qwes" @click="current='money'"  :class="{checked:current=='money'}">
+			<view class="qwes" @click="changeCurrent('money')"  :class="{checked:current=='money'}">
 				资金流水
 			</view>
 		</view>
@@ -107,7 +107,7 @@
 		transferBalance,
 		add_template_code
 	} from "../../common/fetch";
-	import {mapActions} from 'vuex';
+	import {mapActions,mapGetters} from 'vuex';
 	export default {
 		mixins:[pageMixin],
 		data() {
@@ -129,23 +129,60 @@
 			};
 		},
 		computed: {
+			...mapGetters(['initData']),
 			Money: function(){
 				return Number(this.Umoney).toFixed(2)
 			}
 		},
 		watch: {
 			s_money: function(newVal, oldVal){
-					var newValue = parseInt(newVal)
-				console.log(newValue)
-					TweenLite.to(this.$data, 0.5, {Umoney: newValue})
+				var newValue = parseFloat(newVal)
+				TweenLite.to(this.$data, 0.5, {Umoney: newValue})
+			}
+		},
+		onReachBottom() {
+			if(this.current=='charge') {
+				// 充值记录
+				console.log("11111")
+				if(this.chargeMore) {
+					console.log("12222222")
+					this.chargePage++;
+					this.get_user_charge_record();
+				}
+			}else if(this.current = 'money') {
+				// 资金流水
+				if(this.moneyMore) {
+					this.moneyPage++;
+					this.get_user_money_record();
+				}
 			}
 		},
 		methods:{
 			...mapActions(['setUserInfo']),
-			goFacePay(){
+			changeCurrent(value){
+				this.current=value
+				this.chargePage = 1;
+				this.moneyPage = 1;
+				this.charge_records = [];
+				this.records = [];
+				this.moneyMore = false;
+				this.chargeMore = false;
+				if(this.current=='charge'){
+					this.get_user_charge_record();
+				}else{
+					this.get_user_money_record()
+				}
+			},
+			goWithdraw(){
 				uni.navigateTo({
-					url:'/pages/storePay/storePay'
+					url:'../withdrawal/withdrawal?form=2'
 				})
+			},
+			goFacePay(){
+				this.isShow=true
+				// uni.navigateTo({
+				// 	url:'/pages/storePay/storePay'
+				// })
 			},
 			goBack(){
 			    uni.navigateBack(1);
@@ -217,6 +254,8 @@
 					}
 					if(this.records.length < res.totalCount) {
 						this.moneyMore = true;
+					}else{
+						this.moneyMore = false;
 					}
 				}).catch()
 			},
@@ -231,8 +270,10 @@
 					}else {
 						this.charge_records = res.data;
 					}
-					if(this.charge_records.length > res.totalCount) {
+					if(this.charge_records.length < res.totalCount) {
 						this.chargeMore = true;
+					}else{
+						this.chargeMore = false;
 					}
 				}).catch()
 			},
@@ -246,29 +287,12 @@
 				this.chargeMore = false;
 			}
 		},
-		onReachBottom() {
-			if(this.current=='charge') {
-				// 充值记录
-				if(this.chargeMore) {
-					this.chargePage += 1;
-					this.get_user_charge_record();
-				}
-			}else if(this.current = 'money') {
-				// 资金流水
-				if(this.moneyMore) {
-					this.moneyPage += 1;
-					this.get_user_money_record();
-				}
-			}
-		},
 		onLoad(){
-
 			this.$fun.checkIsLogin(1);
+			this.initData=this.getInitData()
 
 		},
 		onShow(){
-
-
 			this.reset();
 			get_user_info().then(res=>{
 				this.info = res.data
@@ -288,7 +312,6 @@ view{
 .boxSizing{
 	/*background-color: #FFFFFF;*/
 	background: #F8F8F8;
-	height: 100vh;
 	width: 750rpx;
 	overflow-x: hidden;
 }

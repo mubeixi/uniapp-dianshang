@@ -35,10 +35,12 @@
 				data:[],//用户提现方式
 				User_Method_ID:-1,//传过来选中的提现方式
 				isShow:false,//是否显示删除
+				withdraw_from:1
 			};
 		},
 		onLoad(options) {
 			let that=this;
+			this.withdraw_from=options.from
 			if(that.User_Method_ID){
 				that.User_Method_ID=options.User_Method_ID;
 			}
@@ -109,7 +111,7 @@
 			//添加提现方式
 			addMethod(){
 				uni.navigateTo({
-					url:'../addWithdrawal/addWithdrawal'
+					url:'../addWithdrawal/addWithdrawal?form='+this.withdraw_from
 				})
 			}
 		}
