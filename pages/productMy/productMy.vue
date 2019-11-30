@@ -64,7 +64,7 @@
 							<view v-if="!(is_refund&&is_fourth)">
 								总价值：<span class="span1">¥</span><span class="span2">{{item.prod_money}}</span>
 							</view>
-							<view v-else class="back-btn" @click="apply_back(item)">申请退货</view>
+							<view v-else class="back-btn" @click="apply_back(item,index)">申请退货</view>
 						</view>
 					</view>
 				</view>
@@ -191,6 +191,7 @@
 				},
 				submit_flag: false, //提交按钮是否可以用
 				amount: 0 , // 用户要退货的总数量
+				prosku_index: 0, //产品在数组中的索引，用于修改产品库存数量
 			};
 		},
 		computed: {
@@ -217,7 +218,10 @@
 			},
 			// 确认退货
 			confirm(prosku){
+				this.productMy[this.prosku_index]
 				console.log(prosku);
+				console.log(this.prosku_index);
+				
 				return;
 				if(!this.submit_flag) {return;}
 				if(!this.postData.attr_id) {
@@ -233,11 +237,12 @@
 				this.showSku = false;
 			},
 			// 申请退货
-			apply_back(item){
+			apply_back(item,index){
 				this.check_attr = {};
 				this.check_attrid_arr = [];
 				this.postData.qty = 1;
 				this.submit_flag = false;
+				this.prosku_index = index; // 产品在数组中的索引，用于修改产品库存数量
 				if(item.skujosn) {
 				    let skujosn = item.skujosn;
 				    let skujosn_new = [];
