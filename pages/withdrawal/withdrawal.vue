@@ -38,7 +38,7 @@
 			<view class="tishi">
 				<image class="tishi-image" :src="'/static/client/fenxiao/tishi.png'|domain" ></image>
 				<view class="tishi-view">
-					申请提现后，系统会自动扣除您提现的{{init.Poundage_Ratio}}%的手续费，{{init.Balance_Ratio}}%转入您的会员余额，{{100-init.Poundage_Ratio-init.Balance_Ratio}}%店主会将钱打入您的账号；若全部转入余额则不扣除手续费。
+					申请提现后，系统会自动扣除您提现的{{init.Poundage_Ratio}}%的手续费<block v-if="withdraw_from==1">，{{init.Balance_Ratio}}%转入您的会员余额，{{100-init.Poundage_Ratio-init.Balance_Ratio}}%店主会将钱打入您的账号；若全部转入余额则不扣除手续费。</block>
 				</view>
 			</view>
 			<view class="liji" @click="withdrawApply">
@@ -66,11 +66,18 @@
 				User_Method_ID:0,//传过来选中的提现方式
 				price:'',//提现金额
 				isQing:false,//是否发起提现
-				init:{}
+				init:{},
+				withdraw_from:1
 			};
 		},
 		onLoad(options) {
 			let that=this;
+			if(options.form==1){
+				this.withdraw_from=1
+			}
+			if(options.form==2){
+				this.withdraw_from=2
+			}
 			if(options.User_Method_ID){
 				that.User_Method_ID=options.User_Method_ID;
 			}
@@ -124,7 +131,8 @@
 				}
 				let data={
 					User_Method_ID:this.User_Method_ID,
-					money:this.price
+					money:this.price,
+					withdraw_from:this.withdraw_from
 				}
 				withdrawApply(data).then(res=>{
 
@@ -178,7 +186,13 @@
 							this.data=res.data.list[0];
 							this.User_Method_ID=res.data.list[0].User_Method_ID;
 						}
-						this.balance=res.data.balance
+						if(this.withdraw_from==1){
+							this.balance=res.data.balance
+						}
+						if(this.withdraw_from==2){
+							this.balance=res.data.user_money
+						}
+						
 					}
 				}).catch(err=>{
 					console.log(err)
@@ -187,13 +201,13 @@
 			//我的提现方式
 			goMethod(){
 				uni.navigateTo({
-					url:"../withdrawalMethod/withdrawalMethod?User_Method_ID="+this.data.User_Method_ID
+					url:"../withdrawalMethod/withdrawalMethod?User_Method_ID="+this.data.User_Method_ID+"&from="+this.withdraw_from
 				})
 			},
 			//管理提现方式
 			guanWithdrawal(){
 				uni.navigateTo({
-					url:"../addWithdrawal/addWithdrawal"
+					url:"../addWithdrawal/addWithdrawal?form="+this.withdraw_from
 				})
 			}
 		}
