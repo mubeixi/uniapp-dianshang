@@ -406,7 +406,6 @@
                 }
             },
             add(item){
-                console.log(item)
                 this.postData.prod_id = item.Products_ID;
                 if(item.skujosn) {
                     let skujosn = item.skujosn;

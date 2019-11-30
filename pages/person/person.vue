@@ -192,7 +192,7 @@
 				signin:0,//0未签到  1 已签到
 				isLodnig:false,
 				orderNum:'',//订单状态角标数
-				Order_Type: 'shop,gift' , //请求的订单类型
+				Order_Type: 'shop' , //请求的订单类型
 			};
 		},
 		computed:{
