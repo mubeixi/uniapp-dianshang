@@ -1,7 +1,10 @@
 <template>
     <view>
-        <view v-show="ifshow" @tap="ableClose" @touchmove.stop.prevent class="popup-layer" ></view>
-        <view  v-show="ifshow" :class="[positions==='top'?'top':'center']" ref="popRef"  class="popup-content"   @tap.stop="stopEvent" >
+        <view v-show="ifshow" @tap="ableClose" @touchmove.stop.prevent class="popup-layer" :style="{backgroundColor:bgColor}" ></view>
+        <view  v-show="ifshow"
+               :class="[positions==='top'?'top':'center']"
+               :style="{backgroundColor:mainBgColor}"
+               ref="popRef"  class="popup-content"   @tap.stop="stopEvent" >
             <slot></slot>
         </view>
     </view>
@@ -15,6 +18,14 @@
             event: "change"
         },
         props: {
+            bgColor:{
+                type:String,
+                default:'rgba(0,0,0,.5)',
+            },
+            mainBgColor:{
+                type:String,
+                default:'#fff',
+            },
             positions:{
                 type:String,
                 default:'center',
@@ -78,7 +89,7 @@
     .popup-layer {
         position: fixed;
         z-index: 99;
-        background: rgba(0, 0, 0, .5);
+        background-color: rgba(0, 0, 0, .5);
         height: 100%;
         width: 100%;
         top: 0px;
@@ -90,7 +101,7 @@
         padding: 10px;
         position: fixed;
         z-index: 100;
-        background: #FFFFFF;
+        /*background-color: #FFFFFF;*/
         //transition: all .3s ease;
         overflow: hidden;
         // border:1px solid red;

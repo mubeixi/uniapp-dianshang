@@ -102,11 +102,12 @@
         //后期可以接自定义的错误上报
         onError:function(err){
             console.log(err)
+			uni.showModal({
+			    title:'错误',
+			    content:JSON.stringify(err)
+			})
             if(isDev){
-                uni.showModal({
-                    title:'错误',
-                    content:JSON.stringify(err)
-                })
+                
             }
         }
 	}
