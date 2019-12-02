@@ -56,6 +56,10 @@ export class Rotate {
     luckNum = 0
     is_start = 0 //是否在转了
 
+    call = false
+
+
+
     intervalInstance = null
 
     randomRate = ["1%", '1%', '1%', '3%', '10%', '29%', '2%', '52%']
@@ -65,6 +69,11 @@ export class Rotate {
 
     constructor(){
 
+    }
+
+
+    setCallFn(fn){
+        this.call = fn
     }
 
     isStart(){
@@ -189,10 +198,11 @@ export class Rotate {
 
         let _self = this
         setTimeout(function () {
-            uni.showModal({
-                title:"中奖提示",
-                content:'恭喜中奖，中奖id:'+_self.idx+'中奖内容为'+_self.names[_self.idx]
-            })
+            // uni.showModal({
+            //     title:"中奖提示",
+            //     content:'恭喜中奖，中奖id:'+_self.idx+'中奖内容为'+_self.names[_self.idx]
+            // })
+            _self.call && _self.call(_self.idx,_self.names[_self.idx])
             _self._init()
         },500)
 

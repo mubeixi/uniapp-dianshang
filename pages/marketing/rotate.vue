@@ -2,65 +2,90 @@
     <view class="wrap">
         <image class="bgimg" src="/static/marketing/rotate-bg.jpg" />
         <div class="rotate-box">
-            <div class="item"  :style="{backgroundColor:getStyle(0)}">
-                <div class="goods">
+            <div class="item"  >
+                <div class="goods" :style="{backgroundColor:getStyle(0)}">
                     <image class="pic" :src="(itemList[0].img||img_url)" />
                     <div class="name">{{itemList[0].name}}</div>
                 </div>
+                <div class="mask" :style="{backgroundColor:getStyle(0,1)}"></div>
             </div>
-            <div class="item"  :style="{backgroundColor:getStyle(1)}">
-                <div class="goods">
+            <div class="item"  >
+                <div class="goods" :style="{backgroundColor:getStyle(1)}">
                     <image class="pic" :src="(itemList[1].img||img_url)" />
                     <div class="name">{{itemList[1].name}}</div>
                 </div>
+                <div class="mask" :style="{backgroundColor:getStyle(1,1)}"></div>
             </div>
-            <div class="item"  :style="{backgroundColor:getStyle(2)}" style="margin-right: 0">
-                <div class="goods">
+            <div class="item"   style="margin-right: 0">
+                <div class="goods" :style="{backgroundColor:getStyle(2)}">
                     <image class="pic" :src="(itemList[2].img||img_url)" />
                     <div class="name">{{itemList[2].name}}</div>
                 </div>
+                <div class="mask" :style="{backgroundColor:getStyle(2,1)}"></div>
             </div>
-            <div class="item"  :style="{backgroundColor:getStyle(7)}">
-                <div class="goods">
+            <div class="item"  >
+                <div class="goods" :style="{backgroundColor:getStyle(7)}">
                     <image class="pic" :src="(itemList[7].img||img_url)" />
                     <div class="name">{{itemList[7].name}}</div>
                 </div>
+                <div class="mask" :style="{backgroundColor:getStyle(7,1)}"></div>
             </div>
             <div class="item" @click="startFn">
                 <div class="goods start-btn">
                     立即抽奖
                 </div>
+                <div class="mask start-btn-mask"></div>
             </div>
 
-            <div class="item"  :style="{backgroundColor:getStyle(3)}" style="margin-right: 0">
-                <div class="goods">
+            <div class="item"   style="margin-right: 0">
+                <div class="goods" :style="{backgroundColor:getStyle(3)}">
                     <image class="pic" :src="(itemList[3].img||img_url)" />
                     <div class="name">{{itemList[3].name}}</div>
                 </div>
+                <div class="mask" :style="{backgroundColor:getStyle(3,1)}"></div>
             </div>
-            <div class="item"  :style="{backgroundColor:getStyle(6)}" >
-                <div class="goods">
+            <div class="item" >
+                <div class="goods" :style="{backgroundColor:getStyle(6)}">
                     <image class="pic" :src="(itemList[6].img||img_url)" />
                     <div class="name">{{itemList[6].name}}</div>
                 </div>
+                <div class="mask" :style="{backgroundColor:getStyle(6,1)}"></div>
             </div>
-            <div class="item"  :style="{backgroundColor:getStyle(5)}">
-                <div class="goods">
+            <div class="item"  >
+                <div class="goods" :style="{backgroundColor:getStyle(5)}">
                     <image class="pic" :src="(itemList[5].img||img_url)" />
                     <div class="name">{{itemList[5].name}}</div>
                 </div>
+                <div class="mask" :style="{backgroundColor:getStyle(5,1)}"></div>
             </div>
-            <div class="item"  :style="{backgroundColor:getStyle(4)}" style="margin-right: 0">
-                <div class="goods">
+            <div class="item"   style="margin-right: 0">
+                <div class="goods" :style="{backgroundColor:getStyle(4)}">
                     <image class="pic" :src="(itemList[4].img||img_url)" />
                     <div class="name">{{itemList[4].name}}</div>
                 </div>
+                <div class="mask" :style="{backgroundColor:getStyle(4,1)}"></div>
             </div>
 
 
 
 
         </div>
+
+        <wzw-dialog ref="result" bgColor="rgba(0,0,0,.7)" mainBgColor="none">
+            <div class="result-container">
+                <div class="top">
+                    <image class="result-bg" src="/static/marketing/result.png" />
+                    <div class="text">
+                        <div class="text-row line6">恭喜您抽中</div>
+                        <div class="text-row">{{result_tip}}</div>
+                    </div>
+                </div>
+
+                <div class="btn-box" @click="cancelDialog">
+                    <image class="close" src="/static/marketing/close-btn.png" />
+                </div>
+            </div>
+        </wzw-dialog>
     </view>
 </template>
 
@@ -75,7 +100,8 @@
             return {
                 rotateObj:null,
                 itemList:[],
-                img_url:img_data
+                img_url:img_data,
+                result_tip:''
             }
         },
         computed:{
@@ -84,89 +110,178 @@
             }
         },
         methods:{
+            cancelDialog(){
+                this.$refs.result.close()
+            },
             startFn(){
                 rotateInstance.start(6,4)
             },
-            getStyle(idx){
-                if(idx!=this.activeIdx || !rotateInstance.isStart())return '#fff'
+            showResult(idx,name){
+                // uni.showModal({
+                //     title:"中奖提示",
+                //     content:'恭喜中奖，中奖id:'+idx+'中奖内容为'+name
+                // })
+
+                this.result_tip = `${name}`
+
+                this.$refs.result.show()
+            },
+            getStyle(idx,is_mask){
+                if((idx!=this.activeIdx || !rotateInstance.isStart()) && !is_mask)return '#FFEBEB'
+                if((idx!=this.activeIdx || !rotateInstance.isStart()) && is_mask)return '#FFC2C8'
                 let bgColor = rotateInstance.getBgColor(idx)
                 return bgColor // `background-color:${bgColor}`
             }
         },
+        mounted(){
+            // this.result_tip = '抽中大疆无人机一个'
+            //
+            // let _self = this
+            // this.$nextTick().then(()=>{
+            //     _self.$refs.result.show()
+            // })
+        },
         created(){
             this.rotateObj = rotateInstance
+            rotateInstance.setCallFn(this.showResult)
             this.itemList = rotateInstance.getItemList()
             //rotateInstance.start()
+
+
         }
 
     }
 </script>
 
 <style lang="scss" scoped>
-    .wrap{
-        background: #ef1828;
-        min-height: 100vh;
-        box-sizing: border-box;
-    }
-    .bgimg{
-        width: 750rpx;
-        height: 1434rpx;
-    }
-    .rotate-box{
-        width: 460rpx;
-        height: 460rpx;
-        /*background: white;*/
-        position: absolute;
-        left: 50%;
-        top: 565rpx;
-        transform: translate(-50%);
-        /*padding: 20rpx;*/
-        z-index: 32;
-        display: flex;
-        flex-wrap: wrap;
-        border-radius: 4px;
-        overflow: hidden;
-        padding: 10rpx;
-        box-sizing: border-box;
-        .item{
-            width: 140rpx;
-            height: 140rpx;
-            text-align: center;
-            box-sizing: border-box;
-            margin-right: 10rpx;
-            margin-bottom: 10rpx;
-            overflow: hidden;
-            background: #ffebec;
-            box-shadow: #ffc2ca 0px 2px 2px;
+.result-container{
 
-            .start-btn{
-                height: 140rpx;
-                line-height: 140rpx;
-                padding: 0 !important;
-                font-size: 14px;
-                background: #F43131;
-                color: white;
-            }
-            .goods{
-                height: 140rpx;
-                padding: 15rpx 0;
-                box-sizing: border-box;
-            }
-            .pic{
-                width: 70rpx;
-                height: 70rpx;
-                border-radius: 50%;
-            }
-            .name{
-                margin: 0 auto 0;
-                height: 48rpx;
-                width: 120rpx;
-                line-height: 48rpx;
-                font-size: 24rpx;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
+    .top{
+        position: relative;
+        text-align: center;
+        width: 750rpx;
+        padding-top: 580rpx;
+        .result-bg{
+            position: absolute;
+            width: 750rpx;
+            height: 580rpx;
+            left: 0;
+            top: 0;
+            z-index: 1;
+        }
+        .text{
+            position: absolute;
+            z-index: 3;
+            width: 750rpx;
+            text-align: center;
+            top: 240rpx;
+            left: 0;
+            .text-row{
+                color: #FF0000;
+                /*width: 228rpx;*/
+                /*margin: 0 auto;*/
+                text-align: center;
+                line-height: 1.4;
+
             }
         }
+
     }
+    .btn-box{
+        text-align: center;
+        margin-top: 60rpx;
+        .close{
+            width: 70rpx;
+            height: 70rpx;
+            margin: 0 auto;
+        }
+    }
+
+}
+.wrap{
+    background: #ef1828;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+.bgimg{
+    width: 750rpx;
+    height: 1434rpx;
+}
+.rotate-box{
+    width: 460rpx;
+    height: 460rpx;
+    /*background: white;*/
+    position: absolute;
+    left: 50%;
+    top: 565rpx;
+    transform: translate(-50%);
+    /*padding: 20rpx;*/
+    z-index: 32;
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 4px;
+    overflow: hidden;
+    padding: 10rpx;
+    box-sizing: border-box;
+    .item{
+        width: 140rpx;
+        height: 140rpx;
+        text-align: center;
+        box-sizing: border-box;
+        margin-right: 10rpx;
+        margin-bottom: 10rpx;
+        position: relative;
+
+        .start-btn{
+            height: 130rpx;
+            line-height: 130rpx;
+            padding: 0 !important;
+            font-size: 14px;
+            background: #FFD800 !important;
+            color: white;
+        }
+        .start-btn-mask{
+            background: #FFB001 !important;
+        }
+        .goods{
+            z-index: 3;
+            position: absolute;
+            width: 140rpx;
+            height: 130rpx;
+            padding: 10rpx 0;
+            box-sizing: border-box;
+            background: #FFEBEB;
+            border-radius: 10rpx;
+        }
+        .mask{
+            z-index: 2;
+            width: 140rpx;
+            position: absolute;
+            top: 10rpx;
+            height: 130rpx;
+            padding: 10rpx 0;
+            box-sizing: border-box;
+            background: #FFC2C8;
+            border-radius: 10rpx;
+        }
+        .pic{
+            width: 70rpx;
+            height: 70rpx;
+            border-radius: 50%;
+            vertical-align: top;
+        }
+        .name{
+            margin: 10rpx auto 0;
+            height: 40rpx;
+            width: 140rpx;
+            color: #2F2F2F;
+            text-align: center;
+            line-height: 40rpx;
+            font-size: 20rpx;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+}
 </style>
