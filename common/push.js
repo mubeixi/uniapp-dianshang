@@ -73,7 +73,7 @@ class Push {
         //     "channel": "moneychange",
         //     "content": "转出余额1",
         //     "ext": {
-        //     "path": "pages/balanceCenter/balanceCenter?users_id=wkbq6nc2kc"
+        //     "path": "pages/person/balanceCenter?users_id=wkbq6nc2kc"
         // },
         //     "time": 1573111452,
         //     "title": "余额变动",
