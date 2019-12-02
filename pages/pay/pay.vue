@@ -579,7 +579,7 @@
 										})
 									}else if(pagefrom == 'gift') {
 										uni.redirectTo({
-											url: '/pages/myGift/myGift?checked=1'
+											url: '/pages/person/myGift?checked=1'
 										})
 									}
 								}
@@ -595,7 +595,7 @@
 										})
 									}else if(pagefrom == 'gift') {
 										uni.redirectTo({
-											url: '/pages/myGift/myGift?checked=0'
+											url: '/pages/person/myGift?checked=0'
 										})
 									}
 								}
@@ -628,7 +628,7 @@
 						})
 					}else if(pagefrom == 'gift') {
 						uni.redirectTo({
-							url: '/pages/myGift/myGift?checked=1'
+							url: '/pages/person/myGift?checked=1'
 						})
 					}
 				}
