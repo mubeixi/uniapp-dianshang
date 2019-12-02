@@ -189,7 +189,7 @@
 			},
 			goRecharge(){
 				uni.navigateTo({
-					url:'/pages/vipRecharge/vipRecharge'
+					url:'/pages/person/vipRecharge'
 				})
 			},
 			confirm(e){

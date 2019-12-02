@@ -95,7 +95,7 @@
 				if(this.isClicked) {return;}
 				this.isClicked = true;
 				uni.navigateTo({
-					url: '../myRedemption/myRedemption'
+					url: '../person/myRedemption'
 				})
 				return;
 			},
@@ -121,7 +121,7 @@
 					});
 					setTimeout(()=>{
 						uni.navigateTo({
-							url: '../myRedemption/myRedemption'
+							url: '../person/myRedemption'
 						})
 					},1500)
 				},err=>{
@@ -158,7 +158,7 @@
 					this.isChanged = false;
 				}else {
 					uni.navigateTo({
-						url: '../jifenCheck/jifenCheck?gift_id=' + item.Gift_ID
+						url: '../person/jifenCheck?gift_id=' + item.Gift_ID
 					})
 				}
 				this.Gift_ID = item.Gift_ID;

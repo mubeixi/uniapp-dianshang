@@ -270,13 +270,13 @@
 			goIntegral(){
 				if(!this.$fun.checkIsLogin(1))return;
 				uni.navigateTo({
-					url:'../integralCenter/integralCenter'
+					url:'../person/integralCenter'
 				})
 			},
 			goBalance(){
 				if(!this.$fun.checkIsLogin(1))return;
 				uni.navigateTo({
-					url:'../balanceCenter/balanceCenter'
+					url:'../person/balanceCenter'
 				})
 			},
 			//获取角标
@@ -291,12 +291,12 @@
 			goVip(){
 				if(!this.$fun.checkIsLogin(1))return;
 				uni.navigateTo({
-					url:'../vipGrade/vipGrade'
+					url:'../person/vipGrade'
 				})
 			},
 			goCoupon(){
 				uni.navigateTo({
-					url:'../coupon/coupon'
+					url:'../person/coupon'
 				})
 			},
 			goRefundList(){
@@ -339,7 +339,7 @@
 				}else if(this.show==2){
 					this.isLodnig=false;
 					uni.navigateTo({
-						url:'../qiandao/qiandao'
+						url:'../person/qiandao'
 					})
 
 				}
@@ -392,7 +392,7 @@
 			goCollection(){
 				if(!this.$fun.checkIsLogin(1))return;
 				uni.navigateTo({
-					url:'../collection/collection'
+					url:'../person/collection'
 				})
 			},
 			//去订单页
@@ -413,7 +413,7 @@
 			goPersonMsg(){
 				if(!this.$fun.checkIsLogin(1))return;
 				uni.navigateTo({
-					url: '../personalMsg/personalMsg'
+					url: '../person/personalMsg'
 				})
 			}
 		},
