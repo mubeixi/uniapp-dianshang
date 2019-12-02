@@ -40,35 +40,99 @@
 		</view>
 		
 		<view class="marginAuto">
-			<view class="blockDiv" v-for="(item,index) of productMy" :key="index">
-				<view class="mbxa" v-if="isShow" @click="checkedSelect(index)">
-					<img class="imgs" :src="checked[index].checked?checked_img_url:uncheck_img_url" >
-				</view>
-				<view style="width: 10rpx" v-if="!isShow">
-				</view>
-				<view class="imgDiv">
-					<image class="imgHund" :src="item.ImgPath"></image>
-				</view>
-				<view class="textRight" :style="{width: isShow?'415':'425'+'rpx'}">
-					<view class="productName">
-						{{item.Products_Name}}
+			<template v-if="index == 4">
+				<view class="blockDiv" v-for="(item,index) of productMy" :key="index">
+					<view class="mbxa" v-if="isShow" @click="checkedSelect(index)">
+						<img class="imgs" :src="checked[index].checked?checked_img_url:uncheck_img_url" >
 					</view>
-					<view class="skuMy">
-						<span>库存：{{item.prod_stock}}</span><span style="margin-left: 100rpx;">销量：{{item.Products_Sales}}</span>
+					<view style="width: 10rpx" v-if="!isShow">
 					</view>
-					<view class="bottomDiv">
-						<view class="skuCount">
-							规格库存
+					<view class="imgDiv">
+						<image class="imgHund" :src="item.ImgPath"></image>
+					</view>
+					<view class="textRight" :style="{width: isShow?'415':'425'+'rpx'}">
+						<view class="productName">
+							{{item.Products_Name}}
 						</view>
-						<view class="allPrice">
-							<view v-if="!(is_refund&&is_fourth)">
-								总价值：<span class="span1">¥</span><span class="span2">{{item.prod_money}}</span>
+						<view class="skuMy">
+							<span>库存：{{item.prod_stock}}</span><span style="margin-left: 100rpx;">销量：{{item.Products_Sales}}</span>
+						</view>
+						<view class="bottomDiv">
+							<view class="skuCount">
+								规格库存
 							</view>
-							<view v-else class="back-btn" @click="apply_back(item,index)">申请退货</view>
+							<view class="allPrice">
+								<view v-if="!(is_refund&&is_fourth)">
+									总价值：<span class="span1">¥</span><span class="span2">{{item.prod_money}}</span>
+								</view>
+								<view v-else class="back-btn" @click="apply_back(item,index)">申请退货</view>
+							</view>
 						</view>
 					</view>
 				</view>
-			</view>
+			</template>
+			<template v-else-if="index == 2">
+				<view class="blockDiv" v-for="(item,index) of productMy_soldout" :key="index">
+					<view class="mbxa" v-if="isShow" @click="checkedSelect(index)">
+						<img class="imgs" :src="checked[index].checked?checked_img_url:uncheck_img_url" >
+					</view>
+					<view style="width: 10rpx" v-if="!isShow">
+					</view>
+					<view class="imgDiv">
+						<image class="imgHund" :src="item.ImgPath"></image>
+					</view>
+					<view class="textRight" :style="{width: isShow?'415':'425'+'rpx'}">
+						<view class="productName">
+							{{item.Products_Name}}
+						</view>
+						<view class="skuMy">
+							<span>库存：{{item.prod_stock}}</span><span style="margin-left: 100rpx;">销量：{{item.Products_Sales}}</span>
+						</view>
+						<view class="bottomDiv">
+							<view class="skuCount">
+								规格库存
+							</view>
+							<view class="allPrice">
+								<view v-if="!(is_refund&&is_fourth)">
+									总价值：<span class="span1">¥</span><span class="span2">{{item.prod_money}}</span>
+								</view>
+								<view v-else class="back-btn" @click="apply_back(item,index)">申请退货</view>
+							</view>
+						</view>
+					</view>
+				</view>
+			</template>
+			<template v-else>
+				<view class="blockDiv" v-for="(item,index) of productlist" :key="index">
+					<view class="mbxa" v-if="isShow" @click="checkedSelect(index)">
+						<img class="imgs" :src="checked[index].checked?checked_img_url:uncheck_img_url" >
+					</view>
+					<view style="width: 10rpx" v-if="!isShow">
+					</view>
+					<view class="imgDiv">
+						<image class="imgHund" :src="item.ImgPath"></image>
+					</view>
+					<view class="textRight" :style="{width: isShow?'415':'425'+'rpx'}">
+						<view class="productName">
+							{{item.Products_Name}}
+						</view>
+						<view class="skuMy">
+							<span>库存：{{item.prod_stock}}</span><span style="margin-left: 100rpx;">销量：{{item.Products_Sales}}</span>
+						</view>
+						<view class="bottomDiv">
+							<view class="skuCount">
+								规格库存
+							</view>
+							<view class="allPrice">
+								<view v-if="!(is_refund&&is_fourth)">
+									总价值：<span class="span1">¥</span><span class="span2">{{item.prod_money}}</span>
+								</view>
+								<view v-else class="back-btn" @click="apply_back(item,index)">申请退货</view>
+							</view>
+						</view>
+					</view>
+				</view>
+			</template>
 		</view>
 		
 		<view v-if="index==3" style="height: 86rpx;width: 750rpx;">
@@ -157,8 +221,8 @@
 	import popupLayer from '../../components/popup-layer/popup-layer.vue'
 	import {domainFn} from "../../common/filter";
 	import {mapGetters} from 'vuex'
-	import {numberSort} from '../../common/tool.js'
-	import {getStoreProdMoney,getSelfStoreProd}  from '../../common/fetch'
+	import {numberSort,ls} from '../../common/tool.js'
+	import {getStoreProdMoney,getSelfStoreProd,storeProdBackSubmit}  from '../../common/fetch'
 	export default {
 		data() {
 			return {
@@ -191,10 +255,13 @@
 				    productDetail_price: 0
 				},
 				submit_flag: false, //提交按钮是否可以用
-				amount: 0 , // 用户要退货的总数量
+				// amount: 0 , // 用户要退货的总数量
 				prosku_index: 0, //产品在数组中的索引，用于修改产品库存数量
 				check_attrid:'',//选中的商品规格1;2;3
 				check_attrnames:"",//选中的商品名称
+				zIndex: 100,
+				productMy_soldout: [], // 库存紧张
+				productlist: [], // index为1，3的时候，产品列表
 			};
 		},
 		components: {
@@ -202,14 +269,35 @@
 		},
 		computed: {
 		    ...mapGetters(['Stores_ID']),		
+				amount: function(){
+					let amount = 0;
+					if(this.productMy) {
+						this.productMy.forEach(item=>{
+							for(let attr_id in item.skuvaljosn) {
+								if(item.skuvaljosn[attr_id].myqty) {
+									amount += item.skuvaljosn[attr_id].myqty
+								}
+							}
+						})						
+					}
+					return amount
+				}
+		},
+		watch: {
+			amount: function(val){
+				if(val == 0) {
+					this.$refs.detail.close();
+				}
+			}
 		},
 		onShow() {
 			this.checked_img_url = domainFn(this.checked_img_url)
 			this.uncheck_img_url = domainFn(this.uncheck_img_url)
 		},
 		onLoad() {
-			this.getSelfStoreProd();
+			this.load();
 		},
+		
 		onReachBottom() {
 			if(this.productMy.length<this.totalCount){
 				this.page++;
@@ -217,6 +305,63 @@
 			}
 		},
 		methods:{
+			load(){
+				this.productMy = [];
+				this.productlist = [];
+				this.page = 1;
+				this.getSelfStoreProd();
+			},
+			// 提交退货
+			submit(){
+				let productMy = this.productMy;
+				let arr = []; // 选中的产品数组
+				productMy.forEach(item=>{
+					for(let attr_id in item.skuvaljosn) {
+						if(item.skuvaljosn[attr_id].myqty > 0) {
+							arr.push(item.skuvaljosn[attr_id])
+						}
+					}
+				})
+				console.log(arr)
+				let prod_json = {};
+				for(let i in arr) {
+					if(prod_json[arr[i].Products_ID]) {
+						prod_json[arr[i].Products_ID]['num'] = prod_json[arr[i].Products_ID]['num'] + arr[i].myqty
+					}else {
+						prod_json[arr[i].Products_ID] = {
+							"num": arr[i].myqty
+						} 
+						if(prod_json[arr[i].Products_ID]['attr']) {
+							console.log('wuwuwu')
+							prod_json[arr[i].Products_ID]['attr'][arr[i].Product_Attr_ID] = arr[i].myqty
+						}else {
+							prod_json[arr[i].Products_ID]['attr'] = {
+								[arr[i].Product_Attr_ID]: arr[i].myqty
+							}										
+						}
+						// for(let j in arr[i]) {
+						// 	if(j == 'check_attrid_arr'){
+						// 		for(let k in arr[i][j]){
+						// 			if(prod_json[arr[i].Products_ID]['attr']) {
+						// 				prod_json[arr[i].Products_ID]['attr'][arr[i][j][k]] = arr[i].myqty
+						// 			}else {
+						// 				prod_json[arr[i].Products_ID]['attr'] = {
+						// 					[arr[i][j][k]]: arr[i].myqty
+						// 				}										
+						// 			}
+						// 		}		
+						// 	}
+						// }
+					}
+				}
+				console.log(prod_json)
+				console.log(JSON.stringify(prod_json))
+				return;
+				storeProdBackSubmit({
+					store_id: Stores_ID,
+					prod_json: {"1":{"num":"20","attr":{"1":"4","5":"16"}},"3":{"num":"10"}}
+				})
+			},
 			delNumber(num,pro){
 				if(num.myqty==1){
 					uni.showToast({
@@ -228,6 +373,9 @@
 				num.myqty--;
 				pro.prod_stock++;
 				num.Property_count ++;
+				num.attr_count--;
+				ls.remove('productMy')
+				ls.set('productMy',this.productMy);
 			},
 			addNumber(num,pro){
 				let my=num.Product_Attr_ID;
@@ -236,6 +384,8 @@
 					num.myqty++;
 					pro.prod_stock--;
 					num.Property_count --;
+					num.attr_count ++;
+					// this.amount ++;
 					return
 				}
 				uni.showToast({
@@ -250,13 +400,15 @@
 			delList(index,qty,attr_id){
 				this.productMy[index].skuvaljosn[attr_id].myqty=0
 				this.productMy[index].prod_stock+=qty
-				this.amount-=qty
+				// this.amount-=qty
 			},
 			// 取消退货
 			cancel(){
 				this.isHiddenMask = true;
 				this.showSku = false;
 			},
+			
+			
 			showSelected(){
 				if(this.total_cart_count == 0) return;
 			    if(!this.isClicked) {
@@ -284,14 +436,16 @@
 				    return;
 				}
 				this.productMy[this.prosku_index].prod_stock-=this.postData.qty
+				this.productMy[this.prosku_index].skuvaljosn[this.check_attrid].attr_count = this.postData.qty;
 				this.productMy[this.prosku_index].skuvaljosn[this.check_attrid].Property_count-=this.postData.qty
+				this.productMy[this.prosku_index].skuvaljosn[this.check_attrid].check_attrid_arr = this.check_attrid_arr;
 				//存选中商品的属性名
 				this.productMy[this.prosku_index].skuvaljosn[this.check_attrid].check_attrnames=this.check_attrnames
 				//存选中商品的规格数量
 				this.productMy[this.prosku_index].skuvaljosn[this.check_attrid].myqty+=this.postData.qty
 				
 				// 确认以后，该产品改属性的库存减少 qty个，
-				this.amount += this.postData.qty;
+				// this.amount += this.postData.qty;
 				this.isHiddenMask = true;
 				this.showSku = false;
 			},
@@ -417,7 +571,7 @@
 				let arr=[];
 				for(let item of this.checked){
 					if(item.checked){
-						arr.push(this.productMy[item.index].Products_ID)
+						arr.push(this.productlist[item.index].Products_ID)
 					}
 				}
 				if(arr.length<=0){
@@ -451,21 +605,11 @@
 					page:this.page,
 					pageSize:this.pageSize
 				}
-				if(this.index==3){
-					this.isShow=true
-				}else{
-					this.isShow=false
-				}
-				
-				if(this.index==2){
-					data.stock_low=10
-				}else{
-					data.is_selling==1
-				}
 				getSelfStoreProd(data).then(res=>{
-					this.productMy = this.productMy.concat(res.data)
+					this.productMy = this.productMy.concat(res.data);
+					this.productlist = this.productlist.concat(res.data);
 					this.checked = [];
-					for(let i in this.productMy) {
+					for(let i in this.productlist) {
 						this.checked.push({
 							index: i,
 							checked: false
@@ -483,21 +627,37 @@
 							item.skuvaljosn[i].myqty=0
 						}
 					}
+					ls.set('productMy',this.productMy);
 				}).catch(e=>{
 					this.loading=false
 				})
 				
 			},
 			changIndex(index){
-				this.productMy=[]
-				this.page=1
+				// 切换存一下数组，否则之前处理的逻辑都没了
+				if(index != 4) {
+					ls.remove('productMy');
+					ls.set('productMy', this.productMy);
+				}
 				this.index=index
-				this.getSelfStoreProd();
 				if(index != 4) {
 					this.is_refund = false;
 				}else {
 					this.is_fourth = true;
 					this.is_refund = !this.is_refund;
+				}
+				if(this.index==3){
+					this.isShow=true
+				}else{
+					this.isShow=false
+				}
+				if(this.index == 2) {
+					// 库存紧张
+					this.productMy_soldout = this.productlist.filter(item=>{
+						return item.prod_stock <= 10
+					})
+				}else if(this.index == 4){
+					this.productMy = ls.get('productMy')
 				}
 			}
 		}
