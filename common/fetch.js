@@ -53,6 +53,9 @@ const fetch = function (act, param,options = false,url='/api/little_program/shop
 
   param.act = act;
   param.User_ID = get_User_ID();
+  
+  if(options && options.noUid)delete param.User_ID
+  
   param.Users_ID = get_Users_ID();   //Users_ID  写死
   // param.appid = get_Appid();
 	param.env = GET_ENV();

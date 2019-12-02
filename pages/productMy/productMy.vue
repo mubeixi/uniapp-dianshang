@@ -64,7 +64,7 @@
 							<view v-if="!(is_refund&&is_fourth)">
 								总价值：<span class="span1">¥</span><span class="span2">{{item.prod_money}}</span>
 							</view>
-							<view v-else class="back-btn" @click="apply_back">申请退货</view>
+							<view v-else class="back-btn" @click="apply_back(item,index)">申请退货</view>
 						</view>
 					</view>
 				</view>
@@ -79,18 +79,16 @@
 		</view>
 		
 		
-		
-		
 		<!--  遮罩层	-->
 		<view class="mask" :hidden="isHiddenMask" @click="hiddenMask"></view>
 		<!--  产品属性弹窗	-->
 		<view class="sku-pop" v-if="showSku">
 		    <view class="sku-title">选择商品属性</view>
 		    <view class="sku-content">
-		        <view class="skulist" v-for="item in prosku.skujosn_new">
+		        <view class="skulist" v-for="item in prosku.skujosn_new" :key="">
 		            <view class="sku-name">{{item.sku}}</view>
 		            <view class="sku-item">
-		                <view :class="[check_attr[item.sku]==index?'active':'','sku']" @click="selectAttr(index,item.sku)"  v-for="(attr,index) of item.val">{{attr}}</view>
+		                <view :class="[check_attr[item.sku]==index?'active':'','sku']" @click="selectAttr(index,item.sku)"  v-for="(attr,index) of item.val" :key="">{{attr}}</view>
 		            </view>
 		        </view>
 		        <view class="skulist">
@@ -103,7 +101,7 @@
 		        </view>
 		        <view class="sku-btns">
 		            <view class="cancel btn" @click="cancel">取消</view>
-		            <view class="confirm btn" @click="confirm" >确定</view>
+		            <view class="confirm btn" @click="confirm(prosku)"  :class="submit_flag?'':'disabled'">确定</view>
 		        </view>
 		    </view>
 		</view>
@@ -114,18 +112,52 @@
 				¥<span class="span">{{prod_money}}</span>
 			</view>
 		</view>
-		<view style="height:90rpx;" v-if="index == 4">
+		<view style="height:90rpx;" v-if="index == 4 && amount > 0 ">
 		    <view class="check" :style="{'z-index': zIndex}">
-		        <view class="check-msg" @click="showSelected">已选取<text class="num">{{total_cart_count}}</text>个普通商品 <image class="img" :class="isClicked?'turn':''" src="/static/top.png"></image></view>
+		        <view class="check-msg" @click="showSelected">已选取<text class="num">{{amount}}</text>个普通商品 <image class="img" :class="isClicked?'turn':''" src="/static/top.png"></image></view>
 		        <view class="submit" @click="submit">发起退货</view>
 		    </view>
 		</view>
+		<!--	明细	-->
+		<popup-layer ref="detail"  @maskClicked="handClicked" :direction="'top'" :bottomHeight="45" >
+		    <view class="mxdetail">
+		        <template v-for="(pro,pro_id) of productMy">
+		            <template v-for="(attr,attr_id) in pro.skuvaljosn">
+		                <view class="product" v-if="attr.myqty>0">
+		                    <view class="proImg">
+		                        <image :src="attr.Attr_Image" class="img"></image>
+		                    </view>
+		                    <view class="proMsg">
+		                        <view class="proName">
+		                            <view class="name">{{pro.Products_Name}}</view>
+		                            <image class="del"  @click="delList(pro_id,attr.myqty,attr_id)" src="/static/del.png"></image>
+		                        </view>
+		                        <view class="attrInfo">
+		                            <view>{{attr.check_attrnames}}</view>
+		                        </view>
+		                        <view class="proPrice">
+		                            <view class="newPrice">￥<text class="number">{{pro.Products_PriceX}}</text></view>
+		                            <view class="oldPrice">￥{{pro.Products_PriceY}}</view>
+		                            <view class="amount">
+		                                <view class="icon" @click="delNumber(attr,pro)">-</view>
+		                                <view class="num">{{attr.myqty}}</view>
+		                                <view class="icon" @click="addNumber(attr,pro)">+</view>
+		                            </view>
+		                        </view>
+		                    </view>
+		                </view>
+		            </template>
+		        </template>
+		    </view>
+		</popup-layer>
 	</view>
 </template>
 
 <script>
+	import popupLayer from '../../components/popup-layer/popup-layer.vue'
 	import {domainFn} from "../../common/filter";
 	import {mapGetters} from 'vuex'
+	import {numberSort} from '../../common/tool.js'
 	import {getStoreProdMoney,getSelfStoreProd}  from '../../common/fetch'
 	export default {
 		data() {
@@ -147,7 +179,26 @@
 				showSku: false,
 				is_refund: false, // 是否是退货状态
 				is_fourth: false, // 是否是第四个状态
+				prosku: {},
+				check_attr: {},
+				check_attrid_arr: [],
+				postData: {
+				    prod_id: 0,    //产品ID  在 onLoad中赋值
+				    attr_id: 0,    //选择属性id
+				    count: 0,         //选择属性的库存
+				    // showimg: '',      //选择属性的图片(用产品图片代替)
+				    qty: 1,           //购买数量
+				    productDetail_price: 0
+				},
+				submit_flag: false, //提交按钮是否可以用
+				amount: 0 , // 用户要退货的总数量
+				prosku_index: 0, //产品在数组中的索引，用于修改产品库存数量
+				check_attrid:'',//选中的商品规格1;2;3
+				check_attrnames:"",//选中的商品名称
 			};
+		},
+		components: {
+		    popupLayer
 		},
 		computed: {
 		    ...mapGetters(['Stores_ID']),		
@@ -166,10 +217,195 @@
 			}
 		},
 		methods:{
+			delNumber(num,pro){
+				if(num.myqty==1){
+					uni.showToast({
+					    title: '数量最少为1，您可以删除',
+					    icon: 'none'
+					})
+					return
+				}
+				num.myqty--;
+				pro.prod_stock++;
+				num.Property_count ++;
+			},
+			addNumber(num,pro){
+				let my=num.Product_Attr_ID;
+				let numbers=pro.sku_stock[my]
+				if(num.myqty<numbers){
+					num.myqty++;
+					pro.prod_stock--;
+					num.Property_count --;
+					return
+				}
+				uni.showToast({
+					title: '该规格已经没有库存',
+					icon: 'none'
+				})
+				
+			},
+			handClicked(){
+				 this.$refs.detail.close();
+			},
+			delList(index,qty,attr_id){
+				this.productMy[index].skuvaljosn[attr_id].myqty=0
+				this.productMy[index].prod_stock+=qty
+				this.amount-=qty
+			},
+			// 取消退货
+			cancel(){
+				this.isHiddenMask = true;
+				this.showSku = false;
+			},
+			showSelected(){
+				if(this.total_cart_count == 0) return;
+			    if(!this.isClicked) {
+			        this.zIndex = 9999999;
+			        this.$refs.detail.show();
+			    }else {
+			        this.$refs.detail.close();
+			        setTimeout(()=>{
+			            this.zIndex = 100;
+			        },500)
+			    }
+			    this.isClicked = !this.isClicked;
+			},
+			// 确认退货
+			confirm(prosku){		
+				console.log(prosku);
+				console.log(this.prosku_index);//产品下表
+				if(!this.submit_flag) {return;}
+				
+				if(!this.postData.attr_id) {
+				    uni.showToast({
+				        title: '请选择规格',
+				        icon: 'none'
+				    });
+				    return;
+				}
+				this.productMy[this.prosku_index].prod_stock-=this.postData.qty
+				this.productMy[this.prosku_index].skuvaljosn[this.check_attrid].Property_count-=this.postData.qty
+				//存选中商品的属性名
+				this.productMy[this.prosku_index].skuvaljosn[this.check_attrid].check_attrnames=this.check_attrnames
+				//存选中商品的规格数量
+				this.productMy[this.prosku_index].skuvaljosn[this.check_attrid].myqty+=this.postData.qty
+				
+				// 确认以后，该产品改属性的库存减少 qty个，
+				this.amount += this.postData.qty;
+				this.isHiddenMask = true;
+				this.showSku = false;
+			},
 			// 申请退货
-			apply_back(){
+			apply_back(item,index){
+				this.check_attr = {};
+				this.check_attrid_arr = [];
+				this.postData.qty = 1;
+				this.submit_flag = false;
+				this.prosku_index = index; // 产品在数组中的索引，用于修改产品库存数量
+				if(item.skujosn) {
+				    let skujosn = item.skujosn;
+				    let skujosn_new = [];
+				    for (let i in item.skujosn) {
+				        skujosn_new.push({
+				            sku: i,
+				            val: skujosn[i]
+				        });
+				    }
+				    item.skujosn_new = skujosn_new;
+				    item.skuvaljosn = item.skuvaljosn;
+				}
+				this.prosku = item;
 				this.isHiddenMask = false;
-				this.showSku = true;
+				// 防止切换产品属性有时候出现 null
+				setTimeout(()=>{
+					this.showSku = true;
+				},100)
+			},
+			// 选择属性
+			selectAttr(index,i){
+			    var value_index = index; //选择的属性值索引
+			    var attr_index = i;   //选择的属性索引
+			    // if (this.check_attrid_arr.indexOf(value_index) > -1) return false;
+			    //记录选择的属性
+			    var check_attr = Object.assign(this.check_attr, { [attr_index]: value_index }); //记录选择的属性  attr_index外的[]必须
+			    //属性处理
+			    var check_attrid = [];
+			    var check_attrname = [];
+			    var check_attrnames = [];
+				var check_name=[]
+			    for (var i in check_attr) {
+			        var attr_id = check_attr[i];
+			        check_attrid.push(attr_id);
+			        check_attrname[attr_id] = i;
+			    }
+			    //数组排序  按从小到大排
+			    var check_attrid_arr = check_attrid;
+			    check_attrid = numberSort(check_attrid);
+			    //获取对应的属性名称
+			    for (var i = 0; i < check_attrid.length; i++) {
+			        var attr_id = check_attrid[i];
+			        var attr_name = check_attrname[attr_id];
+			        check_attrnames.push(attr_name + ':' + this.prosku.skujosn[attr_name][attr_id]);
+					check_name.push(this.prosku.skujosn[attr_name][attr_id])
+			    }
+				let mySku='';
+				for(let item of check_name){
+					mySku+=item+";"
+				}
+				mySku=mySku.substring(0,mySku.length-1)
+			    check_attrid = check_attrid.join(';');
+			    var attr_val = this.prosku.skuvaljosn[check_attrid];   //选择属性对应的属性值
+			    //数组转化为字符串
+			    check_attrnames = check_attrnames.join(';');
+			    //属性判断
+			    if (attr_val) {
+			        this.postData.attr_id = attr_val.Product_Attr_ID;   //选择属性的id
+			        this.postData.count = attr_val.Property_count;   //选择属性的库存
+			        // this.postData.showimg = typeof attr_val.Attr_Image != 'undefined' && attr_val.Attr_Image != '' ? attr_val.Attr_Image : this.product.Products_JSON['ImgPath'][0];// 选择属性的图片
+			        this.postData.productDetail_price = attr_val.Attr_Price?attr_val.Attr_Price:this.prosku.Products_PriceX; // 选择属性的价格
+			        this.submit_flag = (!this.check_attr || Object.getOwnPropertyNames(this.check_attr).length != Object.getOwnPropertyNames(this.prosku.skujosn).length) ? false : true;
+			    }
+			    //判断属性库存
+			    if (attr_val && attr_val.Property_count <= 0) {
+			        uni.showToast({
+			            title: '您选择的 ' + check_attrnames + ' 库存不足，请选择其他属性',
+			            icon: 'none'
+			        })
+			        this.submit_flag =  false;
+			        return false;
+			    }
+					this.check_attr = {};
+					console.log(check_attr);
+					console.log(check_attrid);
+					//存取1；2；3
+					this.check_attrid=check_attrid;
+					this.check_attrnames=mySku;
+					console.log(check_attrid_arr);
+			    this.check_attr = check_attr;
+			    this.check_attrid_arr = check_attrid_arr;
+			    this.submit_flag = (!this.check_attr || Object.getOwnPropertyNames(this.check_attr).length != Object.getOwnPropertyNames(this.prosku.skujosn).length) || Object.getOwnPropertyNames(this.prosku.skuvaljosn).indexOf(check_attrid)==-1 ? false : true;
+			},
+			plus(){
+			    if (this.postData.qty < this.postData.count) {
+			        this.postData.qty = Number(this.postData.qty) + 1;
+			    }else {
+			        uni.showToast({
+			            title: '购买数量不能大于库存量',
+			            icon: 'none',
+			        });
+			        this.postData.qty = this.postData.count;
+			    }
+			},
+			minus(){
+			    if (this.postData.qty > 1) {
+			        this.postData.qty -= 1;
+			    } else {
+			        uni.showToast({
+			            title: '购买数量不能小于1',
+			            icon: 'none',
+			        });
+			        this.postData.qty = 1;
+			    }
 			},
 			// 点击遮罩
 			hiddenMask(){
@@ -240,6 +476,13 @@
 					}
 					this.totalCount=res.totalCount
 					this.loading=false
+					
+					for(let item of this.productMy){
+						if(!item.skuvaljosn) return
+						for(let i in item.skuvaljosn){
+							item.skuvaljosn[i].myqty=0
+						}
+					}
 				}).catch(e=>{
 					this.loading=false
 				})
@@ -394,7 +637,7 @@
         left: 50%;
         z-index: 10000;
         width: 420rpx;
-		height: 260rpx;
+		// height: 260rpx;
         transform: translate(-50%,-50%);
 		background-color: #FFFFFF;
 		border-radius:10rpx;
@@ -517,6 +760,9 @@
 		            .confirm {
 		                background-color: $wzw-primary-color;
 		                color: #fff;
+										&.disabled {
+											background-color: #999;
+										}
 		            }
 		        }
 		    }
@@ -569,6 +815,93 @@
 		        font-size: 28rpx;
 		        color: #fff;
 		        text-align: center;
+		    }
+		}
+		.mxdetail {
+		    padding: 20rpx;
+		    .product {
+		        display: flex;
+		        margin-bottom: 40rpx;
+		        .proImg {
+		            width: 190rpx;
+		            height: 190rpx;
+		            .img {
+		                width: 100%;
+		                height: 100%;
+		            }
+		        }
+		        .proMsg {
+		            flex: 1;
+		            margin-left: 20rpx;
+		            .proName {
+		                overflow: hidden;
+		                margin-bottom: 20rpx;
+		                .name {
+		                    width: 440rpx;
+		                    word-wrap: break-word;
+		                    font-size: 24rpx;
+		                    float: left;
+		                }
+		                .del {
+		                    float: right;
+		                    width: 26rpx;
+		                    height: 31rpx;
+		                    margin-left: 34rpx;
+		                }
+		            }
+		            .attrInfo {
+		                display: inline-block;
+		                padding: 12rpx 16rpx;
+		                background-color: #FFF5F5;
+		                color: #666;
+		                font-size: 22rpx;
+		                border-radius: 5rpx;
+		                margin-bottom: 24rpx;
+		            }
+		            .proPrice {
+		                display: flex;
+		                justify-content: space-between;
+		                align-items: center;
+		                .newPrice {
+		                    font-size: 24rpx;
+		                    color: $wzw-primary-color;
+		                    .number {
+		                        font-size: 30rpx;
+		                    }
+		                }
+		                .oldPrice {
+		                    flex: 1;
+		                    color: #afafaf;
+		                    font-size: 24rpx;
+		                    text-decoration: line-through;
+		                    margin-left: 20rpx;
+		                }
+		                .amount {
+		                    display: flex;
+		                    height: 45rpx;
+		                    line-height: 45rpx;
+		                    width: 160rpx;
+		                    border: 2rpx solid #D1D1D1;
+		                    box-sizing: border-box;
+		                    .icon {
+		                        font-size: 32rpx;
+		                        color: #777;
+		                        width: 43rpx;
+		                        display: flex;
+		                        justify-content: center;
+		                        align-items: center;
+		                    }
+		                    .num {
+		                        flex: 1;
+		                        color: #777;
+		                        font-size: 24rpx;
+		                        text-align: center;
+		                        border-left: 2rpx solid #d1d1d1;
+		                        border-right: 2rpx solid #d1d1d1;
+		                    }
+		                }
+		            }
+		        }
 		    }
 		}
 </style>

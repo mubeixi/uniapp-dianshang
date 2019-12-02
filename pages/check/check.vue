@@ -1,7 +1,7 @@
 <template>
-    <view v-if="loading">
-      <!--  <pagetitle title="提交订单"></pagetitle> -->
-        <div class="top" v-if="orderInfo.all_has_stores">
+    <view v-if="loading" :class="selectStore?'over':''">
+      <!--  <pagetitle title="提交订单"></pagetitle> v-if="orderInfo.all_has_stores" -->
+        <div class="top" >
             <div class="tabs" >
                 <div class="tabs-item" :class="{active:tabIdx==0}" @click="tabIdx=0">快递发货</div>
                 <div class="tabs-item" :class="{active:tabIdx==1}" @click="tabIdx=1">到店自提</div>
@@ -195,7 +195,7 @@
 				确定
 			</view>
 		</popup-layer>
-        <store-list-components ref="stroeComp" @callFn="bindStores" />
+        <store-list-components ref="stroeComp" @callFn="bindStores" @change="selectStore=false" />
     </view>
 </template>
 
@@ -216,6 +216,7 @@ export default {
     },
     data(){
         return {
+			selectStore:false,
             tabIdx:0,
             show: false, // 遮罩层
             wl_show: false, // 物流选择
@@ -313,6 +314,7 @@ export default {
 	},
   methods: {
 	  bindStores(storeInfo){
+		 this.selectStore=false
 	  	if(this.setStoreMode==='all'){
 	  		//居然是对象醉了
 	  		for(var i in this.orderInfo.CartList){
@@ -325,16 +327,21 @@ export default {
 			this.orderInfo.CartList[prod_id][attr_id].store = storeInfo
 		}
 		  this.$refs.stroeComp.close()
+		  
 	  },
 	  multipleSelectStore(){
+		  this.selectStore=true
 		  this.setStoreMode = 'all'
 		  let ids = Object.keys(this.orderInfo.CartList)
 		  this.$refs.stroeComp.show(ids)
+		  
 	  },
       openStores(prod_id,attr_id){
+		  this.selectStore=true
 		  this.setStoreMode = prod_id+'::'+attr_id
 		  let ids = [prod_id]
           this.$refs.stroeComp.show(ids)
+		  
       },
 		...mapActions(['getUserInfo','setUserInfo']),
 		goback(){
@@ -1040,5 +1047,9 @@ export default {
             }
         }
     }
+}
+.over{
+	height: 100vh;
+	overflow: hidden;
 }
 </style>
