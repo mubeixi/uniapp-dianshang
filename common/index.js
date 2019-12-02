@@ -185,6 +185,16 @@ export const fun = {
             link = '/'+link;
         }
         console.log('跳转link:' + link + '===type:' + linkType)
+		//第三方链接
+		if(linkType==='third'){
+			// #ifdef APP-PLUS
+			plus.runtime.openURL(link)
+			// #endif
+			
+			// #ifdef H5
+			location.href = link
+			// #endif
+		}
         //除了这些页面之外，其他都走普通跳转
         if (isHasTabbarRouter(link)) {
 
