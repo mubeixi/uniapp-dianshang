@@ -513,7 +513,7 @@
       }
     },
     {
-      "path": "pages/regionRecord/regionRecord",
+      "path": "pages/fenxiao/regionRecord",
       "style": {
         "navigationBarTitleText": "申请记录"
       }

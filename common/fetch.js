@@ -448,6 +448,10 @@ export const subStorePurchaseApply = (data, options) => fetch('store_pifa_order_
 
 export const delStorePurchaseApply = (data, options) => fetch('store_pifa_order_del', data, options);
 
+export const storeProdBackSubmit = (data, options) => fetch('store_prod_back_submit', data, options);
+
+
+
 
 
 
