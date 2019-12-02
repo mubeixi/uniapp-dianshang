@@ -212,7 +212,7 @@
 					this.isNext=false;
 				}else{
 					uni.navigateTo({
-						url:'../regionRecord/regionRecord?index=1'
+						url:'../fenxiao/regionRecord?index=1'
 					})
 				}
 			},
