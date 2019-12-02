@@ -181,19 +181,29 @@ export const fun = {
     linkTo: (linkObj) => {
 
         let {link, linkType} = linkObj;
-        if(link[0]!='/'){
-            link = '/'+link;
-        }
+        
         console.log('跳转link:' + link + '===type:' + linkType)
 		//第三方链接
 		if(linkType==='third'){
-			// #ifdef APP-PLUS
-			plus.runtime.openURL(link)
+			
+			// #ifndef H5
+			console.log('/pages/common/webview?url='+link)
+			uni.navigateTo({
+				url:'/pages/common/webview?url='+link
+			})
 			// #endif
+			
+			
 			
 			// #ifdef H5
 			location.href = link
 			// #endif
+			
+			return;
+		}
+		
+		if(link[0]!='/'){
+		    link = '/'+link;
 		}
         //除了这些页面之外，其他都走普通跳转
         if (isHasTabbarRouter(link)) {
