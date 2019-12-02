@@ -40,7 +40,7 @@
 		methods:{
 			goRecord(){
 				uni.navigateTo({
-					url:'../regionRecord/regionRecord?index=2'
+					url:'../fenxiao/regionRecord?index=2'
 				})
 			},
 			submit(){
