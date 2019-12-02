@@ -6,24 +6,13 @@
 	<!-- 	<page-title title="爵位晋升" rightHidden="true"></page-title> -->
 		<view class="top">
 			<view class="person">
-				<image class="headimg" :src="pro.disInfo.Shop_Logo"></image>
+				<image :src="data.disInfo.Shop_Logo"></image>
 			</view>
 			<view class="nickName">
-				{{pro.disInfo.Shop_Name}}
+				{{data.disInfo.Shop_Name}}
 			</view>
-
-
-			<view  v-if="pro.disInfo.Enable_Sha==1" class="juewei">
-				股东
-			</view>
-			<view  v-else-if="pro.waiting_pay_apply.Order_ID" class="juewei"  @click="goGudongPay(pro.waiting_pay_apply.Order_ID)">
-				立即支付
-			</view>
-			<view  v-else-if="pro.sha_config.Sha_Agent_Type==1&&pro.is_apply" class="juewei"  @click="goGudong">
-				立即申请
-			</view>
-			<view  v-else class="juewei" >
-				暂不可申请
+			<view class="juewei">
+				{{pro.pro_title_name}}爵位
 			</view>
 		</view>
 		<view class="moneySum">
@@ -33,7 +22,7 @@
 						总佣金
 					</view>
 					<view class="moneyBottom">
-						￥<text>{{pro.total_sha}}</text>
+						￥<text>{{pro.total_nobi}}</text>
 					</view>
 				</view>
 				<view>
@@ -41,43 +30,85 @@
 						已发放佣金
 					</view>
 					<view class="moneyBottom">
-						￥<text>{{pro.total_sha}}</text>
+						￥<text>{{pro.total_nobi_send}}</text>
 					</view>
 				</view>
 			</view>
 			<view class="chakan" @click="goFinance">
 				查看明细
-				<image class="image" :src="'/static/client/fenxiao/chakan.png'|domain" ></image>
+				<image :src="'/static/client/fenxiao/chakan.png'|domain" ></image>
 			</view>
 		</view>
-		<circleTitle title="股东门槛说明"></circleTitle>
-		<view class="xiang">
-			<view class="xiangCenter">
-				<view class="xiangLeft">
-					申请条件:
+		<circleTitle title="我的数据"></circleTitle>
+		<view class="myData">
+			<view class="myDataTop">
+				<view class="td">
+					自身消费额
 				</view>
-				<view class="xiangRight">
-					<view  class="view" v-if="pro.sha_config.Sha_Rate.sha.Level>0">
-						分销商等级:{{pro.sha_config.Sha_Rate.sha.Level_name}}
-					</view>
-					<view  class="view" v-if="pro.sha_config.Sha_Rate.sha.Protitle>0">
-						爵位等级:{{pro.sha_config.Sha_Rate.sha.Protitle_name}}
-					</view>
-					<view  class="view">
-						个人消费额:{{pro.sha_config.Sha_Rate.sha.Selfpro}}
-					</view>
-					<view  class="view">
-						团队销售额:{{pro.sha_config.Sha_Rate.sha.Teampro}}
-					</view>
+				<view class="shu"></view>
+				<view class="td">
+					自身销售额
+				</view>
+				<view class="shu"></view>
+				<view class="td">
+					团队销售额
 				</view>
 			</view>
-			<view class="xiangBottom">
-				<view class="xiangBottomT">
-					所需金额:
+			<view class="myDataTop myDataBottom">
+				<view class="td">
+					¥<text>{{pro.self_buy}}</text>
 				</view>
-				<view class="xiangBottomB">
-					¥<text class="text">{{pro.sha_config.Sha_Rate.sha.price}}</text>(<block v-if="!pro.is_apply">暂未达到申请条件</block><block v-if="pro.is_apply">已达到申请条件</block>)
+				<view class="shu"></view>
+				<view class="td">
+					¥<text>{{pro.self_sales}}</text>
 				</view>
+				<view class="shu"></view>
+				<view class="td">
+					¥<text>{{pro.team_sales}}</text>
+				</view>
+			</view>
+		</view>
+		<circleTitle title="爵位晋升说明"></circleTitle>
+		<view class="description">
+			<view class="t1">
+				<view class="names">
+					名称
+				</view>
+				<view class="zishen">
+					自身消费额
+				</view>
+				<view class="zishen">
+					自身销售额
+				</view>
+				<view class="zishen">
+					团队销售额
+				</view>
+				<view class="zishen rightZ">
+					奖励百分比
+				</view>
+			</view>
+			<view class="t1 t2"  v-for="(item,index) of pro.Pro_Title_Level"  :key="item">
+				<view class="names">
+					{{item.Name}}
+				</view>
+				<view class="zishen">
+					￥{{item.Consume}}
+				</view>
+				<view class="zishen">
+					￥{{item.Sales_Self}}
+				</view>
+				<view class="zishen">
+					￥{{item.Sales_Group}}
+				</view>
+				<view class="zishen rightZ">
+					{{item.Bonus}}%
+				</view>
+			</view>
+		</view>
+		<circleTitle title="名词解释"></circleTitle>
+		<view class="noun">
+			<view class="vivi" v-for="(i,j) of pro.noun_desc" :key="j">
+				{{j+1}}、{{i}}
 			</view>
 		</view>
 	</view>
@@ -86,15 +117,13 @@
 <script>
 	import circleTitle from '../../components/circleTitle/circleTitle.vue'
 	import {pageMixin} from "../../common/mixin";
-	import {shaInit,getDisInit} from '../../common/fetch.js'
+	import {nobiInfo,getDisInit} from '../../common/fetch.js'
 	export default {
 		mixins:[pageMixin],
 		data() {
 			return {
-				pro:{
-					sha_config:{sha:{}},
-					disInfo:{}
-				}
+				pro:[],
+				data:[],
 			};
 		},
 		components:{
@@ -104,26 +133,24 @@
 
 		},
 		onShow() {
-			this.shaInit();
+			this.nobiInfo();
+			this.getDisInit();
 		},
 		methods:{
-			goGudongPay(index){
-				uni.navigateTo({
-					url:'../gudongPay/gudongPay?id='+index
-				})
-			},
-			goGudong(){
-				uni.navigateTo({
-					url:'../addGudong/addGudong'
+			getDisInit(){
+				getDisInit().then(res=>{
+					this.data=res.data;
+				},err=>{
+
 				})
 			},
 			goFinance(){
 				uni.navigateTo({
-					url:'../finance/finance?index=2'
+					url:'../fenxiao/finance?index=1'
 				})
 			},
-			shaInit(){
-				shaInit().then(res=>{
+			nobiInfo(){
+				nobiInfo().then(res=>{
 					if(res.errorCode==0){
 						this.pro=res.data;
 					}
@@ -137,13 +164,13 @@
 
 <style lang="scss" scoped>
 	.myall{
-		background-color: #F8F8F8 !important;
+		background-color: #FFFFFF !important;
 		min-height: 100vh;
 	}
 	.top{
 		margin: 30rpx 0rpx 30rpx 20rpx;
-		margin-top: 0rpx;
-		padding-top: 30rpx;
+		margin-top:0rpx;
+		padding-top:30rpx;
 		height: 75rpx;
 		display: flex;
 		position: relative;
@@ -151,8 +178,8 @@
 			width: 75rpx;
 			height: 75rpx;
 			border-radius: 50%;
-			.headimg{
-				border-radius: 50%;
+			overflow: hidden;
+			image{
 				width: 100%;
 				height: 100%;
 			}
@@ -253,7 +280,7 @@
 				color: #333333;
 			}
 			.shu{
-				width: 1rpx;
+				width: 1px;
 				height: 95rpx;
 				background-color: #E7E7E7;
 			}
@@ -283,6 +310,7 @@
 			width: 710rpx;
 			background-color: #F4F4F4;
 			display: flex;
+
 			.names{
 				width: 98rpx;
 				height: 80rpx;
@@ -314,69 +342,11 @@
 		width:710rpx ;
 		margin-left: 21rpx;
 		margin-right: 19rpx;
-		margin-bottom: 50rpx;
-		.viewq{
+		padding-bottom: 50rpx;
+		.vivi{
 			font-size: 26rpx;
 			color: #666666;
 			line-height: 50rpx;
-		}
-	}
-.xiang{
-		width: 710rpx;
-		margin: 0 auto;
-		margin-bottom: 25rpx;
-		border-radius: 20rpx;
-		padding: 25rpx 34rpx 33rpx 34rpx;
-		background-color: #FFFFFF;
-		box-sizing: border-box;
-		.xiangTop{
-			width:186rpx;
-			height:56rpx;
-			line-height: 56rpx;
-			background:rgba(255,242,242,1);
-			border-radius:28rpx;
-			margin: 0 auto;
-			font-size: 30rpx;
-			color: #333333;
-			text-align: center;
-		}
-		.xiangCenter{
-			width: 642rpx;
-			display: flex;
-			margin-top: 24rpx;
-			.xiangLeft{
-				font-size: 28rpx;
-				color: #333333;
-				margin-right: 10rpx;
-				height: 50rpx;
-				line-height: 50rpx;
-			}
-			.xiangRight{
-				.view{
-					font-size: 24rpx;
-					color: #666666;
-					height: 50rpx;
-					line-height: 50rpx;
-				}
-			}
-		}
-		.xiangBottom{
-			display: flex;
-			margin-top: 34rpx;
-			height: 27rpx;
-			line-height: 27rpx;
-			.xiangBottomT{
-				font-size: 28rpx;
-				color: #333333;
-				margin-right: 10rpx;
-			}
-			.xiangBottomB{
-				font-size: 24rpx;
-				color: #F43131;
-				.text{
-					font-size: 32rpx;
-				}
-			}
 		}
 	}
 </style>

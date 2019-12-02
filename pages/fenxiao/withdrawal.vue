@@ -101,7 +101,7 @@
 			//申请记录
 			goRecord(){
 				uni.navigateTo({
-					url:'../record/record'
+					url:'../fenxiao/record'
 				})
 			},
 			//申请提现
@@ -201,13 +201,13 @@
 			//我的提现方式
 			goMethod(){
 				uni.navigateTo({
-					url:"../withdrawalMethod/withdrawalMethod?User_Method_ID="+this.data.User_Method_ID+"&from="+this.withdraw_from
+					url:"../fenxiao/withdrawalMethod?User_Method_ID="+this.data.User_Method_ID+"&from="+this.withdraw_from
 				})
 			},
 			//管理提现方式
 			guanWithdrawal(){
 				uni.navigateTo({
-					url:"../addWithdrawal/addWithdrawal?form="+this.withdraw_from
+					url:"../fenxiao/addWithdrawal?form="+this.withdraw_from
 				})
 			}
 		}
