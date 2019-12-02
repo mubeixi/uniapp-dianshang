@@ -195,7 +195,7 @@ export default {
 				})
 			}else if(item.Order_Status==2||item.Order_Status==3){
 				uni.navigateTo({
-					url:'../refund/refund?Order_ID='+item.Order_ID
+					url:'../person/refund?Order_ID='+item.Order_ID
 				})
 			}else if(item.Order_Status==4){
 				uni.navigateTo({
