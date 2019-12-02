@@ -136,7 +136,7 @@
 					})
 					setTimeout(function () {
 						uni.navigateTo({
-							url:'../gudong/gudong'
+							url:'../fenxiao/gudong'
 						})
 					},1000)
 				}).catch(e=>{

@@ -268,7 +268,7 @@
 							})
 							setTimeout(function () {
 								uni.navigateTo({
-									url:'../region/region'
+									url:'../fenxiao/region'
 								})
 							},1000)
 						},err=>{

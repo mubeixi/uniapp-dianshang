@@ -117,7 +117,7 @@
 					})
 					setTimeout(function(){
 						uni.navigateTo({
-							url:'../refundList/refundList'
+							url:'../person/refundList'
 						})
 					},2000)
 				},err=>{}).catch(e=>{

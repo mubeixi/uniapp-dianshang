@@ -434,7 +434,7 @@
 			goPay(Order_ID){
 				if(this.orderInfo.Order_Status==2||this.orderInfo.Order_Status==3){
 					uni.navigateTo({
-						url:'../refund/refund?Order_ID='+Order_ID
+						url:'../person/refund?Order_ID='+Order_ID
 					})
 				}else if(this.orderInfo.Order_Status==4){
 					uni.navigateTo({

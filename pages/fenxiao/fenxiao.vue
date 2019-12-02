@@ -174,7 +174,7 @@
 			...mapActions(['getUserInfo','setUserInfo']),
 			goMyVip(){
 				uni.navigateTo({
-					url:'../myVip/myVip'
+					url:'../fenxiao/myVip'
 				})
 			},
 			goDistributor(){
@@ -201,7 +201,7 @@
 				if(!this.$fun.checkIsLogin(1,1))return;
 				if(!this.$fun.checkIsDistribute(1,1))return;
 				uni.navigateTo({
-					url: '../fenxiaoshang/fenxiaoshang'
+					url: '../fenxiao/fenxiaoshang'
 				})
 			},
 			//获取分销首页数据
@@ -224,7 +224,7 @@
 				if(!this.$fun.checkIsLogin(1,1))return;
 				if(!this.$fun.checkIsDistribute(1,1))return;
 				uni.navigateTo({
-					url:'../withdrawal/withdrawal?form=1'
+					url:'../fenxiao/withdrawal?form=1'
 				})
 			},
 			//推广小助手
@@ -248,7 +248,7 @@
 				if(!this.$fun.checkIsLogin(1,1))return;
 				if(!this.$fun.checkIsDistribute(1,1))return;
 				uni.navigateTo({
-					url:'../leaderboard/leaderboard'
+					url:'../fenxiao/leaderboard'
 				})
 			},
 			//爵位晋升
@@ -256,7 +256,7 @@
 				if(!this.$fun.checkIsLogin(1,1))return;
 				if(!this.$fun.checkIsDistribute(1,1))return;
 				uni.navigateTo({
-					url:'../promotion/promotion'
+					url:'../fenxiao/promotion'
 				})
 			},
 			//股东
@@ -264,7 +264,7 @@
 				if(!this.$fun.checkIsLogin(1,1))return;
 				if(!this.$fun.checkIsDistribute(1,1))return;
 				uni.navigateTo({
-					url:'../gudong/gudong'
+					url:'../fenxiao/gudong'
 				})
 			},
 			//区域代理
@@ -272,13 +272,13 @@
 				if(!this.$fun.checkIsLogin(1,1))return;
 				if(!this.$fun.checkIsDistribute(1,1))return;
 				uni.navigateTo({
-					url:'../finance/finance'
+					url:'../fenxiao/finance'
 				})
 			},
 			//财务明细
 			goRegion(){
 				uni.navigateTo({
-					url:'../region/region'
+					url:'../fenxiao/region'
 				})
 			},
 			//我的团队
@@ -286,7 +286,7 @@
 				if(!this.$fun.checkIsLogin(1,1))return;
 				if(!this.$fun.checkIsDistribute(1,1))return;
 				uni.navigateTo({
-					url:'../myTeam/myTeam'
+					url:'../fenxiao/myTeam'
 				})
 			},
 			//二维码
@@ -294,7 +294,7 @@
 				if(!this.$fun.checkIsLogin(1,1))return;
 				if(!this.$fun.checkIsDistribute(1,1))return;
 				uni.navigateTo({
-					url:'../erweima/erweima'
+					url:'../fenxiao/erweima'
 				})
 			}
 		}

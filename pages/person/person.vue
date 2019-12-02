@@ -302,7 +302,7 @@
 			goRefundList(){
 				if(!this.$fun.checkIsLogin(1))return;
 				uni.navigateTo({
-					url:'../refundList/refundList'
+					url:'../person/refundList'
 				})
 			},
 			goMsg(){
@@ -369,13 +369,13 @@
 			goGift(){
 				if(!this.$fun.checkIsLogin(1))return;
 				uni.navigateTo({
-					url:'../myGift/myGift'
+					url:'../person/myGift'
 				})
 			},
 			goSetting(){
 				if(!this.$fun.checkIsLogin(1))return;
 				uni.navigateTo({
-					url: '../editAccount/editAccount'
+					url: '../person/editAccount'
 				})
 				// uni.navigateTo({
 				// 	url:'../setting/setting'
@@ -385,7 +385,7 @@
 			goRenwu(){
 				if(!this.$fun.checkIsLogin(1))return;
 				uni.navigateTo({
-					url:'../taskCenter/taskCenter'
+					url:'../person/taskCenter'
 				})
 			},
 			//去收藏页
