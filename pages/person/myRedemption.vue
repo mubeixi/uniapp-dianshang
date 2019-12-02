@@ -87,7 +87,7 @@
 			toBuy(item){
 				if(item.Orders_Status == 1) {
 					uni.navigateTo({
-						url: '../jifenCheck/jifenCheck?gift_id=' + item.Gift_ID
+						url: '../person/jifenCheck?gift_id=' + item.Gift_ID
 					})
 				};
 				// 已发货物流追踪

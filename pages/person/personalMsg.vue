@@ -88,7 +88,7 @@
 			...mapActions(['getUserInfo','setUserInfo']),
 			update(num){
 				uni.navigateTo({
-					url: '../editPersonalMsg/editPersonalMsg?type=' + num
+					url: '../person/editPersonalMsg?type=' + num
 				})
 			},
 			get_user_info(){
