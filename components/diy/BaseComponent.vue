@@ -91,7 +91,7 @@ import {getProductCountInfo} from "../../common/fetch";
       this.base = this.confData;
 
       getProductCountInfo().then(res=>{
-        console.log(res)
+        // console.log(res)
 
         this.info = res.data
 

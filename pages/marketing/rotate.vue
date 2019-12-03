@@ -114,6 +114,7 @@
                 this.$refs.result.close()
             },
             startFn(){
+				if(rotateInstance.is_start)return //已经启动过程中无法再触发
                 rotateInstance.start(6,4)
             },
             showResult(idx,name){

@@ -30,10 +30,10 @@ export const ajax = (url,method,data,options)=>{
   //   header.Cookie = wx.getStorageSync('cookie')
   // }
 
-  console.log('ajax action is '+data.act);
+  // console.log('ajax action is '+data.act);
 
 	// #ifdef MP-TOUTIAO || APP-PLUS
-  console.log(data)
+  // console.log(data)
 	// #endif
 
 
@@ -58,11 +58,10 @@ export const ajax = (url,method,data,options)=>{
           let res = ret.data;
 
 		  // #ifdef MP-TOUTIAO || APP-PLUS
-		  console.log(res)
+		  // console.log(res)
 		  // #endif
 
 
-          console.log(res)
 
           if(res.hasOwnProperty('errorCode') && hookErrorCode.indexOf(res.errorCode) != -1){
               resolve(res)

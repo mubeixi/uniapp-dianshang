@@ -184,7 +184,7 @@ export const fun = {
         
         console.log('跳转link:' + link + '===type:' + linkType)
 		//第三方链接
-		if(linkType==='third'){
+		if(linkType==='third' || link.indexOf('http')!==-1){
 			
 			// #ifndef H5
 			console.log('/pages/common/webview?url='+link)
