@@ -114,7 +114,7 @@ export default {
 		goPintuan(item){
 			if(item.teamstatus == 0) {
 				uni.navigateTo({
-					url:'../groupJoin/groupJoin?Team_ID='+item.teamid+'&Products_ID='+item.prod_list[0].prod_id
+					url:'../detail/groupJoin?Team_ID='+item.teamid+'&Products_ID='+item.prod_list[0].prod_id
 				})
 			}
 		},
@@ -184,7 +184,7 @@ export default {
 		goLogistics(item){
 			//跳转物流追踪
 			uni.navigateTo({
-				url:'../logistics/logistics?Order_ID='+item.Order_ID
+				url:'../order/logistics?Order_ID='+item.Order_ID
 			})
 		},
 		//跳转订单详情

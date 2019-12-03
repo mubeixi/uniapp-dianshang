@@ -179,7 +179,7 @@ export const pushHandle = ({type='receive',info = {__UUID__:'',title:'',content:
         content:JSON.stringify(payload)
     })
 
-    //data = {action:"navigateTo",confirmText:"跳转到页面",data:"/pages/result/result"};
+    //data = {action:"navigateTo",confirmText:"跳转到页面",data:"/pages/classify/result"};
 
 }
 // #endif

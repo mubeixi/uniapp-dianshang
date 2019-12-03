@@ -175,7 +175,7 @@ export default {
 	  //跳转搜索页
 	  goSearch(){
 		  uni.navigateTo({
-		  	url:'../search/search'
+		  	url:'../classify/search'
 		  })
 	  },
 	  shipping(i){

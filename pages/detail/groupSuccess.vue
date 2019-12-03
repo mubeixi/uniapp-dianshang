@@ -41,11 +41,10 @@
         </ul>
         <!-- 团长 -->
         <div class="three">
-<!--            <div class="paySuc">-->
-<!--                <image class="img" :src="'/static/client/tuan/paySuc.png'|domain"/>-->
-<!--                支付成功-->
-<!--            </div>-->
-            <div class="padding10-r"></div>
+            <div class="paySuc">
+                <image class="img" :src="'/static/client/tuan/paySuc.png'|domain"/>
+                支付成功
+            </div>
             <ul class="lyl">
                 <li class="liq" v-for="(user,idx) in join_team_list">
                     <image class="img" :src="user.User_HeadImg" />
@@ -56,11 +55,11 @@
             </ul>
         </div>
         <!-- 倒计时 -->
-        <div class="how">
+        <div class="how" v-if="product.teamstatus!=1">
             <image class="img" :src="'/static/client/tuan/time.png'|domain"/>
             <span class="my">拼团中，还差<span class="spans">{{product.pintuan_people-product.teamnum}}</span>人</span>
         </div>
-        <div class="times">
+        <div class="times" v-if="product.teamstatus!=1">
             <div class="line"></div>
             <div class="text">
                 剩余
@@ -76,29 +75,32 @@
             <div class="line"></div>
         </div>
         <!--查看订单 -->
-<!--        <div class="dingdan">-->
+        <div class="dingdan" v-if="product.teamstatus!=1">
 
+            <!-- #ifdef MP-WEIXIN || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO -->
+            <button @click="goOrderDetail" class="vanButton">查看订单</button>
+<!--            open-type="share"-->
+            <button   open-type="share" class="vanButton invi" >邀请好友</button>
+            <!-- #endif -->
 
+            <!-- #ifdef H5 || APP-PLUS -->
+            <span @click="goOrderDetail" class="vanButton">查看订单</span>
+            <span class="vanButton invi" @click="inviteFunc">邀请好友</span>
+            <!-- #endif -->
+        </div>
+		<div class="dingdan" v-if="product.teamstatus==1">
+
+		            <!-- #ifdef MP-WEIXIN || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO -->
+		            <button @click="goOrderDetail" class="vanButton" style="margin-left: 125rpx;">查看订单</button>
+		            <!-- #endif -->
+
+		            <!-- #ifdef H5 || APP-PLUS -->
+		            <span @click="goOrderDetail" class="vanButton"  style="margin-left: 125rpx;">查看订单</span>
+		            <!-- #endif -->
+		 </div>
+<!--        <div class="liji">-->
+<!--            <div class="vanButton">立即参团</div>-->
 <!--        </div>-->
-
-        <!-- #ifdef MP-WEIXIN || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO -->
-        <div class="liji">
-        <button v-if="joined"   open-type="share" class="vanButton invi" >邀请好友</button>
-        <div v-else @click="joinFunc" class="vanButton">立即参团</div>
-        </div>
-        <!-- #endif -->
-
-        <!-- #ifdef H5 || APP-PLUS -->
-        <div class="liji">
-            <view v-if="joined" @click="inviteFunc" class="vanButton">去分享</view>
-            <div v-else @click="joinFunc" class="vanButton">立即参团</div>
-        </div>
-        <!-- #endif -->
-
-<!--            <div class="liji">-->
-<!--                <view v-if="joined" @click="shareFunc" class="vanButton">去分享</view>-->
-<!--                <div v-else @click="joinFunc" class="vanButton">立即参团</div>-->
-<!--            </div>-->
 
         <!-- 间隙 -->
         <div class="mbxline"></div>
@@ -108,19 +110,19 @@
             <div class="xiang">
                 <div class="hang">
                     <image class="img" :src="'/static/client/tuan/ju.png'|domain"/>
-                    <span>开团或者参加别人的团</span>
+                    <span class="spana">开团或者参加别人的团</span>
                 </div>
                 <div class="hang">
                     <image class="img" :src="'/static/client/tuan/ju.png'|domain"/>
-                    <span>在规定的时间内，邀请好友参团</span>
+                    <span class="spana">在规定的时间内，邀请好友参团</span>
                 </div>
                 <div class="hang">
                     <image class="img" :src="'/static/client/tuan/ju.png'|domain"/>
-                    <span>达到拼团人数，分别给团长和团员发货</span>
+                    <span class="spana">达到拼团人数，分别给团长和团员发货</span>
                 </div>
                 <div class="hang">
                     <image class="img" :src="'/static/client/tuan/ju.png'|domain"/>
-                    <span>未达到拼团人数，货款将自动原路返还</span>
+                    <span class="spana">未达到拼团人数，货款将自动原路返还</span>
                 </div>
             </div>
         </div>
@@ -128,7 +130,7 @@
         <div class="dianzhang">店长推荐</div>
         <div class="prolist">
             <div class="pro-item" v-for="(item,index) in prodList" :key="index" @click="goProductDetail(item.Products_ID,item.is_pintuan)">
-                <!--                <image :src="'/static/client/check/pro1.png" alt="" class="img"/>-->
+<!--                <image :src="'/static/client/check/pro1.png" alt="" class="img"/>-->
                 <img :src="item.ImgPath" alt="" class="img">
                 <div class="item-name">{{item.Products_Name}}</div>
                 <div class="price">
@@ -143,21 +145,20 @@
             <div class="shareinfo" v-if="type=='share'">
                 <div class="s_top">
                     <!-- #ifdef APP-PLUS -->
-				<div class="flex1" @click="shareFunc('wx')">
-					<image class='img' :src="'/static/client/detail/share1.png'|domain" alt=""></image>
-					<div>发送好友</div>
-				</div>
-				<div class="flex1" @click="shareFunc('wxtimeline')">
-					<image class='img' :src="'/static/client/detail/sahre3.png'|domain" alt=""></image>
-					<div>朋友圈</div>
-				</div>
-				<!--只有配置了这个参数的app，才有分享到小程序选项-->
-				<div class="flex1" @click="shareFunc('wxmini')" v-if="wxMiniOriginId">
-					<img class='img' :src="'/static/client/detail/share4.png'|domain" alt="">
-					<div>微信小程序</div>
-				</div>
-				<!-- #endif -->
-
+                    <div class="flex1" @click="shareFunc('wx')">
+                        <img :src="'/static/client/detail/share1.png'|domain" alt="">
+                        <div>发送好友</div>
+                    </div>
+                    <div class="flex1" @click="shareFunc('wxtimeline')">
+                        <img :src="'/static/client/detail/sahre3.png'|domain" alt="">
+                        <div>朋友圈</div>
+                    </div>
+                    <!--只有配置了这个参数的app，才有分享到小程序选项-->
+                    <div class="flex1" @click="shareFunc('wxmini')" v-if="wxMiniOriginId">
+                        <img :src="'/static/client/detail/share4.png'|domain" alt="">
+                        <div>微信小程序</div>
+                    </div>
+                    <!-- #endif -->
 
                 </div>
                 <div class="s_bottom" @click="cancel">取消</div>
@@ -172,45 +173,6 @@
         </div>
         <!--分享引导框结束-->
 
-        <popupLayer ref="cartPopu" :direction="'top'">
-            <div class="cartSku">
-                <div class="cartTop">
-                    <image :src="product.Products_JSON.ImgPath[0]" mode=""></image>
-                    <div class="cartTitle">
-                        <div class="cartTitles">{{product.Products_Name}}</div>
-                        <div class="addInfo">
-                            <div class="addPrice">{{product.Products_PriceX}}元</div>
-                            <div class="proSale">库存{{postData.count}}</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="cartCenter">
-                    <div class="cartAttr" v-for="(item,i) of product.skujosn" :key="i">
-                        <div class="sku">
-                            {{i}}
-                        </div>
-                        <div class="skuValue">
-                            <div class="divs" :class="check_attr[i]==index?'skuCheck':''" @click="selectAttr(index,i)"  v-for="(mbx,index) of item" :key="index">{{mbx}}</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="numBer">
-                    <div class="numBers">
-                        数量
-                    </div>
-                    <div class="inputNumber">
-                        <div class="clicks" @click="delNum">-</div>
-                        <!--					v-enter-number-->
-                        <input class="inputs"  type="number" v-model="postData.qty"  disabled>
-                        <div class="clicks" @click="addNum">+</div>
-                    </div>
-                </div>
-            </div>
-            <div class="cartSub" @click="skuSub" :class="submit_flag?'':'disabled'">
-                确定
-            </div>
-        </popupLayer>
-
     </div>
 </template>
 
@@ -218,10 +180,10 @@
     // import pagetitle from "@/components/title";
     import popupLayer from '../../components/popup-layer/popup-layer.vue'
     import {pageMixin} from "../../common/mixin";
-    import {getOrderDetail,getProductDetail,getProd,getPintuanTeam,getProductSharePic,updateCart} from "../../common/fetch";
-    import {getGroupCountdown,buildSharePath,getProductThumb,ls,numberSort} from "../../common/tool";
+    import {getOrderDetail,getProductDetail,getProd,getPintuanTeam,getProductSharePic} from "../../common/fetch";
+    import {getGroupCountdown,buildSharePath,getProductThumb,ls} from "../../common/tool";
     import {goProductDetail} from "../../common";
-    import {mapState,mapGetters} from 'vuex';
+    import {mapState} from 'vuex';
 
     export default {
         mixins: [pageMixin],
@@ -234,7 +196,6 @@
                 // #endif
                 JSSDK_INIT:false,//自己有分享的业务
                 type:'',
-                addtime:0,//开始的时间
                 join_team_list:[],
                 Team_ID:null,
                 orderInfo: {},
@@ -250,26 +211,6 @@
                     pageSize: 4,
                 },
                 hasMore: true, // 是否还有产品
-
-
-                count:1,//商品数量
-                skuF:1,//规格详情
-                checkAttr: {} , // 选择的属性
-                check_attrid_arr: [],
-                check_attr: {},
-                couponList:[],//优惠券列表
-                submit_flag: true, //提交按钮
-                postData: {
-                    prod_id: 0,    //产品ID  在 onLoad中赋值
-                    atrid_str: '',    //选择属性  1；2   数字从小到大
-                    atr_str: '',      //选择属性名称
-                    count: 0,         //选择属性的库存
-                    showimg: '',      //选择属性的图片(用产品图片代替)
-                    qty: 1,           //购买数量
-                    cart_key: 'DirectBuy',     //购物车类型   CartList（加入购物车）、DirectBuy（立即购买）、PTCartList（不能加入购物车）
-                    active: 'pintuan',   //拼团时候选，不是拼团不选
-                },
-								joined: false,  //是否已经参加过团
             }
         },
         components: {
@@ -277,12 +218,14 @@
             // pagetitle
         },
         computed:{
-            ...mapState(['initData']),
-            ...mapGetters(['userInfo'])
+            ...mapState(['initData'])
         },
         onLoad(options) {
-            this.Prod_ID = options.Products_ID;
-            this.Team_ID = options.Team_ID;
+
+            if(!this.$fun.checkIsLogin(1))return;
+            if (options.order_id) {
+                this.Order_ID = options.order_id;
+            }
         },
         onShow() {
             this.INIT()
@@ -293,7 +236,7 @@
         onShareAppMessage(){
 
             //分享的是Team_ID
-            let path = '/pages/groupJoin/groupJoin?Team_ID='+this.Team_ID+'&Products_ID='+this.Prod_ID;
+            let path = '/pages/detail/groupJoin?Team_ID='+this.Team_ID+'&Products_ID='+this.Prod_ID;
             console.log(path)
             let shareObj = {
                 title: this.product.Products_Name,
@@ -307,128 +250,10 @@
         },
         // #endif
         methods: {
-            // 选择属性
-            selectAttr(index,i){
-                var value_index = index; //选择的属性值索引
-                var attr_index = i;   //选择的属性索引
-                // if (this.check_attrid_arr.indexOf(value_index) > -1) return false;
-                //记录选择的属性
-                var check_attr = Object.assign(this.check_attr, { [attr_index]: value_index }); //记录选择的属性  attr_index外的[]必须
-                //属性处理
-                var check_attrid = [];
-                var check_attrname = [];
-                var check_attrnames = [];
-                for (var i in check_attr) {
-                    var attr_id = check_attr[i];
-                    check_attrid.push(attr_id);
-                    check_attrname[attr_id] = i;
-                }
-                //数组排序  按从小到大排
-                var check_attrid_arr = check_attrid;
-                check_attrid = numberSort(check_attrid);
-                //获取对应的属性名称
-                for (var i = 0; i < check_attrid.length; i++) {
-                    var attr_id = check_attrid[i];
-                    var attr_name = check_attrname[attr_id];
-                    check_attrnames.push(attr_name + ':' + this.product.skujosn[attr_name][attr_id]);
-                }
-                check_attrid = check_attrid.join(';');
-                var attr_val = this.product.skuvaljosn[check_attrid];   //选择属性对应的属性值
-                //数组转化为字符串
-                check_attrnames = check_attrnames.join(';');
-                this.postData.atr_str = check_attrnames;
-                this.postData.atrid_str = check_attrid;
-                //属性判断
-                if (attr_val) {
-                    this.postData.count = attr_val.Property_count;   //选择属性的库存
-                    this.postData.showimg = typeof attr_val.Attr_Image != 'undefined' && attr_val.Attr_Image != '' ? attr_val.Attr_Image : this.product.Products_JSON['ImgPath'][0];// 选择属性的图片
-                    this.productDetail_price = attr_val.Txt_PriceSon; // 选择属性的价格
-                    this.submit_flag = (!this.check_attr || Object.getOwnPropertyNames(this.check_attr).length != Object.getOwnPropertyNames(this.product.skujosn).length) ? false : true;
-                }
-                //判断属性库存
-                if (attr_val && attr_val.Property_count <= 0) {
-                    // wx.showToast({
-                    //     title: '您选择的 ' + check_attrnames + ' 库存不足，请选择其他属性',
-                    //     icon: 'none'
-                    // })
-                    this.submit_flag =  false;
-                    return false;
-                }
-                this.check_attr = check_attr;
-                this.check_attrid_arr = check_attrid_arr;
-                this.submit_flag = (!this.check_attr || Object.getOwnPropertyNames(this.check_attr).length != Object.getOwnPropertyNames(this.product.skujosn).length) ? false : true;
-                //购买数量处理  大于最高时赋值最高值
-                if (this.postData.qty > this.postData.count) {
-                    this.postData.qty = this.postData.count;
-                }
-            },
-            skuSub(){
-                if(!this.submit_flag) {
-                    return ;
-                }
-                this.postData.prod_id = this.Products_ID;
-                if(this.postData.atr_str==''||this.postData.atrid_str==''){
-                    if(this.product.skujosn){
-                        wx.showToast({
-                            title: '您还没有选择规格',
-                            icon: 'none'
-                        })
-                        return;
-                    }
-                }
-								this.postData.active_id = this.Team_ID;
-								this.postData.prod_id = this.Prod_ID;
-                console.log(this.postData)
-                updateCart(this.postData).then(res=>{
-                    console.log(res)
-                    if(res.errorCode == 0) {
-                        uni.navigateTo({
-                            url: '../order/check?cart_key=DirectBuy'
-                        })
-                    }else {
-
-                    }
-
-                }).catch(e=>{
-                    console.log(e)
-                    uni.showToast({
-                        title: e.msg
-                    })
-                })
-                //确定加入购物车
-                this.$refs.cartPopu.close();
-            },
-            addNum(){
-                if (this.postData.qty < this.postData.count) {
-                    this.postData.qty = parseInt(this.postData.qty) + 1;
-                }else {
-                    uni.showToast({
-                        title: '购买数量不能大于库存量',
-                        icon: 'none',
-                    });
-                    this.postData.qty = this.postData.count;
-                }
-            },
-            delNum(){
-                if (this.postData.qty > 1) {
-                    this.postData.qty = parseInt(this.postData.qty) - 1;
-                } else {
-                    uni.showToast({
-                        title: '购买数量不能小于1',
-                        icon: 'none',
-                    });
-                    this.postData.qty = 1;
-                }
-            },
-            joinFunc(){
-                if(!this.$fun.checkIsLogin(1))return;
-                this.postData.active = 'pintuan';
-                this.$refs.cartPopu.show();
-            },
             async shareFunc(channel) {
 
                 let _self = this
-                let path = 'pages/groupJoin/groupJoin?Team_ID='+this.Team_ID+'&Products_ID='+this.Prod_ID;
+                let path = 'pages/detail/groupJoin?Team_ID='+this.Team_ID+'&Products_ID='+this.Prod_ID;
                 let front_url = this.initData.front_url;
                 console.log('front_url is '+front_url)
 
@@ -541,9 +366,9 @@
                 this.isShowGuide = true
                 // #endif
 
-                // #ifdef MP-WEIXIN || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO
+				// #ifdef MP-WEIXIN || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO
 
-                // #endif
+				 // #endif
 
 
                 // #ifdef APP-PLUS
@@ -558,12 +383,12 @@
             goOrderDetail(){
                 //这里应该需要跳转到订单详情页
                 uni.navigateTo({
-                    url:'/pages/order/order?index='+2
+                    url:'/pages/order/pintuanOrderlist?index='+2
                 })
             },
             async INIT(){
                 //这里要设置Prod_ID
-
+                await this.getOrderDetail();
                 await this.getProdDetail(this.Prod_ID);
 
                 await this.getProdFunc()
@@ -595,25 +420,15 @@
 
                     this.product = res.data;
 
-                    this.postData.count = res.data.Products_Count;
-
                     this.join_team_list = res.data.join_team_list
 
-                    // 查看用户是否已经参加过团
-                    for(var team of this.join_team_list) {
-                        if(team.userid == this.userInfo.User_ID) {
-                            this.joined = true;
+                    //获取开团的时间
+                    for(var team of this.join_team_list){
+                        if(team.team_head){
+                            this.addtime = team.addtime
+                            break;
                         }
                     }
-
-                    //获取开团的时间
-                   for(var team of this.join_team_list){
-                       if(team.team_head){
-                           this.addtime = team.addtime
-                           break;
-                       }
-                   }
-
 
                     if(res.data.skujosn) {
                         this.product.skujosn = typeof res.data.skujosn ==='string' ?JSON.parse(res.data.skujosn):res.data.skujosn;
@@ -628,7 +443,7 @@
                     let product = this.product
                     // #ifdef H5
 
-                    let path = 'pages/groupJoin/groupJoin?Team_ID='+this.Team_ID+'&Products_ID='+this.Prod_ID;
+                    let path = 'pages/detail/groupJoin?Team_ID='+this.Team_ID+'&Products_ID='+this.Prod_ID;
                     let front_url = this.initData.front_url;
 
 
@@ -792,7 +607,6 @@
         padding: 30rpx 0 0;
         color: #333;
         font-size: 12px;
-		text-align: center;
     }
     .shareinfo>div {
         text-align: center;
@@ -802,11 +616,14 @@
         justify-content: center;
         align-items: center;
     }
-    .s_top .img {
+    .s_top img {
         width: 38px;
         height: 38px;
         display: block;
         margin: 0 auto 5px;
+    }
+    .s_top>div:nth-child(1) {
+        /*margin-right: 60px;*/
     }
     .s_bottom {
         position: relative;
@@ -952,7 +769,7 @@
                     border-radius: 50%;
                 }
 
-                .liq{
+                .liq {
                     margin-right: 11px;
                     width: 95rpx;
                     height: 95rpx;
@@ -1025,7 +842,6 @@
                 display: flex;
                 align-items: center;
                 font-size: 24rpx;
-                text-align: center;
                 .myTime {
                     margin: 0 28rpx;
                     font-size: 30rpx;
@@ -1093,8 +909,9 @@
         }
 
         .liji {
-            margin: 0 auto;
             margin-top: 18px;
+            font-size: 0;
+            margin: 0 auto;
             display: flex;
             margin-bottom: 15px;
             height: 74rpx;
@@ -1139,7 +956,7 @@
                         height: 11px;
                     }
 
-                    span {
+                    .spana {
                         margin-left: 8px;
                         font-size: 24rpx;
                         color: #333333;
@@ -1215,127 +1032,5 @@
         color: #afafaf;
         font-size: 12px;
         margin-left: 22rpx;
-    }
-
-    //规格
-    .cartSku{
-        padding: 0rpx 10rpx;
-        .cartTop{
-            position: relative;
-            display: flex;
-            padding-top: 20rpx;
-            image{
-                width: 220rpx;
-                height: 220rpx;
-            }
-            .cartTitle{
-                margin-left: 20rpx;
-                font-size: 32rpx;
-                width: 420rpx;
-                .cartTitles{
-                    height: 80rpx;
-                    line-height: 40rpx;
-                    overflow: hidden;
-                    margin-top: 20rpx;
-                }
-                .addInfo{
-                    width: 450rpx;
-                    margin-top: 70rpx;
-                    display: flex;
-                    flex-flow: row;
-                    justify-content: space-between;
-                    align-items: flex-end;
-                    .addPrice{
-                        font-size: 42rpx;
-                        color: #ff4200;
-                    }
-                    .proSale{
-                        font-size: 24rpx;
-                        color: #999;
-                        justify-content: flex-end;
-                    }
-                }
-            }
-        }
-        .cartCenter{
-            margin-top: 20rpx;
-            .cartAttr{
-                display: flex;
-                padding: 15rpx 0rpx;
-                .sku{
-                    font-size: 28rpx;
-                    height: 70rpx;
-                    line-height: 70rpx;
-                    width: 140rpx;
-                }
-                .skuValue{
-                    display: flex;
-                    .divs{
-                        height: 70rpx;
-                        line-height: 70rpx;
-                        font-size: 28rpx;
-                        border-radius: 10rpx;
-                        color: #000;
-                        background-color: #fff;
-                        padding-left: 20rpx;
-                        padding-right: 20rpx;
-                        margin-right: 20rpx;
-                        border: 1px solid #ccc;
-                    }
-                }
-            }
-        }
-        .numBer{
-            margin-top: 20rpx;
-            display: flex;
-            padding: 15rpx 0rpx;
-            justify-content: space-between;
-            .numBers{
-                font-size: 28rpx;
-                height: 70rpx;
-                line-height: 70rpx;
-                width: 140rpx;
-            }
-            .inputNumber{
-                border: 1px solid #ccc;
-                border-radius: 6rpx;
-                height: 50rpx;
-                margin-right: 50rpx;
-                display: flex;
-                .inputs{
-                    color: black;
-                    margin: 0 auto;
-                    width: 80rpx;
-                    height: 50rpx;
-                    text-align: center;
-                    font-size: 24rpx;
-                    border-left: 2rpx solid #ccc;
-                    border-right: 2rpx solid #ccc;
-                }
-                .clicks{
-                    height: 50rpx;
-                    line-height: 50rpx;
-                    width: 60rpx;
-                    text-align: center;
-                }
-            }
-        }
-    }
-    .cartSub{
-        width: 100%;
-        height: 90rpx;
-        background-color: #F43131;
-        font-size:20px;
-        line-height: 90rpx;
-        text-align: center;
-        color: #FFFFFF;
-        margin-top: 30rpx;
-        &.disabled {
-            background: #999;
-        }
-    }
-    .skuCheck{
-        color: #fff !important;
-        background-color: #ff4200 !important;
     }
 </style>

@@ -381,7 +381,7 @@
 				}
 				//跳转物流追踪
 				uni.navigateTo({
-					url:'../logistics/logistics?shipping_id='+shipping_id + '&express=' + express + '&prod_img=' + prod_img
+					url:'../order/logistics?shipping_id='+shipping_id + '&express=' + express + '&prod_img=' + prod_img
 				})
 			},
 			//取消订单

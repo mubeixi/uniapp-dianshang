@@ -1,9 +1,11 @@
 <template>
-  <div style="position:relative;background-color:#f8f8f8">
+  <div style="position:relative;background-color:#f8f8f8;overflow-x: hidden;">
     <div class="top">
         <image class="imgm" src="/static/back.png" @click="goBack" ></image>
         <image class="imgm cart" src="/static/cart.png" @click="goCart" ></image>
-    </div>
+	</div>
+
+
 
 	<!-- 轮播 -->
 	<view class="uni-padding-wrap">
@@ -19,52 +21,56 @@
 	</view>
     <!-- 产品信息描述 -->
     <div class="section1">
-        <div class="leftss" style="display: flex;align-items: center;">
-			<image class="limits" src="/static/limit.png"></image>
+        <div class="leftss">
+			{{product.label}}
         </div>
-<!--        <div class="rightss">-->
-<!--            <div class="countdown">-->
-<!--               距开始还有 : <span class="spanss">{{countdown.d}}</span>天<span class="spans">{{countdown.h}}</span>时<span class="spans">{{countdown.m}}</span>分<span class="spans">{{countdown.s}}</span>秒-->
-<!--            </div>-->
-<!--        </div>-->
-		<div class="rightss" v-if="isKai">
-			<div class="countdown">
-				距结束还有 : <span class="spanss">{{countdown.d}}</span>天<span class="spans">{{countdown.h}}</span>时<span class="spans">{{countdown.m}}</span>分<span class="spans">{{countdown.s}}</span>秒
-			</div>
-		</div>
+        <div class="rightss" v-if="isKai">
+            <div class="countdown">
+               距结束还有 : <span class="spanss">{{countdown.d}}</span>天<span class="spans">{{countdown.h}}</span>时<span class="spans">{{countdown.m}}</span>分<span class="spans">{{countdown.s}}</span>秒
+            </div>
+        </div>
 		<div class="rightss" v-if="!isKai">
-			<div class="countdown">
-				距开始还有 : <span class="spanss">{{countdown.d}}</span>天<span class="spans">{{countdown.h}}</span>时<span class="spans">{{countdown.m}}</span>分<span class="spans">{{countdown.s}}</span>秒
-			</div>
+		    <div class="countdown">
+		       距开始还有 : <span class="spanss">{{countdown.d}}</span>天<span class="spans">{{countdown.h}}</span>时<span class="spans">{{countdown.m}}</span>分<span class="spans">{{countdown.s}}</span>秒
+		    </div>
 		</div>
+    </div>
+    <div class="section2" >
+        <div class="titles">
+            <div class="title">{{product.Products_Name}}</div>
+        </div>
     </div>
 	<view class="prices">
 		<view class="price">
 			<text class="leftPrice">
-				<text class="rmb">¥<text class="priceX">{{product.price}}</text></text>
+				秒杀价<text class="rmb">¥<text class="priceX">{{product.attr_json.price}}</text></text>
 			</text>
 			<text class="rightPrice">
 				￥{{product.Products_PriceX}}
 			</text>
 		</view>
 		<view class="btn">
-			库存{{product.Products_Count}}
+			库存{{product.attr_json.count}}
 		</view>
 	</view>
-	<div class="section2" >
-	    <div class="titles">
-	        <div class="title">{{product.Products_Name}}</div>
-	    </div>
-	</div>
     <!-- 包邮等信息 -->
-    <div class="section3" v-if="product.Products_Promise && product.Products_Promise.length > 0">
-    		<span v-for="(item,index) in product.Products_Promise" v-if="item.name" :key="index">
-    				<image class="img" :src="'/static/client/detail/dh.png'|domain" alt="" />
-    				<span>{{item.name}}</span>
-    		</span>
+   <!-- 包邮等信息 -->
+   <div class="section3" v-if="product.Products_Promise && product.Products_Promise.length > 0">
+   		<span v-for="(item,index) in product.Products_Promise" v-if="item.name" :key="index">
+   				<image class="img" :src="'/static/client/detail/dh.png'|domain" alt="" />
+   				<span>{{item.name}}</span>
+   		</span>
+   </div>
+    <!-- 小伙伴在拼团 -->
+    <div class="pintuan">
+        <div class="pinTitle">
+            活动介绍
+        </div>
+		<div class="mbxtext">
+			{{product.description}}
+		</div>
     </div>
-
-
+    <!-- 评价 -->
     <!-- 评价 -->
     <div class="comment">
         <div class="c_title">
@@ -97,7 +103,7 @@
         </block>
     </div>
     <!-- 商品详情 -->
-    <div class="pro_detail" v-if="isLoad">
+    <div class="pro_detail">
         <div class="p_detail_title">商品详情</div>
     	<!-- <div v-html="product.Products_Description" class="p_detail_des"></div> -->
 <!--    	<rich-text :nodes="product.Products_Description|formatRichText" class="p_detail_des"></rich-text>-->
@@ -149,8 +155,7 @@
     	        领券
     	        <image  class="imgg" :src="'/static/client/detail/x.png'|domain"  @click="close" ></image>
     	    </div>
-
-			<div class="t_content" v-for="(item,i) of couponList" :key="i" :style="{backgroundImage:'url('+$fun.domainFn('/static/client/detail/yhq.png')+')'}">
+    	    <div class="t_content" v-for="(item,i) of couponList" :key="i">
     	        <div class="t_left">
     	            <div class="t_left_t"><span>￥</span><span class="money">{{item.Coupon_Cash}}</span><span>{{item.Coupon_Title}}</span></div>
     	            <div class="t_left_c">{{item.Coupon_Description}}</div>
@@ -167,8 +172,8 @@
 				<div class="cartTitle">
 					<div class="cartTitles">{{product.Products_Name}}</div>
 					<div class="addInfo">
-						<div class="addPrice">{{postData.productDetail_price}}元</div>
-						<div class="proSale">库存{{postData.count}}</div>
+							<div class="addPrice" >{{postData.productDetail_price}}元</div>
+							<div class="proSale">库存{{postData.count}}</div>
 					</div>
 				</div>
 			</div>
@@ -201,6 +206,10 @@
 		</form>
 
 	</popupLayer>
+	<div class="errorMsg" v-if="!isKai">
+		<image src="/static/error.png" class="errImg"></image>
+		活动尚未开始
+	</div>
 	<div class="fixed">
 		<div class="leftss">
 			<div class="first" @click="goHome">
@@ -220,13 +229,31 @@
 			</div>
 		</div>
 		<div class="rightss">
-			<form  class="form" report-submit @submit="myPin">
-			<div class="tuan bTitle">
-				<button formType="submit" class="danRight">
-					立即抢购
-				</button>
-			</div>
-			</form>
+			<block v-if="!isKai">
+				<form class="form" report-submit @submit="myPays">
+				<div class="dan bTitle">
+					<button formType="submit" class="danRight">
+						零售价购买
+					</button>
+				</div>
+				</form>
+				<form  class="form" report-submit  @submit="flashsaleReserve">
+				<div class="tuan bTitle">
+					<button formType="submit" class="danRight">
+						立即预约
+					</button>
+				</div>
+				</form>
+			</block>
+			<block v-if="isKai">
+				<form class="form" report-submit @submit="myPay">
+				<div class="dan bTitle" style="background-color: #F43131;">
+					<button formType="submit" class="danRight">
+						立即抢购
+					</button>
+				</div>
+				</form>
+			</block>
 		</div>
 	</div>
   </div>
@@ -234,7 +261,7 @@
 
 <script>
 import popupLayer from '../../components/popup-layer/popup-layer.vue'
-import {spikeProdDetail,getCommit,updateCart,addCollection,getCoupon,getUserCoupon,cancelCollection,checkProdCollected,getPintuanTeam,addProductViews,getProductSharePic} from '../../common/fetch.js'
+import {flashsaleReserve,flashsaleDetail,getCommit,updateCart,addCollection,getCoupon,getUserCoupon,cancelCollection,checkProdCollected,getPintuanTeam,addProductViews,getProductSharePic} from '../../common/fetch.js'
 import {goBack,numberSort,getGroupCountdown,buildSharePath,getProductThumb,ls}  from '../../common/tool.js'
 import {pageMixin} from "../../common/mixin";
 import {error} from "../../common";
@@ -248,7 +275,7 @@ export default {
 			// #ifdef APP-PLUS
 			wxMiniOriginId:'',
 			// #endif
-			isLoad:false,
+
 			JSSDK_INIT:false,//自己有分享的业务
 			type: '', // 优惠券内容， 分享内容
             shareShow: false,
@@ -257,6 +284,7 @@ export default {
 			product:{},//商品结果
 			commit:[],//获取评论
 			Products_ID: 0 ,
+			flashsale_id:0,//秒杀商品id
 			count:1,//商品数量
 			skuF:1,//规格详情
 			checkAttr: {} , // 选择的属性
@@ -264,12 +292,12 @@ export default {
 			check_attr: {},
 			couponList:[],//优惠券列表
 			submit_flag: true, //提交按钮
-			isKai:true,//是否开始
 			page:1,//优惠券页
 			pageSize:10,//优惠券页
 			totalCount:0,//优惠券个数
 			countdown:{d:0,h:0,m:0,s:0},
-			spike_good_id:0,
+			isKai:true,//是否开始秒杀
+			isLoading:false,
 			postData: {
 			    prod_id: 0,    //产品ID  在 onLoad中赋值
 			    attr_id: 0,    //选择属性id
@@ -277,8 +305,8 @@ export default {
 			    showimg: '',      //选择属性的图片(用产品图片代替)
 			    qty: 1,           //购买数量
 			    cart_key: 'DirectBuy',     //购物车类型   CartList（加入购物车）、DirectBuy（立即购买）、PTCartList（不能加入购物车）
-					active: 'spike',   //拼团时候选，不是拼团不选
-				productDetail_price:0
+				active: 'flashsale',   //拼团时候选，不是拼团不选
+                productDetail_price:0
 			},
 			isCollected: false, // 该产品是否已收藏
         }
@@ -287,7 +315,7 @@ export default {
 	//自定义小程序分享
 	onShareAppMessage(){
 
-		let path = '/pages/groupDetail/groupDetail?Products_ID='+this.Products_ID;
+		let path = '/pages/detail/groupDetail?Products_ID='+this.Products_ID;
 
 		let shareObj = {
 			title: this.product.Products_Name,
@@ -306,24 +334,17 @@ export default {
 	computed:{
 		...mapGetters(['userInfo']),
 		...mapState(['initData'])
-		// countdown(){
-		// 	if(this.product || !this.product.pintuan_end_time)return {};
-		//
-		// 	let computedStamp = getGroupCountdown({start_timeStamp:this.product.pintuan_end_time})
-		// 	if(computedStamp){
-		// 		return computedStamp
-		// 	}
-		//
-		// 	return {}
-		//
-		// }
 	},
 	onLoad: function (option) {
-		  this.spike_good_id=option.spikeGoodId;
-		 this._init_func();
+		  // this.Products_ID = option.Products_ID;
+		  this.flashsale_id = option.flashsale_id;
+		  this._init_func();
+		  // this.checkProdCollected();
 	},
 	onShow() {
-		//this.getDetail(this.spike_good_id);
+		//this.getDetail(this.flashsale_id);
+		// this.getCommit(this.Products_ID);
+		// this.checkProdCollected();
 	},
 	filters: {
 		endtime(timeStamp){
@@ -392,16 +413,16 @@ export default {
     methods: {
 		...mapActions(['getUserInfo']),
 		async _init_func(){
-			await this.getDetail(this.spike_good_id)
+			await this.getDetail(this.flashsale_id)
 					.then(id=>{
 						this.getCommit(id);
 						this.checkProdCollected(id);
 						addProductViews({prod_id:id}).then().catch();
 					})
-					// await this.getCommit(this.Products_ID);
-					//
-					// await this.checkProdCollected();
-					// await addProductViews({prod_id:this.Products_ID}).then().catch()
+			// await this.getCommit(this.Products_ID);
+			//
+			// await this.checkProdCollected();
+			// await addProductViews({prod_id:this.Products_ID}).then().catch()
 
 			this.isLoad = true;
 
@@ -414,34 +435,10 @@ export default {
 				current:index
 			});
 		},
-		toJoinGroup(tid,team){
-			console.log(team)
-			if(!this.$fun.checkIsLogin())return;
-
-			for(var usr of team.join_user){
-				console.log(usr)
-				if(this.userInfo.User_ID == usr){
-
-					this.$fun.confirm({title:'操作提示',content:'您已经参加该团,是否继续查看?'}).then(res=>{
-						uni.navigateTo({
-							url:"/pages/groupJoin/groupJoin?Team_ID="+tid+"&Products_ID="+this.Products_ID
-						})
-					},err=>{
-
-					})
-					return;
-				}
-			}
-
-
-			uni.navigateTo({
-				url:"/pages/groupJoin/groupJoin?Team_ID="+tid+"&Products_ID="+this.Products_ID
-			})
-		},
 		async shareFunc(channel) {
 
 			let _self = this
-			let path = 'pages/groupDetail/groupDetail?Products_ID=' + this.Products_ID;
+			let path = 'pages/detail/groupDetail?Products_ID=' + this.Products_ID;
 			let front_url = this.initData.front_url;
 			console.log('front_url is '+front_url)
 
@@ -529,11 +526,6 @@ export default {
 							url: '/pages/detail/sharepic/sharepic'
 						})
 					}, 200)
-					// uni.previewImage({
-					// 	urls: [sharePic],
-					// 	indicator:'default',
-					// 	current:0
-					// });
 					break;
 			}
 
@@ -640,8 +632,50 @@ export default {
 		},
 		//拼团
 		myPin(e){
+
+			console.log(e);
+			add_template_code({
+				code: e.detail.formId,
+				times: 1
+			})
 			if(!this.$fun.checkIsLogin(1))return;
 			this.$refs.cartPopu.show();
+		},
+		//秒杀预约
+		flashsaleReserve(e){
+			if(this.isLoading){
+				return;
+			}
+			this.isLoading=true;
+			add_template_code({
+				code: e.detail.formId,
+				times: 1
+			})
+			if(!this.$fun.checkIsLogin(1))return;
+			let data={
+				flashsale_id:this.flashsale_id
+			}
+			flashsaleReserve(data).then(res=>{
+				uni.showToast({
+					title:res.msg,
+					icon:'none'
+				})
+				this.isLoading=false;
+			},err=>{
+				uni.showToast({
+					title:res.msg,
+					icon:'none'
+				})
+				this.isLoading=false;
+			}).catch(e=>{
+				this.isLoading=false;
+			})
+		},
+		myPays(){
+			//零售价购买
+			uni.navigateTo({
+				url:'../detail/detail?Products_ID='+this.Products_ID
+			})
 		},
 		//单独购买
 		myPay(e){
@@ -651,9 +685,8 @@ export default {
 				code: e.detail.formId,
 				times: 1
 			})
-
 			if(!this.$fun.checkIsLogin(1))return;
-			delete this.postData.active ;
+			// delete this.postData.active ;
 			this.$refs.cartPopu.show();
 		},
 		//返回首页
@@ -696,7 +729,7 @@ export default {
         		this.postData.attr_id = attr_val.Product_Attr_ID;   //选择属性的id
         		this.postData.count = attr_val.Property_count;   //选择属性的库存
         		this.postData.showimg = typeof attr_val.Attr_Image != 'undefined' && attr_val.Attr_Image != '' ? attr_val.Attr_Image : this.product.Products_JSON['ImgPath'][0];// 选择属性的图片
-				this.postData.productDetail_price = attr_val.xs_pricex; // 选择属性的价格
+        		this.postData.productDetail_price = attr_val.Attr_Price; // 选择属性的价格
         		this.submit_flag = (!this.check_attr || Object.getOwnPropertyNames(this.check_attr).length != Object.getOwnPropertyNames(this.product.skujosn).length) ? false : true;
         	}
         	//判断属性库存
@@ -727,7 +760,8 @@ export default {
         		return ;
         	}
         	this.postData.prod_id = this.Products_ID;
-			this.postData.active_id=this.product.spike_good_id;
+			this.postData.active_id = this.product.id;
+
         	if(this.postData.attr_id==0){
         		if(this.product.skujosn){
         			wx.showToast({
@@ -751,22 +785,37 @@ export default {
         	}).catch(e=>{
 				console.log(e)
 				uni.showToast({
-					title: e.msg
+					title: e.msg,
+					icon: 'none'
 				})
 			})
         	//确定加入购物车
         	this.$refs.cartPopu.close();
         },
         addNum(){
-        	if (this.postData.qty < this.postData.count) {
-				this.postData.qty = parseInt(this.postData.qty) + 1;
-        	}else {
-        	    uni.showToast({
-        			title: '购买数量不能大于库存量',
-        	        icon: 'none',
-        	    });
-        		this.postData.qty = this.postData.count;
-        	}
+			if(this.isKai){
+				if (this.postData.qty < this.product.attr_json.count) {
+					this.postData.qty = parseInt(this.postData.qty) + 1;
+				}else {
+				    uni.showToast({
+						title: '购买数量不能大于库存量',
+				        icon: 'none',
+				    });
+					this.postData.qty = this.product.attr_json.count;
+				}
+			}else{
+				if (this.postData.qty < this.postData.count) {
+					this.postData.qty = parseInt(this.postData.qty) + 1;
+				}else {
+				    uni.showToast({
+						title: '购买数量不能大于库存量',
+				        icon: 'none',
+				    });
+					this.postData.qty = this.product.attr_json.count;
+				}
+			}
+
+
         },
         delNum(){
         	if (this.postData.qty > 1) {
@@ -806,56 +855,58 @@ export default {
 			let rt  = {};
 			let times=new Date().getTime();
 			if(times<this.product.start_time*1000){
-				this.isKai=false;
-				if(this.product && this.product.end_time){
-					let computedStamp = getGroupCountdown({end_timeStamp:this.product.start_time})
-					if(computedStamp){
-						rt = computedStamp
-					}else{
-						//如果不对，就清空
-						window.clearInterval(window.groupStam)
+					this.isKai=false;
+					if(this.product && this.product.end_time){
+						let computedStamp = getGroupCountdown({end_timeStamp:this.product.start_time})
+						if(computedStamp){
+							rt = computedStamp
+						}else{
+							//如果不对，就清空
+							window.clearInterval(window.groupStam)
+						}
 					}
-				}
 			}else{
 				this.isKai=true;
-				if(this.product && this.product.end_time){
-					let computedStamp = getGroupCountdown({end_timeStamp:this.product.end_time})
-					if(computedStamp){
-						rt = computedStamp
-					}else{
-						//如果不对，就清空
-						window.clearInterval(window.groupStam)
+					if(this.product && this.product.end_time){
+						let computedStamp = getGroupCountdown({end_timeStamp:this.product.end_time})
+						if(computedStamp){
+							rt = computedStamp
+						}else{
+							//如果不对，就清空
+							window.clearInterval(window.groupStam)
+						}
 					}
-				}
 			}
+
+
+			//console.log(rt)
+
 			this.countdown = rt
 		},
 		getDetail(item){
-        	return  new Promise((resolve, reject)=>{
+        	return  new Promise((resolve, reject) =>{
 				let data={
-					spike_good_id:item
+					flashsale_id:item,
+					Users_ID:'wkbq6nc2kc'
 				}
 				let _self = this;
 				let product = null;
 
-				spikeProdDetail(data).then(res=>{
-					console.log(res)
+				flashsaleDetail(data).then(res=>{
+
 					if(res.errorCode != 0){
 						return;
 					}
 					this.product = res.data;
-					this.postData.productDetail_price=res.data.price;
-					this.Products_ID=res.data.Products_ID;
-
-					this.postData.count = res.data.Products_Count;
+					this.Products_ID = res.data.Products_ID;
+					this.postData.count = res.data.attr_json.count;
+					this.postData.productDetail_price=res.data.attr_json.price;
 					if(res.data.skujosn) {
 						this.product.skujosn = typeof res.data.skujosn ==='string' ?JSON.parse(res.data.skujosn):res.data.skujosn;
 						this.product.skuvaljosn = typeof res.data.skuvaljosn === 'string' ?JSON.parse(res.data.skuvaljosn):res.data.skuvaljosn;
 					}
 
-
 					resolve(res.data.Products_ID);
-
 
 					//this.stampCount()
 					//开发时候一直倒计时太乱了
@@ -865,7 +916,7 @@ export default {
 
 					// #ifdef H5
 
-					let path = 'pages/limitDetail/limitDetail?spikeGoodId='+this.spike_good_id;
+					let path = 'pages/detail/spikeDetail?flashsale_id='+this.flashsale_id;
 					let front_url = this.initData.front_url;
 
 
@@ -1083,7 +1134,7 @@ export default {
     }
     /* 产品描述部分 start */
     .section1 {
-       height: 83rpx;
+       height: 70rpx;
        background-color: #fff;
     }
     .price {
@@ -1294,12 +1345,11 @@ export default {
 					width: 37rpx;
 					line-height: 32rpx;
 					text-align: center;
-					background:#333333;
-					color: #FFFFFF;
+					background:#FFFFFF;
+					color: #F43131;
 					font-size: 26rpx;
 					box-shadow:0px 1px 1px 0px rgba(4,0,0,0.5), 0px 1px 1px 0px rgba(255,255,255,0.65);
 					display: inline-block;
-
 				}
 				.spanss{
 					margin: 0 2px;
@@ -1470,8 +1520,8 @@ export default {
 				.cartTitles{
 					height: 80rpx;
 					overflow: hidden;
-					margin-top: 20rpx;
 					line-height: 40rpx;
+					margin-top: 20rpx;
 				}
 				.addInfo{
 					width: 450rpx;
@@ -1578,13 +1628,12 @@ export default {
 	.prices{
 		width: 750rpx;
 		box-sizing: border-box;
-		height: 82rpx;
+		height: 50rpx;
 		padding-left: 20rpx;
-		padding-right: 22rpx;
+		padding-right: 21rpx;
 		display: flex;
 		justify-content: space-between;
 		background-color: #FFFFFF;
-		padding-top: 32rpx;
 		.btn{
 			font-size: 22rpx;
 			color: #666666;
@@ -1663,10 +1712,6 @@ export default {
 		position: absolute;
 		top: 30px;
 		right: 10px !important;
-	}
-	.limits{
-		width: 152rpx;
-		height: 48rpx;
 	}
 	.section3 {
 	    display: flex;
