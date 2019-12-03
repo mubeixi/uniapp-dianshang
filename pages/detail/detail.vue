@@ -627,7 +627,7 @@ export default {
 			updateCart(this.postData).then(res=>{
 				if(res.errorCode == 0) {
 					uni.navigateTo({
-						url: '../gift/gift?cart_key=DirectBuy&gift=gift'
+						url: '../person/gift?cart_key=DirectBuy&gift=gift'
 					})
 				}else {
 					uni.showToast({

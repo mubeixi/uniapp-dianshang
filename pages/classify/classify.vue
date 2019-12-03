@@ -78,7 +78,7 @@
 		methods: {
 			goSearch(){
 				uni.navigateTo({
-					url:'../search/search'
+					url:'../classify/search'
 				})
 			},
 			getList(){
@@ -147,7 +147,7 @@
 			},
 			cart(item) {
 				uni.navigateTo({
-					url:'../result/result?Cate_ID='+item.Category_ID
+					url:'../classify/result?Cate_ID='+item.Category_ID
 				})
 			}
 		},

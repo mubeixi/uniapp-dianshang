@@ -309,7 +309,7 @@
 			//查看须知
 			goDistributeAgreement(){
 				uni.navigateTo({
-					url:'../distributeAgreement/distributeAgreement'
+					url:'../fenxiao/distributeAgreement'
 				})
 			},
 			// 取消输入支付密码
@@ -619,7 +619,7 @@
 			//跳转去列表页
 			goResult(){
 				uni.navigateTo({
-					url:'../result/result'
+					url:'../classify/result'
 				})
 			},
 			application(){

@@ -153,7 +153,7 @@ export default {
 			let express = JSON.parse( item.Order_Shipping).Express;
 			//跳转物流追踪
 			uni.navigateTo({
-				url:'../logistics/logistics?shipping_id='+item.Order_ShippingID + '&express=' + express + '&prod_img=' + item.prod_list[0].prod_img
+				url:'../order/logistics?shipping_id='+item.Order_ShippingID + '&express=' + express + '&prod_img=' + item.prod_list[0].prod_img
 			})
 		},
 		//获取订单角标数

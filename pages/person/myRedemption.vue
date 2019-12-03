@@ -93,7 +93,7 @@
 				// 已发货物流追踪
 				if(item.Orders_Status == 3) {
 					uni.navigateTo({
-						url:'../logistics/logistics?shipping_id='+item.Orders_ShippingID + '&express=' + item.Orders_Shipping + '&prod_img=' + item.Gift_Info.Gift_ImgPath
+						url:'../order/logistics?shipping_id='+item.Orders_ShippingID + '&express=' + item.Orders_Shipping + '&prod_img=' + item.Gift_Info.Gift_ImgPath
 					})
 				}
 			}

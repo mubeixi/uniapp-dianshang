@@ -37,7 +37,7 @@
 		methods:{
 			goDis(){
 				uni.navigateTo({
-					url:'../distributorCenter/distributorCenter'
+					url:'../fenxiao/distributorCenter'
 				})
 			},
 			disApplyInit(){

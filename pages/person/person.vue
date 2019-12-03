@@ -362,7 +362,7 @@
 			},
 			goPintuanOrderlist(){
 				uni.navigateTo({
-					url: '../pintuanOrderlist/pintuanOrderlist'
+					url: '../order/pintuanOrderlist'
 				})
 			},
 			//去赠品中心
