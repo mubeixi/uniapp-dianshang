@@ -1,74 +1,90 @@
 <template>
-  <div style="position:relative;background-color:#f8f8f8;overflow-x: hidden;">
+  <div style="position:relative;background-color:#f8f8f8" class="wrap" >
     <div class="top">
-        <image class="imgm" src="/static/back.png" @click="goBack" ></image>
-        <image class="imgm cart" src="/static/cart.png" @click="goCart" ></image>
-	</div>
-
-
+       <image class="imgm" src="/static/back.png" @click="goBack" ></image>
+       <image class="imgm cart" src="/static/cart.png" @click="goCart" ></image>
+    </div>
 
 	<!-- 轮播 -->
-	<view class="uni-padding-wrap">
+	<view class="uni-padding-wrap"  style="background: #f2f2f2;">
 		<view class="page-section swiper">
 			<view class="page-section-spacing">
 				<swiper class="swiper" circular="true" indicator-dots="indicatorDots" autoplay="autoplay" interval="4000" duration="500" indicator-color="#fff" indicator-active-color="#ff5000">
 					<swiper-item v-for="(item,i) of product.Products_JSON.ImgPath" :key="i">
-						 <img class="imgs" :src="item"  @click="yulan(i)">
+						 <img class="imgs" :src="item|lazyimg"  @click="yulan(i)">
 					</swiper-item>
 				</swiper>
 			</view>
 		</view>
 	</view>
+
     <!-- 产品信息描述 -->
     <div class="section1">
         <div class="leftss">
-			{{product.label}}
+            <span class="pricef">¥</span>
+            <span class="prices">{{product.pintuan_pricex}}</span>
+            <span class="pricet">¥ {{product.Products_PriceX}}</span>
         </div>
-        <div class="rightss" v-if="isKai">
+        <div class="rightss">
             <div class="countdown">
-               距结束还有 : <span class="spanss">{{countdown.d}}</span>天<span class="spans">{{countdown.h}}</span>时<span class="spans">{{countdown.m}}</span>分<span class="spans">{{countdown.s}}</span>秒
+               <span class="spans">{{countdown.d}}</span>天<span class="spans">{{countdown.h}}</span>小时<span class="spans">{{countdown.m}}</span>分<span class="spans">{{countdown.s}}</span>后结束
+            </div>
+            <div class="haha">
+                已团{{product.pintuan_flag}}件  {{product.pintuan_people}}人团
             </div>
         </div>
-		<div class="rightss" v-if="!isKai">
-		    <div class="countdown">
-		       距开始还有 : <span class="spanss">{{countdown.d}}</span>天<span class="spans">{{countdown.h}}</span>时<span class="spans">{{countdown.m}}</span>分<span class="spans">{{countdown.s}}</span>秒
-		    </div>
-		</div>
     </div>
+
+    <!-- 领券 -->
     <div class="section2" >
         <div class="titles">
             <div class="title">{{product.Products_Name}}</div>
+			<span class="share" @click="showTick" data-type="share">分享此产品</span>
+        </div>
+        <div class="titlet">
+           {{product.Products_BriefDescription}}
         </div>
     </div>
-	<view class="prices">
-		<view class="price">
-			<text class="leftPrice">
-				秒杀价<text class="rmb">¥<text class="priceX">{{product.attr_json.price}}</text></text>
-			</text>
-			<text class="rightPrice">
-				￥{{product.Products_PriceX}}
-			</text>
-		</view>
-		<view class="btn">
-			库存{{product.attr_json.count}}
-		</view>
-	</view>
     <!-- 包邮等信息 -->
-   <!-- 包邮等信息 -->
-   <div class="section3" v-if="product.Products_Promise && product.Products_Promise.length > 0">
-   		<span v-for="(item,index) in product.Products_Promise" v-if="item.name" :key="index">
-   				<image class="img" :src="'/static/client/detail/dh.png'|domain" alt="" />
-   				<span>{{item.name}}</span>
-   		</span>
-   </div>
+    <div class="section3">
+        <span>
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABsAAAAbCAYAAACN1PRVAAAEs0lEQVRIiZ1WW2xUVRQ9LSC0pbS0hkc74tBMmBnvnbPX5gaQRAiJwoekMfpl/PWBkVdiQoIStcngn0QIECmJWI0hxGiCMRpfBB8oogiFSqHVpJIKtB06M/fuPeXz+tFpQifDtGX93n322nevfdY+xlRAJh6vHyNaXQBeUuCYMp8X4IYCw8J8S5gvCfNxH9gZWLvOd5ymSvnKIvS8OVnXtQHRbmE+K8BFAX4IgM8FOCrAu0J0RIg+FeZTynxegQtClPaJVg9Eo/OmRTRkbZ1Y+2wAnBGgW4neD4Cn7gBRdZwl+VRq4WgstiAHNA677uJcMvmwAhuF6IACvytwSYhezqdSCysSjcZiC4R5hwLXBDhZAJ4MEonmT4yZVbETxlTlgEZhXi/MJwToF6K0WLuo7IGbnlcrRNsV6BWi9+5Yu3wqknKkY0StQpQW5l4hSv+XSDRPDtqwYbYQPaPMVwXoHLM2MhOSUgSJRLMAHQL0CbB1kobC/Igw/6TAVwHRivvIXzUYidRk4vH60JhqY4wZI2pV5o+U+XwBWBUaU20y8Xi9ArsE6M4TbQqNqZopUyYerxeiLT7R9qznNUwUkCNiAc4I88FMPN5ifGsfVeCCAl33c09CY6p8YJWOT+6BEGic+DbiOPMF2KtATz6VesIUmJ9X4EJgbXtHsQUzwZC1ixToEuBXdV0b3pUjNKZKAQjzWWFOmwDoEuZTOSA6U6LTxsz2U6nnBOiTlSu3XHGcB0pjCp63VJm/FuazRoBuAU6q6y6eKZnvOLHiYH076roPlYsJgUYBOpX5lil63JG7ez0dDFlbp8Brynw1sLY9vIcEoefVCrBHma8bBUYConcy8Xj9pCBjqrNtbQ2htXVl/8raNQJcLB2KUgxEo/OEaJsA/UaBYQEO50oOZNvaGnxgpwB7CswtkwoBGgPmfQr0+NauMRWuS7h2bU1AtFuZ/zUCXBHmz0p9LPS8WiV6VcZdZf+Eq4TGVBesbRfmy8L8ZmlHSpH1vIYCcEiAYSPMJ4To+6zjLJtEZkxVsGLFg0K0TYFrAfBh3trlo9ZGBPhYge/EdZOViIwxRl13sQJfKPOfppjsD7X28XLucbOlpTYAXhDgL2E+LkCHMF8W4JXp7C1x3aQAPwfM+0wulVqvzJcEOHSX1UxCGIvNDYieFuZuGde4Ux1nyVREg5FITdEKrxSAzeMOzZxW4LeiYZYVO/S8OT6wWYFjeaJN01k/o0SOAKe1KIExRcNU4JwwnyjVbhKhMbN8x2kKyzhFKYJEolmIDgrQk7V2XThR3N+x2NwAeDFg/scH9galC2+GKBrwVgH6yk6s7zhNAuxV5l4B3sokk0vvh2jQcZqEaFvxynSO3msRi7WLhCgtQJ8CXflUyhtxnPnTIQkjkZrA2rgA+wXoF6BzSnP3HadJrN0hQK8AvwjQUbB25W2i1nwqtXDI2rqBaHTeTc+rzQGNhWRyqRA5CuwSolMy/ljquE3UOr1WRCI1WaLHlOiAAD3Ft+M3AhwVojfE2h0B8LoAhxX4slhUTwB8kAc2TuUq5VA14jhLFNgYAG8L848KDCrzdQH6FRgQ5hsKnBNgf2Bt+x3PW9ZRYQH/DyS2ZcSf28uXAAAAAElFTkSuQmCC" alt="">
+            <span>假一赔十</span>
+        </span>
+        <span>
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABsAAAAbCAYAAACN1PRVAAAEs0lEQVRIiZ1WW2xUVRQ9LSC0pbS0hkc74tBMmBnvnbPX5gaQRAiJwoekMfpl/PWBkVdiQoIStcngn0QIECmJWI0hxGiCMRpfBB8oogiFSqHVpJIKtB06M/fuPeXz+tFpQifDtGX93n322nevfdY+xlRAJh6vHyNaXQBeUuCYMp8X4IYCw8J8S5gvCfNxH9gZWLvOd5ymSvnKIvS8OVnXtQHRbmE+K8BFAX4IgM8FOCrAu0J0RIg+FeZTynxegQtClPaJVg9Eo/OmRTRkbZ1Y+2wAnBGgW4neD4Cn7gBRdZwl+VRq4WgstiAHNA677uJcMvmwAhuF6IACvytwSYhezqdSCysSjcZiC4R5hwLXBDhZAJ4MEonmT4yZVbETxlTlgEZhXi/MJwToF6K0WLuo7IGbnlcrRNsV6BWi9+5Yu3wqknKkY0StQpQW5l4hSv+XSDRPDtqwYbYQPaPMVwXoHLM2MhOSUgSJRLMAHQL0CbB1kobC/Igw/6TAVwHRivvIXzUYidRk4vH60JhqY4wZI2pV5o+U+XwBWBUaU20y8Xi9ArsE6M4TbQqNqZopUyYerxeiLT7R9qznNUwUkCNiAc4I88FMPN5ifGsfVeCCAl33c09CY6p8YJWOT+6BEGic+DbiOPMF2KtATz6VesIUmJ9X4EJgbXtHsQUzwZC1ixToEuBXdV0b3pUjNKZKAQjzWWFOmwDoEuZTOSA6U6LTxsz2U6nnBOiTlSu3XHGcB0pjCp63VJm/FuazRoBuAU6q6y6eKZnvOLHiYH076roPlYsJgUYBOpX5lil63JG7ez0dDFlbp8Brynw1sLY9vIcEoefVCrBHma8bBUYConcy8Xj9pCBjqrNtbQ2htXVl/8raNQJcLB2KUgxEo/OEaJsA/UaBYQEO50oOZNvaGnxgpwB7CswtkwoBGgPmfQr0+NauMRWuS7h2bU1AtFuZ/zUCXBHmz0p9LPS8WiV6VcZdZf+Eq4TGVBesbRfmy8L8ZmlHSpH1vIYCcEiAYSPMJ4To+6zjLJtEZkxVsGLFg0K0TYFrAfBh3trlo9ZGBPhYge/EdZOViIwxRl13sQJfKPOfppjsD7X28XLucbOlpTYAXhDgL2E+LkCHMF8W4JXp7C1x3aQAPwfM+0wulVqvzJcEOHSX1UxCGIvNDYieFuZuGde4Ux1nyVREg5FITdEKrxSAzeMOzZxW4LeiYZYVO/S8OT6wWYFjeaJN01k/o0SOAKe1KIExRcNU4JwwnyjVbhKhMbN8x2kKyzhFKYJEolmIDgrQk7V2XThR3N+x2NwAeDFg/scH9galC2+GKBrwVgH6yk6s7zhNAuxV5l4B3sokk0vvh2jQcZqEaFvxynSO3msRi7WLhCgtQJ8CXflUyhtxnPnTIQkjkZrA2rgA+wXoF6BzSnP3HadJrN0hQK8AvwjQUbB25W2i1nwqtXDI2rqBaHTeTc+rzQGNhWRyqRA5CuwSolMy/ljquE3UOr1WRCI1WaLHlOiAAD3Ft+M3AhwVojfE2h0B8LoAhxX4slhUTwB8kAc2TuUq5VA14jhLFNgYAG8L848KDCrzdQH6FRgQ5hsKnBNgf2Bt+x3PW9ZRYQH/DyS2ZcSf28uXAAAAAElFTkSuQmCC" alt="">
+            <span>包邮</span>
+        </span>
+        <span>
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABsAAAAbCAYAAACN1PRVAAAEs0lEQVRIiZ1WW2xUVRQ9LSC0pbS0hkc74tBMmBnvnbPX5gaQRAiJwoekMfpl/PWBkVdiQoIStcngn0QIECmJWI0hxGiCMRpfBB8oogiFSqHVpJIKtB06M/fuPeXz+tFpQifDtGX93n322nevfdY+xlRAJh6vHyNaXQBeUuCYMp8X4IYCw8J8S5gvCfNxH9gZWLvOd5ymSvnKIvS8OVnXtQHRbmE+K8BFAX4IgM8FOCrAu0J0RIg+FeZTynxegQtClPaJVg9Eo/OmRTRkbZ1Y+2wAnBGgW4neD4Cn7gBRdZwl+VRq4WgstiAHNA677uJcMvmwAhuF6IACvytwSYhezqdSCysSjcZiC4R5hwLXBDhZAJ4MEonmT4yZVbETxlTlgEZhXi/MJwToF6K0WLuo7IGbnlcrRNsV6BWi9+5Yu3wqknKkY0StQpQW5l4hSv+XSDRPDtqwYbYQPaPMVwXoHLM2MhOSUgSJRLMAHQL0CbB1kobC/Igw/6TAVwHRivvIXzUYidRk4vH60JhqY4wZI2pV5o+U+XwBWBUaU20y8Xi9ArsE6M4TbQqNqZopUyYerxeiLT7R9qznNUwUkCNiAc4I88FMPN5ifGsfVeCCAl33c09CY6p8YJWOT+6BEGic+DbiOPMF2KtATz6VesIUmJ9X4EJgbXtHsQUzwZC1ixToEuBXdV0b3pUjNKZKAQjzWWFOmwDoEuZTOSA6U6LTxsz2U6nnBOiTlSu3XHGcB0pjCp63VJm/FuazRoBuAU6q6y6eKZnvOLHiYH076roPlYsJgUYBOpX5lil63JG7ez0dDFlbp8Brynw1sLY9vIcEoefVCrBHma8bBUYConcy8Xj9pCBjqrNtbQ2htXVl/8raNQJcLB2KUgxEo/OEaJsA/UaBYQEO50oOZNvaGnxgpwB7CswtkwoBGgPmfQr0+NauMRWuS7h2bU1AtFuZ/zUCXBHmz0p9LPS8WiV6VcZdZf+Eq4TGVBesbRfmy8L8ZmlHSpH1vIYCcEiAYSPMJ4To+6zjLJtEZkxVsGLFg0K0TYFrAfBh3trlo9ZGBPhYge/EdZOViIwxRl13sQJfKPOfppjsD7X28XLucbOlpTYAXhDgL2E+LkCHMF8W4JXp7C1x3aQAPwfM+0wulVqvzJcEOHSX1UxCGIvNDYieFuZuGde4Ux1nyVREg5FITdEKrxSAzeMOzZxW4LeiYZYVO/S8OT6wWYFjeaJN01k/o0SOAKe1KIExRcNU4JwwnyjVbhKhMbN8x2kKyzhFKYJEolmIDgrQk7V2XThR3N+x2NwAeDFg/scH9galC2+GKBrwVgH6yk6s7zhNAuxV5l4B3sokk0vvh2jQcZqEaFvxynSO3msRi7WLhCgtQJ8CXflUyhtxnPnTIQkjkZrA2rgA+wXoF6BzSnP3HadJrN0hQK8AvwjQUbB25W2i1nwqtXDI2rqBaHTeTc+rzQGNhWRyqRA5CuwSolMy/ljquE3UOr1WRCI1WaLHlOiAAD3Ft+M3AhwVojfE2h0B8LoAhxX4slhUTwB8kAc2TuUq5VA14jhLFNgYAG8L848KDCrzdQH6FRgQ5hsKnBNgf2Bt+x3PW9ZRYQH/DyS2ZcSf28uXAAAAAElFTkSuQmCC" alt="">
+            <span>7天包退</span>
+        </span>
+        <span>
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABsAAAAbCAYAAACN1PRVAAAEs0lEQVRIiZ1WW2xUVRQ9LSC0pbS0hkc74tBMmBnvnbPX5gaQRAiJwoekMfpl/PWBkVdiQoIStcngn0QIECmJWI0hxGiCMRpfBB8oogiFSqHVpJIKtB06M/fuPeXz+tFpQifDtGX93n322nevfdY+xlRAJh6vHyNaXQBeUuCYMp8X4IYCw8J8S5gvCfNxH9gZWLvOd5ymSvnKIvS8OVnXtQHRbmE+K8BFAX4IgM8FOCrAu0J0RIg+FeZTynxegQtClPaJVg9Eo/OmRTRkbZ1Y+2wAnBGgW4neD4Cn7gBRdZwl+VRq4WgstiAHNA677uJcMvmwAhuF6IACvytwSYhezqdSCysSjcZiC4R5hwLXBDhZAJ4MEonmT4yZVbETxlTlgEZhXi/MJwToF6K0WLuo7IGbnlcrRNsV6BWi9+5Yu3wqknKkY0StQpQW5l4hSv+XSDRPDtqwYbYQPaPMVwXoHLM2MhOSUgSJRLMAHQL0CbB1kobC/Igw/6TAVwHRivvIXzUYidRk4vH60JhqY4wZI2pV5o+U+XwBWBUaU20y8Xi9ArsE6M4TbQqNqZopUyYerxeiLT7R9qznNUwUkCNiAc4I88FMPN5ifGsfVeCCAl33c09CY6p8YJWOT+6BEGic+DbiOPMF2KtATz6VesIUmJ9X4EJgbXtHsQUzwZC1ixToEuBXdV0b3pUjNKZKAQjzWWFOmwDoEuZTOSA6U6LTxsz2U6nnBOiTlSu3XHGcB0pjCp63VJm/FuazRoBuAU6q6y6eKZnvOLHiYH076roPlYsJgUYBOpX5lil63JG7ez0dDFlbp8Brynw1sLY9vIcEoefVCrBHma8bBUYConcy8Xj9pCBjqrNtbQ2htXVl/8raNQJcLB2KUgxEo/OEaJsA/UaBYQEO50oOZNvaGnxgpwB7CswtkwoBGgPmfQr0+NauMRWuS7h2bU1AtFuZ/zUCXBHmz0p9LPS8WiV6VcZdZf+Eq4TGVBesbRfmy8L8ZmlHSpH1vIYCcEiAYSPMJ4To+6zjLJtEZkxVsGLFg0K0TYFrAfBh3trlo9ZGBPhYge/EdZOViIwxRl13sQJfKPOfppjsD7X28XLucbOlpTYAXhDgL2E+LkCHMF8W4JXp7C1x3aQAPwfM+0wulVqvzJcEOHSX1UxCGIvNDYieFuZuGde4Ux1nyVREg5FITdEKrxSAzeMOzZxW4LeiYZYVO/S8OT6wWYFjeaJN01k/o0SOAKe1KIExRcNU4JwwnyjVbhKhMbN8x2kKyzhFKYJEolmIDgrQk7V2XThR3N+x2NwAeDFg/scH9galC2+GKBrwVgH6yk6s7zhNAuxV5l4B3sokk0vvh2jQcZqEaFvxynSO3msRi7WLhCgtQJ8CXflUyhtxnPnTIQkjkZrA2rgA+wXoF6BzSnP3HadJrN0hQK8AvwjQUbB25W2i1nwqtXDI2rqBaHTeTc+rzQGNhWRyqRA5CuwSolMy/ljquE3UOr1WRCI1WaLHlOiAAD3Ft+M3AhwVojfE2h0B8LoAhxX4slhUTwB8kAc2TuUq5VA14jhLFNgYAG8L848KDCrzdQH6FRgQ5hsKnBNgf2Bt+x3PW9ZRYQH/DyS2ZcSf28uXAAAAAElFTkSuQmCC" alt="">
+            <span>正品保证</span>
+        </span>
+    </div>
     <!-- 小伙伴在拼团 -->
     <div class="pintuan">
         <div class="pinTitle">
-            活动介绍
+            小伙伴在开团
         </div>
-		<div class="mbxtext">
-			{{product.description}}
-		</div>
+        <div class="pinCenter" v-for="(team,idx) in teamList">
+            <div class="image">
+                <image :src="team.User_HeadImg" class="img" />
+            </div>
+            <div class="info">
+                <div class="nick">
+                    {{team.User_NickName}}
+                </div>
+                <div class="message">
+                    还差{{product.pintuan_people-team.teamnum}}人，剩余{{team.addtime|endtime}}
+                </div>
+            </div>
+            <div class="cantuan" @click="toJoinGroup(team.id,team)">
+                去参团
+            </div>
+        </div>
     </div>
     <!-- 评价 -->
     <!-- 评价 -->
@@ -155,9 +171,9 @@
     	        领券
     	        <image  class="imgg" :src="'/static/client/detail/x.png'|domain"  @click="close" ></image>
     	    </div>
-    	    <div class="t_content" v-for="(item,i) of couponList" :key="i">
+    	    <div class="t_content" v-for="(item,i) of couponList" :key="i" :style="{backgroundImage: 'url('+$fun.domainFn('/static/client/detail/yhq.png')+')'}">
     	        <div class="t_left">
-    	            <div class="t_left_t"><span>￥</span><span class="money">{{item.Coupon_Cash}}</span><span>{{item.Coupon_Title}}</span></div>
+    	            <div class="t_left_t"><span>￥</span><span class="money">{{item.Coupon_Cash}}</span><span>{{item.Coupon_Subject}}</span></div>
     	            <div class="t_left_c">{{item.Coupon_Description}}</div>
     	            <div class="t_left_b">有效期{{item.Coupon_StartTime}}-{{item.Coupon_EndTime}}</div>
     	        </div>
@@ -172,8 +188,8 @@
 				<div class="cartTitle">
 					<div class="cartTitles">{{product.Products_Name}}</div>
 					<div class="addInfo">
-							<div class="addPrice" >{{postData.productDetail_price}}元</div>
-							<div class="proSale">库存{{postData.count}}</div>
+						<div class="addPrice">{{postData.Products_PriceX}}元</div>
+						<div class="proSale">库存{{postData.count}}</div>
 					</div>
 				</div>
 			</div>
@@ -203,13 +219,11 @@
 			<button  formType="submit" class="cartSub" :class="submit_flag?'':'disabled'">
 				确定
 			</button>
+
+
 		</form>
 
 	</popupLayer>
-	<div class="errorMsg" v-if="!isKai">
-		<image src="/static/error.png" class="errImg"></image>
-		活动尚未开始
-	</div>
 	<div class="fixed">
 		<div class="leftss">
 			<div class="first" @click="goHome">
@@ -229,49 +243,54 @@
 			</div>
 		</div>
 		<div class="rightss">
-			<block v-if="!isKai">
-				<form class="form" report-submit @submit="myPays">
-				<div class="dan bTitle">
-					<button formType="submit" class="danRight">
-						零售价购买
-					</button>
+			<form class="form" report-submit @click="myPay">
+			<div class="dan bTitle">
+				<div class="danLeft">
+					<span class="bF">¥</span><span class="bS">{{product.Products_PriceX}}</span>
 				</div>
-				</form>
-				<form  class="form" report-submit  @submit="flashsaleReserve">
-				<div class="tuan bTitle">
-					<button formType="submit" class="danRight">
-						立即预约
-					</button>
+				<button formType="submit" class="danRight">
+					单独购买
+				</button>
+
+
+			</div>
+			</form>
+			<form  class="form" report-submit @click="myPin">
+			<div class="tuan bTitle">
+				<div class="danLeft">
+					<span class="bF">¥</span><span class="bS">{{product.pintuan_pricex}}</span>
 				</div>
-				</form>
-			</block>
-			<block v-if="isKai">
-				<form class="form" report-submit @submit="myPay">
-				<div class="dan bTitle" style="background-color: #F43131;">
-					<button formType="submit" class="danRight">
-						立即抢购
-					</button>
-				</div>
-				</form>
-			</block>
+
+
+			<button formType="submit" class="danRight">
+				一键开团
+			</button>
+
+
+
+			</div>
+			</form>
 		</div>
 	</div>
+  	<div class="safearea-box"></div>
   </div>
 </template>
 
 <script>
 import popupLayer from '../../components/popup-layer/popup-layer.vue'
-import {flashsaleReserve,flashsaleDetail,getCommit,updateCart,addCollection,getCoupon,getUserCoupon,cancelCollection,checkProdCollected,getPintuanTeam,addProductViews,getProductSharePic} from '../../common/fetch.js'
+import {getProductDetail,getCommit,updateCart,addCollection,getCoupon,getUserCoupon,cancelCollection,checkProdCollected,getPintuanTeam,addProductViews,getProductSharePic} from '../../common/fetch.js'
 import {goBack,numberSort,getGroupCountdown,buildSharePath,getProductThumb,ls}  from '../../common/tool.js'
 import {pageMixin} from "../../common/mixin";
 import {error} from "../../common";
 import {mapState,mapGetters,mapActions} from 'vuex';
 import {add_template_code} from "../../common/fetch";
+import {isWeiXin} from "../../common/tool";
 
 export default {
 	mixins:[pageMixin],
     data(){
         return {
+			groupStam:false,
 			// #ifdef APP-PLUS
 			wxMiniOriginId:'',
 			// #endif
@@ -281,10 +300,9 @@ export default {
             shareShow: false,
 			teamList:[],//正在开团的列表
             ticksShow: false,
-			product:{},//商品结果
+			product:{Products_JSON:{ImgPath:[]}},//商品结果
 			commit:[],//获取评论
 			Products_ID: 0 ,
-			flashsale_id:0,//秒杀商品id
 			count:1,//商品数量
 			skuF:1,//规格详情
 			checkAttr: {} , // 选择的属性
@@ -296,8 +314,6 @@ export default {
 			pageSize:10,//优惠券页
 			totalCount:0,//优惠券个数
 			countdown:{d:0,h:0,m:0,s:0},
-			isKai:true,//是否开始秒杀
-			isLoading:false,
 			postData: {
 			    prod_id: 0,    //产品ID  在 onLoad中赋值
 			    attr_id: 0,    //选择属性id
@@ -305,9 +321,10 @@ export default {
 			    showimg: '',      //选择属性的图片(用产品图片代替)
 			    qty: 1,           //购买数量
 			    cart_key: 'DirectBuy',     //购物车类型   CartList（加入购物车）、DirectBuy（立即购买）、PTCartList（不能加入购物车）
-				active: 'flashsale',   //拼团时候选，不是拼团不选
-                productDetail_price:0
+					active: 'pintuan',   //拼团时候选，不是拼团不选
+				Products_PriceX: ''
 			},
+			isPin:false,
 			isCollected: false, // 该产品是否已收藏
         }
     },
@@ -315,7 +332,7 @@ export default {
 	//自定义小程序分享
 	onShareAppMessage(){
 
-		let path = '/pages/groupDetail/groupDetail?Products_ID='+this.Products_ID;
+		let path = '/pages/detail/groupDetail?Products_ID='+this.Products_ID;
 
 		let shareObj = {
 			title: this.product.Products_Name,
@@ -334,17 +351,34 @@ export default {
 	computed:{
 		...mapGetters(['userInfo']),
 		...mapState(['initData'])
+		// countdown(){
+		// 	if(this.product || !this.product.pintuan_end_time)return {};
+		//
+		// 	let computedStamp = getGroupCountdown({start_timeStamp:this.product.pintuan_end_time})
+		// 	if(computedStamp){
+		// 		return computedStamp
+		// 	}
+		//
+		// 	return {}
+		//
+		// }
 	},
 	onLoad: function (option) {
-		  // this.Products_ID = option.Products_ID;
-		  this.flashsale_id = option.flashsale_id;
-		  this._init_func();
-		  // this.checkProdCollected();
+		  this.Products_ID = option.Products_ID;
+		  this.checkProdCollected();
 	},
 	onShow() {
-		//this.getDetail(this.flashsale_id);
-		// this.getCommit(this.Products_ID);
-		// this.checkProdCollected();
+
+		console.log(this.product);
+		this.getDetail(this.Products_ID);
+		this.getCommit(this.Products_ID);
+
+		addProductViews({prod_id:this.Products_ID}).then().catch()
+
+		//获取正在拼团的团队
+		this.getPintuanTeamList(this.Products_ID)
+
+
 	},
 	filters: {
 		endtime(timeStamp){
@@ -412,21 +446,6 @@ export default {
 	},
     methods: {
 		...mapActions(['getUserInfo']),
-		async _init_func(){
-			await this.getDetail(this.flashsale_id)
-					.then(id=>{
-						this.getCommit(id);
-						this.checkProdCollected(id);
-						addProductViews({prod_id:id}).then().catch();
-					})
-			// await this.getCommit(this.Products_ID);
-			//
-			// await this.checkProdCollected();
-			// await addProductViews({prod_id:this.Products_ID}).then().catch()
-
-			this.isLoad = true;
-
-		},
 		//轮播图图片预览
 		yulan(index){
 			uni.previewImage({
@@ -435,10 +454,34 @@ export default {
 				current:index
 			});
 		},
+		toJoinGroup(tid,team){
+			console.log(team)
+			if(!this.$fun.checkIsLogin())return;
+
+			for(var usr of team.join_user){
+				console.log(usr)
+				if(this.userInfo.User_ID == usr){
+
+					this.$fun.confirm({title:'操作提示',content:'您已经参加该团,是否继续查看?'}).then(res=>{
+						uni.navigateTo({
+							url:"/pages/detail/groupJoin?Team_ID="+tid+"&Products_ID="+this.Products_ID
+						})
+					},err=>{
+
+					})
+					return;
+				}
+			}
+
+
+			uni.navigateTo({
+				url:"/pages/detail/groupJoin?Team_ID="+tid+"&Products_ID="+this.Products_ID
+			})
+		},
 		async shareFunc(channel) {
 
 			let _self = this
-			let path = 'pages/groupDetail/groupDetail?Products_ID=' + this.Products_ID;
+			let path = 'pages/detail/groupDetail?Products_ID=' + this.Products_ID;
 			let front_url = this.initData.front_url;
 			console.log('front_url is '+front_url)
 
@@ -526,9 +569,24 @@ export default {
 							url: '/pages/detail/sharepic/sharepic'
 						})
 					}, 200)
+					// uni.previewImage({
+					// 	urls: [sharePic],
+					// 	indicator:'default',
+					// 	current:0
+					// });
 					break;
 			}
 
+		},
+		getPintuanTeamList(id){
+			getPintuanTeam({prod_id:id},{errtip:false}).then(res=>{
+				if(res.errorCode === 0){
+					this.teamList = res.data.splice(0,3)
+				}
+
+			}).catch(e=>{
+
+			})
 		},
 		formatRichTexts(html){
 			if(!html) return;
@@ -618,11 +676,11 @@ export default {
 			}
 		},
 		// 检查产品是否已收藏
-		checkProdCollected(item) {
+		checkProdCollected() {
 			if(!this.$fun.checkIsLogin()){
 				return
 			}
-			checkProdCollected({prod_id: item}).then(res => {
+			checkProdCollected({prod_id: this.Products_ID}).then(res => {
 				if(res.errorCode == 0) {
 					this.isCollected = res.data.is_favourite == 1
 				}
@@ -632,61 +690,29 @@ export default {
 		},
 		//拼团
 		myPin(e){
-
+			this.isPin=true;
+			this.postData.Products_PriceX=this.product.pintuan_pricex;
 			console.log(e);
 			add_template_code({
 				code: e.detail.formId,
 				times: 1
 			})
 			if(!this.$fun.checkIsLogin(1))return;
+			this.postData.active = 'pintuan';
 			this.$refs.cartPopu.show();
-		},
-		//秒杀预约
-		flashsaleReserve(e){
-			if(this.isLoading){
-				return;
-			}
-			this.isLoading=true;
-			add_template_code({
-				code: e.detail.formId,
-				times: 1
-			})
-			if(!this.$fun.checkIsLogin(1))return;
-			let data={
-				flashsale_id:this.flashsale_id
-			}
-			flashsaleReserve(data).then(res=>{
-				uni.showToast({
-					title:res.msg,
-					icon:'none'
-				})
-				this.isLoading=false;
-			},err=>{
-				uni.showToast({
-					title:res.msg,
-					icon:'none'
-				})
-				this.isLoading=false;
-			}).catch(e=>{
-				this.isLoading=false;
-			})
-		},
-		myPays(){
-			//零售价购买
-			uni.navigateTo({
-				url:'../detail/detail?Products_ID='+this.Products_ID
-			})
 		},
 		//单独购买
 		myPay(e){
-
+			this.isPin=false;
+			this.postData.Products_PriceX=this.product.Products_PriceX;
 			console.log(e);
 			add_template_code({
 				code: e.detail.formId,
 				times: 1
 			})
+
 			if(!this.$fun.checkIsLogin(1))return;
-			// delete this.postData.active ;
+			delete this.postData.active ;
 			this.$refs.cartPopu.show();
 		},
 		//返回首页
@@ -729,7 +755,11 @@ export default {
         		this.postData.attr_id = attr_val.Product_Attr_ID;   //选择属性的id
         		this.postData.count = attr_val.Property_count;   //选择属性的库存
         		this.postData.showimg = typeof attr_val.Attr_Image != 'undefined' && attr_val.Attr_Image != '' ? attr_val.Attr_Image : this.product.Products_JSON['ImgPath'][0];// 选择属性的图片
-        		this.postData.productDetail_price = attr_val.Attr_Price; // 选择属性的价格
+        		if(this.isPin){
+					this.postData.Products_PriceX = attr_val.pt_pricex;
+				}else{
+					this.postData.Products_PriceX = attr_val.Attr_Price; // 选择属性的价格
+				}
         		this.submit_flag = (!this.check_attr || Object.getOwnPropertyNames(this.check_attr).length != Object.getOwnPropertyNames(this.product.skujosn).length) ? false : true;
         	}
         	//判断属性库存
@@ -760,8 +790,6 @@ export default {
         		return ;
         	}
         	this.postData.prod_id = this.Products_ID;
-			this.postData.active_id = this.product.id;
-
         	if(this.postData.attr_id==0){
         		if(this.product.skujosn){
         			wx.showToast({
@@ -776,7 +804,7 @@ export default {
         		console.log(res)
         		if(res.errorCode == 0) {
         				uni.navigateTo({
-        					url: '../check/check?cart_key=DirectBuy'
+        					url: '../order/check?cart_key=DirectBuy'
         				})
         		}else {
 
@@ -785,37 +813,22 @@ export default {
         	}).catch(e=>{
 				console.log(e)
 				uni.showToast({
-					title: e.msg,
-					icon: 'none'
+					title: e.msg
 				})
 			})
         	//确定加入购物车
         	this.$refs.cartPopu.close();
         },
         addNum(){
-			if(this.isKai){
-				if (this.postData.qty < this.product.attr_json.count) {
-					this.postData.qty = parseInt(this.postData.qty) + 1;
-				}else {
-				    uni.showToast({
-						title: '购买数量不能大于库存量',
-				        icon: 'none',
-				    });
-					this.postData.qty = this.product.attr_json.count;
-				}
-			}else{
-				if (this.postData.qty < this.postData.count) {
-					this.postData.qty = parseInt(this.postData.qty) + 1;
-				}else {
-				    uni.showToast({
-						title: '购买数量不能大于库存量',
-				        icon: 'none',
-				    });
-					this.postData.qty = this.product.attr_json.count;
-				}
-			}
-
-
+        	if (this.postData.qty < this.postData.count) {
+				this.postData.qty = parseInt(this.postData.qty) + 1;
+        	}else {
+        	    uni.showToast({
+        			title: '购买数量不能大于库存量',
+        	        icon: 'none',
+        	    });
+        		this.postData.qty = this.postData.count;
+        	}
         },
         delNum(){
         	if (this.postData.qty > 1) {
@@ -830,7 +843,7 @@ export default {
         },
         goCart(){
         	uni.switchTab({
-        		url: '../cart/cart'
+        		url: '../order/cart'
         	})
         },
         goBack(){
@@ -852,110 +865,98 @@ export default {
 			})
         },
 		stampCount(){
-			let rt  = {};
-			let times=new Date().getTime();
-			if(times<this.product.start_time*1000){
-					this.isKai=false;
-					if(this.product && this.product.end_time){
-						let computedStamp = getGroupCountdown({end_timeStamp:this.product.start_time})
-						if(computedStamp){
-							rt = computedStamp
-						}else{
-							//如果不对，就清空
-							window.clearInterval(window.groupStam)
-						}
-					}
-			}else{
-				this.isKai=true;
-					if(this.product && this.product.end_time){
-						let computedStamp = getGroupCountdown({end_timeStamp:this.product.end_time})
-						if(computedStamp){
-							rt = computedStamp
-						}else{
-							//如果不对，就清空
-							window.clearInterval(window.groupStam)
-						}
-					}
-			}
 
+			let rt  = {};
+			if(this.product && this.product.pintuan_end_time){
+				let computedStamp = getGroupCountdown({end_timeStamp:this.product.pintuan_end_time})
+				if(computedStamp){
+					rt = computedStamp
+				}else{
+					//如果不对，就清空
+					clearInterval(this.groupStam)
+				}
+			}
 
 			//console.log(rt)
 
 			this.countdown = rt
 		},
 		getDetail(item){
-        	return  new Promise((resolve, reject) =>{
-				let data={
-					flashsale_id:item,
-					Users_ID:'wkbq6nc2kc'
+        	let data={
+        		prod_id:item,
+        		Users_ID:'wkbq6nc2kc'
+        	}
+        	let _self = this;
+			let product = null;
+
+			getProductDetail(data).then(res=>{
+
+        		console.log(res)
+				if(res.errorCode != 0){
+					return;
 				}
-				let _self = this;
-				let product = null;
 
-				flashsaleDetail(data).then(res=>{
+				if(!res.data.is_pintuan){
+					error('不是拼团产品');
+					let linkObj = {link:'/pages/index/index',linkType:'default'};
+					setTimeout(function(){
+						_self.$fun.linkTo(linkObj)
+					},100)
+					return;
+				}
 
-					if(res.errorCode != 0){
-						return;
-					}
-					this.product = res.data;
-					this.Products_ID = res.data.Products_ID;
-					this.postData.count = res.data.attr_json.count;
-					this.postData.productDetail_price=res.data.attr_json.price;
-					if(res.data.skujosn) {
-						this.product.skujosn = typeof res.data.skujosn ==='string' ?JSON.parse(res.data.skujosn):res.data.skujosn;
-						this.product.skuvaljosn = typeof res.data.skuvaljosn === 'string' ?JSON.parse(res.data.skuvaljosn):res.data.skuvaljosn;
-					}
+				this.product = res.data;
+				this.postData.Products_PriceX=this.product.Products_PriceX;
+				this.postData.count = res.data.Products_Count;
+				if(res.data.skujosn) {
+					this.product.skujosn = typeof res.data.skujosn ==='string' ?JSON.parse(res.data.skujosn):res.data.skujosn;
+					this.product.skuvaljosn = typeof res.data.skuvaljosn === 'string' ?JSON.parse(res.data.skuvaljosn):res.data.skuvaljosn;
+				}
 
-					resolve(res.data.Products_ID);
+				//this.stampCount()
+				//开发时候一直倒计时太乱了
+				this.groupStam = setInterval(this.stampCount,1000)
 
-					//this.stampCount()
-					//开发时候一直倒计时太乱了
-					window.groupStam = setInterval(this.stampCount,1000)
+				product = res.data
 
-					product = res.data
+				// #ifdef H5
 
-					// #ifdef H5
+				if(!isWeiXin())return;
+				let path = 'pages/detail/groupDetail?Products_ID='+this.Products_ID;
+				let front_url = this.initData.front_url;
 
-					let path = 'pages/spikeDetail/spikeDetail?flashsale_id='+this.flashsale_id;
-					let front_url = this.initData.front_url;
+				this.WX_JSSDK_INIT(this).then((wxEnv)=>{
 
+					this.$wx.onMenuShareTimeline({
+						title: '#网中网#'+product.Products_Name, // 分享标题
+						link: front_url+buildSharePath(path), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+						imgUrl: product.ImgPath, // 分享图标
+						success: function() {
+							// 用户点击了分享后执行的回调函数
+						}
+					});
 
-					this.WX_JSSDK_INIT(this).then((wxEnv)=>{
+					//两种方式都可以
+					wxEnv.onMenuShareAppMessage({
+						title: '#网中网#'+product.Products_Name, // 分享标题
+						link: front_url+buildSharePath(path), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+						imgUrl: product.ImgPath, // 分享图标
+						desc: product.Products_BriefDescription||'好物推荐',
+						type: 'link', // 分享类型,music、video或link，不填默认为link
+						// dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+						success: function() {
+							// 用户点击了分享后执行的回调函数
+						}
+					});
 
-						this.$wx.onMenuShareTimeline({
-							title: '#网中网#'+product.Products_Name, // 分享标题
-							link: front_url+buildSharePath(path), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-							imgUrl: product.ImgPath, // 分享图标
-							success: function() {
-								// 用户点击了分享后执行的回调函数
-							}
-						});
-
-						//两种方式都可以
-						wxEnv.onMenuShareAppMessage({
-							title: '#网中网#'+product.Products_Name, // 分享标题
-							link: front_url+buildSharePath(path), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-							imgUrl: product.ImgPath, // 分享图标
-							desc: product.Products_BriefDescription||'好物推荐',
-							type: 'link', // 分享类型,music、video或link，不填默认为link
-							// dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
-							success: function() {
-								// 用户点击了分享后执行的回调函数
-							}
-						});
-
-					}).catch(()=>{
-						console.log('不是微信环境')
-					})
-
-					// #endif
-
-
-
-				}).catch(e=>{
-					console.log(e)
+				}).catch(()=>{
+					console.log('不是微信环境')
 				})
-			})
+
+				// #endif
+        	}).catch(e=>{
+        		console.log(e)
+        	})
         },
         addCart(){
         	this.$refs.cartPopu.show();
@@ -964,7 +965,7 @@ export default {
         },
         gotoComments(){
             uni.navigateTo({
-            	url: '../comments/comments?pro_id='+this.Products_ID
+            	url: '../order/comments?pro_id='+this.Products_ID
             });
         },
         showTick(e){
@@ -1005,6 +1006,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
 // 轮播样式
 .uni-padding-wrap{
 	width: 750rpx;
@@ -1058,7 +1060,7 @@ export default {
         position: relative;
         width: 355px;
         height: 80px;
-        background-repeat: no-repeat ;
+		background-repeat: no-repeat;
         background-size: cover;
         margin: 0 auto 15px;
         padding: 10px 0 14px 20px;
@@ -1134,7 +1136,7 @@ export default {
     }
     /* 产品描述部分 start */
     .section1 {
-       height: 70rpx;
+       height: 100rpx;
        background-color: #fff;
     }
     .price {
@@ -1173,12 +1175,13 @@ export default {
 		position: relative;
         padding-left: 26rpx;
 		padding-top: 20rpx;
-		padding-right: 20rpx;
+		padding-right: 0rpx;
 		padding-bottom: 20rpx;
         font-size: 22rpx;
         // display: flex;
         // align-items: center;
         // justify-content: space-between;
+        border-bottom: 1px solid #ece8e8;
         background-color: #fff;
     }
     .section2 .btn {
@@ -1199,26 +1202,25 @@ export default {
     }
     /* 领券 end */
     /* 包邮信息等 start */
-  //   .section3 {
-  //       display: flex;
-  //       flex-wrap: wrap;
-  //       font-size: 22rpx;
-  //       padding: 15px 10px;
-		// padding-top: 35rpx;
-  //       border-bottom: 20rpx solid #f8f8f8;
-  //       justify-content: space-around;
-  //       background-color: #fff;
-  //   }
-  //   .section3>span {
-  //       display: flex;
-  //       align-items: center;
-  //       margin-right: 10px;
-  //   }
-  //   .section3 img {
-  //       width: 30rpx;
-		// height: 30rpx;
-  //       margin-right: 5px;
-  //   }
+    .section3 {
+        display: flex;
+        flex-wrap: wrap;
+        font-size: 22rpx;
+        padding: 15px 10px;
+        border-bottom: 17px solid #f8f8f8;
+        justify-content: space-around;
+        background-color: #fff;
+    }
+    .section3>span {
+        display: flex;
+        align-items: center;
+        margin-right: 10px;
+    }
+    .section3 img {
+        width: 30rpx;
+		height: 30rpx;
+        margin-right: 5px;
+    }
     /* 包邮信息等 end */
     /* 评价 start */
     .comment {
@@ -1312,8 +1314,7 @@ export default {
         background-color: #F43131;
         color: #fff;
         .leftss{
-            font-size: 36rpx;
-			color: #FFFFFF;
+            font-size: 0;
             .pricef{
                 font-size: 36rpx;
             }
@@ -1331,36 +1332,23 @@ export default {
         }
         .rightss{
 			.countdown{
-				color:#FFFFFF;
+				color:#ddd;
 				font-size: 24rpx;
-				line-height: 37rpx;
+				line-height: 32rpx;
 				overflow: hidden;
-				height: 37rpx;
-				display: flex;
-				align-items: center;
+				margin-bottom: 4px;
+
 				.spans{
 					margin: 0 2px;
 					padding: 0 2px;
-					height:37rpx;
-					width: 37rpx;
+					//width:23px;
+					height:32rpx;
 					line-height: 32rpx;
 					text-align: center;
-					background:#FFFFFF;
-					color: #F43131;
-					font-size: 26rpx;
+					background:linear-gradient(0deg,rgba(12,12,12,1) 0%,rgba(197,195,195,1) 100%);
 					box-shadow:0px 1px 1px 0px rgba(4,0,0,0.5), 0px 1px 1px 0px rgba(255,255,255,0.65);
 					display: inline-block;
-				}
-				.spanss{
-					margin: 0 2px;
-					padding: 0 2px;
-					height:37rpx;
-					width: 37rpx;
-					line-height: 32rpx;
-					text-align: center;
-					color: #FFFFFF;
-					font-size: 26rpx;
-					display: inline-block;
+
 				}
             }
 			.haha{
@@ -1371,14 +1359,13 @@ export default {
     }
     .titles{
 		position: relative;
+		padding-right: 150rpx;
         .title{
 			font-size:28rpx;
 			font-family:PingFang SC;
 			font-weight:bold;
 			color:rgba(51,51,51,1);
-			line-height:34rpx;
-			max-height: 68rpx;
-			overflow: hidden;
+			line-height:22px;
 		}
 
 		.share {
@@ -1406,29 +1393,69 @@ export default {
         line-height:20px;
     }
     .pintuan{
-        margin-bottom: 20rpx;
+        margin-bottom: 17px;
         background-color: #fff;
-		padding:30rpx 27rpx  30rpx 19rpx;
         .pinTitle{
-            font-size:28rpx;
+            font-size:30rpx;
             font-family:PingFang SC;
             font-weight:500;
             color:rgba(51,51,51,1);
             line-height:20px;
+            padding:26rpx;
         }
-        .mbxtext{
-			margin-top: 21rpx;
-			font-size: 22rpx;
-			color: #888888;
-			line-height: 36rpx;
-		}
-
+        .pinCenter{
+                padding: 15rpx 25rpx;
+                display: flex;
+                align-items: center;
+                .image{
+                    width: 100rpx;
+                    height: 100rpx;
+                    border-radius: 50%;
+                    overflow: hidden;
+                    .img{
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+                .info{
+					margin-left: 21rpx;
+                    .nick{
+                        font-size:26rpx;
+                        font-family:PingFang SC;
+                        font-weight:500;
+                        color:rgba(51,51,51,1);
+                        line-height:20px;
+                    }
+                    .message{
+                        font-size:24rpx;
+                        font-family:PingFang SC;
+                        font-weight:500;
+                        color:rgba(110,110,110,1);
+                        line-height:20px;
+                    }
+                }
+                .cantuan{
+                    width:119rpx;
+                    height:48rpx;
+                    border:1px solid rgba(244,49,49,1);
+                    border-radius:3px;
+                    color:  rgba(244,49,49,1);
+                    text-align: center;
+                    line-height: 48rpx;
+                    font-size: 26rpx;
+                    margin-left: auto;
+                }
+        }
     }
 	.fixed{
 		height: 98rpx;
 		display: flex;
 		position: fixed;
 		bottom: 0;
+		/* #ifdef MP */
+		bottom: constant(safe-area-inset-bottom);
+		bottom: env(safe-area-inset-bottom);
+		/* #endif */
 		width: 100%;
 		background-color: #F8F8F8;
 		z-index: 9999;
@@ -1489,7 +1516,9 @@ export default {
 
 				}
 				.danRight{
-					font-size: 30rpx;
+					font-size: 26rpx;
+					/*margin-top: 8rpx;*/
+					/*padding-bottom: 10rpx;*/
 					border-radius: 0;
 					border:none !important;
 					color: white;
@@ -1519,8 +1548,8 @@ export default {
 				width: 420rpx;
 				.cartTitles{
 					height: 80rpx;
-					overflow: hidden;
 					line-height: 40rpx;
+					overflow: hidden;
 					margin-top: 20rpx;
 				}
 				.addInfo{
@@ -1556,10 +1585,10 @@ export default {
 				.skuValue{
 					display: flex;
 					.divs{
-						height: 70upx;
-						line-height: 70upx;
+						height: 70rpx;
+						line-height: 70rpx;
 						font-size: 14px;
-						border-radius: 10upx;
+						border-radius: 10rpx;
 						color: #000;
 						background-color: #fff;
 						padding-left: 20rpx;
@@ -1625,64 +1654,6 @@ export default {
 		color: #fff !important;
 		background-color: #ff4200 !important;
 	}
-	.prices{
-		width: 750rpx;
-		box-sizing: border-box;
-		height: 50rpx;
-		padding-left: 20rpx;
-		padding-right: 21rpx;
-		display: flex;
-		justify-content: space-between;
-		background-color: #FFFFFF;
-		.btn{
-			font-size: 22rpx;
-			color: #666666;
-			height: 50rpx;
-			line-height: 50rpx;
-		}
-		.price{
-			height: 27rpx;
-			margin-top: 0rpx !important;
-				.leftPrice{
-					font-size: 22rpx;
-					color: #777777;
-					.rmb{
-						color: #F43131;
-						font-size: 24rpx;
-						margin-left: 5rpx;
-						margin-right: 5rpx;
-					}
-					.priceX{
-						font-size: 30rpx;
-						color: #F43131;
-						font-weight: bold;
-					}
-				}
-				.rightPrice{
-					font-size: 24rpx;
-					color: #B4B4B4;
-					text-decoration:line-through;
-					margin-left: 23rpx;
-				}
-		}
-	}
-	.errorMsg{
-		width: 750rpx;
-		height: 44rpx;
-		background-color: #F7F6BD;
-		display: flex;
-		align-items: center;
-		padding-left: 21rpx;
-		position: fixed;
-		bottom: 98rpx;
-		color: #F43131;
-		font-size: 20rpx;
-		.errImg{
-			width: 19rpx;
-			height: 19rpx;
-			margin-right: 12rpx;
-		}
-	}
 	.top {
 	    position: fixed;
 	    top: 10px;
@@ -1712,30 +1683,5 @@ export default {
 		position: absolute;
 		top: 30px;
 		right: 10px !important;
-	}
-	.section3 {
-	    display: flex;
-	    flex-wrap: wrap;
-	    font-size: 0rpx;
-		padding-left: 20rpx;
-		padding-right: 20rpx;
-				// padding: 30rpx 0;
-	    // padding: 30rpx 20rpx;
-	    // border-bottom: 20rpx solid #efefef;
-	}
-	.section3>span {
-	    display: flex;
-	    align-items: center;
-	    // margin-right: 20rpx;
-				margin: 20rpx 20rpx 20rpx 0;
-				span{
-					font-size: 24rpx;
-					color: #333333;
-				}
-	}
-	.section3 .img {
-	    width: 28rpx;
-		height: 28rpx;
-	    margin-right: 10rpx;
 	}
 </style>

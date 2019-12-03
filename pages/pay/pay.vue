@@ -571,7 +571,7 @@
 							if (res.confirm) {
 
 								if(Order_Type === 'pintuan'){
-									url:'/pages/pintuanOrderlist/pintuanOrderlist?index=2'
+									url:'/pages/order/pintuanOrderlist?index=2'
 								}else{
 									if(pagefrom == 'check') {
 										uni.redirectTo({
@@ -587,7 +587,7 @@
 							} else if (res.cancel) {
 
 								if(Order_Type === 'pintuan'){
-									url:'/pages/pintuanOrderlist/pintuanOrderlist?index=1'
+									url:'/pages/order/pintuanOrderlist?index=1'
 								}else{
 									if(pagefrom == 'check') {
 										uni.redirectTo({
@@ -619,7 +619,7 @@
 
 				if(Order_Type === 'pintuan'){
 					uni.redirectTo({
-						url:'/pages/groupSuccess/groupSuccess?order_id='+_that.Order_ID
+						url:'/pages/detail/groupSuccess?order_id='+_that.Order_ID
 					})
 				}else{
 					if(pagefrom == 'check') {

@@ -116,7 +116,7 @@ export default {
 				})
 			}else if(item.Order_Status==4){
 				uni.navigateTo({
-					url:'../publishComment/publishComment?Order_ID='+item.Order_ID
+					url:'../order/publishComment?Order_ID='+item.Order_ID
 				})
 			}
 

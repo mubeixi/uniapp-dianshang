@@ -53,7 +53,7 @@ export default {
   methods: {
 	  goSearch(item){
 		  uni.navigateTo({
-		  	url:'../result/result?inputValue='+item
+		  	url:'../classify/result?inputValue='+item
 		  })
 	  },
 	  success(){
@@ -62,7 +62,7 @@ export default {
 					for(var item of this.searchAll){
 						if(item==this.inputValue){
 							uni.navigateTo({
-								url:'../result/result?inputValue='+this.inputValue
+								url:'../classify/result?inputValue='+this.inputValue
 							})
 							return;
 						}
@@ -74,7 +74,7 @@ export default {
 				})
 			}
 		  uni.navigateTo({
-			  url:'../result/result?inputValue='+this.inputValue
+			  url:'../classify/result?inputValue='+this.inputValue
 		  })
 	  },
 	  clear(){

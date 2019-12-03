@@ -263,7 +263,7 @@
         //error('common soon','none');return;
         console.log(item)
         // Products_ID=243
-        let linkObj = {link:'/pages/limitDetail/limitDetail?spikeGoodId='+item.spike_good_id,linkType:'default'};
+        let linkObj = {link:'/pages/detail/limitDetail?spikeGoodId='+item.spike_good_id,linkType:'default'};
 
         this.$fun.linkTo(linkObj)
 

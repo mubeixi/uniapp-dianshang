@@ -196,7 +196,7 @@ export default {
 				return;
 			}
 			uni.navigateTo({
-				url: `../check/check?cart_key=CartList&cart_buy=${this.cart_buy}`
+				url: `../order/check?cart_key=CartList&cart_buy=${this.cart_buy}`
 			})
 		}else {
 			if(Object.getOwnPropertyNames(obj).length == 0) {

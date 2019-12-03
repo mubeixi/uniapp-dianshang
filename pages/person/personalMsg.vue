@@ -32,7 +32,15 @@
 					<image :src="'/static/client/right.png'|domain" mode=""></image>
 				</view>
 			</view>
-
+			<view class="item" @click="update(2)">
+				<view class="item-name">生日</view>
+				<view class="info">
+					1998-10-1
+				</view>
+				<view class="go">
+					<image :src="'/static/client/right.png'|domain" mode=""></image>
+				</view>
+			</view>
 			<view class="item" @click="update(3)">
 				<view class="item-name">邮箱</view>
 				<view class="info">

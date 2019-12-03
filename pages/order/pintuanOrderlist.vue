@@ -114,7 +114,7 @@ export default {
 		goPintuan(item){
 			if(item.teamstatus == 0) {
 				uni.navigateTo({
-					url:'../groupJoin/groupJoin?Team_ID='+item.teamid+'&Products_ID='+item.prod_list[0].prod_id
+					url:'../detail/groupJoin?Team_ID='+item.teamid+'&Products_ID='+item.prod_list[0].prod_id
 				})
 			}
 		},
@@ -178,13 +178,13 @@ export default {
 		// 订单详情
 		goDetail(item){
 			uni.navigateTo({
-				url:"../orderDetail/orderDetail?Order_ID="+item.Order_ID+'&pagefrom=order'
+				url:"../order/orderDetail?Order_ID="+item.Order_ID+'&pagefrom=order'
 			})
 		},
 		goLogistics(item){
 			//跳转物流追踪
 			uni.navigateTo({
-				url:'../logistics/logistics?Order_ID='+item.Order_ID
+				url:'../order/logistics?Order_ID='+item.Order_ID
 			})
 		},
 		//跳转订单详情
@@ -199,7 +199,7 @@ export default {
 				})
 			}else if(item.Order_Status==4){
 				uni.navigateTo({
-					url:'../publishComment/publishComment?Order_ID='+item.Order_ID
+					url:'../order/publishComment?Order_ID='+item.Order_ID
 				})
 			}
 

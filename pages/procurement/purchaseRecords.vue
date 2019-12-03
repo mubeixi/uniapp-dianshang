@@ -10,7 +10,7 @@
 			<view class="list-msg">
 				<view class="biz-msg">
 					<image class="avator" src="../../static/tou.png" mode=""></image>
-					<view class="biz-name">肖战穿搭衣橱<view class="biz-links">(<text class="text-d">查看信息</text>/<text class="text-d">修改渠道</text>)</view></view>
+					<view class="biz-name">肖战穿搭衣橱<view class="biz-links">(<text class="text-d" @click="showStore">查看信息</text>/<text class="text-d">修改渠道</text>)</view></view>
 					<view class="status">待处理</view>
 				</view>
 				<view class="pro-msg">
@@ -143,6 +143,30 @@
 				</view>
 			</view>
 		</view>
+		<!--  门店信息	-->
+		<view class="sku-pop mendian" v-if="isShowStoreMsg">
+		    <view class="sku-title">门店信息</view>
+		    <view class="sku-content">
+		        <view class="skulist">
+		            <view class="sku-name">门店名称：</view>
+		            <view class="sku-item">{{storeInfo.Stores_Name}}</view>
+		        </view>
+		        <view class="skulist">
+		            <view class="sku-name">门店电话：</view>
+		            <view class="sku-item">{{storeInfo.mobile}}</view>
+		        </view>
+		        <view class="skulist">
+		            <view class="sku-name">门店地址：</view>
+		            <view class="sku-item" style="flex:1;">{{storeInfo.Stores_Province_name}}{{storeInfo.Stores_City_name}}{{storeInfo.Stores_Area_name}}{{storeInfo.Stores_Address}}<image class="img" src="/static/local.png"></image></view>
+		        </view>
+		        <view class="skulist">
+		            <view class="sku-name">门店距离：</view>
+		            <view class="sku-item">1.2KM</view>
+		        </view>
+		    </view>
+		</view>
+		<!--  遮罩层	-->
+		<view class="mask" :hidden="isHidden" @click="hiddenMask"></view>
 	</view>
 </template>
 
@@ -150,7 +174,9 @@
 	export default {
 		data(){
 			return {
-				pro_tip_show: false
+				pro_tip_show: false,
+				isHidden: true,
+				isShowStoreMsg: false
 			}
 		},
 		methods: {
@@ -159,6 +185,15 @@
 			},
 			hidden_tip(){
 				this.pro_tip_show = false;
+			},
+			showStore(){
+				console.log('lalal')
+				this.isHidden = false;
+				this.isShowStoreMsg = true;
+			},	
+			hiddenMask(){
+				this.isShowStoreMsg = false;
+				this.isHidden = true;
 			}
 		}
 	}
@@ -334,5 +369,124 @@
 				}
 			}
 		}
+	}
+	.mask {
+	    background-color: rgba(0,0,0,.5);
+	    position: fixed;
+	    top: 0;
+	    left: 0;
+	    width: 100%;
+	    height: 100%;
+	    z-index: 1000;
+	}
+	.sku-pop {
+	    position: absolute;
+	    top: 50%;
+	    left: 50%;
+	    z-index: 10000;
+	    width: 526rpx;
+	    transform: translate(-50%,-50%);
+	    border-radius: 10rpx;
+	    .sku-title {
+	        height: 60rpx;
+	        line-height: 60rpx;
+	        background-color: #f6f6f6;
+	        color: #333;
+	        font-size: 24rpx;
+	        text-align: center;
+	        border-top-left-radius: 10rpx;
+	        border-top-right-radius: 10rpx;
+	    }
+	    .sku-content {
+	        padding: 40rpx 46rpx 34rpx 40rpx;
+	        background-color: #fff;
+	        border-bottom-left-radius: 10rpx;
+	        border-bottom-right-radius: 10rpx;
+	        .skulist {
+	            margin-bottom: 30rpx;
+	            display: flex;
+	            align-items: center;
+	            .sku-name {
+	                color: #333;
+	                font-size: 24rpx;
+	                margin-right:26rpx;
+	            }
+	            .sku-item {
+	                display: flex;
+	                align-items: center;
+	                color: #666;
+	                /*flex: 1;*/
+	                .img {
+	                    width: 27rpx;
+	                    height: 32rpx;
+	                }
+	                .sku {
+	                    width: 80rpx;
+	                    height: 46rpx;
+	                    line-height: 46rpx;
+	                    text-align: center;
+	                    background-color: #f6f6f6;
+	                    color: #666;
+	                    font-size: 24rpx;
+	                    margin-right: 13rpx;
+	                    border-radius: 5rpx;
+	                }
+	                .active {
+	                    background-color: $wzw-primary-color;
+	                    color: #fff;
+	                }
+	                .handle {
+	                    width: 50rpx;
+	                    height: 45rpx;
+	                    line-height: 45rpx;
+	                    text-align: center;
+	                    font-size: 32rpx;
+	                    color: #777;
+	                    background: #f6f6f6;
+	                }
+	                .pro-num {
+	                    margin: 0 15rpx;
+	                    font-size: 24rpx;
+	                    color: #777;
+	                }
+	            }
+	        }
+	        .sku-btns {
+	            display: flex;
+	            justify-content: center;
+	            align-items: center;
+	            margin-top: 60rpx;
+	            .btn {
+	                width: 130rpx;
+	                height: 50rpx;
+	                text-align: center;
+	                line-height: 50rpx;
+	                font-size: 24rpx;
+	            }
+	            .cancel {
+	                background: #e9e9e9;
+	                color: #666;
+	                margin-right: 25rpx;
+	            }
+	            .confirm {
+	                background-color: $wzw-primary-color;
+	                color: #fff;
+	            }
+	        }
+	    }
+	}
+	.mendian {
+	    .sku-content {
+	        .sku-name {
+	            marin-right: 10rpx!important;
+	        }
+	        .sku-item {
+	            display: block !important;
+	            font-size: 26rpx !important;
+	            .img {
+	                margin-left: 10rpx;
+	            }
+	        }
+	    }
 	}
 </style>

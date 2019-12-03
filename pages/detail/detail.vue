@@ -461,7 +461,7 @@ export default {
 			        });
 			        view.addEventListener("click", function(e) {
 			          uni.switchTab({
-			          	url: '../cart/cart'
+			          	url: '../order/cart'
 			          })
 			        }, false);
 			        view.show();
@@ -627,7 +627,7 @@ export default {
 			updateCart(this.postData).then(res=>{
 				if(res.errorCode == 0) {
 					uni.navigateTo({
-						url: '../gift/gift?cart_key=DirectBuy&gift=gift'
+						url: '../person/gift?cart_key=DirectBuy&gift=gift'
 					})
 				}else {
 					uni.showToast({
@@ -836,7 +836,7 @@ export default {
 						})
 					}else {
 						uni.navigateTo({
-							url: '../check/check?cart_key=DirectBuy'
+							url: '../order/check?cart_key=DirectBuy'
 						})
 					}
 				}else {
@@ -906,7 +906,7 @@ export default {
 		},
 		goCart(){
 			uni.switchTab({
-				url: '../cart/cart'
+				url: '../order/cart'
 			})
 		},
 		goBack(){
@@ -1012,7 +1012,7 @@ export default {
 		},
         gotoComments(){
             uni.navigateTo({
-            	url: '../comments/comments?pro_id='+this.Products_ID
+            	url: '../order/comments?pro_id='+this.Products_ID
             });
         },
         showTick(e){

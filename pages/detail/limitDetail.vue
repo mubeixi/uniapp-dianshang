@@ -287,7 +287,7 @@ export default {
 	//自定义小程序分享
 	onShareAppMessage(){
 
-		let path = '/pages/groupDetail/groupDetail?Products_ID='+this.Products_ID;
+		let path = '/pages/detail/groupDetail?Products_ID='+this.Products_ID;
 
 		let shareObj = {
 			title: this.product.Products_Name,
@@ -424,7 +424,7 @@ export default {
 
 					this.$fun.confirm({title:'操作提示',content:'您已经参加该团,是否继续查看?'}).then(res=>{
 						uni.navigateTo({
-							url:"/pages/groupJoin/groupJoin?Team_ID="+tid+"&Products_ID="+this.Products_ID
+							url:"/pages/detail/groupJoin?Team_ID="+tid+"&Products_ID="+this.Products_ID
 						})
 					},err=>{
 
@@ -435,13 +435,13 @@ export default {
 
 
 			uni.navigateTo({
-				url:"/pages/groupJoin/groupJoin?Team_ID="+tid+"&Products_ID="+this.Products_ID
+				url:"/pages/detail/groupJoin?Team_ID="+tid+"&Products_ID="+this.Products_ID
 			})
 		},
 		async shareFunc(channel) {
 
 			let _self = this
-			let path = 'pages/groupDetail/groupDetail?Products_ID=' + this.Products_ID;
+			let path = 'pages/detail/groupDetail?Products_ID=' + this.Products_ID;
 			let front_url = this.initData.front_url;
 			console.log('front_url is '+front_url)
 
@@ -742,7 +742,7 @@ export default {
         		console.log(res)
         		if(res.errorCode == 0) {
         				uni.navigateTo({
-        					url: '../check/check?cart_key=DirectBuy'
+        					url: '../order/check?cart_key=DirectBuy'
         				})
         		}else {
 
@@ -781,7 +781,7 @@ export default {
         },
         goCart(){
         	uni.switchTab({
-        		url: '../cart/cart'
+        		url: '../order/cart'
         	})
         },
         goBack(){
@@ -865,7 +865,7 @@ export default {
 
 					// #ifdef H5
 
-					let path = 'pages/limitDetail/limitDetail?spikeGoodId='+this.spike_good_id;
+					let path = 'pages/detail/limitDetail?spikeGoodId='+this.spike_good_id;
 					let front_url = this.initData.front_url;
 
 
@@ -913,7 +913,7 @@ export default {
         },
         gotoComments(){
             uni.navigateTo({
-            	url: '../comments/comments?pro_id='+this.Products_ID
+            	url: '../order/comments?pro_id='+this.Products_ID
             });
         },
         showTick(e){

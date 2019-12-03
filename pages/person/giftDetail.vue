@@ -217,7 +217,7 @@
 				}
 				//跳转物流追踪
 				uni.navigateTo({
-					url:'../logistics/logistics?shipping_id='+shipping_id + '&express=' + express + '&prod_img=' + prod_img
+					url:'../order/logistics?shipping_id='+shipping_id + '&express=' + express + '&prod_img=' + prod_img
 				})
 			},
 			//取消订单
@@ -274,7 +274,7 @@
 					})
 				}else if(this.orderInfo.Order_Status==4){
 					uni.navigateTo({
-						url:'../publishComment/publishComment?Order_ID='+Order_ID
+						url:'../order/publishComment?Order_ID='+Order_ID
 					})
 				}
 

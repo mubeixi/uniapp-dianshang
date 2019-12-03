@@ -44,7 +44,7 @@ export default {
                         text: '购物车',
                         badgeDot: true,
                         badge: 1,
-                        url:'pages/cart/cart'
+                        url:'pages/order/cart'
                     },
                     {
                         icon: 'icon-paixu',
