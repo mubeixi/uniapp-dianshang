@@ -3,7 +3,7 @@
 		<view class="topImg">
 			<view class="topAll" @click="changIndex(1)">
 				<view class="ulDiv">
-					<image class="imgHund" src="/static/zai.png"></image>
+					<image class="imgHund" src="/static/procurement/zai.png"></image>
 				</view>
 				<view class="font-13">
 					在售产品
@@ -12,7 +12,7 @@
 
 			<view class="topAll" @click="changIndex(2)">
 				<view class="ulDiv">
-					<image class="imgHund" src="/static/zai.png"></image>
+					<image class="imgHund" src="/static/procurement/zai.png"></image>
 				</view>
 				<view class="font-13">
 					库存紧张
@@ -21,7 +21,7 @@
 
 			<view class="topAll" @click="changIndex(3)">
 				<view class="ulDiv">
-					<image class="imgHund" src="/static/zai.png"></image>
+					<image class="imgHund" src="/static/procurement/zai.png"></image>
 				</view>
 				<view class="font-13">
 					统计价值
@@ -30,7 +30,7 @@
 
 			<view class="topAll" @click="changIndex(4)">
 				<view class="ulDiv">
-					<image class="imgHund" src="/static/zai.png"></image>
+					<image class="imgHund" src="/static/procurement/zai.png"></image>
 				</view>
 				<view class="font-13">
 					{{is_refund && is_fourth?'取消':'退货'}}
@@ -194,7 +194,7 @@
 		                    <view class="proMsg">
 		                        <view class="proName">
 		                            <view class="name">{{pro.Products_Name}}</view>
-		                            <image class="del"  @click="delList(pro_id,attr.myqty,attr_id)" src="/static/del.png"></image>
+		                            <image class="del"  @click="delList(pro_id,attr.myqty,attr_id)" src="/static/procurement/del.png"></image>
 		                        </view>
 		                        <view class="attrInfo">
 		                            <view>{{attr.check_attrnames}}</view>

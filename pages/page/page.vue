@@ -10,7 +10,7 @@
 				<base-component v-if="item.indexOf('base') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
 				<swiper-component v-if="item.indexOf('swiper') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
 				<nav-component v-if="item.indexOf('nav') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
-				<video-component v-if="item.indexOf('video') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
+				<video-component ref="video" v-if="item.indexOf('video') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
 				<hr-component v-if="item.indexOf('hr') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
 				<space-component v-if="item.indexOf('space') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
 				<title-component v-if="item.indexOf('title') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
@@ -71,6 +71,11 @@
 			BaseComponent,SwiperComponent,NavComponent,VideoComponent,HrComponent,SpaceComponent,
 			TitleComponent,TextComponent,SearchComponent,NoticeComponent,CouponComponent,
 			GoodsComponent,CubeComponent,TabComponent,FlashComponent,GroupComponent,KillComponent
+		},
+		onHide(){
+			this.$refs.video.map(item=>{
+				item.pauseFn()
+			})
 		},
 		onLoad(options) {
 

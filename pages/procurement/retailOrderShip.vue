@@ -4,7 +4,7 @@
 		<view class="marginAuto">
 			<view class="blockDiv">
 				<view class="imgDiv">
-					<image class="imgHund" src="/static/pro.png"></image>
+					<image class="imgHund" :src="'/static/client/pro.png'|domain"></image>
 				</view>
 				<view class="textRight" >
 					<view class="productName">
@@ -28,7 +28,7 @@
 			
 			<view class="blockDiv">
 				<view class="imgDiv">
-					<image class="imgHund" src="/static/pro.png"></image>
+					<image class="imgHund" :src="'/static/client/pro.png'|domain"></image>
 				</view>
 				<view class="textRight" >
 					<view class="productName">

@@ -97,7 +97,7 @@
                             <view class="proMsg">
                                 <view class="proName">
                                     <view class="name">{{attr.ProductsName}}</view>
-                                    <image class="del"  @click="del(pro_id,attr_id)" src="/static/del.png"></image>
+                                    <image class="del"  @click="del(pro_id,attr_id)" src="/static/procurement/del.png"></image>
                                 </view>
                                 <view class="attrInfo">
                                     <view>{{attr.Productsattrstrval}}</view>

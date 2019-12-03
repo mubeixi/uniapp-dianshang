@@ -5,24 +5,24 @@
 		<view class="prolist" @click="hidden_tip">
 			<view class="pro-title">
 				<view>进货单号：SN123456789</view>
-				<image class="img" src="../../static/del.png" mode=""></image>
+				<image class="img" src="/static/procurement/del.png" mode=""></image>
 			</view>
 			<view class="list-msg">
 				<view class="biz-msg">
-					<image class="avator" src="../../static/tou.png" mode=""></image>
+					<image class="avator" src="/static/procurement/tou.png" mode=""></image>
 					<view class="biz-name">肖战穿搭衣橱<view class="biz-links">(<text class="text-d" @click="showStore">查看信息</text>/<text class="text-d">修改渠道</text>)</view></view>
 					<view class="status">待处理</view>
 				</view>
 				<view class="pro-msg">
 					<view class="pro-img">
-						<image class="img" src="../../static/pro.png" mode=""></image>
+						<image class="img" :src="'/static/procurement/client/pro.png'|domain" mode=""></image>
 					</view>
 					<view class="pro-info">
 						<view class="pro-name">2018夏装新款短袖蕾丝拼接荷叶边波点雪纺连衣裙女时尚名媛...</view>
 						<view class="pro-attr">
 							<view class="attr-info">白色；S码</view>
 							<view class="pro-qty">x5
-								<image class="qty-icon" src="../../static/i.png" mode="" @click.stop="show_pro_tip"></image>
+								<image class="qty-icon" src="/static/procurement/i.png" mode="" @click.stop="show_pro_tip"></image>
 								<view class="tips" v-if="pro_tip_show">
 									<view class="sanjiaoxing"></view>这是解释的内容这是解释的内容这是解释的内容这是解释的内容
 								</view>
@@ -40,24 +40,24 @@
 		<view class="prolist" @click="hidden_tip">
 			<view class="pro-title">
 				<view>进货单号：SN123456789</view>
-				<image class="img" src="../../static/del.png" mode=""></image>
+				<image class="img" src="/static/procurement/procurement/del.png" mode=""></image>
 			</view>
 			<view class="list-msg">
 				<view class="biz-msg">
-					<image class="avator" src="../../static/tou.png" mode=""></image>
+					<image class="avator" src="/static/procurement/procurement/tou.png" mode=""></image>
 					<view class="biz-name">肖战穿搭衣橱<view class="biz-links">(<text class="text-d">查看信息</text>/<text class="text-d">修改渠道</text>)</view></view>
 					<view class="status">已发货</view>
 				</view>
 				<view class="pro-msg">
 					<view class="pro-img">
-						<image class="img" src="../../static/pro.png" mode=""></image>
+						<image class="img" :src="'/static/procurement/procurement/client/pro.png'|domain" mode=""></image>
 					</view>
 					<view class="pro-info">
 						<view class="pro-name">2018夏装新款短袖蕾丝拼接荷叶边波点雪纺连衣裙女时尚名媛...</view>
 						<view class="pro-attr">
 							<view class="attr-info">白色；S码</view>
 							<view class="pro-qty">x5
-								<image class="qty-icon" src="../../static/i.png" mode="" @click.stop="show_pro_tip"></image>
+								<image class="qty-icon" src="/static/procurement/i.png" mode="" @click.stop="show_pro_tip"></image>
 								<view class="tips" v-if="pro_tip_show">
 									<view class="sanjiaoxing"></view>这是解释的内容这是解释的内容这是解释的内容这是解释的内容
 								</view>
@@ -76,24 +76,24 @@
 		<view class="prolist" @click="hidden_tip">
 			<view class="pro-title">
 				<view>进货单号：SN123456789</view>
-				<image class="img" src="../../static/del.png" mode=""></image>
+				<image class="img" src="/static/procurement/del.png" mode=""></image>
 			</view>
 			<view class="list-msg">
 				<view class="biz-msg">
-					<image class="avator" src="../../static/tou.png" mode=""></image>
+					<image class="avator" src="/static/procurement/tou.png" mode=""></image>
 					<view class="biz-name">肖战穿搭衣橱<view class="biz-links">(<text class="text-d">查看信息</text>/<text class="text-d">修改渠道</text>)</view></view>
 					<view class="status">已驳回</view>
 				</view>
 				<view class="pro-msg">
 					<view class="pro-img">
-						<image class="img" src="../../static/pro.png" mode=""></image>
+						<image class="img" src="/static/procurement/pro.png" mode=""></image>
 					</view>
 					<view class="pro-info">
 						<view class="pro-name">2018夏装新款短袖蕾丝拼接荷叶边波点雪纺连衣裙女时尚名媛...</view>
 						<view class="pro-attr">
 							<view class="attr-info">白色；S码</view>
 							<view class="pro-qty">x5
-								<image class="qty-icon" src="../../static/i.png" mode="" @click.stop="show_pro_tip"></image>
+								<image class="qty-icon" src="/static/procurement/i.png" mode="" @click.stop="show_pro_tip"></image>
 								<view class="tips" v-if="pro_tip_show">
 									<view class="sanjiaoxing"></view>这是解释的内容这是解释的内容这是解释的内容这是解释的内容
 								</view>
@@ -111,24 +111,24 @@
 		<view class="prolist" @click="hidden_tip">
 			<view class="pro-title">
 				<view>进货单号：SN123456789</view>
-				<image class="img" src="../../static/del.png" mode=""></image>
+				<image class="img" src="/static/procurement/del.png" mode=""></image>
 			</view>
 			<view class="list-msg">
 				<view class="biz-msg">
-					<image class="avator" src="../../static/tou.png" mode=""></image>
+					<image class="avator" src="/static/procurement/tou.png" mode=""></image>
 					<view class="biz-name">肖战穿搭衣橱<view class="biz-links">(<text class="text-d">查看信息</text>/<text class="text-d">修改渠道</text>)</view></view>
 					<view class="status">已完成</view>
 				</view>
 				<view class="pro-msg">
 					<view class="pro-img">
-						<image class="img" src="../../static/pro.png" mode=""></image>
+						<image class="img" src="/static/procurement/pro.png" mode=""></image>
 					</view>
 					<view class="pro-info">
 						<view class="pro-name">2018夏装新款短袖蕾丝拼接荷叶边波点雪纺连衣裙女时尚名媛...</view>
 						<view class="pro-attr">
 							<view class="attr-info">白色；S码</view>
 							<view class="pro-qty">x5
-								<image class="qty-icon" src="../../static/i.png" mode="" @click.stop="show_pro_tip"></image>
+								<image class="qty-icon" src="/static/procurement/i.png" mode="" @click.stop="show_pro_tip"></image>
 								<view class="tips" v-if="pro_tip_show">
 									<view class="sanjiaoxing"></view>这是解释的内容这是解释的内容这是解释的内容这是解释的内容
 								</view>
