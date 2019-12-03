@@ -193,7 +193,7 @@ export default {
 		},
 		goDetail(item){
 			uni.navigateTo({
-				url:"../orderDetail/orderDetail?Order_ID="+item.Order_ID+'&pagefrom=order'
+				url:"../order/orderDetail?Order_ID="+item.Order_ID+'&pagefrom=order'
 			})
 		},
 		//跳转申请退款 支付   发表评论
@@ -208,7 +208,7 @@ export default {
 				})
 			}else if(item.Order_Status==4){
 				uni.navigateTo({
-					url:'../publishComment/publishComment?Order_ID='+item.Order_ID
+					url:'../order/publishComment?Order_ID='+item.Order_ID
 				})
 			}
 

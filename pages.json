@@ -304,7 +304,7 @@
       }
     },
     {
-      "path": "pages/publishComment/publishComment",
+      "path": "pages/order/publishComment",
       "style": {
         "navigationBarTitleText": "发布评价"
       }
@@ -372,7 +372,7 @@
       }
     },
     {
-      "path": "pages/orderDetail/orderDetail",
+      "path": "pages/order/orderDetail",
       "style": {
         "navigationBarTitleText": "订单详情"
       }
