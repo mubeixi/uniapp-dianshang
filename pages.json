@@ -534,6 +534,12 @@
       }
     },
     {
+      "path": "pages/common/webview",
+      "style": {
+        "navigationBarTitleText": "webview"
+      }
+    },
+    {
       "path": "pages/couponReceive/couponReceive",
       "style": {
         "navigationBarTitleText": "领取优惠券"
