@@ -1,8 +1,7 @@
 <template>
   <view class="video" v-if="video.config.src">
     <!-- @error="videoErrorCallback" -->
-    <video class="myVideo" :src="video.config.src"
-            controls></video>
+    <video class="myVideo" :src="video.config.src" :poster="video.config.cover|domain" controls></video>
 <!--    <img v-if="video.config.cover" :src="video.config.cover|domain"/>-->
 <!--    <div v-else>-->
 <!--      <video width="100%" height="100%" controls="controls">-->
