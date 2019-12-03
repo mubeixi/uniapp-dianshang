@@ -776,7 +776,7 @@ export default {
         		console.log(res)
         		if(res.errorCode == 0) {
         				uni.navigateTo({
-        					url: '../check/check?cart_key=DirectBuy'
+        					url: '../order/check?cart_key=DirectBuy'
         				})
         		}else {
 
@@ -830,7 +830,7 @@ export default {
         },
         goCart(){
         	uni.switchTab({
-        		url: '../cart/cart'
+        		url: '../order/cart'
         	})
         },
         goBack(){
@@ -964,7 +964,7 @@ export default {
         },
         gotoComments(){
             uni.navigateTo({
-            	url: '../comments/comments?pro_id='+this.Products_ID
+            	url: '../order/comments?pro_id='+this.Products_ID
             });
         },
         showTick(e){
