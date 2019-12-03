@@ -144,7 +144,8 @@
 					User_City: this.address_info.Address_City,
 					User_Area: this.address_info.Address_Area,
 					User_Tow: this.address_info.Address_Town,
-					User_Address: this.User_Address
+					User_Address: this.User_Address,
+					User_Birthday:this.dateValue
 				}).then(res=>{
 					console.log(res)
 					if(res.errorCode == 0) {
@@ -152,6 +153,7 @@
 						userInfo.User_Name = res.data.User_Name;
 						userInfo.User_NickName = res.data.User_NickName;
 						userInfo.User_Email = res.data.User_Email;
+						userInfo.User_Birthday = res.data.User_Birthday;
 						this.setUserInfo(userInfo);
 						uni.showToast({
 							title: '修改成功'
