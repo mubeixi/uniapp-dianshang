@@ -232,13 +232,13 @@ export function mixinStyle(defaultStyle, style) {
   if(!style)style={};
 
   let rt = objTranslate(defaultStyle)
-    console.log(rt)
+    // console.log(rt)
   for(var i in style){
     if(!style.hasOwnProperty(i))continue;
     rt[i] = style[i]
 
   }
-  console.log(333333333333333333333333333333,rt)
+
   return rt;
 }
 
@@ -275,15 +275,15 @@ export const uploadImages=(formData,imgs)=>{
 	for(let i=0;i<imgs.length;i++){
 		// #ifdef MP-TOUTIAO
 			let fileCTX = tt.getFileSystemManager()
-			console.log(fileCTX);
+			// console.log(fileCTX);
 			fileCTX.readFile({
 				filePath:imgs[i],
 				encoding:'base64',
 				success(ret) {
-					console.log("222222222222222222")
+
 					let imgs='data:image/jpeg;base64,'+ret.data;
 					uploadImage({'image':imgs}).then(result=>{
-						console.log("33333333333333333333333333333333333333")
+
 						 arr.push(result.data.path);
 					   },err=>{
 
@@ -308,7 +308,7 @@ export const uploadImages=(formData,imgs)=>{
 					success: (uploadFileRes) => {
 						sum++;
 						let msg=JSON.parse(uploadFileRes.data);
-						console.log(msg)
+						// console.log(msg)
 						arr.push(msg.data.path);
 						if(sum==imgs.length){
 							uni.showToast({
@@ -325,7 +325,7 @@ export const uploadImages=(formData,imgs)=>{
 			})
 		// #endif
 	}
-	console.log(arr)
+	// console.log(arr)
 	return arr;
 }
 
@@ -351,7 +351,7 @@ export const buildSharePath = (path)=>{
     let users_ID = ls.get('users_id');
     let userInfo = ls.get('userInfo');
 
-    console.log(userInfo,users_ID)
+    // console.log(userInfo,users_ID)
     let search = '';
 
     if(path.indexOf('users_id')===-1){
@@ -521,7 +521,7 @@ export const createEmptyArray = (len,item)=>{
         tempArr[i] = item
     }
 
-    console.log('createEmptyArray is ',JSON.stringify(tempArr))
+
     return tempArr;
 }
 

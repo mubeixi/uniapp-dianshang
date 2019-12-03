@@ -516,7 +516,7 @@
       }
     },
     {
-      "path": "pages/empty/empty",
+      "path": "pages/common/empty",
       "style": {
         "navigationBarTitleText": "empty"
       }
