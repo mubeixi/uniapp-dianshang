@@ -232,7 +232,7 @@ export default {
 						})
 					}else {
 						uni.navigateTo({
-							url: '../check/check?cart_key=DirectBuy'
+							url: '../order/check?cart_key=DirectBuy'
 						})
 					}
 				}else {
@@ -298,7 +298,7 @@ export default {
 		},
 		goCart(){
 			uni.switchTab({
-				url: '../cart/cart'
+				url: '../order/cart'
 			})
 		},
 		getDetail(item){

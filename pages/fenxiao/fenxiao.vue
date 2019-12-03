@@ -232,15 +232,7 @@
 				if(!this.$fun.checkIsLogin(1,1))return;
 				if(!this.$fun.checkIsDistribute(1,1))return;
 				uni.navigateTo({
-					url:'../promotionAssist/promotionAssist'
-				})
-			},
-			//自定义分享
-			goShare(){
-				if(!this.$fun.checkIsLogin(1,1))return;
-				if(!this.$fun.checkIsDistribute(1,1))return;
-				uni.navigateTo({
-					url:'../customizeShare/customizeShare'
+					url:'../fenxiao/promotionAssist'
 				})
 			},
 			//财富排行榜

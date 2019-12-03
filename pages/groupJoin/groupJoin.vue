@@ -383,7 +383,7 @@
                     console.log(res)
                     if(res.errorCode == 0) {
                         uni.navigateTo({
-                            url: '../check/check?cart_key=DirectBuy'
+                            url: '../order/check?cart_key=DirectBuy'
                         })
                     }else {
 
