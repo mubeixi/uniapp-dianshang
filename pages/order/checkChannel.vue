@@ -1,13 +1,13 @@
 <template>
     <div class="wrap">
 		<!-- #ifndef H5 -->
-		<image @click="scanFn" class="scan" src="/static/check_by_scan.jpg" />
+		<image @click="scanFn" class="scan"  :src="'/static/client/check_by_scan.jpg'|domain" />
 		<!-- #endif -->
 		<!-- #ifdef H5 -->
-		<image @click="scanFn" v-if="iswx" class="scan" src="/static/check_by_scan.jpg" />
+		<image @click="scanFn" v-if="iswx" class="scan" :src="'/static/client/check_by_scan.jpg'|domain" />
 		<!-- #endif -->
 
-        <image @click="toCode" class="code" src="/static/check_by_code.jpg" />
+        <image @click="toCode" class="code"  :src="'/static/client/check_by_code.jpg'|domain" />
     </div>
 </template>
 

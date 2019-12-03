@@ -1,6 +1,6 @@
 <template>
   <div class="goods wrap" id="goods" :style="{background:goods.style.bgColor,paddingLeft:goods.style.wrapmargin+'px',paddingRight:goods.style.wrapmargin+'px'}">
-    <image class="bgimg" src="/static/group_bg.png"></image>
+    <image class="bgimg" :src="'/static/client/group_bg.png'|domain"></image>
     <div :class="className" class="listbox">
       <ul class="list" >
         <li  @click="goProductDetail(item.Products_ID,item.is_pintuan)" v-for="(item,idx) in goodsList" :key="idx" class="item" :class="[idx%2==0?'even':'odd',goods.config.radius=='round'?'round':'',goods.config.showmode]" :style="[itemMarginObj(idx)]">

@@ -20,7 +20,7 @@
     <!-- 产品信息描述 -->
     <div class="section1">
         <div class="leftss" style="display: flex;align-items: center;">
-			<image class="limits" src="/static/limit.png"></image>
+			<image class="limits" :src="'/static/client/limit.png'|domain"></image>
         </div>
 <!--        <div class="rightss">-->
 <!--            <div class="countdown">-->

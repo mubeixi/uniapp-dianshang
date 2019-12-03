@@ -1,7 +1,7 @@
 <template>
   <view class="video">
     <!-- @error="videoErrorCallback" -->
-    <video @error="videoErrorCallback" class="myVideo" id="myVideo" :src="video.config.src" :poster="video.config.cover|domain" controls></video>
+    <video @error="videoErrorCallback" class="myVideo" id="myVideo1" :src="video.config.src" :poster="video.config.cover|domain" controls></video>
 <!--    <img v-if="video.config.cover" :src="video.config.cover|domain"/>-->
 <!--    <div v-else>-->
 <!--      <video width="100%" height="100%" controls="controls">-->
@@ -58,10 +58,13 @@
       },
       // ...mapActions(),
     },
-	mounted(){
+    mounted(){
 		let _self = this
-      _self.videoContext = uni.createVideoContext('myVideo')
-      console.log(_self.videoContext)
+		this.$nextTick(function(){
+			_self.videoContext = uni.createVideoContext('myVideo1')
+			// console.log(_self.videoContext)
+		})
+      
 	},
     created() {
 
