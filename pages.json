@@ -18,13 +18,13 @@
       }
     },
     {
-      "path": "pages/check/check",
+      "path": "pages/order/check",
       "style": {
         "navigationBarTitleText": "提交订单"
       }
     },
     {
-      "path": "pages/cart/cart",
+      "path": "pages/order/cart",
       "style": {
         "navigationBarTitleText": "购物车",
         "scrollIndicator": "none",
@@ -43,7 +43,7 @@
       }
     },
     {
-      "path": "pages/comments/comments",
+      "path": "pages/order/comments",
       "style": {
         "navigationBarTitleText": "评论"
       }
@@ -58,13 +58,7 @@
       }
     },
     {
-      "path": "pages/fenlei/fenlei",
-      "style": {
-        "navigationBarTitleText": "分类"
-      }
-    },
-    {
-      "path": "pages/groupDetail/groupDetail",
+      "path": "pages/detail/groupDetail",
       "style": {
         "navigationBarTitleText": "拼团详情",
         "app-plus": {
@@ -73,7 +67,7 @@
       }
     },
     {
-      "path": "pages/groupSuccess/groupSuccess",
+      "path": "pages/detail/groupSuccess",
       "style": {
         "navigationBarTitleText": "开团成功"
       }
@@ -85,19 +79,19 @@
       }
     },
     {
-      "path": "pages/result/result",
+      "path": "pages/classify/result",
       "style": {
         "navigationBarTitleText": "列表"
       }
     },
     {
-      "path": "pages/search/search",
+      "path": "pages/classify/search",
       "style": {
         "navigationBarTitleText": "搜索"
       }
     },
     {
-      "path": "pages/searchhistory/searchhistory",
+      "path": "pages/classify/searchhistory",
       "style": {
         "navigationBarTitleText": "搜索历史"
       }
@@ -193,12 +187,6 @@
       }
     },
     {
-      "path": "pages/customizeShare/customizeShare",
-      "style": {
-        "navigationBarTitleText": "自定义分享"
-      }
-    },
-    {
       "path": "pages/fenxiao/promotion",
       "style": {
         "navigationBarTitleText": "爵位晋升"
@@ -271,7 +259,7 @@
       }
     },
     {
-      "path": "pages/logistics/logistics",
+      "path": "pages/order/logistics",
       "style": {
         "navigationBarTitleText": "物流跟踪"
       }
@@ -286,7 +274,7 @@
       }
     },
     {
-      "path": "pages/promotionAssist/promotionAssist",
+      "path": "pages/fenxiao/promotionAssist",
       "style": {
         "navigationBarTitleText": "推广小助手"
       }
@@ -328,7 +316,7 @@
       }
     },
     {
-      "path": "pages/distributorCenter/distributorCenter",
+      "path": "pages/fenxiao/distributorCenter",
       "style": {
         "navigationBarTitleText": "分销商信息"
       }
@@ -360,13 +348,13 @@
       "style": {}
     },
     {
-      "path": "pages/groupJoin/groupJoin",
+      "path": "pages/detail/groupJoin",
       "style": {
         "navigationBarTitleText": "立即参团"
       }
     },
     {
-      "path": "pages/pintuanOrderlist/pintuanOrderlist",
+      "path": "pages/order/pintuanOrderlist",
       "style": {
         "navigationBarTitleText": "拼团订单"
       }
@@ -454,13 +442,13 @@
       }
     },
     {
-      "path": "pages/distributeAgreement/distributeAgreement",
+      "path": "pages/fenxiao/distributeAgreement",
       "style": {
         "navigationBarTitleText": "购买须知"
       }
     },
     {
-      "path": "pages/disAgreementBefore/disAgreementBefore",
+      "path": "pages/fenxiao/disAgreementBefore",
       "style": {
         "navigationBarTitleText": "成为分销商"
       }
@@ -486,7 +474,7 @@
       }
     },
     {
-      "path": "pages/spikeDetail/spikeDetail",
+      "path": "pages/detail/spikeDetail",
       "style": {
         "navigationBarTitleText": "限时秒杀",
         "app-plus": {
@@ -495,7 +483,7 @@
       }
     },
     {
-      "path": "pages/gift/gift",
+      "path": "pages/person/gift",
       "style": {
         "navigationBarTitleText": "赠品"
       }
@@ -519,7 +507,7 @@
       }
     },
     {
-      "path": "pages/limitDetail/limitDetail",
+      "path": "pages/detail/limitDetail",
       "style": {
         "navigationBarTitleText": "限时抢购",
         "app-plus": {
@@ -540,7 +528,7 @@
       }
     },
     {
-      "path": "pages/couponReceive/couponReceive",
+      "path": "pages/person/couponReceive",
       "style": {
         "navigationBarTitleText": "领取优惠券"
       }
@@ -612,7 +600,7 @@
       }
     },
     {
-      "path": "pages/productMy/productMy",
+      "path": "pages/procurement/productMy",
       "style": {
         "navigationBarTitleText": "我的产品"
       }
@@ -678,7 +666,7 @@
         "text": "分销"
       },
       {
-        "pagePath": "pages/cart/cart",
+        "pagePath": "pages/order/cart",
         "iconPath": "/static/tabbar/cart.png",
         "selectedIconPath": "/static/tabbar/cartCheck.png",
         "text": "购物车"

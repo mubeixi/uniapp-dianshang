@@ -121,13 +121,13 @@ export const checkIsDistribute = (redirect,tip) => {
         if (redirect) {
             if(!tip){
                 uni.navigateTo({
-                    url: '/pages/distributorCenter/distributorCenter'
+                    url: '/pages/fenxiao/distributorCenter'
                 })
                 return;
             }
             confirm({title: '提示', content: '该操作需要是分销商,请问是否成为分销商?', confirmText: '确定', cancelText: '暂不成为'}).then(() => {
                 uni.navigateTo({
-                    url: '/pages/distributorCenter/distributorCenter'
+                    url: '/pages/fenxiao/distributorCenter'
                 })
 
             }).catch(() => {
@@ -149,13 +149,13 @@ export const goProductDetail = (id,is_group) => {
     if(!id)return;
 
     //let path = '/pages/detail/detail';
-    let path = is_group ? '/pages/groupDetail/groupDetail':'/pages/detail/detail';//根据不同路径跳转
+    let path = is_group ? '/pages/detail/groupDetail':'/pages/detail/detail';//根据不同路径跳转
     uni.navigateTo({
         url:path+'?Products_ID='+id
     })
 }
 
-const tabbarRouter = ['/pages/index/index', '/pages/classify/classify', '/pages/groupSuccess/groupSuccess', '/pages/cart/cart', '/pages/person/person'];
+const tabbarRouter = ['/pages/index/index', '/pages/classify/classify', '/pages/detail/groupSuccess', '/pages/order/cart', '/pages/person/person'];
 
 const isHasTabbarRouter = (link)=>{
     for(var item of tabbarRouter){

@@ -249,7 +249,7 @@
             goDetail(goods){
                 console.log(goods)
                 // Products_ID=243
-                let linkObj = {link:'/pages/spikeDetail/spikeDetail?flashsale_id='+goods.id,linkType:'default'};
+                let linkObj = {link:'/pages/detail/spikeDetail?flashsale_id='+goods.id,linkType:'default'};
 
                 this.$fun.linkTo(linkObj)
 
