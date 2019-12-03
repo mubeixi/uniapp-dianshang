@@ -5,8 +5,8 @@
       "path": "pages/index/index",
       "style": {
         "enablePullDownRefresh": true,
-        "scrollIndicator": "none",
         "app-plus": {
+          "scrollIndicator": "none",
           "titleNView": false
         }
       }
@@ -27,9 +27,8 @@
       "path": "pages/order/cart",
       "style": {
         "navigationBarTitleText": "购物车",
-        "scrollIndicator": "none",
-        // 不显示滚动条
         "app-plus": {
+          "scrollIndicator": "none",
           "titleNView": false
         }
       }
@@ -133,8 +132,9 @@
     {
       "path": "pages/classify/classify",
       "style": {
-        "scrollIndicator": "none",
-        // 不显示滚动条
+        "app-plus": {
+          "scrollIndicator": "none"
+        },
         "navigationBarTitleText": "分类"
       }
     },
@@ -142,13 +142,12 @@
       "path": "pages/person/person",
       "style": {
         "enablePullDownRefresh": true,
-        "scrollIndicator": "none",
-        // 不显示滚动条
         "navigationBarTitleText": "个人中心",
         "navigationBarBackgroundColor": "#f81111",
         "navigationBarTextStyle": "white",
         "app-plus": {
-          "titleNView": false
+          "titleNView": false,
+          "scrollIndicator": "none"
         }
       }
     },
@@ -468,9 +467,7 @@
     {
       "path": "pages/page/page",
       "style": {
-        "style": {
-          "navigationBarTitleText": "自定义"
-        }
+        "navigationBarTitleText": "自定义"
       }
     },
     {
@@ -516,7 +513,7 @@
       }
     },
     {
-      "path": "pages/empty/empty",
+      "path": "pages/common/empty",
       "style": {
         "navigationBarTitleText": "empty"
       }
