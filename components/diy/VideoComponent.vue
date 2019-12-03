@@ -1,5 +1,5 @@
 <template>
-  <view class="video" v-if="video.config.src">
+  <view class="video">
     <!-- @error="videoErrorCallback" -->
     <video @error="videoErrorCallback" class="myVideo" id="myVideo" :src="video.config.src" :poster="video.config.cover|domain" controls></video>
 <!--    <img v-if="video.config.cover" :src="video.config.cover|domain"/>-->
@@ -24,7 +24,9 @@
     data() {
       return {
 		videoContext:null,
-        video: {},
+        video: {
+		  config:{}
+        },
       };
     },
 
@@ -42,13 +44,13 @@
       pauseFn(){
         console.log('暂停视频',this.videoContext)
                 if(this.videoContext){
-                  this.videoContext.stop()
+                  this.videoContext.pause()
                 }
 
 	  },
       videoErrorCallback(e) {
 
-let msg = '视频播放错误:'+JSON.stringify(e)
+        let msg = '视频播放错误:'+JSON.stringify(e)
         uni.showModal({
           content: msg,
           showCancel: false
@@ -58,15 +60,13 @@ let msg = '视频播放错误:'+JSON.stringify(e)
     },
 	mounted(){
 		let _self = this
-		this.$nextTick(function(){
-			_self.videoContext = uni.createVideoContext('myVideo')
-			console.log(_self.videoContext)
-		})
+      _self.videoContext = uni.createVideoContext('myVideo')
+      console.log(_self.videoContext)
 	},
     created() {
 
       this.video = this.confData
-      console.log(this.video)
+      // console.log(this.video)
     }
   }
 </script>

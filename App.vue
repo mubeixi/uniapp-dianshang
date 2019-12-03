@@ -21,7 +21,7 @@
         //目前只有app和小程序用到了应用的全局onLaunch，h5环境下这里不执行的
 		onLaunch: function(option) {
 
-            console.log('App Launch')
+            // console.log('App Launch')
 
 			// #ifndef H5
 			if(checkIsLogin()){
@@ -65,14 +65,14 @@
             let interval = null;
             if(info){
                 if(info.clientid){
-                    console.log('device plus info ',info);
+                    // console.log('device plus info ',info);
                     ls.set('user_client_id',info.clientid)
                 }else{
                     interval = setInterval(function(){
-                        console.log('获取cid ing')
+                        // console.log('获取cid ing')
                         info = plus.push.getClientInfo();
                         if(info.clientid){
-                            console.log('获取cid success',info)
+                            // console.log('获取cid success',info)
                             ls.set('user_client_id',info.clientid)
                             clearInterval(interval);
                         }
@@ -94,14 +94,14 @@
 
 		},
 		onShow: function() {
-			console.log('App Show')
+			// console.log('App Show')
 		},
 		onHide: function() {
-			console.log('App Hide')
+			// console.log('App Hide')
 		},
         //后期可以接自定义的错误上报
         onError:function(err){
-            
+
 			let msg = err?JSON.stringify(err):'程序错误'
 			if(isDev){
 				uni.showModal({
@@ -109,8 +109,8 @@
 				    content:msg
 				})
 			}
-			
-            
+
+
         }
 	}
 </script>

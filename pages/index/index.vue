@@ -70,45 +70,10 @@
 			TitleComponent,TextComponent,SearchComponent,NoticeComponent,CouponComponent,
 			GoodsComponent,CubeComponent,TabComponent,FlashComponent,GroupComponent,KillComponent
 		},
-		onHide(){
-
-			this.$refs.video.map(item=>{
-				item.pauseFn()
-			})
-		},
-		onShow(){
-
-
-		},
-
-		async onPullDownRefresh(){
-			// await this.$_init()
-			uni.stopPullDownRefresh()
-		},
-		onLoad() {
-
-		},
-		async created(){
-
-
-
-
-			this.$_init()
-
-			// this.get_user_location()
-
-			// let initData = await this.getInitData()
-			// uni.setNavigationBarTitle({
-			// 	title:initData.ShopName
-			// })
-
-		},
 		methods: {
-
-			$_init(){
+			initFunc(){
 				let _self = this;
 				new Promise((resolve,reject) => {
-
 
 					getSkinConfig({}).then(res => {
 
@@ -174,7 +139,25 @@
 							console.log(err)
 						})
 			}
-		}
+		},
+		onHide(){
+			this.$refs.video.map(item=>{
+				item.pauseFn()
+			})
+		},
+		onShow(){
+
+
+		},
+		async onPullDownRefresh(){
+			uni.stopPullDownRefresh()
+		},
+		onLoad() {
+
+		},
+		created(){
+			this.initFunc()
+		},
 	}
 </script>
 

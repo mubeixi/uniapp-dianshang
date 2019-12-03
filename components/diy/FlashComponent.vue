@@ -334,7 +334,7 @@
     created() {
       const res = uni.getSystemInfoSync();
       this.fullWidth = res.screenWidth;
-      console.log(this.fullWidth)
+      // console.log(this.fullWidth)
 
       this.goods = this.confData;
 
