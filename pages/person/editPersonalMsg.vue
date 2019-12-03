@@ -5,6 +5,15 @@
 
 		<input v-if="type == 0" type="text" v-model="User_Name" class="v_input" placeholder="修改用户名" />
 		<input v-if="type == 1" type="text" v-model="User_NickName" class="v_input" placeholder="修改昵称" />
+		<block v-if="type == 2">
+			<view class="area-item">
+				<text class="area-label">请选择生日</text>
+					<picker mode="date" :value="date" :start="startDate" :end="endDate" @change="bindDateChange">
+						<view class="uni-input" v-if="dateValue">{{dateValue}}</view>
+						<view class="uni-input" v-if="!dateValue">请选择出生时间</view>
+					</picker>
+			</view>
+		</block>
 		<input v-if="type == 3" type="text" v-model="User_Email" class="v_input" placeholder="修改邮箱" />
 		<block v-if="type == 4">
 			<view class="area-item">
@@ -48,7 +57,12 @@
 	export default {
 		mixins:[pageMixin],
 		data() {
+			 const currentDate = this.getDate({
+			            format: true
+			 })
 			return {
+				date: currentDate,
+				dateValue:'',
 				type: 0,
 				title: '',
 				User_Name: '',
@@ -77,6 +91,24 @@
 		},
 		methods: {
 			...mapActions(['setUserInfo']),
+			bindDateChange(e){
+				this.dateValue=e.target.value
+			},
+			getDate(type) {
+			            const date = new Date();
+			            let year = date.getFullYear();
+			            let month = date.getMonth() + 1;
+			            let day = date.getDate();
+			
+			            if (type === 'start') {
+			                year = year - 60;
+			            } else if (type === 'end') {
+			                year = year + 2;
+			            }
+			            month = month > 9 ? month : '0' + month;;
+			            day = day > 9 ? day : '0' + day;
+			            return `${year}-${month}-${day}`;
+			 },
 			getTitle(){
 				switch (this.type) {
 					case '0' : this.title = '修改姓名';break;

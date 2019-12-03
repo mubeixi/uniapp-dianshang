@@ -274,7 +274,7 @@
 					})
 				}else if(this.orderInfo.Order_Status==4){
 					uni.navigateTo({
-						url:'../publishComment/publishComment?Order_ID='+Order_ID
+						url:'../order/publishComment?Order_ID='+Order_ID
 					})
 				}
 
