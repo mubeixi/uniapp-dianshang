@@ -1485,7 +1485,6 @@ export default {
 				}
 				.skuValue{
 					display: flex;
-					width: 700rpx;
 					flex-wrap: wrap;
 					.skuview{
 						margin-bottom: 10px;
