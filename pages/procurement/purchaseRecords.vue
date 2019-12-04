@@ -10,7 +10,7 @@
 			<view class="list-msg">
 				<view class="biz-msg">
 					<image class="avator" src="../../static/tou.png" mode=""></image>
-					<view class="biz-name">肖战穿搭衣橱<view class="biz-links">(<text class="text-d" @click="showStore">查看信息</text>/<text class="text-d">修改渠道</text>)</view></view>
+					<view class="biz-name">肖战穿搭衣橱<view class="biz-links">(<text class="text-d" @click="showStore">查看信息</text>/<text class="text-d" @click="changeChannel">修改渠道</text>)</view></view>
 					<view class="status">待处理</view>
 				</view>
 				<view class="pro-msg">
@@ -165,6 +165,27 @@
 		        </view>
 		    </view>
 		</view>
+		<!-- 修改渠道 -->
+		<view class="sku-pop" v-if="isChangeChannel">
+		    <view class="sku-title">修改渠道</view>
+		    <view class="sku-content" style="padding-left:53rpx;">
+		        <view class="skulist">
+		            <view class="nochecked"></view>
+								<view>平台进货</view>
+		        </view>
+		        <view class="skulist">
+								<image class="selected" src="../../static/selected.png" mode=""></image>
+								<view>门店进货</view>
+		        </view>
+		        <view class="skulist">
+								<input class="input" type="text" value="" placeholder="请输入门店编号" placeholder-style="color: #C9C9C9;font-size: 24rpx;" />
+		        </view>
+						<view class="skulist change-btn">
+							<view class="btn cancel">取消</view>
+							<view class="btn confirm">确定</view>
+						</view>
+		    </view>
+		</view>
 		<!--  遮罩层	-->
 		<view class="mask" :hidden="isHidden" @click="hiddenMask"></view>
 	</view>
@@ -176,7 +197,9 @@
 			return {
 				pro_tip_show: false,
 				isHidden: true,
-				isShowStoreMsg: false
+				isShowStoreMsg: false,
+				isChangeChannel: false,
+				change_type: 0, // 进货渠道， 0 是平台 1是门店
 			}
 		},
 		methods: {
@@ -194,6 +217,11 @@
 			hiddenMask(){
 				this.isShowStoreMsg = false;
 				this.isHidden = true;
+				this.isChangeChannel = false;
+			},
+			changeChannel(){
+				this.isChangeChannel = true;
+				this.isHidden = false;
 			}
 		}
 	}
@@ -406,6 +434,47 @@
 	            margin-bottom: 30rpx;
 	            display: flex;
 	            align-items: center;
+							&.change-btn {
+								padding-top: 43rpx;
+								justify-content: center;
+							}
+							.selected,
+							.nochecked {
+								display: block;
+								width: 40rpx;
+								height: 40rpx;
+								margin-right: 23rpx;
+							}
+							.nochecked {
+								box-sizing: border-box;
+								border:2rpx solid rgba(214,214,214,1);
+								border-radius:3px;
+							}
+							.input {
+								width:420rpx;
+								height:60rpx;
+								border:1px solid rgba(214,214,214,1);
+								font-size: 24rpx;
+								padding-left: 24rpx;
+								box-sizing: border-box;
+								line-height: 36rpx;
+							}
+							.btn {
+								width: 130rpx;
+								height: 50rpx;
+								text-align: center;
+								line-height: 50rpx;
+								background-color: #E9E9E9;
+								font-size: 24rpx;
+							}
+							.cancel {
+								color: #666;
+								margin-right: 25rpx;
+							}
+							.confirm {
+								color: #fff;
+								background-color: $wzw-primary-color;
+							}
 	            .sku-name {
 	                color: #333;
 	                font-size: 24rpx;
