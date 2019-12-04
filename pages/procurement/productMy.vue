@@ -195,11 +195,7 @@
 		                    <view class="proMsg">
 		                        <view class="proName">
 		                            <view class="name">{{pro.Products_Name}}</view>
-<<<<<<< HEAD
-		                            <image class="del"  @click="delList(index,attr.myqty,attr_id)" src="/static/del.png"></image>
-=======
 		                            <image class="del"  @click="delList(pro_id,attr.myqty,attr_id)" src="/static/procurement/del.png"></image>
->>>>>>> e24605cdfe1c22978a01400cd3bed07eca797874
 		                        </view>
 		                        <view class="attrInfo">
 		                            <view>{{attr.check_attrnames}}</view>
