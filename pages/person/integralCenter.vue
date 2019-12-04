@@ -168,7 +168,7 @@
 					});
 					setTimeout(()=>{
 						this.isClicked = false;
-						this.setUserInfo({});
+						//this.setUserInfo({});
 						get_user_info().then(res=>{
 							this.info = res.data;
 							this.user_intergatal = res.data.User_Integral;
