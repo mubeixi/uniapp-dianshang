@@ -1584,7 +1584,10 @@ export default {
 				}
 				.skuValue{
 					display: flex;
-					.divs{
+					width: 700rpx;
+					flex-wrap: wrap;
+					.skuview{
+						margin-bottom: 10px;
 						height: 70rpx;
 						line-height: 70rpx;
 						font-size: 14px;

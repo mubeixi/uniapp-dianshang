@@ -337,7 +337,6 @@ export default {
 		}
 		// #endif
 
-		console.log(32333333333333333,this.initData)
 	},
 	onUnload(){
 		// #ifdef APP-PLUS
@@ -1486,7 +1485,9 @@ export default {
 				}
 				.skuValue{
 					display: flex;
+					flex-wrap: wrap;
 					.skuview{
+						margin-bottom: 10px;
 						height: 70rpx;
 						line-height: 70rpx;
 						font-size: 14px;

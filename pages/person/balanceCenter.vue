@@ -223,7 +223,7 @@
 						title: res.msg,
 						duration:1500
 					});
-					this.setUserInfo({});
+					// this.setUserInfo({});
 					setTimeout(()=>{
 						// 重新获取积分信息
 						get_user_info().then(res=>{

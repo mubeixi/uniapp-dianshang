@@ -1,8 +1,7 @@
 <template>
-  <view class="video" v-if="video.config.src">
+  <view class="video">
     <!-- @error="videoErrorCallback" -->
-    <video class="myVideo" :src="video.config.src"
-            controls></video>
+    <video @error="videoErrorCallback" class="myVideo" id="myVideo1" :src="video.config.src" :poster="video.config.cover|domain" controls></video>
 <!--    <img v-if="video.config.cover" :src="video.config.cover|domain"/>-->
 <!--    <div v-else>-->
 <!--      <video width="100%" height="100%" controls="controls">-->
@@ -24,9 +23,16 @@
     },
     data() {
       return {
-        video: {},
+		videoContext:null,
+        video: {
+		  config:{}
+        },
       };
     },
+
+	onHide(){
+
+	},
     computed: {
 
     },
@@ -35,20 +41,35 @@
     },
     components: {},
     methods: {
-      
-      videoErrorCallback: function(e) {
+      pauseFn(){
+        console.log('暂停视频',this.videoContext)
+                if(this.videoContext){
+                  this.videoContext.pause()
+                }
 
+	  },
+      videoErrorCallback(e) {
+
+        let msg = '视频播放错误:'+JSON.stringify(e)
         uni.showModal({
-          content: e.target.errMsg||'视频播放失败,请检查视频地址',
+          content: msg,
           showCancel: false
         })
       },
       // ...mapActions(),
     },
+    mounted(){
+		let _self = this
+		this.$nextTick(function(){
+			_self.videoContext = uni.createVideoContext('myVideo1')
+			// console.log(_self.videoContext)
+		})
+      
+	},
     created() {
 
       this.video = this.confData
-      console.log(this.video)
+      // console.log(this.video)
     }
   }
 </script>

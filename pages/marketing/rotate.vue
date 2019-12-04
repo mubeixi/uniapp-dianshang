@@ -1,6 +1,6 @@
 <template>
     <view class="wrap">
-        <image class="bgimg" src="/static/marketing/rotate-bg.jpg" />
+        <image class="bgimg" :src="'/static/client/marketing/rotate-bg.jpg'|domain" />
         <div class="rotate-box">
             <div class="item"  >
                 <div class="goods" :style="{backgroundColor:getStyle(0)}">
@@ -74,7 +74,7 @@
         <wzw-dialog ref="result" bgColor="rgba(0,0,0,.7)" mainBgColor="none">
             <div class="result-container">
                 <div class="top">
-                    <image class="result-bg" src="/static/marketing/result.png" />
+                    <image class="result-bg" :src="'/static/client/marketing/result.png'|domain" />
                     <div class="text">
                         <div class="text-row line6">恭喜您抽中</div>
                         <div class="text-row">{{result_tip}}</div>
@@ -82,7 +82,7 @@
                 </div>
 
                 <div class="btn-box" @click="cancelDialog">
-                    <image class="close" src="/static/marketing/close-btn.png" />
+                    <image class="close" :src="'/static/client/marketing/close-btn.png'|domain" />
                 </div>
             </div>
         </wzw-dialog>
@@ -114,6 +114,7 @@
                 this.$refs.result.close()
             },
             startFn(){
+				if(rotateInstance.is_start)return //已经启动过程中无法再触发
                 rotateInstance.start(6,4)
             },
             showResult(idx,name){

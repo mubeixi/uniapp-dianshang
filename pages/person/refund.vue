@@ -49,7 +49,7 @@
 				<image class="image" :src="item"  @click="yulan(index)"></image>
 				<image class="image del" :src="'/static/client/delimg.png'|domain" @click="delImg(index)"></image>
 			</view>
-            <view class="shangchuan" @click="addImg">
+            <view class="shangchuan" @click="addImg"  v-if="imgs.length<9">
 				<view class="heng"></view>
 				<view class="shu"></view>
 			</view>

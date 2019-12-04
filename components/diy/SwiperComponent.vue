@@ -1,22 +1,21 @@
 <template>
   <view class="swiper wrap fun-preview-swiper" >
 <!--      :class="{single:swiper.value.list.length<2}"-->
-<!-- style="height:375upx" -->
+<!-- style="height:375rpx" -->
 <!--      @load="HandleImgLoad"-->
       <!--      :style="[getSingleStyle()]"-->
     <div v-if="swiper.value.list.length==1"  @click="go(swiper.value.list[0])" class="single" style="display: flex;" >
-		<image mode="widthFix"  style="width: 750upx;vertical-align: top;"  :src="domainFunc(swiper.value.list[0].img_src)"/>
+		<image mode="widthFix"  style="width: 750rpx;vertical-align: top;"  :src="domainFunc(swiper.value.list[0].img_src)"/>
       <!-- <div class="cover-full" :style="{backgroundImage:'url('+domainFunc(swiper.value.list[0].img_src)+')'}"></div> -->
     </div>
-	<!-- style="height:375upx" -->
-    <swiper v-else  class="swiper" style="height:375upx"
+	<!-- style="height:375rpx" -->
+    <swiper v-else  class="swiper-box" style="height:350rpx"
             indicator-color="rgba(255, 255, 255, .3)"
             indicator-active-color="rgba(255, 255, 255, .7)"
             :indicator-dots="swiper.value.list.length>1" :autoplay="swiper.config.autoplay" circular="true" :interval="swiper.config.interval|str2num" :duration="500">
-
       <swiper-item @click="go(item)" v-for="(item,idx) in swiper.value.list" :key="idx">
-<!--        <image mode="widthFix" class="swiper-item" style="width: 750upx;vertical-align: top;"  :src="domainFunc(item.img_src)"></image>-->
-        <view class="swiper-item cover-full" :style="{backgroundImage:'url('+domainFunc(item.img_src)+')'}"></view>
+<!--        <image mode="widthFix" class="swiper-item" style="width: 750rpx;vertical-align: top;"  :src="domainFunc(item.img_src)"></image>-->
+        <view class="swiper-item" :style="{backgroundImage:'url('+domainFunc(item.img_src)+')'}"></view>
       </swiper-item>
     </swiper>
 
@@ -112,6 +111,17 @@
         }
     }
 
+    .swiper-box{
+      .swiper-item{
+        width: 750rpx;
+        height:350rpx;
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        background-color: #f8f8f8;
+        background-position: center;
+      }
+    }
+
   //image{will-change: transform}
   .el-carousel__item h3 {
     color: #475669;
@@ -130,7 +140,7 @@
   }
 
   .cover-full {
-    .cover-full-bg(cover, 50%);
+    .cover-full-bg(cover, 0);
     /*height: 100%;*/
   }
 

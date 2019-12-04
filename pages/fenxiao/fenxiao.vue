@@ -112,8 +112,8 @@
 						股东
 					</view>
 				</view>
-				
-			
+
+
 				<!-- #ifndef MP ||APP-PLUS -->
 				<view class="td"  @click="goAssist" style="border-bottom: 0px;">
 					<image  class="imgs" :src="'/static/client/fenxiao/tuiguang.png'|domain" ></image>
@@ -212,7 +212,7 @@
 					this.userInfo.Is_Distribute=1;
 				},err=>{
 					uni.showToast({
-						title: res.msg,
+						title: err.msg,
 						icon:  'none'
 					})
 				}).catch(err=>{

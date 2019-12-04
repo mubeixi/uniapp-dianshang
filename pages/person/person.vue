@@ -281,6 +281,7 @@
 			},
 			//获取角标
 			getOrderNum(){
+				if(!this.$fun.checkIsLogin())return;
 				getOrderNum({Order_Type:this.Order_Type}).then(res=>{
 					this.orderNum=res.data;
 					console.log(res)

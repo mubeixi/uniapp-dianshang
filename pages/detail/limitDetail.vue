@@ -20,7 +20,7 @@
     <!-- 产品信息描述 -->
     <div class="section1">
         <div class="leftss" style="display: flex;align-items: center;">
-			<image class="limits" src="/static/limit.png"></image>
+			<image class="limits" :src="'/static/client/limit.png'|domain"></image>
         </div>
 <!--        <div class="rightss">-->
 <!--            <div class="countdown">-->
@@ -1505,7 +1505,10 @@ export default {
 				}
 				.skuValue{
 					display: flex;
-					.divs{
+					width: 700rpx;
+					flex-wrap: wrap;
+					.skuview{
+						margin-bottom: 10px;
 						height: 70upx;
 						line-height: 70upx;
 						font-size: 14px;

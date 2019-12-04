@@ -4,7 +4,7 @@
 		<!--分享引导框开始-->
 		<div class="hide guide_box"  v-show="isShowGuide" @click="isShowGuide=false">
 <!--			<div class="mask"></div>-->
-			<div class="guide" ><image class="guideimg" mode="aspectFit" src="/static/pay/alipay.jpg"  /></div>
+			<div class="guide" ><image class="guideimg" mode="aspectFit" :src="'/static/client/pay/alipay.jpg'|domain"  /></div>
 <!--			<div><image  :src="'/static/client/share/guide_point.png'|domain"  class="guide_point" /></div>-->
 <!--			<div><image  :src="'/static/client/share/guide_btn.png'|domain"  class="guide_btn"  /></div>-->
 		</div>
