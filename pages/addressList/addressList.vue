@@ -9,7 +9,7 @@
 				<view class='name'>收货人：{{item.Address_Name}}</view>
 				<view class='pho'>{{item.Address_Mobile}}</view>
 			  </view>
-			  <view class='flex-add'>收货地址：{{item.Address_Province_name}} {{item.Address_City_name}} {{item.Address_Area_name}} {{item.Address_Town_name}} {{item.Address_Detailed}}</view>
+			  <view class='flex-add'>收货地址：{{item.Address_Province_name}} {{item.Address_City_name}} {{item.Address_Area_name}} <block v-if="item.Address_Town_name">{{item.Address_Town_name}}</block> {{item.Address_Detailed}}</view>
 			  <view class='flex-add default' v-if="item.Address_Is_Default == 1">默认地址</view>
 			</view>
 			<view class="flex-action">

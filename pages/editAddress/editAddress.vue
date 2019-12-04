@@ -131,6 +131,7 @@
 			},
 			  // 乡镇地址 点击确定
 			  t_pickerChange: function (e) {
+				  if(this.t_arr.length<=0)return
 			    this.t_index = e.detail.value;
 			    this.address_info.Address_Town = this.t_arr[e.detail.value]['id'];
 			  },
@@ -232,7 +233,7 @@
 					  uni.showToast({
 					  	title: res.msg
 					  })
-					  this.setAddressInfo(res);
+					  this.addeditAddress(res)
 				  })
 				} else {
 				  // 添加
@@ -261,7 +262,7 @@
 					duration: 2000,
 					success: function () {
 					  if (that.address_info.Address_ID) {  //编辑
-						//跳回收货地址列表页面  不需操作
+						//跳回收货地址列表页面  不需操
 					  } else {  //添加
 						//从提交订单页来的，跳回提交订单页
 						if (that.from_page == 'checkout') {
@@ -292,9 +293,11 @@
 						}
 					  }
 					  //返回上一页
-					  uni.navigateBack({
-						delta: 1
-					  });
+					  setTimeout(function(){
+						  uni.navigateBack({
+							delta: 1
+						  });
+					  },2000)
 					}
 				  });
 				} else {
