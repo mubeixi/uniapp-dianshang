@@ -1,6 +1,6 @@
 <template>
 	<view class="wrap" >
-		
+
 		<!-- <page-title :title="'进货记录'" :bgcolor="'#fff'"></page-title> -->
 		<block v-for="(item,index) of orderList" :key="index" >
 			<view class="prolist" @click="hidden_tip(item)" >
@@ -29,7 +29,16 @@
 									</view>
 								</view>
 							</view>
-							<view class="pro-price"><text class="price-icon">￥</text>{{it.prod_price}}</view>
+							<view class="pro-price">
+								<view>
+									<text class="price-icon">￥</text>{{it.prod_price}}
+								</view>
+								<view class="sku-item" v-if="item.Order_Status==20||item.Order_Status==22||item.Order_Status==25">
+									<view class="handle" @click="minus(index,ind,it,item.Order_ID)">-</view>
+									<view class="pro-num">{{it.prod_count}}</view>
+									<view class="handle" @click="plus(index,ind,it,item.Order_ID)">+</view>
+								</view>
+							</view>
 						</view>
 					</view>
 					<view class="totalinfo">总计：<text class="price-icon">￥</text><text class="price-num">{{item.Order_TotalPrice}}</text> <block v-if="item.Order_Shipping.price>0">(含运费{{item.Order_Shipping.price}}元)</block></view>
@@ -37,8 +46,9 @@
 						<view class="btn back" @click="cancelOrder(item.Order_ID)" v-if="item.Order_Status==20||item.Order_Status==21||item.Order_Status==25">取消进货单</view>
 						<view class="btn back" @click="recallOrder(item.Order_ID)" v-if="item.Order_Status==21">撤回进货单</view>
 						<view class="btn back" @click="completedOrder(item.Order_ID)" v-if="item.Order_Status==23">确认收货</view>
+						<view class="btn back" @click="submitOrder(item.Order_ID)" v-if="item.Order_Status==20||item.Order_Status==22||item.Order_Status==25">提交进货单</view>
 					</view>
-				</view>	
+				</view>
 			</view>
 		</block>
 		<!--  门店信息	-->
@@ -47,19 +57,19 @@
 		    <view class="sku-content">
 		        <view class="skulist">
 		            <view class="sku-name">门店名称：</view>
-		            <view class="sku-item">{{storeInfo.Stores_Name}}</view>
+		            <view class="sku-item" v-if="storeAdress.Stores_Name">{{storeAdress.Stores_Name}}</view>
 		        </view>
 		        <view class="skulist">
 		            <view class="sku-name">门店电话：</view>
-		            <view class="sku-item">{{storeInfo.mobile}}</view>
+		            <view class="sku-item" v-if="storeAdress.Stores_Telephone">{{storeAdress.Stores_Telephone}}</view>
 		        </view>
-		        <view class="skulist">
+		        <view class="skulist" @click="showAdress">
 		            <view class="sku-name">门店地址：</view>
-		            <view class="sku-item" style="flex:1;">{{storeInfo.Stores_Province_name}}{{storeInfo.Stores_City_name}}{{storeInfo.Stores_Area_name}}{{storeInfo.Stores_Address}}<image class="img" src="/static/local.png"></image></view>
+		            <view class="sku-item" v-if="storeAdress.Stores_Province_name" style="flex:1;">{{storeAdress.Stores_Province_name}}{{storeAdress.Stores_City_name}}{{storeAdress.Stores_Area_name}}{{storeAdress.Stores_Address}}<image class="img" src="/static/local.png"></image></view>
 		        </view>
 		        <view class="skulist">
 		            <view class="sku-name">门店距离：</view>
-		            <view class="sku-item">1.2KM</view>
+		            <view class="sku-item" v-if="storeAdress.distance">{{storeAdress.distance}}KM</view>
 		        </view>
 		    </view>
 		</view>
@@ -78,22 +88,33 @@
 					<view>门店进货</view>
 		        </view>
 		        <view class="skulist">
-						<input class="input" type="text" value="" placeholder="请输入门店编号" placeholder-style="color: #C9C9C9;font-size: 24rpx;" />
+						<input class="input" type="text" v-model="inputValue" placeholder="请输入门店编号" placeholder-style="color: #C9C9C9;font-size: 24rpx;" />
 		        </view>
 				<view class="skulist change-btn">
-					<view class="btn cancel">取消</view>
-					<view class="btn confirm">确定</view>
+					<view class="btn cancel" @click="cancelMy">取消</view>
+					<view class="btn confirm" @click="sureMy">确定</view>
 				</view>
 		    </view>
 		</view>
 		<!--  遮罩层	-->
 		<view class="mask" catchtouchmove="false" :hidden="isHidden" @click="hiddenMask"></view>
+
+		<div class="input-wrap" v-if="password_input">
+			<div>请输入余额支付密码</div>
+			<input type="password" class="input" placeholder="请输入密码" v-model="user_pay_password" @blur="user_password">
+			<div class="btns">
+				<div @click="cancelInput" class="btn">取消</div>
+				<div @click="confirmInput" class="btn">确定</div>
+			</div>
+		</div>
+
 	</view>
 </template>
 
 <script>
-	import {getStorePurchaseApply,storePifaOrderCancel,storePifaOrderRecall,storePifaOrderCompleted,changeStoreApplyChannel} from "../../common/fetch";
+	import {getStorePurchaseApply,storePifaOrderCancel,storePifaOrderRecall,storePifaOrderCompleted,changeStoreApplyChannel,getStoreDetail,subStorePurchaseApply} from "../../common/fetch";
 	import {mapGetters} from 'vuex'
+	import {getLocation} from "../../common/tool/location";
 	export default {
 		data(){
 			return {
@@ -105,15 +126,82 @@
 				pageSize:10,
 				totalCount:0,
 				orderList:[],
-				store_id:0,//门店id
 				order_id:0,//订单id
 				orderIndex:0,//选择渠道
+				inputValue:'',//门店编号
+				storeAdress:[],
+				user_pay_password:'',
+				password_input:false
 			}
 		},
 		onShow() {
 			this.getStorePurchaseApply()
 		},
 		methods: {
+			confirmInput(){
+				let data={
+					store_id:this.Stores_ID,
+					order_id:this.order_id,
+					password:this.user_pay_password
+				}
+				let that=this
+				this.password_input=false
+				this.isHidden=true
+				subStorePurchaseApply(data).then(res=>{
+					uni.showToast({
+					    title: res.msg,
+					    icon: 'none',
+					});
+					setTimeout(function(){
+						that.getStorePurchaseApply();
+					},1000)
+				})
+			},
+			cancelInput(){
+				this.password_input=false
+				this.isHidden=true
+			},
+			// 用户输入密码完毕
+			user_password(e) {
+				this.user_pay_password = e.detail.value;
+			},
+			//提交订单
+			submitOrder(id){
+				this.order_id=id
+				this.isHidden=false
+				this.password_input=true
+			},
+			plus(index,ind,it,id){
+
+			    this.orderList[index].prod_list[ind].prod_count++;
+				let data={
+					[it.prod_id]:{
+						[it.attr_id]:this.orderList[index].prod_list[ind].prod_count
+					}
+				}
+				subStorePurchaseApply({store_id:this.Stores_ID,order_id:id,prod_json:JSON.stringify(data)}).then(res=>{
+					this.orderList[index].Order_TotalPrice=res.data.pay_money
+				}).catch(e=>{console.log(e)})
+
+			},
+			minus(index,ind,it,id){
+			    if (this.orderList[index].prod_list[ind].prod_count>1) {
+			        this.orderList[index].prod_list[ind].prod_count--
+					let data={
+						[it.prod_id]:{
+							[it.attr_id]:this.orderList[index].prod_list[ind].prod_count
+						}
+					}
+					subStorePurchaseApply({store_id:this.Stores_ID,order_id:id,prod_json:JSON.stringify(data)}).then(res=>{
+						this.orderList[index].Order_TotalPrice=res.data.pay_money
+					}).catch(e=>{console.log(e)})
+			    } else {
+			        uni.showToast({
+			            title: '购买数量不能小于1',
+			            icon: 'none',
+			        });
+			    }
+			},
 			//确认收货采购单
 			completedOrder(){
 				let data={
@@ -176,7 +264,7 @@
 					for(var item of res.data	) {
 						item.pro_tip_show=false
 					}
-					this.orderList=res.data	
+					this.orderList=res.data
 					for(let item of this.orderList){
 						for(let it of item.prod_list){
 							if(it.attr_id>0){
@@ -190,35 +278,87 @@
 							}
 						}
 					}
-					
+
 				}).catch(e=>{console.log(e)})
 			},
 			show_pro_tip(item){
-				console.log(item,"sss")
 				item.pro_tip_show = true;
 			},
 			hidden_tip(item){
 				item.pro_tip_show = false;
 			},
+			showAdress(){
+				uni.openLocation({
+				            latitude: 39.858599437526,
+				            longitude: 116.28599996624,
+				            success: function () {
+				                console.log('success');
+				            }
+				        });
+			},
 			showStore(){
-				console.log('lalal')
+				this.storeAdress=[];
 				this.isHidden = false;
 				this.isShowStoreMsg = true;
-			},	
+				let lat='';
+				let lng='';
+				getLocation().then(res=>{
+				    if(res.code===0){
+						lng=res.data.longitude
+						lat=res.data.latitude
+						let data={
+							lat:lat,
+							lng:lng,
+							store_id:this.Stores_ID
+						}
+						getStoreDetail(data).then(res=>{
+							this.storeAdress=res.data
+							this.storeAdress.distance=(res.data.distance/1000).toFixed(2)
+						})
+					}
+				}).catch(err=>{
+				    this.isHidden = true;
+				    this.isShowStoreMsg = false;
+				})
+			},
 			hiddenMask(){
 				this.isShowStoreMsg = false;
 				this.isHidden = true;
 				this.isChangeChannel = false;
+				this.password_input=false
 			},
 			//修改渠道
 			changeOrderIndex(index){
 				this.orderIndex=index
 			},
+			cancelMy(){
+				this.isChangeChannel = false;
+				this.isHidden = true;
+			},
+			//确定更改渠道
+			sureMy(){
+				let data={
+					store_id:this.Stores_ID,
+					order_id:this.order_id,
+					purchase_type:this.orderIndex?'store':'shop'
+				}
+				if(this.orderIndex==1){
+					data.purchase_store_sn=this.inputValue
+				}
+				changeStoreApplyChannel(data).then(res=>{
+
+				})
+			},
 			//修改渠道
 			changeChannel(item){
 				this.isChangeChannel = true;
 				this.isHidden = false;
-				
+				this.order_id=item.Order_ID;
+				if(item.active_id>0){
+					this.orderIndex=1
+				}else{
+					this.orderIndex=0
+				}
 			}
 		},
 		computed: {
@@ -303,6 +443,7 @@
 						display: flex;
 						flex-direction: column;
 						justify-content: space-between;
+						width: 500rpx;
 						.pro-name {
 							text-overflow: -o-ellipsis-lastline;
 							overflow: hidden;
@@ -359,6 +500,8 @@
 						.pro-price {
 							font-size: 30rpx;
 							color: $wzw-primary-color;
+							display: flex;
+							justify-content: space-between;
 							.price-icon {
 								font-size: 24rpx;
 							}
@@ -558,4 +701,82 @@
 	        }
 	    }
 	}
+
+	.sku-item {
+	    display: flex;
+	    align-items: center;
+	    color: #666;
+	    /*flex: 1;*/
+	    .img {
+	        width: 27rpx;
+	        height: 32rpx;
+	    }
+	    .sku {
+	        width: 80rpx;
+	        height: 46rpx;
+	        line-height: 46rpx;
+	        text-align: center;
+	        background-color: #f6f6f6;
+	        color: #666;
+	        font-size: 24rpx;
+	        margin-right: 13rpx;
+	        border-radius: 5rpx;
+	    }
+	    .active {
+	        background-color: $wzw-primary-color;
+	        color: #fff;
+	    }
+	    .handle {
+	        width: 50rpx;
+	        height: 45rpx;
+	        line-height: 45rpx;
+	        text-align: center;
+	        font-size: 32rpx;
+	        color: #777;
+	        background: #f6f6f6;
+	    }
+	    .pro-num {
+	        margin: 0 15rpx;
+	        font-size: 24rpx;
+	        color: #777;
+	    }
+	}
+
+
+
+		.input-wrap {
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			z-index: 10000;
+			width: 526rpx;
+			transform: translate(-50%,-50%);
+			border-radius: 10rpx;
+			background: #fff;
+			color: #000;
+			text-align: center;
+			width: 90%;
+			padding: 40rpx 50rpx 30rpx;
+			box-sizing: border-box;
+			font-size: 28rpx;
+			border-radius: 10rpx;
+			.input {
+				margin: 40rpx 0;
+				border: 1px solid #efefef;
+				height: 20px;
+				line-height: 20px;
+				padding: 10px 0px;
+			}
+
+			.btns {
+				display: flex;
+				justify-content: space-around;
+				height: 60rpx;
+				line-height: 60rpx;
+				.btn {
+					flex: 1;
+				}
+			}
+		}
+	
 </style>
