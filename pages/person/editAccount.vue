@@ -25,6 +25,10 @@
 				<view>大转盘</view>
 				<image :src="'/static/client/right.png'|domain" mode=""></image>
 			</view>
+			<view class="item" v-if="isDev" @click="goOrder">
+				<view>进货订单</view>
+				<image :src="'/static/client/right.png'|domain" mode=""></image>
+			</view>
 		</view>
 		<view class="btn" @click="logoutFunc">退出登录</view>
 	</view>
@@ -45,6 +49,11 @@
 			}
 		},
 		methods: {
+			goOrder(){
+				uni.navigateTo({
+					url:'/pages/procurement/purchaseRecords'
+				})
+			},
 			goOrderCheck(){
 				uni.navigateTo({
 					url:'/pages/order/checkChannel'
