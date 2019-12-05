@@ -402,6 +402,12 @@ export const getPifaStoreProd = (data, options) => fetch('get_pifa_store_prod', 
 export const getStoreProdMoney = (data, options) => fetch('get_store_prod_money', data, options);
 
 
+//零售订单拒单
+export const systemRejectOrder = (data, options) => fetch('system_reject_order', data, options);
+
+//删除采购单
+export const storePifaOrderDel = (data, options) => fetch('store_pifa_order_del', data, options);
+
 //获取门店信息
 export const getStoreDetail = (data, options) => fetch('get_store_detail', data, options);
 

@@ -6,7 +6,7 @@
 			<view class="prolist" @click="hidden_tip(item)" >
 				<view class="pro-title">
 					<view>进货单号：{{item.Order_ID}}</view>
-					<image class="img" src="/static/procurement/del.png" mode=""></image>
+					<image class="img" src="/static/procurement/del.png" @click="del(item.Order_ID)"></image>
 				</view>
 				<view class="list-msg">
 					<view class="biz-msg">
@@ -112,7 +112,7 @@
 </template>
 
 <script>
-	import {getStorePurchaseApply,storePifaOrderCancel,storePifaOrderRecall,storePifaOrderCompleted,changeStoreApplyChannel,getStoreDetail,subStorePurchaseApply} from "../../common/fetch";
+	import {getStorePurchaseApply,storePifaOrderCancel,storePifaOrderRecall,storePifaOrderCompleted,changeStoreApplyChannel,getStoreDetail,subStorePurchaseApply,storePifaOrderDel} from "../../common/fetch";
 	import {mapGetters} from 'vuex'
 	import {getLocation} from "../../common/tool/location";
 	export default {
@@ -138,6 +138,32 @@
 			this.getStorePurchaseApply()
 		},
 		methods: {
+			del(id){
+				let that=this
+				uni.showModal({
+				    title: '订单',
+				    content: '是否要删除订单',
+				    success: function (res) {
+				        if (res.confirm) {
+							let data={
+								store_id:that.Stores_ID,
+								order_id:id
+							}
+				            storePifaOrderDel(data).then(res=>{
+				            	uni.showToast({
+				            		title:res.msg,
+				            		icon:'none'
+				            	})
+				            	setTimeout(function(){
+									that.getStorePurchaseApply()
+				            	},1000)
+				            })
+				        } else if (res.cancel) {
+				           
+				        }
+				    }
+				});
+			},
 			confirmInput(){
 				let data={
 					store_id:this.Stores_ID,
