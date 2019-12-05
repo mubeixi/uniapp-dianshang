@@ -22,14 +22,14 @@
 					<view>门店进货</view>
 					<view class="box" v-if="selectitem == 2"></view>
 					<view v-if="selectitem == 1">
-						<image class="image" src="../../static/selected.png" mode=""></image>
+						<image class="image" src="/static/procurement/selected.png" mode=""></image>
 					</view>
 				</view>
 				<view class="search-item" @click="changeItem(2)">
 					<view>平台进货</view>
 					<view class="box" v-if="selectitem == 1"></view>
 					<view v-if="selectitem == 2">
-						<image class="image" src="../../static/selected.png" mode=""></image>
+						<image class="image" src="/static/procurement/selected.png" mode=""></image>
 					</view>
 				</view>
 			</view>

@@ -1,148 +1,46 @@
 <template>
-	<view class="wrap">
+	<view class="wrap" >
 		
 		<!-- <page-title :title="'进货记录'" :bgcolor="'#fff'"></page-title> -->
-		<view class="prolist" @click="hidden_tip">
-			<view class="pro-title">
-				<view>进货单号：SN123456789</view>
-				<image class="img" src="/static/procurement/del.png" mode=""></image>
-			</view>
-			<view class="list-msg">
-				<view class="biz-msg">
-					<image class="avator" src="/static/procurement/tou.png" mode=""></image>
-					<view class="biz-name">肖战穿搭衣橱<view class="biz-links">(<text class="text-d" @click="showStore">查看信息</text>/<text class="text-d" @click="changeChannel">修改渠道</text>)</view></view>
-					<view class="status">待处理</view>
+		<block v-for="(item,index) of orderList" :key="index" >
+			<view class="prolist" @click="hidden_tip(item)" >
+				<view class="pro-title">
+					<view>进货单号：{{item.Order_ID}}</view>
+					<image class="img" src="/static/procurement/del.png" mode=""></image>
 				</view>
-				<view class="pro-msg">
-					<view class="pro-img">
-						<image class="img" :src="'/static/procurement/client/pro.png'|domain" mode=""></image>
+				<view class="list-msg">
+					<view class="biz-msg">
+						<image class="avator" :src="item.Stores_ImgPath" mode=""></image>
+						<view class="biz-name">{{item.Stores_Name}}<view class="biz-links" v-if="(item.Order_Status==20||item.Order_Status==22||item.Order_Status==25)||item.active_id>0">(<text v-if="item.active_id>0" class="text-d" @click="showStore(item)">查看信息</text><block v-if="(item.Order_Status==20||item.Order_Status==22||item.Order_Status==25)&&item.active_id>0">/</block><block v-if="item.Order_Status==20||item.Order_Status==22||item.Order_Status==25"><text class="text-d" @click="changeChannel(item)">修改渠道</text></block>)</view></view>
+						<view class="status">{{item.Order_Status_desc}}</view>
 					</view>
-					<view class="pro-info">
-						<view class="pro-name">2018夏装新款短袖蕾丝拼接荷叶边波点雪纺连衣裙女时尚名媛...</view>
-						<view class="pro-attr">
-							<view class="attr-info">白色；S码</view>
-							<view class="pro-qty">x5
-								<image class="qty-icon" src="/static/procurement/i.png" mode="" @click.stop="show_pro_tip"></image>
-								<view class="tips" v-if="pro_tip_show">
-									<view class="sanjiaoxing"></view>这是解释的内容这是解释的内容这是解释的内容这是解释的内容
+					<view class="pro-msg" v-for="(it,ind) of item.prod_list" :key="it">
+						<view class="pro-img">
+							<image class="img" :src="it.prod_img"></image>
+						</view>
+						<view class="pro-info">
+							<view class="pro-name">{{it.prod_name}}</view>
+							<view class="pro-attr">
+								<view class="attr-info">{{it.attr_info.attr_val.Attr_Value}}</view>
+								<view class="pro-qty">x{{it.prod_count}}
+									<image class="qty-icon" src="/static/procurement/i.png" mode="" @click.stop="show_pro_tip(item)"></image>
+									<view class="tips" v-if="item.pro_tip_show">
+										<view class="sanjiaoxing"></view>这是解释的内容这是解释的内容这是解释的内容这是解释的内容
+									</view>
 								</view>
 							</view>
+							<view class="pro-price"><text class="price-icon">￥</text>{{it.prod_price}}</view>
 						</view>
-						<view class="pro-price"><text class="price-icon">￥</text>550.00</view>
 					</view>
-				</view>
-				<view class="totalinfo">总计：<text class="price-icon">￥</text><text class="price-num">1690.00</text> (含运费5元)</view>
-				<view class="btns">
-					<view class="btn back">撤回进货单</view>
-				</view>
-			</view>	
-		</view>
-		<view class="prolist" @click="hidden_tip">
-			<view class="pro-title">
-				<view>进货单号：SN123456789</view>
-				<image class="img" src="/static/procurement/procurement/del.png" mode=""></image>
+					<view class="totalinfo">总计：<text class="price-icon">￥</text><text class="price-num">{{item.Order_TotalPrice}}</text> <block v-if="item.Order_Shipping.price>0">(含运费{{item.Order_Shipping.price}}元)</block></view>
+					<view class="btns">
+						<view class="btn back" @click="cancelOrder(item.Order_ID)" v-if="item.Order_Status==20||item.Order_Status==21||item.Order_Status==25">取消进货单</view>
+						<view class="btn back" @click="recallOrder(item.Order_ID)" v-if="item.Order_Status==21">撤回进货单</view>
+						<view class="btn back" @click="completedOrder(item.Order_ID)" v-if="item.Order_Status==23">确认收货</view>
+					</view>
+				</view>	
 			</view>
-			<view class="list-msg">
-				<view class="biz-msg">
-					<image class="avator" src="/static/procurement/procurement/tou.png" mode=""></image>
-					<view class="biz-name">肖战穿搭衣橱<view class="biz-links">(<text class="text-d">查看信息</text>/<text class="text-d">修改渠道</text>)</view></view>
-					<view class="status">已发货</view>
-				</view>
-				<view class="pro-msg">
-					<view class="pro-img">
-						<image class="img" :src="'/static/procurement/procurement/client/pro.png'|domain" mode=""></image>
-					</view>
-					<view class="pro-info">
-						<view class="pro-name">2018夏装新款短袖蕾丝拼接荷叶边波点雪纺连衣裙女时尚名媛...</view>
-						<view class="pro-attr">
-							<view class="attr-info">白色；S码</view>
-							<view class="pro-qty">x5
-								<image class="qty-icon" src="/static/procurement/i.png" mode="" @click.stop="show_pro_tip"></image>
-								<view class="tips" v-if="pro_tip_show">
-									<view class="sanjiaoxing"></view>这是解释的内容这是解释的内容这是解释的内容这是解释的内容
-								</view>
-							</view>
-						</view>
-						<view class="pro-price"><text class="price-icon">￥</text>550.00</view>
-					</view>
-				</view>
-				<view class="totalinfo">总计：<text class="price-icon">￥</text><text class="price-num">1690.00</text> (含运费5元)</view>
-				<view class="btns">
-					<view class="btn">查看物流</view>
-					<view class="btn back">确认收货</view>
-				</view>
-			</view>
-		</view>
-		<view class="prolist" @click="hidden_tip">
-			<view class="pro-title">
-				<view>进货单号：SN123456789</view>
-				<image class="img" src="/static/procurement/del.png" mode=""></image>
-			</view>
-			<view class="list-msg">
-				<view class="biz-msg">
-					<image class="avator" src="/static/procurement/tou.png" mode=""></image>
-					<view class="biz-name">肖战穿搭衣橱<view class="biz-links">(<text class="text-d">查看信息</text>/<text class="text-d">修改渠道</text>)</view></view>
-					<view class="status">已驳回</view>
-				</view>
-				<view class="pro-msg">
-					<view class="pro-img">
-						<image class="img" src="/static/procurement/pro.png" mode=""></image>
-					</view>
-					<view class="pro-info">
-						<view class="pro-name">2018夏装新款短袖蕾丝拼接荷叶边波点雪纺连衣裙女时尚名媛...</view>
-						<view class="pro-attr">
-							<view class="attr-info">白色；S码</view>
-							<view class="pro-qty">x5
-								<image class="qty-icon" src="/static/procurement/i.png" mode="" @click.stop="show_pro_tip"></image>
-								<view class="tips" v-if="pro_tip_show">
-									<view class="sanjiaoxing"></view>这是解释的内容这是解释的内容这是解释的内容这是解释的内容
-								</view>
-							</view>
-						</view>
-						<view class="pro-price"><text class="price-icon">￥</text>550.00</view>
-					</view>
-				</view>
-				<view class="totalinfo">总计：<text class="price-icon">￥</text><text class="price-num">1690.00</text> (含运费5元)</view>
-				<view class="btns">
-					<view class="btn back">提交进货单</view>
-				</view>
-			</view>
-		</view>
-		<view class="prolist" @click="hidden_tip">
-			<view class="pro-title">
-				<view>进货单号：SN123456789</view>
-				<image class="img" src="/static/procurement/del.png" mode=""></image>
-			</view>
-			<view class="list-msg">
-				<view class="biz-msg">
-					<image class="avator" src="/static/procurement/tou.png" mode=""></image>
-					<view class="biz-name">肖战穿搭衣橱<view class="biz-links">(<text class="text-d">查看信息</text>/<text class="text-d">修改渠道</text>)</view></view>
-					<view class="status">已完成</view>
-				</view>
-				<view class="pro-msg">
-					<view class="pro-img">
-						<image class="img" src="/static/procurement/pro.png" mode=""></image>
-					</view>
-					<view class="pro-info">
-						<view class="pro-name">2018夏装新款短袖蕾丝拼接荷叶边波点雪纺连衣裙女时尚名媛...</view>
-						<view class="pro-attr">
-							<view class="attr-info">白色；S码</view>
-							<view class="pro-qty">x5
-								<image class="qty-icon" src="/static/procurement/i.png" mode="" @click.stop="show_pro_tip"></image>
-								<view class="tips" v-if="pro_tip_show">
-									<view class="sanjiaoxing"></view>这是解释的内容这是解释的内容这是解释的内容这是解释的内容
-								</view>
-							</view>
-						</view>
-						<view class="pro-price"><text class="price-icon">￥</text>550.00</view>
-					</view>
-				</view>
-				<view class="totalinfo">总计：<text class="price-icon">￥</text><text class="price-num">1690.00</text> (含运费5元)</view>
-				<view class="btns">
-					<!-- <view class="btn back">撤回进货单</view> -->
-				</view>
-			</view>
-		</view>
+		</block>
 		<!--  门店信息	-->
 		<view class="sku-pop mendian" v-if="isShowStoreMsg">
 		    <view class="sku-title">门店信息</view>
@@ -169,45 +67,138 @@
 		<view class="sku-pop" v-if="isChangeChannel">
 		    <view class="sku-title">修改渠道</view>
 		    <view class="sku-content" style="padding-left:53rpx;">
-		        <view class="skulist">
-		            <view class="nochecked"></view>
-								<view>平台进货</view>
+		        <view class="skulist" @click="changeOrderIndex(0)">
+		            <view v-if="orderIndex==1" class="nochecked"></view>
+					<image v-if="orderIndex==0" class="selected" src="/static/procurement/selected.png"></image>
+					<view>平台进货</view>
+				</view>
+		        <view class="skulist" @click="changeOrderIndex(1)">
+					<view  v-if="orderIndex==0" class="nochecked"></view>
+					<image v-if="orderIndex==1" class="selected" src="/static/procurement/selected.png"></image>
+					<view>门店进货</view>
 		        </view>
 		        <view class="skulist">
-								<image class="selected" src="../../static/selected.png" mode=""></image>
-								<view>门店进货</view>
+						<input class="input" type="text" value="" placeholder="请输入门店编号" placeholder-style="color: #C9C9C9;font-size: 24rpx;" />
 		        </view>
-		        <view class="skulist">
-								<input class="input" type="text" value="" placeholder="请输入门店编号" placeholder-style="color: #C9C9C9;font-size: 24rpx;" />
-		        </view>
-						<view class="skulist change-btn">
-							<view class="btn cancel">取消</view>
-							<view class="btn confirm">确定</view>
-						</view>
+				<view class="skulist change-btn">
+					<view class="btn cancel">取消</view>
+					<view class="btn confirm">确定</view>
+				</view>
 		    </view>
 		</view>
 		<!--  遮罩层	-->
-		<view class="mask" :hidden="isHidden" @click="hiddenMask"></view>
+		<view class="mask" catchtouchmove="false" :hidden="isHidden" @click="hiddenMask"></view>
 	</view>
 </template>
 
 <script>
+	import {getStorePurchaseApply,storePifaOrderCancel,storePifaOrderRecall,storePifaOrderCompleted,changeStoreApplyChannel} from "../../common/fetch";
+	import {mapGetters} from 'vuex'
 	export default {
 		data(){
 			return {
-				pro_tip_show: false,
 				isHidden: true,
 				isShowStoreMsg: false,
 				isChangeChannel: false,
 				change_type: 0, // 进货渠道， 0 是平台 1是门店
+				page:1,
+				pageSize:10,
+				totalCount:0,
+				orderList:[],
+				store_id:0,//门店id
+				order_id:0,//订单id
+				orderIndex:0,//选择渠道
 			}
 		},
+		onShow() {
+			this.getStorePurchaseApply()
+		},
 		methods: {
-			show_pro_tip(){
-				this.pro_tip_show = true;
+			//确认收货采购单
+			completedOrder(){
+				let data={
+					store_id:this.Stores_ID,
+					order_id:id
+				}
+				let that=this
+				storePifaOrderCompleted(data).then(res=>{
+					uni.showToast({
+						title:res.msg,
+						icon:'none'
+					})
+					setTimeout(function(){
+						that.getStorePurchaseApply()
+					},1000)
+				}).catch(e=>{console.log(e)})
 			},
-			hidden_tip(){
-				this.pro_tip_show = false;
+			//撤回采购单
+			recallOrder(id){
+				let data={
+					store_id:this.Stores_ID,
+					order_id:id
+				}
+				let that=this
+				storePifaOrderRecall(data).then(res=>{
+					uni.showToast({
+						title:res.msg,
+						icon:'none'
+					})
+					setTimeout(function(){
+						that.getStorePurchaseApply()
+					},1000)
+				}).catch(e=>{console.log(e)})
+			},
+			//取消采购单
+			cancelOrder(id){
+				let data={
+					store_id:this.Stores_ID,
+					order_id:id
+				}
+				let that=this
+				storePifaOrderCancel(data).then(res=>{
+					uni.showToast({
+						title:res.msg,
+						icon:'none'
+					})
+					setTimeout(function(){
+						that.getStorePurchaseApply()
+					},1000)
+				}).catch(e=>{console.log(e)})
+			},
+			getStorePurchaseApply(){
+				let data={
+					page:this.page,
+					pageSize:this.pageSize,
+					store_id:this.Stores_ID
+				}
+				getStorePurchaseApply(data).then(res=>{
+					this.totalCount=res.totalCount
+					for(var item of res.data	) {
+						item.pro_tip_show=false
+					}
+					this.orderList=res.data	
+					for(let item of this.orderList){
+						for(let it of item.prod_list){
+							if(it.attr_id>0){
+								it.attr_info=JSON.parse(it.attr_info)
+								let str=''
+								for(let my in it.attr_info.attr_val.Attr_Value){
+									str+=it.attr_info.attr_val.Attr_Value[my]+";"
+								}
+								str=str.slice(0,str.length-1)
+								it.attr_info.attr_val.Attr_Value=str
+							}
+						}
+					}
+					
+				}).catch(e=>{console.log(e)})
+			},
+			show_pro_tip(item){
+				console.log(item,"sss")
+				item.pro_tip_show = true;
+			},
+			hidden_tip(item){
+				item.pro_tip_show = false;
 			},
 			showStore(){
 				console.log('lalal')
@@ -219,10 +210,19 @@
 				this.isHidden = true;
 				this.isChangeChannel = false;
 			},
-			changeChannel(){
+			//修改渠道
+			changeOrderIndex(index){
+				this.orderIndex=index
+			},
+			//修改渠道
+			changeChannel(item){
 				this.isChangeChannel = true;
 				this.isHidden = false;
+				
 			}
+		},
+		computed: {
+		    ...mapGetters(['Stores_ID'])
 		}
 	}
 </script>
@@ -408,7 +408,7 @@
 	    z-index: 1000;
 	}
 	.sku-pop {
-	    position: absolute;
+	    position: fixed;
 	    top: 50%;
 	    left: 50%;
 	    z-index: 10000;
@@ -547,7 +547,7 @@
 	.mendian {
 	    .sku-content {
 	        .sku-name {
-	            marin-right: 10rpx!important;
+	            margin-right: 10rpx!important;
 	        }
 	        .sku-item {
 	            display: block !important;
