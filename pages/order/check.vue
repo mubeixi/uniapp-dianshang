@@ -195,7 +195,7 @@
 				确定
 			</view>
 		</popup-layer>
-        <store-list-components ref="stroeComp" @callFn="bindStores" @change="selectStore=false" />
+        <store-list-components direction="top" ref="stroeComp" @callFn="bindStores" @change="selectStore=false" />
     </view>
 </template>
 
@@ -327,21 +327,21 @@ export default {
 			this.orderInfo.CartList[prod_id][attr_id].store = storeInfo
 		}
 		  this.$refs.stroeComp.close()
-		  
+
 	  },
 	  multipleSelectStore(){
 		  this.selectStore=true
 		  this.setStoreMode = 'all'
 		  let ids = Object.keys(this.orderInfo.CartList)
 		  this.$refs.stroeComp.show(ids)
-		  
+
 	  },
       openStores(prod_id,attr_id){
 		  this.selectStore=true
 		  this.setStoreMode = prod_id+'::'+attr_id
 		  let ids = [prod_id]
           this.$refs.stroeComp.show(ids)
-		  
+
       },
 		...mapActions(['getUserInfo','setUserInfo']),
 		goback(){

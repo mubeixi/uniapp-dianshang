@@ -24,7 +24,7 @@
                             </picker>
                         </div>
                         <div class="filter-item">
-							
+
                             <picker @change="bindCityChange" range-key="name"  :range="city_list">
                                 <div class="uni-input-box">
                                 	<view class="uni-input" :class="{has:city.name}">{{city.name||'选择城市'}}</view>
@@ -38,7 +38,7 @@
 									<view class="uni-input" :class="{has:area.name}">{{area.name||'选择区/县'}}</view>
 									<view class="funicon icon-xia icon" ></view>
 								</div>
-                                
+
                             </picker>
                         </div>
                     </div>
@@ -117,6 +117,7 @@
                 lat:null,
                 lng:null,
                 select_info:null,
+                iftoggle:false,
                 stores_name:'',
                 province:{},
                 province_idx:'',
@@ -163,7 +164,7 @@
                     'left': 'right:0px;height:100%;',
                     'right': 'left:0px;height:100%;',
                 };
-                return '';//positionValue[this.direction] + this._translate;
+                return positionValue[this.direction] + this._translate;
             }
         },
         filters:{
@@ -289,15 +290,15 @@
                     _open = null;
                 }, 100)
                 let _toggle = setTimeout(() => {
-                    // this.iftoggle = true;
+                    this.iftoggle = true;
                     _toggle = null;
                 }, 300);
             },
             close() {
                 console.log('close popup')
-                // if (this.timer !== null || !this.iftoggle) {
-                //     return;
-                // }
+                if (this.timer !== null || !this.iftoggle) {
+                    return;
+                }
                 this.translateValue = -100;
                 this.timer = setTimeout(() => {
                     this.ifshow = false;
@@ -415,6 +416,7 @@
     padding:0 10px ;
     height: 40px;
     .row-label{
+        font-size: 14px;
         padding: 0 10px 0 10px;
     }
     .row-content{
@@ -464,57 +466,57 @@
     width: 100%;
     background: white;
 }
-    .scroll-Y{
-        height: 322px;
-        padding-bottom: 46px;
+.scroll-Y{
+    height: 322px;
+    padding-bottom: 46px;
+}
+.search{
+
+    padding: 6px 30px;
+    display: inline-block;
+    text-align: center;
+    background:rgba(244,49,49,1);
+    color: #FFFFFF;
+    font-size: 14px;
+    box-sizing: border-box;
+    margin: 0 auto;
+    margin-top: 32rpx;
+    margin-bottom: 30rpx;
+}
+.inputs{
+    height: 50rpx;
+    line-height: 50rpx;
+    font-size: 12px;
+    text-align: left;
+    padding-left: 10px;
+}
+.filter-pick{
+    .filter-item{
+        margin-right: 15rpx;
     }
-    .search{
-		
-		padding: 6px 30px;
-        display: inline-block;
-        text-align: center;
-        background:rgba(244,49,49,1);
-        color: #FFFFFF;
-        font-size: 14px;
-        box-sizing: border-box;
-        margin: 0 auto;
-        margin-top: 32rpx;
-        margin-bottom: 30rpx;
+}
+.uni-input-box{
+    border: 1px solid #D2D2D2;
+    padding: 0px 18rpx;
+    height: 50rpx;
+    line-height: 50rpx;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 144rpx;
+
+
+}
+.uni-input{
+    font-size: 12px;
+    color: #BDBDBD;
+    &.has{
+        color: #666;
     }
-    .inputs{
-		height: 50rpx;
-		line-height: 50rpx;
-        font-size: 12px;
-        text-align: left;
-        padding-left: 10px;
-    }
-	.filter-pick{
-		.filter-item{
-			margin-right: 15rpx;
-		}
-	}
-	.uni-input-box{
-		border: 1px solid #D2D2D2;
-		padding: 0px 18rpx;
-		height: 50rpx;
-		line-height: 50rpx;
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		width: 144rpx;
-		
-		
-	}
-	.uni-input{
-		font-size: 12px;
-		color: #BDBDBD;
-		&.has{
-			color: #666;
-		}
-	}
-	.icon-xia{
-		font-size: 14px;
-		color: #444;
-		margin-left: 2px;
-	}
+}
+.icon-xia{
+    font-size: 14px;
+    color: #444;
+    margin-left: 2px;
+}
 </style>
