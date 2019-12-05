@@ -429,6 +429,13 @@ export const getStorePurchaseSales = (data, options) => fetch('get_store_pifa_as
 
 //进货单相关处理
 export const getStorePurchaseApply = (data, options) => fetch('get_store_pifa_apply_order', data, options);
+//取消采购单
+export const storePifaOrderCancel = (data, options) => fetch('store_pifa_order_cancel', data, options);
+
+//撤回采购单
+export const storePifaOrderRecall = (data, options) => fetch('store_pifa_order_recall', data, options);
+//确认收货采购单
+export const storePifaOrderCompleted = (data, options) => fetch('store_pifa_order_completed', data, options);
 
 //驳回进货请求
 
@@ -436,7 +443,7 @@ export const refuseStorePurchaseApply = (data, options) => fetch('store_pifa_ord
 
 export const sendStorePurchaseApply = (data, options) => fetch('store_pifa_order_check', data, options);
 
-
+//更换采购渠道
 export const changeStoreApplyChannel = (data, options) => fetch('store_pifa_order_change_wholesaler', data, options);
 
 

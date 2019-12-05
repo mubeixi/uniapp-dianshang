@@ -281,7 +281,10 @@
 			},
 			//获取角标
 			getOrderNum(){
-				if(!this.$fun.checkIsLogin())return;
+				if(!this.$fun.checkIsLogin()){
+					this.orderNum=[]
+					return;
+				}
 				getOrderNum({Order_Type:this.Order_Type}).then(res=>{
 					this.orderNum=res.data;
 					console.log(res)
@@ -296,6 +299,7 @@
 				})
 			},
 			goCoupon(){
+				if(!this.$fun.checkIsLogin(1))return;
 				uni.navigateTo({
 					url:'../person/coupon'
 				})
