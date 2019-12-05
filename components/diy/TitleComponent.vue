@@ -84,6 +84,7 @@
 
 <style scoped lang="stylus">
 
+  
   .title
     position relative
     box-sizing border-box
@@ -105,5 +106,12 @@
       top 10px
       font-size 12px
       color #66b1ff
+	  
+	  
+.flex
+	align-items center
+
+.icon
+	max-width 40px
 
 </style>

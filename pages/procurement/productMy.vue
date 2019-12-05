@@ -195,7 +195,7 @@
 		                    <view class="proMsg">
 		                        <view class="proName">
 		                            <view class="name">{{pro.Products_Name}}</view>
-		                            <image class="del"  @click="delList(pro_id,attr.myqty,attr_id)" src="/static/procurement/del.png"></image>
+		                            <image class="del"  @click="delList(index,attr.myqty,attr_id)" src="/static/procurement/del.png"></image>
 		                        </view>
 		                        <view class="attrInfo">
 		                            <view>{{attr.check_attrnames}}</view>
@@ -221,7 +221,7 @@
 								    <view class="proMsg">
 								        <view class="proName">
 								            <view class="name">{{pro.Products_Name}}</view>
-								            <image class="del"  @click="delListNoAttr(pro,index)" src="/static/del.png"></image>
+								            <image class="del"  @click="delListNoAttr(pro,index,pro.myqty)" src="/static/procurement/del.png"></image>
 								        </view>
 								        <view class="proPrice">
 								            <view class="newPrice">￥<text class="number">{{pro.Products_PriceX}}</text></view>
@@ -393,16 +393,19 @@
 				}
 				console.log(prod_json)
 				console.log(JSON.stringify(prod_json))
+				
 				return;
 				storeProdBackSubmit({
 					store_id: Stores_ID,
+					receive_id: 0, //接收方id，>=0，0：向平台退货，>0：向指定门店退货
 					prod_json: JSON.stringify(prod_json)
 				}).then(res=>{
 					
 				})
 			},
 			// 删除不含属性的
-			delListNoAttr(pro,index) {
+			delListNoAttr(pro,index,qty) {
+				console.log(this.productMy,index,qty)
 				this.productMy[index].myqty = 0;
 				this.productMy[index].prod_stock+=qty
 			},
@@ -462,11 +465,8 @@
 				 this.$refs.detail.close();
 			},
 			delList(index,qty,attr_id){
-				if(this.productMy[index].skuvaljosn) {
-					this.productMy[index].skuvaljosn[attr_id].myqty=0
-				}else {
-					this.productMy[index].myqty = 0;
-				}
+				console.log(index,this.productMy)
+				this.productMy[index].skuvaljosn[attr_id].myqty=0
 				this.productMy[index].prod_stock+=qty
 				// this.amount-=qty
 			},
