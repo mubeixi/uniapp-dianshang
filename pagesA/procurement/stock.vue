@@ -541,13 +541,15 @@
                     display: flex;
                     align-items: center;
                     color: #666;
-                    /*flex: 1;*/
+										flex-wrap: wrap;
+                    flex: 1;
                     .img {
                         width: 27rpx;
                         height: 32rpx;
                     }
                     .sku {
-                        width: 80rpx;
+                        // width: 80rpx;
+												padding: 0 10rpx;
                         height: 46rpx;
                         line-height: 46rpx;
                         text-align: center;
@@ -555,6 +557,7 @@
                         color: #666;
                         font-size: 24rpx;
                         margin-right: 13rpx;
+												margin-top: 10rpx;
                         border-radius: 5rpx;
                     }
                     .active {

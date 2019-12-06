@@ -471,6 +471,8 @@ export const getStoreProdBackOrder = (data, options) => fetch('get_store_prod_ba
 
 export const storeProdBackOrderCancel = (data,options) => fetch('store_prod_back_order_cancel', data, options);
 
+export const storeInit = (data, options) => fetch('store_init', data, options);
+
 
 
 

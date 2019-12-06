@@ -156,9 +156,9 @@
 				<view class="pintuan">门店入驻</view>
 				<image :src="'/static/client/person/right.png'|domain" class="right"></image>
 			</view>
-			<view class="setting cell" @click="goStock" v-else>
-				<image :src="'/static/client/person/she.png'|domain" class="left"></image>
-				<view class="pintuan">进货</view>
+			<view class="setting cell" @click="goStore" v-else>
+				<image src="/static/mendian/mendian.png" class="left"></image>
+				<view class="pintuan">门店</view>
 				<image :src="'/static/client/person/right.png'|domain" class="right"></image>
 			</view>
 			<view class="setting cell" @click="goSetting">
@@ -251,9 +251,9 @@
 		},
 		methods:{
 			...mapActions(['setUserInfo']),
-			goStock(){
+			goStore(){
 				uni.navigateTo({
-					url: '../selectChannel/selectChannel'
+					url: '/pages/person/storeCenter'
 				})
 			},
 			goNew(){
