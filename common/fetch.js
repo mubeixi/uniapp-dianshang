@@ -463,8 +463,9 @@ export const delStorePurchaseApply = (data, options) => fetch('store_pifa_order_
 
 export const storeProdBackSubmit = (data, options) => fetch('store_prod_back_submit', data, options);
 
+export const getStoreProdBackOrder = (data, options) => fetch('get_store_prod_back_order', data, options);
 
-
+export const storeProdBackOrderCancel = (data,options) => fetch('store_prod_back_order_cancel', data, options);
 
 
 
