@@ -9,7 +9,7 @@
 					<image :src="'/static/client/person/right.png'|domain" class="right"></image>
 				</view>
 			</view>
-			<view class="c-item">
+			<view class="c-item" v-if="selectitem == 1">
 				<view class="item-left">门店编号</view>
 				<view class="item-input"><input type="text" v-model="purchase_store_sn" placeholder="请输入门店编号" placeholder-style="color: #c9c9c9;" /></view>
 			</view>
@@ -33,7 +33,7 @@
 					</view>
 				</view>
 			</view>
-			<view class="search-bottom" @click="closePop">确定</view>
+			<!-- <view class="search-bottom" @click="closePop">确定</view> -->
 		</popupLayer>
 	</view>
 </template>
@@ -70,9 +70,11 @@
 			},
 			changeItem(num){
 				this.selectitem = num;
+				this.$refs.searchLayer.close();
 			},
 			closePop(){
-				this.$refs.searchLayer.close();
+				
+				// this.$refs.searchLayer.close();
 			}
 		}
 	}
@@ -161,6 +163,9 @@
 				border: 1px solid #e6e6e6;
 				box-sizing: border-box;
 			}
+		}
+		& .search-item:nth-last-child(1) {
+			border-bottom: 0;
 		}
 		.search-bottom {
 			width: 100%;

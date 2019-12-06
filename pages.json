@@ -412,6 +412,7 @@
 	],
 	"subPackages": [{
 		"root": "pagesA",
+		"name":"onther",
 		"pages": [
           {
             "path": "marketing/rotate",
@@ -650,6 +651,12 @@
           
         ]
 	}],
+	"preloadRule":{
+		"pages/index/index": {
+		  "network": "all",
+		  "packages": ["onther"]
+		}
+	},
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": " ",
