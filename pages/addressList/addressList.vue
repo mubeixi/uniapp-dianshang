@@ -134,7 +134,7 @@
 				}
 				console.log(address_id)
 			    uni.navigateTo({
-			    	url: '../editAddress/editAddress?from=addresslist' + (address_id ? '&addressid=' + address_id : '')
+			    	url: '/pagesA/editAddress/editAddress?from=addresslist' + (address_id ? '&addressid=' + address_id : '')
 			    })
 			  },
 

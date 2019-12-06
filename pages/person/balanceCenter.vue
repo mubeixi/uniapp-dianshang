@@ -175,7 +175,7 @@
 			},
 			goWithdraw(){
 				uni.navigateTo({
-					url:'../fenxiao/withdrawal?form=2'
+					url:'/pagesA/fenxiao/withdrawal?form=2'
 				})
 			},
 			goFacePay(){

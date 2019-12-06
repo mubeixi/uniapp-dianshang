@@ -258,7 +258,7 @@
 			},
 			goNew(){
 				uni.navigateTo({
-					url: '../procurement/storeSettled'
+					url: '/pagesA/procurement/storeSettled'
 				})
 			},
 			userLevelText(){

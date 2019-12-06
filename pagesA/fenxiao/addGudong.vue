@@ -40,7 +40,7 @@
 		methods:{
 			goRecord(){
 				uni.navigateTo({
-					url:'../fenxiao/regionRecord?index=2'
+					url:'/pagesA/fenxiao/regionRecord?index=2'
 				})
 			},
 			submit(){
@@ -67,7 +67,7 @@
 					})
 					setTimeout(function () {
 						uni.navigateTo({
-							url:'../fenxiao/gudong'
+							url:'/pagesA/fenxiao/gudong'
 						})
 					},1000)
 				},err=>{}).catch(e=>{

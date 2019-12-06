@@ -58,7 +58,7 @@
 		methods: {
 			goPurchase(){
 				uni.navigateTo({
-					url: '../procurement/stock?purchase_store_sn=' + this.purchase_store_sn
+					url: '/pagesA/procurement/stock?purchase_store_sn=' + this.purchase_store_sn
 				})
 			},
 			// 用户只是点击了遮罩
