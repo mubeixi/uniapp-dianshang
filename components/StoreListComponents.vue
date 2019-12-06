@@ -14,20 +14,31 @@
             <div class="row">
                 <div class="row-label graytext">地区:</div>
                 <div class="row-content">
-                    <div class="filter">
+                    <div class="filter filter-pick">
                         <div class="filter-item">
                             <picker @change="bindProvinceChange" range-key="name"  :range="province_list">
-                                <view class="uni-input">{{province.name||'选择省份'}}</view>
+                                <div class="uni-input-box">
+									<view class="uni-input" :class="{has:province.name}">{{province.name||'选择省份'}}</view>
+									<view class="funicon icon-xia icon" ></view>
+								</div>
                             </picker>
                         </div>
                         <div class="filter-item">
+
                             <picker @change="bindCityChange" range-key="name"  :range="city_list">
-                                <view class="uni-input">{{city.name||'选择城市'}}</view>
+                                <div class="uni-input-box">
+                                	<view class="uni-input" :class="{has:city.name}">{{city.name||'选择城市'}}</view>
+                                	<view class="funicon icon-xia icon" ></view>
+                                </div>
                             </picker>
                         </div>
                         <div class="filter-item">
                             <picker @change="bindAreaChange"  range-key="name" :range="area_list">
-                                <view class="uni-input">{{area.name||'选择区/县'}}</view>
+								<div class="uni-input-box">
+									<view class="uni-input" :class="{has:area.name}">{{area.name||'选择区/县'}}</view>
+									<view class="funicon icon-xia icon" ></view>
+								</div>
+
                             </picker>
                         </div>
                     </div>
@@ -37,14 +48,14 @@
             <div class="row">
                 <div class="row-label graytext">门店:</div>
                 <div class="row-content">
-                    <div class="filter">
-                        <div class="filter-item" style="border: 1px solid #D2D2D2">
-                            <input placeholder="请输入门店名称" v-model="stores_name"  class="inputs"/>
-                        </div>
+                    <div style="border: 1px solid #D2D2D2;width:537rpx;height: 50rpx;">
+                        <input placeholder="请输入门店名称" v-model="stores_name"  class="inputs"/>
                     </div>
                 </div>
             </div>
-            <div class="search" @click="loadInfo">搜索</div>
+            <div class="text-center">
+				<div class="search" @click="loadInfo">搜索</div>
+			</div>
             <div class="space-box"></div>
             <div class="label-title" style="justify-content: space-between;">
                 <div class="line"></div>
@@ -106,6 +117,7 @@
                 lat:null,
                 lng:null,
                 select_info:null,
+                iftoggle:false,
                 stores_name:'',
                 province:{},
                 province_idx:'',
@@ -152,7 +164,7 @@
                     'left': 'right:0px;height:100%;',
                     'right': 'left:0px;height:100%;',
                 };
-                return '';//positionValue[this.direction] + this._translate;
+                return positionValue[this.direction] + this._translate;
             }
         },
         filters:{
@@ -278,15 +290,15 @@
                     _open = null;
                 }, 100)
                 let _toggle = setTimeout(() => {
-                    // this.iftoggle = true;
+                    this.iftoggle = true;
                     _toggle = null;
                 }, 300);
             },
             close() {
                 console.log('close popup')
-                // if (this.timer !== null || !this.iftoggle) {
-                //     return;
-                // }
+                if (this.timer !== null || !this.iftoggle) {
+                    return;
+                }
                 this.translateValue = -100;
                 this.timer = setTimeout(() => {
                     this.ifshow = false;
@@ -384,7 +396,7 @@
     padding: 15px 0 5px;
 }
 .label-title{
-    padding: 10px 0;
+    padding: 34rpx 0;
     font-size: 14px;
     line-height: 14px;
     display: flex;
@@ -404,7 +416,8 @@
     padding:0 10px ;
     height: 40px;
     .row-label{
-        padding: 0 6px 0 10px;
+        font-size: 14px;
+        padding: 0 10px 0 10px;
     }
     .row-content{
 
@@ -453,30 +466,57 @@
     width: 100%;
     background: white;
 }
-    .scroll-Y{
-        height: 322px;
-        padding-bottom: 46px;
+.scroll-Y{
+    height: 322px;
+    padding-bottom: 46px;
+}
+.search{
+
+    padding: 6px 30px;
+    display: inline-block;
+    text-align: center;
+    background:rgba(244,49,49,1);
+    color: #FFFFFF;
+    font-size: 14px;
+    box-sizing: border-box;
+    margin: 0 auto;
+    margin-top: 32rpx;
+    margin-bottom: 30rpx;
+}
+.inputs{
+    height: 50rpx;
+    line-height: 50rpx;
+    font-size: 12px;
+    text-align: left;
+    padding-left: 10px;
+}
+.filter-pick{
+    .filter-item{
+        margin-right: 15rpx;
     }
-    .search{
-        width:170rpx;
-        height:25px;
-        line-height: 25px;
-        text-align: center;
-        background:rgba(244,49,49,1);
-        color: #FFFFFF;
-        font-size: 12px;
-        box-sizing: border-box;
-        margin: 0 auto;
-        margin-top: 32rpx;
-        margin-bottom: 30rpx;
+}
+.uni-input-box{
+    border: 1px solid #D2D2D2;
+    padding: 0px 18rpx;
+    height: 50rpx;
+    line-height: 50rpx;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 144rpx;
+
+
+}
+.uni-input{
+    font-size: 12px;
+    color: #BDBDBD;
+    &.has{
+        color: #666;
     }
-    .inputs{
-        font-size: 10px;
-        height: 25px;
-        text-align: left;
-        padding-left: 10px;
-    }
-	.uni-input{
-		font-size: 12px;
-	}
+}
+.icon-xia{
+    font-size: 14px;
+    color: #444;
+    margin-left: 2px;
+}
 </style>

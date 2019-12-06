@@ -58,7 +58,7 @@
 								¥<span class="spanFont">{{i.prod_price}}</span>
 							</view>
 							<view>
-								<span class="spanJu">拒单</span>
+								<span class="spanJu" @click="refund(item.Order_ID)">拒单</span>
 								<span class="spanFa" @click="goFa(item.Order_ID)">去发货</span>
 							</view>
 						</view>
@@ -77,7 +77,7 @@
 <script>
 	import {domainFn} from "../../common/filter";
 	import {mapGetters} from 'vuex'
-	import {getOrder,getOrderNum} from '@/common/fetch.js'
+	import {getOrder,getOrderNum,systemRejectOrder} from '@/common/fetch.js'
 	export default {
 		data() {
 			return {
@@ -107,6 +107,30 @@
 			}
 		},
 		methods:{
+			refund(id){
+				let that=this
+				uni.showModal({
+				    title: '拒单',
+				    content: '是否要拒单',
+				    success: function (res) {
+				        if (res.confirm) {
+				            systemRejectOrder({Order_ID:id}).then(res=>{
+				            	uni.showToast({
+				            		title:res.msg,
+				            		icon:'none'
+				            	})
+				            	setTimeout(function(){
+				            		that._getOrder();
+				            		that.getOrderNum();
+				            	},1000)
+				            })
+				        } else if (res.cancel) {
+				           
+				        }
+				    }
+				});
+				
+			},
 			goFa(id){
 				//发货 订单id
 				uni.navigateTo({

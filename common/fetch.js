@@ -53,9 +53,9 @@ const fetch = function (act, param,options = false,url='/api/little_program/shop
 
   param.act = act;
   param.User_ID = get_User_ID();
-  
+
   if(options && options.noUid)delete param.User_ID
-  
+
   param.Users_ID = get_Users_ID();   //Users_ID  写死
   // param.appid = get_Appid();
 	param.env = GET_ENV();
@@ -402,6 +402,12 @@ export const getPifaStoreProd = (data, options) => fetch('get_pifa_store_prod', 
 export const getStoreProdMoney = (data, options) => fetch('get_store_prod_money', data, options);
 
 
+//零售订单拒单
+export const systemRejectOrder = (data, options) => fetch('system_reject_order', data, options);
+
+//删除采购单
+export const storePifaOrderDel = (data, options) => fetch('store_pifa_order_del', data, options);
+
 //获取门店信息
 export const getStoreDetail = (data, options) => fetch('get_store_detail', data, options);
 
@@ -429,6 +435,13 @@ export const getStorePurchaseSales = (data, options) => fetch('get_store_pifa_as
 
 //进货单相关处理
 export const getStorePurchaseApply = (data, options) => fetch('get_store_pifa_apply_order', data, options);
+//取消采购单
+export const storePifaOrderCancel = (data, options) => fetch('store_pifa_order_cancel', data, options);
+
+//撤回采购单
+export const storePifaOrderRecall = (data, options) => fetch('store_pifa_order_recall', data, options);
+//确认收货采购单
+export const storePifaOrderCompleted = (data, options) => fetch('store_pifa_order_completed', data, options);
 
 //驳回进货请求
 
@@ -436,14 +449,14 @@ export const refuseStorePurchaseApply = (data, options) => fetch('store_pifa_ord
 
 export const sendStorePurchaseApply = (data, options) => fetch('store_pifa_order_check', data, options);
 
-
+//更换采购渠道
 export const changeStoreApplyChannel = (data, options) => fetch('store_pifa_order_change_wholesaler', data, options);
 
 
 export const updateStoreApplyGoodsNum = (data, options) => fetch('store_pifa_order_edit', data, options);
 
 export const cancalStorePurchaseApply = (data, options) => fetch('store_pifa_order_recall', data, options);
-
+//修改采购数量并提交
 export const subStorePurchaseApply = (data, options) => fetch('store_pifa_order_submit', data, options);
 
 export const delStorePurchaseApply = (data, options) => fetch('store_pifa_order_del', data, options);
