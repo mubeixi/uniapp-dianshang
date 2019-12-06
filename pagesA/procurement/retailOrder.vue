@@ -17,7 +17,7 @@
 				<view class="jiaobiao" v-if="orderNum.waitconfirm>0">{{orderNum.waitconfirm}}</view>
 			</view>
 		    <view class="nav-item" :class="index==4?'active':''" @click="changIndex(4)">
-				待评价
+				已完成
 				<view class="jiaobiao" v-if="orderNum.waitcomment>0">{{orderNum.waitcomment}}</view>
 			</view>
 		</view>

@@ -313,7 +313,8 @@
 				isChangeChannel: false, // 修改渠道
 				active_id: 0,
 				purchase_store_sn: '', // 门店编号,
-				isClicked: false
+				isClicked: false,
+				stock_low: 0, // 是否查询的是低库存产品
 			};
 		},
 		components: {
@@ -352,8 +353,10 @@
 			this.uncheck_img_url = domainFn(this.uncheck_img_url)
 			this.load();
 		},
-		onLoad() {
-			
+		onLoad(options) {
+			if(options.stock_low) {
+				this.stock_low = 1;
+			}
 		},
 		onHide(){
 			ls.remove('productMy')
@@ -736,6 +739,9 @@
 					store_id:this.Stores_ID,
 					page:this.page,
 					pageSize:this.pageSize
+				}
+				if(this.stock_low != 0) {
+					data.stock_low = 1;
 				}
 				getSelfStoreProd(data).then(res=>{
 					this.productMy = this.productMy.concat(res.data);

@@ -307,6 +307,12 @@
 			}
 		},
 		{
+			"path": "pages/person/storeCenter",
+			"style": {
+				"navigationBarTitleText": "门店"
+			}
+		},
+		{
 			"path": "pages/storePay/storePay",
 			"style": {
 				"navigationBarTitleText": "实体店消费"
