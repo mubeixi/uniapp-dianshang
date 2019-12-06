@@ -146,7 +146,7 @@
 			},
 			goFinance(){
 				uni.navigateTo({
-					url:'../fenxiao/finance?index=1'
+					url:'/pagesA/fenxiao/finance?index=1'
 				})
 			},
 			nobiInfo(){

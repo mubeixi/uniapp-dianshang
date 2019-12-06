@@ -52,7 +52,7 @@
 <script>
 	import {mapGetters,mapActions} from 'vuex';
 
- 
+
 	import {GET_ENV,getStoreDetail,get_User_ID,get_Users_ID,updateStoreInfo,uploadImage,createToken} from '../../common/fetch';
 	import { staticUrl } from '../../common/env.js'
 	import {pageMixin} from "../../common/mixin";
@@ -75,7 +75,7 @@
 		methods: {
 			updateMy(index){
 				uni.navigateTo({
-					url:'../procurement/storePersonEdit?type='+index
+					url: '/pagesA/procurement/storePersonEdit?type='+index
 				})
 			},
 			getStoreDetail(){

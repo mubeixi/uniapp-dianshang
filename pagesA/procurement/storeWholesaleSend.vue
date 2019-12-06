@@ -240,7 +240,7 @@
                     toast('操作成功')
                     setTimeout(function(){
                         uni.navigateTo({
-                            url:'/pages/procurement/storeWholesale'
+                            url:'/pagesA/procurement/storeWholesale'
                         })
                     },1000)
                 },err=>{})

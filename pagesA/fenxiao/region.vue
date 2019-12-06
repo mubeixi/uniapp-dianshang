@@ -143,12 +143,12 @@
 		methods:{
 			goPay(id){
 				uni.navigateTo({
-					url:'../fenxiao/regionPay?id='+id
+					url:'/pagesA/fenxiao/regionPay?id='+id
 				})
 			},
 			goFinance(){
 				uni.navigateTo({
-					url:'../fenxiao/finance?index=3'
+					url:'/pagesA/fenxiao/finance?index=3'
 				})
 			},
 			agentInfo(){
@@ -176,7 +176,7 @@
 				}
 
 				uni.navigateTo({
-					url:'../fenxiao/addInformation?pro='+pro+'&cit='+cit+'&cou='+cou+'&tow='+tow
+					url:'/pagesA/fenxiao/addInformation?pro='+pro+'&cit='+cit+'&cou='+cou+'&tow='+tow
 				})
 			}
 		}

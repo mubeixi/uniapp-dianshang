@@ -111,7 +111,7 @@
 			//添加提现方式
 			addMethod(){
 				uni.navigateTo({
-					url:'../fenxiao/addWithdrawal?form='+this.withdraw_from
+					url:'/pagesA/fenxiao/addWithdrawal?form='+this.withdraw_from
 				})
 			}
 		}

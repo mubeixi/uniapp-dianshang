@@ -239,7 +239,7 @@ export default {
 		// 跳转新增地址页面
 		goEditAdd(){
 			uni.navigateTo({
-				url: '../editAddress/editAddress?from=checkout'
+				url: '/pagesA/editAddress/editAddress?from=checkout'
 			})
 		},
 		// 提交订单

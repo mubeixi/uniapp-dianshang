@@ -38,15 +38,21 @@
 					填写信息
 				</view>
 				<view class="secondW" >
-					提交审核
+					选择区域
 				</view>
 				<view class="secondE" >
-					立即支付
+					提交审核
 				</view>
 			</view>
 		</view>
 
 		<block v-if="proData.Applyfor_Name">
+			<view class="three">
+				<view class="haha">
+					申请区域
+				</view>
+				{{proData.Area_Concat}}
+			</view>
 			<view class="three">
 				<view class="haha">
 					申请人
@@ -74,13 +80,13 @@
 		</block>
 
 
-		<view class="four" @click="showPay" >
-			立即支付
-		</view>
-		<view class="five"  @click="cancelAge">
-			取消申请
-			<image :src="'/static/client/fenxiao/chakan.png'|domain" ></image>
-		</view>
+			<view class="four" @click="showPay" >
+					立即支付
+			</view>
+			<view class="five"  @click="cancelAge">
+				取消申请
+				<image :src="'/static/client/fenxiao/chakan.png'|domain" ></image>
+			</view>
 
 
 		<popup-layer ref="popupLayer" :direction="'top'">
@@ -95,13 +101,12 @@
 
 <script>
 	import {pageMixin} from "../../common/mixin";
-	import {getShaApply,shaApplyPay,cancelShaApply} from '../../common/fetch.js';
+	import {getAgentApply,agentApplyPay,cancelAgentApply} from '../../common/fetch.js';
 	import popupLayer from '../../components/popup-layer/popup-layer.vue'
 	import {mapGetters,mapActions} from 'vuex';
 	import {unipayFunc} from '../../common/pay.js'
-	import {fun} from "../../common";
+    import {fun} from "../../common";
 	import  {toast} from "../../common";
-
 	export default {
 		mixins:[pageMixin],
 		components: {
@@ -129,29 +134,29 @@
 		},
 		methods:{
 			cancelAge(){
-				cancelShaApply({Order_ID:this.Order_ID}).then(res=>{
+				cancelAgentApply({Order_ID:this.Order_ID}).then(res=>{
 					uni.showToast({
 						title:res.msg,
 						icon:'none'
 					})
 					setTimeout(function () {
 						uni.navigateTo({
-							url:'../fenxiao/gudong'
+							url:'/pagesA/fenxiao/region'
 						})
 					},1000)
 				}).catch(e=>{
 					console.log(e)
 				})
 			},
-			payFailCall(){
+            payFailCall(){
 
-			},
+            },
 			payMoney(){
 				let data={
 					Order_ID:this.Order_ID,
 					pay_type:this.pay_type
 				}
-				shaApplyPay(data).then(res=>{
+				agentApplyPay(data).then(res=>{
 					unipayFunc(this,this.pay_type,res);
 				},err=>{
 					uni.showToast({
@@ -200,7 +205,7 @@
 							if (res.confirm) {
 								toast('支付成功');
 								uni.switchTab({
-									url:'../fenxiao/fenxiao'
+									url:'/pagesA/fenxiao/fenxiao'
 								})
 							} else if (res.cancel) {
 
@@ -219,7 +224,7 @@
 
 				toast('支付成功');
 				uni.switchTab({
-					url:'../fenxiao/fenxiao'
+					url:'/pagesA/fenxiao/fenxiao'
 				})
 			},
 			payNow(){
@@ -230,22 +235,22 @@
 				if(this.pay_type=='remainder_pay'){
 					data.user_pay_password=this.user_pay_password
 				}
-				shaApplyPay(data).then(res=>{
+				agentApplyPay(data).then(res=>{
 					uni.showToast({
 						title:res.msg,
 						icon:'none'
 					})
-					setTimeout(function () {
+                    setTimeout(function () {
 						uni.switchTab({
-							url:'../fenxiao/fenxiao'
+							url:'/pagesA/fenxiao/fenxiao'
 						})
-					},1000)
+                    },1000)
 				}).catch(e=>{
 					console.log(e)
 				})
 			},
 			getAgentApply(){
-				getShaApply({Order_ID:this.Order_ID}).then(res=>{
+				getAgentApply({Order_ID:this.Order_ID}).then(res=>{
 					this.proData=res.data[0]
 				}).catch(e=>{
 					console.log(e)
@@ -271,68 +276,68 @@
 </script>
 
 <style lang="scss" scoped>
-	.all{
-		overflow-x: hidden;
-		background-color: #FFFFFF !important;
-		min-height: 100vh;
-	}
-	.top{
-		width: 750rpx;
-		padding: 50rpx 83rpx;
-		.first{
-			padding-left: 33rpx;
-			padding-right: 41rpxd;
+.all{
+	overflow-x: hidden;
+	background-color: #FFFFFF !important;
+	min-height: 100vh;
+}
+.top{
+	width: 750rpx;
+	padding: 50rpx 83rpx;
+	.first{
+		padding-left: 33rpx;
+		padding-right: 41rpxd;
+		height: 30rpx;
+		display: flex;
+		align-items: center;
+		.circleQ{
+			width: 30rpx;
 			height: 30rpx;
+			border: 1px solid #F43131;
+			border-radius: 50%;
 			display: flex;
 			align-items: center;
-			.circleQ{
-				width: 30rpx;
-				height: 30rpx;
-				border: 1px solid #F43131;
-				border-radius: 50%;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				view{
-					width: 15rpx;
-					height: 15rpx;
-					background-color: #F43131;
-					border-radius: 50%;
-				}
-			}
-			.circleW{
-				border: 1px solid #999999;
-				view{
-					background-color: #999999;
-				}
-			}
-			.lineQ{
-				width: 210rpx;
-				height: 4rpx;
+			justify-content: center;
+			view{
+				width: 15rpx;
+				height: 15rpx;
 				background-color: #F43131;
+				border-radius: 50%;
 			}
 		}
-		.second{
-			margin-top: 21rpx;
-			height: 25rpx;
-			line-height: 25rpx;
-			font-size: 26rpx;
-			color: #999999;
-			display: flex;
-			.secondQ{
-				color: #F43131;
+		.circleW{
+			border: 1px solid #999999;
+			view{
+				background-color: #999999;
 			}
-			.secondW{
-				margin-left: 137rpx;
-				color: #F43131;
-			}
-			.secondE{
-				margin-left: 135rpx;
-				color: #F43131;
-			}
+		}
+		.lineQ{
+			width: 210rpx;
+			height: 4rpx;
+			background-color: #F43131;
 		}
 	}
-	.three{
+	.second{
+		margin-top: 21rpx;
+		height: 25rpx;
+		line-height: 25rpx;
+		font-size: 26rpx;
+		color: #999999;
+		display: flex;
+		.secondQ{
+			color: #F43131;
+		}
+		.secondW{
+			margin-left: 137rpx;
+			color: #F43131;
+		}
+		.secondE{
+			margin-left: 135rpx;
+			color: #F43131;
+		}
+	}
+}
+.three{
 		height: 88rpx;
 		line-height: 88rpx;
 		width: 710rpx;
@@ -375,35 +380,35 @@
 		}
 
 	}
-	.four{
-		width:490rpx;
-		height:75rpx;
-		line-height: 75rpx;
-		text-align: center;
-		background:rgba(244,49,49,1);
-		border-radius:10rpx;
-		margin: 0 auto;
-		margin-top: 110rpx;
-		font-size: 30rpx;
-		color: #FFFFFF;
+.four{
+	width:490rpx;
+	height:75rpx;
+	line-height: 75rpx;
+	text-align: center;
+	background:rgba(244,49,49,1);
+	border-radius:10rpx;
+	margin: 0 auto;
+	margin-top: 110rpx;
+	font-size: 30rpx;
+	color: #FFFFFF;
+}
+.five{
+	height:23rpx;
+	line-height: 23rpx;
+	width: 174rpx;
+	margin: 0 auto;
+	margin-top: 21rpx;
+	font-size:24rpx;
+	font-weight:500;
+	color:rgba(153,153,153,1);
+	image{
+		width: 12rpx;
+		height: 20rpx;
+		margin-left: 10rpx;
 	}
-	.five{
-		height:23rpx;
-		line-height: 23rpx;
-		width: 174rpx;
-		margin: 0 auto;
-		margin-top: 21rpx;
-		font-size:24rpx;
-		font-weight:500;
-		color:rgba(153,153,153,1);
-		image{
-			width: 12rpx;
-			height: 20rpx;
-			margin-left: 10rpx;
-		}
-	}
+}
 
-	.threes{
+.threes{
 		height: 88rpx;
 		line-height: 88rpx;
 		width: 710rpx;
@@ -434,62 +439,62 @@
 	.lineW{
 		background-color: #F43131 !important;
 	}
-	.iMbx {
+.iMbx {
+	text-align: center;
+	padding: 0 20upx;
+	font-size: 28upx;
+	color: #333;
+
+	.c_method {
+		padding: 37upx 0;
+		border-bottom: 2upx solid #E6E6E6;
+	}
+
+	& .c_method:first-child {
+		color: #F43131;
+	}
+
+	& .c_method:nth-last-child(1) {
+		border: none;
+	}
+}
+.zhezhao {
+	left: 0;
+	top: 0;
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	background: rgba(0,0,0,.3);
+	z-index: 1000;
+
+	.input-wrap {
+		background: #fff;
+		color: #000;
 		text-align: center;
-		padding: 0 20upx;
-		font-size: 28upx;
-		color: #333;
-
-		.c_method {
-			padding: 37upx 0;
-			border-bottom: 2upx solid #E6E6E6;
+		width: 90%;
+		margin: 400rpx auto;
+		padding: 40rpx 50rpx 30rpx;
+		box-sizing: border-box;
+		font-size: 28rpx;
+		border-radius: 10rpx;
+		.input {
+			margin: 40rpx 0;
+			border: 1px solid #efefef;
+			height: 20px;
+			line-height: 20px;
+			padding: 10px 0px;
 		}
 
-		& .c_method:first-child {
-			color: #F43131;
-		}
-
-		& .c_method:nth-last-child(1) {
-			border: none;
-		}
-	}
-	.zhezhao {
-		left: 0;
-		top: 0;
-		position: fixed;
-		width: 100%;
-		height: 100%;
-		background: rgba(0,0,0,.3);
-		z-index: 1000;
-
-		.input-wrap {
-			background: #fff;
-			color: #000;
-			text-align: center;
-			width: 90%;
-			margin: 400rpx auto;
-			padding: 40rpx 50rpx 30rpx;
-			box-sizing: border-box;
-			font-size: 28rpx;
-			border-radius: 10rpx;
-			.input {
-				margin: 40rpx 0;
-				border: 1px solid #efefef;
-				height: 20px;
-				line-height: 20px;
-				padding: 10px 0px;
-			}
-
-			.btns {
-				display: flex;
-				justify-content: space-around;
-				height: 60rpx;
-				line-height: 60rpx;
-				.btn {
-					flex: 1;
-				}
+		.btns {
+			display: flex;
+			justify-content: space-around;
+			height: 60rpx;
+			line-height: 60rpx;
+			.btn {
+				flex: 1;
 			}
 		}
 	}
+}
 
 </style>
