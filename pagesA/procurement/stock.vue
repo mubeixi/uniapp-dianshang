@@ -187,7 +187,7 @@
 										obj[i] = [j]
 									}
 								}
-							} 
+							}
 							createOrder({
 								cart_key: 'CartList',
 								cart_buy: obj && JSON.stringify(obj)
@@ -197,7 +197,7 @@
 								});
 								setTimeout(()=>{
 									uni.navigateTo({
-										url: '../procurement/purchaseRecords'
+										url: '/pagesA/procurement/purchaseRecords'
 									})
 								},1500)
 							})
@@ -347,7 +347,7 @@
 							if(this.type == 1) {
 								// 进货记录
 								uni.navigateTo({
-									url: '../procurement/purchaseRecords'
+									url: '/pagesA/procurement/purchaseRecords'
 								})
 							}else {
 								// 门店信息

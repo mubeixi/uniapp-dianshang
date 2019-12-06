@@ -212,7 +212,7 @@
 					this.isNext=false;
 				}else{
 					uni.navigateTo({
-						url:'../fenxiao/regionRecord?index=1'
+						url:'/pagesA/fenxiao/regionRecord?index=1'
 					})
 				}
 			},
@@ -268,7 +268,7 @@
 							})
 							setTimeout(function () {
 								uni.navigateTo({
-									url:'../fenxiao/region'
+									url:'/pagesA/fenxiao/region'
 								})
 							},1000)
 						},err=>{

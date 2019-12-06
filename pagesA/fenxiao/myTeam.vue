@@ -63,7 +63,7 @@
 			goMyNumber(item){
 				let items=item+1;
 				uni.navigateTo({
-					url:'../fenxiao/myTeamNumber?index='+items
+					url:'/pagesA/fenxiao/myTeamNumber?index='+items
 				})
 			},
 			getDisTeamCount(){

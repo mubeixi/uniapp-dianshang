@@ -4,7 +4,7 @@
 			<!-- #ifdef H5||APP-PLUS -->
 			<div v-html="formatRichTexts(pro.dis_config.Dis_Agreement)" class="p_detail_des"></div>
 			<!-- #endif -->
-		
+
 			<!-- #ifdef MP -->
 			<rich-text :nodes="pro.dis_config.Dis_Agreement|formatRichText" class="p_detail_des"></rich-text>
 			<!-- #endif -->
@@ -37,7 +37,7 @@
 		methods:{
 			goDis(){
 				uni.navigateTo({
-					url:'../fenxiao/distributorCenter'
+					url:'/pagesA/fenxiao/distributorCenter'
 				})
 			},
 			disApplyInit(){
@@ -53,12 +53,12 @@
 					match = match.replace(/style="[^"]+"/gi, '')//.replace(/style='[^']+'/gi, '');
 					match = match.replace(/width="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
 					match = match.replace(/height="[^"]+"/gi, '')//.replace(/height='[^']+'/gi, '');
-			
+
 					//图片app不支持
 					// #ifdef APP-PLUS
 					match = match.replace(/!*.webp/gi, '')
 					// #endif
-			
+
 					return match;
 				});
 				newContent= newContent.replace(/<div[^>]*>/gi,function(match,capture){
@@ -73,7 +73,7 @@
 					match = match.replace(/width:[^;]+;/gi, 'width:100%;').replace(/width:[^;]+;/gi, 'width:100%;');
 					return match;
 				});
-			
+
 				newContent = newContent.replace(/<br[^>]*\/>/gi, '');
 				newContent = newContent.replace(/\<img/gi, '<img style="width:100%;float:left;"');
 				newContent = newContent.replace(/src="\/\//gi, 'src="http://');
@@ -103,11 +103,11 @@
 					        match = match.replace(/width:[^;]+;/gi, 'width:100%;').replace(/width:[^;]+;/gi, 'width:100%;');
 					        return match;
 					    });
-		
+
 					    newContent = newContent.replace(/<br[^>]*\/>/gi, '');
 					    newContent = newContent.replace(/\<img/gi, '<img style="width:100%;float:left;"');
 						//newContent = newContent.replace(/>[\s]*</gi, "><");
-		
+
 					    return newContent;
 					}
 				}

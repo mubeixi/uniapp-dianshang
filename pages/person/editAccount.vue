@@ -51,7 +51,7 @@
 		methods: {
 			goOrder(){
 				uni.navigateTo({
-					url:'/pages/procurement/purchaseRecords'
+					url:'/pagesA/procurement/purchaseRecords'
 				})
 			},
 			goOrderCheck(){
@@ -61,7 +61,7 @@
 			},
 			goRotate(){
 				uni.navigateTo({
-					url:'/pages/marketing/rotate'
+					url:'/pagesA/marketing/rotate'
 				})
 			},
 

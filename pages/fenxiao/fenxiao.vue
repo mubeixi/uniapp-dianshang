@@ -174,13 +174,13 @@
 			...mapActions(['getUserInfo','setUserInfo']),
 			goMyVip(){
 				uni.navigateTo({
-					url:'../fenxiao/myVip'
+					url:'/pagesA/fenxiao/myVip'
 				})
 			},
 			goDistributor(){
 				//跳转成为分销商
 				uni.navigateTo({
-					url:'../fenxiao/disAgreementBefore'
+					url:'/pagesA/fenxiao/disAgreementBefore'
 				})
 			},
 			goLogin(){
@@ -224,7 +224,7 @@
 				if(!this.$fun.checkIsLogin(1,1))return;
 				if(!this.$fun.checkIsDistribute(1,1))return;
 				uni.navigateTo({
-					url:'../fenxiao/withdrawal?form=1'
+					url:'/pagesA/fenxiao/withdrawal?form=1'
 				})
 			},
 			//推广小助手
@@ -232,7 +232,7 @@
 				if(!this.$fun.checkIsLogin(1,1))return;
 				if(!this.$fun.checkIsDistribute(1,1))return;
 				uni.navigateTo({
-					url:'../fenxiao/promotionAssist'
+					url:'/pagesA/fenxiao/promotionAssist'
 				})
 			},
 			//财富排行榜
@@ -240,7 +240,7 @@
 				if(!this.$fun.checkIsLogin(1,1))return;
 				if(!this.$fun.checkIsDistribute(1,1))return;
 				uni.navigateTo({
-					url:'../fenxiao/leaderboard'
+					url:'/pagesA/fenxiao/leaderboard'
 				})
 			},
 			//爵位晋升
@@ -248,7 +248,7 @@
 				if(!this.$fun.checkIsLogin(1,1))return;
 				if(!this.$fun.checkIsDistribute(1,1))return;
 				uni.navigateTo({
-					url:'../fenxiao/promotion'
+					url:'/pagesA/fenxiao/promotion'
 				})
 			},
 			//股东
@@ -256,7 +256,7 @@
 				if(!this.$fun.checkIsLogin(1,1))return;
 				if(!this.$fun.checkIsDistribute(1,1))return;
 				uni.navigateTo({
-					url:'../fenxiao/gudong'
+					url:'/pagesA/fenxiao/gudong'
 				})
 			},
 			//区域代理
@@ -264,13 +264,13 @@
 				if(!this.$fun.checkIsLogin(1,1))return;
 				if(!this.$fun.checkIsDistribute(1,1))return;
 				uni.navigateTo({
-					url:'../fenxiao/finance'
+					url:'/pagesA/fenxiao/finance'
 				})
 			},
 			//财务明细
 			goRegion(){
 				uni.navigateTo({
-					url:'../fenxiao/region'
+					url:'/pagesA/fenxiao/region'
 				})
 			},
 			//我的团队
@@ -278,7 +278,7 @@
 				if(!this.$fun.checkIsLogin(1,1))return;
 				if(!this.$fun.checkIsDistribute(1,1))return;
 				uni.navigateTo({
-					url:'../fenxiao/myTeam'
+					url:'/pagesA/fenxiao/myTeam'
 				})
 			},
 			//二维码
@@ -286,7 +286,7 @@
 				if(!this.$fun.checkIsLogin(1,1))return;
 				if(!this.$fun.checkIsDistribute(1,1))return;
 				uni.navigateTo({
-					url:'../fenxiao/erweima'
+					url:'/pagesA/fenxiao/erweima'
 				})
 			}
 		}
