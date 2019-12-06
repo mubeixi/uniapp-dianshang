@@ -11,7 +11,8 @@
 		bgcolor="#ffffff"
 		:rightHidden=true
         :dot=true
-        @methodHandle="methodHandle"></page-title>
+        @methodHandle="methodHandle"
+				:is_pingtai="is_pingtai"></page-title>
 
         <view class="search-wrap">
             <icon type="search" size="34rpx" class="search_icon" @click="search"/>
@@ -59,12 +60,12 @@
                 </view>
                 <view class="sku-btns">
                     <view class="cancel btn" @click="cancel">取消</view>
-                    <view class="confirm btn" @click="confirm" >确定</view>
+                    <view class="confirm btn" @click="confirm"  :class="submit_flag?'':'disabled'">确定</view>
                 </view>
             </view>
         </view>
         <!--  门店信息	-->
-        <view class="sku-pop mendian" v-if="isShowStoreMsg">
+        <view class="sku-pop mendian" v-if="isShowStoreMsg && is_pingtai==0">
             <view class="sku-title">门店信息</view>
             <view class="sku-content">
                 <view class="skulist">
@@ -122,7 +123,7 @@
 
 <script>
     import popupLayer from '../../components/popup-layer/popup-layer.vue'
-    import {getPifaStoreProd, updateCart,getCart,delCart,getStoreList,createOrder} from '../../common/fetch'
+    import {getPifaStoreProd, updateCart,getCart,delCart,getStoreList,createOrder,getProductList} from '../../common/fetch'
     import {mapGetters} from 'vuex'
     import {numberSort} from '../../common/tool'
     export default {
@@ -142,7 +143,7 @@
                 postData: {
                     prod_id: 0,    //产品ID  在 onLoad中赋值
                     attr_id: 0,    //选择属性id
-                    count: 0,         //选择属性的库存
+                    count: 10,         //选择属性的库存
                     // showimg: '',      //选择属性的图片(用产品图片代替)
                     qty: 1,           //购买数量
                     productDetail_price: 0
@@ -152,7 +153,8 @@
                 total_pro_count: '', // 总共的产品数
                 total_cart_count: '', // 购物车中的产品数
 								storeInfo: '' , // 门店信息,
-								active_id: ''
+								active_id: '',
+								is_pingtai: 0, // 是否是平台补货
             }
         },
         components: {
@@ -170,9 +172,15 @@
 				},
         onLoad(options){
             if(options.purchase_store_sn) {
+							this.is_pingtai = 0;
+							// 获取门店产品
                 this.purchase_store_sn = options.purchase_store_sn;
                 this.getProlist();
-            }
+            }else {
+							this.is_pingtai = 1;
+							// 获取平台产品
+							this.getProductList();
+						}
         },
         methods: {
 						// 提交进货单
@@ -225,9 +233,9 @@
             increase(pro_id,attr_id){
 							updateCart({
 									cart_key: 'CartList',
-									prod_id: this.postData.prod_id,
+									prod_id: pro_id,
 									qty: 1,
-									attr_id: this.postData.attr_id,
+									attr_id: attr_id,
 									active: 'store_pifa',
 									active_id:  this.active_id
 							}).then(res=>{
@@ -324,6 +332,7 @@
             },
             // 搜索
             search(){
+							if(this.is_pingtai == 0) {
                 getPifaStoreProd({
                     purchase_store_sn: this.purchase_store_sn,
                     store_id: this.Stores_ID,
@@ -331,7 +340,16 @@
                 }).then(res=>{
                     this.prolist = res.data;
                 })
+							}else {
+								// 平台产品
+								getProductList({
+									Products_Name: this.prod_name
+								}).then(res=>{
+									this.prolist = res.data;
+								})
+							}
             },
+						// 门店产品
             getProlist(){
                 getPifaStoreProd({
                     purchase_store_sn: this.purchase_store_sn,
@@ -342,6 +360,14 @@
 										this.active_id = this.Stores_ID + '_' + res.Stores_ID
                 })
             },
+						// 普通产品
+						getProductList(){
+							getProductList().then(res=>{
+								this.prolist = res.data;
+								this.total_pro_count = res.totalCount;
+								this.active_id = this.Stores_ID + '_' + 0
+							})
+						},
             methodHandle(type){
               this.type = type;
 							if(this.type == 1) {
@@ -406,7 +432,13 @@
                 }
             },
             add(item){
+							this.check_attr = {};
+							this.check_attrid_arr = [];
+							this.postData.qty = 1;
+							this.submit_flag = true;
+							this.postData.attr_id = 0;
                 this.postData.prod_id = item.Products_ID;
+								this.postData.count = item.Products_Count;
                 if(item.skujosn) {
                     let skujosn = item.skujosn;
                     let skujosn_new = [];
@@ -429,7 +461,8 @@
             },
             confirm(){
                 console.log(this.postData)
-                if(!this.postData.attr_id) {
+								if(!this.submit_flag)return;
+                if(this.prosku.skuvaljosn && !this.postData.attr_id) {
                     uni.showToast({
                         title: '请选择规格',
                         icon: 'none'

@@ -57,9 +57,22 @@
 		},
 		methods: {
 			goPurchase(){
-				uni.navigateTo({
-					url: '/pagesA/procurement/stock?purchase_store_sn=' + this.purchase_store_sn
-				})
+				if(this.selectitem == 1 && !this.purchase_store_sn) {
+					uni.showToast({
+						title: '门店编号必须填写',
+						icon: 'none'
+					});
+					return;
+				}
+				if(this.selectitem == 1) {
+					uni.navigateTo({
+						url: '/pagesA/procurement/stock?purchase_store_sn=' + this.purchase_store_sn
+					})
+				}else {
+					uni.navigateTo({
+						url: '/pagesA/procurement/stock'
+					})
+				}
 			},
 			// 用户只是点击了遮罩
 			maskClicked(){
