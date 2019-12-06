@@ -631,6 +631,12 @@
 		"style": {
 		  "navigationBarTitleText": "退货记录"
 		}
+  },
+  {
+    "path" : "pages/procurement/storeSettlement",
+    "style": {
+      "navigationBarTitleText": "结算"
+    }
   }
   ],
   "globalStyle": {
