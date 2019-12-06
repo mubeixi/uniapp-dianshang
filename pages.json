@@ -643,9 +643,9 @@
 		    }
 		  },
 		  {
-		    "path": "procurement/storeSettlementDetail",
+		    "path": "procurement/storeSettlementRecord",
 		    "style": {
-		      "navigationBarTitleText": "结算"
+		      "navigationBarTitleText": "结算记录"
 		    }
 		  }
           

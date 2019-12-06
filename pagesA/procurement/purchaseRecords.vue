@@ -6,7 +6,7 @@
 			<view class="prolist" @click="hidden_tip(item)" >
 				<view class="pro-title">
 					<view>进货单号：{{item.Order_ID}}</view>
-					<image class="img" src="/static/procurement/del.png" @click="del(item.Order_ID)"></image>
+					<image  v-if="item.Order_Status==20||item.Order_Status==26" class="img" src="/static/procurement/del.png" @click="del(item.Order_ID)"></image>
 				</view>
 				<view class="list-msg">
 					<view class="biz-msg">
@@ -229,7 +229,7 @@
 			    }
 			},
 			//确认收货采购单
-			completedOrder(){
+			completedOrder(id){
 				let data={
 					store_id:this.Stores_ID,
 					order_id:id

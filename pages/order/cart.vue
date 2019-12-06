@@ -208,7 +208,7 @@ export default {
 			}
 			delCart({ cart_key: 'CartList', prod_attr: JSON.stringify(obj)}).then(res=>{
 				if(res.errorCode == 0) {
-					uni.showLoading({
+					uni.showToast({
 						icon: 'success',
 						title: res.msg
 					});

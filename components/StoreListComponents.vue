@@ -239,9 +239,9 @@
                     stores_name:this.stores_name,
                 }
 
-                if(this.prod_ids.length>0){
-                    postData.prod_id = this.prod_ids.join(',')
-                }
+               
+                 postData.prod_json = JSON.stringify(this.prod_ids)
+        
 
                 if(this.lat && this.lng){
                     postData.lat = this.lat
@@ -478,7 +478,8 @@
 }
 .scroll-Y{
     height: 322px;
-    padding-bottom: 46px;
+    padding-bottom: 92px;
+	box-sizing: border-box;
 }
 .search{
 
