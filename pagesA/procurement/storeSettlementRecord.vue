@@ -1,7 +1,7 @@
 
 <template>
     <view class="wrap">
-		<view class="list" v-for="(item,index) of list" :key="index">
+		<view class="list" v-for="(item,index) of list" :key="index" @click="noShow">
 			<view class="listText">
 				结算时间: <text class="msg">{{item.time_period}}</text>
 			</view>
@@ -24,14 +24,16 @@
 				实际结算: <text class="msg color">¥{{item.Stores_Balance}}</text>
 			</view>
 			<view class="listText">
-				状态: <text class="msg color">{{item.status_txt}}</text><img v-if="item.status_txt=='已驳回'" class="img" src="/static/procurement/i.png">
+				状态: <text class="msg color">{{item.status_txt}}</text>
+				<image  v-if="item.status_txt=='已驳回'" @click.stop='changge(index)' class="img" src="/static/procurement/i.png"></image>
+				<view class="tips" v-if="item.status_txt=='已驳回'&&item.isShow">
+					<view class="sanjiaoxing"></view>{{item.reject_reason}}
+				</view>
 			</view>
 		</view>
 		
 		
-		<!-- <view class="tips" v-if="item.pro_tip_show">
-			<view class="sanjiaoxing"></view>这是解释的内容这是解释的内容这是解释的内容这是解释的内容
-		</view> -->
+		
     </view>
 </template>
 
@@ -61,6 +63,14 @@
 		    ...mapGetters(['Stores_ID'])
 		},
         methods: {
+			noShow(){
+				for(let item of this.list){
+					item.isShow=false
+				}
+			},
+			changge(index){
+				this.list[index].isShow=!this.list[index].isShow
+			},
 			getSettlements(){
 				let data={
 						store_id:this.Stores_ID,
@@ -68,6 +78,9 @@
 						pageSize:this.pageSize
 					}
 				getSettlements(data).then(res=>{
+					for(let item of res.data){
+						item.isShow=false
+					}
 					this.list=this.list.concat(res.data)
 					this.totalCount=res.totalCount
 				})
@@ -92,6 +105,7 @@
 			margin-bottom: 20rpx;
 			color: #333333;
 			.listText{
+				position: relative;
 				height: 60rpx;
 				line-height: 60rpx;
 				.msg{
@@ -104,7 +118,7 @@
 				.img{
 					width: 22rpx;
 					height: 22rpx;
-					margin-left: 10rpx;
+					margin-left: 20rpx;
 				}
 			}
 		}
@@ -113,16 +127,16 @@
 	
 	.tips {
 		position: absolute;
-		top:50rpx;
-		right: -12rpx;
-		width: 200rpx;
+		left: 130rpx;
+		max-width: 400rpx;
+		font-size: 12px;
+		line-height: 40rpx;
 		padding: 20rpx;
 		background: #fff;
 		box-shadow: 0px 0px 16px 0px rgba(4,0,0,0.18);
 		.sanjiaoxing {
 			position: absolute;
 			top: -14rpx;
-			right: 30rpx;
 			background-color: #fff;
 			transform: rotate(70deg);
 			width: 15rpx;
