@@ -113,6 +113,7 @@
         name: "StoreListComponents",
         data() {
             return {
+
 				timer:null,
                 prod_ids:[],//根据商品筛选门店
                 lat:null,
@@ -135,6 +136,10 @@
             }
         },
         props: {
+            pageEl:{
+                type:Object,
+                require:true
+            },
             showPop: {
                 type: Boolean,
                 default: false,
@@ -204,9 +209,11 @@
                 let localInfo = null;
 
 
-                await getLocation().then(res=>{
+                let rt =false
+                await getLocation(this.pageEl).then(res=>{
                     if(res.code===0){
                         localInfo = res.data
+                        rt = true
                     }
                 }).catch(err=>{
                     console.log(err)
@@ -215,6 +222,7 @@
 
                 console.log('获取到的位置信息',localInfo)
 
+                if(!rt)return;
                 this.lat = localInfo.latitude
                 this.lng = localInfo.longitude
 
@@ -280,7 +288,7 @@
                 }else{
                     this.prod_ids = []
                 }
-				
+
 
                 this.loadInfo()
 
