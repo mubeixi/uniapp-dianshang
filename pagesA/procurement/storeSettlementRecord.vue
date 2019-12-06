@@ -1,30 +1,30 @@
 
 <template>
     <view class="wrap">
-		<view class="list">
+		<view class="list" v-for="(item,index) of list" :key="index">
 			<view class="listText">
-				结算时间: <text class="msg">2019.12.01 — 2019.12.31</text>
+				结算时间: <text class="msg">{{item.time_period}}</text>
 			</view>
 			<view class="listText">
-				订单金额: <text class="msg">¥</text>
+				订单金额: <text class="msg">¥{{item.Order_TotalAmount}}</text>
 			</view>
 			<view class="listText">
-				结算比例: <text class="msg">2019.12.01 — 2019.12.31</text>
+				结算比例: <text class="msg">{{item.Distribute_Balance}}</text>
 			</view>
 			<view class="listText">
-				运费: <text class="msg">¥</text>
+				运费: <text class="msg">¥{{item.Shipping_fee}}</text>
 			</view>
 			<view class="listText">
-				服务费: <text class="msg">¥</text>
+				服务费: <text class="msg">¥{{item.service_fee}}</text>
 			</view>
 			<view class="listText">
-				退款: <text class="msg">¥</text>
+				退款: <text class="msg">¥{{item.back_amount}}</text>
 			</view>
 			<view class="listText">
-				实际结算: <text class="msg color">¥</text>
+				实际结算: <text class="msg color">¥{{item.Stores_Balance}}</text>
 			</view>
 			<view class="listText">
-				状态: <text class="msg color">已驳回</text><img class="img" src="/static/procurement/i.png">
+				状态: <text class="msg color">{{item.status_txt}}</text><img v-if="item.status_txt=='已驳回'" class="img" src="/static/procurement/i.png">
 			</view>
 		</view>
 		
@@ -37,19 +37,41 @@
 
 <script>
  
-    //import {userStoreApply} from '../../common/fetch.js'
+    import {getSettlements} from '../../common/fetch.js'
+	import {mapGetters} from 'vuex'
     export default {
         data() {
-
             return {
-
+				list:[],
+				page:1,
+				pageSize:4,
+				totalCount:0
             }
         },
-        onLoad: function(){
-
-        },
+		onShow() {
+			this.getSettlements()
+		},
+		onReachBottom() {
+			if(this.list.length<this.totalCount){
+				this.page++
+				this.getSettlements()
+			}
+		},
+		computed: {
+		    ...mapGetters(['Stores_ID'])
+		},
         methods: {
-	
+			getSettlements(){
+				let data={
+						store_id:this.Stores_ID,
+						page:this.page,
+						pageSize:this.pageSize
+					}
+				getSettlements(data).then(res=>{
+					this.list=this.list.concat(res.data)
+					this.totalCount=res.totalCount
+				})
+			}
         }
     }
 </script>
