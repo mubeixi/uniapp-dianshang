@@ -77,7 +77,7 @@
 					</view>
 				</view>
 				<view class="td" @click="goMyVip"  style="border-right: 0px;" >
-					<image  class="imgs" src="/static/gudong.jpg" ></image>
+					<image  class="imgs" src="/static/myhuiyuan.png" ></image>
 					<view class="views">
 						我的会员
 					</view>

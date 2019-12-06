@@ -65,7 +65,22 @@
 				</view>
 			</block>
 			<block v-if="tabIdx==1">
-				dd
+				<view class="other" >
+					<view class="bd">
+						<view class="o_title  words">
+							<span>购买人姓名</span>
+							<input class="inputs" type="text" v-model="user_name"  placeholder="请填写姓名">
+						</view>
+					</view>
+				</view>
+				<view class="other">
+					<view class="bd">
+						<view class="o_title  words">
+							<span>购买人手机号</span>
+							<input class="inputs" type="text" v-model="user_mobile"  placeholder="请填写手机号码">
+						</view>
+					</view>
+				</view>
 			</block>
 			<view class="other" v-if="orderInfo.is_virtual == 1">
 				<view class="bd">
@@ -301,7 +316,10 @@ export default {
 		this.createOrderCheck();
 	},
 	async created(){
+		// #ifdef H5
 		this.selfObj = this
+		// #endif
+
 		let userInfo = this.getUserInfo(true);
 	},
 	onLoad(options) {
@@ -349,14 +367,22 @@ export default {
 	  multipleSelectStore(){
 		  this.selectStore=true
 		  this.setStoreMode = 'all'
-		  let ids = Object.keys(this.orderInfo.CartList)
+		  //let ids = Object.keys(this.orderInfo.CartList)
+          let ids={}
+          for(let iq in this.orderInfo.CartList){
+              let arr=[]
+              for(let iw in this.orderInfo.CartList[iq]){
+                  arr.push(iw)
+              }
+              ids[iq]=arr
+          }
 		  this.$refs.stroeComp.show(ids)
 
 	  },
       openStores(prod_id,attr_id){
 		  this.selectStore=true
 		  this.setStoreMode = prod_id+'::'+attr_id
-		  let ids = [prod_id]
+		  let ids ={[prod_id]:[attr_id]}
           this.$refs.stroeComp.show(ids)
 
       },
@@ -398,12 +424,6 @@ export default {
 		},
 		// 提交订单
 		form_submit(e) {
-
-			console.log(e)
-			add_template_code({
-				code: e.detail.formId,
-				times: 1
-			})
 			if(!this.submited){
 				this.submited = true;
 				if(this.postData.need_invoice == 1 && this.postData.invoice_info == '') {
@@ -426,7 +446,7 @@ export default {
 						return;
 					}
 				};
-				if(this.orderInfo.is_virtual == 1) {
+				if(this.orderInfo.is_virtual == 1||this.postData.shipping_id=='is_store') {
 					if(!this.user_name) {
 						uni.showToast({
 							title: '请填写购买人姓名',
@@ -446,6 +466,21 @@ export default {
 					this.postData.user_name = this.user_name;
 					this.postData.user_mobile = this.user_mobile;
 				}
+				if(this.postData.shipping_id=='is_store'){
+					let obj={}
+					for(let it in this.orderInfo.CartList){
+						for(let iq in this.orderInfo.CartList[it]){
+							obj[it]={
+									[iq]:this.orderInfo.CartList[it][iq].store.Stores_ID
+								}
+						}
+					}
+					this.postData.store_id=JSON.stringify(obj)
+				}
+				add_template_code({
+					code: e.detail.formId,
+					times: 1
+				})
 				createOrder(this.postData).then(res=>{
 					if(res.errorCode == 0) {
 						// 如果order_totalPrice <= 0  直接跳转 订单列表页
