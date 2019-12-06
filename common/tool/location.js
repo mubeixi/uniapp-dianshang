@@ -13,7 +13,9 @@ const failOpt = {
     'notFound':{code:-1,msg:'获取位置失败'}
 }
 
-export const getLocation = ()=>{
+
+
+export const getLocation = (vm)=>{
 
     return new Promise((resolve, reject) => {
 
@@ -33,7 +35,7 @@ export const getLocation = ()=>{
 
             // #ifdef H5
             if(isWeiXin()){
-                WX_JSSDK_INIT({}).then(ret=>{
+                WX_JSSDK_INIT(vm).then(ret=>{
 
                     console.log('签名成功')
                     wx.getLocation({

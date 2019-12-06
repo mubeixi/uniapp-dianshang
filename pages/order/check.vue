@@ -1,10 +1,10 @@
 <template>
     <view v-if="loading" :class="selectStore?'over':''">
       <!--  <pagetitle title="提交订单"></pagetitle> v-if="orderInfo.all_has_stores" -->
-        <div class="top" >
-            <div class="tabs" >
-                <div class="tabs-item" :class="{active:tabIdx==0}" @click="tabIdx=0">快递发货</div>
-                <div class="tabs-item" :class="{active:tabIdx==1}" @click="tabIdx=1">到店自提</div>
+        <div class="top"  v-if="orderInfo.all_has_stores==1">
+            <div class="tabs">
+                <div class="tabs-item" :class="{active:tabIdx==0}" @click="changgeTabIdx(0)">快递发货</div>
+                <div class="tabs-item" :class="{active:tabIdx==1}" @click="changgeTabIdx(1)">到店自提</div>
             </div>
         </div>
 		<block v-if="orderInfo.is_virtual == 0 && tabIdx==0 ">
@@ -51,17 +51,37 @@
 
 				</block>
 			</view>
-			<view class="other" v-if="orderInfo.is_virtual == 0">
-				<view class="bd">
-					<view class="o_title" @click="changeShip">
-						<span>运费选择</span>
-						<span style="text-align:right; color: #888;" >
-						<span>{{shipping_name?(shipping_name + ' ' + (orderInfo.Order_Shipping.Price > 0 ? orderInfo.Order_Shipping.Price : '免运费')):'请选择物流'}}</span>
-                        <image  class="right" :src="'/static/client/right.png'|domain" alt=""></image>
-                    </span>
+			<block v-if="tabIdx==0">
+				<view class="other" v-if="orderInfo.is_virtual == 0">
+					<view class="bd">
+						<view class="o_title" @click="changeShip">
+							<span>运费选择</span>
+							<span style="text-align:right; color: #888;" >
+							<span>{{shipping_name?(shipping_name + ' ' + (orderInfo.Order_Shipping.Price > 0 ? orderInfo.Order_Shipping.Price : '免运费')):'请选择物流'}}</span>
+				            <image  class="right" :src="'/static/client/right.png'|domain" alt=""></image>
+				        </span>
+						</view>
 					</view>
 				</view>
-			</view>
+			</block>
+			<block v-if="tabIdx==1">
+				<view class="other" >
+					<view class="bd">
+						<view class="o_title  words">
+							<span>购买人姓名</span>
+							<input class="inputs" type="text" v-model="user_name"  placeholder="请填写姓名">
+						</view>
+					</view>
+				</view>
+				<view class="other">
+					<view class="bd">
+						<view class="o_title  words">
+							<span>购买人手机号</span>
+							<input class="inputs" type="text" v-model="user_mobile"  placeholder="请填写手机号码">
+						</view>
+					</view>
+				</view>
+			</block>
 			<view class="other" v-if="orderInfo.is_virtual == 1">
 				<view class="bd">
 					<view class="o_title  words">
@@ -195,7 +215,7 @@
 				确定
 			</view>
 		</popup-layer>
-        <store-list-components direction="top" ref="stroeComp" @callFn="bindStores" @change="selectStore=false" />
+        <store-list-components :pageEl="selfObj" direction="top" ref="stroeComp" @callFn="bindStores" @change="selectStore=false" />
     </view>
 </template>
 
@@ -216,6 +236,7 @@ export default {
     },
     data(){
         return {
+        	selfObj:null,
 			selectStore:false,
             tabIdx:0,
             show: false, // 遮罩层
@@ -267,7 +288,8 @@ export default {
             isSlide: false, //查看明细是否已经弹出
             bottomHeight: 0, // 弹出层从哪里开始弹出，默认是0，明细从提交按钮上部50px
             zIndex: 3,
-			setStoreMode:''
+			setStoreMode:'',
+			idD:''
         }
     },
 	filters: {
@@ -294,6 +316,10 @@ export default {
 		this.createOrderCheck();
 	},
 	async created(){
+		// #ifdef H5
+		this.selfObj = this
+		// #endif
+
 		let userInfo = this.getUserInfo(true);
 	},
 	onLoad(options) {
@@ -313,6 +339,15 @@ export default {
 		...mapGetters(['userInfo'])
 	},
   methods: {
+	  changgeTabIdx(index){
+		  this.tabIdx=index
+		  if(index==0){
+			  this.postData.shipping_id=this.idD
+		  }else if(index==1){
+			  this.idD=this.postData.shipping_id
+			  this.postData.shipping_id='is_store'
+		  }
+	  },
 	  bindStores(storeInfo){
 		 this.selectStore=false
 	  	if(this.setStoreMode==='all'){
@@ -332,14 +367,22 @@ export default {
 	  multipleSelectStore(){
 		  this.selectStore=true
 		  this.setStoreMode = 'all'
-		  let ids = Object.keys(this.orderInfo.CartList)
+		  //let ids = Object.keys(this.orderInfo.CartList)
+          let ids={}
+          for(let iq in this.orderInfo.CartList){
+              let arr=[]
+              for(let iw in this.orderInfo.CartList[iq]){
+                  arr.push(iw)
+              }
+              ids[iq]=arr
+          }
 		  this.$refs.stroeComp.show(ids)
 
 	  },
       openStores(prod_id,attr_id){
 		  this.selectStore=true
 		  this.setStoreMode = prod_id+'::'+attr_id
-		  let ids = [prod_id]
+		  let ids ={[prod_id]:[attr_id]}
           this.$refs.stroeComp.show(ids)
 
       },
@@ -381,12 +424,6 @@ export default {
 		},
 		// 提交订单
 		form_submit(e) {
-
-			console.log(e)
-			add_template_code({
-				code: e.detail.formId,
-				times: 1
-			})
 			if(!this.submited){
 				this.submited = true;
 				if(this.postData.need_invoice == 1 && this.postData.invoice_info == '') {
@@ -409,7 +446,7 @@ export default {
 						return;
 					}
 				};
-				if(this.orderInfo.is_virtual == 1) {
+				if(this.orderInfo.is_virtual == 1||this.postData.shipping_id=='is_store') {
 					if(!this.user_name) {
 						uni.showToast({
 							title: '请填写购买人姓名',
@@ -429,6 +466,21 @@ export default {
 					this.postData.user_name = this.user_name;
 					this.postData.user_mobile = this.user_mobile;
 				}
+				if(this.postData.shipping_id=='is_store'){
+					let obj={}
+					for(let it in this.orderInfo.CartList){
+						for(let iq in this.orderInfo.CartList[it]){
+							obj[it]={
+									[iq]:this.orderInfo.CartList[it][iq].store.Stores_ID
+								}
+						}
+					}
+					this.postData.store_id=JSON.stringify(obj)
+				}
+				add_template_code({
+					code: e.detail.formId,
+					times: 1
+				})
 				createOrder(this.postData).then(res=>{
 					if(res.errorCode == 0) {
 						// 如果order_totalPrice <= 0  直接跳转 订单列表页

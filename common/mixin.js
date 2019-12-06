@@ -38,6 +38,7 @@ export const WX_JSSDK_INIT = (vm,jsApiListList) => new Promise((resolve, reject)
 	if(vm.JSSDK_READY){
 		console.log('wx env already ready')
 		resolve(wx);
+		return;
 	}
 
 	getJsSign({

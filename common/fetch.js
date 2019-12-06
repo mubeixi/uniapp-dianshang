@@ -157,6 +157,10 @@ export const createOrder = (data,options) => fetch('create_order', data,options)
 
 // 提交订单
 export const getWithdrawConfig = (data,options) => fetch('get_withdraw_config', data,options);
+// 获取结算详情
+export const settlement = (data,options) => fetch('settlement', data,options);
+// 获取结算列表
+export const getSettlements = (data,options) => fetch('get_settlements', data,options);
 
 
 // 上传图片
