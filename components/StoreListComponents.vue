@@ -279,6 +279,7 @@
                 }else{
                     this.prod_ids = []
                 }
+				
 
                 this.loadInfo()
 
