@@ -238,6 +238,30 @@
 		        </template>
 		    </view>
 		</popup-layer>
+		<!-- 修改渠道 -->
+		<view class="sku-pop" v-if="isChangeChannel">
+		    <view class="sku-title">修改渠道</view>
+		    <view class="sku-content" style="padding-left:53rpx;">
+		        <view class="skulist" @click="active_id = 0">
+							
+		            <image class="selected" src="/static/procurement/selected.png" mode="" v-if="active_id == 0"></image>
+								<view class="nochecked" v-else></view>
+								<view>平台进货</view>
+		        </view>
+		        <view class="skulist" @click="active_id = 1">
+								<image class="selected" src="/static/procurement/selected.png" mode="" v-if="active_id == 1"></image>
+								<view class="nochecked" v-else></view>
+								<view>门店进货</view>
+		        </view>
+		        <view class="skulist" v-if="active_id == 1">
+								<input class="input" type="text" v-model="purchase_store_sn" placeholder="请输入门店编号" placeholder-style="color: #C9C9C9;font-size: 24rpx;" />
+		        </view>
+						<view class="skulist change-btn">
+							<view class="btn cancel" @click="sub_cancel">取消</view>
+							<view class="btn confirm" @click="sub_confirm">确定</view>
+						</view>
+		    </view>
+		</view>
 	</view>
 </template>
 
@@ -286,6 +310,10 @@
 				zIndex: 100,
 				productMy_soldout: [], // 库存紧张
 				productlist: [], // index为1，3的时候，产品列表
+				isChangeChannel: false, // 修改渠道
+				active_id: 0,
+				purchase_store_sn: '', // 门店编号,
+				isClicked: false
 			};
 		},
 		components: {
@@ -345,6 +373,16 @@
 			},
 			// 提交退货
 			submit(){
+				this.$refs.detail.close();
+				this.zIndex = 100;
+				this.isChangeChannel = true;
+				this.isHiddenMask = false;
+			},
+			sub_cancel(){
+				this.isChangeChannel = false;
+				this.isHiddenMask = true;
+			},
+			sub_confirm(){
 				let productMy = this.productMy;
 				let arr = []; // 选中的产品数组
 				productMy.forEach(item=>{
@@ -391,16 +429,31 @@
 						}
 					}
 				}
-				console.log(prod_json)
-				console.log(JSON.stringify(prod_json))
-				
-				return;
+				if(this.active_id == 1 && !this.purchase_store_sn) {
+					uni.uni.showToast({
+						title: '门店编号必传',
+						icon:  'none'
+					});
+					return;
+				}
 				storeProdBackSubmit({
-					store_id: Stores_ID,
-					receive_id: 0, //接收方id，>=0，0：向平台退货，>0：向指定门店退货
-					prod_json: JSON.stringify(prod_json)
+					store_id: this.Stores_ID,
+					prod_json: JSON.stringify(prod_json),
+					purchase_type: this.active_id == 0 ? 'shop' : 'store',
+					purchase_store_sn: this.purchase_store_sn
 				}).then(res=>{
-					
+					uni.showToast({
+						title: res.msg
+					});
+					// 关闭遮罩
+					this.isHiddenMask = true;
+					// 关闭选择渠道
+					this.isChangeChannel = false;
+					setTimeout(()=>{
+						uni.navigateTo({
+							url: '/pages/procurement/refundRecords'
+						})
+					},500)
 				})
 			},
 			// 删除不含属性的
@@ -552,6 +605,7 @@
 			},
 			// 选择属性
 			selectAttr(index,i){
+				this.zIndex = 100;
 			    var value_index = index; //选择的属性值索引
 			    var attr_index = i;   //选择的属性索引
 			    // if (this.check_attrid_arr.indexOf(value_index) > -1) return false;
@@ -639,8 +693,11 @@
 			// 点击遮罩
 			hiddenMask(){
 				this.isHiddenMask = true;
+				this.zIndex = 100;
+				this.isClicked = false;
 				this.showSku = false;
-				this.showSum = false
+				this.showSum = false;
+				this.isChangeChannel = false;
 			},
 			allSum(){
 				let arr=[];
@@ -870,42 +927,6 @@
         height: 100%;
         z-index: 1000;
     }
-    .sku-pop {
-        position: fixed;
-        top: 40%;
-        left: 50%;
-        z-index: 10000;
-        width: 420rpx;
-		// height: 260rpx;
-        transform: translate(-50%,-50%);
-		background-color: #FFFFFF;
-		border-radius:10rpx;
-		padding-top: 68rpx;
-		padding-bottom: 104rpx;
-		box-sizing: border-box;
-		.sku-title{
-			font-size: 28rpx;
-			color: #333333;
-			height: 26rpx;
-			line-height: 26rpx;
-			margin: 0 auto;
-			text-align: center;
-		}
-		.priceSum{
-			margin: 34rpx auto;
-			width: 420rpx;
-			text-align: center;
-			height: 28rpx;
-			line-height: 28rpx;
-			font-size: 26rpx;
-			color: #F43131;
-			.span{
-				font-size: 36rpx;
-				margin-left: 4px;
-			}
-		}
-		
-    }
 		.sku-pop {
 		    position: fixed;
 		    top: 50%;
@@ -933,6 +954,47 @@
 		            margin-bottom: 30rpx;
 		            display: flex;
 		            align-items: center;
+		    				&.change-btn {
+		    					padding-top: 43rpx;
+		    					justify-content: center;
+		    				}
+		    				.selected,
+		    				.nochecked {
+		    					display: block;
+		    					width: 40rpx;
+		    					height: 40rpx;
+		    					margin-right: 23rpx;
+		    				}
+		    				.nochecked {
+		    					box-sizing: border-box;
+		    					border:2rpx solid rgba(214,214,214,1);
+		    					border-radius:3px;
+		    				}
+		    				.input {
+		    					width:420rpx;
+		    					height:60rpx;
+		    					border:1px solid rgba(214,214,214,1);
+		    					font-size: 24rpx;
+		    					padding-left: 24rpx;
+		    					box-sizing: border-box;
+		    					line-height: 36rpx;
+		    				}
+		    				.btn {
+		    					width: 130rpx;
+		    					height: 50rpx;
+		    					text-align: center;
+		    					line-height: 50rpx;
+		    					background-color: #E9E9E9;
+		    					font-size: 24rpx;
+		    				}
+		    				.cancel {
+		    					color: #666;
+		    					margin-right: 25rpx;
+		    				}
+		    				.confirm {
+		    					color: #fff;
+		    					background-color: $wzw-primary-color;
+		    				}
 		            .sku-name {
 		                color: #333;
 		                font-size: 24rpx;
@@ -998,9 +1060,6 @@
 		            .confirm {
 		                background-color: $wzw-primary-color;
 		                color: #fff;
-										&.disabled {
-											background-color: #999;
-										}
 		            }
 		        }
 		    }
@@ -1071,6 +1130,9 @@
 		            }
 		        }
 		        .proMsg {
+								display: flex;
+								flex-direction: column;
+								justify-content: space-between;
 		            flex: 1;
 		            margin-left: 20rpx;
 		            .proName {

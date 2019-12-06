@@ -1,146 +1,56 @@
 <template>
 	<view class="wrap">
-		<view class="prolist" @click="hidden_tip">
-			<view class="pro-title">
-				<view>进货单号：SN123456789</view>
-				<image class="img" src="/static/procurement/del.png" mode=""></image>
-			</view>
-			<view class="list-msg">
-				<view class="biz-msg">
-					<image class="avator" src="/static/procurement/tou.png" mode=""></image>
-					<view class="biz-name">肖战穿搭衣橱<view class="biz-links">(<text class="text-d" @click="showStore">查看信息</text>/<text class="text-d" @click="changeChannel">修改渠道</text>)</view></view>
-					<view class="status">待处理</view>
-				</view>
-				<view class="pro-msg">
-					<view class="pro-img">
-						<image class="img" :src="'/static/procurement/client/pro.png'|domain" mode=""></image>
+    <scroll-view class="order-status" scroll-x="true" style="width: 750rpx;white-space: nowrap;" >
+			<view class="status" :class="[status == 0 ? 'active' : '']" @click="changeStatus (0)">全部</view>
+      <view class="status" :class="[status == 31 ? 'active' : '']" @click="changeStatus(31)">待处理</view>
+      <view class="status" :class="[status == 32 ? 'active' : '']" @click="changeStatus(32)">待发货</view>
+      <view class="status" :class="[status == 33 ? 'active' : '']" @click="changeStatus(33)">已驳回</view>
+      <view class="status" :class="[status == 34 ? 'active' : '']" @click="changeStatus(34)">已发货</view>
+			<view class="status" :class="[status == 35 ? 'active' : '']" @click="changeStatus(35)">已收货</view>
+			<view class="status" :class="[status == 36 ? 'active' : '']" @click="changeStatus(36)">已收款</view>
+			<view class="status" :class="[status == 37 ? 'active' : '']" @click="changeStatus(37)">已取消</view>
+    </scroll-view>
+		<block v-if="back_list.length>0">
+			<view class="prolist" @click="hidden_tip" v-for="item of back_list">
+				<view class="pro-title">
+					<view>退货单号：{{item.id}}</view>
+					<view class="status">{{item.status_desc}}
+						<block v-if="item.status == 33">
+							<image class="qty-icon" src="/static/procurement/i.png" mode="" @click.stop="show_pro_tip"></image>
+							<view class="tips" v-if="pro_tip_show">
+								<view class="sanjiaoxing"></view>{{item.reason}}
+							</view>
+						</block>
 					</view>
-					<view class="pro-info">
-						<view class="pro-name">2018夏装新款短袖蕾丝拼接荷叶边波点雪纺连衣裙女时尚名媛...</view>
-						<view class="pro-attr">
-							<view class="attr-info">白色；S码</view>
-							<view class="pro-qty">x5
-								<image class="qty-icon" src="/static/procurement/i.png" mode="" @click.stop="show_pro_tip"></image>
-								<view class="tips" v-if="pro_tip_show">
-									<view class="sanjiaoxing"></view>这是解释的内容这是解释的内容这是解释的内容这是解释的内容
+				</view>
+				<view class="list-msg" v-for="pro of item.prod_list">
+					<view class="pro-msg">
+						<view class="pro-img">
+							<image class="img" :src="pro.prod_img" mode=""></image>
+						</view>
+						<view class="pro-info">
+							<view class="pro-name">{{pro.prod_name}}</view>
+							<view class="pro-attr">
+								<view class="attr-info">{{pro.attr_info.attr_name}}</view>
+								<view class="pro-qty">x{{pro.prod_count}}
 								</view>
 							</view>
+							<view class="pro-price"><text class="price-icon">￥</text>{{pro.prod_price}}</view>
 						</view>
-						<view class="pro-price"><text class="price-icon">￥</text>550.00</view>
 					</view>
-				</view>
-				<view class="totalinfo">总计：<text class="price-icon">￥</text><text class="price-num">1690.00</text> (含运费5元)</view>
+				</view>	
+				<view class="totalinfo">总计：<text class="price-icon">￥</text><text class="price-num">{{item.price}}</text></view>
 				<view class="btns">
-					<view class="btn back">撤回进货单</view>
-				</view>
-			</view>	
-		</view>
-		<view class="prolist" @click="hidden_tip">
-			<view class="pro-title">
-				<view>进货单号：SN123456789</view>
-				<image class="img" src="/static/procurement/procurement/del.png" mode=""></image>
-			</view>
-			<view class="list-msg">
-				<view class="biz-msg">
-					<image class="avator" src="/static/procurement/procurement/tou.png" mode=""></image>
-					<view class="biz-name">肖战穿搭衣橱<view class="biz-links">(<text class="text-d">查看信息</text>/<text class="text-d">修改渠道</text>)</view></view>
-					<view class="status">已发货</view>
-				</view>
-				<view class="pro-msg">
-					<view class="pro-img">
-						<image class="img" :src="'/static/procurement/procurement/client/pro.png'|domain" mode=""></image>
-					</view>
-					<view class="pro-info">
-						<view class="pro-name">2018夏装新款短袖蕾丝拼接荷叶边波点雪纺连衣裙女时尚名媛...</view>
-						<view class="pro-attr">
-							<view class="attr-info">白色；S码</view>
-							<view class="pro-qty">x5
-								<image class="qty-icon" src="/static/procurement/i.png" mode="" @click.stop="show_pro_tip"></image>
-								<view class="tips" v-if="pro_tip_show">
-									<view class="sanjiaoxing"></view>这是解释的内容这是解释的内容这是解释的内容这是解释的内容
-								</view>
-							</view>
-						</view>
-						<view class="pro-price"><text class="price-icon">￥</text>550.00</view>
-					</view>
-				</view>
-				<view class="totalinfo">总计：<text class="price-icon">￥</text><text class="price-num">1690.00</text> (含运费5元)</view>
-				<view class="btns">
-					<view class="btn">查看物流</view>
-					<view class="btn back">确认收货</view>
+					<view class="btn" v-if="item.status == 31 || item.status == 32" @click="cancelOrder(item.id)">取消</view>
+					<view class="btn back" v-if="item.status == 32">发货</view>
+					<view class="btn back" v-if="item.status == 35">确认收款</view>
 				</view>
 			</view>
-		</view>
-		<view class="prolist" @click="hidden_tip">
-			<view class="pro-title">
-				<view>进货单号：SN123456789</view>
-				<image class="img" src="/static/procurement/del.png" mode=""></image>
-			</view>
-			<view class="list-msg">
-				<view class="biz-msg">
-					<image class="avator" src="/static/procurement/tou.png" mode=""></image>
-					<view class="biz-name">肖战穿搭衣橱<view class="biz-links">(<text class="text-d">查看信息</text>/<text class="text-d">修改渠道</text>)</view></view>
-					<view class="status">已驳回</view>
-				</view>
-				<view class="pro-msg">
-					<view class="pro-img">
-						<image class="img" src="/static/procurement/pro.png" mode=""></image>
-					</view>
-					<view class="pro-info">
-						<view class="pro-name">2018夏装新款短袖蕾丝拼接荷叶边波点雪纺连衣裙女时尚名媛...</view>
-						<view class="pro-attr">
-							<view class="attr-info">白色；S码</view>
-							<view class="pro-qty">x5
-								<image class="qty-icon" src="/static/procurement/i.png" mode="" @click.stop="show_pro_tip"></image>
-								<view class="tips" v-if="pro_tip_show">
-									<view class="sanjiaoxing"></view>这是解释的内容这是解释的内容这是解释的内容这是解释的内容
-								</view>
-							</view>
-						</view>
-						<view class="pro-price"><text class="price-icon">￥</text>550.00</view>
-					</view>
-				</view>
-				<view class="totalinfo">总计：<text class="price-icon">￥</text><text class="price-num">1690.00</text> (含运费5元)</view>
-				<view class="btns">
-					<view class="btn back">提交进货单</view>
-				</view>
-			</view>
-		</view>
-		<view class="prolist" @click="hidden_tip">
-			<view class="pro-title">
-				<view>进货单号：SN123456789</view>
-				<image class="img" src="/static/procurement/del.png" mode=""></image>
-			</view>
-			<view class="list-msg">
-				<view class="biz-msg">
-					<image class="avator" src="/static/procurement/tou.png" mode=""></image>
-					<view class="biz-name">肖战穿搭衣橱<view class="biz-links">(<text class="text-d">查看信息</text>/<text class="text-d">修改渠道</text>)</view></view>
-					<view class="status">已完成</view>
-				</view>
-				<view class="pro-msg">
-					<view class="pro-img">
-						<image class="img" src="/static/procurement/pro.png" mode=""></image>
-					</view>
-					<view class="pro-info">
-						<view class="pro-name">2018夏装新款短袖蕾丝拼接荷叶边波点雪纺连衣裙女时尚名媛...</view>
-						<view class="pro-attr">
-							<view class="attr-info">白色；S码</view>
-							<view class="pro-qty">x5
-								<image class="qty-icon" src="/static/procurement/i.png" mode="" @click.stop="show_pro_tip"></image>
-								<view class="tips" v-if="pro_tip_show">
-									<view class="sanjiaoxing"></view>这是解释的内容这是解释的内容这是解释的内容这是解释的内容
-								</view>
-							</view>
-						</view>
-						<view class="pro-price"><text class="price-icon">￥</text>550.00</view>
-					</view>
-				</view>
-				<view class="totalinfo">总计：<text class="price-icon">￥</text><text class="price-num">1690.00</text> (含运费5元)</view>
-				<view class="btns">
-					<!-- <view class="btn back">撤回进货单</view> -->
-				</view>
-			</view>
-		</view>
+			<view class="list-bottom">我是有底线的</view>
+		</block>
+		<block v-else>
+			<view class="nodata">暂无数据</view>
+		</block>
 		<!--  门店信息	-->
 		<view class="sku-pop mendian" v-if="isShowStoreMsg">
 		    <view class="sku-title">门店信息</view>
@@ -190,6 +100,8 @@
 </template>
 
 <script>
+	import {getStoreProdBackOrder,storeProdBackOrderCancel} from '../../common/fetch.js'
+	import {mapGetters} from 'vuex'
 	export default {
 		data(){
 			return {
@@ -197,10 +109,59 @@
 				isHidden: true,
 				isShowStoreMsg: false,
 				isChangeChannel: false,
-				change_type: 0, // 进货渠道， 0 是平台 1是门店
+        change_type: 0, // 进货渠道， 0 是平台 1是门店,
+        status: 0, // 31 待处理  32待发货 33已驳回 34已发货 35 已确认收货 36已确认收款 37已取消
+				receive_id: 0,
+				page: 1,
+				pageSize: 10,
+				back_list: [], // 退货单列表
 			}
 		},
+		computed: {
+		    ...mapGetters(['Stores_ID']),   
+		},
+		onLoad: function(){
+			this.getStoreProdBackOrder();
+		},
 		methods: {
+			// 取消退货单
+			cancelOrder(order_id){
+				storeProdBackOrderCancel({
+					store_id: this.Stores_ID,
+					order_id: order_id
+				}).then((res)=>{
+					uni.showToast({
+						title: res.msg
+					});
+					setTimeout(()=>{
+						this.load();
+					},1000)
+				})
+			},
+			changeStatus(status){
+					this.status = status;
+					this.load();
+			},
+			// 重新获取一下
+			load(){
+				this.reset();
+				this.getStoreProdBackOrder();
+			},
+			reset(){
+				this.back_list = [];
+				this.page = 1;
+			},
+			// 获取退款单
+			getStoreProdBackOrder(){
+				getStoreProdBackOrder({
+					store_id: this.Stores_ID,
+					status: this.status,
+					page: this.page,
+					pageSize: this.pageSize
+				},{tip:'加载中...'}).then(res=>{
+					this.back_list = res.data;
+				})
+			},
 			show_pro_tip(){
 				this.pro_tip_show = true;
 			},
@@ -227,10 +188,39 @@
 
 <style lang="scss" scoped>
 	.wrap {
+		.list-bottom,
+		.nodata {
+			text-align: center;
+			color: #999;
+			margin-bottom: 20rpx;
+		}
+		.nodata {
+			margin-top: 20rpx;
+		}
 		font-size: 26rpx;
 		padding: 0 20rpx;
 		min-height: 100vh;
 		background-color: #F6F6F6;
+    .order-status {
+      height: 90rpx;
+      display: flex;
+      align-items: center;
+      // justify-content: center;
+			text-align: center;
+      .status {
+				display: inline-block;
+        width: 135rpx;
+				margin-right: 40rpx;
+				line-height: 80rpx;
+				&.active {
+					color: $wzw-primary-color;
+					border-bottom: 2rpx solid $wzw-primary-color;
+				}
+      }
+			& .status:nth-last-child(1){
+				margin-right:0;
+			}
+    }
 		.prolist {
 			width: 710rpx;
 			margin: 30rpx 0;
@@ -246,48 +236,48 @@
 				color: #777777;
 				// padding: 0 20rpx;
 				border-bottom: 2rpx solid #E6E6E6;
+				.status {
+					position: relative;
+					color: $wzw-primary-color;
+					.tips {
+						position: absolute;
+						top:50rpx;
+						right: -12rpx;
+						width: 200rpx;
+						padding: 20rpx;
+						background: #fff;
+						box-shadow: 0px 0px 16px 0px rgba(4,0,0,0.18);
+						.sanjiaoxing {
+							position: absolute;
+							top: -14rpx;
+							right: 30rpx;
+							background-color: #fff;
+							transform: rotate(70deg);
+							width: 15rpx;
+							height: 30rpx;
+							border: 2rpx solid #fff;
+							border-right:0;
+							border-bottom: 0;
+							box-shadow: 0px 0px 16px 0px rgba(4,0,0,0.18);
+						}
+					}
+					.qty-icon {
+						width: 22rpx;
+						height: 22rpx;
+						margin-left: 10rpx;
+					}
+				}
 				.img {
 					width: 26rpx;
 					height: 31rpx;
 				}
 			}
 			.list-msg {
-				.biz-msg {
-					display: flex;
-					justify-content: space-between;
-					align-items: center;
-					height: 107rpx;
-					.avator {
-						width: 70rpx;
-						height: 70rpx;
-						border-radius: 50%;
-						margin-right: 20rpx;
-					}
-					.biz-name {
-						display: flex;
-						align-items: center;
-						flex: 1;
-						font-size: 28rpx;
-						color: #333;
-						.biz-links {
-							color: $wzw-primary-color;
-							font-size: 24rpx;
-							margin-left: 14rpx;
-							.text-d {
-								text-decoration: underline;
-								padding: 0 10rpx;
-							}
-						}
-					}
-					.status {
-						color: $wzw-primary-color;
-					}
-				}
 				.pro-msg {
 					display: flex;
+					margin-top: 20rpx;
 					padding-bottom: 30rpx;
-					box-sizing: border-box;
-					border-bottom: 2rpx solid #E6E6E6;
+					box-sizing: border-box;			
 					.pro-img {
 						width: 200rpx;
 						height: 200rpx;
@@ -299,6 +289,7 @@
 					}
 					.pro-info {
 						display: flex;
+						width: 500rpx;
 						flex-direction: column;
 						justify-content: space-between;
 						.pro-name {
@@ -327,7 +318,7 @@
 								position: relative;
 								.tips {
 									position: absolute;
-									top:50rpx;
+									top:80rpx;
 									right: -12rpx;
 									width: 200rpx;
 									padding: 20rpx;
@@ -363,36 +354,37 @@
 						}
 					}
 				}
-				.totalinfo {
-					line-height: 85rpx;
-					text-align: right;
-					.price-icon {
-						font-size: 24rpx;
-						color: $wzw-primary-color;
-					}
-					.price-num {
-						font-size: 30rpx;
-						color: $wzw-primary-color;
-					}
+			}	
+			.btns {
+				display: flex;
+				justify-content: flex-end;
+				.btn {
+					width:155rpx;
+					height:60rpx;
+					line-height: 60rpx;
+					color: #666;
+					text-align: center;
+					background-color: #EEEEEE;
+					border-radius:10rpx;
 				}
-				.btns {
-					display: flex;
-					justify-content: flex-end;
-					.btn {
-						width:155rpx;
-						height:60rpx;
-						line-height: 60rpx;
-						color: #666;
-						text-align: center;
-						background-color: #EEEEEE;
-						border-radius:10rpx;
-					}
-					.back {
-						color: #fff;
-						background:rgba(244,49,49,1);
-						margin-left: 10rpx;
-					}
+				.back {
+					color: #fff;
+					background:rgba(244,49,49,1);
+					margin-left: 10rpx;
 				}
+			}
+		}
+		.totalinfo {
+			line-height: 85rpx;
+			text-align: right;
+			border-top: 2rpx solid #E6E6E6;
+			.price-icon {
+				font-size: 24rpx;
+				color: $wzw-primary-color;
+			}
+			.price-num {
+				font-size: 30rpx;
+				color: $wzw-primary-color;
 			}
 		}
 	}
