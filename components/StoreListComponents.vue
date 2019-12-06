@@ -113,6 +113,7 @@
         name: "StoreListComponents",
         data() {
             return {
+				timer:null,
                 prod_ids:[],//根据商品筛选门店
                 lat:null,
                 lng:null,
