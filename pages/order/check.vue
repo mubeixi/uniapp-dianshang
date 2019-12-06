@@ -3,8 +3,8 @@
       <!--  <pagetitle title="提交订单"></pagetitle> v-if="orderInfo.all_has_stores" -->
         <div class="top" >
             <div class="tabs" >
-                <div class="tabs-item" :class="{active:tabIdx==0}" @click="tabIdx=0">快递发货</div>
-                <div class="tabs-item" :class="{active:tabIdx==1}" @click="tabIdx=1">到店自提</div>
+                <div class="tabs-item" :class="{active:tabIdx==0}" @click="changgeTabIdx(0)">快递发货</div>
+                <div class="tabs-item" :class="{active:tabIdx==1}" @click="changgeTabIdx(1)">到店自提</div>
             </div>
         </div>
 		<block v-if="orderInfo.is_virtual == 0 && tabIdx==0 ">
@@ -51,17 +51,22 @@
 
 				</block>
 			</view>
-			<view class="other" v-if="orderInfo.is_virtual == 0">
-				<view class="bd">
-					<view class="o_title" @click="changeShip">
-						<span>运费选择</span>
-						<span style="text-align:right; color: #888;" >
-						<span>{{shipping_name?(shipping_name + ' ' + (orderInfo.Order_Shipping.Price > 0 ? orderInfo.Order_Shipping.Price : '免运费')):'请选择物流'}}</span>
-                        <image  class="right" :src="'/static/client/right.png'|domain" alt=""></image>
-                    </span>
+			<block v-if="tabIdx==0">
+				<view class="other" v-if="orderInfo.is_virtual == 0">
+					<view class="bd">
+						<view class="o_title" @click="changeShip">
+							<span>运费选择</span>
+							<span style="text-align:right; color: #888;" >
+							<span>{{shipping_name?(shipping_name + ' ' + (orderInfo.Order_Shipping.Price > 0 ? orderInfo.Order_Shipping.Price : '免运费')):'请选择物流'}}</span>
+				            <image  class="right" :src="'/static/client/right.png'|domain" alt=""></image>
+				        </span>
+						</view>
 					</view>
 				</view>
-			</view>
+			</block>
+			<block v-if="tabIdx==1">
+				dd
+			</block>
 			<view class="other" v-if="orderInfo.is_virtual == 1">
 				<view class="bd">
 					<view class="o_title  words">
@@ -195,7 +200,7 @@
 				确定
 			</view>
 		</popup-layer>
-        <store-list-components direction="top" ref="stroeComp" @callFn="bindStores" @change="selectStore=false" />
+        <store-list-components :pageEl="selfObj" direction="top" ref="stroeComp" @callFn="bindStores" @change="selectStore=false" />
     </view>
 </template>
 
@@ -216,6 +221,7 @@ export default {
     },
     data(){
         return {
+        	selfObj:null,
 			selectStore:false,
             tabIdx:0,
             show: false, // 遮罩层
@@ -267,7 +273,8 @@ export default {
             isSlide: false, //查看明细是否已经弹出
             bottomHeight: 0, // 弹出层从哪里开始弹出，默认是0，明细从提交按钮上部50px
             zIndex: 3,
-			setStoreMode:''
+			setStoreMode:'',
+			idD:''
         }
     },
 	filters: {
@@ -294,6 +301,7 @@ export default {
 		this.createOrderCheck();
 	},
 	async created(){
+		this.selfObj = this
 		let userInfo = this.getUserInfo(true);
 	},
 	onLoad(options) {
@@ -313,6 +321,15 @@ export default {
 		...mapGetters(['userInfo'])
 	},
   methods: {
+	  changgeTabIdx(index){
+		  this.tabIdx=index
+		  if(index==0){
+			  this.postData.shipping_id=this.idD
+		  }else if(index==1){
+			  this.idD=this.postData.shipping_id
+			  this.postData.shipping_id='is_store'
+		  }
+	  },
 	  bindStores(storeInfo){
 		 this.selectStore=false
 	  	if(this.setStoreMode==='all'){

@@ -159,7 +159,7 @@
 				            	},1000)
 				            })
 				        } else if (res.cancel) {
-				           
+
 				        }
 				    }
 				});
@@ -328,7 +328,7 @@
 				this.isShowStoreMsg = true;
 				let lat='';
 				let lng='';
-				getLocation().then(res=>{
+				getLocation(this).then(res=>{
 				    if(res.code===0){
 						lng=res.data.longitude
 						lat=res.data.latitude
@@ -804,5 +804,5 @@
 				}
 			}
 		}
-	
+
 </style>
