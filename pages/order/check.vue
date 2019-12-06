@@ -1,8 +1,8 @@
 <template>
     <view v-if="loading" :class="selectStore?'over':''">
       <!--  <pagetitle title="提交订单"></pagetitle> v-if="orderInfo.all_has_stores" -->
-        <div class="top" >
-            <div class="tabs" >
+        <div class="top"  v-if="orderInfo.all_has_stores==1">
+            <div class="tabs">
                 <div class="tabs-item" :class="{active:tabIdx==0}" @click="changgeTabIdx(0)">快递发货</div>
                 <div class="tabs-item" :class="{active:tabIdx==1}" @click="changgeTabIdx(1)">到店自提</div>
             </div>

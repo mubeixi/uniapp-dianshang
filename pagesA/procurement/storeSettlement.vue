@@ -1,6 +1,6 @@
 <template>
     <view class="wrap">
-		<block>
+		<block v-if="index==1">
 			<view class="area-item" >
 				<text class="area-label">开始时间</text>
 				<picker class="pickerView" mode="date" :value="date" :start="startDate" :end="endDate" @change="bindDateChangeStart">
@@ -21,39 +21,39 @@
 			</view>
 			
 			<view class="viewButoon">
-				<view class="button">
+				<view class="button" @click="search">
 					搜索
 				</view>
-				<view class="msg">
+				<view class="msg" @click="goStoreSettlement">
 					历史结算
 				</view>
 			</view>
 		</block>
-		<block>
+		<block v-if="index==2">
 			<view class="myTop">
 				<view class="myView">
-					开放时间: <text class="colorFont">2019-11-01</text>
+					开放时间: <text class="colorFont">{{list.start_time}}</text>
 				</view>
 				<view class="myView">
-					结算时间: <text class="colorFont">2019-11-01</text>
+					结算时间: <text class="colorFont">{{list.end_time}}</text>
 				</view>
 				<view class="myView">
-					订单总金额: <text class="colorRed">¥544.00</text>
+					订单总金额: <text class="colorRed">¥{{list.Order_TotalAmount||0}}</text>
 				</view>
 				<view class="myView">
-					结算比例: <text class="colorFont">2:1</text>
+					结算比例: <text class="colorFont">{{list.Distribute_Balance||'0:0'}}</text>
 				</view>
 				<view class="myView">
-					运费金额: <text class="colorFont">¥544.00</text>
+					运费金额: <text class="colorFont">¥{{list.Shipping_fee||0}}</text>
 				</view>
 				<view class="myView">
-					服务费: <text class="colorFont">¥544.00</text>
+					服务费: <text class="colorFont">¥{{list.service_fee||0}}</text>
 				</view>
 				<view class="myView">
-					退款金额: <text class="colorFont">¥544.00</text>
+					退款金额: <text class="colorFont">¥{{list.back_amount||0}}</text>
 				</view>
 				<view class="myView">
-					实际结算: <text class="colorRed">¥544.00</text>
+					实际结算: <text class="colorRed">¥{{list.Stores_Balance||0}}</text>
 				</view>
 			</view>
 			
@@ -70,16 +70,19 @@
 					<view class="td">退款</view>
 					<view class="td">结算</view>
 				</view>
-				<view class="tr">
-					<view class="td">订单号</view>
-					<view class="td">总价</view>
-					<view class="td">实付</view>
-					<view class="td">退款</view>
-					<view class="td">结算</view>
+				<view class="tr" v-for="(item,index) of list.orders" :key="index">
+					<view class="td">{{item.order_id}}</view>
+					<view class="td">¥{{item.order_totalamount}}</view>
+					<view class="td">¥{{item.order_totalprice}}</view>
+					<view class="td">¥{{item.back_amount}}</view>
+					<view class="td colorRed">¥{{item.settle_money}}</view>
 				</view>
 			</view>
 			
-			<view class="buttons">
+			<view class="buttons" v-if="list.orders" @click="goStore">
+				发起结算
+			</view>
+			<view class="buttons ccc" v-if="!list.orders">
 				发起结算
 			</view>
 		</block>
@@ -88,26 +91,86 @@
 
 <script>
  
-    //import {userStoreApply} from '../../common/fetch.js'
+    import {settlement} from '../../common/fetch.js'
+	import {mapGetters} from 'vuex'
     export default {
         data() {
 			const currentDate = this.getDate({
 			         format: true
 			})
             return {
+				index:1,
 				dateValue:'',//开始时间
 				dateValues:'',//结束时间
+				list:[],
             }
         },
         onLoad: function(){
 
         },
+		computed: {
+		    ...mapGetters(['Stores_ID'])
+		},
         methods: {
-			bindDateChangeEnd(e){
-				this.dateValues=e.target.value
+			goStore(){
+				let data={
+					store_id:this.Stores_ID,
+					start_time:this.list.start_time,
+					end_time:this.list.end_time,
+					type:1
+				}
+				settlement(data).then(res=>{
+					uni.showToast({
+						title:res.msg
+					})
+					setTimeout(function(){
+						uni.navigateTo({
+							url:'/pagesA/procurement/storeSettlementRecord'
+						})
+					},1000)
+				})
+			},
+			goStoreSettlement(){
+				uni.navigateTo({
+					url:'/pagesA/procurement/storeSettlementRecord'
+				})
+			},
+			search(){
+				if(!this.dateValue){
+					uni.showToast({
+						title:'请选择开始时间',
+						icon:'none'
+					})
+					return
+				}
+				if(!this.dateValues){
+					uni.showToast({
+						title:'请选择结束时间',
+						icon:'none'
+					})
+					return
+				}
 				let d=new Date(this.dateValues)
 				let c=new Date(this.dateValue)
-				console.log(d>c,"sss")
+				if(d<c){
+					uni.showToast({
+						title:'结束时间不能小于开始时间',
+						icon:'none'
+					})
+					return
+				}
+				let data={
+					store_id:this.Stores_ID,
+					start_time:this.dateValue,
+					end_time:this.dateValues
+				}
+				settlement(data).then(res=>{
+					this.list=res.data
+					this.index=2
+				})
+			},
+			bindDateChangeEnd(e){
+				this.dateValues=e.target.value
 			},
 			bindDateChangeStart(e){
 				this.dateValue=e.target.value
@@ -228,19 +291,19 @@
 	.table{
 		width: 710rpx;
 		margin: 0 auto;
-		border: 1px solid #E7E7E7;
+		border: 1px solid #eee;
 		.th{
 			display: flex;
 			height: 80rpx;
 			line-height: 80rpx;
 			background-color: #F4F4F4;
-			border-bottom: 1px solid #E7E7E7;
+			border-bottom: 1px solid #eee;
 			font-size: 26rpx;
 			color: #333333;
 			.td{
 				width: 142rpx;
 				text-align: center;
-				border-right: 1px solid #E7E7E7;
+				border-right: 1px solid #eee;
 				box-sizing: border-box;
 				&:last-child{
 					border-right: 0px;
@@ -279,5 +342,11 @@
 		bottom: 0rpx;
 		left: 0rpx;
 		text-align: center;
+	}
+	.ccc{
+		background-color: #CCCCCC;
+	}
+	.colorRed{
+		color: #F43131;
 	}
 </style>
