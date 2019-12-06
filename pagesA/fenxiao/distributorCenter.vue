@@ -309,7 +309,7 @@
 			//查看须知
 			goDistributeAgreement(){
 				uni.navigateTo({
-					url:'../fenxiao/distributeAgreement'
+					url:'/pagesA/fenxiao/distributeAgreement'
 				})
 			},
 			// 取消输入支付密码
@@ -366,7 +366,7 @@
 							if (res.confirm) {
 								toast('成为经销商');
 								uni.switchTab({
-									url:'../fenxiao/fenxiao'
+									url:'/pagesA/fenxiao/fenxiao'
 								})
 
 							} else if (res.cancel) {
@@ -390,7 +390,7 @@
 
 				toast('成为经销商');
 				uni.switchTab({
-					url:'../fenxiao/fenxiao'
+					url:'/pagesA/fenxiao/fenxiao'
 				})
 			},
 			//购买提交信息

@@ -23,7 +23,7 @@
 		</view>
 		<view class="space-box" style="height: 100rpx;width: 100%;background-color: #F8F8F8;">
 		</view>
-		
+
 		<view class="marginAuto" v-for="(item,index) of pro" :key="index" >
 			<view class="orderTop">
 				<view style="color: #777777;">
@@ -47,7 +47,7 @@
 								{{i.attr_info.attr_name}}
 							</view>
 							<view  v-else>
-								
+
 							</view>
 							<view class="allPrice">
 								×{{i.prod_count}}
@@ -66,9 +66,9 @@
 				</view>
 			</block>
 		</view>
-		
-		
-		
+
+
+
 
 
 	</view>
@@ -90,7 +90,7 @@
 			};
 		},
 		computed: {
-		    ...mapGetters(['Stores_ID']),		
+		    ...mapGetters(['Stores_ID']),
 		},
 		onShow() {
 			this.pro=[]
@@ -98,7 +98,7 @@
 			this.getOrderNum();
 		},
 		onLoad() {
-	
+
 		},
 		onReachBottom(){
 			if(this.pro.length<this.totalCount){
@@ -125,16 +125,16 @@
 				            	},1000)
 				            })
 				        } else if (res.cancel) {
-				           
+
 				        }
 				    }
 				});
-				
+
 			},
 			goFa(id){
 				//发货 订单id
 				uni.navigateTo({
-					url:"../procurement/retailOrderShip?id="+id
+					url:"/pagesA/procurement/retailOrderShip?id="+id
 				})
 			},
 			_getOrder(){
@@ -395,7 +395,7 @@
 		        border-bottom: 2px solid red;
 		    }
 		}
-		
+
 .orderTop{
 	height: 76rpx;
 	width: 100%;

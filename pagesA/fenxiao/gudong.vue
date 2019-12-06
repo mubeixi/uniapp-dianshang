@@ -109,17 +109,17 @@
 		methods:{
 			goGudongPay(index){
 				uni.navigateTo({
-					url:'../fenxiao/gudongPay?id='+index
+					url:'/pagesA/fenxiao/gudongPay?id='+index
 				})
 			},
 			goGudong(){
 				uni.navigateTo({
-					url:'../fenxiao/addGudong'
+					url:'/pagesA/fenxiao/addGudong'
 				})
 			},
 			goFinance(){
 				uni.navigateTo({
-					url:'../fenxiao/finance?index=2'
+					url:'/pagesA/fenxiao/finance?index=2'
 				})
 			},
 			shaInit(){

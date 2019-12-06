@@ -16,7 +16,7 @@
                     <div class="head">
                         <div class="status flex flex-between ">
                             <div class="order-no">订单号: {{apply.Order_ID}}</div>
-<!--                            <image class="icon-delete"  @click="delApply(apply,idx1)" v-if="inArray(apply.Order_Status,[21,23,25])" src="/static/store/icon-del.png"></image>-->
+                            <image class="icon-delete"  @click="delApply(apply,idx1)" v-if="inArray(apply.Order_Status,[21,23,25])" src="/static/store/icon-del.png"></image>
                         </div>
                         <div class="info flex flex-between">
                             <div class="flex1 flex store-info">
@@ -99,7 +99,7 @@
 
     export default {
         mixins: [pageMixin],
-        name: "storeWholesale",
+        name: "storeApply",
         data() {
             return {
                 applys: [],
@@ -119,12 +119,12 @@
             }
         },
         computed:{
-          ...mapGetters(['Stores_ID'])
+            ...mapGetters(['Stores_ID'])
         },
         methods:{
             handleApply(apply,idx){
                 uni.navigateTo({
-                    url:`/pages/procurement/storeWholesaleSend?apply_id=${apply.Order_ID}`
+                    url:`/pagesA/procurement/storeWholesaleSend?apply_id=${apply.Order_ID}`
                 })
             },
             cancelRefuseApply(){
@@ -230,209 +230,209 @@
 </script>
 
 <style lang="scss" scoped>
-.navs {
-    z-index: 2;
-    position: fixed;
-    top: 0px;
-    left: 0px;
-    width: 100%;
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
-    height: 50px;
-    line-height: 50px;
-    background: #fff;
-    font-size: 14px;
-    padding: 0 10px;
-
-    .nav-item {
-        flex: 1;
-        /*box-sizing: border-box;*/
-        text-align: center;
-        /*position: relative;*/
-        color: #333;
-    }
-
-    .nav-item.active {
-        color: $wzw-primary-color;
-        border-bottom: 2px solid $wzw-primary-color;
-    }
-}
-
-.space-box {
-    height: 50px;
-    width: 100%;
-    background: white;
-}
-
-.lists{
-    .item{
-        margin: 10px 15px 10px;
-        background: white;
-        border-radius: 4px;
-        overflow: hidden;
-        .head{
-
-            .info{
-                padding: 10px;
-                align-items: center;
-                font-size: 14px;
-                .store-info{
-                    align-items: center;
-                }
-                .store-pic{
-                    width: 25px;
-                    height: 25px;
-                    border-radius: 50%;
-                    background-size: cover;
-                    background-repeat: no-repeat;
-                    background-position: center;
-                    margin-right: 10px;
-                }
-                .store-title{
-                    margin-right: 10px;
-                    color: #333;
-                }
-                .action{
-                    color: $wzw-primary-color;
-                    .action-item{
-                        text-decoration: underline;
-                        cursor: pointer;
-                    }
-                }
-                .order_no{
-                    margin-left: 30px;
-                    color: #666;
-                }
-            }
-            .status{
-                font-size: 12px;
-                border-bottom: 1px solid #E6E6E6;
-                padding: 10px;
-                align-items: center;
-                .icon-delete{
-                    width: 14px;
-                    height: 14px;
-                }
-                .el-icon-delete-solid{
-                    cursor: pointer;
-                    color: #999;
-                    &:hover{
-                        color: #F43131;
-                    }
-                }
-            }
-        }
-        .goods-list{
-            border-bottom: 1px solid #EDEDED;
-            .goods{
-                display: flex;
-                align-items: center;
-                padding: 10px;
-                .l{
-                    width: 100px;
-                    height: 100px;
-                    background-size: cover;
-                    background-repeat: no-repeat;
-                    background-color: #f2f2f2;
-                    background-position: center;
-                }
-                .c{
-                    flex:1;
-                    padding: 0 0 0 10px;
-                    .title{
-                        font-size: 14px;
-                        height: 40px;
-                        line-height: 20px;
-                        color: #333;
-                        overflow: hidden;
-                        text-overflow: ellipsis;
-                    }
-                    .spec-key{
-                        background: #FFF5F5;
-                        font-size: 12px;
-                        padding: 6px 10px;
-                        color: #666666;
-                    }
-                    .numbox{
-                        color: #333333
-                    }
-                }
-
-            }
-
-
-        }
-        .price-box{
-            text-align: right;
-            padding: 10px;
-            font-size: 14px;
-        }
-        .actions{
-            text-align: right;
-            padding: 0 10px;
-            .acion-btn{
-                margin-bottom: 10px;
-                margin-left: 10px;
-            }
-
-
-        }
-
-    }
-}
-
-.storeInfoDialog{
-    width: 560rpx;
-    box-sizing: border-box;
-    padding: 10px;
-    font-size: 14px;
-    .row{
+    .navs {
+        z-index: 2;
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        box-sizing: border-box;
         display: flex;
-        margin-bottom: 8px;
-        .label{
-            color: #999;
-            width: 70px;
-        }
-        .text{
-            flex: 1;
-            color: #444;
-        }
-    }
-}
-
-.refuseApplyDialog{
-    width: 560rpx;
-    box-sizing: border-box;
-    padding: 15px;
-    font-size: 14px;
-    .reason{
+        align-items: center;
+        height: 50px;
+        line-height: 50px;
+        background: #fff;
         font-size: 14px;
-        min-height: 200px;
-        border: 1px solid #E3E3E3;
-        line-height: 1.4;
-        height: auto;
-        width: auto;
-        padding: 10px;
-    }
-    .control{
-        margin-top: 15px;
-        display: flex;
-        justify-content: center;
-        .action-btn{
-            width: 70px;
-            height: 36px;
-            line-height: 36px;
-            font-size: 14px;
+        padding: 0 10px;
+
+        .nav-item {
+            flex: 1;
+            /*box-sizing: border-box;*/
             text-align: center;
-            color: #666;
-            background: #e9e9e9;
-            &.btn-sub{
-                background: $wzw-primary-color;
-                color: white;
-                margin-left: 10px;
+            /*position: relative;*/
+            color: #333;
+        }
+
+        .nav-item.active {
+            color: $wzw-primary-color;
+            border-bottom: 2px solid $wzw-primary-color;
+        }
+    }
+
+    .space-box {
+        height: 50px;
+        width: 100%;
+        background: white;
+    }
+
+    .lists{
+        .item{
+            margin: 10px 15px 10px;
+            background: white;
+            border-radius: 4px;
+            overflow: hidden;
+            .head{
+
+                .info{
+                    padding: 10px;
+                    align-items: center;
+                    font-size: 14px;
+                    .store-info{
+                        align-items: center;
+                    }
+                    .store-pic{
+                        width: 25px;
+                        height: 25px;
+                        border-radius: 50%;
+                        background-size: cover;
+                        background-repeat: no-repeat;
+                        background-position: center;
+                        margin-right: 10px;
+                    }
+                    .store-title{
+                        margin-right: 10px;
+                        color: #333;
+                    }
+                    .action{
+                        color: $wzw-primary-color;
+                        .action-item{
+                            text-decoration: underline;
+                            cursor: pointer;
+                        }
+                    }
+                    .order_no{
+                        margin-left: 30px;
+                        color: #666;
+                    }
+                }
+                .status{
+                    font-size: 12px;
+                    border-bottom: 1px solid #E6E6E6;
+                    padding: 10px;
+                    align-items: center;
+                    .icon-delete{
+                        width: 14px;
+                        height: 14px;
+                    }
+                    .el-icon-delete-solid{
+                        cursor: pointer;
+                        color: #999;
+                        &:hover{
+                            color: #F43131;
+                        }
+                    }
+                }
+            }
+            .goods-list{
+                border-bottom: 1px solid #EDEDED;
+                .goods{
+                    display: flex;
+                    align-items: center;
+                    padding: 10px;
+                    .l{
+                        width: 100px;
+                        height: 100px;
+                        background-size: cover;
+                        background-repeat: no-repeat;
+                        background-color: #f2f2f2;
+                        background-position: center;
+                    }
+                    .c{
+                        flex:1;
+                        padding: 0 0 0 10px;
+                        .title{
+                            font-size: 14px;
+                            height: 40px;
+                            line-height: 20px;
+                            color: #333;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                        }
+                        .spec-key{
+                            background: #FFF5F5;
+                            font-size: 12px;
+                            padding: 6px 10px;
+                            color: #666666;
+                        }
+                        .numbox{
+                            color: #333333
+                        }
+                    }
+
+                }
+
+
+            }
+            .price-box{
+                text-align: right;
+                padding: 10px;
+                font-size: 14px;
+            }
+            .actions{
+                text-align: right;
+                padding: 0 10px;
+                .acion-btn{
+                    margin-bottom: 10px;
+                    margin-left: 10px;
+                }
+
+
+            }
+
+        }
+    }
+
+    .storeInfoDialog{
+        width: 560rpx;
+        box-sizing: border-box;
+        padding: 10px;
+        font-size: 14px;
+        .row{
+            display: flex;
+            margin-bottom: 8px;
+            .label{
+                color: #999;
+                width: 70px;
+            }
+            .text{
+                flex: 1;
+                color: #444;
             }
         }
     }
-}
+
+    .refuseApplyDialog{
+        width: 560rpx;
+        box-sizing: border-box;
+        padding: 15px;
+        font-size: 14px;
+        .reason{
+            font-size: 14px;
+            min-height: 200px;
+            border: 1px solid #E3E3E3;
+            line-height: 1.4;
+            height: auto;
+            width: auto;
+            padding: 10px;
+        }
+        .control{
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+            .action-btn{
+                width: 70px;
+                height: 36px;
+                line-height: 36px;
+                font-size: 14px;
+                text-align: center;
+                color: #666;
+                background: #e9e9e9;
+                &.btn-sub{
+                    background: $wzw-primary-color;
+                    color: white;
+                    margin-left: 10px;
+                }
+            }
+        }
+    }
 </style>

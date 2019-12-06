@@ -101,7 +101,7 @@
 			//申请记录
 			goRecord(){
 				uni.navigateTo({
-					url:'../fenxiao/record'
+					url:'/pagesA/fenxiao/record'
 				})
 			},
 			//申请提现
@@ -192,7 +192,7 @@
 						if(this.withdraw_from==2){
 							this.balance=res.data.user_money
 						}
-						
+
 					}
 				}).catch(err=>{
 					console.log(err)
