@@ -634,7 +634,20 @@
             "style": {
               "navigationBarTitleText": "退货记录"
             }
-          }
+          },
+		  {
+		    "path": "procurement/storeSettlement",
+		    "style": {
+		      "navigationBarTitleText": "结算"
+		    }
+		  },
+		  {
+		    "path": "procurement/storeSettlementDetail",
+		    "style": {
+		      "navigationBarTitleText": "结算"
+		    }
+		  }
+          
         ]
 	}],
 	"globalStyle": {
