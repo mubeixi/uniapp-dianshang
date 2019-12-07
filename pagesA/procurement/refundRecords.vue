@@ -42,8 +42,8 @@
 				<view class="totalinfo">总计：<text class="price-icon">￥</text><text class="price-num">{{item.price}}</text></view>
 				<view class="btns">
 					<view class="btn" v-if="item.status == 31 || item.status == 32" @click="cancelOrder(item.id)">取消</view>
-					<view class="btn back" v-if="item.status == 32">发货</view>
-					<view class="btn back" v-if="item.status == 35">确认收款</view>
+					<view class="btn back" @click="send(item.id)" v-if="item.status == 32">发货</view>
+					<view class="btn back" @click="reciveMoney(item.id)" v-if="item.status == 35">确认收款</view>
 				</view>
 			</view>
 			<view class="list-bottom">我是有底线的</view>
@@ -100,7 +100,7 @@
 </template>
 
 <script>
-	import {getStoreProdBackOrder,storeProdBackOrderCancel} from '../../common/fetch.js'
+	import {getStoreProdBackOrder,storeProdBackOrderCancel,storeProdBackOrderConfirm} from '../../common/fetch.js'
 	import {mapGetters} from 'vuex'
 	export default {
 		data(){
@@ -124,19 +124,51 @@
 			this.getStoreProdBackOrder();
 		},
 		methods: {
-			// 取消退货单
-			cancelOrder(order_id){
-				storeProdBackOrderCancel({
+			// 确认收款
+			reciveMoney(order_id){
+				storeProdBackOrderConfirm({
 					store_id: this.Stores_ID,
 					order_id: order_id
-				}).then((res)=>{
+				}).then(res=>{
 					uni.showToast({
 						title: res.msg
-					});
+					})
 					setTimeout(()=>{
 						this.load();
 					},1000)
 				})
+			},
+			// 发货
+			send(order_id){
+				uni.navigateTo({
+					url: '/pagesA/procurement/purchaseSend?order_id=' + order_id
+				})
+			},
+			// 取消退货单
+			cancelOrder(order_id){
+				uni.showModal({
+					content: '确认退货？',
+					cancelText: '我再想想',
+					confirmText: '我意已决',
+					success: (res) => {
+						if(res.confirm) {
+							storeProdBackOrderCancel({
+								store_id: this.Stores_ID,
+								order_id: order_id
+							}).then((res)=>{
+								uni.showToast({
+									title: res.msg
+								});
+								setTimeout(()=>{
+									this.load();
+								},1000)
+							})
+						}else {
+							return;
+						}
+					}	
+				})
+				
 			},
 			changeStatus(status){
 					this.status = status;
