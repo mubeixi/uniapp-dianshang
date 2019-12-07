@@ -252,11 +252,13 @@
 		methods:{
 			...mapActions(['setUserInfo']),
 			goStore(){
+				if(!this.$fun.checkIsLogin(1))return;
 				uni.navigateTo({
 					url: '/pages/person/storeCenter'
 				})
 			},
 			goNew(){
+				if(!this.$fun.checkIsLogin(1))return;
 				uni.navigateTo({
 					url: '/pagesA/procurement/storeSettled'
 				})
@@ -366,6 +368,7 @@
 				this.$fun.checkIsLogin(1)
 			},
 			goPintuanOrderlist(){
+				if(!this.$fun.checkIsLogin(1))return;
 				uni.navigateTo({
 					url: '../order/pintuanOrderlist'
 				})

@@ -198,7 +198,7 @@
 		                            <image class="del"  @click="delList(index,attr.myqty,attr_id)" src="/static/procurement/del.png"></image>
 		                        </view>
 		                        <view class="attrInfo">
-		                            <view>{{attr.check_attrnames}}</view>
+		                            <view class="attrVal">{{attr.check_attrnames}}</view>
 		                        </view>
 		                        <view class="proPrice">
 		                            <view class="newPrice">￥<text class="number">{{pro.Products_PriceX}}</text></view>
@@ -376,10 +376,22 @@
 			},
 			// 提交退货
 			submit(){
-				this.$refs.detail.close();
-				this.zIndex = 100;
-				this.isChangeChannel = true;
-				this.isHiddenMask = false;
+				uni.showModal({
+					content: '确定要发起退货？',
+					cancelText: '再想想',
+					confirmText: '我心依旧',
+					success: (res)=>{
+						if (res.confirm) {
+							this.$refs.detail.close();
+							this.zIndex = 100;
+							this.isChangeChannel = true;
+							this.isHiddenMask = false;
+						} else if (res.cancel) {
+								return;
+						}
+					}
+				})
+				
 			},
 			sub_cancel(){
 				this.isChangeChannel = false;
@@ -879,6 +891,7 @@
 	align-content: center;
 	justify-content: space-between;
 }
+
 .skuCount{
 	width: 120rpx;
 	height: 46rpx;
@@ -1016,7 +1029,7 @@
 		                    height: 32rpx;
 		                }
 		                .sku {
-		                    width: 80rpx;
+		                    padding: 0 10rpx;
 		                    height: 46rpx;
 		                    line-height: 46rpx;
 		                    text-align: center;
@@ -1159,12 +1172,15 @@
 		            }
 		            .attrInfo {
 		                display: inline-block;
-		                padding: 12rpx 16rpx;
-		                background-color: #FFF5F5;
 		                color: #666;
 		                font-size: 22rpx;
 		                border-radius: 5rpx;
 		                margin-bottom: 24rpx;
+										.attrVal {
+											display: inline-block;
+											padding: 12rpx 16rpx;
+											background-color: #FFF5F5;
+										}
 		            }
 		            .proPrice {
 		                display: flex;

@@ -9,16 +9,16 @@
 				<view class="jiaobiao" v-if="orderNum.waitpay>0">{{orderNum.waitpay}}</view>
 			</view>
 		    <view class="nav-item" :class="index==2?'active':''" @click="changIndex(2)">
-				待发货
-				<view class="jiaobiao" v-if="orderNum.waitsend>0">{{orderNum.waitsend}}</view>
+				待消费
+				<!-- <view class="jiaobiao" v-if="orderNum.waitsend>0">{{orderNum.waitsend}}</view> -->
 			</view>
-		    <view class="nav-item" :class="index==3?'active':''" @click="changIndex(3)">
+		   <!-- <view class="nav-item" :class="index==3?'active':''" @click="changIndex(3)">
 				待收货
 				<view class="jiaobiao" v-if="orderNum.waitconfirm>0">{{orderNum.waitconfirm}}</view>
-			</view>
+			</view> -->
 		    <view class="nav-item" :class="index==4?'active':''" @click="changIndex(4)">
 				已完成
-				<view class="jiaobiao" v-if="orderNum.waitcomment>0">{{orderNum.waitcomment}}</view>
+				<!-- <view class="jiaobiao" v-if="orderNum.waitcomment>0">{{orderNum.waitcomment}}</view> -->
 			</view>
 		</view>
 		<view class="space-box" style="height: 100rpx;width: 100%;background-color: #F8F8F8;">
@@ -57,14 +57,13 @@
 							<view class="viewFont">
 								¥<span class="spanFont">{{i.prod_price}}</span>
 							</view>
-							<view>
-								<span class="spanJu" @click="refund(item.Order_ID)">拒单</span>
-								<span class="spanFa" @click="goFa(item.Order_ID)">去发货</span>
-							</view>
-						</view>
+						</view>	
 					</view>
 				</view>
 			</block>
+			<view style="text-align: right;padding-right:20rpx;">
+				<span class="spanJu" @click="refund(item.Order_ID)">拒单</span>
+			</view>
 		</view>
 
 
@@ -286,29 +285,17 @@
 		color: #F43131;
 		margin-left: 3px;
 	}
-	.spanJu{
-		width:80rpx;
-		height:45rpx;
-		background:#EEEEEE;
-		border-radius:5px;
-		font-size: 24rpx;
-		color: #666666;
-		display: inline-block;
-		line-height: 45rpx;
-		text-align: center;
-	}
-	.spanFa{
-		width:95rpx;
-		height:45rpx;
-		background:#F43131;
-		border-radius:5px;
-		font-size: 24rpx;
-		line-height: 45rpx;
-		text-align: center;
-		color: #FFFFFF;
-		display: inline-block;
-		margin-left: 24rpx;
-	}
+}
+.spanJu{
+	width:80rpx;
+	height:45rpx;
+	background:#EEEEEE;
+	border-radius:5px;
+	font-size: 24rpx;
+	color: #666666;
+	display: inline-block;
+	line-height: 45rpx;
+	text-align: center;
 }
 
 		.check {
