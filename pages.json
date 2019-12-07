@@ -655,7 +655,11 @@
 		    }
 		  }
           
-        ]
+			,{
+							"path" : "procurement/purchaseSend",
+							"style" : {}
+					}
+			]
 	}],
 	"preloadRule":{
 		"pages/index/index": {

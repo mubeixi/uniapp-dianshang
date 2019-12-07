@@ -472,9 +472,10 @@ export const getStoreProdBackOrder = (data, options) => fetch('get_store_prod_ba
 export const storeProdBackOrderCancel = (data,options) => fetch('store_prod_back_order_cancel', data, options);
 
 export const storeInit = (data, options) => fetch('store_init', data, options);
-
-
-
+// 门店退货单详情
+export const getStoreProdBackOrderDetail = (data,options) => fetch('get_store_prod_back_order_detail', data, options);
+// 退货单发货
+export const storeProdBackOrderSend = (data,options) => fetch('store_prod_back_order_send', data, options);
 
 
 

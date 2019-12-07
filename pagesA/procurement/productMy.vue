@@ -246,12 +246,12 @@
 							
 		            <image class="selected" src="/static/procurement/selected.png" mode="" v-if="active_id == 0"></image>
 								<view class="nochecked" v-else></view>
-								<view>平台进货</view>
+								<view>平台退货</view>
 		        </view>
 		        <view class="skulist" @click="active_id = 1">
 								<image class="selected" src="/static/procurement/selected.png" mode="" v-if="active_id == 1"></image>
 								<view class="nochecked" v-else></view>
-								<view>门店进货</view>
+								<view>门店退货</view>
 		        </view>
 		        <view class="skulist" v-if="active_id == 1">
 								<input class="input" type="text" v-model="purchase_store_sn" placeholder="请输入门店编号" placeholder-style="color: #C9C9C9;font-size: 24rpx;" />
@@ -377,21 +377,20 @@
 			// 提交退货
 			submit(){
 				uni.showModal({
-					content: '确定要发起退货？',
-					cancelText: '再想想',
-					confirmText: '我心依旧',
-					success: (res)=>{
-						if (res.confirm) {
+					content: '确定退货？',
+					cancelText: '我再想想',
+					confirmText: '我意已决',
+					success: (res) => {
+						if(res.confirm) {
 							this.$refs.detail.close();
 							this.zIndex = 100;
 							this.isChangeChannel = true;
 							this.isHiddenMask = false;
-						} else if (res.cancel) {
-								return;
+						}else {
+							return;
 						}
 					}
 				})
-				
 			},
 			sub_cancel(){
 				this.isChangeChannel = false;
@@ -466,7 +465,7 @@
 					this.isChangeChannel = false;
 					setTimeout(()=>{
 						uni.navigateTo({
-							url: '/pages/procurement/refundRecords'
+							url: '/pagesA/procurement/refundRecords'
 						})
 					},500)
 				})
@@ -1080,6 +1079,9 @@
 		                background-color: $wzw-primary-color;
 		                color: #fff;
 		            }
+								.disabled {
+									background: #999;
+								}
 		        }
 		    }
 		}
