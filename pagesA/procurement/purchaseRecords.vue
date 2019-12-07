@@ -252,15 +252,26 @@
 					order_id:id
 				}
 				let that=this
-				storePifaOrderRecall(data).then(res=>{
-					uni.showToast({
-						title:res.msg,
-						icon:'none'
-					})
-					setTimeout(function(){
-						that.getStorePurchaseApply()
-					},1000)
-				}).catch(e=>{console.log(e)})
+				uni.showModal({
+				    title: '订单',
+				    content: '是否要撤回订单',
+				    success: function (res) {
+				        if (res.confirm) {		
+							storePifaOrderRecall(data).then(res=>{
+								uni.showToast({
+									title:res.msg,
+									icon:'none'
+								})
+								setTimeout(function(){
+									that.getStorePurchaseApply()
+								},1000)
+							}).catch(e=>{console.log(e)})
+				        } else if (res.cancel) {
+				
+				        }
+				    }
+				});
+				
 			},
 			//取消采购单
 			cancelOrder(id){
@@ -269,15 +280,26 @@
 					order_id:id
 				}
 				let that=this
-				storePifaOrderCancel(data).then(res=>{
-					uni.showToast({
-						title:res.msg,
-						icon:'none'
-					})
-					setTimeout(function(){
-						that.getStorePurchaseApply()
-					},1000)
-				}).catch(e=>{console.log(e)})
+				uni.showModal({
+				    title: '订单',
+				    content: '是否要取消订单',
+				    success: function (res) {
+				        if (res.confirm) {		
+							storePifaOrderCancel(data).then(res=>{
+								uni.showToast({
+									title:res.msg,
+									icon:'none'
+								})
+								setTimeout(function(){
+									that.getStorePurchaseApply()
+								},1000)
+							}).catch(e=>{console.log(e)})
+				        } else if (res.cancel) {
+				
+				        }
+				    }
+				});
+				
 			},
 			getStorePurchaseApply(){
 				let data={
