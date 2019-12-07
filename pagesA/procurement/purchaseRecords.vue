@@ -45,6 +45,7 @@
 					<view class="btns">
 						<view class="btn back" @click="cancelOrder(item.Order_ID)" v-if="item.Order_Status==20||item.Order_Status==21||item.Order_Status==25">取消进货单</view>
 						<view class="btn back" @click="recallOrder(item.Order_ID)" v-if="item.Order_Status==21">撤回进货单</view>
+						<view class="btn back" @click="wuliu(item)" v-if="item.Order_Status==23">查看物流</view>
 						<view class="btn back" @click="completedOrder(item.Order_ID)" v-if="item.Order_Status==23">确认收货</view>
 						<view class="btn back" @click="submitOrder(item.Order_ID)" v-if="item.Order_Status==20||item.Order_Status==22||item.Order_Status==25">提交进货单</view>
 					</view>
@@ -138,6 +139,13 @@
 			this.getStorePurchaseApply()
 		},
 		methods: {
+			wuliu(item){
+				let express = item.Order_Shipping.Express;
+				//跳转物流追踪
+				uni.navigateTo({
+					url:'/pages/order/logistics?shipping_id='+item.Order_ShippingID + '&express=' + express + '&prod_img=' + item.prod_list[0].prod_img
+				})
+			},
 			del(id){
 				let that=this
 				uni.showModal({

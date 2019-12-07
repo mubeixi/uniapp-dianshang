@@ -69,6 +69,16 @@
 
 
 
+		<div class="zhezhao" v-if="password_input">
+		    <div class="input-wrap">
+		        <div>请输入拒单原因</div>
+		        <textarea auto-height  class="input" placeholder="请输入原因" v-model="reason" ></textarea>
+		        <div class="btns">
+		            <div @click="cancelInput" class="btn">取消</div>
+		            <div @click="confirmInput" class="btn">确定</div>
+		        </div>
+		    </div>
+		</div>
 
 	</view>
 </template>
@@ -85,7 +95,10 @@
 				page:1,
 				pageSize:10,
 				totalCount:0,
-				orderNum:""
+				orderNum:"",
+				password_input:false,
+				reason:'',
+				id:0
 			};
 		},
 		computed: {
@@ -106,29 +119,39 @@
 			}
 		},
 		methods:{
+			confirmInput(){
+				let data={
+					Order_ID:this.id,
+					reason:this.reason
+				}
+				let that=this
+				if(!this.reason){
+					uni.showToast({
+						title:'拒单原因必填',
+						icon:"none"
+					})
+					return
+				}
+				systemRejectOrder(data).then(res=>{
+					uni.showToast({
+						title:res.msg,
+						icon:'none'
+					})
+					that.password_input=false
+					setTimeout(function(){
+						that._getOrder();
+						that.getOrderNum();
+					},1000)
+				})
+						
+			},
+			cancelInput(){
+				this.password_input=false
+			},
 			refund(id){
 				let that=this
-				uni.showModal({
-				    title: '拒单',
-				    content: '是否要拒单',
-				    success: function (res) {
-				        if (res.confirm) {
-				            systemRejectOrder({Order_ID:id}).then(res=>{
-				            	uni.showToast({
-				            		title:res.msg,
-				            		icon:'none'
-				            	})
-				            	setTimeout(function(){
-				            		that._getOrder();
-				            		that.getOrderNum();
-				            	},1000)
-				            })
-				        } else if (res.cancel) {
-
-				        }
-				    }
-				});
-
+				this.id=id
+				this.password_input=true
 			},
 			goFa(id){
 				//发货 订单id
@@ -168,12 +191,12 @@
 				}).catch(e=>{})
 			},
 			getOrderNum(){
-				getOrderNum({Order_Store:this.Stores_ID},{noUid:true}).then(res=>{
-					this.orderNum=res.data;
-					console.log(res)
-				}).catch(e=>{
-					console.log(e)
-				})
+				// getOrderNum({Order_Store:this.Stores_ID},{noUid:true}).then(res=>{
+				// 	this.orderNum=res.data;
+				// 	console.log(res)
+				// }).catch(e=>{
+				// 	console.log(e)
+				// })
 			},
 			changIndex(i){
 				this.pro=[];
@@ -396,4 +419,44 @@
 	padding-left: 20rpx;
 	padding-right: 20rpx;
 }
+.zhezhao {
+	    left: 0;
+	    top: 0;
+	    position: fixed;
+	    width: 100%;
+	    height: 100%;
+	    background: rgba(0,0,0,.3);
+	    z-index: 1000;
+
+	    .input-wrap {
+	        background: #fff;
+	        color: #000;
+	        text-align: center;
+	        width: 90%;
+	        margin: 400rpx auto;
+	        padding: 40rpx 50rpx 30rpx;
+	        box-sizing: border-box;
+	        font-size: 28rpx;
+	        border-radius: 10rpx;
+	        .input {
+	            margin: 40rpx 0;
+	            border: 1px solid #efefef;
+				min-height: 20px;
+				line-height: 20px;
+				padding: 10px 0px;
+				text-align: left;
+				padding-left: 10rpx;
+	        }
+
+	        .btns {
+	            display: flex;
+	            justify-content: space-around;
+	            height: 60rpx;
+	            line-height: 60rpx;
+	            .btn {
+	                flex: 1;
+	            }
+	        }
+	    }
+	}
 </style>
