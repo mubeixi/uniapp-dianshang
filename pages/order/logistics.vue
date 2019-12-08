@@ -176,6 +176,7 @@
 	padding: 45rpx 0rpx 0rpx 42rpx;
 	margin: 0 auto;
 	.center{
+		padding: 10px 0px;
 		width: 626rpx;
 		display: flex;
 		.lefts{
