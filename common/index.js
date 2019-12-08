@@ -10,9 +10,7 @@ import store from '../store';
 import {ls} from "./tool";
 // const i18n = require('i18n');
 
-//引入组件
-import ModelComponents from "../components/ModelComponents";
-Vue.component('wzw-dialog',ModelComponents)
+
 //重写uni部分
 require('./uni');
 
@@ -181,27 +179,27 @@ export const fun = {
     linkTo: (linkObj) => {
 
         let {link, linkType} = linkObj;
-        
+
         console.log('跳转link:' + link + '===type:' + linkType)
 		//第三方链接
 		if(linkType==='third' || link.indexOf('http')!==-1){
-			
+
 			// #ifndef H5
 			console.log('/pages/common/webview?url='+link)
 			uni.navigateTo({
 				url:'/pages/common/webview?url='+link
 			})
 			// #endif
-			
-			
-			
+
+
+
 			// #ifdef H5
 			location.href = link
 			// #endif
-			
+
 			return;
 		}
-		
+
 		if(link[0]!='/'){
 		    link = '/'+link;
 		}

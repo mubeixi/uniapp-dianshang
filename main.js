@@ -11,6 +11,10 @@ import Common from './common/index.js';
 import {GetQueryByString, ls} from "./common/tool";
 Vue.use(Common);
 
+//引入组件
+import ModelComponents from "./components/ModelComponents";
+Vue.component('wzw-dialog',ModelComponents)
+
 
 // #ifdef H5
 // var fundebug = require("fundebug-javascript");
