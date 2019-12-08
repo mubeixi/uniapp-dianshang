@@ -239,15 +239,15 @@
                     stores_name:this.stores_name,
                 }
 
-               
+
                  postData.prod_json = JSON.stringify(this.prod_ids)
-        
+
 
                 if(this.lat && this.lng){
                     postData.lat = this.lat
                     postData.lng = this.lng
                 }
-                getStoreList(emptyObject(postData)).then(res => {
+                getStoreList(emptyObject(postData),{tip:'搜索中',mask:true}).then(res => {
 
                     this.stores = res.data;
                     // this.stores = this.stores.concat(res.data)
