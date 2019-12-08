@@ -12,12 +12,70 @@
 		:rightHidden=true
         :dot=true
         @methodHandle="methodHandle"
-				:is_pingtai="is_pingtai"></page-title>
+		:is_pingtai="is_pingtai"></page-title>
 
         <view class="search-wrap">
             <icon type="search" size="34rpx" class="search_icon" @click="search"/>
             <input type="text" class="input" placeholder="请输入商品关键词" @confirm="search" v-model="prod_name" placeholder-style="color:#bebdbd;">
         </view>
+		
+		<view class="storeAddress">
+			<view class="storeAddressImg">
+				<image class="imgWidth" src="https://new401.bafangka.com/uploadfiles/wkbq6nc2kc/image/20191205143705198.png" ></image>
+			</view>
+			<view class="storeAddressRight">
+				<view class="storeName">
+					<view>硅谷广场一店</view>
+					<view class="storeKm">
+						360m
+						<image class="imgHeight" src="https://new401.bafangka.com/static/client/person/right.png"></image>
+					</view>
+				</view>
+				<view class="storeTell" style="margin-bottom: 15rpx;">
+					<image class="storeTellImg" src="/static/tellStore.png"></image>
+					0371-8888888
+				</view>
+				<view class="storeTell">
+					<image class="storeTellImg" src="/static/adressStore.png"></image>
+					金水区文化路东风路交叉口硅谷广场5楼
+				</view>
+			</view>
+		</view>
+		
+		<view class="storeCate">
+			<view class="storeCateLine">
+				<view class="storeCateLei">一级分类:</view>
+				<scroll-view scroll-x="true" class="storeScroll">
+					<block v-for="(item,index) of cateList" :key="index">
+						<!-- skuSelect -->
+						<view class="skuClass " @click="selctFirst(index)"  :class="indexFirst==index?'skuSelect':''">
+							{{item.Category_Name}}
+						</view>
+					</block>
+				</scroll-view>
+			</view>
+			<view class="storeCateLine">
+				<view class="storeCateLei">二级分类:</view>
+				<scroll-view scroll-x="true" class="storeScroll">
+					<block v-for="(it,ind) of cateList[indexFirst].child" :key="ind">
+						<!-- skuSelect -->
+						<view class="skuClass " @click="selctSecond(ind)"  :class="indexSecond==ind?'skuSelect':''">
+							{{it.Category_Name}}
+						</view>
+					</block>
+				</scroll-view>
+			</view>
+			<view class="storeCateLast">
+				<view class="storeCateLei">当前选择:</view>
+					<view v-if="indexFirst>=0" class="selectSku" style="margin-right: 30rpx;">{{cateList[indexFirst].Category_Name}}
+						<image class="delSku" src="/static/skuDel.png" @click="delFirst"></image>
+					</view>
+					<view v-if="indexSecond>=0&&indexFirst>=0" class="selectSku">{{cateList[indexFirst].child[indexSecond].Category_Name}}
+						<image class="delSku" src="/static/skuDel.png" @click="delSecond"></image>
+					</view>
+			</view>
+		</view>
+		
         <view class="prolist">
             <view class="pro" v-for="item in prolist">
                 <view class="pro-img">
@@ -123,7 +181,7 @@
 
 <script>
     import popupLayer from '../../components/popup-layer/popup-layer.vue'
-    import {getPifaStoreProd, updateCart,getCart,delCart,getStoreList,createOrder,getProductList} from '../../common/fetch'
+    import {getPifaStoreProd, updateCart,getCart,delCart,getStoreList,createOrder,getProductList,getProductCategory} from '../../common/fetch'
     import {mapGetters} from 'vuex'
     import {numberSort} from '../../common/tool'
     export default {
@@ -152,9 +210,12 @@
                 cartList: '',
                 total_pro_count: '', // 总共的产品数
                 total_cart_count: '', // 购物车中的产品数
-								storeInfo: '' , // 门店信息,
-								active_id: '',
-								is_pingtai: 0, // 是否是平台补货
+				storeInfo: '' , // 门店信息,
+				active_id: '',
+				is_pingtai: 0, // 是否是平台补货
+				cateList:[],//分类数据
+				indexFirst:-1,
+				indexSecond:-1
             }
         },
         components: {
@@ -167,9 +228,9 @@
             },
 
         },
-				onShow(){
-					this.get_cart();
-				},
+		onShow(){
+			this.get_cart();
+		},
         onLoad(options){
             if(options.purchase_store_sn) {
 							this.is_pingtai = 0;
@@ -180,36 +241,77 @@
 							this.is_pingtai = 1;
 							// 获取平台产品
 							this.getProductList();
-						}
+			}
+			this.getProductCategory()
         },
         methods: {
-						// 提交进货单
-						submit(){
-							console.log(this.cartList)
-							let obj = {}
-							for(let i in this.cartList){
-								for(let j in this.cartList[i]){
-									if(obj[i]) {
-										obj[i].push(j)
-									}else {
-										obj[i] = [j]
-									}
-								}
-							}
-							createOrder({
-								cart_key: 'CartList',
-								cart_buy: obj && JSON.stringify(obj)
-							}).then(res=>{
-								uni.showToast({
-									title: res.msg
-								});
-								setTimeout(()=>{
-									uni.navigateTo({
-										url: '/pagesA/procurement/purchaseRecords'
-									})
-								},1500)
-							})
-						},
+			delFirst(){
+				this.indexFirst=-1
+				this.indexSecond=-1
+				if(this.is_pingtai ==0){
+					this.getProlist()
+				}else if(this.is_pingtai ==1){
+					this.getProductList()
+				}
+		
+			},
+			delSecond(){
+				this.indexSecond=-1
+				if(this.is_pingtai ==0){
+					this.getProlist()
+				}else if(this.is_pingtai ==1){
+					this.getProductList()
+				}
+			},
+			selctSecond(index){
+				this.indexSecond=index
+				if(this.is_pingtai ==0){
+					this.getProlist()
+				}else if(this.is_pingtai ==1){
+					this.getProductList()
+				}
+			},
+			selctFirst(index){
+				this.indexFirst=index
+				this.indexSecond=-1
+				if(this.is_pingtai ==0){
+					this.getProlist()
+				}else if(this.is_pingtai ==1){
+					this.getProductList()
+				}
+			},
+			getProductCategory(){
+				getProductCategory().then(res=>{
+					this.cateList=res.data
+				})
+			},
+			// 提交进货单
+			submit(){
+				console.log(this.cartList)
+				let obj = {}
+				for(let i in this.cartList){
+					for(let j in this.cartList[i]){
+						if(obj[i]) {
+							obj[i].push(j)
+						}else {
+							obj[i] = [j]
+						}
+					}
+				}
+				createOrder({
+					cart_key: 'CartList',
+					cart_buy: obj && JSON.stringify(obj)
+				}).then(res=>{
+					uni.showToast({
+						title: res.msg
+					});
+					setTimeout(()=>{
+						uni.navigateTo({
+							url: '/pagesA/procurement/purchaseRecords'
+						})
+					},1500)
+				})
+			},
             // 更新购物车中产品的数量，数量-1
             reduce(pro_id,attr_id) {
 							updateCart({
@@ -351,23 +453,39 @@
             },
 						// 门店产品
             getProlist(){
-                getPifaStoreProd({
+				let data={
                     purchase_store_sn: this.purchase_store_sn,
                     store_id: this.Stores_ID
-                }).then(res=>{
+                }
+				if(this.indexSecond>=0){
+					data.cate_id=this.cateList[this.indexFirst].child[this.indexSecond].Category_ID
+				}else{
+					if(this.indexFirst>=0){
+						data.cate_id=this.cateList[this.indexFirst].Category_ID
+					}
+				}
+                getPifaStoreProd(data).then(res=>{
                     this.prolist = res.data;
                     this.total_pro_count = res.totalCount;
 										this.active_id = this.Stores_ID + '_' + res.Stores_ID
                 })
             },
-						// 普通产品
-						getProductList(){
-							getProductList().then(res=>{
-								this.prolist = res.data;
-								this.total_pro_count = res.totalCount;
-								this.active_id = this.Stores_ID + '_' + 0
-							})
-						},
+			// 普通产品
+			getProductList(){
+				let data={}
+				if(this.indexSecond>=0){
+					data.Cate_ID=this.cateList[this.indexFirst].child[this.indexSecond].Category_ID
+				}else{
+					if(this.indexFirst>=0){
+						data.Cate_ID=this.cateList[this.indexFirst].Category_ID
+					}
+				}
+				getProductList(data).then(res=>{
+					this.prolist = res.data;
+					this.total_pro_count = res.totalCount;
+					this.active_id = this.Stores_ID + '_' + 0
+				})
+			},
             methodHandle(type){
               this.type = type;
 							if(this.type == 1) {
@@ -836,4 +954,139 @@
             }
         }
     }
+	.storeAddress{
+		width: 710rpx;
+		margin: 0 auto;
+		margin-top: 20rpx;
+		margin-bottom: 20rpx;
+		box-sizing: border-box;
+		border-radius:5px;
+		padding: 20rpx 17rpx 22rpx 21rpx;
+		background-color: #FFFFFF;
+		display: flex;
+		.storeAddressImg{
+			width: 82rpx;
+			height: 82rpx;
+			border-radius: 50%;
+			overflow: hidden;
+			margin-right: 22rpx;
+			.imgWidth{
+				width: 100%;
+				height: 100%;
+			}
+		}
+		.storeAddressRight{
+			width: 580rpx;
+			.storeName{
+				display: flex;
+				justify-content: space-between;
+				font-size: 28rpx;
+				color: #333333;
+				width: 580rpx;
+				height: 28rpx;
+				align-items: center;
+				margin-bottom: 17rpx;
+				.storeKm{
+					display: flex;
+					align-items: center;
+					font-size: 24rpx;
+				}
+				.imgHeight{
+					margin-left: 12rpx;
+					width: 16rpx;
+					height: 24rpx;
+				}
+			}
+			.storeTell{
+				height: 24rpx;
+				width: 580rpx;
+				color: #888888;
+				font-size: 22rpx;
+				.storeTellImg{
+					width: 20rpx;
+					height: 24rpx;
+					margin-right: 16rpx;
+				}
+			}
+		
+		}
+		
+		
+	}
+	.storeCate{
+		width: 750rpx;
+		padding-left:20rpx ;
+		margin-bottom: 30rpx;
+		box-sizing: border-box;
+		background-color: #FFFFFF;
+		.storeCateLine{
+			height: 80rpx;
+			display: flex;
+			align-items: center;
+			border-bottom: 1px dotted #C5C5C5;
+			.storeCateLei{
+				width: 120rpx;
+				font-size: 26rpx;
+				color: #333333;
+				margin-right: 10rpx;
+			}
+			.storeScroll{
+				width: 600rpx;
+				display: flex;
+				align-items: center;
+				height: 80rpx;
+				white-space: nowrap;
+				.skuClass{
+					display: inline-block;
+					height: 40rpx;
+					font-size: 24rpx;
+					color: #888888;
+					margin-right: 10rpx;
+					margin-left: 10rpx;
+					margin-top: 20rpx;
+					padding-left: 10rpx;
+					padding-right: 10rpx;
+					line-height: 40rpx;
+				}
+				.skuSelect{
+					background-color: #F43131 !important;
+					color: #fff !important;
+					padding-left: 10rpx !important;
+					padding-right: 10rpx !important;
+				}
+			}
+		}
+		.storeCateLast{
+			height: 86rpx;
+			display: flex;
+			align-items: center;
+			.storeCateLei{
+				width: 120rpx;
+				font-size: 26rpx;
+				color: #333333;
+				margin-right: 20rpx;
+			}
+			.selectSku{
+				font-size: 24rpx;
+				color: #333333;
+				height: 40rpx;
+				box-sizing: border-box;
+				padding-left: 15rpx;
+				padding-right: 15rpx;
+				line-height: 40rpx;
+				background-color: #FFECEC;
+				position: relative;
+				.delSku{
+					width: 25rpx;
+					height: 25rpx;
+					position: absolute;
+					top: -10rpx;
+					right: -10rpx;
+				}
+			}
+		}
+		
+	}
+
+
 </style>
