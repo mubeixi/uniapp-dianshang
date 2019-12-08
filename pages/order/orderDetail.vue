@@ -3,13 +3,15 @@
 		<!-- #ifdef APP-PLUS -->
 		<!-- <view class="status_bar" style="background:white;position: fixed;top: 0;z-index: 22"></view> -->
 		<!-- #endif -->
-		<block v-if="orderInfo.Order_IsVirtual == 1 && orderInfo.Order_Status==2">
-			<div class="checkinfo-box line10 padding15">
+		<!-- ||orderInfo.Order_Status==4 -->
+		<!-- orderInfo.Order_IsVirtual == 1 && (orderInfo.Order_Status==2) -->
+		<block v-if="2">
+			<div class="checkinfo-box line10 padding15" v-if="orderInfo.Order_IsVirtual == 1 && (orderInfo.Order_Status==2)">
 				<div class="check-orderno ">
 					<div class="font36" style="color: #555;font-weight: 300">{{orderInfo.Order_Code}}</div>
 					<div class="graytext2 font12">兑换码</div>
 				</div>
-				<div class="check-qrcode text-right" @click="showQrImg">
+				<div class="check-qrcode text-right" @click="showQrImg" v-if="qrVal">
 
 					<wzw-qrcode
 							class="line6"
