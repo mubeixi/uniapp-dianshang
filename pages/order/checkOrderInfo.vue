@@ -152,6 +152,7 @@
                 confirm({confirmConf}).then(res=>{
 
                     toast('核销成功')
+					//需要跳转到一个页面
                     setTimeout(function () {
                         uni.navigateTo({
                             url:'/pages/order/checkChannel'
