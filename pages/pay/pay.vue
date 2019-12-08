@@ -542,8 +542,8 @@
 				// 	})
 				// },1000)
 			},
-			paySuccessCall(res){
-
+			paySuccessCall(res){		
+						
 				var _that = this;
 				let Order_Type = ls.get('type');
 				let pagefrom = ls.get('pagefrom');
