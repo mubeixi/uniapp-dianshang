@@ -376,6 +376,11 @@
 			},
 			// 提交退货
 			submit(){
+				ls.set('productMy',this.productMy);
+				uni.navigateTo({
+					url: '/pages/selectChannel/selectChannel?page=productmy'
+				})
+				return;
 				uni.showModal({
 					content: '确定退货？',
 					cancelText: '我再想想',
@@ -593,6 +598,7 @@
 				// this.amount += this.postData.qty;
 				this.isHiddenMask = true;
 				this.showSku = false;
+				ls.set('productMy',this.productMy);
 			},
 			// 申请退货
 			apply_back(item,index){

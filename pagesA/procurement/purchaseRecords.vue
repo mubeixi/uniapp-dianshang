@@ -12,7 +12,14 @@
 					<view class="biz-msg">
 						<image class="avator" :src="item.Stores_ImgPath" mode=""></image>
 						<view class="biz-name">{{item.Stores_Name}}<view class="biz-links" v-if="(item.Order_Status==20||item.Order_Status==22||item.Order_Status==25)||item.active_id>0">(<text v-if="item.active_id>0" class="text-d" @click="showStore(item)">查看信息</text><block v-if="(item.Order_Status==20||item.Order_Status==22||item.Order_Status==25)&&item.active_id>0">/</block><block v-if="item.Order_Status==20||item.Order_Status==22||item.Order_Status==25"><text class="text-d" @click="changeChannel(item)">修改渠道</text></block>)</view></view>
-						<view class="status">{{item.Order_Status_desc}}</view>
+						<view class="status">{{item.Order_Status_desc}}
+							<block v-if="item.Order_Status == 22 && item.reason">
+								<image class="qty-icon" src="/static/procurement/i.png" mode="" @click.stop="show_pro_tip(index)"></image>
+								<view class="tips" >
+									<view class="sanjiaoxing"></view>{{item.reason}}
+								</view>
+							</block>
+						</view>
 					</view>
 					<view class="pro-msg" v-for="(it,ind) of item.prod_list" :key="it">
 						<view class="pro-img">
@@ -23,9 +30,9 @@
 							<view class="pro-attr">
 								<view class="attr-info">{{it.attr_info.attr_val.Attr_Value}}</view>
 								<view class="pro-qty">x{{it.prod_count}}
-									<image class="qty-icon" src="/static/procurement/i.png" mode="" @click.stop="show_pro_tip(item)"></image>
+									<image class="qty-icon" v-if="it.prod_count_change_desc" src="/static/procurement/i.png" mode="" @click.stop="show_pro_tip(item)"></image>
 									<view class="tips" v-if="item.pro_tip_show">
-										<view class="sanjiaoxing"></view>这是解释的内容这是解释的内容这是解释的内容这是解释的内容
+										<view class="sanjiaoxing"></view>{{it.prod_count_change_desc}}
 									</view>
 								</view>
 							</view>
@@ -478,7 +485,35 @@
 						}
 					}
 					.status {
+						position: relative;
 						color: $wzw-primary-color;
+						.tips {
+							position: absolute;
+							top:50rpx;
+							right: -12rpx;
+							width: 200rpx;
+							padding: 20rpx;
+							background: #fff;
+							box-shadow: 0px 0px 16px 0px rgba(4,0,0,0.18);
+							.sanjiaoxing {
+								position: absolute;
+								top: -14rpx;
+								right: 30rpx;
+								background-color: #fff;
+								transform: rotate(70deg);
+								width: 15rpx;
+								height: 30rpx;
+								border: 2rpx solid #fff;
+								border-right:0;
+								border-bottom: 0;
+								box-shadow: 0px 0px 16px 0px rgba(4,0,0,0.18);
+							}
+						}
+						.qty-icon {
+							width: 22rpx;
+							height: 22rpx;
+							margin-left: 10rpx;
+						}
 					}
 				}
 				.pro-msg {

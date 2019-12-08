@@ -3,7 +3,7 @@
 		<!-- <view class="title">选择渠道</view> -->
 		<view class="content">
 			<view class="c-item">
-				<view class="item-left">进货渠道</view>
+				<view class="item-left">{{is_purchase?'退':'进'}}货渠道</view>
 				<view class="item-right" @click="changeChannel">
 					<text>{{channelName}}</text>
 					<image :src="'/static/client/person/right.png'|domain" class="right"></image>
@@ -28,7 +28,7 @@
 				<view class="item-input"><input type="text" v-model="purchase_store_sn" placeholder="请输入门店编号" placeholder-style="color: #c9c9c9;font-size:24rpx;" /></view>
 			</view>
 		</view>
-		<view class="search" @click="goPurchase">搜索</view>
+		<view class="search" @click="goPurchase">{{is_purchase && selectitem == 2 ? '确定' : '搜索'}}</view>
 		<div class="lists" v-if="selectitem == 1">
 		   <scroll-view  scroll-y="true" class="scroll-Y" >
 		       <block v-if="stores.length>0">
@@ -55,14 +55,14 @@
 			<view class="search-title">选择渠道</view>
 			<view class="search-content">
 				<view class="search-item" @click="changeItem(1)">
-					<view>门店进货</view>
+					<view>门店{{is_purchase?'退':'进'}}货</view>
 					<view class="box" v-if="selectitem == 2"></view>
 					<view v-if="selectitem == 1">
 						<image class="image" src="/static/procurement/selected.png" mode=""></image>
 					</view>
 				</view>
 				<view class="search-item" @click="changeItem(2)">
-					<view>平台进货</view>
+					<view>平台{{is_purchase?'退':'进'}}货</view>
 					<view class="box" v-if="selectitem == 1"></view>
 					<view v-if="selectitem == 2">
 						<image class="image" src="/static/procurement/selected.png" mode=""></image>
@@ -78,8 +78,10 @@
 	import area from '../../common/area.js';
 	import popupLayer from '../../components/popup-layer/popup-layer.vue'
 	import util from '../../common/util.js'
-	import {getStoreList} from '../../common/fetch.js';
+	import {getStoreList,storeProdBackSubmit} from '../../common/fetch.js';
 	import {getLocation} from "../../common/tool/location";
+	import {ls} from '../../common/tool.js'
+	import {mapGetters} from 'vuex'
 	export default {
 		components: {
 			popupLayer
@@ -95,21 +97,32 @@
 				p_clicked: false,
 				c_clicked: false,
 				a_clicked: false,
-				stores: []
+				stores: [],
+				is_purchase: false, // 是否是退货页面过来的
+				productMy: [], // 退货的产品列表,
+				prod_json: {}
 			}
 		},
-		onLoad() {
-			
+		onLoad(options) {
+			this.provinceList = this.objtoarr(area.area[0]['0']);
+			if(options.page) {
+				if(options.page == 'productmy') {
+					this.is_purchase = true;
+					this.productMy = ls.get('productMy');
+					this.load();
+				}
+			}
 		},
 		onShow() {
-			this.load();
+			
 		},
 		computed: {
+			...mapGetters(['Stores_ID']),	
 			channelName(){
 				return this.selectitem == 1 ? '门店进货' : '平台进货'
 			},
 			p_id(){
-				return	this.provinceList[this.p_index].id
+				return this.provinceList[this.p_index] && this.provinceList[this.p_index].id
 			},
 			c_str(){
 				return '0'+ ',' + this.p_id
@@ -119,7 +132,7 @@
 				return this.objtoarr(citys)
 			},
 			c_id(){
-				return this.citylist[this.c_index].id
+				return this.citylist[this.c_index] && this.citylist[this.c_index].id
 			},
 			a_str(){
 				return this.c_str + ',' + this.c_id
@@ -129,14 +142,64 @@
 				return this.objtoarr(areas)
 			},
 			a_id(){
-				return this.arealist[this.a_index].id
-			}
+				return this.arealist[this.a_index] &&this.arealist[this.a_index].id
+			},
 		},
 		methods: {
 			load(){
-					console.log(area.area[0]['0'])
-					console.log(this.objtoarr(area.area[0]['0']))
-					this.provinceList = this.objtoarr(area.area[0]['0']);
+				if(!this.is_purchase)return;
+				let productMy = this.productMy;
+				let arr = []; // 选中的产品数组
+				let prod_json = {};
+				productMy.forEach(item=>{
+					console.log(item)
+					if(item.skuvaljosn) {
+						for(let attr_id in item.skuvaljosn) {
+							if(item.skuvaljosn[attr_id].myqty > 0) {
+								arr.push(item.skuvaljosn[attr_id])
+							}
+						}						
+					}else if(item.myqty > 0){
+						arr.push(item)
+					}
+				})
+				
+				console.log(arr)
+				
+				for(let i in arr) {
+					if(!arr[i].Products_ID){
+						arr[i].Products_ID=arr[i].prod_id
+					}
+					if(prod_json[arr[i].Products_ID]) {
+						prod_json[arr[i].Products_ID]['num'] = prod_json[arr[i].Products_ID]['num'] + arr[i].myqty
+						if(prod_json[arr[i].Products_ID]['attr']) {
+							prod_json[arr[i].Products_ID]['attr'][arr[i].Product_Attr_ID] = arr[i].myqty
+						}else {
+							if(arr[i].Product_Attr_ID){
+								prod_json[arr[i].Products_ID]['attr'] = {
+									[arr[i].Product_Attr_ID]: arr[i].myqty
+								}		
+							}
+															
+						}
+					}else {
+						prod_json[arr[i].Products_ID] = {
+							"num": arr[i].myqty
+						} 
+						if(prod_json[arr[i].Products_ID]['attr']) {
+							prod_json[arr[i].Products_ID]['attr'][arr[i].Product_Attr_ID] = arr[i].myqty
+						}else {
+							if(arr[i].Product_Attr_ID){
+								prod_json[arr[i].Products_ID]['attr'] = {
+									[arr[i].Product_Attr_ID]: arr[i].myqty
+								}		
+							}									
+						}
+					}
+				}
+				console.log(prod_json)
+				this.prod_json = prod_json;
+					
 					
 			},
 			// 省份变动
@@ -218,6 +281,38 @@
 				// 	});
 				// 	return;
 				// }
+				if(this.selectitem == 2 && this.is_purchase) {
+					// 选择向平台退货
+					uni.showModal({
+						content: '确定退货？',
+						cancelText: '我再想想',
+						confirmText: '我意已决',
+						success: (res) => {
+							if(res.confirm) {
+								// 退货，并且是门店退货
+								storeProdBackSubmit({
+									store_id: this.Stores_ID,
+									prod_json: JSON.stringify(this.prod_json),
+									purchase_type: 'shop',
+								}).then(res=>{
+									ls.remove('productMy');
+									uni.showToast({
+										title: res.msg
+									});
+									setTimeout(()=>{
+										// 跳转选择渠道页面
+										uni.redirectTo({
+											url: '/pagesA/procurement/refundRecords'
+										})								
+									},1000)
+								})
+							}else {
+								return;
+							}
+						}
+					})
+					return;
+				}
 				if(this.selectitem == 1) {
 					this.getStoreList();
 					return;
@@ -232,11 +327,44 @@
 					})
 				}
 			},
-			// 点击门店跳转去相应门店进货
+			// 点击门店跳转去相应门店退货
 			gostock(stores_sn) {
-				uni.navigateTo({
-					url: '/pagesA/procurement/stock?purchase_store_sn=' + this.stores_sn
-				})
+				if(!this.is_purchase) {
+					uni.navigateTo({
+						url: '/pagesA/procurement/stock?purchase_store_sn=' + stores_sn
+					})					
+				}else {
+					uni.showModal({
+						content: '确定退货？',
+						cancelText: '我再想想',
+						confirmText: '我意已决',
+						success: (res) => {
+							if(res.confirm) {
+								// 退货，并且是门店退货
+								storeProdBackSubmit({
+									store_id: this.Stores_ID,
+									prod_json: JSON.stringify(this.prod_json),
+									purchase_type: 'store',
+									purchase_store_sn: stores_sn
+								}).then(res=>{
+									ls.remove('productMy');
+									uni.showToast({
+										title: res.msg
+									});
+									setTimeout(()=>{
+										// 跳转选择渠道页面
+										uni.redirectTo({
+											url: '/pagesA/procurement/refundRecords'
+										})									
+									},1000)
+								})
+							}else {
+								return;
+							}
+						}
+					})
+					
+				}
 			},
 			// 用户只是点击了遮罩
 			maskClicked(){
