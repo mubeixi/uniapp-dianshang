@@ -476,7 +476,8 @@ export const storeInit = (data, options) => fetch('store_init', data, options);
 export const getStoreProdBackOrderDetail = (data,options) => fetch('get_store_prod_back_order_detail', data, options);
 // 退货单发货
 export const storeProdBackOrderSend = (data,options) => fetch('store_prod_back_order_send', data, options);
-
+// 退货单确认收款
+export const storeProdBackOrderConfirm = (data,options) => fetch('store_prod_back_order_confirm', data, options);
 
 
 

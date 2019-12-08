@@ -9,6 +9,14 @@
 					<image :src="'/static/client/person/right.png'|domain" class="right"></image>
 				</view>
 			</view>
+			<view class="c-item">
+				<view class="item-left">地址选择</view>
+				<view class="item-area">
+					<picker class="a-item">请选择省份<image class="bot" :src="'/static/client/person/right.png'|domain" mode=""></image></picker>
+					<picker class="a-item">请选择市<image class="bot" :src="'/static/client/person/right.png'|domain" mode=""></image></picker>
+					<picker class="a-item">请选择县区<image class="bot" :src="'/static/client/person/right.png'|domain" mode=""></image></picker>
+				</view>
+			</view>
 			<view class="c-item" v-if="selectitem == 1">
 				<view class="item-left">门店编号</view>
 				<view class="item-input"><input type="text" v-model="purchase_store_sn" placeholder="请输入门店编号" placeholder-style="color: #c9c9c9;" /></view>
@@ -39,6 +47,7 @@
 </template>
 
 <script>
+	import area from '../../common/area.js';
 	import popupLayer from '../../components/popup-layer/popup-layer.vue'
 	export default {
 		components: {
@@ -116,6 +125,28 @@
 				border-bottom: 2rpx solid #ebebeb;
 				justify-content: space-between;
 				font-size: 30rpx;
+				.item-area {
+					margin-left: 40rpx;
+					flex: 1;
+					font-size: 22rpx;
+					color: #999999;
+					.a-item {
+						height: 50rpx;
+						line-height: 50rpx;
+						text-align: center;
+						display: flex;
+						justify-content: space-around;
+						align-items: center;
+						background-color: #F4F4F4;
+						padding: 0 18rpx;
+						.bot {
+							height: 18rpx;
+							width: 18rpx;
+							transform: rotate(90deg);
+							margin-left: 14rpx;
+						}
+					}
+				}
 				.item-right {
 					font-size: 28rpx;
 					color: #777;
