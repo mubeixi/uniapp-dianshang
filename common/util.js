@@ -184,57 +184,6 @@ function raw1(args) {
   return str;
 }
 
-//------------------------------------------------
-
-function tags_name(tag) {
-  let name = '--';
-  switch (tag) {
-    case 'window': name = '有窗'; break;
-    case 'breakfast': name = '早餐'; break;
-    case 'special': name = '特价房型'; break;
-    case 'wifi': name = '无线上网'; break;
-    case 'internet': name = '有线上网'; break;
-    case 'parking': name = '停车场'; break;
-    case 'baggage': name = '行李寄存'; break;
-    case 'bath': name = '热水洗浴'; break;
-    case 'dryer': name = '电吹风'; break;
-    case 'toiletry': name = '洗漱用具'; break;
-    case 'call': name = '叫醒服务'; break;
-    case 'meals': name = '送餐服务'; break;
-    case 'pos': name = '刷卡消费'; break;
-    default: name = '--';
-  }
-  return name;
-}
-
-//酒店产品处理
-function jiudian_room_format(front_url, roomList) {
-  for (var i in roomList) {
-    var img_path = typeof roomList[i].img_path != 'object' ? JSON.parse(roomList[i].img_path) : roomList[i].img_path;
-    for (var j in img_path.ImgPath) {
-      img_path.ImgPath[j] = img_path.ImgPath[j].indexOf('http') > -1 ? img_path.ImgPath[j] : front_url + img_path.ImgPath[j]
-    }
-    roomList[i].img_path = img_path;
-    roomList[i].roomjson = typeof roomList[i].roomjson != 'object' ? JSON.parse(roomList[i].roomjson) : roomList[i].roomjson;
-    for (let j in roomList[i].roomjson) {
-      let tags = roomList[i].roomjson[j];
-      if (typeof tags.icon !== 'undefined') {
-        tags.icon = tags.icon.indexOf('http') > -1 ? tags.icon : front_url + tags.icon;
-        tags.switch = typeof tags.switch !== 'undefined' ? tags.switch : 0;
-      } else {  // 兼容老数据
-        tags = {
-          icon: '/images/icon/' + j + '.png',
-          switch: tags == 1 ? 1 : 0,
-          name: tags_name(j)
-        };
-      }
-      roomList[i].roomjson[j] = tags;
-    }
-    roomList[i].bedintro = (roomList[i].bedintro != '' && typeof roomList[i].bedintro != 'object') ? JSON.parse(roomList[i].bedintro) : roomList[i].bedintro;
-  }
-  return roomList;
-}
-
 
 //验证手机号码
 function check_mobile(mobile) {
@@ -639,102 +588,6 @@ function cate_format(cate_list, front_url) {
   return cate_list;
 }
 
-//酒店列表处理
-function jiudian_list_format(list, front_url) {
-  for (var i in list) {
-    list[i].Biz_Logo = list[i].Biz_Logo ? (list[i].Biz_Logo.indexOf('http') > -1 ? list[i].Biz_Logo : front_url + list[i].Biz_Logo) : '/images/none.png';
-    var hotel_img = typeof list[i].hotel_img != 'object' ? JSON.parse(list[i].hotel_img) : list[i].hotel_img;
-    for (var j in hotel_img) {
-      for (var k in hotel_img[j]) {
-        hotel_img[j][k] = hotel_img[j][k].indexOf('http') > -1 ? hotel_img[j][k] : front_url + hotel_img[j][k];
-      }
-    }
-    list[i].hotel_img = hotel_img;
-
-    // 酒店设施
-    list[i].hotel_tags = typeof list[i].hotel_tags != 'object' ? JSON.parse(list[i].hotel_tags) : list[i].hotel_tags;
-    for (let j in list[i].hotel_tags) {
-      let tags = list[i].hotel_tags[j];
-      if (typeof tags.icon !== 'undefined') {
-        tags.icon = tags.icon.indexOf('http') > -1 ? tags.icon : front_url + tags.icon;
-        tags.switch = typeof tags.switch !== 'undefined' ? tags.switch : 0;
-      } else {  // 兼容老数据
-        tags = {
-          icon: '/images/icon/' + j + '.png',
-          switch: tags == 1 ? 1 : 0,
-          name: tags_name(j)
-        };
-      }
-      list[i].hotel_tags[j] = tags;
-    }
-
-    // 自定义酒店设施
-    list[i].hotel_tags_customize = list[i].hotel_tags_customize ? (typeof list[i].hotel_tags_customize != 'object' ? JSON.parse(list[i].hotel_tags_customize) : list[i].hotel_tags_customize) : {};
-    for (let j in list[i].hotel_tags_customize) {
-      let tags = list[i].hotel_tags_customize[j];
-      tags.icon = tags.icon.indexOf('http') > -1 ? tags.icon : front_url + tags.icon;
-      tags.switch = typeof tags.switch !== 'undefined' ? tags.switch : 0;
-      list[i].hotel_tags_customize[j] = tags;
-    }
-  }
-  return list;
-}
-
-//旅游列表处理
-function lvyou_list_format(list, front_url) {
-  for (var i in list) {
-    list[i].Biz_Logo = list[i].Biz_Logo ? (list[i].Biz_Logo.indexOf('http') > -1 ? list[i].Biz_Logo : front_url + list[i].Biz_Logo) : '/images/none.png';
-  }
-  return list;
-}
-
-
-//外卖列表处理
-function waimai_list_format(list, front_url) {
-  for (let i in list) {
-    list[i].coupon = activity_format(list[i].coupon);
-    list[i].Biz_Logo = list[i].Biz_Logo.indexOf('http') > -1 ? list[i].Biz_Logo : front_url + list[i].Biz_Logo;
-    // 评分
-    list[i].score_arr = [];
-    for (let j = 1; j <= 5; j++) {
-      if (list[i].score >= j) {
-        list[i].score_arr.push(1);
-      } else {
-        list[i].score_arr.push(0);
-      }
-    }
-  }
-  return list;
-}
-
-//外卖产品处理
-function waimai_pro_format(pro_list, front_url) {
-  for (var i in pro_list) {
-    //图片处理
-    let pro_img = pro_list[i].pro_img != '' && typeof pro_list[i].pro_img != 'object' ? JSON.parse(pro_list[i].pro_img) : pro_list[i].pro_img;
-    for (var j in pro_img) {
-      pro_img[j] = pro_img[j].indexOf('http') > -1 ? pro_img[j] : front_url + pro_img[j];
-    }
-
-    //属性处理， 删除空属性
-    let pro_attr_price = pro_list[i].pro_attr_price ? (typeof pro_list[i].pro_attr_price != 'object' ? JSON.parse(pro_list[i].pro_attr_price) : pro_list[i].pro_attr_price) : {};
-    for (var j in pro_attr_price) {
-      if (j == '') {
-        delete pro_attr_price[j];
-        continue;
-      }
-      for (var k in pro_attr_price[j]) {
-        if (k == '' || pro_attr_price[j][k] == '') {
-          delete pro_attr_price[j][k];
-        }
-      }
-    }
-    pro_list[i].pro_attr_price = pro_attr_price;
-    //是否有属性
-    pro_list[i].is_attr = pro_attr_price == '' || JSON.stringify(pro_attr_price) == '{}' ? false : true;
-  }
-  return pro_list;
-}
 
 //活动处理
 function activity_format(activity_list) {
@@ -803,13 +656,8 @@ module.exports = {
   orderListImgError: orderListImgError,
   formatOrder: formatOrder,
   pro_format: pro_format,
-  waimai_pro_format: waimai_pro_format,
   activity_format: activity_format,
   cate_format: cate_format,
-  jiudian_list_format: jiudian_list_format,
-  lvyou_list_format: lvyou_list_format,
-  waimai_list_format: waimai_list_format,
-  jiudian_room_format: jiudian_room_format,
   gonglue_format: gonglue_format,
   date_format: date_format,
   overPullDownRefresh: overPullDownRefresh,

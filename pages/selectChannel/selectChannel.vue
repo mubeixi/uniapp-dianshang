@@ -9,20 +9,48 @@
 					<image :src="'/static/client/person/right.png'|domain" class="right"></image>
 				</view>
 			</view>
-			<view class="c-item">
+			<view class="c-item" v-if="selectitem == 1">
 				<view class="item-left">地址选择</view>
 				<view class="item-area">
-					<picker class="a-item">请选择省份<image class="bot" :src="'/static/client/person/right.png'|domain" mode=""></image></picker>
-					<picker class="a-item">请选择市<image class="bot" :src="'/static/client/person/right.png'|domain" mode=""></image></picker>
-					<picker class="a-item">请选择县区<image class="bot" :src="'/static/client/person/right.png'|domain" mode=""></image></picker>
+					<picker class="a-item" mode = "selector" :range="provinceList"  range-key="name" :value="p_index" @change="p_change_handle">
+						<block v-if="p_clicked">{{provinceList[p_index].name}}</block> <block v-else>请选择省份 <image class="bot" :src="'/static/client/person/right.png'|domain" mode=""></block></image>
+					</picker>
+					<picker class="a-item" mode = "selector" :range="citylist"  range-key="name" :value="c_index" @change="c_change_handle">
+						<block v-if="c_clicked">{{citylist[c_index].name}}</block> <block v-else>请选择市 <image class="bot" :src="'/static/client/person/right.png'|domain" mode=""></image></block> 
+					</picker>
+					<picker class="a-item" mode = "selector" :range="arealist" range-key="name" :value="a_index" @change="a_change_handle">
+						<block v-if="a_clicked">{{arealist[a_index].name}}</block> <block v-else>请选择县区 <image class="bot" :src="'/static/client/person/right.png'|domain" mode=""></image></block>	
+					</picker>
 				</view>
 			</view>
 			<view class="c-item" v-if="selectitem == 1">
 				<view class="item-left">门店编号</view>
-				<view class="item-input"><input type="text" v-model="purchase_store_sn" placeholder="请输入门店编号" placeholder-style="color: #c9c9c9;" /></view>
+				<view class="item-input"><input type="text" v-model="purchase_store_sn" placeholder="请输入门店编号" placeholder-style="color: #c9c9c9;font-size:24rpx;" /></view>
 			</view>
 		</view>
 		<view class="search" @click="goPurchase">搜索</view>
+		<div class="lists" v-if="selectitem == 1">
+		   <scroll-view  scroll-y="true" class="scroll-Y" >
+		       <block v-if="stores.length>0">
+		           <view>
+		               <label class="item padding10" v-for="(store,idx) in stores" :key="idx" @click="gostock(store.stores_sn)">
+		                   <image class="logo" :src="store.Stores_ImgPath|domain" />
+		                   <view class="info">
+		                       <div class="flex flex-between">
+		                           <div class="font14">{{store.Stores_Name}}</div>
+		                           <div class="distance font12 graytext" v-if="store.distance">{{store.distance|distanceFn}}km</div>
+		                       </div>
+													 <div class="font12 graytext flex align-center"><image class="icon" src="/static/qudao_cell.png"></image>{{store.Stores_Telephone}}</div>
+		                       <div class="font12 graytext flex align-center"><image class="icon" src="/static/qudao_local.png"></image>{{store.Stores_Province_name}}{{store.Stores_City_name}}{{store.Stores_Area_name}}{{store.Stores_Address}}</div>
+		                   </view>
+		               </label>
+		           </view>
+		       </block>
+		       <div >
+		
+		       </div>
+		   </scroll-view>
+		</div>
 		<popupLayer ref="searchLayer" :direction="'top'" @maskClicked="maskClicked">
 			<view class="search-title">选择渠道</view>
 			<view class="search-content">
@@ -49,6 +77,9 @@
 <script>
 	import area from '../../common/area.js';
 	import popupLayer from '../../components/popup-layer/popup-layer.vue'
+	import util from '../../common/util.js'
+	import {getStoreList} from '../../common/fetch.js';
+	import {getLocation} from "../../common/tool/location";
 	export default {
 		components: {
 			popupLayer
@@ -56,21 +87,139 @@
 		data() {
 			return {
 				selectitem: 1,
-				purchase_store_sn: ''
+				purchase_store_sn: '',
+				provinceList: [],
+				p_index: 0,
+				c_index: 0,
+				a_index: 0,
+				p_clicked: false,
+				c_clicked: false,
+				a_clicked: false,
+				stores: []
 			}
+		},
+		onLoad() {
+			
+		},
+		onShow() {
+			this.load();
 		},
 		computed: {
 			channelName(){
 				return this.selectitem == 1 ? '门店进货' : '平台进货'
+			},
+			p_id(){
+				return	this.provinceList[this.p_index].id
+			},
+			c_str(){
+				return '0'+ ',' + this.p_id
+			},
+			citylist(){
+				let citys = area.area[0][this.c_str];
+				return this.objtoarr(citys)
+			},
+			c_id(){
+				return this.citylist[this.c_index].id
+			},
+			a_str(){
+				return this.c_str + ',' + this.c_id
+			},
+			arealist(){
+				let areas = area.area[0][this.a_str]
+				return this.objtoarr(areas)
+			},
+			a_id(){
+				return this.arealist[this.a_index].id
 			}
 		},
 		methods: {
+			load(){
+					console.log(area.area[0]['0'])
+					console.log(this.objtoarr(area.area[0]['0']))
+					this.provinceList = this.objtoarr(area.area[0]['0']);
+					
+			},
+			// 省份变动
+			p_change_handle(e){
+				this.p_clicked = true;
+				this.c_clicked = false;
+				this.a_clicked = false;
+				this.p_index = e.detail.value;
+			},
+			// 市变动
+			c_change_handle(e) {
+				this.c_clicked = true;
+				this.a_clicked = false;
+				this.c_index = e.detail.value;
+			},
+			a_change_handle(e) {
+				this.a_clicked = true;
+				this.a_index = e.detail.value;
+			},
+			objtoarr(obj){
+				let arr = [];
+				for(let i in obj){
+					arr.push({id: i,name: obj[i]})
+				}
+				return arr
+			},
+			async get_user_location(){
+			    let localInfo = null;
+			    let rt =false
+			    await getLocation(this.pageEl).then(res=>{
+			        if(res.code===0){
+			            localInfo = res.data
+			            rt = true
+			        }
+			    }).catch(err=>{
+			        console.log(err)
+			        error('获取位置信息失败:'+err.msg)
+			    })
+			
+			    console.log('获取到的位置信息',localInfo)
+			
+			    if(!rt)return;
+			    this.lat = localInfo.latitude
+			    this.lng = localInfo.longitude	
+			},
+			// 获取门店列表，
+			getStoreList(){
+				let postData = {
+				    pageSize:10000,
+				    page:1,
+				    stores_sn: this.purchase_store_sn,
+						// search_stores_sn: this.search_stores_sn,
+				}
+				if(this.p_clicked) {
+					// 选择省了
+					postData.province = this.p_id;
+				}
+				if(this.c_clicked) {
+					postData.city = this.c_id;
+				}
+				if(this.a_clicked) {
+					postData.area = this.a_id;
+				}
+				
+				if(this.lat && this.lng){
+				    postData.lat = this.lat
+				    postData.lng = this.lng
+				}
+				getStoreList(postData,{tip:"加载中..."}).then(res => {
+							
+				    this.stores = res.data;
+				})
+			},
 			goPurchase(){
-				if(this.selectitem == 1 && !this.purchase_store_sn) {
-					uni.showToast({
-						title: '门店编号必须填写',
-						icon: 'none'
-					});
+				// if(this.selectitem == 1 && !this.purchase_store_sn) {
+				// 	uni.showToast({
+				// 		title: '门店编号必须填写',
+				// 		icon: 'none'
+				// 	});
+				// 	return;
+				// }
+				if(this.selectitem == 1) {
+					this.getStoreList();
 					return;
 				}
 				if(this.selectitem == 1) {
@@ -82,6 +231,12 @@
 						url: '/pagesA/procurement/stock'
 					})
 				}
+			},
+			// 点击门店跳转去相应门店进货
+			gostock(stores_sn) {
+				uni.navigateTo({
+					url: '/pagesA/procurement/stock?purchase_store_sn=' + this.stores_sn
+				})
 			},
 			// 用户只是点击了遮罩
 			maskClicked(){
@@ -104,7 +259,7 @@
 
 <style lang="scss" scoped>
 	.wrap {
-		height: 100vh;
+		min-height: 100vh;
 		background-color: #fff;
 		.title {
 			height: 90rpx;
@@ -125,12 +280,21 @@
 				border-bottom: 2rpx solid #ebebeb;
 				justify-content: space-between;
 				font-size: 30rpx;
+				.item-left {
+					width: 150rpx;
+				}
 				.item-area {
+					display: flex;
+					justify-content: space-between;
 					margin-left: 40rpx;
-					flex: 1;
+					width: 600rpx;
 					font-size: 22rpx;
 					color: #999999;
 					.a-item {
+						width: 130rpx;
+						white-space:nowrap;
+						overflow: hidden;
+						text-overflow: ellipsis;
 						height: 50rpx;
 						line-height: 50rpx;
 						text-align: center;
@@ -140,8 +304,8 @@
 						background-color: #F4F4F4;
 						padding: 0 18rpx;
 						.bot {
-							height: 18rpx;
-							width: 18rpx;
+							height: 16rpx;
+							width: 12rpx;
 							transform: rotate(90deg);
 							margin-left: 14rpx;
 						}
@@ -160,15 +324,43 @@
 				}
 				.item-input {
 					flex: 1;
-					margin-left: 40rpx;
+					margin-left: 30rpx;
 					font-size: 24rpx;
 					height: 50rpx;
 					line-height: 50rpx;
 				}
 			}
 		}
+		.lists{
+		    .item{
+		        display: flex;
+		        align-items: center;
+		        .logo{
+		            height: 44px;
+		            width:44px;
+		            border-radius: 50%;
+		            background-color: #f2f2f2;
+		            background-repeat: no-repeat;
+		            background-size: cover;
+		            background-position: center;
+		
+		        }
+		        .info{
+		            flex:1;
+								margin-left: 6px;
+								.align-center {
+									align-items: center;
+									.icon {
+										width: 20rpx;
+										height: 24rpx;
+										margin-right: 16rpx;
+									}
+								}
+		        }
+		    }
+		}
 		.search {
-			margin: 212rpx 25rpx;
+			margin: 88rpx auto;
 			color: #FFF;
 			background-color: #F43131;
 			height: 75rpx;
@@ -176,6 +368,7 @@
 			text-align: center;
 			font-size: 30rpx;
 			border-radius: 10rpx;
+			width: 95%;
 		}
 		.search-title {
 			line-height: 88rpx;
