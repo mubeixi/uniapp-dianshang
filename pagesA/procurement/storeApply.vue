@@ -96,7 +96,6 @@
     import {error} from "../../common";
     import {findArrayIdx} from "../../common/tool";
 
-
     export default {
         mixins: [pageMixin],
         name: "storeApply",

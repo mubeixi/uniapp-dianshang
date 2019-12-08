@@ -348,7 +348,7 @@
 			}
 		},
 		onShow() {
-			ls.remove('productMy')
+			// ls.remove('productMy')
 			this.checked_img_url = domainFn(this.checked_img_url)
 			this.uncheck_img_url = domainFn(this.uncheck_img_url)
 			this.load();
@@ -359,7 +359,7 @@
 			}
 		},
 		onHide(){
-			ls.remove('productMy')
+			// ls.remove('productMy')
 		},
 		onReachBottom() {
 			if(this.productMy.length<this.totalCount){
@@ -384,8 +384,12 @@
 						if(res.confirm) {
 							this.$refs.detail.close();
 							this.zIndex = 100;
-							this.isChangeChannel = true;
-							this.isHiddenMask = false;
+							// 跳转选择渠道页面
+							uni.navigateTo({
+								url: '/pages/selectChannel/selectChannel?page=productmy'
+							})
+							// this.isChangeChannel = true;
+							// this.isHiddenMask = false;
 						}else {
 							return;
 						}
