@@ -112,12 +112,45 @@
 						<image :src="'/static/client/defaultImg.png'|domain" ></image>
 				</div>
 			</template>
-			<template v-else>
+			<template v-else-if="index==3">
 				<block v-if="productlist.length>0">
-					<view class="blockDiv" v-for="(item,index) of productlist" :key="index">
-						<view class="mbxa" v-if="isShow" @click="checkedSelect(index)">
+					<view class="blockDiv" v-for="(item,index) of productlist" :key="index" @click="checkedSelect(index)">
+						<view class="mbxa" v-if="isShow" >
 							<img class="imgs" :src="checked[index].checked?checked_img_url:uncheck_img_url" >
 						</view>
+						<view style="width: 10rpx" v-if="!isShow">
+						</view>
+						<view class="imgDiv">
+							<image class="imgHund" :src="item.ImgPath"></image>
+						</view>
+						<view class="textRight" :style="{width: isShow?'415':'425'+'rpx'}">
+							<view class="productName">
+								{{item.Products_Name}}
+							</view>
+							<view class="skuMy">
+								<span>库存：{{item.prod_stock}}</span><span style="margin-left: 100rpx;">销量：{{item.Products_Sales}}</span>
+							</view>
+							<view class="bottomDiv">
+								<view class="skuCount">
+									规格库存
+								</view>
+								<view class="allPrice">
+									<view v-if="!(is_refund&&is_fourth)">
+										总价值：<span class="span1">¥</span><span class="span2">{{item.prod_money}}</span>
+									</view>
+									<view v-else class="back-btn" @click="apply_back(item,index)">申请退货</view>
+								</view>
+							</view>
+						</view>
+					</view>
+				</block>
+				<div class="defaults" v-else>
+						<image :src="'/static/client/defaultImg.png'|domain" ></image>
+				</div>
+			</template>
+			<template v-else>
+				<block v-if="productlist.length>0">
+					<view class="blockDiv" v-for="(item,index) of productlist" :key="index" @click="checkedSelect(index)">
 						<view style="width: 10rpx" v-if="!isShow">
 						</view>
 						<view class="imgDiv">

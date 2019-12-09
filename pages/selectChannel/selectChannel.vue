@@ -16,10 +16,10 @@
 						<block v-if="p_clicked">{{provinceList[p_index].name}}</block> <block v-else>请选择省份 <image class="bot" :src="'/static/client/person/right.png'|domain" mode=""></block></image>
 					</picker>
 					<picker class="a-item" mode = "selector" :range="citylist"  range-key="name" :value="c_index" @change="c_change_handle">
-						<block v-if="c_clicked">{{citylist[c_index].name}}</block> <block v-else>请选择市 <image class="bot" :src="'/static/client/person/right.png'|domain" mode=""></image></block> 
+						<block v-if="c_clicked">{{citylist[c_index].name}}</block> <block v-else>请选择市 <image class="bot" :src="'/static/client/person/right.png'|domain" mode=""></image></block>
 					</picker>
 					<picker class="a-item" mode = "selector" :range="arealist" range-key="name" :value="a_index" @change="a_change_handle">
-						<block v-if="a_clicked">{{arealist[a_index].name}}</block> <block v-else>请选择县区 <image class="bot" :src="'/static/client/person/right.png'|domain" mode=""></image></block>	
+						<block v-if="a_clicked">{{arealist[a_index].name}}</block> <block v-else>请选择县区 <image class="bot" :src="'/static/client/person/right.png'|domain" mode=""></image></block>
 					</picker>
 				</view>
 			</view>
@@ -47,7 +47,7 @@
 		           </view>
 		       </block>
 		       <div >
-		
+
 		       </div>
 		   </scroll-view>
 		</div>
@@ -78,10 +78,11 @@
 	import area from '../../common/area.js';
 	import popupLayer from '../../components/popup-layer/popup-layer.vue'
 	import util from '../../common/util.js'
-	import {getStoreList,storeProdBackSubmit} from '../../common/fetch.js';
+	import {getStoreList,storeProdBackSubmit,changeStoreApplyChannel} from '../../common/fetch.js';
 	import {getLocation} from "../../common/tool/location";
 	import {ls} from '../../common/tool.js'
 	import {mapGetters} from 'vuex'
+	import {toast} from "../../common";
 	export default {
 		components: {
 			popupLayer
@@ -100,7 +101,9 @@
 				stores: [],
 				is_purchase: false, // 是否是退货页面过来的
 				productMy: [], // 退货的产品列表,
-				prod_json: {}
+				prod_json: {},
+				is_stock_records: false, // 是否是进货记录过来的
+				order_id: '', // 进货记录需要修改订单id
 			}
 		},
 		onLoad(options) {
@@ -112,12 +115,17 @@
 					this.load();
 				}
 			}
+			if(options.order_id) {
+				// 进货记录过来
+				this.is_stock_records = true;
+				this.order_id = options.order_id;
+			}
 		},
 		onShow() {
-			
+
 		},
 		computed: {
-			...mapGetters(['Stores_ID']),	
+			...mapGetters(['Stores_ID']),
 			channelName(){
 				return this.selectitem == 1 ? '门店进货' : '平台进货'
 			},
@@ -158,14 +166,14 @@
 							if(item.skuvaljosn[attr_id].myqty > 0) {
 								arr.push(item.skuvaljosn[attr_id])
 							}
-						}						
+						}
 					}else if(item.myqty > 0){
 						arr.push(item)
 					}
 				})
-				
+
 				console.log(arr)
-				
+
 				for(let i in arr) {
 					if(!arr[i].Products_ID){
 						arr[i].Products_ID=arr[i].prod_id
@@ -178,29 +186,29 @@
 							if(arr[i].Product_Attr_ID){
 								prod_json[arr[i].Products_ID]['attr'] = {
 									[arr[i].Product_Attr_ID]: arr[i].myqty
-								}		
+								}
 							}
-															
+
 						}
 					}else {
 						prod_json[arr[i].Products_ID] = {
 							"num": arr[i].myqty
-						} 
+						}
 						if(prod_json[arr[i].Products_ID]['attr']) {
 							prod_json[arr[i].Products_ID]['attr'][arr[i].Product_Attr_ID] = arr[i].myqty
 						}else {
 							if(arr[i].Product_Attr_ID){
 								prod_json[arr[i].Products_ID]['attr'] = {
 									[arr[i].Product_Attr_ID]: arr[i].myqty
-								}		
-							}									
+								}
+							}
 						}
 					}
 				}
 				console.log(prod_json)
 				this.prod_json = prod_json;
-					
-					
+
+
 			},
 			// 省份变动
 			p_change_handle(e){
@@ -238,12 +246,12 @@
 			        console.log(err)
 			        error('获取位置信息失败:'+err.msg)
 			    })
-			
+
 			    console.log('获取到的位置信息',localInfo)
-			
+
 			    if(!rt)return;
 			    this.lat = localInfo.latitude
-			    this.lng = localInfo.longitude	
+			    this.lng = localInfo.longitude
 			},
 			// 获取门店列表，
 			getStoreList(){
@@ -263,76 +271,97 @@
 				if(this.a_clicked) {
 					postData.area = this.a_id;
 				}
-				
+
 				if(this.lat && this.lng){
 				    postData.lat = this.lat
 				    postData.lng = this.lng
 				}
 				getStoreList(postData,{tip:"加载中..."}).then(res => {
-							
+
 				    this.stores = res.data;
 				})
 			},
 			goPurchase(){
-				// if(this.selectitem == 1 && !this.purchase_store_sn) {
-				// 	uni.showToast({
-				// 		title: '门店编号必须填写',
-				// 		icon: 'none'
-				// 	});
-				// 	return;
-				// }
-				if(this.selectitem == 2 && this.is_purchase) {
-					// 选择向平台退货
-					uni.showModal({
-						content: '确定退货？',
-						cancelText: '我再想想',
-						confirmText: '我意已决',
-						success: (res) => {
-							if(res.confirm) {
-								// 退货，并且是门店退货
-								storeProdBackSubmit({
-									store_id: this.Stores_ID,
-									prod_json: JSON.stringify(this.prod_json),
-									purchase_type: 'shop',
-								}).then(res=>{
-									ls.remove('productMy');
-									uni.showToast({
-										title: res.msg
-									});
-									setTimeout(()=>{
-										// 跳转选择渠道页面
-										uni.redirectTo({
-											url: '/pagesA/procurement/refundRecords'
-										})								
-									},1000)
-								})
-							}else {
-								return;
-							}
-						}
-					})
-					return;
-				}
 				if(this.selectitem == 1) {
 					this.getStoreList();
 					return;
-				}
-				if(this.selectitem == 1) {
-					uni.navigateTo({
-						url: '/pagesA/procurement/stock?purchase_store_sn=' + this.purchase_store_sn
-					})
 				}else {
-					uni.navigateTo({
-						url: '/pagesA/procurement/stock'
-					})
+					if(this.is_purchase) {
+						// 选择向平台退货
+						uni.showModal({
+							content: '确定退货？',
+							cancelText: '我再想想',
+							confirmText: '我意已决',
+							success: (res) => {
+								if(res.confirm) {
+									// 退货，并且是门店退货
+									storeProdBackSubmit({
+										store_id: this.Stores_ID,
+										prod_json: JSON.stringify(this.prod_json),
+										purchase_type: 'shop',
+									}).then(res=>{
+										ls.remove('productMy');
+										uni.showToast({
+											title: res.msg
+										});
+										setTimeout(()=>{
+											// 跳转选择渠道页面
+											uni.redirectTo({
+												url: '/pagesA/procurement/refundRecords'
+											})
+										},1000)
+									})
+								}else {
+									return;
+								}
+							}
+						})
+					}else if(this.is_stock_records) {
+						let data={
+							store_id:this.Stores_ID,
+							order_id:this.order_id,
+							purchase_type: 'shop'
+						}
+						changeStoreApplyChannel(data).then(res=>{
+							uni.navigateBack({
+								delta: 1
+							});
+						}).catch(err=>{
+							toast(err.msg);
+							return;
+						})
+					}else {
+						uni.navigateTo({
+							url: '/pagesA/procurement/stock'
+						})
+					}
 				}
+
 			},
 			// 点击门店跳转去相应门店退货
 			gostock(stores_sn) {
 				if(!this.is_purchase) {
-					uni.navigateTo({
-						url: '/pagesA/procurement/stock?purchase_store_sn=' + stores_sn
-					})					
+					if(this.is_stock_records) {
+					//	进货记录过来的，直接修改进货记录的渠道，完成了跳转回去
+						let data={
+							store_id:this.Stores_ID,
+							order_id:this.order_id,
+							purchase_type: 'store',
+							purchase_store_sn: stores_sn
+						}
+						changeStoreApplyChannel(data).then(res=>{
+							uni.navigateBack({
+								delta: 1
+							})
+						}).catch(err=>{
+							toast(err.msg)
+						})
+					}else {
+						//普通进货页面跳转过来的
+						uni.navigateTo({
+							url: '/pagesA/procurement/stock?purchase_store_sn=' + stores_sn
+						})
+					}
 				}else {
 					uni.showModal({
 						content: '确定退货？',
@@ -355,7 +384,7 @@
 										// 跳转选择渠道页面
 										uni.redirectTo({
 											url: '/pagesA/procurement/refundRecords'
-										})									
+										})
 									},1000)
 								})
 							}else {
@@ -363,7 +392,7 @@
 							}
 						}
 					})
-					
+
 				}
 			},
 			// 用户只是点击了遮罩
@@ -378,7 +407,7 @@
 				this.$refs.searchLayer.close();
 			},
 			closePop(){
-				
+
 				// this.$refs.searchLayer.close();
 			}
 		}
@@ -471,7 +500,7 @@
 		            background-repeat: no-repeat;
 		            background-size: cover;
 		            background-position: center;
-		
+
 		        }
 		        .info{
 		            flex:1;
