@@ -88,7 +88,7 @@ export default {
             console.log(this.code)
             if (this.code) {
 
-                this.pay_type = 'wx_mp';//需要手动设置一下
+                this.payChannel = 'wx_mp';//需要手动设置一下
                 // console.log(this.pay_type)
                 // ls.set('code',this.code)
                 this.sub(1);
@@ -108,7 +108,7 @@ export default {
 		confirm(){
 			this.sub();
 		},
-		async	sub(is_forword){
+		async sub(is_forword){
 			let _self = this;
 			let payConf = {};
 			if(!is_forword) {
