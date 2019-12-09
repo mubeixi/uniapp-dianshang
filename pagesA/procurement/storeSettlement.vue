@@ -8,18 +8,18 @@
 					<view class="uni-input" v-if="!dateValue">请选择开始时间</view>
 					<image class="rightImg" src="https://new401.bafangka.com/static/client/right.png" ></image>
 				</picker>
-				
+
 			</view>
-			
+
 			<view class="area-item"  >
 				<text class="area-label">结束时间</text>
 				<picker class="pickerView" mode="date" :value="date" :start="startDate" :end="endDate" @change="bindDateChangeEnd">
 					<view class="uni-inputs" v-if="dateValues">{{dateValues}}</view>
 					<view class="uni-input" v-if="!dateValues">请选择结束时间</view>
 					<image class="rightImg" src="https://new401.bafangka.com/static/client/right.png" ></image>
-				</picker>	
+				</picker>
 			</view>
-			
+
 			<view class="viewButoon">
 				<view class="button" @click="search">
 					搜索
@@ -29,71 +29,73 @@
 				</view>
 			</view>
 		</block>
-		<block v-if="index==2">
-			<view class="myTop">
-				<view class="myView">
-					开放时间: <text class="colorFont">{{list.start_time}}</text>
-				</view>
-				<view class="myView">
-					结算时间: <text class="colorFont">{{list.end_time}}</text>
-				</view>
-				<view class="myView">
-					订单总金额: <text class="colorRed">¥{{list.Order_TotalAmount||0}}</text>
-				</view>
-				<view class="myView">
-					结算比例: <text class="colorFont">{{list.Distribute_Balance||'0:0'}}</text>
-				</view>
-				<view class="myView">
-					运费金额: <text class="colorFont">¥{{list.Shipping_fee||0}}</text>
-				</view>
-				<view class="myView">
-					服务费: <text class="colorFont">¥{{list.service_fee||0}}</text>
-				</view>
-				<view class="myView">
-					退款金额: <text class="colorFont">¥{{list.back_amount||0}}</text>
-				</view>
-				<view class="myView">
-					实际结算: <text class="colorRed">¥{{list.Stores_Balance||0}}</text>
-				</view>
-			</view>
-			
-			<view style="background-color: #F8F8F8;height: 10px;width: 750rpx;"></view>
-			
-			<view class="tableTitle">
-				订单数据
-			</view>
-			<view class="table">
-				<view class="th">
-					<view class="td">订单号</view>
-					<view class="td">总价</view>
-					<view class="td">实付</view>
-					<view class="td">退款</view>
-					<view class="td">结算</view>
-				</view>
-				<view class="tr" v-for="(item,index) of list.orders" :key="index">
-					<view class="td">{{item.order_id}}</view>
-					<view class="td">¥{{item.order_totalamount}}</view>
-					<view class="td">¥{{item.order_totalprice}}</view>
-					<view class="td">¥{{item.back_amount}}</view>
-					<view class="td colorRed">¥{{item.settle_money}}</view>
-				</view>
-			</view>
-			
-			<view class="buttons" v-if="list.orders" @click="goStore">
-				发起结算
-			</view>
-			<view class="buttons ccc" v-if="!list.orders">
-				发起结算
-			</view>
-		</block>
+<!--		<block v-if="index==2">-->
+<!--			<view class="myTop">-->
+<!--				<view class="myView">-->
+<!--					开放时间: <text class="colorFont">{{list.start_time}}</text>-->
+<!--				</view>-->
+<!--				<view class="myView">-->
+<!--					结算时间: <text class="colorFont">{{list.end_time}}</text>-->
+<!--				</view>-->
+<!--				<view class="myView">-->
+<!--					订单总金额: <text class="colorRed">¥{{list.Order_TotalAmount||0}}</text>-->
+<!--				</view>-->
+<!--				<view class="myView">-->
+<!--					结算比例: <text class="colorFont">{{list.Distribute_Balance||'0:0'}}</text>-->
+<!--				</view>-->
+<!--				<view class="myView">-->
+<!--					运费金额: <text class="colorFont">¥{{list.Shipping_fee||0}}</text>-->
+<!--				</view>-->
+<!--				<view class="myView">-->
+<!--					服务费: <text class="colorFont">¥{{list.service_fee||0}}</text>-->
+<!--				</view>-->
+<!--				<view class="myView">-->
+<!--					退款金额: <text class="colorFont">¥{{list.back_amount||0}}</text>-->
+<!--				</view>-->
+<!--				<view class="myView">-->
+<!--					实际结算: <text class="colorRed">¥{{list.Stores_Balance||0}}</text>-->
+<!--				</view>-->
+<!--			</view>-->
+<!--			-->
+<!--			<view style="background-color: #F8F8F8;height: 10px;width: 750rpx;"></view>-->
+<!--			-->
+<!--			<view class="tableTitle">-->
+<!--				订单数据-->
+<!--			</view>-->
+<!--			<view class="table">-->
+<!--				<view class="th">-->
+<!--					<view class="td">订单号</view>-->
+<!--					<view class="td">总价</view>-->
+<!--					<view class="td">实付</view>-->
+<!--					<view class="td">退款</view>-->
+<!--					<view class="td">结算</view>-->
+<!--				</view>-->
+<!--				<view class="tr" v-for="(item,index) of list.orders" :key="index">-->
+<!--					<view class="td">{{item.order_id}}</view>-->
+<!--					<view class="td">¥{{item.order_totalamount}}</view>-->
+<!--					<view class="td">¥{{item.order_totalprice}}</view>-->
+<!--					<view class="td">¥{{item.back_amount}}</view>-->
+<!--					<view class="td colorRed">¥{{item.settle_money}}</view>-->
+<!--				</view>-->
+<!--			</view>-->
+<!--			-->
+<!--			<view class="buttons" v-if="list.orders" @click="goStore">-->
+<!--				发起结算-->
+<!--			</view>-->
+<!--			<view class="buttons ccc" v-if="!list.orders">-->
+<!--				发起结算-->
+<!--			</view>-->
+<!--		</block>-->
     </view>
 </template>
 
 <script>
- 
+ import {pageMixin} from "../../common/mixin";
+
     import {settlement} from '../../common/fetch.js'
 	import {mapGetters} from 'vuex'
     export default {
+			mixins: [pageMixin],
         data() {
 			const currentDate = this.getDate({
 			         format: true
@@ -159,15 +161,18 @@
 					})
 					return
 				}
-				let data={
-					store_id:this.Stores_ID,
-					start_time:this.dateValue,
-					end_time:this.dateValues
-				}
-				settlement(data).then(res=>{
-					this.list=res.data
-					this.index=2
+				uni.navigateTo({
+					url:'/pagesA/procurement/storeSettlementLast?start_time='+this.dateValue+'&&end_time='+this.dateValues
 				})
+				// let data={
+				// 	store_id:this.Stores_ID,
+				// 	start_time:this.dateValue,
+				// 	end_time:this.dateValues
+				// }
+				// settlement(data).then(res=>{
+				// 	this.list=res.data
+				// 	this.index=2
+				// })
 			},
 			bindDateChangeEnd(e){
 				this.dateValues=e.target.value
@@ -255,8 +260,8 @@
 		font-size: 24rpx;
 		color: #888888;
 	}
-	
-	
+
+
 	.wrap{
 		background-color: #FFFFFF;
 		min-height: 100vh;
@@ -318,7 +323,7 @@
 			color: #666666;
 			border-bottom: 1px solid #E7E7E7;
 			&:last-child{
-				border-bottom: 0px;	
+				border-bottom: 0px;
 			}
 			.td{
 				width: 142rpx;

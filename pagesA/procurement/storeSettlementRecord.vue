@@ -1,6 +1,9 @@
 
 <template>
     <view class="wrap">
+		<div class="defaults" v-if="list.length<=0">
+			<image :src="'/static/client/defaultImg.png'|domain" ></image>
+		</div>
 		<view class="list" v-for="(item,index) of list" :key="index" @click="noShow">
 			<view class="listText">
 				结算时间: <text class="msg">{{item.time_period}}</text>
@@ -31,17 +34,19 @@
 				</view>
 			</view>
 		</view>
-		
-		
-		
+
+
+
     </view>
 </template>
 
 <script>
- 
+
     import {getSettlements} from '../../common/fetch.js'
 	import {mapGetters} from 'vuex'
+	import {pageMixin} from "../../common/mixin";
     export default {
+		mixins:[pageMixin],
         data() {
             return {
 				list:[],
@@ -123,8 +128,8 @@
 			}
 		}
 	}
-	
-	
+
+
 	.tips {
 		position: absolute;
 		left: 130rpx;
@@ -146,5 +151,11 @@
 			border-bottom: 0;
 			box-shadow: 0px 0px 16px 0px rgba(4,0,0,0.18);
 		}
+	}
+	.defaults{
+		margin: 0 auto;
+		width: 640rpx;
+		height: 480rpx;
+		margin-top: 100rpx;
 	}
 </style>

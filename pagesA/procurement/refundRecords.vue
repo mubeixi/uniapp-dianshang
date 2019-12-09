@@ -1,15 +1,17 @@
 <template>
 	<view class="wrap">
-    <scroll-view class="order-status" scroll-x="true" style="width: 750rpx;white-space: nowrap;" >
-			<view class="status" :class="[status == 0 ? 'active' : '']" @click="changeStatus (0)">全部</view>
-      <view class="status" :class="[status == 31 ? 'active' : '']" @click="changeStatus(31)">待处理</view>
-      <view class="status" :class="[status == 32 ? 'active' : '']" @click="changeStatus(32)">待发货</view>
-      <view class="status" :class="[status == 33 ? 'active' : '']" @click="changeStatus(33)">已驳回</view>
-      <view class="status" :class="[status == 34 ? 'active' : '']" @click="changeStatus(34)">已发货</view>
-			<view class="status" :class="[status == 35 ? 'active' : '']" @click="changeStatus(35)">已收货</view>
-			<view class="status" :class="[status == 36 ? 'active' : '']" @click="changeStatus(36)">已收款</view>
-			<view class="status" :class="[status == 37 ? 'active' : '']" @click="changeStatus(37)">已取消</view>
-    </scroll-view>
+		<view style="height: 90rpx;">
+			<scroll-view class="order-status" scroll-x="true" style="width: 750rpx;white-space: nowrap;" >
+				<view class="status" :class="[status == 0 ? 'active' : '']" @click="changeStatus (0)">全部</view>
+				<view class="status" :class="[status == 31 ? 'active' : '']" @click="changeStatus(31)">待处理</view>
+				<view class="status" :class="[status == 32 ? 'active' : '']" @click="changeStatus(32)">待发货</view>
+				<view class="status" :class="[status == 33 ? 'active' : '']" @click="changeStatus(33)">已驳回</view>
+				<view class="status" :class="[status == 34 ? 'active' : '']" @click="changeStatus(34)">已发货</view>
+				<view class="status" :class="[status == 35 ? 'active' : '']" @click="changeStatus(35)">已收货</view>
+				<view class="status" :class="[status == 36 ? 'active' : '']" @click="changeStatus(36)">已收款</view>
+				<view class="status" :class="[status == 37 ? 'active' : '']" @click="changeStatus(37)">已取消</view>
+			</scroll-view>
+		</view>
 		<block v-if="back_list.length>0">
 			<view class="prolist" @click="hidden_tip" v-for="item of back_list">
 				<view class="pro-title">
@@ -17,7 +19,7 @@
 					<view class="status">{{item.status_desc}}
 						<block v-if="item.status == 33">
 							<image class="qty-icon" src="/static/procurement/i.png" mode="" @click.stop="show_pro_tip"></image>
-							<view class="tips" v-if="pro_tip_show">
+							<view class="tips" v-if="pro_tip_show && item.reason">
 								<view class="sanjiaoxing"></view>{{item.reason}}
 							</view>
 						</block>
@@ -38,7 +40,7 @@
 							<view class="pro-price"><text class="price-icon">￥</text>{{pro.prod_price}}</view>
 						</view>
 					</view>
-				</view>	
+				</view>
 				<view class="totalinfo">总计：<text class="price-icon">￥</text><text class="price-num">{{item.price}}</text></view>
 				<view class="btns">
 					<view class="btn" v-if="item.status == 31 || item.status == 32" @click="cancelOrder(item.id)">取消</view>
@@ -48,9 +50,9 @@
 			</view>
 			<view class="list-bottom">我是有底线的</view>
 		</block>
-		<block v-else>
-			<view class="nodata">暂无数据</view>
-		</block>
+		<div class="defaults" v-else>
+				<image :src="'/static/client/defaultImg.png'|domain" ></image>
+		</div>
 		<!--  门店信息	-->
 		<view class="sku-pop mendian" v-if="isShowStoreMsg">
 		    <view class="sku-title">门店信息</view>
@@ -100,9 +102,11 @@
 </template>
 
 <script>
+	import {pageMixin} from "../../common/mixin";
 	import {getStoreProdBackOrder,storeProdBackOrderCancel,storeProdBackOrderConfirm} from '../../common/fetch.js'
 	import {mapGetters} from 'vuex'
 	export default {
+		mixins:[pageMixin],
 		data(){
 			return {
 				pro_tip_show: false,
@@ -118,7 +122,7 @@
 			}
 		},
 		computed: {
-		    ...mapGetters(['Stores_ID']),   
+		    ...mapGetters(['Stores_ID']),
 		},
 		onLoad: function(){
 			this.getStoreProdBackOrder();
@@ -166,9 +170,9 @@
 						}else {
 							return;
 						}
-					}	
+					}
 				})
-				
+
 			},
 			changeStatus(status){
 					this.status = status;
@@ -204,7 +208,7 @@
 				console.log('lalal')
 				this.isHidden = false;
 				this.isShowStoreMsg = true;
-			},	
+			},
 			hiddenMask(){
 				this.isShowStoreMsg = false;
 				this.isHidden = true;
@@ -234,7 +238,12 @@
 		min-height: 100vh;
 		background-color: #F6F6F6;
     .order-status {
-      height: 90rpx;
+			position: fixed;
+			top: 0;
+			left: 0;
+			z-index: 10;
+			background-color:#F6F6F6;
+      // height: 90rpx;
       display: flex;
       align-items: center;
       // justify-content: center;
@@ -242,7 +251,7 @@
       .status {
 				display: inline-block;
         width: 135rpx;
-				margin-right: 40rpx;
+				margin-right: 30rpx;
 				line-height: 80rpx;
 				&.active {
 					color: $wzw-primary-color;
@@ -309,7 +318,7 @@
 					display: flex;
 					margin-top: 20rpx;
 					padding-bottom: 30rpx;
-					box-sizing: border-box;			
+					box-sizing: border-box;
 					.pro-img {
 						width: 200rpx;
 						height: 200rpx;
@@ -386,7 +395,7 @@
 						}
 					}
 				}
-			}	
+			}
 			.btns {
 				display: flex;
 				justify-content: flex-end;
@@ -580,4 +589,10 @@
 	        }
 	    }
 	}
+	.defaults{
+			margin: 0 auto;
+			width: 640rpx;
+			height: 480rpx;
+			margin-top: 100rpx;
+		}
 </style>

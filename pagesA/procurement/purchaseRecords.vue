@@ -2,63 +2,70 @@
 	<view class="wrap" >
 
 		<!-- <page-title :title="'进货记录'" :bgcolor="'#fff'"></page-title> -->
-		<block v-for="(item,index) of orderList" :key="index" >
-			<view class="prolist" @click="hidden_tip(item)" >
-				<view class="pro-title">
-					<view>进货单号：{{item.Order_ID}}</view>
-					<image  v-if="item.Order_Status==20||item.Order_Status==26" class="img" src="/static/procurement/del.png" @click="del(item.Order_ID)"></image>
-				</view>
-				<view class="list-msg">
-					<view class="biz-msg">
-						<image class="avator" :src="item.Stores_ImgPath" mode=""></image>
-						<view class="biz-name">{{item.Stores_Name}}<view class="biz-links" v-if="(item.Order_Status==20||item.Order_Status==22||item.Order_Status==25)||item.active_id>0">(<text v-if="item.active_id>0" class="text-d" @click="showStore(item)">查看信息</text><block v-if="(item.Order_Status==20||item.Order_Status==22||item.Order_Status==25)&&item.active_id>0">/</block><block v-if="item.Order_Status==20||item.Order_Status==22||item.Order_Status==25"><text class="text-d" @click="changeChannel(item)">修改渠道</text></block>)</view></view>
-						<view class="status">{{item.Order_Status_desc}}
-							<block v-if="item.Order_Status == 22 && item.reason">
-								<image class="qty-icon" src="/static/procurement/i.png" mode="" @click.stop="show_pro_tip(index)"></image>
-								<view class="tips" >
-									<view class="sanjiaoxing"></view>{{item.reason}}
-								</view>
-							</block>
-						</view>
+		<block v-if="orderList.length>0">
+			<block v-for="(item,index) of orderList" :key="index" >
+				<view class="prolist" @click="hidden_tip(item)" >
+					<view class="pro-title">
+						<view>进货单号：{{item.Order_ID}}</view>
+						<image  v-if="item.Order_Status==20||item.Order_Status==26" class="img" src="/static/procurement/del.png" @click="del(item.Order_ID)"></image>
 					</view>
-					<view class="pro-msg" v-for="(it,ind) of item.prod_list" :key="it">
-						<view class="pro-img">
-							<image class="img" :src="it.prod_img"></image>
+					<view class="list-msg">
+						<view class="biz-msg">
+							<image class="avator" :src="item.supplier_img" mode=""></image>
+							<view class="biz-name">{{item.Stores_Name}}<view class="biz-links" v-if="(item.Order_Status==20||item.Order_Status==22||item.Order_Status==25)||item.active_id>0">(<text v-if="item.active_id>0" class="text-d" @click="showStore(item)">查看信息</text><block v-if="(item.Order_Status==20||item.Order_Status==22||item.Order_Status==25)&&item.active_id>0">/</block><block v-if="item.Order_Status==20||item.Order_Status==22||item.Order_Status==25"><text class="text-d" @click="changeChannel(item)">修改渠道</text></block>)</view></view>
+							<view class="status">{{item.Order_Status_desc}}
+								<block v-if="item.Order_Status == 22 && item.reason">
+									<image class="qty-icon" src="/static/procurement/i.png" mode="" @click.stop="show_pro_tip(index)"></image>
+									<view class="tips" >
+										<view class="sanjiaoxing"></view>{{item.reason}}
+									</view>
+								</block>
+							</view>
 						</view>
-						<view class="pro-info">
-							<view class="pro-name">{{it.prod_name}}</view>
-							<view class="pro-attr">
-								<view class="attr-info">{{it.attr_info.attr_val.Attr_Value}}</view>
-								<view class="pro-qty">x{{it.prod_count}}
-									<image class="qty-icon" v-if="it.prod_count_change_desc" src="/static/procurement/i.png" mode="" @click.stop="show_pro_tip(item)"></image>
-									<view class="tips" v-if="item.pro_tip_show">
-										<view class="sanjiaoxing"></view>{{it.prod_count_change_desc}}
+
+						<view class="pro-msg" v-for="(it,ind) of item.prod_list" :key="it">
+							<view class="pro-img">
+								<image class="img" :src="it.prod_img"></image>
+							</view>
+							<view class="pro-info">
+								<view class="pro-name">{{it.prod_name}}</view>
+								<view class="pro-attr" v-if="it.attr_info.attr_va">
+									<view class="attr-info">{{it.attr_info.attr_val.Attr_Value}}</view>
+									<view class="pro-qty">x{{it.prod_count}}
+										<image class="qty-icon" v-if="it.prod_count_change_desc" src="/static/procurement/i.png" mode="" @click.stop="show_pro_tip(item)"></image>
+										<view class="tips" v-if="item.pro_tip_show">
+											<view class="sanjiaoxing"></view>{{it.prod_count_change_desc}}
+										</view>
+									</view>
+								</view>
+								<view class="pro-price">
+									<view>
+										<text class="price-icon">￥</text>{{it.prod_price}}
+									</view>
+									<view class="sku-item" v-if="item.Order_Status==20||item.Order_Status==22||item.Order_Status==25">
+										<view class="handle" @click="minus(index,ind,it,item.Order_ID)">-</view>
+										<view class="pro-num">{{it.prod_count}}</view>
+										<view class="handle" @click="plus(index,ind,it,item.Order_ID)">+</view>
 									</view>
 								</view>
 							</view>
-							<view class="pro-price">
-								<view>
-									<text class="price-icon">￥</text>{{it.prod_price}}
-								</view>
-								<view class="sku-item" v-if="item.Order_Status==20||item.Order_Status==22||item.Order_Status==25">
-									<view class="handle" @click="minus(index,ind,it,item.Order_ID)">-</view>
-									<view class="pro-num">{{it.prod_count}}</view>
-									<view class="handle" @click="plus(index,ind,it,item.Order_ID)">+</view>
-								</view>
-							</view>
+						</view>
+
+						<view class="totalinfo">总计：<text class="price-icon">￥</text><text class="price-num">{{item.Order_TotalPrice}}</text> <block v-if="item.Order_Shipping.price>0">(含运费{{item.Order_Shipping.price}}元)</block></view>
+						<view class="btns">
+							<view class="btn back" @click="cancelOrder(item.Order_ID)" v-if="item.Order_Status==20||item.Order_Status==21||item.Order_Status==25">取消进货单</view>
+							<view class="btn back" @click="recallOrder(item.Order_ID)" v-if="item.Order_Status==21">撤回进货单</view>
+							<view class="btn back" @click="wuliu(item)" v-if="item.Order_Status==23">查看物流</view>
+							<view class="btn back" @click="completedOrder(item.Order_ID)" v-if="item.Order_Status==23">确认收货</view>
+							<view class="btn back" @click="submitOrder(item.Order_ID)" v-if="item.Order_Status==20||item.Order_Status==22||item.Order_Status==25">提交进货单</view>
 						</view>
 					</view>
-					<view class="totalinfo">总计：<text class="price-icon">￥</text><text class="price-num">{{item.Order_TotalPrice}}</text> <block v-if="item.Order_Shipping.price>0">(含运费{{item.Order_Shipping.price}}元)</block></view>
-					<view class="btns">
-						<view class="btn back" @click="cancelOrder(item.Order_ID)" v-if="item.Order_Status==20||item.Order_Status==21||item.Order_Status==25">取消进货单</view>
-						<view class="btn back" @click="recallOrder(item.Order_ID)" v-if="item.Order_Status==21">撤回进货单</view>
-						<view class="btn back" @click="wuliu(item)" v-if="item.Order_Status==23">查看物流</view>
-						<view class="btn back" @click="completedOrder(item.Order_ID)" v-if="item.Order_Status==23">确认收货</view>
-						<view class="btn back" @click="submitOrder(item.Order_ID)" v-if="item.Order_Status==20||item.Order_Status==22||item.Order_Status==25">提交进货单</view>
-					</view>
 				</view>
-			</view>
+			</block>
 		</block>
+		<div class="defaults" v-else>
+				<image :src="'/static/client/defaultImg.png'|domain" ></image>
+		</div>
 		<!--  门店信息	-->
 		<view class="sku-pop mendian" v-if="isShowStoreMsg">
 		    <view class="sku-title">门店信息</view>
@@ -120,10 +127,12 @@
 </template>
 
 <script>
+	import {pageMixin} from "../../common/mixin";
 	import {getStorePurchaseApply,storePifaOrderCancel,storePifaOrderRecall,storePifaOrderCompleted,changeStoreApplyChannel,getStoreDetail,subStorePurchaseApply,storePifaOrderDel} from "../../common/fetch";
 	import {mapGetters} from 'vuex'
 	import {getLocation} from "../../common/tool/location";
 	export default {
+		mixins:[pageMixin],
 		data(){
 			return {
 				isHidden: true,
@@ -271,7 +280,7 @@
 				    title: '订单',
 				    content: '是否要撤回订单',
 				    success: function (res) {
-				        if (res.confirm) {		
+				        if (res.confirm) {
 							storePifaOrderRecall(data).then(res=>{
 								uni.showToast({
 									title:res.msg,
@@ -282,11 +291,11 @@
 								},1000)
 							}).catch(e=>{console.log(e)})
 				        } else if (res.cancel) {
-				
+
 				        }
 				    }
 				});
-				
+
 			},
 			//取消采购单
 			cancelOrder(id){
@@ -299,7 +308,7 @@
 				    title: '订单',
 				    content: '是否要取消订单',
 				    success: function (res) {
-				        if (res.confirm) {		
+				        if (res.confirm) {
 							storePifaOrderCancel(data).then(res=>{
 								uni.showToast({
 									title:res.msg,
@@ -310,11 +319,11 @@
 								},1000)
 							}).catch(e=>{console.log(e)})
 				        } else if (res.cancel) {
-				
+
 				        }
 				    }
 				});
-				
+
 			},
 			getStorePurchaseApply(){
 				let data={
@@ -352,8 +361,8 @@
 			},
 			showAdress(){
 				uni.openLocation({
-				            latitude: 39.858599437526,
-				            longitude: 116.28599996624,
+				            latitude: this.storeAdress.wx_lat,
+				            longitude: this.storeAdress.wx_lng,
 				            success: function () {
 				                console.log('success');
 				            }
@@ -366,7 +375,7 @@
 				let lat='';
 				let lng='';
 				getLocation(this).then(res=>{
-				    if(res.code===0){
+					if(res.code===0){
 						lng=res.data.longitude
 						lat=res.data.latitude
 						let data={
@@ -380,8 +389,12 @@
 						})
 					}
 				}).catch(err=>{
-				    this.isHidden = true;
-				    this.isShowStoreMsg = false;
+					let data={
+						store_id:this.Stores_ID
+					}
+					getStoreDetail(data).then(res=>{
+						this.storeAdress=res.data
+					})
 				})
 			},
 			hiddenMask(){
@@ -414,14 +427,12 @@
 			},
 			//修改渠道
 			changeChannel(item){
-				this.isChangeChannel = true;
-				this.isHidden = false;
 				this.order_id=item.Order_ID;
-				if(item.active_id>0){
-					this.orderIndex=1
-				}else{
-					this.orderIndex=0
-				}
+				//跳转到 渠道选择页面
+				uni.navigateTo({
+					url: '/pages/selectChannel/selectChannel?order_id=' + item.Order_ID
+				});
+				return;
 			}
 		},
 		computed: {
@@ -869,5 +880,10 @@
 				}
 			}
 		}
-
+.defaults{
+		margin: 0 auto;
+		width: 640rpx;
+		height: 480rpx;
+		margin-top: 100rpx;
+	}
 </style>
