@@ -22,13 +22,14 @@
 								</block>
 							</view>
 						</view>
+
 						<view class="pro-msg" v-for="(it,ind) of item.prod_list" :key="it">
 							<view class="pro-img">
 								<image class="img" :src="it.prod_img"></image>
 							</view>
 							<view class="pro-info">
 								<view class="pro-name">{{it.prod_name}}</view>
-								<view class="pro-attr">
+								<view class="pro-attr" v-if="it.attr_info.attr_val">
 									<view class="attr-info">{{it.attr_info.attr_val.Attr_Value}}</view>
 									<view class="pro-qty">x{{it.prod_count}}
 										<image class="qty-icon" v-if="it.prod_count_change_desc" src="/static/procurement/i.png" mode="" @click.stop="show_pro_tip(item)"></image>
@@ -49,6 +50,7 @@
 								</view>
 							</view>
 						</view>
+
 						<view class="totalinfo">总计：<text class="price-icon">￥</text><text class="price-num">{{item.Order_TotalPrice}}</text> <block v-if="item.Order_Shipping.price>0">(含运费{{item.Order_Shipping.price}}元)</block></view>
 						<view class="btns">
 							<view class="btn back" @click="cancelOrder(item.Order_ID)" v-if="item.Order_Status==20||item.Order_Status==21||item.Order_Status==25">取消进货单</view>
