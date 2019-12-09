@@ -61,6 +61,7 @@
     import {uploadImage,comment,GET_ENV,get_Users_ID,get_User_ID,createToken} from '../../common/fetch.js'
     import {uploadImages,ls} from '../../common/tool.js'
     import {userStoreApply} from '../../common/fetch.js'
+    import {toast,error} from '../../common/index.js'
     export default {
         data() {
             return {
@@ -110,24 +111,18 @@
         methods: {
             // 入驻
             settled: function(){
-							this.store_province = this.address_info.Address_Province;
-							this.store_city = this.address_info.Address_City;
-							this.store_area = this.address_info.Address_Area;
-							if((this.store_name && this.store_mobile && this.store_address && this.store_province && this.store_city && this.store_area ) == '') {
-								uni.showToast({
-									title: '请完善资料再次提交',
-									icon: 'none'
-								});
-								return;
-							}
-							if(this.arr.length == 0) {
-								uni.showToast({
-									title: '请上传门店图片',
-									icon: 'none'
-								});
-								return;
-							}
-							this.store_image = this.arr[0][0];
+                this.store_province = this.address_info.Address_Province;
+                this.store_city = this.address_info.Address_City;
+                this.store_area = this.address_info.Address_Area;
+                if((this.store_name && this.store_mobile && this.store_address && this.store_province && this.store_city && this.store_area ) == '') {
+                    error('请完善资料')
+                    return;
+                }
+                if(this.arr.length == 0) {
+                    error('请上传图片')
+                    return;
+                }
+                this.store_image = this.arr[0][0];
                 userStoreApply({
                     store_name: this.store_name,
                     store_mobile: this.store_mobile,
@@ -137,14 +132,13 @@
                     store_city: this.store_city,
                     store_area: this.store_area
                 }).then(res=>{
-									uni.showToast({
-										title: res.msg
-									})
-								}).catch(err=>{
-									uni.showToast({
-										title: res.msg
-									})
-								})
+                    toast(res.msg);
+                    uni.navigateBack({
+                        delta: 1
+                    })
+                }).catch(err=>{
+                    error(err.msg)
+                })
             },
             //处理省市区联动信息
             addressChange: function (columnValue) {

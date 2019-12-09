@@ -36,9 +36,9 @@
 					{{is_refund && is_fourth?'取消':'退货'}}
 				</view>
 			</view>
-			
+
 		</view>
-		
+
 		<view class="marginAuto">
 			<template v-if="index == 4">
 				<view class="blockDiv" v-for="(item,index) of productMy" :key="index">
@@ -134,15 +134,15 @@
 				</view>
 			</template>
 		</view>
-		
+
 		<view v-if="index==3" style="height: 86rpx;width: 750rpx;">
-			
+
 		</view>
 		<view v-if="index==3" class="buttonLast" @click="allSum">
 			统计价值
 		</view>
-		
-		
+
+
 		<!--  遮罩层	-->
 		<view class="mask" :hidden="isHiddenMask" @click="hiddenMask"></view>
 		<!--  产品属性弹窗	-->
@@ -171,9 +171,10 @@
 		</view>
 		<!--  价值弹窗	-->
 		<view class="sku-pop" v-if="showSum">
-		    <view class="sku-title">您查看的商品总价值为</view>
+		    <!-- <view class="sku-title"></view> -->
 			<view class="priceSum">
-				¥<span class="span">{{prod_money}}</span>
+				<view class="title">您查看的商品总价值为</view>
+				<text class="icon">¥</text>	<span class="span">{{prod_money}}</span>
 			</view>
 		</view>
 		<view style="height:90rpx;" v-if="index == 4 && amount > 0 ">
@@ -243,7 +244,7 @@
 		    <view class="sku-title">修改渠道</view>
 		    <view class="sku-content" style="padding-left:53rpx;">
 		        <view class="skulist" @click="active_id = 0">
-							
+
 		            <image class="selected" src="/static/procurement/selected.png" mode="" v-if="active_id == 0"></image>
 								<view class="nochecked" v-else></view>
 								<view>平台退货</view>
@@ -271,6 +272,7 @@
 	import {mapGetters} from 'vuex'
 	import {numberSort,ls} from '../../common/tool.js'
 	import {getStoreProdMoney,getSelfStoreProd,storeProdBackSubmit}  from '../../common/fetch'
+
 	export default {
 		data() {
 			return {
@@ -321,7 +323,7 @@
 		    popupLayer
 		},
 		computed: {
-		    ...mapGetters(['Stores_ID']),		
+		    ...mapGetters(['Stores_ID']),
 				amount: function(){
 					let amount = 0;
 					if(this.productMy) {
@@ -331,11 +333,11 @@
 									if(item.skuvaljosn[attr_id].myqty) {
 										amount += item.skuvaljosn[attr_id].myqty
 									}
-								}								
+								}
 							}else {
 								amount += item.myqty
 							}
-						})						
+						})
 					}
 					return amount
 				}
@@ -414,7 +416,7 @@
 							if(item.skuvaljosn[attr_id].myqty > 0) {
 								arr.push(item.skuvaljosn[attr_id])
 							}
-						}						
+						}
 					}else if(item.myqty > 0){
 						arr.push(item)
 					}
@@ -433,22 +435,22 @@
 							if(arr[i].Product_Attr_ID){
 								prod_json[arr[i].Products_ID]['attr'] = {
 									[arr[i].Product_Attr_ID]: arr[i].myqty
-								}		
+								}
 							}
-															
+
 						}
 					}else {
 						prod_json[arr[i].Products_ID] = {
 							"num": arr[i].myqty
-						} 
+						}
 						if(prod_json[arr[i].Products_ID]['attr']) {
 							prod_json[arr[i].Products_ID]['attr'][arr[i].Product_Attr_ID] = arr[i].myqty
 						}else {
 							if(arr[i].Product_Attr_ID){
 								prod_json[arr[i].Products_ID]['attr'] = {
 									[arr[i].Product_Attr_ID]: arr[i].myqty
-								}		
-							}									
+								}
+							}
 						}
 					}
 				}
@@ -496,13 +498,13 @@
 				}
 				pro.myqty -- ;
 				pro.prod_stock ++;
-				
+
 			},
 			// 增加数量
 			addNumberNoAttr(pro){
 				pro.myqty ++ ;
 				pro.prod_stock --;
-				
+
 			},
 			// 删除有属性的
 			delNumber(num,pro){
@@ -535,7 +537,7 @@
 					title: '该规格已经没有库存',
 					icon: 'none'
 				})
-				
+
 			},
 			handClicked(){
 				 this.$refs.detail.close();
@@ -551,8 +553,8 @@
 				this.isHiddenMask = true;
 				this.showSku = false;
 			},
-			
-			
+
+
 			showSelected(){
 				if(this.total_cart_count == 0) return;
 			    if(!this.isClicked) {
@@ -567,11 +569,11 @@
 			    this.isClicked = !this.isClicked;
 			},
 			// 确认退货
-			confirm(prosku){		
+			confirm(prosku){
 				console.log(prosku);
 				console.log(this.prosku_index);//产品下表
 				if(!this.submit_flag) {return;}
-				
+
 				if(prosku.skuvaljosn && !this.postData.attr_id) {
 				    uni.showToast({
 				        title: '请选择规格',
@@ -587,13 +589,13 @@
 					//存选中商品的属性名
 					this.productMy[this.prosku_index].skuvaljosn[this.check_attrid].check_attrnames=this.check_attrnames
 					//存选中商品的规格数量
-					this.productMy[this.prosku_index].skuvaljosn[this.check_attrid].myqty+=this.postData.qty					
+					this.productMy[this.prosku_index].skuvaljosn[this.check_attrid].myqty+=this.postData.qty
 				}else {
 					this.productMy[this.prosku_index].prod_stock -= this.postData.qty;
 					this.productMy[this.prosku_index].myqty += this.postData.qty;
 				}
-				
-				
+
+
 				// 确认以后，该产品改属性的库存减少 qty个，
 				// this.amount += this.postData.qty;
 				this.isHiddenMask = true;
@@ -779,12 +781,12 @@
 					}
 					this.totalCount=res.totalCount
 					this.loading=false
-					
+
 					for(let item of this.productMy){
 						if(item.skuvaljosn) {
 							for(let i in item.skuvaljosn){
 								item.skuvaljosn[i].myqty=0
-							}							
+							}
 						}else {
 							item.myqty = 0;
 						}
@@ -793,7 +795,7 @@
 				}).catch(e=>{
 					this.loading=false
 				})
-				
+
 			},
 			changIndex(index){
 				// 切换存一下数组，否则之前处理的逻辑都没了
@@ -1094,6 +1096,24 @@
 								}
 		        }
 		    }
+				.priceSum {
+					text-align: center;
+					padding: 68rpx 0 104rpx;
+					background-color: #fff;
+					.title {
+						font-size: 28rpx;
+						margin-bottom: 28rpx;
+					}
+					.icon {
+						color: $wzw-primary-color;
+						font-size: 26rpx;
+						margin-right: 10rpx;
+					}
+					.span {
+						color: $wzw-primary-color;
+						font-size: 36rpx;
+					}
+				}
 		}
 		.back-btn {
 			height: 50rpx;
