@@ -363,6 +363,7 @@
 				uni.openLocation({
 				            latitude: this.storeAdress.wx_lat,
 				            longitude: this.storeAdress.wx_lng,
+							name:this.storeAdress.Stores_Name,
 				            success: function () {
 				                console.log('success');
 				            }

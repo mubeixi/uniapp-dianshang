@@ -120,6 +120,7 @@
 					that.isQing=false;
 					return;
 				}
+
 				if(this.price==''){
 					uni.showToast({
 						title:'未输入金额',
@@ -127,6 +128,16 @@
 					})
 					this.price='';
 					that.isQing=false;
+					return;
+				}
+				if(this.User_Method_ID<=0){
+					this.$error('请添加提现方式')
+					this.isQing=false
+					setTimeout(function () {
+						uni.navigateTo({
+							url:"../fenxiao/addWithdrawal?form="+this.withdraw_from
+						})
+					},1000)
 					return;
 				}
 				let data={
@@ -175,6 +186,7 @@
 						this.isShow=true;
 					}else{
 						this.isShow=false;
+						this.User_Method_ID=0
 					}
 					if(this.User_Method_ID){
 							for(let item of res.data.list){
