@@ -175,7 +175,7 @@ export default {
 					this.$error('请在微信内打开')
 					return;
 				}
-				let isHasCode =  ls.get('temp_order_info');
+				let isHasCode =  this.code;
 
 				//只有跳转回来的才这么弄
 				if (isHasCode && is_forword) {
@@ -186,8 +186,8 @@ export default {
 						pay_type: 'wx_mp'
 					}
 
-					//拿掉
-                    ls.remove('temp_order_info')
+					//拿掉code
+					this.code = ''
 
 				} else {
 					//存上临时的数据
@@ -539,7 +539,7 @@ export default {
 			}
 			console.log(REDIRECT_URI)
 
-			//window.location.href = wxAuthUrl;
+			window.location.href = wxAuthUrl;
 
 		},
 		payFailCall(){
