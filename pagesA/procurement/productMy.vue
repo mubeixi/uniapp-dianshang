@@ -5,7 +5,7 @@
 				<view class="ulDiv">
 					<image class="imgHund" src="/static/procurement/zai.png"></image>
 				</view>
-				<view class="font-13">
+				<view class="font-13" :class="index == 1? 'redColor':''">
 					在售产品
 				</view>
 			</view>
@@ -14,7 +14,7 @@
 				<view class="ulDiv">
 					<image class="imgHund" src="/static/procurement/zai.png"></image>
 				</view>
-				<view class="font-13">
+				<view class="font-13" :class="index == 2? 'redColor':''">
 					库存紧张
 				</view>
 			</view>
@@ -23,7 +23,7 @@
 				<view class="ulDiv">
 					<image class="imgHund" src="/static/procurement/zai.png"></image>
 				</view>
-				<view class="font-13">
+				<view class="font-13" :class="index == 3? 'redColor':''">
 					统计价值
 				</view>
 			</view>
@@ -32,7 +32,7 @@
 				<view class="ulDiv">
 					<image class="imgHund" src="/static/procurement/zai.png"></image>
 				</view>
-				<view class="font-13">
+				<view class="font-13" :class="index == 4? 'redColor':''">
 					{{is_refund && is_fourth?'取消':'退货'}}
 				</view>
 			</view>
@@ -41,97 +41,112 @@
 
 		<view class="marginAuto">
 			<template v-if="index == 4">
-				<view class="blockDiv" v-for="(item,index) of productMy" :key="index">
-					<view class="mbxa" v-if="isShow" @click="checkedSelect(index)">
-						<img class="imgs" :src="checked[index].checked?checked_img_url:uncheck_img_url" >
-					</view>
-					<view style="width: 10rpx" v-if="!isShow">
-					</view>
-					<view class="imgDiv">
-						<image class="imgHund" :src="item.ImgPath"></image>
-					</view>
-					<view class="textRight" :style="{width: isShow?'415':'425'+'rpx'}">
-						<view class="productName">
-							{{item.Products_Name}}
+				<block v-if="productMy.length > 0">
+					<view class="blockDiv" v-for="(item,index) of productMy" :key="index">
+						<view class="mbxa" v-if="isShow" @click="checkedSelect(index)">
+							<img class="imgs" :src="checked[index].checked?checked_img_url:uncheck_img_url" >
 						</view>
-						<view class="skuMy">
-							<span>库存：{{item.prod_stock}}</span><span style="margin-left: 100rpx;">销量：{{item.Products_Sales}}</span>
+						<view style="width: 10rpx" v-if="!isShow">
 						</view>
-						<view class="bottomDiv">
-							<view class="skuCount">
-								规格库存
+						<view class="imgDiv">
+							<image class="imgHund" :src="item.ImgPath"></image>
+						</view>
+						<view class="textRight" :style="{width: isShow?'415':'425'+'rpx'}">
+							<view class="productName">
+								{{item.Products_Name}}
 							</view>
-							<view class="allPrice">
-								<view v-if="!(is_refund&&is_fourth)">
-									总价值：<span class="span1">¥</span><span class="span2">{{item.prod_money}}</span>
+							<view class="skuMy">
+								<span>库存：{{item.prod_stock}}</span><span style="margin-left: 100rpx;">销量：{{item.Products_Sales}}</span>
+							</view>
+							<view class="bottomDiv">
+								<view class="skuCount">
+									规格库存
 								</view>
-								<view v-else class="back-btn" @click="apply_back(item,index)">申请退货</view>
+								<view class="allPrice">
+									<view v-if="!(is_refund&&is_fourth)">
+										总价值：<span class="span1">¥</span><span class="span2">{{item.prod_money}}</span>
+									</view>
+									<view v-else class="back-btn" @click="apply_back(item,index)">申请退货</view>
+								</view>
 							</view>
 						</view>
 					</view>
-				</view>
+				</block>
+				<div class="defaults" v-else>
+						<image :src="'/static/client/defaultImg.png'|domain" ></image>
+				</div>
 			</template>
 			<template v-else-if="index == 2">
-				<view class="blockDiv" v-for="(item,index) of productMy_soldout" :key="index">
-					<view class="mbxa" v-if="isShow" @click="checkedSelect(index)">
-						<img class="imgs" :src="checked[index].checked?checked_img_url:uncheck_img_url" >
-					</view>
-					<view style="width: 10rpx" v-if="!isShow">
-					</view>
-					<view class="imgDiv">
-						<image class="imgHund" :src="item.ImgPath"></image>
-					</view>
-					<view class="textRight" :style="{width: isShow?'415':'425'+'rpx'}">
-						<view class="productName">
-							{{item.Products_Name}}
+				<block v-if="productMy_soldout.length > 0">
+					<view class="blockDiv" v-for="(item,index) of productMy_soldout" :key="index">
+						<view class="mbxa" v-if="isShow" @click="checkedSelect(index)">
+							<img class="imgs" :src="checked[index].checked?checked_img_url:uncheck_img_url" >
 						</view>
-						<view class="skuMy">
-							<span>库存：{{item.prod_stock}}</span><span style="margin-left: 100rpx;">销量：{{item.Products_Sales}}</span>
+						<view style="width: 10rpx" v-if="!isShow">
 						</view>
-						<view class="bottomDiv">
-							<view class="skuCount">
-								规格库存
+						<view class="imgDiv">
+							<image class="imgHund" :src="item.ImgPath"></image>
+						</view>
+						<view class="textRight" :style="{width: isShow?'415':'425'+'rpx'}">
+							<view class="productName">
+								{{item.Products_Name}}
 							</view>
-							<view class="allPrice">
-								<view v-if="!(is_refund&&is_fourth)">
-									总价值：<span class="span1">¥</span><span class="span2">{{item.prod_money}}</span>
+							<view class="skuMy">
+								<span>库存：{{item.prod_stock}}</span><span style="margin-left: 100rpx;">销量：{{item.Products_Sales}}</span>
+							</view>
+							<view class="bottomDiv">
+								<view class="skuCount">
+									规格库存
 								</view>
-								<view v-else class="back-btn" @click="apply_back(item,index)">申请退货</view>
+								<view class="allPrice">
+									<view v-if="!(is_refund&&is_fourth)">
+										总价值：<span class="span1">¥</span><span class="span2">{{item.prod_money}}</span>
+									</view>
+									<view v-else class="back-btn" @click="apply_back(item,index)">申请退货</view>
+								</view>
 							</view>
 						</view>
 					</view>
-				</view>
+				</block>
+				<div class="defaults" v-else>
+						<image :src="'/static/client/defaultImg.png'|domain" ></image>
+				</div>
 			</template>
 			<template v-else>
-				<view class="blockDiv" v-for="(item,index) of productlist" :key="index">
-					<view class="mbxa" v-if="isShow" @click="checkedSelect(index)">
-						<img class="imgs" :src="checked[index].checked?checked_img_url:uncheck_img_url" >
-					</view>
-					<view style="width: 10rpx" v-if="!isShow">
-					</view>
-					<view class="imgDiv">
-						<image class="imgHund" :src="item.ImgPath"></image>
-					</view>
-					<view class="textRight" :style="{width: isShow?'415':'425'+'rpx'}">
-						<view class="productName">
-							{{item.Products_Name}}
+				<block v-if="productlist.length>0">
+					<view class="blockDiv" v-for="(item,index) of productlist" :key="index">
+						<view class="mbxa" v-if="isShow" @click="checkedSelect(index)">
+							<img class="imgs" :src="checked[index].checked?checked_img_url:uncheck_img_url" >
 						</view>
-						<view class="skuMy">
-							<span>库存：{{item.prod_stock}}</span><span style="margin-left: 100rpx;">销量：{{item.Products_Sales}}</span>
+						<view style="width: 10rpx" v-if="!isShow">
 						</view>
-						<view class="bottomDiv">
-							<view class="skuCount">
-								规格库存
+						<view class="imgDiv">
+							<image class="imgHund" :src="item.ImgPath"></image>
+						</view>
+						<view class="textRight" :style="{width: isShow?'415':'425'+'rpx'}">
+							<view class="productName">
+								{{item.Products_Name}}
 							</view>
-							<view class="allPrice">
-								<view v-if="!(is_refund&&is_fourth)">
-									总价值：<span class="span1">¥</span><span class="span2">{{item.prod_money}}</span>
+							<view class="skuMy">
+								<span>库存：{{item.prod_stock}}</span><span style="margin-left: 100rpx;">销量：{{item.Products_Sales}}</span>
+							</view>
+							<view class="bottomDiv">
+								<view class="skuCount">
+									规格库存
 								</view>
-								<view v-else class="back-btn" @click="apply_back(item,index)">申请退货</view>
+								<view class="allPrice">
+									<view v-if="!(is_refund&&is_fourth)">
+										总价值：<span class="span1">¥</span><span class="span2">{{item.prod_money}}</span>
+									</view>
+									<view v-else class="back-btn" @click="apply_back(item,index)">申请退货</view>
+								</view>
 							</view>
 						</view>
 					</view>
-				</view>
+				</block>
+				<div class="defaults" v-else>
+						<image :src="'/static/client/defaultImg.png'|domain" ></image>
+				</div>
 			</template>
 		</view>
 
@@ -191,7 +206,7 @@
 		            <template v-for="(attr,attr_id) in pro.skuvaljosn">
 		                <view class="product" v-if="attr.myqty>0">
 		                    <view class="proImg">
-		                        <image :src="attr.Attr_Image" class="img"></image>
+		                        <image :src="pro.ImgPath" class="img"></image>
 		                    </view>
 		                    <view class="proMsg">
 		                        <view class="proName">
@@ -267,6 +282,7 @@
 </template>
 
 <script>
+	import {pageMixin} from "../../common/mixin";
 	import popupLayer from '../../components/popup-layer/popup-layer.vue'
 	import {domainFn} from "../../common/filter";
 	import {mapGetters} from 'vuex'
@@ -274,6 +290,7 @@
 	import {getStoreProdMoney,getSelfStoreProd,storeProdBackSubmit}  from '../../common/fetch'
 
 	export default {
+		mixins:[pageMixin],
 		data() {
 			return {
 				checked_img_url:'/static/client/checked.png',
@@ -841,6 +858,9 @@
 .topAll{
 	width: 120rpx;
 	text-align: center;
+	.redColor {
+		color: $wzw-primary-color;
+	}
 }
 .imgHund{
 	width: 100%;
@@ -1260,4 +1280,10 @@
 		        }
 		    }
 		}
+		.defaults{
+				margin: 0 auto;
+				width: 640rpx;
+				height: 480rpx;
+				margin-top: 100rpx;
+			}
 </style>

@@ -12,6 +12,7 @@
         </view>
         <div class="container">
             <div class="lists">
+							<block v-if="applys.length>0">
                 <div class="item" v-for="(apply,idx1) in applys" :key="idx1">
                     <div class="head">
                         <div class="status flex flex-between ">
@@ -54,6 +55,10 @@
                         </block>
                     </div>
                 </div>
+							</block>
+							<div class="defaults" v-else>
+									<image :src="'/static/client/defaultImg.png'|domain" ></image>
+							</div>
             </div>
 
         </div>
@@ -436,4 +441,10 @@
         }
     }
 }
+.defaults{
+		margin: 0 auto;
+		width: 640rpx;
+		height: 480rpx;
+		margin-top: 100rpx;
+	}
 </style>

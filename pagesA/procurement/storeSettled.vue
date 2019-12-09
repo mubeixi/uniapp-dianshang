@@ -56,6 +56,7 @@
 </template>
 
 <script>
+		import {pageMixin} from "../../common/mixin";
     import area from '../../common/area.js';
     import utils from '../../common/util.js';
     import {uploadImage,comment,GET_ENV,get_Users_ID,get_User_ID,createToken} from '../../common/fetch.js'
@@ -63,6 +64,7 @@
     import {userStoreApply} from '../../common/fetch.js'
     import {toast,error} from '../../common/index.js'
     export default {
+			mixins: [pageMixin],
         data() {
             return {
                 arr: [],

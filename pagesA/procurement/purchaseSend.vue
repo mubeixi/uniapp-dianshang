@@ -130,7 +130,9 @@
 	import {domainFn} from "../../common/filter";
 	import {getStoreProdBackOrderDetail,storeProdBackOrderSend,getShipping} from '../../common/fetch.js';
 	import {mapGetters} from 'vuex'
+	import {pageMixin} from "../../common/mixin";
 	export default {
+		mixins:[pageMixin],
 		data() {
 			return {
 				index: 1,

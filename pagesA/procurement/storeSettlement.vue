@@ -90,10 +90,11 @@
 </template>
 
 <script>
- 
+ import {pageMixin} from "../../common/mixin";
     import {settlement} from '../../common/fetch.js'
 	import {mapGetters} from 'vuex'
     export default {
+			mixins: [pageMixin],
         data() {
 			const currentDate = this.getDate({
 			         format: true

@@ -19,7 +19,7 @@
 					<view class="status">{{item.status_desc}}
 						<block v-if="item.status == 33">
 							<image class="qty-icon" src="/static/procurement/i.png" mode="" @click.stop="show_pro_tip"></image>
-							<view class="tips" v-if="pro_tip_show">
+							<view class="tips" v-if="pro_tip_show && item.reason">
 								<view class="sanjiaoxing"></view>{{item.reason}}
 							</view>
 						</block>
@@ -243,7 +243,7 @@
 			left: 0;
 			z-index: 10;
 			background-color:#F6F6F6;
-      height: 90rpx;
+      // height: 90rpx;
       display: flex;
       align-items: center;
       // justify-content: center;
