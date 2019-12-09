@@ -580,6 +580,7 @@
             "path": "procurement/stock",
             "style": {
               "navigationBarTitleText": "进货"
+
             }
           },
           {
@@ -654,7 +655,7 @@
 		      "navigationBarTitleText": "结算记录"
 		    }
 		  }
-          
+
 			,{
 							"path" : "procurement/purchaseSend",
 							"style" : {}

@@ -299,6 +299,7 @@ export const uploadImages=(formData,imgs)=>{
 				}
 			})
 		// #endif
+
 		// #ifndef MP-TOUTIAO
 			uni.uploadFile({
 					url: staticUrl+'/api/little_program/shopconfig.php',

@@ -971,7 +971,7 @@ export default {
             this.WX_JSSDK_INIT(this).then((wxEnv)=>{
 
                 this.$wx.onMenuShareTimeline({
-                    title: '#网中网#'+product.Products_Name, // 分享标题
+                    title: product.Products_Name, // 分享标题
                     link: front_url+buildSharePath(path), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
                     imgUrl: product.ImgPath, // 分享图标
                     success: function() {
@@ -981,7 +981,7 @@ export default {
 
                 //两种方式都可以
                 wxEnv.onMenuShareAppMessage({
-                    title: '#网中网#'+product.Products_Name, // 分享标题
+                    title: product.Products_Name, // 分享标题
                     link: front_url+buildSharePath(path), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
                     imgUrl: product.ImgPath, // 分享图标
                     desc: product.Products_BriefDescription||'好物推荐',
