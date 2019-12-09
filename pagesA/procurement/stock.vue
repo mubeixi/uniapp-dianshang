@@ -1,18 +1,5 @@
 <template>
     <view class="wrap" :style="{'overflow': isScroll}">
-        <!-- #ifdef APP-PLUS -->
-        <view class="status_bar"></view>
-        <view class="space-div"></view>
-        <!-- #endif -->
-        <!-- #ifndef APP-PLUS -->
-        <view class="spaceDiv"></view>
-        <!-- #endif -->
-        <page-title class="nav-title" title="进货"
-                    bgcolor="#ffffff"
-                    :rightHidden=true
-                    :dot=true
-                    @methodHandle="methodHandle"
-                    :is_pingtai="is_pingtai"></page-title>
         <view class="search-wrap">
             <icon type="search" size="34rpx" class="search_icon" @click="search"/>
             <input type="text" class="input" placeholder="请输入商品关键词" @confirm="search" v-model="prod_name" placeholder-style="color:#bebdbd;">
@@ -20,11 +7,11 @@
 
         <view class="storeAddress">
             <view class="storeAddressImg">
-                <image class="imgWidth" src="https://new401.bafangka.com/uploadfiles/wkbq6nc2kc/image/20191205143705198.png" ></image>
+                <image class="imgWidth" :src="storeAdress.Stores_ImgPath" ></image>
             </view>
             <view class="storeAddressRight">
                 <view class="storeName">
-                    <view>硅谷广场一店</view>
+                    <view>{{storeAdress.Stores_Name}}</view>
                     <view class="storeKm">
                         360m
                         <image class="imgHeight" src="https://new401.bafangka.com/static/client/person/right.png"></image>
@@ -32,11 +19,11 @@
                 </view>
                 <view class="storeTell" style="margin-bottom: 15rpx;">
                     <image class="storeTellImg" src="/static/tellStore.png"></image>
-                    0371-8888888
+                    {{storeAdress.Stores_Telephone}}
                 </view>
                 <view class="storeTell">
                     <image class="storeTellImg" src="/static/adressStore.png"></image>
-                    金水区文化路东风路交叉口硅谷广场5楼
+                    {{storeAdress.Stores_Province_name}}{{storeAdress.Stores_City_name}}{{storeAdress.Stores_Area_name}}{{storeAdress.Stores_Address}}
                 </view>
             </view>
         </view>
@@ -139,7 +126,7 @@
                 </view>
                 <view class="skulist">
                     <view class="sku-name">门店距离：</view>
-                    <view class="sku-item">1.2KM</view>
+                    <view class="sku-item">{{storeAdress.distance}}KM</view>
                 </view>
             </view>
         </view>
@@ -179,9 +166,10 @@
 </template>
 <script>
     import popupLayer from '../../components/popup-layer/popup-layer.vue'
-    import {getPifaStoreProd, updateCart,getCart,delCart,getStoreList,createOrder,getProductList,getProductCategory} from '../../common/fetch'
+    import {getPifaStoreProd, updateCart,getCart,delCart,getStoreList,createOrder,getProductList,getProductCategory,getStoreDetail} from '../../common/fetch'
     import {mapGetters} from 'vuex'
     import {numberSort} from '../../common/tool'
+    import {getLocation} from "../../common/tool/location";
     import {pageMixin} from "../../common/mixin";
     export default {
         data() {
@@ -214,7 +202,8 @@
                 is_pingtai: 0, // 是否是平台补货
                 cateList:[],//分类数据
                 indexFirst:-1,
-                indexSecond:-1
+                indexSecond:-1,
+                storeAdress:[],
             }
         },
         components: {
@@ -234,6 +223,7 @@
                 this.is_pingtai = 0;
                 // 获取门店产品
                 this.purchase_store_sn = options.purchase_store_sn;
+                this.getStoreDetail();
                 this.getProlist();
             }else {
                 this.is_pingtai = 1;
@@ -243,6 +233,32 @@
             this.getProductCategory()
         },
         methods: {
+            getStoreDetail(){
+                getLocation(this).then(res=>{
+                    if(res.code===0){
+                        lng=res.data.longitude
+                        lat=res.data.latitude
+                        let data={
+                            lat:lat,
+                            lng:lng,
+                            store_sn:this.purchase_store_sn
+                        }
+                        console.log(data,"ss")
+                        getStoreDetail(data).then(res=>{
+                            this.storeAdress=res.data
+                            this.storeAdress.distance=(res.data.distance/1000).toFixed(2)
+                        })
+                    }
+                }).catch(err=>{
+                    let data={
+                        store_sn:this.purchase_store_sn
+                    }
+                    getStoreDetail(data).then(res=>{
+                        this.storeAdress=res.data
+                    })
+                })
+
+            },
             delFirst(){
                 this.indexFirst=-1
                 this.indexSecond=-1
