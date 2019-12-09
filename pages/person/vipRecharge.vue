@@ -343,6 +343,9 @@ export default {
 						success: function(res) {
 							// 支付成功后的回调函数
 							_self.paySuccessCall(res)
+						},
+						fail:function(err){
+							_self.payFailCall(err)
 						}
 					});
 
@@ -542,15 +545,24 @@ export default {
 			window.location.href = wxAuthUrl;
 
 		},
-		payFailCall(){
+		payFailCall(obj){
 		 	if(ls.get('money')) {
 		 		this.money = ls.get('recharge_money')
 			};
-			uni.showToast({
-				title: '支付失败',
-				icon: 'none',
-				duration: 2000
-			});
+		 	console.log(obj)
+			// fail:{"errMsg":"requestPayment:fail cancel"}
+
+			if(obj.hasOwnProperty('errMsg')){
+				if(obj.errMsg == 'requestPayment:fail cancel'){
+					error('用户取消支付')
+					return;
+				}
+
+				error(obj.errMsg||'支付失败')
+				return;
+
+			}
+			error('支付失败')
 		},
 		paySuccessCall(){
 			let _self = this;
