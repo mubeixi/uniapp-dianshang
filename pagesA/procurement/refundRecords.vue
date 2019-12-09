@@ -242,7 +242,7 @@
       .status {
 				display: inline-block;
         width: 135rpx;
-				margin-right: 40rpx;
+				margin-right: 30rpx;
 				line-height: 80rpx;
 				&.active {
 					color: $wzw-primary-color;

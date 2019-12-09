@@ -160,9 +160,9 @@
                     },1000)
 
                 }).catch(err=>{
-                    uni.switchTab({
-                        url:'/pages/index/index'
-                    })
+                    // uni.switchTab({
+                    //     url:'/pages/index/index'
+                    // })
                 })
             },
 
