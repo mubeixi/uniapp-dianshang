@@ -21,7 +21,7 @@
 					</view>
 				</view>
 			</view>
-			<view class="tips">
+			<view class="tips" v-if="storeDetail.lower_prod_num > 0">
 				<image class="tip" src="/static/mendian/i.png" mode=""></image>
 				<view>您有商品即将售罄，<text class="see" @click="goSolded">立即查看</text></view>
 			</view>
@@ -41,7 +41,7 @@
 				<view class="num">{{storeDetail.pifa_order_num}}</view>
 				<view>批发订单</view>
 			</view>
-			<view class="item" @click="openUrl('/pagesA/procurement/stock')">
+			<view class="item" @click="openUrl('/pages/selectChannel/selectChannel')">
 				<image class="item-img" src="/static/mendian/4.png" mode=""></image>
 				<view>进货</view>
 			</view>
@@ -271,6 +271,7 @@
 				align-items: center;
 				border-bottom: 2rpx solid #F2F2F2;
 				border-right: 2rpx solid #F2F2F2;
+				font-size: 26rpx;
 				.item-img {
 					width: 40rpx;
 					height: 40rpx;
