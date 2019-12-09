@@ -199,7 +199,7 @@
 						{{i}}
 					</div>
 					<div class="skuValue">
-						<div class="divs" :class="check_attr[i]==index?'skuCheck':''" @click="selectAttr(index,i)"  v-for="(mbx,index) of item" :key="index">{{mbx}}</div>
+						<div class="skuview" :class="check_attr[i]==index?'skuCheck':''" @click="selectAttr(index,i)"  v-for="(mbx,index) of item" :key="index">{{mbx}}</div>
 					</div>
 				</div>
 			</div>
@@ -1584,7 +1584,7 @@ export default {
 				}
 				.skuValue{
 					display: flex;
-					width: 700rpx;
+					flex:1;
 					flex-wrap: wrap;
 					.skuview{
 						margin-bottom: 10px;
