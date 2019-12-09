@@ -16,10 +16,10 @@
 						<block v-if="p_clicked">{{provinceList[p_index].name}}</block> <block v-else>请选择省份 <image class="bot" :src="'/static/client/person/right.png'|domain" mode=""></block></image>
 					</picker>
 					<picker class="a-item" mode = "selector" :range="citylist"  range-key="name" :value="c_index" @change="c_change_handle">
-						<block v-if="c_clicked">{{citylist[c_index].name}}</block> <block v-else>请选择市 <image class="bot" :src="'/static/client/person/right.png'|domain" mode=""></image></block> 
+						<block v-if="c_clicked">{{citylist[c_index].name}}</block> <block v-else>请选择市 <image class="bot" :src="'/static/client/person/right.png'|domain" mode=""></image></block>
 					</picker>
 					<picker class="a-item" mode = "selector" :range="arealist" range-key="name" :value="a_index" @change="a_change_handle">
-						<block v-if="a_clicked">{{arealist[a_index].name}}</block> <block v-else>请选择县区 <image class="bot" :src="'/static/client/person/right.png'|domain" mode=""></image></block>	
+						<block v-if="a_clicked">{{arealist[a_index].name}}</block> <block v-else>请选择县区 <image class="bot" :src="'/static/client/person/right.png'|domain" mode=""></image></block>
 					</picker>
 				</view>
 			</view>
@@ -47,7 +47,7 @@
 		           </view>
 		       </block>
 		       <div >
-		
+
 		       </div>
 		   </scroll-view>
 		</div>
@@ -114,10 +114,10 @@
 			}
 		},
 		onShow() {
-			
+
 		},
 		computed: {
-			...mapGetters(['Stores_ID']),	
+			...mapGetters(['Stores_ID']),
 			channelName(){
 				return this.selectitem == 1 ? '门店进货' : '平台进货'
 			},
@@ -158,14 +158,14 @@
 							if(item.skuvaljosn[attr_id].myqty > 0) {
 								arr.push(item.skuvaljosn[attr_id])
 							}
-						}						
+						}
 					}else if(item.myqty > 0){
 						arr.push(item)
 					}
 				})
-				
+
 				console.log(arr)
-				
+
 				for(let i in arr) {
 					if(!arr[i].Products_ID){
 						arr[i].Products_ID=arr[i].prod_id
@@ -178,29 +178,29 @@
 							if(arr[i].Product_Attr_ID){
 								prod_json[arr[i].Products_ID]['attr'] = {
 									[arr[i].Product_Attr_ID]: arr[i].myqty
-								}		
+								}
 							}
-															
+
 						}
 					}else {
 						prod_json[arr[i].Products_ID] = {
 							"num": arr[i].myqty
-						} 
+						}
 						if(prod_json[arr[i].Products_ID]['attr']) {
 							prod_json[arr[i].Products_ID]['attr'][arr[i].Product_Attr_ID] = arr[i].myqty
 						}else {
 							if(arr[i].Product_Attr_ID){
 								prod_json[arr[i].Products_ID]['attr'] = {
 									[arr[i].Product_Attr_ID]: arr[i].myqty
-								}		
-							}									
+								}
+							}
 						}
 					}
 				}
 				console.log(prod_json)
 				this.prod_json = prod_json;
-					
-					
+
+
 			},
 			// 省份变动
 			p_change_handle(e){
@@ -238,12 +238,12 @@
 			        console.log(err)
 			        error('获取位置信息失败:'+err.msg)
 			    })
-			
+
 			    console.log('获取到的位置信息',localInfo)
-			
+
 			    if(!rt)return;
 			    this.lat = localInfo.latitude
-			    this.lng = localInfo.longitude	
+			    this.lng = localInfo.longitude
 			},
 			// 获取门店列表，
 			getStoreList(){
@@ -263,13 +263,13 @@
 				if(this.a_clicked) {
 					postData.area = this.a_id;
 				}
-				
+
 				if(this.lat && this.lng){
 				    postData.lat = this.lat
 				    postData.lng = this.lng
 				}
 				getStoreList(postData,{tip:"加载中..."}).then(res => {
-							
+
 				    this.stores = res.data;
 				})
 			},
@@ -303,7 +303,7 @@
 										// 跳转选择渠道页面
 										uni.redirectTo({
 											url: '/pagesA/procurement/refundRecords'
-										})								
+										})
 									},1000)
 								})
 							}else {
@@ -332,7 +332,7 @@
 				if(!this.is_purchase) {
 					uni.navigateTo({
 						url: '/pagesA/procurement/stock?purchase_store_sn=' + stores_sn
-					})					
+					})
 				}else {
 					uni.showModal({
 						content: '确定退货？',
@@ -355,7 +355,7 @@
 										// 跳转选择渠道页面
 										uni.redirectTo({
 											url: '/pagesA/procurement/refundRecords'
-										})									
+										})
 									},1000)
 								})
 							}else {
@@ -363,7 +363,7 @@
 							}
 						}
 					})
-					
+
 				}
 			},
 			// 用户只是点击了遮罩
@@ -378,7 +378,7 @@
 				this.$refs.searchLayer.close();
 			},
 			closePop(){
-				
+
 				// this.$refs.searchLayer.close();
 			}
 		}
@@ -471,7 +471,7 @@
 		            background-repeat: no-repeat;
 		            background-size: cover;
 		            background-position: center;
-		
+
 		        }
 		        .info{
 		            flex:1;

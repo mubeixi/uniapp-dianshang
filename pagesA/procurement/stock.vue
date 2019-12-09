@@ -18,7 +18,7 @@
             <icon type="search" size="34rpx" class="search_icon" @click="search"/>
             <input type="text" class="input" placeholder="请输入商品关键词" @confirm="search" v-model="prod_name" placeholder-style="color:#bebdbd;">
         </view>
-		
+
 		<view class="storeAddress">
 			<view class="storeAddressImg">
 				<image class="imgWidth" src="https://new401.bafangka.com/uploadfiles/wkbq6nc2kc/image/20191205143705198.png" ></image>
@@ -41,7 +41,7 @@
 				</view>
 			</view>
 		</view>
-		
+
 		<view class="storeCate">
 			<view class="storeCateLine">
 				<view class="storeCateLei">一级分类:</view>
@@ -75,7 +75,7 @@
 					</view>
 			</view>
 		</view>
-		
+
         <view class="prolist">
             <view class="pro" v-for="item in prolist">
                 <view class="pro-img">
@@ -253,7 +253,7 @@
 				}else if(this.is_pingtai ==1){
 					this.getProductList()
 				}
-		
+
 			},
 			delSecond(){
 				this.indexSecond=-1
@@ -1008,10 +1008,10 @@
 					margin-right: 16rpx;
 				}
 			}
-		
+
 		}
-		
-		
+
+
 	}
 	.storeCate{
 		width: 750rpx;
@@ -1085,7 +1085,7 @@
 				}
 			}
 		}
-		
+
 	}
 
 
