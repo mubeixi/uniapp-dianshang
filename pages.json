@@ -649,6 +649,12 @@
 		      "navigationBarTitleText": "结算"
 		    }
 		  },
+		 {
+			"path": "procurement/storeSettlementLast",
+			"style": {
+				"navigationBarTitleText": "结算"
+			}
+		 },
 		  {
 		    "path": "procurement/storeSettlementRecord",
 		    "style": {
