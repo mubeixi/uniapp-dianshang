@@ -68,7 +68,7 @@
                        <radio-group @change="radioChange">
                            <label class="item padding10" v-for="(store,idx) in stores" :key="idx">
                                <view class="checkbox">
-                                   <radio :value="idx"  />
+                                   <radio :value="(''+idx)"  />
                                </view>
                                <image class="logo" :src="store.Stores_ImgPath|domain" />
                                <view class="info">
@@ -113,7 +113,6 @@
         name: "StoreListComponents",
         data() {
             return {
-
 				timer:null,
                 prod_ids:[],//根据商品筛选门店
                 lat:null,
@@ -283,6 +282,16 @@
             },
             show(prod_ids) {
 
+				this.province_list = City.getProvinceList()
+				this.province = {}
+				this.province_idx = ''
+				this.city = {}
+				this.city_idx = ''
+				this.area = {},
+				this.area_idx = ''
+				this.stores_name = ''
+
+
                 if(prod_ids){
                     this.prod_ids = prod_ids
                 }else{
@@ -337,6 +346,7 @@
             },
             province:{
                 handler(val){
+                    if(JSON.stringify(val)=='{}')return;
                     this.city_list = City.getCityList(this.province.id)
                     this.city={};
                     // this.loadInfo()
@@ -344,6 +354,7 @@
             },
             city:{
                 handler(val){
+                    if(JSON.stringify(val)=='{}')return;
                     this.area_list = City.getAreaList(this.province.id,this.city.id)
                     this.area={};
                     // this.loadInfo()
