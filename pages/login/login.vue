@@ -38,7 +38,8 @@
 
 						<div class="inline-block flex1 text-center" v-for="(channel,idx) in channels">
 
-							<button v-if="channel.type=='wx_lp'" size="mini" type="primary" class="text-center" open-type="getUserInfo"  @getuserinfo="weixinlogin">登录</button>
+							<div v-if="channel.type=='wx_lp'" class="inline-block flex1 text-center" @click="showWxLpLoginDialog"><i class="funicon icon-weixin"></i></div>
+<!--							<button v-if="channel.type=='wx_lp'" size="mini" type="primary" class="text-center" open-type="getUserInfo"  @getuserinfo="weixinlogin">登录</button>-->
 							<!-- <i v-if="channel.type=='wx_lp'" @click="weixinlogin" class="funicon icon-weixin font24" ></i> -->
 							<!-- <i v-if="channel.type=='wx_mp'" @click="weixinlogin(channel)" class="funicon icon-weixin"></i>
 							<i v-if="channel.type=='qq'" @click="qqlogin(channel)" style="color: #2eb1f1;font-size: 32px;margin-top: 2px" class="funicon icon-QQ1"></i> -->
@@ -141,6 +142,23 @@
 				</div>
 			</li>
 		</ul>
+
+		<wzw-dialog ref="mpLoginDialog" >
+			<div class="mpLoginDialog">
+				<div class="desc  font14 line15 text-center">
+					<div class="line4 font16">授权提示</div>
+					<div class="graytext">登录后您将获得更好的体验</div>
+				</div>
+				<div class="flex flex-between loginAction">
+					<div class="btn-item flex1 text-center">
+						<button class="btn" size="mini" open-type="getUserInfo"  @getuserinfo="weixinlogin" type="primary">立即登录</button>
+					</div>
+					<div class="btn-item flex1 text-center">
+						<button style="background: #f2f2f2" class="btn" size="mini" @click="cancelLogin">暂不登录</button>
+					</div>
+				</div>
+			</div>
+		</wzw-dialog>
 
 		<!--    <popup v-model="tel.show" class="telContent">-->
 		<!--      <popup-header title="选择国际电话区号"></popup-header>-->
@@ -289,6 +307,13 @@
 			}
 		},
 		methods: {
+			cancelLogin(){
+				this.$refs.mpLoginDialog.close()
+				uni.navigateBack()
+			},
+			showWxLpLoginDialog(){
+				this.$refs.mpLoginDialog.show()
+			},
 			...mapActions(["getInitData", "setUserInfo"]),
 			setStatusFunc(){
 				this.status = 3
@@ -701,7 +726,22 @@
 
 <style scoped lang="scss">
 	@import "../../static/css/scssConfig";
+	.mpLoginDialog{
+		width: 400rpx;
+	}
+	.loginAction{
+		.btn-item{
 
+			box-sizing: border-box;
+			.btn{
+				border-radius: 0;
+				&::after{
+					border-radius: 0;
+					/*border:none;*/
+				}
+			}
+		}
+	}
 	.icon-fanhui {
 		padding-right: 10px;
 		color: #999;
