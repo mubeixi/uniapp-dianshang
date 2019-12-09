@@ -278,7 +278,7 @@
 				    title: '订单',
 				    content: '是否要撤回订单',
 				    success: function (res) {
-				        if (res.confirm) {		
+				        if (res.confirm) {
 							storePifaOrderRecall(data).then(res=>{
 								uni.showToast({
 									title:res.msg,
@@ -289,11 +289,11 @@
 								},1000)
 							}).catch(e=>{console.log(e)})
 				        } else if (res.cancel) {
-				
+
 				        }
 				    }
 				});
-				
+
 			},
 			//取消采购单
 			cancelOrder(id){
@@ -306,7 +306,7 @@
 				    title: '订单',
 				    content: '是否要取消订单',
 				    success: function (res) {
-				        if (res.confirm) {		
+				        if (res.confirm) {
 							storePifaOrderCancel(data).then(res=>{
 								uni.showToast({
 									title:res.msg,
@@ -317,11 +317,11 @@
 								},1000)
 							}).catch(e=>{console.log(e)})
 				        } else if (res.cancel) {
-				
+
 				        }
 				    }
 				});
-				
+
 			},
 			getStorePurchaseApply(){
 				let data={
@@ -359,8 +359,8 @@
 			},
 			showAdress(){
 				uni.openLocation({
-				            latitude: 39.858599437526,
-				            longitude: 116.28599996624,
+				            latitude: this.storeAdress.wx_lat,
+				            longitude: this.storeAdress.wx_lng,
 				            success: function () {
 				                console.log('success');
 				            }

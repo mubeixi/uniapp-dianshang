@@ -741,6 +741,7 @@ export default {
         		this.submit_flag =  false;
         	    return false;
         	}
+			this.check_attr = {};
         	this.check_attr = check_attr;
         	this.check_attrid_arr = check_attrid_arr;
         	this.submit_flag = (!this.check_attr || Object.getOwnPropertyNames(this.check_attr).length != Object.getOwnPropertyNames(this.product.skujosn).length) ? false : true;
