@@ -165,7 +165,6 @@ export default Push;
 export const pushHandle = ({type='receive',info = {__UUID__:'',title:'',content:'',payload:''}}) => {
 
     // "__UUID__": "androidPushMsg91141115",
-    // "title": "网中网电商",
     // "content": "\n{\"channel\":\"fff\",\"fiel\":\"fdsafsa\",\"id\":\"343\"",
     // "payload": "\n{\"channel\":\"fff\",\"fiel\":\"fdsafsa\",\"id\":\"343\""
 

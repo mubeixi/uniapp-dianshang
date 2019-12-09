@@ -51,7 +51,7 @@
 	import {getSkinConfig} from "../../common/fetch";
 
 	import {pageMixin} from "../../common/mixin";
-	import {error} from "../../common";
+	import {error,toast} from "../../common";
 
 
 
@@ -149,7 +149,7 @@
 			
 		},
 		onShow(){
-
+			this.$error('操作失败操作失败操作失败')
 
 		},
 		async onPullDownRefresh(){

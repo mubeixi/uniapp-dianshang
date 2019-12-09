@@ -2,13 +2,21 @@ import * as ENV from './env.js';
 // console.log(ENV.apiBaseUrl)
 import {error} from "./index";
 
+/**
+ *
+ * @param url
+ * @param method
+ * @param data
+ * @param options
+ * @return {Promise<unknown>}
+ */
 export const ajax = (url,method,data,options)=>{
 
   if(!options)options={}
   if(!data)data={}
 
 
-  let {tip='',mask=false,timelen=2000,errtip = true} = options;
+  let {tip='',mask=false,timelen=2000,timeout=2000,errtip = true} = options;
 
   if(tip){
     uni.showLoading({
@@ -16,8 +24,6 @@ export const ajax = (url,method,data,options)=>{
       mask:mask
     })
   }
-
-
 
   let token
 
@@ -35,15 +41,10 @@ export const ajax = (url,method,data,options)=>{
 	// #ifdef MP-TOUTIAO || APP-PLUS
   // console.log(data)
 	// #endif
-
-
   let URL = ENV.apiBaseUrl+url;
-
   const hookErrorCode = [0,88001];
 
-
   return new Promise((resolve, reject) =>{
-
 
     uni.request({
       header,

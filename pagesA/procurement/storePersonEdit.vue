@@ -49,7 +49,7 @@
 <script>
 	import area from '../../common/area.js';
 	import utils from '../../common/util.js';
-	import {updateStoreInfo,add_template_code,updateStoreMobileSms,updateStoreMobile } from '../../common/fetch.js';
+	import {updateStoreInfo,add_template_code,updateStoreMobileSms,updateStoreMobile,getStoreDetail} from '../../common/fetch.js';
 	import {ls} from "../../common/tool.js";
 	import {mapGetters,mapActions} from 'vuex'
 	import {pageMixin} from "../../common/mixin";
@@ -70,13 +70,25 @@
 				code:'',
 				address_info: {},
 				countdownStatus: false, // 是否开启倒计时了
-				countdownNum: 60
+				countdownNum: 60,
+				storeData:[],
+				User_Address:''
 			}
 		},
 		computed: {
 			...mapGetters(['Stores_ID']),
 		},
 		methods: {
+			getStoreDetail(){
+				getStoreDetail({store_id:this.Stores_ID}).then(res=>{
+					var addressInfo = res.data;
+					this.storeData=res.data
+
+					this.User_Address=this.storeData.Stores_Address
+				}).catch(e=>{
+					console.log(e)
+				})
+			},
 			//发送验证码
 			getCode(){
 				if(this.countdownStatus) {return;}
@@ -164,8 +176,8 @@
 			getTitle(){
 				switch (this.type) {
 					case '1' : this.title = '修改门店地址';break;
-					case '2' : this.title = '修改联系电话';break;
-					case '3' : this.title = '修改订单短信通知号码';break;
+					case '2' : this.title = '修改订单短信通知号码';break;
+					case '3' : this.title = '修改联系电话';break;
 				};
 				uni.setNavigationBarTitle({
 					title: this.title
@@ -259,6 +271,7 @@
 			],
 			this.t_arr = [];
 			this.c_t_arr = [];
+			this.getStoreDetail();
 		},
 		onLoad(option) {
 			if(option.type) {
