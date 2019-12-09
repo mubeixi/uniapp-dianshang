@@ -1,4 +1,4 @@
-网中网商城  __UNI__E5E1B20
+商城  __UNI__E5E1B20
 com.zz.wzw.wzwdianshang
 wkbq6nc2kc
 
@@ -32,7 +32,6 @@ ios 包名  com.zz.wzw.wzwdianshang
 appid: "__UNI__E5E1B20"
 content: "{"channel":"fff","fiel":"fdsafsa","id":"343"}"
 payload: "{"channel":"fff","fiel":"fdsafsa","id":"343"}"
-title: "网中网电商"
 __UUID__: "androidPushMsg116729578"
 }
 
