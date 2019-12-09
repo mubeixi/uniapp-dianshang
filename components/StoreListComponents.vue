@@ -346,6 +346,7 @@
             },
             province:{
                 handler(val){
+                    if(JSON.stringify(val)=='{}')return;
                     this.city_list = City.getCityList(this.province.id)
                     this.city={};
                     // this.loadInfo()
@@ -353,6 +354,7 @@
             },
             city:{
                 handler(val){
+                    if(JSON.stringify(val)=='{}')return;
                     this.area_list = City.getAreaList(this.province.id,this.city.id)
                     this.area={};
                     // this.loadInfo()
