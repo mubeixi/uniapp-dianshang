@@ -62,7 +62,9 @@
 
     import {settlement} from '../../common/fetch.js'
     import {mapGetters} from 'vuex'
+    import {pageMixin} from "../../common/mixin";
     export default {
+        mixins:[pageMixin],
         data() {
             const currentDate = this.getDate({
                 format: true
