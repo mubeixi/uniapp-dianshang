@@ -10,7 +10,7 @@
 				</view>
 				<view class="list-msg">
 					<view class="biz-msg">
-						<image class="avator" :src="item.Stores_ImgPath" mode=""></image>
+						<image class="avator" :src="item.supplier_img" mode=""></image>
 						<view class="biz-name">{{item.Stores_Name}}<view class="biz-links" v-if="(item.Order_Status==20||item.Order_Status==22||item.Order_Status==25)||item.active_id>0">(<text v-if="item.active_id>0" class="text-d" @click="showStore(item)">查看信息</text><block v-if="(item.Order_Status==20||item.Order_Status==22||item.Order_Status==25)&&item.active_id>0">/</block><block v-if="item.Order_Status==20||item.Order_Status==22||item.Order_Status==25"><text class="text-d" @click="changeChannel(item)">修改渠道</text></block>)</view></view>
 						<view class="status">{{item.Order_Status_desc}}
 							<block v-if="item.Order_Status == 22 && item.reason">
