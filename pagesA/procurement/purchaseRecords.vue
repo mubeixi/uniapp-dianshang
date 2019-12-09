@@ -29,7 +29,7 @@
 							</view>
 							<view class="pro-info">
 								<view class="pro-name">{{it.prod_name}}</view>
-								<view class="pro-attr" v-if="it.attr_info.attr_val">
+								<view class="pro-attr" v-if="it.attr_info.attr_va">
 									<view class="attr-info">{{it.attr_info.attr_val.Attr_Value}}</view>
 									<view class="pro-qty">x{{it.prod_count}}
 										<image class="qty-icon" v-if="it.prod_count_change_desc" src="/static/procurement/i.png" mode="" @click.stop="show_pro_tip(item)"></image>
@@ -375,7 +375,7 @@
 				let lat='';
 				let lng='';
 				getLocation(this).then(res=>{
-				    if(res.code===0){
+					if(res.code===0){
 						lng=res.data.longitude
 						lat=res.data.latitude
 						let data={
@@ -389,8 +389,12 @@
 						})
 					}
 				}).catch(err=>{
-				    this.isHidden = true;
-				    this.isShowStoreMsg = false;
+					let data={
+						store_id:this.Stores_ID
+					}
+					getStoreDetail(data).then(res=>{
+						this.storeAdress=res.data
+					})
 				})
 			},
 			hiddenMask(){
@@ -423,14 +427,12 @@
 			},
 			//修改渠道
 			changeChannel(item){
-				this.isChangeChannel = true;
-				this.isHidden = false;
 				this.order_id=item.Order_ID;
-				if(item.active_id>0){
-					this.orderIndex=1
-				}else{
-					this.orderIndex=0
-				}
+				//跳转到 渠道选择页面
+				uni.navigateTo({
+					url: '/pages/selectChannel/selectChannel?order_id=' + item.Order_ID
+				});
+				return;
 			}
 		},
 		computed: {
