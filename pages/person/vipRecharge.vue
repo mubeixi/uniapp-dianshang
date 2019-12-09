@@ -106,7 +106,7 @@ export default {
 			})
 		},
 		confirm(){
-			this.sub();
+			this.sub(false);
 		},
 		async sub(is_forword){
 			let _self = this;
@@ -175,15 +175,19 @@ export default {
 					this.$error('请在微信内打开')
 					return;
 				}
-				let isHasCode = this.code || GetQueryByString('code');
+				let isHasCode =  ls.get('temp_order_info');
 
-				if (isHasCode) {
+				//只有跳转回来的才这么弄
+				if (isHasCode && is_forword) {
 					// payConf.code = isHasCode;
 					//拿到之前的配置
 					payConf = { ...ls.get('temp_order_info'),
 						code: isHasCode,
 						pay_type: 'wx_mp'
 					}
+
+					//拿掉
+                    ls.remove('temp_order_info')
 
 				} else {
 					//存上临时的数据
@@ -501,12 +505,13 @@ export default {
 			let strArr = []
 			if (search.indexOf('code') != -1) {
 				let tempArr = search.split('&');
-				for (var i in tempArr) {
 
-					if (i.indexOf('code') === -1) {
-						strArr.push(tempArr[i])
+				for (var i of tempArr) {
+					if (i.indexOf('code') === -1 && i.indexOf('state') === -1 && i.indexOf('appid')===-1) {
+						strArr.push(i)
 					}
 				}
+
 
 				let newSearchStr = strArr.join('&');
 
@@ -532,8 +537,9 @@ export default {
 				wxAuthUrl =
 					`https://open.weixin.qq.com/connect/oauth2/authorize?appid=${channel.appid}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect`
 			}
+			console.log(REDIRECT_URI)
 
-			window.location.href = wxAuthUrl;
+			//window.location.href = wxAuthUrl;
 
 		},
 		payFailCall(){
