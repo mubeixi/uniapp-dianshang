@@ -647,6 +647,12 @@
 				}
 			},
 			{
+				"path": "procurement/storeSettlementLast",
+				"style": {
+					"navigationBarTitleText": "结算"
+				}
+			},
+			{
 				"path": "procurement/storeSettlementRecord",
 				"style": {
 					"navigationBarTitleText": "结算记录"

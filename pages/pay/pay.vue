@@ -488,9 +488,10 @@
 				let strArr = []
 				if (search.indexOf('code') != -1) {
 					let tempArr = search.split('&');
-					for (var i of tempArr) {
-						if (i.indexOf('code') === -1 && i.indexOf('state') === -1 && i.indexOf('appid')===-1) {
-							strArr.push(i)
+					for (var i in tempArr) {
+
+						if (i.indexOf('code') === -1) {
+							strArr.push(tempArr[i])
 						}
 					}
 					let newSearchStr = strArr.join('&');
@@ -541,8 +542,8 @@
 				// 	})
 				// },1000)
 			},
-			paySuccessCall(res){
-
+			paySuccessCall(res){		
+						
 				var _that = this;
 				let Order_Type = ls.get('type');
 				let pagefrom = ls.get('pagefrom');
