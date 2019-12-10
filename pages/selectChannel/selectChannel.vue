@@ -282,6 +282,48 @@
 				})
 			},
 			goPurchase(){
+<<<<<<< HEAD
+				// if(this.selectitem == 1 && !this.purchase_store_sn) {
+				// 	uni.showToast({
+				// 		title: '门店编号必须填写',
+				// 		icon: 'none'
+				// 	});
+				// 	return;
+				// }
+				if(this.selectitem == 2 && this.is_purchase) {
+					// 选择向平台退货
+					uni.showModal({
+						content: '确定退货？',
+						cancelText: '我再想想',
+						confirmText: '我意已决',
+						success: (res) => {
+							if(res.confirm) {
+								// 退货，并且是门店退货
+								storeProdBackSubmit({
+									store_id: this.Stores_ID,
+									prod_json: JSON.stringify(this.prod_json),
+									purchase_type: 'shop',
+								}).then(res=>{
+									ls.remove('productMy');
+									uni.showToast({
+										title: res.msg
+									});
+									setTimeout(()=>{
+										// 跳转选择渠道页面
+										uni.redirectTo({
+											url: '/pagesA/procurement/refundRecords'
+										})
+									},1000)
+								})
+							}else {
+								return;
+							}
+						}
+					})
+					return;
+				}
+=======
+>>>>>>> upstream/master
 				if(this.selectitem == 1) {
 					this.getStoreList();
 					return;
