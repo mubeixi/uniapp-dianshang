@@ -132,6 +132,7 @@ import popupLayer from '../../components/popup-layer/popup-layer.vue';
 import {uploadImage,getRefund,orderRefund,GET_ENV,get_Users_ID,get_User_ID,createToken} from '../../common/fetch.js'
 import {pageMixin} from "../../common/mixin";
 import {uploadImages,ls} from '../../common/tool.js'
+import {error} from "../../common";
 
 export default {
 	mixins:[pageMixin],
@@ -178,9 +179,9 @@ export default {
 		//图片预览
 		yulan(index){
 			uni.previewImage({
-			            urls: this.imgs,
-						indicator:'default',
-						current:index
+				urls: this.imgs,
+				indicator:'default',
+				current:index
 			});
 		},
 		//获取申请退货退款页面
@@ -210,10 +211,7 @@ export default {
 		submit(){
 			// 按照订单退款
 			if(!this.reason_id) {
-				uni.showModal({
-					title: '请选择退款原因',
-					showCancel: false
-				});
+				error('退款原因必选')
 				return;
 			}
 			let arr=[];
