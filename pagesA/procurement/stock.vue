@@ -30,7 +30,7 @@
 
         <view class="storeCate">
             <view class="storeCateLine">
-                <view class="storeCateLei">一级分类:</view>
+                <view class="storeCateLei">级分类:</view>
                 <scroll-view scroll-x="true" class="storeScroll">
                     <block v-for="(item,index) of cateList" :key="index">
                         <!-- skuSelect -->
