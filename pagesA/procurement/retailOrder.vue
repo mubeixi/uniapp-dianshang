@@ -23,50 +23,52 @@
 		</view>
 		<view class="space-box" style="height: 100rpx;width: 100%;background-color: #F8F8F8;">
 		</view>
-
-		<view class="marginAuto" v-for="(item,index) of pro" :key="index" >
-			<view class="orderTop">
-				<view style="color: #777777;">
-					订单号：{{item.Order_ID}}
-				</view>
-				<view style="color: #F43131;">
-					{{item.Order_Status_desc}}
-				</view>
-			</view>
-			<block v-for="(i,k) of item.prod_list" :key="k">
-				<view class="blockDiv">
-					<view class="imgDiv">
-						<image class="imgHund" :src="i.prod_img"></image>
+		<block v-if="pro.length > 0">
+			<view class="marginAuto" v-for="(item,index) of pro" :key="index" >
+				<view class="orderTop">
+					<view style="color: #777777;">
+						订单号：{{item.Order_ID}}
 					</view>
-					<view class="textRight" >
-						<view class="productName">
-							{{i.prod_name}}
-						</view>
-						<view class="bottomDiv">
-							<view class="skuCount" v-if="i.attr_info">
-								{{i.attr_info.attr_name}}
-							</view>
-							<view  v-else>
-
-							</view>
-							<view class="allPrice">
-								×{{i.prod_count}}
-							</view>
-						</view>
-						<view class="buttonLast">
-							<view class="viewFont">
-								¥<span class="spanFont">{{i.prod_price}}</span>
-							</view>
-						</view>	
+					<view style="color: #F43131;">
+						{{item.Order_Status_desc}}
 					</view>
 				</view>
-			</block>
-			<view style="text-align: right;padding-right:20rpx;">
-				<span class="spanJu" @click="refund(item.Order_ID)">拒单</span>
+				<block v-for="(i,k) of item.prod_list" :key="k">
+					<view class="blockDiv">
+						<view class="imgDiv">
+							<image class="imgHund" :src="i.prod_img"></image>
+						</view>
+						<view class="textRight" >
+							<view class="productName">
+								{{i.prod_name}}
+							</view>
+							<view class="bottomDiv">
+								<view class="skuCount" v-if="i.attr_info">
+									{{i.attr_info.attr_name}}
+								</view>
+								<view  v-else>
+
+								</view>
+								<view class="allPrice">
+									×{{i.prod_count}}
+								</view>
+							</view>
+							<view class="buttonLast">
+								<view class="viewFont">
+									¥<span class="spanFont">{{i.prod_price}}</span>
+								</view>
+							</view>
+						</view>
+					</view>
+				</block>
+				<view style="text-align: right;padding-right:20rpx;">
+					<span class="spanJu" @click="refund(item.Order_ID)">拒单</span>
+				</view>
 			</view>
-		</view>
-
-
+		</block>
+		<div class="defaults" v-else>
+			<image :src="'/static/client/defaultImg.png'|domain" ></image>
+		</div>
 
 
 		<div class="zhezhao" v-if="password_input">
@@ -145,7 +147,7 @@
 						that.getOrderNum();
 					},1000)
 				})
-						
+
 			},
 			cancelInput(){
 				this.password_input=false
@@ -461,4 +463,10 @@
 	        }
 	    }
 	}
+.defaults{
+	margin: 0 auto;
+	width: 640rpx;
+	height: 480rpx;
+	margin-top: 100rpx;
+}
 </style>

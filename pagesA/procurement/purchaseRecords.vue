@@ -23,7 +23,7 @@
 							</view>
 						</view>
 
-						<view class="pro-msg" v-for="(it,ind) of item.prod_list" :key="it">
+						<view class="pro-msg" v-for="(it,ind) of item.prod_list" :key="ind">
 							<view class="pro-img">
 								<image class="img" :src="it.prod_img"></image>
 							</view>
@@ -128,7 +128,7 @@
 
 <script>
 	import {pageMixin} from "../../common/mixin";
-	import {getStorePurchaseApply,storePifaOrderCancel,storePifaOrderRecall,storePifaOrderCompleted,changeStoreApplyChannel,getStoreDetail,subStorePurchaseApply,storePifaOrderDel} from "../../common/fetch";
+	import {getStorePurchaseApply,storePifaOrderCancel,storePifaOrderRecall,storePifaOrderCompleted,changeStoreApplyChannel,getStoreDetail,subStorePurchaseApply,storePifaOrderDel,storePifaOrderCalc} from "../../common/fetch";
 	import {mapGetters} from 'vuex'
 	import {getLocation} from "../../common/tool/location";
 	export default {
@@ -148,7 +148,7 @@
 				inputValue:'',//门店编号
 				storeAdress:[],
 				user_pay_password:'',
-				password_input:false
+				password_input:false,
 			}
 		},
 		onShow() {
@@ -189,6 +189,7 @@
 				});
 			},
 			confirmInput(){
+				console.log(this.prod_data)
 				let data={
 					store_id:this.Stores_ID,
 					order_id:this.order_id,
@@ -229,25 +230,25 @@
 						[it.attr_id]:this.orderList[index].prod_list[ind].prod_count
 					}
 				}
-				subStorePurchaseApply({store_id:this.Stores_ID,order_id:id,prod_json:JSON.stringify(data)}).then(res=>{
-					this.orderList[index].Order_TotalPrice=res.data.pay_money
+				storePifaOrderCalc({store_id:this.Stores_ID,order_id:id,prod_json:JSON.stringify(data)}).then(res=>{
+					this.orderList[index].Order_TotalPrice=res.data.Order_TotalPrice
 				}).catch(e=>{console.log(e)})
 
 			},
 			minus(index,ind,it,id){
-			    if (this.orderList[index].prod_list[ind].prod_count>1) {
+			    if (this.orderList[index].prod_list[ind].prod_count>0) {
 			        this.orderList[index].prod_list[ind].prod_count--
 					let data={
 						[it.prod_id]:{
 							[it.attr_id]:this.orderList[index].prod_list[ind].prod_count
 						}
 					}
-					subStorePurchaseApply({store_id:this.Stores_ID,order_id:id,prod_json:JSON.stringify(data)}).then(res=>{
-						this.orderList[index].Order_TotalPrice=res.data.pay_money
+					storePifaOrderCalc({store_id:this.Stores_ID,order_id:id,prod_json:JSON.stringify(data)}).then(res=>{
+						this.orderList[index].Order_TotalPrice=res.data.Order_TotalPrice
 					}).catch(e=>{console.log(e)})
 			    } else {
 			        uni.showToast({
-			            title: '购买数量不能小于1',
+			            title: '购买数量不能小于0',
 			            icon: 'none',
 			        });
 			    }
@@ -363,7 +364,6 @@
 				uni.openLocation({
 				            latitude: this.storeAdress.wx_lat,
 				            longitude: this.storeAdress.wx_lng,
-							name:this.storeAdress.Stores_Name,
 				            success: function () {
 				                console.log('success');
 				            }

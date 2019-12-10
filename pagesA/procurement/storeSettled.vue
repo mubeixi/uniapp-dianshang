@@ -3,18 +3,18 @@
         <view class="item">
             <view class="item-left">门店名称</view>
             <view class="item-input">
-                <input type="text" v-model="store_name" placeholder="将作为您的登录账号" placeholder-style="color:#CAC8C8"/>
+                <input type="text" v-model="store_name" disabled="!is_submitted" placeholder="将作为您的登录账号" placeholder-style="color:#CAC8C8"/>
             </view>
         </view>
         <view class="item">
             <view class="item-left">联系电话</view>
             <view class="item-input">
-                <input type="text" v-model="store_mobile" maxlength="11" placeholder="请输入联系电话" placeholder-style="color:#CAC8C8"/>
+                <input type="text" v-model="store_mobile" disabled="!is_submitted" maxlength="11" placeholder="请输入联系电话" placeholder-style="color:#CAC8C8"/>
             </view>
         </view>
         <view class="item">
             <view class="item-left">门店地址</view>
-            <picker class="pick" mode="multiSelector"  @change="bindMultiPickerChange" @columnchange="bindMultiPickerColumnChange" :value="change_multiIndex" :range="change_objectMultiArray" range-key="name">
+            <picker class="pick" mode="multiSelector" disabled="!is_submitted"  @change="bindMultiPickerChange" @columnchange="bindMultiPickerColumnChange" :value="change_multiIndex" :range="change_objectMultiArray" range-key="name">
                 <view class="picker">
                     <view class="view" v-if="!address_info.Address_Province">选择省份</view>
                     <view class="view choosed"  v-else>{{objectMultiArray[0][multiIndex[0]]['name']}}</view>
@@ -35,7 +35,7 @@
         <view class="item">
             <view class="item-left">详细地址</view>
             <view class="item-input">
-                <input type="text" v-model="store_address" placeholder="请输入详细地址" placeholder-style="color:#CAC8C8"/>
+                <input type="text" v-model="store_address" disabled="!is_submitted" placeholder="请输入详细地址" placeholder-style="color:#CAC8C8"/>
             </view>
         </view>
         <view class="addImg">
@@ -45,13 +45,13 @@
                     <image class="image" :src="item"  @click="yulan(index)"></image>
                     <image :src="'/static/client/delimg.png'|domain" class="del image" @click="delImg(index)"></image>
                 </view>
-                <view class="shangchuan" @click="addImg" v-if="arr.length == 0">
+                <view class="shangchuan" @click="addImg" v-if="arr.length == 0 && !is_submitted">
                     <view class="heng"></view>
                     <view class="shu"></view>
                 </view>
             </view>
         </view>
-        <view class="submit" @click="settled">立即入驻</view>
+        <view class="submit" @click="settled">{{is_submitted?userStoreMsg.status_desc:"立即入驻"}}</view>
     </view>
 </template>
 
@@ -59,12 +59,12 @@
 		import {pageMixin} from "../../common/mixin";
     import area from '../../common/area.js';
     import utils from '../../common/util.js';
-    import {uploadImage,comment,GET_ENV,get_Users_ID,get_User_ID,createToken} from '../../common/fetch.js'
+    import {uploadImage,comment,GET_ENV,get_Users_ID,get_User_ID,createToken,getUserStoreApply} from '../../common/fetch.js'
     import {uploadImages,ls} from '../../common/tool.js'
     import {userStoreApply} from '../../common/fetch.js'
     import {toast,error} from '../../common/index.js'
     export default {
-			mixins: [pageMixin],
+        mixins: [pageMixin],
         data() {
             return {
                 arr: [],
@@ -95,8 +95,13 @@
                 store_image: '',
                 store_province: '',
                 store_city: '',
-                store_area: ''
+                store_area: '',
+                userStoreMsg: {}, // 用户申请信息
+                is_submitted: false, // 用户是否提交过，提交过了不能修改
             }
+        },
+        onShow: function(){
+          this.load();
         },
         onLoad: function(){
             this.objectMultiArray = [
@@ -111,6 +116,21 @@
             ]
         },
         methods: {
+            // 获取用户最后的申请信息
+            load: function(){
+                getUserStoreApply().then(res=>{
+                    // 判断用户是否提交过，未提交data为空
+                    if(!res.data) {
+                        this.is_submitted = true;
+                        return;
+                    }
+                    this.userStoreMsg = res.data
+                    this.store_province = res.data.store_province_name
+                    this.store_city = res.data.store_city_name
+                    this.store_area = res.data.store_area_name
+
+                })
+            },
             // 入驻
             settled: function(){
                 this.store_province = this.address_info.Address_Province;
