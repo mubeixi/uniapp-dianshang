@@ -447,24 +447,24 @@ export default {
 					}
 				};
 				if(this.orderInfo.is_virtual == 1||this.postData.shipping_id=='is_store') {
-					if(!this.user_name) {
-						uni.showToast({
-							title: '请填写购买人姓名',
-							icon: 'none'
-						});
-						this.submited = false;
-						return;
-					};
-					if(!this.user_mobile) {
-						uni.showToast({
-							title: '请填写购买人手机号',
-							icon: 'none'
-						});
-						this.submited = false;
-						return;
-					};
-					this.postData.user_name = this.user_name;
-					this.postData.user_mobile = this.user_mobile;
+					// if(!this.user_name) {
+					// 	uni.showToast({
+					// 		title: '请填写购买人姓名',
+					// 		icon: 'none'
+					// 	});
+					// 	this.submited = false;
+					// 	return;
+					// };
+					// if(!this.user_mobile) {
+					// 	uni.showToast({
+					// 		title: '请填写购买人手机号',
+					// 		icon: 'none'
+					// 	});
+					// 	this.submited = false;
+					// 	return;
+					// };
+					// this.postData.user_name = this.user_name;
+					// this.postData.user_mobile = this.user_mobile;
 				}
 				if(this.postData.shipping_id=='is_store'){
 					let obj={}

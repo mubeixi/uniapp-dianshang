@@ -25,7 +25,7 @@
 						</div>
 					</div>
 				</block>
-				<div class="text-right total">共{{item.prod_list.length}}件商品 合计：<span class="price"><span class="p-span">￥</span> {{item.refund_money_fee}}</span></div>
+				<div class="text-right total">共{{item.prod_list.length}}件商品 合计：<span class="price"><span class="p-span">￥</span> {{item.refund_money_fee+item.refund_pay_fee}}</span></div>
 				<div class="btn-group">
 					<span class="span" style="border: 0rpx;color: red;">{{item.Back_Status_desc}}</span>
 					<span class="span" v-if="item.Back_Status==0" @click="cancelRefund(item,index)">取消退款</span>

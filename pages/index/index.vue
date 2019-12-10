@@ -146,11 +146,10 @@
 					item.pauseFn()
 				})
 			}
-			
+
 		},
 		onShow(){
-			this.$error('操作失败操作失败操作失败')
-
+			
 		},
 		async onPullDownRefresh(){
 			uni.stopPullDownRefresh()

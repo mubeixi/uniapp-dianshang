@@ -47,7 +47,7 @@
 						</div>
 					</div>
 				</block>
-				<div class="text-right total">共{{item.prod_list.length}}件商品 合计：<span class="price"><span>￥</span> {{item.Order_Fyepay}}</span></div>
+				<div class="text-right total">共{{item.prod_list.length}}件商品 合计：<span class="price"><span>￥</span> {{item.Order_TotalPrice}}</span></div>
 				<div class="btn-group" v-if="item.Order_Status==0">
 					<span @click="cancelOrder(item.prod_list,index)">取消订单</span>
 				</div>

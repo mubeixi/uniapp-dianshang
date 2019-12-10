@@ -14,7 +14,7 @@
                 <div class="pro-name">{{item.prod_name}}</div>
                 <div class="attr" v-if="item.attr_info"><span>{{item.attr_info.attr_name}}</span></div>
 								<div class="attr" v-else style="background-color:#fff;"><span></span></div>
-                <div class="pro-price"><span class="span">￥</span>{{item.refund_money_fee}} <span class="span amount">x{{item.prod_count}}</span></div>
+                <div class="pro-price"><span class="span">￥</span>{{item.refund_money_fee+item.refund_pay_fee}} <span class="span amount">x{{item.prod_count}}</span></div>
             </div>
         </div>
 		<div style="height: 20rpx;width: 100%;background-color: #F3F3F3;">

@@ -188,7 +188,7 @@
 		</popup-layer>
 		<div class="order_total">
 			<div class="totalinfo">
-				<div class="info">共{{orderInfo.prod_list.length}}件商品 总计：<span class="mbxa">￥<span>{{orderInfo.Order_Fyepay}}</span></span></div>
+				<div class="info">共{{orderInfo.prod_list.length}}件商品 总计：<span class="mbxa">￥<span>{{orderInfo.Order_TotalPrice}}</span></span></div>
 				<div class="tips">*本次购物一共可获得{{orderInfo.Integral_Get}}积分</div>
 			</div>
 			<view class="mx" @click="seeDetail">明细 <image class="image" :class="isSlide?'slidedown':''" src="../../static/top.png"></image></view>
