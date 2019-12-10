@@ -33,12 +33,12 @@
 			</view>
 			<view class="item" @click="openUrl('/pagesA/procurement/retailOrder')">
 				<image class="item-img" src="/static/mendian/2.png" mode=""></image>
-				<view class="num">{{storeDetail.shop_order_num}}</view>
+				<view class="num" v-if="storeDetail.shop_order_num">{{storeDetail.shop_order_num}}</view>
 				<view>零售订单</view>
 			</view>
 			<view class="item" @click="openUrl('/pagesA/procurement/storeWholesale')">
 				<image class="item-img" src="/static/mendian/3.png" mode=""></image>
-				<view class="num">{{storeDetail.pifa_order_num}}</view>
+				<view class="num" v-if="storeDetail.pifa_order_num">{{storeDetail.pifa_order_num}}</view>
 				<view>批发订单</view>
 			</view>
 			<view class="item" @click="openUrl('/pages/selectChannel/selectChannel')">
@@ -65,7 +65,7 @@
 				<image class="item-img" src="/static/mendian/9.png" mode=""></image>
 				<view>退货记录</view>
 			</view>
-		</view>		
+		</view>
 	</view>
 </template>
 
@@ -96,7 +96,7 @@
 				uni.navigateTo({
 					url: url
 				})
-			},		
+			},
 			// 门店信息初始化
 			getStoreDetail(){
 				storeInit({

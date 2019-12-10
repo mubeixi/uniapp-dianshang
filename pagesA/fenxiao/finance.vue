@@ -11,6 +11,9 @@
 			<view class="views" :class="index==1?'checked':''" @click="change(1)">
 				爵位
 			</view>
+			<view class="views" :class="index==4?'checked':''" @click="change(4)">
+				管理
+			</view>
 			<view class="views" :class="index==2?'checked':''"  @click="change(2)">
 				股东
 			</view>
@@ -19,29 +22,34 @@
 			</view>
 		</view>
 		<view style="width: 100%;height: 105rpx;background-color: #FFFFFF;" ></view>
-		<view class="order" v-for="(item,i) of pro " :key="i">
-			<view>
-				订单号：<text>{{item.Order_ID}}</text>
+		<block v-if="pro.length > 0">
+			<view class="order" v-for="(item,i) of pro " :key="i">
+				<view>
+					订单号：<text>{{index == 4 ? item.order_id : item.Order_ID}}</text>
+				</view>
+				<view>
+					佣金金额：<text class="price" v-if="index==2 || index == 4">￥{{index == 2 ?item.Record_Money : item.record_money}}</text>
+							<text class="price" v-else>￥{{item.money}}</text>
+				</view>
+				<view>
+					描述：<text v-if="index==2">{{item.Record_Type_desc}}</text>
+						 <text v-else>{{index == 4 ? item.descr :item.desc}}</text>
+				</view>
+				<view>
+					时间：<text v-if="index==2">{{item.Order_CreateTime}}</text>
+						 <text v-else>{{item.Record_CreateTime}}</text>
+				</view>
 			</view>
-			<view>
-				佣金金额：<text class="price" v-if="index==2">￥{{item.Record_Money}}</text>
-						<text class="price" v-else>￥{{item.money}}</text>
-			</view>
-			<view>
-				描述：<text v-if="index==2">{{item.Record_Type_desc}}</text>
-					 <text v-else>{{item.desc}}</text>
-			</view>
-			<view>
-				时间：<text v-if="index==2">{{item.Order_CreateTime}}</text>
-					 <text v-else>{{item.Record_CreateTime}}</text>
-			</view>
-		</view>
+		</block>
+		<div class="defaults" v-else>
+			<image :src="'/static/client/defaultImg.png'|domain" ></image>
+		</div>
 	</view>
 </template>
 
 <script>
 	import {pageMixin} from "../../common/mixin";
-	import {getNobiRecordList,getDisRecordList,getShaRecordList,getAgentRecordList} from '../../common/fetch.js'
+	import {getNobiRecordList,getDisRecordList,getShaRecordList,getAgentRecordList,getManageRecordList} from '../../common/fetch.js'
 	export default {
 		mixins:[pageMixin],
 		data() {
@@ -96,7 +104,7 @@
 							}
 							this.totalCount=res.totalCount;
 						}
-				
+
 					}).catch(e=>{
 						console.log(e);
 					})
@@ -121,6 +129,13 @@
 						}
 					}).catch(e=>{
 						console.log(e);
+					})
+				}else if(this.index == 4) {
+					getManageRecordList(data).then(res=>{
+						for(let item of res.data) {
+							this.pro.push(item)
+						}
+						this.totalCount = res.totalCount;
 					})
 				}else{
 					getAgentRecordList(data).then(res=>{
@@ -206,4 +221,10 @@
 		}
 	}
 }
+.defaults{
+	 margin: 0 auto;
+	 width: 640rpx;
+	 height: 480rpx;
+	 margin-top: 100rpx;
+ }
 </style>

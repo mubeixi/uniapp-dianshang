@@ -127,7 +127,11 @@
 		computed: {
 			...mapGetters(['Stores_ID']),
 			channelName(){
-				return this.selectitem == 1 ? '门店进货' : '平台进货'
+				if(!this.is_purchase) {
+					return this.selectitem == 1 ? '门店进货' : '平台进货'
+				}else {
+					return this.selectitem == 1 ? '门店退货' : '平台退货'
+				}
 			},
 			p_id(){
 				return this.provinceList[this.p_index] && this.provinceList[this.p_index].id
