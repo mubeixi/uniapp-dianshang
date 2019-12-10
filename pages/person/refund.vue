@@ -91,14 +91,16 @@
 			<div class="bMbx">
 				<div class="fMbx">退款原因</div>
 				<div class="iMbx" v-for="(item,index) in refundInfo.shop_reason" :key="index">
-					<div>
-						{{item.Reason_Name}}
-					</div>
-					<div>
-						 <radio-group @change="ShipRadioChange">
-						 	<radio :value="index+''" :checked="index==current" style="float:right;" color="#F43131"/>
-						 </radio-group>
-					</div>
+					<radio-group @change="ShipRadioChange" style="display: block;width: 100%;">
+					<label class="flex flex-between flex-vertical-center" style="width: 100%">
+						<div class="flex1">
+							{{item.Reason_Name}}
+						</div>
+						<div>
+							<radio :value="index+''" :checked="index==current" style="float:right;" color="#F43131"/>
+						</div>
+					</label>
+					</radio-group>
 				</div>
 				<!-- <div class="iMbx">
 					<div>
