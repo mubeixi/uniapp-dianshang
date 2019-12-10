@@ -43,11 +43,6 @@
 			<template v-if="index == 4">
 				<block v-if="productMy.length > 0">
 					<view class="blockDiv" v-for="(item,index) of productMy" :key="index">
-						<view class="mbxa" v-if="isShow" @click="checkedSelect(index)">
-							<img class="imgs" :src="checked[index].checked?checked_img_url:uncheck_img_url" >
-						</view>
-						<view style="width: 10rpx" v-if="!isShow">
-						</view>
 						<view class="imgDiv">
 							<image class="imgHund" :src="item.ImgPath"></image>
 						</view>
@@ -79,11 +74,6 @@
 			<template v-else-if="index == 2">
 				<block v-if="productMy_soldout.length > 0">
 					<view class="blockDiv" v-for="(item,index) of productMy_soldout" :key="index">
-						<view class="mbxa" v-if="isShow" @click="checkedSelect(index)">
-							<img class="imgs" :src="checked[index].checked?checked_img_url:uncheck_img_url" >
-						</view>
-						<view style="width: 10rpx" v-if="!isShow">
-						</view>
 						<view class="imgDiv">
 							<image class="imgHund" :src="item.ImgPath"></image>
 						</view>
@@ -151,8 +141,6 @@
 			<template v-else>
 				<block v-if="productlist.length>0">
 					<view class="blockDiv" v-for="(item,index) of productlist" :key="index" @click="checkedSelect(index)">
-						<view style="width: 10rpx" v-if="!isShow">
-						</view>
 						<view class="imgDiv">
 							<image class="imgHund" :src="item.ImgPath"></image>
 						</view>
@@ -408,9 +396,11 @@
 		onLoad(options) {
 			if(options.stock_low) {
 				this.stock_low = 1;
+				this.index = 2;
 			}
 		},
-		onHide(){
+		onUnload(){
+			console.log('hide', this.productMy)
 			ls.set('productMy', this.productMy);
 		},
 		onReachBottom() {
@@ -571,12 +561,18 @@
 
 			},
 			handClicked(){
-				 this.$refs.detail.close();
+				// this.zIndex = 100;
+				this.isClicked = false;
+				this.showSku = false;
+				this.showSum = false;
+				this.isHiddenMask = true;
+				this.$refs.detail.close();
 			},
 			delList(index,qty,attr_id){
 				console.log(index,this.productMy)
 				this.productMy[index].skuvaljosn[attr_id].myqty=0
 				this.productMy[index].prod_stock+=qty
+				this.productMy[index].skuvaljosn[attr_id].Property_count += qty;
 				// this.amount-=qty
 			},
 			// 取消退货
@@ -631,7 +627,8 @@
 				// this.amount += this.postData.qty;
 				this.isHiddenMask = true;
 				this.showSku = false;
-
+				console.log('this.productMy')
+				console.log(this.productMy)
 			},
 			// 申请退货
 			apply_back(item,index){
@@ -707,10 +704,10 @@
 			    }
 			    //判断属性库存
 			    if (attr_val && attr_val.Property_count <= 0) {
-			        uni.showToast({
-			            title: '您选择的 ' + check_attrnames + ' 库存不足，请选择其他属性',
-			            icon: 'none'
-			        })
+			        // uni.showToast({
+			        //     title: '您选择的 ' + check_attrnames + ' 库存不足，请选择其他属性',
+			        //     icon: 'none'
+			        // })
 			        this.submit_flag =  false;
 			        return false;
 			    }
@@ -749,12 +746,13 @@
 			},
 			// 点击遮罩
 			hiddenMask(){
-				this.isHiddenMask = true;
 				this.zIndex = 100;
 				this.isClicked = false;
 				this.showSku = false;
 				this.showSum = false;
+				this.isHiddenMask = true;
 				this.isChangeChannel = false;
+				console.log(this.isClicked);
 			},
 			allSum(){
 				let arr=[];
@@ -799,6 +797,7 @@
 				}
 				getSelfStoreProd(data).then(res=>{
 					let oldProductMy = ls.get('productMy') || [];
+					console.log(oldProductMy);
 					this.productMy = this.productMy.concat(res.data);
 					this.productlist = this.productlist.concat(res.data);
 					this.checked = [];
@@ -814,15 +813,42 @@
 					this.totalCount=res.totalCount
 					this.loading=false
 					this.productMy = this.productlist;
-					// for(let item in oldProductMy){
-					// 	if(oldProductMy[item].skuvaljosn) {
-					// 		for(let i in oldProductMy[item].skuvaljosn){
-					// 			this.productMy[item].skuvaljosn[i].myqty=0
-					// 		}
-					// 	}else {
-					// 		this.productMy[item].myqty = 0;
-					// 	}
-					// }
+					for(let item in this.productMy){
+						if(this.productMy[item].skuvaljosn) {
+							for(let i in this.productMy[item].skuvaljosn){
+								this.productMy[item].skuvaljosn[i].myqty=0
+							}
+						}else {
+							this.productMy[item].myqty = 0;
+						}
+					}
+					oldProductMy.forEach(item=>{
+						let prod_id = item.prod_id;
+						this.productMy.forEach(pro=>{
+							let n_id = pro.prod_id;
+							// 是同一个产品
+							if(prod_id == n_id) {
+								if(pro.skuvaljosn) {
+									for(let i in pro.skuvaljosn) {
+										pro.skuvaljosn[i].myqty = item.skuvaljosn[i].myqty;
+										pro.skuvaljosn[i].check_attrnames = item.skuvaljosn[i].check_attrnames;
+										pro.skuvaljosn[i].check_attrid_arr = item.skuvaljosn[i].check_attrid_arr;
+										pro.skuvaljosn[i].Property_count -= item.skuvaljosn[i].myqty;
+										pro.skuvaljosn[i].attr_count = item.skuvaljosn[i].myqty;
+										pro.prod_stock -= item.skuvaljosn[i].myqty;
+									}
+								}else {
+									pro.myqty = item.myqty;
+									pro.prod_stock -= item.myqty;
+								}
+							}
+						})
+					})
+					console.log(this.productMy);
+					// 库存紧张
+					this.productMy_soldout = this.productlist.filter(item=>{
+						return item.prod_stock <= 10
+					})
 
 				}).catch(e=>{
 					this.loading=false

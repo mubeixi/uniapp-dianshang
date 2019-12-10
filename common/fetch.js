@@ -280,7 +280,8 @@ export const judgeSignin = (data, options) => fetch('judge_signin', data, option
 export const signin = (data, options) => fetch('signin', data, options);
 //获取签到页信息
 export const getSignin = (data, options) => fetch('get_signin', data, options);
-
+// 分销佣金 管理列表
+export const getManageRecordList = (data, options) => fetch('getManageRecordList', data, options);
 //申请成为区域代理
 export const agentApply = (data, options) => fetch('agent_apply', data, options);
 //区域代理支付

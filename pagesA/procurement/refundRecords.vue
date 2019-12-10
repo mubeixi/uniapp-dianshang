@@ -289,8 +289,8 @@
 			text-align: center;
       .status {
 				display: inline-block;
-        width: 135rpx;
-				margin-right: 30rpx;
+        width: 138rpx;
+				/*margin-right: 30rpx;*/
 				line-height: 80rpx;
 				&.active {
 					color: $wzw-primary-color;
