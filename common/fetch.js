@@ -346,6 +346,11 @@ export const userIntegralRecord = (data,options) => fetch('user_integral_record'
 export const getJifenProd = (data,options) => fetch('get_jifen_prod',data,options);
 // 我的积分兑换列表
 export const jifenProdOrder = (data,options) => fetch('jifen_prod_order',data,options);
+// 取消积分兑换订单
+export const cancelJifenProdOrder = (data,options) => fetch('cancel_jifen_prod_order',data,options);
+// 确定兑换订单
+export const confirmJifenProdOrder = (data,options) => fetch('confirm_jifen_prod_order',data,options);
+
 // 积分支付
 export const jifenProdDuihuan = (data,options) => fetch('jifen_prod_duihuan', data, options);
 // 获取退款单列表

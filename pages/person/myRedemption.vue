@@ -13,23 +13,32 @@
 						{{item.Orders_CreateTime | formatTime}}
 					</view>
 				</view>
-				<view class="last" @click="toBuy(item)">
+				<view class="last">
 					<image :src="item.Gift_Info.Gift_ImgPath" ></image>
 					<view class="myRight">
 						<view class="titles">
 							<view class="leftM">
 								{{item.Gift_Info.Gift_Name}}
 							</view>
-							<view class="rightM" :class="[(item.Orders_Status == 2 || item.Orders_Status == 3)? 'payed': '',item.Orders_Status == 4 ? 'complated': '','rightM']" >
+							<view class="rightM" @click="toBuy(item)" :class="[(item.Orders_Status == 2 || item.Orders_Status == 3)? 'payed': '',item.Orders_Status == 4 ? 'complated': '','rightM']" >
 								{{item.Orders_Status|status_desc}}
 							</view>
 						</view>
 						<view class="rty">
-							<image class="image" :src="'/static/client/check/ji.png'|domain" mode=""></image>
-							<text class="texts">{{item.Gift_Info.Gift_Integral}}</text>
+							<view class="leftM">
+								<image class="image" :src="'/static/client/check/ji.png'|domain" mode=""></image>
+								<text class="texts">{{item.Gift_Info.Gift_Integral}}</text>
+							</view>
+							<view class="rightM complated" @click.stop="cancelJifenProdOrder(item)" v-if="item.Orders_Status == 1">
+								取消兑换
+							</view>
+						</view>
+						<view class="rty confirm"  @click.stop="confirmJifenProdOrder(item)" v-if="item.Orders_Status == 3">
+							<view class="rightM payed" style="float: right;">确认收货</view>
 						</view>
 					</view>
 				</view>
+
 			</view>
 		</template>
 		<template v-else>
@@ -41,7 +50,7 @@
 </template>
 
 <script>
-	import {jifenProdOrder} from '../../common/fetch.js'
+	import {jifenProdOrder,cancelJifenProdOrder,confirmJifenProdOrder} from '../../common/fetch.js'
 	import {formatTime} from '../../common/filter'
 	import {pageMixin} from "../../common/mixin";
 	export default {
@@ -96,6 +105,26 @@
 						url:'../order/logistics?shipping_id='+item.Orders_ShippingID + '&express=' + item.Orders_Shipping + '&prod_img=' + item.Gift_Info.Gift_ImgPath
 					})
 				}
+			},
+			// 取消订单
+			cancelJifenProdOrder(item) {
+				cancelJifenProdOrder({Order_ID: item.Orders_ID}).then(res=>{
+					uni.showToast({
+						title: res.msg
+					});
+					this.prod_list = [];
+					this.get_jifen_order();
+				})
+			},
+			//	确认订单
+			confirmJifenProdOrder(item) {
+				confirmJifenProdOrder({Order_ID: item.Orders_ID}).then(res=>{
+					uni.showToast({
+						title: res.msg
+					});
+					this.prod_list = [];
+					this.get_jifen_order();
+				})
 			}
 		}
 
@@ -157,6 +186,9 @@ view{
 			.rty{
 				margin-top: 30rpx;
 				text-align: left;
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
 				.image{
 					width: 16rpx;
 					height: 17rpx;
@@ -167,38 +199,42 @@ view{
 					font-size: 32rpx;
 				}
 			}
+			.rty.confirm {
+				justify-content: flex-end;
+			}
 			.titles{
 				height: 42rpx;
 				width: 100%;
 				display: flex;
 				align-items: center;
 				justify-content: space-between;
-				.leftM{
-					height: 27rpx;
-					overflow: hidden;
-					font-size: 28rpx;
-					line-height: 27rpx;
-					color: #333333;
-					font-weight: 300;
-				}
-				.rightM {
-					width: 114rpx;
-					height: 42rpx;
-					line-height: 42rpx;
-					text-align: center;
-					font-size: 24rpx;
-					color: #FFFFFF;
-					background-color: #cdcdcd;//#FF5C33已发货颜色  #f8e9e8已完成颜色
-					border-top-left-radius: 114rpx;
-					border-bottom-left-radius: 114rpx;
-				}
-				.payed {
-					background-color: #FF5C33
-				}
-				.complated {
-					background-color: #f8e9e8;
-				}
 			}
+			.leftM{
+				height: 27rpx;
+				overflow: hidden;
+				font-size: 28rpx;
+				line-height: 27rpx;
+				color: #333333;
+				font-weight: 300;
+			}
+			.rightM {
+				width: 114rpx;
+				height: 42rpx;
+				line-height: 42rpx;
+				text-align: center;
+				font-size: 24rpx;
+				color: #FFFFFF;
+				background-color: #cdcdcd;//#FF5C33已发货颜色  #f8e9e8已完成颜色
+				border-top-left-radius: 114rpx;
+				border-bottom-left-radius: 114rpx;
+			}
+			.payed {
+				background-color: #FF5C33
+			}
+			.complated {
+				background-color: #f8e9e8;
+			}
+
 		}
 	}
 }

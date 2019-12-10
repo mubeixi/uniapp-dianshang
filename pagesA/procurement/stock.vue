@@ -13,7 +13,7 @@
                 <view class="storeName">
                     <view>{{storeAdress.Stores_Name}}</view>
                     <view class="storeKm">
-                        {{storeAdress.distance}}km
+                        <text v-if="storeAdress.distance">{{storeAdress.distance}}km</text>
                         <image class="imgHeight" src="https://new401.bafangka.com/static/client/person/right.png"></image>
                     </view>
                 </view>
@@ -30,7 +30,7 @@
 
         <view class="storeCate">
             <view class="storeCateLine">
-                <view class="storeCateLei">级分类:</view>
+                <view class="storeCateLei">一级分类:</view>
                 <scroll-view scroll-x="true" class="storeScroll">
                     <block v-for="(item,index) of cateList" :key="index">
                         <!-- skuSelect -->
@@ -182,6 +182,7 @@
                 indexFirst:-1,
                 indexSecond:-1,
                 storeAdress:[],
+                canClicked: true, // 是否可以点明细  防止用户一直点出现bug
             }
         },
         components: {
@@ -518,14 +519,19 @@
                 this.zIndex = 100;
             },
             showSelected(){
+                // 防止用户频繁点击
+                if(!this.canClicked) return;
+                this.canClicked = false;
                 if(this.total_cart_count == 0) return;
                 if(!this.isClicked) {
                     this.zIndex = 9999999;
+                    this.canClicked = true;
                     this.$refs.detail.show();
                 }else {
                     this.$refs.detail.close();
                     setTimeout(()=>{
                         this.zIndex = 100;
+                        this.canClicked = true;
                     },500)
                 }
                 this.isClicked = !this.isClicked;
@@ -876,6 +882,8 @@
         }
     }
     .mxdetail {
+        max-height: 70vh;
+        overflow: scroll;
         padding: 20rpx;
         .product {
             display: flex;
