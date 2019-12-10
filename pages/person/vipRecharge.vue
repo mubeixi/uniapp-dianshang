@@ -17,7 +17,7 @@
 			支付方式
 		</view>
 
-		<view class="selectq" v-for="(channel,idx) in payChannelList" @click="payChannel=idx">
+		<view class="selectq" v-for="(channel,idx) in payChannelList" @click="changeChannelIdx(idx)">
 			<view>
 				{{channel}}
 			</view>
@@ -82,6 +82,7 @@ export default {
 	},
 	created(){
 
+
         // #ifdef H5
         if (isWeiXin()) {
             this.code = GetQueryByString(location.href, 'code');
@@ -97,6 +98,9 @@ export default {
         // #endif
     },
 	methods:{
+		changeChannelIdx(idx){
+			this.payChannel = idx
+		},
 		 ...mapActions(['getInitData']),
 		getBalance(){
 			getBalance().then(res=>{
