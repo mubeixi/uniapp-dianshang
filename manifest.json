@@ -143,7 +143,6 @@
             "urlCheck" : false,
             "postcss" : false
         },
-		"optimization":{"subPackages":true},
         "usingComponents" : true,
         "permission" : {
             "scope.userLocation" : {
@@ -184,11 +183,11 @@
                 }
             }
         },
-        // "optimization" : {
-        //     "treeShaking" : {
-        //         "enable" : true
-        //     }
-        // },
+        "optimization" : {
+            "treeShaking" : {
+                "enable" : true
+            }
+        },
         "title" : " "
     }
 }

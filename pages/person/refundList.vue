@@ -25,7 +25,14 @@
 						</div>
 					</div>
 				</block>
-				<div class="text-right total">共{{item.prod_list.length}}件商品 合计：<span class="price"><span class="p-span">￥</span> {{item.refund_money_fee}}</span></div>
+				<div class="text-right font14 line10 graytext2">
+					共<span class="color555">{{item.prod_list.length}}</span>件商品,
+					<span>退回余额:<span class="font16 danger-color"><span class="span font12">￥</span>{{item.refund_money_fee}} </span>,</span>
+					<span>原路退回:<span class="font16 danger-color"><span class="span font12">￥</span>{{item.refund_pay_fee}} </span></span>
+				</div>
+<!--				<div class="text-right graytext2 font14 line6">-->
+<!--					-->
+<!--				</div>-->
 				<div class="btn-group">
 					<span class="span" style="border: 0rpx;color: red;">{{item.Back_Status_desc}}</span>
 					<span class="span" v-if="item.Back_Status==0" @click="cancelRefund(item,index)">取消退款</span>

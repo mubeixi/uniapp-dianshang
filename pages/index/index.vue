@@ -146,10 +146,9 @@
 					item.pauseFn()
 				})
 			}
-			
+
 		},
 		onShow(){
-			
 
 		},
 		async onPullDownRefresh(){

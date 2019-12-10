@@ -5,7 +5,7 @@
             <input type="text" class="input" placeholder="请输入商品关键词" @confirm="search" v-model="prod_name" placeholder-style="color:#bebdbd;">
         </view>
 
-        <view class="storeAddress">
+        <view class="storeAddress" v-if="is_pingtai==0&&(storeAdress.Stores_Name)" @click="openAddress">
             <view class="storeAddressImg">
                 <image class="imgWidth" :src="storeAdress.Stores_ImgPath" ></image>
             </view>
@@ -13,7 +13,7 @@
                 <view class="storeName">
                     <view>{{storeAdress.Stores_Name}}</view>
                     <view class="storeKm">
-                        360m
+                        {{storeAdress.distance}}km
                         <image class="imgHeight" src="https://new401.bafangka.com/static/client/person/right.png"></image>
                     </view>
                 </view>
@@ -105,28 +105,6 @@
                 <view class="sku-btns">
                     <view class="cancel btn" @click="cancel">取消</view>
                     <view class="confirm btn" @click="confirm"  :class="submit_flag?'':'disabled'">确定</view>
-                </view>
-            </view>
-        </view>
-        <!--  门店信息	-->
-        <view class="sku-pop mendian" v-if="isShowStoreMsg && is_pingtai==0">
-            <view class="sku-title">门店信息</view>
-            <view class="sku-content">
-                <view class="skulist">
-                    <view class="sku-name">门店名称：</view>
-                    <view class="sku-item">{{storeInfo.Stores_Name}}</view>
-                </view>
-                <view class="skulist">
-                    <view class="sku-name">门店电话：</view>
-                    <view class="sku-item">{{storeInfo.mobile}}</view>
-                </view>
-                <view class="skulist">
-                    <view class="sku-name">门店地址：</view>
-                    <view class="sku-item" style="flex:1;">{{storeInfo.Stores_Province_name}}{{storeInfo.Stores_City_name}}{{storeInfo.Stores_Area_name}}{{storeInfo.Stores_Address}}<image class="img" src="/static/local.png"></image></view>
-                </view>
-                <view class="skulist">
-                    <view class="sku-name">门店距离：</view>
-                    <view class="sku-item">{{storeAdress.distance}}KM</view>
                 </view>
             </view>
         </view>
@@ -233,9 +211,20 @@
             this.getProductCategory()
         },
         methods: {
+            openAddress(){
+                uni.openLocation({
+                    latitude: this.storeAdress.wx_lat,
+                    longitude: this.storeAdress.wx_lng,
+                    name:this.storeAdress.Stores_Name,
+                    success: function () {
+                        console.log('success');
+                    }
+                });
+            },
             getStoreDetail(){
                 getLocation(this).then(res=>{
                     if(res.code===0){
+                        let lng=0,lat=0;
                         lng=res.data.longitude
                         lat=res.data.latitude
                         let data={
@@ -243,7 +232,7 @@
                             lng:lng,
                             store_sn:this.purchase_store_sn
                         }
-                        console.log(data,"ss")
+
                         getStoreDetail(data).then(res=>{
                             this.storeAdress=res.data
                             this.storeAdress.distance=(res.data.distance/1000).toFixed(2)
@@ -484,6 +473,10 @@
                     this.prolist = res.data;
                     this.total_pro_count = res.totalCount;
                     this.active_id = this.Stores_ID + '_' + res.Stores_ID
+                }).catch(e=>{
+                    setTimeout(function () {
+                        uni.navigateBack({delta:1})
+                    },2000)
                 })
             },
             // 普通产品

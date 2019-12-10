@@ -30,7 +30,10 @@
 				退款数量：<text style="font-weight: bold;">{{pro.Back_Qty}}件</text>
 			</view>
 			<view class="td">
-				退款总价：<text style="color: red;">¥{{pro.refund_money_fee}}</text>
+				退款总价：
+<!--				<text style="color: red;">¥{{pro.refund_money_fee}}</text>-->
+				<span>退回余额<span class="font16 danger-color"><span class="span font12">￥</span>{{pro.refund_money_fee}} </span>,</span>
+				<span>原路退回 <span class="danger-color"><span class="span font12 ">￥</span>{{pro.refund_pay_fee}} </span></span>
 			</view>
 			<view class="td">
 				退款状态：<text style="color: #FF6600;">{{pro.Back_Status_desc}}</text>

@@ -747,10 +747,10 @@ export default {
 				let strArr = []
 				if (search.indexOf('code') != -1) {
 					let tempArr = search.split('&');
-					for (var i of tempArr) {
+					for (var i in tempArr) {
 
-						if (i.indexOf('code') === -1 && i.indexOf('state') === -1 && i.indexOf('appid')===-1) {
-							strArr.push(i)
+						if (i.indexOf('code') === -1) {
+							strArr.push(tempArr[i])
 						}
 					}
 					let newSearchStr = strArr.join('&');

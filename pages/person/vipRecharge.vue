@@ -88,7 +88,7 @@ export default {
             console.log(this.code)
             if (this.code) {
 
-                this.payChannel = 'wx_mp';//需要手动设置一下
+                this.pay_type = 'wx_mp';//需要手动设置一下
                 // console.log(this.pay_type)
                 // ls.set('code',this.code)
                 this.sub(1);
@@ -106,9 +106,9 @@ export default {
 			})
 		},
 		confirm(){
-			this.sub(false);
+			this.sub();
 		},
-		async sub(is_forword){
+		async	sub(is_forword){
 			let _self = this;
 			let payConf = {};
 			if(!is_forword) {
@@ -175,19 +175,15 @@ export default {
 					this.$error('请在微信内打开')
 					return;
 				}
-				let isHasCode =  this.code;
+				let isHasCode = this.code || GetQueryByString('code');
 
-				//只有跳转回来的才这么弄
-				if (isHasCode && is_forword) {
+				if (isHasCode) {
 					// payConf.code = isHasCode;
 					//拿到之前的配置
 					payConf = { ...ls.get('temp_order_info'),
 						code: isHasCode,
 						pay_type: 'wx_mp'
 					}
-
-					//拿掉code
-					this.code = ''
 
 				} else {
 					//存上临时的数据
@@ -343,9 +339,6 @@ export default {
 						success: function(res) {
 							// 支付成功后的回调函数
 							_self.paySuccessCall(res)
-						},
-						fail:function(err){
-							_self.payFailCall(err)
 						}
 					});
 
@@ -508,13 +501,12 @@ export default {
 			let strArr = []
 			if (search.indexOf('code') != -1) {
 				let tempArr = search.split('&');
+				for (var i in tempArr) {
 
-				for (var i of tempArr) {
-					if (i.indexOf('code') === -1 && i.indexOf('state') === -1 && i.indexOf('appid')===-1) {
-						strArr.push(i)
+					if (i.indexOf('code') === -1) {
+						strArr.push(tempArr[i])
 					}
 				}
-
 
 				let newSearchStr = strArr.join('&');
 
@@ -540,29 +532,19 @@ export default {
 				wxAuthUrl =
 					`https://open.weixin.qq.com/connect/oauth2/authorize?appid=${channel.appid}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect`
 			}
-			console.log(REDIRECT_URI)
 
 			window.location.href = wxAuthUrl;
 
 		},
-		payFailCall(obj){
+		payFailCall(){
 		 	if(ls.get('money')) {
 		 		this.money = ls.get('recharge_money')
 			};
-		 	console.log(obj)
-			// fail:{"errMsg":"requestPayment:fail cancel"}
-
-			if(obj.hasOwnProperty('errMsg')){
-				if(obj.errMsg == 'requestPayment:fail cancel'){
-					error('用户取消支付')
-					return;
-				}
-
-				error(obj.errMsg||'支付失败')
-				return;
-
-			}
-			error('支付失败')
+			uni.showToast({
+				title: '支付失败',
+				icon: 'none',
+				duration: 2000
+			});
 		},
 		paySuccessCall(){
 			let _self = this;

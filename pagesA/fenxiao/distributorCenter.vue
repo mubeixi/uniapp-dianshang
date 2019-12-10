@@ -882,6 +882,7 @@
 			        let tempArr = search.split('&');
 			        for (var i of tempArr) {
 
+			            console.log(i,i.indexOf('code') === -1, i.indexOf('state') === -1,i.indexOf('appid')===-1)
 			            //过滤多余的参数
 			            if (i.indexOf('code') === -1 && i.indexOf('state') === -1 && i.indexOf('appid')===-1) {
 			                strArr.push(i)
