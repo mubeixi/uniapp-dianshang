@@ -84,10 +84,12 @@
 </template>
 
 <script>
+	import {pageMixin} from "../../common/mixin";
 	import {domainFn} from "../../common/filter";
 	import {mapGetters} from 'vuex'
 	import {getOrder,getOrderNum,systemRejectOrder} from '@/common/fetch.js'
 	export default {
+		mixins:[pageMixin],
 		data() {
 			return {
 				index:0,
