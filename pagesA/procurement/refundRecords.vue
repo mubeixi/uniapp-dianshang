@@ -25,6 +25,10 @@
 						</block>
 					</view>
 				</view>
+				<view class="biz-msg">
+					<image class="avator" :src="item.receive_img" mode=""></image>
+					<view class="biz-name">{{item.receive_name}}<view class="biz-links" v-if="item.receive_id > 0">(<text class="text-d" @click="showStore(item.receive_id)">查看门店信息</text>)</view></view>
+				</view>
 				<view class="list-msg" v-for="pro of item.prod_list">
 					<view class="pro-msg">
 						<view class="pro-img">
@@ -65,13 +69,13 @@
 		            <view class="sku-name">门店电话：</view>
 		            <view class="sku-item">{{storeInfo.mobile}}</view>
 		        </view>
-		        <view class="skulist">
+		        <view class="skulist" @click="showAdress">
 		            <view class="sku-name">门店地址：</view>
 		            <view class="sku-item" style="flex:1;">{{storeInfo.Stores_Province_name}}{{storeInfo.Stores_City_name}}{{storeInfo.Stores_Area_name}}{{storeInfo.Stores_Address}}<image class="img" src="/static/local.png"></image></view>
 		        </view>
-		        <view class="skulist">
+		        <view class="skulist" v-if="storeInfo.distance">
 		            <view class="sku-name">门店距离：</view>
-		            <view class="sku-item">1.2KM</view>
+		            <view class="sku-item" >{{storeInfo.distance}}KM</view>
 		        </view>
 		    </view>
 		</view>
@@ -103,8 +107,9 @@
 
 <script>
 	import {pageMixin} from "../../common/mixin";
-	import {getStoreProdBackOrder,storeProdBackOrderCancel,storeProdBackOrderConfirm} from '../../common/fetch.js'
+	import {getStoreProdBackOrder,storeProdBackOrderCancel,storeProdBackOrderConfirm,getStoreDetail} from '../../common/fetch.js'
 	import {mapGetters} from 'vuex'
+	import {getLocation} from "../../common/tool/location";
 	export default {
 		mixins:[pageMixin],
 		data(){
@@ -113,12 +118,13 @@
 				isHidden: true,
 				isShowStoreMsg: false,
 				isChangeChannel: false,
-        change_type: 0, // 进货渠道， 0 是平台 1是门店,
-        status: 0, // 31 待处理  32待发货 33已驳回 34已发货 35 已确认收货 36已确认收款 37已取消
+				change_type: 0, // 进货渠道， 0 是平台 1是门店,
+				status: 0, // 31 待处理  32待发货 33已驳回 34已发货 35 已确认收货 36已确认收款 37已取消
 				receive_id: 0,
 				page: 1,
 				pageSize: 10,
 				back_list: [], // 退货单列表
+				storeInfo: [], // 门店信息
 			}
 		},
 		computed: {
@@ -204,10 +210,43 @@
 			hidden_tip(){
 				this.pro_tip_show = false;
 			},
-			showStore(){
-				console.log('lalal')
+			showAdress(){
+				uni.openLocation({
+					latitude: this.storeInfo.wx_lat,
+					longitude: this.storeInfo.wx_lng,
+					success: function () {
+						console.log('success');
+					}
+				});
+			},
+			showStore(id){
+				this.storeInfo = {};
 				this.isHidden = false;
 				this.isShowStoreMsg = true;
+				let lat='';
+				let lng='';
+				getLocation(this).then(res=>{
+					if(res.code===0){
+						lng=res.data.longitude
+						lat=res.data.latitude
+						let data={
+							lat:lat,
+							lng:lng,
+							store_id: id
+						}
+						getStoreDetail(data).then(res=>{
+							this.storeInfo=res.data
+							this.storeInfo.distance=(res.data.distance/1000).toFixed(2)
+						})
+					}
+				}).catch(err=>{
+					let data={
+						store_id: id
+					}
+					getStoreDetail(data).then(res=>{
+						this.storeInfo=res.data
+					})
+				})
 			},
 			hiddenMask(){
 				this.isShowStoreMsg = false;
@@ -311,6 +350,38 @@
 				.img {
 					width: 26rpx;
 					height: 31rpx;
+				}
+			}
+			.biz-msg {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				height: 107rpx;
+
+				.avator {
+					width: 70rpx;
+					height: 70rpx;
+					border-radius: 50%;
+					margin-right: 20rpx;
+				}
+
+				.biz-name {
+					display: flex;
+					align-items: center;
+					flex: 1;
+					font-size: 28rpx;
+					color: #333;
+
+					.biz-links {
+						color: $wzw-primary-color;
+						font-size: 24rpx;
+						margin-left: 14rpx;
+
+						.text-d {
+							text-decoration: underline;
+							padding: 0 10rpx;
+						}
+					}
 				}
 			}
 			.list-msg {
@@ -439,7 +510,7 @@
 	    z-index: 1000;
 	}
 	.sku-pop {
-	    position: absolute;
+	    position: fixed;
 	    top: 50%;
 	    left: 50%;
 	    z-index: 10000;

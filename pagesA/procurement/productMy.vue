@@ -411,7 +411,7 @@
 			}
 		},
 		onHide(){
-			// ls.remove('productMy')
+			ls.set('productMy', this.productMy);
 		},
 		onReachBottom() {
 			if(this.productMy.length<this.totalCount){
@@ -421,7 +421,7 @@
 		},
 		methods:{
 			load(){
-				this.productMy = [];
+				// this.productMy = [];
 				this.productlist = [];
 				this.page = 1;
 				this.getSelfStoreProd();
@@ -433,25 +433,6 @@
 					url: '/pages/selectChannel/selectChannel?page=productmy'
 				})
 				return;
-				uni.showModal({
-					content: '确定退货？',
-					cancelText: '我再想想',
-					confirmText: '我意已决',
-					success: (res) => {
-						if(res.confirm) {
-							this.$refs.detail.close();
-							this.zIndex = 100;
-							// 跳转选择渠道页面
-							uni.navigateTo({
-								url: '/pages/selectChannel/selectChannel?page=productmy'
-							})
-							// this.isChangeChannel = true;
-							// this.isHiddenMask = false;
-						}else {
-							return;
-						}
-					}
-				})
 			},
 			sub_cancel(){
 				this.isChangeChannel = false;
@@ -650,7 +631,7 @@
 				// this.amount += this.postData.qty;
 				this.isHiddenMask = true;
 				this.showSku = false;
-				ls.set('productMy',this.productMy);
+
 			},
 			// 申请退货
 			apply_back(item,index){
@@ -817,6 +798,7 @@
 					data.stock_low = 1;
 				}
 				getSelfStoreProd(data).then(res=>{
+					let oldProductMy = ls.get('productMy') || [];
 					this.productMy = this.productMy.concat(res.data);
 					this.productlist = this.productlist.concat(res.data);
 					this.checked = [];
@@ -831,17 +813,17 @@
 					}
 					this.totalCount=res.totalCount
 					this.loading=false
+					this.productMy = this.productlist;
+					// for(let item in oldProductMy){
+					// 	if(oldProductMy[item].skuvaljosn) {
+					// 		for(let i in oldProductMy[item].skuvaljosn){
+					// 			this.productMy[item].skuvaljosn[i].myqty=0
+					// 		}
+					// 	}else {
+					// 		this.productMy[item].myqty = 0;
+					// 	}
+					// }
 
-					for(let item of this.productMy){
-						if(item.skuvaljosn) {
-							for(let i in item.skuvaljosn){
-								item.skuvaljosn[i].myqty=0
-							}
-						}else {
-							item.myqty = 0;
-						}
-					}
-					ls.set('productMy',this.productMy);
 				}).catch(e=>{
 					this.loading=false
 				})

@@ -82,9 +82,9 @@
 		            <view class="sku-name">门店地址：</view>
 		            <view class="sku-item" v-if="storeAdress.Stores_Province_name" style="flex:1;">{{storeAdress.Stores_Province_name}}{{storeAdress.Stores_City_name}}{{storeAdress.Stores_Area_name}}{{storeAdress.Stores_Address}}<image class="img" src="/static/local.png"></image></view>
 		        </view>
-		        <view class="skulist">
+		        <view class="skulist" v-if="storeAdress.distance">
 		            <view class="sku-name">门店距离：</view>
-		            <view class="sku-item" v-if="storeAdress.distance">{{storeAdress.distance}}KM</view>
+		            <view class="sku-item" >{{storeAdress.distance}}KM</view>
 		        </view>
 		    </view>
 		</view>
