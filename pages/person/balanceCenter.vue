@@ -293,6 +293,8 @@
 
 		},
 		onShow(){
+			this.user_no = ''
+			this.money = ''
 			this.reset();
 			get_user_info().then(res=>{
 				this.info = res.data
