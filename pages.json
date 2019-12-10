@@ -416,253 +416,96 @@
 	],
 	"subPackages": [{
 		"root": "pagesA",
-		"name":"onther",
-		"pages": [
-          {
-            "path": "marketing/rotate",
-            "style": {
-              "navigationBarTitleText": "大转盘"
-            }
-          },
-          {
-            "path": "fenxiao/fenxiaoshang",
-            "style": {
-              "navigationBarTitleText": "分销商信息"
-            }
-          },
-          {
-            "path": "fenxiao/distributorCenter",
-            "style": {
-              "navigationBarTitleText": "分销商信息"
-            }
-          },
-          {
-            "path": "fenxiao/distributeAgreement",
-            "style": {
-              "navigationBarTitleText": "购买须知"
-            }
-          },
-          {
-            "path": "fenxiao/disAgreementBefore",
-            "style": {
-              "navigationBarTitleText": "成为分销商"
-            }
-          },
-          {
-            "path": "fenxiao/gudong",
-            "style": {
-              "navigationBarTitleText": "股东"
-            }
-          },
-          {
-            "path": "fenxiao/myTeamNumber",
-            "style": {
-              "navigationBarTitleText": "我的会员"
-            }
-          },
-          {
-            "path": "fenxiao/addGudong",
-            "style": {
-              "navigationBarTitleText": "股东申请"
-            }
-          },
-          {
-            "path": "fenxiao/regionRecord",
-            "style": {
-              "navigationBarTitleText": "申请记录"
-            }
-          },
-          {
-            "path": "fenxiao/myVip",
-            "style": {
-              "navigationBarTitleText": "我的会员"
-            }
-          },
-          {
-            "path": "fenxiao/regionPay",
-            "style": {
-              "navigationBarTitleText": "区域代理支付"
-            }
-          },
-          {
-            "path": "fenxiao/gudongPay",
-            "style": {
-              "navigationBarTitleText": "股东支付"
-            }
-          },
-          {
-            "path": "fenxiao/promotionAssist",
-            "style": {
-              "navigationBarTitleText": "推广小助手"
-            }
-          },
-          {
-            "path": "fenxiao/withdrawal",
-            "style": {
-              "navigationBarTitleText": "提现"
-            }
-          },
-          {
-            "path": "fenxiao/withdrawalMethod",
-            "style": {
-              "app-plus": {
-                "titleNView": false
-              }
-            }
-          },
-          {
-            "path": "fenxiao/addWithdrawal",
-            "style": {
-              "navigationBarTitleText": "添加提现方式"
-            }
-          },
-          {
-            "path": "fenxiao/region",
-            "style": {
-              "navigationBarTitleText": "区域代理"
-            }
-          },
-          {
-            "path": "fenxiao/record",
-            "style": {
-              "navigationBarTitleText": "申请记录"
-            }
-          },
-          {
-            "path": "fenxiao/leaderboard",
-            "style": {
-              "navigationBarTitleText": "财富排行榜"
-            }
-          },
-          {
-            "path": "fenxiao/addInformation",
-            "style": {
-              "navigationBarTitleText": "填写信息"
-            }
-          },
-          {
-            "path": "fenxiao/erweima",
-            "style": {
-              "navigationBarTitleText": "二维码"
-            }
-          },
-          {
-            "path": "editAddress/editAddress",
-            "style": {}
-          },
-          {
-            "path": "fenxiao/myTeam",
-            "style": {
-              "navigationBarTitleText": "我的团队"
-            }
-          },
-          {
-            "path": "fenxiao/finance",
-            "style": {
-              "navigationBarTitleText": "财务明细"
-            }
-          },
-          {
-            "path": "fenxiao/promotion",
-            "style": {
-              "navigationBarTitleText": "爵位晋升"
-            }
-          },
-          {
-            "path": "procurement/storeSettled",
-            "style": {
-              "navigationBarTitleText": "门店入驻"
-            }
-          },
-          {
-            "path": "procurement/stock",
-            "style": {
-              "navigationBarTitleText": "进货"
-
-            }
-          },
-          {
-            "path": "procurement/storeApply",
-            "style": {
-              "navigationBarTitleText": "进货订单"
-            }
-          },
-          {
-            "path": "procurement/purchaseRecords",
-            "style": {
-              "navigationBarTitleText": "进货记录"
-            }
-          },
-          {
-            "path": "procurement/storeWholesale",
-            "style": {
-              "navigationBarTitleText": "批发订单"
-            }
-          },
-          {
-            "path": "procurement/storeWholesaleSend",
-            "style": {
-              "navigationBarTitleText": "发货-批发订单"
-            }
-          },
-          {
-            "path": "procurement/productMy",
-            "style": {
-              "navigationBarTitleText": "我的产品"
-            }
-          },
-          {
-            "path": "procurement/storePerson",
-            "style": {
-              "navigationBarTitleText": "资料修改"
-            }
-          },
-          {
-            "path": "procurement/storePersonEdit",
-            "style": {
-              "navigationBarTitleText": "修改信息"
-            }
-          },
-          {
-            "path": "procurement/retailOrder",
-            "style": {
-              "navigationBarTitleText": "零售订单"
-            }
-          },
-          {
-            "path": "procurement/retailOrderShip",
-            "style": {
-              "navigationBarTitleText": "发货"
-            }
-          },
-          {
-            "path": "procurement/refundRecords",
-            "style": {
-              "navigationBarTitleText": "退货记录"
-            }
-          },
-		  {
-		    "path": "procurement/storeSettlement",
-		    "style": {
-		      "navigationBarTitleText": "结算"
-		    }
-		  },
-		 {
-			"path": "procurement/storeSettlementLast",
-			"style": {
-				"navigationBarTitleText": "结算"
-			}
-		 },
-		  {
-		    "path": "procurement/storeSettlementRecord",
-		    "style": {
-		      "navigationBarTitleText": "结算记录"
-		    }
-		  }
-
-			,{
-							"path" : "procurement/purchaseSend",
-							"style" : {}
+		"name": "onther",
+		"pages": [{
+				"path": "marketing/rotate",
+				"style": {
+					"navigationBarTitleText": "大转盘"
+				}
+			},
+			{
+				"path": "fenxiao/fenxiaoshang",
+				"style": {
+					"navigationBarTitleText": "分销商信息"
+				}
+			},
+			{
+				"path": "fenxiao/distributorCenter",
+				"style": {
+					"navigationBarTitleText": "分销商信息"
+				}
+			},
+			{
+				"path": "fenxiao/distributeAgreement",
+				"style": {
+					"navigationBarTitleText": "购买须知"
+				}
+			},
+			{
+				"path": "fenxiao/disAgreementBefore",
+				"style": {
+					"navigationBarTitleText": "成为分销商"
+				}
+			},
+			{
+				"path": "fenxiao/gudong",
+				"style": {
+					"navigationBarTitleText": "股东"
+				}
+			},
+			{
+				"path": "fenxiao/myTeamNumber",
+				"style": {
+					"navigationBarTitleText": "我的会员"
+				}
+			},
+			{
+				"path": "fenxiao/addGudong",
+				"style": {
+					"navigationBarTitleText": "股东申请"
+				}
+			},
+			{
+				"path": "fenxiao/regionRecord",
+				"style": {
+					"navigationBarTitleText": "申请记录"
+				}
+			},
+			{
+				"path": "fenxiao/myVip",
+				"style": {
+					"navigationBarTitleText": "我的会员"
+				}
+			},
+			{
+				"path": "fenxiao/regionPay",
+				"style": {
+					"navigationBarTitleText": "区域代理支付"
+				}
+			},
+			{
+				"path": "fenxiao/gudongPay",
+				"style": {
+					"navigationBarTitleText": "股东支付"
+				}
+			},
+			{
+				"path": "fenxiao/promotionAssist",
+				"style": {
+					"navigationBarTitleText": "推广小助手"
+				}
+			},
+			{
+				"path": "fenxiao/withdrawal",
+				"style": {
+					"navigationBarTitleText": "提现"
+				}
+			},
+			{
+				"path": "fenxiao/withdrawalMethod",
+				"style": {
+					"app-plus": {
+						"titleNView": false
 					}
 				}
 			},
