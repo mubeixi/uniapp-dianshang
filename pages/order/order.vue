@@ -80,7 +80,7 @@
 // import pagetitle from '@/components/title'
 import {getOrder,cancelOrder,getOrderNum,confirmOrder} from '@/common/fetch.js'
 import {pageMixin} from "../../common/mixin";
-import {confirm} from '../../common'
+import {confirm, toast} from '../../common'
 export default {
 	mixins:[pageMixin],
     data(){
@@ -97,10 +97,15 @@ export default {
         }
     },
 	onShow(){
+
+
 		// 放在onshow中防止详情页支付完成跳转过来，订单状态未改变
 		this.data = [];
 		this._getOrder();
 		this.getOrderNum();
+	},
+	created(){
+
 	},
 	onLoad(option){
 		if(option.index<=4){
@@ -132,13 +137,14 @@ export default {
 					Order_ID:item.Order_ID
 				}
 				let that=this;
-				confirmOrder(data).then(res=>{
+				confirmOrder(data,{tip:'请求中',mask:true}).then(res=>{
 						this.data.splice(index,1);
 						that.getOrderNum();
-						uni.showToast({
-							title:res.msg,
-							icon:'none'
-						})
+						toast(res.msg||'操作成功')
+						// uni.showToast({
+						// 	title:res.msg,
+						// 	icon:'none'
+						// })
 				},err=>{
 
 				}).catch(e=>{

@@ -149,7 +149,7 @@
 
 		},
 		onShow(){
-			
+
 		},
 		async onPullDownRefresh(){
 			uni.stopPullDownRefresh()

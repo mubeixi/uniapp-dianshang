@@ -13,8 +13,12 @@
             <div class="pro-msg">
                 <div class="pro-name">{{item.prod_name}}</div>
                 <div class="attr" v-if="item.attr_info"><span>{{item.attr_info.attr_name}}</span></div>
-								<div class="attr" v-else style="background-color:#fff;"><span></span></div>
-                <div class="pro-price"><span class="span">￥</span>{{item.refund_money_fee+item.refund_pay_fee}} <span class="span amount">x{{item.prod_count}}</span></div>
+				<div class="attr" v-else style="background-color:#fff;"><span></span></div>
+				<div class=""> <span class="span amount">x{{item.prod_count}}</span></div>
+				<div class="font14 graytext2">
+					<div>退回余额:<span class="font16 danger-color"><span class="span font12">￥</span>{{item.refund_money_fee}} </span></div>
+					<div>原路退回:<span class="font16 danger-color"><span class="span font12">￥</span>{{item.refund_pay_fee}} </span></div>
+				</div>
             </div>
         </div>
 		<div style="height: 20rpx;width: 100%;background-color: #F3F3F3;">
@@ -92,7 +96,7 @@
 					</div>
 					<div>
 						 <radio-group @change="ShipRadioChange">
-						 	<radio :value="index" :checked="index==current" style="float:right;" color="#F43131"/>
+						 	<radio :value="index+''" :checked="index==current" style="float:right;" color="#F43131"/>
 						 </radio-group>
 					</div>
 				</div>
