@@ -154,7 +154,6 @@
             load: function(){
                 console.log('aaaaa')
                 getUserStoreApply({},{errtip: false}).then(res=>{
-                    console.log(res)
                     // 判断用户是否提交过，未提交data为空
                     if(!res.data) {
                         this.is_submitted = false;
@@ -170,7 +169,22 @@
                     this.store_address = this.userStoreMsg.store_address;
                     this.imgs[0] = this.userStoreMsg.store_image;
                     this.arr[0] = this.userStoreMsg.store_image;
-                    this.store_type = this.userStoreMsg.store_type;
+                    this.current = this.userStoreMsg.type_id;
+                    if(this.storeTypes.length>0) {
+                        for(let i of this.storeTypes) {
+                            if(this.storeTypes[i].id) {
+                                if(this.storeTypes[i].id == this.userStoreMsg.type_id) {
+                                    this.index = i;
+                                }
+                            }
+                        }
+                    }
+                    // this.index = this.storeTypes.forEach((item,index)=>{
+                    //     if(item.id==res.data.type_id){
+                    //         console.log(index)
+                    //         return index
+                    //     }
+                    // })
                     //初始化地址选择数据
                     let objectMultiArray = [
                         utils.array_change(area.area[0]['0']),
@@ -240,7 +254,8 @@
                     store_image: this.store_image,
                     store_province: this.store_province,
                     store_city: this.store_city,
-                    store_area: this.store_area
+                    store_area: this.store_area,
+                    store_type: this.store_type
                 }).then(res=>{
                     toast(res.msg);
                     setTimeout(()=>{
