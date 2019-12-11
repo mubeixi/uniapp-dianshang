@@ -143,29 +143,30 @@
         methods: {
             async subFn(){
 
-                let confirmConf = {title:'操作提示',confirmText:'继续核销',showCancel:true,cancelText:'回到首页'}
+                let confirmConf = {title:'操作提示',confirmText:'继续核销',showCancel:true,cancelText:'回到首页',content:''}
                 await checkOrderByCode({Order_Code:this.Order_Code}).then(res=>{
                     confirmConf.content = '核销成功'
+                    //toast('核销成功')
                 }).catch(err=>{
 
                 })
 
-                if(!confirmConf.conteont)return;
+                if(!confirmConf.content)return;
 
-                confirm({confirmConf}).then(res=>{
 
-                    toast('核销成功')
+                confirm(confirmConf).then(res=>{
+
 					//需要跳转到一个页面
-                    setTimeout(function () {
+                    setTimeout(()=>{
                         uni.navigateTo({
                             url:'/pages/order/checkChannel'
                         })
                     },1000)
 
                 }).catch(err=>{
-                    // uni.switchTab({
-                    //     url:'/pages/index/index'
-                    // })
+                    uni.switchTab({
+                        url:'/pages/index/index'
+                    })
                 })
             },
 
