@@ -99,7 +99,7 @@ export default {
 	onShow(){
 		// 放在onshow中防止详情页支付完成跳转过来，订单状态未改变
 		// this.data = [];
-		this._getOrder();
+		this._getOrder(1);
 		this.getOrderNum();
 	},
 	onLoad(option){
@@ -219,7 +219,7 @@ export default {
 			this._getOrder();
 			this.getOrderNum();
 		},
-		_getOrder(){
+		_getOrder(index){
 			if(this.isQing) return;
 			this.isQing=true;
 			let data={
@@ -250,9 +250,14 @@ export default {
 							}
 						}
 					}
-					for(let item of res.data){
-						this.data.push(item)
+					if(index==1){
+						this.data=res.data
+					}else{
+						for(let item of res.data){
+							this.data.push(item)
+						}
 					}
+					
 					this.totalCount=res.totalCount;
 					this.isQing=false;
 				}
