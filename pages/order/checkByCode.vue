@@ -9,8 +9,8 @@
 
 <script>
     import {isWeiXin} from "../../common/tool";
-    import {checkOrderByCode} from "../../common/fetch";
-    import {confirm} from "../../common";
+    import {checkOrderByCode,getOrderDetail} from "../../common/fetch";
+    import {confirm, error} from "../../common";
 
     export default {
         name: "checkByCode",
@@ -22,10 +22,30 @@
         methods:{
             subFn(){
                 let Order_Code = this.Order_Code
+                if(!Order_Code){
+                    error('核销码必填')
+                    return;
+                }
 
-                uni.navigateTo({
-                    url:'/pages/order/checkOrderInfo?Order_Code='+Order_Code
+                getOrderDetail({
+                    Order_Code,
+                }).then(res => {
+
+                    if(res.data.Order_Status==2){
+                        this.Order_Code = ''
+                        uni.navigateTo({
+                            url:'/pages/order/checkOrderInfo?Order_Code='+Order_Code
+                        })
+
+                    }else{
+                        error('订单状态不符')
+                    }
+                }).catch(e=>{
+
                 })
+
+
+
             },
 
         }
