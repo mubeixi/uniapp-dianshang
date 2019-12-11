@@ -45,10 +45,7 @@
                 <input type="text" v-model="store_address" :disabled="is_submitted" placeholder="请输入详细地址" placeholder-style="color:#CAC8C8"/>
             </view>
         </view>
-        <view class="item" v-if="status == 3">
-            <view class="item-left">驳回原因</view>
-            <view class="item-input">{{userStoreMsg.reason}}</view>
-        </view>
+
         <view class="addImg">
             门店图片
             <view class="imgs">
@@ -63,6 +60,10 @@
             </view>
         </view>
         <view class="submit" @click="settled">{{is_submitted?userStoreMsg.status_desc:(status == 3 ? '被驳回，重新申请' : "立即入驻")}}</view>
+        <view class="item noborder" v-if="status == 3">
+            <view class="item-left">驳回原因</view>
+            <view class="item-input">{{userStoreMsg.reason}}</view>
+        </view>
         <popup-layer ref="storetypes"  @maskClicked="handClicked" :direction="'top'" >
             <view class="search-title">请选择门店类型</view>
             <view class="search-content">
@@ -74,7 +75,7 @@
                     <view class="box" v-else></view>
                 </view>
             </view>
-        </popup-layer>>
+        </popup-layer>
     </view>
 </template>
 
@@ -389,6 +390,9 @@
 						}
         }
     }
+    .item.noborder {
+        border-bottom: none;
+    }
     .addImg {
         font-size: 30rpx;
         height: 100rpx;
@@ -445,10 +449,11 @@
         }
     }
     .submit {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 750rpx;
+        /*position: fixed;*/
+        /*bottom: 0;*/
+        /*left: 0;*/
+        margin-top: 240rpx;
+        /*width: 750rpx;*/
         height: 85rpx;
         line-height: 85rpx;
         font-size: 32rpx;
