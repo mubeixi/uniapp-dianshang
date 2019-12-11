@@ -29,6 +29,11 @@
 			</view>
 		</view>
 		<view class="search" @click="goPurchase">{{is_purchase && selectitem == 2 ? '确定' : '搜索'}}</view>
+		<div class="label-title" v-if="selectitem == 1 && stores.length > 0" style="justify-content: space-between;">
+			<div class="line"></div>
+			<div>门店列表</div>
+			<div @click="get_user_location" class="graytext font14 flex1 text-right padding10-c"><span class="funicon icon-dingwei font14"></span>离我最近</div>
+		</div>
 		<div class="lists" v-if="selectitem == 1">
 		   <scroll-view  scroll-y="true" class="scroll-Y" >
 		       <block v-if="stores.length>0">
@@ -86,6 +91,15 @@
 	export default {
 		components: {
 			popupLayer
+		},
+		filters:{
+			distanceFn:function(val){
+				if(val){
+					return parseInt(val*100/1000)/100
+				}
+
+				return val
+			}
 		},
 		data() {
 			return {
@@ -256,6 +270,7 @@
 			    if(!rt)return;
 			    this.lat = localInfo.latitude
 			    this.lng = localInfo.longitude
+				this.getStoreList()
 			},
 			// 获取门店列表，
 			getStoreList(){
@@ -280,7 +295,7 @@
 				    postData.lat = this.lat
 				    postData.lng = this.lng
 				}
-				getStoreList(postData,{tip:"加载中..."}).then(res => {
+				getStoreList(postData,{tip:'搜索中',mask:true}).then(res => {
 
 				    this.stores = res.data;
 				})
@@ -519,6 +534,20 @@
 								}
 		        }
 		    }
+		}
+		.label-title{
+			padding: 34rpx 0;
+			font-size: 14px;
+			line-height: 14px;
+			display: flex;
+			align-items: center;
+
+			.line{
+				margin: 0px 10px;
+				width: 2px;
+				height: 14px;
+				background: #F43131;
+			}
 		}
 		.search {
 			margin: 88rpx auto;

@@ -3,8 +3,9 @@
         <div class="navs">
             <div class="nav-item" :class="tabidx===0?'active':''" @click="changIndex(0)">全部</div>
             <div class="nav-item" :class="tabidx===1?'active':''" @click="changIndex(1)">待处理</div>
-            <div class="nav-item" :class="tabidx===2?'active':''" @click="changIndex(2)">已出库</div>
-            <div class="nav-item" :class="tabidx===3?'active':''" @click="changIndex(3)">已驳回</div>
+
+            <div class="nav-item" :class="tabidx===2?'active':''" @click="changIndex(2)">已驳回</div>
+            <div class="nav-item" :class="tabidx===3?'active':''" @click="changIndex(3)">已出库</div>
             <div class="nav-item" :class="tabidx===4?'active':''" @click="changIndex(4)">已完成</div>
             <div class="nav-item" :class="tabidx===5?'active':''" @click="changIndex(5)">已撤回</div>
         </div>
@@ -83,7 +84,7 @@
 
         <wzw-dialog ref="refuseApply">
             <div class="refuseApplyDialog">
-                <textarea class="reason" @input="bingReasonInput" placeholder-style="color:#999" placeholder="请输入驳回原因" auto-height />
+                <textarea class="reason" @input="bingReasonInput" :value="reason" placeholder-style="color:#999" placeholder="请输入驳回原因" auto-height />
                 <div class="control">
                     <div @click="cancelRefuseApply" class="action-btn btn-cancel">取消</div>
                     <div @click="refuseApply" class="btn-sub action-btn">确定</div>
@@ -147,13 +148,16 @@
                     error('请填写理由')
                     return;
                 }
-                refuseStorePurchaseApply({order_id:this.activeApply.Order_ID,reason:this.reason},{tip:'处理中'}).then(res=>{
+                refuseStorePurchaseApply({order_id:this.activeApply.Order_ID,reason:this.reason, store_id: this.Stores_ID},{tip:'处理中'}).then(res=>{
                     this.$refs.refuseApply.close()
-                    this.activeApply = null
-                    this.reason = ''
-                    apply.Order_Status = 23
-                    apply.Order_Status_desc = '已驳回'
 
+                    this.reason = ''
+                    this.activeApply.Order_Status = 23
+                    this.activeApply.Order_Status_desc = '已驳回'
+                    this.activeApply = null
+                    uni.showToast({
+                        title: res.msg
+                    })
                 },err=>{})
             },
             bingReasonInput(e){

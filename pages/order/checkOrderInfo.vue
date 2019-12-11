@@ -46,7 +46,10 @@
             <div class="row"><div class="label">订单号</div><div class="form-item">{{orderInfo.Order_ID}}</div></div>
             <div class="row"><div class="label">订单状态</div><div class="form-item" :style="{color:orderInfo.Order_Status!=2?'red':''}">{{orderInfo.Order_Status_desc}}</div></div>
             <div class="row"><div class="label">总价</div><div class="form-item">￥{{orderInfo.Order_TotalAmount}}</div></div>
-            <div class="row"><div class="label">优惠</div><div class="form-item">￥{{orderInfo.Coupon_Money}}</div></div>
+            <div class="row" v-if="orderInfo.Coupon_Money > 0"><div class="label">优惠券</div><div class="form-item">￥-{{orderInfo.Coupon_Money}}</div></div>
+            <div class="row" v-if="orderInfo.Integral_Money > 0"><div class="label">积分抵扣</div><div class="form-item">￥-{{orderInfo.Integral_Money}}</div></div>
+            <div class="row" v-if="orderInfo.Manjian_Cash > 0"><div class="label">满减优惠</div><div class="form-item">￥-{{orderInfo.Manjian_Cash}}</div></div>
+            <div class="row" v-if="orderInfo.user_curagio_money > 0"><div class="label">会员折扣</div><div class="form-item">￥-{{orderInfo.user_curagio_money}}</div></div>
             <div class="row"><div class="label">实付</div><div class="form-item danger-color">￥{{orderInfo.Order_Fyepay}}</div></div>
             <div class="row"><div class="label">获取积分</div><div class="form-item">{{orderInfo.Integral_Get}}</div></div>
             <div class="row"><div class="label">下单时间</div><div class="form-item">{{orderInfo.Order_CreateTime | formatTime}}</div></div>

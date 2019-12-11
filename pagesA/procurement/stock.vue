@@ -326,9 +326,6 @@
                     active: 'store_pifa',
                     active_id:  this.active_id
                 }).then(res=>{
-                    uni.showToast({
-                        title: res.msg
-                    });
                     this.isHidden = true;
                     this.showSku = false;
                     this.get_cart();
@@ -345,9 +342,6 @@
                     active: 'store_pifa',
                     active_id:  this.active_id
                 }).then(res=>{
-                    uni.showToast({
-                        title: res.msg
-                    });
                     this.isHidden = true;
                     this.showSku = false;
                     this.get_cart();
