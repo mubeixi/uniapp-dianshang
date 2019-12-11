@@ -6,7 +6,7 @@
 				<view class="item-left">{{is_purchase?'退':'进'}}货渠道</view>
 				<view class="item-right" @click="changeChannel">
 					<text>{{channelName}}</text>
-					<image :src="'/static/client/person/right.png'|domain" class="right"></image>
+					<image :src="'/static/client/person/right.png'|domain" class="right" v-if="allow_from_plat == 1 "></image>
 				</view>
 			</view>
 			<view class="c-item" v-if="selectitem == 1">
@@ -43,17 +43,19 @@
 		                   <view class="info">
 		                       <div class="flex flex-between">
 		                           <div class="font14">{{store.Stores_Name}}</div>
-		                           <div class="distance font12 graytext" v-if="store.distance">{{store.distance|distanceFn}}km</div>
+		                           <div class="distance font12 graytext" @click.stop="openAddress(store)" v-if="store.distance">{{store.distance|distanceFn}}km</div>
 		                       </div>
-													 <div class="font12 graytext flex align-center"><image class="icon" src="/static/qudao_cell.png"></image>{{store.Stores_Telephone}}</div>
+							   <div class="font12 graytext flex align-center"><image class="icon" src="/static/qudao_cell.png"></image>{{store.Stores_Telephone}}</div>
 		                       <div class="font12 graytext flex align-center"><image class="icon" src="/static/qudao_local.png"></image>{{store.Stores_Province_name}}{{store.Stores_City_name}}{{store.Stores_Area_name}}{{store.Stores_Address}}</div>
 		                   </view>
 		               </label>
 		           </view>
 		       </block>
-		       <div >
-
-		       </div>
+			   <block v-if="stores.length==0 && is_getted">
+				   <div class="graytext padding15 text-center font14">
+					   暂时没有合适的店铺
+				   </div>
+			   </block>
 		   </scroll-view>
 		</div>
 		<popupLayer ref="searchLayer" :direction="'top'" @maskClicked="maskClicked">
@@ -83,11 +85,11 @@
 	import area from '../../common/area.js';
 	import popupLayer from '../../components/popup-layer/popup-layer.vue'
 	import util from '../../common/util.js'
-	import {getStoreList,storeProdBackSubmit,changeStoreApplyChannel} from '../../common/fetch.js';
+	import {getStoreList,storeProdBackSubmit,changeStoreApplyChannel,getStoreDetail} from '../../common/fetch.js';
 	import {getLocation} from "../../common/tool/location";
 	import {ls} from '../../common/tool.js'
 	import {mapGetters} from 'vuex'
-	import {toast} from "../../common";
+	import {toast,error} from "../../common";
 	export default {
 		components: {
 			popupLayer
@@ -118,6 +120,8 @@
 				prod_json: {},
 				is_stock_records: false, // 是否是进货记录过来的
 				order_id: '', // 进货记录需要修改订单id
+				is_getted: false, // 是否已经请求过店铺，
+				allow_from_plat: 0 , // 是否允许向平台进货、退货
 			}
 		},
 		onLoad(options) {
@@ -136,7 +140,7 @@
 			}
 		},
 		onShow() {
-
+			this.get_store_detail();
 		},
 		computed: {
 			...mapGetters(['Stores_ID']),
@@ -228,6 +232,22 @@
 
 
 			},
+			openAddress(store){
+				uni.openLocation({
+					latitude: store.wx_lat,
+					longitude: store.wx_lng,
+					name: store.Stores_Name,
+					success: function () {
+						console.log('success');
+					}
+				});
+			},
+			get_store_detail(){
+				getStoreDetail({store_id: this.Stores_ID}).then(res=>{
+					console.log(res,'hha')	//allow_from_plat
+					this.allow_from_plat = res.data.allow_from_plat;
+				})
+			},
 			// 省份变动
 			p_change_handle(e){
 				this.p_clicked = true;
@@ -278,6 +298,8 @@
 				    pageSize:10000,
 				    page:1,
 				    stores_sn: this.purchase_store_sn,
+					get_top: 1, // 只查询上级门店列表
+					self_store_id: this.Stores_ID, // 只查询上级门店列表必传
 						// search_stores_sn: this.search_stores_sn,
 				}
 				if(this.p_clicked) {
@@ -296,7 +318,7 @@
 				    postData.lng = this.lng
 				}
 				getStoreList(postData,{tip:'搜索中',mask:true}).then(res => {
-
+					this.is_getted = true;
 				    this.stores = res.data;
 				})
 			},
@@ -419,6 +441,7 @@
 				this.selectitem = this.selectitem;
 			},
 			changeChannel(){
+				if(!this.allow_from_plat){return}
 				this.$refs.searchLayer.show();
 			},
 			changeItem(num){

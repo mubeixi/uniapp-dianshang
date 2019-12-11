@@ -487,6 +487,8 @@ export const storeProdBackOrderSend = (data,options) => fetch('store_prod_back_o
 export const storeProdBackOrderConfirm = (data,options) => fetch('store_prod_back_order_confirm', data, options);
 
 export const storePifaOrderCalc = (data,options) => fetch('store_pifa_order_calc', data, options);
+// 获取门店类型列表
+export const getStoreTypes = (data,options) => fetch('get_store_types', data, options);
 
 
 
