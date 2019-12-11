@@ -47,7 +47,7 @@
 						</div>
 					</div>
 				</block>
-				<div class="text-right total">共{{item.prod_list.length}}件商品 合计：<span class="price"><span>￥</span> {{item.Order_TotalPrice}}</span></div>
+				<div class="text-right total">共{{item.prod_list.length}}件商品 合计：<span class="price"><span>￥</span> {{item.Order_Fyepay}}</span></div>
 				<div class="btn-group" v-if="item.Order_Status==0">
 					<span @click.prevent="cancelOrder(item.prod_list,index)">取消订单</span>
 				</div>
@@ -64,7 +64,7 @@
 					<span class="active" @click.prevent="confirmOrder(item,index)">确认收货</span>
 					<!-- @click="goPay(item)"跳转退款 -->
 				</div>
-				<div class="btn-group" v-else-if="item.Order_Status==4 && item.Is_Commit == 0">
+				<div class="btn-group" v-else-if="item.Order_Status==4 && item.Is_Commit == 0 && item.Is_Backup == 0">
 					<span class="active" @click.prevent="goPay(item)">立即评价</span>
 				</div>
 			</template>
@@ -80,7 +80,7 @@
 // import pagetitle from '@/components/title'
 import {getOrder,cancelOrder,getOrderNum,confirmOrder} from '@/common/fetch.js'
 import {pageMixin} from "../../common/mixin";
-import {confirm, toast} from '../../common'
+import {confirm} from '../../common'
 export default {
 	mixins:[pageMixin],
     data(){
@@ -97,15 +97,10 @@ export default {
         }
     },
 	onShow(){
-
-
 		// 放在onshow中防止详情页支付完成跳转过来，订单状态未改变
 		// this.data = [];
 		this._getOrder();
 		this.getOrderNum();
-	},
-	created(){
-
 	},
 	onLoad(option){
 		if(option.index<=4){
@@ -137,14 +132,13 @@ export default {
 					Order_ID:item.Order_ID
 				}
 				let that=this;
-				confirmOrder(data,{tip:'请求中',mask:true}).then(res=>{
+				confirmOrder(data).then(res=>{
 						this.data.splice(index,1);
 						that.getOrderNum();
-						toast(res.msg||'操作成功')
-						// uni.showToast({
-						// 	title:res.msg,
-						// 	icon:'none'
-						// })
+						uni.showToast({
+							title:res.msg,
+							icon:'none'
+						})
 				},err=>{
 
 				}).catch(e=>{

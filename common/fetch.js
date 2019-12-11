@@ -431,7 +431,8 @@ export const updateStoreMobile = (data, options) => fetch('update_store_mobile',
 export const getSelfStoreProd = (data, options) => fetch('get_self_store_prod', data, options);
 //修改门店信息
 export const updateStoreInfo = (data, options) => fetch('update_store_info', data, options);
-
+//获取用户门店申请最后的信息
+export const getUserStoreApply = (data, options) => fetch('get_user_store_apply', data, options);
 //写入用户日志
 export const upUserLog = (data, options) => {
   console.log('上报用户信息',data,options)
@@ -485,6 +486,7 @@ export const storeProdBackOrderSend = (data,options) => fetch('store_prod_back_o
 // 退货单确认收款
 export const storeProdBackOrderConfirm = (data,options) => fetch('store_prod_back_order_confirm', data, options);
 
+export const storePifaOrderCalc = (data,options) => fetch('store_pifa_order_calc', data, options);
 
 
 
