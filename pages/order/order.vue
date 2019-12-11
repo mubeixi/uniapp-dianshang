@@ -25,7 +25,7 @@
         </div>
 		<view class="space-box" style="height: 100rpx;width: 100%;">
 		</view>
-        <div class="order" v-for="(item,index) of data" :key="index" >
+        <div class="order" v-for="(item,index) of data" :key="index" @click="goDetail(item)">
 			<template v-if="item.prod_list.length>0">
 				<div style="background-color: #F3F3F3;height: 20rpx;width: 100%;position: absolute;left: 0rpx;"></div>
 				<div style="height: 20rpx;"></div>
@@ -35,7 +35,7 @@
 					<span class="status">{{item.Order_Status_desc}}</span>
 				</div>
 				<block v-for="(i,k) of item.prod_list" :key="k">
-					<div class="pro" @click="goDetail(item)">
+					<div class="pro" >
 						<div class="pro-div">
 							<img class="pro-img" :src="i.prod_img">
 						</div>
@@ -49,23 +49,23 @@
 				</block>
 				<div class="text-right total">共{{item.prod_list.length}}件商品 合计：<span class="price"><span>￥</span> {{item.Order_TotalPrice}}</span></div>
 				<div class="btn-group" v-if="item.Order_Status==0">
-					<span @click="cancelOrder(item.prod_list,index)">取消订单</span>
+					<span @click.prevent="cancelOrder(item.prod_list,index)">取消订单</span>
 				</div>
 				<div class="btn-group" v-if="item.Order_Status==1">
-					<span @click="cancelOrder(item.prod_list,index)">取消订单</span>
-					<span class="active" @click="goPay(item)">立即付款</span>
+					<span @click.prevent="cancelOrder(item.prod_list,index)">取消订单</span>
+					<span class="active" @click.prevent="goPay(item)">立即付款</span>
 				</div>
 				<div class="btn-group" v-else-if="item.Order_Status==2&&item.Order_Type != 'gift'">
-					<span class="active" @click="goPay(item)">申请退款</span>
+					<span class="active" @click.prevent="goPay(item)">申请退款</span>
 				</div>
 				<div class="btn-group" v-else-if="item.Order_Status==3">
-					<span @click="goLogistics(item)">查看物流</span>
-					<span @click="goPay(item)" style="margin-left: 15rpx;">申请退款退货</span>
-					<span class="active" @click="confirmOrder(item,index)">确认收货</span>
+					<span @click.prevent="goLogistics(item)">查看物流</span>
+					<span @click.prevent="goPay(item)" style="margin-left: 15rpx;">申请退款退货</span>
+					<span class="active" @click.prevent="confirmOrder(item,index)">确认收货</span>
 					<!-- @click="goPay(item)"跳转退款 -->
 				</div>
 				<div class="btn-group" v-else-if="item.Order_Status==4 && item.Is_Commit == 0">
-					<span class="active" @click="goPay(item)">立即评价</span>
+					<span class="active" @click.prevent="goPay(item)">立即评价</span>
 				</div>
 			</template>
         </div>
@@ -100,7 +100,7 @@ export default {
 
 
 		// 放在onshow中防止详情页支付完成跳转过来，订单状态未改变
-		this.data = [];
+		// this.data = [];
 		this._getOrder();
 		this.getOrderNum();
 	},

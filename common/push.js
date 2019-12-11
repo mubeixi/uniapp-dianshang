@@ -32,10 +32,10 @@ class Push {
             }
 
             if(isDev){
-                uni.showModal({
-                    title:'收到推送',
-                    content:'receive event '+JSON.stringify(msg)
-                })
+                // uni.showModal({
+                //     title:'收到推送',
+                //     content:'receive event '+JSON.stringify(msg)
+                // })
             }
 
 

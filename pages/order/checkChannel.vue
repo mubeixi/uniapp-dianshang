@@ -38,7 +38,7 @@
 					console.log('识别结果',rt)
 
                     //params默认空对象不报错
-                    let {act,params={}} = rt
+                    let {act='',params={}} = rt
 
 					if(act ==='IsVirtualOrderCheck' && params.Order_Code){
 						uni.navigateTo({

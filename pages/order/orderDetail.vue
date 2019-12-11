@@ -279,7 +279,7 @@
 				show: false, // 遮罩层
 				wl_show: false, // 物流选择
 				postData: {},
-				orderInfo: '',
+				orderInfo: {},
 				addressInfo: '',
 				Order_ID: 0,
 				totalMoney: 0, // 应支付金额
@@ -460,7 +460,7 @@
 				}
 			},
 			// 订单详情
-			getOrderDetail() {
+			async getOrderDetail() {
 
 				let _self = this;
 				getOrderDetail({
@@ -483,7 +483,15 @@
 							}
 						}
 						let orderInfo = res.data
+						
+						// let aa = await new Promise(resolve=>{
+						// 	setTimeout(()=>{
+						// 		resolve(true)
+						// 	},3000)
+						// })
+						
 						this.orderInfo = res.data;
+						
 						// pay_money 应该支付的钱
 						// user_money 使用的余额
 						this.pay_money = this.orderInfo.Order_Fyepay;
