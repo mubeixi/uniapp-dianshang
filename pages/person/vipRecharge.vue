@@ -52,7 +52,7 @@ export default {
 	data() {
 		return {
 			info:{},
-			payChannel:null,
+			payChannel:0,
 			money: '',
 			pro:[],
 			pay_type: ''
