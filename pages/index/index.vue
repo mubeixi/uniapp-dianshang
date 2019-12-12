@@ -70,6 +70,31 @@
 			TitleComponent,TextComponent,SearchComponent,NoticeComponent,CouponComponent,
 			GoodsComponent,CubeComponent,TabComponent,FlashComponent,GroupComponent,KillComponent
 		},
+
+		onHide(){
+			// if(this.$refs.video){
+			// 	console.log(this.$refs.video)
+			// 	this.$refs.video.map(item=>{
+			// 		item.pauseFn()
+			// 	})
+			// }
+			//暂停播放
+			this.$refs.video.map(item=>{
+				item.pauseFn()
+			})
+		},
+		onShow(){
+
+		},
+		async onPullDownRefresh(){
+			uni.stopPullDownRefresh()
+		},
+		onLoad() {
+
+		},
+		created(){
+			this.initFunc()
+		},
 		methods: {
 			initFunc(){
 				let _self = this;
@@ -139,26 +164,6 @@
 							console.log(err)
 						})
 			}
-		},
-		onHide(){
-			if(this.$refs.video){
-				this.$refs.video.map(item=>{
-					item.pauseFn()
-				})
-			}
-
-		},
-		onShow(){
-
-		},
-		async onPullDownRefresh(){
-			uni.stopPullDownRefresh()
-		},
-		onLoad() {
-
-		},
-		created(){
-			this.initFunc()
 		},
 	}
 </script>

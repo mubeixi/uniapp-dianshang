@@ -180,6 +180,7 @@ export const fun = {
     linkTo: (linkObj) => {
 
         let {link, linkType} = linkObj;
+        if(!link)return;
 
         console.log('跳转link:' + link + '===type:' + linkType)
 		//第三方链接
