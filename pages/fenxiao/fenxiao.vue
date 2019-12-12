@@ -4,14 +4,14 @@
 		<view class="status_bar" style="background: #f81111;"><!-- 这里是状态栏 --></view>
 		<!-- #endif -->
 		<view class="top">
-			<image :src="'/static/client/fenxiao/top.png'|domain"></image>
+			<image class="image" :src="'/static/client/fenxiao/top.png'|domain"></image>
 			<!-- #ifdef APP-PLUS -->
 			<view class="title">分销中心</view>
 			<!-- #endif -->
 			<div v-if="userInfo.User_ID&&userInfo.Is_Distribute==1">
 				<image v-if="userInfo.User_ID" class="msg" :src="'/static/client/fenxiao/msg.png'|domain" @click="goMsg"></image>
 				<view class="person" >
-					<image style="border-radius: 50%;overflow: hidden" :src="data.disInfo.Shop_Logo||data.disInfo.User_HeadImg"  @click="tofenxiaoshang"></image>
+					<image class="image" style="border-radius: 50%;overflow: hidden" :src="data.disInfo.Shop_Logo||data.disInfo.User_HeadImg"  @click="tofenxiaoshang"></image>
 				</view>
 				<view class="nickName" v-if="userInfo.User_ID&&userInfo.Is_Distribute==1">
 					{{data.disInfo.Shop_Name}}
@@ -302,7 +302,7 @@
 	height: 400rpx;
 	position: relative;
 
-	image{
+	.image{
 		width: 100%;
 		height: 100%;
 	}
@@ -329,7 +329,7 @@
 		top:109rpx ;
 		left: 329rpx;
 		border-radius: 50%;
-		image{
+		.image{
 			width: 100%;
 			height: 100%;
 		}

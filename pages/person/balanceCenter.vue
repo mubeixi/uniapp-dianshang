@@ -48,13 +48,13 @@
 			</view>
 			<view class="bottoms">
 				<view class="lefts qwe" @click="goRecharge">
-					<image :src="'/static/client/check/t1.png'|domain" ></image>
+					<image class="image" :src="'/static/client/check/t1.png'|domain" ></image>
 					<text>余额充值</text>
 				</view>
 				<view class="line">
 				</view>
 				<view class="rights qwe" @click="goFacePay" >
-					<image :src="'/static/client/check/t2.png'|domain" ></image>
+					<image class="image" :src="'/static/client/check/t2.png'|domain" ></image>
 					<text>余额转出</text>
 				</view>
 			</view>
@@ -339,7 +339,7 @@ view{
 			display: flex;
 			align-items: center;
 			padding: 38rpx 40rpx 37rpx 40rpx;
-			image{
+			.image{
 				width: 58rpx;
 				height: 58rpx;
 			}
@@ -361,6 +361,10 @@ view{
 				color: #4C4C4C;
 				display: flex;
 				align-items: center;
+				.image{
+					width: 58rpx;
+					height: 58rpx;
+				}
 				&.lefts{
 
 				}

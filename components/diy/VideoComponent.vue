@@ -1,7 +1,7 @@
 <template>
   <view class="video">
-    <!-- @error="videoErrorCallback" -->
-    <video @error="videoErrorCallback" class="myVideo" id="myVideo1" :src="video.config.src" :poster="video.config.cover|domain" controls></video>
+    <!-- @error="videoErrorCall back" -->
+    <video @error="videoErrorCallback" ref="video1" class="myVideo" id="myVideo1" :src="video.config.src" :poster="video.config.cover|domain" controls></video>
 <!--    <img v-if="video.config.cover" :src="video.config.cover|domain"/>-->
 <!--    <div v-else>-->
 <!--      <video width="100%" height="100%" controls="controls">-->
@@ -11,8 +11,11 @@
   </view>
 </template>
 <script>
+  import {toast,error} from "../../common";
+
   export default {
     props: {
+
       index: {
         required: true,
       },
@@ -43,9 +46,9 @@
     methods: {
       pauseFn(){
         console.log('暂停视频',this.videoContext)
-                if(this.videoContext){
-                  this.videoContext.pause()
-                }
+		if(this.videoContext){
+		  this.videoContext.pause()
+		}
 
 	  },
       videoErrorCallback(e) {
@@ -59,12 +62,16 @@
       // ...mapActions(),
     },
     mounted(){
-		let _self = this
-		this.$nextTick(function(){
-			_self.videoContext = uni.createVideoContext('myVideo1')
-			// console.log(_self.videoContext)
-		})
-      
+    let _self = this
+
+    this.$nextTick().then(()=>{
+        let videoContext = uni.createVideoContext('myVideo1',_self)
+        _self.videoContext = videoContext
+        //添加到这里
+        getApp().globalData.videoInstance.push(videoContext)
+    })
+
+
 	},
     created() {
 

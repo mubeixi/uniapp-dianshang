@@ -24,7 +24,7 @@
 			</view>
 			<view class="bottoms">
 				<view class="tupian">
-					<image :src="item.img_url" ></image>
+					<image class="image" :src="item.img_url" ></image>
 				</view>
 				<view class="neirong">
 					<view class="titles">
@@ -205,7 +205,7 @@ view{
 		.tupian{
 			width: 184rpx;
 			height: 184rpx;
-			image{
+			.image{
 				width: 100%;
 				height: 100%;
 			}

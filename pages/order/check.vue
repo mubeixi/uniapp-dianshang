@@ -407,8 +407,10 @@ export default {
 	  },
 		handClicked(){
 			this.isSlide = false;
-			this.zIndex = 99999;
-			this.bottomHeight = 0;
+			setTimeout(()=>{
+				this.zIndex = 99999;
+				this.bottomHeight = 0;
+			},500)
 		},
 		// 跳转地址列表页
 		goAddressList(){

@@ -226,7 +226,7 @@
 			text-align: center;
 			font-size: 24rpx;
 			color: #999999;
-			image{
+			.image{
 				width: 12rpx;
 				height: 20rpx;
 				margin-left: 14rpx;

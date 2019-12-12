@@ -30,10 +30,10 @@
 			<view class="content" v-for="(item,index) of pro " :key="index" v-if="index==0">
 				<view class="contentLeft" >
 					<view class="ming">
-						<image :src="'/static/client/fenxiao/first.png'|domain" ></image>
+						<image class='image' :src="'/static/client/fenxiao/first.png'|domain" ></image>
 					</view>
 					<view class="info">
-						<image :src="item.Shop_Logo" ></image>
+						<image class="image" :src="item.Shop_Logo" ></image>
 					</view>
 					<view class="nickName">
 						{{item.Shop_Name}}
@@ -272,7 +272,7 @@
 				text-align: center;
 				color: #777777;
 				font-size: 32rpx;
-				image{
+				.image{
 					width: 100%;
 					height: 100%;
 				}
@@ -283,7 +283,7 @@
 				border-radius: 50%;
 				margin-right: 14rpx;
 				overflow: hidden;
-				image{
+				.image{
 					width: 100%;
 					height: 100%;
 				}
