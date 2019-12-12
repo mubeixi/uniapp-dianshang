@@ -818,10 +818,12 @@
 					for(let item in this.productMy){
 						if(this.productMy[item].skuvaljosn) {
 							for(let i in this.productMy[item].skuvaljosn){
-								this.productMy[item].skuvaljosn[i].myqty=0
+								this.$set(this.productMy[item].skuvaljosn[i],'myqty',0)
+								// this.productMy[item].skuvaljosn[i].myqty=0
 							}
 						}else {
-							this.productMy[item].myqty = 0;
+							this.$set(this.productMy[item],'myqty',0)
+							// this.productMy[item].myqty = 0;
 						}
 					}
 					oldProductMy.forEach(item=>{
