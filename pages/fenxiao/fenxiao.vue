@@ -179,8 +179,11 @@
 			},
 			goDistributor(){
 				//跳转成为分销商
+				// uni.navigateTo({
+				// 	url:'/pages/fenxiao/distributorLevel'
+				// })
 				uni.navigateTo({
-					url:'/pages/fenxiao/distributorLevel'
+					url:'/pagesA/fenxiao/disAgreementBefore'
 				})
 			},
 			goLogin(){

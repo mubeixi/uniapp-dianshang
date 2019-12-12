@@ -58,6 +58,7 @@
 				Order_ID:0,//订单id
 				Score:5,//评价分数
 				isAnonymous:1,//是否匿名评价
+				isLoadong:false
 			};
 		},
 		onLoad(options) {
@@ -86,6 +87,8 @@
 			},
 			//提交
 			submit(){
+				if(this.isLoadong)return
+				this.isLoadong=true
 				let arr=[];
 				for(let item of this.arr){
 					arr.push(item[0]);
@@ -112,6 +115,7 @@
 										url:"../order/order?index=4"
 									})
 								},2000)
+								this.isLoadong=false
 							}else{
 								uni.showToast({
 									title:res.msg,
@@ -119,6 +123,7 @@
 								})
 							}
 						}).catch(e=>{
+							this.isLoadong=false
 							console.log(e);
 						})
 					}else{
@@ -133,6 +138,7 @@
 						icon:'none'
 					})
 				}
+				this.isLoadong=false
 			},
 			//删除某张预览图片
 			delImg(index){
