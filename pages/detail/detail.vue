@@ -11,7 +11,7 @@
 	<view class="uni-padding-wrap" style="background: #f2f2f2;">
 		<view class="page-section swiper">
 			<view class="page-section-spacing" v-if="(product.video_url && showVideo)">
-				<video class="video" @play="play" @pause="pause" :src="product.video_url"  show-mute-btn="true" muted bindfullscreenchange="changeHiddenBtns" :poster="product.cover_url?product.cover_url:''" show-center-play-btn	 controls>
+				<video class="video" @play="play" @pause="pause" :src="product.video_url"  show-mute-btn="true" muted bindfullscreenchange="changeHiddenBtns" :poster="product.cover_url?product.cover_url:''" id="myVideo1" ref="video1" show-center-play-btn	 controls>
 					<!-- #ifdef APP-PLUS -->
 					<!-- <cover-image v-if="showVideo" class="imgms" src="/static/back.png" @click="goBack" ></cover-image>
 					<cover-image v-if="showVideo" class="carts" src="/static/cart.png" @click="goCart" ></cover-image> -->
@@ -278,6 +278,7 @@ export default {
 			showVideo: true, // 是否展示视频
 			isShowBtn: true, //是否显示视频图片切换按钮
 			isVirtual: false, // 是否虚拟产品
+			videoContext:null
         }
     },
     components: {
@@ -322,6 +323,15 @@ export default {
 			}
 
 		})
+
+
+		this.$nextTick().then(()=>{
+			let videoContext = uni.createVideoContext('myVideo1')
+			_self.videoContext = videoContext
+			//添加到这里
+			// getApp().globalData.videoInstance.push(videoContext)
+		})
+
 	},
 	onShow(){
 		// #ifdef APP-PLUS
@@ -347,12 +357,17 @@ export default {
 		// #endif
 	},
 	onHide(){
+		//停止播放
+
 		// #ifdef APP-PLUS
 			var icon = plus.nativeObj.View.getViewById("icon");
 			var icons = plus.nativeObj.View.getViewById("icons");
 			icon.hide();
 			icons.hide();
 		// #endif
+
+		console.log('暂停视频播放')
+		this.videoContext.pause()
 	},
 	computed:{
 		...mapState(['initData'])

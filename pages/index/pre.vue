@@ -68,6 +68,18 @@
 			TitleComponent,TextComponent,SearchComponent,NoticeComponent,CouponComponent,
 			GoodsComponent,CubeComponent,TabComponent,FlashComponent,GroupComponent
 		},
+
+		onHide(){
+
+			//暂停播放
+			this.$refs.video.map(item=>{
+				item.pauseFn()
+			})
+
+		},
+		methods: {
+
+		},
 		onLoad() {
 
 			let _self = this;
@@ -97,65 +109,54 @@
 				})
 
 			})
-			.then(mixinData => {
+					.then(mixinData => {
 
-				let templateData = mixinData.plugin;
-				this.system = mixinData.system;
+						let templateData = mixinData.plugin;
+						this.system = mixinData.system;
 
-				//存储页面数据
-				this.templateData = [] //页面数据的二维数组。
-				this.templateList = [] //页面组件的二维数组。
-				// console.log(templateData)
+						//存储页面数据
+						this.templateData = [] //页面数据的二维数组。
+						this.templateList = [] //页面组件的二维数组。
+						// console.log(templateData)
 
-				if (templateData && Array.isArray(templateData[0])) {
-					//多个页面，每个页面是一个数组
-					templateData.map(item => {
-						this.templateData.push(item)
-						this.templateList.push([])
+						if (templateData && Array.isArray(templateData[0])) {
+							//多个页面，每个页面是一个数组
+							templateData.map(item => {
+								this.templateData.push(item)
+								this.templateList.push([])
+							})
+						} else if (
+								templateData &&
+								!Array.isArray(templateData[0]) &&
+								templateData.length > 0
+						) {
+							//单纯是一个对象的时候？？
+							this.templateData = [templateData]
+							this.templateList = [[]]
+						} else {
+							this.templateData = [[]]
+							this.templateList = [[]]
+						}
+						// this.templateData = templateData
+						//存储页面组件templateList
+						for (let i = 0; i < this.templateData.length; i++) {
+							if (
+									this.templateData[i] &&
+									this.templateData[i] !== []
+							) {
+								this.templateData[i].map(m => {
+									this.templateList[i].push(m.tag)
+								})
+							}
+						}
+
+
+					},err=>{})
+					.catch(err => {
+						console.log(err)
 					})
-				} else if (
-						templateData &&
-						!Array.isArray(templateData[0]) &&
-						templateData.length > 0
-				) {
-					//单纯是一个对象的时候？？
-					this.templateData = [templateData]
-					this.templateList = [[]]
-				} else {
-					this.templateData = [[]]
-					this.templateList = [[]]
-				}
-				// this.templateData = templateData
-				//存储页面组件templateList
-				for (let i = 0; i < this.templateData.length; i++) {
-					if (
-							this.templateData[i] &&
-							this.templateData[i] !== []
-					) {
-						this.templateData[i].map(m => {
-							this.templateList[i].push(m.tag)
-						})
-					}
-				}
-
-
-			},err=>{})
-			.catch(err => {
-				console.log(err)
-			})
 
 		},
-		onHide(){
-			if(this.$refs.video){
-				this.$refs.video.map(item=>{
-					item.pauseFn()
-				})
-			}
-			
-		},
-		methods: {
-
-		}
 	}
 </script>
 
