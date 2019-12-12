@@ -64,7 +64,7 @@
 					</view>
 				</view>
 			</block>
-			<!-- <block v-if="tabIdx==1">
+			<block v-if="tabIdx==1">
 				<view class="other" >
 					<view class="bd">
 						<view class="o_title  words">
@@ -81,7 +81,7 @@
 						</view>
 					</view>
 				</view>
-			</block> -->
+			</block>
 			<!-- <view class="other" v-if="orderInfo.is_virtual == 1">
 				<view class="bd">
 					<view class="o_title  words">
@@ -465,8 +465,8 @@ export default {
 					// 	this.submited = false;
 					// 	return;
 					// };
-					// this.postData.user_name = this.user_name;
-					// this.postData.user_mobile = this.user_mobile;
+					this.postData.user_name = this.user_name;
+					this.postData.user_mobile = this.user_mobile;
 				}
 				if(this.postData.shipping_id=='is_store'){
 					let obj={}

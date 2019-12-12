@@ -29,8 +29,9 @@
 							</view>
 							<view class="pro-info">
 								<view class="pro-name">{{it.prod_name}}</view>
-								<view class="pro-attr" v-if="it.attr_info.attr_val">
-									<view class="attr-info">{{it.attr_info.attr_val.Attr_Value}}</view>
+								<view class="pro-attr" >
+									<view class="attr-info" v-if="it.attr_info.attr_val">{{it.attr_info.attr_val.Attr_Value}}</view>
+									<view class="attr-info" v-else></view>
 									<view class="pro-qty">x{{it.prod_count}}
 										<image class="qty-icon" v-if="it.prod_count_change_desc" src="/static/procurement/i.png" mode="" @click.stop="show_pro_tip(item)"></image>
 										<view class="tips" v-if="item.pro_tip_show">

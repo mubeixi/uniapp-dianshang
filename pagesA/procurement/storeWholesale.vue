@@ -76,9 +76,16 @@
                     <div class="text">{{storeInfo.Stores_Telephone}}</div>
                 </div>
                 <div class="row">
-                    <div class="label">门店地址:</div>
-                    <div class="text">{{storeInfo.Stores_Province_name}}{{storeInfo.Stores_City_name}}{{storeInfo.Stores_Area_name}}{{storeInfo.Stores_Address}}</div>
+                    <div class="label" >门店地址:</div>
+                    <div class="text">
+						{{storeInfo.Stores_Province_name}}{{storeInfo.Stores_City_name}}{{storeInfo.Stores_Area_name}}{{storeInfo.Stores_Address}}
+						<image class="img" src="/static/local.png" @click="showAdress" style="width: 26rpx;height: 31rpx;margin-left: 5px;vertical-align: top;"></image>
+					</div>
                 </div>
+				<view class="row" v-if="storeInfo.distance">
+				    <view class="label">门店距离：</view>
+				    <view class="text" >{{storeInfo.distance}}KM</view>
+				</view>
             </div>
         </wzw-dialog>
 
@@ -99,10 +106,10 @@
 <script>
     import {pageMixin} from "../../common/mixin";
     import {mapGetters} from "vuex";
-    import {getStorePurchaseSales,getStoreList,refuseStorePurchaseApply} from "../../common/fetch";
+    import {getStorePurchaseSales,getStoreList,refuseStorePurchaseApply,getStoreDetail} from "../../common/fetch";
     import {error} from "../../common";
     import {findArrayIdx} from "../../common/tool";
-
+	import {getLocation} from "../../common/tool/location";
 
     export default {
         mixins: [pageMixin],
@@ -129,6 +136,15 @@
           ...mapGetters(['Stores_ID'])
         },
         methods:{
+			showAdress(){
+				uni.openLocation({
+					latitude: this.storeInfo.wx_lat,
+					longitude: this.storeInfo.wx_lng,
+					success: function () {
+						console.log('success');
+					}
+				});
+			},
             handleApply(apply,idx){
                 uni.navigateTo({
                     url:`/pagesA/procurement/storeWholesaleSend?apply_id=${apply.Order_ID}`
@@ -167,12 +183,38 @@
                 console.log(store_id)
                 let idx = findArrayIdx(this.stores,{Stores_ID:store_id})
                 console.log(idx)
-                if(idx!==false){
-                    this.storeInfo = this.stores[idx]
-                    this.$refs.storeInfo.show()
-                }else{
-                    error('店铺信息错误')
-                }
+				
+				let lat='';
+				let lng='';
+				getLocation(this).then(res=>{
+					if(res.code===0){
+						lng=res.data.longitude
+						lat=res.data.latitude
+						let data={
+							lat:lat,
+							lng:lng,
+							store_id: store_id
+						}
+						getStoreDetail(data).then(res=>{
+							this.storeInfo=res.data
+							this.storeInfo.distance=(res.data.distance/1000).toFixed(2)
+						})
+					}
+				}).catch(err=>{
+					let data={
+						store_id: store_id
+					}
+					getStoreDetail(data).then(res=>{
+						this.storeInfo=res.data
+					})
+				})
+				this.$refs.storeInfo.show()
+                // if(idx!==false){
+                //     this.storeInfo = this.stores[idx]
+                //     this.$refs.storeInfo.show()
+                // }else{
+                //     error('店铺信息错误')
+                // }
             },
             changIndex(idx){
                 this.tabidx = idx
