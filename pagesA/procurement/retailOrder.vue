@@ -74,7 +74,7 @@
 		<div class="zhezhao" v-if="password_input">
 		    <div class="input-wrap">
 		        <div>请输入拒单原因</div>
-		        <textarea auto-height  class="input" placeholder="请输入原因" v-model="reason" ></textarea>
+		        <textarea auto-height  class="input" placeholder="请输入原因" v-model="reason" style="width: 100%;"></textarea>
 		        <div class="btns">
 		            <div @click="cancelInput" class="btn">取消</div>
 		            <div @click="confirmInput" class="btn">确定</div>
