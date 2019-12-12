@@ -178,6 +178,12 @@
 			},
 			getUserWithdrawMethod(){
 				getUserWithdrawMethod().then(res=>{
+					if(this.withdraw_from==1){
+						this.balance=res.data.balance
+					}
+					if(this.withdraw_from==2){
+						this.balance=res.data.user_money
+					}
 					if(res.errorCode==0){
 						this.$vm.$on('fires', (data) =>{
 							this.User_Method_ID = data;
@@ -198,13 +204,7 @@
 							this.data=res.data.list[0];
 							this.User_Method_ID=res.data.list[0].User_Method_ID;
 						}
-						if(this.withdraw_from==1){
-							this.balance=res.data.balance
-						}
-						if(this.withdraw_from==2){
-							this.balance=res.data.user_money
-						}
-
+			
 					}
 				}).catch(err=>{
 					console.log(err)
