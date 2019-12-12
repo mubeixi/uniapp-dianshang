@@ -83,7 +83,7 @@
 					</picker>
 				</view>
 				<view class="images">
-					<image :src="'/static/client/fenxiao/chakan.png'|domain" ></image>
+					<image class="image" :src="'/static/client/fenxiao/chakan.png'|domain" ></image>
 				</view>
 			</view>
 			<view class="threes" v-if="current==3">
@@ -113,7 +113,7 @@
 			</view>
 			<view class="five" @click="lookJilu">
 				{{isNext?'返回修改':'查看申请记录'}}
-				<image :src="'/static/client/fenxiao/chakan.png'|domain" ></image>
+				<image class="image" :src="'/static/client/fenxiao/chakan.png'|domain" ></image>
 			</view>
 		</block>
 	</view>
@@ -574,7 +574,7 @@
 	font-size:24rpx;
 	font-weight:500;
 	color:rgba(153,153,153,1);
-	image{
+	.image{
 		width: 12rpx;
 		height: 20rpx;
 		margin-left: 10rpx;
@@ -599,7 +599,7 @@
 			width: 16rpx;
 			height: 88rpx;
 			line-height: 88rpx;
-			image{
+			.image{
 				width: 16rpx;
 				height: 25rpx;
 			}

@@ -11,7 +11,7 @@
 				<picker @change="bindPickerChange" :value="index" :range="array" range-key="Method_Name" >
 				    <view class="uni-input">{{array[index].Method_Name}}</view>
 				</picker>
-				<image :src="'/static/client/right.png'|domain"></image>
+				<image class="image" :src="'/static/client/right.png'|domain"></image>
 			</view>
 		</view>
 
@@ -298,7 +298,7 @@
 		color: #888888;
 		display: flex;
 		align-items: center;
-		image{
+		.image{
 			width: 15rpx;
 			height: 23rpx;
 			margin-left: 14rpx;

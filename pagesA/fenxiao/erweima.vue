@@ -32,22 +32,22 @@
 		<view class="last">
 			<view class="first" v-show="initData.login_methods.mp_flag==1">
 				<view class="left" @click="showQr(0,0)">
-					<image :src="'/static/client/fenxiao/weixin.png'|domain" ></image>
+					<image class="image" :src="'/static/client/fenxiao/weixin.png'|domain" ></image>
 					<view class="haha">微信二维码</view>
 				</view>
 				<view class="right" @click="showQr(0,1)">
-					<image :src="'/static/client/fenxiao/chongsheng.png'|domain" ></image>
+					<image class="image" :src="'/static/client/fenxiao/chongsheng.png'|domain" ></image>
 					<view class="haha">重生微信二维码</view>
 				</view>
 			</view>
 			<view style="width: 100%;height: 1rpx;background-color: #F3F3F3;"></view>
 			<view class="second">
 				<view class="left" @click="showQr(1,0)">
-					<image :src="'/static/client/fenxiao/tuiguang.png'|domain" ></image>
+					<image class="image" :src="'/static/client/fenxiao/tuiguang.png'|domain" ></image>
 					<view class="haha">推广二维码</view>
 				</view>
 				<view class="right" @click="showQr(1,1)">
-					<image  :src="'/static/client/fenxiao/chongshengtuiguang.png'|domain" ></image>
+					<image class="image"  :src="'/static/client/fenxiao/chongshengtuiguang.png'|domain" ></image>
 					<view class="haha">重生推广二维码</view>
 				</view>
 			</view>
@@ -241,7 +241,7 @@
 			width: 50%;
 			text-align: center;
 			position: relative;
-			image{
+			.image{
 				width: 79rpx;
 				height: 79rpx;
 			}
@@ -260,10 +260,10 @@
 			background-color: #E8E8E8;
 		}
 	}
-	view.first image{
+	view.first .image{
 		margin-top: 46rpx;
 	}
-	view.second image{
+	view.second .image{
 		margin-top: 38rpx;
 	}
 }

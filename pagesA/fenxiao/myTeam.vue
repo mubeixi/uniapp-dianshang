@@ -7,7 +7,7 @@
 		<view style="width: 100%;height: 20rpx;"></view>
 		<view class="teamName" v-if="pro.disInfo">
 			<view class="teamImg">
-				<image :src="pro.disInfo.Shop_Logo"></image>
+				<image class="image" :src="pro.disInfo.Shop_Logo"></image>
 			</view>
 			<view class="teamInfo">
 				<view class="nickName">
@@ -93,7 +93,7 @@
 			height: 90rpx;
 			border-radius: 50%;
 			overflow: hidden;
-			image{
+			.image{
 				width: 100%;
 				height: 100%;
 			}

@@ -13,12 +13,12 @@
 			</view>
 			<view class="personInfo flex">
 				<view class="left" @click="goPersonMsg">
-					<image style="border-radius: 50%;"  :src="(userInfo.User_HeadImg||'/static/client/default.png')|domain" ></image>
+					<image class="image" style="border-radius: 50%;"  :src="(userInfo.User_HeadImg||'/static/client/default.png')|domain" ></image>
 				</view>
 				<view class="right flex1" :style="{position:!userInfo.User_ID?'relative':'static'}">
 					<view class="font14 loginBtn" v-if="!userInfo.User_ID" plain size="mini" @click="goLogin">登录/注册</view>
 					<view v-if="userInfo.User_ID" @click="goPersonMsg" class="nickName">{{userInfo.User_NickName||(userInfo.User_No?('用户'+userInfo.User_No):'暂无昵称')}}</view>
-					<view v-if="userInfo.User_ID" @click="goVip" class="cart">{{userLevelText()}}<image :src="'/static/client/person/rightCart.png'|domain" ></image></view>
+					<view v-if="userInfo.User_ID" @click="goVip" class="cart">{{userLevelText()}}<image class="image" :src="'/static/client/person/rightCart.png'|domain" ></image></view>
 				</view>
 			</view>
 			<view class="nav">
@@ -52,7 +52,7 @@
 			<view class="orderTop">
 					<view class="orderLeft">商城订单</view>
 					<view class="orderRight" @click="goOrder(0)">
-						全部订单<image :src="'/static/client/person/right.png'|domain" ></image>
+						全部订单<image class="image" :src="'/static/client/person/right.png'|domain" ></image>
 					</view>
 			</view>
 			<view class="orderCenter">
@@ -479,7 +479,7 @@
 				width: 100rpx;
 				height: 100rpx;
 				border-radius: 50%;
-				image{
+				.image{
 					width: 100%;
 					height: 100%;
 				}
@@ -518,7 +518,7 @@
 					background:rgb(249, 142, 142);
 					border-radius:20rpx;
 					box-sizing: border-box;
-					image{
+					.image{
 						width: 13rpx;
 						height: 20rpx;
 						margin-left: 9rpx;
@@ -604,7 +604,7 @@
 				color: #666666;
 				display: flex;
 				align-items: center;
-				image{
+				.image{
 					width: 17rpx;
 					height: 26rpx;
 					margin-left: 12rpx;

@@ -39,13 +39,13 @@
 			</view>
 			<view class="bottoms">
 				<view class="lefts qwe" @click="gotojifen">
-					<image :src="'/static/client/check/t3.png'|domain" ></image>
+					<image class="image" :src="'/static/client/check/t3.png'|domain" ></image>
 					<text>积分商城</text>
 				</view>
 				<view class="line">
 				</view>
 				<view class="rights qwe" style="padding-left: 66rpx;" @click="gotoMyExchange">
-					<image :src="'/static/client/check/t4.png'|domain" ></image>
+					<image class="image" :src="'/static/client/check/t4.png'|domain" ></image>
 					<text>我的兑换</text>
 				</view>
 			</view>
@@ -260,7 +260,7 @@ view{
 			align-items: center;
 			justify-content: space-around;
 			padding: 38rpx 97rpx 37rpx 41rpx;
-			image{
+			.image{
 				width: 58rpx;
 				height: 58rpx;
 			}
@@ -277,6 +277,10 @@ view{
 				color: #4C4C4C;
 				display: flex;
 				align-items: center;
+				.image{
+					width: 58rpx;
+					height: 58rpx;
+				}
 				text{
 					margin-left: 21rpx;
 				}
