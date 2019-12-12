@@ -4,7 +4,7 @@
 		<!-- <page-title :title="'进货记录'" :bgcolor="'#fff'"></page-title> -->
 		<block v-if="orderList.length>0">
 			<block v-for="(item,index) of orderList" :key="index" >
-				<view class="prolist" @click="hidden_tip(item)" >
+				<view class="prolist" @click="hidden_tip(index)" >
 					<view class="pro-title">
 						<view>进货单号：{{item.Order_ID}}</view>
 						<image  v-if="item.Order_Status==20||item.Order_Status==26" class="img" src="/static/procurement/del.png" @click="del(item.Order_ID)"></image>
@@ -12,11 +12,11 @@
 					<view class="list-msg">
 						<view class="biz-msg">
 							<image class="avator" :src="item.supplier_img" mode=""></image>
-							<view class="biz-name">{{item.Stores_Name}}<view class="biz-links" v-if="(item.Order_Status==20||item.Order_Status==22||item.Order_Status==25)||item.active_id>0">(<text v-if="item.active_id>0" class="text-d" @click="showStore(item)">查看信息</text><block v-if="(item.Order_Status==20||item.Order_Status==22||item.Order_Status==25)&&item.active_id>0">/</block><block v-if="item.Order_Status==20||item.Order_Status==22||item.Order_Status==25"><text class="text-d" @click="changeChannel(item)">修改渠道</text></block>)</view></view>
+							<view class="biz-name">{{item.supplier_name}}<view class="biz-links" v-if="(item.Order_Status==20||item.Order_Status==22||item.Order_Status==25)||item.active_id>0">(<text v-if="item.active_id>0" class="text-d" @click="showStore(item)">查看信息</text><block v-if="(item.Order_Status==20||item.Order_Status==22||item.Order_Status==25)&&item.active_id>0">/</block><block v-if="item.Order_Status==20||item.Order_Status==22||item.Order_Status==25"><text class="text-d" @click="changeChannel(item)">修改渠道</text></block>)</view></view>
 							<view class="status">{{item.Order_Status_desc}}
 								<block v-if="item.Order_Status == 22 && item.reason">
-									<image class="qty-icon" src="/static/procurement/i.png" mode="" @click.stop="show_pro_tip(index)"></image>
-									<view class="tips" >
+									<image class="qty-icon" src="/static/procurement/i.png" mode="" @click.stop="show_order_tip(index)"></image>
+									<view class="tips" v-if="item.show_order_tip">
 										<view class="sanjiaoxing"></view>{{item.reason}}
 									</view>
 								</block>
@@ -195,8 +195,6 @@
 					order_id:this.order_id,
 					password:this.user_pay_password
 				}
-				console.log('hhah',this.orderList)
-				console.log('index',this.index)
 				let prod_json = {};
 				let prod_list = this.orderList[this.index].prod_list;
 				prod_list.forEach(item=>{
@@ -231,6 +229,12 @@
 			// 用户输入密码完毕
 			user_password(e) {
 				this.user_pay_password = e.detail.value;
+			},
+			// 点击查看订单驳回原因
+			show_order_tip(index){
+				console.log(index)
+				this.orderList[index].show_order_tip = true;
+				console.log(this.orderList[index])
 			},
 			//提交订单
 			submitOrder(id,index){
@@ -354,6 +358,7 @@
 					for(var item of res.data	) {
 						item.pro_tip_show=false
 					}
+					res.data.forEach(item=>item.show_order_tip=false);
 					this.orderList=res.data
 					for(let item of this.orderList){
 						for(let it of item.prod_list){
@@ -374,8 +379,10 @@
 			show_pro_tip(item){
 				item.pro_tip_show = true;
 			},
-			hidden_tip(item){
-				item.pro_tip_show = false;
+			hidden_tip(index){
+				this.orderList = this.orderList;
+				this.orderList[index].show_order_tip = false;
+				// item.pro_tip_show = false;
 			},
 			showAdress(){
 				uni.openLocation({
@@ -420,6 +427,7 @@
 				this.isHidden = true;
 				this.isChangeChannel = false;
 				this.password_input=false
+				this.user_pay_password = '';
 			},
 			//修改渠道
 			changeOrderIndex(index){

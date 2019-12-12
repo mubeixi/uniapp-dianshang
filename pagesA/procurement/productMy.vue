@@ -403,6 +403,9 @@
 			console.log('hide', this.productMy)
 			ls.set('productMy', this.productMy);
 		},
+		onHide(){
+			console.log('haahide', this.productMy)
+		},
 		onReachBottom() {
 			if(this.productMy.length<this.totalCount){
 				this.page++;
@@ -519,13 +522,11 @@
 				}
 				pro.myqty -- ;
 				pro.prod_stock ++;
-
 			},
 			// 增加数量
 			addNumberNoAttr(pro){
 				pro.myqty ++ ;
 				pro.prod_stock --;
-
 			},
 			// 删除有属性的
 			delNumber(num,pro){
@@ -798,7 +799,7 @@
 				getSelfStoreProd(data).then(res=>{
 					let oldProductMy = ls.get('productMy') || [];
 					console.log(oldProductMy);
-					this.productMy = this.productMy.concat(res.data);
+					// this.productMy = this.productMy.concat(res.data);
 					this.productlist = this.productlist.concat(res.data);
 					this.checked = [];
 					for(let i in this.productlist) {
@@ -812,6 +813,7 @@
 					}
 					this.totalCount=res.totalCount
 					this.loading=false
+					this.productMy = [];
 					this.productMy = this.productlist;
 					for(let item in this.productMy){
 						if(this.productMy[item].skuvaljosn) {

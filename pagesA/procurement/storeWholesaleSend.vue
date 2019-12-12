@@ -62,7 +62,7 @@
                     <switch checked @change="changeNeedShipping" color="#F43131" style="transform:scale(0.9)" />
                 </div>
             </div>
-            <div class="row" v-show="is_need_shipping">
+            <div class="row" v-if="is_need_shipping">
                 <div class="label">配送方式</div>
                 <div class="form-item express">
                     <picker @change="bindPickerChange" :value="exprss_index" :range="exprss_list">
@@ -70,11 +70,11 @@
                     </picker>
                 </div>
             </div>
-            <div class="row" v-show="is_need_shipping">
+            <div class="row" v-if="is_need_shipping">
                 <div class="label">快递单号</div>
                 <input v-model="ShippingID" class="form-item" placeholder="请输入快递单号" />
             </div>
-            <div class="row" v-show="is_need_shipping">
+            <div class="row" v-if="is_need_shipping">
                 <div class="label">运费</div>
                 <input type="number" step="0.01" v-model="Express_Price" class="form-item" placeholder="请输入运费" />
             </div>
@@ -250,6 +250,7 @@
               this.exprss_index = e.detail.value
             },
             changeNeedShipping(e){
+							console.log(e.detail.value)
                 this.is_need_shipping = e.detail.value?1:0
             },
             showStore(store_id){
