@@ -18,7 +18,7 @@
 				<view class="right flex1" :style="{position:!userInfo.User_ID?'relative':'static'}">
 					<view class="font14 loginBtn" v-if="!userInfo.User_ID" plain size="mini" @click="goLogin">登录/注册</view>
 					<view v-if="userInfo.User_ID" @click="goPersonMsg" class="nickName">{{userInfo.User_Name||(userInfo.User_No?('用户'+userInfo.User_No):'暂无昵称')}}<block v-if="userInfo.User_Name">({{userInfo.User_No}})</block></view>
-					<view v-if="userInfo.User_ID" @click="goVip" class="cart">{{userLevelText()}}<image :src="'/static/client/person/rightCart.png'|domain" ></image></view>
+					<view v-if="userInfo.User_ID" @click="goVip" class="cart">{{userLevelText()}}<image class="image" :src="'/static/client/person/rightCart.png'|domain" ></image></view>
 				</view>
 			</view>
 			<view class="nav">
