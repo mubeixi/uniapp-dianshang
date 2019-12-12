@@ -63,10 +63,10 @@
         </view>
 
         <view class="prolist">
-            <view class="pro" v-for="item in prolist">
+            <view class="pro" v-for="item in prolist"  @click="add(item)">
                 <view class="pro-img">
                     <image :src="item.ImgPath" class="img"></image>
-                    <view class="add" @click="add(item)">加入选品库</view>
+                    <view class="add">加入选品库</view>
                 </view>
                 <view class="pro-name">{{item.Products_Name}}</view>
                 <view class="pro-price">

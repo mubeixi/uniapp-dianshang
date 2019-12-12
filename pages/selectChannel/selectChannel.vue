@@ -15,10 +15,10 @@
 					<picker class="a-item" mode = "selector" :range="provinceList"  range-key="name" :value="p_index" @change="p_change_handle">
 						<block v-if="p_clicked">{{provinceList[p_index].name}}</block> <block v-else>请选择省份 <image class="bot" :src="'/static/client/person/right.png'|domain" mode=""></block></image>
 					</picker>
-					<picker class="a-item" mode = "selector" :range="citylist"  range-key="name" :value="c_index" @change="c_change_handle">
+					<picker class="a-item" mode = "selector" :range="citylist" :disabled="!openCity" range-key="name" :value="c_index" @change="c_change_handle">
 						<block v-if="c_clicked">{{citylist[c_index].name}}</block> <block v-else>请选择市 <image class="bot" :src="'/static/client/person/right.png'|domain" mode=""></image></block>
 					</picker>
-					<picker class="a-item" mode = "selector" :range="arealist" range-key="name" :value="a_index" @change="a_change_handle">
+					<picker class="a-item" mode = "selector" :range="arealist" :disabled="!openArea" range-key="name" :value="a_index" @change="a_change_handle">
 						<block v-if="a_clicked">{{arealist[a_index].name}}</block> <block v-else>请选择县区 <image class="bot" :src="'/static/client/person/right.png'|domain" mode=""></image></block>
 					</picker>
 				</view>
@@ -122,6 +122,8 @@
 				order_id: '', // 进货记录需要修改订单id
 				is_getted: false, // 是否已经请求过店铺，
 				allow_from_plat: 0 , // 是否允许向平台进货、退货
+				openCity: false,
+				openArea: false
 			}
 		},
 		onLoad(options) {
@@ -254,12 +256,14 @@
 				this.c_clicked = false;
 				this.a_clicked = false;
 				this.p_index = e.detail.value;
+				this.openCity = true;
 			},
 			// 市变动
 			c_change_handle(e) {
 				this.c_clicked = true;
 				this.a_clicked = false;
 				this.c_index = e.detail.value;
+				this.openArea = true;
 			},
 			a_change_handle(e) {
 				this.a_clicked = true;
