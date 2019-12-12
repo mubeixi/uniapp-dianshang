@@ -2,7 +2,7 @@
 	<view class="myall">
 			<view class="centers" v-for="(item,index) of pro " :key="index">
 				<view class="imgs">
-					<image :src="item.User_HeadImg" ></image>
+					<image class="image" :src="item.User_HeadImg" ></image>
 				</view>
 				<view class="titles">
 					<view class="msg">
@@ -88,7 +88,7 @@
 		height: 98rpx;
 		border-radius: 50%;
 		overflow: hidden;
-		image{
+		.image{
 			width: 100%;
 			height: 100%;
 		}

@@ -184,7 +184,7 @@
 	<popupLayer ref="cartPopu" :direction="'top'">
 		<div class="cartSku">
 			<div class="cartTop">
-				<image :src="product.Products_JSON.ImgPath[0]" mode=""></image>
+				<image class="image" :src="product.Products_JSON.ImgPath[0]" mode=""></image>
 				<div class="cartTitle">
 					<div class="cartTitles">{{product.Products_Name}}</div>
 					<div class="addInfo">
@@ -1539,7 +1539,7 @@ export default {
 			position: relative;
 			display: flex;
 			padding-top: 20rpx;
-			image{
+			.image{
 				width: 220rpx;
 				height: 220rpx;
 			}

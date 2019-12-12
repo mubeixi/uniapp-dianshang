@@ -14,7 +14,7 @@
 					</view>
 				</view>
 				<view class="last">
-					<image :src="item.Gift_Info.Gift_ImgPath" ></image>
+					<image class="image" :src="item.Gift_Info.Gift_ImgPath" ></image>
 					<view class="myRight">
 						<view class="titles">
 							<view class="leftM">
@@ -175,7 +175,7 @@ view{
 		width: 680rpx;
 		height: 176rpx;
 		display: flex;
-		image{
+		.image{
 			width: 176rpx;
 			height: 176rpx;
 		}

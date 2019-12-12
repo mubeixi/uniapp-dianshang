@@ -18,7 +18,7 @@
 		</view>
 		<view class="five" @click="goRecord">
 			查看申请记录
-			<image :src="'/static/client/fenxiao/chakan.png'|domain" ></image>
+			<image class="image" :src="'/static/client/fenxiao/chakan.png'|domain" ></image>
 		</view>
 	</view>
 </template>
@@ -154,7 +154,7 @@
 	font-size:24rpx;
 	font-weight:500;
 	color:rgba(153,153,153,1);
-	image{
+	.image{
 		width: 12rpx;
 		height: 20rpx;
 		margin-left: 10rpx;
