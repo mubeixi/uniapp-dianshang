@@ -180,7 +180,7 @@
 			goDistributor(){
 				//跳转成为分销商
 				uni.navigateTo({
-					url:'/pagesA/fenxiao/disAgreementBefore'
+					url:'/pages/fenxiao/distributorLevel'
 				})
 			},
 			goLogin(){

@@ -133,26 +133,6 @@
 					console.log(e)
 				})
 			},
-			goRight(event){
-				if(event.detail.scrollLeft<300){
-					this.index=0;
-				}else if(event.detail.scrollLeft>300&&event.detail.scrollLeft<600){
-					this.index=1;
-				}else if(event.detail.scrollLeft>600&&event.detail.scrollLeft<900){
-					this.index=2;
-				}else if(event.detail.scrollLeft>900&&event.detail.scrollLeft<1200){
-					this.index=3;
-				}else if(event.detail.scrollLeft>1200&&event.detail.scrollLeft<1500){
-					this.index=4;
-				}else if(event.detail.scrollLeft>1500&&event.detail.scrollLeft<1800){
-					this.index=5;
-				}else if(event.detail.scrollLeft>1800&&event.detail.scrollLeft<2100){
-					this.index=6;
-				}else if(event.detail.scrollLeft>2100&&event.detail.scrollLeft<2400){
-					this.index=7;
-				}
-				this.tequan=this.pro.levels[this.index];
-			},
 			goBack(){
 				goBack();
 			},
@@ -406,8 +386,8 @@
 			font-size:46rpx;
 			font-weight:bold;
 			text-align: center;
-			height: 30rpx;
-			line-height: 35rpx;
+			height: 20rpx;
+			line-height: 20rpx;
 			margin: 12rpx 0rpx;
 		}
 		.posiE{

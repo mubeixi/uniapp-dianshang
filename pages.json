@@ -412,6 +412,12 @@
 			"style": {
 				"navigationBarTitleText": "选择渠道"
 			}
+		},
+		{
+			"path": "pages/fenxiao/distributorLevel",
+			"style": {
+				"navigationBarTitleText": "分销商等级"
+			}
 		}
 	],
 	"subPackages": [{
