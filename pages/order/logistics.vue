@@ -5,7 +5,7 @@
 		<!-- #endif -->
 		<!-- <page-title title="物流追踪" rightHidden="true" bgcolor="#ffffff" ></page-title> -->
 		<view class="wuliu box-sizing" v-if="pro.list">
-			<image :src="pro.imgpath"></image>
+			<image class="image" :src="pro.imgpath"></image>
 			<view>
 				<view class="fonts">
 					<view class="left">
@@ -149,7 +149,7 @@
 	padding-left: 32rpx;
 	display: flex;
 	padding-bottom: 10rpx;
-	image{
+	.image{
 		width: 72rpx;
 		height: 72rpx;
 		margin-right: 30rpx;

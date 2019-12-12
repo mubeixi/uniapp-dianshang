@@ -6,7 +6,7 @@
 	<!-- 	<page-title title="爵位晋升" rightHidden="true"></page-title> -->
 		<view class="top">
 			<view class="person">
-				<image :src="data.disInfo.Shop_Logo"></image>
+				<image class="image" :src="data.disInfo.Shop_Logo"></image>
 			</view>
 			<view class="nickName">
 				{{data.disInfo.Shop_Name}}
@@ -36,7 +36,7 @@
 			</view>
 			<view class="chakan" @click="goFinance">
 				查看明细
-				<image :src="'/static/client/fenxiao/chakan.png'|domain" ></image>
+				<image class="image" :src="'/static/client/fenxiao/chakan.png'|domain" ></image>
 			</view>
 		</view>
 		<circleTitle title="我的数据"></circleTitle>
@@ -179,7 +179,7 @@
 			height: 75rpx;
 			border-radius: 50%;
 			overflow: hidden;
-			image{
+			.image{
 				width: 100%;
 				height: 100%;
 			}
@@ -253,7 +253,7 @@
 			text-align: center;
 			font-size: 24rpx;
 			color: #999999;
-			image{
+			.image{
 				width: 12rpx;
 				height: 20rpx;
 				margin-left: 14rpx;
