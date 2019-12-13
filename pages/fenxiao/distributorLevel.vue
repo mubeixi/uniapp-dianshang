@@ -5,7 +5,7 @@
 				<swiper-item class="vipFir"  v-for="(item,index) of dis_level" :key="index"  :style="dis_level.length==1?'margin-left:43rpx;':''">
 						<image src="https://new401.bafangka.com/static/client/task/vip.png" class="allImg"></image>
 	
-						<view class="vipGrade" v-if="item.Level_ID==pro.user_info.Level_ID">
+						<view class="vipGrade" v-if="item.Level_ID==pro.user_info.Level_ID&&userInfo.Is_Distribute==1">
 							当前等级
 						</view>
 						<view class="mmp" v-if="dis_level.length>0">
@@ -70,8 +70,8 @@
 						</view>
 					</view>
 					
-					<view class="productList">
-						<view class="myProduct" v-for="(item,index) of dis_level[inds].level_rules_edit.buy_prod.data" :key="index">
+					<view class="productList" v-if="dis_level[inds].level_rules_edit.buy_prod.value.type=='2'">
+						<view class="myProduct" v-for="(item,index) in dis_level[inds].level_rules_edit.buy_prod.data" :key="index">
 							<image class="imgPro" :src="item.ImgPath" @click="goDetail(item.Products_ID)"></image>
 							<view class="proText">
 								{{item.Products_Name}}
@@ -134,8 +134,14 @@
 						<view class="tops">
 							直接购买{{dis_level[inds].level_rules_edit.direct_buy.value.money}}元
 						</view>
-						<view class="bottoms">
-							
+						<view class="bottoms" v-if="dis_level[inds].level_rules_edit.direct_buy.value.type=='1'">
+							直接购买
+						</view>
+						<view class="bottoms" v-if="dis_level[inds].level_rules_edit.direct_buy.value.type=='2'">
+							送赠品({{dis_level[inds].level_rules_edit.direct_buy.data.gift_name}})
+						</view>
+						<view class="bottoms" v-if="dis_level[inds].level_rules_edit.direct_buy.value.type=='3'">
+							送余额({{dis_level[inds].level_rules_edit.direct_buy.value.present}}元)
 						</view>
 					</view>
 					<view class="submit" @click="buyDis(dis_level[inds].Level_ID)">
@@ -212,6 +218,7 @@
 	import circleTitle from '../../components/circleTitle/circleTitle.vue'
 	import {pageMixin} from "../../common/mixin";
 	import {disApplyInit} from '../../common/fetch.js';
+	import {mapActions,mapState,mapGetters} from 'vuex';
 	export default {
 		mixins:[pageMixin],
 		data() {
@@ -232,6 +239,9 @@
 		onShow() {
 			this.disApplyInit();
 		},
+		computed:{
+			...mapGetters(['userInfo'])
+		},
 		methods:{
 			//申请成为分销商
 			edit(id){
@@ -251,6 +261,8 @@
 				})
 			},
 			goDetail(id){
+				console.log("1111")
+				return
 				uni.navigateTo({
 					url:'/pages/detail/detail?Products_ID='+id
 				})
