@@ -170,8 +170,13 @@
                     this.imgs[0] = this.userStoreMsg.store_image;
                     this.arr[0] = this.userStoreMsg.store_image;
                     this.current = this.userStoreMsg.type_id;
+                    if(res.data.status == 3) {
+                        //    被驳回了
+                        this.is_submitted = false;
+                        this.status = 3;
+                    }
                     if(this.storeTypes.length>0) {
-                        for(let i of this.storeTypes) {
+                        for(let i = 0 ; i<this.storeTypes - 1; i++) {
                             if(this.storeTypes[i].id) {
                                 if(this.storeTypes[i].id == this.userStoreMsg.type_id) {
                                     this.index = i;
@@ -179,12 +184,6 @@
                             }
                         }
                     }
-                    // this.index = this.storeTypes.forEach((item,index)=>{
-                    //     if(item.id==res.data.type_id){
-                    //         console.log(index)
-                    //         return index
-                    //     }
-                    // })
                     //初始化地址选择数据
                     let objectMultiArray = [
                         utils.array_change(area.area[0]['0']),
@@ -212,11 +211,6 @@
                                 }
                             }
                         })
-                    }
-                    if(res.data.status == 3) {
-                        //    被驳回了
-                        this.is_submitted = false;
-                        this.status = 3;
                     }
                 })
             },

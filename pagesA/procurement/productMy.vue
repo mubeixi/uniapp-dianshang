@@ -339,7 +339,7 @@
 				    attr_id: 0,    //选择属性id
 				    count: 0,         //选择属性的库存
 				    // showimg: '',      //选择属性的图片(用产品图片代替)
-				    qty: 1,           //购买数量
+				    qty: 1,           //退货数量
 				    productDetail_price: 0
 				},
 				submit_flag: true, //提交按钮是否可以用
@@ -728,7 +728,7 @@
 			        this.postData.qty = Number(this.postData.qty) + 1;
 			    }else {
 			        uni.showToast({
-			            title: '购买数量不能大于库存量',
+			            title: '退货数量不能大于库存量',
 			            icon: 'none',
 			        });
 			        this.postData.qty = this.postData.count;
@@ -739,7 +739,7 @@
 			        this.postData.qty -= 1;
 			    } else {
 			        uni.showToast({
-			            title: '购买数量不能小于1',
+			            title: '退货数量不能小于1',
 			            icon: 'none',
 			        });
 			        this.postData.qty = 1;
