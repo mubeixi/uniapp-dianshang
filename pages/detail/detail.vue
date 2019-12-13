@@ -367,7 +367,10 @@ export default {
 		// #endif
 
 		console.log('暂停视频播放')
-		this.videoContext.pause()
+		if(this.videoContext){
+			this.videoContext.pause()
+		}
+
 	},
 	computed:{
 		...mapState(['initData'])

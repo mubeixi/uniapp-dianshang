@@ -51,8 +51,12 @@
 							<block v-if="dis_level[inds].level_rules_edit.buy_prod.value.type=='1'">购买任意商品</block>
 							<block v-if="dis_level[inds].level_rules_edit.buy_prod.value.type=='2'">购买特定商品</block>
 						</view>
-						<view class="bottoms">
+						
+						<view class="bottoms" v-if="dis_level[inds].level_rules_edit.buy_prod.user_data>0">
 							已完成
+						</view>
+						<view v-else>
+							去完成
 						</view>
 					</view>
 					<view class="submit submitMbx">

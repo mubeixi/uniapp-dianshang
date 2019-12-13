@@ -26,7 +26,7 @@
 				</view>
 				<view class="other-item">
 					手机号
-					<input type="text" v-model="mobile" class="input phone" placeholder="请输入手机号" />
+					<input type="text" v-model="mobile" maxlength="11" class="input phone" placeholder="请输入手机号" />
 				</view>
 				<view class="other-item">
 					验证码

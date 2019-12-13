@@ -262,7 +262,7 @@
 		{
 			"path": "pages/order/pintuanOrderlist",
 			"style": {
-				"navigationBarTitleText": "拼团订单"
+				"navigationBarTitleText": "我的拼团订单"
 			}
 		},
 		{

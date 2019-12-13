@@ -107,7 +107,19 @@ export default {
 			this.index=option.index;
 		}else{
 			this.index=0;
+			uni.setNavigationBarTitle({
+			    title: '我的订单'
+			});
 			this.Order_Type=option.index;
+		}
+		if(option.index=='spike'){
+			uni.setNavigationBarTitle({
+			    title: '我的限时抢购订单'
+			});
+		}else if(option.index=='flashsale'){
+			uni.setNavigationBarTitle({
+			    title: '我的秒杀订单'
+			});
 		}
 		// 判断订单类型，有可能是 限时抢购spike、秒杀 flashsale 和普通订单 shop
 		if(option.Order_Type) {
