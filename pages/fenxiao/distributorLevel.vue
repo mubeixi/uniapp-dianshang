@@ -8,7 +8,8 @@
 						<view class="vipGrade" v-if="item.Level_ID==pro.user_info.Level_ID">
 							当前等级
 						</view>
-						<view class="mmp">
+						<view class="mmp" v-if="dis_level.length>0">
+							<image :src="item.Level_Icon" class="myImgs"></image>
 							{{item.Level_Name}}
 						</view>
 				</swiper-item>
@@ -21,9 +22,11 @@
 		</view>
 		<view style="height: 20rpx;background-color: #F8F8F8;"></view>
 		<circleTitle title="级别门槛"></circleTitle>
-		
+		<view class="titleMy" v-if="dis_level.length>0">
+			<image src="/static/procurement/error.png" style="height: 25rpx;width: 25rpx;margin-right: 12rpx;"></image>
+			注意：以下条件需{{dis_level[inds].arrive_limit_desc}}才能达到门槛
+		</view>
 		<view class="ruhe">
-			<block v-if="dis_level[inds].arrive_limit=='3'||dis_level[inds].arrive_limit=='4'">
 				<view class="td" v-if="dis_level[inds].level_rules_edit.pay_money.checked=='1'">
 					<image class="image" src="/static/fenxiao/storeSum.png"></image>
 					<view class="mbx">
@@ -38,34 +41,53 @@
 					<view class="submit submitMbx" v-if="dis_level[inds].level_rules_edit.pay_money.user_data>=dis_level[inds].level_rules_edit.pay_money.value.money">
 						已完成
 					</view>
-					<view class="submit"    v-else>
+					<view class="submit" @click="goIndex"   v-else>
 						去消费
 					</view>
 					
 				</view>
 				
-				<view class="td" v-if="dis_level[inds].level_rules_edit.buy_prod.checked=='1'">
-					<image class="image" src="/static/fenxiao/buyPro.png"></image>
-					<view class="mbx">
-						<view class="tops">
-							<block v-if="dis_level[inds].level_rules_edit.buy_prod.value.type=='1'">购买任意商品</block>
-							<block v-if="dis_level[inds].level_rules_edit.buy_prod.value.type=='2'">购买特定商品</block>
+				<view class="td" style="display: block;height: auto;" v-if="dis_level[inds].level_rules_edit.buy_prod.checked=='1'">
+					<view class="td" style="border-bottom: 0px;">
+						<image class="image" src="/static/fenxiao/buyPro.png"></image>
+						<view class="mbx">
+							<view class="tops">
+								<block v-if="dis_level[inds].level_rules_edit.buy_prod.value.type=='1'">购买任意商品</block>
+								<block v-if="dis_level[inds].level_rules_edit.buy_prod.value.type=='2'">购买特定商品</block>
+							</view>
+							<view class="bottoms"  v-if="dis_level[inds].level_rules_edit.buy_prod.user_data>0">
+								已完成
+							</view>
+							<view class="bottoms">
+								未完成
+							</view>
 						</view>
-						
-						<view class="bottoms" v-if="dis_level[inds].level_rules_edit.buy_prod.user_data>0">
+						<view class="submit submitMbx" v-if="dis_level[inds].level_rules_edit.buy_prod.user_data>0">
 							已完成
 						</view>
-						<view v-else>
-							去完成
+						<view @click="goIndex" class="submit" v-if="dis_level[inds].level_rules_edit.buy_prod.value.type=='1'&&dis_level[inds].level_rules_edit.buy_prod.user_data<=0">
+							去购买
 						</view>
 					</view>
-					<view class="submit submitMbx">
-						已完成
-					</view>
-					<!-- <view class="submit"    v-else>
-						去购买
-					</view> -->
 					
+					<view class="productList">
+						<view class="myProduct" v-for="(item,index) of dis_level[inds].level_rules_edit.buy_prod.data" :key="index">
+							<image class="imgPro" :src="item.ImgPath" @click="goDetail(item.Products_ID)"></image>
+							<view class="proText">
+								{{item.Products_Name}}
+							</view>
+							<view class="buttonLast">
+								<view class="priceAll">
+									<text class="priceText">¥</text>
+									{{item.Products_PriceX}}
+								</view>
+								<view class="proDetail" @click="goDetail(item.Products_ID)">
+									去购买
+								</view>
+							</view>
+						</view>
+									
+					</view>
 				</view>
 				<!-- 商品购买几次 -->
 				<view class="td" v-if="dis_level[inds].level_rules_edit.buy_times.checked=='1'">
@@ -81,7 +103,7 @@
 					<view class="submit submitMbx" v-if="dis_level[inds].level_rules_edit.buy_times.user_data>=dis_level[inds].level_rules_edit.buy_times.value">
 						已完成
 					</view>
-					<view class="submit"    v-else>
+					<view class="submit"  @click="goIndex"  v-else>
 						去购买
 					</view>
 					
@@ -116,12 +138,70 @@
 							
 						</view>
 					</view>
-					<view class="submit" >
-						去完成
-					</view>
-					
+					<view class="submit" @click="buyDis(dis_level[inds].Level_ID)">
+						去购买
+					</view>		
 				</view>
-			</block>
+				<!-- 去申请 -->
+				<view class="td" v-if="dis_level[inds].arrive_limit=='2'">
+					<image class="image" src="/static/fenxiao/editS.png"></image>
+					<view class="mbx">
+						<view class="tops">
+							直接申请
+						</view>
+						<view class="bottoms">
+							去申请
+						</view>
+					</view>
+					<view class="submit" @click="edit(dis_level[inds].Level_ID)">
+						去申请
+					</view>		
+				</view>
+				<!-- 直邀请 -->
+				<view class="td" style="display: block;height: auto;" v-if="dis_level[inds].level_rules_edit.direct_sons.checked=='1'">
+					<view class="td" style="border-bottom: 0px;" v-for="(it,ind) of dis_level[inds].level_rules_edit.direct_sons.value" :key="ind">
+						<image class="image" src="/static/fenxiao/zhiyao.png"></image>
+						<view class="mbx">
+							<view class="tops">
+								直邀{{it.count}}人{{it.level_name}}
+							</view>
+							<view class="bottoms"  >
+								已邀{{dis_level[inds].level_rules_edit.direct_sons.user_data[it.level_id]||0}}人
+							</view>
+						</view>
+						<block v-if="ind==0">
+							<view class="submit submitMbx" v-if="dis_level[inds].level_rules_edit.direct_sons .user_data>0">
+								已完成
+							</view>
+							<view class="submit">
+								去邀请
+							</view>
+						</block>
+					</view>
+				</view>
+				<!-- 团队 -->
+				<view class="td" style="display: block;height: auto;" v-if="dis_level[inds].level_rules_edit.team_sons.checked=='1'">
+					<view class="td" style="border-bottom: 0px;" v-for="(it,ind) of dis_level[inds].level_rules_edit.team_sons.value" :key="ind">
+						<image class="image" src="/static/fenxiao/teamLast.png"></image>
+						<view class="mbx">
+							<view class="tops">
+								团队{{it.level_name}}达{{it.count}}人
+							</view>
+							<view class="bottoms"  >
+								已邀{{dis_level[inds].level_rules_edit.team_sons.user_data[it.level_id]||0}}人
+							</view>
+						</view>
+						<block v-if="ind==0">
+							<view class="submit submitMbx" v-if="dis_level[inds].level_rules_edit.team_sons.user_data>0">
+								已完成
+							</view>
+							<view class="submit">
+								去邀请
+							</view>
+						</block>
+					</view>
+				</view>
+	
 			
 		</view>
 		
@@ -153,6 +233,28 @@
 			this.disApplyInit();
 		},
 		methods:{
+			//申请成为分销商
+			edit(id){
+				uni.navigateTo({
+					url:'/pagesA/fenxiao/distributorCenter?id='+id+'&&type=edit'
+				})
+			},
+			//去购买分销商
+			buyDis(id){
+				uni.navigateTo({
+					url:'/pagesA/fenxiao/distributorCenter?id='+id
+				})
+			},
+			goIndex(){
+				uni.switchTab({
+					url:"/pages/index/index"
+				})
+			},
+			goDetail(id){
+				uni.navigateTo({
+					url:'/pages/detail/detail?Products_ID='+id
+				})
+			},
 			change(e){
 				this.inds=e.detail.current;
 				this.Level_Description=this.dis_level[this.inds].Level_Description
@@ -247,6 +349,8 @@
 	width: 230rpx;
 	height: 36rpx;
 	text-align: center;
+	display: flex;
+	align-items: center;
 }
 
 .level-description{
@@ -265,6 +369,7 @@
 	border-radius:10rpx;
 	margin: 0 auto;
 	margin-top: 10rpx;
+	margin-bottom: 60rpx;
 	.td{
 		width: 690rpx;
 		margin: 0 auto;
@@ -316,4 +421,74 @@
 	}
 }
 
+.productList{
+	width: 710rpx;
+	box-sizing: border-box;
+	padding-left: 25rpx;
+	padding-right: 25rpx;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	.myProduct{
+		width: 310rpx;
+		.imgPro{
+			width: 310rpx;
+			height: 310rpx;
+			margin-bottom: 16rpx;
+		}
+		.proText{
+			width: 300rpx;
+			height: 52rpx;
+			line-height: 26rpx;
+			display: -webkit-box;
+			-webkit-box-orient: vertical;
+			-webkit-line-clamp: 2;
+			overflow: hidden;
+			font-size: 12px;
+			color: #333333;
+			margin-bottom: 12rpx;
+		}
+		.buttonLast{
+			width: 310rpx;
+			display: flex;
+			justify-content:space-between;
+			align-items: center;
+			height: 45rpx;
+			margin-bottom: 22rpx;
+			.priceAll{
+				color: #F43131;
+				font-size: 30rpx;
+				.priceText{
+					font-size: 24rpx;
+					margin-right: 8rpx;
+				}
+			}
+			.proDetail{
+				width:105rpx;
+				height:45rpx;
+				line-height: 45rpx;
+				text-align: center;
+				background:rgba(244,49,49,1);
+				border-radius:8rpx;
+				font-size: 24rpx;
+				color: #FFFFFF;
+			}
+		}
+	}
+}
+.myImgs{
+	width: 36rpx;
+	height: 36rpx;
+	margin-right: 12rpx;
+}
+.titleMy{
+	padding-left: 20rpx;
+	padding-right: 35rpx;
+	margin-bottom: 30rpx;
+	font-size: 11px;
+	color: #999999;
+	height: 30rpx;
+	display: flex;
+	align-items: center;
+}
 </style>
