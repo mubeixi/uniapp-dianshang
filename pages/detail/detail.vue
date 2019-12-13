@@ -11,7 +11,7 @@
 	<view class="uni-padding-wrap" style="background: #f2f2f2;">
 		<view class="page-section swiper">
 			<view class="page-section-spacing" v-if="(product.video_url && showVideo)">
-				<video class="video" @play="play" @pause="pause" :src="product.video_url"  show-mute-btn="true" muted bindfullscreenchange="changeHiddenBtns" :poster="product.cover_url?product.cover_url:''" id="myVideo1" ref="video1" show-center-play-btn	 controls>
+				<video class="video" @play="play" @pause="pause" :src="product.video_url"   bindfullscreenchange="changeHiddenBtns" :poster="product.cover_url?product.cover_url:''" id="myVideo1" ref="video1" show-center-play-btn	 controls>
 					<!-- #ifdef APP-PLUS -->
 					<!-- <cover-image v-if="showVideo" class="imgms" src="/static/back.png" @click="goBack" ></cover-image>
 					<cover-image v-if="showVideo" class="carts" src="/static/cart.png" @click="goCart" ></cover-image> -->
