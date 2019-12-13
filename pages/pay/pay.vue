@@ -116,7 +116,7 @@
 		<div class="order_total" :style="{'z-index': zIndex}">
 			<div class="totalinfo">
 				<div class="info">共{{orderInfo.prod_list.length}}件商品 总计：<span class="mbxa">￥<span>{{orderInfo.Order_Fyepay}}</span></span></div>
-				<div class="tips">*本次购物一共可获得{{orderInfo.Integral_Get}}积分</div>
+				<view class="tips" v-if="orderInfo.obtain_desc">{{orderInfo.obtain_desc}}</view>
 			</div>
 			<view class="mx" @click="seeDetail">明细 <image class="image" :class="isSlide?'slidedown':''" src="../../static/top.png"></image></view>
 			<div class="submit" @click="submit">去支付</div>
@@ -198,7 +198,7 @@
 				pagefrom: 'check', // 页面来源，支付成功跳转路径不同
 				isSlide: false, // 明细是否已经打开
 				isGetOrder: false, // orderinfo 数据是否已拿到，防止页面报错
-				zIndex: 999
+				zIndex: 99
 			}
 		},
 		onLoad(options) {
@@ -272,13 +272,15 @@
 				}else {
 					this.$refs.popupMX.close();
 					setTimeout(()=>{
-						this.zIndex = 99999;
+						this.zIndex = 99;
 					},500)
 				}
 				this.isSlide = !this.isSlide;
 			},
 			handClicked(){
-				this.zIndex = 99999;
+				setTimeout(() => {
+					this.zIndex = 99;
+				}, 500);
 				this.isSlide = false;
 			},
 			// 订单详情
@@ -413,6 +415,11 @@
 			},
 			// 去支付
 			submit() {
+				setTimeout(() => {
+					this.zIndex = 99;
+					this.isSlide = false;
+				}, 500);
+				this.$refs.popupMX.close();
 				// 如果用户全部使用了余额支付，就不要走弹窗再选择支付方式了,直接输入密码
 				if(this.pay_money == 0) {
 					this.password_input = true;
