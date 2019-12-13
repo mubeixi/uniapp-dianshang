@@ -51,23 +51,26 @@
 			</view>
 		</view>
 		<circleTitle title="股东门槛说明"></circleTitle>
-		<view class="xiang">
+		<view class="xiang" v-for="(item,index) of pro.sha_config.Sha_Rate" :key="index" v-if="item.sha_name">
+			<view class="xiangTop">
+				{{item.sha_name}}
+			</view>
 			<view class="xiangCenter">
 				<view class="xiangLeft">
 					申请条件:
 				</view>
 				<view class="xiangRight">
-					<view  class="view" v-if="pro.sha_config.Sha_Rate.sha.Level>0">
-						分销商等级:{{pro.sha_config.Sha_Rate.sha.Level_name}}
+					<view  class="view" v-if="item.Level_name">
+						分销商等级:{{item.Level_name}}
 					</view>
-					<view  class="view" v-if="pro.sha_config.Sha_Rate.sha.Protitle>0">
-						爵位等级:{{pro.sha_config.Sha_Rate.sha.Protitle_name}}
-					</view>
-					<view  class="view">
-						个人消费额:{{pro.sha_config.Sha_Rate.sha.Selfpro}}
+					<view  class="view" v-if="item.nobi_level">
+						爵位等级:{{item.nobi_level}}
 					</view>
 					<view  class="view">
-						团队销售额:{{pro.sha_config.Sha_Rate.sha.Teampro}}
+						个人消费额:{{item.self_pay}}
+					</view>
+					<view  class="view">
+						团队销售额:{{item.team_sales}}
 					</view>
 				</view>
 			</view>
@@ -76,7 +79,7 @@
 					所需金额:
 				</view>
 				<view class="xiangBottomB">
-					¥<text class="text">{{pro.sha_config.Sha_Rate.sha.price}}</text>(<block v-if="!pro.is_apply">暂未达到申请条件</block><block v-if="pro.is_apply">已达到申请条件</block>)
+					¥<text class="text">{{item.price}}</text><block v-if="item.is_apply">(已达到申请条件)</block>
 				</view>
 			</view>
 		</view>
