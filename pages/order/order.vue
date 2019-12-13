@@ -47,7 +47,7 @@
 						</div>
 					</div>
 				</block>
-				<div class="text-right total">共{{item.prod_list.length}}件商品 合计：<span class="price"><span>￥</span> {{item.Order_Fyepay}}</span></div>
+				<div class="text-right total">共{{item.prod_list.length}}件商品 实付：<span class="price"><span>￥</span> {{item.Order_TotalPrice}} <block v-if="item.Order_Shipping.Price>0">(含运费{{item.Order_Shipping.Price}}元)</block></span></div>
 				<div class="btn-group" v-if="item.Order_Status==0">
 					<span @click.stop="cancelOrder(item.prod_list,index)">取消订单</span>
 				</div>
@@ -248,6 +248,7 @@ export default {
 			getOrder(data).then(res=>{
 				if(res.errorCode==0){
 					for(var i in res.data) {
+						res.data[i].Order_Shipping=JSON.parse(res.data[i].Order_Shipping)
 						for(var m in res.data[i]){
 							if(m == 'prod_list'){
 								for(var j in res.data[i][m]) {
