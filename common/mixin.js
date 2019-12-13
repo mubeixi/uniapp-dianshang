@@ -80,10 +80,31 @@ export const WX_JSSDK_INIT = (vm,jsApiListList) => new Promise((resolve, reject)
 import {buildSharePath} from "./tool";
 
 /**
+ * 统计的混合类
+ */
+import {sendAnalysisData} from "./fetch";
+export const Analysis = {
+	mounted() {
+
+
+		this.$nextTick().then(()=>{
+			let currentPageInstance = getCurrentPages()
+			const currentPageName = currentPageInstance[currentPageInstance.length-1].route
+			if(!currentPageName)return;
+
+			sendAnalysisData({url:currentPageName}).then(res=>{}).catch(e=>{})
+
+		})
+	}
+}
+
+
+/**
  *
  * @type {{methods, onLoad(*): (undefined), mounted(): void}}
  */
 export const pageMixin = {
+	// mixins:[Analysis],//启用统计
 	data: function () {
 		return {
 			//是否需要刷新配置，可以实现页面级配置
@@ -99,8 +120,7 @@ export const pageMixin = {
 	//页面的初始化
 	onLoad(option) {
 
-		let currentPageInstance = getCurrentPages()
-		console.log('current pageName is'+currentPageInstance[currentPageInstance.length-1].route)
+
 		let owner_id = null,users_id = null
 		// #ifdef H5
 
@@ -329,6 +349,7 @@ export const payMixin = {
 
 	},
 }
+
 
 
 
