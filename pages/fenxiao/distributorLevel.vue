@@ -71,22 +71,23 @@
 					</view>
 					
 					<view class="productList" v-if="dis_level[inds].level_rules_edit.buy_prod.value.type=='2'">
-						<view class="myProduct" v-for="(item,index) in dis_level[inds].level_rules_edit.buy_prod.data" :key="index">
-							<image class="imgPro" :src="item.ImgPath" @click="goDetail(item.Products_ID)"></image>
-							<view class="proText">
-								{{item.Products_Name}}
-							</view>
-							<view class="buttonLast">
-								<view class="priceAll">
-									<text class="priceText">¥</text>
-									{{item.Products_PriceX}}
+						<block v-for="(item,index) in dis_level[inds].level_rules_edit.buy_prod.data" :key="index">
+							<view class="myProduct"  @click="goDetail(item.Products_ID)">
+								<image class="imgPro" :src="item.ImgPath" ></image>
+								<view class="proText">
+									{{item.Products_Name}}
 								</view>
-								<view class="proDetail" @click="goDetail(item.Products_ID)">
-									去购买
+								<view class="buttonLast">
+									<view class="priceAll">
+										<text class="priceText">¥</text>
+										{{item.Products_PriceX}}
+									</view>
+									<view class="proDetail" >
+										去购买
+									</view>
 								</view>
 							</view>
-						</view>
-									
+						</block>			
 					</view>
 				</view>
 				<!-- 商品购买几次 -->
@@ -144,7 +145,10 @@
 							送余额({{dis_level[inds].level_rules_edit.direct_buy.value.present}}元)
 						</view>
 					</view>
-					<view class="submit" @click="buyDis(dis_level[inds].Level_ID)">
+					<view class="submit submitMbx" v-if="dis_level[inds].buy_order.Order_Status==4">
+						已完成
+					</view>	
+					<view class="submit" @click="buyDis(dis_level[inds].Level_ID)" v-else >
 						去购买
 					</view>		
 				</view>
@@ -176,10 +180,10 @@
 							</view>
 						</view>
 						<block v-if="ind==0">
-							<view class="submit submitMbx" v-if="dis_level[inds].level_rules_edit.direct_sons .user_data>0">
+							<view class="submit submitMbx" v-if="dis_level[inds].level_rules_edit.direct_sons.user_data.is_completed==1">
 								已完成
 							</view>
-							<view class="submit">
+							<view class="submit" @click="goFenxiao">
 								去邀请
 							</view>
 						</block>
@@ -198,10 +202,10 @@
 							</view>
 						</view>
 						<block v-if="ind==0">
-							<view class="submit submitMbx" v-if="dis_level[inds].level_rules_edit.team_sons.user_data>0">
+							<view class="submit submitMbx" v-if="dis_level[inds].level_rules_edit.team_sons.user_data.is_completed==1">
 								已完成
 							</view>
-							<view class="submit">
+							<view class="submit" @click="goFenxiao">
 								去邀请
 							</view>
 						</block>
@@ -243,6 +247,11 @@
 			...mapGetters(['userInfo'])
 		},
 		methods:{
+			goFenxiao(){
+				uni.switchTab({
+					url:"/pages/fenxiao/fenxiao"
+				})
+			},
 			//申请成为分销商
 			edit(id){
 				uni.navigateTo({
@@ -261,8 +270,6 @@
 				})
 			},
 			goDetail(id){
-				console.log("1111")
-				return
 				uni.navigateTo({
 					url:'/pages/detail/detail?Products_ID='+id
 				})
