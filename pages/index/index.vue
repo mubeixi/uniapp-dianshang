@@ -79,9 +79,12 @@
 			// 	})
 			// }
 			//暂停播放
-			this.$refs.video.map(item=>{
-				item.pauseFn()
-			})
+			if(this.$refs.video){
+				this.$refs.video.map(item=>{
+					item.pauseFn()
+				})
+			}
+
 		},
 		onShow(){
 
