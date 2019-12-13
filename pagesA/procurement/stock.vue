@@ -167,7 +167,6 @@
                 postData: {
                     prod_id: 0,    //产品ID  在 onLoad中赋值
                     attr_id: 0,    //选择属性id
-                    count: 10,         //选择属性的库存
                     // showimg: '',      //选择属性的图片(用产品图片代替)
                     qty: 1,           //购买数量
                     productDetail_price: 0
@@ -404,19 +403,9 @@
                 //属性判断
                 if (attr_val) {
                     this.postData.attr_id = attr_val.Product_Attr_ID;   //选择属性的id
-                    this.postData.count = attr_val.Property_count;   //选择属性的库存
                     // this.postData.showimg = typeof attr_val.Attr_Image != 'undefined' && attr_val.Attr_Image != '' ? attr_val.Attr_Image : this.product.Products_JSON['ImgPath'][0];// 选择属性的图片
                     this.postData.productDetail_price = attr_val.Attr_Price?attr_val.Attr_Price:this.prosku.Products_PriceX; // 选择属性的价格
                     this.submit_flag = (!this.check_attr || Object.getOwnPropertyNames(this.check_attr).length != Object.getOwnPropertyNames(this.prosku.skujosn).length) ? false : true;
-                }
-                //判断属性库存
-                if (attr_val && attr_val.Property_count <= 0) {
-                    // wx.showToast({
-                    //     title: '您选择的 ' + check_attrnames + ' 库存不足，请选择其他属性',
-                    //     icon: 'none'
-                    // })
-                    this.submit_flag =  false;
-                    return false;
                 }
                 this.check_attr = {};
                 this.check_attr = check_attr;
@@ -528,15 +517,17 @@
                 this.isShowStoreMsg = false;
             },
             plus(){
-                if (this.postData.qty < this.postData.count) {
-                    this.postData.qty = Number(this.postData.qty) + 1;
-                }else {
-                    uni.showToast({
-                        title: '购买数量不能大于库存量',
-                        icon: 'none',
-                    });
-                    this.postData.qty = this.postData.count;
-                }
+                // 进货不用限制数量
+                 this.postData.qty = Number(this.postData.qty) + 1;
+                // if (this.postData.qty < this.postData.count) {
+                //     this.postData.qty = Number(this.postData.qty) + 1;
+                // }else {
+                //     uni.showToast({
+                //         title: '购买数量不能大于库存量',
+                //         icon: 'none',
+                //     });
+                //     this.postData.qty = this.postData.count;
+                // }
             },
             minus(){
                 if (this.postData.qty > 1) {
@@ -556,7 +547,6 @@
                 this.submit_flag = true;
                 this.postData.attr_id = 0;
                 this.postData.prod_id = item.Products_ID;
-                this.postData.count = item.Products_Count;
                 if(item.skujosn) {
                     let skujosn = item.skujosn;
                     let skujosn_new = [];
