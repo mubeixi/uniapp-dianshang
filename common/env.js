@@ -7,14 +7,14 @@ export const APP_USERS_ID = 'wkbq6nc2kc';//'	mrw5iqvhs2  wkbq6nc2kc';
 
 // #ifdef H5
 console.log('NODE_ENV is '+isDev);
-export const apiBaseUrl = isDev?'':'https://new401.bafangka.com';//h5调试为了跨域https://new401.bafangka.com
+export const apiBaseUrl = isDev?'':'http://www.qiyeban.com';//h5调试为了跨域https://new401.bafangka.com
 // #endif
 
 // #ifndef H5
-export const apiBaseUrl = 'https://new401.bafangka.com';
+export const apiBaseUrl = 'http://www.qiyeban.com';
 // #endif
 
-export const staticUrl = 'https://new401.bafangka.com';
+export const staticUrl = 'http://www.qiyeban.com';
 
 export const apiKey = '458f_$#@$*!fdjisdJDFHUk4%%653154%^@#(FSD#$@0-T';
 
