@@ -76,7 +76,7 @@
 			<view class="order_total">
 				<view class="totalinfo">
 					<view class="info">共{{orderInfo.prod_count}}件商品 总计：<text class="money"><text class="m_icon">￥</text> {{orderInfo.Order_Fyepay}}</text></view>
-					<view class="tips">*本次购物一共可获得{{orderInfo.Integral_Get}}积分</view>
+					<view class="tips" v-if="orderInfo.obtain_desc">{{orderInfo.obtain_desc}}</view>
 				</view>
 				<form report-submit @submit="form_submit">
 					<button formType="submit" class="submit">确定领取</button>

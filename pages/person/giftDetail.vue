@@ -92,7 +92,7 @@
 		<div class="order_total">
 			<div class="totalinfo">
 				<div class="info">共{{orderInfo.prod_list.length}}件商品 总计：<span class="mbxa">￥<span>{{orderInfo.Order_Fyepay}}</span></span></div>
-				<div class="tips">*本次购物一共可获得{{orderInfo.Integral_Get}}积分</div>
+				<view class="tips" v-if="orderInfo.obtain_desc">{{orderInfo.obtain_desc}}</view>
 			</div>
 			<div class="btn-group" v-if="orderInfo.Order_Status==2">
 			    <span class="active">等待卖家发货</span>
