@@ -97,9 +97,9 @@
                 <view class="skulist">
                     <view class="sku-name">数量</view>
                     <view class="sku-item">
-                        <view class="handle" @click="minus">-</view>
+                        <view class="handle" @click="minus"><view class="handle-bg">-</view></view>
                         <view class="pro-num">{{postData.qty}}</view>
-                        <view class="handle" @click="plus">+</view>
+                        <view class="handle" @click="plus"><view class="handle-bg">+</view></view>
                     </view>
                 </view>
                 <view class="sku-btns">
@@ -159,6 +159,7 @@
                 zIndex: 100,
                 type: 1, // 1表示进货记录  2表示门店信息,
                 purchase_store_sn: '', // 门店编码
+                purchase_store_id: 0, // 门店id
                 prolist: [], // 产品列表
                 prosku: {}, // 属性弹窗的产品
                 check_attr: {},
@@ -202,6 +203,7 @@
                 this.is_pingtai = 0;
                 // 获取门店产品
                 this.purchase_store_sn = options.purchase_store_sn;
+                this.purchase_store_id = options.purchase_store_id;
                 this.getStoreDetail();
                 this.getProlist();
             }else {
@@ -291,20 +293,8 @@
             },
             // 提交进货单
             submit(){
-                console.log(this.cartList)
-                let obj = {}
-                for(let i in this.cartList){
-                    for(let j in this.cartList[i]){
-                        if(obj[i]) {
-                            obj[i].push(j)
-                        }else {
-                            obj[i] = [j]
-                        }
-                    }
-                }
                 createOrder({
-                    cart_key: 'CartList',
-                    cart_buy: obj && JSON.stringify(obj)
+                    cart_key: 'StorePifa',
                 }).then(res=>{
                     uni.showToast({
                         title: res.msg
@@ -319,7 +309,7 @@
             // 更新购物车中产品的数量，数量-1
             reduce(pro_id,attr_id) {
                 updateCart({
-                    cart_key: 'CartList',
+                    cart_key: 'StorePifa',
                     prod_id: pro_id,
                     qty: -1,
                     attr_id: attr_id,
@@ -335,7 +325,7 @@
             // 数量加1
             increase(pro_id,attr_id){
                 updateCart({
-                    cart_key: 'CartList',
+                    cart_key: 'StorePifa',
                     prod_id: pro_id,
                     qty: 1,
                     attr_id: attr_id,
@@ -356,7 +346,7 @@
                 }
                 console.log(obj)
                 delCart({
-                    cart_key: 'CartList',
+                    cart_key: 'StorePifa',
                     prod_attr: JSON.stringify(obj)
                 }).then(res=>{
                     uni.showToast({
@@ -368,7 +358,8 @@
             // 商品添加到了购物车中，获取购物车产品
             get_cart(){
                 getCart({
-                    cart_key: 'CartList'
+                    cart_key: 'StorePifa',
+                    store_pifa_receive_id: this.purchase_store_id
                 }).then(res=>{
                     console.log(res)
                     this.cartList = res.data.CartList;
@@ -597,7 +588,7 @@
                     return;
                 }
                 updateCart({
-                    cart_key: 'CartList',
+                    cart_key: 'StorePifa',
                     prod_id: this.postData.prod_id,
                     qty: this.postData.qty,
                     attr_id: this.postData.attr_id,
@@ -691,13 +682,16 @@
                         color: #fff;
                     }
                     .handle {
+											padding: 16rpx;
+											.handle-bg {
                         width: 50rpx;
                         height: 45rpx;
                         line-height: 45rpx;
                         text-align: center;
-                        font-size: 32rpx;
+                        font-size: 20px;
                         color: #777;
                         background: #f6f6f6;
+											}
                     }
                     .pro-num {
                         margin: 0 15rpx;
