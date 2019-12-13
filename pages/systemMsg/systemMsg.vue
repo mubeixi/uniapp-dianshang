@@ -90,6 +90,8 @@
 	background-color: #F8F8F8;
 	box-sizing: border-box;
 	min-height: 100vh;
+	width: 750rpx;
+	overflow-x: hidden;
 }
 .centers{
 	margin: 0 auto;

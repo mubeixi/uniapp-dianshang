@@ -455,7 +455,8 @@ export default {
 			.filter{
 				display: block;
 				line-height: 60rpx;
-				padding-right: 6px;
+				//padding-right: 6px;
+				margin-right: 20px;
 			}
 
 		}
