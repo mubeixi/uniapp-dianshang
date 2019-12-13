@@ -279,7 +279,7 @@
 				this.Level_Description=this.dis_level[this.inds].Level_Description
 			},
 			disApplyInit(){
-				disApplyInit().then(res=>{
+				disApplyInit({},{tip:'正在加载中',mask:true}).then(res=>{
 					this.pro=res.data;
 					this.dis_level=res.data.dis_level
 					if(this.pro.user_info.Level_ID=='0'){
