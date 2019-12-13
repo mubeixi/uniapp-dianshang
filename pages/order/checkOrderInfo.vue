@@ -56,7 +56,7 @@
             <div class="row"><div class="label">付款时间</div><div class="form-item">{{orderInfo.Pay_time | formatTime}}</div></div>
         </div>
 
-        <div class="subbox">
+        <div class="subbox" v-if="orderInfo.Order_Status==2">
             <button @click="subFn" class="subbtn" type="warn">立即核销</button>
         </div>
 
@@ -157,11 +157,12 @@
                 confirm(confirmConf).then(res=>{
 
 					//需要跳转到一个页面
-                    setTimeout(()=>{
-                        uni.navigateTo({
-                            url:'/pages/order/checkChannel'
-                        })
-                    },1000)
+                    // setTimeout(()=>{
+                    //     uni.navigateTo({
+                    //         url:'/pages/order/checkChannel'
+                    //     })
+                    // },1000)
+                    uni.navigateBack()
 
                 }).catch(err=>{
                     uni.switchTab({

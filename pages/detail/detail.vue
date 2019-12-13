@@ -93,14 +93,16 @@
         </block>
     </div>
     <!-- 商品详情 -->
-    <div class="pro_detail" v-if="isLoad">
+    <div class="pro_detail" >
         <div class="p_detail_title bgwhite">商品详情</div>
+
+		<u-parse :content="product.Products_Description|formatRichTextByUparse" ></u-parse>
 		<!-- #ifdef H5||APP-PLUS -->
-		<div v-html="formatRichTexts(product.Products_Description)" class="p_detail_des"></div>
+		<!-- <div v-html="formatRichTexts(product.Products_Description)" class="p_detail_des"></div> -->
 		<!-- #endif -->
 
 		<!-- #ifdef MP -->
-		<rich-text :nodes="product.Products_Description|formatRichText" class="p_detail_des"></rich-text>
+		<!-- <rich-text :nodes="product.Products_Description|formatRichText" class="p_detail_des"></rich-text> -->
 		<!-- #endif -->
 
     </div>
@@ -376,44 +378,56 @@ export default {
 		...mapState(['initData'])
 	},
 	filters: {
-				/**
-				 * 处理富文本里的图片宽度自适应
-				 * 1.去掉img标签里的style、width、height属性
-				 * 2.img标签添加style属性：max-width:100%;height:auto
-				 * 3.修改所有style里的width属性为max-width:100%
-				 * 4.去掉<br/>标签
-				 * @param html
-				 * @returns {void|string|*}
-				 */
+		formatRichTextByUparse(html){
+			if(!html) return;
+			let newContent= html.replace(/<embed[^>]*>/gi,function(match,capture){
+				match = match.replace(/embed/gi, 'video')
+				match = match.replace(/width="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
+				match = match.replace(/height="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
+				match = match.replace(/type="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
 
-				formatRichText (html) { //控制小程序中图片大小
-					if(!html) return;
-				    let newContent= html.replace(/<img[^>]*>/gi,function(match,capture){
-				        match = match.replace(/style="[^"]+"/gi, '')//.replace(/style='[^']+'/gi, '');
-				        match = match.replace(/width="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
-				        match = match.replace(/height="[^"]+"/gi, '')//.replace(/height='[^']+'/gi, '');
-				        return match;
-				    });
-					newContent= newContent.replace(/<div[^>]*>/gi,function(match,capture){
-					    match = match.replace(/style="[^"]+"/gi, '')//.replace(/style='[^']+'/gi, '');
-					    match = match.replace(/width="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
-					    match = match.replace(/height="[^"]+"/gi, '')//.replace(/height='[^']+'/gi, '');
-					    return match;
-					});
-					newContent= newContent.replace(/<p[^>]*>/gi,'');
-					newContent= newContent.replace(/<[/]p[^>]*>/gi,'');
-				    newContent = newContent.replace(/style="[^"]+"/gi,function(match,capture){
-				        match = match.replace(/width:[^;]+;/gi, 'width:100%;').replace(/width:[^;]+;/gi, 'width:100%;');
-				        return match;
-				    });
+				return match;
+			});
+			return newContent
+		},
+		/**
+		 * 处理富文本里的图片宽度自适应
+		 * 1.去掉img标签里的style、width、height属性
+		 * 2.img标签添加style属性：max-width:100%;height:auto
+		 * 3.修改所有style里的width属性为max-width:100%
+		 * 4.去掉<br/>标签
+		 * @param html
+		 * @returns {void|string|*}
+		 */
 
-				    newContent = newContent.replace(/<br[^>]*\/>/gi, '');
-				    newContent = newContent.replace(/\<img/gi, '<img style="width:100%;float:left;"');
-					//newContent = newContent.replace(/>[\s]*</gi, "><");
+		formatRichText (html) { //控制小程序中图片大小
+			if(!html) return;
+			let newContent= html.replace(/<img[^>]*>/gi,function(match,capture){
+				match = match.replace(/style="[^"]+"/gi, '')//.replace(/style='[^']+'/gi, '');
+				match = match.replace(/width="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
+				match = match.replace(/height="[^"]+"/gi, '')//.replace(/height='[^']+'/gi, '');
+				return match;
+			});
+			newContent= newContent.replace(/<div[^>]*>/gi,function(match,capture){
+				match = match.replace(/style="[^"]+"/gi, '')//.replace(/style='[^']+'/gi, '');
+				match = match.replace(/width="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
+				match = match.replace(/height="[^"]+"/gi, '')//.replace(/height='[^']+'/gi, '');
+				return match;
+			});
+			newContent= newContent.replace(/<p[^>]*>/gi,'');
+			newContent= newContent.replace(/<[/]p[^>]*>/gi,'');
+			newContent = newContent.replace(/style="[^"]+"/gi,function(match,capture){
+				match = match.replace(/width:[^;]+;/gi, 'width:100%;').replace(/width:[^;]+;/gi, 'width:100%;');
+				return match;
+			});
 
-				    return newContent;
-				}
-			},
+			newContent = newContent.replace(/<br[^>]*\/>/gi, '');
+			newContent = newContent.replace(/\<img/gi, '<img style="width:100%;float:left;"');
+			//newContent = newContent.replace(/>[\s]*</gi, "><");
+
+			return newContent;
+		}
+	},
     methods: {
 		async _init_func(option){
 
