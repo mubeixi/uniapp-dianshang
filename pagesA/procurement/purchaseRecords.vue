@@ -254,7 +254,7 @@
 				}
 				storePifaOrderCalc({store_id:this.Stores_ID,order_id:id,prod_json:JSON.stringify(data)}).then(res=>{
 					this.orderList[index].Order_TotalPrice=res.data.Order_TotalPrice
-				}).catch(e=>{console.log(e)})
+				}).catch(e=>{console.log(e);this.orderList[index].prod_list[ind].prod_count--;})
 
 			},
 			minus(index,ind,it,id){
@@ -267,7 +267,7 @@
 					}
 					storePifaOrderCalc({store_id:this.Stores_ID,order_id:id,prod_json:JSON.stringify(data)}).then(res=>{
 						this.orderList[index].Order_TotalPrice=res.data.Order_TotalPrice
-					}).catch(e=>{console.log(e)})
+					}).catch(e=>{console.log(e);this.orderList[index].prod_list[ind].prod_count++})
 			    } else {
 			        uni.showToast({
 			            title: '购买数量不能小于0',

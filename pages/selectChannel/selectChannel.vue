@@ -38,7 +38,7 @@
 		   <scroll-view  scroll-y="true" class="scroll-Y" >
 		       <block v-if="stores.length>0">
 		           <view>
-		               <label class="item padding10" v-for="(store,idx) in stores" :key="idx" @click="gostock(store.stores_sn)">
+		               <label class="item padding10" v-for="(store,idx) in stores" :key="idx" @click="gostock(store.stores_sn, store.Stores_ID)">
 		                   <image class="logo" :src="store.Stores_ImgPath|domain" />
 		                   <view class="info">
 		                       <div class="flex flex-between">
@@ -384,7 +384,7 @@
 
 			},
 			// 点击门店跳转去相应门店退货
-			gostock(stores_sn) {
+			gostock(stores_sn, stores_id) {
 				if(!this.is_purchase) {
 					if(this.is_stock_records) {
 					//	进货记录过来的，直接修改进货记录的渠道，完成了跳转回去
@@ -404,7 +404,7 @@
 					}else {
 						//普通进货页面跳转过来的
 						uni.navigateTo({
-							url: '/pagesA/procurement/stock?purchase_store_sn=' + stores_sn
+							url: '/pagesA/procurement/stock?purchase_store_sn=' + stores_sn + '&purchase_store_id=' + stores_id
 						})
 					}
 				}else {

@@ -5,11 +5,11 @@
 					<text class="area-label">请选择省市县</text>
 					<picker mode="multiSelector" style="flex:1;" @change="bindMultiPickerChange" @columnchange="bindMultiPickerColumnChange" :value="change_multiIndex" :range="change_objectMultiArray" range-key="name">
 						<view class="picker">
-							<view class="p_item" v-if="!address_info.Address_Province">选择省份</view>
+							<view class="p_item" v-if="!address_info.Stores_Province">选择省份</view>
 							<view class="p_item" v-else>{{objectMultiArray[0][multiIndex[0]]['name']}}</view>
-							<view class="p_item" v-if="!address_info.Address_City">选择城市</view>
+							<view class="p_item" v-if="!address_info.Stores_City">选择城市</view>
 							<view class="p_item" v-else>{{objectMultiArray[1][multiIndex[1]]['name']}}</view>
-							<view class="p_item" v-if="!address_info.Address_Area">选择地区</view>
+							<view class="p_item" v-if="!address_info.Stores_Area">选择地区</view>
 							<view class="p_item" v-else>{{objectMultiArray[2][multiIndex[2]]['name']}}</view>
 						</view>
 					</picker>
@@ -83,8 +83,22 @@
 				getStoreDetail({store_id:this.Stores_ID}).then(res=>{
 					var addressInfo = res.data;
 					this.storeData=res.data
-
-					this.User_Address=this.storeData.Stores_Address
+					this.User_Address=this.storeData.Stores_Address;
+					//初始化地址选择数据
+					let objectMultiArray = [
+					  utils.array_change(area.area[0]['0']),
+					  utils.array_change(area.area[0]['0,' + addressInfo['Stores_Province']]),
+					  utils.array_change(area.area[0]['0,' + addressInfo['Stores_Province'] + ',' + addressInfo['Stores_City']])
+					];
+					//设置初始显示列
+					let multiIndex = [
+					  utils.get_arr_index(objectMultiArray[0], addressInfo['Stores_Province']),
+					  utils.get_arr_index(objectMultiArray[1], addressInfo['Stores_City']),
+					  utils.get_arr_index(objectMultiArray[2], addressInfo['Stores_Area'])
+					];
+					this.address_info = addressInfo;
+					this.objectMultiArray = objectMultiArray;
+					this.multiIndex = multiIndex;
 				}).catch(e=>{
 					console.log(e)
 				})

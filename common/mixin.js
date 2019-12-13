@@ -99,6 +99,8 @@ export const pageMixin = {
 	//页面的初始化
 	onLoad(option) {
 
+		let currentPageInstance = getCurrentPages()
+		console.log('current pageName is'+currentPageInstance[currentPageInstance.length-1].route)
 		let owner_id = null,users_id = null
 		// #ifdef H5
 
