@@ -16,7 +16,7 @@
 				<view class="nickName" v-if="userInfo.User_ID&&userInfo.Is_Distribute==1">
 					{{data.disInfo.Shop_Name}}
 				</view>
-				<view class="putong" v-if="userInfo.User_ID&&userInfo.Is_Distribute==1">
+				<view class="putong" v-if="userInfo.User_ID&&userInfo.Is_Distribute==1"   @click="goDistributor">
 					{{data.disInfo.Level_Name}}
 				</view>
 			</div>
@@ -179,12 +179,12 @@
 			},
 			goDistributor(){
 				//跳转成为分销商
-				// uni.navigateTo({
-				// 	url:'/pages/fenxiao/distributorLevel'
-				// })
 				uni.navigateTo({
-					url:'/pagesA/fenxiao/disAgreementBefore'
+					url:'/pages/fenxiao/distributorLevel'
 				})
+				// uni.navigateTo({
+				// 	url:'/pagesA/fenxiao/disAgreementBefore'
+				// })
 			},
 			goLogin(){
 				//直接跳转取登录
