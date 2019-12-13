@@ -106,9 +106,7 @@
 		<!-- #endif -->
 
     </div>
-	<div style="clear: both;">
-
-	</div>
+	<div style="clear: both;"></div>
     <div style="height:60px;background: white;"></div>
 	<bottom @cartHandle="addCart" @directHandle="directBuy" @goGet="lingqu" @collect="collect" :collected="isCollected" :recieve="recieve" :isVirtual="isVirtual" :canSubmit="canSubmit"></bottom>
   	<div class="safearea-box"></div>
@@ -320,6 +318,21 @@ export default {
 	mounted(){
 		let _self = this
 		this.$nextTick().then(res=>{
+
+			// #ifdef APP-PLUS
+			var icon = plus.nativeObj.View.getViewById("icon");
+			var icons = plus.nativeObj.View.getViewById("icons");
+			console.log(icon,"sssssssssssssssssssssss")
+			if(icon&&icons){
+				icon.show();
+				icons.show();
+			}else{
+				_self.createtab();
+				_self.createtabs();
+			}
+			// #endif
+
+
 			if(_self.$refs.cartPopu){
 				_self.$refs.cartPopu.close()
 			}
@@ -336,18 +349,7 @@ export default {
 
 	},
 	onShow(){
-		// #ifdef APP-PLUS
-		var icon = plus.nativeObj.View.getViewById("icon");
-		var icons = plus.nativeObj.View.getViewById("icons");
-		console.log(icon,"sssssssssssssssssssssss")
-		if(icon&&icons){
-			icon.show();
-			icons.show();
-		}else{
-			this.createtab();
-			this.createtabs();
-		}
-		// #endif
+
 
 	},
 	onUnload(){
@@ -454,49 +456,59 @@ export default {
 
 		},
 		createtab: function(){
-		        // 设置水平居中位置
-				var bitmap = new plus.nativeObj.Bitmap('bmp1');
-		        var view = new plus.nativeObj.View('icon', {
-		            top: '30px',
-		            left: '10px',
-		            width: '30px',
-		            height: '30px'
-		        });
-		        view.drawBitmap('/static/back.png', {
-		            top: '0px',
-		            left: '0px',
-		            width: '100%',
-		            height: '100%'
-		        });
-		        view.addEventListener("click", function(e) {
-		           uni.navigateBack({
-		               delta: 1
-		           });
-		        }, false);
-		        view.show();
-		    },
-			createtabs: function(){
-			        // 设置水平居中位置
-					var bitmap = new plus.nativeObj.Bitmap('bmp2');
-			        var view = new plus.nativeObj.View('icons', {
-			            top: '30px',
-			            right: '10px',
-			            width: '30px',
-			            height: '30px'
-			        });
-			        view.drawBitmap('/static/cart.png', {
-			            top: '0px',
-			            left: '0px',
-			            width: '100%',
-			            height: '100%'
-			        });
-			        view.addEventListener("click", function(e) {
-			          uni.switchTab({
-			          	url: '../order/cart'
-			          })
-			        }, false);
-			        view.show();
-			    },
+			// 设置水平居中位置
+			var bitmap = new plus.nativeObj.Bitmap('bmp1');
+
+
+
+			var view = new plus.nativeObj.View('icon', {
+				top: '30px',
+				left: '10px',
+				width: '30px',
+				height: '30px'
+			});
+			view.drawBitmap('/static/back.png', {
+				top: '0px',
+				left: '0px',
+				width: '100%',
+				height: '100%'
+			});
+			view.addEventListener("click", function(e) {
+			   uni.navigateBack({
+				   delta: 1
+			   });
+			}, false);
+			console.log('成功创建')
+			view.show();
+		},
+		createtabs: function(){
+
+			const res = uni.getSystemInfoSync();
+			const fullWidth = res.screenWidth;
+
+			let leftOffset = fullWidth-40
+			console.log('第二个的left为'+leftOffset)
+			// 设置水平居中位置
+			var bitmap = new plus.nativeObj.Bitmap('bmp2');
+			var view = new plus.nativeObj.View('icons', {
+				top: '30px',
+				left: leftOffset +'px',
+				width: '30px',
+				height: '30px'
+			});
+			view.drawBitmap('/static/cart.png', {
+				top: '0px',
+				left: '0px',
+				width: '100%',
+				height: '100%'
+			});
+			view.addEventListener("click", function(e) {
+			  uni.switchTab({
+				url: '/pages/order/cart'
+			  })
+			}, false);
+			view.show();
+		},
 		// 开始播放事件
 		play(){
 			this.isShowBtn = false;
