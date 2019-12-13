@@ -18,6 +18,9 @@
 					</view>
 				</view>
 			</view>
+			<div class="defaults" v-if="pro.length<=0">
+				<image :src="'/static/client/defaultImg.png'|domain" ></image>
+			</div>
 	</view>
 </template>
 <script>
@@ -124,4 +127,9 @@
 		}
 	}
 }
+.defaults{
+		margin: 0 auto;
+		width: 640rpx;
+		height: 480rpx;
+	}
 </style>
