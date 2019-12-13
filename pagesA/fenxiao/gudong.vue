@@ -41,7 +41,7 @@
 						已发放佣金
 					</view>
 					<view class="moneyBottom">
-						￥<text>{{pro.total_sha}}</text>
+						￥<text>{{pro.sha_send_money}}</text>
 					</view>
 				</view>
 			</view>
@@ -83,6 +83,25 @@
 				</view>
 			</view>
 		</view>
+
+		<view style="height: 20rpx;width: 100%;"></view>
+		<circleTitle title="收益介绍"></circleTitle>
+		<view class="shouyi">
+			<view class="tt">
+				<view class="view" :class="{rightZ:index==pro.sha_config.Sha_Rate.length-1}" v-for="(item,index) of pro.sha_config.Sha_Rate" :key="index">
+					{{item.sha_name}}
+				</view>
+			</view>
+			<view class="tt ts">
+				<view class="view" :class="{rightZ:index==pro.sha_config.Sha_Rate.length-1}" v-for="(item,index) of pro.sha_config.Sha_Rate" :key="index">
+					{{item.sha_commi_scale}}%
+				</view>
+			</view>
+		</view>
+		<view class="guize">
+			<text class="text">*</text>当平台设置股东发放的总佣金为100元时，<block v-for="(item,index) of pro.sha_config.Sha_Rate">{{item.sha_name}}<block v-if="index!=pro.sha_config.Sha_Rate.length-1">、</block></block>分别获得<block v-for="(item,index) of pro.sha_config.Sha_Rate">{{item.sha_commi_scale}}元<block v-if="index!=pro.sha_config.Sha_Rate.length-1">、</block></block>收益。
+		</view>
+
 	</view>
 </template>
 
@@ -380,6 +399,54 @@
 					font-size: 32rpx;
 				}
 			}
+		}
+	}
+	.shouyi{
+		width: 710rpx;
+		margin: 0 auto;
+		margin-bottom: 25rpx;
+		border-top: 2rpx solid  #eee;
+		border-left: 2rpx solid #eee;
+		.tt{
+			width: 710rpx;
+			/*height: 95rpx;*/
+			display: flex;
+			background-color: #E3E2E2;
+			.view{
+				flex:1;
+				/*width: 177rpx;*/
+				/*height: 95rpx;*/
+				padding: 10rpx 0;
+				line-height: 40rpx;
+				word-wrap: break-word;
+				text-align: center;
+				font-size: 26rpx;
+				color: #333333;
+				border-right: 2rpx solid #eee;
+				border-bottom: 2rpx solid #eee;
+			}
+			.rightZ{
+				/*border-right: 0rpx;*/
+			}
+		}
+		.ts{
+			background-color: #FFFFFF;
+			.view{
+				font-size: 30rpx !important;
+				color: #F43131 !important;
+				font-weight: bold;
+			}
+		}
+	}
+	.guize{
+		width: 677rpx;
+		margin-left: 21rpx;
+		margin-right: 52rpx;
+		font-size: 24rpx;
+		color: #666666;
+		padding-bottom: 100rpx;
+		.text{
+			color: #F43131;
 		}
 	}
 </style>
