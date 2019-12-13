@@ -92,7 +92,7 @@ export const Analysis = {
 			const currentPageName = currentPageInstance[currentPageInstance.length-1].route
 			if(!currentPageName)return;
 
-			sendAnalysisData({url:currentPageName}).then(res=>{}).catch(e=>{})
+			//sendAnalysisData({url:currentPageName}).then(res=>{}).catch(e=>{})
 
 		})
 	}

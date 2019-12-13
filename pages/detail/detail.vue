@@ -232,6 +232,8 @@ import {error} from "../../common";
 
 import {add_template_code} from "../../common/fetch";
 
+import {staticUrl} from "../../common/env";
+
 export default {
 	mixins:[pageMixin],
     data(){
@@ -387,6 +389,8 @@ export default {
 				match = match.replace(/width="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
 				match = match.replace(/height="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
 				match = match.replace(/type="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
+				//相对地址
+				match = match.replace(/src="\/uploadfiles/gi, `src="${staticUrl}/uploadfiles`)
 
 				return match;
 			});
