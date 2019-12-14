@@ -82,9 +82,9 @@
                     "unipush" : {}
                 },
                 "maps" : {
-                    "amap" : {
-                        "appkey_ios" : "85cd1bf51d07fa3689fe1f957f226967",
-                        "appkey_android" : "6bb1494145a23de862d82712b58c7d75"
+                    "baidu" : {
+                        "appkey_ios" : "lzyDdhz2XSHvGejtPMUGqU69SFX3Y0r0",
+                        "appkey_android" : "Wnt2hgud5MemH6Cu5cVktU9oyh7Lc0em"
                     }
                 }
             },
