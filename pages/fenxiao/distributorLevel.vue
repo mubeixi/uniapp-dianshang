@@ -27,6 +27,7 @@
 			注意：以下条件需{{dis_level[inds].arrive_limit_desc}}才能达到门槛
 		</view>
 		<view class="ruhe">
+			<block v-if="dis_level[inds].level_rules_edit.pay_money">
 				<view class="td" v-if="dis_level[inds].level_rules_edit.pay_money.checked=='1'">
 					<image class="image" src="/static/fenxiao/storeSum.png"></image>
 					<view class="mbx">
@@ -46,7 +47,8 @@
 					</view>
 					
 				</view>
-				
+			</block>
+			<block v-if="dis_level[inds].level_rules_edit.buy_prod">
 				<view class="td" style="display: block;height: auto;" v-if="dis_level[inds].level_rules_edit.buy_prod.checked=='1'">
 					<view class="td" style="border-bottom: 0px;">
 						<image class="image" src="/static/fenxiao/buyPro.png"></image>
@@ -90,6 +92,9 @@
 						</block>			
 					</view>
 				</view>
+			</block>	
+				
+			<block v-if="dis_level[inds].level_rules_edit.buy_times">
 				<!-- 商品购买几次 -->
 				<view class="td" v-if="dis_level[inds].level_rules_edit.buy_times.checked=='1'">
 					<image class="image" src="/static/fenxiao/proCount.png"></image>
@@ -109,6 +114,9 @@
 					</view>
 					
 				</view>
+			</block>	
+			
+			<block v-if="dis_level[inds].level_rules_edit.team_sales">
 				<!-- 团队销售额 -->
 				<view class="td" v-if="dis_level[inds].level_rules_edit.team_sales.checked=='1'">
 					<image class="image" src="/static/fenxiao/teanSum.png"></image>
@@ -128,6 +136,9 @@
 					</view>
 					
 				</view>
+			</block>
+			
+			<block v-if="dis_level[inds].level_rules_edit.direct_buy">
 				<!-- 直接购买 -->
 				<view class="td" v-if="dis_level[inds].level_rules_edit.direct_buy.checked=='1'">
 					<image class="image" src="/static/fenxiao/disBuy.png"></image>
@@ -152,6 +163,8 @@
 						去购买
 					</view>		
 				</view>
+			</block>
+			<block v-if="dis_level[inds]">
 				<!-- 去申请 -->
 				<view class="td" v-if="dis_level[inds].arrive_limit=='2'">
 					<image class="image" src="/static/fenxiao/editS.png"></image>
@@ -167,6 +180,9 @@
 						去申请
 					</view>		
 				</view>
+			</block>
+			
+			<block v-if="dis_level[inds].level_rules_edit.direct_sons">
 				<!-- 直邀请 -->
 				<view class="td" style="display: block;height: auto;" v-if="dis_level[inds].level_rules_edit.direct_sons.checked=='1'">
 					<view class="td" style="border-bottom: 0px;" v-for="(it,ind) of dis_level[inds].level_rules_edit.direct_sons.value" :key="ind">
@@ -189,6 +205,10 @@
 						</block>
 					</view>
 				</view>
+			
+			</block>
+	
+			<block  v-if="dis_level[inds].level_rules_edit.team_son">
 				<!-- 团队 -->
 				<view class="td" style="display: block;height: auto;" v-if="dis_level[inds].level_rules_edit.team_sons.checked=='1'">
 					<view class="td" style="border-bottom: 0px;" v-for="(it,ind) of dis_level[inds].level_rules_edit.team_sons.value" :key="ind">
@@ -211,7 +231,7 @@
 						</block>
 					</view>
 				</view>
-	
+			</block>
 			
 		</view>
 		
