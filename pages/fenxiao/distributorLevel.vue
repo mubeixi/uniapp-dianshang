@@ -131,7 +131,7 @@
 					<view class="submit submitMbx" v-if="dis_level[inds].level_rules_edit.team_sales.user_data>=dis_level[inds].level_rules_edit.team_sales.value">
 						已完成
 					</view>
-					<view class="submit"    v-else>
+					<view class="submit"    v-else @click="goFenxiao()">
 						去完成
 					</view>
 					
