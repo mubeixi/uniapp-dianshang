@@ -52,8 +52,8 @@
 	import utils from '../../common/util.js';
 	import {upDateUserInfo,getTown,get_user_info} from '../../common/fetch.js';
 	import {ls} from "../../common/tool.js";
-	import {mapActions} from 'vuex'
 	import {pageMixin} from "../../common/mixin";
+	import {mapGetters,mapActions} from 'vuex';
 	export default {
 		mixins:[pageMixin],
 		data() {
@@ -87,7 +87,7 @@
 			}
 		},
 		computed: {
-			
+			...mapGetters(['userInfo'])
 		},
 		methods: {
 			...mapActions(['setUserInfo']),
@@ -149,6 +149,35 @@
 				})
 			},
 			save(){
+				if(this.type==0){
+					if(!this.User_Name){
+						uni.showToast({
+							title:'输入不能为空',
+							icon:'none'
+						})
+						return
+					}
+				}
+				if(this.type==1){
+					if(!this.User_NickName){
+						uni.showToast({
+							title:'输入不能为空',
+							icon:'none'
+						})
+						return
+					}
+				}
+				if(this.type==3){
+					if(!this.User_Email){
+						uni.showToast({
+							title:'输入不能为空',
+							icon:'none'
+						})
+						return
+					}
+				}
+				
+				
 				if(this.type == 4){
 					if(!this.address_info.User_Province || !this.address_info.User_City || !this.address_info.User_Area|| !this.address_info.User_Tow) {
 						uni.showToast({
@@ -263,6 +292,10 @@
 			  },
 		},
 		onShow(){
+			this.User_Name=this.userInfo.User_Name
+			this.User_NickName=this.userInfo.User_NickName
+			this.User_Email=this.userInfo.User_Email
+			this.dateValue=this.userInfo.User_Birthday
 			this.objectMultiArray = [
 			  utils.array_change(area.area[0]['0']),
 			  utils.array_change(area.area[0]['0,1']),

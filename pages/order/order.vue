@@ -112,11 +112,11 @@ export default {
 			});
 			this.Order_Type=option.index;
 		}
-		if(option.index=='spike'){
+		if(option.Order_Type=='spike'){
 			uni.setNavigationBarTitle({
 			    title: '我的限时抢购订单'
 			});
-		}else if(option.index=='flashsale'){
+		}else if(option.Order_Type=='flashsale'){
 			uni.setNavigationBarTitle({
 			    title: '我的秒杀订单'
 			});
