@@ -20,9 +20,9 @@
             "OAuth" : {},
             "Payment" : {},
             "Share" : {},
-            "Maps" : {},
             "VideoPlayer" : {},
-            "Push" : {}
+            "Push" : {},
+            "Maps" : {}
         },
         /* 应用发布信息 */
         "distribute" : {
