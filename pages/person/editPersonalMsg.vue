@@ -94,21 +94,26 @@
 			get_user_info(){
 				get_user_info().then(res=>{
 					let addressInfo = res.data;
+					console.log(res)
 					//初始化地址选择数据
 					let objectMultiArray = [
 					  utils.array_change(area.area[0]['0']),
 					  utils.array_change(area.area[0]['0,' + addressInfo['User_Province']]),
-					  utils.array_change(area.area[0]['0,' + addressInfo['User_Province'] + ',' + addressInfo['User_City']])
+					  utils.array_change(area.area[0]['0,' + addressInfo['User_Province'] + ',' + addressInfo['User_City']]),
+						utils.array_change(area.area[0]['0,' + addressInfo['User_Province'] + ',' + addressInfo['User_City'] + ',' + addressInfo['User_Tow']])
 					];
 					console.log(objectMultiArray)
+					console.log(addressInfo);
 					//设置初始显示列
 					let multiIndex = [
 					  utils.get_arr_index(objectMultiArray[0], addressInfo['User_Province']),
 					  utils.get_arr_index(objectMultiArray[1], addressInfo['User_City']),
-					  utils.get_arr_index(objectMultiArray[2], addressInfo['User_Area'])
+					  utils.get_arr_index(objectMultiArray[2], addressInfo['User_Area']),
+						utils.get_arr_index(objectMultiArray[3], addressInfo['User_Tow'])
 					];
-					this.address_info = {};
-					this.address_info = addressInfo;
+					this.address_info.User_Province = addressInfo.User_Province;
+					this.address_info.User_City = addressInfo.User_City;
+					this.address_info.User_Tow = addressInfo.User_Tow;
 					this.objectMultiArray = objectMultiArray;
 					this.multiIndex = multiIndex;
 					this.User_Address = addressInfo.User_Address
@@ -145,7 +150,7 @@
 			},
 			save(){
 				if(this.type == 4){
-					if(!this.address_info.Address_Province || !this.address_info.Address_City || !this.address_info.Address_Area|| !this.address_info.Address_Town) {
+					if(!this.address_info.User_Province || !this.address_info.User_City || !this.address_info.User_Area|| !this.address_info.User_Tow) {
 						uni.showToast({
 							title: '请选择完整地址',
 							icon: 'none'
@@ -163,15 +168,15 @@
 					User_Name: this.User_Name,
 					User_NickName: this.User_NickName,
 					User_Email: this.User_Email,
-					User_Province: this.address_info.Address_Province,
-					User_City: this.address_info.Address_City,
-					User_Area: this.address_info.Address_Area,
-					User_Tow: this.address_info.Address_Town,
+					User_Province: this.address_info.User_Province,
+					User_City: this.address_info.User_City,
+					User_Area: this.address_info.User_Area,
+					User_Tow: this.address_info.User_Tow,
 					User_Address: this.User_Address,
 					User_Birthday:this.dateValue
 				}).then(res=>{
 					if(res.errorCode == 0) {
-						let userInfo = this.userInfo;
+						let userInfo = res.data;
 						userInfo.User_Name = res.data.User_Name;
 						userInfo.User_NickName = res.data.User_NickName;
 						userInfo.User_Email = res.data.User_Email;
@@ -204,7 +209,7 @@
 			  },
 			  // 获取乡镇
 			address_town: function () {
-			    getTown({'a_id': this.address_info.Address_Area }).then(res => {
+			    getTown({'a_id': this.address_info.User_Area }).then(res => {
 			      if (res.errorCode == 0) {
 			            var t_arr = [];
 			            var t_index = 0;
@@ -212,7 +217,7 @@
 			            for (var i in res.data) {
 			               for (var j in res.data[i]) {
 			                t_arr.push({ 'id': j, 'name': res.data[i][j] });
-			                if (j == this.address_info.Address_Town) {
+			                if (j == this.address_info.User_Tow) {
 			                    t_index = idx;
 			                }
 			                  idx++;
@@ -226,17 +231,17 @@
 			  // 乡镇地址 点击确定
 			  t_pickerChange: function (e) {
 			    this.t_index = e.detail.value;
-			    this.address_info.Address_Town = this.t_arr[e.detail.value]['id'];
+			    this.address_info.User_Tow = this.t_arr[e.detail.value]['id'];
 			  },
 			  //选择收获地址三级联动后确定按钮动作
 			  bindMultiPickerChange: function (e) {
 					this.addressChange(e.detail.value);
 					this.objectMultiArray = this.change_objectMultiArray;
 					this.multiIndex = e.detail.value;
-					this.address_info.Address_Province = this.objectMultiArray[0][this.multiIndex[0]]['id'];
-					this.address_info.Address_City = this.objectMultiArray[1][this.multiIndex[1]]['id'];
-					this.address_info.Address_Area = this.objectMultiArray[2][this.multiIndex[2]]['id'];
-					this.address_info.Address_Town = 0;
+					this.address_info.User_Province = this.objectMultiArray[0][this.multiIndex[0]]['id'];
+					this.address_info.User_City = this.objectMultiArray[1][this.multiIndex[1]]['id'];
+					this.address_info.User_Area = this.objectMultiArray[2][this.multiIndex[2]]['id'];
+					this.address_info.User_Tow = 0;
 					this.t_arr = [];
 					this.t_index = 0;
 					// 处理街道信息
