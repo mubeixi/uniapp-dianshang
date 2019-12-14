@@ -20,11 +20,11 @@
 				<text class="area-label">请选择省市县</text>
 				<picker mode="multiSelector" style="flex:1;" @change="bindMultiPickerChange" @columnchange="bindMultiPickerColumnChange" :value="change_multiIndex" :range="change_objectMultiArray" range-key="name">
 					<view class="picker">
-						<view class="p_item" v-if="!address_info.User_Province">选择省份</view>
+						<view class="p_item" v-if="address_info.User_Province <= 0">选择省份</view>
 						<view class="p_item" v-else>{{objectMultiArray[0][multiIndex[0]]['name']}}</view>
-						<view class="p_item" v-if="!address_info.User_City">选择城市</view>
+						<view class="p_item" v-if="address_info.User_City <= 0">选择城市</view>
 						<view class="p_item" v-else>{{objectMultiArray[1][multiIndex[1]]['name']}}</view>
-						<view class="p_item" v-if="!address_info.User_Area">选择地区</view>
+						<view class="p_item" v-if="address_info.User_Area <= 0">选择地区</view>
 						<view class="p_item" v-else>{{objectMultiArray[2][multiIndex[2]]['name']}}</view>
 					</view>
 				</picker>
@@ -33,7 +33,7 @@
 				<text  class="area-label">请选择街道</text>
 				<picker mode="selector" @change="t_pickerChange" :range="t_arr" range-key="name" :value="t_index">
 				<view class="picker">
-					<view class="p_item" v-if="!address_info.User_Tow">选择街道</view>
+					<view class="p_item" v-if="address_info.User_Tow <= 0">选择街道</view>
 					<view class="p_item" v-else>{{t_arr[t_index]['name']}}</view>
 				</view>
 				</picker>
@@ -94,29 +94,52 @@
 			get_user_info(){
 				get_user_info().then(res=>{
 					let addressInfo = res.data;
-					console.log(res)
-					//初始化地址选择数据
-					let objectMultiArray = [
-					  utils.array_change(area.area[0]['0']),
-					  utils.array_change(area.area[0]['0,' + addressInfo['User_Province']]),
-					  utils.array_change(area.area[0]['0,' + addressInfo['User_Province'] + ',' + addressInfo['User_City']]),
-						utils.array_change(area.area[0]['0,' + addressInfo['User_Province'] + ',' + addressInfo['User_City'] + ',' + addressInfo['User_Tow']])
-					];
-					console.log(objectMultiArray)
-					console.log(addressInfo);
-					//设置初始显示列
-					let multiIndex = [
-					  utils.get_arr_index(objectMultiArray[0], addressInfo['User_Province']),
-					  utils.get_arr_index(objectMultiArray[1], addressInfo['User_City']),
-					  utils.get_arr_index(objectMultiArray[2], addressInfo['User_Area']),
-						utils.get_arr_index(objectMultiArray[3], addressInfo['User_Tow'])
-					];
 					this.address_info.User_Province = addressInfo.User_Province;
 					this.address_info.User_City = addressInfo.User_City;
+					this.address_info.User_Area = addressInfo.User_Area;
 					this.address_info.User_Tow = addressInfo.User_Tow;
-					this.objectMultiArray = objectMultiArray;
-					this.multiIndex = multiIndex;
-					this.User_Address = addressInfo.User_Address
+					if(this.address_info.User_Area){
+						//初始化地址选择数据
+						this.address_town();
+						let objectMultiArray = [
+						  utils.array_change(area.area[0]['0']),
+						  utils.array_change(area.area[0]['0,' + addressInfo['User_Province']]),
+						  utils.array_change(area.area[0]['0,' + addressInfo['User_Province'] + ',' + addressInfo['User_City']]),
+							utils.array_change(area.area[0]['0,' + addressInfo['User_Province'] + ',' + addressInfo['User_City'] + ',' + addressInfo['User_Area']])
+						];
+						//设置初始显示列
+						let multiIndex = [
+						  utils.get_arr_index(objectMultiArray[0], addressInfo['User_Province']),
+						  utils.get_arr_index(objectMultiArray[1], addressInfo['User_City']),
+						  utils.get_arr_index(objectMultiArray[2], addressInfo['User_Area']),
+							utils.get_arr_index(objectMultiArray[3], addressInfo['User_Tow'])
+						];
+						this.objectMultiArray = objectMultiArray;
+						// this.change_objectMultiArray = objectMultiArray;
+						this.multiIndex = multiIndex;
+						// this.change_multiIndex = multiIndex;
+						this.User_Address = addressInfo.User_Address
+					} else{
+						//初始化地址选择数据
+						
+						let objectMultiArray = [
+						  utils.array_change(area.area[0]['0']),
+						  utils.array_change(area.area[0]['0,' + addressInfo['User_Province']]),
+						  utils.array_change(area.area[0]['0,' + addressInfo['User_Province'] + ',' + addressInfo['User_City']])
+						];
+						//设置初始显示列
+						let multiIndex = [
+						  utils.get_arr_index(objectMultiArray[0], addressInfo['User_Province']),
+						  utils.get_arr_index(objectMultiArray[1], addressInfo['User_City']),
+						  utils.get_arr_index(objectMultiArray[2], addressInfo['User_Area']),
+						];
+						this.objectMultiArray = objectMultiArray;
+						// this.change_objectMultiArray = objectMultiArray;
+						this.multiIndex = multiIndex;
+						// this.change_multiIndex = multiIndex;
+						this.User_Address = addressInfo.User_Address
+					}
+					
 				})
 			},
 			bindDateChange(e){

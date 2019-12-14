@@ -251,7 +251,10 @@
                     store_area: this.store_area,
                     store_type: this.store_type
                 }).then(res=>{
-                    toast(res.msg);
+										uni.showToast({
+											title: res.msg,
+											icon: 'none'
+										})
                     setTimeout(()=>{
                         uni.navigateBack({
                             delta: 1

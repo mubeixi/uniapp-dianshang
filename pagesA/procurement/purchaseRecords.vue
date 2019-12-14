@@ -383,6 +383,9 @@
 			hidden_tip(index){
 				this.orderList = this.orderList;
 				this.orderList[index].show_order_tip = false;
+				this.orderList[index].prod_list.forEach(item=>{
+					item.pro_tip_show = false;
+				})
 				// item.pro_tip_show = false;
 			},
 			showAdress(){
