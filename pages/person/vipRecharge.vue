@@ -226,9 +226,9 @@ export default {
 
 				console.log(this);
 				unipayFunc(this,this.pay_type,res);
-				// #ifdef APP-PLUS
 				return;
 
+				// #ifdef APP-PLUS
 				if(this.pay_type === 'ali_app'){
 
 					let provider = 'alipay';

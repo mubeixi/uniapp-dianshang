@@ -97,8 +97,8 @@
 					//初始化地址选择数据
 					let objectMultiArray = [
 					  utils.array_change(area.area[0]['0']),
-					  utils.array_change(area.area[0]['0,' + parseInt(addressInfo['User_Province'])]),
-					  utils.array_change(area.area[0]['0,' + parseInt(addressInfo['User_Province']) + ',' + parseInt(addressInfo['User_City'])])
+					  utils.array_change(area.area[0]['0,' + addressInfo['User_Province']]),
+					  utils.array_change(area.area[0]['0,' + addressInfo['User_Province'] + ',' + addressInfo['User_City']])
 					];
 					console.log(objectMultiArray)
 					//设置初始显示列
