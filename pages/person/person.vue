@@ -94,14 +94,14 @@
 				</view>
 				<image :src="'/static/client/person/right.png'|domain" class="right"></image>
 			</view>
-			<view class="group cell" @click="goOrder('spike')">
+			<view class="group cell" @click="goToOrder('spike')">
 				<image src="/static/limitOrder.png" class="left"></image>
 				<view class="pintuan">
 					限时抢购订单
 				</view>
 				<image :src="'/static/client/person/right.png'|domain" class="right"></image>
 			</view>
-			<view class="group cell" @click="goOrder('flashsale')">
+			<view class="group cell" @click="goToOrder('flashsale')">
 				<image src="/static/spikeOrder.png" class="left"></image>
 				<view class="pintuan">
 					秒杀订单
@@ -401,6 +401,12 @@
 				if(!this.$fun.checkIsLogin(1))return;
 				uni.navigateTo({
 					url:'../person/collection'
+				})
+			},
+			goToOrder(item){
+				if(!this.$fun.checkIsLogin(1))return;
+				uni.navigateTo({
+					url:'../order/order?Order_Type='+item
 				})
 			},
 			//去订单页
