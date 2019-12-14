@@ -28,7 +28,7 @@
 					订单号：<text>{{index == 4 ? item.order_id : item.Order_ID}}</text>
 				</view>
 				<view>
-					佣金金额：<text class="price" v-if="index==2 || index == 4">￥{{index == 2 ?item.Record_Money : item.record_money}}</text>
+					佣金金额：<text class="price" v-if="index==2 || index == 4||index==3">￥{{(index == 2||index==3) ?item.Record_Money : item.record_money}}</text>
 							<text class="price" v-else>￥{{item.money}}</text>
 				</view>
 				<view>
@@ -36,8 +36,7 @@
 						 <text v-else>{{index == 4 ? item.descr :item.desc}}</text>
 				</view>
 				<view>
-					时间：<text v-if="index==2">{{item.Order_CreateTime}}</text>
-						 <text v-else>{{item.Record_CreateTime}}</text>
+					时间：<text >{{item.Record_CreateTime}}</text>
 				</view>
 			</view>
 		</block>
