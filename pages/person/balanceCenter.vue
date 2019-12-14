@@ -289,7 +289,7 @@
 		},
 		onLoad(){
 			this.$fun.checkIsLogin(1);
-			this.initData=this.getInitData()
+			// this.initData=this.getInitData()
 
 		},
 		onShow(){
