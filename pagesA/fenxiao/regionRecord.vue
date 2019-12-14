@@ -1,6 +1,9 @@
 <template>
 	<view class="all" >
 		<!-- <page-title title="申请记录" rightHidden="true" bgcolor="#ffffff"></page-title> -->
+		<div class="defaults" v-if="data.length<=0">
+			<image :src="'/static/client/defaultImg.png'|domain" ></image>
+		</div>
 		<view class="main" v-for="(item,ind) of data" :key="ind">
 			<block v-if="index==1">
 				<view class="fir">
@@ -159,5 +162,11 @@
 				color: #F43131;
 			}
 		}
+	}
+	.defaults{
+		margin: 0 auto;
+		width: 640rpx;
+		height: 480rpx;
+		margin-top: 100rpx;
 	}
 </style>
