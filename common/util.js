@@ -291,7 +291,7 @@ export const array_change = function (arr) {
 export const get_arr_index = function (arr, id) {
   for (var i in arr) {
     if (arr[i]['id'] == id) {
-      return i;
+      return parseInt(i);
     }
   }
 }

@@ -126,7 +126,8 @@
 			confirmInput(){
 				let data={
 					Order_ID:this.id,
-					reason:this.reason
+					reason:this.reason,
+					store_id:this.Stores_ID
 				}
 				let that=this
 				if(!this.reason){

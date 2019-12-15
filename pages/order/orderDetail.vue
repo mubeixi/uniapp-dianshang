@@ -51,7 +51,7 @@
 			<image class="loc_icon" :src="'/static/client/location.png'|domain" alt="" />
 			<div class="add_msg">
 				<div class="name">收货人：{{orderInfo.Address_Name}} <span>{{orderInfo.Address_Mobile}}</span></div>
-				<div class="location">收货地址：{{orderInfo.Address_Province_name}}{{orderInfo.Address_City_name}}{{orderInfo.Address_Area_name}}{{orderInfo.Address_Town_name}}</div>
+				<div class="location">收货地址：{{orderInfo.Address_Province_name}}{{orderInfo.Address_City_name}}{{orderInfo.Address_Area_name}}<block v-if="orderInfo.Address_Town_name">{{orderInfo.Address_Town_name}}</block></div>
 			</div>
 		</div>
 		<div class="order_msg bgwhite">

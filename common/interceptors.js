@@ -11,7 +11,7 @@ import {error} from "./index";
  * @return {Promise<unknown>}
  */
 export const ajax = (url,method,data,options)=>{
-
+  
   if(!options)options={}
   if(!data)data={}
 

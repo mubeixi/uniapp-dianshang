@@ -158,7 +158,7 @@ export const unipayFunc = (vm,pay_type,payRequestData) => {
                 location.href = url;
 
             },err=>{
-                error('获取支付宝支付参数失败');
+                // error('获取支付宝支付参数失败');
 
             })
             //let origin = location.origin;

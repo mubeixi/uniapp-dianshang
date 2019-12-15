@@ -158,7 +158,7 @@
 			</scroll-view>
 		</view>
 	</popupLayer>
-	<popupLayer ref="cartPopu" :direction="'top'">
+	<popupLayer ref="cartPopu" :direction="'top'" @maskClicked="handClicked">
 		<div class="cartSku">
 			<div class="cartTop">
 				<image class="image" :src="product.Products_JSON.ImgPath[0]" mode=""></image>
@@ -337,6 +337,7 @@ export default {
 
 			if(_self.$refs.cartPopu){
 				_self.$refs.cartPopu.close()
+				this.postData.qty = 1;
 			}
 
 		})
@@ -435,6 +436,9 @@ export default {
 		}
 	},
     methods: {
+			handClicked(){
+				this.postData.qty = 1;
+			},
 		async _init_func(option){
 
 			await this.getDetail(this.Products_ID);
@@ -896,6 +900,7 @@ export default {
 			})
 			//确定加入购物车
 			this.$refs.cartPopu.close();
+			this.postData.qty = 1;
 		},
 		addNum(){
 			if (this.postData.qty < this.postData.count) {

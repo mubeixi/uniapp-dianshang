@@ -35,7 +35,7 @@
 			<view class="item" @click="update(2)">
 				<view class="item-name">生日</view>
 				<view class="info">
-					{{userInfo.User_Birthday}}
+					{{userInfo.User_Birthday==0?'':userInfo.User_Birthday}}
 				</view>
 				<view class="go">
 					<image :src="'/static/client/right.png'|domain" mode=""></image>
@@ -95,6 +95,15 @@
 		methods: {
 			...mapActions(['getUserInfo','setUserInfo']),
 			update(num){
+				if(num==2){
+					if(this.userInfo.User_Birthday!=0){
+						uni.showToast({
+							title:'生日不允许修改',
+							icon:'none'
+						})
+						return
+					}
+				}
 				uni.navigateTo({
 					url: '../person/editPersonalMsg?type=' + num
 				})

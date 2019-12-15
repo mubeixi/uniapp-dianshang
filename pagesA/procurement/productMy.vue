@@ -54,8 +54,11 @@
 								<span>库存：{{item.prod_stock}}</span><span style="margin-left: 100rpx;">销量：{{item.Products_Sales}}</span>
 							</view>
 							<view class="bottomDiv">
-								<view class="skuCount">
+								<view class="skuCount" v-if="item.Products_Type" @click="showSkuList(item.Products_ID)">
 									规格库存
+								</view>
+								<view v-else>
+									
 								</view>
 								<view class="allPrice">
 									<view v-if="!(is_refund&&is_fourth)">
@@ -85,8 +88,11 @@
 								<span>库存：{{item.prod_stock}}</span><span style="margin-left: 100rpx;">销量：{{item.Products_Sales}}</span>
 							</view>
 							<view class="bottomDiv">
-								<view class="skuCount">
+								<view class="skuCount" v-if="item.Products_Type" @click="showSkuList(item.Products_ID)">
 									规格库存
+								</view>
+								<view v-else>
+									
 								</view>
 								<view class="allPrice">
 									<view v-if="!(is_refund&&is_fourth)">
@@ -121,8 +127,11 @@
 								<span>库存：{{item.prod_stock}}</span><span style="margin-left: 100rpx;">销量：{{item.Products_Sales}}</span>
 							</view>
 							<view class="bottomDiv">
-								<view class="skuCount">
+								<view class="skuCount" v-if="item.Products_Type" @click="showSkuList(item.Products_ID)">
 									规格库存
+								</view>
+								<view v-else>
+									
 								</view>
 								<view class="allPrice">
 									<view v-if="!(is_refund&&is_fourth)">
@@ -152,8 +161,11 @@
 								<span>库存：{{item.prod_stock}}</span><span style="margin-left: 100rpx;">销量：{{item.Products_Sales}}</span>
 							</view>
 							<view class="bottomDiv">
-								<view class="skuCount">
+								<view class="skuCount" v-if="item.Products_Type" @click="showSkuList(item.Products_ID)">
 									规格库存
+								</view>
+								<view v-else>
+									
 								</view>
 								<view class="allPrice">
 									<view v-if="!(is_refund&&is_fourth)">
@@ -219,6 +231,16 @@
 		        <view class="submit" @click="submit">发起退货</view>
 		    </view>
 		</view>
+		<!-- 规格弹窗 -->
+		<popup-layer ref="skuRef"  @maskClicked="Clicked" :direction="'top'" >
+				<view class="mxdetail">
+					<view class="mxtitle">规格库存</view>
+					<view class="mxitem">规格 <text class="num">库存</text></view>
+					<block v-for="(item,index) of mySkuList" :key="index">
+						<view class="mxitem">{{item.attr_txt}}<text class="num">{{item.count}}</text></view>
+					</block>
+				</view>
+		</popup-layer>
 		<!--	明细	-->
 		<popup-layer ref="detail"  @maskClicked="handClicked" :direction="'top'" :bottomHeight="45" >
 		    <view class="mxdetail">
@@ -308,7 +330,7 @@
 	import {domainFn} from "../../common/filter";
 	import {mapGetters} from 'vuex'
 	import {numberSort,ls} from '../../common/tool.js'
-	import {getStoreProdMoney,getSelfStoreProd,storeProdBackSubmit}  from '../../common/fetch'
+	import {getStoreProdMoney,getSelfStoreProd,storeProdBackSubmit,getProductAtts}  from '../../common/fetch'
 
 	export default {
 		mixins:[pageMixin],
@@ -355,6 +377,7 @@
 				purchase_store_sn: '', // 门店编号,
 				isClicked: false,
 				stock_low: 0, // 是否查询的是低库存产品
+				mySkuList:[]
 			};
 		},
 		components: {
@@ -413,6 +436,19 @@
 			}
 		},
 		methods:{
+			Clicked(){
+				this.$refs.skuRef.close();
+			},
+			showSkuList(id){
+				let data={
+					store_id:this.Stores_ID,
+					product_id:id
+				}
+				getProductAtts(data,{tip:'加载中',mask:true}).then(res=>{
+					this.$refs.skuRef.show();
+					this.mySkuList=res.data
+				})
+			},
 			load(){
 				// this.productMy = [];
 				this.productlist = [];
@@ -562,7 +598,7 @@
 
 			},
 			handClicked(){
-				// this.zIndex = 100;
+				this.zIndex = 100;
 				this.isClicked = false;
 				this.showSku = false;
 				this.showSum = false;
@@ -1330,5 +1366,22 @@
 				width: 640rpx;
 				height: 480rpx;
 				margin-top: 100rpx;
+			}
+			
+			
+			.mxdetail {
+				font-size: 28rpx;
+				line-height: 80rpx;
+				padding: 20rpx 30rpx;
+				.mxtitle {
+					font-size: 28rpx;
+					text-align: center;
+				}
+				.mxitem {
+					border-bottom: 1px solid #eaeaea;
+					.num {
+						float: right;
+					}
+				}
 			}
 </style>

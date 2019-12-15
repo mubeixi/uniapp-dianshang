@@ -5,7 +5,7 @@
 				<swiper-item class="vipFir"  v-for="(item,index) of dis_level" :key="index"  :style="dis_level.length==1?'margin-left:43rpx;':''">
 						<image src="https://new401.bafangka.com/static/client/task/vip.png" class="allImg"></image>
 	
-						<view class="vipGrade" v-if="item.Level_ID==pro.user_info.Level_ID">
+						<view class="vipGrade" v-if="item.Level_ID==pro.user_info.Level_ID&&userInfo.Is_Distribute==1">
 							当前等级
 						</view>
 						<view class="mmp" v-if="dis_level.length>0">
@@ -27,6 +27,7 @@
 			注意：以下条件需{{dis_level[inds].arrive_limit_desc}}才能达到门槛
 		</view>
 		<view class="ruhe">
+			<block v-if="dis_level[inds].level_rules_edit.pay_money">
 				<view class="td" v-if="dis_level[inds].level_rules_edit.pay_money.checked=='1'">
 					<image class="image" src="/static/fenxiao/storeSum.png"></image>
 					<view class="mbx">
@@ -46,7 +47,8 @@
 					</view>
 					
 				</view>
-				
+			</block>
+			<block v-if="dis_level[inds].level_rules_edit.buy_prod">
 				<view class="td" style="display: block;height: auto;" v-if="dis_level[inds].level_rules_edit.buy_prod.checked=='1'">
 					<view class="td" style="border-bottom: 0px;">
 						<image class="image" src="/static/fenxiao/buyPro.png"></image>
@@ -70,25 +72,29 @@
 						</view>
 					</view>
 					
-					<view class="productList">
-						<view class="myProduct" v-for="(item,index) of dis_level[inds].level_rules_edit.buy_prod.data" :key="index">
-							<image class="imgPro" :src="item.ImgPath" @click="goDetail(item.Products_ID)"></image>
-							<view class="proText">
-								{{item.Products_Name}}
-							</view>
-							<view class="buttonLast">
-								<view class="priceAll">
-									<text class="priceText">¥</text>
-									{{item.Products_PriceX}}
+					<view class="productList" v-if="dis_level[inds].level_rules_edit.buy_prod.value.type=='2'">
+						<block v-for="(item,index) in dis_level[inds].level_rules_edit.buy_prod.data" :key="index">
+							<view class="myProduct"  @click="goDetail(item.Products_ID)">
+								<image class="imgPro" :src="item.ImgPath" ></image>
+								<view class="proText">
+									{{item.Products_Name}}
 								</view>
-								<view class="proDetail" @click="goDetail(item.Products_ID)">
-									去购买
+								<view class="buttonLast">
+									<view class="priceAll">
+										<text class="priceText">¥</text>
+										{{item.Products_PriceX}}
+									</view>
+									<view class="proDetail" >
+										去购买
+									</view>
 								</view>
 							</view>
-						</view>
-									
+						</block>			
 					</view>
 				</view>
+			</block>	
+				
+			<block v-if="dis_level[inds].level_rules_edit.buy_times">
 				<!-- 商品购买几次 -->
 				<view class="td" v-if="dis_level[inds].level_rules_edit.buy_times.checked=='1'">
 					<image class="image" src="/static/fenxiao/proCount.png"></image>
@@ -108,6 +114,9 @@
 					</view>
 					
 				</view>
+			</block>	
+			
+			<block v-if="dis_level[inds].level_rules_edit.team_sales">
 				<!-- 团队销售额 -->
 				<view class="td" v-if="dis_level[inds].level_rules_edit.team_sales.checked=='1'">
 					<image class="image" src="/static/fenxiao/teanSum.png"></image>
@@ -122,11 +131,14 @@
 					<view class="submit submitMbx" v-if="dis_level[inds].level_rules_edit.team_sales.user_data>=dis_level[inds].level_rules_edit.team_sales.value">
 						已完成
 					</view>
-					<view class="submit"    v-else>
+					<view class="submit"    v-else @click="goFenxiao()">
 						去完成
 					</view>
 					
 				</view>
+			</block>
+			
+			<block v-if="dis_level[inds].level_rules_edit.direct_buy">
 				<!-- 直接购买 -->
 				<view class="td" v-if="dis_level[inds].level_rules_edit.direct_buy.checked=='1'">
 					<image class="image" src="/static/fenxiao/disBuy.png"></image>
@@ -134,14 +146,25 @@
 						<view class="tops">
 							直接购买{{dis_level[inds].level_rules_edit.direct_buy.value.money}}元
 						</view>
-						<view class="bottoms">
-							
+						<view class="bottoms" v-if="dis_level[inds].level_rules_edit.direct_buy.value.type=='1'">
+							直接购买
+						</view>
+						<view class="bottoms" v-if="dis_level[inds].level_rules_edit.direct_buy.value.type=='2'">
+							送赠品({{dis_level[inds].level_rules_edit.direct_buy.data.gift_name}})
+						</view>
+						<view class="bottoms" v-if="dis_level[inds].level_rules_edit.direct_buy.value.type=='3'">
+							送余额({{dis_level[inds].level_rules_edit.direct_buy.value.present}}元)
 						</view>
 					</view>
-					<view class="submit" @click="buyDis(dis_level[inds].Level_ID)">
+					<view class="submit submitMbx" v-if="dis_level[inds].buy_order.Order_Status==4">
+						已完成
+					</view>	
+					<view class="submit" @click="buyDis(dis_level[inds].Level_ID)" v-else >
 						去购买
 					</view>		
 				</view>
+			</block>
+			<block v-if="dis_level[inds]">
 				<!-- 去申请 -->
 				<view class="td" v-if="dis_level[inds].arrive_limit=='2'">
 					<image class="image" src="/static/fenxiao/editS.png"></image>
@@ -157,6 +180,9 @@
 						去申请
 					</view>		
 				</view>
+			</block>
+			
+			<block v-if="dis_level[inds].level_rules_edit.direct_sons">
 				<!-- 直邀请 -->
 				<view class="td" style="display: block;height: auto;" v-if="dis_level[inds].level_rules_edit.direct_sons.checked=='1'">
 					<view class="td" style="border-bottom: 0px;" v-for="(it,ind) of dis_level[inds].level_rules_edit.direct_sons.value" :key="ind">
@@ -170,15 +196,19 @@
 							</view>
 						</view>
 						<block v-if="ind==0">
-							<view class="submit submitMbx" v-if="dis_level[inds].level_rules_edit.direct_sons .user_data>0">
+							<view class="submit submitMbx" v-if="dis_level[inds].level_rules_edit.direct_sons.user_data.is_completed==1">
 								已完成
 							</view>
-							<view class="submit">
+							<view class="submit" @click="goFenxiao">
 								去邀请
 							</view>
 						</block>
 					</view>
 				</view>
+			
+			</block>
+	
+			<block  v-if="dis_level[inds].level_rules_edit.team_son">
 				<!-- 团队 -->
 				<view class="td" style="display: block;height: auto;" v-if="dis_level[inds].level_rules_edit.team_sons.checked=='1'">
 					<view class="td" style="border-bottom: 0px;" v-for="(it,ind) of dis_level[inds].level_rules_edit.team_sons.value" :key="ind">
@@ -192,16 +222,16 @@
 							</view>
 						</view>
 						<block v-if="ind==0">
-							<view class="submit submitMbx" v-if="dis_level[inds].level_rules_edit.team_sons.user_data>0">
+							<view class="submit submitMbx" v-if="dis_level[inds].level_rules_edit.team_sons.user_data.is_completed==1">
 								已完成
 							</view>
-							<view class="submit">
+							<view class="submit" @click="goFenxiao">
 								去邀请
 							</view>
 						</block>
 					</view>
 				</view>
-	
+			</block>
 			
 		</view>
 		
@@ -212,6 +242,7 @@
 	import circleTitle from '../../components/circleTitle/circleTitle.vue'
 	import {pageMixin} from "../../common/mixin";
 	import {disApplyInit} from '../../common/fetch.js';
+	import {mapActions,mapState,mapGetters} from 'vuex';
 	export default {
 		mixins:[pageMixin],
 		data() {
@@ -232,7 +263,15 @@
 		onShow() {
 			this.disApplyInit();
 		},
+		computed:{
+			...mapGetters(['userInfo'])
+		},
 		methods:{
+			goFenxiao(){
+				uni.switchTab({
+					url:"/pages/fenxiao/fenxiao"
+				})
+			},
 			//申请成为分销商
 			edit(id){
 				uni.navigateTo({
@@ -260,7 +299,7 @@
 				this.Level_Description=this.dis_level[this.inds].Level_Description
 			},
 			disApplyInit(){
-				disApplyInit().then(res=>{
+				disApplyInit({},{tip:'正在加载中',mask:true}).then(res=>{
 					this.pro=res.data;
 					this.dis_level=res.data.dis_level
 					if(this.pro.user_info.Level_ID=='0'){

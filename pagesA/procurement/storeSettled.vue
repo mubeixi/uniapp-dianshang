@@ -64,7 +64,7 @@
             <view class="item-left">驳回原因</view>
             <view class="item-input">{{userStoreMsg.reason}}</view>
         </view>
-        <popup-layer ref="storetypes"  @maskClicked="handClicked" :direction="'top'" >
+        <popup-layer ref="storetypes"  :direction="'top'" >
             <view class="search-title">请选择门店类型</view>
             <view class="search-content">
                 <view class="search-item" v-for="(store,index) of storeTypes" @click="changeType(index)">
@@ -175,15 +175,16 @@
                         this.is_submitted = false;
                         this.status = 3;
                     }
-                    if(this.storeTypes.length>0) {
-                        for(let i = 0 ; i<this.storeTypes - 1; i++) {
-                            if(this.storeTypes[i].id) {
-                                if(this.storeTypes[i].id == this.userStoreMsg.type_id) {
+                    getStoreTypes().then(res=>{
+                        let storeTypes = res.data;
+                        for(let i = 0 ; i<storeTypes.length - 1; i++) {
+                            if(storeTypes[i].id) {
+                                if(storeTypes[i].id == this.userStoreMsg.type_id) {
                                     this.index = i;
                                 }
                             }
                         }
-                    }
+                    })
                     //初始化地址选择数据
                     let objectMultiArray = [
                         utils.array_change(area.area[0]['0']),
@@ -251,7 +252,10 @@
                     store_area: this.store_area,
                     store_type: this.store_type
                 }).then(res=>{
-                    toast(res.msg);
+										uni.showToast({
+											title: res.msg,
+											icon: 'none'
+										})
                     setTimeout(()=>{
                         uni.navigateBack({
                             delta: 1
@@ -478,6 +482,8 @@
     }
     .search-content {
         padding: 20rpx;
+				max-height: 600rpx;
+				overflow: auto;
     }
     .search-item {
         display: flex;

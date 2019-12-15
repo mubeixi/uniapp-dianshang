@@ -390,18 +390,6 @@
 			}
 		},
 		{
-			"path": "pages/common/empty",
-			"style": {
-				"navigationBarTitleText": "empty"
-			}
-		},
-		{
-			"path": "pages/common/webview",
-			"style": {
-				"navigationBarTitleText": "webview"
-			}
-		},
-		{
 			"path": "pages/person/couponReceive",
 			"style": {
 				"navigationBarTitleText": "领取优惠券"

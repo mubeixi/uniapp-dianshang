@@ -183,6 +183,8 @@ export const cancelRefund = (data,options) => fetch('cancel_refund', data, optio
 export const getBackOrderDetail = (data,options) => fetch('get_back_order_detail', data, options);
 // 用户退款发货
 export const refundSend = (data,options) => fetch('refund_send', data, options);
+// 获取商品规格库存
+export const getProductAtts = (data,options) => fetch('get_product_atts', data, options);
 
 
 // 支付订单
