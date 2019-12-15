@@ -44,10 +44,10 @@
 										<text class="price-icon">￥</text>{{it.prod_price}}
 									</view>
 									<view class="sku-item" v-if="item.Order_Status==20||item.Order_Status==22||item.Order_Status==25">
-									<view class="handle" @click="minus(index,ind,it,item.Order_ID)">-</view>
-									<view class="pro-num">{{it.prod_count}}</view>
-									<view class="handle" @click="plus(index,ind,it,item.Order_ID)">+</view>
-								</view>
+										<view class="handle" @click="minus(index,ind,it,item.Order_ID)">-</view>
+										<view class="pro-num">{{it.prod_count}}</view>
+										<view class="handle" @click="plus(index,ind,it,item.Order_ID)">+</view>
+									</view>
 								</view>
 							</view>
 						</view>
