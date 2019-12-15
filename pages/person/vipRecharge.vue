@@ -333,7 +333,7 @@ export default {
 				title: '支付成功'
 			});
 			uni.navigateBack({
-				delta: 1
+				url:'/pages/person/vipGrade'
 			});
 			return;
 		},
