@@ -1,5 +1,5 @@
 <template>
-    <view class="wrap" :style="{'overflow': isScroll}">
+    <view class="wrap" >
         <view class="search-wrap">
             <icon type="search" size="34rpx" class="search_icon" @click="search"/>
             <input type="text" class="input" placeholder="请输入商品关键词" @confirm="search" v-model="prod_name" placeholder-style="color:#bebdbd;">
@@ -605,8 +605,9 @@
 </script>
 <style lang="scss" scoped>
     .wrap {
-        height: 100vh;
-        background-color: #F3F3F3;
+        /*height: 100vh;*/
+        padding-top: 20rpx;
+        background-color: #f2f2f2;
         width: 100%;
     }
     .mask {
@@ -737,7 +738,7 @@
     .search-wrap {
         position: relative;
         width: 710rpx;
-        margin:20rpx auto 30rpx;
+        margin:0rpx auto 30rpx;
         height: 65rpx;
         z-index: 10;
         .search_icon {

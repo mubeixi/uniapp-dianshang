@@ -34,6 +34,7 @@
                     "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>",
                     "<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>",
                     "<uses-permission android:name=\"android.permission.CALL_PHONE\"/>",
+                    "<uses-permission android:name=\"android.permission.CAMERA\"/>",
                     "<uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\"/>",
                     "<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>",
                     "<uses-permission android:name=\"android.permission.GET_ACCOUNTS\"/>",
@@ -52,13 +53,11 @@
             },
             /* ios打包配置 */
             "ios" : {
-                "urlschemewhitelist": [
-                    "baidumap",
-                    "iosamap",
-                    "qqmap"
-                ],
+                "urlschemewhitelist" : [ "baidumap", "iosamap", "qqmap" ],
                 "privacyDescription" : {
-                    "NSLocationAlwaysAndWhenInUseUsageDescription" : "为了为您匹配更精准的信息，需要获取您的位置"
+                    "NSLocationAlwaysAndWhenInUseUsageDescription" : "为了为您匹配更精准的信息，需要获取您的位置",
+                    "NSCameraUsageDescription" : "为了扫码核销您的券码，可能需要唤起摄像头",
+                    "NSPhotoLibraryUsageDescription" : ""
                 }
             },
             /* SDK配置 */

@@ -106,14 +106,13 @@
         onError:function(err){
 
 			let msg = err?JSON.stringify(err):'程序错误'
+            console.log(msg)
 			if(isDev){
 				uni.showModal({
 				    title:'错误',
 				    content:msg
 				})
 			}
-
-
         }
 	}
 </script>

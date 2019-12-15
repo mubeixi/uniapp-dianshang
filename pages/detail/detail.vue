@@ -467,9 +467,7 @@ export default {
 		},
 		createtab: function(){
 			// 设置水平居中位置
-			var bitmap = new plus.nativeObj.Bitmap('bmp1');
-
-
+			//var bitmap = new plus.nativeObj.Bitmap('bmp1');
 
 			var view = new plus.nativeObj.View('icon', {
 				top: '30px',
@@ -500,9 +498,10 @@ export default {
 
 			console.log('第二个的left为'+leftOffset)
 			// 设置水平居中位置
-			var bitmap = new plus.nativeObj.Bitmap('bmp2');
+			//var bitmap = new plus.nativeObj.Bitmap('bmp2');
 			var view = new plus.nativeObj.View('icons', {
 				top: '30px',
+				// left: 'auto',
 				left: leftOffset +'px',
 				width: '30px',
 				height: '30px'

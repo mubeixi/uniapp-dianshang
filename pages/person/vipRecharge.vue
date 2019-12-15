@@ -25,6 +25,7 @@
 				<view class="el-radio" :class="{check:payChannel==idx}"></view>
 			</view>
 		</view>
+		<div style="height: 10px"></div>
 		<view class="youhui" v-for="(item,index) of pro.gives " :key="index">
 			{{index+1}}、充值满{{item.deposit_money}}赠送<text class="youhui-text">{{item.present_money}}</text>余额
 		</view>
@@ -52,7 +53,7 @@ export default {
 	data() {
 		return {
 			info:{},
-			payChannel:0,
+			payChannel:'',
 			money: '',
 			pro:[],
 			pay_type: ''
@@ -72,7 +73,7 @@ export default {
 			for(var i in this.initData.pay_arr){
 				if(i!='remainder_pay'){
 					//默认第一个
-					if(!this.payChannel)this.payChannel = i
+					// if(!this.payChannel)this.payChannel = i
 					obj[i] = this.initData.pay_arr[i]
 				}
 			}
@@ -82,6 +83,15 @@ export default {
 	},
 	created(){
 
+		//设置第一个为选中
+		if(this.initData && this.initData.pay_arr){
+			for(var i in this.initData.pay_arr){
+				if(i!='remainder_pay'){
+					//默认第一个
+					if(!this.payChannel)this.payChannel = i
+				}
+			}
+		}
 
         // #ifdef H5
         if (isWeiXin()) {
@@ -410,7 +420,7 @@ export default {
 	color: #666666;
 	font-weight: 400;
 	justify-content: space-between;
-	margin-bottom: 20rpx;
+	padding-top: 20rpx;
 }
 .radio{
 	background-color: #EFEFEF;

@@ -568,7 +568,7 @@
         }
     }
     .row{
-
+        font-size: 14px;
         margin: 0 10px;
         display: flex;
         align-items: center;
@@ -576,9 +576,10 @@
         line-height: 32px;
         border-bottom: 1px solid #eee;
         padding: 10px 0;
+        /*box-sizing: border-box;*/
         .label{
             width: 90px;
-            color: #666;
+            color: #999;
         }
         .form-item{
             color: #444;

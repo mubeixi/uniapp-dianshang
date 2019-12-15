@@ -135,7 +135,7 @@ export const pageMixin = {
 
 			ls.set('users_id',users_id);
 
-			console.log(1111111111111)
+			// console.log(1111111111111)
 
 			if(old_users_id && old_users_id!=users_id){
 				console.log('清空本地配置和登录信息')
@@ -236,7 +236,7 @@ export const pageMixin = {
 		// this.initData = initData;
 
 		// #ifdef H5
-		console.log(2222222222222)
+		// console.log(2222222222222)
 		// let users_id = GetQueryByString(location.href, 'users_id')
 		// //如果连接里面已经有了，就不需要搞事
 		// if(users_id){
@@ -356,7 +356,10 @@ export const payMixin = {
 /**
  * 扫描二维码
  */
+// #ifdef APP-PLUS
+import permision from "./permission";
 
+// #endif
 export const scanMixin = {
 	data(){
 		return {
@@ -364,6 +367,24 @@ export const scanMixin = {
 		}
 	},
 	methods:{
+		async checkPermission(code) {
+			let status = permision.isIOS ? await permision.requestIOS('camera') : await permision.requestAndroid('android.permission.CAMERA');
+
+			if (status === null || status === 1) {
+				status = 1;
+			} else {
+				uni.showModal({
+					content: "需要相机权限",
+					confirmText: "设置",
+					success: function(res) {
+						if (res.confirm) {
+							permision.gotoAppSetting();
+						}
+					}
+				})
+			}
+			return status;
+		},
 		/**
 		 *唤起不同终端的二维码，并且返回返回内容
 		 * @param needResult 是由微信处理还是自定义业务 微信wap专用
@@ -372,10 +393,16 @@ export const scanMixin = {
 		 * @param qrCode 支持二维码 微信wap专用
 		 * @return {Promise<unknown>}
 		 */
-		openScanFn(needResult,onlyFromCamera,barCode,qrCode){
+		async openScanFn(needResult,onlyFromCamera,barCode,qrCode){
 
-			console.log(arguments)
-			return new Promise((resolve, reject) => {
+			// #ifdef APP-PLUS
+			let status = await this.checkPermission();
+			if (status !== 1) {
+				return;
+			}
+			// #endif
+
+			return new Promise( (resolve, reject) => {
 
 				// #ifdef H5
 				if(!isWeiXin()){
@@ -401,6 +428,8 @@ export const scanMixin = {
 				})
 				// #endif
 
+
+
 				// #ifndef H5
 				console.log('手机扫码')
 				// 只允许通过相机扫码
@@ -409,7 +438,6 @@ export const scanMixin = {
 					success: function (res) {
 						console.log('条码类型：' + res.scanType);
 						console.log('条码内容：' + res.result);
-
 						resolve(res.result)
 					},
 					fail:function(err){
@@ -417,6 +445,8 @@ export const scanMixin = {
 					}
 				});
 				// #endif
+
+
 
 
 
