@@ -194,7 +194,7 @@
 			},
 			confirm(e){
 
-
+				let _self = this
 				console.log(e)
 				add_template_code({
 					code: e.detail.formId,
@@ -219,6 +219,8 @@
 					money: this.money,
 					user_no: this.user_no
 				}).then(res=>{
+					_self.money = ''
+					_self.user_no = ''
 					uni.showToast({
 						title: res.msg,
 						duration:1500

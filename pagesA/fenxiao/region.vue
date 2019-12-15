@@ -116,7 +116,7 @@
 			</view>
 		</view>
 		<view class="guize">
-			<text class="text">*</text>当平台设置区域代理发放的总佣金为100元时，<block v-if="item.title" v-for="(item,index) of agent_rate_arr">{{item.title}}<block v-if="index!=agent_rate_arr.length-1">、</block></block>分别获得<block v-if="item.title" v-for="(item,index) of agent_rate_arr">{{item.Province}}元<block v-if="index!=agent_rate_arr.length-1">、</block></block>收益。
+			<text class="text">*</text>当平台设置区域代理发放的总佣金为100元时，<block v-if="item.title" v-for="(item,index) of agent_rate_arr" :key="index">{{item.title}}<block v-if="index!=agent_rate_arr.length-1">、</block></block>分别获得<block v-if="item.title" v-for="(item,index) of agent_rate_arr" :key="index" >{{item.Province}}元<block v-if="index!=agent_rate_arr.length-1">、</block></block>收益。
 		</view>
 	</view>
 </template>

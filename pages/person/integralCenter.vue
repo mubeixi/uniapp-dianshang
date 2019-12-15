@@ -140,6 +140,7 @@
 			...mapActions(['setUserInfo','getUserInfo']),
 			// 确认转出
 			confirm(){
+
 				if(this.isClicked) return;
 				this.isClicked = true;
 				if(!this.integral || this.integral < 0 || isNaN(this.integral)) {
@@ -162,12 +163,14 @@
 					integral: this.integral,
 					user_no: this.user_no
 				}).then(res=>{
+
 					uni.showToast({
 						title: res.msg,
 						duration:1500
 					});
 					setTimeout(()=>{
 						this.isClicked = false;
+
 						//this.setUserInfo({});
 						get_user_info().then(res=>{
 							this.info = res.data;

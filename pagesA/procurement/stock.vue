@@ -248,6 +248,7 @@
             },
             getStoreDetail(){
                 getLocation(this).then(res=>{
+                    console.log('address info is'+JSON.stringify(res))
                     if(res.code===0){
                         let lng=0,lat=0;
                         lng=res.data.longitude

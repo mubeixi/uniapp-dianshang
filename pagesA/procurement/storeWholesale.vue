@@ -221,6 +221,20 @@
 							}
 						});
 					},
+			showAdress(){
+				console.log(JSON.stringify({lat:this.storeInfo.wx_lat,lng:this.storeInfo.wx_lng}))
+				uni.openLocation({
+					latitude: this.storeInfo.wx_lat,
+					longitude: this.storeInfo.wx_lng,
+					success: function (res) {
+						console.log(JSON.stringify(res))
+						console.log('open location success');
+					},
+					fail:function(err){
+						console.log(JSON.stringify(err))
+					}
+				});
+			},
             handleApply(apply,idx){
                 uni.navigateTo({
                     url:`/pagesA/procurement/storeWholesaleSend?apply_id=${apply.Order_ID}`
