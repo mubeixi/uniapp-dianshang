@@ -88,8 +88,8 @@
     components: {},
     methods: {
       toSearch(){
-          let path = '/pages/classify/search'
-          // let path = '/pages/classify/search?keyword='+this.placeholderText
+          // let path = '/pages/classify/search'
+          let path = '/pages/classify/search?keyword='+this.placeholderText
         this.$fun.linkTo({link:path,linkType:'default'})
       }
     },

@@ -56,7 +56,7 @@
             <div class="row"><div class="label">付款时间</div><div class="form-item">{{orderInfo.Pay_time | formatTime}}</div></div>
         </div>
 
-        <div class="subbox">
+        <div class="subbox" v-if="orderInfo.Order_Status==2">
             <button @click="subFn" class="subbtn" type="warn">立即核销</button>
         </div>
 
@@ -87,6 +87,7 @@
     } from "../../common/tool";
     import {error, confirm, toast} from "../../common";
     import PayComponents from '../../components/PayComponents.vue';
+    import {mapGetters} from 'vuex'
 
     export default {
         mixins: [pageMixin],
@@ -128,6 +129,7 @@
             // this.get_user_info();// 获取用于可用余额
         },
         computed: {
+            ...mapGetters(['Stores_ID']),
             invoiceChecked() {
                 return this.openInvoice;
             },
@@ -144,7 +146,7 @@
             async subFn(){
 
                 let confirmConf = {title:'操作提示',confirmText:'继续核销',showCancel:true,cancelText:'回到首页',content:''}
-                await checkOrderByCode({Order_Code:this.Order_Code}).then(res=>{
+                await checkOrderByCode({Order_Code:this.Order_Code,store_id:this.Stores_ID}).then(res=>{
                     confirmConf.content = '核销成功'
                     //toast('核销成功')
                 }).catch(err=>{
@@ -157,11 +159,12 @@
                 confirm(confirmConf).then(res=>{
 
 					//需要跳转到一个页面
-                    setTimeout(()=>{
-                        uni.navigateTo({
-                            url:'/pages/order/checkChannel'
-                        })
-                    },1000)
+                    // setTimeout(()=>{
+                    //     uni.navigateTo({
+                    //         url:'/pages/order/checkChannel'
+                    //     })
+                    // },1000)
+                    uni.navigateBack()
 
                 }).catch(err=>{
                     uni.switchTab({

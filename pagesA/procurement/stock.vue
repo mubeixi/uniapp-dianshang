@@ -149,6 +149,7 @@
     import {numberSort} from '../../common/tool'
     import {getLocation} from "../../common/tool/location";
     import {pageMixin} from "../../common/mixin";
+    import {error} from "../../common";
     export default {
         data() {
             return {
@@ -214,6 +215,11 @@
         },
         methods: {
             openAddress(){
+                if(!this.storeAdress.wx_lat || !this.storeAdress.wx_lng){
+                    error('门店地址信息错误')
+                    return;
+                }
+                //百度就用Stores_PrimaryLng	:	113.32922884302Stores_PrimaryLat	:	33.745785957533
                 uni.openLocation({
                     latitude: this.storeAdress.wx_lat,
                     longitude: this.storeAdress.wx_lng,

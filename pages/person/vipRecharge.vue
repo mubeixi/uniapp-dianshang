@@ -89,6 +89,10 @@ export default {
             console.log(this.code)
             if (this.code) {
 
+            	if(ls.get('recharge_money')){
+            		this.money = ls.get('recharge_money')
+				}
+            	this.payChannel = 'wx_mp';
                 this.pay_type = 'wx_mp';//需要手动设置一下
                 // console.log(this.pay_type)
                 // ls.set('code',this.code)
