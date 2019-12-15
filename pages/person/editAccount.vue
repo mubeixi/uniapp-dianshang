@@ -40,6 +40,7 @@
 	import {ls} from "../../common/tool";
 	import {pageMixin} from "../../common/mixin";
 	import {isDev} from "../../common/env";
+	import {bindUserClientId} from "../../common/fetch";
 
 	export default {
 		mixins:[pageMixin],
@@ -75,8 +76,14 @@
 			},
 			logoutFunc(){
 				confirm({title:'操作提示',content:'是否退出登录'}).then(res=>{
+
+					bindUserClientId({action:'clear'},{errtip:false}).then(res=>{console.log('设备注销成功')},err=>{}).catch(error=>{})
+
+
 					let users_id = ls.get('users_id');
 					ls.clear();
+
+
 					ls.set('users_id',users_id);
 
 					// #ifdef H5
@@ -85,7 +92,10 @@
 					// #endif
 
 
+
+
 					this.setUserInfo({})
+					this.setStoresId(null)
 					uni.switchTab({
 						url:'/pages/index/index'
 					})
@@ -94,7 +104,7 @@
 
 				})
 			},
-			...mapActions(['setUserInfo']),
+			...mapActions(['setUserInfo','setStoresId']),
 		}
 	}
 </script>
