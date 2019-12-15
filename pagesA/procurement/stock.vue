@@ -632,8 +632,9 @@
 </script>
 <style lang="scss" scoped>
     .wrap {
-        height: 100vh;
-        background-color: #F3F3F3;
+        /*height: 100vh;*/
+        padding-top: 20rpx;
+        background-color: #f2f2f2;
         width: 100%;
     }
     .mask {
@@ -764,7 +765,7 @@
     .search-wrap {
         position: relative;
         width: 710rpx;
-        margin:20rpx auto 30rpx;
+        margin:0rpx auto 30rpx;
         height: 65rpx;
         z-index: 10;
         .search_icon {

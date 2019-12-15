@@ -2,9 +2,10 @@
  * 地理位置类
  *
  */
-import permission from "../../js_sdk/wa-permission/permission";
+// import permission from "../../js_sdk/wa-permission/permission";
 import {isWeiXin} from "../tool";
 import {WX_JSSDK_INIT} from "../mixin";
+import permision from "../permission";
 
 const failOpt = {
     'osNotAllow':{code:2001,msg:'无获取位置权限'},
@@ -14,19 +15,42 @@ const failOpt = {
 }
 
 
+const checkLocationPermission = async()=>{
+    let status = permision.isIOS ? await permision.requestIOS('location') : await permision.requestAndroid('android.permission.ACCESS_FINE_LOCATION');
+    if (status === null || status === 1) {
+        status = 1;
+    } else {
+        uni.showModal({
+            content: "需要相机权限",
+            confirmText: "设置",
+            success: function(res) {
+                if (res.confirm) {
+                    permision.gotoAppSetting();
+                }
+            }
+        })
+    }
+    return status;
+}
 
-export const getLocation = (vm)=>{
+export const getLocation = async(vm)=>{
+
+    // #ifdef APP-PLUS
+    let checkPermission = await checkLocationPermission();
+    // #endif
 
     return new Promise((resolve, reject) => {
 
         try{
             // #ifdef APP-PLUS
-
             //判断iOS上是否给予位置权限，有权限返回true，否则返回false
-            if(plus.os.name == 'Android' && !permission.requestAndroidPermission('android.permission.ACCESS_FINE_LOCATION')){
-                reject(failOpt.osNotAllow)
-            }
-            if(plus.os.name == 'iOS' && !permission.judgeIosPermission('location')){
+            // if(plus.os.name == 'Android' && !permission.requestAndroidPermission('android.permission.ACCESS_FINE_LOCATION')){
+            //     reject(failOpt.osNotAllow)
+            // }
+            // if(plus.os.name == 'iOS' && !permission.judgeIosPermission('location')){
+            //     reject(failOpt.osNotAllow)
+            // }
+            if(!checkPermission){
                 reject(failOpt.osNotAllow)
             }
 
