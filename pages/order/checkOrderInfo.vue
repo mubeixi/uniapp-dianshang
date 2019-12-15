@@ -87,6 +87,7 @@
     } from "../../common/tool";
     import {error, confirm, toast} from "../../common";
     import PayComponents from '../../components/PayComponents.vue';
+    import {mapGetters} from 'vuex'
 
     export default {
         mixins: [pageMixin],
@@ -128,6 +129,7 @@
             // this.get_user_info();// 获取用于可用余额
         },
         computed: {
+            ...mapGetters(['Stores_ID']),
             invoiceChecked() {
                 return this.openInvoice;
             },
@@ -144,7 +146,7 @@
             async subFn(){
 
                 let confirmConf = {title:'操作提示',confirmText:'继续核销',showCancel:true,cancelText:'回到首页',content:''}
-                await checkOrderByCode({Order_Code:this.Order_Code}).then(res=>{
+                await checkOrderByCode({Order_Code:this.Order_Code,store_id:this.Stores_ID}).then(res=>{
                     confirmConf.content = '核销成功'
                     //toast('核销成功')
                 }).catch(err=>{
