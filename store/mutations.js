@@ -5,9 +5,11 @@ export const SET_PAY_TEMP_OBJ = function (state, value) {
   state.payTempObj = value;
 };
 
-// export const SET_STORES_ID = function (state, value) {
-//   state.Stores_ID = value;
-//
+export const SET_STORES_ID = function (state, value) {
+  state.Stores_ID = value;
+  ls.set('Stores_ID',value,1)
+}
+
 
 export const SET_USER_INFO = function (state, value) {
 

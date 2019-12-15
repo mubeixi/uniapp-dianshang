@@ -11,7 +11,7 @@
 	<view class="uni-padding-wrap" style="background: #f2f2f2;">
 		<view class="page-section swiper">
 			<view class="page-section-spacing" v-if="(product.video_url && showVideo)">
-				<video class="video" @play="play" @pause="pause" :src="product.video_url"  show-mute-btn="true" muted bindfullscreenchange="changeHiddenBtns" :poster="product.cover_url?product.cover_url:''" id="myVideo1" ref="video1" show-center-play-btn	 controls>
+				<video class="video" @play="play" @pause="pause" :src="product.video_url"   bindfullscreenchange="changeHiddenBtns" :poster="product.cover_url?product.cover_url:''" id="myVideo1" ref="video1" show-center-play-btn	 controls>
 					<!-- #ifdef APP-PLUS -->
 					<!-- <cover-image v-if="showVideo" class="imgms" src="/static/back.png" @click="goBack" ></cover-image>
 					<cover-image v-if="showVideo" class="carts" src="/static/cart.png" @click="goCart" ></cover-image> -->
@@ -93,20 +93,20 @@
         </block>
     </div>
     <!-- 商品详情 -->
-    <div class="pro_detail" v-if="isLoad">
+    <div class="pro_detail" >
         <div class="p_detail_title bgwhite">商品详情</div>
+
+		<u-parse :content="product.Products_Description|formatRichTextByUparse" ></u-parse>
 		<!-- #ifdef H5||APP-PLUS -->
-		<div v-html="formatRichTexts(product.Products_Description)" class="p_detail_des"></div>
+		<!-- <div v-html="formatRichTexts(product.Products_Description)" class="p_detail_des"></div> -->
 		<!-- #endif -->
 
 		<!-- #ifdef MP -->
-		<rich-text :nodes="product.Products_Description|formatRichText" class="p_detail_des"></rich-text>
+		<!-- <rich-text :nodes="product.Products_Description|formatRichText" class="p_detail_des"></rich-text> -->
 		<!-- #endif -->
 
     </div>
-	<div style="clear: both;">
-
-	</div>
+	<div style="clear: both;"></div>
     <div style="height:60px;background: white;"></div>
 	<bottom @cartHandle="addCart" @directHandle="directBuy" @goGet="lingqu" @collect="collect" :collected="isCollected" :recieve="recieve" :isVirtual="isVirtual" :canSubmit="canSubmit"></bottom>
   	<div class="safearea-box"></div>
@@ -228,9 +228,11 @@ import { mapGetters, mapActions, Store,mapState } from "vuex";
 
 import uParse from '@/components/gaoyia-parse/parse.vue'
 import {pageMixin} from "../../common/mixin";
-import {error} from "../../common";
+import {error, toast} from "../../common";
 
 import {add_template_code} from "../../common/fetch";
+
+import {staticUrl} from "../../common/env";
 
 export default {
 	mixins:[pageMixin],
@@ -316,8 +318,25 @@ export default {
 	 },
 
 	mounted(){
+
 		let _self = this
 		this.$nextTick().then(res=>{
+
+			// #ifdef APP-PLUS
+			var icon = plus.nativeObj.View.getViewById("icon");
+			var icons = plus.nativeObj.View.getViewById("icons");
+
+			console.log(icon,"sssssssssssssssssssssss")
+			if(icon&&icons){
+				icon.show();
+				icons.show();
+			}else{
+				_self.createtab();
+				_self.createtabs();
+			}
+			// #endif
+
+
 			if(_self.$refs.cartPopu){
 				_self.$refs.cartPopu.close()
 				this.postData.qty = 1;
@@ -335,18 +354,7 @@ export default {
 
 	},
 	onShow(){
-		// #ifdef APP-PLUS
-		var icon = plus.nativeObj.View.getViewById("icon");
-		var icons = plus.nativeObj.View.getViewById("icons");
-		console.log(icon,"sssssssssssssssssssssss")
-		if(icon&&icons){
-			icon.show();
-			icons.show();
-		}else{
-			this.createtab();
-			this.createtabs();
-		}
-		// #endif
+
 
 	},
 	onUnload(){
@@ -377,44 +385,58 @@ export default {
 		...mapState(['initData'])
 	},
 	filters: {
-				/**
-				 * 处理富文本里的图片宽度自适应
-				 * 1.去掉img标签里的style、width、height属性
-				 * 2.img标签添加style属性：max-width:100%;height:auto
-				 * 3.修改所有style里的width属性为max-width:100%
-				 * 4.去掉<br/>标签
-				 * @param html
-				 * @returns {void|string|*}
-				 */
+		formatRichTextByUparse(html){
+			if(!html) return;
+			let newContent= html.replace(/<embed[^>]*>/gi,function(match,capture){
+				match = match.replace(/embed/gi, 'video')
+				match = match.replace(/width="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
+				match = match.replace(/height="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
+				match = match.replace(/type="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
+				//相对地址
+				match = match.replace(/src="\/uploadfiles/gi, `src="${staticUrl}/uploadfiles`)
 
-				formatRichText (html) { //控制小程序中图片大小
-					if(!html) return;
-				    let newContent= html.replace(/<img[^>]*>/gi,function(match,capture){
-				        match = match.replace(/style="[^"]+"/gi, '')//.replace(/style='[^']+'/gi, '');
-				        match = match.replace(/width="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
-				        match = match.replace(/height="[^"]+"/gi, '')//.replace(/height='[^']+'/gi, '');
-				        return match;
-				    });
-					newContent= newContent.replace(/<div[^>]*>/gi,function(match,capture){
-					    match = match.replace(/style="[^"]+"/gi, '')//.replace(/style='[^']+'/gi, '');
-					    match = match.replace(/width="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
-					    match = match.replace(/height="[^"]+"/gi, '')//.replace(/height='[^']+'/gi, '');
-					    return match;
-					});
-					newContent= newContent.replace(/<p[^>]*>/gi,'');
-					newContent= newContent.replace(/<[/]p[^>]*>/gi,'');
-				    newContent = newContent.replace(/style="[^"]+"/gi,function(match,capture){
-				        match = match.replace(/width:[^;]+;/gi, 'width:100%;').replace(/width:[^;]+;/gi, 'width:100%;');
-				        return match;
-				    });
+				return match;
+			});
+			return newContent
+		},
+		/**
+		 * 处理富文本里的图片宽度自适应
+		 * 1.去掉img标签里的style、width、height属性
+		 * 2.img标签添加style属性：max-width:100%;height:auto
+		 * 3.修改所有style里的width属性为max-width:100%
+		 * 4.去掉<br/>标签
+		 * @param html
+		 * @returns {void|string|*}
+		 */
 
-				    newContent = newContent.replace(/<br[^>]*\/>/gi, '');
-				    newContent = newContent.replace(/\<img/gi, '<img style="width:100%;float:left;"');
-					//newContent = newContent.replace(/>[\s]*</gi, "><");
+		formatRichText (html) { //控制小程序中图片大小
+			if(!html) return;
+			let newContent= html.replace(/<img[^>]*>/gi,function(match,capture){
+				match = match.replace(/style="[^"]+"/gi, '')//.replace(/style='[^']+'/gi, '');
+				match = match.replace(/width="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
+				match = match.replace(/height="[^"]+"/gi, '')//.replace(/height='[^']+'/gi, '');
+				return match;
+			});
+			newContent= newContent.replace(/<div[^>]*>/gi,function(match,capture){
+				match = match.replace(/style="[^"]+"/gi, '')//.replace(/style='[^']+'/gi, '');
+				match = match.replace(/width="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
+				match = match.replace(/height="[^"]+"/gi, '')//.replace(/height='[^']+'/gi, '');
+				return match;
+			});
+			newContent= newContent.replace(/<p[^>]*>/gi,'');
+			newContent= newContent.replace(/<[/]p[^>]*>/gi,'');
+			newContent = newContent.replace(/style="[^"]+"/gi,function(match,capture){
+				match = match.replace(/width:[^;]+;/gi, 'width:100%;').replace(/width:[^;]+;/gi, 'width:100%;');
+				return match;
+			});
 
-				    return newContent;
-				}
-			},
+			newContent = newContent.replace(/<br[^>]*\/>/gi, '');
+			newContent = newContent.replace(/\<img/gi, '<img style="width:100%;float:left;"');
+			//newContent = newContent.replace(/>[\s]*</gi, "><");
+
+			return newContent;
+		}
+	},
     methods: {
 			handClicked(){
 				this.postData.qty = 1;
@@ -444,49 +466,60 @@ export default {
 
 		},
 		createtab: function(){
-		        // 设置水平居中位置
-				var bitmap = new plus.nativeObj.Bitmap('bmp1');
-		        var view = new plus.nativeObj.View('icon', {
-		            top: '30px',
-		            left: '10px',
-		            width: '30px',
-		            height: '30px'
-		        });
-		        view.drawBitmap('/static/back.png', {
-		            top: '0px',
-		            left: '0px',
-		            width: '100%',
-		            height: '100%'
-		        });
-		        view.addEventListener("click", function(e) {
-		           uni.navigateBack({
-		               delta: 1
-		           });
-		        }, false);
-		        view.show();
-		    },
-			createtabs: function(){
-			        // 设置水平居中位置
-					var bitmap = new plus.nativeObj.Bitmap('bmp2');
-			        var view = new plus.nativeObj.View('icons', {
-			            top: '30px',
-			            right: '10px',
-			            width: '30px',
-			            height: '30px'
-			        });
-			        view.drawBitmap('/static/cart.png', {
-			            top: '0px',
-			            left: '0px',
-			            width: '100%',
-			            height: '100%'
-			        });
-			        view.addEventListener("click", function(e) {
-			          uni.switchTab({
-			          	url: '../order/cart'
-			          })
-			        }, false);
-			        view.show();
-			    },
+			// 设置水平居中位置
+			var bitmap = new plus.nativeObj.Bitmap('bmp1');
+
+
+
+			var view = new plus.nativeObj.View('icon', {
+				top: '30px',
+				left: '10px',
+				width: '30px',
+				height: '30px'
+			});
+			view.drawBitmap('/static/back.png', {
+				top: '0px',
+				left: '0px',
+				width: '100%',
+				height: '100%'
+			});
+			view.addEventListener("click", function(e) {
+			   uni.navigateBack({
+				   delta: 1
+			   });
+			}, false);
+			console.log('成功创建')
+			view.show();
+		},
+		createtabs: function(){
+
+			const res = uni.getSystemInfoSync();
+			const fullWidth = res.screenWidth;
+
+			let leftOffset = fullWidth-40
+
+			console.log('第二个的left为'+leftOffset)
+			// 设置水平居中位置
+			var bitmap = new plus.nativeObj.Bitmap('bmp2');
+			var view = new plus.nativeObj.View('icons', {
+				top: '30px',
+				left: leftOffset +'px',
+				width: '30px',
+				height: '30px'
+			});
+			view.drawBitmap('/static/cart.png', {
+				top: '0px',
+				left: '0px',
+				width: '100%',
+				height: '100%'
+			});
+			view.addEventListener("click", function(e) {
+			  uni.switchTab({
+				url: '/pages/order/cart'
+			  })
+			}, false);
+			view.show();
+		},
 		// 开始播放事件
 		play(){
 			this.isShowBtn = false;

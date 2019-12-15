@@ -18,7 +18,7 @@
 
 
     export default {
-		globalData: {  
+		globalData: {
 			videoInstance:[]
 		},
         //目前只有app和小程序用到了应用的全局onLaunch，h5环境下这里不执行的
@@ -121,7 +121,7 @@
 <style lang="less">
 @import "./static/css/app.less";
 @import "./static/css/icon.css";
-
+@import "./components/u-parse/u-parse.css";
 
 </style>
 <style lang="scss">
