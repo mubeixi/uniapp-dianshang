@@ -1,5 +1,5 @@
 <template>
-    <view class="wrap" :style="{'overflow': isScroll}">
+    <view class="wrap" >
         <view class="search-wrap">
             <icon type="search" size="34rpx" class="search_icon" @click="search"/>
             <input type="text" class="input" placeholder="请输入商品关键词" @confirm="search" v-model="prod_name" placeholder-style="color:#bebdbd;">
@@ -184,6 +184,9 @@
                 indexSecond:-1,
                 storeAdress:[],
                 canClicked: true, // 是否可以点明细  防止用户一直点出现bug
+								page: 1,
+								pageSize: 10,
+								get_more: false
             }
         },
         components: {
@@ -213,6 +216,20 @@
             }
             this.getProductCategory()
         },
+				onReachBottom() {
+					console.log('ahahah')
+					console.log(this.get_more)
+					if(this.get_more) {
+						this.page += 1;
+						if(this.is_pingtai) {
+							// 平台产品
+							this.getProductList();
+						}else {
+							// 门店产品
+							this.getProlist()
+						}
+					}
+				},
         methods: {
             openAddress(){
                 if(!this.storeAdress.wx_lat || !this.storeAdress.wx_lng){
@@ -257,6 +274,7 @@
 
             },
             delFirst(){
+							this.page = 1;
                 this.indexFirst=-1
                 this.indexSecond=-1
                 if(this.is_pingtai ==0){
@@ -267,6 +285,7 @@
 
             },
             delSecond(){
+							this.page = 1;
                 this.indexSecond=-1
                 if(this.is_pingtai ==0){
                     this.getProlist()
@@ -275,6 +294,7 @@
                 }
             },
             selctSecond(index){
+							this.page = 1;
                 this.indexSecond=index
                 if(this.is_pingtai ==0){
                     this.getProlist()
@@ -283,6 +303,7 @@
                 }
             },
             selctFirst(index){
+							this.page = 1;
                 this.indexFirst=index
                 this.indexSecond=-1
                 if(this.is_pingtai ==0){
@@ -443,6 +464,8 @@
                     purchase_store_sn: this.purchase_store_sn,
                     store_id: this.Stores_ID
                 }
+								data.page = this.page;
+								data.pageSize = this.pageSize;
                 if(this.indexSecond>=0){
                     data.cate_id=this.cateList[this.indexFirst].child[this.indexSecond].Category_ID
                 }else{
@@ -451,16 +474,17 @@
                     }
                 }
                 getPifaStoreProd(data).then(res=>{
-                    this.prolist = res.data;
+                    this.prolist = this.prolist.concat(res.data);
                     this.total_pro_count = res.totalCount;
                     this.active_id = this.Stores_ID + '_' + res.Stores_ID
+										this.get_more = res.totalCount / this.prolist.length ? true : false
                 }).catch(e=>{
                     setTimeout(function () {
                         uni.navigateBack({delta:1})
                     },2000)
                 })
             },
-            // 普通产品
+            // 平台产品
             getProductList(){
                 let data={}
                 if(this.indexSecond>=0){
@@ -470,10 +494,13 @@
                         data.Cate_ID=this.cateList[this.indexFirst].Category_ID
                     }
                 }
+								data.page = this.page;
+								data.pageSize = this.pageSize;
                 getProductList(data).then(res=>{
-                    this.prolist = res.data;
+                    this.prolist = this.prolist.concat(res.data);
                     this.total_pro_count = res.totalCount;
-                    this.active_id = this.Stores_ID + '_' + 0
+                    this.active_id = this.Stores_ID + '_' + 0;
+										this.get_more = res.totalCount > this.prolist.length ? true : false
                 })
             },
             methodHandle(type){
@@ -619,7 +646,7 @@
         z-index: 1000;
     }
     .sku-pop {
-        position: absolute;
+        position: fixed;
         top: 50%;
         left: 50%;
         z-index: 10000;
