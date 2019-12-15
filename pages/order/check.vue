@@ -181,7 +181,8 @@
 		<popup-layer ref="popupMX" :direction="'top'" @maskClicked="handClicked" :bottomHeight="bottomHeight">
 			<view class="mxdetail">
 				<view class="mxtitle">明细</view>
-				<view class="mxitem">产品 <text class="num">+{{orderInfo.Order_TotalAmount}}</text></view>
+				<view class="mxitem">产品原价 <text class="num">{{orderInfo.Order_TotalAmount}}</text></view>
+				<view class="mxitem" v-if="checkfrom">{{active_name}} <text class="num">{{orderInfo.Order_Fyepay}}</text></view>
 				<view class="mxitem" v-if="orderInfo.user_curagio_money > 0">会员折扣 <text class="num">-{{orderInfo.user_curagio_money}}</text></view>
 				<view class="mxitem" v-if="orderInfo.Manjian_Cash > 0">满减 <text class="num">-{{orderInfo.Manjian_Cash}}</text></view>
 				<view class="mxitem" v-if="orderInfo.Coupon_Money > 0">优惠券 <text class="num">-{{orderInfo.Coupon_Money}}</text></view>
@@ -288,8 +289,9 @@ export default {
             isSlide: false, //查看明细是否已经弹出
             bottomHeight: 0, // 弹出层从哪里开始弹出，默认是0，明细从提交按钮上部50px
             zIndex: 3,
-			setStoreMode:'',
-			idD:''
+						setStoreMode:'',
+						idD:'',
+						checkfrom: '', // 支付订单的来源页面，用于展示明细活动价，spike,秒杀，limit限时抢购，group 拼团， 
         }
     },
 	filters: {
@@ -328,6 +330,9 @@ export default {
 		if(options.cart_buy){
 			this.postData.cart_buy = options.cart_buy;
 		}
+		if(options.checkfrom) {
+			this.checkfrom = options.checkfrom;
+		}
 	},
 	computed: {
 		loading: function(){
@@ -335,6 +340,13 @@ export default {
 		},
 		remindAddress: function(){
 			return this.orderInfo.is_virtual == 0 && !this.addressinfo.Address_Name
+		},
+		active_name: function(){
+			switch (this.checkfrom) {
+				case 'spike' : return '秒杀价'; break;
+				case 'limit' : return '限时抢购价'; break;
+				case 'group' : return '拼团价';				
+			}
 		},
 		...mapGetters(['userInfo'])
 	},
