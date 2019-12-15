@@ -6,6 +6,10 @@ export const setUserInfo = ({commit}, data) => {
   commit('SET_USER_INFO', data);
 };
 
+export const setStoresId = ({commit}, data) => {
+  commit('SET_STORES_ID', data);
+};
+
 export const setInitData = ({commit}, data) => {
   commit('SET_INIT_DATA', data);
 };

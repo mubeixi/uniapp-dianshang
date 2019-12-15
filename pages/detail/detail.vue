@@ -228,7 +228,7 @@ import { mapGetters, mapActions, Store,mapState } from "vuex";
 
 import uParse from '@/components/gaoyia-parse/parse.vue'
 import {pageMixin} from "../../common/mixin";
-import {error} from "../../common";
+import {error, toast} from "../../common";
 
 import {add_template_code} from "../../common/fetch";
 
@@ -318,12 +318,14 @@ export default {
 	 },
 
 	mounted(){
+
 		let _self = this
 		this.$nextTick().then(res=>{
 
 			// #ifdef APP-PLUS
 			var icon = plus.nativeObj.View.getViewById("icon");
 			var icons = plus.nativeObj.View.getViewById("icons");
+
 			console.log(icon,"sssssssssssssssssssssss")
 			if(icon&&icons){
 				icon.show();
@@ -495,6 +497,7 @@ export default {
 			const fullWidth = res.screenWidth;
 
 			let leftOffset = fullWidth-40
+
 			console.log('第二个的left为'+leftOffset)
 			// 设置水平居中位置
 			var bitmap = new plus.nativeObj.Bitmap('bmp2');
