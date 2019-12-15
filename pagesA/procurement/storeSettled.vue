@@ -148,6 +148,7 @@
                 this.$refs.storetypes.close();
             },
             getType(){
+							if(this.is_submitted)return;
               this.$refs.storetypes.show();
             },
             // 获取用户最后的申请信息

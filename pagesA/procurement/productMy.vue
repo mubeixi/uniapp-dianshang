@@ -561,6 +561,13 @@
 			},
 			// 增加数量
 			addNumberNoAttr(pro){
+				if(pro.prod_stock == 0) {
+					uni.showToast({
+						title: '购买数量已超库存',
+						icon: 'none'
+					})
+					return;
+				}
 				pro.myqty ++ ;
 				pro.prod_stock --;
 			},
@@ -675,6 +682,9 @@
 				this.submit_flag = true;
 				this.prosku_index = index; // 产品在数组中的索引，用于修改产品库存数量
 				this.postData.count = item.prod_stock;
+				if(item.prod_stock == 0) {
+					this.postData.qty = 0;
+				}
 				if(item.skujosn) {
 				    let skujosn = item.skujosn;
 				    let skujosn_new = [];
@@ -771,15 +781,16 @@
 			    }
 			},
 			minus(){
-			    if (this.postData.qty > 1) {
-			        this.postData.qty -= 1;
-			    } else {
-			        uni.showToast({
-			            title: '退货数量不能小于1',
-			            icon: 'none',
-			        });
-			        this.postData.qty = 1;
-			    }
+				if(this.postData.qty == 0) return;
+				if (this.postData.qty > 1) {
+						this.postData.qty -= 1;
+				} else {
+						uni.showToast({
+								title: '退货数量不能小于1',
+								icon: 'none',
+						});
+						this.postData.qty = 1;
+				}
 			},
 			// 点击遮罩
 			hiddenMask(){

@@ -61,7 +61,7 @@
 						</view>
 					</view>
 				</block>
-				<view style="text-align: right;padding-right:20rpx;">
+				<view style="text-align: right;padding-right:20rpx;" v-if="item.Order_Status == 2">
 					<span class="spanJu" @click="refund(item.Order_ID)">拒单</span>
 				</view>
 			</view>

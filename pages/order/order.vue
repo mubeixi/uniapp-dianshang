@@ -48,6 +48,9 @@
 					</div>
 				</block>
 				<div class="text-right total">共{{item.prod_list.length}}件商品 实付：<span class="price"><span>￥</span> {{item.Order_TotalPrice}} <block v-if="item.Order_Shipping.Price>0">(含运费{{item.Order_Shipping.Price}}元)</block></span></div>
+				<div class="btn-group" v-if="item.Order_Status==-1">
+					<span @click.stop="delOrder(item.prod_list,index)">删除订单</span>
+				</div>
 				<div class="btn-group" v-if="item.Order_Status==0">
 					<span @click.stop="cancelOrder(item.prod_list,index)">取消订单</span>
 				</div>
@@ -78,7 +81,7 @@
 
 <script>
 // import pagetitle from '@/components/title'
-import {getOrder,cancelOrder,getOrderNum,confirmOrder} from '@/common/fetch.js'
+import {getOrder,cancelOrder,getOrderNum,confirmOrder,delOrder} from '@/common/fetch.js'
 import {pageMixin} from "../../common/mixin";
 import {confirm} from '../../common'
 export default {
@@ -177,6 +180,32 @@ export default {
 				console.log(e)
 			})
 		},
+		// 删除订单
+		delOrder(item,index){
+			if(this.isLoading)return
+			this.isLoading=true;
+			let Order_ID;
+			for(let i in item){
+				console.log(i)
+				if(item[i].Order_ID){
+					Order_ID=item[i].Order_ID;
+				}
+			}
+			if(Order_ID){
+				delOrder({Order_ID}).then(res=>{
+					this.isLoading=false;
+					this.data.splice(index,1);
+					this.getOrderNum();
+						uni.showToast({
+							title:res.msg,
+							icon:"none"
+						})
+				}).catch(e=>{
+					console.log(e);
+					this.isLoading=false;
+				})
+			}
+		},
 		//取消订单
 		cancelOrder(item,index){
 			if(this.isLoading)return
@@ -191,7 +220,8 @@ export default {
 			if(Order_ID){
 				cancelOrder({Order_ID}).then(res=>{
 					this.isLoading=false;
-					this.data.splice(index,1);
+					// 取消订单，仅改变了订单的状态
+					this.data[index].Order_Status = -1;
 					this.getOrderNum();
 						uni.showToast({
 							title:res.msg,

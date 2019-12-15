@@ -508,7 +508,7 @@ export default {
 				case 'pic':
 					//this.$toast('comming soon')
 
-					let sharePic = await getProductSharePic({'product_id': this.Products_ID}).then(res => {
+					let sharePic = await getProductSharePic({'product_id': this.Products_ID,'act_price':this.product.attr_json.price}).then(res => {
 						console.log(res)
 						ls.set('temp_sharepic_info', res.data)
 						return res.data.img_url
@@ -777,7 +777,7 @@ export default {
         		console.log(res)
         		if(res.errorCode == 0) {
         				uni.navigateTo({
-        					url: '../order/check?cart_key=DirectBuy'
+        					url: '../order/check?cart_key=DirectBuy&checkfrom=spike'
         				})
         		}else {
 

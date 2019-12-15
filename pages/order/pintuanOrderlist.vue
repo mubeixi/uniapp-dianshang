@@ -47,7 +47,7 @@
 				    </div>
 				</div>
 			</block>
-			<div class="total"><view class="ptdesc" @click="goPintuan(item)" v-if="item.teamstatus_desc">{{item.teamstatus_desc}}</view><view> 共{{item.prod_list.length}}件商品 合计：<span class="price"><span>￥</span> {{item.Order_Fyepay}}</span></view></div>
+			<div class="total"><view class="ptdesc" @click="goPintuan(item)" v-if="item.teamstatus_desc">{{item.teamstatus_desc}}</view><view> 共{{item.prod_list.length}}件商品 实付：<span class="price"><span>￥</span> {{item.Order_TotalPrice}}</span></view></div>
 			<div class="btn-group" v-if="item.Order_Status==0">
 					<span @click="cancelOrder(item.prod_list,index)">取消订单</span>
 			</div>
