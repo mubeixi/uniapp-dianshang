@@ -2,7 +2,7 @@
  * 地理位置类
  *
  */
-// import permission from "../../js_sdk/wa-permission/permission";
+
 import {isWeiXin} from "../tool";
 import {WX_JSSDK_INIT} from "../mixin";
 import permision from "../permission";
@@ -21,7 +21,7 @@ const checkLocationPermission = async()=>{
         status = 1;
     } else {
         uni.showModal({
-            content: "需要相机权限",
+            content: "需要定位权限",
             confirmText: "设置",
             success: function(res) {
                 if (res.confirm) {

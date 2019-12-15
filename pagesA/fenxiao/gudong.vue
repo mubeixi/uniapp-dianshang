@@ -99,7 +99,7 @@
 			</view>
 		</view>
 		<view class="guize">
-			<text class="text">*</text>当平台设置股东发放的总佣金为100元时，<block v-for="(item,index) of pro.sha_config.Sha_Rate">{{item.sha_name}}<block v-if="index!=pro.sha_config.Sha_Rate.length-1">、</block></block>分别获得<block v-for="(item,index) of pro.sha_config.Sha_Rate">{{item.sha_commi_scale}}元<block v-if="index!=pro.sha_config.Sha_Rate.length-1">、</block></block>收益。
+			<text class="text">*</text>当平台设置股东发放的总佣金为100元时，<block :key="index" v-for="(item,index) of pro.sha_config.Sha_Rate">{{item.sha_name}}<block v-if="index!=pro.sha_config.Sha_Rate.length-1">、</block></block>分别获得<block v-for="(item,index) of pro.sha_config.Sha_Rate" :key="index">{{item.sha_commi_scale}}元<block v-if="index!=pro.sha_config.Sha_Rate.length-1">、</block></block>收益。
 		</view>
 
 	</view>

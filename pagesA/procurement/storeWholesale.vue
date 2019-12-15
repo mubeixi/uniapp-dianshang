@@ -137,11 +137,16 @@
         },
         methods:{
 			showAdress(){
+				console.log(JSON.stringify({lat:this.storeInfo.wx_lat,lng:this.storeInfo.wx_lng}))
 				uni.openLocation({
 					latitude: this.storeInfo.wx_lat,
 					longitude: this.storeInfo.wx_lng,
-					success: function () {
-						console.log('success');
+					success: function (res) {
+						console.log(JSON.stringify(res))
+						console.log('open location success');
+					},
+					fail:function(err){
+						console.log(JSON.stringify(err))
 					}
 				});
 			},
