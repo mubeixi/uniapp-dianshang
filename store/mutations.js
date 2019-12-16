@@ -24,6 +24,7 @@ export const SET_USER_INFO = function (state, value) {
   ls.set('userInfo',value);
   //要覆盖，不然有时候user_id删不掉
   ls.set("user_id",value.User_ID,1);
+  ls.set("access_token",value.access_token,1);
 };
 
 export const SET_INIT_DATA = function (state, value) {
