@@ -6,7 +6,7 @@
 		    <view class="nav-item" :class="index==0?'active':''" @click="changIndex(0)">全部</view>
 		    <view class="nav-item" :class="index==1?'active':''" @click="changIndex(1)">
 				待付款
-				<view class="jiaobiao" v-if="orderNum.waitpay>0">{{orderNum.waitpay}}</view>
+				<!-- <view class="jiaobiao" v-if="orderNum.waitpay>0">{{orderNum.waitpay}}</view> -->
 			</view>
 		    <view class="nav-item" :class="index==2?'active':''" @click="changIndex(2)">
 				待消费
@@ -196,7 +196,7 @@
 				}).catch(e=>{})
 			},
 			getOrderNum(){
-				// getOrderNum({Order_Store:this.Stores_ID},{noUid:true}).then(res=>{
+				// getOrderNum({store_id:this.Stores_ID},{noUid:true}).then(res=>{
 				// 	this.orderNum=res.data;
 				// 	console.log(res)
 				// }).catch(e=>{
