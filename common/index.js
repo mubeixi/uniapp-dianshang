@@ -7,7 +7,7 @@ import wx from 'weixin-js-sdk';
 import filter from './filter.js';
 import {ajax, get, post} from './interceptors.js';
 import store from '../store';
-import {ls} from "./tool";
+import {isWeiXin, ls} from "./tool";
 // const i18n = require('i18n');
 
 
@@ -179,10 +179,88 @@ export const fun = {
     //跳转方法
     linkTo: (linkObj) => {
 
-        let {link, linkType} = linkObj;
-        if(!link)return;
+        let {link, linkType,ext={}} = linkObj;
+        if(!link){
+            toast('跳转地址为空')
+            return;
+        }
 
         console.log('跳转link:' + link + '===type:' + linkType)
+
+        //跳转到小程序
+        if(linkType==='mini'){
+
+            let {url,appid,origin_id} = ext
+			console.log(link,url,appid,origin_id)
+			// #ifdef APP-PLUS
+            if(!origin_id){
+                error('origin_id_缺失')
+                return;
+            }
+			plus.share.getServices(function(s){
+			    var shares=null;
+			    var sweixin=null;
+
+			    shares={};
+			    for(var i in s){
+			        var t=s[i];
+			        shares[t.id]=t;
+			    }
+			    sweixin=shares['weixin'];
+
+			    sweixin?sweixin.launchMiniProgram({
+			        id:origin_id,
+                    path:link,
+                    webUrl:ext.url
+			    }):toast('跳转小程序参数错误');
+
+			}, function(e){
+			    console.log("获取分享服务列表失败："+e.message);
+                if(ext.url){
+
+                }
+			});
+            return;
+			// #endif
+
+
+			// #ifdef MP
+			if(appid&&link){
+			    uni.navigateToMiniProgram({
+			        appId: appid,
+			        path: link,
+			        success(res) {
+						console.log(res)
+			            // 打开成功
+			        },
+					fail(err){
+						console.log(err)
+					}
+			    })
+			    return;
+			}else{
+			    error('小程序跳转参数错误')
+            }
+            return;
+			// #endif
+
+            // #ifdef H5
+            if(url){
+                location.href = ext.url
+            }else{
+                error('小程序备用地址为空')
+            }
+            return;
+
+            // #endif
+
+
+
+
+            return;
+        }
+
+
 		//第三方链接
 		if(linkType==='third' || link.indexOf('http')!==-1){
 
@@ -192,7 +270,6 @@ export const fun = {
 				url:'/pages/common/webview?url='+link
 			})
 			// #endif
-
 
 
 			// #ifdef H5

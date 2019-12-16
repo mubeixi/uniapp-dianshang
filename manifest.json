@@ -153,6 +153,9 @@
             "postcss" : false
         },
         "usingComponents" : true,
+		"navigateToMiniProgramAppIdList": [
+		    "wxbdeb9e51dacbbafc"
+		],
         "permission" : {
             "scope.userLocation" : {
                 "desc" : "你的位置信息将用于为您就近匹配门店"

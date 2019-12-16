@@ -1,6 +1,6 @@
 import * as ENV from './env.js';
 // console.log(ENV.apiBaseUrl)
-import {error} from "./index";
+import {error, toast} from "./index";
 
 /**
  *
@@ -10,8 +10,9 @@ import {error} from "./index";
  * @param options
  * @return {Promise<unknown>}
  */
+import store from '../store'
 export const ajax = (url,method,data,options)=>{
-  
+
   if(!options)options={}
   if(!data)data={}
 
@@ -42,7 +43,7 @@ export const ajax = (url,method,data,options)=>{
   // console.log(data)
 	// #endif
   let URL = ENV.apiBaseUrl+url;
-  const hookErrorCode = [0,88001];
+  const hookErrorCode = [0,88001,66001];
 
   return new Promise((resolve, reject) =>{
 
@@ -65,6 +66,27 @@ export const ajax = (url,method,data,options)=>{
 
 
           if(res.hasOwnProperty('errorCode') && hookErrorCode.indexOf(res.errorCode) != -1){
+              if(res.errorCode === 66001){
+                  error(res.msg)
+
+                  //重置用户信息
+
+                  let users_id = ls.get('users_id');
+                  ls.clear();
+                  ls.set('users_id',users_id);
+                  // #ifdef H5
+                  sessionStorage.removeItem('is_send_usrlog')
+                  // #endif
+                  store.commit('SET_USER_INFO',{})
+                  store.commit('SET_STORES_ID',null)
+
+                  setTimeout(()=>{
+                      uni.navigateTo({
+                          url:'/pages/login/login'
+                      })
+                  },1000)
+                  return;
+              }
               resolve(res)
           }else{
               if(res.hasOwnProperty('errorCode') && res.msg){

@@ -351,8 +351,6 @@ export const payMixin = {
 }
 
 
-
-
 /**
  * 扫描二维码
  */

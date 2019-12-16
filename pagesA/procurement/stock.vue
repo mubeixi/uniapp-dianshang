@@ -184,9 +184,9 @@
                 indexSecond:-1,
                 storeAdress:[],
                 canClicked: true, // 是否可以点明细  防止用户一直点出现bug
-								page: 1,
-								pageSize: 10,
-								get_more: false
+                page: 1,
+                pageSize: 10,
+                get_more: false
             }
         },
         components: {
@@ -216,20 +216,20 @@
             }
             this.getProductCategory()
         },
-				onReachBottom() {
-					console.log('ahahah')
-					console.log(this.get_more)
-					if(this.get_more) {
-						this.page += 1;
-						if(this.is_pingtai) {
-							// 平台产品
-							this.getProductList();
-						}else {
-							// 门店产品
-							this.getProlist()
-						}
-					}
-				},
+        onReachBottom() {
+            console.log('ahahah')
+            console.log(this.get_more)
+            if(this.get_more) {
+                this.page += 1;
+                if(this.is_pingtai) {
+                    // 平台产品
+                    this.getProductList();
+                }else {
+                    // 门店产品
+                    this.getProlist()
+                }
+            }
+        },
         methods: {
             openAddress(){
                 if(!this.storeAdress.wx_lat || !this.storeAdress.wx_lng){
@@ -465,8 +465,8 @@
                     purchase_store_sn: this.purchase_store_sn,
                     store_id: this.Stores_ID
                 }
-								data.page = this.page;
-								data.pageSize = this.pageSize;
+                data.page = this.page;
+                data.pageSize = this.pageSize;
                 if(this.indexSecond>=0){
                     data.cate_id=this.cateList[this.indexFirst].child[this.indexSecond].Category_ID
                 }else{
@@ -474,11 +474,11 @@
                         data.cate_id=this.cateList[this.indexFirst].Category_ID
                     }
                 }
-                getPifaStoreProd(data).then(res=>{
+                getPifaStoreProd(data,{tip:'loading'}).then(res=>{
                     this.prolist = this.prolist.concat(res.data);
                     this.total_pro_count = res.totalCount;
                     this.active_id = this.Stores_ID + '_' + res.Stores_ID
-										this.get_more = res.totalCount / this.prolist.length ? true : false
+                    this.get_more = res.totalCount / this.prolist.length ? true : false
                 }).catch(e=>{
                     setTimeout(function () {
                         uni.navigateBack({delta:1})
@@ -495,9 +495,9 @@
                         data.Cate_ID=this.cateList[this.indexFirst].Category_ID
                     }
                 }
-								data.page = this.page;
-								data.pageSize = this.pageSize;
-                getProductList(data).then(res=>{
+                data.page = this.page;
+                data.pageSize = this.pageSize;
+                getProductList(data,{tip:'loading'}).then(res=>{
                     this.prolist = this.prolist.concat(res.data);
                     this.total_pro_count = res.totalCount;
                     this.active_id = this.Stores_ID + '_' + 0;
