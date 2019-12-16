@@ -166,7 +166,7 @@
 			},
 			_getOrder(){
 				let data={
-					Order_Store:this.Stores_ID,
+					store_id:this.Stores_ID,
 					page:this.page,
 					pageSize:this.pageSize
 				}

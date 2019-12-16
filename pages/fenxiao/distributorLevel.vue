@@ -4,7 +4,7 @@
 			<swiper class="center" :indicator-dots="false" :autoplay="false"  :duration="1000" :current="inds" @change="change">
 				<swiper-item class="vipFir"  v-for="(item,index) of dis_level" :key="index"  :style="dis_level.length==1?'margin-left:43rpx;':''">
 						<image src="https://new401.bafangka.com/static/client/task/vip.png" class="allImg"></image>
-	
+
 						<view class="vipGrade" v-if="item.Level_ID==pro.user_info.Level_ID&&userInfo.Is_Distribute==1">
 							当前等级
 						</view>
@@ -45,7 +45,7 @@
 					<view class="submit" @click="goIndex"   v-else>
 						去消费
 					</view>
-					
+
 				</view>
 			</block>
 			<block v-if="dis_level[inds].level_rules_edit.buy_prod">
@@ -71,7 +71,7 @@
 							去购买
 						</view>
 					</view>
-					
+
 					<view class="productList" v-if="dis_level[inds].level_rules_edit.buy_prod.value.type=='2'">
 						<block v-for="(item,index) in dis_level[inds].level_rules_edit.buy_prod.data" :key="index">
 							<view class="myProduct"  @click="goDetail(item.Products_ID)">
@@ -89,11 +89,11 @@
 									</view>
 								</view>
 							</view>
-						</block>			
+						</block>
 					</view>
 				</view>
-			</block>	
-				
+			</block>
+
 			<block v-if="dis_level[inds].level_rules_edit.buy_times">
 				<!-- 商品购买几次 -->
 				<view class="td" v-if="dis_level[inds].level_rules_edit.buy_times.checked=='1'">
@@ -112,10 +112,10 @@
 					<view class="submit"  @click="goIndex"  v-else>
 						去购买
 					</view>
-					
+
 				</view>
-			</block>	
-			
+			</block>
+
 			<block v-if="dis_level[inds].level_rules_edit.team_sales">
 				<!-- 团队销售额 -->
 				<view class="td" v-if="dis_level[inds].level_rules_edit.team_sales.checked=='1'">
@@ -134,10 +134,10 @@
 					<view class="submit"    v-else @click="goFenxiao()">
 						去完成
 					</view>
-					
+
 				</view>
 			</block>
-			
+
 			<block v-if="dis_level[inds].level_rules_edit.direct_buy">
 				<!-- 直接购买 -->
 				<view class="td" v-if="dis_level[inds].level_rules_edit.direct_buy.checked=='1'">
@@ -158,10 +158,10 @@
 					</view>
 					<view class="submit submitMbx" v-if="dis_level[inds].buy_order.Order_Status==4">
 						已完成
-					</view>	
+					</view>
 					<view class="submit" @click="buyDis(dis_level[inds].Level_ID)" v-else >
 						去购买
-					</view>		
+					</view>
 				</view>
 			</block>
 			<block v-if="dis_level[inds]">
@@ -176,12 +176,24 @@
 							去申请
 						</view>
 					</view>
-					<view class="submit" @click="edit(dis_level[inds].Level_ID)">
-						去申请
-					</view>		
+					<block v-if="dis_level[inds].apply_order">
+						<block v-if="dis_level[inds].apply_order.status">
+							<view class="submit submitMbx" v-if="dis_level[inds].apply_order.status==2">
+								已完成
+							</view>
+							<view class="submit" v-else @click="edit(dis_level[inds].Level_ID)">
+								去申请
+							</view>
+						</block>
+					</block>
+					<block  v-else>
+						<view class="submit"  @click="edit(dis_level[inds].Level_ID)">
+							去申请
+						</view>
+					</block>
 				</view>
 			</block>
-			
+
 			<block v-if="dis_level[inds].level_rules_edit.direct_sons">
 				<!-- 直邀请 -->
 				<view class="td" style="display: block;height: auto;" v-if="dis_level[inds].level_rules_edit.direct_sons.checked=='1'">
@@ -205,9 +217,9 @@
 						</block>
 					</view>
 				</view>
-			
+
 			</block>
-	
+
 			<block  v-if="dis_level[inds].level_rules_edit.team_son">
 				<!-- 团队 -->
 				<view class="td" style="display: block;height: auto;" v-if="dis_level[inds].level_rules_edit.team_sons.checked=='1'">
@@ -232,9 +244,9 @@
 					</view>
 				</view>
 			</block>
-			
+
 		</view>
-		
+
 	</view>
 </template>
 
@@ -258,7 +270,7 @@
 			circleTitle
 		},
 		onLoad() {
-				
+
 		},
 		onShow() {
 			this.disApplyInit();
@@ -311,8 +323,8 @@
 							}
 						}
 					}
-					
-					
+
+
 				},err=>{}).catch(e=>{
 					console.log(e)
 				})
@@ -363,7 +375,7 @@
 			.allImg{
 				width: 100%;
 				height: 100%;
-			}	
+			}
 			.vipGrade{
 				height:24rpx;
 				font-size:11px;
