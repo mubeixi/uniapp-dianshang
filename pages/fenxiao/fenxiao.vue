@@ -212,10 +212,10 @@
 					this.data=res.data;
 					this.userInfo.Is_Distribute=1;
 				},err=>{
-					uni.showToast({
-						title: err.msg,
-						icon:  'none'
-					})
+					// uni.showToast({
+					// 	title: err.msg,
+					// 	icon:  'none'
+					// })
 				}).catch(err=>{
 					console.log(err)
 				})
