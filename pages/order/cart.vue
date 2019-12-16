@@ -144,7 +144,10 @@ export default {
   },
   onShow() {
 	this.loading = false;
-  	this.getCart();
+	if(this.$fun.checkIsLogin()){
+		this.getCart();
+	}
+  	
 	this.getProd();
 	this.reset();
   },
