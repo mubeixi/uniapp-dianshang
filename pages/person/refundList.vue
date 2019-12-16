@@ -314,6 +314,6 @@ export default {
 		margin: 0 auto;
 		width: 640rpx;
 		height: 480rpx;
-		margin-top: 100rpx;
+		padding-top: 100rpx;
 	}
 </style>

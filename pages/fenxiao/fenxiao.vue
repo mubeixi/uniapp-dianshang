@@ -13,11 +13,12 @@
 				<view class="person" >
 					<image class="image" style="border-radius: 50%;overflow: hidden" :src="data.disInfo.Shop_Logo||data.disInfo.User_HeadImg"  @click="tofenxiaoshang"></image>
 				</view>
-				<view class="nickName" v-if="userInfo.User_ID&&userInfo.Is_Distribute==1">
+				<view class="nickName" v-if="userInfo.User_ID&&userInfo.Is_Distribute==1" @click="tofenxiaoshang">
 					{{data.disInfo.Shop_Name}}
 				</view>
 				<view class="putong" v-if="userInfo.User_ID&&userInfo.Is_Distribute==1"   @click="goDistributor">
 					{{data.disInfo.Level_Name}}
+					<image v-if="data.disInfo.Level_Name" class="rightMy" src="https://new401.bafangka.com/static/client/person/right.png" ></image>
 				</view>
 			</div>
 
@@ -182,9 +183,6 @@
 				uni.navigateTo({
 					url:'/pages/fenxiao/distributorLevel'
 				})
-				// uni.navigateTo({
-				// 	url:'/pagesA/fenxiao/disAgreementBefore'
-				// })
 			},
 			goLogin(){
 				//直接跳转取登录
@@ -195,7 +193,7 @@
 			},
 			goMsg(){
 				uni.navigateTo({
-					url:'../systemMsg/systemMsg'
+					url:'/pages/systemMsg/systemMsg'
 				})
 			},
 			// 去分销商页面
@@ -204,7 +202,7 @@
 				if(!this.$fun.checkIsLogin(1,1))return;
 				if(!this.$fun.checkIsDistribute(1,1))return;
 				uni.navigateTo({
-					url: '../fenxiao/fenxiaoshang'
+					url: '/pagesA/fenxiao/fenxiaoshang'
 				})
 			},
 			//获取分销首页数据
@@ -492,5 +490,13 @@
 		top: 124rpx;
 		right: 0rpx;
 		border-radius:152rpx 0px 0px 152rpx;
+		display: flex;
+		align-items: center;
+		padding-left: 10px;
+		.rightMy{
+			width: 9px !important;
+			height: 14px !important;
+			margin-left: 2px;
+		}
 	}
 </style>

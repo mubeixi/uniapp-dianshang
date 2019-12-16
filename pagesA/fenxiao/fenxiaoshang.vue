@@ -145,6 +145,11 @@
 								title: '修改成功',
 								icon: 'success'
 							})
+							setTimeout(function(){
+								uni.switchTab({
+									url:"/pages/fenxiao/fenxiao"
+								})
+							},1000)
 						}else {
 							uni.showToast({
 								title: res.msg,
