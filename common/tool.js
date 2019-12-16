@@ -307,6 +307,7 @@ export const uploadImages=(formData,imgs)=>{
 					name: 'image',
 					formData: formData,
 					success: (uploadFileRes) => {
+					    console.log(uploadFileRes)
 						sum++;
 						let msg=JSON.parse(uploadFileRes.data);
 						// console.log(msg)
