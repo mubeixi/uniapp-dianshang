@@ -152,7 +152,7 @@
 				<image :src="'/static/client/person/right.png'|domain" class="right"></image>
 			</view>
 			<view class="setting cell" @click="goNew" v-if="!Stores_ID">
-				<image :src="'/static/client/person/she.png'|domain" class="left"></image>
+				<image src="/static/mendian/mendian.png" class="left"></image>
 				<view class="pintuan">门店入驻</view>
 				<image :src="'/static/client/person/right.png'|domain" class="right"></image>
 			</view>
