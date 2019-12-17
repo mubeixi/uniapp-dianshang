@@ -598,6 +598,9 @@ export default {
 		},
 		// 收藏
 		collect(){
+			if(!this.$fun.checkIsLogin(1,1)){
+				return;
+			}
 			// 检查是否已收藏
 			if(this.isCollected) {
 				cancelCollection({prod_id: this.Products_ID}).then(res=>{
