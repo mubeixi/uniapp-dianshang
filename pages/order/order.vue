@@ -154,8 +154,6 @@ export default {
 							title:res.msg,
 							icon:'none'
 						})
-				},err=>{
-
 				}).catch(e=>{
 					console.log(e);
 				})
@@ -300,7 +298,7 @@ export default {
 							this.data.push(item)
 						}
 					}
-					
+
 					this.totalCount=res.totalCount;
 					this.isQing=false;
 				}
