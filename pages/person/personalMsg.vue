@@ -201,7 +201,7 @@
 
 							// #ifndef MP-TOUTIAO
 								let filePath = res.tempFilePaths[0];
-								console.log(filePath);
+								console.log(filePath,JSON.stringify(data));
 								//上传图片
 								uni.uploadFile({
 										url: apiBaseUrl+'/api/little_program/shopconfig.php',

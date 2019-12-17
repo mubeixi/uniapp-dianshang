@@ -129,7 +129,7 @@
 
 <script>
 import popupLayer from '../../components/popup-layer/popup-layer.vue';
-import {uploadImage,getRefund,orderRefund,GET_ENV,get_Users_ID,get_User_ID,createToken} from '../../common/fetch.js'
+import {uploadImage,getRefund,orderRefund,GET_ENV,get_Users_ID,get_User_ID,createToken,GET_ACCESS_TOKEN} from '../../common/fetch.js'
 import {pageMixin} from "../../common/mixin";
 import {uploadImages,ls} from '../../common/tool.js'
 import {error} from "../../common";
@@ -260,6 +260,10 @@ export default {
 			param.User_ID = get_User_ID();
 			param.Users_ID = get_Users_ID();
 			param.env = GET_ENV();
+
+			if(!param.hasOwnProperty('access_token')){
+				param.access_token = GET_ACCESS_TOKEN()
+			}
 
 			let data = createToken(param);
 			let that=this;
