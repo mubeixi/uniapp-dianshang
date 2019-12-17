@@ -176,6 +176,8 @@
 		methods:{
 			...mapActions(['getUserInfo','setUserInfo']),
 			goMyVip(){
+				if(!this.$fun.checkIsLogin(1,1))return;
+				if(!this.$fun.checkIsDistribute(1,1))return;
 				uni.navigateTo({
 					url:'/pagesA/fenxiao/myVip'
 				})
