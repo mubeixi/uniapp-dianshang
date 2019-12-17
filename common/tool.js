@@ -1,5 +1,5 @@
 import {error, fun} from "./index";
-import { staticUrl } from './env.js';
+import { apiBaseUrl } from './env.js';
 import {get_Users_ID,GET_ENV,uploadImage} from "./fetch";
 
 
@@ -301,12 +301,20 @@ export const uploadImages=(formData,imgs)=>{
 		// #endif
 
 		// #ifndef MP-TOUTIAO
+        if(!formData.hasOwnProperty('access_token')){
+            formData.access_token = ls.get('access_token')
+        }
+
+        console.log(formData)
 			uni.uploadFile({
-					url: staticUrl+'/api/little_program/shopconfig.php',
+					url: apiBaseUrl+'/api/little_program/shopconfig.php',
 					filePath: imgs[i],
 					name: 'image',
 					formData: formData,
 					success: (uploadFileRes) => {
+					    if(!uploadFileRes.data || !uploadFileRes.data.path){
+
+                        }
 					    console.log(uploadFileRes)
 						sum++;
 						let msg=JSON.parse(uploadFileRes.data);

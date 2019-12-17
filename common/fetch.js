@@ -53,7 +53,7 @@ const fetch = function (act, param,options = false,url='/api/little_program/shop
 
   param.act = act;
   param.User_ID = get_User_ID();
-  
+
   if(!param.hasOwnProperty('access_token')){
 	  param.access_token = GET_ACCESS_TOKEN()
   }
@@ -73,7 +73,7 @@ const fetch = function (act, param,options = false,url='/api/little_program/shop
 
 };
 
-const GET_ACCESS_TOKEN = ()=>ls.get('access_token')
+export const GET_ACCESS_TOKEN = ()=>ls.get('access_token')
 
 //获取全局配置
 export const getSystemConf = (data,options) => fetch('shopconfig', data,options)
