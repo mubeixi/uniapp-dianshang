@@ -213,7 +213,10 @@
 				})
 			}
 			this.getOrderNum();
-			this.judgeSignin();
+			if(this.$fun.checkIsLogin()){
+				this.judgeSignin();
+			}
+			
 		},
 		async onPullDownRefresh(){
 

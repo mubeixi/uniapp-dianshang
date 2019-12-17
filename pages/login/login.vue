@@ -6,7 +6,7 @@
 		<ul>
 			<li class="codeContent" v-if="status == 1">
 				<h1 class="topTitle">
-					<view @click="$fun.back" class="funicon icon icon-fanhui inline-block"></view>
+					<view @click="goBack" class="funicon icon icon-fanhui inline-block"></view>
 					登陆 / 注册
 				</h1>
 				<div class="codeLogin">
@@ -290,6 +290,11 @@
 		},
 		methods: {
 			...mapActions(["getInitData", "setUserInfo"]),
+			goBack(){
+				uni.navigateBack({
+				    delta: 1
+				});
+			},
 			setStatusFunc(){
 				this.status = 3
 				this.loginStatus = 3
