@@ -45,8 +45,10 @@
 <script>
 	import {pageMixin} from "../../common/mixin";
 	import {uploadImages,ls} from '../../common/tool.js'
-	import {uploadImage,comment,GET_ENV,get_Users_ID,get_User_ID,createToken} from '../../common/fetch.js'
+	import {uploadImage,comment,GET_ENV,get_Users_ID,get_User_ID,createToken,GET_ACCESS_TOKEN} from '../../common/fetch.js'
 	import uniRate from "../../components/uni-rate/uni-rate.vue"
+	import {chooseImageByPromise, uploadByPromise} from "../../common/tool";
+
 	export default {
 		mixins:[pageMixin],
 		components: {uniRate},
@@ -145,37 +147,44 @@
 				this.imgs.splice(index, 1);
 				this.arr.splice(index, 1);
 			},
-			addImg(){
+			async addImg(){
+				let that=this;
 				let param = {act:'upload_image'};
 				param.User_ID = get_User_ID();
 				param.Users_ID = get_Users_ID();
 				param.env = GET_ENV();
+				if(!param.hasOwnProperty('access_token')){
+					param.access_token = GET_ACCESS_TOKEN()
+				}
 
 				let data = createToken(param);
-				let that=this;
-				uni.chooseImage({
-					count:1,
-					// #ifndef MP-TOUTIAO
-						sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
-					// #endif
-					success(res) {
-						that.isSubmit=false;
-						for(let item of res.tempFiles){
-							that.imgs.push(item.path);
-							//上传图片
-							let arrs=[];
-							arrs.push(item.path);
-							let arr=uploadImages(data,arrs);
-							that.arr.push(arr);
-							//是否可以提交
-							that.isSubmit=true;
-						}
 
-					},
-					fail(e) {
-						console.log(e);
-					}
+
+
+				let sizeType = null
+				// #ifndef MP-TOUTIAO
+				sizeType =  ['original', 'compressed'] //可以指定是原图还是压缩图，默认二者都有
+				// #endif
+
+				let temp_file_list = []
+				await chooseImageByPromise({count:(9-that.imgs.length),sizeType}).then(tempFiles=>{
+					temp_file_list = tempFiles
 				})
+
+				that.imgs = [...temp_file_list]
+
+				let arrs = temp_file_list.map(item=>item.path)
+
+				uploadImages(data,arrs).then(urls=>{
+
+					that.arr = that.arr.concat(urls);
+					//是否可以提交
+					that.isSubmit = true;
+				});
+
+
+
+
 			},
 		}
 	}

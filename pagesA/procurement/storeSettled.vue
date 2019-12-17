@@ -84,7 +84,7 @@
     import {pageMixin} from "../../common/mixin";
     import area from '../../common/area.js';
     import utils from '../../common/util.js';
-    import {uploadImage,comment,GET_ENV,get_Users_ID,get_User_ID,createToken,getUserStoreApply,getStoreTypes} from '../../common/fetch.js'
+    import {uploadImage,comment,GET_ENV,get_Users_ID,get_User_ID,createToken,getUserStoreApply,getStoreTypes,GET_ACCESS_TOKEN} from '../../common/fetch.js'
     import {uploadImages,ls} from '../../common/tool.js'
     import {userStoreApply} from '../../common/fetch.js'
     import {toast,error} from '../../common/index.js'
@@ -321,6 +321,10 @@
                 param.User_ID = get_User_ID();
                 param.Users_ID = get_Users_ID();
                 param.env = GET_ENV();
+
+                if(!param.hasOwnProperty('access_token')){
+                    param.access_token = GET_ACCESS_TOKEN()
+                }
 
                 let data = createToken(param);
                 let that=this;

@@ -4,6 +4,7 @@ import wx from 'weixin-js-sdk';
 // #endif
 
 
+
 import filter from './filter.js';
 import {ajax, get, post} from './interceptors.js';
 import store from '../store';

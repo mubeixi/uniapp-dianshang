@@ -577,6 +577,7 @@
 			},
 			loginCall(userData){
 				this.setUserInfo(userData);
+				ls.set("access_token",userData.access_token,1);
 
 				// #ifdef APP-PLUS
 				//注册设备
@@ -609,9 +610,9 @@
 					let login_farward_url = ls.get('login_farward_url');
 
 					if(login_farward_url){
-						location.href = login_farward_url;
+						location.replace = login_farward_url;
 					}else{
-						uni.switchTab({
+						uni.reLaunch({
 							url: '/pages/index/index'
 						})
 					}
@@ -621,7 +622,7 @@
 					if(history.length>1){
 						history.back();
 					}else{
-						uni.switchTab({
+						uni.reLaunch({
 							url: '/pages/index/index'
 						})
 					}
@@ -650,14 +651,10 @@
 
 				//只有登陆页的话
 				if(pages.length<2){
-
-
-
 					// uni.switchTab({
 					// 	url: '/pages/index/index'
 					// })
 					// return;
-
 				}
 
 				uni.navigateBack()

@@ -16,10 +16,13 @@
 </template>
 
 <script>
-	import {getUserDisInfo,updateUserDisInfo,uploadImage,GET_ENV,get_Users_ID,get_User_ID,createToken} from '../../common/fetch.js';
-	import {uploadImages} from '../../common/tool.js'
+	import {getUserDisInfo,updateUserDisInfo,uploadImage,GET_ENV,get_Users_ID,get_User_ID,createToken,GET_ACCESS_TOKEN} from '../../common/fetch.js';
+
+
 	import { staticUrl } from '../../common/env.js';
 	import {pageMixin} from "../../common/mixin";
+	import {error,toast} from "../../common";
+
 	export default {
 		mixins:[pageMixin],
 		data() {
@@ -70,6 +73,10 @@
 					param.Users_ID = get_Users_ID();
 					param.env = GET_ENV();
 
+					if(!param.hasOwnProperty('access_token')){
+						param.access_token = GET_ACCESS_TOKEN()
+					}
+
 					let data = createToken(param);
 
 					let that=this;
@@ -114,6 +121,10 @@
 												name: 'image',
 												formData: data,
 												success: (uploadFileRes) => {
+													if(typeof uploadFileRes !='object' || !uploadFileRes.hasOwnProperty('data') || !uploadFileRes.data){
+														error('上传文件失败')
+														return;
+													}
 													console.log(uploadFileRes)
 													uploadFileRes =	JSON.parse(uploadFileRes.data)
 													that.tem_Shop_Logo = uploadFileRes.data.path;

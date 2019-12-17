@@ -67,9 +67,10 @@
 	import {mapGetters,mapActions} from 'vuex';
 
 
-	import {GET_ENV,get_User_ID,get_Users_ID,upDateUserInfo,get_user_info,uploadImage,createToken} from '../../common/fetch';
-	import { staticUrl } from '../../common/env.js';
+	import {GET_ENV,get_User_ID,get_Users_ID,GET_ACCESS_TOKEN,upDateUserInfo,get_user_info,uploadImage,createToken} from '../../common/fetch';
+	import { apiBaseUrl } from '../../common/env.js';
 	import {pageMixin} from "../../common/mixin";
+	import {toast,error} from "../../common";
 	export default {
 		mixins:[pageMixin],
 		data() {
@@ -135,6 +136,10 @@
 					// param.appid = get_Appid();
 					param.env = GET_ENV();
 
+					if(!param.hasOwnProperty('access_token')){
+						param.access_token = GET_ACCESS_TOKEN()
+					}
+
 					let data = createToken(param);
 
 					let that=this;
@@ -196,15 +201,19 @@
 
 							// #ifndef MP-TOUTIAO
 								let filePath = res.tempFilePaths[0];
-								console.log(filePath);
+								console.log(filePath,JSON.stringify(data));
 								//上传图片
 								uni.uploadFile({
-										url: staticUrl+'/api/little_program/shopconfig.php',
+										url: apiBaseUrl+'/api/little_program/shopconfig.php',
 										filePath: filePath,
 										name: 'image',
 										formData: data,
 										success: (uploadFileRes) => {
 											console.log(uploadFileRes,'ssssssssss')
+											if(typeof uploadFileRes !='object' || !uploadFileRes.hasOwnProperty('data') || !uploadFileRes.data){
+												error('上传文件失败')
+												return;
+											}
 											uploadFileRes =	JSON.parse(uploadFileRes.data)
 											that.tem_Shop_Logo = uploadFileRes.data.path;
 											upDateUserInfo({

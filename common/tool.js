@@ -1,6 +1,7 @@
-import {error, fun} from "./index";
-import { staticUrl } from './env.js';
-import {get_Users_ID,GET_ENV,uploadImage} from "./fetch";
+import {error, fun, toast} from "./index";
+import { apiBaseUrl } from './env.js';
+import {get_Users_ID,GET_ENV,uploadImage,GET_ACCESS_TOKEN} from "./fetch";
+import _ from 'underscore';
 
 
 export const formatTime = date => {
@@ -266,69 +267,151 @@ export function isWeiXin() {
 
 }
 
+export const uploadByPromise = ({url,filePath,name='image',formData})=>{
+
+    return new Promise((resolve, reject) => {
+        uni.uploadFile({
+            url,
+            filePath,
+            name,
+            formData,
+            success:(res)=>{
+
+                let {data={}} =res
+                if(typeof data ==='string' && data){
+                    let body = JSON.parse(data)
+
+                    data = body.data
+                }
+                if(data.path){
+                    resolve(data.path)
+                }else{
+                    resolve(false)
+
+                    // let msg=JSON.parse(res.data);
+                    toast('文件上传失败')
+                }
+
+            },
+            fail:(err)=>{
+                reject(false)
+            },
+            complete:(rt)=>{
+                console.log(rt)
+            }
+        })
+    })
+
+}
+export const chooseImageByPromise = ({count=1,sizeType=['original', 'compressed']})=>{
+    return new Promise((resolve,reject) => {
+
+        uni.chooseImage({
+            count,
+            // #ifndef MP-TOUTIAO
+            sizeType, //可以指定是原图还是压缩图，默认二者都有
+            // #endif
+            success(res) {
+                resolve(res.tempFiles)
+            },
+            fail(e) {
+                reject(false)
+            }
+        })
+
+    })
+}
 //上传图片
-export const uploadImages=(formData,imgs)=>{
-	let sum=0;
-	let arr=[];
-	let that=this;
-	formData.env=GET_ENV();
+export const uploadImages = (formData,imgs)=>{
+    let sum=0;
+    let arr=[];
+    let that=this;
+
+
+
+	//formData.env=GET_ENV();
+    let taskList = []
 	for(let i=0;i<imgs.length;i++){
-		// #ifdef MP-TOUTIAO
-			let fileCTX = tt.getFileSystemManager()
-			// console.log(fileCTX);
-			fileCTX.readFile({
-				filePath:imgs[i],
-				encoding:'base64',
-				success(ret) {
-
-					let imgs='data:image/jpeg;base64,'+ret.data;
-					uploadImage({'image':imgs}).then(result=>{
-
-						 arr.push(result.data.path);
-					   },err=>{
-
-					   }).catch(e=>{
-
-					   })
-				},
-				fail(ret) {
-				  console.log(ret,`run fail`);
-				},
-				complete(ret) {
-				  console.log(`run done`);
-				}
-			})
-		// #endif
+        // #ifdef MP-TOUTIAO
+			// let fileCTX = tt.getFileSystemManager()
+			// // console.log(fileCTX);
+			// fileCTX.readFile({
+			// 	filePath:imgs[i],
+			// 	encoding:'base64',
+			// 	success(ret) {
+            //
+			// 		let imgs='data:image/jpeg;base64,'+ret.data;
+			// 		uploadImage({'image':imgs}).then(result=>{
+            //
+			// 			 arr.push(result.data.path);
+			// 		   },err=>{
+            //
+			// 		   }).catch(e=>{
+            //
+			// 		   })
+			// 	},
+			// 	fail(ret) {
+			// 	  console.log(ret,`run fail`);
+			// 	},
+			// 	complete(ret) {
+			// 	  console.log(`run done`);
+			// 	}
+			// })
+        // #endif
 
 		// #ifndef MP-TOUTIAO
-			uni.uploadFile({
-					url: staticUrl+'/api/little_program/shopconfig.php',
-					filePath: imgs[i],
-					name: 'image',
-					formData: formData,
-					success: (uploadFileRes) => {
-					    console.log(uploadFileRes)
-						sum++;
-						let msg=JSON.parse(uploadFileRes.data);
-						// console.log(msg)
-						arr.push(msg.data.path);
-						if(sum==imgs.length){
-							uni.showToast({
-								title:msg.msg
-							})
-							if(msg.errorCode==0){
 
-							}else{
 
-							}
-
-						}
-					}
-			})
+        let taskItem = uploadByPromise({
+            url: apiBaseUrl+'/api/little_program/shopconfig.php',
+            filePath: imgs[i],
+            name: 'image',
+            formData: formData
+        })
+        taskList.push(taskItem)
+        //console.log(formData)
+			// uni.uploadFile({
+			// 		url: apiBaseUrl+'/api/little_program/shopconfig.php',
+			// 		filePath: imgs[i],
+			// 		name: 'image',
+			// 		formData: formData,
+			// 		success: (uploadFileRes) => {
+			// 		    if(!uploadFileRes.data || !uploadFileRes.data.path){
+            //
+            //             }
+			// 		    console.log(uploadFileRes)
+			// 			sum++;
+			// 			let msg=JSON.parse(uploadFileRes.data);
+			// 			// console.log(msg)
+			// 			arr.push(msg.data.path);
+			// 			if(sum==imgs.length){
+			// 				uni.showToast({
+			// 					title:msg.msg
+			// 				})
+			// 				if(msg.errorCode==0){
+            //
+			// 				}else{
+            //
+			// 				}
+            //
+			// 			}
+			// 		}
+			// })
 		// #endif
 	}
-	// console.log(arr)
-	return arr;
+
+
+
+    return new Promise((resolve, reject) => {
+        Promise.all(taskList).then((urls) => {
+            console.log(urls)
+            resolve(urls)
+        }).catch((error) => {
+            reject(false)
+            console.log(error)
+        })
+    })
+
 }
 
 
