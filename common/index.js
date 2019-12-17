@@ -53,9 +53,10 @@ export const confirm = (options) => {
             ...options,
             success: function (res) {
                 if (res.confirm) {
+                    console.log('用户点击111');
                     resolve(res)
                 } else if (res.cancel) {
-                    //console.log('用户点击取消');
+                    console.log('用户点击取消');
                     reject(res)
                 }
             },

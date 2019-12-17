@@ -53,7 +53,7 @@
 	import {mapGetters,mapActions} from 'vuex';
 
 
-	import {GET_ENV,getStoreDetail,get_User_ID,get_Users_ID,updateStoreInfo,uploadImage,createToken} from '../../common/fetch';
+	import {GET_ENV,getStoreDetail,get_User_ID,get_Users_ID,updateStoreInfo,uploadImage,createToken,GET_ACCESS_TOKEN} from '../../common/fetch';
 	import { staticUrl } from '../../common/env.js'
 	import {pageMixin} from "../../common/mixin";
 	export default {
@@ -94,7 +94,9 @@
 					param.Users_ID = get_Users_ID();
 					// param.appid = get_Appid();
 					param.env = GET_ENV();
-
+					if(!param.hasOwnProperty('access_token')){
+						param.access_token = GET_ACCESS_TOKEN()
+					}
 					let data = createToken(param);
 
 					let that=this;
@@ -128,8 +130,13 @@
 									   			title: '修改成功',
 									   			icon: 'success'
 									   		});
-									   		that.User_HeadImg = res.data.User_HeadImg;
-									   		that.userInfo.User_HeadImg = res.data.User_HeadImg;
+											getStoreDetail({store_id:_this.Stores_ID}).then(res=>{
+												_this.User_HeadImg=res.data.Stores_ImgPath
+											}).catch(e=>{
+												console.log(e)
+											})
+									   		// that.User_HeadImg = res.data.User_HeadImg;
+									   		// that.userInfo.User_HeadImg = res.data.User_HeadImg;
 									   	}else {
 									   		uni.showToast({
 									   			title: res.msg,
@@ -177,8 +184,13 @@
 														title: '修改成功',
 														icon: 'success'
 													});
-													that.User_HeadImg = res.data.User_HeadImg;
-													that.userInfo.User_HeadImg = res.data.User_HeadImg;
+													getStoreDetail({store_id:_this.Stores_ID}).then(res=>{
+														_this.User_HeadImg=res.data.Stores_ImgPath
+													}).catch(e=>{
+														console.log(e)
+													})
+													// that.User_HeadImg = res.data.User_HeadImg;
+													// that.userInfo.User_HeadImg = res.data.User_HeadImg;
 												}else {
 													uni.showToast({
 														title: res.msg,
