@@ -275,42 +275,42 @@
 
             },
             delFirst(){
-							this.page = 1;
+				this.page = 1;
                 this.indexFirst=-1
                 this.indexSecond=-1
                 if(this.is_pingtai ==0){
-                    this.getProlist()
+                    this.getProlist(1)
                 }else if(this.is_pingtai ==1){
-                    this.getProductList()
+                    this.getProductList(1)
                 }
 
             },
             delSecond(){
-							this.page = 1;
+				this.page = 1;
                 this.indexSecond=-1
                 if(this.is_pingtai ==0){
-                    this.getProlist()
+                    this.getProlist(1)
                 }else if(this.is_pingtai ==1){
-                    this.getProductList()
+                    this.getProductList(1)
                 }
             },
             selctSecond(index){
-							this.page = 1;
+				this.page = 1;
                 this.indexSecond=index
                 if(this.is_pingtai ==0){
-                    this.getProlist()
+                    this.getProlist(1)
                 }else if(this.is_pingtai ==1){
-                    this.getProductList()
+                    this.getProductList(1)
                 }
             },
             selctFirst(index){
-							this.page = 1;
+				this.page = 1;
                 this.indexFirst=index
                 this.indexSecond=-1
                 if(this.is_pingtai ==0){
-                    this.getProlist()
+                    this.getProlist(1)
                 }else if(this.is_pingtai ==1){
-                    this.getProductList()
+                    this.getProductList(1)
                 }
             },
             getProductCategory(){
@@ -460,7 +460,7 @@
                 }
             },
             // 门店产品
-            getProlist(){
+            getProlist(index){
                 let data={
                     purchase_store_sn: this.purchase_store_sn,
                     store_id: this.Stores_ID
@@ -475,7 +475,12 @@
                     }
                 }
                 getPifaStoreProd(data,{tip:'loading'}).then(res=>{
-                    this.prolist = this.prolist.concat(res.data);
+					if(index==1){
+						this.prolist = res.data;
+					}else{
+						this.prolist = this.prolist.concat(res.data);
+					}
+                    
                     this.total_pro_count = res.totalCount;
                     this.active_id = this.Stores_ID + '_' + res.Stores_ID
                     this.get_more = res.totalCount / this.prolist.length ? true : false
@@ -486,7 +491,7 @@
                 })
             },
             // 平台产品
-            getProductList(){
+            getProductList(index){
                 let data={}
                 if(this.indexSecond>=0){
                     data.Cate_ID=this.cateList[this.indexFirst].child[this.indexSecond].Category_ID
@@ -498,7 +503,12 @@
                 data.page = this.page;
                 data.pageSize = this.pageSize;
                 getProductList(data,{tip:'loading'}).then(res=>{
-                    this.prolist = this.prolist.concat(res.data);
+					if(index==1){
+						this.prolist = res.data;
+					}else{
+						this.prolist = this.prolist.concat(res.data);
+					}
+                    
                     this.total_pro_count = res.totalCount;
                     this.active_id = this.Stores_ID + '_' + 0;
 										this.get_more = res.totalCount > this.prolist.length ? true : false
