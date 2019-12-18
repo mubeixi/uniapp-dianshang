@@ -173,7 +173,7 @@
 				if(this.index>0){
 					data.Order_Status=this.index
 				}
-				getOrder(data,{noUid:true}).then(res=>{
+				getOrder(data).then(res=>{
 					for(var i in res.data) {
 						for(var m in res.data[i]){
 							if(m == 'prod_list'){
@@ -196,7 +196,7 @@
 				}).catch(e=>{})
 			},
 			getOrderNum(){
-				// getOrderNum({store_id:this.Stores_ID},{noUid:true}).then(res=>{
+				// getOrderNum({store_id:this.Stores_ID}).then(res=>{
 				// 	this.orderNum=res.data;
 				// 	console.log(res)
 				// }).catch(e=>{
