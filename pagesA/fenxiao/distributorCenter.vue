@@ -32,12 +32,13 @@
 							<view class="mbx">
 								{{itm.name}}
 							</view>
-							<view class="haha">
-							  <picker :value="itm.index" mode="selector" :range="itm.options"  @change="selectS(idx2,$event)">
+							<view class="haha  disMy">
+							  <picker :value="itm.index" mode="selector" :range="itm.options"  @change="selectS(idx2,$event)" style="width: 90%;">
 									<view class="picker">
 									{{itm.options[itm.index]}}
 									</view>
 							  </picker>
+							  <image class="disMyImg" src="https://new401.bafangka.com/static/client/person/right.png"></image>
 							</view>
 				 </view>
 				 <view class="center" v-for="(m,n) of text_lists" :key="n">
@@ -966,6 +967,18 @@
 										// 如果用户之前提交过
 									if(!((JSON.stringify(dislist.apply_order) == "{}"))){
 										let myInfo=JSON.parse(dislist.apply_order.manual_form)
+										
+										
+										if(dislist.apply_order.status==3){
+											this.textShen=dislist.apply_order.status_desc+"("+dislist.apply_order.reason+")"
+										}
+										if(dislist.apply_order.status==1){
+											this.submitM=true
+											this.textShen=dislist.apply_order.status_desc
+										}
+										if(dislist.apply_order.status==2){
+											this.textShen=dislist.apply_order.status_desc
+										}
 										console.log(myInfo,"ssss")
 										for(let item in myInfo){
 											console.log(item,"sss")
@@ -1389,5 +1402,17 @@ view.haha{
 	            }
 	        }
 	    }
+	}
+	
+	.disMy{
+		    display: flex;
+		    align-items: center;
+		    justify-content: space-between;
+		    width: 100%;
+			margin-right: 0px !important;
+	}
+	.disMyImg{
+		width: 9px;
+		height: 14px;
 	}
 </style>
