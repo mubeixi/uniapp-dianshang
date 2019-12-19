@@ -323,7 +323,7 @@
 					return error("请先填入手机号");
 				let event = undefined;
 				if(this.countdownStatus)return;
-				this.countdownStatus=true;
+				//this.countdownStatus=true;
 				return getSmsCode({mobile})
 					.then(() => toast("发送短信成功",'success'))
 					.then(() => this.startCountdown());
@@ -332,7 +332,9 @@
 				// 发送验证码并设置 status（更新页面）
 				if (!status) throw "请传入 status";
 				await this.sendCode();
-				this.status = status;
+				//只有发送验证码成功了，才是
+				if(this.countdownStatus)this.status = status;
+
 			},
 			againSendCode() {
 				if (!this.countdownStatus) this.sendCode();

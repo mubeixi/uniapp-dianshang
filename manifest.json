@@ -186,7 +186,7 @@
             "disableHostCheck" : true,
             "proxy" : {
                 "/api" : {
-                    "target" : "http://www.gogo.com/api",
+                    "target" : "https://new401.bafangka.com/api",//"http://www.gogo.com/api",
                     "changeOrigin" : true,
                     "secure" : false,
                     "pathRewrite" : {
