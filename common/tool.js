@@ -642,8 +642,8 @@ export const findArrayIdx = (arr, key_val_arr, full)=>{
         if(typeof arr[i] !='object')continue
         //用来比较对象
         if(compare_obj(key_val_arr,arr[i])){
-            if(!full) return i;
-            return {val:arr[i],idx:i}
+            if(!full) return parseInt(i);
+            return {val:arr[i],idx:parseInt(i)}
         }
 
     }
@@ -675,3 +675,5 @@ export const createTmplArray = (item,len)=>{
     }
     return rt
 }
+
+

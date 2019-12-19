@@ -143,10 +143,6 @@
         this.isAllowCouponList = res.data
       })
 
-
-
-
-
     }
   }
 </script>

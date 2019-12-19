@@ -4,80 +4,139 @@
         <div class="rotate-box">
             <div class="item"  >
                 <div class="goods" :style="{backgroundColor:getStyle(0)}">
-                    <image class="pic" :src="(itemList[0].img||img_url)" />
-                    <div class="name">{{itemList[0].name}}</div>
+                    <div class="picbox">
+                        <image mode="widthFix" class="pic" :src="itemList[0].img|domain" />
+                    </div>
+                    <div class="name" :class="{active:activeIdx==0}">{{itemList[0].name}}</div>
                 </div>
                 <div class="mask" :style="{backgroundColor:getStyle(0,1)}"></div>
             </div>
             <div class="item"  >
                 <div class="goods" :style="{backgroundColor:getStyle(1)}">
-                    <image class="pic" :src="(itemList[1].img||img_url)" />
-                    <div class="name">{{itemList[1].name}}</div>
+                    <div class="picbox">
+                        <image mode="widthFix" class="pic" :src="itemList[1].img|domain" />
+                    </div>
+                    <div class="name" :class="{active:activeIdx==1}">{{itemList[1].name}}</div>
                 </div>
                 <div class="mask" :style="{backgroundColor:getStyle(1,1)}"></div>
             </div>
             <div class="item"   style="margin-right: 0">
                 <div class="goods" :style="{backgroundColor:getStyle(2)}">
-                    <image class="pic" :src="(itemList[2].img||img_url)" />
-                    <div class="name">{{itemList[2].name}}</div>
+                    <div class="picbox">
+                        <image mode="widthFix" class="pic" :src="itemList[2].img|domain" />
+                    </div>
+                    <div class="name" :class="{active:activeIdx==2}">{{itemList[2].name}}</div>
                 </div>
                 <div class="mask" :style="{backgroundColor:getStyle(2,1)}"></div>
             </div>
             <div class="item"  >
                 <div class="goods" :style="{backgroundColor:getStyle(7)}">
-                    <image class="pic" :src="(itemList[7].img||img_url)" />
-                    <div class="name">{{itemList[7].name}}</div>
+                    <div class="picbox">
+                        <image mode="widthFix" class="pic" :src="itemList[7].img|domain" />
+                    </div>
+                    <div class="name" :class="{active:activeIdx==7}">{{itemList[7].name}}</div>
                 </div>
                 <div class="mask" :style="{backgroundColor:getStyle(7,1)}"></div>
             </div>
             <div class="item" @click="startFn">
                 <div class="goods start-btn">
-                    立即抽奖
+                    {{getStartTip}}
+
                 </div>
                 <div class="mask start-btn-mask"></div>
             </div>
 
             <div class="item"   style="margin-right: 0">
                 <div class="goods" :style="{backgroundColor:getStyle(3)}">
-                    <image class="pic" :src="(itemList[3].img||img_url)" />
-                    <div class="name">{{itemList[3].name}}</div>
+                    <div class="picbox">
+                        <image mode="widthFix" class="pic" :src="itemList[3].img|domain" />
+                    </div>
+                    <div class="name" :class="{active:activeIdx==3}">{{itemList[3].name}}</div>
                 </div>
                 <div class="mask" :style="{backgroundColor:getStyle(3,1)}"></div>
             </div>
             <div class="item" >
                 <div class="goods" :style="{backgroundColor:getStyle(6)}">
-                    <image class="pic" :src="(itemList[6].img||img_url)" />
-                    <div class="name">{{itemList[6].name}}</div>
+                    <div class="picbox">
+                        <image mode="widthFix" class="pic" :src="itemList[6].img|domain" />
+                    </div>
+                    <div class="name" :class="{active:activeIdx==6}">{{itemList[6].name}}</div>
                 </div>
                 <div class="mask" :style="{backgroundColor:getStyle(6,1)}"></div>
             </div>
             <div class="item"  >
                 <div class="goods" :style="{backgroundColor:getStyle(5)}">
-                    <image class="pic" :src="(itemList[5].img||img_url)" />
-                    <div class="name">{{itemList[5].name}}</div>
+                    <div class="picbox">
+                        <image mode="widthFix" class="pic" :src="itemList[5].img|domain" />
+                    </div>
+                    <div class="name" :class="{active:activeIdx==5}">{{itemList[5].name}}</div>
                 </div>
                 <div class="mask" :style="{backgroundColor:getStyle(5,1)}"></div>
             </div>
             <div class="item"   style="margin-right: 0">
                 <div class="goods" :style="{backgroundColor:getStyle(4)}">
-                    <image class="pic" :src="(itemList[4].img||img_url)" />
-                    <div class="name">{{itemList[4].name}}</div>
+                    <div class="picbox">
+                        <image mode="widthFix" class="pic" :src="itemList[4].img|domain" />
+                    </div>
+                    <div class="name" :class="{active:activeIdx==4}">{{itemList[4].name}}</div>
                 </div>
                 <div class="mask" :style="{backgroundColor:getStyle(4,1)}"></div>
             </div>
 
 
-
-
         </div>
 
+        <div class="num-count">
+            <image class="num-count-img" src="/static/marketing/num_count.png" />
+            <div class=" text font14">今日剩余抽奖次数<span class="font16 danger-color" style="">{{day_count}}</span>次,总剩余抽奖次数<span class="font16 danger-color" style="">{{total_count}}</span>次</div>
+        </div>
+
+        <div class="reward-list" @click="showRewardList">
+            我的中奖记录
+        </div>
+
+        <div class="tip-box">
+            <div class="title">抽奖规则</div>
+            <div style="color: white">
+                <text style="font-size: 14px;line-height: 1.6;">
+                    {{tipText}}
+                </text>
+<!--                <u-parse :content="tipText|formatRichTextByUparse" ></u-parse>-->
+            </div>
+        </div>
+
+        <wzw-dialog positions="top" ref="record" bgColor="rgba(0,0,0,.7)" mainBgColor="none">
+            <div class="record-container" >
+                <div class="top">
+                    <image class="record-bg" :src="'/static/marketing/records_bg.png'" />
+                    <div class="record-box">
+                        <div class="title">我的中奖记录</div>
+                        <div class="table">
+                            <div class="tr">
+                                <div class="th time">时间</div>
+                                <div class="th prize">奖品</div>
+                            </div>
+                            <div class="tr" v-for="(item,idx) in record_list">
+                                <div class="td time">{{item.time}}</div>
+                                <div class="td prize">{{item.prize}}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="btn-box" @click="cancelRecordDialog">
+                    <image class="close" :src="'/static/client/marketing/close-btn.png'|domain" />
+                </div>
+            </div>
+        </wzw-dialog>
+
         <wzw-dialog ref="result" bgColor="rgba(0,0,0,.7)" mainBgColor="none">
-            <div class="result-container">
+            <div class="result-container" @click="cancelDialog">
                 <div class="top">
                     <image class="result-bg" :src="'/static/client/marketing/result.png'|domain" />
                     <div class="text">
-                        <div class="text-row line6">恭喜您抽中</div>
-                        <div class="text-row">{{result_tip}}</div>
+                        <div class="text-row line6">恭喜您</div>
+                        <div class="text-row reward">{{result_tip}}</div>
                     </div>
                 </div>
 
@@ -86,36 +145,123 @@
                 </div>
             </div>
         </wzw-dialog>
+
     </view>
 </template>
 
 <script>
+    import {rotateBegin,rotateInit,getRotateRecord} from "../../common/fetch";
     import {Rotate} from "../../common/luck";
     const rotateInstance = new Rotate()
-    const img_data = 'data:image/jpeg;base64,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';
+    import {pageMixin} from "../../common/mixin";
+    import _ from 'underscore';
+
+    import {findArrayIdx} from "../../common/tool";
+    import uParse from '../../components/gaoyia-parse/parse.vue'
+    import {staticUrl} from "../../common/env";
+    import {error,toast} from "../../common";
+
     export default {
         name:'Rotate',
-        components:{},
+        mixins:[pageMixin],
+        components: {
+            uParse
+        },
         data() {
             return {
+                start_num:0,
+                total_count:0,
+                day_count:0,
+                activity_id:null,
                 rotateObj:null,
                 itemList:[],
-                img_url:img_data,
-                result_tip:''
+                tipText:'<img src="https://img30.360buyimg.com/sku/jfs/t1/52867/24/15366/254665/5dc22d25E95f8d33b/965dcdf6430cd8c1.jpg" />',
+                img_url:'',
+                result_tip:'',
+                record_list:[]
             }
         },
-        computed:{
-            activeIdx(){
-                return rotateInstance.getIdx()
-            }
-        },
+
         methods:{
+
+            async showRewardList(){
+                this.$refs.record.show()
+                getRotateRecord({id:this.activity_id,pageSize:999},{tip:'获取中'}).then(res=>{
+                    this.record_list = res.data
+                })
+            },
+            init_func(){
+                rotateInit({id:this.activity_id},{tip:'加载配置'}).then(res=>{
+                    if(res.data.prizes && _.isArray(res.data.prizes)){
+                        this.total_count = res.data.total_count
+                        this.day_count = res.data.day_count
+                        this.tipText = res.data.describe
+                        rotateInstance.setList(res.data.prizes)
+                        this.itemList = rotateInstance.getItemList()
+                    }else{
+                        error('初始化失败')
+                    }
+
+                })
+            },
+            cancelRecordDialog(){
+              this.$refs.record.close()
+            },
             cancelDialog(){
                 this.$refs.result.close()
             },
-            startFn(){
+            async startFn(){
+
+
+
 				if(rotateInstance.is_start)return //已经启动过程中无法再触发
-                rotateInstance.start(6,4)
+
+                if(this.day_count<1){
+                    toast('今日次数已用完，明天再来吧')
+                    return;
+                }
+
+                if(this.total_count<1){
+                    toast('您的抽奖总次数用完啦')
+                    return;
+                }
+                this.total_count--
+                this.day_count--
+
+                //记录点了几次开奖，这个暂时用不到
+                this.start_num++;
+
+                rotateInstance.start(999,10)
+                await rotateBegin({id:this.activit_id}).then(res=>{
+
+
+
+                    // desc: "很遗憾，未中奖"
+                    // id: 2
+                    // prize: 0
+                    let {desc,id,prize} = res.data
+                    //获取中奖的下标
+                    let idx = findArrayIdx(this.itemList,{id:id})
+                    console.log(`中奖下标${idx}`)
+                    // //修改限制圈数
+                    // console.log(rotateInstance.rotate_count,rotateInstance.rotate_count+2)
+                    rotateInstance.setRotateNum(rotateInstance.rotate_count+5)
+                    //设置跳转的方块
+                    rotateInstance.setLuckNum(idx+1)
+                    //这是提示
+                    rotateInstance.setReward(res.data)
+
+                    rotateInstance.setCallFn(this.showResult)
+
+
+
+
+                }).catch(e=>{
+
+                })
+
+
+
             },
             showResult(idx,name){
                 // uni.showModal({
@@ -123,38 +269,203 @@
                 //     content:'恭喜中奖，中奖id:'+idx+'中奖内容为'+name
                 // })
 
-                this.result_tip = `${name}`
+                if(rotateInstance.reward.prize){
+                    this.result_tip = rotateInstance.reward.desc;//`${name}`
+                    this.$refs.result.show()
+                }else{
 
-                this.$refs.result.show()
+                    error(rotateInstance.reward.desc||'没有中奖哦，再试一次吧')
+                }
+
             },
             getStyle(idx,is_mask){
-                if((idx!=this.activeIdx || !rotateInstance.isStart()) && !is_mask)return '#FFEBEB'
-                if((idx!=this.activeIdx || !rotateInstance.isStart()) && is_mask)return '#FFC2C8'
-                let bgColor = rotateInstance.getBgColor(idx)
+                if((idx!=this.activeIdx) && !is_mask)return '#FFEBEB'
+                if((idx!=this.activeIdx) && is_mask)return '#FFC2C8'
+                // if((idx!=this.activeIdx || !rotateInstance.isStart()) && !is_mask)return '#FFEBEB'
+                // if((idx!=this.activeIdx || !rotateInstance.isStart()) && is_mask)return '#FFC2C8'
+                let bgColor = '#FFD800';//rotateInstance.getBgColor(idx)
                 return bgColor // `background-color:${bgColor}`
+            },
+
+            getTextStyle(idx){
+                if(idx==this.activeIdx)return '#fff'
             }
         },
+        computed:{
+            getStartTip(){
+
+                // if(this.start_num>0 && this.total_count>0){
+                //     return '再来一次'
+                // }
+                return '立即抽奖'
+            },
+            activeIdx(){
+                return rotateInstance.getIdx()
+            }
+        },
+        filters: {
+            formatRichTextByUparse(html) {
+                console.log(html)
+                if (!html) return;
+                let newContent = html.replace(/<embed[^>]*>/gi, function (match, capture) {
+                    match = match.replace(/embed/gi, 'video')
+                    match = match.replace(/width="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
+                    match = match.replace(/height="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
+                    match = match.replace(/type="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
+                    //相对地址
+                    match = match.replace(/src="\/uploadfiles/gi, `src="${staticUrl}/uploadfiles`)
+
+                    return match;
+                });
+                return newContent
+            },
+        },
+        onLoad(options){
+            let {activity_id=0} = options
+            this.activity_id = activity_id
+        },
         mounted(){
-            // this.result_tip = '抽中大疆无人机一个'
-            //
-            // let _self = this
-            // this.$nextTick().then(()=>{
-            //     _self.$refs.result.show()
+            // this.$nextTick().then(res=>{
+            //     this.showRewardList()
             // })
         },
+
+        onShow(){
+
+            this.init_func()
+        },
         created(){
+
+            this.$fun.checkIsLogin(1)
             this.rotateObj = rotateInstance
-            rotateInstance.setCallFn(this.showResult)
-            this.itemList = rotateInstance.getItemList()
+            //rotateInstance.setCallFn(this.showResult)
+            //this.itemList = rotateInstance.getItemList()
             //rotateInstance.start()
-
-
         }
 
     }
 </script>
 
 <style lang="scss" scoped>
+.record-container{
+
+    .top{
+        position: relative;
+        text-align: center;
+        width: 656rpx;
+        height: 902rpx;
+        margin: 0 auto;
+        .record-bg{
+            position: absolute;
+            width: 656rpx;
+            height: 902rpx;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+        .record-box{
+            position: relative;
+            z-index: 4;
+            padding: 130rpx 30rpx;
+        }
+        .title{
+            margin: 30rpx 0;
+            color: #e84428;
+            position: relative;
+            z-index: 4;
+        }
+        .table{
+            font-size: 14px;
+            height: 540rpx;
+            overflow-y: scroll;
+            overflow-x: hidden;
+
+            .tr{
+                height: 60rpx;
+                line-height: 60rpx;
+                display: flex;
+                .td{
+                    text-align: center;
+                }
+                .th{
+                    text-align: center;
+                    background: #fff1ee;
+                    color: #333333;
+                }
+                .time{
+                    width: 200rpx;
+                    color: #666;
+                }
+                .prize{
+                    color: #666;
+                    flex: 1;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+            }
+        }
+
+    }
+    .btn-box{
+        text-align: center;
+        margin-top: 30rpx;
+        .close{
+            width: 70rpx;
+            height: 70rpx;
+            margin: 0 auto;
+        }
+    }
+
+}
+
+
+.reward-list{
+    right: 70rpx;
+    text-align: right;
+    position: absolute;
+    top: 1273rpx;
+    width: 750rpx;
+    font-size: 14px;
+    text-decoration: underline;
+    color: white;
+}
+.tip-box{
+    width: 650rpx;
+    position: absolute;
+    top: 1330rpx;
+    left: 50rpx;
+    overflow: hidden;
+    padding-bottom: 30px;
+    .title{
+        color: #FFD800;
+        margin-bottom: 10px;
+    }
+}
+.num-count{
+    width: 660rpx;
+    height: 90rpx;
+    position: absolute;
+    top: 1163rpx;
+    left: 45rpx;
+    .text{
+        position: absolute;
+        width: 660rpx;
+        height: 64rpx;
+        line-height: 64rpx;
+        text-align: center;
+        z-index: 3;
+        color: #925507;
+    }
+    .num-count-img{
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 660rpx;
+        height: 90rpx;
+
+    }
+}
 .result-container{
 
     .top{
@@ -184,6 +495,15 @@
                 text-align: center;
                 line-height: 1.4;
 
+                &.reward{
+                    width: 260rpx;
+                    margin: 0 auto;
+                    height: 80rpx;
+                    overflow: hidden;
+                    word-wrap: break-word;
+                }
+
+
             }
         }
 
@@ -200,9 +520,14 @@
 
 }
 .wrap{
+
     background: #ef1828;
-    min-height: 100vh;
+    height: 100vh;
     box-sizing: border-box;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    position: absolute;
+    width: 750rpx;
 }
 .bgimg{
     width: 750rpx;
@@ -239,7 +564,7 @@
             padding: 0 !important;
             font-size: 14px;
             background: #FFD800 !important;
-            color: white;
+            color: #AB6102;
         }
         .start-btn-mask{
             background: #FFB001 !important;
@@ -265,23 +590,36 @@
             background: #FFC2C8;
             border-radius: 10rpx;
         }
-        .pic{
+        .picbox{
             width: 70rpx;
             height: 70rpx;
+            margin: 0 auto;
+            overflow: hidden;
+            position: relative;
+        }
+        .pic{
+            position: absolute;
+            width: 70rpx;
+            max-height: 70rpx;
             border-radius: 50%;
-            vertical-align: top;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%,-50%);
         }
         .name{
             margin: 10rpx auto 0;
             height: 40rpx;
             width: 140rpx;
-            color: #2F2F2F;
+            color: #2f2f2f;
             text-align: center;
             line-height: 40rpx;
             font-size: 20rpx;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            &.active{
+                color: #AB6102;
+            }
         }
     }
 }

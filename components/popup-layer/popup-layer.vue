@@ -92,8 +92,6 @@
 				console.log('show popup')
 				this.ifshow = true;
 
-
-
 				let _open = setTimeout(() => {
 					this.translateValue = 0;
 					_open = null;
