@@ -210,7 +210,9 @@ export const pageMixin = {
 
 
     },
-
+	onShow(){		
+		plus.key.hideSoftKeybord();
+	},
 	async created(){
 		// console.log('让你等')
 		//
