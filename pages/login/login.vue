@@ -483,7 +483,7 @@
 						console.log(loginRes);
 						let CODE = loginRes.code
 
-						login({code:CODE,login_method:'wx_lp'}).then(result=>{
+						login({code:CODE,login_method:'wx_lp'},{tip:'登录中'}).then(result=>{
 
 							if(result.errorCode === 0){
 								_self.loginCall(result.data)
@@ -513,7 +513,7 @@
 															const lp_raw_data = {...userInfoData.userInfo,...result.data}
 															console.log(lp_raw_data)
 
-															login({code:CODE,login_method:'wx_lp',lp_raw_data:JSON.stringify(lp_raw_data)}).then(ret=>{
+															login({code:CODE,login_method:'wx_lp',lp_raw_data:JSON.stringify(lp_raw_data)},{tip:'更新用户信息'}).then(ret=>{
 																_self.loginCall(ret.data)
 															}).catch(err=>{})
 														}
@@ -538,7 +538,7 @@
 													const lp_raw_data = {...userInfoData.userInfo,...result.data}
 													console.log(lp_raw_data)
 
-													login({code:CODE,login_method:'wx_lp',lp_raw_data:JSON.stringify(lp_raw_data)}).then(ret=>{
+													login({code:CODE,login_method:'wx_lp',lp_raw_data:JSON.stringify(lp_raw_data)},{tip:'更新用户信息'}).then(ret=>{
 														_self.loginCall(ret.data)
 													}).catch(err=>{})
 												}
