@@ -69,14 +69,14 @@
 		            <view class="sku-name">门店电话：</view>
 		            <view class="sku-item">{{storeInfo.mobile}}</view>
 		        </view>
-		        <view class="skulist" >
+		        <view class="skulist" @click="showAdress">
 		            <view class="sku-name">门店地址：</view>
 		            <view class="sku-item" style="flex:1;">
 					{{storeInfo.Stores_Province_name}}{{storeInfo.Stores_City_name}}{{storeInfo.Stores_Area_name}}{{storeInfo.Stores_Address}}
-					<image class="img" src="/static/local.png" @click="showAdress"></image>
+					<image class="img" src="/static/local.png" ></image>
 					</view>
 		        </view>
-		        <view class="skulist" v-if="storeInfo.distance">
+		        <view class="skulist" v-if="storeInfo.distance" @click="showAdress">
 		            <view class="sku-name">门店距离：</view>
 		            <view class="sku-item" >{{storeInfo.distance}}KM</view>
 		        </view>

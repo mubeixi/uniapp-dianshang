@@ -90,12 +90,12 @@
                 </div>
                 <div class="row">
                     <div class="label" >门店地址:</div>
-                    <div class="text">
+                    <div class="text"  @click="showAdress">
 						{{storeInfo.Stores_Province_name}}{{storeInfo.Stores_City_name}}{{storeInfo.Stores_Area_name}}{{storeInfo.Stores_Address}}
-						<image class="img" src="/static/local.png" @click="showAdress" style="width: 26rpx;height: 31rpx;margin-left: 5px;vertical-align: top;"></image>
+						<image class="img" src="/static/local.png"  style="width: 26rpx;height: 31rpx;margin-left: 5px;vertical-align: top;"></image>
 					</div>
                 </div>
-				<view class="row" v-if="storeInfo.distance">
+				<view class="row" v-if="storeInfo.distance"  @click="showAdress">
 				    <view class="label">门店距离：</view>
 				    <view class="text" >{{storeInfo.distance}}KM</view>
 				</view>
