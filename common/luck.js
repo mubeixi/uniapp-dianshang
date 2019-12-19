@@ -50,7 +50,7 @@ export class Rotate {
 
     speed = 200 //速度,多少毫秒转一格,数越大越慢
     len = 0 //多少个格子
-    idx = 0 //当前指向
+    idx = -1 //当前指向
     rotateNum = 1
     rotate_count = 0
     luckNum = 0
@@ -62,10 +62,13 @@ export class Rotate {
 
     intervalInstance = null
 
-    randomRate = ["1%", '1%', '1%', '3%', '10%', '29%', '2%', '52%']
-    imgs = ['','','','','','','','']
-    names = ["一等奖", "10猫币", "谢谢参与", "5猫币", "10元免费流量包", "20元免费流量包", "20猫币 ", "30元免费流量包"]
-    colors = [createRandomColor(),createRandomColor(),createRandomColor(),createRandomColor(),createRandomColor(),createRandomColor(),createRandomColor(),createRandomColor()]
+    reward = null
+
+    ids = [];
+    randomRate = []//["1%", '1%', '1%', '3%', '10%', '29%', '2%', '52%']
+    imgs = []//['','','','','','','','']
+    names = []//["一等奖", "10猫币", "谢谢参与", "5猫币", "10元免费流量包", "20元免费流量包", "20猫币 ", "30元免费流量包"]
+    colors = []//[createRandomColor(),createRandomColor(),createRandomColor(),createRandomColor(),createRandomColor(),createRandomColor(),createRandomColor(),createRandomColor()]
 
     constructor(){
 
@@ -84,7 +87,8 @@ export class Rotate {
             return {
                 color:item,
                 name:this.names[idx],
-                img:this.imgs[idx]
+                img:this.imgs[idx],
+                id:this.ids[idx]
             }
         })
         return rt
@@ -104,21 +108,29 @@ export class Rotate {
 
 
     setList(list){
-        // this.list = [...list]
-        this.radomRate = []
+
+        // this.radomRate = []
         this.names = []
         this.colors = []
+        this.imgs = []
+        this.ids = []
 
         for(var item of list){
-            radomRate.push(item.radomRate)
-            names.push(item.name)
-            colors.push(item.color)
+            // radomRate.push(item.radomRate)
+            this.imgs.push(item.img_url)
+            this.names.push(item.title)
+            this.ids.push(item.id)
+            this.colors.push(createRandomColor())
         }
         this.len = list.length
     }
 
     setSpeed(speed){
         this.speed = parseInt(speed*100)/100
+    }
+
+    setReward(reward){
+        this.reward = reward
     }
 
     //旋转转盘 item:奖品位置; txt：提示语;
@@ -133,8 +145,6 @@ export class Rotate {
         if(this.idx === this.len-1){
             this.idx = 0
             this.rotate_count++
-
-
 
         }else{
             this.idx++
@@ -151,9 +161,7 @@ export class Rotate {
                 this.speed -= 10
             }
         }
-        console.log('this.speed is',this.speed)
-
-
+        //console.log('this.speed is',this.speed)
         console.log(this.luckNum,this.idx,this.rotate_count,this.rotateNum,this.rotate_count === this.rotateNum && this.idx === this.luckNum)
         //满这么多圈
         //下标对了
@@ -164,6 +172,14 @@ export class Rotate {
         }
     }
 
+    setRotateNum(num){
+        console.log('动态设置圈数')
+        this.rotateNum = parseInt(num)
+    }
+    setLuckNum(id){
+        this.luckNum = parseInt(id)
+    }
+
     _init(){
         this.len = this.names.length
         this.speed = 200
@@ -171,18 +187,23 @@ export class Rotate {
         this.is_start = 0
     }
 
+
+
     /**
      *
-     * @param num 最少多少圈
-     * @param round 偏移量，随机增加多少圈
+     * @param {Number}num 最少多少圈
+     * @param {Number}offest 随机增加多少圈
      */
     start(num,offest){
-        if(!num)num=5
-        if(!offest)offest=0
+        if(!num)num=99
+        if(!offest)offest=10
         this._init()
         //获取随机数(奖品个数范围内)
-        this.luckNum = random(this.randomRate)
-        if(!this.luckNum)return;
+        // this.luckNum = random(this.randomRate)
+        // if(!this.luckNum)return;
+
+        this.idx = 0;//恢复光标
+
         this.rotateNum = parseInt(Math.random()*offest+num) //5圈起步，最多10圈
 
         console.log(this.luckNum,this.rotateNum)
