@@ -211,7 +211,9 @@ export const pageMixin = {
 
     },
 	onShow(){		
-		plus.key.hideSoftKeybord();
+		// #ifdef APP-PLUS
+			plus.key.hideSoftKeybord();
+		// #endif
 	},
 	async created(){
 		// console.log('让你等')
