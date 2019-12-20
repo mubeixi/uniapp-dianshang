@@ -309,6 +309,7 @@ export default {
                 productDetail_price:0
 			},
 			isCollected: false, // 该产品是否已收藏
+			isSubmit: false
         }
     },
 	// #ifdef MP-WEIXIN || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO
@@ -754,7 +755,7 @@ export default {
         	}
         },
         skuSub(e){
-
+				if(this.isSubmit) return;
 			console.log(e);
 			add_template_code({
 				code: e.detail.formId,
@@ -775,9 +776,11 @@ export default {
         			return;
         		}
         	}
+					this.isSubmit = true;
         	console.log(this.postData)
         	updateCart(this.postData).then(res=>{
         		console.log(res)
+						this.isSubmit = false;
         		if(res.errorCode == 0) {
         				uni.navigateTo({
         					url: '../order/check?cart_key=DirectBuy&checkfrom=spike'
@@ -788,6 +791,7 @@ export default {
 
         	}).catch(e=>{
 				console.log(e)
+				this.isSubmit = false;
 				uni.showToast({
 					title: e.msg,
 					icon: 'none'

@@ -50,19 +50,21 @@ const fetch = function (act, param,options = false,url='/api/little_program/shop
 	  });
 	  return;
   };
+	const d = new Date();
+	console.log(options)
+	if(options.hasOwnProperty('is_tap') && options.is_tap) {
 
-  const d = new Date();
+		let temp_act_info = ls.get('temp_act_info')
+		if(temp_act_info && temp_act_info.hasOwnProperty('act') && temp_act_info.hasOwnProperty('time') && temp_act_info.act && temp_act_info.time){
+			//同一个请求，不能在0.5s内连点两次
 
-  let temp_act_info = ls.get('temp_act_info')
-  if(temp_act_info && temp_act_info.hasOwnProperty('act') && temp_act_info.hasOwnProperty('time') && temp_act_info.act && temp_act_info.time){
-    //同一个请求，不能在0.5s内连点两次
-
-    console.log(temp_act_info.time+500-d.getTime())
-    if(act == temp_act_info.act && d.getTime()<(temp_act_info.time+500)){
-      toast('请求过快')
-      return new Promise((resolve, reject) => {reject(false)})
-    }
-  }
+			console.log(temp_act_info.time+500-d.getTime())
+			if(act == temp_act_info.act && d.getTime()<(temp_act_info.time+500)){
+				error('请求过快')
+				return new Promise((resolve, reject) => {reject(false)})
+			}
+		}		
+	}
 
   ls.set('temp_act_info',{act,time:d.getTime()})
 
