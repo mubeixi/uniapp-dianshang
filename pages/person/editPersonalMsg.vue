@@ -8,7 +8,7 @@
 		<block v-if="type == 2">
 			<view class="area-item">
 				<text class="area-label">请选择生日</text>
-					<picker mode="date" :value="date" :start="startDate" :end="endDate" @change="bindDateChange">
+					<picker mode="date"   @change="bindDateChange">
 						<view class="uni-input" v-if="dateValue">{{dateValue}}</view>
 						<view class="uni-input" v-if="!dateValue">请选择出生时间</view>
 					</picker>
