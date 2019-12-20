@@ -232,7 +232,7 @@
                 this.start_num++;
 
                 rotateInstance.start(999,10)
-                await rotateBegin({id:this.activit_id}).then(res=>{
+                await rotateBegin({id:this.activity_id}).then(res=>{
 
 
 
