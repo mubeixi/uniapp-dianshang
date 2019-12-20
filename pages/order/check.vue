@@ -489,7 +489,7 @@ export default {
 								}
 						}
 					}
-					this.postData.store_id=JSON.stringify(obj)
+					this.postData.self_pick_store_id=JSON.stringify(obj)
 				}
 				add_template_code({
 					code: e.detail.formId,

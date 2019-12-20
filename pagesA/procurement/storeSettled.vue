@@ -49,8 +49,8 @@
         <view class="addImg">
             门店图片
             <view class="imgs">
-                <view class="shangchuans" v-for="(item,index) of imgs" :key="index"  >
-                    <image class="image" :src="item"  @click="yulan(index)"></image>
+                <view class="shangchuans" v-for="(item,index) in imgs" :key="index"  >
+                    <image class="image" :src="item.path || item"  @click="yulan(index)"></image>
                     <image :src="'/static/client/delimg.png'|domain" class="del image" @click="delImg(index)"></image>
                 </view>
                 <view class="shangchuan" @click="addImg" v-if="arr.length == 0 && !is_submitted">
@@ -85,7 +85,7 @@
     import area from '../../common/area.js';
     import utils from '../../common/util.js';
     import {uploadImage,comment,GET_ENV,get_Users_ID,get_User_ID,createToken,getUserStoreApply,getStoreTypes,GET_ACCESS_TOKEN} from '../../common/fetch.js'
-    import {uploadImages,ls} from '../../common/tool.js'
+    import {uploadImages,ls,chooseImageByPromise} from '../../common/tool.js'
     import {userStoreApply} from '../../common/fetch.js'
     import {toast,error} from '../../common/index.js'
     export default {
@@ -113,7 +113,7 @@
                 storeTypes: [], // 门店类型
                 current: 0,
                 store_type: 0, // 门店类型
-                index:  0
+                index:  0,
             }
         },
         computed: {
@@ -316,7 +316,7 @@
                 this.imgs.splice(index, 1);
                 this.arr.splice(index, 1);
             },
-            addImg(){
+						async addImg(){
                 let param = {act:'upload_image'};
                 param.User_ID = get_User_ID();
                 param.Users_ID = get_Users_ID();
@@ -327,31 +327,25 @@
                 }
 
                 let data = createToken(param);
-                let that=this;
-                uni.chooseImage({
-                    count:1,
-                    // #ifndef MP-TOUTIAO
-                    sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
-                    // #endif
-                    success(res) {
-                        that.isSubmit=false;
-                        for(let item of res.tempFiles){
-                            that.imgs.push(item.path);
-                            //上传图片
-                            let arrs=[];
-                            arrs.push(item.path);
-                            let arr=uploadImages(data,arrs);
-                            // that.arr.push(arr);
-                            that.arr = arr;
-                            //是否可以提交
-                            that.isSubmit=true;
-                        }
-
-                    },
-                    fail(e) {
-
-                    }
-                })
+								
+								let sizeType = null
+								// #ifndef MP-TOUTIAO
+								sizeType =  ['original', 'compressed'] //可以指定是原图还是压缩图，默认二者都有
+								// #endif
+								let that = this;
+								let temp_file_list = []
+								await chooseImageByPromise({count:(9-that.imgs.length),sizeType}).then(tempFiles=>{
+									temp_file_list = tempFiles
+								})
+								
+								that.imgs = [...temp_file_list]
+								
+								let arrs = temp_file_list.map(item=>item.path)
+								uploadImages(data,arrs).then(urls=>{
+									that.arr = that.arr.concat(urls);
+									//是否可以提交
+									that.isSubmit = true;
+								});
             },
         }
     }
