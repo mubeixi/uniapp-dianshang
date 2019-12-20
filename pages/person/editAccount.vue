@@ -62,7 +62,7 @@
 			},
 			goRotate(){
 				uni.navigateTo({
-					url:'/pagesA/marketing/rotate'
+					url:'/pagesA/marketing/rotate?activity_id=19'
 				})
 			},
 
