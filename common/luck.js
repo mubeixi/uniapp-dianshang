@@ -162,7 +162,7 @@ export class Rotate {
             }
         }
         //console.log('this.speed is',this.speed)
-        console.log(this.luckNum,this.idx,this.rotate_count,this.rotateNum,this.rotate_count === this.rotateNum && this.idx === this.luckNum)
+        //console.log(this.luckNum,this.idx,this.rotate_count,this.rotateNum,this.rotate_count === this.rotateNum && this.idx === this.luckNum)
         //满这么多圈
         //下标对了
         if(this.rotate_count === this.rotateNum && this.idx+1 === this.luckNum){

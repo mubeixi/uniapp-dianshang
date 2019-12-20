@@ -7,6 +7,7 @@ import Base64 from './tool/base64.js'
 import {ls} from "./tool.js";
 import {post,get,ajax} from './interceptors.js';
 import {isWeiXin} from "./tool";
+import {error} from "./index";
 
 export const GET_ENV = ()=>{
 
@@ -40,6 +41,7 @@ export const GET_ENV = ()=>{
 
 
 const fetch = function (act, param,options = false,url='/api/little_program/shopconfig.php',  method = 'post') {
+
   if(!act){
 	  uni.showToast({
 	      title: 'act参数必传',
@@ -48,6 +50,19 @@ const fetch = function (act, param,options = false,url='/api/little_program/shop
 	  });
 	  return;
   };
+
+  const d = new Date()
+
+  let temp_act_info = ls.get('temp_act_info')
+  if(temp_act_info && temp_act_info.hasOwnProperty('act') && temp_act_info.hasOwnProperty('time') && temp_act_info.act && temp_act_info.time){
+    //同一个请求，不能在0.5s内连点两次
+    if(act==temp_act_info.act && d.getTime()<temp_act_info.time+500*1000){
+      console('请求过快')
+      return
+    }
+  }
+
+  ls.set('temp_act_info',{act,time:d.getTime()})
 
   if(!param)param = {}
 

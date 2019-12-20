@@ -460,14 +460,16 @@
 
 				let wxAuthUrl = null;
 
+				let scope = 'snsapi_userinfo';//snsapi_userinfo //snsapi_base
 				if(channel.type=='wx_mp' && channel.component_appid){
 					//服务商模式登录
-					wxAuthUrl = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${channel.appid}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=snsapi_userinfo&state=STATE&component_appid=${channel.component_appid}#wechat_redirect`;
+					wxAuthUrl = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${channel.appid}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=${scope}&connect_redirect=1&state=STATE&component_appid=${channel.component_appid}#wechat_redirect`;
 				}else{
 
 					//公众号自己的appid用于登录
-					wxAuthUrl = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${channel.appid}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect`
+					wxAuthUrl = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${channel.appid}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=${scope}&connect_redirect=1&state=STATE#wechat_redirect`
 				}
+				console.log(wxAuthUrl)
 
 				window.location.href = wxAuthUrl;
 
@@ -601,7 +603,7 @@
 
 
 			},
-			loginCall(userData){
+			async loginCall(userData){
 				this.setUserInfo(userData);
 				ls.set("access_token",userData.access_token,1);
 
@@ -610,14 +612,14 @@
 				let clientid = ls.get('user_client_id')
 				if(clientid){
 					console.log("注册设备",clientid,userData)
-					bindUserClientId({uuid:clientid,action:'save'},{errtip:false}).then(res=>{console.log('注册设备成功')},err=>{}).catch(error=>{})
+					await bindUserClientId({uuid:clientid,action:'save'},{errtip:false}).then(res=>{console.log('注册设备成功')},err=>{}).catch(error=>{})
 				}
 				// #endif
 
 
 
 				//手动绑定一下
-				upUserLog({},{errtip:false}).then(res=>{
+				await upUserLog({},{errtip:false}).then(res=>{
 					// #ifdef H5
 					sessionStorage.setItem('is_send_usrlog',1)
 					// #endif
@@ -631,28 +633,38 @@
 				// #ifdef H5
 				//微信登录才这么走
 
+				let login_farward_url = ls.get('login_farward_url');
 
-				if(GetQueryByString(location.href,'code')){
-					let login_farward_url = ls.get('login_farward_url');
-
-					if(login_farward_url){
-						location.replace = login_farward_url;
-					}else{
-						uni.reLaunch({
-							url: '/pages/index/index'
-						})
-					}
+				if(login_farward_url){
+					ls.remove('login_farward_url');
+					//location.replace(login_farward_url);
+					// uni.navigateBack({
+					// 	delta: 2
+					// });
+					// history.go(-2);
+					location.href = login_farward_url
+					return;
 				}else{
-
-					//不是微信登录
-					if(history.length>1){
-						history.back();
-					}else{
-						uni.reLaunch({
-							url: '/pages/index/index'
-						})
-					}
+					uni.reLaunch({
+						url: '/pages/index/index'
+					})
 				}
+
+				// if(GetQueryByString(location.href,'code')){
+				// 	uni.reLaunch({
+				// 		url: '/pages/index/index'
+				// 	})
+				// }else{
+
+				// 	//不是微信登录
+				// 	if(history.length>1){
+				// 		history.back();
+				// 	}else{
+				// 		uni.reLaunch({
+				// 			url: '/pages/index/index'
+				// 		})
+				// 	}
+				// }
 				// location.href = ls.get('login_farward_url');//没办法
 				// //alert(history.length);
 				// //hack navigateBack无效
@@ -699,20 +711,29 @@
 		//   })
 		// },
 		onShow(){
-			this.setUserInfo({});
-		},
-		created() {
 
+			let uid = ls.get('user_id'),access_token = ls.get('access_token')
+			console.log(uid,access_token,666666666666)
+			if(uid && access_token){
+				history.go(1)
+				return;
+			}
+
+			//
 
 			// #ifdef H5
 			if (isWeiXin()) {
+
+
 				let code = GetQueryByString(location.href, 'code');
-				if (code) {
+				if (code && !access_token) {
+					this.setUserInfo({});
+					console.log('code is'+code)
 					login({
 						login_method: 'wx_mp',
 						code: code
 					}).then(res => {
-						console.log(res)
+						console.log(JSON.stringify(res))
 						if(res.errorCode === 0){
 							this.loginCall(res.data)
 						}
@@ -722,7 +743,15 @@
 			}
 			// #endif
 
+			// #ifndef H5
+			this.setUserInfo({});
+			// #endif
+
 			this.initDataFn();
+
+		},
+		created() {
+
 
 		}
 	};
