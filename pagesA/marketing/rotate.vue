@@ -212,7 +212,7 @@
             },
             async startFn(){
 
-
+				if(!this.$fun.checkIsLogin(1))return;
 
 				if(rotateInstance.is_start)return //已经启动过程中无法再触发
 
@@ -336,7 +336,7 @@
         },
         created(){
 
-            this.$fun.checkIsLogin(1)
+           // this.$fun.checkIsLogin(1)
             this.rotateObj = rotateInstance
             //rotateInstance.setCallFn(this.showResult)
             //this.itemList = rotateInstance.getItemList()

@@ -204,6 +204,7 @@
 				// })
 			},
 			changIndex(i){
+				if(i==this.index) return
 				this.pro=[];
 				this.index=i;
 				this.page=1;

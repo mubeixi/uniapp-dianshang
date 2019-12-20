@@ -196,7 +196,7 @@
 			};
 		},
 		computed:{
-			...mapGetters(['userInfo']),
+			...mapGetters(['userInfo','initData']),
 			...mapState(['Stores_ID'])
 		},
 		onLoad(){

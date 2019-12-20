@@ -252,7 +252,7 @@
                     store_city: this.store_city,
                     store_area: this.store_area,
                     store_type: this.store_type
-                }).then(res=>{
+                },{mask:true}).then(res=>{
 										uni.showToast({
 											title: res.msg,
 											icon: 'none'
