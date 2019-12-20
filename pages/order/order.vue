@@ -254,6 +254,7 @@ export default {
 
 		},
 		changIndex(i){
+			if(i==this.index) return
 			this.data=[];
 			this.index=i;
 			this._getOrder();

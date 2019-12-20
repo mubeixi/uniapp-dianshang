@@ -1,5 +1,8 @@
 <template>
 	<view class="myall">
+			<div class="defaults" v-if="pro.length<=0">
+				<image :src="'/static/client/defaultImg.png'|domain" ></image>
+			</div>
 			<view class="centers" v-for="(item,index) of pro " :key="index">
 				<view class="imgs">
 					<image class="image" :src="item.User_HeadImg" ></image>
@@ -60,7 +63,7 @@
 						this.pro.push(item);
 					}
 					this.totalCount=res.totalCount;
-				},err=>{})
+				})
 				.catch(e=>{
 					console.log(e)
 				})
@@ -129,4 +132,10 @@
 		}
 	}
 }
+.defaults{
+		margin: 0 auto;
+		width: 640rpx;
+		height: 480rpx;
+		margin-top: 100rpx;
+	}
 </style>

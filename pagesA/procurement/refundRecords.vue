@@ -184,6 +184,7 @@
 
 			},
 			changeStatus(status){
+					if(status==this.status) return
 					this.status = status;
 					this.load();
 			},

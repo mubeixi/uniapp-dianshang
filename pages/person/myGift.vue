@@ -122,6 +122,7 @@
 				})
 			},
 			change(item){
+				if(item==this.checked) return
 				this.checked=item;
 				this.data=[];
 				this.page=1;

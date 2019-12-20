@@ -908,6 +908,8 @@
 			},
 			changIndex(index){
 				// 切换存一下数组，否则之前处理的逻辑都没了
+				if(index==this.index) return
+				
 				if(index != 4) {
 					// ls.remove('productMy');
 					// ls.set('productMy', this.productMy);

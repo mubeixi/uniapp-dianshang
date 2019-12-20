@@ -85,6 +85,7 @@
 		},
 		methods:{
 			change(item){
+				if(item==this.index) return
 				this.pro=[];
 				this.page=1;
 				this.index=item;
