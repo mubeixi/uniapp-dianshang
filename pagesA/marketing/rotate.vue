@@ -214,7 +214,10 @@
 
 				if(!this.$fun.checkIsLogin(1))return;
 
-				if(rotateInstance.is_start)return //已经启动过程中无法再触发
+				if(rotateInstance.is_start){
+				    console.log('已经在跑了')
+                    return //已经启动过程中无法再触发
+                }
 
                 if(this.day_count<1){
                     toast('今日次数已用完，明天再来吧')
