@@ -116,12 +116,12 @@
 
 
 				<!-- #ifndef MP ||APP-PLUS -->
-				<view class="td"  @click="goAssist" style="border-bottom: 0px;">
+				<!-- <view class="td"  @click="goAssist" style="border-bottom: 0px;">
 					<image  class="imgs" :src="'/static/client/fenxiao/tuiguang.png'|domain" ></image>
 					<view class="views">
 						推广小助手
 					</view>
-				</view>
+				</view> -->
 				<!-- #endif -->
 			</view>
 		</view>

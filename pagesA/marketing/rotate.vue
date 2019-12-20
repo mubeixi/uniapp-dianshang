@@ -212,7 +212,7 @@
             },
             async startFn(){
 
-
+				if(!this.$fun.checkIsLogin(1))return;
 
 				if(rotateInstance.is_start)return //已经启动过程中无法再触发
 
