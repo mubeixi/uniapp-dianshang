@@ -181,8 +181,11 @@
 							<view class="submit submitMbx" v-if="dis_level[inds].apply_order.status==2">
 								已完成
 							</view>
-							<view class="submit" v-else @click="edit(dis_level[inds].Level_ID)">
-								去申请
+							<view class="submit submitMbx" v-else-if="dis_level[inds].apply_order.status==1">
+								待审核
+							</view>
+							<view class="submit" v-else  @click="edit(dis_level[inds].Level_ID)">
+								已驳回({{dis_level[inds].apply_order.reason}})
 							</view>
 						</block>
 					</block>
