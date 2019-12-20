@@ -187,7 +187,7 @@ export const fun = {
 
         let {link, linkType,ext={}} = linkObj;
         if(!link){
-            error('跳转地址为空')
+            //error('跳转地址为空')
             return;
         }
 

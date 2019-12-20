@@ -210,7 +210,7 @@ export const pageMixin = {
 
 
     },
-	onShow(){		
+	onShow(){
 		plus.key.hideSoftKeybord();
 	},
 	async created(){
@@ -226,9 +226,7 @@ export const pageMixin = {
 
 		// #ifdef H5
 		//微信里面强制刷新
-		if(isWeiXin()){
-			this.refreshInit = true
-		}
+		this.refreshInit = true
 		// #endif
 
 
