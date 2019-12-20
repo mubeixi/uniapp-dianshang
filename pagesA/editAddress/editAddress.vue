@@ -229,7 +229,7 @@
 				if (this.address_info.Address_ID) {
 				  // 编辑
 				  var data = this.address_info;
-				  editAddress(data).then(res => {
+				  editAddress(data,{is_tap:true}).then(res => {
 					  uni.showToast({
 					  	title: res.msg
 					  })
@@ -240,7 +240,7 @@
 				  var data = this.address_info;
 				  data.act = 'add_address';
 				  delete data.Address_ID;
-				  addAddress(data).then(res => {
+				  addAddress(data,{is_tap:true}).then(res => {
 					  uni.showToast({
 					  	title: res.msg
 					  });

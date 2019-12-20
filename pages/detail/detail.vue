@@ -238,49 +238,50 @@ export default {
 	mixins:[pageMixin],
     data(){
         return {
-			isLoad:false,
-			// #ifdef APP-PLUS
-        	wxMiniOriginId:'',
-			// #endif
-			JSSDK_INIT:false,//自己有分享的业务
-            type: '', // 优惠券内容， 分享内容
-            shareShow: false,
-            ticksShow: false,
-			product:{Products_JSON:{ImgPath:[]}},//商品结果
-			commit:'',//获取评论
-			Products_ID: 0 ,
-			count:1,//商品数量
-			skuF:1,//规格详情
-			checkAttr: {} , // 选择的属性
-			check_attrid_arr: [],
-			check_attr: {},
-			couponList:[],//优惠券列表
-			//购买需要传输的信息
-			postData: {
-			    act: 'add_cart',
-			    prod_id: 0,    //产品ID  在 onLoad中赋值
-			    attr_id: 0,    //选择属性id
-			    count: 0,         //选择属性的库存
-			    // showimg: '',      //选择属性的图片(用产品图片代替)
-			    qty: 1,           //购买数量
-			    cart_key: '',     //购物车类型   CartList（加入购物车）、DirectBuy（立即购买）、PTCartList（不能加入购物车）
-				productDetail_price: 0
-			},
-			submit_flag: true, //提交按钮
-			page:1,//优惠券页
-			pageSize:10,//优惠券页
-			totalCount:0,//优惠券个数
-			isCollected: false, // 该产品是否已收藏
-			gift: 0, //赠品id
-			skuval: [], // 赠品带过来的产品属性
-			recieve: false,  //是否是赠品，赠品按钮显示 立即领取
-			gift_attr_id: '', //赠品属性id,
-			canSubmit: true,
-			isLoading:false,
-			showVideo: true, // 是否展示视频
-			isShowBtn: true, //是否显示视频图片切换按钮
-			isVirtual: false, // 是否虚拟产品
-			videoContext:null
+					isLoad:false,
+					// #ifdef APP-PLUS
+							wxMiniOriginId:'',
+					// #endif
+					JSSDK_INIT:false,//自己有分享的业务
+								type: '', // 优惠券内容， 分享内容
+								shareShow: false,
+								ticksShow: false,
+					product:{Products_JSON:{ImgPath:[]}},//商品结果
+					commit:'',//获取评论
+					Products_ID: 0 ,
+					count:1,//商品数量
+					skuF:1,//规格详情
+					checkAttr: {} , // 选择的属性
+					check_attrid_arr: [],
+					check_attr: {},
+					couponList:[],//优惠券列表
+					//购买需要传输的信息
+					postData: {
+							act: 'add_cart',
+							prod_id: 0,    //产品ID  在 onLoad中赋值
+							attr_id: 0,    //选择属性id
+							count: 0,         //选择属性的库存
+							// showimg: '',      //选择属性的图片(用产品图片代替)
+							qty: 1,           //购买数量
+							cart_key: '',     //购物车类型   CartList（加入购物车）、DirectBuy（立即购买）、PTCartList（不能加入购物车）
+						productDetail_price: 0
+					},
+					submit_flag: true, //提交按钮
+					page:1,//优惠券页
+					pageSize:10,//优惠券页
+					totalCount:0,//优惠券个数
+					isCollected: false, // 该产品是否已收藏
+					gift: 0, //赠品id
+					skuval: [], // 赠品带过来的产品属性
+					recieve: false,  //是否是赠品，赠品按钮显示 立即领取
+					gift_attr_id: '', //赠品属性id,
+					canSubmit: true,
+					isLoading:false,
+					showVideo: true, // 是否展示视频
+					isShowBtn: true, //是否显示视频图片切换按钮
+					isVirtual: false, // 是否虚拟产品
+					videoContext:null,
+					isSubmit: false, // 是否提交过了
         }
     },
     components: {
@@ -861,9 +862,8 @@ export default {
 			}
 		},
 		skuSub(e){
-
+			if(this.isSubmit) {return}
 			console.log(e);
-
 			if(!this.submit_flag) {
 				return ;
 			}
@@ -881,9 +881,10 @@ export default {
 				code: e.detail.formId,
 				times: 1
 			})
-
+			this.isSubmit = true;
 			updateCart(this.postData).then(res=>{
 				if(res.errorCode == 0) {
+					this.isSubmit = false;
 					if(this.postData.cart_key == 'CartList') {
 						uni.showToast({
 							title: '加入购物车成功',
@@ -899,6 +900,7 @@ export default {
 						title: res.msg,
 						icon: 'none'
 					})
+					this.isSubmit = false;
 				}
 			})
 			//确定加入购物车

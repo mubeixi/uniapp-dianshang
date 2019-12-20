@@ -405,7 +405,7 @@
 		display: flex;
 		.p_item {
 			flex: 1;
-			text-align: center;
+			// text-align: center;
 		}
 	}
 </style>
