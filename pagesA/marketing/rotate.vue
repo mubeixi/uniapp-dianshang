@@ -336,7 +336,7 @@
         },
         created(){
 
-            this.$fun.checkIsLogin(1)
+           // this.$fun.checkIsLogin(1)
             this.rotateObj = rotateInstance
             //rotateInstance.setCallFn(this.showResult)
             //this.itemList = rotateInstance.getItemList()
