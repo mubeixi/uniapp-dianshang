@@ -83,7 +83,8 @@
 				change_multiIndex: [0, 0, 0], //改变的收货地址对应列的下标
 				t_arr: [],
 				t_index: 0,
-				address_info: {}
+				address_info: {},
+				loading:false
 			}
 		},
 		computed: {
@@ -162,7 +163,7 @@
 			 },
 			getTitle(){
 				switch (this.type) {
-					case '0' : this.title = '修改姓名';break;
+					case '0' : this.title = '修改用户名';break;
 					case '1' : this.title = '修改昵称';break;
 					case '3' : this.title = '修改邮箱';break;
 					case '4' : this.title = '修改地址';break;
@@ -172,10 +173,12 @@
 				})
 			},
 			save(){
+				
+				if(this.loading)return
 				if(this.type==0){
 					if(!this.User_Name){
 						uni.showToast({
-							title:'输入不能为空',
+							title:'请输入用户名',
 							icon:'none'
 						})
 						return
@@ -184,7 +187,7 @@
 				if(this.type==1){
 					if(!this.User_NickName){
 						uni.showToast({
-							title:'输入不能为空',
+							title:'请输入昵称',
 							icon:'none'
 						})
 						return
@@ -193,14 +196,12 @@
 				if(this.type==3){
 					if(!this.User_Email){
 						uni.showToast({
-							title:'输入不能为空',
+							title:'请输入邮箱',
 							icon:'none'
 						})
 						return
 					}
 				}
-				
-				
 				if(this.type == 4){
 					if(!this.address_info.User_Province || !this.address_info.User_City || !this.address_info.User_Area|| !this.address_info.User_Tow) {
 						uni.showToast({
@@ -216,6 +217,16 @@
 						return;
 					}
 				}
+				if(this.type == 2){
+					if(!this.dateValue){
+						uni.showToast({
+							title: '请填写生日',
+							icon: 'none'
+						});
+						return
+					}
+				}
+				this.loading=true
 				upDateUserInfo({
 					User_Name: this.User_Name,
 					User_NickName: this.User_NickName,
@@ -243,7 +254,10 @@
 							})
 						}, 1500);
 					}
+				}).catch(e=>{
+					this.loading=false
 				})
+				
 			},
 			//处理省市区联动信息
 			  addressChange: function (columnValue) {
@@ -352,6 +366,7 @@
 	.bgColor-white{
 		height: 100vh;
 		padding-top: 20px;
+		box-sizing: border-box;
 	}
 	.v_input {
 		border: 1px solid #efefef;
