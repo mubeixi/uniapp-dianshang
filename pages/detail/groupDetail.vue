@@ -314,6 +314,7 @@ export default {
 			},
 			isPin:false,
 			isCollected: false, // 该产品是否已收藏
+			isSubmit: false, // 是否提交过了
         }
     },
 	// #ifdef MP-WEIXIN || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO
@@ -772,12 +773,12 @@ export default {
         	}
         },
         skuSub(e){
-
-			console.log(e);
-			add_template_code({
-				code: e.detail.formId,
-				times: 1
-			})
+					if(this.isSubmit) return;
+					console.log(e);
+					add_template_code({
+						code: e.detail.formId,
+						times: 1
+					})
         	if(!this.submit_flag) {
         		return ;
         	}
@@ -792,8 +793,10 @@ export default {
         		}
         	}
         	console.log(this.postData)
+					this.isSubmit = true;
         	updateCart(this.postData).then(res=>{
         		console.log(res)
+						this.isSubmit = false;
         		if(res.errorCode == 0) {
         				uni.navigateTo({
         					url: '../order/check?cart_key=DirectBuy&checkfrom=group'
@@ -804,6 +807,7 @@ export default {
 
         	}).catch(e=>{
 				console.log(e)
+				this.isSubmit = false;
 				uni.showToast({
 					title: e.msg
 				})
