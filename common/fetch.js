@@ -59,7 +59,7 @@ const fetch = function (act, param,options = false,url='/api/little_program/shop
 
     console.log(temp_act_info.time+500-d.getTime())
     if(d.getTime()<(temp_act_info.time+500)){
-      error('请求过快')
+      console.log('请求过快')
       return new Promise((resolve, reject) => {reject(false)})
     }
   }
