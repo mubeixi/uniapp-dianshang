@@ -322,19 +322,7 @@ export default {
 		let _self = this
 		this.$nextTick().then(res=>{
 
-			// #ifdef APP-PLUS
-			var icon = plus.nativeObj.View.getViewById("icon");
-			var icons = plus.nativeObj.View.getViewById("icons");
-
-			console.log(icon,"sssssssssssssssssssssss")
-			if(icon&&icons){
-				icon.show();
-				icons.show();
-			}else{
-				_self.createtab();
-				_self.createtabs();
-			}
-			// #endif
+		
 
 
 			if(_self.$refs.cartPopu){
@@ -354,7 +342,20 @@ export default {
 
 	},
 	onShow(){
+			let _self = this
+			// #ifdef APP-PLUS
+			var icon = plus.nativeObj.View.getViewById("icon");
+			var icons = plus.nativeObj.View.getViewById("icons");
 
+			console.log(icon,"sssssssssssssssssssssss")
+			if(icon&&icons){
+				icon.show();
+				icons.show();
+			}else{
+				_self.createtab();
+				_self.createtabs();
+			}
+			// #endif
 
 	},
 	onUnload(){

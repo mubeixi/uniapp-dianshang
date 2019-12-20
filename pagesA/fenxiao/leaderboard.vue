@@ -118,7 +118,7 @@
 			return {
 				index:0,
 				page:1,
-				pageSize:10,
+				pageSize:15,
 				isFriend:0,
 				pro:[],
 				myInfo:'',
@@ -195,6 +195,7 @@
 	top: 0rpx;
 	left: 0rpx;
 	background-color: #FFFFFF;
+	z-index: 999;
 	.hahas{
 		width: 202rpx;
 		height: 95rpx;

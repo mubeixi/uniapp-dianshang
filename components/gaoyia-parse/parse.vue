@@ -4,12 +4,12 @@
  * github地址: https://github.com/dcloudio/uParse
  *
  * for: uni-app框架下 富文本解析
- * 
+ *
  * 优化 by gaoyia@qq.com  https://github.com/gaoyia/parse
  */-->
 
 <template>
-	
+
 	<!--基础元素-->
 	<div class="wxParse" :class="className" :style="'user-select:' + userSelect">
 		<block v-for="(node, index) of nodes" :key="index" v-if="!loading">
@@ -23,7 +23,7 @@
 	import wxParseTemplate from './components/wxParseTemplate0';
 
 	export default {
-		name: 'wxParse',
+		name: 'uParse',
 		props: {
 			// user-select:none;
 			userSelect: {
@@ -44,7 +44,7 @@
 						// 		},
 						// 		fail: function (res) {
 						// 			console.log(res.errMsg);
-						// 		}    
+						// 		}
 						// 	}
 						// }
 					}
@@ -209,7 +209,7 @@
 			// content: {
 			// 	handler: function(newVal, oldVal) {
 			// 		if (newVal !== oldVal) {
-			// 			
+			//
 			// 		}
 			// 	},
 			// 	deep: true

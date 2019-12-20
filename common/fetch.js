@@ -88,8 +88,17 @@ export const login = (data,options) => {
     return fetch('user_login', data,options)
 }
 
-export const sendAnalysisData = (data,options) => fetch('sendAnalysisData',data,options)
+//大转盘初始化
+export const rotateInit = (data,options) => fetch('initTurn',data,options)
 
+//大转盘开始
+export const rotateBegin = (data,options) => fetch('beginTurn',data,options)
+
+//获取中奖记录
+export const getRotateRecord = (data,options) => fetch('getPrizeRecord',data,options)
+
+
+export const sendAnalysisData = (data,options) => fetch('sendAnalysisData',data,options)
 
 export const getCouponList = (data,options) => fetch('get_unaccalimed_coupon',data,options)
 

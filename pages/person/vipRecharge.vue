@@ -342,8 +342,8 @@ export default {
 			uni.showToast({
 				title: '支付成功'
 			});
-			uni.navigateBack({
-				url:'/pages/person/vipGrade'
+			uni.navigateTo({
+				url:'/pages/person/balanceCenter'
 			});
 			return;
 		},

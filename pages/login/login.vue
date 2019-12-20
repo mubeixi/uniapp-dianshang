@@ -38,8 +38,8 @@
 
 						<div class="inline-block flex1 text-center" v-for="(channel,idx) in channels">
 
-							<button v-if="channel.type=='wx_lp'" size="mini" type="primary" class="text-center" open-type="getUserInfo"  @getuserinfo="weixinlogin">登录</button>
-							<!-- <i v-if="channel.type=='wx_lp'" @click="weixinlogin" class="funicon icon-weixin font24" ></i> -->
+<!--							<button v-if="channel.type=='wx_lp'" size="mini" type="primary" class="text-center" open-type="getUserInfo"  @getuserinfo="weixinlogin">登录</button>-->
+							 <i v-if="channel.type=='wx_lp'" @click="openLoginDialog" class="funicon icon-weixin font24" ></i>
 							<!-- <i v-if="channel.type=='wx_mp'" @click="weixinlogin(channel)" class="funicon icon-weixin"></i>
 							<i v-if="channel.type=='qq'" @click="qqlogin(channel)" style="color: #2eb1f1;font-size: 32px;margin-top: 2px" class="funicon icon-QQ1"></i> -->
 						</div>
@@ -141,6 +141,23 @@
 				</div>
 			</li>
 		</ul>
+
+		<wzw-dialog ref="refLogin" positions="center" bgColor="rgba(0,0,0,.7)" mainBgColor="none">
+			<div class="joinForm">
+				<div class="line15">
+				登录提示
+				</div>
+				<div class="line10 graytext">
+				为了更好的为您服务，需要获取您的资料
+				</div>
+				<div class="line10">
+					<button type="primary" open-type="getUserInfo"  @getuserinfo="weixinlogin">立即登录</button>
+				</div>
+				<div>
+					<button @click="cancelLoginDialog">暂不登录</button>
+				</div>
+			</div>
+		</wzw-dialog>
 
 		<!--    <popup v-model="tel.show" class="telContent">-->
 		<!--      <popup-header title="选择国际电话区号"></popup-header>-->
@@ -289,7 +306,14 @@
 			}
 		},
 		methods: {
-			...mapActions(["getInitData", "setUserInfo"]),
+			openLoginDialog(){
+				this.$refs.refLogin.show()
+			},
+			cancelLoginDialog(){
+				this.$refs.refLogin.close()
+				// uni.navigateBack()
+			},
+
 			goBack(){
 				uni.navigateBack({
 				    delta: 1
@@ -323,7 +347,7 @@
 					return error("请先填入手机号");
 				let event = undefined;
 				if(this.countdownStatus)return;
-				this.countdownStatus=true;
+				//this.countdownStatus=true;
 				return getSmsCode({mobile})
 					.then(() => toast("发送短信成功",'success'))
 					.then(() => this.startCountdown());
@@ -332,7 +356,9 @@
 				// 发送验证码并设置 status（更新页面）
 				if (!status) throw "请传入 status";
 				await this.sendCode();
-				this.status = status;
+				//只有发送验证码成功了，才是
+				if(this.countdownStatus)this.status = status;
+
 			},
 			againSendCode() {
 				if (!this.countdownStatus) this.sendCode();
@@ -457,7 +483,7 @@
 						console.log(loginRes);
 						let CODE = loginRes.code
 
-						login({code:CODE,login_method:'wx_lp'}).then(result=>{
+						login({code:CODE,login_method:'wx_lp'},{tip:'登录中'}).then(result=>{
 
 							if(result.errorCode === 0){
 								_self.loginCall(result.data)
@@ -487,7 +513,7 @@
 															const lp_raw_data = {...userInfoData.userInfo,...result.data}
 															console.log(lp_raw_data)
 
-															login({code:CODE,login_method:'wx_lp',lp_raw_data:JSON.stringify(lp_raw_data)}).then(ret=>{
+															login({code:CODE,login_method:'wx_lp',lp_raw_data:JSON.stringify(lp_raw_data)},{tip:'更新用户信息'}).then(ret=>{
 																_self.loginCall(ret.data)
 															}).catch(err=>{})
 														}
@@ -512,7 +538,7 @@
 													const lp_raw_data = {...userInfoData.userInfo,...result.data}
 													console.log(lp_raw_data)
 
-													login({code:CODE,login_method:'wx_lp',lp_raw_data:JSON.stringify(lp_raw_data)}).then(ret=>{
+													login({code:CODE,login_method:'wx_lp',lp_raw_data:JSON.stringify(lp_raw_data)},{tip:'更新用户信息'}).then(ret=>{
 														_self.loginCall(ret.data)
 													}).catch(err=>{})
 												}
@@ -662,7 +688,8 @@
 				// uni.switchTab({
 				// 	url: '/pages/index/index'
 				// })
-			}
+			},
+			...mapActions(["getInitData", "setUserInfo"]),
 
 		},
 		//  beforeRouteEnter(to, from, next) {
@@ -703,6 +730,15 @@
 
 <style scoped lang="scss">
 	@import "../../static/css/scssConfig";
+
+	.joinForm{
+		background: white;
+		width: 500rpx;
+		padding: 30rpx;
+		text-align: center;
+		border-radius: 4px;
+
+	}
 
 	.icon-fanhui {
 		padding-right: 10px;
