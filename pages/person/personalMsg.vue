@@ -5,10 +5,10 @@
 		<!-- <page-title title="个人信息" rightHidden="true" bgcolor="#F8F8F8"></page-title> -->
 
 		<view class="msg">
-			<view class="item">
+			<view class="item" @click="changeAvator">
 				<view class="item-name">头像</view>
 				<view class="info">
-					<image :src="User_HeadImg" mode="" @click="changeAvator"></image>
+					<image :src="User_HeadImg" ></image>
 				</view>
 				<view class="go">
 					<image :src="'/static/client/right.png'|domain" mode=""></image>
