@@ -151,16 +151,19 @@
 				</view>
 				<image :src="'/static/client/person/right.png'|domain" class="right"></image>
 			</view>
-			<view class="setting cell" @click="goNew" v-if="!Stores_ID">
-				<image src="/static/mendian/mendian.png" class="left"></image>
-				<view class="pintuan">门店入驻</view>
-				<image :src="'/static/client/person/right.png'|domain" class="right"></image>
-			</view>
-			<view class="setting cell" @click="goStore" v-else>
-				<image src="/static/mendian/mendian.png" class="left"></image>
-				<view class="pintuan">门店</view>
-				<image :src="'/static/client/person/right.png'|domain" class="right"></image>
-			</view>
+			<block v-if="!!initData.is_store_apply">
+				<view class="setting cell" @click="goNew" v-if="!Stores_ID">
+					<image src="/static/mendian/mendian.png" class="left"></image>
+					<view class="pintuan">门店入驻</view>
+					<image :src="'/static/client/person/right.png'|domain" class="right"></image>
+				</view>
+				<view class="setting cell" @click="goStore" v-else>
+					<image src="/static/mendian/mendian.png" class="left"></image>
+					<view class="pintuan">门店</view>
+					<image :src="'/static/client/person/right.png'|domain" class="right"></image>
+				</view>
+			</block>
+
 			<view class="setting cell" @click="goSetting">
 				<image :src="'/static/client/person/she.png'|domain" class="left"></image>
 				<view class="pintuan">
@@ -216,7 +219,7 @@
 			if(this.$fun.checkIsLogin()){
 				this.judgeSignin();
 			}
-			
+
 		},
 		async onPullDownRefresh(){
 

@@ -173,7 +173,7 @@ export class Rotate {
     }
 
     setRotateNum(num){
-        console.log('动态设置圈数')
+        // console.log('动态设置圈数')
         this.rotateNum = parseInt(num)
     }
     setLuckNum(id){
@@ -206,7 +206,7 @@ export class Rotate {
 
         this.rotateNum = parseInt(Math.random()*offest+num) //5圈起步，最多10圈
 
-        console.log(this.luckNum,this.rotateNum)
+        // console.log(this.luckNum,this.rotateNum)
 
         this.is_start = 1
         this.rotateFn();
