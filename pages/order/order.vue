@@ -163,10 +163,16 @@ export default {
 		},
 		goLogistics(item){
 			// 处理物流名称
-			let express = JSON.parse( item.Order_Shipping).Express;
+			let express ={}
+			if(typeof item.Order_Shipping =='object'){
+				express =item.Order_Shipping.Express;
+			}else{
+				express = JSON.parse( item.Order_Shipping).Express;	 
+			}
+			
 			//跳转物流追踪
 			uni.navigateTo({
-				url:'../order/logistics?shipping_id='+item.Order_ShippingID + '&express=' + express + '&prod_img=' + item.prod_list[0].prod_img
+				url:'/pages/order/logistics?shipping_id='+item.Order_ShippingID + '&express=' + express + '&prod_img=' + item.prod_list[0].prod_img
 			})
 		},
 		//获取订单角标数
@@ -233,22 +239,22 @@ export default {
 		},
 		goDetail(item){
 			uni.navigateTo({
-				url:"../order/orderDetail?Order_ID="+item.Order_ID+'&pagefrom=order'
+				url:"/pages/order/orderDetail?Order_ID="+item.Order_ID+'&pagefrom=order'
 			})
 		},
 		//跳转申请退款 支付   发表评论
 		goPay(item){
 			if(item.Order_Status==1){
 				uni.navigateTo({
-					url:"../pay/pay?Order_ID="+item.Order_ID
+					url:"/pages/pay/pay?Order_ID="+item.Order_ID
 				})
 			}else if(item.Order_Status==2||item.Order_Status==3){
 				uni.navigateTo({
-					url:'../person/refund?Order_ID='+item.Order_ID
+					url:'/pages/person/refund?Order_ID='+item.Order_ID
 				})
 			}else if(item.Order_Status==4){
 				uni.navigateTo({
-					url:'../order/publishComment?Order_ID='+item.Order_ID
+					url:'/pages/order/publishComment?Order_ID='+item.Order_ID
 				})
 			}
 

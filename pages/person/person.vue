@@ -510,12 +510,21 @@
 					transform: translateY(-50%);
 				}
 				.nickName{
-					font-size:30rpx;
+					font-size:15px;
 					height: 29rpx;
 					line-height: 29rpx;
+					overflow: hidden;
+				
 					color: #FFFFFF;
 					font-weight:bold;
+					width: 500rpx;
+					white-space: nowrap;
+					overflow-x: scroll;
+					visibility:middle;
 				}
+				 .nickName::-webkit-scrollbar {
+				                display: none;
+				   }
 				.cart{
 					margin-top: 19rpx;
 					font-size: 22rpx;
