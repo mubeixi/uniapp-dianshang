@@ -27,7 +27,7 @@
 			<div class="item noborder">上传照片(最多9张)</div>
 			<div class="imgs">
 				<view class="shangchuans" v-for="(item,index) of imgs" :key="index"  >
-					<image class="image" :src="item"  @click="yulan(index)"></image>
+					<image class="image" :src="item.path"  @click="yulan(index)"></image>
 					<image :src="'/static/client/delimg.png'|domain" class="del image" @click="delImg(index)"></image>
 				</view>
 			    <view class="shangchuan" @click="addImg"  v-if="arr.length<9">
@@ -81,8 +81,12 @@
 			},
 			//图片预览
 			yulan(index){
+				let arr=[]
+				for(let item of this.imgs){
+					arr.push(item.path)
+				}
 				uni.previewImage({
-				            urls: this.imgs,
+				            urls: arr,
 							indicator:'default',
 							current:index
 				});
@@ -168,11 +172,13 @@
 
 				let temp_file_list = []
 				await chooseImageByPromise({count:(9-that.imgs.length),sizeType}).then(tempFiles=>{
-					temp_file_list = tempFiles
+					temp_file_list=tempFiles
+					for(let item of tempFiles){
+						that.imgs.push(item)
+					}
 				})
 
-				that.imgs = [...temp_file_list]
-
+				// that.imgs = [...temp_file_list]
 				let arrs = temp_file_list.map(item=>item.path)
 
 				uploadImages(data,arrs).then(urls=>{
