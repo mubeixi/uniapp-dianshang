@@ -23,6 +23,7 @@
 				<tab-component v-if="item.indexOf('tab') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
 				<group-component v-if="item.indexOf('group') !== -1" :confData="templateData[tagIndex][index]" :index="index"  />
 				<flash-component v-if="item.indexOf('flash') !== -1" :confData="templateData[tagIndex][index]" :index="index"  />
+				<kill-component v-if="item.indexOf('kill') !== -1" :confData="templateData[tagIndex][index]" :index="index"  />
 			</section>
 		</view>
 	</view>
