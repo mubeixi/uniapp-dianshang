@@ -205,7 +205,7 @@ function requestAndroid(permissionID) {
     return new Promise((resolve, reject) => {
         plus.android.requestPermissions(
             [permissionID],
-            function(resultObj) {
+            function (resultObj) {
                 var result = 0;
                 for (var i = 0; i < resultObj.granted.length; i++) {
                     var grantedPermission = resultObj.granted[i];
@@ -224,7 +224,7 @@ function requestAndroid(permissionID) {
                 }
                 resolve(result);
             },
-            function(error) {
+            function (error) {
                 console.log('result error: ' + error.message)
                 resolve({
                     code: error.code,
@@ -259,7 +259,7 @@ function gotoAppPermissionSetting() {
 }
 
 const permission = {
-    get isIOS(){
+    get isIOS() {
         return typeof isIOS === 'boolean' ? isIOS : (isIOS = uni.getSystemInfoSync().platform === 'ios')
     },
     requestIOS: requestIOS,

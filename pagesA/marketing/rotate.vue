@@ -245,7 +245,7 @@
                     let {desc,id,prize} = res.data
                     //获取中奖的下标
                     let idx = findArrayIdx(this.itemList,{id:id})
-                    console.log(`中奖下标${idx}`)
+                    // console.log(`中奖下标${idx}`)
                     // //修改限制圈数
                     // console.log(rotateInstance.rotate_count,rotateInstance.rotate_count+2)
                     rotateInstance.setRotateNum(rotateInstance.rotate_count+5)
@@ -308,7 +308,7 @@
         },
         filters: {
             formatRichTextByUparse(html) {
-                console.log(html)
+                // console.log(html)
                 if (!html) return;
                 let newContent = html.replace(/<embed[^>]*>/gi, function (match, capture) {
                     match = match.replace(/embed/gi, 'video')
@@ -501,7 +501,10 @@
                 &.reward{
                     width: 260rpx;
                     margin: 0 auto;
-                    height: 80rpx;
+                    height: 120rpx;
+					font-size: 14px;
+					line-height: 40rpx;
+					text-overflow: ellipsis;
                     overflow: hidden;
                     word-wrap: break-word;
                 }
