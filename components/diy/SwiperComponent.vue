@@ -43,7 +43,7 @@
                 singleH: null,
                 swipwerH: '150px',
                 fullWidth: null,
-                height_list:[],
+                height_list: [],
                 swiper: {
                     config: {},
                     value: {
@@ -67,12 +67,12 @@
         components: {},
         methods: {
             //用第一张图片做初始化高度
-            imgLoad(e){
+            imgLoad(e) {
                 //只有第一个的时候才改
-                if(e.currentTarget.id='js-swiper-item0'){
+                if (e.currentTarget.id = 'js-swiper-item0') {
                     this.swipwerH = e.detail.height + 'rpx'
                 }
-                this.height_list.push(e.detail.height+'rpx')
+                this.height_list.push(e.detail.height + 'rpx')
                 console.log(e)
             },
             //滚动的时候灵活设置个高度

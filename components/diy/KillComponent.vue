@@ -1,15 +1,25 @@
 <template>
-    <div class="goods wrap" id="goods" :style="{background:goods.style.bgColor,paddingLeft:goods.style.wrapmargin+'px',paddingRight:goods.style.wrapmargin+'px'}">
+    <div class="goods wrap" id="goods"
+         :style="{background:goods.style.bgColor,paddingLeft:goods.style.wrapmargin+'px',paddingRight:goods.style.wrapmargin+'px'}">
         <div :class="className">
-            <ul class="list" >
-                <li  @click="goDetail(item)" v-for="(item,idx) in goodsList" :key="idx" class="item" :class="[idx%2==0?'even':'odd',goods.config.radius=='round'?'round':'',goods.config.showmode]" :style="[itemMarginObj(idx)]">
-                    <div class="cover" :style="{width:itemw,height:itemH,backgroundSize:goods.config.fill?goods.config.fill:'cover',backgroundImage:'url('+domainFunc(item.ImgPath)+')'}">
-                        <div v-show="goods.config.attr && goods.config.attr.tag.show" :class="goods.config.attr.tag.style" v-if="['new','hot'].indexOf(goods.config.attr.tag.style)!=-1" class="tag">
+            <ul class="list">
+                <li @click="goDetail(item)" v-for="(item,idx) in goodsList" :key="idx" class="item"
+                    :class="[idx%2==0?'even':'odd',goods.config.radius=='round'?'round':'',goods.config.showmode]"
+                    :style="[itemMarginObj(idx)]">
+                    <div class="cover"
+                         :style="{width:itemw,height:itemH,backgroundSize:goods.config.fill?goods.config.fill:'cover',backgroundImage:'url('+domainFunc(item.ImgPath)+')'}">
+                        <div v-show="goods.config.attr && goods.config.attr.tag.show"
+                             :class="goods.config.attr.tag.style"
+                             v-if="['new','hot'].indexOf(goods.config.attr.tag.style)!=-1" class="tag">
                             {{goods.config.attr.tag.style=='hot'?'hot':'new'}}
                         </div>
-                        <div v-show="goods.config.attr.tag.show" v-else class="tag img"><img :src="goods.config.attr.tag.img|domain"/></div>
+                        <div v-show="goods.config.attr.tag.show" v-else class="tag img"><img
+                                :src="goods.config.attr.tag.img|domain"/></div>
 
-                        <div v-if="goods.config.style!=3" class="stamp">距{{item.countdown.is_start?'结束':'开始'}}<span class="countdown_tag2">{{item.countdown.d|zero}}</span>天<span class="countdown_tag">{{item.countdown.h|zero}}</span>时<span class="countdown_tag">{{item.countdown.m|zero}}</span>分<span class="countdown_tag">{{item.countdown.s|zero}}</span>秒<span class="count" v-if="goods.config.style==1">秒杀库存{{item.attr_json.count}}</span></div>
+                        <div v-if="goods.config.style!=3" class="stamp">距{{item.countdown.is_start?'结束':'开始'}}<span
+                                class="countdown_tag2">{{item.countdown.d|zero}}</span>天<span class="countdown_tag">{{item.countdown.h|zero}}</span>时<span
+                                class="countdown_tag">{{item.countdown.m|zero}}</span>分<span class="countdown_tag">{{item.countdown.s|zero}}</span>秒<span
+                                class="count" v-if="goods.config.style==1">秒杀库存{{item.attr_json.count}}</span></div>
 
                         <span class="count" v-if="goods.config.style==3">库存{{item.attr_json.count}}</span>
 
@@ -20,15 +30,25 @@
                             <div v-show="goods.config.attr.desc.show" class="font12 graytext desc">
                                 {{item.Products_BriefDescription||'暂无介绍'}}
                             </div>
-                            <div v-if="goods.config.style!=1" v-show="goods.config.attr.price.show" class="price"><span class="graytext2 font12">秒杀价 </span><span class="sign">￥</span><span style="font-weight: 600">{{item.attr_json.price}}</span><span class="graytext2 market-price font12"> ￥{{item.Products_PriceX}} </span>
+                            <div v-if="goods.config.style!=1" v-show="goods.config.attr.price.show" class="price"><span
+                                    class="graytext2 font12">秒杀价 </span><span class="sign">￥</span><span
+                                    style="font-weight: 600">{{item.attr_json.price}}</span><span
+                                    class="graytext2 market-price font12"> ￥{{item.Products_PriceX}} </span>
                             </div>
                         </div>
-                        <div v-if="goods.config.style==3" class="stamp">距{{item.countdown.is_start?'结束':'开始'}}<span class="countdown_tag2">{{item.countdown.d|zero}}</span>天<span class="countdown_tag">{{item.countdown.h|zero}}</span>时<span class="countdown_tag">{{item.countdown.m|zero}}</span>分<span class="countdown_tag">{{item.countdown.s|zero}}</span>秒</div>
+                        <div v-if="goods.config.style==3" class="stamp">距{{item.countdown.is_start?'结束':'开始'}}<span
+                                class="countdown_tag2">{{item.countdown.d|zero}}</span>天<span class="countdown_tag">{{item.countdown.h|zero}}</span>时<span
+                                class="countdown_tag">{{item.countdown.m|zero}}</span>分<span class="countdown_tag">{{item.countdown.s|zero}}</span>秒
+                        </div>
                         <div class="bottom-box">
-                            <div v-if="goods.config.style==1" v-show="goods.config.attr.price.show" class="price"><span class="graytext2 font12">秒杀价 </span><span class="sign">￥</span><span style="font-weight: 600">{{item.attr_json.price}}</span><span class="graytext2 market-price font12"> ￥{{item.Products_PriceX}} </span></div>
+                            <div v-if="goods.config.style==1" v-show="goods.config.attr.price.show" class="price"><span
+                                    class="graytext2 font12">秒杀价 </span><span class="sign">￥</span><span
+                                    style="font-weight: 600">{{item.attr_json.price}}</span><span
+                                    class="graytext2 market-price font12"> ￥{{item.Products_PriceX}} </span></div>
 
                             <span class="count" v-if="goods.config.style==2">库存{{item.attr_json.count}}</span>
-                            <div v-show="goods.config.attr.buybtn.show" class="buybtn" :class="'theme'+goods.config.attr.buybtn.style">
+                            <div v-show="goods.config.attr.buybtn.show" class="buybtn"
+                                 :class="'theme'+goods.config.attr.buybtn.style">
                                 {{item.countdown.is_start?'立即购买':'立即预订'}}
                             </div>
                         </div>
@@ -40,11 +60,10 @@
     </div>
 </template>
 <script>
-    import {getProductList,getFlashSaleList} from "../../common/fetch";
+    import {getFlashSaleList} from "../../common/fetch";
     import {domainFn, lazyImgUrl} from "../../common/filter";
     import {goProductDetail} from "../../common";
-    import {getCountdownFunc,createEmptyArray} from "../../common/tool";
-
+    import {createEmptyArray, getCountdownFunc} from "../../common/tool";
 
 
     export default {
@@ -60,16 +79,16 @@
         data() {
             return {
                 goodsList: [],
-                infoTmpl:{
-                    Products_ID:33,
-                    Products_Name:'商品名称',
-                    Products_PriceX:99.99,
-                    Products_BriefDescription:'商品简介',
-                    ImgPath:''
+                infoTmpl: {
+                    Products_ID: 33,
+                    Products_Name: '商品名称',
+                    Products_PriceX: 99.99,
+                    Products_BriefDescription: '商品简介',
+                    ImgPath: ''
                 },
                 goods: {
-                    config:{
-                        attr:{
+                    config: {
+                        attr: {
                             title: {},
                             desc: {},
                             price: {},
@@ -82,9 +101,9 @@
             };
         },
         computed: {
-            limit(){
-                if(this.goods.value){
-                    return this.goods.value.cate_id ? this.goods.value.limit :20
+            limit() {
+                if (this.goods.value) {
+                    return this.goods.value.cate_id ? this.goods.value.limit : 20
                 }
                 return 20
 
@@ -93,12 +112,12 @@
                 return !this.goods.config.attr.title.show && !this.goods.config.attr.desc.show && !this.goods.config.attr.price.show && !this.goods.config.attr.buybtn.show
             },
             w() {
-                return this.fullWidth+'px';
+                return this.fullWidth + 'px';
             },
             itemw() {
                 let full = this.fullWidth;
 
-                if(this.goods.config.showmode == 'border-bgwhite'){
+                if (this.goods.config.showmode == 'border-bgwhite') {
                     full -= 4;//4个边框
                 }
 
@@ -109,12 +128,12 @@
 
                 if (this.goods.config.style === 1) {
                     //内边不是乘以3 而是1
-                    return (full - this.goods.style.wrapmargin * 2)+'px'
+                    return (full - this.goods.style.wrapmargin * 2) + 'px'
                 }
 
                 if (this.goods.config.style === 3) {
                     //内边不是乘以3 而是1
-                    return 200+'rpx';
+                    return 200 + 'rpx';
                 }
 
                 if (this.goods.config.style === 4) {
@@ -123,12 +142,12 @@
                 return 'auto';
 
             },
-            itemH(){
+            itemH() {
                 let full = this.fullWidth;
-                let ratio = this.goods.config.ratio?this.goods.config.ratio:1;
+                let ratio = this.goods.config.ratio ? this.goods.config.ratio : 1;
                 let num = 0;
 
-                if(this.goods.config.showmode == 'border-bgwhite'){
+                if (this.goods.config.showmode == 'border-bgwhite') {
                     full -= 4;//4个边框
                 }
                 if (this.goods.config.style === 2) {
@@ -139,7 +158,7 @@
                 if (this.goods.config.style === 3) {
                     //内边不是乘以3 而是1
                     num = 200
-                    return num*ratio +'rpx';
+                    return num * ratio + 'rpx';
                 }
 
                 if (this.goods.config.style === 1) {
@@ -150,15 +169,15 @@
                 if (this.goods.config.style === 4) {
                     num = full / 3;
                 }
-                if(num>0){
-                    return num*ratio +'px';
+                if (num > 0) {
+                    return num * ratio + 'px';
                 }
                 return 'auto';
             },
 
             className() {
                 //利用这样的方式，传入className box +style1/2/3/4
-                return 'style' + this.goods.config.style+' box'
+                return 'style' + this.goods.config.style + ' box'
             },
             style() {
                 // return deepCopyStrict(this.coupon.styleDefault, this.coupon.style);
@@ -178,17 +197,17 @@
                     let _self = this;
 
                     if (!val) return;
-                    let {list = [], cate_id=[], limit} = val;
+                    let {list = [], cate_id = [], limit} = val;
 
                     //if(!cate_id)cate_id = []
 
                     // console.log(list,cate_id,limit)
                     //如果值还没有设置的话
-                    if(list.length===0 && cate_id.length===0){
+                    if (list.length === 0 && cate_id.length === 0) {
                         return;
                     }
 
-                    this.goodsList = createEmptyArray(list.length,{countdown:{}})//空对象
+                    this.goodsList = createEmptyArray(list.length, {countdown: {}})//空对象
 
                     let param = {pageSize: limit};//cate_id.length===0 && limit ? limit : 900}
 
@@ -198,7 +217,7 @@
 
                     getFlashSaleList(param).then(res => {
 
-                        this.goodsList = res.data.map(item=>{
+                        this.goodsList = res.data.map(item => {
                             item.countdown = {}
                             return item
                         })
@@ -212,13 +231,13 @@
         },
         components: {},
         methods: {
-            stampFunc(){
+            stampFunc() {
 
 
-                for(var item of this.goodsList){
+                for (var item of this.goodsList) {
                     // let start_timeStamp = item.pintuan_start_time,end_timeStamp = item.pintuan_end_time;
-                    let data = getCountdownFunc({start_timeStamp:item.start_time,end_timeStamp:item.end_time})
-                    this.$set(item,'countdown',data);
+                    let data = getCountdownFunc({start_timeStamp: item.start_time, end_timeStamp: item.end_time})
+                    this.$set(item, 'countdown', data);
                 }
                 // let start_timeStamp = item.pintuan_start_time,end_timeStamp = item.pintuan_end_time;
                 //
@@ -245,10 +264,10 @@
                 // return rt;
             },
             goProductDetail,
-            goDetail(goods){
+            goDetail(goods) {
                 console.log(goods)
                 // Products_ID=243
-                let linkObj = {link:'/pages/detail/spikeDetail?flashsale_id='+goods.id,linkType:'default'};
+                let linkObj = {link: '/pages/detail/spikeDetail?flashsale_id=' + goods.id, linkType: 'default'};
 
                 this.$fun.linkTo(linkObj)
 
@@ -290,9 +309,9 @@
                 // })
 
                 //6666
-                if(idx===0 )top = 0
+                if (idx === 0) top = 0
                 //这个需要是2
-                if(idx===1 && this.goods.config.style==2 )top = 0
+                if (idx === 1 && this.goods.config.style == 2) top = 0
                 return {
                     marginTop: top + 'px',
                     marginBottom: bottom + 'px',
@@ -309,7 +328,7 @@
                 return domainFn(obj.ImgPath[0])
             },
             domainFunc(url) {
-                if(!url){
+                if (!url) {
                     return lazyImgUrl;//展位图替换掉吧。。
                 }
 
@@ -324,7 +343,7 @@
 
             this.goods = this.confData;
 
-            setInterval(this.stampFunc,1000)
+            setInterval(this.stampFunc, 1000)
 
         }
 
@@ -334,37 +353,36 @@
 <style scoped lang="less">
     @import "../../static/css/app.less";
 
-    .wrap{
+    .wrap {
         background: #f8f8f8;
         /*padding-top: 110rpx;*/
         /*position: relative;*/
     }
 
-    .bgimg{
+    .bgimg {
         /*position: absolute;*/
         /*top: 0;*/
         /*left: 0;*/
         /*width: 750rpx;*/
         /*height: 282rpx;*/
     }
+
     //无边框白底 有边框白底 无边框透明底
     /*'noborder-bgwhite','border-bgwhite','noborder-nobg'*/
-    .noborder-bgwhite{
+    .noborder-bgwhite {
 
     }
 
-    .border-bgwhite{
+    .border-bgwhite {
 
         border: 1px solid #e3e3e3;
     }
 
-    .noborder-nobg{
-        .info{
+    .noborder-nobg {
+        .info {
             background: none !important;
         }
     }
-
-
 
 
     *::-webkit-scrollbar {
@@ -396,13 +414,13 @@
         color: white;
         /*border: 1px solid #409EFF;*/
 
-        &.theme1{
+        &.theme1 {
             background: #ff4444;
             color: white;
             border-radius: 1px;
         }
 
-        &.theme2{
+        &.theme2 {
             color: #ff4444;
             background: white;
             border: 1px solid #ffacac;
@@ -435,39 +453,41 @@
         }
     }
 
-    .market-price{
+    .market-price {
         text-decoration: line-through;
         padding-left: 10px;
     }
 
 
     //在cover里面的
-    .cover{
-        .stamp{
+    .cover {
+        .stamp {
             font-size: 12px;
 
-            background: rgba(0,0,0,.5);
+            background: rgba(0, 0, 0, .5);
             padding: 6px 2px;
             position: absolute;
             left: 0;
             right: 0;
             bottom: 0;
             color: #fff;
-            .countdown_tag{
+
+            .countdown_tag {
                 background: #F43131;
                 color: white;
                 padding: 0 2px;
             }
-            .count{
+
+            .count {
                 float: right;
             }
         }
     }
 
-    .style3{
-        .count{
+    .style3 {
+        .count {
             font-size: 12px;
-            background: rgba(0,0,0,.5);
+            background: rgba(0, 0, 0, .5);
             padding: 2px;
             position: absolute;
             right: 0;
@@ -477,8 +497,8 @@
         }
     }
 
-    .style2{
-        .count{
+    .style2 {
+        .count {
             font-size: 12px;
             color: #999;
             /*background: rgba(0,0,0,.5);*/
@@ -492,13 +512,14 @@
     }
 
     //在info里面的
-    .info{
-        .stamp{
+    .info {
+        .stamp {
             font-size: 12px;
 
             margin: 6px 0 10px;
             color: #666;
-            .countdown_tag{
+
+            .countdown_tag {
                 background: #F43131;
                 color: white;
                 padding: 0 2px;

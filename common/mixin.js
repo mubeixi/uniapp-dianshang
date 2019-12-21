@@ -1,62 +1,63 @@
-import {getSystemConf, login} from "./fetch";
-import {ls,GetQueryByString,isWeiXin} from "./tool";
+// #ifdef H5
+//上报用户信息
+/**
+ * 统计的混合类
+ */
+import {getJsSign, getSystemConf, upUserLog} from "./fetch";
+import {buildSharePath, GetQueryByString, isWeiXin, ls} from "./tool";
 import {domainFn} from "./filter";
-import {checkIsLogin, error, fun} from "./index";
-import {get_Users_ID} from "./fetch";
-import { mapGetters, mapActions, Store } from "vuex";
-
-import {isDev} from "./env";
+import {checkIsLogin, error} from "./index";
+import {mapActions} from "vuex";
+import wx from 'weixin-js-sdk';
+/**
+ * 扫描二维码
+ */
+// #ifdef APP-PLUS
+import permision from "./permission";
 
 
 /**
  * 很多接口都需要user_id,先全局mixin下
  */
 export const defaultMixin = {
-    created() {
+	created() {
 
-    },
+	},
 
 }
 
 
-// #ifdef H5
-import {getJsSign} from "./fetch";
-import wx from 'weixin-js-sdk';
-
-//上报用户信息
-import {upUserLog} from "./fetch";
-
 function setWxConfig(config) {
-	console.log('wx seting',config)
+	console.log('wx seting', config)
 	wx.config(config);
 }
 
-export const WX_JSSDK_INIT = (vm,jsApiListList) => new Promise((resolve, reject) => {
+export const WX_JSSDK_INIT = (vm, jsApiListList) => new Promise((resolve, reject) => {
 
-	if(!isWeiXin())reject(false);
+	if (!isWeiXin()) reject(false);
 
-	if(vm.JSSDK_READY){
+	if (vm.JSSDK_READY) {
 		console.log('wx env already ready')
 		resolve(wx);
 		return;
 	}
 
 	getJsSign({
-		url:location.href.split('#')[0],
+		url: location.href.split('#')[0],
 		//debug : process.env.NODE_ENV === 'production' ? false : true
-	},{errtip:false}).then((res) => {
-		if(res.errorCode === 0){
+	}, {errtip: false}).then((res) => {
+		if (res.errorCode === 0) {
 
 			let config = res.data;
 			//线上环境，听服务器的，本地的一律调试
 			let debug = false;//process.env.NODE_ENV === 'production'?config.debug?true:false:true
-			let jsApiList = jsApiListList?jsApiListList:['onMenuShareAppMessage','onMenuShareTimeline','openLocation','getLocation','scanQRCode'];
+			let jsApiList = jsApiListList ? jsApiListList : ['onMenuShareAppMessage', 'onMenuShareTimeline', 'openLocation', 'getLocation', 'scanQRCode'];
 			// ['chooseImage', 'previewImage', 'uploadImage', 'openLocation','getLocation', 'chooseWXPay', 'getSystemInfo', 'onMenuShareAppMessage','onMenuShareTimeline','scanQRCode'];
-			let {noncestr,timestamp,appId,signature} = config;
+			let {noncestr, timestamp, appId, signature} = config;
 
-			setWxConfig({debug,appId,timestamp,nonceStr:noncestr,signature,jsApiList});
+			setWxConfig({debug, appId, timestamp, nonceStr: noncestr, signature, jsApiList});
 
-			wx.ready(function(){
+			wx.ready(function () {
 
 				vm.JSSDK_READY = true;
 				console.log('wx ready')
@@ -66,31 +67,24 @@ export const WX_JSSDK_INIT = (vm,jsApiListList) => new Promise((resolve, reject)
 			});
 
 
-		}else{
+		} else {
 			reject(false)
 		}
 
-	}).catch(res=>{
+	}).catch(res => {
 		reject(false)
 	})
 
 })
 // #endif
-
-import {buildSharePath} from "./tool";
-
-/**
- * 统计的混合类
- */
-import {sendAnalysisData} from "./fetch";
 export const Analysis = {
 	mounted() {
 
 
-		this.$nextTick().then(()=>{
+		this.$nextTick().then(() => {
 			let currentPageInstance = getCurrentPages()
-			const currentPageName = currentPageInstance[currentPageInstance.length-1].route
-			if(!currentPageName)return;
+			const currentPageName = currentPageInstance[currentPageInstance.length - 1].route
+			if (!currentPageName) return;
 
 			//sendAnalysisData({url:currentPageName}).then(res=>{}).catch(e=>{})
 
@@ -108,10 +102,10 @@ export const pageMixin = {
 	data: function () {
 		return {
 			//是否需要刷新配置，可以实现页面级配置
-			refreshInit:false,
+			refreshInit: false,
 			// #ifdef H5
-			JSSDK_READY:false,
-			JSSDK_INIT:true,//是否需要微信签名
+			JSSDK_READY: false,
+			JSSDK_INIT: true,//是否需要微信签名
 			// #endif
 
 		}
@@ -121,56 +115,56 @@ export const pageMixin = {
 	onLoad(option) {
 
 
-		let owner_id = null,users_id = null
+		let owner_id = null, users_id = null
 		// #ifdef H5
 
 		/*商户id机制*/
 		users_id = GetQueryByString(location.href, 'users_id')
 		//如果连接里面已经有了，就不需要搞事
-		if(users_id){
+		if (users_id) {
 
 			//比较新旧users_id
 			//只有h5有这个问题，app和小程序都是有单独分配的
 			let old_users_id = ls.get('users_id')
 
-			ls.set('users_id',users_id);
+			ls.set('users_id', users_id);
 
 			// console.log(1111111111111)
 
-			if(old_users_id && old_users_id!=users_id){
+			if (old_users_id && old_users_id != users_id) {
 				console.log('清空本地配置和登录信息')
 				this.setUserInfo({})
 				this.setInitData(null)
-				getSystemConf({}).then(res=>{
+				getSystemConf({}).then(res => {
 					this.setInitData(res.data)
 				})
 
 			}
 
-		}else{
-		    users_id = ls.get('users_id');
+		} else {
+			users_id = ls.get('users_id');
 		}
 
 		if (users_id) {
 
-			if(!GetQueryByString(location.href, 'users_id')){
+			if (!GetQueryByString(location.href, 'users_id')) {
 				let search = location.search;
 
-				if(search.indexOf('?')===-1){
-					search += '?users_id='+users_id
-				}else{
-					search = search.replace(/\?/,'?users_id='+users_id+'&')
+				if (search.indexOf('?') === -1) {
+					search += '?users_id=' + users_id
+				} else {
+					search = search.replace(/\?/, '?users_id=' + users_id + '&')
 				}
 				location.search = search
 			}
 
-		}else{
-		    uni.showModal({
-		        title: '提示',
-		        content: '缺少商户id',
-		        success: function (res) {
-		        }
-		    });
+		} else {
+			uni.showModal({
+				title: '提示',
+				content: '缺少商户id',
+				success: function (res) {
+				}
+			});
 		}
 
 		/*owner_id 机制*/
@@ -183,13 +177,13 @@ export const pageMixin = {
 		/*users_id*/
 		users_id = option.users_id
 		//如果连接里面已经有了，就不需要搞事
-		if(users_id){
-			ls.set('users_id',users_id);
-		}else{
+		if (users_id) {
+			ls.set('users_id', users_id);
+		} else {
 			users_id = ls.get('users_id');
 		}
 
-		if (!users_id){
+		if (!users_id) {
 			uni.showModal({
 				title: '提示',
 				content: '缺少商户id',
@@ -203,19 +197,19 @@ export const pageMixin = {
 		// #endif
 
 		//如果连接里面已经有了，就不需要搞事
-		if(owner_id || owner_id==0){
-			ls.set('owner_id',owner_id);
-			console.log('this page owner_id is '+owner_id)
+		if (owner_id || owner_id == 0) {
+			ls.set('owner_id', owner_id);
+			console.log('this page owner_id is ' + owner_id)
 		}
 
 
-    },
-	onShow(){		
+	},
+	onShow() {
 		// #ifdef APP-PLUS
-			plus.key.hideSoftKeybord();
+		plus.key.hideSoftKeybord();
 		// #endif
 	},
-	async created(){
+	async created() {
 		// console.log('让你等')
 		//
 		// await new Promise(resolve => {
@@ -228,9 +222,7 @@ export const pageMixin = {
 
 		// #ifdef H5
 		//微信里面强制刷新
-		if(isWeiXin()){
-			this.refreshInit = true
-		}
+		this.refreshInit = true
 		// #endif
 
 
@@ -263,22 +255,26 @@ export const pageMixin = {
 		// }
 
 
-		if(checkIsLogin() && !sessionStorage.getItem('is_send_usrlog')){
-			upUserLog({},{errtip:false}).then(res=>{
-				sessionStorage.setItem('is_send_usrlog',1)
-			},err=>{console.log('error',err)}).catch(e=>{console.log('catch',e)})
+		if (checkIsLogin() && !sessionStorage.getItem('is_send_usrlog')) {
+			upUserLog({}, {errtip: false}).then(res => {
+				sessionStorage.setItem('is_send_usrlog', 1)
+			}, err => {
+				console.log('error', err)
+			}).catch(e => {
+				console.log('catch', e)
+			})
 		}
 
 		//页面默认全都是分享出去是首页的
-		if(isWeiXin() && this.JSSDK_INIT){
+		if (isWeiXin() && this.JSSDK_INIT) {
 
-			await this.WX_JSSDK_INIT(this).then((env)=>{
+			await this.WX_JSSDK_INIT(this).then((env) => {
 
 				this.$wx.onMenuShareTimeline({
 					title: initData.ShopName, // 分享标题
 					link: buildSharePath(initData.front_url), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
 					imgUrl: domainFn(initData.ShareLogo), // 分享图标
-					success: function() {
+					success: function () {
 						// 用户点击了分享后执行的回调函数
 					}
 				});
@@ -291,7 +287,7 @@ export const pageMixin = {
 					desc: initData.ShareIntro,
 					type: 'link', // 分享类型,music、video或link，不填默认为link
 					// dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
-					success: function() {
+					success: function () {
 						// 用户点击了分享后执行的回调函数
 					}
 				});
@@ -301,23 +297,23 @@ export const pageMixin = {
 		// #endif
 
 	},
-    mounted() {
-    },
-    methods:{
+	mounted() {
+	},
+	methods: {
 		// #ifdef H5
 		WX_JSSDK_INIT,
 		// #endif
-        ...mapActions(['getInitData','setUserInfo','getUserInfo','setInitData'])
-    },
+		...mapActions(['getInitData', 'setUserInfo', 'getUserInfo', 'setInitData'])
+	},
 	// #ifdef MP-WEIXIN || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO
-	onShareAppMessage(){
+	onShareAppMessage() {
 
 		let initData = this.getInitData()
 		let path = '/pages/index/index';
 		let shareObj = {
 			title: initData.ShopName,
-			desc:initData.ShareIntro,
-			imageUrl:domainFn(initData.ShareLogo),
+			desc: initData.ShareIntro,
+			imageUrl: domainFn(initData.ShareLogo),
 			path: buildSharePath(path)
 		};
 		return shareObj
@@ -331,9 +327,7 @@ export const pageMixin = {
  * @type {{}}
  */
 export const payMixin = {
-	methods:{
-
-	},
+	methods: {},
 	created() {
 
 		// #ifdef H5
@@ -355,20 +349,14 @@ export const payMixin = {
 }
 
 
-/**
- * 扫描二维码
- */
-// #ifdef APP-PLUS
-import permision from "./permission";
-
 // #endif
 export const scanMixin = {
-	data(){
+	data() {
 		return {
-			originData:''//扫码得到的原始数据，格式  act##dataString 其中dataString可能是单独的值或者 name::val;;name::val;;name::val;;name::val这样的键值对
+			originData: ''//扫码得到的原始数据，格式  act##dataString 其中dataString可能是单独的值或者 name::val;;name::val;;name::val;;name::val这样的键值对
 		}
 	},
-	methods:{
+	methods: {
 		async checkPermission(code) {
 			let status = permision.isIOS ? await permision.requestIOS('camera') : await permision.requestAndroid('android.permission.CAMERA');
 
@@ -378,7 +366,7 @@ export const scanMixin = {
 				uni.showModal({
 					content: "需要相机权限",
 					confirmText: "设置",
-					success: function(res) {
+					success: function (res) {
 						if (res.confirm) {
 							permision.gotoAppSetting();
 						}
@@ -395,7 +383,7 @@ export const scanMixin = {
 		 * @param qrCode 支持二维码 微信wap专用
 		 * @return {Promise<unknown>}
 		 */
-		async openScanFn(needResult,onlyFromCamera,barCode,qrCode){
+		async openScanFn(needResult, onlyFromCamera, barCode, qrCode) {
 
 			// #ifdef APP-PLUS
 			let status = await this.checkPermission();
@@ -404,18 +392,18 @@ export const scanMixin = {
 			}
 			// #endif
 
-			return new Promise( (resolve, reject) => {
+			return new Promise((resolve, reject) => {
 
 				// #ifdef H5
-				if(!isWeiXin()){
+				if (!isWeiXin()) {
 					reject('请在微信中打开此页面')
 				}
 
 				let scanType = []
-				if(barCode)scanType.push('barCode')
-				if(qrCode)scanType.push('qrCode')
+				if (barCode) scanType.push('barCode')
+				if (qrCode) scanType.push('qrCode')
 
-				WX_JSSDK_INIT(this).then(wxEnv=>{
+				WX_JSSDK_INIT(this).then(wxEnv => {
 					wxEnv.scanQRCode({
 						needResult, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
 						scanType, // 可以指定扫二维码还是一维码，默认二者都有
@@ -423,13 +411,12 @@ export const scanMixin = {
 							var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
 							resolve(result)
 						},
-						fail:function(err){
+						fail: function (err) {
 							reject(err)
 						}
 					});
 				})
 				// #endif
-
 
 
 				// #ifndef H5
@@ -442,26 +429,23 @@ export const scanMixin = {
 						console.log('条码内容：' + res.result);
 						resolve(res.result)
 					},
-					fail:function(err){
+					fail: function (err) {
 						reject(err)
 					}
 				});
 				// #endif
 
 
-
-
-
 			})
 		},
-		translateQrData(origin){
-			if(!origin){
+		translateQrData(origin) {
+			if (!origin) {
 				error('信息为空');
 				return;
 			}
 
 			const dataArr = origin.split('##')
-			if(dataArr.length<2){
+			if (dataArr.length < 2) {
 				error('信息有误');
 				return;
 			}
@@ -469,11 +453,11 @@ export const scanMixin = {
 			const valArr = dataArr[1].split(';;')
 
 			let valObj = {}
-			for(var valStr of valArr){
+			for (var valStr of valArr) {
 				let tempArr = valStr.split('::')
 				valObj[tempArr[0]] = tempArr[1]
 			}
-			return {act,params:valObj}
+			return {act, params: valObj}
 		}
 	}
 }

@@ -1,10 +1,11 @@
 <template>
     <view>
-        <view v-show="ifshow" @tap="ableClose" @touchmove.stop.prevent class="popup-layer" :style="{backgroundColor:bgColor}" ></view>
-        <view  v-show="ifshow"
-               :class="[positions==='top'?'top':'center']"
-               :style="{backgroundColor:mainBgColor}"
-               ref="popRef"  class="popup-content"   @tap.stop="stopEvent" >
+        <view v-show="ifshow" @tap="ableClose" @touchmove.stop.prevent class="popup-layer"
+              :style="{backgroundColor:bgColor}"></view>
+        <view v-show="ifshow"
+              :class="[positions==='top'?'top':'center']"
+              :style="{backgroundColor:mainBgColor}"
+              ref="popRef" class="popup-content" @tap.stop="stopEvent">
             <slot></slot>
         </view>
     </view>
@@ -18,21 +19,21 @@
             event: "change"
         },
         props: {
-            bgColor:{
-                type:String,
-                default:'rgba(0,0,0,.5)',
+            bgColor: {
+                type: String,
+                default: 'rgba(0,0,0,.5)',
             },
-            mainBgColor:{
-                type:String,
-                default:'#fff',
+            mainBgColor: {
+                type: String,
+                default: '#fff',
             },
-            positions:{
-                type:String,
-                default:'center',
+            positions: {
+                type: String,
+                default: 'center',
             },
-            showPop:{
-                type:Boolean,
-                default:false,
+            showPop: {
+                type: Boolean,
+                default: false,
             },
             // direction: {
             // 	type: String,
@@ -49,17 +50,17 @@
             };
         },
         computed: {},
-        mounted(){
-            if(this.showPop){
+        mounted() {
+            if (this.showPop) {
                 this.show();
             }
         },
-        watch:{
-            showPop(value){
+        watch: {
+            showPop(value) {
                 console.log(value)
-                if(value){
+                if (value) {
                     this.show();
-                }else{
+                } else {
                     this.close();
                 }
             }
@@ -76,8 +77,9 @@
                     this.close();
                 }
             },
-            stopEvent(event) {},
-            doSome(){
+            stopEvent(event) {
+            },
+            doSome() {
 
             }
 
@@ -107,12 +109,13 @@
         // border:1px solid red;
         border-radius: 6px;
         left: 50%;
-        &.center{
+
+        &.center {
             top: 50%;
-            transform: translate(-50%,-50%);
+            transform: translate(-50%, -50%);
         }
 
-        &.top{
+        &.top {
             top: 10%;
             transform: translate(-50%);;
         }
