@@ -80,6 +80,42 @@ export const Analysis = {
 			analysisExt:{}//额外参数，每个页面自己可以随便添加，会上传的
 		}
 	},
+	onLoad(options){
+		this.analysisExt.options = JSON.stringify(options)
+	},
+	onTabItemTap(onTabItemTap){
+
+		let {pagePath,index,text} = onTabItemTap
+
+		const res = uni.getSystemInfoSync();
+		const fullWidth = res.screenWidth;
+		const fullHeight = res.screenHeight
+
+		let x = fullWidth/5*(index+1.5);//这样坐标就是正中间了
+		let y = fullHeight-25;//正好50px底部
+
+		//合并内容
+		//Object.assign(this.analysisExt,{onTabItemTap})
+		this.analysisExt.onTabItemTap = JSON.stringify(onTabItemTap)
+
+		this.currentPageName = pagePath
+		this.commonClick({target:{x,y}})
+
+		// let d = new Date();
+		// let postData = {y,x,_timeStamp:parseInt(d.getTime()/1000)}
+		//
+		// if(!emptyObject(postData,1))return;//距离和坐标是肯定要有的
+		// Object.assign(postData,this.analysisExt);
+		//
+		// let history = ls.get('analysis')
+		// if(!history)history=[]
+		// history.push(postData)
+		// ls.set('analysis',history)
+		// console.log(postData)
+		//
+		// sendAnalysisData(postData).then(res=>{}).catch(e=>{})
+
+	},
 	methods:{
 		commonClick(evt){
 			//console.log(333333333)
@@ -88,9 +124,18 @@ export const Analysis = {
 			//坐标
 			let {x,y} = evt.target
 
-			let postData = {rouete:this.currentPageName,y,x}
+			const d = new Date()
+			//,
+			let postData = {rouete:this.currentPageName,y_coordinate:y,x_coordinate:x,_timeStamp:parseInt(d.getTime()/1000)}
+
 			if(!emptyObject(postData,1))return;//距离和坐标是肯定要有的
 			Object.assign(postData,this.analysisExt);
+
+			let history = ls.get('analysis')
+			if(!history)history=[]
+			history.push(postData)
+			ls.set('analysis',history)
+			console.log(JSON.stringify(postData))
 
 			sendAnalysisData(postData).then(res=>{}).catch(e=>{})
 		},

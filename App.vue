@@ -15,7 +15,7 @@
 	import {upUserLog} from "./common/fetch";
     import {checkIsLogin} from "./common";
     // #endif
-
+    import {sendAnalysisData} from "./common/fetch";
 
     export default {
 		globalData: {

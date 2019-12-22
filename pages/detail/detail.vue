@@ -311,6 +311,9 @@ export default {
 		this.Products_ID = option.Products_ID;
 		this.postData.prod_id = option.Products_ID;
 
+		//参与统计的
+		this.analysisExt.prod_id = option.Products_ID
+
 		this._init_func(option)
 
 
