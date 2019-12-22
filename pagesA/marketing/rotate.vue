@@ -1,5 +1,5 @@
 <template>
-    <view class="wrap">
+    <view class="wrap" @click="commonClick">
         <image class="bgimg" :src="'/static/client/marketing/rotate-bg.jpg'|domain" />
         <div class="rotate-box">
             <div class="item"  >

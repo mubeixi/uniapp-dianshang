@@ -1,5 +1,5 @@
 <template>
-  <div class="bd" @click="closeShow">
+  <div @click="commonClick" class="bd" >
 	  <!-- #ifdef APP-PLUS -->
 	  <!-- 这里是状态栏 -->
 	  <!-- <view class="status_bar" ></view> -->
@@ -214,6 +214,7 @@ export default {
 		  this.showShai=false;
 	  },
 	  closeShow(){
+
 		  this.showShai=false;
 	  },
 	  getActive(item){

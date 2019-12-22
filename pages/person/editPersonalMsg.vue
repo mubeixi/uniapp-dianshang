@@ -1,5 +1,5 @@
 <template>
-	<view class="bgColor-white">
+	<view @click="commonClick" class="bgColor-white">
 
 		<!-- 	<page-title :title="title" rightHidden="true" bgcolor="#F8F8F8"></page-title> -->
 
@@ -122,7 +122,7 @@
 						this.User_Address = addressInfo.User_Address
 					} else{
 						//初始化地址选择数据
-						
+
 						let objectMultiArray = [
 						  utils.array_change(area.area[0]['0']),
 						  utils.array_change(area.area[0]['0,' + addressInfo['User_Province']]),
@@ -140,7 +140,7 @@
 						// this.change_multiIndex = multiIndex;
 						this.User_Address = addressInfo.User_Address
 					}
-					
+
 				})
 			},
 			bindDateChange(e){
@@ -151,7 +151,7 @@
 			            let year = date.getFullYear();
 			            let month = date.getMonth() + 1;
 			            let day = date.getDate();
-			
+
 			            if (type === 'start') {
 			                year = year - 60;
 			            } else if (type === 'end') {
@@ -173,7 +173,7 @@
 				})
 			},
 			save(){
-				
+
 				if(this.loading)return
 				if(this.type==0){
 					if(!this.User_Name){
@@ -257,7 +257,7 @@
 				}).catch(e=>{
 					this.loading=false
 				})
-				
+
 			},
 			//处理省市区联动信息
 			  addressChange: function (columnValue) {

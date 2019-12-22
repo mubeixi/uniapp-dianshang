@@ -1,5 +1,5 @@
 <template>
-	<view class="myall">
+	<view class="myall" @click="commonClick">
 		<view class="top">
 
 			<image class="back" :src="'/static/client/fenxiao/top.png'|domain" ></image>

@@ -1,5 +1,5 @@
 <template>
-	<view class="myall">
+	<view @click="commonClick" class="myall">
 		<view style="height: 10px;width: 100%;"></view>
 		<view class="three">
 			<view class="haha">

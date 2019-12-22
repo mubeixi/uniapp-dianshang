@@ -1,5 +1,5 @@
 <template>
-	<view class="bgColor-white">
+	<view class="bgColor-white" @click="commonClick">
 			<block v-if="type==1">
 				<view class="area-item">
 					<text class="area-label">请选择省市县</text>
@@ -149,7 +149,7 @@
 						return;
 					}
 				}
-				
+
 				let data={
 					store_id:this.Stores_ID,
 					mobile:this.mobile,
@@ -161,7 +161,7 @@
 				if(this.type==3){
 					data.type='store_mobile'
 				}
-				
+
 				updateStoreMobile(data).then(res=>{
 					if(res.errorCode == 0) {
 						uni.showToast({
@@ -347,7 +347,7 @@
 			text-align: center;
 		}
 	}
-	
+
 	.other {
 		padding: 14rpx 20rpx 0;
 		.other-item {

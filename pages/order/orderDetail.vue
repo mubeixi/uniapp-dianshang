@@ -1,5 +1,5 @@
 <template>
-	<div class="myall">
+	<div @click="commonClick" class="myall">
 		<!-- #ifdef APP-PLUS -->
 		<!-- <view class="status_bar" style="background:white;position: fixed;top: 0;z-index: 22"></view> -->
 		<!-- #endif -->
@@ -483,15 +483,15 @@
 							}
 						}
 						let orderInfo = res.data
-						
+
 						// let aa = await new Promise(resolve=>{
 						// 	setTimeout(()=>{
 						// 		resolve(true)
 						// 	},3000)
 						// })
-						
+
 						this.orderInfo = res.data;
-						
+
 						// pay_money 应该支付的钱
 						// user_money 使用的余额
 						this.pay_money = this.orderInfo.Order_Fyepay;

@@ -1,5 +1,5 @@
 <template>
-	<view class="wrap">
+	<view @click="commonClick" class="wrap">
 		<!-- <view class="title">选择渠道</view> -->
 		<view class="content">
 			<view class="c-item">

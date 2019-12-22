@@ -41,7 +41,7 @@ export default {
 		},
 		bgcolor:{
 			default: '#f8f8f8'
-    },
+        },
 		// 右上角是三个点
 		dot: {
 				type: Boolean,

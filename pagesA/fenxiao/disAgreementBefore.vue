@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view @click="commonClick">
 		<div class="pro_detail">
 			<!-- #ifdef H5||APP-PLUS -->
 			<div v-html="formatRichTexts(pro.dis_config.Dis_Agreement)" class="p_detail_des"></div>

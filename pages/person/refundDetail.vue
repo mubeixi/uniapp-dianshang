@@ -1,5 +1,5 @@
 <template>
-	<view class="overflow">
+	<view @click="commonClick" class="overflow">
 		<view class="tops">
 				<view class="imgs box-sizing">
 					<image class="image" :src="prod_list.prod_img" ></image>

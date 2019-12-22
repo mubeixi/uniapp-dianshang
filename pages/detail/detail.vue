@@ -1,5 +1,5 @@
 <template>
-  <div style="position:relative;" class="wrap">
+  <div @click="commonClick" style="position:relative;" class="wrap">
 
 	<!-- #ifndef APP-PLUS -->
 		<view class="top">
@@ -311,6 +311,9 @@ export default {
 		this.Products_ID = option.Products_ID;
 		this.postData.prod_id = option.Products_ID;
 
+		//参与统计的
+		this.analysisExt.prod_id = option.Products_ID
+
 		this._init_func(option)
 
 
@@ -323,7 +326,7 @@ export default {
 		let _self = this
 		this.$nextTick().then(res=>{
 
-		
+
 
 
 			if(_self.$refs.cartPopu){

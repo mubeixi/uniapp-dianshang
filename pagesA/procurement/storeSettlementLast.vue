@@ -1,5 +1,5 @@
 <template>
-    <view class="wrap">
+    <view class="wrap" @click="commonClick">
             <view class="myTop">
                 <view class="myView">
                     开放时间: <text class="colorFont">{{list.start_time}}</text>

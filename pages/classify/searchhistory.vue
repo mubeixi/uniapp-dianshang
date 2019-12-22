@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div @click="commonClick">
     <div class="history">
         <div class="title">搜索历史</div>
         <div class="h_content">
@@ -24,14 +24,14 @@ export default {
   props: {value:'',},
   data() {
     return {
-        
+
     }
   },
   components: {
-    
+
   },
   methods: {
-      
+
   }
 }
 </script>

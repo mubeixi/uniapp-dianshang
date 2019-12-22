@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view @click="commonClick">
 <!--		请按提示完成支付宝支付-->
 		<!--分享引导框开始-->
 		<div class="hide guide_box"  v-show="isShowGuide" @click="isShowGuide=false">

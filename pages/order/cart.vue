@@ -1,5 +1,5 @@
 <template>
-	<div class="wrap">
+	<div @click="commonClick" class="wrap">
 		<!-- #ifdef APP-PLUS -->
 		<view class="status_bar"></view>
 		<view class="space-div"></view>
@@ -147,7 +147,7 @@ export default {
 	if(this.$fun.checkIsLogin()){
 		this.getCart();
 	}
-  	
+
 	this.getProd();
 	this.reset();
   },

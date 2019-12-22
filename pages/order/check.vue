@@ -1,5 +1,5 @@
 <template>
-    <view v-if="loading" :class="selectStore?'over':''">
+    <view @click="commonClick" v-if="loading" :class="selectStore?'over':''">
       <!--  <pagetitle title="提交订单"></pagetitle> v-if="orderInfo.all_has_stores" -->
         <div class="top"  v-if="orderInfo.all_has_stores==1">
             <div class="tabs">
@@ -291,7 +291,7 @@ export default {
             zIndex: 3,
 						setStoreMode:'',
 						idD:'',
-						checkfrom: '', // 支付订单的来源页面，用于展示明细活动价，spike,秒杀，limit限时抢购，group 拼团， 
+						checkfrom: '', // 支付订单的来源页面，用于展示明细活动价，spike,秒杀，limit限时抢购，group 拼团，
         }
     },
 	filters: {
@@ -345,7 +345,7 @@ export default {
 			switch (this.checkfrom) {
 				case 'spike' : return '秒杀价'; break;
 				case 'limit' : return '限时抢购价'; break;
-				case 'group' : return '拼团价';				
+				case 'group' : return '拼团价';
 			}
 		},
 		...mapGetters(['userInfo'])

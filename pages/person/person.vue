@@ -1,5 +1,5 @@
 <template>
-	<view class="person">
+	<view @click="commonClick" class="person">
 		<!-- #ifdef APP-PLUS -->
 		<view class="status_bar" style="background: #f81111;"></view>
 		<!-- #endif -->
@@ -514,7 +514,7 @@
 					height: 29rpx;
 					line-height: 29rpx;
 					overflow: hidden;
-				
+
 					color: #FFFFFF;
 					font-weight:bold;
 					width: 500rpx;

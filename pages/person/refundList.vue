@@ -1,5 +1,5 @@
 <template>
-    <div class="myall">
+    <div @click="commonClick" class="myall">
 <!--    <page-title title="我的订单" rightHidden="true" class="titless"></page-title>-->
         <div class="order" v-for="(item,index) of data" :key="index" >
 			<template v-if="item.prod_list.length>0">

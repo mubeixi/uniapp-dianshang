@@ -1,5 +1,5 @@
 <template>
-	<view class="myall">
+	<view @click="commonClick" class="myall">
 		<form report-submit="true" @submit="formSubmit">
 		  <view class='xinxi'>
 			<text class="text">收货人</text>

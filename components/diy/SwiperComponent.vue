@@ -73,7 +73,7 @@
                     this.swipwerH = e.detail.height + 'rpx'
                 }
                 this.height_list.push(e.detail.height + 'rpx')
-                console.log(e)
+                //console.log(e)
             },
             //滚动的时候灵活设置个高度
             changeHeightFn(e) {

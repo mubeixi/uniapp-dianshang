@@ -1,5 +1,5 @@
 <template>
-	<view class="wrap" :style="{height: height + 'px', background:bgcolor}">
+	<view @click="commonClick" class="wrap" :style="{height: height + 'px', background:bgcolor}">
 		<!-- <page-title :title="title" rightHidden="true" bgcolor="#F8F8F8"></page-title> -->
 
 		<block v-if="type != 3">

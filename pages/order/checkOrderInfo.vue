@@ -1,5 +1,5 @@
 <template>
-    <div class="myall" v-show="orderInfo.Order_ID">
+    <div @click="commonClick" class="myall" v-show="orderInfo.Order_ID">
 
         <div class="container" >
             <div class="lists">

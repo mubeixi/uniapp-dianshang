@@ -1,5 +1,5 @@
 <template>
-    <view v-if="loading">
+    <view @click="commonClick" v-if="loading">
         <view class="address" v-if="orderInfo.is_virtual == 0 " @click="goAddressList">
             <image class="loc_icon" :src="'/static/client/location.png'|domain" alt="" ></image>
             <view class="add_msg" v-if="addressinfo.Address_Name">

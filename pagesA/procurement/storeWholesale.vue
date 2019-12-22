@@ -1,5 +1,5 @@
 <template>
-    <div class="wrap">
+    <div class="wrap" @click="commonClick">
         <div class="navs">
             <div class="nav-item" :class="tabidx===0?'active':''" @click="changIndex(0)">全部</div>
             <div class="nav-item" :class="tabidx===1?'active':''" @click="changIndex(1)">待处理</div>
@@ -186,7 +186,7 @@
 									})
 									data.prod_json = JSON.stringify(prod_json);
 									console.log(data)
-									
+
 									subStorePurchaseApply(data).then(res=>{
 										uni.showToast({
 										    title: res.msg,
@@ -273,7 +273,7 @@
                 console.log(store_id)
                 let idx = findArrayIdx(this.stores,{Stores_ID:store_id})
                 console.log(idx)
-				
+
 				let lat='';
 				let lng='';
 				getLocation(this).then(res=>{
@@ -649,7 +649,7 @@
 	        font-size: 24rpx;
 	        color: #777;
 					position: relative;
-					
+
 	    }
 	}
 .defaults{

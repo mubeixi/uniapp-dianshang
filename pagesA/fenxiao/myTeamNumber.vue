@@ -1,5 +1,5 @@
 <template>
-	<view class="myall">
+	<view class="myall" @click="commonClick">
 			<div class="defaults" v-if="pro.length<=0">
 				<image :src="'/static/client/defaultImg.png'|domain" ></image>
 			</div>
@@ -9,7 +9,7 @@
 				</view>
 				<view class="titles">
 					<view class="msg">
-						<view class="tops"> 
+						<view class="tops">
 							{{item.Shop_Name}}<text>{{item.User_Mobile}}</text>
 						</view>
 						<view class="rights">

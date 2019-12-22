@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view @click="commonClick">
 
 		<!-- <view class="zhezhao" v-if="password_input">
 			<view class="input-wrap">
@@ -136,7 +136,7 @@
 			</view>
 		</block>
 
-		
+
 		<popup-layer ref="popupLayer" :direction="'top'">
 			<div class="iMbx">
 				<div class="c_method" v-for="(item,index) in initData.pay_arr" @click="chooseType(index)" :key="index">
@@ -216,7 +216,7 @@
 			this.level_id=options.id
 			this.type=options.type
 			let that=this;
-			
+
 			this.disApplyInit();
 			this.objectMultiArray = [
 			  utils.array_change(area.area[0]['0']),
@@ -240,7 +240,7 @@
 					icon: 'none',
 					duration: 2000
 				});
-			
+
 			},
 			//查看须知
 			goDistributeAgreement(){
@@ -604,7 +604,7 @@
 
 				}
 
-				
+
 
 				if(this.pro.dis_config.Distribute_AgreementOpen){
 					if(!this.isAgree){
@@ -619,7 +619,7 @@
 				//是否同意购买须知
 				if(arr){
 					let apply_info={};
-				
+
 					if(this.isShowAddress){
 						let DisplayLocaltion=this.addressArr.name
 						apply_info[DisplayLocaltion]={};
@@ -967,8 +967,8 @@
 										// 如果用户之前提交过
 									if(!((JSON.stringify(dislist.apply_order) == "{}"))){
 										let myInfo=JSON.parse(dislist.apply_order.manual_form)
-										
-										
+
+
 										if(dislist.apply_order.status==3){
 											this.textShen=dislist.apply_order.status_desc+"("+dislist.apply_order.reason+")"
 										}
@@ -1005,7 +1005,7 @@
 												this.multiIndex = multiIndex;
 											}
 										}
-										
+
 
 											for(let ite in myInfo){
 												for(let text in this.text_lists){
@@ -1403,7 +1403,7 @@ view.haha{
 	        }
 	    }
 	}
-	
+
 	.disMy{
 		    display: flex;
 		    align-items: center;

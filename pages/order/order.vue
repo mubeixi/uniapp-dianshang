@@ -1,5 +1,5 @@
 <template>
-    <div class="haihong">
+    <div @click="commonClick" class="haihong">
 		<!-- #ifdef APP-PLUS -->
 		<!-- <view class="status_bar" style="background:white;position: fixed;top: 0;z-index: 22"></view>-->
 		<!-- #endif -->
@@ -167,9 +167,9 @@ export default {
 			if(typeof item.Order_Shipping =='object'){
 				express =item.Order_Shipping.Express;
 			}else{
-				express = JSON.parse( item.Order_Shipping).Express;	 
+				express = JSON.parse( item.Order_Shipping).Express;
 			}
-			
+
 			//跳转物流追踪
 			uni.navigateTo({
 				url:'/pages/order/logistics?shipping_id='+item.Order_ShippingID + '&express=' + express + '&prod_img=' + item.prod_list[0].prod_img

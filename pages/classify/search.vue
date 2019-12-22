@@ -1,5 +1,5 @@
 <template>
-  <div >
+  <div @click="commonClick" >
     <form action="/">
 		<div class="search-wrap">
 			<icon type="search" size="34rpx" class="search_icon"/>

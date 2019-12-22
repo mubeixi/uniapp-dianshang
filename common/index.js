@@ -1,18 +1,19 @@
 import Vue from 'vue';
-// #ifdef H5
-import wx from 'weixin-js-sdk';
+
 import filter from './filter.js';
 import {ajax, get, post} from './interceptors.js';
 import store from '../store';
 import {ls} from "./tool";
 import {domainFn} from "./filter";
-// #endif
-// const i18n = require('i18n');
 
+// #ifdef H5
+import wx from 'weixin-js-sdk';
+// #endif
+
+// const i18n = require('i18n');
 
 //重写uni部分
 require('./uni');
-
 
 export const toast = (title, icon, image, duration) => {
     uni.showToast({
@@ -158,7 +159,6 @@ export const goProductDetail = (id, is_group) => {
 }
 
 const tabbarRouter = ['/pages/index/index', '/pages/classify/classify', '/pages/detail/groupSuccess', '/pages/order/cart', '/pages/person/person'];
-
 const isHasTabbarRouter = (link) => {
     for (var item of tabbarRouter) {
         console.log(item, link, item.indexOf(link));
@@ -171,160 +171,134 @@ const isHasTabbarRouter = (link) => {
     return false;
 }
 
+const linkTo =  (linkObj) => {
+
+    let {link, linkType, ext = {}} = linkObj;
+    if (!link) {
+        //error('跳转地址为空')
+        return;
+    }
+
+    console.log('跳转link:' + link + '===type:' + linkType)
+
+    //跳转到小程序
+    if (linkType === 'mini') {
+
+        let {url, appid, origin_id} = ext
+        console.log(link, url, appid, origin_id)
+        // #ifdef APP-PLUS
+        if (!origin_id) {
+            error('origin_id_缺失')
+            return;
+        }
+        plus.share.getServices(function (s) {
+            var shares = null;
+            var sweixin = null;
+
+            shares = {};
+            for (var i in s) {
+                var t = s[i];
+                shares[t.id] = t;
+            }
+            sweixin = shares['weixin'];
+
+            sweixin ? sweixin.launchMiniProgram({
+                id: origin_id,
+                path: link,
+                webUrl: ext.url
+            }) : toast('跳转小程序参数错误');
+
+        }, function (e) {
+            console.log("获取分享服务列表失败：" + e.message);
+            if (ext.url) {
+
+            }
+        });
+        return;
+        // #endif
+
+
+        // #ifdef MP
+        if (appid && link) {
+            uni.navigateToMiniProgram({
+                appId: appid,
+                path: link,
+                success(res) {
+                    console.log(res)
+                    // 打开成功
+                },
+                fail(err) {
+                    console.log(err)
+                }
+            })
+            return;
+        } else {
+            error('小程序跳转参数错误')
+        }
+        return;
+        // #endif
+
+        // #ifdef H5
+        if (url) {
+            location.href = ext.url
+        } else {
+            error('小程序备用地址为空')
+        }
+        return;
+
+        // #endif
+
+        return;
+    }
+
+
+    //第三方链接
+    if (linkType === 'third' || link.indexOf('http') !== -1) {
+
+        // #ifndef H5
+        console.log('/pages/common/webview?url=' + link)
+        uni.navigateTo({
+            url: '/pages/common/webview?url=' + link
+        })
+        // #endif
+
+
+        // #ifdef H5
+        location.href = link
+        // #endif
+
+        return;
+    }
+
+    if (link[0] != '/') {
+        link = '/' + link;
+    }
+    //除了这些页面之外，其他都走普通跳转
+    if (isHasTabbarRouter(link)) {
+
+        uni.switchTab({
+            url: link
+        });
+
+    } else {
+
+        uni.navigateTo({
+            url: link
+        });
+
+    }
+}
+
 export const fun = {
     domainFn,
     confirm,
     checkIsLogin,
     goProductDetail,
     checkIsDistribute,
-    //跳转方法
-    linkTo: (linkObj) => {
-
-        let {link, linkType, ext = {}} = linkObj;
-        if (!link) {
-            //error('跳转地址为空')
-            return;
-        }
-
-        console.log('跳转link:' + link + '===type:' + linkType)
-
-        //跳转到小程序
-        if (linkType === 'mini') {
-
-            let {url, appid, origin_id} = ext
-            console.log(link, url, appid, origin_id)
-            // #ifdef APP-PLUS
-            if (!origin_id) {
-                error('origin_id_缺失')
-                return;
-            }
-            plus.share.getServices(function (s) {
-                var shares = null;
-                var sweixin = null;
-
-                shares = {};
-                for (var i in s) {
-                    var t = s[i];
-                    shares[t.id] = t;
-                }
-                sweixin = shares['weixin'];
-
-                sweixin ? sweixin.launchMiniProgram({
-                    id: origin_id,
-                    path: link,
-                    webUrl: ext.url
-                }) : toast('跳转小程序参数错误');
-
-            }, function (e) {
-                console.log("获取分享服务列表失败：" + e.message);
-                if (ext.url) {
-
-                }
-            });
-            return;
-            // #endif
-
-
-            // #ifdef MP
-            if (appid && link) {
-                uni.navigateToMiniProgram({
-                    appId: appid,
-                    path: link,
-                    success(res) {
-                        console.log(res)
-                        // 打开成功
-                    },
-                    fail(err) {
-                        console.log(err)
-                    }
-                })
-                return;
-            } else {
-                error('小程序跳转参数错误')
-            }
-            return;
-            // #endif
-
-            // #ifdef H5
-            if (url) {
-                location.href = ext.url
-            } else {
-                error('小程序备用地址为空')
-            }
-            return;
-
-            // #endif
-
-
-            return;
-        }
-
-
-        //第三方链接
-        if (linkType === 'third' || link.indexOf('http') !== -1) {
-
-            // #ifndef H5
-            console.log('/pages/common/webview?url=' + link)
-            uni.navigateTo({
-                url: '/pages/common/webview?url=' + link
-            })
-            // #endif
-
-
-            // #ifdef H5
-            location.href = link
-            // #endif
-
-            return;
-        }
-
-        if (link[0] != '/') {
-            link = '/' + link;
-        }
-        //除了这些页面之外，其他都走普通跳转
-        if (isHasTabbarRouter(link)) {
-
-            uni.switchTab({
-                url: link
-            });
-
-        } else {
-
-            uni.navigateTo({
-                url: link
-            });
-
-        }
-    },
+    linkTo,
     back: () => {
         uni.navigateBack()
     }
-    // success: ({ msg = '操作成功', title = '成功' }) => Notification({
-    //   title,
-    //   message: msg,
-    //   type: 'success',
-    // }),
-    // warning: ({ msg = '', title = '警告' }) => Notification({
-    //   title,
-    //   message: msg,
-    //   type: 'warning',
-    // }),
-    // info: ({ msg = ''}) => uni.showToast({
-    //     title: msg,
-    //     duration: 2000,
-    //     icon:'none'
-    // }),
-    // error: ({ msg = '错误', title = '错误' }) => Notification({
-    //   title,
-    //   message: msg,
-    //   type: 'error',
-    // }),
-    // Loading:({text = 'loading',fullscreen = false,lock = true,spinner = 'el-icon-loading',mask = false}) =>{
-    //   window.funLoading = Loading.service({text,fullscreen,lock,spinner,background:mask?'rgba(0, 0, 0, 0.1)':null})
-    //
-    // },
-    // close:()=>{window.funLoading.close()}
-
 };
 // console.log(filter)
 
@@ -342,10 +316,7 @@ export default {
         // #ifdef H5
         Vue.prototype.$wx = wx;
         // #endif
-
-
         Vue.prototype.$fun = fun;
-
         filter.map((value) => {
             Vue.filter(value.name, value.methods);
         });

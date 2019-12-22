@@ -1,19 +1,12 @@
-// #ifdef H5
-//上报用户信息
 /**
  * 统计的混合类
  */
 import {getJsSign, getSystemConf, upUserLog} from "./fetch";
-import {buildSharePath, GetQueryByString, isWeiXin, ls} from "./tool";
+import {buildSharePath, emptyObject, GetQueryByString, isWeiXin, ls} from "./tool";
 import {domainFn} from "./filter";
 import {checkIsLogin, error} from "./index";
 import {mapActions} from "vuex";
-import wx from 'weixin-js-sdk';
-/**
- * 扫描二维码
- */
-// #ifdef APP-PLUS
-import permision from "./permission";
+
 
 
 /**
@@ -26,12 +19,12 @@ export const defaultMixin = {
 
 }
 
-
+// #ifdef H5
+import wx from 'weixin-js-sdk';
 function setWxConfig(config) {
 	console.log('wx seting', config)
 	wx.config(config);
 }
-
 export const WX_JSSDK_INIT = (vm, jsApiListList) => new Promise((resolve, reject) => {
 
 	if (!isWeiXin()) reject(false);
@@ -77,15 +70,89 @@ export const WX_JSSDK_INIT = (vm, jsApiListList) => new Promise((resolve, reject
 
 })
 // #endif
-export const Analysis = {
-	mounted() {
 
+import {sendAnalysisData} from "./fetch";
+
+export const Analysis = {
+	data(){
+		return {
+			currentPageName:'',
+			analysisExt:{}//额外参数，每个页面自己可以随便添加，会上传的
+		}
+	},
+	onLoad(options){
+		this.analysisExt.options = JSON.stringify(options)
+	},
+	onTabItemTap(onTabItemTap){
+
+
+
+
+		let {pagePath,index,text} = onTabItemTap
+
+		const res = uni.getSystemInfoSync();
+		const fullWidth = res.screenWidth;
+		const fullHeight = res.screenHeight
+
+		let x = fullWidth/5*(index+1.5);//这样坐标就是正中间了
+		let y = fullHeight-25;//正好50px底部
+
+		//合并内容
+		//Object.assign(this.analysisExt,{onTabItemTap})
+		this.analysisExt.onTabItemTap = JSON.stringify(onTabItemTap)
+
+		this.currentPageName = ls.get('temp_tab_url')
+		this.commonClick({target:{x,y}})
+
+		ls.set('temp_tab_url',pagePath)
+
+		// let d = new Date();
+		// let postData = {y,x,_timeStamp:parseInt(d.getTime()/1000)}
+		//
+		// if(!emptyObject(postData,1))return;//距离和坐标是肯定要有的
+		// Object.assign(postData,this.analysisExt);
+		//
+		// let history = ls.get('analysis')
+		// if(!history)history=[]
+		// history.push(postData)
+		// ls.set('analysis',history)
+		// console.log(postData)
+		//
+		// sendAnalysisData(postData).then(res=>{}).catch(e=>{})
+
+	},
+	methods:{
+		commonClick(evt){
+			//console.log(333333333)
+			//console.log(JSON.stringify(evt))
+			// {"id":"","offsetLeft":0,"offsetTop":0,"dataset":{},"x":114,"y":1369},"currentTarget":{"id":"","offsetLeft":0,"offsetTop":0,"dataset
+			//坐标
+			let {x,y} = evt.target
+
+			const d = new Date()
+			//,
+			let postData = {rouete:this.currentPageName,y_coordinate:y,x_coordinate:x,_timeStamp:parseInt(d.getTime()/1000)}
+
+			if(!emptyObject(postData,1))return;//距离和坐标是肯定要有的
+			Object.assign(postData,this.analysisExt);
+
+			let history = ls.get('analysis')
+			if(!history)history=[]
+			history.push(postData)
+			ls.set('analysis',history)
+			console.log(JSON.stringify(postData))
+
+			sendAnalysisData(postData).then(res=>{}).catch(e=>{})
+		},
+	},
+	mounted() {
 
 		this.$nextTick().then(() => {
 			let currentPageInstance = getCurrentPages()
 			const currentPageName = currentPageInstance[currentPageInstance.length - 1].route
 			if (!currentPageName) return;
-
+			this.currentPageName = currentPageName
+			//console.log(currentPageName)
 			//sendAnalysisData({url:currentPageName}).then(res=>{}).catch(e=>{})
 
 		})
@@ -98,7 +165,7 @@ export const Analysis = {
  * @type {{methods, onLoad(*): (undefined), mounted(): void}}
  */
 export const pageMixin = {
-	// mixins:[Analysis],//启用统计
+	mixins:[Analysis],//启用统计
 	data: function () {
 		return {
 			//是否需要刷新配置，可以实现页面级配置
@@ -219,42 +286,11 @@ export const pageMixin = {
 		// 	},5000)
 		// })
 
-
-		// #ifdef H5
-		//微信里面强制刷新
-		this.refreshInit = true
-		// #endif
-
-
 		//根据配置决定是否刷新配置
 		let initData = await this.getInitData(this.refreshInit)
-		// console.log('get initdata',initData)
-		// this.initData = initData;
 
 		// #ifdef H5
-		// console.log(2222222222222)
-		// let users_id = GetQueryByString(location.href, 'users_id')
-		// //如果连接里面已经有了，就不需要搞事
-		// if(users_id){
-		//
-		// 	//比较新旧users_id
-		// 	//只有h5有这个问题，app和小程序都是有单独分配的
-		// 	let old_users_id = ls.get('users_id')
-		//
-		// 	ls.set('users_id',users_id);
-		//
-		// 	if(old_users_id && old_users_id!=users_id){
-		// 		console.log('清空本地配置和登录信息')
-		// 		this.setUserInfo({})
-		// 		getSystemConf({}).then(res=>{
-		// 			this.setInitData(res.data)
-		// 		})
-		//
-		// 	}
-		//
-		// }
-
-
+		//上报用户信息
 		if (checkIsLogin() && !sessionStorage.getItem('is_send_usrlog')) {
 			upUserLog({}, {errtip: false}).then(res => {
 				sessionStorage.setItem('is_send_usrlog', 1)
@@ -264,6 +300,9 @@ export const pageMixin = {
 				console.log('catch', e)
 			})
 		}
+
+		//微信里面强制刷新
+		this.refreshInit = true
 
 		//页面默认全都是分享出去是首页的
 		if (isWeiXin() && this.JSSDK_INIT) {
@@ -348,7 +387,11 @@ export const payMixin = {
 	},
 }
 
-
+/**
+ * 扫描二维码
+ */
+// #ifdef APP-PLUS
+import permision from "./permission";
 // #endif
 export const scanMixin = {
 	data() {

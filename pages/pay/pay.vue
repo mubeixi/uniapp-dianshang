@@ -1,5 +1,5 @@
 <template>
-	<div v-if="isGetOrder">
+	<div @click="commonClick" v-if="isGetOrder">
 		<div class="zhezhao" v-if="password_input">
 			<div class="input-wrap">
 				<div>请输入余额支付密码</div>
@@ -549,8 +549,8 @@
 				// 	})
 				// },1000)
 			},
-			paySuccessCall(res){		
-						
+			paySuccessCall(res){
+
 				var _that = this;
 				let Order_Type = ls.get('type');
 				let pagefrom = ls.get('pagefrom');

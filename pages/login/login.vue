@@ -1,5 +1,5 @@
 <template>
-	<div class="loginSign font16">
+	<div @click="commonClick" class="loginSign font16">
 		<!-- #ifdef APP-PLUS -->
 		<view class="status_bar" ></view>
 		<!-- #endif -->

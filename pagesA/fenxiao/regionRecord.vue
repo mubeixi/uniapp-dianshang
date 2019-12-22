@@ -1,5 +1,5 @@
 <template>
-	<view class="all" >
+	<view class="all"  @click="commonClick">
 		<!-- <page-title title="申请记录" rightHidden="true" bgcolor="#ffffff"></page-title> -->
 		<div class="defaults" v-if="data.length<=0">
 			<image :src="'/static/client/defaultImg.png'|domain" ></image>
@@ -108,7 +108,7 @@
 							this.totalCount=res.totalCount;
 							for(let item of res.data){
 								this.data.push(item);
-							}		
+							}
 						}
 					}).catch(e=>{
 						console.log(e)
@@ -119,7 +119,7 @@
 							this.totalCount=res.totalCount;
 							for(let item of res.data){
 								this.data.push(item);
-							}		
+							}
 						}
 					}).catch(e=>{
 						console.log(e)

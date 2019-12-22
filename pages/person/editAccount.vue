@@ -1,5 +1,5 @@
 <template>
-	<view class="myall">
+	<view @click="commonClick" class="myall">
 		<!-- #ifdef APP-PLUS -->
 <!--		<view class="status_bar" style="background-color: rgb(248, 248, 248);"></view>-->
 		<!-- #endif -->

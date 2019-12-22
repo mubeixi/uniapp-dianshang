@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view @click="commonClick">
 		<view class="banner">
 			<image class="src" :src="'/static/clientpop_default.jpg'|domain" ></image>
 			<form report-submit @submit="submit" >

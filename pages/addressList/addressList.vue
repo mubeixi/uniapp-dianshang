@@ -1,6 +1,6 @@
 <template>
 
-	<view class="myall">
+	<view @click="commonClick" class="myall">
 		<radio-group class="radio-group" @change="radioChange">
 		  <label class="radio" :class="!check_flag ? 'no-redio' : ''" v-for="item in addresslist" :key="">
 			<radio :value="item.Address_ID" color="#F43131" :checked="item.Address_ID == check_address_id" v-if="check_flag" :disabled="!check_flag"/>

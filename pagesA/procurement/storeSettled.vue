@@ -1,5 +1,5 @@
 <template>
-    <view class="wrap">
+    <view class="wrap" @click="commonClick">
         <view class="item flex-vertical-center">
             <view class="item-left">门店类型</view>
             <view class="item-right flex justify-end flex-vertical-center" @click="getType">
@@ -327,7 +327,7 @@
                 }
 
                 let data = createToken(param);
-								
+
 								let sizeType = null
 								// #ifndef MP-TOUTIAO
 								sizeType =  ['original', 'compressed'] //可以指定是原图还是压缩图，默认二者都有
@@ -337,9 +337,9 @@
 								await chooseImageByPromise({count:(9-that.imgs.length),sizeType}).then(tempFiles=>{
 									temp_file_list = tempFiles
 								})
-								
+
 								that.imgs = [...temp_file_list]
-								
+
 								let arrs = temp_file_list.map(item=>item.path)
 								uploadImages(data,arrs).then(urls=>{
 									that.arr = that.arr.concat(urls);

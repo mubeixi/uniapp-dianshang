@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div @click="commonClick">
 		<view class="address order-id">订单号：{{orderInfo.Order_ID}}</view>
 		<view class="address">下单时间: {{orderInfo.Order_CreateTime | formatTime}}</view>
 		<div class="order_msg">

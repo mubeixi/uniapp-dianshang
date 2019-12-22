@@ -1,5 +1,5 @@
 <template>
-	<view style="padding-bottom: 100rpx;">
+	<view style="padding-bottom: 100rpx;" @click="commonClick">
 
 		<view class="marginAuto">
 			<view class="blockDiv">
@@ -25,7 +25,7 @@
 					</view>
 				</view>
 			</view>
-			
+
 			<view class="blockDiv">
 				<view class="imgDiv">
 					<image class="imgHund" :src="'/static/client/pro.png'|domain"></image>
@@ -50,13 +50,13 @@
 				</view>
 			</view>
 		</view>
-		
+
 		<view class="orderDetail">
 			<view class="orderDetailTop">
 				<view class="leftDiv"></view>
 				<view>订单信息</view>
 			</view>
-			
+
 			<view class="orderDetailBottom">
 				<view class="viewHeight">
 					订单号：<span class="fontColor">12315465</span>
@@ -81,13 +81,13 @@
 				</view>
 			</view>
 		</view>
-		
+
 		<view class="orderDetail">
 			<view class="orderDetailTop">
 				<view class="leftDiv"></view>
 				<view>发货信息</view>
 			</view>
-			
+
 			<view class="orderDetailOther">
 				<view class="inputView">
 					<view style="width: 160rpx;">
@@ -97,7 +97,7 @@
 						<input type="text" placeholder="请输入联系人" style="width: 100%;">
 					</view>
 				</view>
-				
+
 				<view class="inputView">
 					<view style="width: 160rpx;">
 						手机号
@@ -106,7 +106,7 @@
 						<input type="text" placeholder="请输入手机号" style="width: 100%;">
 					</view>
 				</view>
-				
+
 				<view class="inputView">
 					<view style="width: 160rpx;">
 						配送方式
@@ -123,7 +123,7 @@
 						<input type="text" placeholder="请输入快递单号" style="width: 100%;">
 					</view>
 				</view>
-				
+
 				<view class="inputView">
 					<view style="width: 160rpx;">
 						备注
@@ -134,8 +134,8 @@
 				</view>
 			</view>
 		</view>
-		
-		
+
+
 		<view class="submit">
 			立即发货
 		</view>
@@ -153,19 +153,19 @@
 			};
 		},
 		computed: {
-		    ...mapGetters(['Stores_ID']),		
+		    ...mapGetters(['Stores_ID']),
 		},
 		onShow() {
 
 		},
 		onLoad() {
-	
+
 		},
 		onReachBottom() {
-		
+
 		},
 		methods:{
-			
+
 		}
 	}
 </script>
@@ -309,7 +309,7 @@
 		align-items: center;
 		padding-left: 21rpx;
 		border-bottom: 1px solid #E6E6E6;
-		
+
 	}
 	.orderDetailBottom{
 		padding: 26rpx 0rpx 40rpx 21rpx;
@@ -319,7 +319,7 @@
 			height: 48rpx;
 			line-height: 48rpx;
 		}
-		
+
 	}
 	.orderDetailOther{
 		padding-left: 20rpx;
@@ -335,19 +335,19 @@
 			display: flex;
 			align-items: center;
 		}
-		
+
 	}
 
 }
-	
-		
+
+
 .leftDiv{
 	background-color: #F43131;
 	width: 3px;
 	height: 15px;
 	margin-right: 15rpx;
 	border-radius: 15rpx;
-}	
+}
 .fontColor{
 	color: #777777;
 	margin-left: 2px;
@@ -355,7 +355,7 @@
 .fontColorRed{
 	color: #F43131 !important;
 }
-		
+
 .submit{
 	width:750rpx;
 	height:85rpx;

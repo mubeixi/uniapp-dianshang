@@ -1,5 +1,5 @@
 <template>
-	<view style="padding-bottom: 100rpx;">
+	<view style="padding-bottom: 100rpx;" @click="commonClick">
 
 		<view class="marginAuto">
 			<view class="blockDiv" v-for="item in backInfo.prod_list">
@@ -26,13 +26,13 @@
 				</view>
 			</view>
 		</view>
-		
+
 		<view class="orderDetail">
 			<view class="orderDetailTop">
 				<view class="leftDiv"></view>
 				<view>订单信息</view>
 			</view>
-			
+
 			<view class="orderDetailBottom">
 				<view class="viewHeight">
 					订单号：<span class="fontColor">{{backInfo.id}}</span>
@@ -83,7 +83,7 @@
 						<block v-else>
 							<image class="selected" src="/static/procurement/selected.png" mode=""></image>
 						</block>
-						<view style="margin-left: 20rpx;">否</view>							
+						<view style="margin-left: 20rpx;">否</view>
 					</template>
 				</view>
 				<view class="inputView" v-if="index == 1" @click="changeMethod">
@@ -147,7 +147,7 @@
 			popupLayer
 		},
 		computed: {
-		    ...mapGetters(['Stores_ID']),		
+		    ...mapGetters(['Stores_ID']),
 				ship_name: function(){
 					return this.shipping[this.current]
 				},
@@ -171,7 +171,7 @@
 			}
 		},
 		onReachBottom() {
-		
+
 		},
 		methods:{
 			changeCurrent(shipid){
@@ -234,7 +234,7 @@
 					order_id: this.order_id
 				}).then(res=>{
 					this.backInfo = res.data;
-				})				
+				})
 			}
 		}
 	}
@@ -379,7 +379,7 @@
 		align-items: center;
 		padding-left: 21rpx;
 		border-bottom: 1px solid #E6E6E6;
-		
+
 	}
 	.orderDetailBottom{
 		padding: 26rpx 0rpx 40rpx 21rpx;
@@ -389,7 +389,7 @@
 			height: 48rpx;
 			line-height: 48rpx;
 		}
-		
+
 	}
 	.orderDetailOther{
 		padding-left: 20rpx;
@@ -405,19 +405,19 @@
 			display: flex;
 			align-items: center;
 		}
-		
+
 	}
 
 }
-	
-		
+
+
 .leftDiv{
 	background-color: #F43131;
 	width: 3px;
 	height: 15px;
 	margin-right: 15rpx;
 	border-radius: 15rpx;
-}	
+}
 .fontColor{
 	color: #777777;
 	margin-left: 2px;
@@ -425,7 +425,7 @@
 .fontColorRed{
 	color: #F43131 !important;
 }
-		
+
 .submit{
 	width:750rpx;
 	height:85rpx;

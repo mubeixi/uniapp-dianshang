@@ -1,5 +1,5 @@
 <template>
-	<view class="all">
+	<view @click="commonClick" class="all">
 		<!-- <page-title title="我的兑换" bgcolor="#ffffff"></page-title> -->
 		<view style="height: 10rpx;width: 100%;"></view>
 		<template v-if="prod_list.length > 0">

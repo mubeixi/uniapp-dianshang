@@ -1,5 +1,5 @@
 <template>
-    <div class="wrap">
+    <div class="wrap" @click="commonClick">
         <div class="container">
             <div class="lists">
                 <div class="item" >
