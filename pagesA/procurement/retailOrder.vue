@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view @click="commonClick">
 
 
 		<view class="navs">

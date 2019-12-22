@@ -1,5 +1,5 @@
 <template>
-	<view class="myall">
+	<view @click="commonClick" class="myall">
 <!-- 		<view class="nav">
 			<view class="views" :class="checked==0?'checked':''" @click="change(0)">
 				全部

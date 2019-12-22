@@ -1,5 +1,5 @@
 <template>
-    <div class="wrap">
+    <div @click="commonClick" class="wrap">
         <div class="input-box">
             <input confirm-type="done" v-model="Order_Code" class="input" type="digit" placeholder="请输入消费券码" />
         </div>

@@ -1,5 +1,5 @@
 <template>
-	<view class="all" >
+	<view class="all"  @click="commonClick">
 
 		<!-- <page-title title="提现" rightHidden="true" bgcolor="#ffffff" ></page-title> -->
 		<view class="content">
@@ -204,7 +204,7 @@
 							this.data=res.data.list[0];
 							this.User_Method_ID=res.data.list[0].User_Method_ID;
 						}
-			
+
 					}
 				}).catch(err=>{
 					console.log(err)

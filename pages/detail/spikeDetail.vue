@@ -1,5 +1,5 @@
 <template>
-  <div style="position:relative;background-color:#f8f8f8;overflow-x: hidden;">
+  <div @click="commonClick" style="position:relative;background-color:#f8f8f8;overflow-x: hidden;">
     <div class="top">
         <image class="imgm" src="/static/back.png" @click="goBack" ></image>
         <image class="imgm cart" src="/static/cart.png" @click="goCart" ></image>

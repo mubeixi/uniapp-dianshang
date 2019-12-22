@@ -1,5 +1,5 @@
 <template>
-    <div class="haihong">
+    <div @click="commonClick" class="haihong">
 		<!-- #ifdef APP-PLUS -->
 		<!-- <view class="status_bar" style="background:white;position: fixed;top: 0;z-index: 22"> --></view>
 		<!-- #endif -->

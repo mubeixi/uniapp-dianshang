@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view @click="commonClick">
 		<view class="topImg">
 			<view class="topAll" @click="changIndex(1)">
 				<view class="ulDiv">
@@ -58,7 +58,7 @@
 									规格库存
 								</view>
 								<view v-else>
-									
+
 								</view>
 								<view class="allPrice">
 									<view v-if="!(is_refund&&is_fourth)">
@@ -92,7 +92,7 @@
 									规格库存
 								</view>
 								<view v-else>
-									
+
 								</view>
 								<view class="allPrice">
 									<view v-if="!(is_refund&&is_fourth)">
@@ -131,7 +131,7 @@
 									规格库存
 								</view>
 								<view v-else>
-									
+
 								</view>
 								<view class="allPrice">
 									<view v-if="!(is_refund&&is_fourth)">
@@ -165,7 +165,7 @@
 									规格库存
 								</view>
 								<view v-else>
-									
+
 								</view>
 								<view class="allPrice">
 									<view v-if="!(is_refund&&is_fourth)">
@@ -909,7 +909,7 @@
 			changIndex(index){
 				// 切换存一下数组，否则之前处理的逻辑都没了
 				if(index==this.index) return
-				
+
 				if(index != 4) {
 					// ls.remove('productMy');
 					// ls.set('productMy', this.productMy);
@@ -1380,8 +1380,8 @@
 				height: 480rpx;
 				margin-top: 100rpx;
 			}
-			
-			
+
+
 			.mxdetail {
 				font-size: 28rpx;
 				line-height: 80rpx;

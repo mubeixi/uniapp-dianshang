@@ -1,5 +1,5 @@
 <template>
-    <view class="wrap">
+    <view class="wrap" @click="commonClick">
 		<block v-if="index==1">
 			<view class="area-item" >
 				<text class="area-label">开始时间</text>

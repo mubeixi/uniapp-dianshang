@@ -1,5 +1,5 @@
 <template>
-	<view class="all">
+	<view @click="commonClick" class="all">
 		<!-- <page-title title="会员充值"></page-title> -->
 		<view class="yue">
 			<image class="image" :src="'/static/client/blance/storePay.jpg'|domain" ></image>

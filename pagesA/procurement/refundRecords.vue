@@ -1,5 +1,5 @@
 <template>
-	<view class="wrap">
+	<view class="wrap" @click="commonClick">
 		<view style="height: 90rpx;">
 			<scroll-view class="order-status" scroll-x="true" style="width: 750rpx;white-space: nowrap;" >
 				<view class="status" :class="[status == 0 ? 'active' : '']" @click="changeStatus (0)">全部</view>

@@ -1,5 +1,5 @@
-        <template>
-	<view class="wrap">
+<template>
+	<view @click="commonClick" class="wrap">
 		<view class="top">
 			<view class="bgimg">
 				<image class="image" src="/static/mendian/bg.jpg" mode=""></image>

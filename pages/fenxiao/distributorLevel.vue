@@ -1,5 +1,5 @@
 <template>
-	<view class="all">
+	<view @click="commonClick" class="all">
 		<view class="top">
 			<swiper class="center" :indicator-dots="false" :autoplay="false"  :duration="1000" :current="inds" @change="change">
 				<swiper-item class="vipFir"  v-for="(item,index) of dis_level" :key="index"  :style="dis_level.length==1?'margin-left:43rpx;':''">

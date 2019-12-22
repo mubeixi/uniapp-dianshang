@@ -1,5 +1,5 @@
 <template>
-	<view class="all" >
+	<view class="all" @click="commonClick" >
 		<!-- <page-title title="申请记录" rightHidden="true" bgcolor="#ffffff"></page-title> -->
 		<view class="main" v-for="(item,index) of data" :key="index">
 			<view class="fir">
@@ -95,7 +95,7 @@
 						this.totalCount=res.totalCount;
 						for(let item of res.data){
 							this.data.push(item);
-						}		
+						}
 					}
 				}).catch(e=>{
 					console.log(e)

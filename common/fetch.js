@@ -49,7 +49,7 @@ const fetch = function (act, param, options = false, url = '/api/little_program/
     }
     ;
     const d = new Date();
-    console.log(options)
+    //console.log(options)
     if (options.hasOwnProperty('is_tap') && options.is_tap) {
 
         let temp_act_info = ls.get('temp_act_info')
@@ -117,7 +117,7 @@ export const rotateBegin = (data, options) => fetch('beginTurn', data, options)
 export const getRotateRecord = (data, options) => fetch('getPrizeRecord', data, options)
 
 
-export const sendAnalysisData = (data, options) => fetch('sendAnalysisData', data, options)
+export const sendAnalysisData = (data, options) => fetch('clickRecord', data, options)
 
 export const getCouponList = (data, options) => fetch('get_unaccalimed_coupon', data, options)
 

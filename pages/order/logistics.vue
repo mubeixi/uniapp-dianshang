@@ -1,5 +1,5 @@
 <template>
-	<view class="all" :style="{'min-height':height+'px'}">
+	<view @click="commonClick" class="all" :style="{'min-height':height+'px'}">
 		<!-- #ifdef APP-PLUS -->
 		<view class="status_bar" style="background-color: rgb(248, 248, 248);"><!-- 这里是状态栏 --></view>
 		<!-- #endif -->
@@ -9,7 +9,7 @@
 			<view>
 				<view class="fonts">
 					<view class="left">
-						物流状态: 
+						物流状态:
 					</view>
 					<view class="right">
 						{{pro.shipping_status}}
@@ -17,7 +17,7 @@
 				</view>
 				<view class="fonts">
 					<view class="left">
-						物流公司: 
+						物流公司:
 					</view>
 					<view>
 						{{pro.shipping_express}}
@@ -25,18 +25,18 @@
 				</view>
 				<view class="fonts" v-if="pro.shipping_no">
 					<view class="left">
-						物流单号: 
+						物流单号:
 					</view>
 					<view>
-						{{pro.shipping_no}}			                        
+						{{pro.shipping_no}}
 					</view>
 				</view>
 				<view class="fonts" v-if="pro.delivery_man_phone">
 					<view class="left">
-						派送员电话: 
+						派送员电话:
 					</view>
 					<view>
-						{{pro.delivery_man_phone}}			                        
+						{{pro.delivery_man_phone}}
 					</view>
 				</view>
 			</view>
@@ -48,8 +48,8 @@
 						<view class="tops">
 							<view class="views"></view>
 						</view>
-						<view class="bottoms" v-if="(index+1)<pro.list.length"> 
-							
+						<view class="bottoms" v-if="(index+1)<pro.list.length">
+
 						</view>
 					</view>
 					<view class="rights">
@@ -67,7 +67,7 @@
 							<view class="views"></view>
 						</view>
 						<view class="bottoms" v-if="(index+1)<pro.list.length">
-							
+
 						</view>
 					</view>
 					<view class="rights">
@@ -79,7 +79,7 @@
 						</view>
 					</view>
 				</view>
-			</block>	
+			</block>
 		</view>
 	</view>
 </template>
@@ -125,7 +125,7 @@
 				getOrderExpress(data).then(res=>{
 					this.pro=res.data;
 				},err=>{
-					
+
 				}).catch(e=>{
 					console.log(e)
 				})
@@ -229,7 +229,7 @@
 			background-color: #ECECEC !important;
 			.views{
 				background-color: #AFAFAF !important;
-			}	
+			}
 		}
 
 	}

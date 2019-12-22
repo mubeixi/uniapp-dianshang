@@ -1,5 +1,5 @@
 <template>
-	<web-view v-if="url" :src="url"></web-view>
+	<web-view @click="commonClick" v-if="url" :src="url"></web-view>
 </template>
 
 <script>

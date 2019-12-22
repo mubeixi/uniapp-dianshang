@@ -1,5 +1,5 @@
 <template>
-    <div class="start">
+    <div @click="commonClick" class="start">
         <!--       <page-title class="nav-title" :title="msg"  @handle="handle" rightHidden="true"></page-title>-->
         <!-- 商品详情部分 -->
         <div class="first">

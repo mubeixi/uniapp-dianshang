@@ -1,5 +1,5 @@
 <template>
-	<view class="bgColor-white">
+	<view class="bgColor-white" @click="commonClick">
 
 
 		<!-- <page-title title="个人信息" rightHidden="true" bgcolor="#F8F8F8"></page-title> -->

@@ -1,5 +1,5 @@
 <template>
-	<view class="all">
+	<view @click="commonClick" class="all">
 		<!-- #ifdef APP-PLUS -->
 		<view class="status_bar" style="background: #f81111;"><!-- 这里是状态栏 --></view>
 		<!-- #endif -->
@@ -159,7 +159,7 @@
 				get_user_info({},{errtip: false}).then(res=>{
 					this.setUserInfo(res.data);
 				},err=>{
-				
+
 				}).catch(e=>{
 					console.log(e)
 				})

@@ -1,5 +1,5 @@
 <template>
-	<view class="myall">
+	<view class="myall" @click="commonClick">
 		<view class="user-info">
 			<view class="user-avator" @click="changeAvator">
 				<image  class="imgs" :src="Shop_Logo" mode=""></image>

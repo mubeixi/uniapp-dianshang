@@ -1,5 +1,5 @@
 <template>
-  <div class="bd" @click="closeShow">
+  <div @click="commonClick" class="bd" @click="closeShow">
 	  <!-- #ifdef APP-PLUS -->
 	  <!-- 这里是状态栏 -->
 	  <!-- <view class="status_bar" ></view> -->

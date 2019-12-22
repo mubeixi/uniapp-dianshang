@@ -55,7 +55,6 @@ export const GetQueryByString = (str, name) => {
 
 }
 
-
 export const ls = {
     set(key, val, cover) {
 
@@ -82,7 +81,6 @@ export const ls = {
         return uni.clearStorageSync()
     }
 };
-
 
 export const goBack = function () {
     uni.navigateBack({
@@ -243,7 +241,6 @@ export function mixinStyle(defaultStyle, style) {
     return rt;
 }
 
-
 export function isWeiXin() {
     // #ifdef H5
     var ua = window.navigator.userAgent.toLowerCase();
@@ -303,6 +300,7 @@ export const uploadByPromise = ({url, filePath, name = 'image', formData}) => {
     })
 
 }
+
 export const chooseImageByPromise = ({count = 1, sizeType = ['original', 'compressed']}) => {
     return new Promise((resolve, reject) => {
 
@@ -412,13 +410,9 @@ export const uploadImages = (formData, imgs) => {
 
 }
 
-
 export const urlencode = (str) => {
-
     return encodeURIComponent(str).replace(/!/g, '%21').replace(/'/g, '%27').replace(/\(/g, '%28').replace(/\)/g, '%29').replace(/\*/g, '%2A').replace(/%20/g, '+');
-
 }
-
 
 //构造分享事件
 /**
@@ -640,11 +634,11 @@ export const findArrayIdx = (arr, key_val_arr, full) => {
     return false
 }
 
-export const emptyObject = (obj, strice) => {
+export const emptyObject = (obj, strice,tip) => {
     for (var prop in obj) {
         if (obj[prop] === '' || obj[prop] === undefined || obj[prop] === null || obj[prop] === 'null' || obj[prop] === 'undefined') {
             if (strice) {
-                error('参数' + prop + '不能为空');
+                tip && error('参数' + prop + '不能为空');
                 console.log('参数' + prop + '不能为空');
                 return false;
             }

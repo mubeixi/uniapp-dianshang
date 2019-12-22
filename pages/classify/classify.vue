@@ -1,5 +1,5 @@
 <template>
-	<view class="wrap">
+	<view @click="commonClick" class="wrap">
 
 		<view class="search-wrap" @click="goSearch">
 			<icon type="search" size="34rpx" class="search_icon"/>

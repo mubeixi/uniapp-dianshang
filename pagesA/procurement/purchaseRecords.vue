@@ -1,5 +1,5 @@
 <template>
-	<view class="wrap" >
+	<view class="wrap"  @click="commonClick">
 
 		<!-- <page-title :title="'进货记录'" :bgcolor="'#fff'"></page-title> -->
 		<block v-if="orderList.length>0">

@@ -1,5 +1,5 @@
 <template>
-    <view class="wrap" >
+    <view class="wrap"  @click="commonClick">
         <view class="search-wrap">
             <icon type="search" size="34rpx" class="search_icon" @click="search"/>
             <input type="text" class="input" placeholder="请输入商品关键词" @confirm="search" v-model="prod_name" placeholder-style="color:#bebdbd;">
@@ -480,7 +480,7 @@
 					}else{
 						this.prolist = this.prolist.concat(res.data);
 					}
-                    
+
                     this.total_pro_count = res.totalCount;
                     this.active_id = this.Stores_ID + '_' + res.Stores_ID
                     this.get_more = res.totalCount / this.prolist.length ? true : false
@@ -508,7 +508,7 @@
 					}else{
 						this.prolist = this.prolist.concat(res.data);
 					}
-                    
+
                     this.total_pro_count = res.totalCount;
                     this.active_id = this.Stores_ID + '_' + 0;
 										this.get_more = res.totalCount > this.prolist.length ? true : false

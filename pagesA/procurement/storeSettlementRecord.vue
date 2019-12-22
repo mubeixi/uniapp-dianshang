@@ -1,6 +1,5 @@
-
 <template>
-    <view class="wrap">
+    <view class="wrap" @click="commonClick">
 		<div class="defaults" v-if="list.length<=0">
 			<image :src="'/static/client/defaultImg.png'|domain" ></image>
 		</div>

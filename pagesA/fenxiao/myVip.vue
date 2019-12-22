@@ -1,12 +1,12 @@
 <template>
-	<view class="myall">
+	<view class="myall" @click="commonClick">
 			<view class="centers" v-for="(item,index) of pro " :key="index">
 				<view class="imgs">
 					<image class="image" :src="item.User_HeadImg" ></image>
 				</view>
 				<view class="titles">
 					<view class="msg">
-						<view class="tops"> 
+						<view class="tops">
 							{{item.User_NickName}}<text>{{item.User_Mobile}}</text>
 						</view>
 						<view class="rights">

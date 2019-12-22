@@ -1,5 +1,5 @@
 <template>
-    <div class="wrap">
+    <div @click="commonClick" class="wrap">
 		<!-- #ifndef H5 -->
 		<image @click="scanFn" class="scan"  :src="'/static/client/check_by_scan.jpg'|domain" />
 		<!-- #endif -->

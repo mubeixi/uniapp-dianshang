@@ -1,5 +1,5 @@
 <template>
-  <div style="position:relative;" class="wrap">
+  <div @click="commonClick" style="position:relative;" class="wrap">
 
 	<!-- #ifndef APP-PLUS -->
 		<view class="top">
@@ -323,7 +323,7 @@ export default {
 		let _self = this
 		this.$nextTick().then(res=>{
 
-		
+
 
 
 			if(_self.$refs.cartPopu){

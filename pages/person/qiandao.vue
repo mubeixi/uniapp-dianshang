@@ -1,5 +1,5 @@
 <template>
-	<view class="all" v-if="pro">
+	<view @click="commonClick" class="all" v-if="pro">
 		<view class="top">
 <!--			<image :src="'/static/client/task/left.png'|domain" class="goBack" @click="goBack"></image>-->
 <!--			<view class="titles">每日签到</view>-->

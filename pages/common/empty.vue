@@ -1,5 +1,5 @@
 <template>
-	<view class="wrap">
+	<view @click="commonClick" class="wrap">
 <!--		<div class="rotate-box">-->
 
 <!--			<div class="item"  :style="getStyle(0)">-->

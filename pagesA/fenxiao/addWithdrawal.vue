@@ -1,5 +1,5 @@
 <template>
-	<view class="myall">
+	<view @click="commonClick" class="myall">
 
 		<!-- <page-title title="添加提现方式" rightHidden="true" ></page-title> -->
 		<view class="center">

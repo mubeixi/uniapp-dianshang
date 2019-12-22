@@ -1,5 +1,5 @@
 <template>
-	<view v-if="pro.img_url" class="myall">
+	<view @click="commonClick" v-if="pro.img_url" class="myall">
 		<!-- #ifdef APP-PLUS -->
 				<view class="status_bar" style="background:#2e323c;"></view>
 		<!-- #endif -->

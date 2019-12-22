@@ -1,5 +1,5 @@
 <template>
-	<view class="wrap">
+	<view @click="commonClick" class="wrap">
 		<view class="bg" :style="{backgroundImage:'url('+domainFunc('/uploadfiles/wkbq6nc2kc/image/5daa7f9be1.jpg')+')'}"></view>
 		<view class="moneybox font14">分销佣金<span class="font14" style="color: #f43838">￥</span><span class="money">{{info.money}}</span></view>
 		<view class="imgbox" @click="preview"><image class="img" :src="info.img_url"></image></view>

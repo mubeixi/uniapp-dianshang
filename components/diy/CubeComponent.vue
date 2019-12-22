@@ -93,7 +93,7 @@
                 this.$fun.linkTo(area)
             },
             getWrapStyle() {
-                console.log(this.fullW)
+                //console.log(this.fullW)
                 let styleObj = {
                     marginLeft: this.cube.style.wrapmargin + 'px',
                     marginRight: this.cube.style.wrapmargin + 'px',
@@ -105,7 +105,7 @@
             },
             getAreaStyle(area) {
 
-                console.log(this.rowW, this.colH, this.W, this.H, area, this.colWH)
+                //console.log(this.rowW, this.colH, this.W, this.H, area, this.colWH)
                 let styleObj = {
                     left: area.x * this.rowW + 'px',
                     top: area.y * this.colH + 'px',
@@ -134,7 +134,7 @@
             this.cube = this.confData
 
             const res = uni.getSystemInfoSync();
-            console.log(res)
+            //console.log(res)
             this.fullW = res.screenWidth;
 
             //长宽比计算出高度
@@ -143,7 +143,7 @@
 
 
             this.CTX = this.cube;
-            console.log(this.CTX)
+            //console.log(this.CTX)
 
         }
     }

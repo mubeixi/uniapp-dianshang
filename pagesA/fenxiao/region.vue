@@ -1,5 +1,5 @@
 <template>
-	<view class="all" v-if="pro.agent_rate">
+	<view class="all" v-if="pro.agent_rate" @click="commonClick">
 		<view class="top">
 			<view class="person">
 				<image class="image" :src="pro.disInfo.Shop_Logo"></image>
