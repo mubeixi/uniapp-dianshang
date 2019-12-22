@@ -85,6 +85,9 @@ export const Analysis = {
 	},
 	onTabItemTap(onTabItemTap){
 
+
+
+
 		let {pagePath,index,text} = onTabItemTap
 
 		const res = uni.getSystemInfoSync();
@@ -98,8 +101,10 @@ export const Analysis = {
 		//Object.assign(this.analysisExt,{onTabItemTap})
 		this.analysisExt.onTabItemTap = JSON.stringify(onTabItemTap)
 
-		this.currentPageName = pagePath
+		this.currentPageName = ls.get('temp_tab_url')
 		this.commonClick({target:{x,y}})
+
+		ls.set('temp_tab_url',pagePath)
 
 		// let d = new Date();
 		// let postData = {y,x,_timeStamp:parseInt(d.getTime()/1000)}
