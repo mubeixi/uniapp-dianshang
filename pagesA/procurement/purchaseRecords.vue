@@ -33,8 +33,8 @@
 									<view class="attr-info" v-if="it.attr_info.attr_val">{{it.attr_info.attr_val.Attr_Value}}</view>
 									<view class="attr-info" v-else></view>
 									<view class="pro-qty">x{{it.prod_count}}
-										<image class="qty-icon" v-if="it.prod_count_change_desc" src="/static/procurement/i.png" mode="" @click.stop="show_pro_tip(item)"></image>
-										<view class="tips" v-if="item.pro_tip_show">
+										<image class="qty-icon" v-if="it.prod_count_change_desc" src="/static/procurement/i.png" mode="" @click.stop="show_pro_tip(item,ind)"></image>
+										<view class="tips" v-if="it.pro_tip_show">
 											<view class="sanjiaoxing"></view>{{it.prod_count_change_desc}}
 										</view>
 									</view>
@@ -356,10 +356,14 @@
 				}
 				getStorePurchaseApply(data).then(res=>{
 					this.totalCount=res.totalCount
-					for(var item of res.data	) {
-						item.pro_tip_show=false
+					// res.data.forEach(item=>item.show_order_tip=false);
+					for(var i = 0 ; i<res.data.length-1; i++) {
+						res.data[i].order_tip_show = false;
+						for(var j =0; j<res.data[i]['prod_list'].length-1; j++) {
+							
+							res.data[i]['prod_list'][j].pro_tip_show = false;
+						}
 					}
-					res.data.forEach(item=>item.show_order_tip=false);
 					this.orderList=res.data
 					for(let item of this.orderList){
 						for(let it of item.prod_list){
@@ -377,8 +381,8 @@
 
 				}).catch(e=>{console.log(e)})
 			},
-			show_pro_tip(item){
-				item.pro_tip_show = true;
+			show_pro_tip(item,ind){
+				item.prod_list[ind].pro_tip_show = true;
 			},
 			hidden_tip(index){
 				this.orderList = this.orderList;
