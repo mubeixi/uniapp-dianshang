@@ -123,6 +123,7 @@ export const Analysis = {
 	},
 	methods:{
 		commonClick(evt){
+			if(isDev)return;
 			//console.log(333333333)
 			//console.log(JSON.stringify(evt))
 			// {"id":"","offsetLeft":0,"offsetTop":0,"dataset":{},"x":114,"y":1369},"currentTarget":{"id":"","offsetLeft":0,"offsetTop":0,"dataset
@@ -392,6 +393,7 @@ export const payMixin = {
  */
 // #ifdef APP-PLUS
 import permision from "./permission";
+import {isDev} from "./env";
 // #endif
 export const scanMixin = {
 	data() {
