@@ -206,8 +206,10 @@
 
 		},
 		onShow() {
+			
 			if(JSON.stringify(this.userInfo) != "{}"){
 				get_user_info({},{tip:'',errtip:false}).then(res=>{
+					console.log(res.data)
 					this.setUserInfo(res.data);
 				},err=>{
 

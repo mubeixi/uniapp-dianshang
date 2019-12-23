@@ -71,7 +71,7 @@
                         <radio-group @change="radioChange">
                             <label class="item padding10" v-for="(store,idx) in stores" :key="idx">
                                 <view class="checkbox">
-                                    <radio :value="idx"/>
+                                    <radio :value="idx" :checked="index==idx" />
                                 </view>
                                 <image class="logo" :src="store.Stores_ImgPath|domain"/>
                                 <view class="info">
@@ -119,7 +119,7 @@
         name: "StoreListComponents",
         data() {
             return {
-
+				index:-1,
                 timer: null,
                 prod_ids: [],//根据商品筛选门店
                 lat: null,
@@ -191,6 +191,7 @@
         methods: {
             radioChange(e) {
                 console.log(e)
+				this.index=e.detail.value
                 this.select_info = this.stores[e.detail.value]
             },
             subFn() {
@@ -235,7 +236,7 @@
                 this.loadInfo()
 
             },
-            loadInfo() {
+            loadInfo(storeId) {
                 let postData = {
                     pageSize: 10000,
                     page: 1,
@@ -256,6 +257,17 @@
                 getStoreList(emptyObject(postData), {tip: '搜索中', mask: true}).then(res => {
 
                     this.stores = res.data;
+					if(storeId){
+						for(let it=0;it<this.stores.length;it++){
+							if(this.stores[it].Stores_ID==storeId){
+								this.select_info=this.stores[it]
+								this.index=it
+							}
+						}
+					}else{
+						this.index=-1
+						this.select_info={}
+					}
                     // this.stores = this.stores.concat(res.data)
                     // this.stores = this.stores.concat(res.data)
                     // this.stores = this.stores.concat(res.data)
@@ -287,7 +299,7 @@
                 console.log(event);
                 return;
             },
-            show(prod_ids) {
+            show(prod_ids,storeId) {
 
                 if (prod_ids) {
                     this.prod_ids = prod_ids
@@ -295,8 +307,12 @@
                     this.prod_ids = []
                 }
 
-
-                this.loadInfo()
+				if(storeId){
+					this.loadInfo(storeId)
+				}else{
+					this.loadInfo()
+				}
+                
 
                 console.log('show popup')
                 this.ifshow = true;

@@ -97,7 +97,7 @@
 				this.isLoadong=true
 				let arr=[];
 				for(let item of this.arr){
-					arr.push(item[0]);
+					arr.push(item);
 				}
 				arr=JSON.stringify(arr);
 				if(this.isSubmit){
