@@ -42,7 +42,7 @@
                                 <view class="pro-price"><span>￥</span>{{attr.ProductsPriceX}} <span class="amount">x<span class="num">{{attr.Qty}}</span></span></view>
                             </view>
                         </view>
-                        <div v-if="tabIdx==1" class="store-box" @click="openStores(pro_id,attr_id)">
+                        <div v-if="tabIdx==1" class="store-box" @click="openStores(pro_id,attr_id,attr.store)">
                             <div class="store-name">{{attr.store.Stores_Name||'选择门店'}}</div>
                             <div class="funicon icon-fanhui icon"></div>
                         </div>
@@ -391,11 +391,16 @@ export default {
 		  this.$refs.stroeComp.show(ids)
 
 	  },
-      openStores(prod_id,attr_id){
+      openStores(prod_id,attr_id,store){
 		  this.selectStore=true
 		  this.setStoreMode = prod_id+'::'+attr_id
 		  let ids ={[prod_id]:[attr_id]}
-          this.$refs.stroeComp.show(ids)
+		  if(store){
+			   this.$refs.stroeComp.show(ids,store.Stores_ID) 
+		  }else{
+			 this.$refs.stroeComp.show(ids) 
+		  }
+          
 
       },
 		...mapActions(['getUserInfo','setUserInfo']),
