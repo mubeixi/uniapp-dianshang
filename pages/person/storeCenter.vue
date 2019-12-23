@@ -72,7 +72,10 @@
 <script>
 	import {storeInit} from '../../common/fetch.js';
 	import {mapGetters} from 'vuex'
+	import {pageMixin} from "../../common/mixin";
+
 	export default {
+		mixins:[pageMixin],
 		data: function(){
 			return {
 				storeDetail: {}

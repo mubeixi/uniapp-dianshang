@@ -38,7 +38,7 @@
                                         <div class="inputNumber" @click="setCurrentGoods(item)">
                                             <div class="clicks" @click="minusFn(item)">-</div>
                                             <input class="inputq"  type="number" :value="item.prod_count" @blur="setValFn" >
-                                            <div class="clicks" @click="plusFn(item)">+</div>
+                                            <div class="clicks" @click="plusFn" style="color: #999;background: #e7e7e7">+</div>
                                         </div>
                                     </div>
 
@@ -115,7 +115,7 @@
 <script>
     import {pageMixin} from "../../common/mixin";
     import {mapGetters} from "vuex";
-    import {getStorePurchaseSales,getStoreList,getShipping,sendStorePurchaseApply,updateStoreApplyGoodsNum} from "../../common/fetch";
+    import {getStorePurchaseSales,getStoreList,getShipping,sendStorePurchaseApply,subStorePurchaseApply} from "../../common/fetch";
     import {error, toast} from "../../common";
     import {emptyObject, findArrayIdx} from "../../common/tool";
 
@@ -163,8 +163,7 @@
                 }
                 //这种骚操作需要看是不是兼容
                 let goods = this.currentGoods
-                console.log(e.detail .value)
-
+                console.log(e,e.detail.value)
 
 
                 let Attr_ID = null
@@ -173,21 +172,30 @@
                 }
                 let newVal = e.target.value,oldVal = goods.prod_count
 
+                if(parseInt(newVal)>=parseInt(oldVal)){
+                    //e.target.value = oldVal
+                    error('只允许减少数量')
+                    return;
+                }
+
                 //如果设置失败，数量要变回来
                 this.updateGoodsStock(this.apply.Order_ID,goods.prod_id,Attr_ID,e.target.value,function(){
                     goods.prod_count = newVal
                 },function(){
                     console.log('errorerror')
-                    e.target.value = oldVal
+                    //e.target.value = oldVal
                 })
             },
             plusFn(goods){
 
+                error('不允许增加数量')
+                return;
                 let Attr_ID = null
                 if(goods.attr_info && goods.attr_info.attr_val){
                     Attr_ID  = goods.attr_info.attr_val.Product_Attr_ID
                 }
-                this.updateGoodsStock(this.apply.Order_ID,goods.prod_id,Attr_ID,goods.prod_count+1,function(){goods.prod_count++})
+                goods.prod_count++
+                //this.updateGoodsStock(this.apply.Order_ID,goods.prod_id,Attr_ID,goods.prod_count+1,function(){goods.prod_count++})
             },
 
             minusFn(goods){
@@ -195,20 +203,28 @@
                 if(goods.attr_info && goods.attr_info.attr_val){
                     Attr_ID  = goods.attr_info.attr_val.Product_Attr_ID
                 }
+                if(goods.prod_count<2){
+                    error('数量最少为1')
+                    return;
+                }
+                //goods.prod_count--
                 this.updateGoodsStock(this.apply.Order_ID,goods.prod_id,Attr_ID,goods.prod_count-1,function(){goods.prod_count--})
             },
 
             async updateGoodsStock(order_id,prod_id,attr_id,modify_prod_count,call,errcall){
 
-
-                await updateStoreApplyGoodsNum({order_id,prod_id,attr_id,modify_prod_count,store_id:this.Stores_ID}).then(res=>{
+                let prod_info = {}
+                if(!attr_id)attr_id=0
+                prod_info[prod_id] = {[attr_id]:modify_prod_count}
+                await subStorePurchaseApply({order_id,receive_id:this.Stores_ID,prod_json:JSON.stringify(prod_info)}).then(res=>{
                     console.log('success')
+                    toast(res.msg)
                     call && call()
                 },err=>{
+                    toast(err.msg)
                     console.log('error')
                     errcall && errcall()
                 })
-
 
 
             },
@@ -541,7 +557,9 @@
     }
 }
 .subbox{
-    margin: 70px 0;
+    position: fixed;
+    bottom: 0;
+    width: 750rpx;
     .subbtn{
         border-radius: 0;
     }
