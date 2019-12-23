@@ -46,6 +46,11 @@
 				</view>
 			</view>
 		</view>
+			
+			
+		<div class="defaults" v-if="data.length<=0">
+			<image :src="'/static/client/defaultImg.png'|domain" ></image>
+		</div>
 	</view>
 </template>
 
@@ -137,5 +142,11 @@
 				color: #F43131;
 			}
 		}
+	}
+	.defaults{
+		margin: 0 auto;
+		width: 640rpx;
+		height: 480rpx;
+		margin-top: 100rpx;
 	}
 </style>
