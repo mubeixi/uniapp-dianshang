@@ -84,13 +84,13 @@ export default {
     data(){
         return {
             index: 0,
-						data:[],
-						pageSize:5,
-						page:1,
-						totalCount:0,
-						orderNum:'',//订单状态角标数
-						isQing:false,
-						Order_Type: 'pintuan' , //请求的订单类型
+			data:[],
+			pageSize:5,
+			page:1,
+			totalCount:0,
+			orderNum:'',//订单状态角标数
+			isQing:false,
+			Order_Type: 'pintuan' , //请求的订单类型
         }
     },
 	onShow(){
@@ -100,7 +100,10 @@ export default {
 		// this.getOrderNum();
 	},
 	onLoad(option){
-		this.index=option.index;
+		if(option.index){
+			this.index=option.index;
+		}
+		
 		this._getOrder();
 		this.getOrderNum();
 	},
@@ -205,7 +208,7 @@ export default {
 
 		},
 		changIndex(i){
-			if(i=this.index) return
+			if(i==this.index) return
 			this.data=[];
 			this.index=i;
 			this._getOrder();

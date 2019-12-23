@@ -307,7 +307,7 @@
                 // }
             },
             changIndex(idx){
-				if(idx=this.tabidx) return
+				if(idx==this.tabidx) return
                 this.tabidx = idx
                 this.paginate.page = 1
                 this.paginate.finish = false
