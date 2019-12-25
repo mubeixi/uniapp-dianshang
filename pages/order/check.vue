@@ -216,7 +216,7 @@
 				确定
 			</view>
 		</popup-layer>
-        <store-list-components :pageEl="selfObj" direction="top" ref="stroeComp" @callFn="bindStores" @change="selectStore=false" />
+        <store-list-components :pageEl="selfObj" direction="top" ref="stroeComp" @callFn="bindStores" @change="selectStore=false" catchtouchmove/>
     </view>
 </template>
 
