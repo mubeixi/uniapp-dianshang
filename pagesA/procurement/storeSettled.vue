@@ -88,6 +88,7 @@
     import {uploadImages,ls,chooseImageByPromise} from '../../common/tool.js'
     import {userStoreApply} from '../../common/fetch.js'
     import {toast,error} from '../../common/index.js'
+	import {mapGetters,mapActions, mapState} from 'vuex';
     export default {
         mixins: [pageMixin],
         data() {
@@ -117,6 +118,7 @@
             }
         },
         computed: {
+			...mapGetters(['userInfo']),
           store_title_name: function(){
               return this.storeTypes[this.index] && this.storeTypes[this.index].title || '请选择类型'
           }
@@ -126,6 +128,25 @@
         },
         onShow: function(){
           this.load();
+		  if(!this.userInfo.User_Mobile){
+			  uni.showModal({
+				  confirmText:'去绑定',
+			      title: '提示',
+			      content: '你还未绑定手机号，请先去绑定手机号再来申请。',
+			      success: function (res) {
+			          if (res.confirm) {
+			              uni.navigateTo({
+							  url:"/pages/person/updateUserPsw?type=3"
+						  })
+			          } else if (res.cancel) {
+			             uni.navigateBack({
+			                 delta: 1
+			             });
+			          }
+			      }
+			  });
+		  }
+
         },
         onLoad: function(){
             this.objectMultiArray = [
