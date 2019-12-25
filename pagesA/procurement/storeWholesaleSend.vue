@@ -229,8 +229,10 @@
                 if(!attr_id)attr_id=0
                 prod_info[prod_id] = {[attr_id]:modify_prod_count}
                 await subStorePurchaseApply({order_id,receive_id:this.Stores_ID,prod_json:JSON.stringify(prod_info)}).then(res=>{
-                    console.log('success')
-                    toast(res.msg)
+                    uni.showToast({
+                    	title: res.msg,
+											icon: 'none'
+                    })
                     call && call()
                 },err=>{
                     toast(err.msg)
