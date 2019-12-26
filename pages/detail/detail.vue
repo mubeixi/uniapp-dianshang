@@ -357,29 +357,7 @@ export default {
 			uni.$emit('page-video-stop', {});  
 			// #endif
 
-			// uni.$emit('page-popup', {
-			// 	title: '请阅读软件内容',
-			// 	content: 'uni-app 是一个使用 Vue.js 开发跨平台应用的前端框架，开发者编写一套代码，可编译到iOS、Android、H5、小程序等多个平台。'
-			// });
-
-			// #ifdef APP-PLUS
-			// const subNVue = uni.getSubNVueById('proDetailAction')
-			// console.log(333333333333333,subNVue)
-			// subNVue.show();
-			// setTimeout(()=>{
-			// 	uni.$emit('page-popup', {
-			// 		title: '请阅读软件内容',
-			// 		content: 'uni-app 是一个使用 Vue.js 开发跨平台应用的前端框架，开发者编写一套代码，可编译到iOS、Android、H5、小程序等多个平台。'
-			// 	});
-			// 	const subNVue1 = uni.getSubNVueById('popup')
-			// 	console.log(subNVue1)
-			// 	subNVue1.show()
-
-
-			// },3000)
-			// #endif
-
-
+		
 			// #ifdef APP-PLUS
 			var icon = plus.nativeObj.View.getViewById("icon");
 			var icons = plus.nativeObj.View.getViewById("icons");

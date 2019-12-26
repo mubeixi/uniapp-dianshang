@@ -53,7 +53,7 @@
 
 	import {pageMixin} from "../../common/mixin";
 	import {error,toast} from "../../common";
-
+	import {mapGetters,mapActions, mapState} from 'vuex';
 
 
 	export default {
@@ -93,8 +93,15 @@
 		async onPullDownRefresh(){
 			uni.stopPullDownRefresh()
 		},
+		computed:{
+			...mapGetters(['initData']),
+		},
 		onLoad() {
-
+			console.log(this.initData,"ss")
+			let that=this
+			uni.setNavigationBarTitle({
+				title:that.initData.ShopName
+			})
 		},
 		created(){
 			this.initFunc()
@@ -123,9 +130,7 @@
 							let templateData = mixinData.plugin;
 							this.system = mixinData.system;
 
-							uni.setNavigationBarTitle({
-								title:mixinData.system.title
-							})
+							
 
 							//存储页面数据
 							this.templateData = [] //页面数据的二维数组。

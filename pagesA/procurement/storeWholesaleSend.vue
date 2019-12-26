@@ -93,9 +93,12 @@
                     <div class="label">门店电话:</div>
                     <div class="text">{{storeInfo.Stores_Telephone}}</div>
                 </div>
-                <div class="row">
+                <div class="row" >
                     <div class="label">门店地址:</div>
-                    <div class="text">{{storeInfo.Stores_Province_name}}{{storeInfo.Stores_City_name}}{{storeInfo.Stores_Area_name}}{{storeInfo.Stores_Address}}</div>
+                    <div class="text"  @click="showAdress">
+										{{storeInfo.Stores_Province_name}}{{storeInfo.Stores_City_name}}{{storeInfo.Stores_Area_name}}{{storeInfo.Stores_Address}}
+											<image class="img" src="/static/local.png"  style="width: 26rpx;height: 31rpx;margin-left: 5px;vertical-align: top;"></image>
+										</div>
                 </div>
             </div>
         </wzw-dialog>
@@ -152,6 +155,15 @@
           ...mapGetters(['Stores_ID'])
         },
         methods:{
+						showAdress(){
+							uni.openLocation({
+								latitude: this.storeInfo.wx_lat,
+								longitude: this.storeInfo.wx_lng,
+								success: function () {
+									console.log('success');
+								}
+							});
+						},
             setCurrentGoods(obj){
               this.currentGoods = obj
             },
@@ -217,8 +229,10 @@
                 if(!attr_id)attr_id=0
                 prod_info[prod_id] = {[attr_id]:modify_prod_count}
                 await subStorePurchaseApply({order_id,receive_id:this.Stores_ID,prod_json:JSON.stringify(prod_info)}).then(res=>{
-                    console.log('success')
-                    toast(res.msg)
+                    uni.showToast({
+                    	title: res.msg,
+											icon: 'none'
+                    })
                     call && call()
                 },err=>{
                     toast(err.msg)

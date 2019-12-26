@@ -1,5 +1,5 @@
 <template>
-  <div @click="commonClick">
+  <div @click="commonClick" style='padding-bottom: 60px;'>
 		  <!-- #ifdef APP-PLUS -->
 		  <view class="status_bar" style="background-color: rgb(248, 248, 248);"><!-- 这里是状态栏 --></view>
 		  <!-- #endif -->
