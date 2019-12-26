@@ -13,8 +13,8 @@
 			</view>
 
 
-			<view  v-if="pro.disInfo.Enable_Sha==1" class="juewei">
-				股东
+			<view  v-if="pro.disInfo.sha_level_id" class="juewei">
+				{{pro.disInfo.sha_level_name}}
 			</view>
 			<view  v-else-if="pro.waiting_pay_apply.Order_ID" class="juewei"  @click="goGudongPay(pro.waiting_pay_apply.Order_ID)">
 				立即支付
