@@ -9,6 +9,7 @@ import {mapActions} from "vuex";
 
 
 
+
 /**
  * 很多接口都需要user_id,先全局mixin下
  */
@@ -123,7 +124,7 @@ export const Analysis = {
 	},
 	methods:{
 		commonClick(evt){
-			if(isDev)return;
+			//if(isDev)return;
 			//console.log(333333333)
 			//console.log(JSON.stringify(evt))
 			// {"id":"","offsetLeft":0,"offsetTop":0,"dataset":{},"x":114,"y":1369},"currentTarget":{"id":"","offsetLeft":0,"offsetTop":0,"dataset
@@ -132,7 +133,7 @@ export const Analysis = {
 
 			const d = new Date()
 			//,
-			let postData = {rouete:this.currentPageName,y_coordinate:y,x_coordinate:x,_timeStamp:parseInt(d.getTime()/1000)}
+			let postData = {router:this.currentPageName,y_coordinate:y,x_coordinate:x,_timeStamp:parseInt(d.getTime()/1000)}
 
 			if(!emptyObject(postData,1))return;//距离和坐标是肯定要有的
 			Object.assign(postData,this.analysisExt);
@@ -388,12 +389,12 @@ export const payMixin = {
 	},
 }
 
+import {isDev} from "./env";
 /**
  * 扫描二维码
  */
 // #ifdef APP-PLUS
 import permision from "./permission";
-import {isDev} from "./env";
 // #endif
 export const scanMixin = {
 	data() {

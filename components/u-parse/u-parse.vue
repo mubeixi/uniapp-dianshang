@@ -8,7 +8,7 @@
 
 <template>
 <!--基础元素-->
-<div class="wxParse" :class="className" v-if="!loading">
+<div class="wxParse" :class="className" v-if="!loading" style="">
   <block v-for="(node,index) of nodes" :key="index">
     <wxParseTemplate :node="node" />
   </block>
@@ -97,7 +97,7 @@ export default {
       };
       const results = HtmlToJson(parseData, customHandler, imageProp, this);
       this.imageUrls = results.imageUrls;
-      console.log(results)
+      console.log(333333333333333333,results)
       return results.nodes;
     },
   },

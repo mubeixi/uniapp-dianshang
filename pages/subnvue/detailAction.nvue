@@ -1,0 +1,38 @@
+<template>
+    <div class="wrapper">
+        3423423423423423423423423423423
+    </div>
+</template>
+
+<script>
+    export default {
+        data() {
+            return {
+                lists: [],
+            }
+        },
+        beforeCreate() {
+
+        },
+        created() {
+            // for(let i = 0; i < 5; i++){
+            //     this.lists.push({
+            //         id: i,
+            //         name: 'Item' + i,
+            //     });
+            // }
+        },
+        methods: {
+            hideDrawer() {
+                uni.getCurrentSubNVue().hide('auto')
+            },
+            clickitem(e) {
+                uni.$emit('drawer-page', e);
+            }
+        }
+    }
+</script>
+
+<style>
+
+</style>

@@ -590,6 +590,7 @@
 				let login_methods = initData.login_methods;
 				let component_appid = login_methods.component_appid
 
+				this.channels = []
 				//根据服务器返回配置设置channels,只有微信公众号和小程序会用到component_appid
 				//而且状态可以灵活控制 state为1
 				for(var i in login_methods){

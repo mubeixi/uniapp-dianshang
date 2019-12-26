@@ -21,11 +21,30 @@ export const formatTime = function (date) {
   return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':')
 }
 
+const formatRichTextByUparse = (html)=>{
+  //let html2 = '<div style="position:relative;z-index:1;width: 750rpx;height: 300rpx;"><video  x5-video-player-type="h5-page"  src="https://new401.bafangka.com/uploadfiles/wkbq6nc2kc/media/5df3493875.mp4"    autostart="false" loop="true" /></div>';
+  if(!html) return;
+  let newContent= html.replace(/<embed[^>]*>/gi,function(match,capture){
+    match = match.replace(/type="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
+    match = match.replace(/embed/gi, 'video x5-video-player-type="h5-page" ')
+    match = match.replace(/width="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
+    match = match.replace(/height="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
+    //相对地址
+    match = match.replace(/src="\/uploadfiles/gi, `src="${staticUrl}/uploadfiles`)
+    return match;
+  });
+
+  return newContent
+}
+
 
 export const lazyImgUrl = 'https://new401.bafangka.com/uploadfiles/wkbq6nc2kc/image/20191112154310111.jpg'
 
 export default [
   {
+    name:'formatRichTextByUparse',
+    methods:formatRichTextByUparse,
+  },{
     name: 'zero',
     methods: (val) => {
       return val ? val : 0
