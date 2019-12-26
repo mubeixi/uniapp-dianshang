@@ -25,6 +25,7 @@
 				<kill-component v-if="item.indexOf('kill') !== -1" :confData="templateData[tagIndex][index]" :index="index"  />
 			</section>
 		</view>
+		<!-- <div style="height: 60px;background: red;position: fixed;bottom: 0;width: 100%"></div> -->
 	</view>
 
 </template>

@@ -40,6 +40,7 @@
     </div>
 </template>
 
+
 <script>
     export default {
         data() {
@@ -110,7 +111,7 @@
         /* #endif */
         width: 100%;
         background-color: #F8F8F8;
-        z-index: 9999;
+        z-index:101;
 
         .leftss, .rightss {
             width: 50%;

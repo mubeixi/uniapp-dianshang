@@ -171,7 +171,7 @@ const isHasTabbarRouter = (link) => {
     return false;
 }
 
-const linkTo =  (linkObj) => {
+export const linkTo =  (linkObj) => {
 
     let {link, linkType, ext = {}} = linkObj;
     if (!link) {

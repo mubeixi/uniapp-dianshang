@@ -108,20 +108,21 @@
     	<!-- <div v-html="product.Products_Description" class="p_detail_des"></div> -->
 <!--    	<rich-text :nodes="product.Products_Description|formatRichText" class="p_detail_des"></rich-text>-->
     	<!-- <u-parse :content="product.Products_Description"  /> -->
-
+		<u-parse  :content="product.Products_Description|formatRichTextByUparse" ></u-parse>
 
 		<!-- #ifdef H5||APP-PLUS -->
-		<div v-html="formatRichTexts(product.Products_Description)" class="p_detail_des"></div>
+		<!-- <div v-html="formatRichTexts(product.Products_Description)" class="p_detail_des"></div> -->
 		<!-- #endif -->
 
 		<!-- #ifdef MP -->
-		<rich-text :nodes="product.Products_Description|formatRichText" class="p_detail_des"></rich-text>
+		<!-- <rich-text :nodes="product.Products_Description|formatRichText" class="p_detail_des"></rich-text> -->
 		<!-- #endif -->
     </div>
     <div style="clear: both;">
 
     </div>
     <div style="height:60px;background: white;"></div>
+	<div class="safearea-box"></div>
     <popupLayer ref="popupLayer" :direction="'top'" >
     	<div class="shareinfo" v-if="type=='share'">
     		<div class="s_top">
@@ -267,7 +268,7 @@ import {pageMixin} from "../../common/mixin";
 import {error} from "../../common";
 import {mapState,mapGetters,mapActions} from 'vuex';
 import {add_template_code} from "../../common/fetch";
-
+import uParse from '../../components/gaoyia-parse/parse.vue'
 export default {
 	mixins:[pageMixin],
     data(){
@@ -330,7 +331,7 @@ export default {
 	},
 	// #endif
     components: {
-        popupLayer
+        popupLayer,uParse
     },
 	computed:{
 		...mapGetters(['userInfo']),
@@ -343,6 +344,13 @@ export default {
 		  // this.checkProdCollected();
 	},
 	onShow() {
+		// #ifdef APP-PLUS
+			const vm = this;
+			const subNVue1 = uni.getSubNVueById('video')
+			subNVue1.hide()
+			uni.$emit('page-video-stop', {});  
+			// #endif
+
 		//this.getDetail(this.flashsale_id);
 		// this.getCommit(this.Products_ID);
 		// this.checkProdCollected();
@@ -1437,6 +1445,10 @@ export default {
 		display: flex;
 		position: fixed;
 		bottom: 0;
+		/* #ifdef MP */
+		bottom: constant(safe-area-inset-bottom);
+		bottom: env(safe-area-inset-bottom);
+		/* #endif */
 		width: 100%;
 		background-color: #F8F8F8;
 		z-index: 9999;

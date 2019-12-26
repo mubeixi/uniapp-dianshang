@@ -102,14 +102,14 @@
     	<!-- <div v-html="product.Products_Description" class="p_detail_des"></div> -->
 <!--    	<rich-text :nodes="product.Products_Description|formatRichText" class="p_detail_des"></rich-text>-->
     	<!-- <u-parse :content="product.Products_Description"  /> -->
-
+<u-parse  :content="product.Products_Description|formatRichTextByUparse" ></u-parse>
 
 		<!-- #ifdef H5||APP-PLUS -->
-		<div v-html="formatRichTexts(product.Products_Description)" class="p_detail_des"></div>
+		<!-- <div v-html="formatRichTexts(product.Products_Description)" class="p_detail_des"></div> -->
 		<!-- #endif -->
 
 		<!-- #ifdef MP -->
-		<rich-text :nodes="product.Products_Description|formatRichText" class="p_detail_des"></rich-text>
+		<!-- <rich-text :nodes="product.Products_Description|formatRichText" class="p_detail_des"></rich-text> -->
 		<!-- #endif -->
     </div>
     <div style="clear: both;">
@@ -201,6 +201,7 @@
 		</form>
 
 	</popupLayer>
+	<div class="safearea-box"></div>
 	<div class="fixed">
 		<div class="leftss">
 			<div class="first" @click="goHome">
@@ -240,7 +241,9 @@ import {pageMixin} from "../../common/mixin";
 import {error} from "../../common";
 import {mapState,mapGetters,mapActions} from 'vuex';
 import {add_template_code} from "../../common/fetch";
+import uParse from '../../components/gaoyia-parse/parse.vue'
 
+let groupStamInstance = null
 export default {
 	mixins:[pageMixin],
     data(){
@@ -302,7 +305,7 @@ export default {
 	},
 	// #endif
     components: {
-        popupLayer
+        popupLayer,uParse
     },
 	computed:{
 		...mapGetters(['userInfo']),
@@ -324,6 +327,13 @@ export default {
 		 this._init_func();
 	},
 	onShow() {
+		// #ifdef APP-PLUS
+			const vm = this;
+			const subNVue1 = uni.getSubNVueById('video')
+			subNVue1.hide()
+			uni.$emit('page-video-stop', {});  
+			// #endif
+
 		//this.getDetail(this.spike_good_id);
 	},
 	filters: {
@@ -823,7 +833,7 @@ export default {
 						rt = computedStamp
 					}else{
 						//如果不对，就清空
-						window.clearInterval(window.groupStam)
+						clearInterval(groupStamInstance)
 					}
 				}
 			}else{
@@ -834,7 +844,7 @@ export default {
 						rt = computedStamp
 					}else{
 						//如果不对，就清空
-						window.clearInterval(window.groupStam)
+						clearInterval(groupStamInstance)
 					}
 				}
 			}
@@ -869,7 +879,7 @@ export default {
 
 					//this.stampCount()
 					//开发时候一直倒计时太乱了
-					window.groupStam = setInterval(this.stampCount,1000)
+					groupStamInstance = setInterval(this.stampCount,1000)
 
 					product = res.data
 
@@ -1389,6 +1399,10 @@ export default {
 		display: flex;
 		position: fixed;
 		bottom: 0;
+		/* #ifdef MP */
+		bottom: constant(safe-area-inset-bottom);
+		bottom: env(safe-area-inset-bottom);
+		/* #endif */
 		width: 100%;
 		background-color: #F8F8F8;
 		z-index: 9999;

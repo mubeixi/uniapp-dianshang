@@ -1,7 +1,7 @@
 <template>
-    <view class="video">
+    <view class="video" style="z-index: 1;position: relative;">
         <!-- @error="videoErrorCall back" -->
-        <video @error="videoErrorCallback" ref="video1" class="myVideo" id="myVideo1" :src="video.config.src"
+        <video  x5-video-player-type="h5-page" @error="videoErrorCallback" ref="video1" class="myVideo" id="myVideo1" :src="video.config.src"
                :poster="video.config.cover|domain" controls></video>
         <!--    <img v-if="video.config.cover" :src="video.config.cover|domain"/>-->
         <!--    <div v-else>-->
@@ -12,7 +12,7 @@
     </view>
 </template>
 <script>
-
+	import {isDev} from '../../common/env.js';
     export default {
         props: {
 
@@ -49,6 +49,7 @@
             },
             videoErrorCallback(e) {
 
+				if(!isDev)return;
                 let msg = '视频播放错误:' + JSON.stringify(e)
                 uni.showModal({
                     content: msg,

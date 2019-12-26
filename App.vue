@@ -118,11 +118,10 @@
 </script>
 
 <style lang="less">
+/* #ifndef APP-NVUE */
 @import "./static/css/app.less";
 @import "./static/css/icon.css";
 @import "./components/u-parse/u-parse.css";
-
+/* #endif */
 </style>
-<style lang="scss">
 
-</style>
