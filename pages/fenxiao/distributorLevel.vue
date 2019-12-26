@@ -3,7 +3,7 @@
 		<view class="top">
 			<swiper class="center" :indicator-dots="false" :autoplay="false"  :duration="1000" :current="inds" @change="change">
 				<swiper-item class="vipFir"  v-for="(item,index) of dis_level" :key="index"  :style="dis_level.length==1?'margin-left:43rpx;':''">
-						<image  :src="'/static/client/person/right.png' | domain"  class="allImg"></image>
+						<image   src='/static/vipBgColor.png'  class="allImg"></image>
 
 						<view class="vipGrade" v-if="item.Level_ID==pro.user_info.Level_ID&&userInfo.Is_Distribute==1">
 							当前等级
@@ -60,7 +60,7 @@
 							<view class="bottoms"  v-if="dis_level[inds].level_rules_edit.buy_prod.user_data>0">
 								已完成
 							</view>
-							<view class="bottoms">
+							<view class="bottoms" v-else>
 								未完成
 							</view>
 						</view>
