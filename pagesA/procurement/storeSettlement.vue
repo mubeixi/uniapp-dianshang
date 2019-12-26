@@ -6,7 +6,7 @@
 				<picker class="pickerView" mode="date" :value="date" :start="startDate" :end="endDate" @change="bindDateChangeStart">
 					<view class="uni-inputs" v-if="dateValue">{{dateValue}}</view>
 					<view class="uni-input" v-if="!dateValue">请选择开始时间</view>
-					<image class="rightImg" src="https://new401.bafangka.com/static/client/right.png" ></image>
+					<image class="rightImg"  :src="'/static/client/person/right.png' | domain" ></image>
 				</picker>
 
 			</view>
@@ -16,7 +16,7 @@
 				<picker class="pickerView" mode="date" :value="date" :start="startDate" :end="endDate" @change="bindDateChangeEnd">
 					<view class="uni-inputs" v-if="dateValues">{{dateValues}}</view>
 					<view class="uni-input" v-if="!dateValues">请选择结束时间</view>
-					<image class="rightImg" src="https://new401.bafangka.com/static/client/right.png" ></image>
+					<image class="rightImg"  :src="'/static/client/person/right.png' | domain"  ></image>
 				</picker>
 			</view>
 

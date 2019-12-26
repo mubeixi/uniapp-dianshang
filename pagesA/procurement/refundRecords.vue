@@ -298,7 +298,7 @@
 				line-height: 80rpx;
 				&.active {
 					color: $wzw-primary-color;
-					border-bottom: 2rpx solid $wzw-primary-color;
+					border-bottom: 2px solid $wzw-primary-color;
 				}
       }
 			& .status:nth-last-child(1){
@@ -670,4 +670,10 @@
 			height: 480rpx;
 			margin-top: 100rpx;
 		}
+		
+		
+		/deep/ .uni-scroll-view::-webkit-scrollbar {
+				/* 隐藏滚动条，但依旧具备可以滚动的功能 */
+				display: none
+			}
 </style>

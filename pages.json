@@ -691,7 +691,13 @@
 				"path": "procurement/purchaseSend",
 				"style": {}
 			}
-		]
+		    ,{
+                    "path" : "fenxiao/profitSum",
+                    "style": {
+                    	"navigationBarTitleText": "累计利润"
+                    }
+                }
+            ]
 	}],
 	"preloadRule": {
 		"pages/index/index": {

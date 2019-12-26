@@ -38,7 +38,7 @@
 									{{itm.options[itm.index]}}
 									</view>
 							  </picker>
-							  <image class="disMyImg" src="https://new401.bafangka.com/static/client/person/right.png"></image>
+							  <image class="disMyImg"  :src="'/static/client/person/right.png' | domain" ></image>
 							</view>
 				 </view>
 				 <view class="center" v-for="(m,n) of text_lists" :key="n">

@@ -57,7 +57,7 @@
 				page:1,
 				pageSize:5,
 				pro:[],
-				index:0,
+				index:-1,
 				totalCount:0,
 			};
 		},
@@ -85,7 +85,7 @@
 		},
 		methods:{
 			change(item){
-				if(item==this.index) return
+				//if(item==this.index) return
 				this.pro=[];
 				this.page=1;
 				this.index=item;
