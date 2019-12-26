@@ -40,11 +40,7 @@ export default {
     }
   },
   created(){
-	const vm = this;
-	const subNVue1 = uni.getSubNVueById('video')
-	this.ifshow = false
-	subNVue1.hide()
-	uni.$emit('page-video-stop', {});  
+	
   },
   methods:{
 	  ableClose(){

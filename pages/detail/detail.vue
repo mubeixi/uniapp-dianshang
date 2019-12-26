@@ -108,13 +108,13 @@
 
 	</div>
 
-<!--	<div style="clear: both;"></div>-->
-<!--    <div style="height:60px;background: white;"></div>-->
+	<div style="clear: both;"></div>
+   
 
 	<bottom @cartHandle="addCart" @directHandle="directBuy" @goGet="lingqu" @collect="collect" :collected="isCollected" :recieve="recieve" :isVirtual="isVirtual" :canSubmit="canSubmit"></bottom>
 
-
-<!--  	<div class="safearea-box"></div>-->
+	<div style="height:60px;background: white;"></div>
+ 	<div class="safearea-box"></div>
 	<popupLayer ref="popupLayer" :direction="'top'" >
 		<div class="shareinfo" v-if="type=='share'">
 			<div class="s_top">
@@ -349,6 +349,13 @@ export default {
 	},
 	onShow(){
 			let _self = this
+
+			// #ifdef APP-PLUS
+			const vm = this;
+			const subNVue1 = uni.getSubNVueById('video')
+			subNVue1.hide()
+			uni.$emit('page-video-stop', {});  
+			// #endif
 
 			// uni.$emit('page-popup', {
 			// 	title: '请阅读软件内容',

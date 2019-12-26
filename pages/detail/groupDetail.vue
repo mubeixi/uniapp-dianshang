@@ -359,6 +359,14 @@ export default {
 	},
 	onShow() {
 
+			// #ifdef APP-PLUS
+			const vm = this;
+			const subNVue1 = uni.getSubNVueById('video')
+			subNVue1.hide()
+			uni.$emit('page-video-stop', {});  
+			// #endif
+
+
 		console.log(this.product);
 		this.getDetail(this.Products_ID);
 		this.getCommit(this.Products_ID);

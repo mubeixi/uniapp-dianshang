@@ -69,7 +69,16 @@
 			"style": {
 				"navigationBarTitleText": "拼团详情",
 				"app-plus": {
-					"titleNView": false
+					"titleNView": false,
+					"subNVues": [{
+						"id": "video",
+						"path": "pages/subnvue/video",
+						"style": {
+							"margin": "auto",
+							"width": "750upx",
+							"height": "375upx"
+						}
+					}]
 				}
 			}
 		},
@@ -373,7 +382,16 @@
 			"style": {
 				"navigationBarTitleText": "限时秒杀",
 				"app-plus": {
-					"titleNView": false
+					"titleNView": false,
+					"subNVues": [{
+						"id": "video",
+						"path": "pages/subnvue/video",
+						"style": {
+							"margin": "auto",
+							"width": "750upx",
+							"height": "375upx"
+						}
+					}]
 				}
 			}
 		},
@@ -394,7 +412,16 @@
 			"style": {
 				"navigationBarTitleText": "限时抢购",
 				"app-plus": {
-					"titleNView": false
+					"titleNView": false,
+					"subNVues": [{
+						"id": "video",
+						"path": "pages/subnvue/video",
+						"style": {
+							"margin": "auto",
+							"width": "750upx",
+							"height": "375upx"
+						}
+					}]
 				}
 			}
 		},

@@ -122,6 +122,7 @@
 
     </div>
     <div style="height:60px;background: white;"></div>
+	<div class="safearea-box"></div>
     <popupLayer ref="popupLayer" :direction="'top'" >
     	<div class="shareinfo" v-if="type=='share'">
     		<div class="s_top">
@@ -343,6 +344,13 @@ export default {
 		  // this.checkProdCollected();
 	},
 	onShow() {
+		// #ifdef APP-PLUS
+			const vm = this;
+			const subNVue1 = uni.getSubNVueById('video')
+			subNVue1.hide()
+			uni.$emit('page-video-stop', {});  
+			// #endif
+
 		//this.getDetail(this.flashsale_id);
 		// this.getCommit(this.Products_ID);
 		// this.checkProdCollected();
@@ -1437,6 +1445,10 @@ export default {
 		display: flex;
 		position: fixed;
 		bottom: 0;
+		/* #ifdef MP */
+		bottom: constant(safe-area-inset-bottom);
+		bottom: env(safe-area-inset-bottom);
+		/* #endif */
 		width: 100%;
 		background-color: #F8F8F8;
 		z-index: 9999;
