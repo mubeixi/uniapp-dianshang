@@ -1,6 +1,6 @@
 <template>
 	<view @click="commonClick" class="boxSizing">
-		<view class="zhezhao" v-if="isShow">
+		<view class="zhezhao" v-if="isShow" >
 			<view class="zhezhaoView">
 				<image :src="'/static/client/check/close.png'|domain" class="closeZ" @click="isShow=false"></image>
 				<view class="zhezhaoYue">
@@ -29,7 +29,7 @@
 		</view>
 
 
-		<view class="top">
+		<view class="top" catchtouchmove>
 
 			<image  class="bgImg" :src="'/static/client/blance/bg.jpg'|domain" ></image>
 			<!-- <image class="back" @click="goBack" :src="'/static/client/check/left.png'|domain"></image>
@@ -62,18 +62,49 @@
 
 		<view class="selects">
 			<view class="qwes" @click="changeCurrent('charge')" :class="{checked:current=='charge'}">
-				充值记录
+				收入  <image class="imgQ" src="/static/moneySort.png" ></image>
 			</view>
 			<view class="qwes" @click="changeCurrent('money')"  :class="{checked:current=='money'}">
-				资金流水
+				支出  <image class="imgQ" src="/static/moneySort.png" ></image>
+			</view>
+			<view class="showCeng" v-if="showSure">
+				<view class="priceInterval">时间区间</view>
+				<view style="display: flex;align-content: center;padding-left: 10px;">
+					<picker mode="date"   @change="bindDateChange" class="picker">
+						<view class="uni-input" v-if="beginTime">{{beginTime}}</view>
+						<view class="uni-input" v-if="!beginTime">开始时间</view>
+					</picker>
+					<view class="centerPicker">
+						—
+					</view>
+					<picker mode="date"   @change="bindDateChanges" class="picker">
+						<view class="uni-input" v-if="endTime">{{endTime}}</view>
+						<view class="uni-input" v-if="!endTime">结束时间</view>
+					</picker>
+				</view>
+				<view class="submit">
+					  <view class="view reset" @click="resets">重置</view>
+					  <view class="view sure" @click="sureSearch">确定</view>
+				</view>
+				<view class="zhao" @click="closeShow" catchtouchmove>
+				
+				</view>
 			</view>
 		</view>
+		
 
 		<view class="contents" v-show="current=='charge'">
-			<view class="mingxi" v-for="(item,idx) in charge_records">
+			<view class="mingxi  mingxiPlus">
 				<view>
-					充值{{item.Amount}} <text v-if="item.present > 0">,系统赠送您{{item.present}}</text>
-					<text style="float: right;margin-top: 15rpx;">{{item.Status_desc}}</text>
+					总收入:{{records.total_get}}元
+				</view>
+				<view>
+					总支出:{{records.total_pay}}元
+				</view>
+			</view>
+			<view class="mingxi" v-for="(item,idx) in records.list" :key="idx">
+				<view class="note">
+					{{item.Note}}
 				</view>
 				<view class="times">
 					{{item.CreateTime}}
@@ -81,16 +112,22 @@
 			</view>
 		</view>
 		<view class="contents"  v-show="current=='money'">
-			<view class="mingxi" v-for="(item,idx) in records">
+			
+			<view class="mingxi  mingxiPlus" >
+				<view>
+					总收入:{{records.total_get}}元
+				</view>
+				<view>
+					总支出:{{records.total_pay}}元
+				</view>
+			</view>
+			<view class="mingxi" v-for="(item,idx) in records.list" :key="idx">
 				<view class="note">
 					{{item.Note}}
 				</view>
 				<view class="times">
 					{{item.CreateTime}}
 				</view>
-<!--				<view>-->
-<!--					{{item.Note}}-->
-<!--				</view>-->
 			</view>
 		</view>
 	</view>
@@ -112,11 +149,14 @@
 		mixins:[pageMixin],
 		data() {
 			return {
+				showSure:false,
+				endTime:'',
+				beginTime:'',
 				isShow:false,
 				info:{},
 				current:'charge',
 				charge_records:[],
-				records:[],
+				records:{list:[]},
 				user_no: '', //会员号
 				money: '', // 转出金额
 				chargePage: 1, // 充值记录分页
@@ -143,23 +183,60 @@
 		onReachBottom() {
 			if(this.current=='charge') {
 				// 充值记录
-				console.log("11111")
-				if(this.chargeMore) {
-					console.log("12222222")
-					this.chargePage++;
-					this.get_user_charge_record();
+				if(this.moneyMore) {
+					this.moneyPage++;
+					this.get_user_money_record(1);
 				}
 			}else if(this.current = 'money') {
 				// 资金流水
 				if(this.moneyMore) {
 					this.moneyPage++;
-					this.get_user_money_record();
+					this.get_user_money_record(2);
 				}
 			}
 		},
 		methods:{
 			...mapActions(['setUserInfo']),
+			sureSearch(){
+				if(this.beginTime&&this.endTime){
+					var startTmp=this.beginTime.split("-");
+					var endTmp=this.endTime.split("-");
+					var sd=new Date(startTmp[0],startTmp[1],startTmp[2]);
+					var ed=new Date(endTmp[0],endTmp[1],endTmp[2]);
+					if(sd.getTime()>ed.getTime()){ 
+						  uni.showToast({
+						  	title:'开始时间不得大于结束时间',
+							icon:'none'
+						  })
+						return 
+					} 
+				}
+				
+				if(this.current=='charge'){
+					this.get_user_money_record(1);
+				}else{
+					this.get_user_money_record(2)
+				}
+				this.showSure=false
+			},
+			resets(){
+				this.beginTime='';
+				this.endTime='';
+			},
+			bindDateChange(e){
+				this.beginTime=e.target.value
+			},
+			bindDateChanges(e){
+				this.endTime=e.target.value
+			},
 			changeCurrent(value){
+				if(this.current==value){
+					this.showSure=!this.showSure
+					return
+				}
+				this.showSure=false
+				this.beginTime=''
+				this.endTime=''
 				this.current=value
 				this.chargePage = 1;
 				this.moneyPage = 1;
@@ -168,9 +245,9 @@
 				this.moneyMore = false;
 				this.chargeMore = false;
 				if(this.current=='charge'){
-					this.get_user_charge_record();
+					this.get_user_money_record(1);
 				}else{
-					this.get_user_money_record()
+					this.get_user_money_record(2)
 				}
 			},
 			goWithdraw(){
@@ -243,18 +320,28 @@
 				});
 				this.isShow = false;
 			},
-			get_user_money_record(){
-				getUserMoneyRecord({
+			get_user_money_record(item){
+				let data={
 					page: this.moneyPage,
-					pageSize: this.pageSize
-				}).then(res=>{
+					pageSize: this.pageSize,
+					begin_time:this.beginTime,
+					end_time:this.endTime
+				}
+				if(item==1){
+					data.money_type=1
+				}else{
+					data.money_type=2
+				}
+				
+				getUserMoneyRecord(data).then(res=>{
 					if(this.moneyPage != 1) {
-						let old = this.records;
-						this.records = old.concat(res.data);
+						let old = this.records.list;
+						this.records=res.data
+						this.records.list = old.concat(res.data.list);
 					}else {
 						this.records = res.data;
 					}
-					if(this.records.length < res.totalCount) {
+					if(this.records.list.length < res.totalCount) {
 						this.moneyMore = true;
 					}else{
 						this.moneyMore = false;
@@ -318,6 +405,7 @@ view{
 	background: #F8F8F8;
 	width: 750rpx;
 	overflow-x: hidden;
+	height: 100vh;
 }
 	.top{
 		width: 750rpx;
@@ -448,6 +536,7 @@ view{
 		width: 750rpx;
 		background-color: #FFFFFF;
 		display: flex;
+		position: relative;
 		.qwes{
 			width: 375rpx;
 			height: 110rpx;
@@ -456,6 +545,15 @@ view{
 			font-size: 32rpx;
 			color: #666666;
 			position: relative;
+			.imgQ{
+				width: 35px;
+				height: 35px;
+				position: absolute;
+				top: 12px;
+				right: 35px;
+				padding: 10px;
+				box-sizing: border-box;
+			}
 		}
 		.checked{
 			color: #FF5C33;
@@ -475,7 +573,7 @@ view{
 
 	.contents{
 		width: 750rpx;
-		padding:17rpx 26rpx 32rpx 24rpx ;
+		padding:17rpx 0rpx 32rpx 0rpx ;
 		background-color: #F8F8F8;
 		.mingxi{
 			/*height: 115rpx;*/
@@ -487,6 +585,9 @@ view{
 			align-items: center;
 			font-size: 28rpx;
 			color: #333333;
+			margin-left: 24rpx;
+			margin-right: 26rpx;
+			box-sizing: border-box;
 			&:first-child{
 				padding-top: 0;
 			}
@@ -572,4 +673,89 @@ view{
 		color: #FFFFFF;
 	}
 }
+.mingxiPlus{
+	display: flex;
+	width: 750rpx !important;
+	box-sizing: border-box;
+	align-items: center;
+	justify-content: space-between;
+	height: 40px;
+	line-height: 40px;
+	margin: 0px !important;
+	padding-left: 26rpx !important;
+	padding-right: 40px !important;
+}
+
+.showCeng{
+	background-color: #FFFFFF;
+	position: absolute;
+	width: 750rpx;
+	z-index: 999;
+	top: 60px;
+	box-sizing: border-box;
+	padding-top: 20px;
+	
+	.picker{
+		background: whitesmoke;
+		border-radius: 15px;
+		height: 30px;
+		line-height: 30px;
+		font-size: 14px;
+		color: rgb(153, 153, 153);
+		text-align: center;
+		width: 150px;
+	}
+	.centerPicker{
+		height: 30px;
+		line-height: 30px;
+		font-size: 14px;
+		color: rgb(153, 153, 153);
+		margin-left: 10px;
+		margin-right: 10px;
+	}
+	.submit{
+		display: flex;
+		width: 100%;
+		height: 80rpx;
+		padding-left: 0rpx;
+		padding-right: 0rpx;
+		margin-top: 30px;
+		.view{
+			width: 50%;
+			height: 80rpx;
+			line-height: 80rpx;
+			text-align: center;
+			color: #FFFFFF;
+			font-size: 30rpx;
+		}
+		.reset{
+			background-color: #B9B9B9;
+		}
+		.sure{
+			background-color: #F43131;
+		}
+	}
+	.zhao{
+		height:230px;
+		width: 100%;
+		padding-left: 0rpx;
+		padding-right: 0rpx;
+		//background: rgba(0, 0, 0, .3);
+		//position: fixed;
+		z-index: 998;
+		position: absolute;
+		background-color:#000;
+		opacity:0.6;
+	}
+	.priceInterval{
+		font-size: 26rpx;
+		color: #999999;
+		margin-bottom: 20px;
+		height:27rpx;
+		line-height: 27rpx;
+		padding-left: 10px;
+	}
+}
+
+
 </style>

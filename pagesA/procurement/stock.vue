@@ -14,7 +14,7 @@
                     <view>{{storeAdress.Stores_Name}}</view>
                     <view class="storeKm">
                         <text v-if="storeAdress.distance">{{storeAdress.distance}}km</text>
-                        <image class="imgHeight" src="https://new401.bafangka.com/static/client/person/right.png"></image>
+                        <image class="imgHeight"  :src="'/static/client/person/right.png' | domain" ></image>
                     </view>
                 </view>
                 <view class="storeTell" style="margin-bottom: 15rpx;">

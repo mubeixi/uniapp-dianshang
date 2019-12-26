@@ -389,7 +389,7 @@
     align-items: center;
     height: 50px;
     line-height: 50px;
-    background: #fff;
+    //background: #fff;
     font-size: 14px;
     padding: 0 10px;
 
@@ -410,7 +410,7 @@
 .space-box {
     height: 50px;
     width: 100%;
-    background: white;
+   // background: white;
 }
 
 .lists{

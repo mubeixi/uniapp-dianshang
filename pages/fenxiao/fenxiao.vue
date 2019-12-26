@@ -18,7 +18,7 @@
 				</view>
 				<view class="putong" v-if="userInfo.User_ID&&userInfo.Is_Distribute==1"   @click="goDistributor">
 					{{data.disInfo.Level_Name}}
-					<image v-if="data.disInfo.Level_Name" class="rightMy" src="https://new401.bafangka.com/static/client/person/right.png" ></image>
+					<image v-if="data.disInfo.Level_Name" class="rightMy" :src="'/static/client/person/right.png' | domain" ></image>
 				</view>
 			</div>
 
@@ -36,9 +36,10 @@
 						{{'—'}}
 					</view>
 				</view>
-				<view class="right">
+				<view class="right" @click="goProfit">
 					<view class="salesSum">
 						累计利润（元）
+						<image class="rightMys" :src="'/static/client/person/right.png' | domain" ></image>
 					</view>
 					<view class="salesSumPrice" v-if="userInfo.User_ID&&userInfo.Is_Distribute">
 						{{data.total_income}}
@@ -86,7 +87,7 @@
 				<view class="td"  @click="goFinance" >
 					<image  class="imgs" :src="'/static/client/fenxiao/caiwu.png'|domain" ></image>
 					<view class="views">
-						财务明细
+						佣金记录
 					</view>
 				</view>
 				<view class="td" @click="goPromotion">
@@ -175,6 +176,13 @@
 		},
 		methods:{
 			...mapActions(['getUserInfo','setUserInfo']),
+			goProfit(){
+				if(!this.$fun.checkIsLogin(1,1))return;
+				if(!this.$fun.checkIsDistribute(1,1))return;
+				uni.navigateTo({
+					url:'/pagesA/fenxiao/profitSum'
+				})
+			},
 			goMyVip(){
 				if(!this.$fun.checkIsLogin(1,1))return;
 				if(!this.$fun.checkIsDistribute(1,1))return;
@@ -269,7 +277,7 @@
 				if(!this.$fun.checkIsLogin(1,1))return;
 				if(!this.$fun.checkIsDistribute(1,1))return;
 				uni.navigateTo({
-					url:'/pagesA/fenxiao/finance'
+					url:'/pagesA/fenxiao/finance?index=0'
 				})
 			},
 			//财务明细
@@ -502,5 +510,11 @@
 			height: 14px !important;
 			margin-left: 2px;
 		}
+	}
+	.rightMys{
+		width: 9px !important;
+		height: 14px !important;
+		margin-left: 2px;
+		margin-bottom: -2px;
 	}
 </style>
