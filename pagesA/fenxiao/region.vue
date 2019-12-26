@@ -1,23 +1,26 @@
 <template>
 	<view class="all" v-if="pro.agent_rate" @click="commonClick">
 		<view class="top">
-			<view class="person">
+			<view class="person" v-if="pro.disInfo">
 				<image class="image" :src="pro.disInfo.Shop_Logo"></image>
 			</view>
 			<view class="nickName">
-				<view class="tops">
+				<view class="tops" v-if="pro.disInfo">
 					{{pro.disInfo.Shop_Name}}
 				</view>
 				<view class="bottoms" v-if="pro.agent_identity">
 					<image class="image" :src="'/static/client/fenxiao/vip.png'|domain"></image>
-					<template v-for="(item,index) of  pro.agent_identity">
+					<block v-for="(item,index) of  pro.agent_identity" :key="index">
 						<span style="margin-right: 4px">{{item.area_name}}</span>
-					</template>
+					</block>
 				</view>
 			</view>
-			<view  v-if="pro.waiting_pay_apply.Order_ID" @click="goPay(pro.waiting_pay_apply.Order_ID)" class="juewei">
-				立即支付
-			</view>
+			<block v-if="pro.waiting_pay_apply">
+				<view  v-if="pro.waiting_pay_apply.Order_ID" @click="goPay(pro.waiting_pay_apply.Order_ID)" class="juewei">
+					立即支付
+				</view>
+			</block>
+			
 			<view  v-else-if="pro.agent_rate.Agentenable==1&&(pro.agent_rate.tow.is_apply||pro.agent_rate.pro.is_apply||pro.agent_rate.cit.is_apply||pro.agent_rate.cou.is_apply)" class="juewei" @click="goAddInfo">
 				立即申请
 			</view>

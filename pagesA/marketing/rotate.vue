@@ -91,8 +91,9 @@
             <div class=" text font14">今日剩余抽奖次数<span class="font16 danger-color" style="">{{day_count}}</span>次,总剩余抽奖次数<span class="font16 danger-color" style="">{{total_count}}</span>次</div>
         </div>
 
-        <div class="reward-list" @click="showRewardList">
-            我的中奖记录
+        <div class="reward-list">
+            <span  @click="showRewardList">我的中奖记录</span>
+			<span @click="goPerson" style="margin-left: 10px;">个人中心</span>
         </div>
 
         <div class="tip-box">
@@ -111,7 +112,7 @@
                     <image class="record-bg" :src="'/static/marketing/records_bg.png'" />
                     <div class="record-box">
                         <div class="title">我的中奖记录</div>
-                        <div class="table">
+                        <scroll-view scroll-y class="table">
                             <div class="tr">
                                 <div class="th time">时间</div>
                                 <div class="th prize">奖品</div>
@@ -120,7 +121,7 @@
                                 <div class="td time">{{item.time}}</div>
                                 <div class="td prize">{{item.prize}}</div>
                             </div>
-                        </div>
+                        </scroll-view>
                     </div>
 
                 </div>
@@ -184,6 +185,11 @@
 
         methods:{
 
+			goPerson(){
+				uni.switchTab({
+					url:"/pages/person/person"
+				})
+			},
             async showRewardList(){
                 this.$refs.record.show()
                 getRotateRecord({id:this.activity_id,pageSize:999},{tip:'获取中'}).then(res=>{
@@ -382,7 +388,6 @@
             height: 540rpx;
             overflow-y: scroll;
             overflow-x: hidden;
-
             .tr{
                 height: 60rpx;
                 line-height: 60rpx;
