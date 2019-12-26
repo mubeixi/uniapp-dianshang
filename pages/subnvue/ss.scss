@@ -1,0 +1,77 @@
+.detailAction {
+  height: 98 rpx;
+  width: 100%;
+  background-color: #F8F8F8;
+  z-index: 9999;
+  .leftss, .rightss {
+    width: 50%;
+    height: 98 rpx;
+    display: flex;
+  }
+
+  .leftss {
+    div.first {
+      width: 33.3%;
+      height: 98 rpx;
+      text-align: center;
+      padding-top: 15 rpx;
+
+      .img {
+        width: 38 rpx;
+        height: 38 rpx;
+        display: block;
+        margin: 0 auto;
+      }
+
+      .txt {
+        font-size: 22 rpx;
+        margin-top: 10 rpx;
+      }
+    }
+  }
+
+  .rightss {
+    .dan {
+      width: 50%;
+      background-color: #FA6B27;
+    }
+
+    .tuan {
+      width: 50%;
+      background-color: #F43131;
+    }
+
+    .bTitle {
+      color: #fff;
+      text-align: center;
+      line-height: 98 rpx;
+      font-size: 30 rpx;
+
+      .bF {
+        font-size: 24 rpx;
+      }
+
+      .bS {
+        font-size: 32 rpx;
+      }
+
+      .danRight {
+        font-size: 26 rpx;
+      }
+    }
+
+    .all {
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      line-height: 98 rpx;
+      background: #F43131;
+      color: #fff;
+    }
+
+    .disable {
+      background: #efefef;
+      color: #999;
+    }
+  }
+}

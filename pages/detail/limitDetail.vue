@@ -102,14 +102,14 @@
     	<!-- <div v-html="product.Products_Description" class="p_detail_des"></div> -->
 <!--    	<rich-text :nodes="product.Products_Description|formatRichText" class="p_detail_des"></rich-text>-->
     	<!-- <u-parse :content="product.Products_Description"  /> -->
-
+<u-parse  :content="product.Products_Description|formatRichTextByUparse" ></u-parse>
 
 		<!-- #ifdef H5||APP-PLUS -->
-		<div v-html="formatRichTexts(product.Products_Description)" class="p_detail_des"></div>
+		<!-- <div v-html="formatRichTexts(product.Products_Description)" class="p_detail_des"></div> -->
 		<!-- #endif -->
 
 		<!-- #ifdef MP -->
-		<rich-text :nodes="product.Products_Description|formatRichText" class="p_detail_des"></rich-text>
+		<!-- <rich-text :nodes="product.Products_Description|formatRichText" class="p_detail_des"></rich-text> -->
 		<!-- #endif -->
     </div>
     <div style="clear: both;">
@@ -240,7 +240,7 @@ import {pageMixin} from "../../common/mixin";
 import {error} from "../../common";
 import {mapState,mapGetters,mapActions} from 'vuex';
 import {add_template_code} from "../../common/fetch";
-
+import uParse from '../../components/gaoyia-parse/parse.vue'
 export default {
 	mixins:[pageMixin],
     data(){
@@ -302,7 +302,7 @@ export default {
 	},
 	// #endif
     components: {
-        popupLayer
+        popupLayer,uParse
     },
 	computed:{
 		...mapGetters(['userInfo']),

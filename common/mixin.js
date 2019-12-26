@@ -9,6 +9,7 @@ import {mapActions} from "vuex";
 
 
 
+
 /**
  * 很多接口都需要user_id,先全局mixin下
  */
@@ -388,12 +389,12 @@ export const payMixin = {
 	},
 }
 
+import {isDev} from "./env";
 /**
  * 扫描二维码
  */
 // #ifdef APP-PLUS
 import permision from "./permission";
-import {isDev} from "./env";
 // #endif
 export const scanMixin = {
 	data() {

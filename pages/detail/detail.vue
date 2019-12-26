@@ -7,6 +7,7 @@
 			<image class="imgm cart" src="/static/cart.png" @click="goCart" ></image>
 		</view>
 	<!-- #endif -->
+
 	<!-- 轮播 -->
 	<view class="uni-padding-wrap" style="background: #f2f2f2;">
 		<view class="page-section swiper">
@@ -25,7 +26,7 @@
 			<view class="page-section-spacing" v-else>
 				<swiper class="swiper" circular="true" indicator-dots="indicatorDots" autoplay="autoplay" interval="4000" duration="500" indicator-color="#fff" indicator-active-color="#ff5000">
 					<swiper-item v-for="(item,i) of product.Products_JSON.ImgPath" :key="i">
-						 <img :src="item|lazyimg"  @click="yulan(i)">
+						<img :src="item|lazyimg"  @click="yulan(i)">
 					</swiper-item>
 				</swiper>
 				<view class="change-btn" v-if="product.video_url">
@@ -35,68 +36,68 @@
 			</view>
 		</view>
 	</view>
-    <!-- 产品信息描述 -->
-    <div class="section1">
-        <div class="price">
-            <span class="n_price"><span class="mm">￥</span>{{product.Products_PriceX}}</span>
-            <span class="o_price"><span class="mm">￥</span>{{product.Products_PriceY}}</span>
-            <span class="share" @click="showTick" data-type="share">分享此产品</span>
-        </div>
-        <div class="name">{{product.Products_Name}}</div>
-        <div class="sold">
-            <span v-if="product.Products_Count">库存{{product.Products_Count}}</span>
-            <span v-if="product.Products_Sales">月销{{product.Products_Sales}}</span>
-        </div>
-				<!-- 包邮等信息 -->
-				<div class="section3" v-if="product.Products_Promise && product.Products_Promise.length > 0">
-						<span v-for="(item,index) in product.Products_Promise" v-if="item.name" :key="index">
-								<image class="img" :src="'/static/client/detail/dh.png'|domain" alt="" />
-								<span>{{item.name}}</span>
-						</span>
+	<!-- 产品信息描述 -->
+	<div class="section1">
+		<div class="price">
+			<span class="n_price"><span class="mm">￥</span>{{product.Products_PriceX}}</span>
+			<span class="o_price"><span class="mm">￥</span>{{product.Products_PriceY}}</span>
+			<span class="share" @click="showTick" data-type="share">分享此产品</span>
+		</div>
+		<div class="name">{{product.Products_Name}}</div>
+		<div class="sold">
+			<span v-if="product.Products_Count">库存{{product.Products_Count}}</span>
+			<span v-if="product.Products_Sales">月销{{product.Products_Sales}}</span>
+		</div>
+		<!-- 包邮等信息 -->
+		<div class="section3" v-if="product.Products_Promise && product.Products_Promise.length > 0">
+					<span v-for="(item,index) in product.Products_Promise" v-if="item.name" :key="index">
+							<image class="img" :src="'/static/client/detail/dh.png'|domain" alt="" />
+							<span>{{item.name}}</span>
+					</span>
+		</div>
+	</div>
+	<!-- 领券 -->
+	<div class="section2" @click="showTick" data-type="ticks"  v-if="couponList.length>0">
+		<div class="btn">领券</div>
+		<div class="right" >店铺优惠券 <image class="img" :src="'/static/client/detail/right.png'|domain" alt="" /></div>
+	</div>
+
+	<!-- 评价 -->
+	<div class="comment bgwhite">
+		<div class="c_title">
+			<span>评价</span>
+			<div class="right" @click="gotoComments">查看全部  <image style="width: 19rpx;height: 30rpx;margin-left: 20rpx;" :src="'/static/client/detail/right.png'|domain" alt="" /></div>
+		</div>
+		<block v-for="(item,index) of commit" :key="item">
+			<div class="c_content" v-if="!item.ImgPath">
+				<div class="c_content_title">
+					<img :src="item.User_HeadImg" alt="">
+					<span class="user_name">{{item.User_NickName}}</span>
+					<span class="c_time">{{item.CreateTime}}</span>
 				</div>
-    </div>
-    <!-- 领券 -->
-    <div class="section2" @click="showTick" data-type="ticks"  v-if="couponList.length>0">
-        <div class="btn">领券</div>
-        <div class="right" >店铺优惠券 <image class="img" :src="'/static/client/detail/right.png'|domain" alt="" /></div>
-    </div>
-
-    <!-- 评价 -->
-    <div class="comment bgwhite">
-        <div class="c_title">
-            <span>评价</span>
-            <div class="right" @click="gotoComments">查看全部  <image style="width: 19rpx;height: 30rpx;margin-left: 20rpx;" :src="'/static/client/detail/right.png'|domain" alt="" /></div>
-        </div>
-        <block v-for="(item,index) of commit" :key="item">
-        	<div class="c_content" v-if="!item.ImgPath">
-        	    <div class="c_content_title">
-        	        <img :src="item.User_HeadImg" alt="">
-        	        <span class="user_name">{{item.User_NickName}}</span>
-        	        <span class="c_time">{{item.CreateTime}}</span>
-        	    </div>
-        	    <div class="c_content_msg">{{item.Note}}</div>
-        	    <div class="c_content_img"></div>
-        	</div>
-        	<div class="c_content" v-else>
-        	    <div class="c_content_title">
-        	        <img :src="item.User_HeadImg" alt="">
-        	        <span class="user_name">{{item.User_NickName}}</span>
-        	        <span class="c_time">{{item.CreateTime}}</span>
-        	    </div>
-        	    <div class="c_content_msg">{{item.Note}}</div>
-        	    <div class="c_content_img">
-        			<block v-for="(i,j) of item.ImgPath" :key="j">
-        				 <img :src="i"  @click="yulanImg(index,j)">
-        			</block>
-        	    </div>
-        	</div>
-        </block>
-    </div>
-    <!-- 商品详情 -->
-    <div class="pro_detail" >
-        <div class="p_detail_title bgwhite">商品详情</div>
-
-		<u-parse :content="product.Products_Description|formatRichTextByUparse" ></u-parse>
+				<div class="c_content_msg">{{item.Note}}</div>
+				<div class="c_content_img"></div>
+			</div>
+			<div class="c_content" v-else>
+				<div class="c_content_title">
+					<img :src="item.User_HeadImg" alt="">
+					<span class="user_name">{{item.User_NickName}}</span>
+					<span class="c_time">{{item.CreateTime}}</span>
+				</div>
+				<div class="c_content_msg">{{item.Note}}</div>
+				<div class="c_content_img">
+					<block v-for="(i,j) of item.ImgPath" :key="j">
+						<img :src="i"  @click="yulanImg(index,j)">
+					</block>
+				</div>
+			</div>
+		</block>
+	</div>
+	<!-- 商品详情 -->
+	<div class="pro_detail" >
+		<div class="p_detail_title bgwhite">商品详情</div>
+<!--			<div style="height: 500px;"></div>-->
+		<u-parse  :content="product.Products_Description|formatRichTextByUparse" ></u-parse>
 		<!-- #ifdef H5||APP-PLUS -->
 		<!-- <div v-html="formatRichTexts(product.Products_Description)" class="p_detail_des"></div> -->
 		<!-- #endif -->
@@ -105,11 +106,15 @@
 		<!-- <rich-text :nodes="product.Products_Description|formatRichText" class="p_detail_des"></rich-text> -->
 		<!-- #endif -->
 
-    </div>
-	<div style="clear: both;"></div>
-    <div style="height:60px;background: white;"></div>
+	</div>
+
+<!--	<div style="clear: both;"></div>-->
+<!--    <div style="height:60px;background: white;"></div>-->
+
 	<bottom @cartHandle="addCart" @directHandle="directBuy" @goGet="lingqu" @collect="collect" :collected="isCollected" :recieve="recieve" :isVirtual="isVirtual" :canSubmit="canSubmit"></bottom>
-  	<div class="safearea-box"></div>
+
+
+<!--  	<div class="safearea-box"></div>-->
 	<popupLayer ref="popupLayer" :direction="'top'" >
 		<div class="shareinfo" v-if="type=='share'">
 			<div class="s_top">
@@ -226,7 +231,7 @@ import {buildSharePath, isWeiXin, ls} from "../../common/tool";
 
 import { mapGetters, mapActions, Store,mapState } from "vuex";
 
-import uParse from '@/components/gaoyia-parse/parse.vue'
+import uParse from '../../components/gaoyia-parse/parse.vue'
 import {pageMixin} from "../../common/mixin";
 import {error, toast} from "../../common";
 
@@ -238,50 +243,50 @@ export default {
 	mixins:[pageMixin],
     data(){
         return {
-					isLoad:false,
-					// #ifdef APP-PLUS
-							wxMiniOriginId:'',
-					// #endif
-					JSSDK_INIT:false,//自己有分享的业务
-								type: '', // 优惠券内容， 分享内容
-								shareShow: false,
-								ticksShow: false,
-					product:{Products_JSON:{ImgPath:[]}},//商品结果
-					commit:'',//获取评论
-					Products_ID: 0 ,
-					count:1,//商品数量
-					skuF:1,//规格详情
-					checkAttr: {} , // 选择的属性
-					check_attrid_arr: [],
-					check_attr: {},
-					couponList:[],//优惠券列表
-					//购买需要传输的信息
-					postData: {
-							act: 'add_cart',
-							prod_id: 0,    //产品ID  在 onLoad中赋值
-							attr_id: 0,    //选择属性id
-							count: 0,         //选择属性的库存
-							// showimg: '',      //选择属性的图片(用产品图片代替)
-							qty: 1,           //购买数量
-							cart_key: '',     //购物车类型   CartList（加入购物车）、DirectBuy（立即购买）、PTCartList（不能加入购物车）
-						productDetail_price: 0
-					},
-					submit_flag: true, //提交按钮
-					page:1,//优惠券页
-					pageSize:10,//优惠券页
-					totalCount:0,//优惠券个数
-					isCollected: false, // 该产品是否已收藏
-					gift: 0, //赠品id
-					skuval: [], // 赠品带过来的产品属性
-					recieve: false,  //是否是赠品，赠品按钮显示 立即领取
-					gift_attr_id: '', //赠品属性id,
-					canSubmit: true,
-					isLoading:false,
-					showVideo: true, // 是否展示视频
-					isShowBtn: true, //是否显示视频图片切换按钮
-					isVirtual: false, // 是否虚拟产品
-					videoContext:null,
-					isSubmit: false, // 是否提交过了
+			isLoad:false,
+			// #ifdef APP-PLUS
+					wxMiniOriginId:'',
+			// #endif
+			JSSDK_INIT:false,//自己有分享的业务
+			type: '', // 优惠券内容， 分享内容
+			shareShow: false,
+			ticksShow: false,
+			product:{Products_JSON:{ImgPath:[]}},//商品结果
+			commit:'',//获取评论
+			Products_ID: 0 ,
+			count:1,//商品数量
+			skuF:1,//规格详情
+			checkAttr: {} , // 选择的属性
+			check_attrid_arr: [],
+			check_attr: {},
+			couponList:[],//优惠券列表
+			//购买需要传输的信息
+			postData: {
+				act: 'add_cart',
+				prod_id: 0,    //产品ID  在 onLoad中赋值
+				attr_id: 0,    //选择属性id
+				count: 0,         //选择属性的库存
+				// showimg: '',      //选择属性的图片(用产品图片代替)
+				qty: 1,           //购买数量
+				cart_key: '',     //购物车类型   CartList（加入购物车）、DirectBuy（立即购买）、PTCartList（不能加入购物车）
+				productDetail_price: 0
+			},
+			submit_flag: true, //提交按钮
+			page:1,//优惠券页
+			pageSize:10,//优惠券页
+			totalCount:0,//优惠券个数
+			isCollected: false, // 该产品是否已收藏
+			gift: 0, //赠品id
+			skuval: [], // 赠品带过来的产品属性
+			recieve: false,  //是否是赠品，赠品按钮显示 立即领取
+			gift_attr_id: '', //赠品属性id,
+			canSubmit: true,
+			isLoading:false,
+			showVideo: true, // 是否展示视频
+			isShowBtn: true, //是否显示视频图片切换按钮
+			isVirtual: false, // 是否虚拟产品
+			videoContext:null,
+			isSubmit: false, // 是否提交过了
         }
     },
     components: {
@@ -326,9 +331,6 @@ export default {
 		let _self = this
 		this.$nextTick().then(res=>{
 
-
-
-
 			if(_self.$refs.cartPopu){
 				_self.$refs.cartPopu.close()
 				this.postData.qty = 1;
@@ -347,6 +349,30 @@ export default {
 	},
 	onShow(){
 			let _self = this
+
+			// uni.$emit('page-popup', {
+			// 	title: '请阅读软件内容',
+			// 	content: 'uni-app 是一个使用 Vue.js 开发跨平台应用的前端框架，开发者编写一套代码，可编译到iOS、Android、H5、小程序等多个平台。'
+			// });
+
+			// #ifdef APP-PLUS
+			// const subNVue = uni.getSubNVueById('proDetailAction')
+			// console.log(333333333333333,subNVue)
+			// subNVue.show();
+			// setTimeout(()=>{
+			// 	uni.$emit('page-popup', {
+			// 		title: '请阅读软件内容',
+			// 		content: 'uni-app 是一个使用 Vue.js 开发跨平台应用的前端框架，开发者编写一套代码，可编译到iOS、Android、H5、小程序等多个平台。'
+			// 	});
+			// 	const subNVue1 = uni.getSubNVueById('popup')
+			// 	console.log(subNVue1)
+			// 	subNVue1.show()
+
+
+			// },3000)
+			// #endif
+
+
 			// #ifdef APP-PLUS
 			var icon = plus.nativeObj.View.getViewById("icon");
 			var icons = plus.nativeObj.View.getViewById("icons");
@@ -390,20 +416,7 @@ export default {
 		...mapState(['initData'])
 	},
 	filters: {
-		formatRichTextByUparse(html){
-			if(!html) return;
-			let newContent= html.replace(/<embed[^>]*>/gi,function(match,capture){
-				match = match.replace(/embed/gi, 'video')
-				match = match.replace(/width="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
-				match = match.replace(/height="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
-				match = match.replace(/type="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
-				//相对地址
-				match = match.replace(/src="\/uploadfiles/gi, `src="${staticUrl}/uploadfiles`)
-
-				return match;
-			});
-			return newContent
-		},
+		
 		/**
 		 * 处理富文本里的图片宽度自适应
 		 * 1.去掉img标签里的style、width、height属性
@@ -1118,7 +1131,13 @@ export default {
 
 <style scoped lang="scss" >
 
-
+.info-wrap{
+	/*height: 100vh;*/
+	/*padding-bottom: 60px;*/
+	/*width: 750rpx;*/
+	/*overflow-y: scroll;*/
+	/*overflow-x: hidden;*/
+}
 	/* 轮播图样式 */
 	.uni-padding-wrap{
 		width: 750rpx;
@@ -1472,7 +1491,9 @@ export default {
     /* 评价 end */
     /* 商品详情 start */
     .pro_detail {
+
 		.p_detail_des {
+
 			width:100%;
 			font-size: 28rpx;
 			color: #999;

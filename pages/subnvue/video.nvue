@@ -1,0 +1,94 @@
+<template>
+	<div class="wrapper">
+		<video id="myVideo1" ref="myVideo1" controls  class="video" :src="src"></video>
+	</div>
+</template>
+
+<script>
+	export default {
+		data() {
+			return {
+				videoContext:null,
+				title: '',
+				src:'',
+				content: '',
+				lists: [],
+			}
+		},
+		created() {
+			const vm = this;
+			// for (let i = 1; i < 20; i++) {
+			// 	this.lists.push('item' + i);
+			// }
+			uni.$on('page-video', (data) => {
+				if(data.src){
+					vm.src = data.src;
+					console.log(66666666,data.src)
+				}
+				
+				//vm.content = data.content;
+			})
+			
+			uni.$on('page-video-stop',(data)=>{
+				vm.pauseFn()
+			})
+		},
+		beforeDestroy() {
+			this.pauseFn()
+			//uni.$off('drawer-page')
+		},
+		mounted() {
+		    let _self = this
+		
+		    this.$nextTick().then(() => {
+		        let videoContext = uni.createVideoContext('myVideo1', _self)
+				console.log(videoContext)
+		        _self.videoContext = videoContext
+		        //添加到这里
+		        getApp().globalData.videoInstance.push(videoContext)
+		    })
+		
+		
+		},
+		methods: {
+			pauseFn() {
+			    console.log('暂停视频', this.videoContext)
+			    if (this.videoContext) {
+			        this.videoContext.pause()
+			    }
+			
+			},
+			videoErrorCallback(e) {
+			
+				if(!isDev)return;
+			    let msg = '视频播放错误:' + JSON.stringify(e)
+			    uni.showModal({
+			        content: msg,
+			        showCancel: false
+			    })
+			},
+		}
+	}
+</script>
+
+<style>
+	.video{
+		width: 750rpx;
+		height: 375rpx;
+	}
+	.wrapper {
+		flex-direction: column;
+		justify-content: space-between;
+		padding: 0;
+		background-color: #F4F5F6;
+		border-radius: 4upx;
+	}
+
+	
+
+	.text {
+		font-size: 30upx;
+		text-align: center;
+		color: white;
+	}
+</style>

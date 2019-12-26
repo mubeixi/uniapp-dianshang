@@ -51,7 +51,16 @@
 			"style": {
 				"navigationBarTitleText": "商品详情",
 				"app-plus": {
-					"titleNView": false
+					"titleNView": false,
+					"subNVues": [{
+						"id": "video",
+						"path": "pages/subnvue/video",
+						"style": {
+							"margin": "auto",
+							"width": "750upx",
+							"height": "375upx"
+						}
+					}]
 				}
 			}
 		},
@@ -674,6 +683,9 @@
 		"app-plus": {}
 	},
 	"tabBar": {
+		// #ifdef MP-WEIXIN
+		//"custom": true,
+		// #endif
 		"color": "#7A7E83",
 		"selectedColor": "#F43131",
 		"borderStyle": "black",
@@ -709,5 +721,6 @@
 				"text": "我的"
 			}
 		]
-	}
+	},
+	"usingComponents": {}
 }
