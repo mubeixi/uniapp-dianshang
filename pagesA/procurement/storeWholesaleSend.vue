@@ -74,14 +74,16 @@
                 <div class="label">快递单号</div>
                 <input v-model="ShippingID" class="form-item" placeholder="请输入快递单号" />
             </div>
-            <div class="row" v-if="is_need_shipping">
+            <!-- <div class="row" v-if="is_need_shipping">
                 <div class="label">运费</div>
                 <input type="number" step="0.01" v-model="Express_Price" class="form-item" placeholder="请输入运费" />
-            </div>
+            </div> -->
         </div>
-        <div class="subbox">
-            <button @click="subFn" class="subbtn" type="warn">立即发货</button>
-        </div>
+				<div style="height:50px;">
+					<div class="subbox">
+							<button @click="subFn" class="subbtn" type="warn">立即发货</button>
+					</div>
+				</div>
         <wzw-dialog ref="storeInfo">
             <div class="storeInfoDialog">
                 <div class="title text-center line15 font16">门店信息</div>
