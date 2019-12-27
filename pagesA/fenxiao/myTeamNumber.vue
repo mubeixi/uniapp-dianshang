@@ -58,7 +58,7 @@
 					pgae:this.page,
 					pageSize:this.pageSize
 				}
-				getDisTeamList(data).then(res=>{
+				getDisTeamList(data,{errtip:false}).then(res=>{
 					for(let item of res.data){
 						this.pro.push(item);
 					}
@@ -136,6 +136,6 @@
 		margin: 0 auto;
 		width: 640rpx;
 		height: 480rpx;
-		margin-top: 100rpx;
+		padding-top: 100rpx;
 	}
 </style>

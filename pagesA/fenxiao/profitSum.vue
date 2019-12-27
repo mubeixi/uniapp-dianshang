@@ -1,6 +1,6 @@
 <template>
 	<view class="profitSum">
-		<view style="height: 90rpx;margin-bottom: 15px;">
+		<view style="height: 90rpx;margin-bottom: 15px;font-size: 14px;">
 			<view class="status fixed" :class="[status == 9 ? 'active' : '']" @click="changeStatus(9)">全部</view>
 			<scroll-view class="order-status" scroll-x="true" style="width: 612rpx;white-space: nowrap;margin-left: 138rpx;" >
 				<view class="status" :class="[status == 0 ? 'active' : '']" @click="changeStatus(0)">门店结算</view>
@@ -95,6 +95,7 @@
 <style lang="scss" scoped>
 .profitSum{
 	background-color: #F8F8F8;
+	padding-bottom: 40rpx;
 }	
 	
 .order-status {
@@ -152,6 +153,7 @@
 		box-sizing: border-box;
 		border-radius:20rpx;
 		padding-bottom: 30rpx;
+		margin-bottom: 20rpx;
 		.view{
 			//height: 50rpx;
 			line-height: 50rpx;

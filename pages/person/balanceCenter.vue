@@ -86,7 +86,7 @@
 					  <view class="view reset" @click="resets">重置</view>
 					  <view class="view sure" @click="sureSearch">确定</view>
 				</view>
-				<view class="zhao" @click="closeShow" catchtouchmove>
+				<view class="zhao" @click="showSure=false" catchtouchmove>
 				
 				</view>
 			</view>
@@ -104,7 +104,8 @@
 			</view>
 			<view class="mingxi" v-for="(item,idx) in records.list" :key="idx">
 				<view class="note">
-					{{item.Note}}
+					<view class="leftNote">{{item.Note}}</view>
+					<view class="rightNote">{{'+'}}{{item.Amount}}元</view>
 				</view>
 				<view class="times">
 					{{item.CreateTime}}
@@ -123,7 +124,8 @@
 			</view>
 			<view class="mingxi" v-for="(item,idx) in records.list" :key="idx">
 				<view class="note">
-					{{item.Note}}
+					<view class="leftNote">{{item.Note}}</view>
+					<view class="rightNote">{{item.Amount}}元</view>
 				</view>
 				<view class="times">
 					{{item.CreateTime}}
@@ -389,8 +391,7 @@
 				this.info = res.data
 				this.s_money = res.data.User_Money;
 			},err=>{}).catch()
-			this.get_user_money_record();
-			this.get_user_charge_record();
+			this.get_user_money_record(1);
 
 		}
 	}
@@ -593,6 +594,15 @@ view{
 			}
 			.note{
 				color: #555;
+				display: flex;
+				justify-content: space-between;
+				.rightNote{
+					width: 200rpx;
+					text-align: right;
+				}
+				.leftNote{
+					width: 500rpx;
+				}
 			}
 			.times{
 				color: #999999;
