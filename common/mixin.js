@@ -86,9 +86,6 @@ export const Analysis = {
 	},
 	onTabItemTap(onTabItemTap){
 
-
-
-
 		let {pagePath,index,text} = onTabItemTap
 
 		const res = uni.getSystemInfoSync();
@@ -103,7 +100,7 @@ export const Analysis = {
 		this.analysisExt.onTabItemTap = JSON.stringify(onTabItemTap)
 
 		this.currentPageName = ls.get('temp_tab_url')
-		this.commonClick({target:{x,y}})
+		this.commonClick({target:{x,y,view_type:'tap'}})
 
 		ls.set('temp_tab_url',pagePath)
 
@@ -129,11 +126,11 @@ export const Analysis = {
 			//console.log(JSON.stringify(evt))
 			// {"id":"","offsetLeft":0,"offsetTop":0,"dataset":{},"x":114,"y":1369},"currentTarget":{"id":"","offsetLeft":0,"offsetTop":0,"dataset
 			//坐标
-			let {x,y} = evt.target
+			let {x,y,view_type='tap'} = evt.target
 
 			const d = new Date()
 			//,
-			let postData = {router:this.currentPageName,y_coordinate:y,x_coordinate:x,_timeStamp:parseInt(d.getTime()/1000)}
+			let postData = {view_type,router:this.currentPageName,y_coordinate:y,x_coordinate:x,_timeStamp:parseInt(d.getTime()/1000)}
 
 			if(!emptyObject(postData,1))return;//距离和坐标是肯定要有的
 			Object.assign(postData,this.analysisExt);
@@ -154,12 +151,18 @@ export const Analysis = {
 			const currentPageName = currentPageInstance[currentPageInstance.length - 1].route
 			if (!currentPageName) return;
 			this.currentPageName = currentPageName
+
+			//进入页面
+			this.commonClick({target:{x:0,y:0,view_type:'enter'}})
 			//console.log(currentPageName)
 			//sendAnalysisData({url:currentPageName}).then(res=>{}).catch(e=>{})
 
 		})
 	}
 }
+
+
+
 
 
 /**
@@ -277,6 +280,40 @@ export const pageMixin = {
 		// #ifdef APP-PLUS
 		plus.key.hideSoftKeybord();
 		// #endif
+
+
+
+		// #ifdef H5
+		let events = [];
+		console.log(3333333333333333)
+		// rrweb.record({
+		//   emit(event) {
+		// 	// 将 event 存入 events 数组中
+		// 	events.push(event);
+		//   },
+		// });
+
+		// save 函数用于将 events 发送至后端存入，并重置 events 数组
+		// function save() {
+		//   const body = JSON.stringify({ events });
+		//   events = [];
+		//   console.log('发送一次')
+		//   fetch('http://localhost:9100/debug', {
+		// 	method: 'POST',
+		// 	headers: {
+		// 	  'Content-Type': 'application/json',
+		// 	},
+		// 	body,
+		//   });
+		// }
+		//
+		// // 每 10 秒调用一次 save 方法，避免请求过多
+		// setInterval(save, 10 * 1000);
+		// #endif
+
+
+
+
 	},
 	async created() {
 		// console.log('让你等')
@@ -339,6 +376,8 @@ export const pageMixin = {
 
 	},
 	mounted() {
+
+
 	},
 	methods: {
 		// #ifdef H5
