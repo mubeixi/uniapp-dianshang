@@ -16,6 +16,7 @@
     "fundebug-javascript": "^2.0.0",
     "fundebug-revideo": "^0.6.0",
     "fundebug-vue": "0.0.1",
+    "rrweb": "^0.7.27",
     "underscore": "^1.9.1",
     "weixin-js-sdk": "^1.4.0-test"
   }

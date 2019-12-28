@@ -2,6 +2,9 @@ import Vue from 'vue'
 import App from './App'
 import store from './store';
 
+import rrweb from 'rrweb';
+console.log(rrweb)
+
 // import {isDev} from "./common/env";
 
 Vue.config.productionTip = false
@@ -14,8 +17,7 @@ Vue.use(Common);
 import ModelComponents from "./components/ModelComponents";
 Vue.component('wzw-dialog',ModelComponents)
 
-import uParse from './components/u-parse/u-parse.vue'
-Vue.component('u-parse',uParse)
+
 
 // #ifdef H5
 // var fundebug = require("fundebug-javascript");

@@ -151,7 +151,7 @@ export const Analysis = {
 			const currentPageName = currentPageInstance[currentPageInstance.length - 1].route
 			if (!currentPageName) return;
 			this.currentPageName = currentPageName
-			
+
 			//进入页面
 			this.commonClick({target:{x:0,y:0,view_type:'enter'}})
 			//console.log(currentPageName)
@@ -160,6 +160,9 @@ export const Analysis = {
 		})
 	}
 }
+
+
+
 
 
 /**
@@ -277,9 +280,40 @@ export const pageMixin = {
 		// #ifdef APP-PLUS
 		plus.key.hideSoftKeybord();
 		// #endif
-		
-		
-		
+
+
+
+		// #ifdef H5
+		let events = [];
+		console.log(3333333333333333)
+		// rrweb.record({
+		//   emit(event) {
+		// 	// 将 event 存入 events 数组中
+		// 	events.push(event);
+		//   },
+		// });
+
+		// save 函数用于将 events 发送至后端存入，并重置 events 数组
+		// function save() {
+		//   const body = JSON.stringify({ events });
+		//   events = [];
+		//   console.log('发送一次')
+		//   fetch('http://localhost:9100/debug', {
+		// 	method: 'POST',
+		// 	headers: {
+		// 	  'Content-Type': 'application/json',
+		// 	},
+		// 	body,
+		//   });
+		// }
+		//
+		// // 每 10 秒调用一次 save 方法，避免请求过多
+		// setInterval(save, 10 * 1000);
+		// #endif
+
+
+
+
 	},
 	async created() {
 		// console.log('让你等')
@@ -342,8 +376,8 @@ export const pageMixin = {
 
 	},
 	mounted() {
-		
-		
+
+
 	},
 	methods: {
 		// #ifdef H5
