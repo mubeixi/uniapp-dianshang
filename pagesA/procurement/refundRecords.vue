@@ -1,6 +1,6 @@
 <template>
 	<view class="wrap" @click="commonClick">
-		<view style="height: 90rpx;">
+		<view style="height: 90rpx;margin-bottom: 10px">
 			<scroll-view class="order-status" scroll-x="true" style="width: 750rpx;white-space: nowrap;" >
 				<view class="status" :class="[status == 0 ? 'active' : '']" @click="changeStatus (0)">全部</view>
 				<view class="status" :class="[status == 31 ? 'active' : '']" @click="changeStatus(31)">待处理</view>
@@ -307,10 +307,11 @@
     }
 		.prolist {
 			width: 710rpx;
-			margin: 30rpx 0;
+			margin-bottom: 10px;
 			padding: 0 16rpx 42rpx 14rpx;
 			background-color: #fff;
 			box-sizing: border-box;
+			border-radius: 10px;
 			.pro-title {
 				display: flex;
 				justify-content: space-between;
@@ -670,8 +671,8 @@
 			height: 480rpx;
 			margin-top: 100rpx;
 		}
-		
-		
+
+
 		/deep/ .uni-scroll-view::-webkit-scrollbar {
 				/* 隐藏滚动条，但依旧具备可以滚动的功能 */
 				display: none

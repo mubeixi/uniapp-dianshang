@@ -25,9 +25,10 @@
 			<view class="font14 loginBtn" v-if="!userInfo.User_ID" plain size="mini" @click="goLogin">登录/注册</view>
 			<view class="font14 loginBtn" v-if="userInfo.User_ID && userInfo.Is_Distribute!=1" plain size="mini" @click="goDistributor">成为分销商</view>
 			<view class="sales">
-				<view class="left">
+				<view class="left" @click="goSales">
 					<view class="salesSum">
 						累计销售额（元）
+						<image class="rightMys" :src="'/static/client/person/right.png' | domain" ></image>
 					</view>
 					<view class="salesSumPrice" v-if="userInfo.User_ID&&userInfo.Is_Distribute">
 						{{data.total_sales}}
@@ -176,6 +177,13 @@
 		},
 		methods:{
 			...mapActions(['getUserInfo','setUserInfo']),
+			goSales(){
+				if(!this.$fun.checkIsLogin(1,1))return;
+				if(!this.$fun.checkIsDistribute(1,1))return;
+				uni.navigateTo({
+					url:'/pagesA/fenxiao/salesSum'
+				})
+			},
 			goProfit(){
 				if(!this.$fun.checkIsLogin(1,1))return;
 				if(!this.$fun.checkIsDistribute(1,1))return;

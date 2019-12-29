@@ -161,10 +161,12 @@
 	box-sizing: border-box;
 
 	.nav{
-		padding: 20rpx 70rpx;
+		padding: 0rpx 70rpx;
 		padding-left: 0rpx;
 		padding-right: 0rpx;
-		height: 105rpx;
+		height: 104rpx;
+		line-height: 104rpx;
+		align-items: center;
 		box-sizing: border-box;
 		width: 750rpx;
 		display: flex;
@@ -209,6 +211,7 @@
 		box-sizing: border-box;
 		border-radius:20rpx;
 		padding-bottom: 30rpx;
+		margin-bottom: 10px;
 		&>view{
 			//height: 50rpx;
 			line-height: 50rpx;

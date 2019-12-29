@@ -219,11 +219,12 @@
 .marginAuto{
 	width: 710rpx;
 	margin: 0 auto;
-	margin-top: 26rpx;
+	margin-bottom: 26rpx;
 	background-color: #FFFFFF;
 	border-radius: 5px;
 	box-sizing: border-box;
 	padding: 0rpx 0rpx 18rpx 0rpx;
+	border-radius: 20rpx;
 }
 .blockDiv{
 	width: 664rpx;
@@ -380,8 +381,8 @@
 			box-sizing: border-box;
 		    display: flex;
 		    align-items: center;
-		    height: 100rpx;
-		    line-height: 100rpx;
+		    height: 80rpx;
+		    line-height: 80rpx;
 		    background: #F8F8F8;
 		    font-size: 28rpx;
 		    padding: 0 10px;

@@ -49,13 +49,14 @@
 	import FlashComponent from "../../components/diy/FlashComponent";
 	import KillComponent from "../../components/diy/KillComponent";
 
-	import {getSkinConfig} from "../../common/fetch";
+	import {getSkinConfig,getSystemConf} from "../../common/fetch";
 
 	import {pageMixin} from "../../common/mixin";
 	import {error,toast} from "../../common";
 	import {mapGetters,mapActions, mapState} from 'vuex';
 
-
+	import {ls} from "../../common/tool";
+	
 	export default {
 		mixins:[pageMixin],
 		data() {
@@ -89,10 +90,20 @@
 		},
 		onShow(){
 			let that=this
-			console.log(that.initData.ShopName,"ss")
-			uni.setNavigationBarTitle({
-				title:that.initData.ShopName
-			})
+			//每次加载都清空全站配置
+			ls.remove('initData');
+			getSystemConf().then(res => {
+				console.log("2222",that.initData)
+				ls.set('initData',res.data)
+				uni.setNavigationBarTitle({
+					title:that.initData.ShopName
+				})
+			    
+			},err=>{}).catch(error=>{})
+			
+			
+			
+			
 		},
 		async onPullDownRefresh(){
 			uni.stopPullDownRefresh()
