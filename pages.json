@@ -696,7 +696,13 @@
                     "style": {
                     	"navigationBarTitleText": "累计利润"
                     }
-                }
+			}
+			,{
+					"path" : "fenxiao/salesSum",
+					"style": {
+						"navigationBarTitleText": "累计销售"
+					}
+				}
             ]
 	}],
 	"preloadRule": {

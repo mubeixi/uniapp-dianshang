@@ -387,9 +387,10 @@
     box-sizing: border-box;
     display: flex;
     align-items: center;
-    height: 50px;
-    line-height: 50px;
+    height: 80rpx;
+    line-height: 80rpx;
     //background: #fff;
+    background-color: #F8F8F8;
     font-size: 14px;
     padding: 0 10px;
 
@@ -417,7 +418,7 @@
     .item{
         margin: 10px 15px 10px;
         background: white;
-        border-radius: 4px;
+        border-radius: 10px;
         overflow: hidden;
         .head{
 

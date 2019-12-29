@@ -1148,7 +1148,8 @@
 		                display: flex;
 		                align-items: center;
 		                color: #666;
-		                /*flex: 1;*/
+		                flex: 1;
+						flex-wrap: wrap;
 		                .img {
 		                    width: 27rpx;
 		                    height: 32rpx;
