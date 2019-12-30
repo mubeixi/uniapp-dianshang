@@ -56,7 +56,7 @@
 	import {mapGetters,mapActions, mapState} from 'vuex';
 
 	import {ls} from "../../common/tool";
-	
+
 	export default {
 		mixins:[pageMixin],
 		data() {
@@ -88,22 +88,23 @@
 			}
 
 		},
+		mounted(){
+			let that =this
+
+		},
 		onShow(){
+
 			let that=this
 			//每次加载都清空全站配置
 			ls.remove('initData');
 			getSystemConf().then(res => {
-				console.log("2222",that.initData)
+
 				ls.set('initData',res.data)
 				uni.setNavigationBarTitle({
-					title:that.initData.ShopName
+					title:res.data.ShopName
 				})
-			    
 			},err=>{}).catch(error=>{})
-			
-			
-			
-			
+
 		},
 		async onPullDownRefresh(){
 			uni.stopPullDownRefresh()

@@ -1,0 +1,389 @@
+<template>
+	<div class="goods-spec-wrap">
+		<div class="cartSku">
+			<div class="cartTop">
+				<image class="image" :src="product.Products_JSON.ImgPath[0]" ></image>
+				<div class="cartTitle">
+					<text class="cartTitles">{{product.Products_Name}}</text>
+					<div class="addInfo">
+						<text class="addPrice">{{postData.productDetail_price}}元</text>
+						<text class="proSale">库存{{postData.count}}</text>
+					</div>
+				</div>
+			</div>
+			<div class="cartCenter">
+				<div class="cartAttr" v-for="(item,i) of product.skujosn_new" :key="i">
+					<text class="sku">{{item.sku}}</text>
+					<div class="skuValue" v-if="gift == 0">
+						<div v-for="(mbx,index) of item.val"
+							 :key="index" class="skuview" :class="check_attr[item.sku]==index?'skuCheck':''" @click="selectAttr(index,item.sku)" >
+							<text :class="check_attr[item.sku]==index?'skuview-txt-active':''" class="skuview-txt">{{mbx}}</text>
+						</div>
+
+					</div>
+					<div class="skuValue" v-else>
+						<div v-for="(mbx,index) of item.val" :key="index" class="skuview" :class="skuval[i]==index?'skuCheck':'unablechoose'" >
+							<text :class="check_attr[item.sku]==index?'skuview-txt-active':''" class="skuview-txt">{{mbx}}</text>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="numBer" v-if="gift == 0">
+				<div class="numBers"><text class="numBers-txt">数量</text></div>
+				<div class="inputNumber">
+					<div class="clicks" @click="delNum"><text class="clicks-txt">-</text></div>
+					<input class="inputq" type="number" v-model="postData.qty" disabled>
+					<div class="clicks" @click="addNum"><text class="clicks-txt">+</text></div>
+				</div>
+			</div>
+			<div class="numBer" v-else>
+				<div class="numBers"><text class="numBers-txt">数量</text></div>
+				<div class="inputNumber">
+					<div class="clicks"><text class="clicks-txt">-</text></div>
+					<input class="inputq" type="number" v-model="postData.qty" disabled>
+					<div class="clicks"><text class="clicks-txt">+</text></div>
+				</div>
+			</div>
+		</div>
+		<div @click="skuSub" class="cartSub" :class="submit_flag?'':'disabled'"><text class="cartSubTxt">确定</text></div>
+	</div>
+</template>
+
+<script>
+	import {numberSort} from "../../../common/tool";
+	export default {
+		data() {
+			return {
+				gift:0,
+				postData:{},
+				submit_flag:true,
+				checkAttr: {} , // 选择的属性
+				check_attr: {},
+				check_attrid_arr: [],
+				product: {
+					Products_JSON: {
+						ImgPath:[]
+					},
+					skujosn_new: []
+				}
+			};
+		},
+		props: {
+
+		},
+		created() {
+			const vm = this;
+			uni.$on('goods_spec_setval', (data) => {
+				//console.log('goods_spec_setval', data)
+				for (var key in data) {
+					vm[key] = data[key]
+				}
+				// vm.title = data.title;
+				// vm.content = data.content;
+				console.log(vm.product.Products_JSON.imgPath)
+			})
+		},
+		beforeDestroy() {
+			uni.$off('goods_spec_setval')
+		},
+		methods: {
+			addNum(){
+				if (this.postData.qty < this.postData.count) {
+					this.postData.qty = Number(this.postData.qty) + 1;
+				}else {
+					uni.showToast({
+						title: '购买数量不能大于库存量',
+						icon: 'none',
+					});
+					this.postData.qty = this.postData.count;
+				}
+			},
+			delNum(){
+				if (this.postData.qty > 1) {
+					this.postData.qty -= 1;
+				} else {
+					uni.showToast({
+						title: '购买数量不能小于1',
+						icon: 'none',
+					});
+					this.postData.qty = 1;
+				}
+			},
+			skuSub(){
+				// this.check_attr = {};
+				// this.check_attr = check_attr;
+				// this.check_attrid_arr = check_attrid_arr;
+				// this.submit_flag
+				// postData
+				uni.$emit('goodsSkuSub',{check_attr:this.check_attr,check_attrid_arr:this.check_attrid_arr,submit_flag:this.submit_flag,postData:this.postData})
+			},
+			// 选择属性
+			selectAttr(index,i){
+				var value_index = index; //选择的属性值索引
+				var attr_index = i;   //选择的属性索引
+				// if (this.check_attrid_arr.indexOf(value_index) > -1) return false;
+				//记录选择的属性
+				var check_attr = Object.assign(this.check_attr, { [attr_index]: value_index }); //记录选择的属性  attr_index外的[]必须
+				//属性处理
+				var check_attrid = [];
+				var check_attrname = [];
+				var check_attrnames = [];
+				for (var i in check_attr) {
+					var attr_id = check_attr[i];
+					check_attrid.push(attr_id);
+					check_attrname[attr_id] = i;
+				}
+				//数组排序  按从小到大排
+				var check_attrid_arr = check_attrid;
+				check_attrid = numberSort(check_attrid);
+				//获取对应的属性名称
+				for (var i = 0; i < check_attrid.length; i++) {
+					var attr_id = check_attrid[i];
+					var attr_name = check_attrname[attr_id];
+					check_attrnames.push(attr_name + ':' + this.product.skujosn[attr_name][attr_id]);
+				}
+				check_attrid = check_attrid.join(';');
+				var attr_val = this.product.skuvaljosn[check_attrid];   //选择属性对应的属性值
+				//数组转化为字符串
+				check_attrnames = check_attrnames.join(';');
+				//属性判断
+				if (attr_val) {
+					this.postData.attr_id = attr_val.Product_Attr_ID;   //选择属性的id
+					this.postData.count = attr_val.Property_count;   //选择属性的库存
+					// this.postData.showimg = typeof attr_val.Attr_Image != 'undefined' && attr_val.Attr_Image != '' ? attr_val.Attr_Image : this.product.Products_JSON['ImgPath'][0];// 选择属性的图片
+					this.postData.productDetail_price = attr_val.Attr_Price?attr_val.Attr_Price:this.product.Products_PriceX; // 选择属性的价格
+					this.submit_flag = (!this.check_attr || Object.getOwnPropertyNames(this.check_attr).length != Object.getOwnPropertyNames(this.product.skujosn).length) ? false : true;
+				}
+				//判断属性库存
+				if (attr_val && attr_val.Property_count <= 0) {
+					// wx.showToast({
+					//     title: '您选择的 ' + check_attrnames + ' 库存不足，请选择其他属性',
+					//     icon: 'none'
+					// })
+					this.submit_flag =  false;
+					return false;
+				}
+				this.check_attr = {};
+				this.check_attr = check_attr;
+				this.check_attrid_arr = check_attrid_arr;
+				this.submit_flag = (!this.check_attr || Object.getOwnPropertyNames(this.check_attr).length != Object.getOwnPropertyNames(this.product.skujosn).length) ? false : true;
+				//购买数量处理  大于最高时赋值最高值
+				if (this.postData.qty > this.postData.count) {
+					this.postData.qty = this.postData.count;
+				}
+			},
+			toHome() {
+				uni.switchTab({
+					url: '/pages/index/index'
+				})
+			},
+			collect() {
+				//this.$emit('collect');
+			},
+			addCart() {
+				// if (!this.$fun.checkIsLogin(1, 1)) {
+				//     return;
+				// }
+				uni.$emit('cartHandle', {});
+			},
+			directBuy() {
+
+				// if (!this.$fun.checkIsLogin(1, 1)) {
+				//     return;
+				// }
+				uni.$emit('directHandle');
+			},
+			lingqu() {
+				if (this.canSubmit) {
+					this.$emit('goGet')
+				}
+			}
+		}
+	}
+</script>
+
+<style>
+	.cartTop {
+		position: relative;
+		padding-top: 20upx;
+		flex-direction:row;
+	}
+
+	.image {
+		width: 220upx;
+		height: 220upx;
+	}
+
+	.cartTitle {
+		margin-left: 20upx;
+		font-size: 32upx;
+		width: 420upx;
+		flex-direction:column;
+	}
+
+	.cartTitles {
+		height: 80upx;
+		overflow: hidden;
+		margin-top: 20upx;
+		line-height: 40upx;
+	}
+
+	.addInfo {
+		flex-direction:row;
+		width: 450upx;
+		margin-top: 70upx;
+		justify-content: space-between;
+		align-items: flex-end;
+	}
+
+	.addPrice {
+		font-size: 42upx;
+		color: #ff4200;
+	}
+
+	.proSale {
+		font-size: 24upx;
+		color: #999;
+		justify-content: flex-end;
+	}
+
+	.cartCenter {
+		margin-top: 20upx;
+
+	}
+
+	.sku {
+		font-size: 28upx;
+		width: 140upx;
+		text-align: center;
+	}
+
+	.cartAttr {
+		width: 750upx;
+		/*height: 300upx;*/
+		/*padding: 15upx 0upx;*/
+		flex-direction:row;
+	}
+
+	.skuValue {
+		width: 610upx;
+		flex-direction:row;
+		flex-wrap: wrap;
+
+	}
+
+	.skuview {
+		margin-bottom: 20upx;
+		height: 70upx;
+		line-height: 70upx;
+		/*border-radius: 10upx;*/
+		color: #000;
+		background-color: #f2f2f2;
+		margin-right: 20upx;
+		align-items: center;
+		justify-content: center;
+		 /*border: 1px solid #ccc;*/
+		border-width: 1px;border-color: #ccc;border-radius: 10upx;
+	}
+	.skuview-txt{
+		font-size: 14px;
+		padding-left: 20upx;
+		padding-right: 20upx;
+
+	}
+
+	.skuview-txt-active{
+		color: #fff;
+	}
+
+	.unablechoose {
+		background-color: #ddd;
+	}
+
+	.numBer {
+		margin-top: 20upx;
+		padding: 15upx 0upx;
+		flex-direction: row;
+		justify-content: space-between;
+	}
+
+	.numBers {
+
+		height: 70upx;
+		line-height: 70upx;
+		width: 140upx;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+	}
+	.numBers-txt{
+		font-size: 28upx;
+	}
+
+	.inputNumber {
+		/* border: 1px solid #ccc; */
+		/* border-radius: 6upx; */
+		flex-direction: row;
+		height: 50upx;
+		margin-right: 50upx;
+		/* display: flex; */
+
+	}
+
+	.inputq {
+		color: black;
+		/* margin: 0 auto; */
+		width: 80upx;
+		height: 60upx;
+		text-align: center;
+		font-size: 28upx;
+		/* border-left: 2upx solid #ccc; */
+		/* border-right: 2upx solid #ccc; */
+		border-top-width: 1px;
+		border-bottom-width: 1px;
+		border-color: #ccc;
+
+	}
+
+	.clicks {
+		height: 60upx;
+		line-height: 60upx;
+		width: 60upx;
+		align-items: center;
+		justify-content: center;
+		border-width: 1px;border-color: #ccc;border-radius: 6upx;
+
+	}
+	.clicks-txt{
+		font-size: 50upx;
+		color: #444;
+	}
+
+	.cartSku {
+		padding: 0upx 10upx;
+	}
+
+	.cartSub {
+		position: absolute;
+		bottom: 0;
+		width: 750upx;
+		height: 90upx;
+		background-color: #F43131;
+		align-items: center;
+		justify-content: center;
+	}
+	.cartSubTxt{
+		font-size: 20px;
+		color: #fff;
+	}
+
+	.disabled {
+		background-color: #999;
+	}
+
+	.skuCheck {
+		color: #ffffff;
+		background-color: #ff4200;
+	}
+
+</style>

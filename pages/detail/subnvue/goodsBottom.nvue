@@ -1,0 +1,164 @@
+<template>
+    <div class="goods-bottom">
+        <div class="leftss">
+            <div class="first" @click="toHome">
+                <image class='img' src="/static/detail/home.png"></image>
+                <text class="txt">首页</text>
+            </div>
+            <div class="first" @click="collectFn">
+                <image class='img' v-if="isCollected" src="/static/detail/favorite-a.png"></image>
+                <image class='img' v-else src="/static/detail/favorite.png"></image>
+                <text class="txt">收藏</text>
+            </div>
+            <div class="first">
+                <image class='img' src="/static/detail/kefu.png"></image>
+                <text class="txt">客服</text>
+            </div>
+        </div>
+        <div class="rightss">
+            <text v-if="!(recieve || isVirtual)" class="dan bTitle" @click="addCart">{{first}}</text>
+            <text v-if="!(recieve || isVirtual)" class="tuan bTitle" @click="directBuy">{{second}}</text>
+            <div class="all" @click="lingqu" :class="canSubmit?'':'disable'" v-if="(recieve || isVirtual)">
+                <text>{{isVirtual ? '立即购买' : '立即领取'}}</text>
+            </div>
+        </div>
+    </div>
+</template>
+
+
+<script>
+    export default {
+        data() {
+            return {
+                isCollected:false,
+                recieve:false,
+                isVirtual:false,
+                canSubmit:false,
+                first:'加入购物车',
+                second:'立即购买'
+            };
+        },
+        props: {
+        },
+        created(){
+            const vm = this;
+            uni.$on('goods_bottom_setval', (data) => {
+				console.log('goods_bottom_setval',data)
+                for(var key in data){
+                    vm[key] = data[key]
+                }
+                // vm.title = data.title;
+                // vm.content = data.content;
+            })
+        },
+        methods: {
+            collectFn(){
+                console.log("click collect")
+                uni.$emit('collectHandle',{});
+            },
+            toHome(){
+              uni.switchTab({
+                  url:'/pages/index/index'
+              })
+            },
+            // collect() {
+            //     //this.$emit('collect');
+            // },
+            addCart() {
+                // if (!this.$fun.checkIsLogin(1, 1)) {
+                //     return;
+                // }
+                uni.$emit('cartHandle',{});
+            },
+            directBuy() {
+
+                // if (!this.$fun.checkIsLogin(1, 1)) {
+                //     return;
+                // }
+                uni.$emit('directHandle');
+            },
+            lingqu() {
+                if (this.canSubmit) {
+                    this.$emit('goGet')
+                }
+            }
+        }
+    }
+</script>
+
+<style>
+.goods-bottom {
+    height: 100upx;
+    width: 750upx;
+    background-color: #F8F8F8;
+    flex-direction:row;
+}
+.leftss{
+    height: 100upx;
+    flex:1;
+    flex-direction:row;
+}
+.rightss {
+    flex-direction:row;
+    height: 100upx;
+    flex:1;
+}
+
+.first {
+    height: 100upx;
+    justify-content: center;
+    align-items: center;
+    flex:1;
+    flex-direction:row;
+}
+.img {
+    width: 38upx;
+    height: 38upx;
+}
+.txt {
+    font-size: 24upx;
+    margin-left: 4upx;
+}
+
+.bTitle {
+    color: #fff;
+    text-align: center;
+    line-height: 98upx;
+    font-size: 28upx;
+}
+.dan {
+    flex:1;
+    background-color: #FA6B27;
+}
+
+.tuan {
+    flex:1;
+    background-color: #F43131;
+}
+.bF {
+    font-size: 24upx;
+}
+
+.bS {
+    font-size: 32upx;
+}
+
+.danRight {
+    font-size: 26upx;
+}
+.all {
+    flex:1;
+    height: 100%;
+    text-align: center;
+    line-height: 100upx;
+    background-color: #F43131;
+    color: #fff;
+}
+
+.disable {
+    background-color: #efefef;
+    color: #999;
+}
+
+
+</style>

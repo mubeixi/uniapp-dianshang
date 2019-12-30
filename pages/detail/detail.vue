@@ -7,111 +7,113 @@
 			<image class="imgm cart" src="/static/cart.png" @click="goCart" ></image>
 		</view>
 	<!-- #endif -->
-
-	<!-- 轮播 -->
-	<view class="uni-padding-wrap" style="background: #f2f2f2;">
-		<view class="page-section swiper">
-			<view class="page-section-spacing" v-if="(product.video_url && showVideo)">
-				<video class="video" @play="play" @pause="pause" :src="product.video_url"   bindfullscreenchange="changeHiddenBtns" :poster="product.cover_url?product.cover_url:''" id="myVideo1" ref="video1" show-center-play-btn	 controls>
-					<!-- #ifdef APP-PLUS -->
-					<!-- <cover-image v-if="showVideo" class="imgms" src="/static/back.png" @click="goBack" ></cover-image>
-					<cover-image v-if="showVideo" class="carts" src="/static/cart.png" @click="goCart" ></cover-image> -->
-					<!-- #endif -->
-				</video>
-				<view class="change-btn" >
-					<cover-view  v-if="showVideo" :class="[showVideo?'active':'','shipin']" @click="change_view(1)">视频</cover-view>
-					<cover-view  v-if="showVideo"  :class="[showVideo?'':'active','tupian']" @click="change_view(2)">图片</cover-view>
-				</view>
-			</view>
-			<view class="page-section-spacing" v-else>
-				<swiper class="swiper" circular="true" indicator-dots="indicatorDots" autoplay="autoplay" interval="4000" duration="500" indicator-color="#fff" indicator-active-color="#ff5000">
-					<swiper-item v-for="(item,i) of product.Products_JSON.ImgPath" :key="i">
-						<img :src="item|lazyimg"  @click="yulan(i)">
-					</swiper-item>
-				</swiper>
-				<view class="change-btn" v-if="product.video_url">
-					<view  :class="[showVideo?'active':'','shipin']" @click="change_view(1)">视频</view>
-					<view  :class="[showVideo?'':'active','tupian']" @click="change_view(2)">图片</view>
-				</view>
-			</view>
-		</view>
-	</view>
-	<!-- 产品信息描述 -->
-	<div class="section1">
-		<div class="price">
-			<span class="n_price"><span class="mm">￥</span>{{product.Products_PriceX}}</span>
-			<span class="o_price"><span class="mm">￥</span>{{product.Products_PriceY}}</span>
-			<span class="share" @click="showTick" data-type="share">分享此产品</span>
-		</div>
-		<div class="name">{{product.Products_Name}}</div>
-		<div class="sold">
-			<span v-if="product.Products_Count">库存{{product.Products_Count}}</span>
-			<span v-if="product.Products_Sales">月销{{product.Products_Sales}}</span>
-		</div>
-		<!-- 包邮等信息 -->
-		<div class="section3" v-if="product.Products_Promise && product.Products_Promise.length > 0">
+	  <!-- 轮播 -->
+	  <view class="uni-padding-wrap" style="background: #f2f2f2;">
+		  <view class="page-section swiper">
+			  <view class="page-section-spacing" v-if="(product.video_url && showVideo)">
+				  <video class="video" @play="play" @pause="pause" :src="product.video_url"   bindfullscreenchange="changeHiddenBtns" :poster="product.cover_url?product.cover_url:''" id="myVideo1" ref="video1" show-center-play-btn	 controls>
+					  <!-- #ifdef APP-PLUS -->
+					  <!-- <cover-image v-if="showVideo" class="imgms" src="/static/back.png" @click="goBack" ></cover-image>
+                      <cover-image v-if="showVideo" class="carts" src="/static/cart.png" @click="goCart" ></cover-image> -->
+					  <!-- #endif -->
+				  </video>
+				  <view class="change-btn" >
+					  <cover-view  v-if="showVideo" :class="[showVideo?'active':'','shipin']" @click="change_view(1)">视频</cover-view>
+					  <cover-view  v-if="showVideo"  :class="[showVideo?'':'active','tupian']" @click="change_view(2)">图片</cover-view>
+				  </view>
+			  </view>
+			  <view class="page-section-spacing" v-else>
+				  <swiper class="swiper" circular="true" indicator-dots="indicatorDots" autoplay="autoplay" interval="4000" duration="500" indicator-color="#fff" indicator-active-color="#ff5000">
+					  <swiper-item v-for="(item,i) of product.Products_JSON.ImgPath" :key="i">
+						  <img :src="item|lazyimg"  @click="yulan(i)">
+					  </swiper-item>
+				  </swiper>
+				  <view class="change-btn" v-if="product.video_url">
+					  <view  :class="[showVideo?'active':'','shipin']" @click="change_view(1)">视频</view>
+					  <view  :class="[showVideo?'':'active','tupian']" @click="change_view(2)">图片</view>
+				  </view>
+			  </view>
+		  </view>
+	  </view>
+	  <!-- 产品信息描述 -->
+	  <div class="section1">
+		  <div class="price">
+			  <span class="n_price"><span class="mm">￥</span>{{product.Products_PriceX}}</span>
+			  <span class="o_price"><span class="mm">￥</span>{{product.Products_PriceY}}</span>
+			  <span class="share" @click="showTick" data-type="share">分享此产品</span>
+		  </div>
+		  <div class="name">{{product.Products_Name}}</div>
+		  <div class="sold">
+			  <span v-if="product.Products_Count">库存{{product.Products_Count}}</span>
+			  <span v-if="product.Products_Sales">月销{{product.Products_Sales}}</span>
+		  </div>
+		  <!-- 包邮等信息 -->
+		  <div class="section3" v-if="product.Products_Promise && product.Products_Promise.length > 0">
 					<span v-for="(item,index) in product.Products_Promise" v-if="item.name" :key="index">
 							<image class="img" :src="'/static/client/detail/dh.png'|domain" alt="" />
 							<span>{{item.name}}</span>
 					</span>
-		</div>
-	</div>
-	<!-- 领券 -->
-	<div class="section2" @click="showTick" data-type="ticks"  v-if="couponList.length>0">
-		<div class="btn">领券</div>
-		<div class="right" >店铺优惠券 <image class="img" :src="'/static/client/detail/right.png'|domain" alt="" /></div>
-	</div>
+		  </div>
+	  </div>
+	  <!-- 领券 -->
+	  <div class="section2" @click="showTick" data-type="ticks"  v-if="couponList.length>0">
+		  <div class="btn">领券</div>
+		  <div class="right" >店铺优惠券 <image class="img" :src="'/static/client/detail/right.png'|domain" alt="" /></div>
+	  </div>
 
-	<!-- 评价 -->
-	<div class="comment bgwhite">
-		<div class="c_title">
-			<span>评价</span>
-			<div class="right" @click="gotoComments">查看全部  <image style="width: 19rpx;height: 30rpx;margin-left: 20rpx;" :src="'/static/client/detail/right.png'|domain" alt="" /></div>
-		</div>
-		<block v-for="(item,index) of commit" :key="item">
-			<div class="c_content" v-if="!item.ImgPath">
-				<div class="c_content_title">
-					<img :src="item.User_HeadImg" alt="">
-					<span class="user_name">{{item.User_NickName}}</span>
-					<span class="c_time">{{item.CreateTime}}</span>
-				</div>
-				<div class="c_content_msg">{{item.Note}}</div>
-				<div class="c_content_img"></div>
-			</div>
-			<div class="c_content" v-else>
-				<div class="c_content_title">
-					<img :src="item.User_HeadImg" alt="">
-					<span class="user_name">{{item.User_NickName}}</span>
-					<span class="c_time">{{item.CreateTime}}</span>
-				</div>
-				<div class="c_content_msg">{{item.Note}}</div>
-				<div class="c_content_img">
-					<block v-for="(i,j) of item.ImgPath" :key="j">
-						<img :src="i"  @click="yulanImg(index,j)">
-					</block>
-				</div>
-			</div>
-		</block>
-	</div>
-	<!-- 商品详情 -->
-	<div class="pro_detail" >
-		<div class="p_detail_title bgwhite">商品详情</div>
-<!--			<div style="height: 500px;"></div>-->
-		<u-parse  :content="product.Products_Description|formatRichTextByUparse" ></u-parse>
-		<!-- #ifdef H5||APP-PLUS -->
-		<!-- <div v-html="formatRichTexts(product.Products_Description)" class="p_detail_des"></div> -->
-		<!-- #endif -->
+	  <!-- 评价 -->
+	  <div class="comment bgwhite">
+		  <div class="c_title">
+			  <span>评价</span>
+			  <div class="right" @click="gotoComments">查看全部  <image style="width: 19rpx;height: 30rpx;margin-left: 20rpx;" :src="'/static/client/detail/right.png'|domain" alt="" /></div>
+		  </div>
+		  <block v-for="(item,index) of commit" :key="item">
+			  <div class="c_content" v-if="!item.ImgPath">
+				  <div class="c_content_title">
+					  <img :src="item.User_HeadImg" alt="">
+					  <span class="user_name">{{item.User_NickName}}</span>
+					  <span class="c_time">{{item.CreateTime}}</span>
+				  </div>
+				  <div class="c_content_msg">{{item.Note}}</div>
+				  <div class="c_content_img"></div>
+			  </div>
+			  <div class="c_content" v-else>
+				  <div class="c_content_title">
+					  <img :src="item.User_HeadImg" alt="">
+					  <span class="user_name">{{item.User_NickName}}</span>
+					  <span class="c_time">{{item.CreateTime}}</span>
+				  </div>
+				  <div class="c_content_msg">{{item.Note}}</div>
+				  <div class="c_content_img">
+					  <block v-for="(i,j) of item.ImgPath" :key="j">
+						  <img :src="i"  @click="yulanImg(index,j)">
+					  </block>
+				  </div>
+			  </div>
+		  </block>
+	  </div>
+	  <!-- 商品详情 -->
+	  <div class="pro_detail" >
+		  <div class="p_detail_title bgwhite">商品详情</div>
+		  <!--			<div style="height: 500px;"></div>-->
+		  <u-parse  :content="product.Products_Description|formatRichTextByUparse" ></u-parse>
+		  <!-- #ifdef H5||APP-PLUS -->
+		  <!-- <div v-html="formatRichTexts(product.Products_Description)" class="p_detail_des"></div> -->
+		  <!-- #endif -->
 
-		<!-- #ifdef MP -->
-		<!-- <rich-text :nodes="product.Products_Description|formatRichText" class="p_detail_des"></rich-text> -->
-		<!-- #endif -->
+		  <!-- #ifdef MP -->
+		  <!-- <rich-text :nodes="product.Products_Description|formatRichText" class="p_detail_des"></rich-text> -->
+		  <!-- #endif -->
 
-	</div>
+	  </div>
 
 	<div style="clear: both;"></div>
-   
 
+
+	<!-- #ifndef APP-PLUS -->
 	<bottom @cartHandle="addCart" @directHandle="directBuy" @goGet="lingqu" @collect="collect" :collected="isCollected" :recieve="recieve" :isVirtual="isVirtual" :canSubmit="canSubmit"></bottom>
+	<!-- #endif -->
+
 
 	<div style="height:60px;background: white;"></div>
  	<div class="safearea-box"></div>
@@ -348,29 +350,36 @@ export default {
 
 	},
 	onShow(){
-			let _self = this
+		let _self = this
 
-			// #ifdef APP-PLUS
-			const vm = this;
-			const subNVue1 = uni.getSubNVueById('video')
-			subNVue1.hide()
-			uni.$emit('page-video-stop', {});  
-			// #endif
+		// #ifdef APP-PLUS
+		const vm = this;
+		const subNVue1 = uni.getSubNVueById('video')
+		subNVue1.hide()
+		uni.$emit('page-video-stop', {});
 
-		
-			// #ifdef APP-PLUS
-			var icon = plus.nativeObj.View.getViewById("icon");
-			var icons = plus.nativeObj.View.getViewById("icons");
+		//隐藏规格框
+		const goodsSpecNvue = uni.getSubNVueById('goodsSpec')
+		goodsSpecNvue.hide()
 
-			console.log(icon,"sssssssssssssssssssssss")
-			if(icon&&icons){
-				icon.show();
-				icons.show();
-			}else{
-				_self.createtab();
-				_self.createtabs();
-			}
-			// #endif
+		const subNVue2 = uni.getSubNVueById('goodsBottom')
+		subNVue2.show()
+		// #endif
+
+
+		// #ifdef APP-PLUS
+		var icon = plus.nativeObj.View.getViewById("icon");
+		var icons = plus.nativeObj.View.getViewById("icons");
+
+		console.log(icon,"sssssssssssssssssssssss")
+		if(icon&&icons){
+			icon.show();
+			icons.show();
+		}else{
+			_self.createtab();
+			_self.createtabs();
+		}
+		// #endif
 
 	},
 	onUnload(){
@@ -401,7 +410,7 @@ export default {
 		...mapState(['initData'])
 	},
 	filters: {
-		
+
 		/**
 		 * 处理富文本里的图片宽度自适应
 		 * 1.去掉img标签里的style、width、height属性
@@ -749,6 +758,10 @@ export default {
 			checkProdCollected({prod_id: this.Products_ID}).then(res => {
 				if(res.errorCode == 0) {
 					this.isCollected = res.data.is_favourite == 1
+					console.log('收藏了',this.isCollected);
+					// #ifdef APP-PLUS
+					uni.$emit('goods_bottom_setval', {isCollected:this.isCollected});
+					// #endif
 				}
 			}).catch(e => {
 
@@ -863,6 +876,11 @@ export default {
 			}
 		},
 		skuSub(e){
+			
+			if(!this.$fun.checkIsLogin(1,1)){
+				return;
+			}
+			
 			if(this.isSubmit) {return}
 			console.log(e);
 			if(!this.submit_flag) {
@@ -878,10 +896,13 @@ export default {
 					return;
 				}
 			}
+			// #ifndef APP-PLUS
 			add_template_code({
 				code: e.detail.formId,
 				times: 1
 			})
+			// #endif
+
 			this.isSubmit = true;
 			updateCart(this.postData).then(res=>{
 				if(res.errorCode == 0) {
@@ -944,6 +965,9 @@ export default {
 							title: res.msg
 						});
 						this.isCollected = false;
+						// #ifdef APP-PLUS
+						uni.$emit('goods_bottom_setval',{isCollected:this.isCollected})
+						// #endif
 					}
 
 				})
@@ -954,6 +978,10 @@ export default {
 							title: '收藏成功'
 						});
 						this.isCollected = true;
+						// #ifdef APP-PLUS
+						uni.$emit('goods_bottom_setval',{isCollected:this.isCollected})
+						// #endif
+
 					}else {
 						uni.showToast({
 							title: res.msg,
@@ -997,6 +1025,10 @@ export default {
 				this.product = res.data;
 				this.postData.productDetail_price =this.product.Products_PriceX;
 				this.isVirtual = res.data.Products_IsVirtual == 1;
+
+
+
+
 				this.postData.count = res.data.Products_Count;
 				if(res.data.skujosn) {
 					let skujosn = res.data.skujosn;
@@ -1011,8 +1043,19 @@ export default {
 
 					this.product.skujosn_new = skujosn_new;
 					this.product.skuvaljosn = res.data.skuvaljosn;
-					console.log(this.product.skujosn);
+					//console.log(this.product.skujosn);
 				}
+
+
+
+				// #ifdef APP-PLUS
+
+				//规格选择
+				uni.$emit('goods_spec_setval',{product:this.product})
+				uni.$emit('goods_spec_setval',{postData:this.postData})
+
+				uni.$emit('goods_bottom_setval', {isVirtual:this.isVirtual});
+				// #endif
 			}).catch(e=>{
 				console.log(e)
 			})
@@ -1059,15 +1102,39 @@ export default {
 
 		},
 		addCart(){
-			this.$refs.cartPopu.show();
 			this.postData.cart_key = 'CartList';
+			// #ifdef APP-PLUS
+			const goodsSpecNvue = uni.getSubNVueById('goodsSpec')
+			goodsSpecNvue.show('slide-in-bottom',200)
+			uni.$emit('goods_spec_setval',{postData:this.postData})
+			// #endif
+
+			// #ifndef APP-PLUS
+			this.$refs.cartPopu.show();
+
+			// #endif
+
 		},
 		directBuy(){
 			if(!this.$fun.checkIsLogin(1,1)){
 				return;
 			}
-			this.$refs.cartPopu.show();
+
 			this.postData.cart_key = 'DirectBuy'
+
+			// #ifdef APP-PLUS
+
+			const goodsSpecNvue = uni.getSubNVueById('goodsSpec')
+			goodsSpecNvue.show('slide-in-bottom',200)
+			uni.$emit('goods_spec_setval',{postData:this.postData})
+
+			// #endif
+
+			// #ifndef APP-PLUS
+			this.$refs.cartPopu.show();
+			// #endif
+
+
 		},
         gotoComments(){
             uni.navigateTo({
@@ -1108,6 +1175,37 @@ export default {
 
 		this.wxMiniOriginId = WX_MINI_ORIGIN_ID;
 		console.log('wxMiniOriginId is '+this.wxMiniOriginId)
+
+		// #ifdef APP-PLUS
+		//hack app的商品详情页购买
+		const vm = this;
+		uni.$on('cartHandle', (data) => {
+			vm.addCart()
+		})
+		uni.$on('directHandle',(data)=>{
+			vm.directBuy()
+		})
+
+		uni.$on('collectHandle',(data)=>{
+			console.log('触发收藏事件')
+			vm.collect()
+		})
+
+		uni.$on('goodsSkuSub',(data)=>{
+			console.log('触发这么多次事件????')
+			let {check_attr,check_attrid_arr,submit_flag,postData} = data
+			this.check_attr = check_attr
+			this.check_attrid_arr = check_attrid_arr
+			this.submit_flag = submit_flag
+			this.postData = postData
+			vm.skuSub()
+			//隐藏规格框
+			const goodsSpecNvue = uni.getSubNVueById('goodsSpec')
+			goodsSpecNvue.hide()
+		})
+
+		// #endif
+
 
 
 	}
