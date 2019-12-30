@@ -2,8 +2,8 @@ import Vue from 'vue'
 import App from './App'
 import store from './store';
 
-import rrweb from 'rrweb';
-console.log(rrweb)
+// import rrweb from 'rrweb';
+// console.log(rrweb)
 
 // import {isDev} from "./common/env";
 

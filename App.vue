@@ -54,8 +54,8 @@
 
             //清空一下
             if(ls.get('users_id') && APP_USERS_ID != ls.get('users_id')){
-                ls.set('userInfo',{})
-                ls.set('user_id','',1)
+                // ls.set('userInfo',{})
+                // ls.set('user_id','',1)
             }
             ls.set('users_id',APP_USERS_ID);
             // #endif
