@@ -24,7 +24,7 @@
             </view>
         </view>
 
-
+		<view style="height: 90rpx;"></view>
         <view class="order" v-for="(item,i) of resData " :key="i">
             <view class="view">
                 订单号：<text>{{item.order_id}}</text>
@@ -203,6 +203,10 @@
 
     .titleClass{
         height: 90rpx;font-size: 14px;display: flex;align-items: center;box-sizing: border-box;width: 710rpx;margin: 0 auto;margin-bottom: 10px;
+		position: fixed;
+		width: 750rpx;
+		top: 0px;left: 0px;
+		background-color: #F8F8F8;z-index: 99;padding-left: 20rpx;padding-right: 20rpx;
         .titleButton{
             width: 100rpx;
             height: 60rpx;
