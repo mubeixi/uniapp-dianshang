@@ -60,6 +60,7 @@ export default {
 		};
 	},
 	onShow(){
+		if(!this.$fun.checkIsLogin(1))return;
 		this.getBalance();
 		get_user_info().then(res=>{
 			this.info = res.data

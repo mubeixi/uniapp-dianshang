@@ -499,7 +499,6 @@
 	}
 }
 .putong{
-		width:152rpx;
 		height:50rpx;
 		line-height: 50rpx;
 		text-align: center;

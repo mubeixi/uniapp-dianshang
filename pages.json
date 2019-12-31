@@ -83,6 +83,26 @@
 							"zindex": 3
 
 						}
+					},{
+						"id": "coupon",
+						"path": "pages/detail/subnvue/coupon",
+						"type": "popup",
+						"style": {
+							"width": "750upx",
+							"top":  "50%",
+							"bottom": "0upx",
+							"zindex": 3
+						}
+					},{
+						"id": "share",
+						"path": "paltform/app-plus/subNVue/shareDetail",
+						"type": "popup",
+						"style": {
+							"width": "750upx",
+							"top":  "82%",
+							"bottom": "0upx",
+							"zindex": 3
+						}
 					}]
 				}
 			}
@@ -466,7 +486,8 @@
 				"navigationBarTitleText": "分销商等级"
 			}
 		}
-	],
+        
+    ],
 	"subPackages": [{
 		"root": "pagesA",
 		"name": "onther",

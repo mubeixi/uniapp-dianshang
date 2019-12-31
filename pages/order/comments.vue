@@ -52,7 +52,7 @@
 							{{i}}
 						</div>
 						<div class="skuValue">
-							<div class="haihong" :class="check_attr[i]==index?'skuCheck':''" @click="selectAttr(index,i)"  v-for="(mbx,index) of item" :key="index">{{mbx}}</div>
+							<div class="skuview" :class="check_attr[i]==index?'skuCheck':''" @click="selectAttr(index,i)"  v-for="(mbx,index) of item" :key="index">{{mbx}}</div>
 						</div>
 					</div>
 				</div>
@@ -62,7 +62,7 @@
 					</div>
 					<div class="inputNumber">
 							<div class="clicks" @click="delNum">-</div>
-							<input class="inputs" v-enter-number type="number" v-model="postData.qty"  disabled>
+							<input class="inputq" v-enter-number type="number" v-model="postData.qty"  disabled>
 							<div class="clicks" @click="addNum">+</div>
 					</div>
 				</div>
@@ -141,6 +141,7 @@ export default {
 	methods: {
 		// 检查产品是否已收藏
 		checkProdCollected() {
+			if(!this.$fun.checkIsLogin()) return
 			checkProdCollected({prod_id: this.Products_ID}).then(res => {
 				console.log(res)
 				if(res.errorCode == 0) {
@@ -452,9 +453,9 @@ export default {
 				width: 420rpx;
 				.cartTitles{
 					height: 80rpx;
-					line-height: 40rpx;
 					overflow: hidden;
 					margin-top: 20rpx;
+					line-height: 40rpx;
 				}
 				.addInfo{
 					width: 450rpx;
@@ -488,7 +489,10 @@ export default {
 				}
 				.skuValue{
 					display: flex;
-					.haihong{
+					flex:1;
+					flex-wrap: wrap;
+					.skuview{
+						margin-bottom: 10px;
 						height: 70rpx;
 						line-height: 70rpx;
 						font-size: 14px;
@@ -499,6 +503,9 @@ export default {
 						padding-right: 20rpx;
 						margin-right: 20rpx;
 						border: 1px solid #ccc;
+					}
+					.unablechoose {
+						background: #ddd;
 					}
 				}
 			}
@@ -520,7 +527,7 @@ export default {
 				height: 50rpx;
 				margin-right: 50rpx;
 				display: flex;
-				.inputs{
+				.inputq{
 					color: black;
 					margin: 0 auto;
 					width: 80rpx;
