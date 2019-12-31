@@ -1,0 +1,144 @@
+<template>
+		<view style="max-height: 1050rpx;">
+			<div class="t_title">
+			    领券
+			    <image class="image" src="/static/no/detailX-no.png"  @click="close" ></image>
+			</div>
+			<scroll-view class="ticks" scroll-y=true  @scrolltolower="goNextPage">
+			    <div class="t_content" v-for="(item,i) of couponList" :key="i">
+			        <div class="t_left">
+			            <div class="t_left_t"><text class="colorFont">￥</text><text class="money colorFont" style="font-size: 20px;">{{item.Coupon_Cash}}</text><text class="colorFont">店铺优惠券<text class="colorFont" v-if="item.Coupon_UseArea==0">(实体店)</text></text></div>
+			            <div class="t_left_c"><text class="colorFont">{{item.Coupon_Subject}}</text></div>
+			            <div class="t_left_b"><text class="colorFont">有效期{{item.Coupon_StartTime}}-{{item.Coupon_EndTime}}</text></div>
+			        </div>
+			        <div class="t_right"><text class="colorFont" style="font-size: 16px;" @click="getMyCoupon(item.Coupon_ID,i)">立即领取</text></div>
+			    </div>
+			</scroll-view>
+		</view>
+</template>
+
+<script>
+	import {getCoupon,getUserCoupon} from '../../../common/fetch.js';
+	export default {
+		data() {
+			return {
+				couponList:[]
+			}
+		},
+		created() {
+			const vm = this;
+			uni.$on('couponList', (data) => {
+				this.couponList=data.couponList
+			})
+		},
+		beforeDestroy() {
+			uni.$off('couponList')
+		},
+		methods: {
+			//领取优惠券
+			getMyCoupon(item,i){
+				uni.$emit('getMyCoupon',{item:item,i:i})
+			},
+			close(){
+				const coupon = uni.getSubNVueById('coupon')
+				coupon.hide()
+			},
+			goNextPage(){
+				uni.$emit('goNextPage',{})
+			}
+		}
+	}
+</script>
+
+<style >
+	.ticks{
+		height: 600upx;
+	}
+.t_title {
+		font-size: 15px;
+		color: #333;
+        text-align:center;
+		width: 750upx;
+		z-index: 999;
+		height: 45px;
+		align-items: center;
+		line-height: 45px;
+		background-color: #FFFFFF;
+		flex-direction: row;
+		justify-content: center;
+    }
+	.t_title_txt{
+		/* margin: 0 auto; */
+	}
+    .image{
+			height: 12px;
+			width: 12px;
+			position: absolute;
+			top: 16px;
+			right: 12px;
+    }
+    .t_content {
+        position: relative;
+        width: 710upx;
+        height: 90px;
+		background-color: #FDF1E5;
+       /* margin: 0 auto 30rpx; */
+		padding-top: 10px;
+		padding-right: 0px;
+		padding-bottom: 5px;
+		padding-left: 20px;
+      /*  box-sizing: border-box; */
+        font-size: 11px;
+        color: #F43131;
+		/* display: flex; */
+		flex-direction: row;
+		justify-content: space-between;
+		margin-left:20upx;
+		margin-bottom: 20upx;
+    }
+
+	.colorFont{
+		font-size: 13px;
+		color: #F43131;
+	}
+    .t_left_t {
+        font-size: 12px;
+        margin-bottom: 5px;
+		flex-direction: row;
+		align-items: flex-end;
+    }
+	 .t_left_b{
+		margin-top: 3px;
+	}
+	.money{
+	    font-size: 21px !important;
+	    margin-right: 5px;
+	}
+     /* .t_left_t i {
+        font-size: 22rpx;
+        font-style: normal;
+    } */
+	.t_left_c{
+		font-size: 11px;
+		margin-top: 6px;
+		margin-bottom: 3px;
+	}
+	.t_left_b{
+		font-size: 11px;
+	}
+    .t_right {
+        /* float: right; */
+        height: 70px;
+        line-height: 70px;
+		flex-direction: row;
+		align-items: center;
+       /* padding: 0 36rpx; */
+		padding-left: 18px;
+		padding-right: 18px;
+        font-size: 15px;
+		border-left-width:1px ;
+		border-color: #999;
+		border-style: dotted ;
+        text-align: center;
+    }
+</style>

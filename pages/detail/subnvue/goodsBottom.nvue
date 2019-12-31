@@ -40,6 +40,9 @@
         },
         props: {
         },
+		beforeDestroy() {
+			uni.$off('goods_bottom_setval')
+		},
         created(){
             const vm = this;
             uni.$on('goods_bottom_setval', (data) => {

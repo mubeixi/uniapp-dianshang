@@ -275,7 +275,7 @@ export default {
 			},
 			submit_flag: true, //提交按钮
 			page:1,//优惠券页
-			pageSize:10,//优惠券页
+			pageSize:4,//优惠券页
 			totalCount:0,//优惠券个数
 			isCollected: false, // 该产品是否已收藏
 			gift: 0, //赠品id
@@ -362,6 +362,14 @@ export default {
 		const goodsSpecNvue = uni.getSubNVueById('goodsSpec')
 		goodsSpecNvue.hide()
 
+		//隐藏优惠券
+		const coupon = uni.getSubNVueById('coupon')
+		coupon.hide()
+
+		//隐藏优惠券
+		const share = uni.getSubNVueById('share')
+		share.hide()
+
 		const subNVue2 = uni.getSubNVueById('goodsBottom')
 		subNVue2.show()
 		// #endif
@@ -388,6 +396,17 @@ export default {
 			var icons = plus.nativeObj.View.getViewById("icons");
 			icon.hide();
 			icons.hide();
+			
+			uni.$off('cartHandle')
+			uni.$off('directHandle')
+			
+			uni.$off('collectHandle')
+			uni.$off('getMyCoupon')
+			uni.$off('goNextPage')
+			
+			uni.$off('shareDetail')
+			
+			uni.$off('goodsSkuSub')
 		// #endif
 	},
 	onHide(){
@@ -398,6 +417,26 @@ export default {
 			var icons = plus.nativeObj.View.getViewById("icons");
 			icon.hide();
 			icons.hide();
+			
+			let _self = this
+			const vm = this;
+
+			
+			//隐藏规格框
+			const goodsSpecNvue = uni.getSubNVueById('goodsSpec')
+			goodsSpecNvue.hide()
+			
+			//隐藏优惠券
+			const coupon = uni.getSubNVueById('coupon')
+			coupon.hide()
+			
+			//隐藏优惠券
+			const share = uni.getSubNVueById('share')
+			share.hide()
+			
+			const subNVue2 = uni.getSubNVueById('goodsBottom')
+			subNVue2.hide()
+		
 		// #endif
 
 		console.log('暂停视频播放')
@@ -775,8 +814,16 @@ export default {
 			}
 		},
 		//领取优惠券
-		getMyCoupon(item,i){
-			if(!this.$fun.checkIsLogin(1))return;
+		getMyCoupon(item,i){		
+			
+			// #ifdef APP-PLUS
+				if(!this.$fun.checkIsLogin()){
+					const coupon = uni.getSubNVueById('coupon')
+					coupon.hide()
+				}
+			// #endif
+
+			if(!this.$fun.checkIsLogin(1,1))return;
 			if(this.isLoading==true)return;
 			this.isLoading=true;
 			let data={
@@ -786,15 +833,24 @@ export default {
 				this.goNextPage();
 			}
 			getUserCoupon(data,{errtip:false}).then(res=>{
-					wx.showToast({
+					uni.showToast({
 					    title: res.msg,
 					    icon: 'none'
 					})
 					this.isLoading=false;
 					this.page=1;
 					this.couponList.splice(i, 1);
+					// #ifdef APP-PLUS
+						uni.$emit('couponList',{couponList:this.couponList})
+					// #endif
 					if(this.couponList.length<=0){
-						this.$refs.popupLayer.close();
+						// #ifndef APP-PLUS
+							this.$refs.popupLayer.close();
+						// #endif
+						// #ifdef APP-PLUS
+							const coupon = uni.getSubNVueById('coupon')
+							coupon.hide()
+						// #endif
 					}
 			}).catch(e=>{
 				console.log(e)
@@ -1143,7 +1199,21 @@ export default {
         },
         showTick(e){
 			this.type = e.currentTarget.dataset.type
-            this.$refs.popupLayer.show();
+			// #ifndef APP-PLUS
+				this.$refs.popupLayer.show();
+			// #endif
+			// #ifdef APP-PLUS
+				if(this.type=='ticks'){
+					const coupon = uni.getSubNVueById('coupon')
+					coupon.show('slide-in-bottom',200)
+					uni.$emit('couponList',{couponList:this.couponList})
+				}else if(this.type=='share'){
+					const share = uni.getSubNVueById('share')
+					share.show('slide-in-bottom',200)
+					uni.$emit('share',{wxMiniOriginId:this.wxMiniOriginId})
+				}
+			// #endif
+           
         },
         close(){
 			this.$refs.popupLayer.close();
@@ -1189,6 +1259,19 @@ export default {
 		uni.$on('collectHandle',(data)=>{
 			console.log('触发收藏事件')
 			vm.collect()
+		})
+		uni.$on('getMyCoupon',(data)=>{
+			console.log('触发领取事件')
+			vm.getMyCoupon(data.item,data.i)
+		})
+		uni.$on('goNextPage',(data)=>{
+			console.log('触发优惠券下一页事件')
+			vm.goNextPage()
+		})
+		
+		uni.$on('shareDetail',(data)=>{
+			console.log('触发分享')
+			vm.shareFunc(data.item)
 		})
 
 		uni.$on('goodsSkuSub',(data)=>{
