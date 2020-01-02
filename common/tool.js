@@ -1,5 +1,6 @@
 import {error, toast} from "./index";
 import {apiBaseUrl} from './env.js';
+import store from "../store";
 
 
 export const formatTime = date => {
@@ -423,9 +424,11 @@ export const urlencode = (str) => {
 export const buildSharePath = (path) => {
 
     let users_ID = ls.get('users_id');
-    let userInfo = ls.get('userInfo');
+    let userInfo = store.state.userInfo || ls.get('userInfo');
+    const User_ID = ls.get('user_id')
 
-    // console.log(userInfo,users_ID)
+
+    console.log(User_ID,userInfo,users_ID)
     let search = '';
 
     if (path.indexOf('users_id') === -1) {

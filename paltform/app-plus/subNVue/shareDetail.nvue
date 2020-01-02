@@ -35,13 +35,15 @@
 	export default {
 		data() {
 			return {
-				wxMiniOriginId:''
+				wxMiniOriginId:'',
+				detail:''
 			}
 		},
 		created() {
 			const vm = this;
 			uni.$on('share', (data) => {
 				this.wxMiniOriginId=data.wxMiniOriginId
+				this.detail=data.detail
 			})
 		},
 		beforeDestroy() {
@@ -49,7 +51,7 @@
 		},
 		methods: {
 			shareFunc(item){
-				uni.$emit('shareDetail',{item:item})
+				uni.$emit('shareDetail',{item:item,detail:this.detail})
 			},
 			cancel(){
 				const share = uni.getSubNVueById('share')

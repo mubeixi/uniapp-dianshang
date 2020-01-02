@@ -213,54 +213,56 @@
 		</form>
 
 	</popupLayer>
-	<div class="fixed">
-		<div class="leftss">
-			<div class="first" @click="goHome">
-				<div><image class="img" src="/static/detail/home.png" ></image></div>
-				<div class="txt">首页</div>
-			</div>
-			<div class="first" @click="collect">
-				<div>
-					<image class="img" v-if="isCollected"  src="/static/detail/favorite-a.png" ></image>
-					<image class="img" v-else src="/static/detail/favorite.png" ></image>
+	<!-- #ifndef APP-PLUS -->
+		<div class="fixed">
+			<div class="leftss">
+				<div class="first" @click="goHome">
+					<div><image class="img" src="/static/detail/home.png" ></image></div>
+					<div class="txt">首页</div>
 				</div>
-				<div class="txt">收藏</div>
-			</div>
-			<div class="first">
-				<div><image class="img" src="/static/detail/kefu.png" ></image></div>
-				<div class="txt">客服</div>
-			</div>
-		</div>
-		<div class="rightss">
-			<form class="form" report-submit @click="myPay">
-			<div class="dan bTitle">
-				<div class="danLeft">
-					<span class="bF">¥</span><span class="bS">{{product.Products_PriceX}}</span>
+				<div class="first" @click="collect">
+					<div>
+						<image class="img" v-if="isCollected"  src="/static/detail/favorite-a.png" ></image>
+						<image class="img" v-else src="/static/detail/favorite.png" ></image>
+					</div>
+					<div class="txt">收藏</div>
 				</div>
+				<div class="first">
+					<div><image class="img" src="/static/detail/kefu.png" ></image></div>
+					<div class="txt">客服</div>
+				</div>
+			</div>
+			<div class="rightss">
+				<form class="form" report-submit @click="myPay">
+				<div class="dan bTitle">
+					<div class="danLeft">
+						<span class="bF">¥</span><span class="bS">{{product.Products_PriceX}}</span>
+					</div>
+					<button formType="submit" class="danRight">
+						单独购买
+					</button>
+		
+		
+				</div>
+				</form>
+				<form  class="form" report-submit @click="myPin">
+				<div class="tuan bTitle">
+					<div class="danLeft">
+						<span class="bF">¥</span><span class="bS">{{product.pintuan_pricex}}</span>
+					</div>
+		
+		
 				<button formType="submit" class="danRight">
-					单独购买
+					一键开团
 				</button>
-
-
-			</div>
-			</form>
-			<form  class="form" report-submit @click="myPin">
-			<div class="tuan bTitle">
-				<div class="danLeft">
-					<span class="bF">¥</span><span class="bS">{{product.pintuan_pricex}}</span>
+		
+		
+		
 				</div>
-
-
-			<button formType="submit" class="danRight">
-				一键开团
-			</button>
-
-
-
+				</form>
 			</div>
-			</form>
 		</div>
-	</div>
+	<!-- #endif -->
   	<div class="safearea-box"></div>
   </div>
 </template>
@@ -357,6 +359,18 @@ export default {
 		  this.Products_ID = option.Products_ID;
 		  this.checkProdCollected();
 	},
+	onHide() {
+		// #ifdef APP-PLUS
+			const share = uni.getSubNVueById('share')
+			share.hide()
+			
+			const groupBottom = uni.getSubNVueById('groupBottom')
+			groupBottom.hide()
+			
+			const goodsSpecNvue = uni.getSubNVueById('goodsSpec')
+			goodsSpecNvue.hide()
+		// #endif
+	},
 	onShow() {
 
 			// #ifdef APP-PLUS
@@ -364,6 +378,15 @@ export default {
 			const subNVue1 = uni.getSubNVueById('video')
 			subNVue1.hide()
 			uni.$emit('page-video-stop', {});  
+			
+			const share = uni.getSubNVueById('share')
+			share.hide()
+			
+			const groupBottom = uni.getSubNVueById('groupBottom')
+			groupBottom.show()
+			
+			const goodsSpecNvue = uni.getSubNVueById('goodsSpec')
+			goodsSpecNvue.hide()
 			// #endif
 
 
@@ -657,6 +680,9 @@ export default {
 							title: res.msg
 						});
 						this.isCollected = false;
+						// #ifdef APP-PLUS
+							uni.$emit('goods_bottom_setvals',{isCollected:this.isCollected})
+						// #endif
 					}
 
 				})
@@ -667,6 +693,10 @@ export default {
 							title: '收藏成功'
 						});
 						this.isCollected = true;
+						// #ifdef APP-PLUS
+							console.log("sss",this.isCollected)
+							uni.$emit('goods_bottom_setvals',{isCollected:this.isCollected})
+						// #endif
 					}else {
 						uni.showToast({
 							title: res.msg,
@@ -684,6 +714,10 @@ export default {
 			checkProdCollected({prod_id: this.Products_ID}).then(res => {
 				if(res.errorCode == 0) {
 					this.isCollected = res.data.is_favourite == 1
+					
+					// #ifdef APP-PLUS
+					uni.$emit('goods_bottom_setvals', {isCollected:this.isCollected});
+					// #endif
 				}
 			}).catch(e => {
 
@@ -693,28 +727,51 @@ export default {
 		myPin(e){
 			this.isPin=true;
 			this.postData.Products_PriceX=this.product.pintuan_pricex;
-			console.log(e);
-			add_template_code({
-				code: e.detail.formId,
-				times: 1
-			})
+			if(e){
+				console.log(e);
+				add_template_code({
+					code: e.detail.formId,
+					times: 1
+				})
+			}
 			if(!this.$fun.checkIsLogin(1))return;
 			this.postData.active = 'pintuan';
-			this.$refs.cartPopu.show();
+			
+			// #ifdef APP-PLUS
+				const goodsSpecNvue = uni.getSubNVueById('goodsSpec')
+				goodsSpecNvue.show('slide-in-bottom',200)
+				uni.$emit('goods_spec_setval',{postData:this.postData,detail:'group'})
+			// #endif
+			// #ifndef APP-PLUS
+				this.$refs.cartPopu.show();
+			// #endif
+			
 		},
 		//单独购买
 		myPay(e){
 			this.isPin=false;
 			this.postData.Products_PriceX=this.product.Products_PriceX;
-			console.log(e);
-			add_template_code({
-				code: e.detail.formId,
-				times: 1
-			})
+			if(e){
+				console.log(e);
+				add_template_code({
+					code: e.detail.formId,
+					times: 1
+				})
+			}
+			
 
 			if(!this.$fun.checkIsLogin(1))return;
 			delete this.postData.active ;
-			this.$refs.cartPopu.show();
+			
+			// #ifdef APP-PLUS
+				const goodsSpecNvue = uni.getSubNVueById('goodsSpec')
+				goodsSpecNvue.show('slide-in-bottom',200)
+				uni.$emit('goods_spec_setval',{postData:this.postData,detail:'group'})
+			// #endif
+			// #ifndef APP-PLUS
+				this.$refs.cartPopu.show();
+			// #endif
+			
 		},
 		//返回首页
 		goHome(){
@@ -782,12 +839,14 @@ export default {
         	}
         },
         skuSub(e){
-					if(this.isSubmit) return;
-					console.log(e);
-					add_template_code({
-						code: e.detail.formId,
-						times: 1
-					})
+			if(this.isSubmit) return;
+			if(e){
+				console.log(e);
+				add_template_code({
+					code: e.detail.formId,
+					times: 1
+				})
+			}
         	if(!this.submit_flag) {
         		return ;
         	}
@@ -924,6 +983,29 @@ export default {
 
 				product = res.data
 
+
+				if(res.data.skujosn) {
+					let skujosn = res.data.skujosn;
+					let skujosn_new = [];
+					for (let i in res.data.skujosn) {
+						skujosn_new.push({
+							sku: i,
+							val: skujosn[i]
+						});
+					}
+				
+				
+					this.product.skujosn_new = skujosn_new;
+					this.product.skuvaljosn = res.data.skuvaljosn;
+					//console.log(this.product.skujosn);
+				}
+				// #ifdef APP-PLUS
+					uni.$emit('goods_spec_setval',{product:this.product,detail:'group'})
+					uni.$emit('goods_spec_setval',{postData:this.postData,detail:'group'})
+				
+					uni.$emit('goods_bottom_setvals', {postData:this.product});
+				// #endif
+
 				// #ifdef H5
 
 				if(!isWeiXin())return;
@@ -954,6 +1036,8 @@ export default {
 						}
 					});
 
+
+					
 				}).catch(()=>{
 					console.log('不是微信环境')
 				})
@@ -974,8 +1058,23 @@ export default {
             });
         },
         showTick(e){
-        	this.type = e.currentTarget.dataset.type
-            this.$refs.popupLayer.show();
+        	// this.type = e.currentTarget.dataset.type
+			//    this.$refs.popupLayer.show();
+			 this.type = e.currentTarget.dataset.type
+			 // #ifndef APP-PLUS
+				this.$refs.popupLayer.show();
+			 // #endif
+			 // #ifdef APP-PLUS
+				if(this.type=='ticks'){
+					// const coupon = uni.getSubNVueById('coupon')
+					// coupon.show('slide-in-bottom',200)
+					// uni.$emit('couponList',{couponList:this.couponList})
+				}else if(this.type=='share'){
+					const share = uni.getSubNVueById('share')
+					share.show('slide-in-bottom',200)
+					uni.$emit('share',{wxMiniOriginId:this.wxMiniOriginId,detail:'group'})
+				}
+			 // #endif
         },
         close(){
         	this.$refs.popupLayer.close();
@@ -985,6 +1084,20 @@ export default {
         }
 
     },
+	onUnload() {
+		// #ifdef APP-PLUS
+
+			uni.$on('shareDetail')
+			
+			uni.$on('collectHandles')
+			
+			uni.$on('danBuy')
+			
+			uni.$on('pinBuy')
+			
+			uni.$on('goodsSkuSub')
+		// #endif
+	},
 	async created(){
 
 		let initData = await this.getInitData();
@@ -1006,6 +1119,45 @@ export default {
 		this.wxMiniOriginId = WX_MINI_ORIGIN_ID;
 		console.log('wxMiniOriginId is '+this.wxMiniOriginId)
 
+
+		// #ifdef APP-PLUS
+				const vm=this
+				uni.$on('shareDetail',(data)=>{
+					if(data.detail!='group')return
+					console.log('触发拼团分享',data)	
+					vm.shareFunc(data.item)
+				})
+				
+				uni.$on('collectHandles',(data)=>{
+					console.log('触发拼团收藏事件')
+					vm.collect()
+				})
+				
+				uni.$on('danBuy',(data)=>{
+					console.log('触发单独购买事件')
+					vm.myPay()
+				})
+				
+				uni.$on('pinBuy',(data)=>{
+					console.log('触发拼团购买事件')
+					vm.myPin()
+				})
+				
+				uni.$on('goodsSkuSub',(data)=>{
+					if(data.detail!='group') return
+					console.log('触发这么多次事件????')
+					let {check_attr,check_attrid_arr,submit_flag,postData} = data
+					this.check_attr = check_attr
+					this.check_attrid_arr = check_attrid_arr
+					this.submit_flag = submit_flag
+					this.postData = postData
+					vm.skuSub()
+					//隐藏规格框
+					const goodsSpecNvue = uni.getSubNVueById('goodsSpec')
+					goodsSpecNvue.hide()
+				})
+				
+		// #endif
 	}
 }
 </script>

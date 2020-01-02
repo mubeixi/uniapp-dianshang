@@ -605,6 +605,7 @@
 
 			},
 			async loginCall(userData){
+				console.log('userDatauserDatauserDatauserData',userData)
 				this.setUserInfo(userData);
 				ls.set("access_token",userData.access_token,1);
 

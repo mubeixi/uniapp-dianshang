@@ -352,6 +352,9 @@ export default {
 	onShow(){
 		let _self = this
 
+		const USERINFO = ls.get('userInfo');
+		console.log('USERINFO',USERINFO);
+
 		// #ifdef APP-PLUS
 		const vm = this;
 		const subNVue1 = uni.getSubNVueById('video')
@@ -396,16 +399,16 @@ export default {
 			var icons = plus.nativeObj.View.getViewById("icons");
 			icon.hide();
 			icons.hide();
-			
+
 			uni.$off('cartHandle')
 			uni.$off('directHandle')
-			
+
 			uni.$off('collectHandle')
 			uni.$off('getMyCoupon')
 			uni.$off('goNextPage')
-			
+
 			uni.$off('shareDetail')
-			
+
 			uni.$off('goodsSkuSub')
 		// #endif
 	},
@@ -417,26 +420,26 @@ export default {
 			var icons = plus.nativeObj.View.getViewById("icons");
 			icon.hide();
 			icons.hide();
-			
+
 			let _self = this
 			const vm = this;
 
-			
+
 			//隐藏规格框
 			const goodsSpecNvue = uni.getSubNVueById('goodsSpec')
 			goodsSpecNvue.hide()
-			
+
 			//隐藏优惠券
 			const coupon = uni.getSubNVueById('coupon')
 			coupon.hide()
-			
+
 			//隐藏优惠券
 			const share = uni.getSubNVueById('share')
 			share.hide()
-			
+
 			const subNVue2 = uni.getSubNVueById('goodsBottom')
 			subNVue2.hide()
-		
+
 		// #endif
 
 		console.log('暂停视频播放')
@@ -814,8 +817,8 @@ export default {
 			}
 		},
 		//领取优惠券
-		getMyCoupon(item,i){		
-			
+		getMyCoupon(item,i){
+
 			// #ifdef APP-PLUS
 				if(!this.$fun.checkIsLogin()){
 					const coupon = uni.getSubNVueById('coupon')
@@ -932,11 +935,11 @@ export default {
 			}
 		},
 		skuSub(e){
-			
+
 			if(!this.$fun.checkIsLogin(1,1)){
 				return;
 			}
-			
+
 			if(this.isSubmit) {return}
 			console.log(e);
 			if(!this.submit_flag) {
@@ -1107,8 +1110,8 @@ export default {
 				// #ifdef APP-PLUS
 
 				//规格选择
-				uni.$emit('goods_spec_setval',{product:this.product})
-				uni.$emit('goods_spec_setval',{postData:this.postData})
+				uni.$emit('goods_spec_setval',{product:this.product,detail:'detail'})
+				uni.$emit('goods_spec_setval',{postData:this.postData,detail:'group'})
 
 				uni.$emit('goods_bottom_setval', {isVirtual:this.isVirtual});
 				// #endif
@@ -1162,7 +1165,7 @@ export default {
 			// #ifdef APP-PLUS
 			const goodsSpecNvue = uni.getSubNVueById('goodsSpec')
 			goodsSpecNvue.show('slide-in-bottom',200)
-			uni.$emit('goods_spec_setval',{postData:this.postData})
+			uni.$emit('goods_spec_setval',{postData:this.postData,detail:'detail'})
 			// #endif
 
 			// #ifndef APP-PLUS
@@ -1182,7 +1185,7 @@ export default {
 
 			const goodsSpecNvue = uni.getSubNVueById('goodsSpec')
 			goodsSpecNvue.show('slide-in-bottom',200)
-			uni.$emit('goods_spec_setval',{postData:this.postData})
+			uni.$emit('goods_spec_setval',{postData:this.postData,detail:'detail'})
 
 			// #endif
 
@@ -1210,10 +1213,10 @@ export default {
 				}else if(this.type=='share'){
 					const share = uni.getSubNVueById('share')
 					share.show('slide-in-bottom',200)
-					uni.$emit('share',{wxMiniOriginId:this.wxMiniOriginId})
+					uni.$emit('share',{wxMiniOriginId:this.wxMiniOriginId,detail:'detail'})
 				}
 			// #endif
-           
+
         },
         close(){
 			this.$refs.popupLayer.close();
@@ -1268,13 +1271,18 @@ export default {
 			console.log('触发优惠券下一页事件')
 			vm.goNextPage()
 		})
-		
+
 		uni.$on('shareDetail',(data)=>{
-			console.log('触发分享')
-			vm.shareFunc(data.item)
+			
+			if(data.detail!='detail') return
+				console.log('触发普通详情分享')
+				vm.shareFunc(data.item)
+			
+			
 		})
 
 		uni.$on('goodsSkuSub',(data)=>{
+			if(data.detail!='detail') return
 			console.log('触发这么多次事件????')
 			let {check_attr,check_attrid_arr,submit_flag,postData} = data
 			this.check_attr = check_attr
