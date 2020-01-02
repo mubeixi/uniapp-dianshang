@@ -121,6 +121,39 @@
 							"width": "750upx",
 							"height": "375upx"
 						}
+					},{
+						"id": "share",
+						"path": "paltform/app-plus/subNVue/shareDetail",
+						"type": "popup",
+						"style": {
+							"width": "750upx",
+							"top":  "82%",
+							"bottom": "0upx",
+							"zindex": 3
+						}
+					},{
+						"id": "groupBottom",
+						"path": "pages/detail/subnvue/groupBottom",
+						"style": {
+							"type": "popup",
+							"position": "dock",
+							"dock": "bottom",
+							"width": "750upx",
+							"height": "100upx",
+							"zindex": 2
+						}
+					},
+					{
+						"id": "goodsSpec",
+						"path": "pages/detail/subnvue/goodsSpec",
+						"type": "popup",
+						"style": {
+							"width": "750upx",
+							"top":  "20%",
+							"bottom": "0upx",
+							"zindex": 3
+
+						}
 					}]
 				}
 			}

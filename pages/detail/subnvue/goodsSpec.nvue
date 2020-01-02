@@ -6,7 +6,8 @@
 				<div class="cartTitle">
 					<text class="cartTitles">{{product.Products_Name}}</text>
 					<div class="addInfo">
-						<text class="addPrice">{{postData.productDetail_price}}元</text>
+						<text class="addPrice" v-if="detail=='detail'">{{postData.productDetail_price}}元</text>
+						<text class="addPrice" v-else-if="detail=='group'">{{postData.Products_PriceX}}元</text>
 						<text class="proSale">库存{{postData.count}}</text>
 					</div>
 				</div>
@@ -56,6 +57,7 @@
 			return {
 				gift:0,
 				postData:{},
+				detail:'',
 				submit_flag:true,
 				checkAttr: {} , // 选择的属性
 				check_attr: {},
@@ -74,7 +76,9 @@
 		created() {
 			const vm = this;
 			uni.$on('goods_spec_setval', (data) => {
+				
 				//console.log('goods_spec_setval', data)
+				this.detail=data.detail
 				for (var key in data) {
 					vm[key] = data[key]
 				}
@@ -115,7 +119,7 @@
 				// this.check_attrid_arr = check_attrid_arr;
 				// this.submit_flag
 				// postData
-				uni.$emit('goodsSkuSub',{check_attr:this.check_attr,check_attrid_arr:this.check_attrid_arr,submit_flag:this.submit_flag,postData:this.postData})
+				uni.$emit('goodsSkuSub',{check_attr:this.check_attr,check_attrid_arr:this.check_attrid_arr,submit_flag:this.submit_flag,postData:this.postData,detail:this.detail})
 			},
 			// 选择属性
 			selectAttr(index,i){
