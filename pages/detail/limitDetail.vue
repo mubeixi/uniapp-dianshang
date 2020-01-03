@@ -202,34 +202,36 @@
 
 	</popupLayer>
 	<div class="safearea-box"></div>
-	<div class="fixed">
-		<div class="leftss">
-			<div class="first" @click="goHome">
-				<div><image class="img" src="/static/detail/home.png" ></image></div>
-				<div class="txt">首页</div>
-			</div>
-			<div class="first" @click="collect">
-				<div>
-					<image class="img" v-if="isCollected"  src="/static/detail/favorite-a.png" ></image>
-					<image class="img" v-else src="/static/detail/favorite.png" ></image>
+	<!-- #ifndef APP-PLUS -->
+		<div class="fixed">
+			<div class="leftss">
+				<div class="first" @click="goHome">
+					<div><image class="img" src="/static/detail/home.png" ></image></div>
+					<div class="txt">首页</div>
 				</div>
-				<div class="txt">收藏</div>
+				<div class="first" @click="collect">
+					<div>
+						<image class="img" v-if="isCollected"  src="/static/detail/favorite-a.png" ></image>
+						<image class="img" v-else src="/static/detail/favorite.png" ></image>
+					</div>
+					<div class="txt">收藏</div>
+				</div>
+				<div class="first">
+					<div><image class="img" src="/static/detail/kefu.png" ></image></div>
+					<div class="txt">客服</div>
+				</div>
 			</div>
-			<div class="first">
-				<div><image class="img" src="/static/detail/kefu.png" ></image></div>
-				<div class="txt">客服</div>
+			<div class="rightss">
+				<form  class="form" report-submit @submit="myPin">
+				<div class="tuan bTitle">
+					<button formType="submit" class="danRight">
+						立即抢购
+					</button>
+				</div>
+				</form>
 			</div>
 		</div>
-		<div class="rightss">
-			<form  class="form" report-submit @submit="myPin">
-			<div class="tuan bTitle">
-				<button formType="submit" class="danRight">
-					立即抢购
-				</button>
-			</div>
-			</form>
-		</div>
-	</div>
+	<!-- #endif -->
   </div>
 </template>
 
@@ -325,6 +327,44 @@ export default {
 	onLoad: function (option) {
 		  this.spike_good_id=option.spikeGoodId;
 		 this._init_func();
+		 
+		 
+		// #ifdef APP-PLUS
+			const vm =this
+			uni.$on('collectSpike',(data)=>{
+				if(data.detail!='limit') return
+				console.log('触发limit收藏事件')
+				vm.collect()
+			})
+			
+			uni.$on('spikeBuy',(data)=>{
+				if(data.detail!='limit') return
+				console.log('触发limit抢购')
+				vm.myPin()
+			})
+			
+			uni.$on('goodsSkuSub',(data)=>{
+				if(data.detail!='limit') return
+				console.log('触发这么多次事件????')
+				let {check_attr,check_attrid_arr,submit_flag,postData} = data
+				this.check_attr = check_attr
+				this.check_attrid_arr = check_attrid_arr
+				this.submit_flag = submit_flag
+				this.postData = postData
+				vm.skuSub()
+				//隐藏规格框
+				const goodsSpecNvue = uni.getSubNVueById('goodsSpec')
+				goodsSpecNvue.hide()
+			})
+		// #endif
+		 
+	},
+	onUnload() {
+		// #ifdef APP-PLUS
+			uni.$off('collectSpike')
+			uni.$off('spikeBuy')
+			uni.$off('goodsSkuSub')
+		// #endif
 	},
 	onShow() {
 
@@ -616,6 +656,9 @@ export default {
 							icon:'none'
 						});
 						this.isCollected = false;
+						// #ifdef APP-PLUS
+							uni.$emit('spike_bottom_setval', {isCollected:this.isCollected,detail:'limit'});
+						// #endif
 					}
 
 				})
@@ -626,6 +669,9 @@ export default {
 							title: '收藏成功'
 						});
 						this.isCollected = true;
+						// #ifdef APP-PLUS
+							uni.$emit('spike_bottom_setval', {isCollected:this.isCollected,detail:'limit'});
+						// #endif
 					}else {
 						uni.showToast({
 							title: res.msg,
@@ -643,6 +689,9 @@ export default {
 			checkProdCollected({prod_id: item}).then(res => {
 				if(res.errorCode == 0) {
 					this.isCollected = res.data.is_favourite == 1
+					// #ifdef APP-PLUS
+						uni.$emit('spike_bottom_setval', {isCollected:this.isCollected,detail:'limit'});
+					// #endif
 				}
 			}).catch(e => {
 
@@ -651,16 +700,26 @@ export default {
 		//拼团
 		myPin(e){
 			if(!this.$fun.checkIsLogin(1))return;
-			this.$refs.cartPopu.show();
+			// #ifdef APP-PLUS
+				const goodsSpecNvue = uni.getSubNVueById('goodsSpec')
+				goodsSpecNvue.show('slide-in-bottom',200)
+				uni.$emit('goods_spec_setval',{product:this.product,detail:'limit'})
+				uni.$emit('goods_spec_setval',{postData:this.postData,detail:'limit'})
+			// #endif
+			// #ifndef APP-PLUS
+				this.$refs.cartPopu.show();
+			// #endif
 		},
 		//单独购买
 		myPay(e){
 
-			console.log(e);
-			add_template_code({
-				code: e.detail.formId,
-				times: 1
-			})
+			if(e){
+				console.log(e);
+				add_template_code({
+					code: e.detail.formId,
+					times: 1
+				})
+			}
 
 			if(!this.$fun.checkIsLogin(1))return;
 			delete this.postData.active ;
@@ -729,11 +788,13 @@ export default {
         },
         skuSub(e){
 				if(this.isSubmit) return;
-			console.log(e);
-			add_template_code({
-				code: e.detail.formId,
-				times: 1
-			})
+			if(e){
+				console.log(e);
+				add_template_code({
+					code: e.detail.formId,
+					times: 1
+				})
+			}
         	if(!this.submit_flag) {
         		return ;
         	}
@@ -869,7 +930,7 @@ export default {
 					}
 
 
-					resolve(res.data.Products_ID);
+					
 
 
 					//this.stampCount()
@@ -877,6 +938,28 @@ export default {
 					groupStamInstance = setInterval(this.stampCount,1000)
 
 					product = res.data
+
+					if (res.data.skujosn) {
+						let skujosn = res.data.skujosn;
+						let skujosn_new = [];
+						for (let i in res.data.skujosn) {
+							skujosn_new.push({
+								sku: i,
+								val: skujosn[i]
+							});
+						}
+					
+					
+						this.product.skujosn_new = skujosn_new;
+						this.product.skuvaljosn = res.data.skuvaljosn;
+						//console.log(this.product.skujosn);
+					}
+					console.log(this.product.skujosn_new,"ssssssssssssssssssss")
+					// #ifdef APP-PLUS
+						//规格选择
+						uni.$emit('goods_spec_setval',{product:this.product,detail:'limit'})
+						uni.$emit('goods_spec_setval',{postData:this.postData,detail:'limit'})
+					// #endif
 
 					// #ifdef H5
 
@@ -914,7 +997,7 @@ export default {
 
 					// #endif
 
-
+					resolve(res.data.Products_ID);
 
 				}).catch(e=>{
 					console.log(e)

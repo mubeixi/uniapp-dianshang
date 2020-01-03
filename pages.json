@@ -443,7 +443,29 @@
 				"navigationBarTitleText": "限时秒杀",
 				"app-plus": {
 					"titleNView": false,
-					"subNVues": []
+					"subNVues": [{
+						"id": "spikeBottom",
+						"path": "pages/detail/subnvue/spikeBottom",
+						"style": {
+							"type": "popup",
+							"position": "dock",
+							"dock": "bottom",
+							"width": "750upx",
+							"height": "100upx",
+							"zindex": 2
+						}
+					},{
+						"id": "goodsSpec",
+						"path": "pages/detail/subnvue/goodsSpec",
+						"type": "popup",
+						"style": {
+							"width": "750upx",
+							"top":  "20%",
+							"bottom": "0upx",
+							"zindex": 3
+
+						}
+					}]
 				}
 			}
 		},
@@ -465,7 +487,29 @@
 				"navigationBarTitleText": "限时抢购",
 				"app-plus": {
 					"titleNView": false,
-					"subNVues": []
+					"subNVues": [{
+						"id": "spikeBottom",
+						"path": "pages/detail/subnvue/spikeBottom",
+						"style": {
+							"type": "popup",
+							"position": "dock",
+							"dock": "bottom",
+							"width": "750upx",
+							"height": "100upx",
+							"zindex": 2
+						}
+					},{
+						"id": "goodsSpec",
+						"path": "pages/detail/subnvue/goodsSpec",
+						"type": "popup",
+						"style": {
+							"width": "750upx",
+							"top":  "20%",
+							"bottom": "0upx",
+							"zindex": 3
+
+						}
+					}]
 				}
 			}
 		},

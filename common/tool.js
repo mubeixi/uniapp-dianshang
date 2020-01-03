@@ -557,7 +557,7 @@ export const getCountdownFunc = ({start_timeStamp, end_timeStamp, current = (new
 
     //还没开始
     if (start_timeStamp > current && end_timeStamp > current) {
-        console.log('还没开始')
+        //console.log('还没开始')
         countTime = start_timeStamp - current;
 
     } else if (end_timeStamp > current && start_timeStamp < current) {
@@ -566,7 +566,7 @@ export const getCountdownFunc = ({start_timeStamp, end_timeStamp, current = (new
         is_start = true;
         countTime = end_timeStamp - current;
     } else {
-        console.warn('活动信息无效');
+        //console.warn('活动信息无效');
         // throw "活动信息无效";
     }
 

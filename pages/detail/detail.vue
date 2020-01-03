@@ -809,6 +809,11 @@ export default {
 					});
 					this.canSubmit = false;
 				}
+				
+				// #ifdef APP-PLUS
+					uni.$emit('goods_bottom_setval', {isCollected:this.isCollected,canSubmit:this.canSubmit});
+				// #endif
+				
 			}).catch(res=>{
 				console.log('catch222222222222222')
 			})
@@ -1155,7 +1160,7 @@ export default {
 
 				//规格选择
 				uni.$emit('goods_spec_setval',{product:this.product,detail:'detail'})
-				uni.$emit('goods_spec_setval',{postData:this.postData,detail:'group'})
+				uni.$emit('goods_spec_setval',{postData:this.postData,detail:'detail'})
 
 				uni.$emit('goods_bottom_setval', {isVirtual:this.isVirtual});
 				// #endif
