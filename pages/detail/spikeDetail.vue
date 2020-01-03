@@ -95,7 +95,7 @@
         	    </div>
         	    <div class="c_content_msg">{{item.Note}}</div>
         	    <div class="c_content_img">
-        			<block v-for="(i,j) of item.ImgPath">
+        			<block v-for="(i,j) of item.ImgPath" :key="j">
         				 <img :src="i" @click="yulanImg(index,j)">
         			</block>
         	    </div>
@@ -211,52 +211,54 @@
 		<image src="/static/error.png" class="errImg"></image>
 		活动尚未开始
 	</div>
-	<div class="fixed">
-		<div class="leftss">
-			<div class="first" @click="goHome">
-				<div><image class="img" src="/static/detail/home.png" ></image></div>
-				<div class="txt">首页</div>
-			</div>
-			<div class="first" @click="collect">
-				<div>
-					<image class="img" v-if="isCollected"  src="/static/detail/favorite-a.png" ></image>
-					<image class="img" v-else src="/static/detail/favorite.png" ></image>
+	<!-- #ifndef APP-PLUS -->
+		<div class="fixed">
+			<div class="leftss">
+				<div class="first" @click="goHome">
+					<div><image class="img" src="/static/detail/home.png" ></image></div>
+					<div class="txt">首页</div>
 				</div>
-				<div class="txt">收藏</div>
+				<div class="first" @click="collect">
+					<div>
+						<image class="img" v-if="isCollected"  src="/static/detail/favorite-a.png" ></image>
+						<image class="img" v-else src="/static/detail/favorite.png" ></image>
+					</div>
+					<div class="txt">收藏</div>
+				</div>
+				<div class="first">
+					<div><image class="img" src="/static/detail/kefu.png" ></image></div>
+					<div class="txt">客服</div>
+				</div>
 			</div>
-			<div class="first">
-				<div><image class="img" src="/static/detail/kefu.png" ></image></div>
-				<div class="txt">客服</div>
+			<div class="rightss">
+				<block v-if="!isKai">
+					<form class="form" report-submit @submit="myPays">
+					<div class="dan bTitle">
+						<button formType="submit" class="danRight">
+							零售价购买
+						</button>
+					</div>
+					</form>
+					<form  class="form" report-submit  @submit="flashsaleReserve">
+					<div class="tuan bTitle">
+						<button formType="submit" class="danRight">
+							立即预约
+						</button>
+					</div>
+					</form>
+				</block>
+				<block v-if="isKai">
+					<form class="form" report-submit @submit="myPay">
+					<div class="dan bTitle" style="background-color: #F43131;">
+						<button formType="submit" class="danRight">
+							立即抢购
+						</button>
+					</div>
+					</form>
+				</block>
 			</div>
 		</div>
-		<div class="rightss">
-			<block v-if="!isKai">
-				<form class="form" report-submit @submit="myPays">
-				<div class="dan bTitle">
-					<button formType="submit" class="danRight">
-						零售价购买
-					</button>
-				</div>
-				</form>
-				<form  class="form" report-submit  @submit="flashsaleReserve">
-				<div class="tuan bTitle">
-					<button formType="submit" class="danRight">
-						立即预约
-					</button>
-				</div>
-				</form>
-			</block>
-			<block v-if="isKai">
-				<form class="form" report-submit @submit="myPay">
-				<div class="dan bTitle" style="background-color: #F43131;">
-					<button formType="submit" class="danRight">
-						立即抢购
-					</button>
-				</div>
-				</form>
-			</block>
-		</div>
-	</div>
+	<!-- #endif -->
   </div>
 </template>
 
@@ -269,6 +271,8 @@ import {error} from "../../common";
 import {mapState,mapGetters,mapActions} from 'vuex';
 import {add_template_code} from "../../common/fetch";
 import uParse from '../../components/gaoyia-parse/parse.vue'
+
+let groupStam = null
 export default {
 	mixins:[pageMixin],
     data(){
@@ -337,19 +341,64 @@ export default {
 		...mapGetters(['userInfo']),
 		...mapState(['initData'])
 	},
+	onUnload() {
+		// #ifdef APP-PLUS
+			uni.$off('collectSpike')
+			uni.$off('cartSpike')
+			uni.$off('directSpike')
+			uni.$off('spikeBuy')
+			uni.$off('goodsSkuSub')
+		// #endif
+	},
 	onLoad: function (option) {
 		  // this.Products_ID = option.Products_ID;
 		  this.flashsale_id = option.flashsale_id;
 		  this._init_func();
 		  // this.checkProdCollected();
+		  
+		  // #ifdef APP-PLUS
+			const vm =this
+			uni.$on('collectSpike',(data)=>{
+				if(data.detail!='spike') return
+				console.log('触发秒杀收藏事件')
+				vm.collect()
+			})
+			
+			
+			uni.$on('cartSpike',(data)=>{
+				console.log('触发秒杀零售价购买')
+				vm.myPays()
+			})
+			
+			uni.$on('directSpike',(data)=>{
+				console.log('触发秒杀预约')
+				vm.flashsaleReserve()
+			})
+			
+			uni.$on('spikeBuy',(data)=>{
+				if(data.detail!='spike') return
+				console.log('触发秒杀抢购')
+				vm.myPay()
+			})
+			
+			uni.$on('goodsSkuSub',(data)=>{
+				if(data.detail!='spike') return
+				console.log('触发这么多次事件????')
+				let {check_attr,check_attrid_arr,submit_flag,postData} = data
+				this.check_attr = check_attr
+				this.check_attrid_arr = check_attrid_arr
+				this.submit_flag = submit_flag
+				this.postData = postData
+				vm.skuSub()
+				//隐藏规格框
+				const goodsSpecNvue = uni.getSubNVueById('goodsSpec')
+				goodsSpecNvue.hide()
+			})
+			
+		  // #endif
 	},
 	onShow() {
-		// #ifdef APP-PLUS
-			const vm = this;
-			const subNVue1 = uni.getSubNVueById('video')
-			subNVue1.hide()
-			uni.$emit('page-video-stop', {});
-			// #endif
+	
 
 		//this.getDetail(this.flashsale_id);
 		// this.getCommit(this.Products_ID);
@@ -610,6 +659,9 @@ export default {
 							title: res.msg
 						});
 						this.isCollected = false;
+						// #ifdef APP-PLUS
+							uni.$emit('spike_bottom_setval', {isCollected:this.isCollected,isKai:this.isKai,detail:'spike'});
+						// #endif
 					}
 
 				})
@@ -620,6 +672,9 @@ export default {
 							title: '收藏成功'
 						});
 						this.isCollected = true;
+						// #ifdef APP-PLUS
+							uni.$emit('spike_bottom_setval', {isCollected:this.isCollected,isKai:this.isKai,detail:'spike'});
+						// #endif
 					}else {
 						uni.showToast({
 							title: res.msg,
@@ -637,6 +692,10 @@ export default {
 			checkProdCollected({prod_id: item}).then(res => {
 				if(res.errorCode == 0) {
 					this.isCollected = res.data.is_favourite == 1
+					
+					// #ifdef APP-PLUS
+						uni.$emit('spike_bottom_setval', {isCollected:this.isCollected,isKai:this.isKai,detail:'spike'});
+					// #endif
 				}
 			}).catch(e => {
 
@@ -659,10 +718,12 @@ export default {
 				return;
 			}
 			this.isLoading=true;
-			// add_template_code({
-			// 	code: e.detail.formId,
-			// 	times: 1
-			// })
+			if(e){
+				add_template_code({
+					code: e.detail.formId,
+					times: 1
+				})
+			}
 			if(!this.$fun.checkIsLogin(1))return;
 			let data={
 				flashsale_id:this.flashsale_id
@@ -692,14 +753,25 @@ export default {
 		//单独购买
 		myPay(e){
 
-			console.log(e);
-			// add_template_code({
-			// 	code: e.detail.formId,
-			// 	times: 1
-			// })
+			if(e){
+				console.log(e);
+				add_template_code({
+					code: e.detail.formId,
+					times: 1
+				})
+			}
 			if(!this.$fun.checkIsLogin(1))return;
 			// delete this.postData.active ;
-			this.$refs.cartPopu.show();
+			
+			// #ifdef APP-PLUS
+				const goodsSpecNvue = uni.getSubNVueById('goodsSpec')
+				goodsSpecNvue.show('slide-in-bottom',200)
+				uni.$emit('goods_spec_setval',{product:this.product,detail:'spike'})
+				uni.$emit('goods_spec_setval',{postData:this.postData,detail:'spike'})
+			// #endif
+			// #ifndef APP-PLUS
+				this.$refs.cartPopu.show();
+			// #endif
 		},
 		//返回首页
 		goHome(){
@@ -764,11 +836,13 @@ export default {
         },
         skuSub(e){
 				if(this.isSubmit) return;
-			console.log(e);
-			// add_template_code({
-			// 	code: e.detail.formId,
-			// 	times: 1
-			// })
+			if(e){
+				console.log(e);
+				add_template_code({
+					code: e.detail.formId,
+					times: 1
+				})
+			}
         	if(!this.submit_flag) {
         		return ;
         	}
@@ -878,7 +952,7 @@ export default {
 							rt = computedStamp
 						}else{
 							//如果不对，就清空
-							window.clearInterval(window.groupStam)
+							window.clearInterval(groupStam)
 						}
 					}
 			}else{
@@ -889,12 +963,13 @@ export default {
 							rt = computedStamp
 						}else{
 							//如果不对，就清空
-							window.clearInterval(window.groupStam)
+							window.clearInterval(groupStam)
 						}
 					}
 			}
 
-
+			
+			
 			//console.log(rt)
 
 			this.countdown = rt
@@ -922,14 +997,37 @@ export default {
 						this.product.skuvaljosn = typeof res.data.skuvaljosn === 'string' ?JSON.parse(res.data.skuvaljosn):res.data.skuvaljosn;
 					}
 
-					resolve(res.data.Products_ID);
+					
 
 					//this.stampCount()
 					//开发时候一直倒计时太乱了
-					window.groupStam = setInterval(this.stampCount,1000)
+					groupStam = setInterval(this.stampCount,1000)
 
 					product = res.data
 
+
+					if (res.data.skujosn) {
+						let skujosn = res.data.skujosn;
+						let skujosn_new = [];
+						for (let i in res.data.skujosn) {
+							skujosn_new.push({
+								sku: i,
+								val: skujosn[i]
+							});
+						}
+					
+					
+						this.product.skujosn_new = skujosn_new;
+						this.product.skuvaljosn = res.data.skuvaljosn;
+						//console.log(this.product.skujosn);
+					}
+					// #ifdef APP-PLUS
+						//规格选择
+						uni.$emit('goods_spec_setval',{product:this.product,detail:'spike'})
+						uni.$emit('goods_spec_setval',{postData:this.postData,detail:'spike'})
+					// #endif
+
+				
 					// #ifdef H5
 
 					let path = 'pages/detail/spikeDetail?flashsale_id='+this.flashsale_id;
@@ -967,7 +1065,7 @@ export default {
 					// #endif
 
 
-
+					resolve(res.data.Products_ID);
 				}).catch(e=>{
 					console.log(e)
 				})
