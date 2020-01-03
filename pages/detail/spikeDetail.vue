@@ -1025,6 +1025,15 @@ export default {
 						//规格选择
 						uni.$emit('goods_spec_setval',{product:this.product,detail:'spike'})
 						uni.$emit('goods_spec_setval',{postData:this.postData,detail:'spike'})
+			
+						let times=new Date().getTime();
+						if(times<this.product.start_time*1000){
+								this.isKai=false;		
+						}else{
+							this.isKai=true;
+						}
+						uni.$emit('spike_bottom_setval', {isCollected:this.isCollected,isKai:this.isKai,detail:'spike'});
+
 					// #endif
 
 				
