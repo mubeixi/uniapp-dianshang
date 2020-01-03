@@ -515,8 +515,7 @@
 					font-size:15px;
 					height: 29rpx;
 					line-height: 29rpx;
-					overflow: hidden;
-
+					//overflow: hidden;
 					color: #FFFFFF;
 					font-weight:bold;
 					width: 500rpx;
