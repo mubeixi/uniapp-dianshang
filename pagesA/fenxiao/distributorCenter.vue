@@ -330,6 +330,7 @@
 					let lp_template = initData.lp_template
 					let tmplIds = lp_template.dis_buy
 					//调就是了，是否成功都可以
+					console.log('调用wx.requestSubscribeMessage',tmplIds)
 					wx.requestSubscribeMessage({tmplIds})
 				}
 				// #endif

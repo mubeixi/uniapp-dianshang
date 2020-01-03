@@ -327,19 +327,19 @@ export default {
 		// #ifdef APP-PLUS
 			const vm = this;
 
-			
+
 			//隐藏规格框
 			// const goodsSpecNvue = uni.getSubNVueById('goodsSpec')
 			// goodsSpecNvue.hide()
-			
+
 			// //隐藏优惠券
 			// const coupon = uni.getSubNVueById('coupon')
 			// coupon.hide()
-			
+
 			// //隐藏优惠券
 			// const share = uni.getSubNVueById('share')
 			// share.hide()
-			
+
 			const subNVue2 = uni.getSubNVueById('goodsBottom')
 			subNVue2.show()
 
@@ -351,7 +351,7 @@ export default {
 		uni.$on('directHandle',(data)=>{
 			vm.directBuy()
 		})
-		
+
 		uni.$on('collectHandle',(data)=>{
 			console.log('触发收藏事件')
 			vm.collect()
@@ -364,16 +364,16 @@ export default {
 			console.log('触发优惠券下一页事件')
 			vm.goNextPage()
 		})
-		
+
 		uni.$on('shareDetail',(data)=>{
-			
+
 			if(data.detail!='detail') return
 				console.log('触发普通详情分享')
 				vm.shareFunc(data.item)
-			
-			
+
+
 		})
-		
+
 		uni.$on('goodsSkuSub',(data)=>{
 			if(data.detail!='detail') return
 			console.log('触发这么多次事件????')
@@ -387,7 +387,7 @@ export default {
 			const goodsSpecNvue = uni.getSubNVueById('goodsSpec')
 			goodsSpecNvue.hide()
 		})
-		
+
 		// #endif
 
 
@@ -420,7 +420,7 @@ export default {
 		const USERINFO = ls.get('userInfo');
 		console.log('USERINFO',USERINFO);
 
-		
+
 
 		// #ifdef APP-PLUS
 		var icon = plus.nativeObj.View.getViewById("icon");
@@ -769,11 +769,11 @@ export default {
 					});
 					this.canSubmit = false;
 				}
-				
+
 				// #ifdef APP-PLUS
 					uni.$emit('goods_bottom_setval', {isCollected:this.isCollected,canSubmit:this.canSubmit});
 				// #endif
-				
+
 			}).catch(res=>{
 				console.log('catch222222222222222')
 			})
@@ -1258,7 +1258,7 @@ export default {
 		this.wxMiniOriginId = WX_MINI_ORIGIN_ID;
 		console.log('wxMiniOriginId is '+this.wxMiniOriginId)
 
-		
+
 
 
 
@@ -1465,7 +1465,7 @@ export default {
     .section1 {
 		background: white;
         padding: 0 20rpx 20rpx;
-        border-bottom: 20rpx solid #efefef;
+        border-bottom: 20rpx solid #f8f8f8;
 		padding-bottom: 0rpx;
     }
     .price {
@@ -1527,7 +1527,8 @@ export default {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        border-bottom: 20rpx solid #efefef;
+		background: white;
+        border-bottom: 20rpx solid #f8f8f8;
     }
     .section2 .btn {
         padding: 0 10rpx;
@@ -1575,7 +1576,7 @@ export default {
     /* 评价 start */
     .comment {
         padding: 30rpx 20rpx;
-        border-bottom: 20rpx solid #efefef;
+        border-bottom: 20rpx solid #f8f8f8;
     }
     .c_title {
         display: flex;
@@ -1618,7 +1619,7 @@ export default {
         color: #333;
         line-height: 36rpx;
         padding: 18rpx 0;
-        border-bottom: 2rpx solid #efefef;
+        border-bottom: 2rpx solid #f8f8f8;
     }
     .c_content_img img {
         width: 140rpx;

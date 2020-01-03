@@ -647,7 +647,8 @@
 							break;
 					}
 					//调就是了，是否成功都可以
-					wx.requestSubscribeMessage({tmplIds})
+					console.log('调用wx.requestSubscribeMessage',tmplIds)
+					wx.requestSubscribeMessage({tmplIds,success (res) {console.log('success',res)},fail(err) {console.log('fail',err)}})
 				}
 
 				// #endif

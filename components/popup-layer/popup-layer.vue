@@ -140,6 +140,7 @@
 		top: 0px;
 		left: 0px;
 		overflow: hidden;
+		transition: all .3s ease;
 	}
 
 	.popup-content {
