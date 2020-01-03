@@ -234,7 +234,7 @@ export default {
 					// #ifdef MP-WEIXIN
 					const initData = this.initData
 					if(initData.hasOwnProperty('lp_template') && initData.lp_template){
-						let lp_template = init.lp_template
+						let lp_template = initData.lp_template
 						let tmplIds = lp_template.back_commit
 						//调就是了，是否成功都可以
 						wx.requestSubscribeMessage({tmplIds})
