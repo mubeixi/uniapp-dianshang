@@ -6,7 +6,6 @@ export const APP_USERS_ID = 'wkbq6nc2kc';//'	mrw5iqvhs2 xjgjd88jee  wkbq6nc2kc';
 // #endif
 
 // #ifdef H5
-console.log('NODE_ENV is ' + isDev);
 export const apiBaseUrl = isDev ? '' : 'https://new401t.bafangka.com';//h5调试为了跨域https://new401.bafangka.com
 // #endif
 
@@ -14,7 +13,7 @@ export const apiBaseUrl = isDev ? '' : 'https://new401t.bafangka.com';//h5调试
 export const apiBaseUrl = 'https://new401t.bafangka.com';
 // #endif
 
-export const staticUrl = 'https://new401t.bafangka.com';
+export const staticUrl = isDev ?'https://new401t.bafangka.com':'';
 
 export const apiKey = '458f_$#@$*!fdjisdJDFHUk4%%653154%^@#(FSD#$@0-T';
 
