@@ -733,6 +733,7 @@ export default {
 		},
 		// 立即领取
 		lingqu(){
+			console.log(this.isVirtual,"ssss")
 			if(this.isVirtual) {
 				this.directBuy();
 				return;
