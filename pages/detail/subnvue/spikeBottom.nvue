@@ -106,6 +106,7 @@
     flex-direction:row;
     height: 100upx;
     flex:1;
+	align-items: center;
 }
 
 .first {
@@ -151,11 +152,12 @@
     font-size: 26upx;
 }
 .all {
-    height: 100%;
+    /* height: 100%;
 	flex: 1;
 	flex-direction: row;
     align-items: center;
-	justify-content: center;
+	justify-content: center; */
+	flex: 1;
     color: #fff !important;
 	background-color: #F43131 !important;
 }
