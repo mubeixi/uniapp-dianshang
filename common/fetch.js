@@ -546,7 +546,7 @@ export const getStoreTypes = (data, options) => fetch('get_store_types', data, o
 
 export const add_template_code = (data, option) => {
     // #ifdef MP-WEIXIN || MP-ALIPAY
-    return fetch('add_template_code', data, option ? option : {errtip: false})
+    //return fetch('add_template_code', data, option ? option : {errtip: false})
     // #endif
 };
 

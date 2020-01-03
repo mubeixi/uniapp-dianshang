@@ -241,8 +241,8 @@
 					<button formType="submit" class="danRight">
 						单独购买
 					</button>
-		
-		
+
+
 				</div>
 				</form>
 				<form  class="form" report-submit @click="myPin">
@@ -250,14 +250,14 @@
 					<div class="danLeft">
 						<span class="bF">¥</span><span class="bS">{{product.pintuan_pricex}}</span>
 					</div>
-		
-		
+
+
 				<button formType="submit" class="danRight">
 					一键开团
 				</button>
-		
-		
-		
+
+
+
 				</div>
 				</form>
 			</div>
@@ -363,10 +363,10 @@ export default {
 		// #ifdef APP-PLUS
 			const share = uni.getSubNVueById('share')
 			share.hide()
-			
+
 			const groupBottom = uni.getSubNVueById('groupBottom')
 			groupBottom.hide()
-			
+
 			const goodsSpecNvue = uni.getSubNVueById('goodsSpec')
 			goodsSpecNvue.hide()
 		// #endif
@@ -377,14 +377,14 @@ export default {
 			const vm = this;
 			const subNVue1 = uni.getSubNVueById('video')
 			subNVue1.hide()
-			uni.$emit('page-video-stop', {});  
-			
+			uni.$emit('page-video-stop', {});
+
 			const share = uni.getSubNVueById('share')
 			share.hide()
-			
+
 			const groupBottom = uni.getSubNVueById('groupBottom')
 			groupBottom.show()
-			
+
 			const goodsSpecNvue = uni.getSubNVueById('goodsSpec')
 			goodsSpecNvue.hide()
 			// #endif
@@ -714,7 +714,7 @@ export default {
 			checkProdCollected({prod_id: this.Products_ID}).then(res => {
 				if(res.errorCode == 0) {
 					this.isCollected = res.data.is_favourite == 1
-					
+
 					// #ifdef APP-PLUS
 					uni.$emit('goods_bottom_setvals', {isCollected:this.isCollected});
 					// #endif
@@ -729,14 +729,14 @@ export default {
 			this.postData.Products_PriceX=this.product.pintuan_pricex;
 			if(e){
 				console.log(e);
-				add_template_code({
-					code: e.detail.formId,
-					times: 1
-				})
+				// add_template_code({
+				// 	code: e.detail.formId,
+				// 	times: 1
+				// })
 			}
 			if(!this.$fun.checkIsLogin(1))return;
 			this.postData.active = 'pintuan';
-			
+
 			// #ifdef APP-PLUS
 				const goodsSpecNvue = uni.getSubNVueById('goodsSpec')
 				goodsSpecNvue.show('slide-in-bottom',200)
@@ -745,7 +745,7 @@ export default {
 			// #ifndef APP-PLUS
 				this.$refs.cartPopu.show();
 			// #endif
-			
+
 		},
 		//单独购买
 		myPay(e){
@@ -753,16 +753,16 @@ export default {
 			this.postData.Products_PriceX=this.product.Products_PriceX;
 			if(e){
 				console.log(e);
-				add_template_code({
-					code: e.detail.formId,
-					times: 1
-				})
+				// add_template_code({
+				// 	code: e.detail.formId,
+				// 	times: 1
+				// })
 			}
-			
+
 
 			if(!this.$fun.checkIsLogin(1))return;
 			delete this.postData.active ;
-			
+
 			// #ifdef APP-PLUS
 				const goodsSpecNvue = uni.getSubNVueById('goodsSpec')
 				goodsSpecNvue.show('slide-in-bottom',200)
@@ -771,7 +771,7 @@ export default {
 			// #ifndef APP-PLUS
 				this.$refs.cartPopu.show();
 			// #endif
-			
+
 		},
 		//返回首页
 		goHome(){
@@ -842,10 +842,10 @@ export default {
 			if(this.isSubmit) return;
 			if(e){
 				console.log(e);
-				add_template_code({
-					code: e.detail.formId,
-					times: 1
-				})
+				// add_template_code({
+				// 	code: e.detail.formId,
+				// 	times: 1
+				// })
 			}
         	if(!this.submit_flag) {
         		return ;
@@ -993,8 +993,8 @@ export default {
 							val: skujosn[i]
 						});
 					}
-				
-				
+
+
 					this.product.skujosn_new = skujosn_new;
 					this.product.skuvaljosn = res.data.skuvaljosn;
 					//console.log(this.product.skujosn);
@@ -1002,7 +1002,7 @@ export default {
 				// #ifdef APP-PLUS
 					uni.$emit('goods_spec_setval',{product:this.product,detail:'group'})
 					uni.$emit('goods_spec_setval',{postData:this.postData,detail:'group'})
-				
+
 					uni.$emit('goods_bottom_setvals', {postData:this.product});
 				// #endif
 
@@ -1037,7 +1037,7 @@ export default {
 					});
 
 
-					
+
 				}).catch(()=>{
 					console.log('不是微信环境')
 				})
@@ -1088,13 +1088,13 @@ export default {
 		// #ifdef APP-PLUS
 
 			uni.$on('shareDetail')
-			
+
 			uni.$on('collectHandles')
-			
+
 			uni.$on('danBuy')
-			
+
 			uni.$on('pinBuy')
-			
+
 			uni.$on('goodsSkuSub')
 		// #endif
 	},
@@ -1124,25 +1124,25 @@ export default {
 				const vm=this
 				uni.$on('shareDetail',(data)=>{
 					if(data.detail!='group')return
-					console.log('触发拼团分享',data)	
+					console.log('触发拼团分享',data)
 					vm.shareFunc(data.item)
 				})
-				
+
 				uni.$on('collectHandles',(data)=>{
 					console.log('触发拼团收藏事件')
 					vm.collect()
 				})
-				
+
 				uni.$on('danBuy',(data)=>{
 					console.log('触发单独购买事件')
 					vm.myPay()
 				})
-				
+
 				uni.$on('pinBuy',(data)=>{
 					console.log('触发拼团购买事件')
 					vm.myPin()
 				})
-				
+
 				uni.$on('goodsSkuSub',(data)=>{
 					if(data.detail!='group') return
 					console.log('触发这么多次事件????')
@@ -1156,7 +1156,7 @@ export default {
 					const goodsSpecNvue = uni.getSubNVueById('goodsSpec')
 					goodsSpecNvue.hide()
 				})
-				
+
 		// #endif
 	}
 }

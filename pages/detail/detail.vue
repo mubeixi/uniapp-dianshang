@@ -915,12 +915,12 @@ export default {
 					return;
 				}
 			}
-			// #ifndef APP-PLUS
-			add_template_code({
-				code: e.detail.formId,
-				times: 1
-			})
-			// #endif
+
+			// add_template_code({
+			// 	code: e.detail.formId,
+			// 	times: 1
+			// })
+
 
 			this.isSubmit = true;
 			updateCart(this.postData).then(res=>{

@@ -168,10 +168,10 @@
 			  formSubmit: function (e) {
 				  console.log(e)
 
-			  	add_template_code({
-					code: e.detail.formId,
-					times: 1
-				})
+			  	// add_template_code({
+				// 	code: e.detail.formId,
+				// 	times: 1
+				// })
 
 				var address_info = e.detail.value;
 				if (!address_info.Address_Name) {

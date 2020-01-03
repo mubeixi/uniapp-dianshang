@@ -331,7 +331,7 @@ export default {
 			const vm = this;
 			const subNVue1 = uni.getSubNVueById('video')
 			subNVue1.hide()
-			uni.$emit('page-video-stop', {});  
+			uni.$emit('page-video-stop', {});
 			// #endif
 
 		//this.getDetail(this.spike_good_id);
@@ -662,10 +662,10 @@ export default {
 		myPay(e){
 
 			console.log(e);
-			add_template_code({
-				code: e.detail.formId,
-				times: 1
-			})
+			// add_template_code({
+			// 	code: e.detail.formId,
+			// 	times: 1
+			// })
 
 			if(!this.$fun.checkIsLogin(1))return;
 			delete this.postData.active ;
@@ -735,10 +735,10 @@ export default {
         skuSub(e){
 				if(this.isSubmit) return;
 			console.log(e);
-			add_template_code({
-				code: e.detail.formId,
-				times: 1
-			})
+			// add_template_code({
+			// 	code: e.detail.formId,
+			// 	times: 1
+			// })
         	if(!this.submit_flag) {
         		return ;
         	}

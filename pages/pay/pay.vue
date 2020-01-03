@@ -568,6 +568,7 @@
 					return;
 				}
 
+				//头条小程序
 				if(res && res.code && res.code==9){
 					uni.showModal({
 						title: '提示',
@@ -579,7 +580,9 @@
 
 								if(Order_Type === 'pintuan'){
 									url:'/pages/order/pintuanOrderlist?index=2'
+
 								}else{
+
 									if(pagefrom == 'check') {
 										uni.redirectTo({
 											url:'/pages/order/order?index=2'
@@ -589,6 +592,7 @@
 											url: '/pages/person/myGift?checked=1'
 										})
 									}
+
 								}
 
 							} else if (res.cancel) {
@@ -622,7 +626,34 @@
 
 				toast('支付成功');
 
+				//微信小程序下需要模板消息
+				// #ifdef MP-WEIXIN
+				const initData = this.initData
+				if(initData.hasOwnProperty('lp_template') && initData.lp_template){
+					let lp_template = init.lp_template
+					let tmplIds = []
+					switch(Order_Type){
+						case 'spike':
+							tmplIds = lp_template.spike_buy
+							break;
+						case 'pintuan':
+							tmplIds = lp_template.pt_buy
+							break;
+						case 'shop':
+							tmplIds = lp_template.normal_buy
+							break;
+						case 'flashsale':
+							tmplIds = lp_template.flash_buy
+							break;
+					}
+					//调就是了，是否成功都可以
+					wx.requestSubscribeMessage({tmplIds})
+				}
+
+				// #endif
+
 				//拼团订单则跳转到开团成功
+
 
 				if(Order_Type === 'pintuan'){
 					uni.redirectTo({

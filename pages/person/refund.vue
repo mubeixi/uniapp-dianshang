@@ -133,6 +133,7 @@ import {uploadImage,getRefund,orderRefund,GET_ENV,get_Users_ID,get_User_ID,creat
 import {pageMixin} from "../../common/mixin";
 import {uploadImages,ls} from '../../common/tool.js'
 import {error} from "../../common";
+import {mapActions,mapGetters} from 'vuex';
 
 export default {
 	mixins:[pageMixin],
@@ -166,6 +167,9 @@ export default {
 	},
 	created() {
 
+	},
+	computed:{
+		...mapGetters(['initData']),
 	},
     methods: {
 		// 退款说明
@@ -225,6 +229,18 @@ export default {
 				Order_ID: this.Order_ID
 			}).then(res=>{
 				if(res.errorCode == 0){
+
+					//微信小程序下需要模板消息
+					// #ifdef MP-WEIXIN
+					const initData = this.initData
+					if(initData.hasOwnProperty('lp_template') && initData.lp_template){
+						let lp_template = init.lp_template
+						let tmplIds = lp_template.back_commit
+						//调就是了，是否成功都可以
+						wx.requestSubscribeMessage({tmplIds})
+					}
+					// #endif
+
 					uni.showToast({
 						title: '提交成功',
 						duration: 1500,

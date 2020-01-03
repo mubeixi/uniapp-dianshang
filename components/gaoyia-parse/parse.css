@@ -27,6 +27,7 @@
 .wxParse .p {
 	/* padding-bottom: 0.5em; */
 	clear: both;
+	padding: 0 6px;
 	/* letter-spacing: 0;//字间距 */
 }
 .wxParse .inline {
