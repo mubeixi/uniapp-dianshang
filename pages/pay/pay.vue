@@ -628,28 +628,28 @@
 
 				//微信小程序下需要模板消息
 				// #ifdef MP-WEIXIN
-				const initData = this.initData
-				if(initData.hasOwnProperty('lp_template') && initData.lp_template){
-					let lp_template = initData.lp_template
-					let tmplIds = []
-					switch(Order_Type){
-						case 'spike':
-							tmplIds = lp_template.spike_buy
-							break;
-						case 'pintuan':
-							tmplIds = lp_template.pt_buy
-							break;
-						case 'shop':
-							tmplIds = lp_template.normal_buy
-							break;
-						case 'flashsale':
-							tmplIds = lp_template.flash_buy
-							break;
-					}
-					//调就是了，是否成功都可以
-					console.log('调用wx.requestSubscribeMessage',tmplIds)
-					wx.requestSubscribeMessage({tmplIds,success (res) {console.log('success',res)},fail(err) {console.log('fail',err)}})
-				}
+				// const initData = this.initData
+				// if(initData.hasOwnProperty('lp_template') && initData.lp_template){
+				// 	let lp_template = initData.lp_template
+				// 	let tmplIds = []
+				// 	switch(Order_Type){
+				// 		case 'spike':
+				// 			tmplIds = lp_template.spike_buy
+				// 			break;
+				// 		case 'pintuan':
+				// 			tmplIds = lp_template.pt_buy
+				// 			break;
+				// 		case 'shop':
+				// 			tmplIds = lp_template.normal_buy
+				// 			break;
+				// 		case 'flashsale':
+				// 			tmplIds = lp_template.flash_buy
+				// 			break;
+				// 	}
+				// 	//调就是了，是否成功都可以
+				// 	console.log('调用wx.requestSubscribeMessage',tmplIds)
+				// 	wx.requestSubscribeMessage({tmplIds,success (res) {console.log('success',res)},fail(err) {console.log('fail',err)}})
+				// }
 
 				// #endif
 
