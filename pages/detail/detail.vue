@@ -324,6 +324,71 @@ export default {
 		this._init_func(option)
 
 
+		// #ifdef APP-PLUS
+			const vm = this;
+
+			
+			//隐藏规格框
+			// const goodsSpecNvue = uni.getSubNVueById('goodsSpec')
+			// goodsSpecNvue.hide()
+			
+			// //隐藏优惠券
+			// const coupon = uni.getSubNVueById('coupon')
+			// coupon.hide()
+			
+			// //隐藏优惠券
+			// const share = uni.getSubNVueById('share')
+			// share.hide()
+			
+			const subNVue2 = uni.getSubNVueById('goodsBottom')
+			subNVue2.show()
+
+		//hack app的商品详情页购买
+		//const vm = this;
+		uni.$on('cartHandle', (data) => {
+			vm.addCart()
+		})
+		uni.$on('directHandle',(data)=>{
+			vm.directBuy()
+		})
+		
+		uni.$on('collectHandle',(data)=>{
+			console.log('触发收藏事件')
+			vm.collect()
+		})
+		uni.$on('getMyCoupon',(data)=>{
+			console.log('触发领取事件')
+			vm.getMyCoupon(data.item,data.i)
+		})
+		uni.$on('goNextPage',(data)=>{
+			console.log('触发优惠券下一页事件')
+			vm.goNextPage()
+		})
+		
+		uni.$on('shareDetail',(data)=>{
+			
+			if(data.detail!='detail') return
+				console.log('触发普通详情分享')
+				vm.shareFunc(data.item)
+			
+			
+		})
+		
+		uni.$on('goodsSkuSub',(data)=>{
+			if(data.detail!='detail') return
+			console.log('触发这么多次事件????')
+			let {check_attr,check_attrid_arr,submit_flag,postData} = data
+			this.check_attr = check_attr
+			this.check_attrid_arr = check_attrid_arr
+			this.submit_flag = submit_flag
+			this.postData = postData
+			vm.skuSub()
+			//隐藏规格框
+			const goodsSpecNvue = uni.getSubNVueById('goodsSpec')
+			goodsSpecNvue.hide()
+		})
+		
+		// #endif
 
 
 	 },
@@ -355,28 +420,7 @@ export default {
 		const USERINFO = ls.get('userInfo');
 		console.log('USERINFO',USERINFO);
 
-		// #ifdef APP-PLUS
-		const vm = this;
-		const subNVue1 = uni.getSubNVueById('video')
-		subNVue1.hide()
-		uni.$emit('page-video-stop', {});
-
-		//隐藏规格框
-		const goodsSpecNvue = uni.getSubNVueById('goodsSpec')
-		goodsSpecNvue.hide()
-
-		//隐藏优惠券
-		const coupon = uni.getSubNVueById('coupon')
-		coupon.hide()
-
-		//隐藏优惠券
-		const share = uni.getSubNVueById('share')
-		share.hide()
-
-		const subNVue2 = uni.getSubNVueById('goodsBottom')
-		subNVue2.show()
-		// #endif
-
+		
 
 		// #ifdef APP-PLUS
 		var icon = plus.nativeObj.View.getViewById("icon");
@@ -426,19 +470,19 @@ export default {
 
 
 			//隐藏规格框
-			const goodsSpecNvue = uni.getSubNVueById('goodsSpec')
-			goodsSpecNvue.hide()
+			// const goodsSpecNvue = uni.getSubNVueById('goodsSpec')
+			// goodsSpecNvue.hide()
 
-			//隐藏优惠券
-			const coupon = uni.getSubNVueById('coupon')
-			coupon.hide()
+			// //隐藏优惠券
+			// const coupon = uni.getSubNVueById('coupon')
+			// coupon.hide()
 
-			//隐藏优惠券
-			const share = uni.getSubNVueById('share')
-			share.hide()
+			// //隐藏优惠券
+			// const share = uni.getSubNVueById('share')
+			// share.hide()
 
-			const subNVue2 = uni.getSubNVueById('goodsBottom')
-			subNVue2.hide()
+			// const subNVue2 = uni.getSubNVueById('goodsBottom')
+			// subNVue2.hide()
 
 		// #endif
 
@@ -1249,53 +1293,7 @@ export default {
 		this.wxMiniOriginId = WX_MINI_ORIGIN_ID;
 		console.log('wxMiniOriginId is '+this.wxMiniOriginId)
 
-		// #ifdef APP-PLUS
-		//hack app的商品详情页购买
-		const vm = this;
-		uni.$on('cartHandle', (data) => {
-			vm.addCart()
-		})
-		uni.$on('directHandle',(data)=>{
-			vm.directBuy()
-		})
-
-		uni.$on('collectHandle',(data)=>{
-			console.log('触发收藏事件')
-			vm.collect()
-		})
-		uni.$on('getMyCoupon',(data)=>{
-			console.log('触发领取事件')
-			vm.getMyCoupon(data.item,data.i)
-		})
-		uni.$on('goNextPage',(data)=>{
-			console.log('触发优惠券下一页事件')
-			vm.goNextPage()
-		})
-
-		uni.$on('shareDetail',(data)=>{
-			
-			if(data.detail!='detail') return
-				console.log('触发普通详情分享')
-				vm.shareFunc(data.item)
-			
-			
-		})
-
-		uni.$on('goodsSkuSub',(data)=>{
-			if(data.detail!='detail') return
-			console.log('触发这么多次事件????')
-			let {check_attr,check_attrid_arr,submit_flag,postData} = data
-			this.check_attr = check_attr
-			this.check_attrid_arr = check_attrid_arr
-			this.submit_flag = submit_flag
-			this.postData = postData
-			vm.skuSub()
-			//隐藏规格框
-			const goodsSpecNvue = uni.getSubNVueById('goodsSpec')
-			goodsSpecNvue.hide()
-		})
-
-		// #endif
+		
 
 
 

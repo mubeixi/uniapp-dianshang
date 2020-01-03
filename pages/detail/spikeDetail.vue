@@ -95,7 +95,7 @@
         	    </div>
         	    <div class="c_content_msg">{{item.Note}}</div>
         	    <div class="c_content_img">
-        			<block v-for="(i,j) of item.ImgPath">
+        			<block v-for="(i,j) of item.ImgPath" :key="j">
         				 <img :src="i" @click="yulanImg(index,j)">
         			</block>
         	    </div>
@@ -344,12 +344,7 @@ export default {
 		  // this.checkProdCollected();
 	},
 	onShow() {
-		// #ifdef APP-PLUS
-			const vm = this;
-			const subNVue1 = uni.getSubNVueById('video')
-			subNVue1.hide()
-			uni.$emit('page-video-stop', {});  
-			// #endif
+	
 
 		//this.getDetail(this.flashsale_id);
 		// this.getCommit(this.Products_ID);
