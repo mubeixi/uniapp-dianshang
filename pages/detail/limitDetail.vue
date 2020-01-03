@@ -327,12 +327,7 @@ export default {
 		 this._init_func();
 	},
 	onShow() {
-		// #ifdef APP-PLUS
-			const vm = this;
-			const subNVue1 = uni.getSubNVueById('video')
-			subNVue1.hide()
-			uni.$emit('page-video-stop', {});  
-			// #endif
+
 
 		//this.getDetail(this.spike_good_id);
 	},
