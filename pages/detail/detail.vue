@@ -388,6 +388,11 @@ export default {
 			goodsSpecNvue.hide()
 		})
 
+		
+		uni.$on('goGet',(data)=>{
+			console.log('触发立即领取')
+			vm.lingqu()
+		})
 		// #endif
 
 
@@ -757,6 +762,7 @@ export default {
 			judgeReceiveGift({gift: this.gift}).then(res=>{
 				console.log(res)
 				if(res.errorCode ==0){
+	
 					this.gift_attr_id = res.data.attr_id;
 					this.skuval = res.data.skuval.split(';');
 
@@ -767,7 +773,10 @@ export default {
 					});
 					this.canSubmit = false;
 				}
-
+				
+				// #ifdef APP-PLUS
+					uni.$emit('goods_bottom_setval', {isCollected:this.isCollected,canSubmit:this.canSubmit});
+				// #endif
 				
 			}).catch(res=>{
 			
