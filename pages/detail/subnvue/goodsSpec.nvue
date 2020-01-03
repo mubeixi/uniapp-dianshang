@@ -220,7 +220,7 @@
 	}
 
 	.cartTitle {
-		margin-left: 20upx;
+		/* margin-left: 20upx; */
 		font-size: 32upx;
 		width: 420upx;
 		flex-direction:column;
@@ -238,7 +238,7 @@
 		width: 450upx;
 		margin-top: 70upx;
 		justify-content: space-between;
-		align-items: flex-end;
+		align-items: center;
 	}
 
 	.addPrice {
@@ -249,7 +249,7 @@
 	.proSale {
 		font-size: 24upx;
 		color: #999;
-		justify-content: flex-end;
+		/* justify-content: flex-end; */
 	}
 
 	.cartCenter {

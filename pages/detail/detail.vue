@@ -757,12 +757,10 @@ export default {
 			judgeReceiveGift({gift: this.gift}).then(res=>{
 				console.log(res)
 				if(res.errorCode ==0){
-					console.log('22')
 					this.gift_attr_id = res.data.attr_id;
 					this.skuval = res.data.skuval.split(';');
 
 				}else if(res.errorCode == 1) {
-					console.log('res')
 					uni.showModal({
 						title: res.data.msg,
 						showCancel: false
@@ -770,12 +768,9 @@ export default {
 					this.canSubmit = false;
 				}
 
-				// #ifdef APP-PLUS
-					uni.$emit('goods_bottom_setval', {isCollected:this.isCollected,canSubmit:this.canSubmit});
-				// #endif
-
+				
 			}).catch(res=>{
-				console.log('catch222222222222222')
+			
 			})
 		},
 		//评价预览
