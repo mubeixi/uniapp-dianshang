@@ -74,6 +74,14 @@ export const WX_JSSDK_INIT = (vm, jsApiListList) => new Promise((resolve, reject
 
 import {sendAnalysisData} from "./fetch";
 
+
+
+// #ifdef H5
+//目前只支持h5环境下录屏
+var rrweb = require('rrweb')
+console.log(rrweb)
+// #endif
+
 export const Analysis = {
 	data(){
 		return {
@@ -83,6 +91,44 @@ export const Analysis = {
 	},
 	onLoad(options){
 		this.analysisExt.options = JSON.stringify(options)
+	},
+	onShow(){
+		// #ifdef H5
+		let events = [];
+		
+		rrweb.record({
+		  emit(event) {
+			// 将 event 存入 events 数组中
+			events.push(event);
+		  },
+		});
+		
+		//save 函数用于将 events 发送至后端存入，并重置 events 数组
+		function save() {
+		  const body = JSON.stringify(events);
+		  
+		  events = [];
+		  console.log('发送一次')
+		  
+		  uni.request({
+		     header:{ "content-type": "application/x-www-form-urlencoded"},
+		      url: '/node/debug',
+		      method:'post',
+		      data:{func:body},
+			  success: (res) => {
+			  	console.log(res)
+			  }
+			  
+		  })
+		  
+		}
+		//
+		save()
+		//setTimeout(()=>{save()},1000)
+		// // 每 10 秒调用一次 save 方法，避免请求过多
+		setInterval(save, 10 * 1000);
+		// #endif
+		
 	},
 	onTabItemTap(onTabItemTap){
 
@@ -104,27 +150,10 @@ export const Analysis = {
 
 		ls.set('temp_tab_url',pagePath)
 
-		// let d = new Date();
-		// let postData = {y,x,_timeStamp:parseInt(d.getTime()/1000)}
-		//
-		// if(!emptyObject(postData,1))return;//距离和坐标是肯定要有的
-		// Object.assign(postData,this.analysisExt);
-		//
-		// let history = ls.get('analysis')
-		// if(!history)history=[]
-		// history.push(postData)
-		// ls.set('analysis',history)
-		// console.log(postData)
-		//
-		// sendAnalysisData(postData).then(res=>{}).catch(e=>{})
-
 	},
 	methods:{
 		commonClick(evt){
-			//if(isDev)return;
-			//console.log(333333333)
-			//console.log(JSON.stringify(evt))
-			// {"id":"","offsetLeft":0,"offsetTop":0,"dataset":{},"x":114,"y":1369},"currentTarget":{"id":"","offsetLeft":0,"offsetTop":0,"dataset
+			
 			//坐标
 			let {x,y,view_type='tap'} = evt.target
 
@@ -154,14 +183,10 @@ export const Analysis = {
 
 			//进入页面
 			this.commonClick({target:{x:0,y:0,view_type:'enter'}})
-			//console.log(currentPageName)
-			//sendAnalysisData({url:currentPageName}).then(res=>{}).catch(e=>{})
-
+		
 		})
 	}
 }
-
-
 
 
 
@@ -280,39 +305,6 @@ export const pageMixin = {
 		// #ifdef APP-PLUS
 		plus.key.hideSoftKeybord();
 		// #endif
-
-
-
-		// #ifdef H5
-		let events = [];
-		console.log(3333333333333333)
-		// rrweb.record({
-		//   emit(event) {
-		// 	// 将 event 存入 events 数组中
-		// 	events.push(event);
-		//   },
-		// });
-
-		// save 函数用于将 events 发送至后端存入，并重置 events 数组
-		// function save() {
-		//   const body = JSON.stringify({ events });
-		//   events = [];
-		//   console.log('发送一次')
-		//   fetch('http://localhost:9100/debug', {
-		// 	method: 'POST',
-		// 	headers: {
-		// 	  'Content-Type': 'application/json',
-		// 	},
-		// 	body,
-		//   });
-		// }
-		//
-		// // 每 10 秒调用一次 save 方法，避免请求过多
-		// setInterval(save, 10 * 1000);
-		// #endif
-
-
-
 
 	},
 	async created() {
