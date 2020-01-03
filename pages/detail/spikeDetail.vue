@@ -1,11 +1,9 @@
 <template>
-  <div @click="commonClick" style="position:relative;background-color:#f8f8f8;overflow-x: hidden;">
+  <div @click="commonClick" class="spikeWrap">
     <div class="top">
         <image class="imgm" src="/static/back.png" @click="goBack" ></image>
         <image class="imgm cart" src="/static/cart.png" @click="goCart" ></image>
 	</div>
-
-
 
 	<!-- 轮播 -->
 	<view class="uni-padding-wrap">
@@ -355,7 +353,7 @@ export default {
 		  this.flashsale_id = option.flashsale_id;
 		  this._init_func();
 		  // this.checkProdCollected();
-		  
+
 		  // #ifdef APP-PLUS
 			const vm =this
 			uni.$on('collectSpike',(data)=>{
@@ -363,24 +361,24 @@ export default {
 				console.log('触发秒杀收藏事件')
 				vm.collect()
 			})
-			
-			
+
+
 			uni.$on('cartSpike',(data)=>{
 				console.log('触发秒杀零售价购买')
 				vm.myPays()
 			})
-			
+
 			uni.$on('directSpike',(data)=>{
 				console.log('触发秒杀预约')
 				vm.flashsaleReserve()
 			})
-			
+
 			uni.$on('spikeBuy',(data)=>{
 				if(data.detail!='spike') return
 				console.log('触发秒杀抢购')
 				vm.myPay()
 			})
-			
+
 			uni.$on('goodsSkuSub',(data)=>{
 				if(data.detail!='spike') return
 				console.log('触发这么多次事件????')
@@ -394,11 +392,11 @@ export default {
 				const goodsSpecNvue = uni.getSubNVueById('goodsSpec')
 				goodsSpecNvue.hide()
 			})
-			
+
 		  // #endif
 	},
 	onShow() {
-	
+
 
 		//this.getDetail(this.flashsale_id);
 		// this.getCommit(this.Products_ID);
@@ -692,7 +690,7 @@ export default {
 			checkProdCollected({prod_id: item}).then(res => {
 				if(res.errorCode == 0) {
 					this.isCollected = res.data.is_favourite == 1
-					
+
 					// #ifdef APP-PLUS
 						uni.$emit('spike_bottom_setval', {isCollected:this.isCollected,isKai:this.isKai,detail:'spike'});
 					// #endif
@@ -705,10 +703,10 @@ export default {
 		myPin(e){
 
 			console.log(e);
-			add_template_code({
-				code: e.detail.formId,
-				times: 1
-			})
+			// add_template_code({
+			// 	code: e.detail.formId,
+			// 	times: 1
+			// })
 			if(!this.$fun.checkIsLogin(1))return;
 			this.$refs.cartPopu.show();
 		},
@@ -762,7 +760,7 @@ export default {
 			}
 			if(!this.$fun.checkIsLogin(1))return;
 			// delete this.postData.active ;
-			
+
 			// #ifdef APP-PLUS
 				const goodsSpecNvue = uni.getSubNVueById('goodsSpec')
 				goodsSpecNvue.show('slide-in-bottom',200)
@@ -968,8 +966,8 @@ export default {
 					}
 			}
 
-			
-			
+
+
 			//console.log(rt)
 
 			this.countdown = rt
@@ -997,7 +995,7 @@ export default {
 						this.product.skuvaljosn = typeof res.data.skuvaljosn === 'string' ?JSON.parse(res.data.skuvaljosn):res.data.skuvaljosn;
 					}
 
-					
+
 
 					//this.stampCount()
 					//开发时候一直倒计时太乱了
@@ -1015,8 +1013,8 @@ export default {
 								val: skujosn[i]
 							});
 						}
-					
-					
+
+
 						this.product.skujosn_new = skujosn_new;
 						this.product.skuvaljosn = res.data.skuvaljosn;
 						//console.log(this.product.skujosn);
@@ -1036,7 +1034,7 @@ export default {
 
 					// #endif
 
-				
+
 					// #ifdef H5
 
 					let path = 'pages/detail/spikeDetail?flashsale_id='+this.flashsale_id;
@@ -1128,6 +1126,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.spikeWrap{
+	position:relative;background-color:#f8f8f8;overflow-x: hidden;
+}
 // 轮播样式
 .uni-padding-wrap{
 	width: 750rpx;

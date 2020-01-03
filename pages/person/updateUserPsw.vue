@@ -76,10 +76,10 @@
 				},1000)
 			},
 			confirm(e){
-				add_template_code({
-					code: e.detail.formId,
-					times: 1
-				})
+				// add_template_code({
+				// 	code: e.detail.formId,
+				// 	times: 1
+				// })
 				if(!(/^1[3456789]\d{9}$/.test(this.mobile))){
 					uni.showToast({
 						title:'手机号输入错误，请重新输入',
@@ -151,10 +151,10 @@
 			save(e){
 
 				console.log(e)
-				add_template_code({
-					code: e.detail.formId,
-					times: 1
-				})
+				// add_template_code({
+				// 	code: e.detail.formId,
+				// 	times: 1
+				// })
 
 				let arg = {
 					curr_psw: this.curr_psw,

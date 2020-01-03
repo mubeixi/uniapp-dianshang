@@ -396,11 +396,11 @@ export default {
 		  this.setStoreMode = prod_id+'::'+attr_id
 		  let ids ={[prod_id]:[attr_id]}
 		  if(store){
-			   this.$refs.stroeComp.show(ids,store.Stores_ID) 
+			   this.$refs.stroeComp.show(ids,store.Stores_ID)
 		  }else{
-			 this.$refs.stroeComp.show(ids) 
+			 this.$refs.stroeComp.show(ids)
 		  }
-          
+
 
       },
 		...mapActions(['getUserInfo','setUserInfo']),
@@ -496,10 +496,10 @@ export default {
 					}
 					this.postData.self_pick_store_id=JSON.stringify(obj)
 				}
-				add_template_code({
-					code: e.detail.formId,
-					times: 1
-				})
+				// add_template_code({
+				// 	code: e.detail.formId,
+				// 	times: 1
+				// })
 				createOrder(this.postData).then(res=>{
 					if(res.errorCode == 0) {
 						// 如果order_totalPrice <= 0  直接跳转 订单列表页

@@ -121,7 +121,7 @@
 /* #ifndef APP-NVUE */
 @import "./static/css/app.less";
 @import "./static/css/icon.css";
-//@import "./components/u-parse/u-parse.css";
+@import "./components/gaoyia-parse/parse.css";
 /* #endif */
 </style>
 

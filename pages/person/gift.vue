@@ -246,10 +246,10 @@ export default {
 		form_submit(e) {
 
 			console.log(e)
-			add_template_code({
-				code: e.detail.formId,
-				times: 1
-			})
+			// add_template_code({
+			// 	code: e.detail.formId,
+			// 	times: 1
+			// })
 			if(!this.submited){
 				this.submited = true;
 				if(this.orderInfo.is_virtual == 0) {

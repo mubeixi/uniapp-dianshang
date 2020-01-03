@@ -66,7 +66,9 @@ export default {
 			this.info = res.data
 		},err=>{}).catch()
 	},
+
 	computed:{
+
 		payChannelList(){
 			let obj = {};
 
@@ -340,6 +342,19 @@ export default {
 		},
 		paySuccessCall(){
 			let _self = this;
+
+			//微信小程序下需要模板消息
+			// #ifdef MP-WEIXIN
+			// const initData = this.initData
+			// if(initData.hasOwnProperty('lp_template') && initData.lp_template){
+			// 	let lp_template = initData.lp_template
+			// 	let tmplIds = lp_template.charge_pay
+			// 	//调就是了，是否成功都可以
+			// 	console.log('调用wx.requestSubscribeMessage',tmplIds)
+			// 	wx.requestSubscribeMessage({tmplIds})
+			// }
+			// #endif
+
 			uni.showToast({
 				title: '支付成功'
 			});
