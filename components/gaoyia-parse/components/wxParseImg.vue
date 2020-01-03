@@ -30,7 +30,7 @@ export default {
 			}
 		}
 	},
-	
+
 	methods: {
 		wxParseImgTap(e) {
 			if (!this.preview) return;

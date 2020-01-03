@@ -19,12 +19,13 @@
 	line-height: 1.5;
 	font-size: 1em;
 	text-align:justify;/* //左右两端对齐 */
+	overflow-x: hidden;
 }
 .wxParse view ,.wxParse uni-view{
 	word-break: break-word;
 }
 .wxParse .p {
-	padding-bottom: 0.5em;
+	/* padding-bottom: 0.5em; */
 	clear: both;
 	/* letter-spacing: 0;//字间距 */
 }
@@ -144,12 +145,14 @@
 
 .wxParse .video {
   text-align: center;
-  margin: 0upx 0;
+  margin: 0upx auto;
+  
 }
 
 .wxParse .video-video {
     width: 100%;
     height: 100%;
+	left: 0;
 }
 .wxParse .uni-image{
 	max-width: 100%;
