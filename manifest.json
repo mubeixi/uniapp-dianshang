@@ -192,7 +192,15 @@
                     "pathRewrite" : {
                         "^/api" : ""
                     }
-                }
+                },
+				"/node" : {
+					"target" : "http://localhost:9100/",//"http://www.gogo.com/api",
+					"changeOrigin" : true,
+					"secure" : false,
+					"pathRewrite" : {
+						"^/node" : ""
+					}
+				}
             }
         },
         "optimization" : {

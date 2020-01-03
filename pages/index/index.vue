@@ -25,7 +25,14 @@
 				<kill-component v-if="item.indexOf('kill') !== -1" :confData="templateData[tagIndex][index]" :index="index"  />
 			</section>
 		</view>
-		<!-- <div style="height: 60px;background: red;position: fixed;bottom: 0;width: 100%"></div> -->
+		<!-- <div style="height: 60px;"></div>
+		<div v-if="tabbar" class="tabbar">
+			<div class="item" @click="tabbarFn(0)">首页</div>
+			<div class="item" @click="tabbarFn(1)">类别</div>
+			<div class="item" @click="tabbarFn(2)">分销</div>
+			<div class="item" @click="tabbarFn(3)">购物车</div>
+			<div class="item" @click="tabbarFn(4)">个人中心</div>
+		</div> -->
 	</view>
 
 </template>
@@ -64,7 +71,8 @@
 				templateList:[],
 				templateData:[],
 				tagIndex:0,
-				system:{}
+				system:{},
+				tabbar:false,
 			}
 		},
 		components:{
@@ -104,6 +112,21 @@
 					title:res.data.ShopName
 				})
 			},err=>{}).catch(error=>{})
+			
+			
+			setTimeout(()=>{
+				
+				// this.tabbar = true
+				// uni.setTabBarItem({
+				// 	index:1,
+				// 	text:'花里胡哨',
+				// 	iconPath:'https://img-cdn-qiniu.dcloud.net.cn/uniapp/doc/uniapp4@2x.png',
+				// 	selectedIconPath:'https://img-cdn-qiniu.dcloud.net.cn/uniapp/doc/uniapp4@2x.png',
+				// 	success:function(res){console.log(res)},
+				// 	fail:function(e){console.log(e)},
+				// 	complete:function(res){},
+				// })
+			},500)
 
 		},
 		async onPullDownRefresh(){
@@ -113,12 +136,19 @@
 			...mapGetters(['initData']),
 		},
 		onLoad() {
-
+			// uni.hideTabBar()
 		},
 		created(){
 			this.initFunc()
 		},
 		methods: {
+			tabbarFn(idx){
+				const tabbarRouter = ['/pages/index/index', '/pages/classify/classify', '/pages/detail/groupSuccess', '/pages/order/cart', '/pages/person/person'];
+				
+				uni.switchTab({
+					url:tabbarRouter[idx]
+				})
+			},
 			initFunc(){
 				let _self = this;
 				new Promise((resolve,reject) => {
@@ -190,6 +220,18 @@
 </script>
 
 <style lang="less" scope="scope">
+	.tabbar{
+		height: 60px;background: red;position: fixed;bottom: 0;width: 100%;
+		display: flex;
+		z-index: 999;
+		.item{
+			flex: 1;
+			text-align: center;
+			line-height: 60px;
+			font-size: 14px;
+			color: #fff;
+		}
+	}
 	.home-wrap{
 		width: 750rpx;
 		overflow-x: hidden;
