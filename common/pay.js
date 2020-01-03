@@ -226,10 +226,10 @@ export const unipayFunc = (vm, pay_type, payRequestData) => {
         ...orderInfo,
         provider,
         success: function (res) {
-            add_template_code({
-                code: prepay_id,
-                times: 3
-            })
+            // add_template_code({
+            //     code: prepay_id,
+            //     times: 3
+            // })
             console.log('success:' + JSON.stringify(res));
             _self.paySuccessCall(res)
         },

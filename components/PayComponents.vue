@@ -44,15 +44,6 @@
     }
 
     export default {
-        // name: "PayComponents",
-        // Order_ID: this.Order_ID,
-        // pay_type: this.pay_type,
-        // pay_money: this.orderInfo.Order_Fyepay, // 剩余支付的钱
-        // use_money: this.user_money , // 使用的余额
-        // user_pay_password: this.user_pay_password, //余额支付密码
-        // need_invoice: this.need_invoice,
-        // invoice_info: this.invoice_info,
-        // order_remark: this.order_remark
         props: {
             //是否自动显示
             isOpen: {

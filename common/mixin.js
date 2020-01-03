@@ -6,8 +6,7 @@ import {buildSharePath, emptyObject, GetQueryByString, isWeiXin, ls} from "./too
 import {domainFn} from "./filter";
 import {checkIsLogin, error} from "./index";
 import {mapActions} from "vuex";
-
-
+import {get_Users_ID,get_User_ID,GET_ENV} from "./fetch";
 
 
 /**
@@ -95,32 +94,36 @@ export const Analysis = {
 	onShow(){
 		// #ifdef H5
 		let events = [];
-		
+
 		rrweb.record({
 		  emit(event) {
 			// 将 event 存入 events 数组中
 			events.push(event);
 		  },
 		});
-		
+
 		//save 函数用于将 events 发送至后端存入，并重置 events 数组
 		function save() {
 		  const body = JSON.stringify(events);
-		  
+
 		  events = [];
 		  console.log('发送一次')
-		  
+		  let postData = {func:body};
+		  postData.User_ID = get_User_ID();
+		  postData.Users_ID = get_Users_ID();   //Users_ID  写死
+		  postData.env = GET_ENV();
+
 		  uni.request({
 		     header:{ "content-type": "application/x-www-form-urlencoded"},
 		      url: '/node/debug',
 		      method:'post',
-		      data:{func:body},
+		      data:emptyObject(postData),
 			  success: (res) => {
 			  	console.log(res)
 			  }
-			  
+
 		  })
-		  
+
 		}
 		//
 		save()
@@ -128,7 +131,7 @@ export const Analysis = {
 		// // 每 10 秒调用一次 save 方法，避免请求过多
 		setInterval(save, 10 * 1000);
 		// #endif
-		
+
 	},
 	onTabItemTap(onTabItemTap){
 
@@ -153,7 +156,7 @@ export const Analysis = {
 	},
 	methods:{
 		commonClick(evt){
-			
+
 			//坐标
 			let {x,y,view_type='tap'} = evt.target
 
@@ -183,7 +186,7 @@ export const Analysis = {
 
 			//进入页面
 			this.commonClick({target:{x:0,y:0,view_type:'enter'}})
-		
+
 		})
 	}
 }

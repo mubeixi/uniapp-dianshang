@@ -96,10 +96,10 @@
 			},
 			submit(e) {
 
-				add_template_code({
-					code: e.detail.formId,
-					times: 1
-				})
+				// add_template_code({
+				// 	code: e.detail.formId,
+				// 	times: 1
+				// })
 				let isMobileOK = /^1(3|5|6|7|8|9)[0-9]{9}$/.test(this.postData.mobile);
 				let isEmailOK = /^([a-zA-Z0-9_\.\-]+)@([a-zA-Z0-9_\.\-]+)\.([a-zA-Z]{2,4})$/.test(this.postData.email);
 				let isQQ = /[1-9][0-9]{4,10}/.test(this.postData.qq)

@@ -25,7 +25,7 @@
 		
 		<!--br类型-->
 		<!-- #ifndef H5 -->
-			<text v-else-if="node.tag == 'br'">\n</text>
+			<text v-else-if="node.tag == 'br'"></text>
 		<!-- #endif -->
 		<!-- #ifdef H5 -->
 			<br v-else-if="node.tag == 'br'">

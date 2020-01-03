@@ -21,8 +21,8 @@ export const formatTime = function (date) {
   return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':')
 }
 
-const formatRichTextByUparse = (html)=>{
-  //let html2 = '<div style="position:relative;z-index:1;width: 750rpx;height: 300rpx;"><video  x5-video-player-type="h5-page"  src="https://new401.bafangka.com/uploadfiles/wkbq6nc2kc/media/5df3493875.mp4"    autostart="false" loop="true" /></div>';
+const formatRichTextByUparseFn = (html)=>{
+
   if(!html) return;
   let newContent= html.replace(/<embed[^>]*>/gi,function(match,capture){
     match = match.replace(/type="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
@@ -34,6 +34,23 @@ const formatRichTextByUparse = (html)=>{
     return match;
   });
 
+  // newContent= newContent.replace(/<img[^>]*>/gi,function(match,capture){
+  //   match = match.replace(/style="[^"]+"/gi, '')//.replace(/style='[^']+'/gi, '');
+  //   match = match.replace(/width="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
+  //   match = match.replace(/height="[^"]+"/gi, '')//.replace(/height='[^']+'/gi, '');
+  //
+  //   //图片app不支持
+  //   // #ifdef APP-PLUS
+  //   match = match.replace(/!*.webp/gi, '')
+  //   // #endif
+  //
+  //   return match;
+  // });
+
+  //newContent = newContent.replace(/\<img/gi, '<img style="width:100%;vertical-align:middle"');
+
+  //newContent = newContent.replace(/inline/gi, '');
+
   return newContent
 }
 
@@ -43,7 +60,7 @@ export const lazyImgUrl = 'https://new401.bafangka.com/uploadfiles/wkbq6nc2kc/im
 export default [
   {
     name:'formatRichTextByUparse',
-    methods:formatRichTextByUparse,
+    methods:formatRichTextByUparseFn,
   },{
     name: 'zero',
     methods: (val) => {

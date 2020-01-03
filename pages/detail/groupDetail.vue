@@ -1406,9 +1406,7 @@
 		margin: 0 auto 5px;
 	}
 
-	.s_top>div:nth-child(1) {
-		/*margin-right: 60px;*/
-	}
+
 
 	.s_bottom {
 		position: relative;

@@ -103,10 +103,10 @@
 			async addInfo(e){
 
 				console.log(e)
-				add_template_code({
-					code: e.detail.formId,
-					times: 1
-				})
+				// add_template_code({
+				// 	code: e.detail.formId,
+				// 	times: 1
+				// })
 				//如果用户不存在openid   手机号其他登录
 				// if(!this.userInfo.openid){
 				// 	if(this.data.Method_Type=='wx_hongbao'||this.data.Method_Type=='wx_zhuanzhang'){
