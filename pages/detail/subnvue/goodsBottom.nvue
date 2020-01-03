@@ -18,9 +18,9 @@
         <div class="rightss">
             <text v-if="!(recieve || isVirtual)" class="dan bTitle" @click="addCart">{{first}}</text>
             <text v-if="!(recieve || isVirtual)" class="tuan bTitle" @click="directBuy">{{second}}</text>
-            <div class="all" @click="lingqu" :class="canSubmit?'':'disable'" v-if="(recieve || isVirtual)">
-                <text>{{isVirtual ? '立即购买' : '立即领取'}}</text>
-            </div>
+            <text class="all" @click="lingqu" :class="canSubmit?'':'disable'" v-if="(recieve || isVirtual)">
+                {{isVirtual ? '立即购买' : '立即领取'}}
+            </text>
         </div>
     </div>
 </template>
@@ -33,7 +33,7 @@
                 isCollected:false,
                 recieve:false,
                 isVirtual:false,
-                canSubmit:false,
+                canSubmit:true,
                 first:'加入购物车',
                 second:'立即购买'
             };
@@ -82,7 +82,8 @@
             },
             lingqu() {
                 if (this.canSubmit) {
-                    this.$emit('goGet')
+					console.log("sssss")
+                    uni.$emit('goGet',{})
                 }
             }
         }
@@ -105,6 +106,7 @@
     flex-direction:row;
     height: 100upx;
     flex:1;
+	align-items: center;
 }
 
 .first {
@@ -151,11 +153,11 @@
 }
 .all {
     flex:1;
-    height: 100%;
+   /* height: 100%;
     text-align: center;
-    line-height: 100upx;
+    line-height: 100upx; */
     background-color: #F43131;
-    color: #fff;
+    color: #fff !important;
 }
 
 .disable {
