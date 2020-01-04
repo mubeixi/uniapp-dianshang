@@ -209,8 +209,8 @@
 		<image src="/static/error.png" class="errImg"></image>
 		活动尚未开始
 	</div>
+	<div class="fixed">
 	<!-- #ifndef APP-PLUS -->
-		<div class="fixed">
 			<div class="leftss">
 				<div class="first" @click="goHome">
 					<div><image class="img" src="/static/detail/home.png" ></image></div>
@@ -255,8 +255,9 @@
 					</form>
 				</block>
 			</div>
-		</div>
 	<!-- #endif -->
+	</div>
+	
   </div>
 </template>
 
