@@ -846,6 +846,9 @@
 			//拼团
 			myPin(e) {
 				this.isPin = true;
+				if (!this.$fun.checkIsLogin(1, 1)) {
+					return;
+				}
 				this.postData.Products_PriceX = this.product.pintuan_pricex;
 				if (e) {
 					console.log(e);
@@ -873,6 +876,9 @@
 			//单独购买
 			myPay(e) {
 				this.isPin = false;
+				if (!this.$fun.checkIsLogin(1, 1)) {
+					return;
+				}
 				this.postData.Products_PriceX = this.product.Products_PriceX;
 				if (e) {
 					console.log(e);
@@ -1939,7 +1945,7 @@
 			margin-top: 20rpx;
 
 			.cartAttr {
-				display: flex;
+				//display: flex;
 				padding: 15rpx 0rpx;
 
 				.sku {
@@ -1947,11 +1953,13 @@
 					height: 70rpx;
 					line-height: 70rpx;
 					width: 140rpx;
+					padding-left: 10px;
+					margin-bottom: 5px;
 				}
 
 				.skuValue {
 					display: flex;
-					flex: 1;
+					//flex: 1;
 					flex-wrap: wrap;
 
 					.skuview {
