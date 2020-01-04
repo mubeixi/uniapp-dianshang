@@ -201,8 +201,9 @@
 		</form>
 
 	</popupLayer>
-	<div class="safearea-box"></div>
+	
 	<!-- #ifndef APP-PLUS -->
+		<div class="safearea-box"></div>
 		<div class="fixed">
 			<div class="leftss">
 				<div class="first" @click="goHome">

@@ -418,8 +418,8 @@
 			// const share = uni.getSubNVueById('share')
 			// share.hide()
 
-			const groupBottom = uni.getSubNVueById('groupBottom')
-			groupBottom.show()
+			// const groupBottom = uni.getSubNVueById('groupBottom')
+			// groupBottom.show()
 
 			// const goodsSpecNvue = uni.getSubNVueById('goodsSpec')
 			// goodsSpecNvue.hide()
@@ -472,8 +472,8 @@
 			const share = uni.getSubNVueById('share')
 			share.hide()
 
-			const groupBottom = uni.getSubNVueById('groupBottom')
-			groupBottom.hide()
+			// const groupBottom = uni.getSubNVueById('groupBottom')
+			// groupBottom.hide()
 
 			const goodsSpecNvue = uni.getSubNVueById('goodsSpec')
 			goodsSpecNvue.hide()
