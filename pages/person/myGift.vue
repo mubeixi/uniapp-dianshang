@@ -232,7 +232,7 @@ view{
 			}
 			.button{
 				width: 463rpx;
-				margin-top: 22rpx;
+				margin-top: 15rpx;
 				height: 55rpx;
 				display: flex;
 				.sku{
