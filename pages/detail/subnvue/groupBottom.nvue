@@ -107,7 +107,7 @@
     justify-content: center;
     align-items: center;
     flex:1;
-    flex-direction:row;
+  /*  flex-direction:row; */
 }
 .img {
     width: 38upx;
@@ -116,6 +116,7 @@
 .txt {
     font-size: 24upx;
     margin-left: 4upx;
+	margin-top: 5px;
 }
 
 .bTitle {

@@ -259,19 +259,21 @@
 
 	.sku {
 		font-size: 28upx;
-		width: 140upx;
-		text-align: center;
+		/* width: 140upx;
+		text-align: center; */
+		margin-bottom: 20upx;
+		margin-left: 20upx;
 	}
 
 	.cartAttr {
 		width: 750upx;
 		/*height: 300upx;*/
 		/*padding: 15upx 0upx;*/
-		flex-direction:row;
+		/* flex-direction:row; 横向排列*/
 	}
 
 	.skuValue {
-		width: 610upx;
+		width: 750upx;
 		flex-direction:row;
 		flex-wrap: wrap;
 
@@ -288,7 +290,8 @@
 		align-items: center;
 		justify-content: center;
 		 /*border: 1px solid #ccc;*/
-		border-width: 1px;border-color: #ccc;border-radius: 10upx;
+		/* border-width: 1px;border-color: #ccc; */
+		border-radius: 10upx;
 	}
 	.skuview-txt{
 		font-size: 14px;

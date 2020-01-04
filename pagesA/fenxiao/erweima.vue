@@ -136,9 +136,9 @@
 		left: 19rpx;
 	}
 	.person{
-		width: 400rpx;
+		width: 550rpx;
 		height: 92rpx;
-
+		overflow: hidden;
 		position: absolute;
 		top: 103rpx;
 		left: 21rpx;

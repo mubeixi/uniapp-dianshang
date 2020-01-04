@@ -459,6 +459,8 @@ export default {
 			uni.$off('shareDetail')
 
 			uni.$off('goodsSkuSub')
+			
+			uni.$off('goGet')
 		// #endif
 	},
 	onHide(){
@@ -733,7 +735,6 @@ export default {
 		},
 		// 立即领取
 		lingqu(){
-			
 			if(this.isVirtual) {
 				this.directBuy();
 				return;
@@ -1701,17 +1702,19 @@ export default {
 		.cartCenter{
 			margin-top: 20rpx;
 			.cartAttr{
-				display: flex;
+				//display: flex;
 				padding: 15rpx 0rpx;
 				.sku{
 					font-size: 28rpx;
 					height: 70rpx;
 					line-height: 70rpx;
 					width: 140rpx;
+					padding-left: 10px;
+					margin-bottom: 5px;
 				}
 				.skuValue{
 					display: flex;
-					flex:1;
+					//flex:1;
 					flex-wrap: wrap;
 					.skuview{
 						margin-bottom: 10px;

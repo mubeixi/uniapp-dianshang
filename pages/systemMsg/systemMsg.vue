@@ -24,6 +24,9 @@
 				{{item.Message_Description}}
 			</view>
 		</view>
+		<div class="defaults" v-if="pro.length<=0">
+			<image :src="'/static/client/defaultImg.png'|domain" ></image>
+		</div>
 	</view>
 </template>
 
@@ -153,4 +156,10 @@
 		transition: max-height ease-in 0.2s;
 	}
 }
+.defaults{
+		margin: 0 auto;
+		width: 640rpx;
+		height: 480rpx;
+		margin-top: 100rpx;
+	}
 </style>

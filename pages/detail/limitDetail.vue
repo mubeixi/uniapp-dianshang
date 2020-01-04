@@ -333,13 +333,13 @@ export default {
 		// #ifdef APP-PLUS
 			const vm =this
 			uni.$on('collectSpike',(data)=>{
-				if(data.detail!='limit') return
+				//if(data.detail!='limit') return
 				console.log('触发limit收藏事件')
 				vm.collect()
 			})
 			
 			uni.$on('spikeBuy',(data)=>{
-				if(data.detail!='limit') return
+				//if(data.detail!='limit') return
 				console.log('触发limit抢购')
 				vm.myPin()
 			})
@@ -367,9 +367,7 @@ export default {
 			uni.$off('goodsSkuSub')
 		// #endif
 	},
-	onShow() {
-
-
+	onShow(){
 		//this.getDetail(this.spike_good_id);
 	},
 	filters: {
@@ -700,7 +698,9 @@ export default {
 		},
 		//拼团
 		myPin(e){
-			if(!this.$fun.checkIsLogin(1))return;
+			if (!this.$fun.checkIsLogin(1, 1)) {
+				return;
+			}
 			// #ifdef APP-PLUS
 				const goodsSpecNvue = uni.getSubNVueById('goodsSpec')
 				goodsSpecNvue.show('slide-in-bottom',200)
@@ -713,6 +713,9 @@ export default {
 		},
 		//单独购买
 		myPay(e){
+			if (!this.$fun.checkIsLogin(1, 1)) {
+				return;
+			}
 
 			if(e){
 				console.log(e);
@@ -1598,17 +1601,19 @@ export default {
 		.cartCenter{
 			margin-top: 20rpx;
 			.cartAttr{
-				display: flex;
+				//display: flex;
 				padding: 15rpx 0rpx;
 				.sku{
 					font-size: 28rpx;
 					height: 70rpx;
 					line-height: 70rpx;
 					width: 140rpx;
+					padding-left: 10px;
+					margin-bottom: 5px;
 				}
 				.skuValue{
 					display: flex;
-					flex:1;
+					//flex:1;
 					flex-wrap: wrap;
 					.skuview{
 						margin-bottom: 10px;

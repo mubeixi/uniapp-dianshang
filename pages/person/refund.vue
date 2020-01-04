@@ -296,10 +296,16 @@ export default {
 						//上传图片
 						let arrs=[];
 						arrs.push(item.path);
-						let arr=uploadImages(data,arrs);
-						that.arr.push(arr);
-						//是否可以提交
-						that.isSubmit=true;
+						uploadImages(data,arrs).then(urls=>{
+
+							that.arr.push(urls);
+							//是否可以提交
+							that.isSubmit = true;
+						});
+
+						// that.arr.push(arr);
+						// //是否可以提交
+						// that.isSubmit=true;
 					}
 
 				},

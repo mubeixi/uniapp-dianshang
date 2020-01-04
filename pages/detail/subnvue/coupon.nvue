@@ -52,7 +52,7 @@
 
 <style >
 	.ticks{
-		height: 600upx;
+		height: 700upx;
 	}
 .t_title {
 		font-size: 15px;

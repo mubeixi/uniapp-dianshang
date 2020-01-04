@@ -158,7 +158,7 @@ export const goProductDetail = (id, is_group) => {
     })
 }
 
-const tabbarRouter = ['/pages/index/index', '/pages/classify/classify', '/pages/detail/groupSuccess', '/pages/order/cart', '/pages/person/person'];
+const tabbarRouter = ['/pages/index/index', '/pages/classify/classify', '/pages/detail/groupSuccess', '/pages/order/cart', '/pages/person/person', '/pages/fenxiao/fenxiao'];
 const isHasTabbarRouter = (link) => {
     for (var item of tabbarRouter) {
         console.log(item, link, item.indexOf(link));

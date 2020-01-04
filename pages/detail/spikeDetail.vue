@@ -397,8 +397,6 @@ export default {
 		  // #endif
 	},
 	onShow() {
-
-
 		//this.getDetail(this.flashsale_id);
 		// this.getCommit(this.Products_ID);
 		// this.checkProdCollected();
@@ -702,7 +700,9 @@ export default {
 		},
 		//拼团
 		myPin(e){
-
+			if (!this.$fun.checkIsLogin(1, 1)) {
+				return;
+			}
 			console.log(e);
 			// add_template_code({
 			// 	code: e.detail.formId,
@@ -713,6 +713,9 @@ export default {
 		},
 		//秒杀预约
 		flashsaleReserve(e){
+			if (!this.$fun.checkIsLogin(1, 1)) {
+				return;
+			}
 			if(this.isLoading){
 				return;
 			}
@@ -744,6 +747,9 @@ export default {
 			})
 		},
 		myPays(){
+			if (!this.$fun.checkIsLogin(1, 1)) {
+				return;
+			}
 			//零售价购买
 			uni.navigateTo({
 				url:'../detail/detail?Products_ID='+this.Products_ID
@@ -752,6 +758,7 @@ export default {
 		//单独购买
 		myPay(e){
 
+
 			if(e){
 				console.log(e);
 				add_template_code({
@@ -759,7 +766,9 @@ export default {
 					times: 1
 				})
 			}
-			if(!this.$fun.checkIsLogin(1))return;
+			if (!this.$fun.checkIsLogin(1, 1)) {
+				return;
+			}
 			// delete this.postData.active ;
 
 			// #ifdef APP-PLUS
@@ -1674,17 +1683,19 @@ export default {
 		.cartCenter{
 			margin-top: 20rpx;
 			.cartAttr{
-				display: flex;
+				//display: flex;
 				padding: 15rpx 0rpx;
 				.sku{
 					font-size: 28rpx;
 					height: 70rpx;
 					line-height: 70rpx;
 					width: 140rpx;
+					padding-left: 10px;
+					margin-bottom: 5px;
 				}
 				.skuValue{
 					display: flex;
-					flex:1;
+					//flex:1;
 					flex-wrap: wrap;
 					.skuview{
 						margin-bottom: 10px;

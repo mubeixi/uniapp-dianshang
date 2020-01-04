@@ -26,7 +26,7 @@
 				</div>
 				<!-- #endif -->
 			</div>
-			<div class="s_bottom" @click="cancel"><text>取消</text></div>
+			<div class="s_bottom" @click="cancel"><text class="test">取消</text></div>
 		</div>
 	</view>
 </template>
@@ -108,10 +108,13 @@
         color: #666;
         font-size: 26upx;
         justify-content: center;
-		height: 86upx;
+		height: 100upx;
 		flex-direction: row;
 		align-items: center;
         margin-top: 16upx;
     }
-
+	.test{
+		height: 100upx;
+		line-height: 100upx;
+	}
 </style>
