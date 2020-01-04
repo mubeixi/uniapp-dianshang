@@ -77,8 +77,8 @@ import {sendAnalysisData} from "./fetch";
 
 // #ifdef H5
 //目前只支持h5环境下录屏
-var rrweb = require('rrweb')
-console.log(rrweb)
+// var rrweb = require('rrweb')
+// console.log(rrweb)
 // #endif
 
 export const Analysis = {
@@ -93,43 +93,43 @@ export const Analysis = {
 	},
 	onShow(){
 		// #ifdef H5
-		let events = [];
+		// let events = [];
 
-		rrweb.record({
-		  emit(event) {
-			// 将 event 存入 events 数组中
-			events.push(event);
-		  },
-		});
+		// rrweb.record({
+		//   emit(event) {
+		// 	// 将 event 存入 events 数组中
+		// 	events.push(event);
+		//   },
+		// });
 
-		//save 函数用于将 events 发送至后端存入，并重置 events 数组
-		function save() {
-		  const body = JSON.stringify(events);
+		// //save 函数用于将 events 发送至后端存入，并重置 events 数组
+		// function save() {
+		//   const body = JSON.stringify(events);
 
-		  events = [];
-		  console.log('发送一次')
-		  let postData = {func:body};
-		  postData.User_ID = get_User_ID();
-		  postData.Users_ID = get_Users_ID();   //Users_ID  写死
-		  postData.env = GET_ENV();
+		//   events = [];
+		//   console.log('发送一次')
+		//   let postData = {func:body};
+		//   postData.User_ID = get_User_ID();
+		//   postData.Users_ID = get_Users_ID();   //Users_ID  写死
+		//   postData.env = GET_ENV();
 
-		  uni.request({
-		     header:{ "content-type": "application/x-www-form-urlencoded"},
-		      url: '/node/debug',
-		      method:'post',
-		      data:emptyObject(postData),
-			  success: (res) => {
-			  	console.log(res)
-			  }
+		//   uni.request({
+		//      header:{ "content-type": "application/x-www-form-urlencoded"},
+		//       url: '/node/debug',
+		//       method:'post',
+		//       data:emptyObject(postData),
+		// 	  success: (res) => {
+		// 	  	console.log(res)
+		// 	  }
 
-		  })
+		//   })
 
-		}
-		//
-		save()
-		//setTimeout(()=>{save()},1000)
-		// // 每 10 秒调用一次 save 方法，避免请求过多
-		setInterval(save, 10 * 1000);
+		// }
+		// //
+		// save()
+		// //setTimeout(()=>{save()},1000)
+		// // // 每 10 秒调用一次 save 方法，避免请求过多
+		// setInterval(save, 10 * 1000);
 		// #endif
 
 	},
