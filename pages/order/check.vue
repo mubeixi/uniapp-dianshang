@@ -29,6 +29,7 @@
                     <image :src="orderInfo.ShopLogo" class="biz_logo" alt="" />
                     <span class="biz_name">{{orderInfo.ShopName}}</span>
                 </div>
+								<div v-if="tabIdx==0 && orderInfo.shipping_has_stores == 1" @click="multipleSelectStore" class="graytext2 font14">选择门店</div>
                 <div v-if="tabIdx==1" @click="multipleSelectStore" class="graytext2 font14">批量选择门店</div>
 			</view>
 			<view class="order_msg">
@@ -292,6 +293,7 @@ export default {
 						setStoreMode:'',
 						idD:'',
 						checkfrom: '', // 支付订单的来源页面，用于展示明细活动价，spike,秒杀，limit限时抢购，group 拼团，
+						shipping_store_id: '', // 选择的门店id
         }
     },
 	filters: {
@@ -362,6 +364,8 @@ export default {
 	  },
 	  bindStores(storeInfo){
 		 this.selectStore=false
+		 console.log(storeInfo)
+		 this.shipping_store_id = storeInfo.Stores_ID;
 	  	if(this.setStoreMode==='all'){
 	  		//居然是对象醉了
 	  		for(var i in this.orderInfo.CartList){
@@ -500,6 +504,9 @@ export default {
 				// 	code: e.detail.formId,
 				// 	times: 1
 				// })
+				if(this.shipping_store_id) {
+					this.postData.shipping_store_id = this.shipping_store_id
+				}
 				createOrder(this.postData).then(res=>{
 					if(res.errorCode == 0) {
 						// 如果order_totalPrice <= 0  直接跳转 订单列表页
