@@ -13,17 +13,17 @@
 			</view>
 
 
-			<view  v-if="pro.disInfo.sha_level_id" class="juewei">
+			<view  v-if="pro.disInfo.sha_level_id>0" class="juewei">
 				{{pro.disInfo.sha_level_name}}
-			</view>
-			<view  v-else-if="pro.sha_config.Sha_Agent_Type==1&&pro.is_apply" class="juewei"  @click="goGudong">
-				立即申请
 			</view>
 			<view  v-else-if="pro.waiting_pay_apply" class="juewei"  @click="goGudongPay(pro.waiting_pay_apply.Order_ID)">
 				立即支付
 			</view>
-			<view  v-else class="juewei" >
+			<!-- <view  v-else-if="" class="juewei" >
 				暂不可申请
+			</view> -->
+			<view  v-else-if="pro.sha_config.Sha_Agent_Type==1&&pro.is_apply" class="juewei"  @click="goGudong">
+				立即申请
 			</view>
 		</view>
 		<view class="moneySum">
