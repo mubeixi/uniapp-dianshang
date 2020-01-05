@@ -488,9 +488,7 @@
 			this.getDetail(this.Products_ID);
 			this.getCommit(this.Products_ID);
 
-			addProductViews({
-				prod_id: this.Products_ID
-			}).then().catch()
+
 
 			//获取正在拼团的团队
 			this.getPintuanTeamList(this.Products_ID)
@@ -1969,11 +1967,11 @@
 						font-size: 14px;
 						border-radius: 10rpx;
 						color: #000;
-						background-color: #fff;
+						background-color: #F2F2F2;
 						padding-left: 20rpx;
 						padding-right: 20rpx;
 						margin-right: 20rpx;
-						border: 1px solid #ccc;
+						//border: 1px solid #ccc;
 					}
 				}
 			}
