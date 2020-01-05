@@ -413,7 +413,7 @@
 			const vm = this;
 			// const subNVue1 = uni.getSubNVueById('video')
 			// subNVue1.hide()
-			// uni.$emit('page-video-stop', {});  
+			// uni.$emit('page-video-stop', {});
 
 			// const share = uni.getSubNVueById('share')
 			// share.hide()
@@ -488,9 +488,7 @@
 			this.getDetail(this.Products_ID);
 			this.getCommit(this.Products_ID);
 
-			addProductViews({
-				prod_id: this.Products_ID
-			}).then().catch()
+
 
 			//获取正在拼团的团队
 			this.getPintuanTeamList(this.Products_ID)
