@@ -45,8 +45,9 @@ export default {
 		},
 		// 图片视觉宽高计算函数区
 		wxParseImgLoad(e) {
+
 			const { src } = e.currentTarget.dataset;
-			if (!src) return;
+
 			let { width, height } = e.mp.detail;
 
 			const recal = this.wxAutoImageCal(width, height);

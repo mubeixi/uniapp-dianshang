@@ -21,7 +21,7 @@ export const formatTime = function (date) {
   return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':')
 }
 
-const formatRichTextByUparseFn = (html)=>{
+export const formatRichTextByUparseFn = (html)=>{
 
   if(!html) return;
   let newContent= html.replace(/<embed[^>]*>/gi,function(match,capture){
@@ -30,6 +30,11 @@ const formatRichTextByUparseFn = (html)=>{
     match = match.replace(/embed/gi, 'video x5-video-player-type="h5-page"')
     match = match.replace(/width="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
     match = match.replace(/height="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
+
+    match = match.replace(/autostart="[^"]+"/gi, '')
+    match = match.replace(/loop="[^"]+"/gi, '')
+
+    match = match.replace(/\/>/gi, '></video>')
 
     //相对地址
     match = match.replace(/src="\/uploadfiles/gi, `src="${staticUrl}/uploadfiles`)
@@ -43,6 +48,8 @@ const formatRichTextByUparseFn = (html)=>{
     match = match.replace(/width="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
     match = match.replace(/height="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
     match = match.replace(/url/gi, 'src')
+
+    match = match.replace(/\/>/gi, '></video>')
     // //相对地址
     match = match.replace(/="\/uploadfiles/gi, `="${staticUrl}/uploadfiles`)
     return match;
@@ -65,7 +72,7 @@ const formatRichTextByUparseFn = (html)=>{
   //newContent = newContent.replace(/\<img/gi, '<img style="width:100%;vertical-align:middle"');
 
   newContent = newContent.replace(/oembed/gi, 'video');
-  console.log(newContent)
+  //console.log(newContent)
   return newContent
 }
 

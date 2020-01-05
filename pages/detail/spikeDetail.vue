@@ -106,7 +106,7 @@
     	<!-- <div v-html="product.Products_Description" class="p_detail_des"></div> -->
 <!--    	<rich-text :nodes="product.Products_Description|formatRichText" class="p_detail_des"></rich-text>-->
     	<!-- <u-parse :content="product.Products_Description"  /> -->
-		<u-parse  :content="product.Products_Description|formatRichTextByUparse" ></u-parse>
+		<u-parse  :content.sync="Products_Description" ></u-parse>
 
 		<!-- #ifdef H5||APP-PLUS -->
 		<!-- <div v-html="formatRichTexts(product.Products_Description)" class="p_detail_des"></div> -->
@@ -269,6 +269,7 @@ import {error} from "../../common";
 import {mapState,mapGetters,mapActions} from 'vuex';
 import {add_template_code} from "../../common/fetch";
 import uParse from '../../components/gaoyia-parse/parse.vue'
+import {formatRichTextByUparseFn} from "../../common/filter";
 
 let groupStam = null
 export default {
@@ -278,7 +279,7 @@ export default {
 			// #ifdef APP-PLUS
 			wxMiniOriginId:'',
 			// #endif
-
+			Products_Description:'',
 			JSSDK_INIT:false,//自己有分享的业务
 			type: '', // 优惠券内容， 分享内容
             shareShow: false,
@@ -362,11 +363,11 @@ export default {
 			}else if(str=='Android'){
 				this.classSelect=true
 			}
-			
+
 			console.log(str,this.classSelect,"ssss")
 
-		  
-		  
+
+
 			const vm =this
 			uni.$on('collectSpike',(data)=>{
 				if(data.detail!='spike') return
@@ -1016,6 +1017,11 @@ export default {
 						this.product.skuvaljosn = typeof res.data.skuvaljosn === 'string' ?JSON.parse(res.data.skuvaljosn):res.data.skuvaljosn;
 					}
 
+					setTimeout(()=>{
+						_self.Products_Description = formatRichTextByUparseFn(_self.product.Products_Description)
+					},50)
+
+
 
 
 					//this.stampCount()
@@ -1044,10 +1050,10 @@ export default {
 						//规格选择
 						uni.$emit('goods_spec_setval',{product:this.product,detail:'spike'})
 						uni.$emit('goods_spec_setval',{postData:this.postData,detail:'spike'})
-			
+
 						let times=new Date().getTime();
 						if(times<this.product.start_time*1000){
-								this.isKai=false;		
+								this.isKai=false;
 						}else{
 							this.isKai=true;
 						}
