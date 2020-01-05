@@ -484,12 +484,11 @@ export default {
 					.then(id=>{
 						this.getCommit(id);
 						this.checkProdCollected(id);
-						addProductViews({prod_id:id}).then().catch();
+
 					})
 			// await this.getCommit(this.Products_ID);
 			//
 			// await this.checkProdCollected();
-			// await addProductViews({prod_id:this.Products_ID}).then().catch()
 
 			this.isLoad = true;
 
@@ -1718,11 +1717,11 @@ export default {
 						font-size: 14px;
 						border-radius: 10upx;
 						color: #000;
-						background-color: #fff;
+						background-color: #F2F2F2;
 						padding-left: 20rpx;
 						padding-right: 20rpx;
 						margin-right: 20rpx;
-						border: 1px solid #ccc;
+						//border: 1px solid #ccc;
 					}
 				}
 			}

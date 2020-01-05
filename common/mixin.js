@@ -251,18 +251,17 @@ export const pageMixin = {
 				
 				
 				let { href, protocol, host, search, hash,pathname } = window.location;
-				console.log(protocol, host, search, hash)   
+				//console.log(protocol, host, search, hash)   
 
 				if (search.indexOf('?') === -1) {
 					search += '?users_id=' + users_id
 				} else {
 					search = search.replace(/\?/, '?users_id=' + users_id + '&')
 				}
-				console.log(search)
-				
+				//console.log(search)
 				
 				const newHref = `${protocol}//${host}${pathname}${search}${hash}`;
-				console.log(newHref)
+				//console.log(newHref)
 				 if (newHref !== href) {
 				   window.location.replace(newHref);
 				 }
