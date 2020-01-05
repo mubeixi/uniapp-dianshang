@@ -41,34 +41,34 @@ export default {
     }
   },
   created(){
-
+    console.log(this.node)
   },
   methods:{
-	  ableClose(){
-		  // #ifdef APP-PLUS
-		  const vm = this;
-		  const subNVue1 = uni.getSubNVueById('video')
-		  this.ifshow = false
-		  subNVue1.hide()
-		  uni.$emit('page-video-stop', {});
-		  // #endif
-
-	  },
-    showDialog(){
-			// #ifdef APP-PLUS
-			const vm = this;
-			//this.$error(vm.node.attr.src)
-			uni.$emit('page-video', {
-				src:vm.node.attr.src
-			});
-			const subNVue1 = uni.getSubNVueById('video')
-			console.log(subNVue1)
-			subNVue1.show()
-			this.ifshow = true
-			// #endif
-
-      //this.$refs.dialog.show()
-    }
+	//   ableClose(){
+	// 	  // #ifdef APP-PLUS
+	// 	  const vm = this;
+	// 	  const subNVue1 = uni.getSubNVueById('video')
+	// 	  this.ifshow = false
+	// 	  subNVue1.hide()
+	// 	  uni.$emit('page-video-stop', {});
+	// 	  // #endif
+    //
+	//   },
+    // showDialog(){
+	// 		// #ifdef APP-PLUS
+	// 		const vm = this;
+	// 		//this.$error(vm.node.attr.src)
+	// 		uni.$emit('page-video', {
+	// 			src:vm.node.attr.src
+	// 		});
+	// 		const subNVue1 = uni.getSubNVueById('video')
+	// 		console.log(subNVue1)
+	// 		subNVue1.show()
+	// 		this.ifshow = true
+	// 		// #endif
+    //
+    //   //this.$refs.dialog.show()
+    // }
   }
 };
 </script>

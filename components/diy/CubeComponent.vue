@@ -161,6 +161,7 @@
 
     .active {
         position: absolute;
+		border: 1px #f2f2f2 solid;
 
         .mask {
             .cover-full-bg(cover, 0, #f2f2f2);

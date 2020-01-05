@@ -10,7 +10,7 @@
                 <image class='img' v-else src="/static/detail/favorite.png"></image>
                 <text class="txt">收藏</text>
             </div>
-            <div class="first">
+            <div class="first" @click="kefu">
                 <image class='img' src="/static/detail/kefu.png"></image>
                 <text class="txt">客服</text>
             </div>
@@ -67,6 +67,9 @@
             // collect() {
             //     //this.$emit('collect');
             // },
+			kefu(){
+				uni.$emit('kefu',{});
+			},
             addCart() {
                 // if (!this.$fun.checkIsLogin(1, 1)) {
                 //     return;

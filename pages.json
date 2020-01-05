@@ -17,6 +17,12 @@
 			}
 		},
 		{
+			"path": "pages/common/webview",
+			"style": {
+				"navigationBarTitleText": "webview"
+			}
+		},
+		{
 			"path": "pages/order/check",
 			"style": {
 				"navigationBarTitleText": "提交订单"

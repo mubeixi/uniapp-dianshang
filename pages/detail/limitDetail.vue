@@ -201,7 +201,7 @@
 		</form>
 
 	</popupLayer>
-	
+
 	<!-- #ifndef APP-PLUS -->
 		<div class="safearea-box"></div>
 		<div class="fixed">
@@ -328,8 +328,8 @@ export default {
 	onLoad: function (option) {
 		  this.spike_good_id=option.spikeGoodId;
 		 this._init_func();
-		 
-		 
+
+
 		// #ifdef APP-PLUS
 			const vm =this
 			uni.$on('collectSpike',(data)=>{
@@ -337,13 +337,13 @@ export default {
 				console.log('触发limit收藏事件')
 				vm.collect()
 			})
-			
+
 			uni.$on('spikeBuy',(data)=>{
 				//if(data.detail!='limit') return
 				console.log('触发limit抢购')
 				vm.myPin()
 			})
-			
+
 			uni.$on('goodsSkuSub',(data)=>{
 				if(data.detail!='limit') return
 				console.log('触发这么多次事件????')
@@ -358,7 +358,7 @@ export default {
 				goodsSpecNvue.hide()
 			})
 		// #endif
-		 
+
 	},
 	onUnload() {
 		// #ifdef APP-PLUS
@@ -934,7 +934,7 @@ export default {
 					}
 
 
-					
+
 
 
 					//this.stampCount()
@@ -952,8 +952,8 @@ export default {
 								val: skujosn[i]
 							});
 						}
-					
-					
+
+
 						this.product.skujosn_new = skujosn_new;
 						this.product.skuvaljosn = res.data.skuvaljosn;
 						//console.log(this.product.skujosn);
