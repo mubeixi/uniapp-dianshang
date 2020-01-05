@@ -97,7 +97,7 @@
 						"type": "popup",
 						"style": {
 							"width": "750upx",
-							"top":  "82%",
+							"height":"250upx",
 							"bottom": "0upx",
 							"zindex": 3
 						}

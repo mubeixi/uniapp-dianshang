@@ -5,7 +5,7 @@
 				<image class="image" :src="product.Products_JSON.ImgPath[0]" ></image>
 				<div class="cartTitle">
 					<text class="cartTitles">{{product.Products_Name}}</text>
-					<div class="addInfo">
+					<div class="addInfo padding10-c">
 						<text class="addPrice" v-if="detail=='detail'">{{postData.productDetail_price}}元</text>
 						<text class="addPrice" v-else-if="detail=='group'">{{postData.Products_PriceX}}元</text>
 						<text class="addPrice" v-else-if="detail=='spike'">{{postData.productDetail_price}}元</text>
@@ -235,7 +235,7 @@
 
 	.addInfo {
 		flex-direction:row;
-		width: 450upx;
+		width: 420upx;
 		margin-top: 70upx;
 		justify-content: space-between;
 		align-items: center;
@@ -259,19 +259,21 @@
 
 	.sku {
 		font-size: 28upx;
-		width: 140upx;
-		text-align: center;
+		/* width: 140upx;
+		text-align: center; */
+		margin-bottom: 20upx;
+		margin-left: 20upx;
 	}
 
 	.cartAttr {
 		width: 750upx;
 		/*height: 300upx;*/
 		/*padding: 15upx 0upx;*/
-		flex-direction:row;
+		/* flex-direction:row; 横向排列*/
 	}
 
 	.skuValue {
-		width: 610upx;
+		width: 750upx;
 		flex-direction:row;
 		flex-wrap: wrap;
 
@@ -288,7 +290,8 @@
 		align-items: center;
 		justify-content: center;
 		 /*border: 1px solid #ccc;*/
-		border-width: 1px;border-color: #ccc;border-radius: 10upx;
+		/* border-width: 1px;border-color: #ccc; */
+		border-radius: 10upx;
 	}
 	.skuview-txt{
 		font-size: 14px;

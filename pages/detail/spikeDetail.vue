@@ -205,56 +205,56 @@
 		</form>
 
 	</popupLayer>
-	<div class="errorMsg" v-if="!isKai">
-		<image src="/static/error.png" class="errImg"></image>
+	<div :class="classSelect?'errorMsg':'errorMsgs'" v-if="!isKai">
+		<image  src="/static/error.png" class="errImg"></image>
 		活动尚未开始
 	</div>
 	<!-- #ifndef APP-PLUS -->
 		<div class="fixed">
-			<div class="leftss">
-				<div class="first" @click="goHome">
-					<div><image class="img" src="/static/detail/home.png" ></image></div>
-					<div class="txt">首页</div>
+				<div class="leftss">
+					<div class="first" @click="goHome">
+						<div><image class="img" src="/static/detail/home.png" ></image></div>
+						<div class="txt">首页</div>
+					</div>
+					<div class="first" @click="collect">
+						<div>
+							<image class="img" v-if="isCollected"  src="/static/detail/favorite-a.png" ></image>
+							<image class="img" v-else src="/static/detail/favorite.png" ></image>
+						</div>
+						<div class="txt">收藏</div>
+					</div>
+					<div class="first">
+						<div><image class="img" src="/static/detail/kefu.png" ></image></div>
+						<div class="txt">客服</div>
+					</div>
 				</div>
-				<div class="first" @click="collect">
-					<div>
-						<image class="img" v-if="isCollected"  src="/static/detail/favorite-a.png" ></image>
-						<image class="img" v-else src="/static/detail/favorite.png" ></image>
-					</div>
-					<div class="txt">收藏</div>
+				<div class="rightss">
+					<block v-if="!isKai">
+						<form class="form" report-submit @submit="myPays">
+						<div class="dan bTitle">
+							<button formType="submit" class="danRight">
+								零售价购买
+							</button>
+						</div>
+						</form>
+						<form  class="form" report-submit  @submit="flashsaleReserve">
+						<div class="tuan bTitle">
+							<button formType="submit" class="danRight">
+								立即预约
+							</button>
+						</div>
+						</form>
+					</block>
+					<block v-if="isKai">
+						<form class="form" report-submit @submit="myPay">
+						<div class="dan bTitle" style="background-color: #F43131;">
+							<button formType="submit" class="danRight">
+								立即抢购
+							</button>
+						</div>
+						</form>
+					</block>
 				</div>
-				<div class="first">
-					<div><image class="img" src="/static/detail/kefu.png" ></image></div>
-					<div class="txt">客服</div>
-				</div>
-			</div>
-			<div class="rightss">
-				<block v-if="!isKai">
-					<form class="form" report-submit @submit="myPays">
-					<div class="dan bTitle">
-						<button formType="submit" class="danRight">
-							零售价购买
-						</button>
-					</div>
-					</form>
-					<form  class="form" report-submit  @submit="flashsaleReserve">
-					<div class="tuan bTitle">
-						<button formType="submit" class="danRight">
-							立即预约
-						</button>
-					</div>
-					</form>
-				</block>
-				<block v-if="isKai">
-					<form class="form" report-submit @submit="myPay">
-					<div class="dan bTitle" style="background-color: #F43131;">
-						<button formType="submit" class="danRight">
-							立即抢购
-						</button>
-					</div>
-					</form>
-				</block>
-			</div>
 		</div>
 	<!-- #endif -->
   </div>
@@ -312,7 +312,8 @@ export default {
                 productDetail_price:0
 			},
 			isCollected: false, // 该产品是否已收藏
-			isSubmit: false
+			isSubmit: false,
+			classSelect:true
         }
     },
 	// #ifdef MP-WEIXIN || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO
@@ -355,6 +356,17 @@ export default {
 		  // this.checkProdCollected();
 
 		  // #ifdef APP-PLUS
+			let str=plus.os.name
+			if(str=='iOS'){
+				this.classSelect=false
+			}else if(str=='Android'){
+				this.classSelect=true
+			}
+			
+			console.log(str,this.classSelect,"ssss")
+
+		  
+		  
 			const vm =this
 			uni.$on('collectSpike',(data)=>{
 				if(data.detail!='spike') return
@@ -396,8 +408,6 @@ export default {
 		  // #endif
 	},
 	onShow() {
-
-
 		//this.getDetail(this.flashsale_id);
 		// this.getCommit(this.Products_ID);
 		// this.checkProdCollected();
@@ -701,7 +711,9 @@ export default {
 		},
 		//拼团
 		myPin(e){
-
+			if (!this.$fun.checkIsLogin(1, 1)) {
+				return;
+			}
 			console.log(e);
 			// add_template_code({
 			// 	code: e.detail.formId,
@@ -712,6 +724,9 @@ export default {
 		},
 		//秒杀预约
 		flashsaleReserve(e){
+			if (!this.$fun.checkIsLogin(1, 1)) {
+				return;
+			}
 			if(this.isLoading){
 				return;
 			}
@@ -743,6 +758,9 @@ export default {
 			})
 		},
 		myPays(){
+			if (!this.$fun.checkIsLogin(1, 1)) {
+				return;
+			}
 			//零售价购买
 			uni.navigateTo({
 				url:'../detail/detail?Products_ID='+this.Products_ID
@@ -751,6 +769,7 @@ export default {
 		//单独购买
 		myPay(e){
 
+
 			if(e){
 				console.log(e);
 				add_template_code({
@@ -758,7 +777,9 @@ export default {
 					times: 1
 				})
 			}
-			if(!this.$fun.checkIsLogin(1))return;
+			if (!this.$fun.checkIsLogin(1, 1)) {
+				return;
+			}
 			// delete this.postData.active ;
 
 			// #ifdef APP-PLUS
@@ -1673,17 +1694,19 @@ export default {
 		.cartCenter{
 			margin-top: 20rpx;
 			.cartAttr{
-				display: flex;
+				//display: flex;
 				padding: 15rpx 0rpx;
 				.sku{
 					font-size: 28rpx;
 					height: 70rpx;
 					line-height: 70rpx;
 					width: 140rpx;
+					padding-left: 10px;
+					margin-bottom: 5px;
 				}
 				.skuValue{
 					display: flex;
-					flex:1;
+					//flex:1;
 					flex-wrap: wrap;
 					.skuview{
 						margin-bottom: 10px;
@@ -1806,6 +1829,23 @@ export default {
 		padding-left: 21rpx;
 		position: fixed;
 		bottom: 98rpx;
+		color: #F43131;
+		font-size: 20rpx;
+		.errImg{
+			width: 19rpx;
+			height: 19rpx;
+			margin-right: 12rpx;
+		}
+	}
+	.errorMsgs{
+		width: 750rpx;
+		height: 44rpx;
+		background-color: #F7F6BD;
+		display: flex;
+		align-items: center;
+		padding-left: 21rpx;
+		position: fixed;
+		bottom: 0rpx;
 		color: #F43131;
 		font-size: 20rpx;
 		.errImg{
