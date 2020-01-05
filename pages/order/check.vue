@@ -29,7 +29,12 @@
                     <image :src="orderInfo.ShopLogo" class="biz_logo" alt="" />
                     <span class="biz_name">{{orderInfo.ShopName}}</span>
                 </div>
-								<div v-if="tabIdx==0 && orderInfo.shipping_has_stores == 1" @click="multipleSelectStore" class="graytext2 font14">选择门店</div>
+				<div v-if="tabIdx==0 && orderInfo.shipping_has_stores == 1" @click="multipleSelectStore" class="graytext2 font14 disMbx" >
+						{{orderInfo.Stores_Name?orderInfo.Stores_Name+'  修改门店':'选择门店'}}
+						<div class="zhouri">
+							<image style="width: 100%;height: 100%;" :src="'/static/client/right.png'|domain" alt=""></image>
+						</div>
+				</div>			
                 <div v-if="tabIdx==1" @click="multipleSelectStore" class="graytext2 font14">批量选择门店</div>
 			</view>
 			<view class="order_msg">
@@ -373,9 +378,12 @@ export default {
 					this.orderInfo.CartList[i][j].store = storeInfo
 				}
 			}
+			
+			this.orderInfo.Stores_Name=storeInfo.Stores_Name
 		}else{
 	  		let tempArr = this.setStoreMode.split('::'),prod_id=tempArr[0],attr_id=tempArr[1];
 			this.orderInfo.CartList[prod_id][attr_id].store = storeInfo
+			this.orderInfo.Stores_Name=storeInfo.Stores_Name
 		}
 		  this.$refs.stroeComp.close()
 
@@ -1130,4 +1138,6 @@ export default {
 	height: 100vh;
 	overflow: hidden;
 }
+.disMbx{display: flex;align-items: center;}
+.zhouri{width: 9px;height: 14px;margin-left: 5px;}
 </style>
