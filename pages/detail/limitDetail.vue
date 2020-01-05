@@ -1622,11 +1622,11 @@ export default {
 						font-size: 14px;
 						border-radius: 10upx;
 						color: #000;
-						background-color: #fff;
+						background-color: #F2F2F2;
 						padding-left: 20rpx;
 						padding-right: 20rpx;
 						margin-right: 20rpx;
-						border: 1px solid #ccc;
+						//border: 1px solid #ccc;
 					}
 				}
 			}
