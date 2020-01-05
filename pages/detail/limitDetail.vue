@@ -376,6 +376,7 @@ export default {
 			uni.$off('collectSpike')
 			uni.$off('spikeBuy')
 			uni.$off('goodsSkuSub')
+		uni.$off('kefu')
 		// #endif
 	},
 	onShow(){

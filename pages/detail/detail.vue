@@ -458,6 +458,7 @@ export default {
 			uni.$off('goNextPage')
 
 			uni.$off('shareDetail')
+			uni.$off('kefu')
 
 			uni.$off('goodsSkuSub')
 

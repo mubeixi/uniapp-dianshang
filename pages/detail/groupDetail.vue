@@ -1259,6 +1259,8 @@
 			uni.$off('pinBuy')
 
 			uni.$off('goodsSkuSub')
+
+			uni.$off('kefu')
 			// #endif
 		},
 		async created() {

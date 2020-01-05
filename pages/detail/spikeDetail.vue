@@ -348,6 +348,7 @@ export default {
 			uni.$off('directSpike')
 			uni.$off('spikeBuy')
 			uni.$off('goodsSkuSub')
+		uni.$off('kefu')
 		// #endif
 	},
 	onLoad: function (option) {
