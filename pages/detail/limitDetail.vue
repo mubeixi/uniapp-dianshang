@@ -882,7 +882,8 @@ export default {
         	})
         },
         goBack(){
-        	goBack();
+			uni.navigateBack()
+        	// goBack();
         },
         getCommit(item){
         	let data={

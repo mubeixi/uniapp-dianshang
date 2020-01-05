@@ -228,7 +228,7 @@
 import bottom from '../../components/bottom/bottom'
 import popupLayer from '../../components/popup-layer/popup-layer.vue'
 import {getProductDetail,getCommit,updateCart,addCollection,getCoupon,getUserCoupon,checkProdCollected,cancelCollection,judgeReceiveGift,getProductSharePic,addProductViews} from '../../common/fetch.js';
-import {goBack,numberSort,getProductThumb}  from '../../common/tool.js'
+import {goBack as goBackFn,numberSort,getProductThumb}  from '../../common/tool.js'
 import {buildSharePath, isWeiXin, ls} from "../../common/tool";
 
 import { mapGetters, mapActions, Store,mapState } from "vuex";
@@ -1052,7 +1052,7 @@ export default {
 			})
 		},
 		goBack(){
-			goBack();
+			uni.navigateBack()
 		},
 		getCommit(item){
 			let data={

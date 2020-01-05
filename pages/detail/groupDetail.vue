@@ -1056,7 +1056,8 @@
 				})
 			},
 			goBack() {
-				goBack();
+				uni.navigateBack()
+				// goBack();
 			},
 			getCommit(item) {
 				let data = {
