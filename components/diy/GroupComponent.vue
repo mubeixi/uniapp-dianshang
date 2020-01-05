@@ -1,5 +1,6 @@
 <template>
     <div class="goods wrap" id="goods"
+         v-if="goodsList.length>0"
          :style="{background:goods.style.bgColor,paddingLeft:goods.style.wrapmargin+'px',paddingRight:goods.style.wrapmargin+'px'}">
         <image class="bgimg" :src="'/static/client/group_bg.png'|domain"></image>
         <div :class="className" class="listbox">
