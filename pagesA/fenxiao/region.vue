@@ -10,9 +10,11 @@
 				</view>
 				<view class="bottoms" v-if="pro.agent_identity">
 					<image class="image" :src="'/static/client/fenxiao/vip.png'|domain"></image>
-					<block v-for="(item,index) of  pro.agent_identity" :key="index">
-						<span style="margin-right: 4px">{{item.area_name}}</span>
-					</block>
+					<view class="flexMbx">
+						<block v-for="(item,index) of  pro.agent_identity" :key="index" >
+							<span style="margin-right: 4px;height: 30rpx;line-height: 30rpx;">{{item.area_name}}</span>
+						</block>
+					</view>
 				</view>
 			</view>
 			<block v-if="pro.waiting_pay_apply">
@@ -243,6 +245,17 @@
 				margin-top: 14rpx;
 				font-size: 22rpx;
 				color: #666666;
+				display: flex;
+				align-items: center;
+				.flexMbx{
+					width: 400rpx;
+					height: 30rpx;
+					line-height: 30rpx;
+					white-space: nowrap;
+					overflow-x: scroll;
+					visibility:middle;
+					overflow-y: hidden;
+				}
 				.image{
 					width: 25rpx;
 					height: 23rpx;

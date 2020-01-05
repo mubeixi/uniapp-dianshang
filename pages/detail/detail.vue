@@ -771,20 +771,18 @@ export default {
 					this.gift_attr_id = res.data.attr_id;
 					this.skuval = res.data.skuval.split(';');
 
-				}else if(res.errorCode == 1) {
-					uni.showModal({
-						title: res.data.msg,
-						showCancel: false
-					});
-					this.canSubmit = false;
 				}
-
 				// #ifdef APP-PLUS
 					uni.$emit('goods_bottom_setval', {isCollected:this.isCollected,canSubmit:this.canSubmit});
 				// #endif
 
 			}).catch(res=>{
-
+				setTimeout(function(){
+					uni.navigateBack({
+					    delta: 1
+					});
+				},1000)
+				this.canSubmit = false;
 			})
 		},
 		//评价预览

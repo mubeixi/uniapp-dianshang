@@ -522,6 +522,7 @@
 					white-space: nowrap;
 					overflow-x: scroll;
 					visibility:middle;
+					overflow-y: hidden;
 				}
 				 .nickName::-webkit-scrollbar {
 				                display: none;
