@@ -101,8 +101,13 @@
         <div class="p_detail_title">商品详情</div>
     	<!-- <div v-html="product.Products_Description" class="p_detail_des"></div> -->
 <!--    	<rich-text :nodes="product.Products_Description|formatRichText" class="p_detail_des"></rich-text>-->
-    	<!-- <u-parse :content="product.Products_Description"  /> -->
-<u-parse  :content="product.Products_Description|formatRichTextByUparse" ></u-parse>
+<!--    	 <u-parse :content="product.Products_Description"  />-->
+
+		<u-parse :content.sync="Products_Description"  />
+<!--		<block v-if="Products_Description">-->
+<!--			<u-parse  :content.sync="Products_Description" ></u-parse>-->
+<!--		</block>-->
+
 
 		<!-- #ifdef H5||APP-PLUS -->
 		<!-- <div v-html="formatRichTexts(product.Products_Description)" class="p_detail_des"></div> -->
@@ -245,6 +250,7 @@ import {error} from "../../common";
 import {mapState,mapGetters,mapActions} from 'vuex';
 import {add_template_code} from "../../common/fetch";
 import uParse from '../../components/gaoyia-parse/parse.vue'
+import {formatRichTextByUparseFn} from "../../common/filter";
 
 let groupStamInstance = null
 export default {
@@ -254,13 +260,14 @@ export default {
 			// #ifdef APP-PLUS
 			wxMiniOriginId:'',
 			// #endif
+			Products_Description:'',
 			isLoad:false,
 			JSSDK_INIT:false,//自己有分享的业务
 			type: '', // 优惠券内容， 分享内容
             shareShow: false,
 			teamList:[],//正在开团的列表
             ticksShow: false,
-			product:{},//商品结果
+			product:{Products_Description:''},//商品结果
 			commit:[],//获取评论
 			Products_ID: 0 ,
 			count:1,//商品数量
@@ -437,12 +444,12 @@ export default {
     methods: {
 		...mapActions(['getUserInfo']),
 		async _init_func(){
-			await this.getDetail(this.spike_good_id)
-					.then(id=>{
-						this.getCommit(id);
-						this.checkProdCollected(id);
-						addProductViews({prod_id:id}).then().catch();
-					})
+			this.getDetail(this.spike_good_id)
+
+			let id = this.spike_good_id
+			this.getCommit(id);
+			this.checkProdCollected(id);
+			addProductViews({prod_id:id}).then(()=>{}).catch(()=>{});
 					// await this.getCommit(this.Products_ID);
 					//
 					// await this.checkProdCollected();
@@ -911,101 +918,101 @@ export default {
 			this.countdown = rt
 		},
 		getDetail(item){
-        	return  new Promise((resolve, reject)=>{
-				let data={
-					spike_good_id:item
+			let data={
+				spike_good_id:item
+			}
+			let _self = this;
+			let product = null;
+
+			spikeProdDetail(data).then(res=>{
+				//console.log(res)
+				if(res.errorCode != 0){
+					return;
 				}
-				let _self = this;
-				let product = null;
+				this.product = res.data;
+				this.postData.productDetail_price=res.data.price;
+				this.Products_ID=res.data.Products_ID;
 
-				spikeProdDetail(data).then(res=>{
-					console.log(res)
-					if(res.errorCode != 0){
-						return;
+				this.postData.count = res.data.Products_Count;
+				if(res.data.skujosn) {
+					this.product.skujosn = typeof res.data.skujosn ==='string' ?JSON.parse(res.data.skujosn):res.data.skujosn;
+					this.product.skuvaljosn = typeof res.data.skuvaljosn === 'string' ?JSON.parse(res.data.skuvaljosn):res.data.skuvaljosn;
+				}
+
+
+				setTimeout(()=>{
+					_self.Products_Description = formatRichTextByUparseFn(_self.product.Products_Description)
+				},10)
+
+
+				//this.stampCount()
+				//开发时候一直倒计时太乱了
+				groupStamInstance = setInterval(this.stampCount,1000)
+
+				product = res.data
+
+				if (res.data.skujosn) {
+					let skujosn = res.data.skujosn;
+					let skujosn_new = [];
+					for (let i in res.data.skujosn) {
+						skujosn_new.push({
+							sku: i,
+							val: skujosn[i]
+						});
 					}
-					this.product = res.data;
-					this.postData.productDetail_price=res.data.price;
-					this.Products_ID=res.data.Products_ID;
-
-					this.postData.count = res.data.Products_Count;
-					if(res.data.skujosn) {
-						this.product.skujosn = typeof res.data.skujosn ==='string' ?JSON.parse(res.data.skujosn):res.data.skujosn;
-						this.product.skuvaljosn = typeof res.data.skuvaljosn === 'string' ?JSON.parse(res.data.skuvaljosn):res.data.skuvaljosn;
-					}
 
 
+					this.product.skujosn_new = skujosn_new;
+					this.product.skuvaljosn = res.data.skuvaljosn;
+					//console.log(this.product.skujosn);
+				}
+				//console.log(this.product.skujosn_new,"ssssssssssssssssssss")
+				// #ifdef APP-PLUS
+				//规格选择
+				uni.$emit('goods_spec_setval',{product:this.product,detail:'limit'})
+				uni.$emit('goods_spec_setval',{postData:this.postData,detail:'limit'})
+				// #endif
+
+				// #ifdef H5
+
+				let path = 'pages/detail/limitDetail?spikeGoodId='+this.spike_good_id;
+				let front_url = this.initData.front_url;
 
 
+				this.WX_JSSDK_INIT(this).then((wxEnv)=>{
 
-					//this.stampCount()
-					//开发时候一直倒计时太乱了
-					groupStamInstance = setInterval(this.stampCount,1000)
-
-					product = res.data
-
-					if (res.data.skujosn) {
-						let skujosn = res.data.skujosn;
-						let skujosn_new = [];
-						for (let i in res.data.skujosn) {
-							skujosn_new.push({
-								sku: i,
-								val: skujosn[i]
-							});
+					this.$wx.onMenuShareTimeline({
+						title: '#网中网#'+product.Products_Name, // 分享标题
+						link: front_url+buildSharePath(path), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+						imgUrl: product.ImgPath, // 分享图标
+						success: function() {
+							// 用户点击了分享后执行的回调函数
 						}
+					});
 
+					//两种方式都可以
+					wxEnv.onMenuShareAppMessage({
+						title: '#网中网#'+product.Products_Name, // 分享标题
+						link: front_url+buildSharePath(path), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+						imgUrl: product.ImgPath, // 分享图标
+						desc: product.Products_BriefDescription||'好物推荐',
+						type: 'link', // 分享类型,music、video或link，不填默认为link
+						// dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+						success: function() {
+							// 用户点击了分享后执行的回调函数
+						}
+					});
 
-						this.product.skujosn_new = skujosn_new;
-						this.product.skuvaljosn = res.data.skuvaljosn;
-						//console.log(this.product.skujosn);
-					}
-					console.log(this.product.skujosn_new,"ssssssssssssssssssss")
-					// #ifdef APP-PLUS
-						//规格选择
-						uni.$emit('goods_spec_setval',{product:this.product,detail:'limit'})
-						uni.$emit('goods_spec_setval',{postData:this.postData,detail:'limit'})
-					// #endif
-
-					// #ifdef H5
-
-					let path = 'pages/detail/limitDetail?spikeGoodId='+this.spike_good_id;
-					let front_url = this.initData.front_url;
-
-
-					this.WX_JSSDK_INIT(this).then((wxEnv)=>{
-
-						this.$wx.onMenuShareTimeline({
-							title: '#网中网#'+product.Products_Name, // 分享标题
-							link: front_url+buildSharePath(path), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-							imgUrl: product.ImgPath, // 分享图标
-							success: function() {
-								// 用户点击了分享后执行的回调函数
-							}
-						});
-
-						//两种方式都可以
-						wxEnv.onMenuShareAppMessage({
-							title: '#网中网#'+product.Products_Name, // 分享标题
-							link: front_url+buildSharePath(path), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-							imgUrl: product.ImgPath, // 分享图标
-							desc: product.Products_BriefDescription||'好物推荐',
-							type: 'link', // 分享类型,music、video或link，不填默认为link
-							// dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
-							success: function() {
-								// 用户点击了分享后执行的回调函数
-							}
-						});
-
-					}).catch(()=>{
-						console.log('不是微信环境')
-					})
-
-					// #endif
-
-					resolve(res.data.Products_ID);
-
-				}).catch(e=>{
-					console.log(e)
+				}).catch(()=>{
+					console.log('不是微信环境')
 				})
+
+				// #endif
+
+				//resolve(res.data.Products_ID);
+
+			}).catch(e=>{
+				console.log(e)
 			})
         },
         addCart(){

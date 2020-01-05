@@ -41,7 +41,7 @@ export default {
     }
   },
   created(){
-    console.log(this.node)
+
   },
   methods:{
 	//   ableClose(){

@@ -108,7 +108,11 @@
 			};
 		},
 		computed: {},
+		created(){
+
+		},
 		mounted() {
+
 		},
 		methods: {
 			setHtml() {
@@ -139,6 +143,7 @@
 						this.nodes.push(item)
 					}, 0);
 				})
+				console.log(this.nodes)
 			},
 			getWidth() {
 				return new Promise((res, rej) => {
@@ -203,7 +208,9 @@
 			};
 		},
 		watch: {
-			content(){
+			content:function(newVal, oldVal){
+
+				console.log('content 变化content 变化content 变化content 变化')
 				this.setHtml()
 			}
 			// content: {

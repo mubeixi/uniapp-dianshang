@@ -313,21 +313,7 @@
             }
         },
         filters: {
-            formatRichTextByUparse(html) {
-                // console.log(html)
-                if (!html) return;
-                let newContent = html.replace(/<embed[^>]*>/gi, function (match, capture) {
-                    match = match.replace(/embed/gi, 'video')
-                    match = match.replace(/width="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
-                    match = match.replace(/height="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
-                    match = match.replace(/type="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
-                    //相对地址
-                    match = match.replace(/src="\/uploadfiles/gi, `src="${staticUrl}/uploadfiles`)
 
-                    return match;
-                });
-                return newContent
-            },
         },
         onLoad(options){
             let {activity_id=0} = options
