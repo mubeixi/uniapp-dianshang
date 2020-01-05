@@ -5,12 +5,12 @@
 		<block v-if="type != 3">
 			<form report-submit @submit="save">
 				<view v-if="type == 0" class="content">
-					<input type="password" class="item" v-model="curr_psw" placeholder="请输入原始登录密码">
+					<input type="password" class="item" v-model="curr_psw" placeholder="请输入原始登录密码,如未设置请留空">
 					<input type="password" class="item" v-model="new_psw" placeholder="请输入新的登录密码">
 					<input type="password" class="item" v-model="check_psw" placeholder="请再次输入新密码">
 				</view>
 				<view v-if="type == 1" class="content">
-					<input type="password" class="item" v-model="curr_psw" placeholder="请输入原始支付密码">
+					<input type="password" class="item" v-model="curr_psw" placeholder="请输入原始支付密码,如未设置请留空">
 					<input type="password" class="item" v-model="new_psw" placeholder="请输入新的支付密码">
 					<input type="password" class="item" v-model="check_psw" placeholder="请再次输入新密码">
 				</view>
@@ -41,9 +41,9 @@
 </template>
 
 <script>
-	import {updateUserLoginPsw,updateUserPayPsw,updateMobileSms,updateUserMobile} from '../../common/fetch.js';
+	import {updateUserLoginPsw,updateUserPayPsw,updateMobileSms,updateUserMobile,get_user_info} from '../../common/fetch.js';
 	import {ls} from '../../common/tool.js';
-	import {mapGetters} from 'vuex'
+	import {mapGetters,mapActions} from 'vuex'
 	import {add_template_code} from "../../common/fetch";
 	import {pageMixin} from "../../common/mixin";
 	export default {
@@ -51,6 +51,7 @@
 		data() {
 			return {
 				type: 0,
+				is_back:false,
 				curr_psw: '',
 				new_psw: '',
 				check_psw: '',
@@ -67,6 +68,7 @@
 			...mapGetters(['userInfo'])
 		},
 		methods: {
+			...mapActions(['setUserInfo']),
 			// 返回上一页
 			goBack(){
 				setTimeout(()=>{
@@ -161,14 +163,27 @@
 					new_psw: this.new_psw,
 					check_psw: this.check_psw
 				};
-				if(arg.curr_psw.length < 6 || arg.new_psw.length < 6 || arg.check_psw.length < 6) {
-					this.toast('密码最少6位');
-					return;
+				if(this.type==1){
+					//原始密码默认为空
+					if((arg.curr_psw&&arg.curr_psw.length < 6) || arg.new_psw.length < 6 || arg.check_psw.length < 6) {
+						this.toast('密码最少6位');
+						return;
+					}
+					// if(arg.curr_psw == '') {
+					// 	this.toast('原始密码不能为空')
+					// 	return;
+					// }
+				}else{
+					if((arg.curr_psw&&arg.curr_psw.length < 6) || arg.new_psw.length < 6 || arg.check_psw.length < 6) {
+						this.toast('密码最少6位');
+						return;
+					}
+					// if(arg.curr_psw == '') {
+					// 	this.toast('原始密码不能为空')
+					// 	return;
+					// }
 				}
-				if(arg.curr_psw == '') {
-					this.toast('原始密码不能为空')
-					return;
-				}
+
 				if(arg.new_psw == '') {
 					this.toast('新密码不能为空');
 					return;
@@ -190,10 +205,26 @@
 						})
 				}else if(this.type == 1) {
 					updateUserPayPsw(arg).then(res=>{
-							this.toast('修改成功','success')
-						},err => {
-							this.toast(err.msg)
-						})
+						this.toast('修改成功','success')
+						//如果成功就返回
+						if(this.is_back){
+
+							//更新信息
+							get_user_info({},{tip:'',errtip:false}).then(res=>{
+								console.log(res.data)
+								this.setUserInfo(res.data);
+								setTimeout(()=>{
+									uni.navigateBack()
+								},100)
+							}).catch(e=>{
+								console.log(e)
+							})
+
+
+						}
+					},err => {
+						this.toast(err.msg)
+					})
 				}
 			}
 		},
@@ -204,6 +235,9 @@
 			}else if(options.type == 1) {
 				this.title = '修改支付密码';
 				this.type = 1;
+				if(options.hasOwnProperty('is_back') && options.is_back){
+					this.is_back = true
+				}
 			}else if(options.type == 3) {
 				this.title = '修改手机号码';
 				this.type = 3;

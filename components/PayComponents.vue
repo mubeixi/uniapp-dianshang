@@ -32,7 +32,7 @@
 <script>
 
     import {mapActions, mapGetters} from 'vuex';
-    import {error, toast} from "../common";
+    import {error, toast,confirm} from "../common";
     import {orderPay} from "../common/fetch";
     import {GetQueryByString, isWeiXin, ls, urlencode} from "../common/tool";
     // #ifdef H5
@@ -236,6 +236,22 @@
                 console.log('支付方式', name)
                 this.pay_type = name;
                 this.close();
+
+                if(name=='remainder_pay'){
+
+                    if(this.userInfo.hasOwnProperty('User_PayPassword') && !this.userInfo.User_PayPassword){
+                        confirm({title: '提示', content: '该操作需要设置支付密码,是否前往设置?', confirmText: '去设置', cancelText: '暂不设置'}).then(res=>{
+                            uni.navigateTo({
+                                url:'/pages/person/updateUserPsw?type=1&is_back=1'
+                            })
+                        }).catch(err=>{error('请选择其他支付方式')})
+                        return;
+                    }
+                    this.password_input=true;//弹出密码输入框
+                    return;
+                }
+
+
                 // 判断是否使用了余额，
                 if (this.use_money > 0 || name == 'remainder_pay') {
                     // 使用了 余额支付

@@ -161,7 +161,7 @@
 		isWeiXin,
 		urlencode
 	} from "../../common/tool";
-	import {toast} from "../../common";
+	import {toast, confirm, error} from "../../common";
 	export default {
 		mixins:[pageMixin],
 		components: {
@@ -272,6 +272,15 @@
 				this.pay_type=index;
 				if(index=='remainder_pay'){
 					this.$refs.popupLayer.close();
+
+					if(this.userInfo.hasOwnProperty('User_PayPassword') && !this.userInfo.User_PayPassword){
+						confirm({title: '提示', content: '该操作需要设置支付密码,是否前往设置?', confirmText: '去设置', cancelText: '暂不设置'}).then(res=>{
+							uni.navigateTo({
+								url:'/pages/person/updateUserPsw?type=1&is_back=1'
+							})
+						}).catch(err=>{error('请选择其他支付方式')})
+						return;
+					}
 					this.password_input=true;//弹出密码输入框
 					return;
 				}
