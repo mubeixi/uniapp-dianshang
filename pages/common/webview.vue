@@ -10,7 +10,14 @@
 			}
 		},
 		onLoad(options){
-			this.url = options.url
+
+			if(options.hasOwnProperty('encode') && options.encode){
+				this.url = decodeURIComponent(options.url)
+			}else{
+				this.url = options.url
+			}
+
+
 			console.log('url is',this.url)
 		}
 	}

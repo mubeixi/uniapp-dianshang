@@ -18,7 +18,7 @@
                 </div>
                 <div class="txt">收藏</div>
             </div>
-            <div class="first">
+            <div class="first" @click="kefu">
                 <div>
                     <image class='img' src="/static/detail/kefu.png"></image>
                 </div>
@@ -90,6 +90,9 @@
                 }
                 this.$emit('directHandle');
             },
+			kefu(){
+				 this.$emit('kefu')
+			},
             lingqu() {
                 if (this.canSubmit) {
                     this.$emit('goGet')

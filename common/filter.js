@@ -26,13 +26,28 @@ const formatRichTextByUparseFn = (html)=>{
   if(!html) return;
   let newContent= html.replace(/<embed[^>]*>/gi,function(match,capture){
     match = match.replace(/type="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
-    match = match.replace(/embed/gi, 'video x5-video-player-type="h5-page" ')
+    // x5-video-player-type="h5-page" 同层播放
+    match = match.replace(/embed/gi, 'video x5-video-player-type="h5-page"')
     match = match.replace(/width="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
     match = match.replace(/height="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
+
     //相对地址
     match = match.replace(/src="\/uploadfiles/gi, `src="${staticUrl}/uploadfiles`)
     return match;
   });
+
+
+  newContent= newContent.replace(/<oembed[^>]*>/gi,function(match,capture){
+    match = match.replace(/type="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
+    match = match.replace(/oembed/gi, 'video x5-video-player-type="h5-page"')
+    match = match.replace(/width="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
+    match = match.replace(/height="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
+    match = match.replace(/url/gi, 'src')
+    // //相对地址
+    match = match.replace(/="\/uploadfiles/gi, `="${staticUrl}/uploadfiles`)
+    return match;
+  });
+
 
   // newContent= newContent.replace(/<img[^>]*>/gi,function(match,capture){
   //   match = match.replace(/style="[^"]+"/gi, '')//.replace(/style='[^']+'/gi, '');
@@ -49,8 +64,8 @@ const formatRichTextByUparseFn = (html)=>{
 
   //newContent = newContent.replace(/\<img/gi, '<img style="width:100%;vertical-align:middle"');
 
-  //newContent = newContent.replace(/inline/gi, '');
-
+  newContent = newContent.replace(/oembed/gi, 'video');
+  console.log(newContent)
   return newContent
 }
 
