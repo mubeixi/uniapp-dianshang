@@ -449,11 +449,10 @@ export default {
 			let id = this.spike_good_id
 			this.getCommit(id);
 			this.checkProdCollected(id);
-			addProductViews({prod_id:id}).then(()=>{}).catch(()=>{});
 					// await this.getCommit(this.Products_ID);
 					//
 					// await this.checkProdCollected();
-					// await addProductViews({prod_id:this.Products_ID}).then().catch()
+
 
 			this.isLoad = true;
 

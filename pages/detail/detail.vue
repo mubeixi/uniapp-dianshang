@@ -351,7 +351,7 @@ export default {
 		uni.$on('directHandle',(data)=>{
 			vm.directBuy()
 		})
-		
+
 		uni.$on('kefu', (data) => {
 			vm.contact()
 		})
@@ -392,7 +392,7 @@ export default {
 			goodsSpecNvue.hide()
 		})
 
-		
+
 		uni.$on('goGet',(data)=>{
 			console.log('触发立即领取')
 			vm.lingqu()
@@ -463,7 +463,7 @@ export default {
 			uni.$off('shareDetail')
 
 			uni.$off('goodsSkuSub')
-			
+
 			uni.$off('goGet')
 		// #endif
 	},
@@ -529,7 +529,6 @@ export default {
 
 			await this.getCoupon();//获取可领取的优惠券
 
-			await addProductViews({prod_id:this.Products_ID}).then().catch()
 
 			this.isLoad = true;
 
@@ -768,7 +767,7 @@ export default {
 			judgeReceiveGift({gift: this.gift}).then(res=>{
 				console.log(res)
 				if(res.errorCode ==0){
-	
+
 					this.gift_attr_id = res.data.attr_id;
 					this.skuval = res.data.skuval.split(';');
 
@@ -779,13 +778,13 @@ export default {
 					});
 					this.canSubmit = false;
 				}
-				
+
 				// #ifdef APP-PLUS
 					uni.$emit('goods_bottom_setval', {isCollected:this.isCollected,canSubmit:this.canSubmit});
 				// #endif
-				
+
 			}).catch(res=>{
-			
+
 			})
 		},
 		//评价预览
