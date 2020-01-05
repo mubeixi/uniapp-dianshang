@@ -837,7 +837,7 @@ export default {
 						this.isSubmit = false;
         		if(res.errorCode == 0) {
         				uni.navigateTo({
-        					url: '../order/check?cart_key=DirectBuy?checkfrom=limit'
+        					url: '../order/check?cart_key=DirectBuy'
         				})
         		}else {
 
