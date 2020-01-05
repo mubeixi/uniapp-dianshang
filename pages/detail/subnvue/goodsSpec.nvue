@@ -5,7 +5,7 @@
 				<image class="image" :src="product.Products_JSON.ImgPath[0]" ></image>
 				<div class="cartTitle">
 					<text class="cartTitles">{{product.Products_Name}}</text>
-					<div class="addInfo">
+					<div class="addInfo padding10-c">
 						<text class="addPrice" v-if="detail=='detail'">{{postData.productDetail_price}}元</text>
 						<text class="addPrice" v-else-if="detail=='group'">{{postData.Products_PriceX}}元</text>
 						<text class="addPrice" v-else-if="detail=='spike'">{{postData.productDetail_price}}元</text>
@@ -235,7 +235,7 @@
 
 	.addInfo {
 		flex-direction:row;
-		width: 450upx;
+		width: 420upx;
 		margin-top: 70upx;
 		justify-content: space-between;
 		align-items: center;
