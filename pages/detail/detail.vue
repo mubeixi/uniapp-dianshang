@@ -111,7 +111,7 @@
 
 
 	<!-- #ifndef APP-PLUS -->
-	<bottom @cartHandle="addCart" @directHandle="directBuy" @goGet="lingqu" @collect="collect" :collected="isCollected" :recieve="recieve" :isVirtual="isVirtual" :canSubmit="canSubmit"></bottom>
+	<bottom @kefu="contact" @cartHandle="addCart" @directHandle="directBuy" @goGet="lingqu" @collect="collect" :collected="isCollected" :recieve="recieve" :isVirtual="isVirtual" :canSubmit="canSubmit"></bottom>
 	<!-- #endif -->
 
 
@@ -350,6 +350,10 @@ export default {
 		})
 		uni.$on('directHandle',(data)=>{
 			vm.directBuy()
+		})
+		
+		uni.$on('kefu', (data) => {
+			vm.contact()
 		})
 
 		uni.$on('collectHandle',(data)=>{
@@ -1187,6 +1191,12 @@ export default {
 
 			// #endif
 
+		},
+		/**
+		 * 客服
+		 */
+		contact(){
+			this.$fun.contact()
 		},
 		directBuy(){
 			if(!this.$fun.checkIsLogin(1,1)){

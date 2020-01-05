@@ -258,7 +258,7 @@ export const linkTo =  (linkObj) => {
         // #ifndef H5
         console.log('/pages/common/webview?url=' + link)
         uni.navigateTo({
-            url: '/pages/common/webview?url=' + link
+            url: '/pages/common/webview?encode=1&url=' + encodeURIComponent(link)
         })
         // #endif
 
@@ -293,7 +293,7 @@ export const linkTo =  (linkObj) => {
  * 打开客服
  */
 
-export const contact(){
+export const contact = ()=>{
 	let initData = store.state.initData || ls.get('initData');
 	if(initData.kf_url){
 		linkTo({linkType:'third',link:initData.kf_url})
