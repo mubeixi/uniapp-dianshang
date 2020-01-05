@@ -205,59 +205,58 @@
 		</form>
 
 	</popupLayer>
-	<div class="errorMsg" v-if="!isKai">
-		<image src="/static/error.png" class="errImg"></image>
+	<div :class="classSelect?'errorMsg':'errorMsgs'" v-if="!isKai">
+		<image  src="/static/error.png" class="errImg"></image>
 		活动尚未开始
 	</div>
-	<div class="fixed">
 	<!-- #ifndef APP-PLUS -->
-			<div class="leftss">
-				<div class="first" @click="goHome">
-					<div><image class="img" src="/static/detail/home.png" ></image></div>
-					<div class="txt">首页</div>
+		<div class="fixed">
+				<div class="leftss">
+					<div class="first" @click="goHome">
+						<div><image class="img" src="/static/detail/home.png" ></image></div>
+						<div class="txt">首页</div>
+					</div>
+					<div class="first" @click="collect">
+						<div>
+							<image class="img" v-if="isCollected"  src="/static/detail/favorite-a.png" ></image>
+							<image class="img" v-else src="/static/detail/favorite.png" ></image>
+						</div>
+						<div class="txt">收藏</div>
+					</div>
+					<div class="first">
+						<div><image class="img" src="/static/detail/kefu.png" ></image></div>
+						<div class="txt">客服</div>
+					</div>
 				</div>
-				<div class="first" @click="collect">
-					<div>
-						<image class="img" v-if="isCollected"  src="/static/detail/favorite-a.png" ></image>
-						<image class="img" v-else src="/static/detail/favorite.png" ></image>
-					</div>
-					<div class="txt">收藏</div>
+				<div class="rightss">
+					<block v-if="!isKai">
+						<form class="form" report-submit @submit="myPays">
+						<div class="dan bTitle">
+							<button formType="submit" class="danRight">
+								零售价购买
+							</button>
+						</div>
+						</form>
+						<form  class="form" report-submit  @submit="flashsaleReserve">
+						<div class="tuan bTitle">
+							<button formType="submit" class="danRight">
+								立即预约
+							</button>
+						</div>
+						</form>
+					</block>
+					<block v-if="isKai">
+						<form class="form" report-submit @submit="myPay">
+						<div class="dan bTitle" style="background-color: #F43131;">
+							<button formType="submit" class="danRight">
+								立即抢购
+							</button>
+						</div>
+						</form>
+					</block>
 				</div>
-				<div class="first">
-					<div><image class="img" src="/static/detail/kefu.png" ></image></div>
-					<div class="txt">客服</div>
-				</div>
-			</div>
-			<div class="rightss">
-				<block v-if="!isKai">
-					<form class="form" report-submit @submit="myPays">
-					<div class="dan bTitle">
-						<button formType="submit" class="danRight">
-							零售价购买
-						</button>
-					</div>
-					</form>
-					<form  class="form" report-submit  @submit="flashsaleReserve">
-					<div class="tuan bTitle">
-						<button formType="submit" class="danRight">
-							立即预约
-						</button>
-					</div>
-					</form>
-				</block>
-				<block v-if="isKai">
-					<form class="form" report-submit @submit="myPay">
-					<div class="dan bTitle" style="background-color: #F43131;">
-						<button formType="submit" class="danRight">
-							立即抢购
-						</button>
-					</div>
-					</form>
-				</block>
-			</div>
+		</div>
 	<!-- #endif -->
-	</div>
-	
   </div>
 </template>
 
@@ -313,7 +312,8 @@ export default {
                 productDetail_price:0
 			},
 			isCollected: false, // 该产品是否已收藏
-			isSubmit: false
+			isSubmit: false,
+			classSelect:true
         }
     },
 	// #ifdef MP-WEIXIN || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO
@@ -356,6 +356,17 @@ export default {
 		  // this.checkProdCollected();
 
 		  // #ifdef APP-PLUS
+			let str=plus.os.name
+			if(str=='iOS'){
+				this.classSelect=false
+			}else if(str=='Android'){
+				this.classSelect=true
+			}
+			
+			console.log(str,this.classSelect,"ssss")
+
+		  
+		  
 			const vm =this
 			uni.$on('collectSpike',(data)=>{
 				if(data.detail!='spike') return
@@ -1818,6 +1829,23 @@ export default {
 		padding-left: 21rpx;
 		position: fixed;
 		bottom: 98rpx;
+		color: #F43131;
+		font-size: 20rpx;
+		.errImg{
+			width: 19rpx;
+			height: 19rpx;
+			margin-right: 12rpx;
+		}
+	}
+	.errorMsgs{
+		width: 750rpx;
+		height: 44rpx;
+		background-color: #F7F6BD;
+		display: flex;
+		align-items: center;
+		padding-left: 21rpx;
+		position: fixed;
+		bottom: 0rpx;
 		color: #F43131;
 		font-size: 20rpx;
 		.errImg{
