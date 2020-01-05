@@ -1021,9 +1021,6 @@ export default {
 						_self.Products_Description = formatRichTextByUparseFn(_self.product.Products_Description)
 					},50)
 
-
-
-
 					//this.stampCount()
 					//开发时候一直倒计时太乱了
 					groupStam = setInterval(this.stampCount,1000)
@@ -1093,7 +1090,7 @@ export default {
 						});
 
 					}).catch(()=>{
-						console.log('不是微信环境')
+						// console.log('不是微信环境')
 					})
 
 					// #endif

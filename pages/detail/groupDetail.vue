@@ -413,7 +413,7 @@
 			const vm = this;
 			// const subNVue1 = uni.getSubNVueById('video')
 			// subNVue1.hide()
-			// uni.$emit('page-video-stop', {});  
+			// uni.$emit('page-video-stop', {});
 
 			// const share = uni.getSubNVueById('share')
 			// share.hide()
@@ -1191,7 +1191,7 @@
 
 
 					}).catch(() => {
-						console.log('不是微信环境')
+						// console.log('不是微信环境')
 					})
 
 					// #endif

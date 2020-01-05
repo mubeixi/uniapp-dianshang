@@ -171,7 +171,7 @@ export const Analysis = {
 			if(!history)history=[]
 			history.push(postData)
 			ls.set('analysis',history)
-			console.log(JSON.stringify(postData))
+			//console.log(JSON.stringify(postData))
 
 			sendAnalysisData(postData).then(res=>{}).catch(e=>{})
 		},
@@ -248,14 +248,24 @@ export const pageMixin = {
 		if (users_id) {
 
 			if (!GetQueryByString(location.href, 'users_id')) {
-				let search = location.search;
+				
+				
+				let { href, protocol, host, search, hash,pathname } = window.location;
+				console.log(protocol, host, search, hash)   
 
 				if (search.indexOf('?') === -1) {
 					search += '?users_id=' + users_id
 				} else {
 					search = search.replace(/\?/, '?users_id=' + users_id + '&')
 				}
-				location.search = search
+				console.log(search)
+				
+				
+				const newHref = `${protocol}//${host}${pathname}${search}${hash}`;
+				console.log(newHref)
+				 if (newHref !== href) {
+				   window.location.replace(newHref);
+				 }
 			}
 
 		} else {

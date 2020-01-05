@@ -657,7 +657,7 @@
                         });
 
                     }).catch(()=>{
-                        console.log('不是微信环境')
+                        // console.log('不是微信环境')
                     })
 
                     // #endif
