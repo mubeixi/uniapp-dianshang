@@ -269,10 +269,13 @@ export default {
 		_getOrder(index){
 			if(this.isQing) return;
 			this.isQing=true;
+			if(this.Order_Type==undefined){
+				this.Order_Type='shop'
+			}
 			let data={
 				page:this.page,
 				pageSize:this.pageSize,
-				Order_Type: this.Order_Type
+				Order_Type:this.Order_Type
 			};
 			if(this.index>0&&this.index<4){
 				data['Order_Status'] = this.index;
