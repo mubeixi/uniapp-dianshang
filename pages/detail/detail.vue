@@ -427,15 +427,12 @@ export default {
 		let _self = this
 
 		const USERINFO = ls.get('userInfo');
-		console.log('USERINFO',USERINFO);
-
 
 
 		// #ifdef APP-PLUS
 		var icon = plus.nativeObj.View.getViewById("icon");
 		var icons = plus.nativeObj.View.getViewById("icons");
 
-		console.log(icon,"sssssssssssssssssssssss")
 		if(icon&&icons){
 			icon.show();
 			icons.show();
@@ -476,28 +473,8 @@ export default {
 			icon.hide();
 			icons.hide();
 
-			let _self = this
-			const vm = this;
-
-
-			//隐藏规格框
-			// const goodsSpecNvue = uni.getSubNVueById('goodsSpec')
-			// goodsSpecNvue.hide()
-
-			// //隐藏优惠券
-			// const coupon = uni.getSubNVueById('coupon')
-			// coupon.hide()
-
-			// //隐藏优惠券
-			// const share = uni.getSubNVueById('share')
-			// share.hide()
-
-			// const subNVue2 = uni.getSubNVueById('goodsBottom')
-			// subNVue2.hide()
-
 		// #endif
 
-		console.log('暂停视频播放')
 		if(this.videoContext){
 			this.videoContext.pause()
 		}
@@ -1272,10 +1249,6 @@ export default {
 
 		this.wxMiniOriginId = WX_MINI_ORIGIN_ID;
 		console.log('wxMiniOriginId is '+this.wxMiniOriginId)
-
-
-
-
 
 	}
 }

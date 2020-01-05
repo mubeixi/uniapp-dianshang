@@ -234,7 +234,7 @@
 					</div>
 					<div class="txt">收藏</div>
 				</div>
-				<div class="first">
+				<div class="first" @click="contact">
 					<div>
 						<image class="img" src="/static/detail/kefu.png"></image>
 					</div>
@@ -431,6 +431,10 @@
 				vm.shareFunc(data.item)
 			})
 
+			uni.$on('kefu', (data) => {
+				vm.contact()
+			})
+
 			uni.$on('collectHandles', (data) => {
 				console.log('触发拼团收藏事件')
 				vm.collect()
@@ -563,6 +567,12 @@
 		},
 		methods: {
 			...mapActions(['getUserInfo']),
+			/**
+			 * 客服
+			 */
+			contact(){
+				this.$fun.contact()
+			},
 			//轮播图图片预览
 			yulan(index) {
 				uni.previewImage({

@@ -223,7 +223,7 @@
 						</div>
 						<div class="txt">收藏</div>
 					</div>
-					<div class="first">
+					<div class="first" @click="contact">
 						<div><image class="img" src="/static/detail/kefu.png" ></image></div>
 						<div class="txt">客服</div>
 					</div>
@@ -375,6 +375,10 @@ export default {
 				vm.collect()
 			})
 
+			uni.$on('kefu', (data) => {
+				vm.contact()
+			})
+
 
 			uni.$on('cartSpike',(data)=>{
 				console.log('触发秒杀零售价购买')
@@ -479,6 +483,12 @@ export default {
 	},
     methods: {
 		...mapActions(['getUserInfo']),
+		/**
+		 * 客服
+		 */
+		contact(){
+			this.$fun.contact()
+		},
 		async _init_func(){
 			await this.getDetail(this.flashsale_id)
 					.then(id=>{

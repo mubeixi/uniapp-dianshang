@@ -222,7 +222,7 @@
 					</div>
 					<div class="txt">收藏</div>
 				</div>
-				<div class="first">
+				<div class="first" @click="contact">
 					<div><image class="img" src="/static/detail/kefu.png" ></image></div>
 					<div class="txt">客服</div>
 				</div>
@@ -345,6 +345,10 @@ export default {
 				vm.collect()
 			})
 
+			uni.$on('kefu', (data) => {
+				vm.contact()
+			})
+
 			uni.$on('spikeBuy',(data)=>{
 				//if(data.detail!='limit') return
 				console.log('触发limit抢购')
@@ -443,6 +447,12 @@ export default {
 	},
     methods: {
 		...mapActions(['getUserInfo']),
+		/**
+		 * 客服
+		 */
+		contact(){
+			this.$fun.contact()
+		},
 		async _init_func(){
 			this.getDetail(this.spike_good_id)
 
