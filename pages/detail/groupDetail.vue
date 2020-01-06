@@ -1910,7 +1910,7 @@
 
 	//规格
 	.cartSku {
-		padding: 0rpx 10rpx;
+		padding: 0rpx 20rpx;
 
 		.cartTop {
 			position: relative;
@@ -1925,8 +1925,8 @@
 			.cartTitle {
 				margin-left: 20rpx;
 				font-size: 32rpx;
-				width: 420rpx;
-
+				//width: 420rpx;
+				flex: 1;
 				.cartTitles {
 					height: 80rpx;
 					line-height: 40rpx;
@@ -2011,7 +2011,7 @@
 				border: 1px solid #ccc;
 				border-radius: 6rpx;
 				height: 50rpx;
-				margin-right: 50rpx;
+				//margin-right: 50rpx;
 				display: flex;
 
 				.inputs {
