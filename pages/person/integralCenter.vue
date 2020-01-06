@@ -71,7 +71,7 @@
 						</view>
 					</view>
 					<view>
-						{{item.Record_Integral > 0 ? `+${item.Record_Integral}` : ''}}
+						{{item.Record_Integral}}
 					</view>
 				</view>
 			</template>
