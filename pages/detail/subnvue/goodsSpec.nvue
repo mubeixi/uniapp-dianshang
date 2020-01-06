@@ -2,7 +2,7 @@
 	<div class="goods-spec-wrap">
 		<div class="cartSku">
 			<div class="cartTop">
-				<image class="image" :src="product.Products_JSON.ImgPath[0]" ></image>
+				<image class="image" :src="skuImg?skuImg:product.Products_JSON.ImgPath[0]" mode=""></image>
 				<div class="cartTitle">
 					<text class="cartTitles">{{product.Products_Name}}</text>
 					<div class="addInfo padding10-c">
@@ -68,7 +68,8 @@
 						ImgPath:[]
 					},
 					skujosn_new: []
-				}
+				},
+				skuImg:''
 			};
 		},
 		props: {
@@ -155,6 +156,8 @@
 				if (attr_val) {
 					this.postData.attr_id = attr_val.Product_Attr_ID;   //选择属性的id
 					this.postData.count = attr_val.Property_count;   //选择属性的库存
+					
+					this.skuImg=attr_val.Attr_Image//选择属性的图片
 					// this.postData.showimg = typeof attr_val.Attr_Image != 'undefined' && attr_val.Attr_Image != '' ? attr_val.Attr_Image : this.product.Products_JSON['ImgPath'][0];// 选择属性的图片
 					this.postData.productDetail_price = attr_val.Attr_Price?attr_val.Attr_Price:this.product.Products_PriceX; // 选择属性的价格
 					this.submit_flag = (!this.check_attr || Object.getOwnPropertyNames(this.check_attr).length != Object.getOwnPropertyNames(this.product.skujosn).length) ? false : true;

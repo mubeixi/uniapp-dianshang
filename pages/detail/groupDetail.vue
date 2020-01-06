@@ -177,7 +177,7 @@
 		<popupLayer ref="cartPopu" :direction="'top'">
 			<div class="cartSku">
 				<div class="cartTop">
-					<image class="image" :src="product.Products_JSON.ImgPath[0]" mode=""></image>
+					<image class="image" :src="skuImg?skuImg:product.Products_JSON.ImgPath[0]" mode=""></image>
 					<div class="cartTitle">
 						<div class="cartTitles">{{product.Products_Name}}</div>
 						<div class="addInfo">
@@ -367,6 +367,7 @@
 				isPin: false,
 				isCollected: false, // 该产品是否已收藏
 				isSubmit: false, // 是否提交过了
+				skuImg:''
 			}
 		},
 		// #ifdef MP-WEIXIN || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO
@@ -944,6 +945,8 @@
 				if (attr_val) {
 					this.postData.attr_id = attr_val.Product_Attr_ID; //选择属性的id
 					this.postData.count = attr_val.Property_count; //选择属性的库存
+					
+					this.skuImg=attr_val.Attr_Image//选择属性的图片
 					this.postData.showimg = typeof attr_val.Attr_Image != 'undefined' && attr_val.Attr_Image != '' ? attr_val.Attr_Image :
 						this.product.Products_JSON['ImgPath'][0]; // 选择属性的图片
 					if (this.isPin) {
@@ -1502,8 +1505,8 @@
 	}
 
 	.right .img {
-		width: 19rpx;
-		height: 30rpx;
+		width: 19rpx !important;
+		height: 30rpx !important;
 		margin-left: 20rpx;
 	}
 
@@ -1515,7 +1518,7 @@
 		font-size: 22rpx;
 		padding: 15px 10px;
 		border-bottom: 17px solid #f8f8f8;
-		justify-content: space-around;
+		// justify-content: space-around;
 		background-color: #fff;
 	}
 
@@ -1525,7 +1528,7 @@
 		margin-right: 10px;
 	}
 
-	.section3 img {
+	.section3 .img {
 		width: 30rpx;
 		height: 30rpx;
 		margin-right: 5px;

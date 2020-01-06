@@ -54,6 +54,7 @@
 <script>
 	import {pageMixin} from "../../common/mixin";
 	import {mapGetters,mapActions} from 'vuex';
+	import {ls} from '../../common/tool.js';
 	import {getUserWithdrawMethod,withdrawApply,getWithdrawConfig} from '../../common/fetch.js'
 	export default {
 		mixins:[pageMixin],
@@ -184,26 +185,31 @@
 					if(this.withdraw_from==2){
 						this.balance=res.data.user_money
 					}
+					
+					
 					if(res.errorCode==0){
-						this.$vm.$on('fires', (data) =>{
-							this.User_Method_ID = data;
-						})
-					if(res.data.list.length>0){
-						this.isShow=true;
-					}else{
-						this.isShow=false;
-						this.User_Method_ID=0
-					}
-					if(this.User_Method_ID){
-							for(let item of res.data.list){
-								if(item.User_Method_ID==this.User_Method_ID){
-									this.data=item;
-								}
+							// this.$vm.$on('fires', (data) =>{
+							
+							// 	this.User_Method_ID = data;
+							// })
+							this.User_Method_ID=ls.get("myMethod")
+							ls.remove("myMethod")
+							if(res.data.list.length>0){
+								this.isShow=true;
+							}else{
+								this.isShow=false;
+								this.User_Method_ID=0
 							}
-						}else{
-							this.data=res.data.list[0];
-							this.User_Method_ID=res.data.list[0].User_Method_ID;
-						}
+							if(this.User_Method_ID){
+									for(let item of res.data.list){
+										if(item.User_Method_ID==this.User_Method_ID){
+											this.data=item;
+										}
+									}
+							}else{
+								this.data=res.data.list[0];
+								this.User_Method_ID=res.data.list[0].User_Method_ID;
+							}
 
 					}
 				}).catch(err=>{

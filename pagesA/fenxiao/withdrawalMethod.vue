@@ -26,6 +26,7 @@
 
 <script>
 	import {pageMixin} from "../../common/mixin";
+	import {ls} from '../../common/tool.js';
 	import {getUserWithdrawMethod,delUserWithdrawMethod} from '../../common/fetch.js'
 	export default {
 		mixins:[pageMixin],
@@ -94,7 +95,8 @@
 					return;
 				}
 				this.User_Method_ID=item.User_Method_ID;
-				this.$vm.$emit('fires',this.User_Method_ID)
+				ls.set("myMethod",this.User_Method_ID)
+				//this.$vm.$emit('fires',this.User_Method_ID)
 				//返回上一页
 				uni.navigateBack({
 				  delta: 1

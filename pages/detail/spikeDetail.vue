@@ -167,7 +167,7 @@
 	<popupLayer ref="cartPopu" :direction="'top'">
 		<div class="cartSku">
 			<div class="cartTop">
-				<image class="image" :src="product.Products_JSON.ImgPath[0]" mode=""></image>
+				<image class="image" :src="skuImg?skuImg:product.Products_JSON.ImgPath[0]" mode=""></image>
 				<div class="cartTitle">
 					<div class="cartTitles">{{product.Products_Name}}</div>
 					<div class="addInfo">
@@ -314,7 +314,8 @@ export default {
 			},
 			isCollected: false, // 该产品是否已收藏
 			isSubmit: false,
-			classSelect:true
+			classSelect:true,
+			skuImg:''
         }
     },
 	// #ifdef MP-WEIXIN || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO
@@ -831,6 +832,7 @@ export default {
         	if (attr_val) {
         		this.postData.attr_id = attr_val.Product_Attr_ID;   //选择属性的id
         		this.postData.count = attr_val.Property_count;   //选择属性的库存
+				this.skuImg=attr_val.Attr_Image//选择属性的图片
         		this.postData.showimg = typeof attr_val.Attr_Image != 'undefined' && attr_val.Attr_Image != '' ? attr_val.Attr_Image : this.product.Products_JSON['ImgPath'][0];// 选择属性的图片
         		this.postData.productDetail_price = attr_val.Attr_Price; // 选择属性的价格
         		this.submit_flag = (!this.check_attr || Object.getOwnPropertyNames(this.check_attr).length != Object.getOwnPropertyNames(this.product.skujosn).length) ? false : true;

@@ -18,8 +18,8 @@
 					  <!-- #endif -->
 				  </video>
 				  <view class="change-btn" >
-					  <cover-view  v-if="showVideo" :class="[showVideo?'active':'','shipin']" @click="change_view(1)">视频</cover-view>
-					  <cover-view  v-if="showVideo"  :class="[showVideo?'':'active','tupian']" @click="change_view(2)">图片</cover-view>
+					  <cover-view  v-if="showVideo&&showCorver" :class="[showVideo?'active':'','shipin']" @click="change_view(1)">视频</cover-view>
+					  <cover-view  v-if="showVideo&&showCorver"  :class="[showVideo?'':'active','tupian']" @click="change_view(2)">图片</cover-view>
 				  </view>
 			  </view>
 			  <view class="page-section-spacing" v-else>
@@ -168,7 +168,7 @@
 	<popupLayer ref="cartPopu" :direction="'top'" @maskClicked="handClicked">
 		<div class="cartSku">
 			<div class="cartTop">
-				<image class="image" :src="product.Products_JSON.ImgPath[0]" mode=""></image>
+				<image class="image" :src="skuImg?skuImg:product.Products_JSON.ImgPath[0]" mode=""></image>
 				<div class="cartTitle">
 					<div class="cartTitles">{{product.Products_Name}}</div>
 					<div class="addInfo">
@@ -289,6 +289,8 @@ export default {
 			isVirtual: false, // 是否虚拟产品
 			videoContext:null,
 			isSubmit: false, // 是否提交过了
+			skuImg:'',
+			showCorver:true
         }
     },
     components: {
@@ -509,6 +511,7 @@ export default {
     methods: {
 			handClicked(){
 				this.postData.qty = 1;
+				this.showCorver=true
 			},
 		async _init_func(option){
 
@@ -928,6 +931,8 @@ export default {
 			if (attr_val) {
 				this.postData.attr_id = attr_val.Product_Attr_ID;   //选择属性的id
 				this.postData.count = attr_val.Property_count;   //选择属性的库存
+				
+				this.skuImg=attr_val.Attr_Image
 				// this.postData.showimg = typeof attr_val.Attr_Image != 'undefined' && attr_val.Attr_Image != '' ? attr_val.Attr_Image : this.product.Products_JSON['ImgPath'][0];// 选择属性的图片
 				this.postData.productDetail_price = attr_val.Attr_Price?attr_val.Attr_Price:this.product.Products_PriceX; // 选择属性的价格
 				this.submit_flag = (!this.check_attr || Object.getOwnPropertyNames(this.check_attr).length != Object.getOwnPropertyNames(this.product.skujosn).length) ? false : true;
@@ -1177,6 +1182,10 @@ export default {
 
 		},
 		addCart(){
+			if(!this.$fun.checkIsLogin(1,1)){
+				return;
+			}
+			this.showCorver=true
 			this.postData.cart_key = 'CartList';
 			// #ifdef APP-PLUS
 			const goodsSpecNvue = uni.getSubNVueById('goodsSpec')
@@ -1201,6 +1210,7 @@ export default {
 				return;
 			}
 
+			this.showCorver=true
 			this.postData.cart_key = 'DirectBuy'
 
 			// #ifdef APP-PLUS
