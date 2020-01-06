@@ -171,6 +171,8 @@ export const getAddress = (data, options) => fetch('get_address', data, options)
 export const updateCart = (data, options) => fetch('update_cart', data, options)
 // 获取订单操作
 export const createOrderCheck = (data, options) => fetch('create_order_check', data, options)
+//延迟发货
+export const extendOrderConfirm = (data, options) => fetch('extendOrderConfirm', data, options)
 // 获取用户信息（临时）
 export const get_user_info = (data, options) => fetch('get_user_info', data, options)
 // 获取评论
