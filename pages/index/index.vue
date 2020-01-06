@@ -25,6 +25,13 @@
 				<kill-component v-if="item.indexOf('kill') !== -1" :confData="templateData[tagIndex][index]" :index="index"  />
 			</section>
 		</view>
+		<!-- #ifndef H5 -->
+		<image v-if="initData.CallEnable" @click="callFn" class="telphone" src="https://new401.bafangka.com/static/api/shop/skin/default/images/autotel.png" />
+		<!-- #endif -->
+		<!-- #ifdef H5 -->
+		<a class="telphoneLink" v-if="initData.CallEnable" :href="'tel:'+initData.CallPhoneNumber"><image class="telphone" src="https://new401.bafangka.com/static/api/shop/skin/default/images/autotel.png" /></a>
+		<!-- #endif -->
+
 		<!-- <div style="height: 60px;"></div>
 		<div v-if="tabbar" class="tabbar">
 			<div class="item" @click="tabbarFn(0)">首页</div>
@@ -104,18 +111,18 @@
 
 			let that=this
 			//每次加载都清空全站配置
-			ls.remove('initData');
+			this.setInitData({})
 			getSystemConf().then(res => {
 
-				ls.set('initData',res.data)
+				this.setInitData(res.data)
 				uni.setNavigationBarTitle({
 					title:res.data.ShopName
 				})
 			},err=>{}).catch(error=>{})
-			
-			
+
+
 			setTimeout(()=>{
-				
+
 				// this.tabbar = true
 				// uni.setTabBarItem({
 				// 	index:1,
@@ -142,9 +149,17 @@
 			this.initFunc()
 		},
 		methods: {
+			...mapActions(['setInitData']),
+			callFn(){
+				if(this.initData.hasOwnProperty('CallPhoneNumber') && this.initData.CallPhoneNumber){
+					uni.makePhoneCall({
+						phoneNumber: this.initData.CallPhoneNumber
+					});
+				}
+			},
 			tabbarFn(idx){
 				const tabbarRouter = ['/pages/index/index', '/pages/classify/classify', '/pages/detail/groupSuccess', '/pages/order/cart', '/pages/person/person'];
-				
+
 				uni.switchTab({
 					url:tabbarRouter[idx]
 				})
@@ -210,7 +225,7 @@
 					}
 
 
-				},err=>{})
+				})
 				.catch(err => {
 					console.log(err)
 				})
@@ -220,6 +235,15 @@
 </script>
 
 <style lang="less" scope="scope">
+	.telphone{
+		width: 27px;
+		height: 101px;
+		position: fixed;
+		right: 0;
+		top: 50%;
+		transform: translateY(-50%);
+		z-index: 999;
+	}
 	.tabbar{
 		height: 60px;background: red;position: fixed;bottom: 0;width: 100%;
 		display: flex;
