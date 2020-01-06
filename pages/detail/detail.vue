@@ -1540,9 +1540,7 @@ export default {
         display: flex;
         flex-wrap: wrap;
         font-size: 0rpx;
-				// padding: 30rpx 0;
-        // padding: 30rpx 20rpx;
-        // border-bottom: 20rpx solid #efefef;
+
     }
     .section3>span {
         display: flex;

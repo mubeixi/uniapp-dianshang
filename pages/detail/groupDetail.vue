@@ -49,7 +49,7 @@
 		</div>
 		<!-- 包邮等信息 -->
 		<div class="section3" v-if="product.Products_Promise && product.Products_Promise.length > 0">
-			<span v-for="(item,index) in product.Products_Promise" v-if="item.name" :key="index">
+			<span class="span" v-for="(item,index) in product.Products_Promise" v-if="item.name" :key="index">
 				<image class="img" :src="'/static/client/detail/dh.png'|domain" alt="" />
 				<span>{{item.name}}</span>
 			</span>
@@ -1450,6 +1450,8 @@
 		background-color: #fff;
 	}
 
+
+
 	.price {
 		margin-top: 22px;
 	}
@@ -1529,17 +1531,17 @@
 		font-size: 22rpx;
 		padding: 15px 10px;
 		border-bottom: 17px solid #f8f8f8;
-		justify-content: space-around;
+		/*justify-content: space-around;*/
 		background-color: #fff;
 	}
 
-	.section3>span {
+	.section3 .span {
 		display: flex;
 		align-items: center;
 		margin-right: 10px;
 	}
 
-	.section3 img {
+	.section3 .img {
 		width: 30rpx;
 		height: 30rpx;
 		margin-right: 5px;
