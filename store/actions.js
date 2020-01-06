@@ -21,7 +21,6 @@ export const getInitData = async ({commit, state},refresh) => {
   if(!refresh){
     data = state.initData
     if (data) return data;
-
     if (!data) {
       let data2 = ls.get('initData')
       if (data2) {

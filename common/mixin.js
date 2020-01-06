@@ -43,7 +43,7 @@ export const WX_JSSDK_INIT = (vm, jsApiListList) => new Promise((resolve, reject
 
 			let config = res.data;
 			//线上环境，听服务器的，本地的一律调试
-			let debug = false;//process.env.NODE_ENV === 'production'?config.debug?true:false:true
+			let debug = res.data.debug?true:false;//process.env.NODE_ENV === 'production'?config.debug?true:false:true
 			let jsApiList = jsApiListList ? jsApiListList : ['onMenuShareAppMessage', 'onMenuShareTimeline', 'openLocation', 'getLocation', 'scanQRCode'];
 			// ['chooseImage', 'previewImage', 'uploadImage', 'openLocation','getLocation', 'chooseWXPay', 'getSystemInfo', 'onMenuShareAppMessage','onMenuShareTimeline','scanQRCode'];
 			let {noncestr, timestamp, appId, signature} = config;
@@ -248,10 +248,10 @@ export const pageMixin = {
 		if (users_id) {
 
 			if (!GetQueryByString(location.href, 'users_id')) {
-				
-				
+
+
 				let { href, protocol, host, search, hash,pathname } = window.location;
-				//console.log(protocol, host, search, hash)   
+				//console.log(protocol, host, search, hash)
 
 				if (search.indexOf('?') === -1) {
 					search += '?users_id=' + users_id
@@ -259,7 +259,7 @@ export const pageMixin = {
 					search = search.replace(/\?/, '?users_id=' + users_id + '&')
 				}
 				//console.log(search)
-				
+
 				const newHref = `${protocol}//${host}${pathname}${search}${hash}`;
 				//console.log(newHref)
 				 if (newHref !== href) {
@@ -329,6 +329,11 @@ export const pageMixin = {
 		// 	},5000)
 		// })
 
+		// #ifdef H5
+		//微信里面强制刷新
+		this.refreshInit = true
+		// #endif
+
 		//根据配置决定是否刷新配置
 		let initData = await this.getInitData(this.refreshInit)
 
@@ -344,8 +349,7 @@ export const pageMixin = {
 			})
 		}
 
-		//微信里面强制刷新
-		this.refreshInit = true
+
 
 		//页面默认全都是分享出去是首页的
 		if (isWeiXin() && this.JSSDK_INIT) {
