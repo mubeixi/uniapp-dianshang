@@ -366,7 +366,7 @@ export const getProductSharePic = (data, options) => fetch('get_product_tgqrcode
 export const addPromotionArticle = (data, options) => fetch('add_promotion_article', data, options);
 
 //增加产品的浏览次数
-export const addProductViews = (data, options) => fetch('prod_views', data, options);
+// export const addProductViews = (data, options) => fetch('prod_views', data, options);
 
 //获取拼团的团队
 export const getPintuanTeam = (data, options) => fetch('get_pintuan_team', data, options);

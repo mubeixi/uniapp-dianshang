@@ -288,7 +288,7 @@
 		cancelCollection,
 		checkProdCollected,
 		getPintuanTeam,
-		addProductViews,
+
 		getProductSharePic
 	} from '../../common/fetch.js'
 	import {
@@ -1060,6 +1060,7 @@
 				// goBack();
 			},
 			getCommit(item) {
+
 				let data = {
 					Products_ID: item,
 					page: 1,

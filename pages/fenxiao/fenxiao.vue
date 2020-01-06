@@ -231,6 +231,9 @@
 				getDisInit({},{errtip:false}).then(res=>{
 					this.data=res.data;
 					this.userInfo.Is_Distribute=1;
+					uni.setNavigationBarTitle({
+						title:res.data.title
+					})
 				},err=>{
 					// uni.showToast({
 					// 	title: err.msg,

@@ -227,7 +227,7 @@
 <script>
 import bottom from '../../components/bottom/bottom'
 import popupLayer from '../../components/popup-layer/popup-layer.vue'
-import {getProductDetail,getCommit,updateCart,addCollection,getCoupon,getUserCoupon,checkProdCollected,cancelCollection,judgeReceiveGift,getProductSharePic,addProductViews} from '../../common/fetch.js';
+import {getProductDetail,getCommit,updateCart,addCollection,getCoupon,getUserCoupon,checkProdCollected,cancelCollection,judgeReceiveGift,getProductSharePic} from '../../common/fetch.js';
 import {goBack as goBackFn,numberSort,getProductThumb}  from '../../common/tool.js'
 import {buildSharePath, isWeiXin, ls} from "../../common/tool";
 
