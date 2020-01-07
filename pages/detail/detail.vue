@@ -691,7 +691,7 @@ export default {
 				case 'pic':
 					//this.$toast('comming soon')
 
-					let sharePic = await getProductSharePic({'product_id':this.Products_ID}).then(res=>{
+					let sharePic = await getProductSharePic({'product_id':this.Products_ID},{tip:'努力加载中',mask:true}).then(res=>{
 						console.log(res)
 						ls.set('temp_sharepic_info',res.data)
 						return res.data.img_url
@@ -905,12 +905,24 @@ export default {
 			var attr_val = this.product.skuvaljosn[check_attrid];   //选择属性对应的属性值
 			//数组转化为字符串
 			check_attrnames = check_attrnames.join(';');
+			
+			
+			//更改第一个规格显示图片
+			for(let mbx in this.product.skuvaljosn){
+				let arr=mbx.split(';')
+				if(arr[0]==index){
+					this.skuImg=this.product.skuvaljosn[mbx].Attr_Image
+					break
+				}
+			}
+
+			
 			//属性判断
 			if (attr_val) {
 				this.postData.attr_id = attr_val.Product_Attr_ID;   //选择属性的id
 				this.postData.count = attr_val.Property_count;   //选择属性的库存
 				
-				this.skuImg=attr_val.Attr_Image
+				//this.skuImg=attr_val.Attr_Image
 				// this.postData.showimg = typeof attr_val.Attr_Image != 'undefined' && attr_val.Attr_Image != '' ? attr_val.Attr_Image : this.product.Products_JSON['ImgPath'][0];// 选择属性的图片
 				this.postData.productDetail_price = attr_val.Attr_Price?attr_val.Attr_Price:this.product.Products_PriceX; // 选择属性的价格
 				this.submit_flag = (!this.check_attr || Object.getOwnPropertyNames(this.check_attr).length != Object.getOwnPropertyNames(this.product.skujosn).length) ? false : true;

@@ -3,7 +3,6 @@
 		<!-- #ifdef APP-PLUS -->
 		<view class="status_bar" style="background: #f81111;"></view>
 		<!-- #endif -->
-
 		<view class="personTop">
 			<image class="bg" :src="'/static/client/person/top.png'|domain"  ></image>
 			<image :class="userInfo.User_ID&&show>0?'':'onlyMsg'"  class="msg" :src="'/static/client/fenxiao/msg.png'|domain" @click="goMsg"></image>
@@ -50,39 +49,39 @@
 		</view>
 		<view class="order">
 			<view class="orderTop">
-					<view class="orderLeft">商城订单</view>
-					<view class="orderRight" @click="goOrder(0)">
-						全部订单<image class="image" :src="'/static/client/person/right.png'|domain" ></image>
-					</view>
+				<view class="orderLeft">商城订单</view>
+				<view class="orderRight" @click="goOrder(0)">
+					全部订单<image class="image" :src="'/static/client/person/right.png'|domain" ></image>
+				</view>
 			</view>
 			<view class="orderCenter">
 				<view class="orderLast" @click="goOrder(1)">
-						<image class="zxc" :src="'/static/client/person/pay.png'|domain"></image>
-						<view class="views">
-							待付款
-						</view>
-						<view class="jiaobiao" v-if="orderNum.waitpay>0">{{orderNum.waitpay}}</view>
+					<image class="zxc" :src="'/static/client/person/pay.png'|domain"></image>
+					<view class="views">
+						待付款
+					</view>
+					<view class="jiaobiao" v-if="orderNum.waitpay>0">{{orderNum.waitpay}}</view>
 				</view>
 				<view class="orderLast" @click="goOrder(2)">
-						<image class="zxc" :src="'/static/client/person/fa.png'|domain"></image>
-						<view class="views">
-							待发货
-						</view>
-						<div class="jiaobiao" v-if="orderNum.waitsend>0">{{orderNum.waitsend}}</div>
+					<image class="zxc" :src="'/static/client/person/fa.png'|domain"></image>
+					<view class="views">
+						待发货
+					</view>
+					<div class="jiaobiao" v-if="orderNum.waitsend>0">{{orderNum.waitsend}}</div>
 				</view>
 				<view class="orderLast" @click="goOrder(3)">
-						<image class="zxc" :src="'/static/client/person/shou.png'|domain"></image>
-						<view class="views">
-							待收货
-						</view>
-						<div class="jiaobiao" v-if="orderNum.waitconfirm>0">{{orderNum.waitconfirm}}</div>
+					<image class="zxc" :src="'/static/client/person/shou.png'|domain"></image>
+					<view class="views">
+						待收货
+					</view>
+					<div class="jiaobiao" v-if="orderNum.waitconfirm>0">{{orderNum.waitconfirm}}</div>
 				</view>
 				<view class="orderLast" @click="goOrder(4)">
-						<image class="zxc" :src="'/static/client/person/ping.png'|domain"></image>
-						<view class="views">
-							待评价
-						</view>
-						<div class="jiaobiao" v-if="orderNum.waitcomment>0">{{orderNum.waitcomment}}</div>
+					<image class="zxc" :src="'/static/client/person/ping.png'|domain"></image>
+					<view class="views">
+						待评价
+					</view>
+					<div class="jiaobiao" v-if="orderNum.waitcomment>0">{{orderNum.waitcomment}}</div>
 				</view>
 			</view>
 		</view>
@@ -179,7 +178,6 @@
 <!--		<div class="space" style="height:60px"></div>-->
 <!--		<div class="safearea"></div>-->
 <!--		<tabbar-components></tabbar-components>-->
-
 	</view>
 </template>
 
@@ -207,63 +205,8 @@
 			...mapGetters(['userInfo','initData']),
 			...mapState(['Stores_ID'])
 		},
-		onLoad(){
-
-		},
-		onShow() {
-
-			if(JSON.stringify(this.userInfo) != "{}"){
-				get_user_info({},{tip:'',errtip:false}).then(res=>{
-					console.log(res.data)
-					this.setUserInfo(res.data);
-				},err=>{
-
-				}).catch(e=>{
-					console.log(e)
-				})
-			}
-			this.getOrderNum();
-			if(this.$fun.checkIsLogin()){
-				this.judgeSignin();
-			}
-
-		},
-		async onPullDownRefresh(){
-
-			if(JSON.stringify(this.userInfo) != "{}"){
-
-				await get_user_info({},{tip:'',errtip:false}).then(res=>{
-					this.setUserInfo(res.data);
-				},err=>{
-
-				}).catch(e=>{
-					console.log(e)
-				})
-
-				await getOrderNum({Order_Type:this.Order_Type}).then(res=>{
-					this.orderNum=res.data;
-					console.log(res)
-				}).catch(e=>{
-					console.log(e)
-				});
-
-				await judgeSignin({},{errtip:false}).then(res=>{
-					this.show=res.data.show;
-					this.signin=res.data.signin;
-				},err=>{
-
-				}).catch(e=>{
-					console.log(e)
-				});
-
-			}
-
-
-
-			uni.stopPullDownRefresh()
-		},
 		methods:{
-			...mapActions(['setUserInfo']),
+			...mapActions(['setUserInfo','getUserInfo']),
 			goStore(){
 				if(!this.$fun.checkIsLogin(1))return;
 				uni.navigateTo({
@@ -361,9 +304,7 @@
 					uni.navigateTo({
 						url:'../person/qiandao'
 					})
-
 				}
-
 			},
 			//获取签到状态
 			judgeSignin(){
@@ -376,7 +317,7 @@
 					console.log(e)
 				})
 			},
-			...mapActions(['getUserInfo']),
+
 			goLogin(){
 				this.$fun.checkIsLogin(1)
 			},
@@ -444,14 +385,56 @@
 				})
 			}
 		},
-		created(){
+		onShow() {
+			if(JSON.stringify(this.userInfo) != "{}"){
+				get_user_info({},{tip:'',errtip:false}).then(res=>{
+					console.log(res.data)
+					this.setUserInfo(res.data);
+				},err=>{
 
-		}
+				}).catch(e=>{
+					console.log(e)
+				})
+			}
+			this.getOrderNum();
+			if(this.$fun.checkIsLogin()){
+				this.judgeSignin();
+			}
+		},
+		async onPullDownRefresh(){
+			if(JSON.stringify(this.userInfo) != "{}"){
+				await get_user_info({},{tip:'',errtip:false}).then(res=>{
+					this.setUserInfo(res.data);
+				},err=>{
+
+				}).catch(e=>{
+					console.log(e)
+				})
+
+				await getOrderNum({Order_Type:this.Order_Type}).then(res=>{
+					this.orderNum=res.data;
+					console.log(res)
+				}).catch(e=>{
+					console.log(e)
+				});
+
+				await judgeSignin({},{errtip:false}).then(res=>{
+					this.show=res.data.show;
+					this.signin=res.data.signin;
+				},err=>{
+
+				}).catch(e=>{
+					console.log(e)
+				});
+
+			}
+			uni.stopPullDownRefresh()
+		},
 	}
 </script>
 
 <style lang="scss" scoped>
-.person{
+	.person{
 	background-color: rgb(241, 241, 241);
 	.personTop{
 		width: 750rpx;
@@ -469,7 +452,6 @@
 			//opacity:0.45;
 			border-radius:20rpx;
 			position: absolute;
-
 			top: 22rpx;
 			right: 20rpx;
 			display: flex;
@@ -529,9 +511,9 @@
 					visibility:middle;
 					overflow-y: hidden;
 				}
-				 .nickName::-webkit-scrollbar {
-				                display: none;
-				   }
+				.nickName::-webkit-scrollbar {
+				 display: none;
+				}
 				.cart{
 					margin-top: 19rpx;
 					font-size: 22rpx;
@@ -748,22 +730,22 @@
 	}
 }
 
-.msg{
-	width: 45rpx;
-	height: 45rpx;
-	position: absolute;
-	top: 22rpx;
-	right: 175rpx;
-}
-.onlyMsg{
-	right: 25rpx;
-}
-.isQian{
-	padding-left: 12rpx !important;
-	padding-right: 12rpx !important;
-}
+	.msg{
+		width: 45rpx;
+		height: 45rpx;
+		position: absolute;
+		top: 22rpx;
+		right: 175rpx;
+	}
+	.onlyMsg{
+		right: 25rpx;
+	}
+	.isQian{
+		padding-left: 12rpx !important;
+		padding-right: 12rpx !important;
+	}
 
-.jiaobiao{
+	.jiaobiao{
 		position: absolute;
 		top: -6rpx;
 		right: 42rpx;
