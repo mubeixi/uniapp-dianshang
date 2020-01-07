@@ -27,7 +27,7 @@
 			<view class="sales">
 				<view class="left" @click="goSales">
 					<view class="salesSum">
-						累计销售额（元）
+						累计业绩（元）
 						<image class="rightMys" :src="'/static/client/person/right.png' | domain" ></image>
 					</view>
 					<view class="salesSumPrice" v-if="userInfo.User_ID&&userInfo.Is_Distribute">
@@ -134,10 +134,11 @@
 	import {pageMixin} from "../../common/mixin";
 	import {getDisInit,get_user_info} from '../../common/fetch.js'
 	import {mapActions,mapState,mapGetters} from 'vuex';
+	// import TabbarComponents from "../../components/TabbarComponents";
 	export default {
 		mixins:[pageMixin],
 		components:{
-			TabbarComponents
+			// TabbarComponents
 		},
 		data() {
 			return {

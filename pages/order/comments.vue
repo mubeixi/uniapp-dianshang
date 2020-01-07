@@ -233,7 +233,7 @@ export default {
 						})
 					}else {
 						uni.navigateTo({
-							url: '../order/check?cart_key=DirectBuy'
+							url: '/pages/order/check?cart_key=DirectBuy'
 						})
 					}
 				}else {

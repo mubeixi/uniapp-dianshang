@@ -276,25 +276,27 @@
 				}
 				return arr
 			},
-			async get_user_location(){
+			get_user_location(){
 			    let localInfo = null;
 			    let rt =false
-			    await getLocation(this.pageEl).then(res=>{
+			    getLocation(this.pageEl).then(res=>{
 			        if(res.code===0){
 			            localInfo = res.data
-			            rt = true
+			            // rt = true
+						console.log('获取到的位置信息',localInfo)
+
+						// if(!rt)return;
+						this.lat = localInfo.latitude
+						this.lng = localInfo.longitude
+						this.getStoreList()
+
 			        }
 			    }).catch(err=>{
 			        console.log(err)
 			        error('获取位置信息失败:'+err.msg)
 			    })
 
-			    console.log('获取到的位置信息',localInfo)
 
-			    if(!rt)return;
-			    this.lat = localInfo.latitude
-			    this.lng = localInfo.longitude
-				this.getStoreList()
 			},
 			// 获取门店列表，
 			getStoreList(){

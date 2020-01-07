@@ -29,11 +29,11 @@
 			<!-- <view  v-else-if="pro.disInfo.sha_level_id>0" class="juewei">
 				{{pro.disInfo.sha_level_name}}
 			</view> -->
-			
+
 			<!-- <view  v-else-if="" class="juewei" >
 				暂不可申请
 			</view> -->
-			
+
 		</view>
 		<view class="moneySum">
 			<view class="money">
@@ -59,7 +59,7 @@
 				<image class="image" :src="'/static/client/fenxiao/chakan.png'|domain" ></image>
 			</view>
 		</view>
-		<circleTitle title="股东门槛说明"></circleTitle>
+		<circleTitle title="股东条件说明"></circleTitle>
 		<view class="xiang" v-for="(item,index) of pro.sha_config.Sha_Rate" :key="index" v-if="item.sha_name">
 			<view class="xiangTop">
 				{{item.sha_name}}
@@ -79,7 +79,7 @@
 						个人消费额:{{item.self_pay}}
 					</view>
 					<view  class="view">
-						团队销售额:{{item.team_sales}}
+						团队业绩:{{item.team_sales}}
 					</view>
 				</view>
 			</view>

@@ -217,23 +217,27 @@
 
 
                 let rt = false
-                await getLocation(this.pageEl).then(res => {
+                //这里是返回了一个promise，而且不具备阻断后面的作用。不能用await promise.then()这样的古怪语法。要么就是await，要么就是promise.then()
+                getLocation(this.pageEl).then(res => {
                     if (res.code === 0) {
                         localInfo = res.data
-                        rt = true
+                        // rt = true
+
+                        console.log('获取到的位置信息', localInfo)
+
+                        // if (!rt) return;
+                        this.lat = localInfo.latitude
+                        this.lng = localInfo.longitude
+
+                        this.loadInfo()
+
                     }
                 }).catch(err => {
                     console.log(err)
                     error('获取位置信息失败:' + err.msg)
                 })
 
-                console.log('获取到的位置信息', localInfo)
 
-                if (!rt) return;
-                this.lat = localInfo.latitude
-                this.lng = localInfo.longitude
-
-                this.loadInfo()
 
             },
             loadInfo(storeId) {
@@ -312,7 +316,7 @@
 				}else{
 					this.loadInfo()
 				}
-                
+
 
                 console.log('show popup')
                 this.ifshow = true;

@@ -124,6 +124,7 @@ export const getInitData = async ({commit, state},refresh) => {
     console.log('刷新initData')
     commit('SET_INIT_DATA', res.data);
     data = res.data
+	console.log('获取的什么东西???')
   })
 
   console.log('获取initData',data)

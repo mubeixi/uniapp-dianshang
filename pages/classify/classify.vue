@@ -45,7 +45,7 @@
 <script>
 	import {getProductCategory} from '../../common/fetch.js';
 	import {pageMixin} from "../../common/mixin";
-	import TabbarComponents from "../../components/TabbarComponents";
+	// import TabbarComponents from "../../components/TabbarComponents";
 
 	export default {
 		mixins:[pageMixin],

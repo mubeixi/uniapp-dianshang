@@ -1,7 +1,10 @@
 //重写navigateTo
-import {GetQueryByString, ls} from "./tool";
+import {GetQueryByString, ls,isWeiXin,isIos} from "./tool";
+
 
 let navigateTOCopy = uni.navigateTo;
+let redirectToCopy = uni.redirectTo;
+let switchTabCopy = uni.switchTab;
 
 uni.navigateTo = (opt) => {
 
@@ -56,13 +59,28 @@ uni.navigateTo = (opt) => {
     }
 
 
+
+
+
     let endOpt = {...opt, url}
+
+    //去订单详情页的，精准hack....
+    // #ifdef H5
+    if(isWeiXin() && isIos() && url.indexOf('/pages/order/check?')!==-1){
+
+        console.log('ios下订单相关的用redirct')
+        console.log('/fre'+url)
+        location.href = '/fre'+url;//这样很危险，因为需要约定其他地方跳转到check页面都只能写url，不能用query和parmas
+        return;
+    }
+    // #endif
+
     console.log('endOpt is ', endOpt)
     navigateTOCopy(endOpt)
 
 }
 
-let redirectToCopy = uni.redirectTo;
+
 
 uni.redirectTo = (opt) => {
 
@@ -122,7 +140,6 @@ uni.redirectTo = (opt) => {
 
 }
 
-let switchTabCopy = uni.switchTab;
 
 uni.switchTab = (opt) => {
 
