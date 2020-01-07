@@ -53,9 +53,7 @@
 
 		</view>
 		<view class="center" v-if="userInfo.User_ID&&userInfo.Is_Distribute">
-			<view>
-				可提现金额
-			</view>
+			<view>可提现金额</view>
 			<view>
 				{{data.balance}}
 			</view>
@@ -135,7 +133,6 @@
 	import {pageMixin} from "../../common/mixin";
 	import {getDisInit,get_user_info} from '../../common/fetch.js'
 	import {mapActions,mapState,mapGetters} from 'vuex';
-
 	export default {
 		mixins:[pageMixin],
 		data() {
@@ -152,28 +149,6 @@
 		},
 		computed:{
 			...mapGetters(['userInfo'])
-		},
-		onLoad() {
-
-		},
-		onShow() {
-			if(this.$fun.checkIsLogin()){
-				get_user_info({},{errtip: false}).then(res=>{
-					this.setUserInfo(res.data);
-				},err=>{
-
-				}).catch(e=>{
-					console.log(e)
-				})
-			}
-			//获取分销首页
-			this.getDisInit();
-
-
-			//this.userInfo = await this.getUserInfo();
-		},
-		created(){
-
 		},
 		methods:{
 			...mapActions(['getUserInfo','setUserInfo']),
@@ -310,195 +285,207 @@
 					url:'/pagesA/fenxiao/erweima'
 				})
 			}
+		},
+		onShow() {
+			if(this.$fun.checkIsLogin()){
+				get_user_info({},{errtip: false}).then(res=>{
+					this.setUserInfo(res.data);
+				},err=>{
+
+				}).catch(e=>{
+					console.log(e)
+				})
+			}
+			//获取分销首页
+			this.getDisInit();
+			//this.userInfo = await this.getUserInfo();
 		}
 	}
 </script>
 
 <style lang="scss" scoped>
-.all{
-	background-color: #f8f8f8;
-}
-.top{
-	width: 750rpx;
-	height: 400rpx;
-	position: relative;
-
-	.image{
-		width: 100%;
-		height: 100%;
+	.all{
+		background-color: #f8f8f8;
 	}
-	.title{
-		width:138rpx;
-		font-size:34rpx;
-		font-weight:bold;
-		color:#FFFFFF;
-		position: absolute;
-		top: 27rpx;
-		left: 306rpx;
-	}
-	.msg{
-		width: 45rpx;
-		height: 45rpx;
-		position: absolute;
-		top: 25rpx;
-		right: 21rpx;
-	}
-	.person{
-		width: 92rpx;
-		height: 92rpx;
-		position: absolute;
-		top:109rpx ;
-		left: 329rpx;
-		border-radius: 50%;
+	.top{
+		width: 750rpx;
+		height: 400rpx;
+		position: relative;
 		.image{
 			width: 100%;
 			height: 100%;
 		}
-
-	}
-	.nickName{
-				font-size: 28rpx;
-				height: 27rpx;
-				line-height: 27rpx;
-				font-weight:bold;
-				color:rgba(255,255,255,1);
-				width: 400rpx;
-				position: absolute;
-				top: 215rpx;
-				left: 175rpx;
-				text-align: center;
-	}
-	.loginBtn{
-		padding:4px 10px;
-		color: white;
-		border: 1px solid #e7e7e7;
-		border-radius: 4px;
-		position: absolute;
-		left: 50%;
-		top: 50%;
-		transform: translate(-50%,-50%);
-	}
-	.sales{
-		width: 690rpx;
-		height: 160rpx;
-		position: absolute;
-		left: 30rpx;
-		top: 297rpx;
-		background:rgba(255,255,255,1);
-		box-shadow:0px 0px 27rpx 0px rgba(244,49,49,0.46);
-		border-radius:10rpx;
-		display: flex;
-		.left,view.right{
-			width: 50%;
-			margin-top: 42rpx;
-			margin-bottom: 41rpx;
-			text-align: center;
-		}
-		.left{
-			border-right: 1px solid #E7E7E7;
-		}
-		.salesSum{
-			height:25rpx;
-			font-size:26rpx;
-			font-family:PingFang SC;
-			font-weight:500;
-			color:rgba(51,51,51,1);
-		}
-		.salesSumPrice{
-			height:29rpx;
-			font-size:38rpx;
-			font-family:PingFang SC;
+		.title{
+			width:138rpx;
+			font-size:34rpx;
 			font-weight:bold;
-			color:rgba(244,49,49,1);
-			margin-top: 23rpx;
+			color:#FFFFFF;
+			position: absolute;
+			top: 27rpx;
+			left: 306rpx;
 		}
-	}
-}
-.center{
-	width:690rpx;
-	height:90rpx;
-	line-height: 90rpx;
-	background:rgba(255,255,255,1);
-	border-radius:10rpx;
-	margin: 0 auto;
-	margin-top: 117rpx;
-	display: flex;
-	align-items: center;
-	position: relative;
-	& view:first-child{
-		margin-left: 48rpx;
-		color: #333333;
-		font-weight: 500;
-		font-size: 26rpx;
-		margin-right: 16rpx;
-	}
-	& view:nth-child(2){
-		font-size:34rpx;
-		font-weight:bold;
-		color:#F43131;
-	}
-	& view:nth-child(3){
-		font-size:26rpx;
-		font-weight:500;
-		color:#FFFFFF;
-		background-color: #F43131;
-		width: 85rpx;
-		height: 45rpx;
-		line-height: 45rpx;
-		border-radius: 10rpx;
-		text-align: center;
-		position: absolute;
-		right: 49rpx;
-		top: 23rpx;
-	}
-}
-.last{
-	width: 691rpx;
-	height: 668rpx;
-	margin: 0 auto;
-	position: relative;
-	margin-top: 30rpx;
-	image.back{
-		width: 100%;
-		height: 100%;
-	}
-	.zhezhao{
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 691rpx;
-		//height: 668rpx;
-		padding-left: 34rpx;
-		padding-right: 30rpx;
-		padding-top: 1rpx;
-		padding-bottom: 1rpx;
-		box-sizing: border-box;
-		display: flex;
-		flex-wrap: wrap;
-		.td{
-			width: 209rpx;
-			height: 222rpx;
-			border-right: 1px dotted #D3D3D3;
-			border-bottom: 1px dotted #D3D3D3;
+		.msg{
+			width: 45rpx;
+			height: 45rpx;
+			position: absolute;
+			top: 25rpx;
+			right: 21rpx;
+		}
+		.person{
+			width: 92rpx;
+			height: 92rpx;
+			position: absolute;
+			top:109rpx ;
+			left: 329rpx;
+			border-radius: 50%;
+			.image{
+				width: 100%;
+				height: 100%;
+			}
+		}
+		.nickName{
+			font-size: 28rpx;
+			height: 27rpx;
+			line-height: 27rpx;
+			font-weight:bold;
+			color:rgba(255,255,255,1);
+			width: 400rpx;
+			position: absolute;
+			top: 215rpx;
+			left: 175rpx;
 			text-align: center;
-			box-sizing: border-box;
-			.imgs{
-				width: 95rpx;
-				height: 95rpx;
-				margin-top: 44rpx;
+		}
+		.loginBtn{
+			padding:4px 10px;
+			color: white;
+			border: 1px solid #e7e7e7;
+			border-radius: 4px;
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%,-50%);
+		}
+		.sales{
+			width: 690rpx;
+			height: 160rpx;
+			position: absolute;
+			left: 30rpx;
+			top: 297rpx;
+			background:rgba(255,255,255,1);
+			box-shadow:0px 0px 27rpx 0px rgba(244,49,49,0.46);
+			border-radius:10rpx;
+			display: flex;
+			.left,view.right{
+				width: 50%;
+				margin-top: 42rpx;
+				margin-bottom: 41rpx;
+				text-align: center;
 			}
-			.views{
+			.left{
+				border-right: 1px solid #E7E7E7;
+			}
+			.salesSum{
 				height:25rpx;
-				line-height: 25rpx;
 				font-size:26rpx;
+				font-family:PingFang SC;
 				font-weight:500;
-				color: #303030;
-				margin-top: 12rpx;
+				color:rgba(51,51,51,1);
+			}
+			.salesSumPrice{
+				height:29rpx;
+				font-size:38rpx;
+				font-family:PingFang SC;
+				font-weight:bold;
+				color:rgba(244,49,49,1);
+				margin-top: 23rpx;
 			}
 		}
 	}
-}
-.putong{
+	.center{
+		width:690rpx;
+		height:90rpx;
+		line-height: 90rpx;
+		background:rgba(255,255,255,1);
+		border-radius:10rpx;
+		margin: 0 auto;
+		margin-top: 117rpx;
+		display: flex;
+		align-items: center;
+		position: relative;
+		& view:first-child{
+			margin-left: 48rpx;
+			color: #333333;
+			font-weight: 500;
+			font-size: 26rpx;
+			margin-right: 16rpx;
+		}
+		& view:nth-child(2){
+			font-size:34rpx;
+			font-weight:bold;
+			color:#F43131;
+		}
+		& view:nth-child(3){
+			font-size:26rpx;
+			font-weight:500;
+			color:#FFFFFF;
+			background-color: #F43131;
+			width: 85rpx;
+			height: 45rpx;
+			line-height: 45rpx;
+			border-radius: 10rpx;
+			text-align: center;
+			position: absolute;
+			right: 49rpx;
+			top: 23rpx;
+		}
+	}
+	.last{
+		width: 691rpx;
+		height: 668rpx;
+		margin: 0 auto;
+		position: relative;
+		margin-top: 30rpx;
+		image.back{
+			width: 100%;
+			height: 100%;
+		}
+		.zhezhao{
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 691rpx;
+			//height: 668rpx;
+			padding-left: 34rpx;
+			padding-right: 30rpx;
+			padding-top: 1rpx;
+			padding-bottom: 1rpx;
+			box-sizing: border-box;
+			display: flex;
+			flex-wrap: wrap;
+			.td{
+				width: 209rpx;
+				height: 222rpx;
+				border-right: 1px dotted #D3D3D3;
+				border-bottom: 1px dotted #D3D3D3;
+				text-align: center;
+				box-sizing: border-box;
+				.imgs{
+					width: 95rpx;
+					height: 95rpx;
+					margin-top: 44rpx;
+				}
+				.views{
+					height:25rpx;
+					line-height: 25rpx;
+					font-size:26rpx;
+					font-weight:500;
+					color: #303030;
+					margin-top: 12rpx;
+				}
+			}
+		}
+	}
+	.putong{
 		height:50rpx;
 		line-height: 50rpx;
 		text-align: center;

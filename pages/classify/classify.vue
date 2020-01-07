@@ -46,6 +46,8 @@
 
 	export default {
 		mixins:[pageMixin],
+		components: {
+		},
 		data() {
 			return {
 				name: "wkiwi",
@@ -61,19 +63,6 @@
 				diff: 0,//左边scroll-view 内层nav的总高度与视口之差
 				tabBarHeight:50,//如果此页面为Tab页面，自己改变高度值,,一般tab高度为51
 			}
-		},
-		created(){
-			//如果你的分类数据为后台异步获取请	将下方代码放置你的数据回调中
-			// this.$nextTick(()=>{
-			// 	this.getHeightList();
-			// })
-			this.getList();
-		},
-		onLoad: function () {
-			this.height = uni.getSystemInfoSync().windowHeight - this.tabBarHeight;
-		},
-		onReady() {
-			this.getHeightList();
 		},
 		methods: {
 			goSearch(){
@@ -104,20 +93,20 @@
 					let arr = [0];
 					let top = 0;
 					rects.forEach(function(rect){
-	// 					rect.id      // 节点的ID
-	// 					rect.dataset // 节点的dataset
-	// 					rect.left    // 节点的左边界坐标
-	// 					rect.right   // 节点的右边界坐标
-	// 					rect.top     // 节点的上边界坐标
-	// 					rect.bottom  // 节点的下边界坐标
-	// 					rect.width   // 节点的宽度
-	// 					rect.height  // 节点的高度
+						// 					rect.id      // 节点的ID
+						// 					rect.dataset // 节点的dataset
+						// 					rect.left    // 节点的左边界坐标
+						// 					rect.right   // 节点的右边界坐标
+						// 					rect.top     // 节点的上边界坐标
+						// 					rect.bottom  // 节点的下边界坐标
+						// 					rect.width   // 节点的宽度
+						// 					rect.height  // 节点的高度
 						top += rect.height;
 						arr.push(top)
-						})
-						//console.log(arr)
-						_this.arr = arr
-					}).exec()
+					})
+					//console.log(arr)
+					_this.arr = arr
+				}).exec()
 			},
 			scroll(e) {
 				let _this = this;
@@ -151,7 +140,18 @@
 				})
 			}
 		},
-		components: {
+		onLoad: function () {
+			this.height = uni.getSystemInfoSync().windowHeight - this.tabBarHeight;
+		},
+		onReady() {
+			this.getHeightList();
+		},
+		created(){
+			//如果你的分类数据为后台异步获取请	将下方代码放置你的数据回调中
+			// this.$nextTick(()=>{
+			// 	this.getHeightList();
+			// })
+			this.getList();
 		}
 	}
 </script>
@@ -247,37 +247,37 @@
 	}
 
 	::-webkit-scrollbar {/*取消小程序的默认导航条样式*/
-   width: 0;
-   height: 0;
-   color: transparent;
-}
-.titles{
-	height: 97rpx;
-	line-height: 97rpx;
-	display: flex;
-	justify-content: space-between;
-	width: 100%;
-	.titleSum{
-		font-size: 26rpx;
-		color: #333333;
+	   width: 0;
+	   height: 0;
+	   color: transparent;
 	}
-	.gengduo{
-		color: #888888;
-		font-size: 26rpx;
-	}
-}
-.imgTop{
-	width: 100%;
-	height: 150rpx;
-	margin-bottom: 20rpx;
-	.imgs{
+	.titles{
+		height: 97rpx;
+		line-height: 97rpx;
+		display: flex;
+		justify-content: space-between;
 		width: 100%;
-		height: 100%;
+		.titleSum{
+			font-size: 26rpx;
+			color: #333333;
+		}
+		.gengduo{
+			color: #888888;
+			font-size: 26rpx;
+		}
 	}
-}
+	.imgTop{
+		width: 100%;
+		height: 150rpx;
+		margin-bottom: 20rpx;
+		.imgs{
+			width: 100%;
+			height: 100%;
+		}
+	}
 
 
-.search-wrap {
+	.search-wrap {
 		position: relative;
 		display: flex;
 		justify-content: space-between;
