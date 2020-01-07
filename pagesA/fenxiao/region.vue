@@ -74,7 +74,7 @@
 						个人消费额:{{item.Selfpro}}
 					</view>
 					<view  class="view">
-						团队销售额:{{item.Teampro}}
+						团队业绩:{{item.Teampro}}
 					</view>
 				</view>
 			</view>

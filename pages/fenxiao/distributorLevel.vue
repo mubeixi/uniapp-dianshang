@@ -117,12 +117,12 @@
 			</block>
 
 			<block v-if="dis_level[inds].level_rules_edit.team_sales">
-				<!-- 团队销售额 -->
+				<!-- 团队业绩 -->
 				<view class="td" v-if="dis_level[inds].level_rules_edit.team_sales.checked=='1'">
 					<image class="image" src="/static/fenxiao/teanSum.png"></image>
 					<view class="mbx">
 						<view class="tops">
-							团队销售额达{{dis_level[inds].level_rules_edit.team_sales.value}}元
+							团队业绩达{{dis_level[inds].level_rules_edit.team_sales.value}}元
 						</view>
 						<view class="bottoms">
 							已销售{{dis_level[inds].level_rules_edit.team_sales.user_data}}元

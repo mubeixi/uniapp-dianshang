@@ -27,7 +27,7 @@
 			<view class="sales">
 				<view class="left" @click="goSales">
 					<view class="salesSum">
-						累计销售额（元）
+						累计业绩（元）
 						<image class="rightMys" :src="'/static/client/person/right.png' | domain" ></image>
 					</view>
 					<view class="salesSumPrice" v-if="userInfo.User_ID&&userInfo.Is_Distribute">

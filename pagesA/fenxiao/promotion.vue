@@ -47,11 +47,11 @@
 				</view>
 				<view class="shu"></view>
 				<view class="td">
-					自身销售额
+					自身业绩
 				</view>
 				<view class="shu"></view>
 				<view class="td">
-					团队销售额
+					团队业绩
 				</view>
 			</view>
 			<view class="myDataTop myDataBottom">
@@ -78,10 +78,10 @@
 					自身消费额
 				</view>
 				<view class="zishen">
-					自身销售额
+					自身业绩
 				</view>
 				<view class="zishen">
-					团队销售额
+					团队业绩
 				</view>
 				<view class="zishen rightZ">
 					奖励百分比

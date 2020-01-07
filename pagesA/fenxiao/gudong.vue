@@ -79,7 +79,7 @@
 						个人消费额:{{item.self_pay}}
 					</view>
 					<view  class="view">
-						团队销售额:{{item.team_sales}}
+						团队业绩:{{item.team_sales}}
 					</view>
 				</view>
 			</view>
