@@ -174,6 +174,7 @@
 
 		</view>
 		<view style="height: 118rpx;"></view>
+<!--		<tabbar-components/>-->
 
 <!--		<div class="space" style="height:60px"></div>-->
 <!--		<div class="safearea"></div>-->
@@ -186,8 +187,12 @@
 	import {pageMixin} from "../../common/mixin";
 	import {mapGetters,mapActions, mapState} from 'vuex';
 	import { judgeSignin,signin,getOrderNum,get_user_info} from "../../common/fetch.js"
+	import TabbarComponents from "../../components/TabbarComponents";
 	export default {
 		mixins:[pageMixin],
+		components:{
+			TabbarComponents
+		},
 		data() {
 			return {
 				//userInfo:{}
@@ -206,7 +211,7 @@
 
 		},
 		onShow() {
-			
+
 			if(JSON.stringify(this.userInfo) != "{}"){
 				get_user_info({},{tip:'',errtip:false}).then(res=>{
 					console.log(res.data)

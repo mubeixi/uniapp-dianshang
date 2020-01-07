@@ -128,6 +128,7 @@
 			</view>
 		</view>
 		<view style="height: 50rpx;"></view>
+<!--		<tabbar-components />-->
 	</view>
 </template>
 
@@ -135,9 +136,13 @@
 	import {pageMixin} from "../../common/mixin";
 	import {getDisInit,get_user_info} from '../../common/fetch.js'
 	import {mapActions,mapState,mapGetters} from 'vuex';
+	import TabbarComponents from "../../components/TabbarComponents";
 
 	export default {
 		mixins:[pageMixin],
+		components:{
+			TabbarComponents
+		},
 		data() {
 			return {
 				data:{

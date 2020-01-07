@@ -80,6 +80,7 @@
 		  <div class="total" v-if="handleShow">合计：<span>￥<span>{{totalPrice}}</span></span></div>
 		  <div class="checkbtn" @click="submit">{{handleShow?'结算':'删除'}} </div>
 		</div>
+<!--		<tabbar-components/>-->
 	   <!-- <tabs style="background:#F3F3F3;"></tabs> -->
 
   </div>
@@ -93,17 +94,16 @@ import {pageMixin} from "../../common/mixin";
 import {ls} from '../../common/tool.js';
 import {mapActions} from 'vuex';
 import {goProductDetail} from "../../common";
+import TabbarComponents from "../../components/TabbarComponents";
 
 export default {
-		mixins:[pageMixin],
-		  name: "App",
-		  // components: {
-		  //   tabs,
-		  //   pagetitle
-		  // },
-
-  data(){
-    return {
+	mixins:[pageMixin],
+	name: "App",
+	components:{
+		TabbarComponents
+	},
+	data(){
+	return {
 		checked: [],
 		CartList:[],
 		prodList: [],
@@ -127,22 +127,22 @@ export default {
 		cart_buy: '',
 		loading: false,
 		isfirst: true,
-    }
-  },
-  computed: {
+	}
+	},
+	computed: {
 
-  },
-  // 用户下拉
-  onPullDownRefresh() {
+	},
+	// 用户下拉
+	onPullDownRefresh() {
 
-  },
-  // 上拉触底
-  onReachBottom() {
-  	if(this.hasMore) {
+	},
+	// 上拉触底
+	onReachBottom() {
+	if(this.hasMore) {
 		this.getProd();
 	}
-  },
-  onShow() {
+	},
+	onShow() {
 	this.loading = false;
 	if(this.$fun.checkIsLogin()){
 		this.getCart();
@@ -150,14 +150,14 @@ export default {
 
 	this.getProd();
 	this.reset();
-  },
-  onLoad(){
+	},
+	onLoad(){
 
-  },
+	},
 	async created(){
 		let UserInfo = this.getUserInfo();
 	},
-  methods: {
+	methods: {
 	  goProductDetail,
 	...mapActions(['getUserInfo']),
 	 // 去逛逛
@@ -299,10 +299,10 @@ export default {
 			}
 		}).catch(e=>console.log(e));
 	},
-    handle(){
-      this.handleShow = !this.handleShow;
+	handle(){
+	  this.handleShow = !this.handleShow;
 
-    },
+	},
 	// 初始化选中对象
 	initCheck(){
 		this.isfirst = false;
@@ -346,16 +346,16 @@ export default {
 	},
 	gotoDetail(e){
 		uni.navigateTo({
-		    url: '../detail/detail?Products_ID=' + e
+			url: '../detail/detail?Products_ID=' + e
 		});
 	}
-  },
-  computed: {
-    manage(){
-      return this.CartList.length == 0
-    },
+	},
+	computed: {
+	manage(){
+	  return this.CartList.length == 0
+	},
 
-  }
+	}
 };
 </script>
 

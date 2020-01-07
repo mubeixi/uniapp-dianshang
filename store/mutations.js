@@ -46,3 +46,9 @@ export const SET_INIT_DATA = function (state, value) {
   }
 };
 
+
+export const SET_TABBAR = function (state, value) {
+  state.tabbar = value;
+  ls.set('tabbar',value,1)
+};
+

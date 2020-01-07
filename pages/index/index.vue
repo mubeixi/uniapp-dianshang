@@ -32,6 +32,8 @@
 		<a class="telphoneLink" v-if="initData.CallEnable" :href="'tel:'+initData.CallPhoneNumber"><image class="telphone" src="https://new401.bafangka.com/static/api/shop/skin/default/images/autotel.png" /></a>
 		<!-- #endif -->
 
+<!--		<tabbar-components/>-->
+
 		<!-- <div style="height: 60px;"></div>
 		<div v-if="tabbar" class="tabbar">
 			<div class="item" @click="tabbarFn(0)">首页</div>
@@ -68,6 +70,7 @@
 	import {pageMixin} from "../../common/mixin";
 	import {error,toast} from "../../common";
 	import {mapGetters,mapActions, mapState} from 'vuex';
+	import TabbarComponents from "../../components/TabbarComponents";
 
 	import {ls} from "../../common/tool";
 
@@ -85,7 +88,8 @@
 		components:{
 			BaseComponent,SwiperComponent,NavComponent,VideoComponent,HrComponent,SpaceComponent,
 			TitleComponent,TextComponent,SearchComponent,NoticeComponent,CouponComponent,
-			GoodsComponent,CubeComponent,TabComponent,FlashComponent,GroupComponent,KillComponent
+			GoodsComponent,CubeComponent,TabComponent,FlashComponent,GroupComponent,KillComponent,
+			TabbarComponents
 		},
 
 		onHide(){
@@ -145,11 +149,28 @@
 		onLoad() {
 			// uni.hideTabBar()
 		},
-		created(){
+		async created(){
 			this.initFunc()
+
+			// let tabbarConf = await this.getTabBar(1)
+			//
+			// console.log(JSON.stringify(tabbarConf))
+			//
+			// for(let key in tabbarConf){
+			// 	uni.setTabBarItem({
+			// 		index: parseInt(key),
+			// 		text: tabbarConf[key].text,
+			// 		iconPath: tabbarConf[key].iconPath,
+			// 		selectedIconPath: tabbarConf[key].selectedIconPath
+			// 	})
+			// }
+			//
+			// setTimeout(()=>{
+			// 	uni.hideTabBar()
+			// },2000)
 		},
 		methods: {
-			...mapActions(['setInitData']),
+			...mapActions(['setInitData','getTabBar']),
 			callFn(){
 				if(this.initData.hasOwnProperty('CallPhoneNumber') && this.initData.CallPhoneNumber){
 					uni.makePhoneCall({
@@ -244,18 +265,18 @@
 		transform: translateY(-50%);
 		z-index: 999;
 	}
-	.tabbar{
-		height: 60px;background: red;position: fixed;bottom: 0;width: 100%;
-		display: flex;
-		z-index: 999;
-		.item{
-			flex: 1;
-			text-align: center;
-			line-height: 60px;
-			font-size: 14px;
-			color: #fff;
-		}
-	}
+	/*.tabbar{*/
+	/*	height: 60px;background: red;position: fixed;bottom: 0;width: 100%;*/
+	/*	display: flex;*/
+	/*	z-index: 999;*/
+	/*	.item{*/
+	/*		flex: 1;*/
+	/*		text-align: center;*/
+	/*		line-height: 60px;*/
+	/*		font-size: 14px;*/
+	/*		color: #fff;*/
+	/*	}*/
+	/*}*/
 	.home-wrap{
 		width: 750rpx;
 		overflow-x: hidden;

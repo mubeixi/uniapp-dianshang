@@ -14,6 +14,93 @@ export const setInitData = ({commit}, data) => {
   commit('SET_INIT_DATA', data);
 };
 
+function downImg(){
+
+}
+function getTabBarConf(){
+	let url = '/node/tabbar'
+	// #ifndef H5
+	url = 'http://localhost:9100/tabbar'
+	// #endif
+
+	// #ifdef APP-PLUS ||MP
+	var tabbar = [{
+	            "pagePath": "pages/index/index",
+	            "iconPath": "/static/tabbar/person.png",
+	            "selectedIconPath": "/static/tabbar/person.png",
+	            "text": "首页1"
+	        },
+	        {
+	            "pagePath": "pages/person/storeCenter",
+	            "iconPath": "http://dev.jingjin.site/static/tabbar.jpg",
+	            "selectedIconPath": "http://dev.jingjin.site/static/tabbar.jpg",
+	            "text": "门店"
+	        }
+	    ]
+
+	return new Promise((resolve,reject)=>{
+
+		uni.downloadFile({
+		    url: 'http://dev.jingjin.site/static/tabbar.jpg', //仅为示例，并非真实的资源
+		    success: (res) => {
+		        if (res.statusCode === 200) {
+					tabbar[1].iconPath = res.tempFilePath
+					tabbar[1].selectedIconPath = res.tempFilePath
+		            resolve({data:tabbar})
+		        }
+		    }
+		});
+
+	})
+
+
+	// #endif
+
+	// #ifndef APP-PLUS
+	return new Promise((resolve, reject) => {
+	  uni.request({
+	    header:{ "content-type": "application/x-www-form-urlencoded"},
+	    url,
+	    method:'post',
+	    success: (res) => {
+	      resolve(res.data)
+	    }
+
+	  })
+	})
+	// #endif
+}
+
+/**
+ * async相当于返回了一个promise，直接return rt就相当于promise.resolve(rt)
+ */
+export const getTabBar = async ({commit, state},refresh) => {
+
+  let data = null;
+  if(!refresh){
+    data = state.tabbar
+    if (data) return data;
+    if (!data) {
+      let data2 = ls.get('tabbar')
+      if (data2) {
+        commit('SET_TABBAR', data2);
+        return data2
+      }
+
+    }
+    return {}
+  }
+
+  let res = await getTabBarConf()
+
+  commit('SET_TABBAR', res.data);
+  data = res.data
+
+  console.log('获取tabbar',data)
+  return data;
+
+};
+
 
 export const getInitData = async ({commit, state},refresh) => {
 
