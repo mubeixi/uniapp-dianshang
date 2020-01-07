@@ -175,7 +175,7 @@
 						return;
 					}
 					uni.navigateTo({
-						url: `../order/check?cart_key=CartList&cart_buy=${this.cart_buy}`
+						url: `/pages/order/check?cart_key=CartList&cart_buy=${this.cart_buy}`
 					})
 				}else {
 					if(Object.getOwnPropertyNames(obj).length == 0) {

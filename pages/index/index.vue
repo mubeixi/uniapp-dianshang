@@ -128,7 +128,7 @@
 	import {pageMixin} from "../../common/mixin";
 	import {error,toast} from "../../common";
 	import {mapGetters,mapActions, mapState} from 'vuex';
-	import TabbarComponents from "../../components/TabbarComponents";
+	// import TabbarComponents from "../../components/TabbarComponents";
 
 	import {ls} from "../../common/tool";
 
@@ -146,8 +146,7 @@
 		components:{
 			BaseComponent,SwiperComponent,NavComponent,VideoComponent,HrComponent,SpaceComponent,
 			TitleComponent,TextComponent,SearchComponent,NoticeComponent,CouponComponent,
-			GoodsComponent,CubeComponent,TabComponent,FlashComponent,GroupComponent,KillComponent,
-			TabbarComponents
+			GoodsComponent,CubeComponent,TabComponent,FlashComponent,GroupComponent,KillComponent
 		},
 		computed:{
 			...mapGetters(['initData']),
