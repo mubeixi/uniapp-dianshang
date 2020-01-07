@@ -177,7 +177,7 @@
 		<popupLayer ref="cartPopu" :direction="'top'">
 			<div class="cartSku">
 				<div class="cartTop">
-					<image class="image" :src="product.Products_JSON.ImgPath[0]" mode=""></image>
+					<image class="image" :src="skuImg?skuImg:product.Products_JSON.ImgPath[0]" mode=""></image>
 					<div class="cartTitle">
 						<div class="cartTitles">{{product.Products_Name}}</div>
 						<div class="addInfo">
@@ -204,7 +204,7 @@
 					<div class="inputNumber">
 						<div class="clicks" @click="delNum">-</div>
 						<!--					v-enter-number-->
-						<input class="inputs" type="number" v-model="postData.qty" disabled>
+						<input class="inputs" type="number" v-model="postData.qty" @blur="setCount" >
 						<div class="clicks" @click="addNum">+</div>
 					</div>
 				</div>
@@ -367,6 +367,7 @@
 				isPin: false,
 				isCollected: false, // 该产品是否已收藏
 				isSubmit: false, // 是否提交过了
+				skuImg:''
 			}
 		},
 		// #ifdef MP-WEIXIN || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO
@@ -954,6 +955,8 @@
 				if (attr_val) {
 					this.postData.attr_id = attr_val.Product_Attr_ID; //选择属性的id
 					this.postData.count = attr_val.Property_count; //选择属性的库存
+					
+					this.skuImg=attr_val.Attr_Image//选择属性的图片
 					this.postData.showimg = typeof attr_val.Attr_Image != 'undefined' && attr_val.Attr_Image != '' ? attr_val.Attr_Image :
 						this.product.Products_JSON['ImgPath'][0]; // 选择属性的图片
 					if (this.isPin) {
@@ -1027,6 +1030,20 @@
 				})
 				//确定加入购物车
 				this.$refs.cartPopu.close();
+			},
+			// 用户手动输入数量
+			setCount(e){
+					let amount = e.detail.value;
+					if(amount <= 0) {
+						this.postData.qty = 1;
+						error('至少购买一件')
+						return;
+					}
+					if(amount > this.postData.count) {
+						this.postData.qty = this.postData.count;
+						error('购买数量不能超过库存量')
+						return;
+					}		
 			},
 			addNum() {
 				if (this.postData.qty < this.postData.count) {
@@ -1518,8 +1535,8 @@
 	}
 
 	.right .img {
-		width: 19rpx;
-		height: 30rpx;
+		width: 19rpx !important;
+		height: 30rpx !important;
 		margin-left: 20rpx;
 	}
 
@@ -1531,7 +1548,7 @@
 		font-size: 22rpx;
 		padding: 15px 10px;
 		border-bottom: 17px solid #f8f8f8;
-		/*justify-content: space-around;*/
+		// justify-content: space-around;
 		background-color: #fff;
 	}
 
@@ -1909,7 +1926,7 @@
 
 	//规格
 	.cartSku {
-		padding: 0rpx 10rpx;
+		padding: 0rpx 20rpx;
 
 		.cartTop {
 			position: relative;
@@ -1924,8 +1941,8 @@
 			.cartTitle {
 				margin-left: 20rpx;
 				font-size: 32rpx;
-				width: 420rpx;
-
+				//width: 420rpx;
+				flex: 1;
 				.cartTitles {
 					height: 80rpx;
 					line-height: 40rpx;
@@ -2010,7 +2027,7 @@
 				border: 1px solid #ccc;
 				border-radius: 6rpx;
 				height: 50rpx;
-				margin-right: 50rpx;
+				//margin-right: 50rpx;
 				display: flex;
 
 				.inputs {

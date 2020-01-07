@@ -148,6 +148,11 @@
         computed:{
           ...mapGetters(['Stores_ID'])
         },
+		onShow() {
+			this.paginate.finish=false
+			this.paginate.page=1
+			this.loadInfo()
+		},
         methods:{
 					show_pro_tip(apply,index){
 						console.log(apply,index)
@@ -368,7 +373,7 @@
         },
         created(){
             console.log(this.$store.state)
-            this.loadInfo()
+            
 
             // getStoreList({pageSize:999}).then(res=>{
             //     this.stores = res.data

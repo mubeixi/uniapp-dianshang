@@ -9,22 +9,31 @@
 				<image class="headimg" :src="pro.disInfo.Shop_Logo"></image>
 			</view>
 			<view class="nickName">
-				{{pro.disInfo.Shop_Name}}
+				<view class="tops" v-if="pro.disInfo">
+					{{pro.disInfo.Shop_Name}}
+				</view>
+				<view class="bottoms">
+					{{pro.disInfo.sha_level_name}}
+				</view>
 			</view>
 
-
-			<view  v-if="pro.disInfo.sha_level_id>0" class="juewei">
-				{{pro.disInfo.sha_level_name}}
-			</view>
-			<view  v-else-if="pro.waiting_pay_apply" class="juewei"  @click="goGudongPay(pro.waiting_pay_apply.Order_ID)">
+			<view  v-if="pro.waiting_pay_apply" class="juewei"  @click="goGudongPay(pro.waiting_pay_apply.Order_ID)">
 				立即支付
 			</view>
-			<!-- <view  v-else-if="" class="juewei" >
-				暂不可申请
-			</view> -->
 			<view  v-else-if="pro.sha_config.Sha_Agent_Type==1&&pro.is_apply" class="juewei"  @click="goGudong">
 				立即申请
 			</view>
+			<view  v-else class="juewei" >
+				暂不可申请
+			</view>
+			<!-- <view  v-else-if="pro.disInfo.sha_level_id>0" class="juewei">
+				{{pro.disInfo.sha_level_name}}
+			</view> -->
+			
+			<!-- <view  v-else-if="" class="juewei" >
+				暂不可申请
+			</view> -->
+			
 		</view>
 		<view class="moneySum">
 			<view class="money">
@@ -185,6 +194,20 @@
 			height: 75rpx;
 			line-height: 75rpx;
 			color: #333333;
+			.tops{
+				margin-top: 10rpx;
+				margin-left: 1rpx;
+				height: 28rpx;
+				font-size: 30rpx;
+				line-height: 28rpx;
+			}
+			.bottoms{
+				font-size: 22rpx;
+				color: #666666;
+				height: 21rpx;
+				line-height: 21rpx;
+				margin-top: 20rpx;
+			}
 		}
 		.juewei{
 			width: 125rpx;

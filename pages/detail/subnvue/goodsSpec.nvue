@@ -2,7 +2,7 @@
 	<div class="goods-spec-wrap">
 		<div class="cartSku">
 			<div class="cartTop">
-				<image class="image" :src="product.Products_JSON.ImgPath[0]" ></image>
+				<image class="image" :src="skuImg?skuImg:product.Products_JSON.ImgPath[0]" mode=""></image>
 				<div class="cartTitle">
 					<text class="cartTitles">{{product.Products_Name}}</text>
 					<div class="addInfo padding10-c">
@@ -34,7 +34,7 @@
 				<div class="numBers"><text class="numBers-txt">数量</text></div>
 				<div class="inputNumber">
 					<div class="clicks" @click="delNum"><text class="clicks-txt">-</text></div>
-					<input class="inputq" type="number" v-model="postData.qty" disabled>
+					<input class="inputq" type="number" v-model="postData.qty" @blur="setCount">
 					<div class="clicks" @click="addNum"><text class="clicks-txt">+</text></div>
 				</div>
 			</div>
@@ -53,6 +53,7 @@
 
 <script>
 	import {numberSort} from "../../../common/tool";
+	import {error} from "../../common";
 	export default {
 		data() {
 			return {
@@ -68,7 +69,8 @@
 						ImgPath:[]
 					},
 					skujosn_new: []
-				}
+				},
+				skuImg:''
 			};
 		},
 		props: {
@@ -92,6 +94,20 @@
 			uni.$off('goods_spec_setval')
 		},
 		methods: {
+			// 用户手动输入数量
+			setCount(e){
+					let amount = e.detail.value;
+					if(amount <= 0) {
+						this.postData.qty = 1;
+						error('至少购买一件')
+						return;
+					}
+					if(amount > this.postData.count) {
+						this.postData.qty = this.postData.count;
+						error('购买数量不能超过库存量')
+						return;
+					}		
+			},
 			addNum(){
 				if (this.postData.qty < this.postData.count) {
 					this.postData.qty = Number(this.postData.qty) + 1;
@@ -155,6 +171,8 @@
 				if (attr_val) {
 					this.postData.attr_id = attr_val.Product_Attr_ID;   //选择属性的id
 					this.postData.count = attr_val.Property_count;   //选择属性的库存
+					
+					this.skuImg=attr_val.Attr_Image//选择属性的图片
 					// this.postData.showimg = typeof attr_val.Attr_Image != 'undefined' && attr_val.Attr_Image != '' ? attr_val.Attr_Image : this.product.Products_JSON['ImgPath'][0];// 选择属性的图片
 					this.postData.productDetail_price = attr_val.Attr_Price?attr_val.Attr_Price:this.product.Products_PriceX; // 选择属性的价格
 					this.submit_flag = (!this.check_attr || Object.getOwnPropertyNames(this.check_attr).length != Object.getOwnPropertyNames(this.product.skujosn).length) ? false : true;
@@ -222,8 +240,11 @@
 	.cartTitle {
 		/* margin-left: 20upx; */
 		font-size: 32upx;
-		width: 420upx;
+		margin-left: 20rpx;
+		/* width: 420upx; */
+		flex: 1;
 		flex-direction:column;
+		justify-content: space-between;
 	}
 
 	.cartTitles {
@@ -235,7 +256,7 @@
 
 	.addInfo {
 		flex-direction:row;
-		width: 420upx;
+		/* width: 420upx; */
 		margin-top: 70upx;
 		justify-content: space-between;
 		align-items: center;
@@ -321,7 +342,7 @@
 		line-height: 70upx;
 		width: 140upx;
 		flex-direction: row;
-		justify-content: center;
+		justify-content: flex-start;
 		align-items: center;
 	}
 	.numBers-txt{
@@ -333,7 +354,7 @@
 		/* border-radius: 6upx; */
 		flex-direction: row;
 		height: 50upx;
-		margin-right: 50upx;
+		/* margin-right: 50upx; */
 		/* display: flex; */
 
 	}
@@ -368,7 +389,7 @@
 	}
 
 	.cartSku {
-		padding: 0upx 10upx;
+		padding: 0upx 20upx;
 	}
 
 	.cartSub {
