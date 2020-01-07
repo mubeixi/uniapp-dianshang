@@ -34,7 +34,7 @@
 				<div class="numBers"><text class="numBers-txt">数量</text></div>
 				<div class="inputNumber">
 					<div class="clicks" @click="delNum"><text class="clicks-txt">-</text></div>
-					<input class="inputq" type="number" v-model="postData.qty" disabled>
+					<input class="inputq" type="number" v-model="postData.qty" @blur="setCount">
 					<div class="clicks" @click="addNum"><text class="clicks-txt">+</text></div>
 				</div>
 			</div>
@@ -53,6 +53,7 @@
 
 <script>
 	import {numberSort} from "../../../common/tool";
+	import {error} from "../../common";
 	export default {
 		data() {
 			return {
@@ -93,6 +94,20 @@
 			uni.$off('goods_spec_setval')
 		},
 		methods: {
+			// 用户手动输入数量
+			setCount(e){
+					let amount = e.detail.value;
+					if(amount <= 0) {
+						this.postData.qty = 1;
+						error('至少购买一件')
+						return;
+					}
+					if(amount > this.postData.count) {
+						this.postData.qty = this.postData.count;
+						error('购买数量不能超过库存量')
+						return;
+					}		
+			},
 			addNum(){
 				if (this.postData.qty < this.postData.count) {
 					this.postData.qty = Number(this.postData.qty) + 1;

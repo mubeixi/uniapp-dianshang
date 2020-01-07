@@ -200,7 +200,7 @@
 				<div class="inputNumber">
 						<div class="clicks" @click="delNum">-</div>
 						<!--v-enter-number-->
-						<input class="inputq"  type="number" v-model="postData.qty"  disabled>
+						<input class="inputq"  type="number" v-model="postData.qty" @blur="setCount">
 						<div class="clicks" @click="addNum">+</div>
 				</div>
 			</div>
@@ -1008,6 +1008,20 @@ export default {
 			//确定加入购物车
 			this.$refs.cartPopu.close();
 			this.postData.qty = 1;
+		},
+		// 用户手动输入数量
+		setCount(e){
+				let amount = e.detail.value;
+				if(amount <= 0) {
+					this.postData.qty = 1;
+					error('至少购买一件')
+					return;
+				}
+				if(amount > this.postData.count) {
+					this.postData.qty = this.postData.count;
+					error('购买数量不能超过库存量')
+					return;
+				}		
 		},
 		addNum(){
 			if (this.postData.qty < this.postData.count) {

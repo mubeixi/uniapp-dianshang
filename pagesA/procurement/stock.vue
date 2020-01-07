@@ -98,7 +98,7 @@
                     <view class="sku-name">数量</view>
                     <view class="sku-item">
                         <view class="handle" @click="minus"><view class="handle-bg">-</view></view>
-                        <view class="pro-num">{{postData.qty}}</view>
+                        <input class="pro-num" v-model="postData.qty" @blur="setCount"/>
                         <view class="handle" @click="plus"><view class="handle-bg">+</view></view>
                     </view>
                 </view>
@@ -560,6 +560,15 @@
                 this.showSku = false;
                 this.isShowStoreMsg = false;
             },
+						// 不限制购买数量
+						setCount(e){
+							let count = e.detail.value;
+							if(count <= 0) {
+								this.postData.qty = 1;
+								error('数量输入有误')
+								return
+							}
+						},
             plus(){
                 // 进货不用限制数量
                  this.postData.qty = Number(this.postData.qty) + 1;
@@ -729,7 +738,8 @@
 											}
                     }
                     .pro-num {
-                        margin: 0 15rpx;
+												width: 40px;
+												text-align: center;
                         font-size: 24rpx;
                         color: #777;
                     }
