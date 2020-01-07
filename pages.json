@@ -538,6 +538,12 @@
 			}
 		}
         
+        ,{
+            "path" : "pages/common/article",
+            "style": {
+            	"navigationBarTitleText": "文章"
+            }
+        }
     ],
 	"subPackages": [{
 		"root": "pagesA",
