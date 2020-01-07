@@ -70,7 +70,7 @@
 					</view>
 				</view>
 			</block>
-			<block v-if="tabIdx==1">
+			<block v-if="tabIdx==1||orderInfo.is_virtual == 1">
 				<view class="other" >
 					<view class="bd">
 						<view class="o_title  words">

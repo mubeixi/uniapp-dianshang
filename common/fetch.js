@@ -118,7 +118,8 @@ export const getRotateRecord = (data, options) => fetch('getPrizeRecord', data, 
 
 //分销累计利润接口
 export const getBalanceDetail = (data, options) => fetch('getBalanceDetail', data, options)
-
+//获取文章详情
+export const getArticle = (data, options) => fetch('getArticle', data, options)
 
 export const sendAnalysisData = (data, options) => fetch('clickRecord', data, options)
 
