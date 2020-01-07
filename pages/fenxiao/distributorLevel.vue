@@ -21,10 +21,10 @@
 			{{Level_Description}}
 		</view>
 		<view style="height: 20rpx;background-color: #F8F8F8;"></view>
-		<circleTitle title="级别门槛"></circleTitle>
+		<circleTitle title="级别条件"></circleTitle>
 		<view class="titleMy" v-if="dis_level.length>0">
 			<image src="/static/procurement/error.png" style="height: 25rpx;width: 25rpx;margin-right: 12rpx;"></image>
-			注意：以下条件需{{dis_level[inds].arrive_limit_desc}}才能达到门槛
+			注意：以下条件需{{dis_level[inds].arrive_limit_desc}}才能达到条件
 		</view>
 		<view class="ruhe">
 			<block v-if="dis_level[inds].level_rules_edit.pay_money">

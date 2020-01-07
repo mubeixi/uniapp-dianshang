@@ -22,7 +22,7 @@
 					立即支付
 				</view>
 			</block>
-			
+
 			<view  v-else-if="pro.agent_rate.Agentenable==1&&(pro.agent_rate.tow.is_apply||pro.agent_rate.pro.is_apply||pro.agent_rate.cit.is_apply||pro.agent_rate.cou.is_apply)" class="juewei" @click="goAddInfo">
 				立即申请
 			</view>
@@ -54,7 +54,7 @@
 				<image class="image" :src="'/static/client/fenxiao/chakan.png'|domain" ></image>
 			</view>
 		</view>
-		<circleTitle title="区域代理门槛说明"></circleTitle>
+		<circleTitle title="区域代理条件说明"></circleTitle>
 		<view class="xiang" v-for="(item,index) of pro.agent_rate" :key="index"  v-if="item.title">
 			<view class="xiangTop">
 				{{item.title}}
