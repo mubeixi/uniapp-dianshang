@@ -4,7 +4,7 @@
             <div class="postion-wrap" :style="[getWrapStyle()]">
                 <!--所有热区用绝对定位实现-->
                 <div @click="go(area)" class="active" :data-idx="area.IDX" :style="[getAreaStyle(area)]"
-                     v-for="(area,aidx) in cube.value.list">
+                     v-for="(area,aidx) in cube.value.list" :key="aidx">
                     <div class="mask" :style="{backgroundImage:'url('+domainFunc(area.bgimg)+')'}"></div>
                 </div>
             </div>

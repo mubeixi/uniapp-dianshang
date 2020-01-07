@@ -62,6 +62,10 @@
 					<span class="active" @click.stop="goPay(item)">申请退款</span>
 				</div>
 				<div class="btn-group" v-else-if="item.Order_Status==3">
+					<div v-if="item.allow_extend_receipt" @click.stop="openExtendReceiptFn(item)" class="extend_receipt">
+						<div class="funicon icon-more1 icon font22 " style="color: #777;"></div>
+						<div @click.stop="extendReceiptFn(item)" v-if="item.extend" class="tooltip">确认延迟</div>
+					</div>
 					<span @click.stop="goLogistics(item)">查看物流</span>
 					<span @click.stop="goPay(item)" style="margin-left: 15rpx;">申请退款退货</span>
 					<span class="active" @click.stop="confirmOrder(item,index)">确认收货</span>
@@ -70,6 +74,9 @@
 				<div class="btn-group" v-else-if="item.Order_Status==4 && item.Is_Commit == 0 && item.Is_Backup == 0">
 					<span class="active" @click.stop="goPay(item)">立即评价</span>
 				</div>
+			</template>
+			<template v-if="item.prod_list.length>0">
+			<div style="background-color: #F3F3F3;height: 20rpx;width: 100%;position: absolute;left: 0rpx;"></div>
 			</template>
         </div>
 		<div class="defaults" v-if="data.length<=0">
@@ -81,22 +88,29 @@
 
 <script>
 // import pagetitle from '@/components/title'
-import {getOrder,cancelOrder,getOrderNum,confirmOrder,delOrder} from '@/common/fetch.js'
+import {
+	getOrder,
+	cancelOrder,
+	getOrderNum,
+	confirmOrder,
+	delOrder,
+	extendOrderConfirm
+} from '../../common/fetch.js'
 import {pageMixin} from "../../common/mixin";
-import {confirm} from '../../common'
+import {confirm, error} from '../../common'
 export default {
 	mixins:[pageMixin],
     data(){
         return {
             index: 0,
-						data:[],
-						pageSize:5,
-						page:1,
-						totalCount:0,
-						orderNum:'',//订单状态角标数
-						isQing:false,
-						Order_Type: 'shop' , //请求的订单类型
-						isLoading:false,
+			data:[],
+			pageSize:5,
+			page:1,
+			totalCount:0,
+			orderNum:'',//订单状态角标数
+			isQing:false,
+			Order_Type: 'shop' , //请求的订单类型
+			isLoading:false,
         }
     },
 	onShow(){
@@ -139,6 +153,23 @@ export default {
 		}
 	},
 	methods:{
+		openExtendReceiptFn(order){
+			console.log(order)
+			let extend = order.extend?false:true;
+			// order.extend = true;
+			this.$set(order,'extend',extend)
+		},
+		extendReceiptFn(order){
+
+			extendOrderConfirm({Order_ID:order.Order_ID},{tip:'操作中'}).then(res=>{
+				this.page =1
+				this.data=[];
+				this._getOrder()
+				this.getOrderNum();
+			}).catch(()=>{
+				// error('')
+			})
+		},
 		//确认收货
 		confirmOrder(item,index){
 			// 先询问
@@ -321,9 +352,48 @@ export default {
 </script>
 
 <style scoped lang="scss">
+	.extend_receipt{
+		flex: 1;
+		display: inline-block;
+		text-align: left;
+		font-size: 14px;
+		color: #999;
+		margin-right: 10px;
+		/*position:relative;*/
+		z-index: 3;
+
+		.tooltip{
+			position: absolute;
+			background: #fff;
+			bottom: 0px;
+			transform: translateY(56px);
+			padding: 0px 20px;
+			height: 32px;
+			line-height: 32px;
+			text-align: center;
+			/*border: 1px solid #e7e7e7;*/
+			box-shadow: rgba(0,0,0,.1) 0px 0px 2px 2px ;
+			border-radius: 5px;
+			color: #444;
+			font-size: 15px;
+			&::after {
+
+				content: " ";
+				position: absolute;
+				bottom: 100%;  /* 提示工具头部 */
+				left: 10px;
+				margin-left: -5px;
+				border-width: 8px;
+				border-style: solid;
+				border-color: transparent transparent #fff transparent;
+				/*box-shadow: rgba(0,0,0,.1) 0px 0px 2px 2px ;*/
+			}
+		}
+	}
 	.haihong{
 		background-color: #ffffff !important;
 		min-height: 100vh;
+		padding-bottom: 50px;
 	}
 	.titless{
 		position: fixed;
@@ -463,7 +533,10 @@ export default {
             }
         }
         .btn-group {
-            text-align: right;
+			display: flex;
+            /*text-align: right;*/
+			justify-content: flex-end;
+			align-items: center;
 			margin-bottom: 30rpx;
             span {
                 display: inline-block;

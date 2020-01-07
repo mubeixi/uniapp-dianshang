@@ -222,7 +222,7 @@
 					</div>
 					<div class="txt">收藏</div>
 				</div>
-				<div class="first">
+				<div class="first" @click="contact">
 					<div><image class="img" src="/static/detail/kefu.png" ></image></div>
 					<div class="txt">客服</div>
 				</div>
@@ -243,7 +243,7 @@
 
 <script>
 import popupLayer from '../../components/popup-layer/popup-layer.vue'
-import {spikeProdDetail,getCommit,updateCart,addCollection,getCoupon,getUserCoupon,cancelCollection,checkProdCollected,getPintuanTeam,addProductViews,getProductSharePic} from '../../common/fetch.js'
+import {spikeProdDetail,getCommit,updateCart,addCollection,getCoupon,getUserCoupon,cancelCollection,checkProdCollected,getPintuanTeam,getProductSharePic} from '../../common/fetch.js'
 import {goBack,numberSort,getGroupCountdown,buildSharePath,getProductThumb,ls}  from '../../common/tool.js'
 import {pageMixin} from "../../common/mixin";
 import {error} from "../../common";
@@ -346,6 +346,10 @@ export default {
 				vm.collect()
 			})
 
+			uni.$on('kefu', (data) => {
+				vm.contact()
+			})
+
 			uni.$on('spikeBuy',(data)=>{
 				//if(data.detail!='limit') return
 				console.log('触发limit抢购')
@@ -373,6 +377,7 @@ export default {
 			uni.$off('collectSpike')
 			uni.$off('spikeBuy')
 			uni.$off('goodsSkuSub')
+		uni.$off('kefu')
 		// #endif
 	},
 	onShow(){
@@ -444,6 +449,12 @@ export default {
 	},
     methods: {
 		...mapActions(['getUserInfo']),
+		/**
+		 * 客服
+		 */
+		contact(){
+			this.$fun.contact()
+		},
 		async _init_func(){
 			this.getDetail(this.spike_good_id)
 
@@ -887,7 +898,8 @@ export default {
         	})
         },
         goBack(){
-        	goBack();
+			uni.navigateBack()
+        	// goBack();
         },
         getCommit(item){
         	let data={

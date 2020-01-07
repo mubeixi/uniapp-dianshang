@@ -10,13 +10,13 @@
                 <image class='img' v-else src="/static/detail/favorite.png"></image>
                 <text class="txt">收藏</text>
             </div>
-            <div class="first">
+            <div class="first" @click="kefu">
                 <image class='img' src="/static/detail/kefu.png"></image>
                 <text class="txt">客服</text>
             </div>
         </div>
         <div class="rightss">
-   
+
 			<text v-if="!isKai"  class="dan bTitle" @click="addCart">零售价购</text>
 			<text v-if="!isKai"  class="tuan bTitle" @click="directBuy">立即预约</text>
 
@@ -57,6 +57,9 @@
             })
         },
         methods: {
+            kefu(){
+                uni.$emit('kefu',{});
+            },
             collectFn(){
                 console.log("click collect")
                 uni.$emit('collectSpike',{detail:this.detail});
@@ -83,7 +86,7 @@
                 uni.$emit('directSpike');
             },
             lingqu() {
-             
+
                 uni.$emit('spikeBuy',{detail:this.detail});
             }
         }

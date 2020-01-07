@@ -49,7 +49,7 @@
 		</div>
 		<!-- 包邮等信息 -->
 		<div class="section3" v-if="product.Products_Promise && product.Products_Promise.length > 0">
-			<span v-for="(item,index) in product.Products_Promise" v-if="item.name" :key="index">
+			<span class="span" v-for="(item,index) in product.Products_Promise" v-if="item.name" :key="index">
 				<image class="img" :src="'/static/client/detail/dh.png'|domain" alt="" />
 				<span>{{item.name}}</span>
 			</span>
@@ -234,7 +234,7 @@
 					</div>
 					<div class="txt">收藏</div>
 				</div>
-				<div class="first">
+				<div class="first" @click="contact">
 					<div>
 						<image class="img" src="/static/detail/kefu.png"></image>
 					</div>
@@ -288,7 +288,7 @@
 		cancelCollection,
 		checkProdCollected,
 		getPintuanTeam,
-		addProductViews,
+
 		getProductSharePic
 	} from '../../common/fetch.js'
 	import {
@@ -432,6 +432,10 @@
 				vm.shareFunc(data.item)
 			})
 
+			uni.$on('kefu', (data) => {
+				vm.contact()
+			})
+
 			uni.$on('collectHandles', (data) => {
 				console.log('触发拼团收藏事件')
 				vm.collect()
@@ -564,6 +568,12 @@
 		},
 		methods: {
 			...mapActions(['getUserInfo']),
+			/**
+			 * 客服
+			 */
+			contact(){
+				this.$fun.contact()
+			},
 			//轮播图图片预览
 			yulan(index) {
 				uni.previewImage({
@@ -1063,9 +1073,11 @@
 				})
 			},
 			goBack() {
-				goBack();
+				uni.navigateBack()
+				// goBack();
 			},
 			getCommit(item) {
+
 				let data = {
 					Products_ID: item,
 					page: 1,
@@ -1206,7 +1218,7 @@
 
 
 					}).catch(() => {
-						console.log('不是微信环境')
+						// console.log('不是微信环境')
 					})
 
 					// #endif
@@ -1266,6 +1278,8 @@
 			uni.$off('pinBuy')
 
 			uni.$off('goodsSkuSub')
+
+			uni.$off('kefu')
 			// #endif
 		},
 		async created() {
@@ -1453,6 +1467,8 @@
 		background-color: #fff;
 	}
 
+
+
 	.price {
 		margin-top: 22px;
 	}
@@ -1536,7 +1552,7 @@
 		background-color: #fff;
 	}
 
-	.section3>span {
+	.section3 .span {
 		display: flex;
 		align-items: center;
 		margin-right: 10px;

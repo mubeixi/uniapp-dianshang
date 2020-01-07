@@ -552,7 +552,7 @@ export const getCountdownFunc = ({start_timeStamp, end_timeStamp, current = (new
     current = parseInt(current / 1000)
 
     // console.log(end_timeStamp,current)
-    let countTime = 0, is_start = false;
+    let countTime = 0, is_start = false,is_end=false;
 
 
     //还没开始
@@ -566,6 +566,7 @@ export const getCountdownFunc = ({start_timeStamp, end_timeStamp, current = (new
         is_start = true;
         countTime = end_timeStamp - current;
     } else {
+        is_end = true
         //console.warn('活动信息无效');
         // throw "活动信息无效";
     }
@@ -575,7 +576,7 @@ export const getCountdownFunc = ({start_timeStamp, end_timeStamp, current = (new
     m = parseInt((countTime - d * 60 * 60 * 24 - h * 60 * 60) / 60)
     s = countTime - d * 60 * 60 * 24 - h * 60 * 60 - m * 60
 
-    return {d, h, m, s, is_start}
+    return {d, h, m, s, is_start,is_end}
 }
 
 /**

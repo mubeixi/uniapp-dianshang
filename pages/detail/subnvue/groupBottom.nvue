@@ -10,7 +10,7 @@
                 <image class='img' v-else src="/static/detail/favorite.png"></image>
                 <text class="txt">收藏</text>
             </div>
-            <div class="first">
+            <div class="first" @click="kefu">
                 <image class='img' src="/static/detail/kefu.png"></image>
                 <text class="txt">客服</text>
             </div>
@@ -20,15 +20,15 @@
             	<div class="danLeft">
             		<text class="bF">¥</text><text class="bS">{{postData.Products_PriceX}}</text>
             	</div>
-            	
+
             	<text class="danRight">单独购买</text>
-    
+
             </div>
 
             <div class="tuan bTitle" @click="pinBuy">
             	<div class="danLeft">
             		<text class="bF">¥</text><text class="bS">{{postData.pintuan_pricex}}</text>
-            	</div> 		
+            	</div>
 				<text class="danRight">一键开团</text>
 
             </div>
@@ -65,6 +65,9 @@
             })
         },
         methods: {
+            kefu(){
+                uni.$emit('kefu',{});
+            },
             collectFn(){
                 console.log("click collect")
                 uni.$emit('collectHandles',{});
@@ -169,7 +172,7 @@
 	flex-direction: row;
 	justify-content: center;
 	margin-bottom:10upx ;
-	
+
 }
 
 </style>

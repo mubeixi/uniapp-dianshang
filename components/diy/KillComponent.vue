@@ -1,5 +1,5 @@
 <template>
-    <div class="goods wrap" id="goods"
+    <div class="goods wrap" id="goods" v-if="goodsList.length>0"
          :style="{background:goods.style.bgColor,paddingLeft:goods.style.wrapmargin+'px',paddingRight:goods.style.wrapmargin+'px'}">
         <div :class="className">
             <ul class="list">
