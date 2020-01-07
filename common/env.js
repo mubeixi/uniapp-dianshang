@@ -16,7 +16,7 @@ export const apiBaseUrl = 'https://new401t.bafangka.com';
 //后面的正式环境地址,每次打包要从新切换.
 //许总又要求,可以打包一套多个站点部署
 const devStatic = 'https://new401t.bafangka.com'
-const prodStatic = 'https://new401.bafangka.com'
+const prodStatic = 'https://new401t.bafangka.com'
 export const staticUrl = isDev ?devStatic:prodStatic;
 
 export const apiKey = '458f_$#@$*!fdjisdJDFHUk4%%653154%^@#(FSD#$@0-T';

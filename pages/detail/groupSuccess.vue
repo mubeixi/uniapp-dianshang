@@ -185,6 +185,8 @@
     import {goProductDetail} from "../../common";
     import {mapState} from 'vuex';
 
+    let groupStam = null
+
     export default {
         mixins: [pageMixin],
         name: 'App',
@@ -437,7 +439,7 @@
 
                     //this.stampCount()
                     //开发时候一直倒计时太乱了
-                    window.groupStam = setInterval(this.stampCount,1000)
+                    groupStam = setInterval(this.stampCount,1000)
 
 
                     let product = this.product
@@ -472,7 +474,7 @@
                         });
 
                     }).catch(()=>{
-                        console.log('不是微信环境')
+                        // console.log('不是微信环境')
                     })
 
                     // #endif
@@ -528,7 +530,7 @@
                         rt = computedStamp
                     }else{
                         //如果不对，就清空
-                        window.clearInterval(window.groupStam)
+                        clearInterval(groupStam)
                     }
                 }
 

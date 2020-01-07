@@ -83,6 +83,7 @@
 		  <div class="total" v-if="handleShow">合计：<span>￥<span>{{totalPrice}}</span></span></div>
 		  <div class="checkbtn" @click="submit">{{handleShow?'结算':'删除'}} </div>
 		</div>
+<!--		<tabbar-components/>-->
 	   <!-- <tabs style="background:#F3F3F3;"></tabs> -->
 
   </div>

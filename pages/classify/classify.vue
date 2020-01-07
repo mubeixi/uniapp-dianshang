@@ -32,6 +32,8 @@
 				</view>
 			</scroll-view>
 		</view>
+<!--		<tabbar-components/>-->
+
 
 <!--		<div class="space" style="height:60px"></div>-->
 <!--		<div class="safearea"></div>-->
@@ -43,6 +45,7 @@
 <script>
 	import {getProductCategory} from '../../common/fetch.js';
 	import {pageMixin} from "../../common/mixin";
+	import TabbarComponents from "../../components/TabbarComponents";
 
 	export default {
 		mixins:[pageMixin],

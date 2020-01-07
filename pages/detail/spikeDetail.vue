@@ -223,7 +223,7 @@
 						</div>
 						<div class="txt">收藏</div>
 					</div>
-					<div class="first">
+					<div class="first" @click="contact">
 						<div><image class="img" src="/static/detail/kefu.png" ></image></div>
 						<div class="txt">客服</div>
 					</div>
@@ -262,7 +262,7 @@
 
 <script>
 import popupLayer from '../../components/popup-layer/popup-layer.vue'
-import {flashsaleReserve,flashsaleDetail,getCommit,updateCart,addCollection,getCoupon,getUserCoupon,cancelCollection,checkProdCollected,getPintuanTeam,addProductViews,getProductSharePic} from '../../common/fetch.js'
+import {flashsaleReserve,flashsaleDetail,getCommit,updateCart,addCollection,getCoupon,getUserCoupon,cancelCollection,checkProdCollected,getPintuanTeam,getProductSharePic} from '../../common/fetch.js'
 import {goBack,numberSort,getGroupCountdown,buildSharePath,getProductThumb,ls}  from '../../common/tool.js'
 import {pageMixin} from "../../common/mixin";
 import {error} from "../../common";
@@ -349,6 +349,7 @@ export default {
 			uni.$off('directSpike')
 			uni.$off('spikeBuy')
 			uni.$off('goodsSkuSub')
+		uni.$off('kefu')
 		// #endif
 	},
 	onLoad: function (option) {
@@ -374,6 +375,10 @@ export default {
 				if(data.detail!='spike') return
 				console.log('触发秒杀收藏事件')
 				vm.collect()
+			})
+
+			uni.$on('kefu', (data) => {
+				vm.contact()
 			})
 
 
@@ -480,6 +485,12 @@ export default {
 	},
     methods: {
 		...mapActions(['getUserInfo']),
+		/**
+		 * 客服
+		 */
+		contact(){
+			this.$fun.contact()
+		},
 		async _init_func(){
 			await this.getDetail(this.flashsale_id)
 					.then(id=>{
@@ -959,7 +970,8 @@ export default {
         	})
         },
         goBack(){
-        	goBack();
+			uni.navigateBack()
+        	// goBack();
         },
         getCommit(item){
         	let data={
@@ -1036,9 +1048,6 @@ export default {
 						_self.Products_Description = formatRichTextByUparseFn(_self.product.Products_Description)
 					},50)
 
-
-
-
 					//this.stampCount()
 					//开发时候一直倒计时太乱了
 					groupStam = setInterval(this.stampCount,1000)
@@ -1108,7 +1117,7 @@ export default {
 						});
 
 					}).catch(()=>{
-						console.log('不是微信环境')
+						// console.log('不是微信环境')
 					})
 
 					// #endif

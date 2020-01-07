@@ -79,7 +79,10 @@
                 //this.$emit('click', index)
                 uni.navigateTo({
                     url: '/' + item.url,
-                    animationType: 'none'
+                    animationType: 'none',
+                    fail:function(){
+                        uni.switchTab({url: '/' + item.url})
+                    }
                 })
             }
         },
@@ -92,10 +95,12 @@
         height: 50px;
         position: fixed;
         border-top: 1px solid #eee;
-        box-sizing: border-box;
-        bottom: constant(safe-area-inset-bottom);
-        bottom: env(safe-area-inset-bottom);
-        width: 750 upx;
+        /*box-sizing: border-box;*/
+        bottom: 0;
+        z-index: 9999;
+        padding-bottom: constant(safe-area-inset-bottom);
+        padding-bottom: env(safe-area-inset-bottom);
+        width: 750rpx;
         background: white;
 
         .tabbar-item {

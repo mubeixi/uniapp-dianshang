@@ -37,7 +37,7 @@
             // #ifdef MP-WEIXIN
             //小程序需要拿这个，都拿一下覆盖吧
             let extConfig = wx.getExtConfigSync ? wx.getExtConfigSync() : {};
-            console.log('extConfig info is',extConfig);
+            //console.log('extConfig info is',extConfig);
             let users_id = extConfig.users_id;
             //切换的时候清空资料
             if(ls.get('users_id') && users_id != ls.get('users_id')){
@@ -106,8 +106,8 @@
         onError:function(err){
 
 			let msg = err?JSON.stringify(err):'程序错误'
-            console.log(msg)
-			if(isDev){
+
+			if(isDev && msg && msg!='{}'){
 				uni.showModal({
 				    title:'错误',
 				    content:msg

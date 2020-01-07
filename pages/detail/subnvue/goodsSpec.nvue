@@ -53,7 +53,7 @@
 
 <script>
 	import {numberSort} from "../../../common/tool";
-	import {error} from "../../common";
+	import {error} from "../../../common";
 	export default {
 		data() {
 			return {

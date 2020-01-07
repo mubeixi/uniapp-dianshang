@@ -130,8 +130,10 @@
 <script>
 	import {pageMixin} from "../../common/mixin";
 	import {getStorePurchaseApply,storePifaOrderCancel,storePifaOrderRecall,storePifaOrderCompleted,changeStoreApplyChannel,getStoreDetail,subStorePurchaseApply,storePifaOrderDel,storePifaOrderCalc} from "../../common/fetch";
-	import {mapGetters} from 'vuex'
+	import {mapGetters,mapActions} from 'vuex'
 	import {getLocation} from "../../common/tool/location";
+	import {error,toast,confirm} from "../../common";
+
 	export default {
 		mixins:[pageMixin],
 		data(){
@@ -157,6 +159,7 @@
 			this.getStorePurchaseApply()
 		},
 		methods: {
+
 			wuliu(item){
 				let express = item.Order_Shipping.Express;
 				//跳转物流追踪
@@ -239,6 +242,18 @@
 			},
 			//提交订单
 			submitOrder(id,index){
+
+				if(this.userInfo.hasOwnProperty('User_PayPassword') && !this.userInfo.User_PayPassword){
+					confirm({title: '提示', content: '该操作需要设置支付密码,是否前往设置?', confirmText: '去设置', cancelText: '暂不设置'}).then(res=>{
+						uni.navigateTo({
+							url:'/pages/person/updateUserPsw?type=1&is_back=1'
+						})
+					}).catch(err=>{error('请选择其他支付方式')})
+					return;
+				}
+
+
+
 				this.order_id=id
 				this.isHidden=false
 				this.password_input=true
@@ -360,7 +375,7 @@
 					for(var i = 0 ; i<res.data.length-1; i++) {
 						res.data[i].order_tip_show = false;
 						for(var j =0; j<res.data[i]['prod_list'].length-1; j++) {
-							
+
 							res.data[i]['prod_list'][j].pro_tip_show = false;
 						}
 					}
@@ -470,7 +485,7 @@
 			}
 		},
 		computed: {
-		    ...mapGetters(['Stores_ID'])
+		    ...mapGetters(['Stores_ID','userInfo'])
 		}
 	}
 </script>

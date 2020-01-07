@@ -227,8 +227,8 @@
 <script>
 import bottom from '../../components/bottom/bottom'
 import popupLayer from '../../components/popup-layer/popup-layer.vue'
-import {getProductDetail,getCommit,updateCart,addCollection,getCoupon,getUserCoupon,checkProdCollected,cancelCollection,judgeReceiveGift,getProductSharePic,addProductViews} from '../../common/fetch.js';
-import {goBack,numberSort,getProductThumb}  from '../../common/tool.js'
+import {getProductDetail,getCommit,updateCart,addCollection,getCoupon,getUserCoupon,checkProdCollected,cancelCollection,judgeReceiveGift,getProductSharePic} from '../../common/fetch.js';
+import {goBack as goBackFn,numberSort,getProductThumb}  from '../../common/tool.js'
 import {buildSharePath, isWeiXin, ls} from "../../common/tool";
 
 import { mapGetters, mapActions, Store,mapState } from "vuex";
@@ -429,15 +429,12 @@ export default {
 		let _self = this
 
 		const USERINFO = ls.get('userInfo');
-		console.log('USERINFO',USERINFO);
-
 
 
 		// #ifdef APP-PLUS
 		var icon = plus.nativeObj.View.getViewById("icon");
 		var icons = plus.nativeObj.View.getViewById("icons");
 
-		console.log(icon,"sssssssssssssssssssssss")
 		if(icon&&icons){
 			icon.show();
 			icons.show();
@@ -463,6 +460,7 @@ export default {
 			uni.$off('goNextPage')
 
 			uni.$off('shareDetail')
+			uni.$off('kefu')
 
 			uni.$off('goodsSkuSub')
 
@@ -478,28 +476,8 @@ export default {
 			icon.hide();
 			icons.hide();
 
-			let _self = this
-			const vm = this;
-
-
-			//隐藏规格框
-			// const goodsSpecNvue = uni.getSubNVueById('goodsSpec')
-			// goodsSpecNvue.hide()
-
-			// //隐藏优惠券
-			// const coupon = uni.getSubNVueById('coupon')
-			// coupon.hide()
-
-			// //隐藏优惠券
-			// const share = uni.getSubNVueById('share')
-			// share.hide()
-
-			// const subNVue2 = uni.getSubNVueById('goodsBottom')
-			// subNVue2.hide()
-
 		// #endif
 
-		console.log('暂停视频播放')
 		if(this.videoContext){
 			this.videoContext.pause()
 		}
@@ -1091,7 +1069,7 @@ export default {
 			})
 		},
 		goBack(){
-			goBack();
+			uni.navigateBack()
 		},
 		getCommit(item){
 			let data={
@@ -1189,7 +1167,7 @@ export default {
                 });
 
             }).catch(()=>{
-            	console.log('不是微信环境')
+            	// console.log('不是微信环境')
 			})
 
 			// #endif
@@ -1294,10 +1272,6 @@ export default {
 
 		this.wxMiniOriginId = WX_MINI_ORIGIN_ID;
 		console.log('wxMiniOriginId is '+this.wxMiniOriginId)
-
-
-
-
 
 	}
 }
@@ -1590,9 +1564,7 @@ export default {
         display: flex;
         flex-wrap: wrap;
         font-size: 0rpx;
-				// padding: 30rpx 0;
-        // padding: 30rpx 20rpx;
-        // border-bottom: 20rpx solid #efefef;
+
     }
     .section3>span {
         display: flex;

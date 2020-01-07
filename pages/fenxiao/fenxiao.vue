@@ -126,6 +126,7 @@
 			</view>
 		</view>
 		<view style="height: 50rpx;"></view>
+<!--		<tabbar-components />-->
 	</view>
 </template>
 
@@ -135,6 +136,9 @@
 	import {mapActions,mapState,mapGetters} from 'vuex';
 	export default {
 		mixins:[pageMixin],
+		components:{
+			TabbarComponents
+		},
 		data() {
 			return {
 				data:{
@@ -206,6 +210,9 @@
 				getDisInit({},{errtip:false}).then(res=>{
 					this.data=res.data;
 					this.userInfo.Is_Distribute=1;
+					uni.setNavigationBarTitle({
+						title:res.data.title
+					})
 				},err=>{
 					// uni.showToast({
 					// 	title: err.msg,

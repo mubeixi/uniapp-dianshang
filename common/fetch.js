@@ -118,7 +118,8 @@ export const getRotateRecord = (data, options) => fetch('getPrizeRecord', data, 
 
 //分销累计利润接口
 export const getBalanceDetail = (data, options) => fetch('getBalanceDetail', data, options)
-
+//获取文章详情
+export const getArticle = (data, options) => fetch('getArticle', data, options)
 
 export const sendAnalysisData = (data, options) => fetch('clickRecord', data, options)
 
@@ -171,6 +172,8 @@ export const getAddress = (data, options) => fetch('get_address', data, options)
 export const updateCart = (data, options) => fetch('update_cart', data, options)
 // 获取订单操作
 export const createOrderCheck = (data, options) => fetch('create_order_check', data, options)
+//延迟发货
+export const extendOrderConfirm = (data, options) => fetch('extendOrderConfirm', data, options)
 // 获取用户信息（临时）
 export const get_user_info = (data, options) => fetch('get_user_info', data, options)
 // 获取评论
@@ -366,7 +369,7 @@ export const getProductSharePic = (data, options) => fetch('get_product_tgqrcode
 export const addPromotionArticle = (data, options) => fetch('add_promotion_article', data, options);
 
 //增加产品的浏览次数
-export const addProductViews = (data, options) => fetch('prod_views', data, options);
+// export const addProductViews = (data, options) => fetch('prod_views', data, options);
 
 //获取拼团的团队
 export const getPintuanTeam = (data, options) => fetch('get_pintuan_team', data, options);
