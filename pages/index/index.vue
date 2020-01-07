@@ -5,24 +5,82 @@
 		<view class="status_bar" style="position: fixed;background-color: white;top:0;left:0;z-index: 99;"></view>
 		<!-- #endif -->
 		<view class="home-wrap" :style="{background:system.bgcolor}">
-			<section :ref="item" v-for="(item, index) in templateList[tagIndex]" :key="index" class="section" :class="[item]"  :data-name="item" >
-				<base-component v-if="item.indexOf('base') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
-				<swiper-component v-if="item.indexOf('swiper') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
-				<nav-component v-if="item.indexOf('nav') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
-				<video-component ref="video" v-if="item.indexOf('video') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
-				<hr-component v-if="item.indexOf('hr') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
-				<space-component v-if="item.indexOf('space') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
-				<title-component v-if="item.indexOf('title') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
-				<text-component v-if="item.indexOf('text') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
-				<search-component v-if="item.indexOf('search') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
-				<notice-component v-if="item.indexOf('notice') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
-				<coupon-component v-if="item.indexOf('coupon') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
-				<goods-component v-if="item.indexOf('goods') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
-				<cube-component v-if="item.indexOf('cube') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
-				<tab-component v-if="item.indexOf('tab') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
-				<group-component v-if="item.indexOf('group') !== -1" :confData="templateData[tagIndex][index]" :index="index"  />
-				<flash-component v-if="item.indexOf('flash') !== -1" :confData="templateData[tagIndex][index]" :index="index"  />
-				<kill-component v-if="item.indexOf('kill') !== -1" :confData="templateData[tagIndex][index]" :index="index"  />
+			<section
+				:ref="item"
+				v-for="(item, index) in templateList[tagIndex]"
+				:key="index"
+				class="section"
+				:class="[item]"
+				:data-name="item">
+				<base-component
+					v-if="item.indexOf('base') !== -1"
+					:confData="templateData[tagIndex][index]"
+					:index="index" />
+				<swiper-component
+					v-if="item.indexOf('swiper') !== -1"
+					:confData="templateData[tagIndex][index]"
+					:index="index" />
+				<nav-component
+					v-if="item.indexOf('nav') !== -1"
+					:confData="templateData[tagIndex][index]"
+					:index="index" />
+				<video-component
+					ref="video"
+					v-if="item.indexOf('video') !== -1"
+					:confData="templateData[tagIndex][index]"
+					:index="index" />
+				<hr-component
+					v-if="item.indexOf('hr') !== -1"
+					:confData="templateData[tagIndex][index]"
+					:index="index" />
+				<space-component
+					v-if="item.indexOf('space') !== -1"
+					:confData="templateData[tagIndex][index]"
+					:index="index" />
+				<title-component
+					v-if="item.indexOf('title') !== -1"
+					:confData="templateData[tagIndex][index]"
+					:index="index" />
+				<text-component
+					v-if="item.indexOf('text') !== -1"
+					:confData="templateData[tagIndex][index]"
+					:index="index" />
+				<search-component
+					v-if="item.indexOf('search') !== -1"
+					:confData="templateData[tagIndex][index]"
+					:index="index" />
+				<notice-component
+					v-if="item.indexOf('notice') !== -1"
+					:confData="templateData[tagIndex][index]"
+					:index="index" />
+				<coupon-component
+					v-if="item.indexOf('coupon') !== -1"
+					:confData="templateData[tagIndex][index]"
+					:index="index" />
+				<goods-component
+					v-if="item.indexOf('goods') !== -1"
+					:confData="templateData[tagIndex][index]"
+					:index="index" />
+				<cube-component
+					v-if="item.indexOf('cube') !== -1"
+					:confData="templateData[tagIndex][index]"
+					:index="index" />
+				<tab-component
+					v-if="item.indexOf('tab') !== -1"
+					:confData="templateData[tagIndex][index]"
+					:index="index" />
+				<group-component
+					v-if="item.indexOf('group') !== -1"
+					:confData="templateData[tagIndex][index]"
+					:index="index"  />
+				<flash-component
+					v-if="item.indexOf('flash') !== -1"
+					:confData="templateData[tagIndex][index]"
+					:index="index"  />
+				<kill-component
+					v-if="item.indexOf('kill') !== -1"
+					:confData="templateData[tagIndex][index]"
+					:index="index"  />
 			</section>
 		</view>
 		<!-- #ifndef H5 -->
@@ -91,21 +149,89 @@
 			GoodsComponent,CubeComponent,TabComponent,FlashComponent,GroupComponent,KillComponent,
 			TabbarComponents
 		},
+		computed:{
+			...mapGetters(['initData']),
+		},
+		methods: {
+			tabbarFn(idx){
+				const tabbarRouter = ['/pages/index/index', '/pages/classify/classify', '/pages/detail/groupSuccess', '/pages/order/cart', '/pages/person/person'];
 
-		onHide(){
-			// if(this.$refs.video){
-			// 	console.log(this.$refs.video)
-			// 	this.$refs.video.map(item=>{
-			// 		item.pauseFn()
-			// 	})
-			// }
-			//暂停播放
-			if(this.$refs.video){
-				this.$refs.video.map(item=>{
-					item.pauseFn()
+				uni.switchTab({
+					url:tabbarRouter[idx]
 				})
-			}
+			},
+			initFunc(){
+				let _self = this;
+				new Promise((resolve,reject) => {
 
+					getSkinConfig({}).then(res => {
+
+						if(res.data.Home_Json){
+							resolve(JSON.parse(res.data.Home_Json))
+						}else{
+							reject(false)
+						}
+
+					}).catch(e=>{
+						console.log('获取首页模板信息失败')
+						console.log(e)
+					})
+
+				})
+						.then(mixinData => {
+
+							let templateData = mixinData.plugin;
+							this.system = mixinData.system;
+
+
+
+							//存储页面数据
+							this.templateData = [] //页面数据的二维数组。
+							this.templateList = [] //页面组件的二维数组。
+							// console.log(templateData)
+							if (templateData && Array.isArray(templateData[0])) {
+								//多个页面，每个页面是一个数组
+								templateData.map(item => {
+									this.templateData.push(item)
+									this.templateList.push([])
+								})
+							} else if (
+									templateData &&
+									!Array.isArray(templateData[0]) &&
+									templateData.length > 0
+							) {
+								//单纯是一个对象的时候？？
+								this.templateData = [templateData]
+								this.templateList = [[]]
+							} else {
+								this.templateData = [[]]
+								this.templateList = [[]]
+							}
+							// this.templateData = templateData
+							//存储页面组件templateList
+							for (let i = 0; i < this.templateData.length; i++) {
+								if (
+										this.templateData[i] &&
+										this.templateData[i] !== []
+								) {
+									this.templateData[i].map(m => {
+										this.templateList[i].push(m.tag)
+									})
+								}
+							}
+
+
+						},err=>{})
+						.catch(err => {
+							console.log(err)
+						})
+			}
+		},
+		onLoad() {
+			// uni.hideTabBar()
+		},
+		created(){
+			this.initFunc()
 		},
 		mounted(){
 			let that =this
@@ -143,114 +269,20 @@
 		async onPullDownRefresh(){
 			uni.stopPullDownRefresh()
 		},
-		computed:{
-			...mapGetters(['initData']),
-		},
-		onLoad() {
-			// uni.hideTabBar()
-		},
-		async created(){
-			this.initFunc()
-
-			// let tabbarConf = await this.getTabBar(1)
-			//
-			// console.log(JSON.stringify(tabbarConf))
-			//
-			// for(let key in tabbarConf){
-			// 	uni.setTabBarItem({
-			// 		index: parseInt(key),
-			// 		text: tabbarConf[key].text,
-			// 		iconPath: tabbarConf[key].iconPath,
-			// 		selectedIconPath: tabbarConf[key].selectedIconPath
+		onHide(){
+			// if(this.$refs.video){
+			// 	console.log(this.$refs.video)
+			// 	this.$refs.video.map(item=>{
+			// 		item.pauseFn()
 			// 	})
 			// }
-			//
-			// setTimeout(()=>{
-			// 	uni.hideTabBar()
-			// },2000)
-		},
-		methods: {
-			...mapActions(['setInitData','getTabBar']),
-			callFn(){
-				if(this.initData.hasOwnProperty('CallPhoneNumber') && this.initData.CallPhoneNumber){
-					uni.makePhoneCall({
-						phoneNumber: this.initData.CallPhoneNumber
-					});
-				}
-			},
-			tabbarFn(idx){
-				const tabbarRouter = ['/pages/index/index', '/pages/classify/classify', '/pages/detail/groupSuccess', '/pages/order/cart', '/pages/person/person'];
-
-				uni.switchTab({
-					url:tabbarRouter[idx]
-				})
-			},
-			initFunc(){
-				let _self = this;
-				new Promise((resolve,reject) => {
-
-					getSkinConfig({}).then(res => {
-
-						if(res.data.Home_Json){
-							resolve(JSON.parse(res.data.Home_Json))
-						}else{
-							reject(false)
-						}
-
-					}).catch(e=>{
-						console.log('获取首页模板信息失败')
-						console.log(e)
-					})
-
-				})
-				.then(mixinData => {
-
-					let templateData = mixinData.plugin;
-					this.system = mixinData.system;
-
-
-
-					//存储页面数据
-					this.templateData = [] //页面数据的二维数组。
-					this.templateList = [] //页面组件的二维数组。
-					// console.log(templateData)
-					if (templateData && Array.isArray(templateData[0])) {
-						//多个页面，每个页面是一个数组
-						templateData.map(item => {
-							this.templateData.push(item)
-							this.templateList.push([])
-						})
-					} else if (
-							templateData &&
-							!Array.isArray(templateData[0]) &&
-							templateData.length > 0
-					) {
-						//单纯是一个对象的时候？？
-						this.templateData = [templateData]
-						this.templateList = [[]]
-					} else {
-						this.templateData = [[]]
-						this.templateList = [[]]
-					}
-					// this.templateData = templateData
-					//存储页面组件templateList
-					for (let i = 0; i < this.templateData.length; i++) {
-						if (
-								this.templateData[i] &&
-								this.templateData[i] !== []
-						) {
-							this.templateData[i].map(m => {
-								this.templateList[i].push(m.tag)
-							})
-						}
-					}
-
-
-				})
-				.catch(err => {
-					console.log(err)
+			//暂停播放
+			if(this.$refs.video){
+				this.$refs.video.map(item=>{
+					item.pauseFn()
 				})
 			}
+
 		},
 	}
 </script>
