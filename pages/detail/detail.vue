@@ -168,7 +168,7 @@
 	<popupLayer ref="cartPopu" :direction="'top'" @maskClicked="handClicked">
 		<div class="cartSku">
 			<div class="cartTop">
-				<image class="image" :src="skuImg?skuImg:product.Products_JSON.ImgPath[0]" mode=""></image>
+				<image  class="image" @click="yulanDetail" :src="skuImg?skuImg+'-r200':product.Products_JSON.ImgPath[0]+'-r200'" ></image>
 				<div class="cartTitle">
 					<div class="cartTitles">{{product.Products_Name}}</div>
 					<div class="addInfo">
@@ -290,7 +290,8 @@ export default {
 			videoContext:null,
 			isSubmit: false, // 是否提交过了
 			skuImg:'',
-			showCorver:true
+			showCorver:true,
+			//imgIndex:-1
         }
     },
     components: {
@@ -487,6 +488,22 @@ export default {
 		...mapState(['initData'])
 	},
     methods: {
+		yulanDetail(){
+			let arr=[]
+			let str
+			if(this.skuImg){
+				 str=this.skuImg+'-r420'
+			}else{
+				str=this.product.Products_JSON.ImgPath[0]+'-r420'
+			}
+			arr.push(str)
+			uni.previewImage({
+				urls: arr,
+				indicator:'default',
+				current:0
+			});
+
+		},
 			handClicked(){
 				this.postData.qty = 1;
 				this.showCorver=true
@@ -878,6 +895,7 @@ export default {
 		},
 		// 选择属性
 		selectAttr(index,i){
+
 			var value_index = index; //选择的属性值索引
 			var attr_index = i;   //选择的属性索引
 			// if (this.check_attrid_arr.indexOf(value_index) > -1) return false;
@@ -911,6 +929,7 @@ export default {
 			for(let mbx in this.product.skuvaljosn){
 				let arr=mbx.split(';')
 				if(arr[0]==index){
+					//this.imgIndex=index
 					this.skuImg=this.product.skuvaljosn[mbx].Attr_Image
 					break
 				}
