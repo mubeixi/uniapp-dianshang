@@ -152,6 +152,11 @@
 			...mapGetters(['initData']),
 		},
 		methods: {
+			callFn(){
+				uni.makePhoneCall({
+				    phoneNumber: this.initData.CallPhoneNumber
+				});
+			},
 			tabbarFn(idx){
 				const tabbarRouter = ['/pages/index/index', '/pages/classify/classify', '/pages/detail/groupSuccess', '/pages/order/cart', '/pages/person/person'];
 

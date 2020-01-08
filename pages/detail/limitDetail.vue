@@ -168,7 +168,7 @@
 	<popupLayer ref="cartPopu" :direction="'top'">
 		<div class="cartSku">
 			<div class="cartTop">
-				<image class="image" :src="skuImg?skuImg:product.Products_JSON.ImgPath[0]" mode=""></image>
+				<image  class="image" @click="yulanDetail" :src="skuImg?skuImg+'-r200':product.Products_JSON.ImgPath[0]+'-r200'" ></image>
 				<div class="cartTitle">
 					<div class="cartTitles">{{product.Products_Name}}</div>
 					<div class="addInfo">
@@ -454,6 +454,22 @@ export default {
 		 */
 		contact(){
 			this.$fun.contact()
+		},
+		yulanDetail(){
+			let arr=[]
+			let str
+			if(this.skuImg){
+				str=this.skuImg+'-r420'
+			}else{
+				str=this.product.Products_JSON.ImgPath[0]+'-r420'
+			}
+			arr.push(str)
+			uni.previewImage({
+				urls: arr,
+				indicator:'default',
+				current:0
+			});
+
 		},
 		async _init_func(){
 			this.getDetail(this.spike_good_id)

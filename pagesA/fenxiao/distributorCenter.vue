@@ -466,7 +466,7 @@
 						console.log(e);
 					})
 				}else{
-					disBuy(data).then(res=>{
+					disBuy(data,{tip:'正在加载中',mask:true}).then(res=>{
 						unipayFunc(this,this.pay_type,res);
 					},err=>{
 						uni.showToast({
