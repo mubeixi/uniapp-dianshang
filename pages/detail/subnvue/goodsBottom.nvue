@@ -95,25 +95,25 @@
 
 <style>
 .goods-bottom {
-    height: 100upx;
+    height: 98upx;
     width: 750upx;
     background-color: #F8F8F8;
     flex-direction:row;
 }
 .leftss{
-    height: 100upx;
+    height: 98upx;
     flex:1;
     flex-direction:row;
 }
 .rightss {
     flex-direction:row;
-    height: 100upx;
+    height: 98upx;
     flex:1;
 	align-items: center;
 }
 
 .first {
-    height: 100upx;
+    height: 98upx;
     justify-content: center;
     align-items: center;
     flex:1;

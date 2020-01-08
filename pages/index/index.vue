@@ -236,27 +236,21 @@
 		},
 		created(){
 			this.initFunc()
-		},
-		mounted(){
-			let that =this
-
-		},
-		onShow(){
-
+			
 			let that=this
 			//每次加载都清空全站配置
 			this.setInitData({})
 			getSystemConf().then(res => {
-
+			
 				this.setInitData(res.data)
 				uni.setNavigationBarTitle({
 					title:res.data.ShopName
 				})
 			},err=>{}).catch(error=>{})
-
-
+			
+			
 			setTimeout(()=>{
-
+			
 				// this.tabbar = true
 				// uni.setTabBarItem({
 				// 	index:1,
@@ -268,6 +262,15 @@
 				// 	complete:function(res){},
 				// })
 			},500)
+			
+		},
+		mounted(){
+			let that =this
+
+		},
+		onShow(){
+
+			
 
 		},
 		async onPullDownRefresh(){
