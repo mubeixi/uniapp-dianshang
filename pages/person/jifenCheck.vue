@@ -484,7 +484,7 @@ export default {
 
 
 				console.log('payConf',payConf)
-				jifenProdPay(payConf).then(res => {
+				jifenProdPay(payConf,{tip:'正在加载中',mask:true}).then(res => {
 					console.log(res);
 
 					unipayFunc(this,this.pay_type,res);

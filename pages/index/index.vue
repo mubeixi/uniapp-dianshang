@@ -128,7 +128,7 @@
 	import {pageMixin} from "../../common/mixin";
 	import {error,toast} from "../../common";
 	import {mapGetters,mapActions, mapState} from 'vuex';
-	import TabbarComponents from "../../components/TabbarComponents";
+	// import TabbarComponents from "../../components/TabbarComponents";
 
 	import {ls} from "../../common/tool";
 
@@ -146,13 +146,17 @@
 		components:{
 			BaseComponent,SwiperComponent,NavComponent,VideoComponent,HrComponent,SpaceComponent,
 			TitleComponent,TextComponent,SearchComponent,NoticeComponent,CouponComponent,
-			GoodsComponent,CubeComponent,TabComponent,FlashComponent,GroupComponent,KillComponent,
-			TabbarComponents
+			GoodsComponent,CubeComponent,TabComponent,FlashComponent,GroupComponent,KillComponent
 		},
 		computed:{
 			...mapGetters(['initData']),
 		},
 		methods: {
+			callFn(){
+				uni.makePhoneCall({
+				    phoneNumber: this.initData.CallPhoneNumber
+				});
+			},
 			tabbarFn(idx){
 				const tabbarRouter = ['/pages/index/index', '/pages/classify/classify', '/pages/detail/groupSuccess', '/pages/order/cart', '/pages/person/person'];
 
@@ -232,27 +236,21 @@
 		},
 		created(){
 			this.initFunc()
-		},
-		mounted(){
-			let that =this
-
-		},
-		onShow(){
-
+			
 			let that=this
 			//每次加载都清空全站配置
 			this.setInitData({})
 			getSystemConf().then(res => {
-
+			
 				this.setInitData(res.data)
 				uni.setNavigationBarTitle({
 					title:res.data.ShopName
 				})
 			},err=>{}).catch(error=>{})
-
-
+			
+			
 			setTimeout(()=>{
-
+			
 				// this.tabbar = true
 				// uni.setTabBarItem({
 				// 	index:1,
@@ -264,6 +262,15 @@
 				// 	complete:function(res){},
 				// })
 			},500)
+			
+		},
+		mounted(){
+			let that =this
+
+		},
+		onShow(){
+
+			
 
 		},
 		async onPullDownRefresh(){

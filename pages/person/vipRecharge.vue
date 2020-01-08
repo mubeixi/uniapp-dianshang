@@ -239,7 +239,7 @@ export default {
 			// #endif
 			console.log('payConf',payConf)
 			let that = this;
-			depositBalance(payConf).then(res => {
+			depositBalance(payConf,{tip:'正在加载中',mask:true}).then(res => {
 
 				console.log(this);
 				unipayFunc(this,this.pay_type,res);

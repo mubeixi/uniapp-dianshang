@@ -168,7 +168,7 @@
 	<popupLayer ref="cartPopu" :direction="'top'" @maskClicked="handClicked">
 		<div class="cartSku">
 			<div class="cartTop">
-				<image class="image" :src="skuImg?skuImg:product.Products_JSON.ImgPath[0]" mode=""></image>
+				<image  class="image" @click="yulanDetail" :src="skuImg?skuImg+'-r200':product.Products_JSON.ImgPath[0]+'-r200'" ></image>
 				<div class="cartTitle">
 					<div class="cartTitles">{{product.Products_Name}}</div>
 					<div class="addInfo">
@@ -290,7 +290,8 @@ export default {
 			videoContext:null,
 			isSubmit: false, // 是否提交过了
 			skuImg:'',
-			showCorver:true
+			showCorver:true,
+			//imgIndex:-1
         }
     },
     components: {
@@ -487,6 +488,22 @@ export default {
 		...mapState(['initData'])
 	},
     methods: {
+		yulanDetail(){
+			let arr=[]
+			let str
+			if(this.skuImg){
+				 str=this.skuImg+'-r420'
+			}else{
+				str=this.product.Products_JSON.ImgPath[0]+'-r420'
+			}
+			arr.push(str)
+			uni.previewImage({
+				urls: arr,
+				indicator:'default',
+				current:0
+			});
+
+		},
 			handClicked(){
 				this.postData.qty = 1;
 				this.showCorver=true
@@ -878,6 +895,7 @@ export default {
 		},
 		// 选择属性
 		selectAttr(index,i){
+
 			var value_index = index; //选择的属性值索引
 			var attr_index = i;   //选择的属性索引
 			// if (this.check_attrid_arr.indexOf(value_index) > -1) return false;
@@ -905,23 +923,24 @@ export default {
 			var attr_val = this.product.skuvaljosn[check_attrid];   //选择属性对应的属性值
 			//数组转化为字符串
 			check_attrnames = check_attrnames.join(';');
-			
-			
+
+
 			//更改第一个规格显示图片
 			for(let mbx in this.product.skuvaljosn){
 				let arr=mbx.split(';')
 				if(arr[0]==index){
+					//this.imgIndex=index
 					this.skuImg=this.product.skuvaljosn[mbx].Attr_Image
 					break
 				}
 			}
 
-			
+
 			//属性判断
 			if (attr_val) {
 				this.postData.attr_id = attr_val.Product_Attr_ID;   //选择属性的id
 				this.postData.count = attr_val.Property_count;   //选择属性的库存
-				
+
 				//this.skuImg=attr_val.Attr_Image
 				// this.postData.showimg = typeof attr_val.Attr_Image != 'undefined' && attr_val.Attr_Image != '' ? attr_val.Attr_Image : this.product.Products_JSON['ImgPath'][0];// 选择属性的图片
 				this.postData.productDetail_price = attr_val.Attr_Price?attr_val.Attr_Price:this.product.Products_PriceX; // 选择属性的价格
@@ -971,6 +990,8 @@ export default {
 			// 	code: e.detail.formId,
 			// 	times: 1
 			// })
+			
+			
 
 
 			this.isSubmit = true;
@@ -984,7 +1005,7 @@ export default {
 						})
 					}else {
 						uni.navigateTo({
-							url: '../order/check?cart_key=DirectBuy'
+							url: '/pages/order/check?cart_key=DirectBuy'
 						})
 					}
 				}else {
@@ -1011,7 +1032,7 @@ export default {
 					this.postData.qty = this.postData.count;
 					error('购买数量不能超过库存量')
 					return;
-				}		
+				}
 		},
 		addNum(){
 			if (this.postData.qty < this.postData.count) {

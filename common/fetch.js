@@ -144,7 +144,7 @@ export const setSkinConfig = (data, options) => fetch('update_shophome', data, o
 export const getProductCategory = (data, options) => fetch('pro_cate', data, options)
 
 
-//获取团队销售额来源
+//获取团队业绩来源
 export const getTeamSalesList = (data, options) => fetch('getTeamSalesList', data, options)
 
 //获取详情页

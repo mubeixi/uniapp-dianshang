@@ -752,7 +752,7 @@ return;
 
 
 						console.log('payConf is', payConf)
-						orderPay(payConf).then(res => {
+						orderPay(payConf,{mask:true,tip:'正在加载中'}).then(res => {
 							console.log(res);
 
 
@@ -865,7 +865,7 @@ return;
 							need_invoice: this.need_invoice,
 							invoice_info: this.invoice_info,
 							order_remark: this.order_remark
-						}).then(res => {
+						},{mask:true,tip:'正在加载中'}).then(res => {
 							console.log(res);
 
 						})
@@ -893,7 +893,7 @@ return;
                     need_invoice: this.need_invoice,
 					invoice_info: this.invoice_info,
 					order_remark: this.order_remark
-				}).then((res)=>{
+				},{mask:true,tip:'正在加载中'}).then((res)=>{
 					this.paySuccessCall(res)
 				},(err)=>{
 					this.payFailCall(err)

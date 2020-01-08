@@ -168,7 +168,7 @@
 	<popupLayer ref="cartPopu" :direction="'top'">
 		<div class="cartSku">
 			<div class="cartTop">
-				<image class="image" :src="skuImg?skuImg:product.Products_JSON.ImgPath[0]" mode=""></image>
+				<image  class="image" @click="yulanDetail" :src="skuImg?skuImg+'-r200':product.Products_JSON.ImgPath[0]+'-r200'" ></image>
 				<div class="cartTitle">
 					<div class="cartTitles">{{product.Products_Name}}</div>
 					<div class="addInfo">
@@ -454,6 +454,22 @@ export default {
 		 */
 		contact(){
 			this.$fun.contact()
+		},
+		yulanDetail(){
+			let arr=[]
+			let str
+			if(this.skuImg){
+				str=this.skuImg+'-r420'
+			}else{
+				str=this.product.Products_JSON.ImgPath[0]+'-r420'
+			}
+			arr.push(str)
+			uni.previewImage({
+				urls: arr,
+				indicator:'default',
+				current:0
+			});
+
 		},
 		async _init_func(){
 			this.getDetail(this.spike_good_id)
@@ -782,7 +798,7 @@ export default {
         	var attr_val = this.product.skuvaljosn[check_attrid];   //选择属性对应的属性值
         	//数组转化为字符串
         	check_attrnames = check_attrnames.join(';');
-			
+
 			//更改第一个规格显示图片
 			for(let mbx in this.product.skuvaljosn){
 				let arr=mbx.split(';')
@@ -848,7 +864,7 @@ export default {
 						this.isSubmit = false;
         		if(res.errorCode == 0) {
         				uni.navigateTo({
-        					url: '../order/check?cart_key=DirectBuy'
+        					url: '/pages/order/check?cart_key=DirectBuy'
         				})
         		}else {
 
@@ -877,7 +893,7 @@ export default {
 							this.postData.qty = this.postData.count;
 							error('购买数量不能超过库存量')
 							return;
-						}		
+						}
 				},
         addNum(){
         	if (this.postData.qty < this.postData.count) {

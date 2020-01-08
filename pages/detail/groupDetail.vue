@@ -177,7 +177,7 @@
 		<popupLayer ref="cartPopu" :direction="'top'">
 			<div class="cartSku">
 				<div class="cartTop">
-					<image class="image" :src="skuImg?skuImg:product.Products_JSON.ImgPath[0]" mode=""></image>
+					<image  class="image" @click="yulanDetail" :src="skuImg?skuImg+'-r200':product.Products_JSON.ImgPath[0]+'-r200'" ></image>
 					<div class="cartTitle">
 						<div class="cartTitles">{{product.Products_Name}}</div>
 						<div class="addInfo">
@@ -574,6 +574,22 @@
 			contact(){
 				this.$fun.contact()
 			},
+			yulanDetail(){
+				let arr=[]
+				let str
+				if(this.skuImg){
+					str=this.skuImg+'-r420'
+				}else{
+					str=this.product.Products_JSON.ImgPath[0]+'-r420'
+				}
+				arr.push(str)
+				uni.previewImage({
+					urls: arr,
+					indicator:'default',
+					current:0
+				});
+
+			},
 			//轮播图图片预览
 			yulan(index) {
 				uni.previewImage({
@@ -951,8 +967,8 @@
 				var attr_val = this.product.skuvaljosn[check_attrid]; //选择属性对应的属性值
 				//数组转化为字符串
 				check_attrnames = check_attrnames.join(';');
-				
-				
+
+
 				//更改第一个规格显示图片
 				for(let mbx in this.product.skuvaljosn){
 					let arr=mbx.split(';')
@@ -965,7 +981,7 @@
 				if (attr_val) {
 					this.postData.attr_id = attr_val.Product_Attr_ID; //选择属性的id
 					this.postData.count = attr_val.Property_count; //选择属性的库存
-					
+
 					//this.skuImg=attr_val.Attr_Image//选择属性的图片
 					this.postData.showimg = typeof attr_val.Attr_Image != 'undefined' && attr_val.Attr_Image != '' ? attr_val.Attr_Image :
 						this.product.Products_JSON['ImgPath'][0]; // 选择属性的图片
@@ -1025,7 +1041,7 @@
 					this.isSubmit = false;
 					if (res.errorCode == 0) {
 						uni.navigateTo({
-							url: '../order/check?cart_key=DirectBuy&checkfrom=group'
+							url: '/pages/order/check?cart_key=DirectBuy&checkfrom=group'
 						})
 					} else {
 
@@ -1053,7 +1069,7 @@
 						this.postData.qty = this.postData.count;
 						error('购买数量不能超过库存量')
 						return;
-					}		
+					}
 			},
 			addNum() {
 				if (this.postData.qty < this.postData.count) {

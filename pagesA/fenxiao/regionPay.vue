@@ -156,7 +156,7 @@
 					Order_ID:this.Order_ID,
 					pay_type:this.pay_type
 				}
-				agentApplyPay(data).then(res=>{
+				agentApplyPay(data,{tip:'正在加载中',mask:true}).then(res=>{
 					unipayFunc(this,this.pay_type,res);
 				},err=>{
 					uni.showToast({

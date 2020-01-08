@@ -25,6 +25,8 @@ function setWxConfig(config) {
 	console.log('wx seting', config)
 	wx.config(config);
 }
+
+
 export const WX_JSSDK_INIT = (vm, jsApiListList) => new Promise((resolve, reject) => {
 
 	if (!isWeiXin()) reject(false);
@@ -35,6 +37,8 @@ export const WX_JSSDK_INIT = (vm, jsApiListList) => new Promise((resolve, reject
 		return;
 	}
 
+	//let {origin,pathname} = location
+	//`${origin}${pathname}`,//
 	getJsSign({
 		url: location.href.split('#')[0],
 		//debug : process.env.NODE_ENV === 'production' ? false : true

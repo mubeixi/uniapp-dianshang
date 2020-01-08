@@ -34,7 +34,7 @@
 						<div class="zhouri">
 							<image style="width: 100%;height: 100%;" :src="'/static/client/right.png'|domain" alt=""></image>
 						</div>
-				</div>			
+				</div>
                 <div v-if="tabIdx==1" @click="multipleSelectStore" class="graytext2 font14">批量选择门店</div>
 			</view>
 			<view class="order_msg">
@@ -332,6 +332,9 @@ export default {
 		let userInfo = this.getUserInfo(true);
 	},
 	onLoad(options) {
+
+
+
 		console.log('options is',options)
 		this.postData.cart_key = options.cart_key;
 		if(options.cart_buy){
@@ -378,7 +381,7 @@ export default {
 					this.orderInfo.CartList[i][j].store = storeInfo
 				}
 			}
-			
+
 			this.orderInfo.Stores_Name=storeInfo.Stores_Name
 		}else{
 	  		let tempArr = this.setStoreMode.split('::'),prod_id=tempArr[0],attr_id=tempArr[1];

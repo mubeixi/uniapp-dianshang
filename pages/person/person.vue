@@ -185,11 +185,11 @@
 	import {pageMixin} from "../../common/mixin";
 	import {mapGetters,mapActions, mapState} from 'vuex';
 	import { judgeSignin,signin,getOrderNum,get_user_info} from "../../common/fetch.js"
-	import TabbarComponents from "../../components/TabbarComponents";
+	// import TabbarComponents from "../../components/TabbarComponents";
 	export default {
 		mixins:[pageMixin],
 		components:{
-			TabbarComponents
+
 		},
 		data() {
 			return {

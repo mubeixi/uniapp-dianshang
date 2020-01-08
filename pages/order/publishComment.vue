@@ -117,7 +117,7 @@
 									icon:''
 								})
 								setTimeout(function(){
-									uni.navigateTo({
+									 uni.redirectTo({
 										url:"../order/order?index=4"
 									})
 								},2000)

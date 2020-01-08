@@ -294,6 +294,7 @@
 							this.storeInfo=res.data
 							this.storeInfo.distance=(res.data.distance/1000).toFixed(2)
 						})
+                        this.$refs.storeInfo.show()
 					}
 				}).catch(err=>{
 					let data={
@@ -302,8 +303,9 @@
 					getStoreDetail(data).then(res=>{
 						this.storeInfo=res.data
 					})
+                    this.$refs.storeInfo.show()
 				})
-				this.$refs.storeInfo.show()
+
                 // if(idx!==false){
                 //     this.storeInfo = this.stores[idx]
                 //     this.$refs.storeInfo.show()
@@ -373,7 +375,7 @@
         },
         created(){
             console.log(this.$store.state)
-            
+
 
             // getStoreList({pageSize:999}).then(res=>{
             //     this.stores = res.data

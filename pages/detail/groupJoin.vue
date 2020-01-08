@@ -383,7 +383,7 @@
                     console.log(res)
                     if(res.errorCode == 0) {
                         uni.navigateTo({
-                            url: '../order/check?cart_key=DirectBuy&checkfrom=group'
+                            url: '/pages/order/check?cart_key=DirectBuy&checkfrom=group'
                         })
                     }else {
 
@@ -410,7 +410,7 @@
 									this.postData.qty = this.postData.count;
 									error('购买数量不能超过库存量')
 									return;
-								}		
+								}
 						},
             addNum(){
                 if (this.postData.qty < this.postData.count) {
