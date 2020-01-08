@@ -2,6 +2,7 @@
 	<view>
 		<!-- #ifdef H5 -->
 		<image v-show="!loading"
+			   style="width: 750rpx"
 				:mode="node.attr.mode"
 				:lazy-load="node.attr.lazyLoad"
 				:class="node.classStr"
@@ -14,6 +15,7 @@
 		<!-- #endif -->
 		<!-- #ifndef H5 -->
 		<image v-if="!loading&&bolburl"
+			   style="width: 750rpx"
 				:mode="node.attr.mode"
 				:lazy-load="node.attr.lazyLoad"
 				:class="node.classStr"
@@ -24,7 +26,7 @@
 				@load="wxParseImgLoad"
 		/>
 		<!-- #endif -->
-		<view style="text-align: center;padding: 20px 0;" v-if="loading">
+		<view style="text-align: center;padding: 20px 0;background: #fff;" v-if="loading">
 			<image  src="/static/lazy-img.gif" style="width: 50px;height: 10px" />
 		</view>
 	</view>

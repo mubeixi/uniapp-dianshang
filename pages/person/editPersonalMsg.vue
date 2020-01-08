@@ -33,7 +33,7 @@
 				<text  class="area-label">请选择街道</text>
 				<picker mode="selector" @change="t_pickerChange" :range="t_arr" range-key="name" :value="t_index">
 				<view class="picker">
-					<view class="p_item" v-if="address_info.User_Tow <= 0">选择街道</view>
+					<view class="p_item" v-if="address_info.User_Tow <= 0 || !t_arr[t_index]">选择街道</view>
 					<view class="p_item" v-else>{{t_arr[t_index]['name']}}</view>
 				</view>
 				</picker>
