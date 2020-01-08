@@ -9,7 +9,7 @@
 				<!-- <view class="jiaobiao" v-if="orderNum.waitpay>0">{{orderNum.waitpay}}</view> -->
 			</view>
 		    <view class="nav-item" :class="index==2?'active':''" @click="changIndex(2)">
-				待消费
+				待消费|待发货
 				<!-- <view class="jiaobiao" v-if="orderNum.waitsend>0">{{orderNum.waitsend}}</view> -->
 			</view>
 		   <!-- <view class="nav-item" :class="index==3?'active':''" @click="changIndex(3)">
@@ -62,6 +62,7 @@
 					</view>
 				</block>
 				<view style="text-align: right;padding-right:20rpx;" v-if="item.Order_Status == 2">
+					<span class="spanJu" @click="goFa(item.Order_ID)">发货</span>
 					<span class="spanJu" @click="refund(item.Order_ID)">拒单</span>
 				</view>
 			</view>
@@ -327,7 +328,11 @@
 	line-height: 45rpx;
 	text-align: center;
 }
-
+.spanJu:nth-child(1) {
+	background: #F43131;
+	color: #fff;
+	margin-right: 10px;
+}
 		.check {
 		    position: fixed;
 		    bottom: 0;

@@ -146,25 +146,42 @@
 <script>
 	import {domainFn} from "../../common/filter";
 	import {mapGetters} from 'vuex'
+	import {getOrderDetail} from '../../common/fetch';
+	import {error} from '../../common'
 	export default {
 		data() {
 			return {
-				index:0
+				index:0,
+				Order_ID: 0,
+				orderInfo: {}
 			};
 		},
 		computed: {
 		    ...mapGetters(['Stores_ID']),
 		},
+		methods:{
+			getOrderDetail: function(){
+				getOrderDetail({Order_ID: this.Order_ID,store_id:this.Stores_ID}).then(res=>{
+					console.log(res)
+					this.orderInfo = res.data;
+				})
+			}
+		},
 		onShow() {
 
 		},
-		onLoad() {
-
+		onLoad(options) {
+			if(options.id) {
+				this.Order_ID = options.id
+				this.getOrderDetail();
+			}else {
+				error('缺少参数')
+				uni.navigateBack({
+					delta: 1
+				});  
+			}
 		},
 		onReachBottom() {
-
-		},
-		methods:{
 
 		}
 	}
