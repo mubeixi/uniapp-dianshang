@@ -151,7 +151,7 @@
 					Order_ID:this.Order_ID,
 					pay_type:this.pay_type
 				}
-				shaApplyPay(data).then(res=>{
+				shaApplyPay(data,{tip:'正在加载中',mask:true}).then(res=>{
 					unipayFunc(this,this.pay_type,res);
 				},err=>{
 					uni.showToast({

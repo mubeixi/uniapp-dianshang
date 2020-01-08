@@ -372,7 +372,7 @@
                     // 用户选择余额支付
                     if (this.pay_type == 'remainder_pay') {
 
-                        orderPay(payConf, {errtip: false}).then(res => {
+                        orderPay(payConf, {errtip: false,mask:true,tip:'正在加载中'}).then(res => {
                             console.log(res)
                             _self.paySuccessCall();
                         }, err => {
@@ -470,7 +470,7 @@
                 // #endif
 
                 console.log('payConf', payConf)
-                orderPay(payConf).then(res => {
+                orderPay(payConf,{mask:true,tip:'正在加载中'}).then(res => {
 
                     console.log(this.paySuccessCall);
                     console.log(res);
