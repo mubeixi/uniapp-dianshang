@@ -2,49 +2,27 @@
 	<view style="padding-bottom: 100rpx;" @click="commonClick">
 
 		<view class="marginAuto">
-			<view class="blockDiv">
+			<view class="blockDiv" v-for="(item,index) in orderInfo.prod_list" :key="index">
 				<view class="imgDiv">
-					<image class="imgHund" :src="'/static/client/pro.png'|domain"></image>
+					<image class="imgHund" :src="item.prod_img"></image>
 				</view>
 				<view class="textRight" >
 					<view class="productName">
-						2018夏装新款短袖蕾丝拼接荷叶边波点雪纺连衣裙女时尚名媛...
+						{{item.prod_name}}
 					</view>
 					<view class="bottomDiv">
-						<view class="skuCount">
-							白色；S码
+						<view class="skuCount" v-if="item.attr_info">
+							{{item.attr_info}}
+						</view>
+						<view class="skuCount" v-else style="background:#fff;">
 						</view>
 						<view class="allPrice">
-							×5
+							×{{item.prod_count}}
 						</view>
 					</view>
 					<view class="buttonLast">
 						<view class="viewFont">
-							¥<span class="spanFont">351</span>
-						</view>
-					</view>
-				</view>
-			</view>
-
-			<view class="blockDiv">
-				<view class="imgDiv">
-					<image class="imgHund" :src="'/static/client/pro.png'|domain"></image>
-				</view>
-				<view class="textRight" >
-					<view class="productName">
-						2018夏装新款短袖蕾丝拼接荷叶边波点雪纺连衣裙女时尚名媛...
-					</view>
-					<view class="bottomDiv">
-						<view class="skuCount">
-							白色；S码
-						</view>
-						<view class="allPrice">
-							×5
-						</view>
-					</view>
-					<view class="buttonLast">
-						<view class="viewFont">
-							¥<span class="spanFont">351</span>
+							¥<span class="spanFont">{{item.prod_price}}</span>
 						</view>
 					</view>
 				</view>
@@ -59,25 +37,25 @@
 
 			<view class="orderDetailBottom">
 				<view class="viewHeight">
-					订单号：<span class="fontColor">12315465</span>
+					订单号：<span class="fontColor">{{orderInfo.Order_ID}}</span>
 				</view>
 				<view class="viewHeight">
-					商品总价： ¥<span class="fontColor">12315465</span>
+					商品总价： ¥<span class="fontColor">{{orderInfo.Order_TotalAmount}}</span>
+				</view>
+				<!-- <view class="viewHeight">
+					优惠： ¥<span class="fontColor"></span>
+				</view> -->
+				<view class="viewHeight">
+					运费： ¥<span class="fontColor">{{orderInfo.Order_Shipping && orderInfo.Order_Shipping.price || 0}}</span>
 				</view>
 				<view class="viewHeight">
-					优惠： ¥<span class="fontColor">12315465</span>
+					实付： <span class="fontColorRed">¥</span><span class=" fontColor fontColorRed">{{orderInfo.Order_TotalPrice}}</span>
 				</view>
 				<view class="viewHeight">
-					运费： ¥<span class="fontColor">12315465</span>
+					付款时间：{{orderInfo.Order_CreateTime | timeFormat}}
 				</view>
 				<view class="viewHeight">
-					实付： <span class="fontColorRed">¥</span><span class=" fontColor fontColorRed">12315465</span>
-				</view>
-				<view class="viewHeight">
-					付款时间： ¥<span class="fontColor">2019.11.22</span>
-				</view>
-				<view class="viewHeight">
-					收货信息： ¥<span class="fontColor">肖战  1551515</span>
+					收货信息： {{orderInfo.Address_Name}} {{orderInfo.Address_Province}} {{orderInfo.Address_City}} {{orderInfo.Address_Area}} {{orderInfo.Address_Town}} {{orderInfo.Address_Detailed}}
 				</view>
 			</view>
 		</view>
@@ -94,7 +72,7 @@
 						联系人
 					</view>
 					<view style="width: 100%;">
-						<input type="text" placeholder="请输入联系人" style="width: 100%;">
+						<input type="text" v-model="name" placeholder="请输入联系人" style="width: 100%;">
 					</view>
 				</view>
 
@@ -103,7 +81,7 @@
 						手机号
 					</view>
 					<view style="width: 100%;">
-						<input type="text" placeholder="请输入手机号" style="width: 100%;">
+						<input type="text" v-model="mobile" placeholder="请输入手机号" style="width: 100%;">
 					</view>
 				</view>
 
@@ -112,7 +90,7 @@
 						配送方式
 					</view>
 					<view style="width: 100%;">
-						<input type="text" placeholder="请输入手机号" style="width: 100%;">
+						<input type="text" v-model="ship_method" placeholder="请输入快递公司" style="width: 100%;">
 					</view>
 				</view>
 				<view class="inputView">
@@ -120,7 +98,7 @@
 						快递单号
 					</view>
 					<view style="width: 100%;">
-						<input type="text" placeholder="请输入快递单号" style="width: 100%;">
+						<input type="text" v-model="ship_num" placeholder="请输入快递单号" style="width: 100%;">
 					</view>
 				</view>
 
@@ -129,14 +107,14 @@
 						备注
 					</view>
 					<view style="width: 100%;">
-						<input type="text" placeholder="请输入备注内容" style="width: 100%;">
+						<input type="text" v-model="remark" placeholder="请输入备注内容" style="width: 100%;">
 					</view>
 				</view>
 			</view>
 		</view>
 
 
-		<view class="submit">
+		<view class="submit" @click="send">
 			立即发货
 		</view>
 
@@ -146,29 +124,60 @@
 <script>
 	import {domainFn} from "../../common/filter";
 	import {mapGetters} from 'vuex'
-	import {getOrderDetail} from '../../common/fetch';
+	import {getOrderDetail,systemSendOrder} from '../../common/fetch';
 	import {error} from '../../common'
+	import {formatTime} from '../../common/filter'
 	export default {
 		data() {
 			return {
 				index:0,
 				Order_ID: 0,
-				orderInfo: {}
+				orderInfo: {},
+				name: '',
+				mobile: '',
+				ship_method: '',
+				ship_num: '',
+				remark: ''
 			};
 		},
 		computed: {
 		    ...mapGetters(['Stores_ID']),
 		},
+		filters: {
+			timeFormat: formatTime
+		},
 		methods:{
 			getOrderDetail: function(){
 				getOrderDetail({Order_ID: this.Order_ID,store_id:this.Stores_ID}).then(res=>{
-					console.log(res)
+					res.data.Order_Shipping = res.data.Order_Shipping && JSON.stringify(res.data.Order_Shipping) ||''
 					this.orderInfo = res.data;
 				})
+			},
+			send: function(){
+				if(!this.ship_num) {
+					error('请填写物流单号')
+					return;
+				}
+				let data = {
+					Order_ID: this.orderInfo.Order_ID,
+					ShippingID: this.ship_num,
+					Express: this.ship_method,
+					Address_Name: this.name,
+					Address_Mobile: this.mobile,
+					Order_Remark: this.remark,
+					store_id: this.Stores_ID
+				}
+				systemSendOrder(data).then(res=>{
+					uni.showToast({
+						title: res.msg,
+					})
+					uni.navigateBack({
+						delta: 1
+					})
+				}).catch(err=>{
+					error(err.msg)
+				})
 			}
-		},
-		onShow() {
-
 		},
 		onLoad(options) {
 			if(options.id) {

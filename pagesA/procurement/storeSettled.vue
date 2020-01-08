@@ -66,7 +66,7 @@
                     <image class="image" :src="item.path || item"  @click="yulan(index,1)"></image>
                     <image :src="'/static/client/delimg.png'|domain" class="del image" @click="delImg(index,1)"></image>
                 </view>
-                <view class="shangchuan" @click="addImg(1)">
+                <view class="shangchuan" @click="addImg(1)" v-if="!is_submitted">
                     <view class="heng"></view>
                     <view class="shu"></view>
                 </view>
@@ -129,8 +129,9 @@
                 current: 0,
                 store_type: 0, // 门店类型
                 index:  0,
+                arrlist: [],
                 imglist: [],
-                arrlist: []
+                
             }
         },
         computed: {
@@ -208,8 +209,8 @@
                     this.imgs[0] = this.userStoreMsg.store_image;
                     this.arr[0] = this.userStoreMsg.store_image;
                     this.current = this.userStoreMsg.type_id;
-                    this.arrlist = this.userStoreMsg.img_info;
-                    this.imglist = this.userStoreMsg.img_info;
+                    this.arrlist = JSON.parse(this.userStoreMsg.img_info) || [];
+                    this.imglist = JSON.parse(this.userStoreMsg.img_info) || [];
                     if(res.data.status == 3) {
                         //    被驳回了
                         this.is_submitted = false;
@@ -265,6 +266,7 @@
             // 入驻
             settled: function(){
                 if(this.is_submitted) return;
+                console.log('11')
                 this.store_province = this.userStoreMsg.store_province;
                 this.store_city = this.userStoreMsg.store_city;
                 this.store_area = this.userStoreMsg.store_area;
@@ -277,13 +279,14 @@
                     error('请上传图片')
                     return;
                 }
-
                 if(!this.store_type) {
                     error('请选择门店类型')
                     return;
                 }
                 this.store_image = this.arr[0];
+                console.log(this.arrlist)
                 let img_info = this.arrlist.length>0?JSON.stringify(this.arrlist):'';
+                console.log(img_info)
                 userStoreApply({
                     store_name: this.store_name,
                     store_mobile: this.store_mobile,
@@ -390,9 +393,7 @@
                     await chooseImageByPromise({count:(9-that.imgs.length),sizeType}).then(tempFiles=>{
                         temp_file_list = tempFiles
                     })
-                    console.log(arg)
                     if(arg == 0) {
-                        console.log('1')
                         that.imgs = [...temp_file_list]
     
                         let arrs = temp_file_list.map(item=>item.path)
@@ -405,6 +406,7 @@
                         that.imglist = [...temp_file_list]
                         let arrs = temp_file_list.map(item=>item.path)
                         uploadImages(data,arrs).then(urls=>{
+                            console.log(that.arrlist)
                             that.arrlist = that.arrlist.concat(urls);
                             //是否可以提交
                             that.isSubmit = true;
