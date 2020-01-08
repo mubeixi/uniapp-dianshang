@@ -123,7 +123,7 @@
 					@blur="moneyInputHandle" />
 				</div>
 			</div>
-			<div class="other bgwhite">
+			<div class="other bgwhite" v-if="initData.invoice_switch == 1">
 				<div class="bd">
 					<div class="o_title">
 						<span>是否开具发票</span>
@@ -329,7 +329,8 @@
 			},
 			moneyChecked() {
 				return this.openMoney;
-			}
+			},
+			...mapGetters(['initData'])
 		},
 		created() {
 

@@ -76,7 +76,7 @@
 						   @blur="moneyInputHandle" />
 				</div>
 			</div>
-			<div class="other" v-if="pagefrom != 'gift'">
+			<div class="other" v-if="pagefrom != 'gift' && initData.invoice_switch == 1">
 				<div class="bd">
 					<div class="o_title">
 						<span>是否开具发票</span>

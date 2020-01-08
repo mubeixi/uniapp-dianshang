@@ -134,7 +134,7 @@
 					<input v-if="userMoneyChecked" @focus="postData.use_money = 0" v-model.number="postData.use_money" class="o_desc" placeholder="请输入金额" type="number" @blur="confirm_user_money">
 				</view>
 			</view>
-			<view class="other" v-if="initData.invoice_switch">
+			<view class="other" v-if="initData.invoice_switch == 1">
 				<view class="bd">
 					<view class="o_title">
 						<span>是否开具发票</span>
@@ -295,10 +295,10 @@ export default {
             isSlide: false, //查看明细是否已经弹出
             bottomHeight: 0, // 弹出层从哪里开始弹出，默认是0，明细从提交按钮上部50px
             zIndex: 3,
-						setStoreMode:'',
-						idD:'',
-						checkfrom: '', // 支付订单的来源页面，用于展示明细活动价，spike,秒杀，limit限时抢购，group 拼团，
-						shipping_store_id: '', // 选择的门店id
+			setStoreMode:'',
+			idD:'',
+			checkfrom: '', // 支付订单的来源页面，用于展示明细活动价，spike,秒杀，limit限时抢购，group 拼团，
+			shipping_store_id: '', // 选择的门店id
         }
     },
 	filters: {
@@ -457,7 +457,7 @@ export default {
 		form_submit(e) {
 			if(!this.submited){
 				this.submited = true;
-				if(this.postData.need_invoice == 1 && this.postData.invoice_info == '') {
+				if(this.postData.need_invoice == 1 && this.postData.invoice_info == '' && this.initData.invoice_switch == 1) {
 					this.submited = false;
 					if(this.postData.invoice_info == '') {
 						uni.showToast({
