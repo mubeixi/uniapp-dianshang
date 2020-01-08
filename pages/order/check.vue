@@ -134,7 +134,7 @@
 					<input v-if="userMoneyChecked" @focus="postData.use_money = 0" v-model.number="postData.use_money" class="o_desc" placeholder="请输入金额" type="number" @blur="confirm_user_money">
 				</view>
 			</view>
-			<view class="other">
+			<view class="other" v-if="initData.invoice_switch">
 				<view class="bd">
 					<view class="o_title">
 						<span>是否开具发票</span>
@@ -355,7 +355,7 @@ export default {
 				case 'group' : return '拼团价';
 			}
 		},
-		...mapGetters(['userInfo'])
+		...mapGetters(['userInfo','initData'])
 	},
   methods: {
 	  changgeTabIdx(index){
