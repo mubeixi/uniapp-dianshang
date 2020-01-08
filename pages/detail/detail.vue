@@ -12,10 +12,7 @@
 		  <view class="page-section swiper">
 			  <view class="page-section-spacing" v-if="(product.video_url && showVideo)">
 				  <video class="video" @play="play" @pause="pause" :src="product.video_url"   bindfullscreenchange="changeHiddenBtns" :poster="product.cover_url?product.cover_url:''" id="myVideo1" ref="video1" show-center-play-btn	 controls>
-					  <!-- #ifdef APP-PLUS -->
-					  <!-- <cover-image v-if="showVideo" class="imgms" src="/static/back.png" @click="goBack" ></cover-image>
-                      <cover-image v-if="showVideo" class="carts" src="/static/cart.png" @click="goCart" ></cover-image> -->
-					  <!-- #endif -->
+
 				  </video>
 				  <view class="change-btn" >
 					  <cover-view  v-if="showVideo&&showCorver" :class="[showVideo?'active':'','shipin']" @click="change_view(1)">视频</cover-view>
@@ -971,8 +968,8 @@ export default {
 			// 	code: e.detail.formId,
 			// 	times: 1
 			// })
-			
-			
+
+
 
 
 			this.isSubmit = true;
