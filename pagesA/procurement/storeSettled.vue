@@ -50,21 +50,21 @@
             门店图片
             <view class="imgs">
                 <view class="shangchuans" v-for="(item,index) in imgs" :key="index"  >
-                    <image class="image" :src="item.path || item"  @click="yulan(index)"></image>
+                    <image class="image" :src="item.path || item"  @click="yulan(index,0)"></image>
                     <image :src="'/static/client/delimg.png'|domain" class="del image" @click="delImg(index)"></image>
                 </view>
-                <view class="shangchuan" @click="addImg" v-if="arr.length == 0 && !is_submitted">
+                <view class="shangchuan" @click="addImg(0)" v-if="arr.length == 0 && !is_submitted">
                     <view class="heng"></view>
                     <view class="shu"></view>
                 </view>
             </view>
         </view>
-        <view class="addImg">
+        <view class="addImg" style="margin-top:70px;">
             其它相关图片
             <view class="imgs">
                 <view class="shangchuans" v-for="(item,index) in imglist" :key="index"  >
-                    <image class="image" :src="item.path || item"  @click="yulan(index)"></image>
-                    <image :src="'/static/client/delimg.png'|domain" class="del image" @click="delImg(index)"></image>
+                    <image class="image" :src="item.path || item"  @click="yulan(index,1)"></image>
+                    <image :src="'/static/client/delimg.png'|domain" class="del image" @click="delImg(index,1)"></image>
                 </view>
                 <view class="shangchuan" @click="addImg(1)">
                     <view class="heng"></view>
@@ -277,6 +277,7 @@
                     error('请上传图片')
                     return;
                 }
+
                 if(!this.store_type) {
                     error('请选择门店类型')
                     return;
@@ -344,18 +345,30 @@
                 this.addressChange(columnValue);
             },
             //图片预览
-            yulan(index){
+            yulan(index,arg){
+                let imgs = [];
+                if(arg == 0) {
+                    imgs = this.imgs;
+                }else if(arg == 1) {
+                    imgs = this.imglist;
+                }
+                imgs = imgs.map(item=>item.path)
                 uni.previewImage({
-                    urls: this.imgs,
+                    urls: imgs,
                     indicator:'default',
                     current:index
                 });
             },
             //删除某张预览图片
-            delImg(index){
+            delImg(index,arg=0){
                 if(this.is_submitted) return;
-                this.imgs.splice(index, 1);
-                this.arr.splice(index, 1);
+                if(arg == 0) {
+                    this.imgs.splice(index, 1);
+                    this.arr.splice(index, 1);
+                }else if(arg == 1) {
+                    this.imglist.splice(index,1);
+                    this.arrlist.splice(index,1);
+                }
             },
 			async addImg(arg=0){
                 let param = {act:'upload_image'};
@@ -377,7 +390,9 @@
                     await chooseImageByPromise({count:(9-that.imgs.length),sizeType}).then(tempFiles=>{
                         temp_file_list = tempFiles
                     })
+                    console.log(arg)
                     if(arg == 0) {
+                        console.log('1')
                         that.imgs = [...temp_file_list]
     
                         let arrs = temp_file_list.map(item=>item.path)
@@ -386,7 +401,7 @@
                             //是否可以提交
                             that.isSubmit = true;
                         });
-                    }else {
+                    }else if(arg == 1){
                         that.imglist = [...temp_file_list]
                         let arrs = temp_file_list.map(item=>item.path)
                         uploadImages(data,arrs).then(urls=>{
