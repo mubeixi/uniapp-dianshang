@@ -216,191 +216,148 @@ export const pageMixin = {
 	},
 	//option为object类型，会序列化上个页面传递的参数
 	//页面的初始化
-	onLoad(option) {
+	onLoad(options) {
 
+		let opt = {...options}
 
-		let owner_id = null, users_id = null
-		// #ifdef H5
-
-		/*商户id机制*/
-		users_id = GetQueryByString(location.href, 'users_id')
-		//如果连接里面已经有了，就不需要搞事
-		if (users_id) {
-
-			//比较新旧users_id
-			//只有h5有这个问题，app和小程序都是有单独分配的
-			let old_users_id = ls.get('users_id')
-
-			ls.set('users_id', users_id);
-
-			// console.log(1111111111111)
-
-			if (old_users_id && old_users_id != users_id) {
-				console.log('清空本地配置和登录信息')
-				this.setUserInfo({})
-				this.setInitData(null)
-				getSystemConf({}).then(res => {
-					this.setInitData(res.data)
-				})
-
-			}
-
-		} else {
-			users_id = ls.get('users_id');
-		}
-
-		if (users_id) {
-
-			if (!GetQueryByString(location.href, 'users_id')) {
-
-
-				let { href, protocol, host, search, hash,pathname } = window.location;
-				//console.log(protocol, host, search, hash)
-
-				if (search.indexOf('?') === -1) {
-					search += '?users_id=' + users_id
-				} else {
-					search = search.replace(/\?/, '?users_id=' + users_id + '&')
-				}
-				//console.log(search)
-
-				const newHref = `${protocol}//${host}${pathname}${search}${hash}`;
-				//console.log(newHref)
-				 if (newHref !== href) {
-				   window.location.replace(newHref);
-				 }
-			}
-
-		} else {
-			uni.showModal({
-				title: '提示',
-				content: '缺少商户id',
-				success: function (res) {
-				}
-			});
-		}
-
-		/*owner_id 机制*/
-		owner_id = GetQueryByString(location.href, 'owner_id')
-		//console.log(owner_id)
-		// #endif
-
-		// #ifdef MP-WEIXIN || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO
-
-		/*users_id*/
-		users_id = option.users_id
-		//如果连接里面已经有了，就不需要搞事
-		if (users_id) {
-			ls.set('users_id', users_id);
-		} else {
-			users_id = ls.get('users_id');
-		}
-
-		if (!users_id) {
-			uni.showModal({
-				title: '提示',
-				content: '缺少商户id',
-				success: function (res) {
-				}
-			});
-		}
-
-		/*owner_id 机制*/
-		owner_id = option.owner_id
-		// #endif
-
-		//如果连接里面已经有了，就不需要搞事
-		if (owner_id || owner_id == 0) {
-			ls.set('owner_id', owner_id);
-			console.log('this page owner_id is ' + owner_id)
-		}
-
+		//这样简洁多了
+		this.default_init_func(opt)
 
 	},
 	onShow() {
 		// #ifdef APP-PLUS
 		plus.key.hideSoftKeybord();
 		// #endif
-
 	},
-	async created() {
-		// console.log('让你等')
-		//
-		// await new Promise(resolve => {
-		// 	setTimeout(function () {
-		// 		console.log('等到了')
-		// 		resolve(false)
-		// 	},5000)
-		// })
-
-		// #ifdef H5
-		//微信里面强制刷新
-		this.refreshInit = true
-		// #endif
-
-		//根据配置决定是否刷新配置
-		let initData = await this.getInitData(this.refreshInit)
-
-		// #ifdef H5
-		//上报用户信息
-		if (checkIsLogin() && !sessionStorage.getItem('is_send_usrlog')) {
-			upUserLog({}, {errtip: false}).then(res => {
-				sessionStorage.setItem('is_send_usrlog', 1)
-			}, err => {
-				console.log('error', err)
-			}).catch(e => {
-				console.log('catch', e)
-			})
-		}
-
-
-
-		//页面默认全都是分享出去是首页的
-		if (isWeiXin() && this.JSSDK_INIT) {
-
-			await this.WX_JSSDK_INIT(this).then((env) => {
-
-				this.$wx.onMenuShareTimeline({
-					title: initData.ShopName, // 分享标题
-					link: buildSharePath(initData.front_url), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-					imgUrl: domainFn(initData.ShareLogo), // 分享图标
-					success: function () {
-						// 用户点击了分享后执行的回调函数
-					}
-				});
-
-				//两种方式都可以
-				this.$wx.onMenuShareAppMessage({
-					title: initData.ShopName, // 分享标题
-					link: buildSharePath(initData.front_url), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-					imgUrl: domainFn(initData.ShareLogo), // 分享图标
-					desc: initData.ShareIntro,
-					type: 'link', // 分享类型,music、video或link，不填默认为link
-					// dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
-					success: function () {
-						// 用户点击了分享后执行的回调函数
-					}
-				});
-
-			})
-		}
-		// #endif
+	created() {
 
 	},
 	mounted() {
 
-
 	},
 	methods: {
+		async default_init_func(options){
+			// #ifdef H5
+			//微信里面强制刷新
+			this.refreshInit = true
+			// #endif
+
+			console.log('options is',options)
+
+			/*商户id机制*/
+			// #ifdef H5|| MP-WEIXIN || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO
+			let owner_id = null, users_id = null
+			users_id = options.users_id || ls.get('users_id')
+
+			if(!users_id){
+				uni.showModal({
+					title: '提示',
+					content: '缺少商户id'
+				})
+				return;
+			}
+
+			//如果连接里面已经有了，就不需要搞事
+			if (users_id) {
+				//暂存一下，会用到
+				let old_users_id = ls.get('users_id')
+
+				//不管ls有没有，都存一次
+				ls.set('users_id', users_id);
+
+				// #ifdef H5
+				//要保持url里面一直有users_id,没有就重新跳转一次
+				if (!GetQueryByString(location.href, 'users_id')) {
+
+					let { href, protocol, host, search, hash,pathname } = window.location;
+					if (search.indexOf('?') === -1) {
+						search += '?users_id=' + users_id
+					} else {
+						search = search.replace(/\?/, '?users_id=' + users_id + '&')
+					}
+					const newHref = `${protocol}//${host}${pathname}${search}${hash}`;
+					if (newHref !== href) {
+						window.location.replace(newHref);
+					}
+				}
+				//比较新旧users_id,只有h5有这个问题，app和小程序都是有单独分配的
+				if (old_users_id && old_users_id != users_id) {
+					console.log('清空本地配置和登录信息')
+					this.setUserInfo({})
+					this.setInitData(null)
+
+					//返回了promise,这样就阻塞了
+				 	let system = await getSystemConf({})
+					system.then(res => {
+						this.refreshInit = false //已经更新过最新的initData,所以后面没有必要再强制ajax获取了，拿ls或者state中的就好
+						this.setInitData(res.data)
+					})
+				}
+				// #endif
+
+			}
+
+			owner_id = options.owner_id
+			if (owner_id >= 0) {
+				ls.set('owner_id', owner_id);
+			}
+			// #endif
+
+
+			//根据配置决定是否刷新配置
+			let initData = await this.getInitData(this.refreshInit)
+
+			// #ifdef H5
+			//上报用户信息
+			if (checkIsLogin() && !sessionStorage.getItem('is_send_usrlog')) {
+				upUserLog({}, {errtip: false}).then(res => {
+					sessionStorage.setItem('is_send_usrlog', 1)
+				}).catch(e => {
+					console.log('catch', e)
+				})
+			}
+
+			//页面默认全都是分享出去是首页的
+			if (isWeiXin() && this.JSSDK_INIT) {
+
+				WX_JSSDK_INIT(this).then((env) => {
+
+					this.$wx.onMenuShareTimeline({
+						title: initData.ShopName, // 分享标题
+						link: buildSharePath(initData.front_url), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+						imgUrl: domainFn(initData.ShareLogo), // 分享图标
+						success: function () {
+							// 用户点击了分享后执行的回调函数
+						}
+					});
+
+					//两种方式都可以
+					this.$wx.onMenuShareAppMessage({
+						title: initData.ShopName, // 分享标题
+						link: buildSharePath(initData.front_url), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+						imgUrl: domainFn(initData.ShareLogo), // 分享图标
+						desc: initData.ShareIntro,
+						type: 'link', // 分享类型,music、video或link，不填默认为link
+						// dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+						success: function () {
+							// 用户点击了分享后执行的回调函数
+						}
+					});
+				})
+			}
+			// #endif
+
+		},
 		// #ifdef H5
 		WX_JSSDK_INIT,
 		// #endif
 		...mapActions(['getInitData', 'setUserInfo', 'getUserInfo', 'setInitData'])
 	},
 	// #ifdef MP-WEIXIN || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO
-	onShareAppMessage() {
+	async onShareAppMessage() {
 
-		let initData = this.getInitData()
+		//getInitData是async，而且retrun一个data,相当于返回了一个promise
+		let initData = await this.getInitData()
 		let path = '/pages/index/index';
 		let shareObj = {
 			title: initData.ShopName,
@@ -408,8 +365,9 @@ export const pageMixin = {
 			imageUrl: domainFn(initData.ShareLogo),
 			path: buildSharePath(path)
 		};
+		console.log(shareObj)
 		return shareObj
-	},
+	}
 	// #endif
 }
 

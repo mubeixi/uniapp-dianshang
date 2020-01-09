@@ -301,7 +301,6 @@ export default {
 	onShareAppMessage(){
 
 		let path = '/pages/detail/detail?Products_ID='+this.Products_ID;
-
 		let shareObj = {
 			title: this.product.Products_Name,
 			desc:this.product.Products_BriefDescription,
@@ -1116,20 +1115,21 @@ export default {
 			})
 		},
 		async getDetail(item){
+
 			let data={
 				prod_id:item,
 			}
 
 			let product = null;
 
+			console.log(1)
+			//返回的就是一个pormise了
 			await getProductDetail(data).then(res=>{
+				console.log(2)
 				product = res.data
 				this.product = res.data;
 				this.postData.productDetail_price =this.product.Products_PriceX;
 				this.isVirtual = res.data.Products_IsVirtual == 1;
-
-
-
 
 				this.postData.count = res.data.Products_Count;
 				if(res.data.skujosn) {
@@ -1142,13 +1142,10 @@ export default {
 						});
 					}
 
-
 					this.product.skujosn_new = skujosn_new;
 					this.product.skuvaljosn = res.data.skuvaljosn;
 					//console.log(this.product.skujosn);
 				}
-
-
 
 				// #ifdef APP-PLUS
 
@@ -1161,6 +1158,8 @@ export default {
 			}).catch(e=>{
 				console.log(e)
 			})
+
+			console.log(3)
 
 
             //let _self = this;

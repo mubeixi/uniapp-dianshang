@@ -254,6 +254,10 @@
 		pageMixin
 	} from "../../common/mixin";
 	import {
+		mapGetters,
+		mapActions
+	} from 'vuex';
+	import {
 		ls,
 		GetQueryByString,
 		isWeiXin,
