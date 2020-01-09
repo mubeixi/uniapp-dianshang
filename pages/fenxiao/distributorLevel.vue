@@ -3,7 +3,12 @@
 		<view class="top">
 			<swiper class="center" :indicator-dots="false" :autoplay="false"  :duration="1000" :current="inds" @change="change">
 				<swiper-item class="vipFir"  v-for="(item,index) of dis_level" :key="index"  :style="dis_level.length==1?'margin-left:43rpx;':''">
-						<image   src='/static/vipBgColor.png'  class="allImg"></image>
+						<block v-if="item.Level_BackImg">
+							<image   :src='item.Level_BackImg'  class="allImg"></image>
+						</block>
+						<block v-else>
+							<image   src='/static/vipBgColor.png'  class="allImg"></image>
+						</block>
 
 						<view class="vipGrade" v-if="item.Level_ID==pro.user_info.Level_ID&&userInfo.Is_Distribute==1">
 							当前等级
