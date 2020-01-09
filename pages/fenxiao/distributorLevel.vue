@@ -228,7 +228,7 @@
 
 			</block>
 
-			<block  v-if="dis_level[inds].level_rules_edit.team_son">
+			<block  v-if="dis_level[inds].level_rules_edit.team_sons">
 				<!-- 团队 -->
 				<view class="td" style="display: block;height: auto;" v-if="dis_level[inds].level_rules_edit.team_sons.checked=='1'">
 					<view class="td" style="border-bottom: 0px;" v-for="(it,ind) of dis_level[inds].level_rules_edit.team_sons.value" :key="ind">

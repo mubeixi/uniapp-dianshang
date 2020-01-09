@@ -178,7 +178,7 @@
 				this.$refs.popupLayer.show();
 			},
 			paySuccessCall(res){
-
+				console.log("111")
 				var _that = this;
 				console.log('支付成功回调',res)
 				if(res && res.code && res.code==2){
@@ -200,7 +200,7 @@
 							if (res.confirm) {
 								toast('支付成功');
 								uni.switchTab({
-									url:'/pagesA/fenxiao/fenxiao'
+									url:'/pages/fenxiao/fenxiao'
 								})
 							} else if (res.cancel) {
 
@@ -237,7 +237,7 @@
 					})
 					setTimeout(function () {
 						uni.switchTab({
-							url:'/pagesA/fenxiao/fenxiao'
+							url:'/pages/fenxiao/fenxiao'
 						})
 					},1000)
 				}).catch(e=>{
