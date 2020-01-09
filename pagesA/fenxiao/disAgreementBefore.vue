@@ -118,7 +118,7 @@
 		async created(){
 			let initData = await this.getInitData()
 			uni.setNavigationBarTitle({
-				title:initData.commi_rename.commi
+				title:'成为'+initData.commi_rename.commi
 			})
 		}
 	}
