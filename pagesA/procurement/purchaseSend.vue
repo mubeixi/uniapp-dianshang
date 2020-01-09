@@ -11,8 +11,11 @@
 						{{item.prod_name}}
 					</view>
 					<view class="bottomDiv">
-						<view class="skuCount">
+						<view class="skuCount" v-if="item.attr_info.attr_name">
 							{{item.attr_info.attr_name}}
+						</view>
+						<view v-else class="noattr noattr">
+
 						</view>
 						<view class="allPrice">
 							×{{item.prod_count}}
@@ -294,13 +297,17 @@
 	justify-content: space-between;
 }
 .skuCount{
-	width: 150rpx;
+	// width: 150rpx;
 	height: 50rpx;
 	background-color: #FFF2F1;
 	font-size: 13px;
 	color: #666666;
 	text-align: center;
 	line-height: 50rpx;
+}
+.noattr {
+	width: 150rpx;
+	background: #fff;
 }
 .allPrice{
 	font-size: 30rpx;

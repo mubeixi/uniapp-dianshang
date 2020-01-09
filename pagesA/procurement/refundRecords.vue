@@ -13,13 +13,13 @@
 			</scroll-view>
 		</view>
 		<block v-if="back_list.length>0">
-			<view class="prolist" @click="hidden_tip" v-for="item of back_list">
+			<view class="prolist" @click="hidden_tip" v-for="(item,index) of back_list" :key="index">
 				<view class="pro-title">
 					<view>退货单号：{{item.id}}</view>
 					<view class="status">{{item.status_desc}}
 						<block v-if="item.status == 33">
-							<image class="qty-icon" src="/static/procurement/i.png" mode="" @click.stop="show_pro_tip"></image>
-							<view class="tips" v-if="pro_tip_show && item.reason">
+							<image class="qty-icon" src="/static/procurement/i.png" mode="" @click.stop="show_pro_tip(index)"></image>
+							<view class="tips" v-if="item.pro_tip_show && item.reason">
 								<view class="sanjiaoxing"></view>{{item.reason}}
 							</view>
 						</block>
@@ -205,14 +205,20 @@
 					page: this.page,
 					pageSize: this.pageSize
 				},{tip:'加载中...'}).then(res=>{
+					res.data.forEach(item=>{
+						item.pro_tip_show = false;
+					})
 					this.back_list = res.data;
+
 				})
 			},
-			show_pro_tip(){
-				this.pro_tip_show = true;
+			show_pro_tip(index){
+				this.back_list[index].pro_tip_show = true;
 			},
 			hidden_tip(){
-				this.pro_tip_show = false;
+				this.back_list.forEach(item=>{
+					item.pro_tip_show = false;
+				})
 			},
 			showAdress(){
 				uni.openLocation({
