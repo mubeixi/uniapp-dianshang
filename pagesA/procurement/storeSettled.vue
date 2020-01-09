@@ -50,15 +50,29 @@
             门店图片
             <view class="imgs">
                 <view class="shangchuans" v-for="(item,index) in imgs" :key="index"  >
-                    <image class="image" :src="item.path || item"  @click="yulan(index)"></image>
+                    <image class="image" :src="item.path || item"  @click="yulan(index,0)"></image>
                     <image :src="'/static/client/delimg.png'|domain" class="del image" @click="delImg(index)"></image>
                 </view>
-                <view class="shangchuan" @click="addImg" v-if="arr.length == 0 && !is_submitted">
+                <view class="shangchuan" @click="addImg(0)" v-if="arr.length == 0 && !is_submitted">
                     <view class="heng"></view>
                     <view class="shu"></view>
                 </view>
             </view>
         </view>
+        <view class="addImg" style="margin-top:70px;">
+            其它相关图片
+            <view class="imgs">
+                <view class="shangchuans" v-for="(item,index) in imglist" :key="index"  >
+                    <image class="image" :src="item.path || item"  @click="yulan(index,1)"></image>
+                    <image :src="'/static/client/delimg.png'|domain" class="del image" @click="delImg(index,1)"></image>
+                </view>
+                <view class="shangchuan" @click="addImg(1)" v-if="!is_submitted">
+                    <view class="heng"></view>
+                    <view class="shu"></view>
+                </view>
+            </view>
+        </view>
+
         <view class="submit" @click="settled">{{is_submitted?userStoreMsg.status_desc:(status == 3 ? '被驳回，重新申请' : "立即入驻")}}</view>
         <view class="item noborder" v-if="status == 3">
             <view class="item-left">驳回原因</view>
@@ -115,6 +129,9 @@
                 current: 0,
                 store_type: 0, // 门店类型
                 index:  0,
+                arrlist: [],
+                imglist: [],
+                
             }
         },
         computed: {
@@ -169,8 +186,8 @@
                 this.$refs.storetypes.close();
             },
             getType(){
-							if(this.is_submitted)return;
-              this.$refs.storetypes.show();
+				if(this.is_submitted)return;
+                this.$refs.storetypes.show();
             },
             // 获取用户最后的申请信息
             load: function(){
@@ -192,6 +209,8 @@
                     this.imgs[0] = this.userStoreMsg.store_image;
                     this.arr[0] = this.userStoreMsg.store_image;
                     this.current = this.userStoreMsg.type_id;
+                    this.arrlist = JSON.parse(this.userStoreMsg.img_info) || [];
+                    this.imglist = JSON.parse(this.userStoreMsg.img_info) || [];
                     if(res.data.status == 3) {
                         //    被驳回了
                         this.is_submitted = false;
@@ -247,6 +266,7 @@
             // 入驻
             settled: function(){
                 if(this.is_submitted) return;
+                console.log('11')
                 this.store_province = this.userStoreMsg.store_province;
                 this.store_city = this.userStoreMsg.store_city;
                 this.store_area = this.userStoreMsg.store_area;
@@ -264,6 +284,9 @@
                     return;
                 }
                 this.store_image = this.arr[0];
+                console.log(this.arrlist)
+                let img_info = this.arrlist.length>0?JSON.stringify(this.arrlist):'';
+                console.log(img_info)
                 userStoreApply({
                     store_name: this.store_name,
                     store_mobile: this.store_mobile,
@@ -272,7 +295,8 @@
                     store_province: this.store_province,
                     store_city: this.store_city,
                     store_area: this.store_area,
-                    store_type: this.store_type
+                    store_type: this.store_type,
+                    img_info: img_info
                 },{mask:true}).then(res=>{
 										uni.showToast({
 											title: res.msg,
@@ -324,20 +348,32 @@
                 this.addressChange(columnValue);
             },
             //图片预览
-            yulan(index){
+            yulan(index,arg){
+                let imgs = [];
+                if(arg == 0) {
+                    imgs = this.imgs;
+                }else if(arg == 1) {
+                    imgs = this.imglist;
+                }
+                imgs = imgs.map(item=>item.path)
                 uni.previewImage({
-                    urls: this.imgs,
+                    urls: imgs,
                     indicator:'default',
                     current:index
                 });
             },
             //删除某张预览图片
-            delImg(index){
+            delImg(index,arg=0){
                 if(this.is_submitted) return;
-                this.imgs.splice(index, 1);
-                this.arr.splice(index, 1);
+                if(arg == 0) {
+                    this.imgs.splice(index, 1);
+                    this.arr.splice(index, 1);
+                }else if(arg == 1) {
+                    this.imglist.splice(index,1);
+                    this.arrlist.splice(index,1);
+                }
             },
-						async addImg(){
+			async addImg(arg=0){
                 let param = {act:'upload_image'};
                 param.User_ID = get_User_ID();
                 param.Users_ID = get_Users_ID();
@@ -348,25 +384,34 @@
                 }
 
                 let data = createToken(param);
-
-								let sizeType = null
-								// #ifndef MP-TOUTIAO
-								sizeType =  ['original', 'compressed'] //可以指定是原图还是压缩图，默认二者都有
-								// #endif
-								let that = this;
-								let temp_file_list = []
-								await chooseImageByPromise({count:(9-that.imgs.length),sizeType}).then(tempFiles=>{
-									temp_file_list = tempFiles
-								})
-
-								that.imgs = [...temp_file_list]
-
-								let arrs = temp_file_list.map(item=>item.path)
-								uploadImages(data,arrs).then(urls=>{
-									that.arr = that.arr.concat(urls);
-									//是否可以提交
-									that.isSubmit = true;
-								});
+                    let sizeType = null
+                    // #ifndef MP-TOUTIAO
+                    sizeType =  ['original', 'compressed'] //可以指定是原图还是压缩图，默认二者都有
+                    // #endif
+                    let that = this;
+                    let temp_file_list = []
+                    await chooseImageByPromise({count:(9-that.imgs.length),sizeType}).then(tempFiles=>{
+                        temp_file_list = tempFiles
+                    })
+                    if(arg == 0) {
+                        that.imgs = [...temp_file_list]
+    
+                        let arrs = temp_file_list.map(item=>item.path)
+                        uploadImages(data,arrs).then(urls=>{
+                            that.arr = that.arr.concat(urls);
+                            //是否可以提交
+                            that.isSubmit = true;
+                        });
+                    }else if(arg == 1){
+                        that.imglist = [...temp_file_list]
+                        let arrs = temp_file_list.map(item=>item.path)
+                        uploadImages(data,arrs).then(urls=>{
+                            console.log(that.arrlist)
+                            that.arrlist = that.arrlist.concat(urls);
+                            //是否可以提交
+                            that.isSubmit = true;
+                        });
+                    }
             },
         }
     }

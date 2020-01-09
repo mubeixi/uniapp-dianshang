@@ -540,6 +540,8 @@ export const storeProdBackOrderConfirm = (data, options) => fetch('store_prod_ba
 export const storePifaOrderCalc = (data, options) => fetch('store_pifa_order_calc', data, options);
 // 获取门店类型列表
 export const getStoreTypes = (data, options) => fetch('get_store_types', data, options);
+// 门店发货
+export const systemSendOrder = (data, options) => fetch('system_send_order', data, options);
 
 
 //普通环境noop就行了
