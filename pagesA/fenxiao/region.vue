@@ -65,7 +65,7 @@
 				</view>
 				<view class="xiangRight">
 					<view v-if="item.Level>0" class="view">
-						分销商等级:{{item.Level_name}}
+						{{commi_rename.commi}}等级:{{item.Level_name}}
 					</view>
 					<view v-if="item.Protitle>0" class="view">
 						爵位等级:{{item.Level_name}}
@@ -128,8 +128,11 @@
 
 <script>
 	import circleTitle from '../../components/circleTitle/circleTitle.vue'
-	import {pageMixin} from "../../common/mixin";
+	import {pageMixin} from "../../common/mixin"
 	import {agentInfo} from '../../common/fetch.js'
+	import {
+		mapGetters
+	} from 'vuex'
 	export default {
 		mixins:[pageMixin],
 		data() {
@@ -139,6 +142,9 @@
 					waiting_pay_apply:{}
 				},
 			};
+		},
+		computed:{
+			...mapGetters(['commi_rename'])
 		},
 		components:{
 			circleTitle

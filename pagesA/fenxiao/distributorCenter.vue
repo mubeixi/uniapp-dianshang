@@ -132,7 +132,7 @@
 				<radio @click="changes" :checked="isAgree" style="transform:scale(0.7)"/><text  @click="goDistributeAgreement">同意<text  class="checkq" >{{pro.dis_config.Distribute_AgreementTitle}}</text></text>
 			</view>
 			<view class="submits" @click="becomeFenxiao">
-				立即购买成为分销商
+				立即购买成为{{commi_rename.commi}}
 			</view>
 		</block>
 
@@ -153,7 +153,10 @@
 	import area from '../../common/area.js';
 	import utils from '../../common/util.js';
 	import popupLayer from '../../components/popup-layer/popup-layer.vue'
-	import {mapGetters,mapActions} from 'vuex';
+	import {
+		mapGetters,
+		mapActions
+	} from 'vuex';
 	import {unipayFunc} from '../../common/pay.js'
 	import {
 		ls,
@@ -173,7 +176,7 @@
 				addressArr:{},
 				isShowAddress:false,
 				type:'',//是申请还是购买
-				textShen:'立即申请成为分销商',
+
 				isXu:false,//是否弹出购买须知
 				isAgree:false,//是否同意
 				pro:{
@@ -210,7 +213,8 @@
 			};
 		},
 		computed:{
-			...mapGetters(['initData','userInfo'])
+			textShen:()=>{return '立即申请成为'+this.commi_rename.commi},
+			...mapGetters(['initData','userInfo','commi_rename'])
 		},
 		onLoad(options) {
 			this.level_id=options.id
@@ -1091,7 +1095,7 @@
 				this.isAgree=!this.isAgree;
 			}
 		},
-		created(){
+		async created(){
 
 			// #ifdef H5
 			if (isWeiXin()) {
@@ -1106,6 +1110,11 @@
 			    }
 			}
 			// #endif
+
+			let initData = await this.getInitData()
+			uni.setNavigationBarTitle({
+				title:initData.commi_rename.commi
+			})
 
 		}
 	}
