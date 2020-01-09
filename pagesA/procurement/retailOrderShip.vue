@@ -14,7 +14,7 @@
 						<view class="skuCount" v-if="item.attr_info">
 							{{item.attr_info}}
 						</view>
-						<view class="skuCount" v-else style="background:#fff;">
+						<view class="skuCount" v-else style="background:#fff;width:150rpx;">
 						</view>
 						<view class="allPrice">
 							×{{item.prod_count}}
@@ -250,7 +250,7 @@
 	justify-content: space-between;
 }
 .skuCount{
-	width: 150rpx;
+	// width: 150rpx;
 	height: 50rpx;
 	background-color: #FFF2F1;
 	font-size: 13px;

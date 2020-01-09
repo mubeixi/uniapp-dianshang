@@ -29,8 +29,6 @@
                                     <div class="line10 flex flex-between graytext font14 flex-vertical-center">
                                         <div class="spec-key">{{item.attr_info.attr_name||'无规格'}}</div>
                                         <div class="numbox font16">
-
-
                                         </div>
                                     </div>
                                     <div class="flex flex-between">
@@ -98,9 +96,9 @@
                 <div class="row" >
                     <div class="label">门店地址:</div>
                     <div class="text"  @click="showAdress">
-										{{storeInfo.Stores_Province_name}}{{storeInfo.Stores_City_name}}{{storeInfo.Stores_Area_name}}{{storeInfo.Stores_Address}}
-											<image class="img" src="/static/local.png"  style="width: 26rpx;height: 31rpx;margin-left: 5px;vertical-align: top;"></image>
-										</div>
+                        {{storeInfo.Stores_Province_name}}{{storeInfo.Stores_City_name}}{{storeInfo.Stores_Area_name}}{{storeInfo.Stores_Address}}
+                        <image class="img" src="/static/local.png"  style="width: 26rpx;height: 31rpx;margin-left: 5px;vertical-align: top;"></image>
+                    </div>
                 </div>
             </div>
         </wzw-dialog>

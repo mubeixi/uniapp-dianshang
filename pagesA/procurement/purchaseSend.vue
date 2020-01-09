@@ -14,7 +14,7 @@
 						<view class="skuCount" v-if="item.attr_info.attr_name">
 							{{item.attr_info.attr_name}}
 						</view>
-						<view v-else class="noattr noattr">
+						<view v-else class="noattr">
 
 						</view>
 						<view class="allPrice">
