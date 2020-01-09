@@ -29,10 +29,18 @@
 			<block v-else>
 				<view class="fir">
 					<view class="left">
-						申请名称：
+						申请分销商等级名称：
 					</view>
 					<view class="right">
 						{{item.Level_Name}}
+					</view>
+				</view>
+				<view class="fir">
+					<view class="left">
+						申请股东名称：
+					</view>
+					<view class="right">
+						{{item.sha_level_name}}
 					</view>
 				</view>
 				<view class="fir">
