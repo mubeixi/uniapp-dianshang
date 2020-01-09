@@ -64,27 +64,30 @@
 		</block>
 		<block v-else>
 			<view class="threes">
-				<view class="haha">
+				<view class="haha" style="flex: 1;">
 					<!-- 选择区域 -->
 					<picker mode="multiSelector"  @change="bindMultiPickerChange" @columnchange="bindMultiPickerColumnChange" :value="change_multiIndex" :range="change_objectMultiArray" range-key="name">
-									<view class="picker">
-									  <view class="quyu">选择区域</view>
-									  <view v-if="!address_info.Address_Province">选择省份</view>
-									  <view v-else>{{objectMultiArray[0][multiIndex[0]]['name']}}</view>
-									  <block v-if="current>0">
-									  	<view v-if="!address_info.Address_City">选择城市</view>
-									  	<view v-else>{{objectMultiArray[1][multiIndex[1]]['name']}}</view>
-									  </block>
-									  <block v-if="current>1">
-										  <view v-if="!address_info.Address_Area">选择地区</view>
-										  <view v-else>{{objectMultiArray[2][multiIndex[2]]['name']}}</view>
-									  </block>
+									<view style="display: flex;justify-content: space-between;">
+										<view class="picker">
+										  <view class="quyu">选择区域</view>
+										  <view v-if="!address_info.Address_Province">选择省份</view>
+										  <view v-else>{{objectMultiArray[0][multiIndex[0]]['name']}}</view>
+										  <block v-if="current>0">
+										  	<view v-if="!address_info.Address_City">选择城市</view>
+										  	<view v-else>{{objectMultiArray[1][multiIndex[1]]['name']}}</view>
+										  </block>
+										  <block v-if="current>1">
+											  <view v-if="!address_info.Address_Area">选择地区</view>
+											  <view v-else>{{objectMultiArray[2][multiIndex[2]]['name']}}</view>
+										  </block>
+										</view>
+										<view class="images">
+											<image class="image" :src="'/static/client/fenxiao/chakan.png'|domain" ></image>
+										</view>
 									</view>
 					</picker>
 				</view>
-				<view class="images">
-					<image class="image" :src="'/static/client/fenxiao/chakan.png'|domain" ></image>
-				</view>
+				
 			</view>
 			<view class="threes" v-if="current==3">
 					<view class="haha">
