@@ -18,17 +18,16 @@
 <script>
 	import {getUserDisInfo,updateUserDisInfo,uploadImage,GET_ENV,get_Users_ID,get_User_ID,createToken,GET_ACCESS_TOKEN} from '../../common/fetch.js';
 
-
 	import { staticUrl } from '../../common/env.js';
 	import {pageMixin} from "../../common/mixin";
 	import {error,toast} from "../../common";
+	import {mapActions} from 'vuex';
 
 	export default {
 		mixins:[pageMixin],
 		data() {
 			return {
 				userDisInfo: {},
-
 				Shop_Name: '',  // 自定义店铺名称
 				Shop_Logo: '',  // 自定义头像
 				Shop_Announce: '' ,//自定义分享与
@@ -168,10 +167,17 @@
 							})
 						}
 					})
-			}
+			},
+			...mapActions(['getInitData'])
 		},
 		onShow: function(){
 
+		},
+		async created(){
+			let initData = await this.getInitData()
+			uni.setNavigationBarTitle({
+				title:initData.commi_rename.commi+'信息'
+			})
 		}
 	}
 </script>

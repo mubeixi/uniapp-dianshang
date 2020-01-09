@@ -18,6 +18,9 @@
 <script>
 	import {disApplyInit} from '../../common/fetch.js';
 	import {pageMixin} from "../../common/mixin";
+	import {
+		mapActions
+	} from 'vuex'
 	export default {
 		mixins:[pageMixin],
 		data() {
@@ -81,36 +84,43 @@
 				// console.log(newContent);
 				return newContent;
 			},
+			...mapActions(['getInitData'])
 		},
 		filters: {
-					formatRichText (html) { //控制小程序中图片大小
-						if(!html) return;
-					    let newContent= html.replace(/<img[^>]*>/gi,function(match,capture){
-					        match = match.replace(/style="[^"]+"/gi, '')//.replace(/style='[^']+'/gi, '');
-					        match = match.replace(/width="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
-					        match = match.replace(/height="[^"]+"/gi, '')//.replace(/height='[^']+'/gi, '');
-					        return match;
-					    });
-						newContent= newContent.replace(/<div[^>]*>/gi,function(match,capture){
-						    match = match.replace(/style="[^"]+"/gi, '')//.replace(/style='[^']+'/gi, '');
-						    match = match.replace(/width="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
-						    match = match.replace(/height="[^"]+"/gi, '')//.replace(/height='[^']+'/gi, '');
-						    return match;
-						});
-						newContent= newContent.replace(/<p[^>]*>/gi,'');
-						newContent= newContent.replace(/<[/]p[^>]*>/gi,'');
-					    newContent = newContent.replace(/style="[^"]+"/gi,function(match,capture){
-					        match = match.replace(/width:[^;]+;/gi, 'width:100%;').replace(/width:[^;]+;/gi, 'width:100%;');
-					        return match;
-					    });
+			formatRichText (html) { //控制小程序中图片大小
+				if(!html) return;
+				let newContent= html.replace(/<img[^>]*>/gi,function(match,capture){
+					match = match.replace(/style="[^"]+"/gi, '')//.replace(/style='[^']+'/gi, '');
+					match = match.replace(/width="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
+					match = match.replace(/height="[^"]+"/gi, '')//.replace(/height='[^']+'/gi, '');
+					return match;
+				});
+				newContent= newContent.replace(/<div[^>]*>/gi,function(match,capture){
+					match = match.replace(/style="[^"]+"/gi, '')//.replace(/style='[^']+'/gi, '');
+					match = match.replace(/width="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
+					match = match.replace(/height="[^"]+"/gi, '')//.replace(/height='[^']+'/gi, '');
+					return match;
+				});
+				newContent= newContent.replace(/<p[^>]*>/gi,'');
+				newContent= newContent.replace(/<[/]p[^>]*>/gi,'');
+				newContent = newContent.replace(/style="[^"]+"/gi,function(match,capture){
+					match = match.replace(/width:[^;]+;/gi, 'width:100%;').replace(/width:[^;]+;/gi, 'width:100%;');
+					return match;
+				});
 
-					    newContent = newContent.replace(/<br[^>]*\/>/gi, '');
-					    newContent = newContent.replace(/\<img/gi, '<img style="width:100%;float:left;"');
-						//newContent = newContent.replace(/>[\s]*</gi, "><");
+				newContent = newContent.replace(/<br[^>]*\/>/gi, '');
+				newContent = newContent.replace(/\<img/gi, '<img style="width:100%;float:left;"');
+				//newContent = newContent.replace(/>[\s]*</gi, "><");
 
-					    return newContent;
-					}
-				}
+				return newContent;
+			}
+		},
+		async created(){
+			let initData = await this.getInitData()
+			uni.setNavigationBarTitle({
+				title:'成为'+initData.commi_rename.commi
+			})
+		}
 	}
 </script>
 
