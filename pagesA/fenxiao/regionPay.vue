@@ -205,7 +205,7 @@
 							if (res.confirm) {
 								toast('支付成功');
 								uni.switchTab({
-									url:'/pagesA/fenxiao/fenxiao'
+									url:'/pages/fenxiao/fenxiao'
 								})
 							} else if (res.cancel) {
 
@@ -242,7 +242,7 @@
 					})
                     setTimeout(function () {
 						uni.switchTab({
-							url:'/pagesA/fenxiao/fenxiao'
+							url:'/pages/fenxiao/fenxiao'
 						})
                     },1000)
 				}).catch(e=>{
