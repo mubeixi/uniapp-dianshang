@@ -19,7 +19,7 @@
 				</view>
 		</view>
 
-		<view class="centers">
+		<view class="centers" v-if="pro">
 			<view class="td">
 				退款编号：{{pro.Back_ID}}
 			</view>
@@ -31,20 +31,19 @@
 			</view>
 			<view class="td">
 				退款总价：
-<!--				<text style="color: red;">¥{{pro.refund_money_fee}}</text>-->
 				<span>退回余额<span class="font16 danger-color"><span class="span font12">￥</span>{{pro.refund_money_fee}} </span>,</span>
 				<span>原路退回 <span class="danger-color"><span class="span font12 ">￥</span>{{pro.refund_pay_fee}} </span></span>
 			</view>
 			<view class="td">
 				退款状态：<text style="color: #FF6600;">{{pro.Back_Status_desc}}</text>
 			</view>
-			<view class="address">
+			<view class="address" v-if="pro.shop_address">
 				商家收货地址：{{pro.shop_address.RecieveProvince_name}}{{pro.shop_address.RecieveCity_name}}{{pro.shop_address.RecieveArea_name}}{{pro.shop_address.RecieveName}}
 				手机号码:{{pro.shop_address.RecieveMobile}}{{pro.shop_address.RecieveAddress}}收
 			</view>
 			<block v-if="isFahuo">
 				<view class="fahuo" v-if="pro.Back_Status==1">
-					<view class="fahuoSubmit" @click="this.isFahuo=false">
+					<view class="fahuoSubmit" @click="isFahuo=false">
 						我要发货
 					</view>
 				</view>

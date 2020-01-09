@@ -3,7 +3,18 @@
 		<view style="height: 90rpx;margin-bottom: 10px;font-size: 14px;">
 			<view class="status fixed" :class="[status == 9 ? 'active' : '']" @click="changeStatus(9)">全部</view>
 			<scroll-view class="order-status" scroll-x="true" style="width: 612rpx;white-space: nowrap;margin-left: 138rpx;" >
-				<view class="status" :class="[status == 0 ? 'active' : '']" @click="changeStatus(0)">门店结算</view>
+				
+				<block v-if="Array.isArray(show_type)">
+					<block v-for="(item,index) of show_type" :key="index">
+						<view class="status" :class="[status == index ? 'active' : '']" @click="changeStatus(index)">{{item}}</view>
+					</block>
+				</block>
+				<block v-else>
+					<block v-for="(item,index) in show_type" :key="index">
+						<view class="status" :class="[status == index ? 'active' : '']" @click="changeStatus(index)">{{item}}</view>
+					</block>
+				</block>
+				<!-- <view class="status" :class="[status == 0 ? 'active' : '']" @click="changeStatus(0)">门店结算</view>
 				<view class="status" :class="[status == 1 ? 'active' : '']" @click="changeStatus(1)">分销佣金</view>
 				<view class="status" :class="[status == 2 ? 'active' : '']" @click="changeStatus(2)">股东佣金</view>
 				<view class="status" :class="[status == 3 ? 'active' : '']" @click="changeStatus(3)">爵位佣金</view>
@@ -11,7 +22,7 @@
 				<view class="status" :class="[status == 5 ? 'active' : '']" @click="changeStatus(5)">返本</view>
 				<view class="status" :class="[status == 6 ? 'active' : '']" @click="changeStatus(6)">提现</view>
 				<view class="status" :class="[status == 7 ? 'active' : '']" @click="changeStatus(7)">管理奖</view>
-				<view class="status" :class="[status == 8 ? 'active' : '']" @click="changeStatus(8)">贡献奖</view>
+				<view class="status" :class="[status == 8 ? 'active' : '']" @click="changeStatus(8)">贡献奖</view> -->
 			</scroll-view>
 		</view>
 		
@@ -52,6 +63,7 @@
 				page:1,
 				pageSize:10,
 				resData:[],
+				show_type:{}
 			};
 		},
 		onShow() {
@@ -81,6 +93,7 @@
 					}else{
 						this.resData=this.resData.concat(res.data.list)
 					}
+					this.show_type=res.data.show_type
 					this.totalCount=res.totalCount
 				})
 			},
@@ -107,8 +120,7 @@
 	 // height: 90rpx;
 	display: flex;
 	align-items: center;
-	  // justify-content: center;
-	text-align: center;
+	justify-content: flex-start;
 	.status {
 			display: inline-block;
 			width: 150rpx;
