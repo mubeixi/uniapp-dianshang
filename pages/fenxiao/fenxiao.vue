@@ -179,7 +179,7 @@
 				})
 			},
 			goDistributor(){
-				//跳转成为分销商
+				//跳转成为
 				uni.navigateTo({
 					url:'/pages/fenxiao/distributorLevel'
 				})

@@ -89,7 +89,7 @@
 					return {
 						mode: 'aspectFit',
 						padding: 0,
-						lazyLoad: false,
+						lazyLoad: true,
 						domain: ''
 					};
 				}

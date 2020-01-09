@@ -127,7 +127,11 @@
 
 	import {pageMixin} from "../../common/mixin";
 	import {error,toast} from "../../common";
-	import {mapGetters,mapActions, mapState} from 'vuex';
+	import {
+		mapGetters,
+		mapActions,
+		mapState
+	} from 'vuex';
 	// import TabbarComponents from "../../components/TabbarComponents";
 
 	import {ls} from "../../common/tool";
@@ -164,113 +168,83 @@
 					url:tabbarRouter[idx]
 				})
 			},
-			initFunc(){
-				let _self = this;
-				new Promise((resolve,reject) => {
+			async get_tmpl_data(){
 
-					getSkinConfig({}).then(res => {
-
-						if(res.data.Home_Json){
-							resolve(JSON.parse(res.data.Home_Json))
-						}else{
-							reject(false)
-						}
-
-					}).catch(e=>{
-						console.log('获取首页模板信息失败')
-						console.log(e)
-					})
-
+				let rt = {}
+				await getSkinConfig({}).then(res => {
+					if(res.data.Home_Json){
+						rt = JSON.parse(res.data.Home_Json)
+					}
+				}).catch(e=>{
+					console.log('获取首页模板信息失败')
+					console.log(e)
 				})
-						.then(mixinData => {
 
-							let templateData = mixinData.plugin;
-							this.system = mixinData.system;
+				return rt
+			},
+			async initFunc(){
+				let _self = this;
 
+				let mixinData = await this.get_tmpl_data()
 
+				let templateData = mixinData.plugin;
+				this.system = mixinData.system;
 
-							//存储页面数据
-							this.templateData = [] //页面数据的二维数组。
-							this.templateList = [] //页面组件的二维数组。
-							// console.log(templateData)
-							if (templateData && Array.isArray(templateData[0])) {
-								//多个页面，每个页面是一个数组
-								templateData.map(item => {
-									this.templateData.push(item)
-									this.templateList.push([])
-								})
-							} else if (
-									templateData &&
-									!Array.isArray(templateData[0]) &&
-									templateData.length > 0
-							) {
-								//单纯是一个对象的时候？？
-								this.templateData = [templateData]
-								this.templateList = [[]]
-							} else {
-								this.templateData = [[]]
-								this.templateList = [[]]
-							}
-							// this.templateData = templateData
-							//存储页面组件templateList
-							for (let i = 0; i < this.templateData.length; i++) {
-								if (
-										this.templateData[i] &&
-										this.templateData[i] !== []
-								) {
-									this.templateData[i].map(m => {
-										this.templateList[i].push(m.tag)
-									})
-								}
-							}
-
-
-						},err=>{})
-						.catch(err => {
-							console.log(err)
+				//存储页面数据
+				this.templateData = [] //页面数据的二维数组。
+				this.templateList = [] //页面组件的二维数组。
+				// console.log(templateData)
+				if (templateData && Array.isArray(templateData[0])) {
+					//多个页面，每个页面是一个数组
+					templateData.map(item => {
+						this.templateData.push(item)
+						this.templateList.push([])
+					})
+				} else if (
+						templateData &&
+						!Array.isArray(templateData[0]) &&
+						templateData.length > 0
+				) {
+					//单纯是一个对象的时候？？
+					this.templateData = [templateData]
+					this.templateList = [[]]
+				} else {
+					this.templateData = [[]]
+					this.templateList = [[]]
+				}
+				// this.templateData = templateData
+				//存储页面组件templateList
+				for (let i = 0; i < this.templateData.length; i++) {
+					if (
+							this.templateData[i] &&
+							this.templateData[i] !== []
+					) {
+						this.templateData[i].map(m => {
+							this.templateList[i].push(m.tag)
 						})
-			}
+					}
+				}
+
+
+			},
+			...mapActions(['getInitData'])
 		},
 		onLoad() {
 			// uni.hideTabBar()
 		},
-		created(){
+		async created(){
 			this.initFunc()
-			
-			let that=this
-			//每次加载都清空全站配置
-			this.setInitData({})
-			getSystemConf().then(res => {
-			
-				this.setInitData(res.data)
-				uni.setNavigationBarTitle({
-					title:res.data.ShopName
-				})
-			},err=>{}).catch(error=>{})
-			
-			
-			setTimeout(()=>{
-			
-				// this.tabbar = true
-				// uni.setTabBarItem({
-				// 	index:1,
-				// 	text:'花里胡哨',
-				// 	iconPath:'https://img-cdn-qiniu.dcloud.net.cn/uniapp/doc/uniapp4@2x.png',
-				// 	selectedIconPath:'https://img-cdn-qiniu.dcloud.net.cn/uniapp/doc/uniapp4@2x.png',
-				// 	success:function(res){console.log(res)},
-				// 	fail:function(e){console.log(e)},
-				// 	complete:function(res){},
-				// })
-			},500)
-			
+
+			let initData = await this.getInitData()
+			uni.setNavigationBarTitle({
+				title:initData.ShopName
+			})
 		},
 		mounted(){
 			let that =this
 
 		},
 		onShow(){
-
-			
 
 		},
 		async onPullDownRefresh(){

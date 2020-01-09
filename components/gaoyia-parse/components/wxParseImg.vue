@@ -1,14 +1,35 @@
 <template>
-	<image
-		:mode="node.attr.mode"
-		:lazy-load="node.attr.lazyLoad"
-		:class="node.classStr"
-		:style="newStyleStr || node.styleStr"
-		:data-src="node.attr.src"
-		:src="node.attr.src"
-		@tap="wxParseImgTap"
-		@load="wxParseImgLoad"
-	/>
+	<view>
+		<!-- #ifdef H5 -->
+		<image v-show="!loading"
+			   style="width: 750rpx"
+				:mode="node.attr.mode"
+				:lazy-load="node.attr.lazyLoad"
+				:class="node.classStr"
+				:style="newStyleStr || node.styleStr"
+				:data-src="node.attr.src"
+				:src="node.attr.src"
+				@tap="wxParseImgTap"
+				@load="wxParseImgLoad"
+		/>
+		<!-- #endif -->
+		<!-- #ifndef H5 -->
+		<image v-if="!loading&&bolburl"
+			   style="width: 750rpx"
+				:mode="node.attr.mode"
+				:lazy-load="node.attr.lazyLoad"
+				:class="node.classStr"
+				:style="newStyleStr || node.styleStr"
+				:data-src="node.attr.src"
+				:src="bolburl"
+				@tap="wxParseImgTap"
+				@load="wxParseImgLoad"
+		/>
+		<!-- #endif -->
+		<view style="text-align: center;padding: 20px 0;background: #fff;" v-if="loading">
+			<image  src="/static/lazy-img.gif" style="width: 50px;height: 10px" />
+		</view>
+	</view>
 </template>
 
 <script>
@@ -17,6 +38,8 @@ export default {
 	data() {
 		return {
 			newStyleStr: '',
+			bolburl:'',
+			loading:true,
 			preview: true
 		};
 	},
@@ -30,7 +53,19 @@ export default {
 			}
 		}
 	},
-
+	created() {
+		// #ifndef H5
+		uni.downloadFile({
+		    url: this.node.attr.src, //仅为示例，并非真实的资源
+		    success: (res) => {
+		        if (res.statusCode === 200 && res.tempFilePath) {
+					this.loading = false
+		            this.bolburl = res.tempFilePath
+		        }
+		    }
+		});
+		// #endif
+	},
 	methods: {
 		wxParseImgTap(e) {
 			if (!this.preview) return;
@@ -45,7 +80,7 @@ export default {
 		},
 		// 图片视觉宽高计算函数区
 		wxParseImgLoad(e) {
-
+			this.loading = false
 			const { src } = e.currentTarget.dataset;
 
 			let { width, height } = e.mp.detail;
@@ -93,3 +128,6 @@ export default {
 	}
 };
 </script>
+<style scoped lang="scss">
+image{will-change: transform}
+</style>
