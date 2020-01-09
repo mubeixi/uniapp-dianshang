@@ -33,7 +33,7 @@ export const SET_USER_INFO = function (state, value) {
 
 export const SET_INIT_DATA = function (state, value) {
   state.initData = value;
-  ls.set('initData',value)
+  ls.set('initData',value,1)
 
   //app分享小程序的时候有用到
   if(value && value.login_methods){
