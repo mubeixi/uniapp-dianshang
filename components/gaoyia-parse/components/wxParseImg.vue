@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<!-- #ifdef H5 -->
+		<!-- #ifdef H5 || MP -->
 		<image v-show="!loading"
 			   style="width: 750rpx"
 				:mode="node.attr.mode"
@@ -13,7 +13,7 @@
 				@load="wxParseImgLoad"
 		/>
 		<!-- #endif -->
-		<!-- #ifndef H5 -->
+		<!-- #ifdef APP-PLUS -->
 		<image v-if="!loading&&bolburl"
 			   style="width: 750rpx"
 				:mode="node.attr.mode"

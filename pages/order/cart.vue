@@ -24,7 +24,7 @@
 						<image class="img" :src="(checkAllFlag ? '/static/client/checked.png' : '/static/client/uncheck.png')|domain" />
 
 				   </div>
-					<img :src="shop_config.ShopLogo" class="biz_logo" alt />
+					<img :src="shop_config.ShopLogo|domain" class="biz_logo" alt />
 					<text class="biz_name">{{shop_config.ShopName}}</text>
 				</div>
 				<block  v-for="(pro,pro_id) in CartList" :key="pro_id">
