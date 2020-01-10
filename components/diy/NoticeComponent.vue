@@ -3,7 +3,7 @@
         <view class="flex content" :style="{background:notice.style.bgColor}">
             <view class="funicon icon-gonggao icon" :style="{color:notice.style.iconColor}"></view>
             <div class="flex1 title" :style="{color:notice.style.color}">
-                <span :style="{marginLeft: '-' + marginLeft + 'px'}">{{notice.value.content}}</span>
+                <div class="content-box" id="content" :style="{marginLeft: '-' + marginLeft + 'px'}">{{notice.value.content}}</div>
             </div>
         </view>
     </view>
@@ -53,6 +53,15 @@
                 // this.fullWidth = res.screenWidth;
 
                 let width = res.screenWidth;//document.getElementById('canvas').offsetWidth;
+
+                const query = uni.createSelectorQuery().in(this);
+                query.select('#content').boundingClientRect(data => {
+                    console.log(data)
+                    width = data.width
+                }).exec();
+
+                console.log(width)
+
                 _self.an = setInterval(function () {
                     if (_self.marginLeft > width) {
                         _self.marginLeft = 0;
@@ -164,9 +173,16 @@
         color: #666;
         font-size: 14px;
         line-height: 20px;
-
         height: 20px;
         overflow: hidden;
+        position: relative;
+        .content-box{
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            white-space: nowrap;
+        }
     }
 
 

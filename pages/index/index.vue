@@ -236,9 +236,12 @@
 			this.initFunc()
 
 			let initData = await this.getInitData()
-			uni.setNavigationBarTitle({
-				title:initData.ShopName
-			})
+			if(initData.hasOwnProperty('ShopName') && initData.ShopName){
+                uni.setNavigationBarTitle({
+                    title:initData.ShopName
+                })
+			}
+
 		},
 		mounted(){
 			let that =this

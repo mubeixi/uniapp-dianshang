@@ -1,6 +1,7 @@
 import {error, toast} from "./index";
 import {apiBaseUrl} from './env.js';
 import store from "../store";
+import _ from 'underscore'
 
 
 export const formatTime = date => {
@@ -670,3 +671,21 @@ export const createTmplArray = (item, len) => {
 }
 
 
+export const plainArray = (arr,key,newArr)=>{
+
+    if(!arr || !key)return false;
+
+    for(var item of arr){
+        let tempObj = objTranslate(item)
+        if(tempObj.hasOwnProperty(key)){
+            tempObj[key] = null
+        }
+        newArr.push(tempObj)
+
+        if(item && item[key] && _.isArray(item[key])){
+            plainArray(item[key],key,newArr);
+        }
+
+    }
+
+}

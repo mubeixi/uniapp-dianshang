@@ -237,7 +237,7 @@
 		{
 			"path": "pages/fenxiao/fenxiao",
 			"style": {
-				"navigationBarTitleText": "分销中心",
+				"navigationBarTitleText": "",
 				"navigationBarBackgroundColor": "#f81111",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
@@ -537,7 +537,7 @@
 				"navigationBarTitleText": "分销商等级"
 			}
 		}
-        
+
         ,{
             "path" : "pages/common/article",
             "style": {
