@@ -23,7 +23,7 @@
 			</div>
 
 			<view class="font14 loginBtn" v-if="!userInfo.User_ID" plain size="mini" @click="goLogin">登录/注册</view>
-			<view class="font14 loginBtn" v-if="userInfo.User_ID && userInfo.Is_Distribute!=1" plain size="mini" @click="goDistributor">成为分销商</view>
+			<view class="font14 loginBtn" v-if="userInfo.User_ID && userInfo.Is_Distribute!=1" plain size="mini" @click="goDistributor">成为{{commi_rename.commi}}</view>
 			<view class="sales">
 				<view class="left" @click="goSales">
 					<view class="salesSum">
@@ -153,7 +153,7 @@
 			};
 		},
 		computed:{
-			...mapGetters(['userInfo'])
+			...mapGetters(['userInfo','commi_rename'])
 		},
 		methods:{
 			...mapActions(['getUserInfo','setUserInfo']),

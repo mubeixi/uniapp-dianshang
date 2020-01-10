@@ -87,7 +87,9 @@ const fetch = function (act, param, options = false, url = '/api/little_program/
 
     // 数据加密
     let data = createToken(param);
-
+	
+	//保持签名通过，同时支持传空字符串
+	Object.assign(data,param)
     return ajax(url, method, data, options);
 
 };

@@ -29,7 +29,7 @@
 			<block v-else>
 				<view class="fir">
 					<view class="left">
-						申请分销商等级名称：
+						申请{{commi_rename.commi}}等级名称：
 					</view>
 					<view class="right">
 						{{item.Level_Name}}
@@ -70,6 +70,8 @@
 <script>
 	import {pageMixin} from "../../common/mixin";
 	import {getShaApply,getAgentApply} from '../../common/fetch.js'
+	import {mapGetters} from 'vuex';
+	
 	export default {
 		mixins:[pageMixin],
 		data() {
@@ -102,6 +104,9 @@
 				this.page++;
 				this.getWithdrawRecordList();
 			}
+		},
+		computed:{
+			...mapGetters(['commi_rename'])
 		},
 		methods:{
 			//获取提现记录
