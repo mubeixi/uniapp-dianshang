@@ -56,7 +56,7 @@
 		</div>
 		<div class="order_msg bgwhite">
 			<div class="biz_msg">
-				<image :src="orderInfo.ShopLogo" class="biz_logo" alt="" />
+				<image :src="orderInfo.ShopLogo|domain" class="biz_logo" alt="" />
 				<span class="biz_name">{{orderInfo.ShopName}}</span>
 			</div>
 			<div class="pro" v-for="(pro,pro_id) in orderInfo.prod_list" :key="pro_id">

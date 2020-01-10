@@ -12,7 +12,7 @@
             <image class="right" :src="'/static/client/right.png'|domain" alt="" ></image>
         </view>
 		<view class="biz_msg">
-			<image :src="orderInfo.ShopLogo" class="biz_logo" alt="" />
+			<image :src="orderInfo.ShopLogo|domain" class="biz_logo" alt="" />
 			<span class="biz_name">{{orderInfo.ShopName}}</span>
 		</view>
         <view class="order_msg">

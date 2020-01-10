@@ -30,7 +30,7 @@
 				<div style="background-color: #F3F3F3;height: 20rpx;width: 100%;position: absolute;left: 0rpx;"></div>
 				<div style="height: 20rpx;"></div>
 				<div class="bizinfo">
-					<img class="img" :src="item.ShopLogo" alt="">
+					<img class="img" :src="item.ShopLogo|domain" alt="">
 					<span class="bizname">{{item.ShopName}}</span>
 					<span class="status">{{item.Order_Status_desc}}</span>
 				</div>
