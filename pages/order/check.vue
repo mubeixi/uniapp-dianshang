@@ -240,7 +240,7 @@ export default {
     components: {
         StoreListComponents,
         popupLayer
-    },
+	},
     data(){
         return {
         	selfObj:null,
@@ -328,13 +328,11 @@ export default {
 		// #ifdef H5
 		this.selfObj = this
 		// #endif
-
+		this.tabIdx = this.initData.order_submit_first;
 		let userInfo = this.getUserInfo(true);
+		console.log(this.initData.order_submit_first)
 	},
 	onLoad(options) {
-
-
-
 		console.log('options is',options)
 		this.postData.cart_key = options.cart_key;
 		if(options.cart_buy){

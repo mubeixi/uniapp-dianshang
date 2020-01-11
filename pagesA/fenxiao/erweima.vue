@@ -58,7 +58,7 @@
 	import {goBack}  from '../../common/tool.js'
 	import {pageMixin} from "../../common/mixin";
 	import {mapGetters,mapActions} from 'vuex';
-	import {getDisInit,getDistributeWxQrcode} from "../../common/fetch";
+	import {getDisInit,getDistributeWxQrcode,getFuncModule} from "../../common/fetch";
 
 	export default {
 		mixins:[pageMixin],
@@ -72,7 +72,7 @@
 					total_income:'',
 					balance:''
 				},//
-
+				funcModules: {}
 			};
 		},
 		computed:{
@@ -88,7 +88,7 @@
 			}).catch(err=>{
 				console.log(err)
 			})
-
+			this.getFuncModule();
 			//this.userInfo = this.getUserInfo()
 		},
 		methods:{
@@ -103,6 +103,13 @@
 			},
 			goBack(){
 				goBack();
+			},
+			// 获取功能模块
+			getFuncModule(){
+				getFuncModule({type:1,field:'erweima'}).then(res=>{
+					this.funcModules = res.data[0];
+					console.log(this.funcModules)
+				})
 			}
 		}
 	}
