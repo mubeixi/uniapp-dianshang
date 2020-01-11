@@ -4,7 +4,7 @@
 		<!-- <page-title title="提现" rightHidden="true" bgcolor="#ffffff" ></page-title> -->
 		<view class="content">
 			<view class="bank" v-if="isShow" @click="goMethod">
-				<image :src="initData.ShopLogo" class="bankCard"></image>
+				<image :src="initData.ShopLogo|domain" class="bankCard"></image>
 				<view class="bankName" v-if="data.Method_Type=='bank_card'||data.Method_Type=='alipay'">
 					{{data.Method_Name}}({{data.Account_Val}})
 				</view>

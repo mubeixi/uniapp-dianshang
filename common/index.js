@@ -128,7 +128,10 @@ export const checkIsDistribute = (redirect, tip) => {
                 })
                 return;
             }
-            confirm({title: '提示', content: '该操作需要是分销商,请问是否成为分销商?', confirmText: '确定', cancelText: '暂不成为'}).then(() => {
+
+            const commi_rename = store.getters.commi_rename
+            const commi = commi_rename.commi
+            confirm({title: '提示', content: `该操作需要是${commi},请问是否成为${commi}?`, confirmText: '确定', cancelText: '暂不成为'}).then(() => {
                 uni.navigateTo({
                     url: '/pages/fenxiao/distributorCenter'
                 })

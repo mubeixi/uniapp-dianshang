@@ -26,7 +26,7 @@
 		<div class="container bgwhite">
 			<view class="biz_msg">
 				<div style="display: flex;align-items: center;">
-                    <image :src="orderInfo.ShopLogo" class="biz_logo" alt="" />
+                    <image :src="orderInfo.ShopLogo|domain" class="biz_logo" alt="" />
                     <span class="biz_name">{{orderInfo.ShopName}}</span>
                 </div>
 				<div v-if="tabIdx==0 && orderInfo.shipping_has_stores == 1" @click="multipleSelectStore" class="graytext2 font14 disMbx" >

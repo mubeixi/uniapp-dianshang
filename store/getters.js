@@ -26,3 +26,14 @@ export const initData = function (state, value) {
     }
     return state.initData;
 };
+
+export const commi_rename = function (state, value) {
+
+    let initData = state.initData || ls.get('initData')
+    if(!initData || !initData.commi_rename){
+        return {}
+    }
+
+    return initData.commi_rename
+
+};

@@ -6,7 +6,7 @@
 		<!-- <page-title title="财富排行榜" rightHidden="true" ></page-title> -->
 		<view class="all">
 			<view class="hahas" :class="index==0?'checked':''" @click="change(0)">
-				总部分销商
+				总部{{commi_rename.commi}}
 			</view>
 			<view class="hahas"  :class="index==1?'checked':''"   @click="change(1)">
 				我的好友
@@ -110,8 +110,11 @@
 </template>
 
 <script>
-	import {pageMixin} from "../../common/mixin";
+	import {pageMixin} from "../../common/mixin"
 	import {getBalanceRank} from "../../common/fetch.js"
+	import {
+		mapGetters
+	} from 'vuex'
 	export default {
 		mixins:[pageMixin],
 		data() {
@@ -125,6 +128,9 @@
 				totalCount:0,
 				rank_config:0,
 			};
+		},
+		computed:{
+			...mapGetters(['commi_rename'])
 		},
 		onShow() {
 			this.page=1;

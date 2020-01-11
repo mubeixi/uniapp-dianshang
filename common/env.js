@@ -6,7 +6,7 @@ export const APP_USERS_ID = 'wkbq6nc2kc';//'	mrw5iqvhs2 xjgjd88jee  wkbq6nc2kc';
 // #endif
 
 // #ifdef H5
-export const apiBaseUrl = isDev ? '' : 'https://new401.bafangka.com';//h5调试为了跨域https://new401.bafangka.com
+export const apiBaseUrl = isDev ? '' : '';//h5调试为了跨域https://new401.bafangka.com
 // #endif
 
 // #ifndef H5

@@ -83,7 +83,7 @@
         .list {
 
             .item {
-                margin-right: 15px;
+                // margin-right: 15px;
                 text-align: center;
                 cursor: pointer;
 

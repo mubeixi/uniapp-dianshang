@@ -287,11 +287,10 @@ export const pageMixin = {
 					this.setInitData(null)
 
 					//返回了promise,这样就阻塞了
-				 	let system = await getSystemConf({})
-					system.then(res => {
-						this.refreshInit = false //已经更新过最新的initData,所以后面没有必要再强制ajax获取了，拿ls或者state中的就好
-						this.setInitData(res.data)
-					})
+				 	let rt = await getSystemConf({})
+                    this.refreshInit = false //已经更新过最新的initData,所以后面没有必要再强制ajax获取了，拿ls或者state中的就好
+					console.log(rt.data)
+                    this.setInitData(rt.data)
 				}
 				// #endif
 
