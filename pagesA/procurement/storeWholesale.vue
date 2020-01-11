@@ -40,21 +40,21 @@
                                     <div class="line10 flex flex-between graytext font14 flex-vertical-center">
                                         <div class="spec-key">{{item.attr_info.attr_name||'无规格'}}</div>
                                         <div class="numbox font16"><span class="font14">x</span>{{item.prod_count}}
-																					<image class="qty-icon" v-if="item.prod_count_change_desc" src="/static/procurement/i.png" mode="" @click.stop="show_pro_tip(apply,idx2)"></image>
-																					<view class="tips" v-if="item.pro_tip_show">
-																						<view class="sanjiaoxing"></view>{{item.prod_count_change_desc}}
-																					</view>
-																				</div>
+                                            <image class="qty-icon" v-if="item.prod_count_change_desc" src="/static/procurement/i.png" mode="" @click.stop="show_pro_tip(apply,idx2)"></image>
+                                            <view class="tips" v-if="item.pro_tip_show">
+                                                <view class="sanjiaoxing"></view>{{item.prod_count_change_desc}}
+                                            </view>
+                                        </div>
                                     </div>
                                     <div class="font14 flex flex-between flex-vertical-center">
-																			<span class="danger-color">￥<span class="price-num font16">{{item.prod_price}}</span></span>
-																			<view class="sku-item" v-if="apply.Order_Status == 21">
-																				<view class="handle" @click="minus(idx1,idx2,item,apply.Order_ID)">-</view>
-																				<view class="pro-num">{{item.prod_count}}
-																				</view>
-																				<view class="handle graytext" @click="plus(idx2,apply.Order_ID)">+</view>
-																			</view>
-																		</div>
+                                        <span class="danger-color">￥<span class="price-num font16">{{item.prod_price}}</span></span>
+                                        <view class="sku-item" v-if="apply.Order_Status == 21">
+                                            <view class="handle" @click="minus(idx1,idx2,item,apply.Order_ID)">-</view>
+                                            <view class="pro-num">{{item.prod_count}}
+                                            </view>
+                                            <view class="handle graytext" @click="plus(idx2,apply.Order_ID)">+</view>
+                                        </view>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -156,15 +156,16 @@
         methods:{
 					show_pro_tip(apply,index){
 						console.log(apply,index)
-						apply.order_tip_show = true;
+						// apply.order_tip_show = true;
 						apply.prod_list[index].pro_tip_show = true;
 					},
-					hidden_tip(index){
-						this.applys = this.applys;
-						this.applys[index].prod_list.forEach(item=>{
-							item.pro_tip_show = false;
-						})
-						// item.pro_tip_show = false;
+					hidden_tip(){
+                        this.applys = this.applys;
+                        this.applys.map(item=>{
+                            item.prod_list.forEach(goods=>{
+                                goods.pro_tip_show = false;
+                            })
+                        })
 					},
 					// 减少数量
 					minus(idx1,idx2,it,order_id){
@@ -331,21 +332,13 @@
                 await getStorePurchaseSales({...this.paginate,order_status:this.order_status,store_id:this.Stores_ID},{tip:'加载中'}).then(res=>{
 
                     this.paginate.totalCount = res.totalCount
-										for(var i = 0 ; i<res.data.length-1; i++) {
-											res.data[i].order_tip_show = false;
-											for(var j =0; j<res.data[i].prod_list.length-1; j++) {
-												res.data[i]['prod_list'][j].pro_tip_show = false;
-											}
-										}
-
-
-
                     let rt = res.data.map(item=>{
 
                         for(var goods of item.prod_list){
                             if(goods.attr_info){
                                 goods.attr_info = JSON.parse(goods.attr_info)
                             }
+                            goods.pro_tip_show = false;
                         }
                         return {...item}
                     })
@@ -362,7 +355,7 @@
                         this.paginate.finish = true
                         return;
                     }
-										this.applys = this.applys;
+					this.applys = this.applys;
                     this.paginate.page ++
                 },err=>{
 
@@ -511,35 +504,36 @@
                         color: #666666;
                     }
                     .numbox{
-											position: relative;
-                       color: #333333;
-											 .tips {
-											 	position: absolute;
-											 	top:50rpx;
-											 	right: -12rpx;
-											 	width: 200rpx;
-											 	padding: 20rpx;
-											 	background: #fff;
-											 	box-shadow: 0px 0px 16px 0px rgba(4,0,0,0.18);
-											 	.sanjiaoxing {
-											 		position: absolute;
-											 		top: -14rpx;
-											 		right: 30rpx;
-											 		background-color: #fff;
-											 		transform: rotate(70deg);
-											 		width: 15rpx;
-											 		height: 30rpx;
-											 		border: 2rpx solid #fff;
-											 		border-right:0;
-											 		border-bottom: 0;
-											 		box-shadow: 0px 0px 16px 0px rgba(4,0,0,0.18);
-											 	}
-											 }
-											 .qty-icon {
-											 	width: 22rpx;
-											 	height: 22rpx;
-											 	margin-left: 10rpx;
-											 }
+                        position: relative;
+                        color: #333333;
+                            .tips {
+                            position: absolute;
+                            top:50rpx;
+                            right: -12rpx;
+                            width: 200rpx;
+                            padding: 20rpx;
+                            background: #fff;
+                            z-index: 1000;
+                            box-shadow: 0px 0px 16px 0px rgba(4,0,0,0.18);
+                            .sanjiaoxing {
+                                position: absolute;
+                                top: -14rpx;
+                                right: 30rpx;
+                                background-color: #fff;
+                                transform: rotate(70deg);
+                                width: 15rpx;
+                                height: 30rpx;
+                                border: 2rpx solid #fff;
+                                border-right:0;
+                                border-bottom: 0;
+                                box-shadow: 0px 0px 16px 0px rgba(4,0,0,0.18);
+                            }
+                            }
+                            .qty-icon {
+                            width: 22rpx;
+                            height: 22rpx;
+                            margin-left: 10rpx;
+                            }
                     }
                 }
 
