@@ -543,6 +543,8 @@ export const getStoreTypes = (data, options) => fetch('get_store_types', data, o
 // 门店发货
 export const systemSendOrder = (data, options) => fetch('system_send_order', data, options);
 
+// 获取分销功能模块
+export const getFuncModule = (data,options) => fetch('getFuncModule', data, options);
 
 //普通环境noop就行了
 //let add_template_code = ()=>{}
