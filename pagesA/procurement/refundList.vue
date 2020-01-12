@@ -42,8 +42,9 @@
             		</div>
             		<div class="btn-group">
             			<span class="span" style="border: 0rpx;color: red;">{{item.Back_Status_desc}}</span>
-            			<span class="span"  @click="openRefuseDialog(item.Back_ID)">拒单</span>
-            			<span class="span"  @click="sureOrder(item.Back_ID)">确认</span>
+            			<span class="span" v-if='item.Back_Status==0'  @click="openRefuseDialog(item.Back_ID)">拒单</span>
+            			<span class="span" v-if='item.Back_Status==0||item.Back_Status==1'  @click="sureOrder(item.Back_ID)">确认</span>
+						<span class="span" v-if='item.Back_Status==2'  @click="sureShou(item.Back_ID)">收货</span>
             		</div>
             	</template>
             </div>
@@ -57,9 +58,19 @@
                     <div @click="cancelRefuseApply" class="action-btn btn-cancel">取消</div>
                     <div @click="refuseApply" class="btn-sub action-btn">确定</div>
                 </div>
-
             </div>
         </wzw-dialog>
+		
+		<wzw-dialog ref="sureReason">
+		    <div class="refuseApplyDialog">
+				<input type="number" v-model="priceValue" class="inputs" placeholder="请输入退款总金额">
+		        <textarea class="reason reasons" @input="bingReasonInputs" :value="reasons" placeholder-style="color:#999" placeholder="请输入原因" />
+		        <div class="control">
+		            <div @click="cancelRefuseApplys" class="action-btn btn-cancel">取消</div>
+		            <div @click="refuseApplys" class="btn-sub action-btn">确定</div>
+		        </div>
+		    </div>
+		</wzw-dialog>
 
     </div>
 </template>
@@ -67,11 +78,10 @@
 <script>
     import {pageMixin} from "../../common/mixin";
     import {mapGetters} from "vuex";
-    import {getStorePurchaseSales,getStoreList,refuseStorePurchaseApply,getStoreDetail,subStorePurchaseApply,getBackOrder,systemRefuseApply,systemConfirmApply} from "../../common/fetch";
-    import {error} from "../../common";
+    import {getStorePurchaseSales,getStoreList,refuseStorePurchaseApply,getStoreDetail,subStorePurchaseApply,getBackOrder,systemRefuseApply,systemConfirmApply,systemReceiptRefundProd} from "../../common/fetch";
     import {findArrayIdx} from "../../common/tool";
 	import {getLocation} from "../../common/tool/location";
-
+	import {toast, confirm,error} from "../../common";
     export default {
         mixins: [pageMixin],
         name: "refundList",
@@ -82,10 +92,12 @@
 				tabidx:-1,
                 reason:'',
 				totalCount :0,
+				reasons:'',
+				priceValue:'',
+				backItem:'',
                 paginate:{
                     page:1,
-                    pageSize:20,
-                   
+                    pageSize:20
                 }
             }
         },
@@ -101,6 +113,32 @@
 			this.loadInfo()
 		},
         methods:{
+			refuseApplys(){
+				if(!this.priceValue){
+					error('请输入退款总金额')
+					return
+				}
+				let data={
+					Back_ID:this.backItem,
+					Amount:this.priceValue,
+					reason:this.reasons,
+					store_id: this.Stores_ID
+				}
+				systemReceiptRefundProd(data).then(res=>{
+					toast(res.msg);
+					this.loadInfo();
+				})
+			},
+			cancelRefuseApplys(){
+				this.reasons=''
+				this.priceValue=''
+				this.$refs.sureReason.close()
+			},
+			sureShou(item){
+				// systemReceiptRefundProd
+				this.backItem=item
+				this.$refs.sureReason.show()
+			},
 			sureOrder(item){
 				let data={
 					Back_ID:item,
@@ -142,6 +180,9 @@
             bingReasonInput(e){
                 this.reason = e.detail.value
             },
+			bingReasonInputs(e){
+			    this.reasons = e.detail.value
+			},
             changIndex(idx){
 				if(idx==this.tabidx) return
                 this.tabidx = idx
@@ -158,7 +199,7 @@
 					store_id:this.Stores_ID
 					}
 					if(this.tabidx!=5){
-						data.Order_Status=this.tabidx
+						data.Back_Status=this.tabidx
 					}
 				
                 await getBackOrder(data,{tip:'加载中'}).then(res=>{
@@ -405,6 +446,18 @@
         width: auto;
         padding: 10px;
     }
+	.inputs{
+		 font-size: 14px;
+		 border: 1px solid #E3E3E3;
+		 line-height: 1.4;
+		 padding: 10px;
+		 height: auto;
+		 width: auto;
+		 margin-bottom: 10px;
+	}
+	.reasons{
+		min-height: 20px;
+	}
     .control{
         margin-top: 15px;
         display: flex;
