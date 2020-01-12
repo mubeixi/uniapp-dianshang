@@ -85,11 +85,14 @@
 				prod_list:'',
 				isFahuo:true,
 				shipping:'',
-				shippingID:''
+				shippingID:'',
+				store_id:''
 			};
 		},
 		onLoad(options) {
 			this.Back_ID=options.Back_ID;
+			if(!options.store_id) return
+			this.store_id=options.store_id
 		},
 		onShow() {
 			this.getBackOrderDetail()
@@ -127,7 +130,12 @@
 				})
 			},
 			getBackOrderDetail(){
-				getBackOrderDetail({Back_ID:this.Back_ID}).then(res=>{
+				let data={Back_ID:this.Back_ID}
+				if(this.store_id){
+					data.store_id=this.store_id
+				}
+				
+				getBackOrderDetail(data).then(res=>{
 					this.pro=res.data;
 					this.prod_list=res.data.prod_list[0];
 				},err=>{

@@ -65,6 +65,10 @@
 				<image class="item-img" src="/static/mendian/9.png" mode=""></image>
 				<view>退货记录</view>
 			</view>
+			<view class="item" @click="openUrl('/pagesA/procurement/refundList')">
+				<image class="item-img" src="/static/mendian/9.png" mode=""></image>
+				<view>零售订单退款</view>
+			</view>
 		</view>
 	</view>
 </template>

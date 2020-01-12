@@ -803,6 +803,12 @@
 					"style": {
 						"navigationBarTitleText": "累计销售"
 					}
+			},
+			{
+					"path" : "procurement/refundList",
+					"style": {
+						"navigationBarTitleText": "零售订单退款列表"
+					}
 				}
             ]
 	}],
