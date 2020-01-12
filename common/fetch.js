@@ -368,8 +368,12 @@ export const getProductSharePic = (data, options) => fetch('get_product_tgqrcode
 // 推广小助手 添加文章
 export const addPromotionArticle = (data, options) => fetch('add_promotion_article', data, options);
 
-//增加产品的浏览次数
-// export const addProductViews = (data, options) => fetch('prod_views', data, options);
+//零售单拒单
+ export const systemRefuseApply = (data, options) => fetch('system_refuse_apply', data, options);
+ 
+ //零售单确认退款
+  export const systemConfirmApply = (data, options) => fetch('system_confirm_apply', data, options);
+ 
 
 //获取拼团的团队
 export const getPintuanTeam = (data, options) => fetch('get_pintuan_team', data, options);
