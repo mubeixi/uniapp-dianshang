@@ -373,7 +373,9 @@ export const addPromotionArticle = (data, options) => fetch('add_promotion_artic
  
  //零售单确认退款
   export const systemConfirmApply = (data, options) => fetch('system_confirm_apply', data, options);
- 
+ //零售单收货
+  export const systemReceiptRefundProd = (data, options) => fetch('system_receipt_refund_prod', data, options);
+
 
 //获取拼团的团队
 export const getPintuanTeam = (data, options) => fetch('get_pintuan_team', data, options);

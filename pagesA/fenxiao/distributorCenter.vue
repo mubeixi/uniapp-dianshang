@@ -28,7 +28,8 @@
 		<!--  申请逻辑 -->
 		<block v-if="type=='edit'">
 			<block >
-				 <view class="center" v-for="(itm,idx2) of select_lists" :key="idx2">
+				 <block v-if="select_lists.length>0">
+					 <view class="center" v-for="(itm,idx2) of select_lists" :key="idx2">
 							<view class="mbx">
 								{{itm.name}}
 							</view>
@@ -40,19 +41,21 @@
 							  </picker>
 							  <image class="disMyImg"  :src="'/static/client/person/right.png' | domain" ></image>
 							</view>
-				 </view>
-				 <view class="center" v-for="(m,n) of text_lists" :key="n">
-							<view class="mbx">
-								{{m.Name}}
-							</view>
-							<input class="inputa" type="text" v-model="m.Value" >
-				 </view>
+					 </view>
+				 </block>
+				 <block v-if="text_lists.length>0">
+					 <view class="center" v-for="(m,n) of text_lists" :key="n">
+									<view class="mbx">
+										{{m.Name}}
+									</view>
+									<input class="inputa" type="text" v-model="m.Value" >
+					 </view>
+				 </block>
 				<view class="center" v-if="isShowAddress">
 							<view class="mbx">
 								区域选择
 							</view>
 							<view class="haha">
-								<!-- 选择区域 -->
 								<picker mode="multiSelector"  @change="bindMultiPickerChange" @columnchange="bindMultiPickerColumnChange" :value="change_multiIndex" :range="change_objectMultiArray" range-key="name">
 										<view class="picker" style="text-align: center;">
 										  <view v-if="!address_info.Address_Province">选择省份</view>
@@ -72,7 +75,6 @@
 							<view class="haha">
 							  <picker mode="selector" @change="t_pickerChange" :range="t_arr" range-key="name" :value="t_index">
 								<view class="picker">
-								<!--  <text style="font-size: 28upx;">街道地址</text> -->
 								  <view v-if="!address_info.Address_Town" style="margin-left: 20upx;width: 300upx;">选择街道</view>
 								  <view v-else style="margin-left: 20upx;width: 300upx;">{{t_arr[t_index]['name']}}</view>
 								</view>
@@ -87,7 +89,8 @@
 			</view>
 
 			<view class="submits" @click="application">
-				{{textShen}}
+				 {{textShen}}
+<!--				立即申请成为分销商-->
 			</view>
 		</block>
 
@@ -213,7 +216,13 @@
 			};
 		},
 		computed:{
-			textShen:()=>{return '立即申请成为'+this.commi_rename.commi},
+			textShen(){
+
+				if(this.commi_rename){
+					return '立即申请成为'+this.commi_rename.commi
+				}
+				return ''
+			},
 			...mapGetters(['initData','userInfo','commi_rename'])
 		},
 		onLoad(options) {
@@ -988,6 +997,7 @@
 											}
 										}
 										// 如果用户之前提交过
+										if(!dislist.apply_order) return
 									if(!((JSON.stringify(dislist.apply_order) == "{}"))){
 										let myInfo=JSON.parse(dislist.apply_order.manual_form)
 
