@@ -183,12 +183,14 @@ export default {
 				let that=this;
 				confirmOrder(data).then(res=>{
 						this.data.splice(this.orderIndex,1);
+						this.$refs.sureReason.close();
 						that.getOrderNum();
 						uni.showToast({
 							title:res.msg,
 							icon:'none'
 						})
 				}).catch(e=>{
+					this.$refs.sureReason.close();
 					console.log(e);
 				})
 		},
