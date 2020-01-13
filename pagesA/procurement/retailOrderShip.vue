@@ -11,10 +11,11 @@
 						{{item.prod_name}}
 					</view>
 					<view class="bottomDiv">
-						<view class="skuCount" v-if="item.attr_info">
-							{{item.attr_info}}
+						<view class="skuCount" v-if="item.attr_name">
+							{{item.attr_name}}
 						</view>
-						<view class="skuCount" v-else style="background:#fff;width:150rpx;">
+						<view class="skuCount" v-else>
+							无规格
 						</view>
 						<view class="allPrice">
 							×{{item.prod_count}}
@@ -151,6 +152,15 @@
 				getOrderDetail({Order_ID: this.Order_ID,store_id:this.Stores_ID}).then(res=>{
 					res.data.Order_Shipping = res.data.Order_Shipping && JSON.stringify(res.data.Order_Shipping) ||''
 					this.orderInfo = res.data;
+
+						for(let it of  this.orderInfo.prod_list){
+							if(it.attr_info){
+								it.attr_info=JSON.parse(it.attr_info)
+								it.attr_name=it.attr_info.attr_name
+							}	
+							
+						}
+			
 				})
 			},
 			send: function(){
@@ -257,6 +267,8 @@
 	color: #666666;
 	text-align: center;
 	line-height: 50rpx;
+	padding-left: 4px;
+	padding-right: 4px;
 }
 .allPrice{
 	font-size: 30rpx;

@@ -133,7 +133,7 @@
 		computed: {
 		    ...mapGetters(['Stores_ID']),
 		},
-		onLoad: function(){
+		onShow() {
 			this.getStoreProdBackOrder();
 		},
 		methods: {
