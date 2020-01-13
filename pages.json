@@ -680,6 +680,12 @@
 				}
 			},
 			{
+				"path":"fenxiao/shareQrcode",
+				"style": {
+					"navigationBarTitleText": "分享海报"
+				}
+			},
+			{
 				"path": "editAddress/editAddress",
 				"style": {}
 			},

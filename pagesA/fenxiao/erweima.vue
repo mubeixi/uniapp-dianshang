@@ -42,7 +42,8 @@
 			</view>
 			<view style="width: 100%;height: 1rpx;background-color: #F3F3F3;"></view>
 			<view class="second">
-				<view class="left" @click="showQr(1,0)">
+<!--				@click="showQr(1,0)"-->
+				<view class="left"  @click="spreadQr(1,0)">
 					<image class="image" :src="'/static/client/fenxiao/tuiguang.png'|domain" ></image>
 					<view class="haha">推广二维码</view>
 				</view>
@@ -93,6 +94,11 @@
 		},
 		methods:{
 			...mapActions(['getUserInfo']),
+			spreadQr(type,again){
+				uni.navigateTo({
+					url:`/pagesA/fenxiao/shareQrcode?type=${type}&again=${again}`
+				})
+			},
 			showQr(type,again){
 				getDistributeWxQrcode({type,again,owner_id:this.userInfo.User_ID},{tip:'生成中'}).then(res=>{
 					uni.previewImage({

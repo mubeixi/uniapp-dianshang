@@ -284,6 +284,12 @@ export const jifenProdDetail = (data, options) => fetch('jifen_prod_detail', dat
 // 获取赠品详情
 export const judgeReceiveGift = (data, options) => fetch('judge_receive_gift', data, options);
 
+//获取海报模板
+export const getPosterList = (data,options) => fetch('getPosterList', data, options)
+
+//获取海报模板详情
+export const getPosterDetail = (data,options) => fetch('getPosterDetail', data, options)
+
 // 获取佣金列表 爵位
 export const getNobiRecordList = (data, options) => fetch('get_nobi_record_list', data, options);
 // 获取佣金列表分销
