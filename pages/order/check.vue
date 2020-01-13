@@ -738,6 +738,7 @@ export default {
 					this.couponlist = res.data.coupon_list;
 					this.orderLoading = true;
 					this.postData.shipping_id = res.data.Order_Shipping.shipping_id;
+					this.idD=this.postData.shipping_id
 					for(var i in this.orderInfo.shipping_company) {
 						if(i == this.postData.shipping_id) {
 							this.shipping_name = `${this.orderInfo.shipping_company[i]}`
