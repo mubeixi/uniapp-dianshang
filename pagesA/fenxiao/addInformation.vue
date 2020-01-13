@@ -71,14 +71,14 @@
 										<view class="picker">
 										  <view class="quyu">选择区域</view>
 										  <view v-if="!address_info.Address_Province">选择省份</view>
-										  <view v-else>{{objectMultiArray[0][multiIndex[0]]['name']}}</view>
+										  <view v-else style="overflow: hidden;">{{objectMultiArray[0][multiIndex[0]]['name']}}</view>
 										  <block v-if="current>0">
 										  	<view v-if="!address_info.Address_City">选择城市</view>
-										  	<view v-else>{{objectMultiArray[1][multiIndex[1]]['name']}}</view>
+										  	<view v-else  style="overflow: hidden;">{{objectMultiArray[1][multiIndex[1]]['name']}}</view>
 										  </block>
 										  <block v-if="current>1">
 											  <view v-if="!address_info.Address_Area">选择地区</view>
-											  <view v-else>{{objectMultiArray[2][multiIndex[2]]['name']}}</view>
+											  <view v-else  style="overflow: hidden;">{{objectMultiArray[2][multiIndex[2]]['name']}}</view>
 										  </block>
 										</view>
 										<view class="images">
@@ -100,7 +100,7 @@
 					  </picker>
 					</view>
 					<view class="images">
-						<image :src="'/static/client/fenxiao/chakan.png'|domain" ></image>
+						<image class="image" :src="'/static/client/fenxiao/chakan.png'|domain" ></image>
 					</view>
 			</view>
 		</block>
