@@ -371,6 +371,7 @@ export default {
 	  bindStores(storeInfo){
 		 this.selectStore=false
 		 console.log(storeInfo)
+		 this.postData.shipping_id='is_store'
 		 this.shipping_store_id = storeInfo.Stores_ID;
 	  	if(this.setStoreMode==='all'){
 	  		//居然是对象醉了
@@ -498,6 +499,7 @@ export default {
 					this.postData.user_name = this.user_name;
 					this.postData.user_mobile = this.user_mobile;
 				}
+				
 				if(this.postData.shipping_id=='is_store'){
 					let obj={}
 					for(let it in this.orderInfo.CartList){
