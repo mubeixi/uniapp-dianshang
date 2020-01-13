@@ -297,15 +297,28 @@
 					order_id:id
 				}
 				let that=this
-				storePifaOrderCompleted(data).then(res=>{
-					uni.showToast({
-						title:res.msg,
-						icon:'none'
-					})
-					setTimeout(function(){
-						that.getStorePurchaseApply()
-					},1000)
-				}).catch(e=>{console.log(e)})
+				uni.showModal({
+				    title: '确认收货',
+				    content: '是否确认收货',
+				    success: function (res) {
+				        if (res.confirm) {
+								storePifaOrderCompleted(data).then(res=>{
+									uni.showToast({
+										title:res.msg,
+										icon:'none'
+									})
+									setTimeout(function(){
+										that.getStorePurchaseApply()
+									},1000)
+								}).catch(e=>{console.log(e)})
+							
+				        } else if (res.cancel) {
+				
+				        }
+				    }
+				});
+				
+				
 			},
 			//撤回采购单
 			recallOrder(id){
