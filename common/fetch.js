@@ -501,6 +501,15 @@ export const checkOrderByCode = (data, options) => fetch('system_consumption_ord
 //获取批发的订单
 export const getStorePurchaseSales = (data, options) => fetch('get_store_pifa_assign_order', data, options);
 
+
+//驳回退货单（平台 | 接收门店 操作）
+export const storeProdBackOrderReject = (data, options) => fetch('store_prod_back_order_reject', data, options);
+//确认退货单（平台 | 接收门店 操作）
+export const storeProdBackOrderPass = (data, options) => fetch('store_prod_back_order_pass', data, options);
+//确认 退货单（平台 | 接收门店 操作）
+export const storeProdBackOrderArrived = (data, options) => fetch('store_prod_back_order_arrived', data, options);
+
+
 //进货单相关处理
 export const getStorePurchaseApply = (data, options) => fetch('get_store_pifa_apply_order', data, options);
 //取消采购单

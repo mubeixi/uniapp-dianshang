@@ -768,7 +768,7 @@
 			{
 				"path": "procurement/refundRecords",
 				"style": {
-					"navigationBarTitleText": "退货记录"
+					"navigationBarTitleText": "我的退货单"
 				}
 			},
 			{
@@ -810,6 +810,12 @@
 						"navigationBarTitleText": "零售订单退款列表"
 					}
 				}
+                ,{
+                    "path" : "procurement/storeRefundList",
+                    "style": {
+                    	"navigationBarTitleText": "门店退货单"
+                    }
+                }
             ]
 	}],
 	"preloadRule": {
