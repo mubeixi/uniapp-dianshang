@@ -3,6 +3,9 @@
 		{
 			"path": "pages/index/index",
 			"style": {
+				// #ifndef H5
+				//"navigationBarTitleText": "新零售",
+				// #endif
 				"enablePullDownRefresh": true,
 				"app-plus": {
 					"scrollIndicator": "none",
@@ -674,6 +677,12 @@
 				"path": "fenxiao/erweima",
 				"style": {
 					"navigationBarTitleText": "二维码"
+				}
+			},
+			{
+				"path":"fenxiao/shareQrcode",
+				"style": {
+					"navigationBarTitleText": "分享海报"
 				}
 			},
 			{
