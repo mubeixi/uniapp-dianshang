@@ -7,7 +7,7 @@
 				<view class="status" :class="[status == 32 ? 'active' : '']" @click="changeStatus(32)">待发货</view>
 				<view class="status" :class="[status == 33 ? 'active' : '']" @click="changeStatus(33)">已驳回</view>
 				<view class="status" :class="[status == 34 ? 'active' : '']" @click="changeStatus(34)">已发货</view>
-				<view class="status" :class="[status == 35 ? 'active' : '']" @click="changeStatus(35)">已收货</view>
+	<!-- 			<view class="status" :class="[status == 35 ? 'active' : '']" @click="changeStatus(35)">已收货</view> -->
 				<view class="status" :class="[status == 36 ? 'active' : '']" @click="changeStatus(36)">已收款</view>
 				<view class="status" :class="[status == 37 ? 'active' : '']" @click="changeStatus(37)">已取消</view>
 			</scroll-view>
@@ -47,9 +47,9 @@
 				</view>
 				<view class="totalinfo">总计：<text class="price-icon">￥</text><text class="price-num">{{item.price}}</text></view>
 				<view class="btns">
-					<view class="btn" v-if="item.status == 31 || item.status == 32" @click="cancelOrder(item.id)">取消</view>
-					<view class="btn back" @click="send(item.id)" v-if="item.status == 32">发货</view>
-					<view class="btn back" @click="reciveMoney(item.id)" v-if="item.status == 35">确认收款</view>
+					<view class="btn" v-if="item.status == 31" @click="bohui(item.id)">驳回</view>
+					<view class="btn back"  v-if="item.status == 31" @click="sureOrder(item.id)">同意</view>
+					<view class="btn back"  v-if="item.status == 34" @click="queren(item.id)">确认收货</view>
 				</view>
 			</view>
 			<view class="list-bottom">我是有底线的</view>
@@ -105,13 +105,26 @@
 		</view>
 		<!--  遮罩层	-->
 		<view class="mask" :hidden="isHidden" @click="hiddenMask"></view>
+		
+		<wzw-dialog ref="refuseApply">
+		    <div class="refuseApplyDialog">
+		        <textarea class="reason" @input="bingReasonInput" :value="reason" placeholder-style="color:#999" placeholder="请输入驳回原因" auto-height />
+		        <div class="control">
+		            <div @click="cancelRefuseApply" class="action-btn btn-cancel">取消</div>
+		            <div @click="refuseApply" class="btn-sub action-btn">确定</div>
+		        </div>
+		    </div>
+		</wzw-dialog>
+		
+		
 	</view>
 </template>
 
 <script>
 	import {pageMixin} from "../../common/mixin";
-	import {getStoreProdBackOrder,storeProdBackOrderCancel,storeProdBackOrderConfirm,getStoreDetail} from '../../common/fetch.js'
+	import {getStoreProdBackOrder,storeProdBackOrderCancel,storeProdBackOrderConfirm,getStoreDetail,storeProdBackOrderReject,storeProdBackOrderPass,storeProdBackOrderArrived} from '../../common/fetch.js'
 	import {mapGetters} from 'vuex'
+	import {error,toast} from "../../common";
 	import {getLocation} from "../../common/tool/location";
 	export default {
 		mixins:[pageMixin],
@@ -128,6 +141,8 @@
 				pageSize: 10,
 				back_list: [], // 退货单列表
 				storeInfo: [], // 门店信息
+				reason:'',
+				id:'',
 			}
 		},
 		computed: {
@@ -137,51 +152,86 @@
 			this.getStoreProdBackOrder();
 		},
 		methods: {
-			// 确认收款
-			reciveMoney(order_id){
-				storeProdBackOrderConfirm({
-					store_id: this.Stores_ID,
-					order_id: order_id
-				}).then(res=>{
-					uni.showToast({
-						title: res.msg
-					})
-					setTimeout(()=>{
-						this.load();
-					},1000)
-				})
-			},
-			// 发货
-			send(order_id){
-				uni.navigateTo({
-					url: '/pagesA/procurement/purchaseSend?order_id=' + order_id
-				})
-			},
-			// 取消退货单
-			cancelOrder(order_id){
+			queren(item){
+				let data={
+					order_id:item,
+					store_id: this.Stores_ID
+				}
+				let that=this
 				uni.showModal({
-					content: '确认退货？',
-					cancelText: '我再想想',
-					confirmText: '我意已决',
-					success: (res) => {
-						if(res.confirm) {
-							storeProdBackOrderCancel({
-								store_id: this.Stores_ID,
-								order_id: order_id
-							}).then((res)=>{
-								uni.showToast({
-									title: res.msg
-								});
-								setTimeout(()=>{
-									this.load();
+				    title: '提示',
+				    content: '确认收到货物了吗',
+				    success: function (res) {
+				        if (res.confirm) {
+				            storeProdBackOrderArrived(data).then(res=>{
+								toast(res.msg)
+								setTimeout(function(){
+									that.load();
 								},1000)
 							})
-						}else {
-							return;
-						}
-					}
-				})
-
+				        } else if (res.cancel) {
+				          
+				        }
+				    }
+				});
+				
+				
+			},
+			sureOrder(item){
+				let data={
+					order_id:item,
+					store_id: this.Stores_ID
+				}
+				let that=this
+				uni.showModal({
+				    title: '提示',
+				    content: '确认同意退货',
+				    success: function (res) {
+				        if (res.confirm) {
+				            storeProdBackOrderPass(data).then(res=>{
+								toast(res.msg)
+								setTimeout(function(){
+									that.load();
+								},1000)
+							})
+				        } else if (res.cancel) {
+				          
+				        }
+				    }
+				});
+				
+			},
+			bohui(item){
+				this.id=item
+				this.$refs.refuseApply.show()
+			},
+			refuseApply(){
+			    if(!this.reason){
+			        error('请填写理由')
+			        return;
+			    }
+				let that=this
+				let data={
+					reason:this.reason, 
+					store_id: this.Stores_ID,
+					order_id:this.id
+				}
+				storeProdBackOrderReject(data,{tip:'处理中'}).then(res=>{
+				    this.$refs.refuseApply.close()
+				
+				    this.reason = ''
+				    toast(res.msg)
+					setTimeout(function(){
+						that.load();
+					},1000)
+				},err=>{})
+			   
+			},
+			cancelRefuseApply(){
+			    this.$refs.refuseApply.close()
+			},
+			bingReasonInput(e){
+			    this.reason = e.detail.value
 			},
 			changeStatus(status){
 					if(status==this.status) return
@@ -200,7 +250,7 @@
 			// 获取退款单
 			getStoreProdBackOrder(){
 				getStoreProdBackOrder({
-					store_id: this.Stores_ID,
+					receive_id: this.Stores_ID,
 					status: this.status,
 					page: this.page,
 					pageSize: this.pageSize
@@ -682,5 +732,39 @@
 		/deep/ .uni-scroll-view::-webkit-scrollbar {
 				/* 隐藏滚动条，但依旧具备可以滚动的功能 */
 				display: none
+			}
+			.refuseApplyDialog{
+			    width: 560rpx;
+			    box-sizing: border-box;
+			    padding: 15px;
+			    font-size: 14px;
+			    .reason{
+			        font-size: 14px;
+			        min-height: 200px;
+			        border: 1px solid #E3E3E3;
+			        line-height: 1.4;
+			        height: auto;
+			        width: auto;
+			        padding: 10px;
+			    }
+			    .control{
+			        margin-top: 15px;
+			        display: flex;
+			        justify-content: center;
+			        .action-btn{
+			            width: 70px;
+			            height: 36px;
+			            line-height: 36px;
+			            font-size: 14px;
+			            text-align: center;
+			            color: #666;
+			            background: #e9e9e9;
+			            &.btn-sub{
+			                background: $wzw-primary-color;
+			                color: white;
+			                margin-left: 10px;
+			            }
+			        }
+			    }
 			}
 </style>

@@ -376,8 +376,14 @@ export const getProductSharePic = (data, options) => fetch('get_product_tgqrcode
 // 推广小助手 添加文章
 export const addPromotionArticle = (data, options) => fetch('add_promotion_article', data, options);
 
-//增加产品的浏览次数
-// export const addProductViews = (data, options) => fetch('prod_views', data, options);
+//零售单拒单
+ export const systemRefuseApply = (data, options) => fetch('system_refuse_apply', data, options);
+ 
+ //零售单确认退款
+  export const systemConfirmApply = (data, options) => fetch('system_confirm_apply', data, options);
+ //零售单收货
+  export const systemReceiptRefundProd = (data, options) => fetch('system_receipt_refund_prod', data, options);
+
 
 //获取拼团的团队
 export const getPintuanTeam = (data, options) => fetch('get_pintuan_team', data, options);
@@ -503,6 +509,15 @@ export const checkOrderByCode = (data, options) => fetch('system_consumption_ord
 //获取批发的订单
 export const getStorePurchaseSales = (data, options) => fetch('get_store_pifa_assign_order', data, options);
 
+
+//驳回退货单（平台 | 接收门店 操作）
+export const storeProdBackOrderReject = (data, options) => fetch('store_prod_back_order_reject', data, options);
+//确认退货单（平台 | 接收门店 操作）
+export const storeProdBackOrderPass = (data, options) => fetch('store_prod_back_order_pass', data, options);
+//确认 退货单（平台 | 接收门店 操作）
+export const storeProdBackOrderArrived = (data, options) => fetch('store_prod_back_order_arrived', data, options);
+
+
 //进货单相关处理
 export const getStorePurchaseApply = (data, options) => fetch('get_store_pifa_apply_order', data, options);
 //取消采购单
@@ -551,6 +566,8 @@ export const getStoreTypes = (data, options) => fetch('get_store_types', data, o
 // 门店发货
 export const systemSendOrder = (data, options) => fetch('system_send_order', data, options);
 
+// 获取分销功能模块
+export const getFuncModule = (data,options) => fetch('getFuncModule', data, options);
 
 //普通环境noop就行了
 //let add_template_code = ()=>{}

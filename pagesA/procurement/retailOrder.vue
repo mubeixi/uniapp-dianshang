@@ -389,8 +389,8 @@
 		    height: 80rpx;
 		    line-height: 80rpx;
 		    background: #F8F8F8;
-		    font-size: 28rpx;
-		    padding: 0 10px;
+		    font-size: 14px;
+		    padding: 0 10px;			
 		    .nav-item {
 		        flex: 1;
 		        box-sizing: border-box;

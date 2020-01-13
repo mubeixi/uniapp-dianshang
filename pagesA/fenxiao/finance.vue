@@ -32,7 +32,7 @@
 							<text class="price" v-else>￥{{item.money}}</text>
 				</view>
 				<view>
-					描述：<text v-if="index==2">{{item.Record_Type_desc}}</text>
+					描述：<text v-if="index==2||index==3">{{item.Record_Type_desc}}</text>
 						 <text v-else>{{index == 4 ? item.descr :item.desc}}</text>
 				</view>
 				<view>

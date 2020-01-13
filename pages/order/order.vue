@@ -82,6 +82,26 @@
 		<div class="defaults" v-if="data.length<=0">
 			<image :src="'/static/client/defaultImg.png'|domain" ></image>
 		</div>
+		
+		
+		
+		<wzw-dialog ref="sureReason" >
+		    <div class="refuseApplyDialog">
+				<div style="width: 110px;height: 110px;margin: 0 auto;">
+					<image :src="prod_img" style="width: 100%;height: 100%;"></image>
+				</div>
+				<div class="my-huo">
+					确认收到货了吗?
+				</div>
+				<div class="my-content">
+					为保障您的售后权益,请收到货确认无误后,再确认收货哦!
+				</div>
+		    </div>
+			<div class="control">
+			    <div  class="action-btn" @click="cancelReason" style="border-right: 1px solid #e4e4e4; box-sizing: border-box;">取消</div>
+			    <div  class="action-btn" style="color: #F43131;" @click="sureReason">确定</div>
+			</div>
+		</wzw-dialog>
 	</div>
 
 </template>
@@ -111,6 +131,9 @@ export default {
 			isQing:false,
 			Order_Type: 'shop' , //请求的订单类型
 			isLoading:false,
+			Order_ID:'',
+			prod_img:'',
+			orderIndex:''
         }
     },
 	onShow(){
@@ -153,6 +176,28 @@ export default {
 		}
 	},
 	methods:{
+		sureReason(){
+				let data={
+					Order_ID:this.Order_ID
+				}
+				let that=this;
+				confirmOrder(data).then(res=>{
+						this.data.splice(this.orderIndex,1);
+						this.$refs.sureReason.close();
+						that.getOrderNum();
+						uni.showToast({
+							title:res.msg,
+							icon:'none'
+						})
+				}).catch(e=>{
+					this.$refs.sureReason.close();
+					console.log(e);
+				})
+		},
+		cancelReason(){
+			this.$refs.sureReason.close();
+			
+		},
 		openExtendReceiptFn(order){
 			console.log(order)
 			let extend = order.extend?false:true;
@@ -172,25 +217,29 @@ export default {
 		},
 		//确认收货
 		confirmOrder(item,index){
+			this.orderIndex=index
+			this.prod_img=item.prod_list[0].prod_img
+			this.Order_ID=item.Order_ID
+			this.$refs.sureReason.show();
 			// 先询问
-			confirm({title: '提示',content:'确认收货？'}).then( ()=>{
-				let data={
-					Order_ID:item.Order_ID
-				}
-				let that=this;
-				confirmOrder(data).then(res=>{
-						this.data.splice(index,1);
-						that.getOrderNum();
-						uni.showToast({
-							title:res.msg,
-							icon:'none'
-						})
-				}).catch(e=>{
-					console.log(e);
-				})
-			}).catch(e=>{
-				console.log(e)
-			})
+			// confirm({title: '提示',content:'确认收货？'}).then( ()=>{
+			// 	let data={
+			// 		Order_ID:item.Order_ID
+			// 	}
+			// 	let that=this;
+			// 	confirmOrder(data).then(res=>{
+			// 			this.data.splice(index,1);
+			// 			that.getOrderNum();
+			// 			uni.showToast({
+			// 				title:res.msg,
+			// 				icon:'none'
+			// 			})
+			// 	}).catch(e=>{
+			// 		console.log(e);
+			// 	})
+			// }).catch(e=>{
+			// 	console.log(e)
+			// })
 		},
 		goLogistics(item){
 			// 处理物流名称
@@ -569,4 +618,63 @@ export default {
 		height: 480rpx;
 		margin-top: 100rpx;
 	}
+	.refuseApplyDialog{
+	    width: 560rpx;
+	    box-sizing: border-box;
+	    padding: 15px;
+	    font-size: 14px;
+	    .reason{
+	        font-size: 14px;
+	        min-height: 200px;
+	        border: 1px solid #E3E3E3;
+	        line-height: 1.4;
+	        height: auto;
+	        width: auto;
+	        padding: 10px;
+	    }
+		.inputs{
+			 font-size: 14px;
+			 border: 1px solid #E3E3E3;
+			 line-height: 1.4;
+			 padding: 10px;
+			 height: auto;
+			 width: auto;
+			 margin-bottom: 10px;
+		}
+		.reasons{
+			min-height: 20px;
+		}
+	   
+	}
+	.control{
+		width: 100%;
+	    margin-top: 15px;
+	    display: flex;
+		border-top: 1px solid #e4e4e4;
+		.action-btn{
+			flex: 1;
+			font-size: 16px;
+			height: 40px;
+			color: #999;
+			line-height: 40px;
+			text-align: center;
+		}
+	   
+	}
+	.my-huo{
+		margin-top: 20px;
+		margin-bottom: 10px;
+		font-size: 16px;
+		color: #333333;
+		font-weight: 800;
+		width: 100%;
+		text-align: center;
+	}
+	.my-content{
+		font-size: 14px;
+		width: 100%;
+		text-align: center;
+		color: #a1a1a1;
+	}
+	.haihong /deep/ .popup-content{padding: 0px;}
 </style>

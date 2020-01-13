@@ -240,7 +240,7 @@ export default {
     components: {
         StoreListComponents,
         popupLayer
-    },
+	},
     data(){
         return {
         	selfObj:null,
@@ -328,13 +328,11 @@ export default {
 		// #ifdef H5
 		this.selfObj = this
 		// #endif
-
+		this.tabIdx = this.initData.order_submit_first;
 		let userInfo = this.getUserInfo(true);
+		console.log(this.initData.order_submit_first)
 	},
 	onLoad(options) {
-
-
-
 		console.log('options is',options)
 		this.postData.cart_key = options.cart_key;
 		if(options.cart_buy){
@@ -373,6 +371,7 @@ export default {
 	  bindStores(storeInfo){
 		 this.selectStore=false
 		 console.log(storeInfo)
+		 this.postData.shipping_id='is_store'
 		 this.shipping_store_id = storeInfo.Stores_ID;
 	  	if(this.setStoreMode==='all'){
 	  		//居然是对象醉了
@@ -500,6 +499,7 @@ export default {
 					this.postData.user_name = this.user_name;
 					this.postData.user_mobile = this.user_mobile;
 				}
+				
 				if(this.postData.shipping_id=='is_store'){
 					let obj={}
 					for(let it in this.orderInfo.CartList){
@@ -740,6 +740,7 @@ export default {
 					this.couponlist = res.data.coupon_list;
 					this.orderLoading = true;
 					this.postData.shipping_id = res.data.Order_Shipping.shipping_id;
+					this.idD=this.postData.shipping_id
 					for(var i in this.orderInfo.shipping_company) {
 						if(i == this.postData.shipping_id) {
 							this.shipping_name = `${this.orderInfo.shipping_company[i]}`

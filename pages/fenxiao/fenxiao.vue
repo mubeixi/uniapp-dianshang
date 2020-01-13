@@ -65,64 +65,12 @@
 		<view class="last">
 			<image :src="'/static/client/fenxiao/background.png'|domain" class="back"></image>
 			<view class="zhezhao">
-				<view class="td" @click="goErweima">
-					<image class="imgs" :src="'/static/client/fenxiao/erweima.png'|domain" ></image>
+				<view class="td" v-for="(item,index) in funcModules" @click="goOther(item)" :key="index">
+					<image class="imgs" :src="item.img" ></image>
 					<view class="views">
-						二维码
+						{{item.name}}
 					</view>
 				</view>
-				<view class="td"  @click="goMyTeam">
-					<image  class="imgs" :src="'/static/client/fenxiao/wode.png'|domain" ></image>
-					<view class="views">
-						我的团队
-					</view>
-				</view>
-				<view class="td" @click="goMyVip"  style="border-right: 0px;" >
-					<image  class="imgs" src="/static/myhuiyuan.png" ></image>
-					<view class="views">
-						我的会员
-					</view>
-				</view>
-				<view class="td"  @click="goFinance" >
-					<image  class="imgs" :src="'/static/client/fenxiao/caiwu.png'|domain" ></image>
-					<view class="views">
-						佣金记录
-					</view>
-				</view>
-				<view class="td" @click="goPromotion">
-					<image  class="imgs" :src="'/static/client/fenxiao/juewei.png'|domain" ></image>
-					<view class="views">
-						爵位晋升
-					</view>
-				</view>
-				<view class="td"  @click="goLeaderboard" style="border-right: 0px;">
-					<image  class="imgs" :src="'/static/client/fenxiao/caifu.png'|domain" ></image>
-					<view class="views">
-						财富排行榜
-					</view>
-				</view>
-				<view class="td" @click="goRegion"   v-if="data.dis_config.Dis_Agent_Type==1">
-					<image  class="imgs" :src="'/static/client/fenxiao/quyu.png'|domain" ></image>
-					<view class="views">
-						区域代理
-					</view>
-				</view>
-				<view class="td" @click="goGudong"  v-if="data.dis_config.Sha_Agent_Type==1">
-					<image  class="imgs" src="/static/gudong.jpg" ></image>
-					<view class="views">
-						股东
-					</view>
-				</view>
-
-
-				<!-- #ifndef MP ||APP-PLUS -->
-				<!-- <view class="td"  @click="goAssist" style="border-bottom: 0px;">
-					<image  class="imgs" :src="'/static/client/fenxiao/tuiguang.png'|domain" ></image>
-					<view class="views">
-						推广小助手
-					</view>
-				</view> -->
-				<!-- #endif -->
 			</view>
 		</view>
 		<view style="height: 50rpx;"></view>
@@ -132,7 +80,7 @@
 
 <script>
 	import {pageMixin} from "../../common/mixin";
-	import {getDisInit,get_user_info} from '../../common/fetch.js'
+	import {getDisInit,get_user_info,getFuncModule} from '../../common/fetch.js'
 	import {mapActions,mapState,mapGetters} from 'vuex';
 	// import TabbarComponents from "../../components/TabbarComponents";
 	export default {
@@ -150,6 +98,7 @@
 					balance:''
 				},//
 				pro:[],
+				funcModules: [], // 功能模块
 			};
 		},
 		computed:{
@@ -169,13 +118,6 @@
 				if(!this.$fun.checkIsDistribute(1,1))return;
 				uni.navigateTo({
 					url:'/pagesA/fenxiao/profitSum'
-				})
-			},
-			goMyVip(){
-				if(!this.$fun.checkIsLogin(1,1))return;
-				if(!this.$fun.checkIsDistribute(1,1))return;
-				uni.navigateTo({
-					url:'/pagesA/fenxiao/myVip'
 				})
 			},
 			goDistributor(){
@@ -231,66 +173,19 @@
 					url:'/pagesA/fenxiao/withdrawal?form=1'
 				})
 			},
-			//推广小助手
-			goAssist(){
+			// 跳转其他页面
+			goOther(item){
 				if(!this.$fun.checkIsLogin(1,1))return;
 				if(!this.$fun.checkIsDistribute(1,1))return;
 				uni.navigateTo({
-					url:'/pagesA/fenxiao/promotionAssist'
+					url:item.url
 				})
 			},
-			//财富排行榜
-			goLeaderboard(){
-				if(!this.$fun.checkIsLogin(1,1))return;
-				if(!this.$fun.checkIsDistribute(1,1))return;
-				uni.navigateTo({
-					url:'/pagesA/fenxiao/leaderboard'
-				})
-			},
-			//爵位晋升
-			goPromotion(){
-				if(!this.$fun.checkIsLogin(1,1))return;
-				if(!this.$fun.checkIsDistribute(1,1))return;
-				uni.navigateTo({
-					url:'/pagesA/fenxiao/promotion'
-				})
-			},
-			//股东
-			goGudong(){
-				if(!this.$fun.checkIsLogin(1,1))return;
-				if(!this.$fun.checkIsDistribute(1,1))return;
-				uni.navigateTo({
-					url:'/pagesA/fenxiao/gudong'
-				})
-			},
-			//区域代理
-			goFinance(){
-				if(!this.$fun.checkIsLogin(1,1))return;
-				if(!this.$fun.checkIsDistribute(1,1))return;
-				uni.navigateTo({
-					url:'/pagesA/fenxiao/finance?index=0'
-				})
-			},
-			//财务明细
-			goRegion(){
-				uni.navigateTo({
-					url:'/pagesA/fenxiao/region'
-				})
-			},
-			//我的团队
-			goMyTeam(){
-				if(!this.$fun.checkIsLogin(1,1))return;
-				if(!this.$fun.checkIsDistribute(1,1))return;
-				uni.navigateTo({
-					url:'/pagesA/fenxiao/myTeam'
-				})
-			},
-			//二维码
-			goErweima(){
-				if(!this.$fun.checkIsLogin(1,1))return;
-				if(!this.$fun.checkIsDistribute(1,1))return;
-				uni.navigateTo({
-					url:'/pagesA/fenxiao/erweima'
+			// 获取功能模块
+			getFuncModule(){
+				getFuncModule({type:1}).then(res=>{
+					console.log(res)
+					this.funcModules = res.data;
 				})
 			}
 		},
@@ -304,6 +199,8 @@
 					console.log(e)
 				})
 			}
+			// 获取首页功能
+			this.getFuncModule(); 
 			//获取分销首页
 			this.getDisInit();
 			//this.userInfo = await this.getUserInfo();
