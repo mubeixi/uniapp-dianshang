@@ -59,8 +59,8 @@
                 </view>
             </view>
         </view>
-        <view class="addImg" style="margin-top:70px;">
-            其它相关图片
+        <view class="addImg">
+            营业执照等相关资质
             <view class="imgs">
                 <view class="shangchuans" v-for="(item,index) in imglist" :key="index"  >
                     <image class="image" :src="item.path || item"  @click="yulan(index,1)"></image>
@@ -81,10 +81,10 @@
         <popup-layer ref="storetypes"  :direction="'top'" >
             <view class="search-title">请选择门店类型</view>
             <view class="search-content">
-                <view class="search-item" v-for="(store,index) of storeTypes" @click="changeType(index)">
+                <view class="search-item" v-for="(store,index) of storeTypes" @click="changeType(index)" :key="index">
                     <view>{{store.title}}</view>
                     <view v-if="store.id == current">
-                        <image class="image" src="/static/procurement/selected.png" mode=""></image>
+                        <image class="image" src="/static/procurement/selected.png" ></image>
                     </view>
                     <view class="box" v-else></view>
                 </view>
@@ -209,8 +209,8 @@
                     this.imgs[0] = this.userStoreMsg.store_image;
                     this.arr[0] = this.userStoreMsg.store_image;
                     this.current = this.userStoreMsg.type_id;
-                    this.arrlist = JSON.parse(this.userStoreMsg.img_info) || [];
-                    this.imglist = JSON.parse(this.userStoreMsg.img_info) || [];
+                    this.arrlist =this.userStoreMsg.img_info?this.userStoreMsg.img_info:[];
+                    this.imglist =this.userStoreMsg.img_info?this.userStoreMsg.img_info:[];
                     if(res.data.status == 3) {
                         //    被驳回了
                         this.is_submitted = false;
@@ -403,7 +403,8 @@
                             that.isSubmit = true;
                         });
                     }else if(arg == 1){
-                        that.imglist = [...temp_file_list]
+                        // that.imglist = [...temp_file_list]
+							that.imglist = that.imglist.concat(temp_file_list);
                         let arrs = temp_file_list.map(item=>item.path)
                         uploadImages(data,arrs).then(urls=>{
                             console.log(that.arrlist)
@@ -473,7 +474,7 @@
     }
     .addImg {
         font-size: 30rpx;
-        height: 100rpx;
+        //height: 100rpx;
         line-height: 100rpx;
         color: #333;
     }
@@ -499,7 +500,7 @@
             position: absolute;
             top: -19rpx;
             right: -19rpx;
-            z-index: 9999;
+            z-index: 9;
         }
     }
     .shangchuan{
@@ -530,7 +531,6 @@
         /*position: fixed;*/
         /*bottom: 0;*/
         /*left: 0;*/
-        margin-top: 240rpx;
         /*width: 750rpx;*/
         height: 85rpx;
         line-height: 85rpx;

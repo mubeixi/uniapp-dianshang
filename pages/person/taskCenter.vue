@@ -63,7 +63,11 @@
 						{{it.desc}}
 					</view>
 				</view>
-				<view class="submit" @click="goJump(it)"  v-if="it.done==0">
+				
+				<view class="submit" @click="yulan(it)"  v-if="it.done==0&&ind=='focus'">
+					去完成
+				</view>
+				<view class="submit" @click="goJump(it)"  v-else-if="it.done==0">
 					去完成
 				</view>
 				<view class="submit submitMbx"   v-if="it.done==1">
@@ -76,6 +80,7 @@
 
 <script>
 	import {goBack}  from '../../common/tool.js'
+	import {mapGetters,mapActions, mapState} from 'vuex';
 	import circleTitle from '../../components/circleTitle/circleTitle.vue'
 	import {pageMixin} from "../../common/mixin";
 	import {getTaskCenter} from '../../common/fetch.js'
@@ -89,10 +94,27 @@
 		components:{
 			circleTitle
 		},
+		computed:{
+			...mapGetters(['initData']),
+		},
 		onShow() {
 			this.getTaskCenter();
 		},
 		methods:{
+			yulan(index){
+				if(this.initData.SubscribeQrcode){
+					let arr=[]
+					arr.push(this.initData.SubscribeQrcode)
+					uni.previewImage({
+						urls:arr,
+						indicator:'default',
+						current:1
+					});
+				}else{
+					this.goJump(item)
+				}
+				
+			},
 			getTaskCenter(){
 				getTaskCenter().then(res=>{
 					this.pro=res.data;
