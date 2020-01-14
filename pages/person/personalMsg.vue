@@ -99,7 +99,7 @@
 				if(num==2){
 					if(this.userInfo.User_Birthday!=0){
 						uni.showToast({
-							title:'生日不允许修改',
+							title:'生日不允许再次修改',
 							icon:'none'
 						})
 						return
