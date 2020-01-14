@@ -242,7 +242,7 @@ export const pageMixin = {
 			this.refreshInit = true
 			// #endif
 
-			console.log('options is',options)
+			//console.log('options is',options)
 
 			/*商户id机制*/
 			// #ifdef H5|| MP-WEIXIN || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO

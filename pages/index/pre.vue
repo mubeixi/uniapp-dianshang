@@ -16,7 +16,7 @@
 				<title-component v-if="item.indexOf('title') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
 				<text-component v-if="item.indexOf('text') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
 				<search-component v-if="item.indexOf('search') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
-				<notice-component v-if="item.indexOf('notice') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
+				<notice-component v-if="item.indexOf('notice') !== -1" :confData="templateData[tagIndex][index]" :index="index" ref="notice" />
 				<coupon-component v-if="item.indexOf('coupon') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
 				<goods-component v-if="item.indexOf('goods') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
 				<cube-component v-if="item.indexOf('cube') !== -1" :confData="templateData[tagIndex][index]" :index="index" />
@@ -69,8 +69,21 @@
 			TitleComponent,TextComponent,SearchComponent,NoticeComponent,CouponComponent,
 			GoodsComponent,CubeComponent,TabComponent,FlashComponent,GroupComponent
 		},
-
+		onShow(){
+			if(this.$refs.notice){
+				this.$refs.notice.map(item=>{
+					item.restartAn()
+				})
+			}
+		},
 		onHide(){
+
+			//暂停notice组件的定时器任务
+			if(this.$refs.notice){
+				this.$refs.notice.map(item=>{
+					item.pauseAn()
+				})
+			}
 
 			//暂停播放
 			if(this.$refs.video){

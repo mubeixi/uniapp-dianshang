@@ -121,13 +121,13 @@ export const getInitData = async ({commit, state},refresh) => {
 
 
   await getSystemConf().then(res => {
-    console.log('刷新initData')
+    //console.log('刷新initData')
     commit('SET_INIT_DATA', res.data);
     data = res.data
-	console.log('获取的什么东西???')
+	//console.log('获取的什么东西???')
   })
 
-  console.log('获取initData',data)
+  //console.log('获取initData',data)
   return data;
 
 };

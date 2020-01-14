@@ -1,5 +1,5 @@
 <template>
-    <div class="bgwhite wrap">
+    <div class="bgwhite wrap" v-if="ifshow">
         <view v-if="ifshow" @tap="ableClose" @touchmove.stop.prevent class="popup-layer">
 
         </view>
