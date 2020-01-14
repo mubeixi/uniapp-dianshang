@@ -329,7 +329,15 @@
             async loadInfo(){
 
                 if(this.paginate.finish)return;
-                await getStorePurchaseSales({...this.paginate,order_status:this.order_status,store_id:this.Stores_ID},{tip:'加载中'}).then(res=>{
+				let data={
+					...this.paginate,
+					store_id:this.Stores_ID,
+				}
+				if(this.order_status){
+					data.order_status=this.order_status
+				}
+				
+                await getStorePurchaseSales(data,{tip:'加载中'}).then(res=>{
 
                     this.paginate.totalCount = res.totalCount
                     let rt = res.data.map(item=>{
