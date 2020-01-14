@@ -209,8 +209,8 @@
                     this.imgs[0] = this.userStoreMsg.store_image;
                     this.arr[0] = this.userStoreMsg.store_image;
                     this.current = this.userStoreMsg.type_id;
-                    this.arrlist = JSON.parse(this.userStoreMsg.img_info) || [];
-                    this.imglist = JSON.parse(this.userStoreMsg.img_info) || [];
+                    this.arrlist =this.userStoreMsg.img_info?this.userStoreMsg.img_info:[];
+                    this.imglist =this.userStoreMsg.img_info?this.userStoreMsg.img_info:[];
                     if(res.data.status == 3) {
                         //    被驳回了
                         this.is_submitted = false;
