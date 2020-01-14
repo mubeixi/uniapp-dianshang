@@ -59,7 +59,7 @@
                 </view>
             </view>
         </view>
-        <view class="addImg" style="margin-top:70px;">
+        <view class="addImg">
             营业执照等相关资质
             <view class="imgs">
                 <view class="shangchuans" v-for="(item,index) in imglist" :key="index"  >
@@ -474,7 +474,7 @@
     }
     .addImg {
         font-size: 30rpx;
-        height: 100rpx;
+        //height: 100rpx;
         line-height: 100rpx;
         color: #333;
     }
@@ -500,7 +500,7 @@
             position: absolute;
             top: -19rpx;
             right: -19rpx;
-            z-index: 9999;
+            z-index: 9;
         }
     }
     .shangchuan{
@@ -531,7 +531,6 @@
         /*position: fixed;*/
         /*bottom: 0;*/
         /*left: 0;*/
-        margin-top: 240rpx;
         /*width: 750rpx;*/
         height: 85rpx;
         line-height: 85rpx;
