@@ -9,7 +9,7 @@
 				<!-- <view class="jiaobiao" v-if="orderNum.waitpay>0">{{orderNum.waitpay}}</view> -->
 			</view>
 		    <view class="nav-item" :class="index==2?'active':''" @click="changIndex(2)">
-				待消费|待发货
+				待发货
 				<!-- <view class="jiaobiao" v-if="orderNum.waitsend>0">{{orderNum.waitsend}}</view> -->
 			</view>
 		   <!-- <view class="nav-item" :class="index==3?'active':''" @click="changIndex(3)">
