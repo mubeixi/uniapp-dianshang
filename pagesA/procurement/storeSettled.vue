@@ -60,7 +60,7 @@
             </view>
         </view>
         <view class="addImg" style="margin-top:70px;">
-            其它相关图片
+            营业执照等相关资质
             <view class="imgs">
                 <view class="shangchuans" v-for="(item,index) in imglist" :key="index"  >
                     <image class="image" :src="item.path || item"  @click="yulan(index,1)"></image>
