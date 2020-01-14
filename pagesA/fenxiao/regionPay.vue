@@ -105,7 +105,7 @@
 	import popupLayer from '../../components/popup-layer/popup-layer.vue'
 	import {mapGetters,mapActions} from 'vuex';
 	import {unipayFunc} from '../../common/pay.js'
-    import {fun} from "../../common";
+	import {confirm, error, fun} from "../../common";
 	import  {toast} from "../../common";
 	export default {
 		mixins:[pageMixin],
@@ -125,7 +125,7 @@
 
 		},
 		computed:{
-			...mapGetters(['initData'])
+			...mapGetters(['initData', 'userInfo'])
 		},
 		onLoad(options) {
 			this.Order_ID=options.id
@@ -170,11 +170,21 @@
 			//选择支付方式
 			chooseType(index){
 				this.pay_type=index;
+
 				if(index=='remainder_pay'){
+
+					if(this.userInfo.hasOwnProperty('User_PayPassword') && !this.userInfo.User_PayPassword){
+						confirm({title: '提示', content: '该操作需要设置支付密码,是否前往设置?', confirmText: '去设置', cancelText: '暂不设置'}).then(res=>{
+							uni.navigateTo({
+								url:'/pages/person/updateUserPsw?type=1&is_back=1'
+							})
+						}).catch(err=>{error('请选择其他支付方式')})
+						return;
+					}
 					this.$refs.popupLayer.close();
 					this.password_input=true;//弹出密码输入框
-					return;
 				}
+
 
 				this.payMoney();
 
