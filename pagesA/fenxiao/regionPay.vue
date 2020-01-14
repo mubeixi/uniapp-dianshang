@@ -224,7 +224,7 @@
 
 				toast('支付成功');
 				uni.switchTab({
-					url:'/pagesA/fenxiao/fenxiao'
+					url:'/pages/fenxiao/fenxiao'
 				})
 			},
 			payNow(){
@@ -338,7 +338,7 @@
 	}
 }
 .three{
-		height: 88rpx;
+		//height: 88rpx;
 		line-height: 88rpx;
 		width: 710rpx;
 		margin: 0 auto;
@@ -348,8 +348,10 @@
 		.haha{
 			font-size: 30rpx;
 			color: #333333;
-			margin-right: 42rpx;
-			width: 64px;
+			margin-right: 20rpx;
+			width: 100px;
+			box-sizing: border-box;
+			padding-left: 10px;
 		}
 		.inputs{
 			height: 88rpx;

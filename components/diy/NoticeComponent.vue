@@ -47,7 +47,16 @@
         },
         watch: {},
         components: {},
+        beforeDestroy(){
+          this.pauseAn()
+        },
         methods: {
+            restartAn(){
+                this.$nextTick(function () {
+                    this.startAn();
+                })
+
+            },
             startAn: function () { // 开始
                 let _self = this;
                 const res = uni.getSystemInfoSync();
@@ -57,17 +66,17 @@
 
                 const query = uni.createSelectorQuery().in(this);
                 query.select('#content').boundingClientRect(data => {
-                    console.log(data)
+                    //console.log(data)
                     width = data.width
                 }).exec();
 
-                console.log(width)
+                //console.log(width)
 
                 _self.an = setInterval(()=>{
                     if (_self.marginLeft*(-1) > width) {
                         _self.marginLeft = _self.fullWidth;
                     }
-					console.log(_self.marginLeft)
+					//console.log(_self.marginLeft)
                     _self.marginLeft -= 2;
                 }, _self.time);
             },
@@ -76,7 +85,7 @@
                 this.marginLeft = this.fullWidth;
 				console.log('stopstop')
                 clearInterval(this.an);
-                this.$emit('on-stop-An');
+                //this.$emit('on-stop-An');
             },
             pauseAn: function () { // 暂停动画
                 clearInterval(this.an);

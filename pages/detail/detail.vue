@@ -810,7 +810,7 @@ export default {
 			checkProdCollected({prod_id: this.Products_ID}).then(res => {
 				if(res.errorCode == 0) {
 					this.isCollected = res.data.is_favourite == 1
-					console.log('收藏了',this.isCollected);
+					//console.log('收藏了',this.isCollected);
 					// #ifdef APP-PLUS
 					uni.$emit('goods_bottom_setval', {isCollected:this.isCollected});
 					// #endif

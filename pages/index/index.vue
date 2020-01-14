@@ -6,7 +6,7 @@
 		<!-- #endif -->
 		<view class="home-wrap" :style="{background:system.bgcolor}">
 			<section
-				:ref="item"
+
 				v-for="(item, index) in templateList[tagIndex]"
 				:key="index"
 				class="section"
@@ -50,6 +50,7 @@
 					:confData="templateData[tagIndex][index]"
 					:index="index" />
 				<notice-component
+					ref="notice"
 					v-if="item.indexOf('notice') !== -1"
 					:confData="templateData[tagIndex][index]"
 					:index="index" />
@@ -236,9 +237,9 @@
 			this.initFunc()
 
 			let initData = await this.getInitData(1)
-			console.log(initData.ShopName)
+
 			if(initData.hasOwnProperty('ShopName') && initData.ShopName){
-				console.log('?????????')
+
                 uni.setNavigationBarTitle({
                     title:initData.ShopName
                 })
@@ -250,7 +251,11 @@
 
 		},
 		onShow(){
-
+			if(this.$refs.notice){
+				this.$refs.notice.map(item=>{
+					item.restartAn()
+				})
+			}
 		},
 		async onPullDownRefresh(){
 			uni.stopPullDownRefresh()
@@ -262,6 +267,13 @@
 			// 		item.pauseFn()
 			// 	})
 			// }
+
+			//暂停notice组件的定时器任务
+			if(this.$refs.notice){
+				this.$refs.notice.map(item=>{
+					item.pauseAn()
+				})
+			}
 			//暂停播放
 			if(this.$refs.video){
 				this.$refs.video.map(item=>{

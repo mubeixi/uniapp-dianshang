@@ -14,5 +14,5 @@ shell.cd('../shop-diy-dist');
 
 // 不能在一股脑全部添加了
 shell.exec('git add htdocs/fre/');
-shell.exec('git commit -m 修复提现页面商城logo以及其他地方使用商城logo的显示问题');
+shell.exec('git commit -m 合并双涛修改');
 shell.exec('git push origin master');
