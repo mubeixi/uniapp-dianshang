@@ -3,7 +3,7 @@
         <view class="flex content" :style="{background:notice.style.bgColor}">
             <view class="funicon icon-gonggao icon" :style="{color:notice.style.iconColor}"></view>
             <div class="flex1 title" :style="{color:notice.style.color}">
-                <div class="content-box" id="content" :style="{marginLeft: '-' + marginLeft + 'px'}">{{notice.value.content}}</div>
+                <div class="content-box" id="content" :style="{marginLeft: marginLeft + 'px'}">如意洲商城开业啦如意洲商城开业啦如意洲商城开业啦如意洲商城开业啦如意洲商城开业啦</div>
             </div>
         </view>
     </view>
@@ -28,6 +28,7 @@
                 time: 100,
                 marginLeft: 0,
                 an: null,
+				fullWidth:0,
                 notice: {},
             };
         },
@@ -62,16 +63,18 @@
 
                 console.log(width)
 
-                _self.an = setInterval(function () {
-                    if (_self.marginLeft > width) {
-                        _self.marginLeft = 0;
+                _self.an = setInterval(()=>{
+                    if (_self.marginLeft*(-1) > width) {
+                        _self.marginLeft = _self.fullWidth;
                     }
-                    _self.marginLeft += 2;
+					console.log(_self.marginLeft)
+                    _self.marginLeft -= 2;
                 }, _self.time);
             },
             stopAn: function () { // 停止
                 this.prevLeft = this.marginLeft;
-                this.marginLeft = 0;
+                this.marginLeft = this.fullWidth;
+				console.log('stopstop')
                 clearInterval(this.an);
                 this.$emit('on-stop-An');
             },
@@ -98,14 +101,22 @@
             // this.$nextTick().then(res => {
             //   this.startMove()
             // })
-
+			
+			
 
         },
         created() {
 
+			let _self = this;
+			const res = uni.getSystemInfoSync();
+			// this.fullWidth = res.screenWidth;
+			this.fullWidth = res.screenWidth;//document.getElementById('canvas').offsetWidth;
+			this.marginLeft = this.fullWidth;
+			
             this.notice = this.confData;
 
             this.$nextTick(function () {
+				
                 this.startAn();
             })
 

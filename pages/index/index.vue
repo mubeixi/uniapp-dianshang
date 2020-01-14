@@ -235,8 +235,10 @@
 		async created(){
 			this.initFunc()
 
-			let initData = await this.getInitData()
+			let initData = await this.getInitData(1)
+			console.log(initData.ShopName)
 			if(initData.hasOwnProperty('ShopName') && initData.ShopName){
+				console.log('?????????')
                 uni.setNavigationBarTitle({
                     title:initData.ShopName
                 })

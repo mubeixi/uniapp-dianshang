@@ -1,9 +1,9 @@
 <template>
     <div class="bgwhite wrap">
-        <view v-show="ifshow" @tap="ableClose" @touchmove.stop.prevent class="popup-layer">
+        <view v-if="ifshow" @tap="ableClose" @touchmove.stop.prevent class="popup-layer">
 
         </view>
-        <view ref="popRef" v-show="ifshow" class="popup-content" @tap.stop="stopEvent" :style="_location">
+        <view ref="popRef" @touchmove.stop.prevent v-if="ifshow" class="popup-content"  @tap.stop="stopEvent" :style="_location">
             <div class="text-center component-title">
                 选择门店
             </div>
@@ -65,8 +65,8 @@
                         class="funicon icon-dingwei font14"></span>离我最近
                 </div>
             </div>
-            <div class="lists">
-                <scroll-view scroll-y="true" class="scroll-Y">
+            <div class="lists" @touchmove.stop>
+                <scroll-view scroll-y="true" class="scroll-Y" >
                     <block v-if="stores.length>0">
                         <radio-group @change="radioChange">
                             <label class="item padding10" v-for="(store,idx) in stores" :key="idx">
@@ -94,12 +94,14 @@
                             暂时没有合适的店铺
                         </div>
                     </block>
-
+					<div style="height: 46px;"></div>
+					
 
                     <div>
 
                     </div>
                 </scroll-view>
+				
             </div>
             <button size="large" class="subbtn" @click="subFn">确定</button>
             <div style="height: 46px;background: white;"></div>
@@ -390,7 +392,10 @@
 
 <style lang="scss" scoped>
     .wrap {
+		position: fixed;
+		z-index: 99;
         width: 750rpx;
+		height: 100%;
         background: white;
         overflow-x: hidden;
     }

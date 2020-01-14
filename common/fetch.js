@@ -87,7 +87,9 @@ const fetch = function (act, param, options = false, url = '/api/little_program/
 
     // 数据加密
     let data = createToken(param);
-
+	
+	//保持签名通过，同时支持传空字符串
+	Object.assign(data,param)
     return ajax(url, method, data, options);
 
 };
@@ -281,6 +283,12 @@ export const orderRefund = (data, options) => fetch('order_refund', data, option
 export const jifenProdDetail = (data, options) => fetch('jifen_prod_detail', data, options);
 // 获取赠品详情
 export const judgeReceiveGift = (data, options) => fetch('judge_receive_gift', data, options);
+
+//获取海报模板
+export const getPosterList = (data,options) => fetch('getPosterList', data, options)
+
+//获取海报模板详情
+export const getPosterDetail = (data,options) => fetch('getPosterDetail', data, options)
 
 // 获取佣金列表 爵位
 export const getNobiRecordList = (data, options) => fetch('get_nobi_record_list', data, options);

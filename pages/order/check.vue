@@ -1139,7 +1139,10 @@ export default {
     }
 }
 .over{
-	height: 100vh;
+	position: fixed;
+	width: 750rpx;
+	z-index: 90;
+	height: 100%;
 	overflow: hidden;
 }
 .disMbx{display: flex;align-items: center;}
