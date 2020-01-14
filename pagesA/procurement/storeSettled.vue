@@ -81,10 +81,10 @@
         <popup-layer ref="storetypes"  :direction="'top'" >
             <view class="search-title">请选择门店类型</view>
             <view class="search-content">
-                <view class="search-item" v-for="(store,index) of storeTypes" @click="changeType(index)">
+                <view class="search-item" v-for="(store,index) of storeTypes" @click="changeType(index)" :key="index">
                     <view>{{store.title}}</view>
                     <view v-if="store.id == current">
-                        <image class="image" src="/static/procurement/selected.png" mode=""></image>
+                        <image class="image" src="/static/procurement/selected.png" ></image>
                     </view>
                     <view class="box" v-else></view>
                 </view>
@@ -403,7 +403,8 @@
                             that.isSubmit = true;
                         });
                     }else if(arg == 1){
-                        that.imglist = [...temp_file_list]
+                        // that.imglist = [...temp_file_list]
+							that.imglist = that.imglist.concat(temp_file_list);
                         let arrs = temp_file_list.map(item=>item.path)
                         uploadImages(data,arrs).then(urls=>{
                             console.log(that.arrlist)
