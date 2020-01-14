@@ -40,7 +40,7 @@
 							<block v-if="dis_level[inds].level_rules_edit.pay_money.value.type=='1'">商城总消费{{dis_level[inds].level_rules_edit.pay_money.value.money}}元</block>
 							<block v-if="dis_level[inds].level_rules_edit.pay_money.value.type=='2'">一次性消费{{dis_level[inds].level_rules_edit.pay_money.value.money}}元</block>
 						</view>
-						<view class="bottoms">
+						<view class="bottoms" v-if="dis_level[inds].level_rules_edit.pay_money.value.type=='1'">
 							已消费{{dis_level[inds].level_rules_edit.pay_money.user_data}}元
 						</view>
 					</view>
