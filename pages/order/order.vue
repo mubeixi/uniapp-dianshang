@@ -341,6 +341,7 @@ export default {
 		},
 		changIndex(i){
 			if(i==this.index) return
+			this.page=1
 			this.data=[];
 			this.index=i;
 			this._getOrder();
