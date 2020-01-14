@@ -500,7 +500,7 @@
             position: absolute;
             top: -19rpx;
             right: -19rpx;
-            z-index: 9999;
+            z-index: 9;
         }
     }
     .shangchuan{
