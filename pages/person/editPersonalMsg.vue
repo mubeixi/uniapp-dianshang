@@ -54,6 +54,7 @@
 	import {ls} from "../../common/tool.js";
 	import {pageMixin} from "../../common/mixin";
 	import {mapGetters,mapActions} from 'vuex';
+	import {confirm} from "../../common";
 	export default {
 		mixins:[pageMixin],
 		data() {
@@ -225,6 +226,51 @@
 						});
 						return
 					}
+
+					let that=this
+					uni.showModal({
+					    title: '提示',
+					    content: '生日信息一旦修改，不可再次更改',
+					    success: function (res) {
+					        if (res.confirm) {
+								that.loading=true
+								upDateUserInfo({
+									User_Name: that.User_Name,
+									User_NickName: that.User_NickName,
+									User_Email: that.User_Email,
+									User_Province: that.address_info.User_Province,
+									User_City: that.address_info.User_City,
+									User_Area: that.address_info.User_Area,
+									User_Tow: that.address_info.User_Tow,
+									User_Address: that.User_Address,
+									User_Birthday:that.dateValue
+								}).then(res=>{
+									if(res.errorCode == 0) {
+										let userInfo = res.data;
+										userInfo.User_Name = res.data.User_Name;
+										userInfo.User_NickName = res.data.User_NickName;
+										userInfo.User_Email = res.data.User_Email;
+										userInfo.User_Birthday = res.data.User_Birthday;
+										that.setUserInfo(userInfo);
+										uni.showToast({
+											title: '修改成功'
+										});
+										setTimeout(() => {
+											uni.navigateBack({
+												delta: 1
+											})
+										}, 1500);
+									}
+								}).catch(e=>{
+									that.loading=false
+								})
+
+							} else if (res.cancel) {
+					            return
+					        }
+					    }
+					});
+					return;
 				}
 				this.loading=true
 				upDateUserInfo({
