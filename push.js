@@ -14,5 +14,5 @@ shell.cd('../shop-diy-dist');
 
 // 不能在一股脑全部添加了
 shell.exec('git add htdocs/fre/');
-shell.exec('git commit -m 合并双涛修改');
+shell.exec('git commit -m "合并双涛修改20200114 15:01"');
 shell.exec('git push origin master');

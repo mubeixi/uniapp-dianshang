@@ -9,14 +9,20 @@
 				<form  report-submit @submit="confirm">
 					<view class="zhezhaoCenter">
 						<view class="views">
-							<image class="imgs" :src="'/static/client/check/phone.png'|domain"></image>
+							<image mode="widthFix" class="imgs" :src="'/static/client/check/phone.png'|domain"></image>
 							<input class="inputs" type="text" placeholder="请输入对方会员号" v-model="user_no">
 						</view>
 					</view>
 					<view class="zhezhaoCenter">
 						<view class="views">
-							<image class="imgs" :src="'/static/client/check/money.png'|domain"></image>
+							<image mode="widthFix" class="imgs" :src="'/static/client/check/money.png'|domain"></image>
 							<input class="inputs" type="text" placeholder="请输入转出金额" v-model="money">
+						</view>
+					</view>
+					<view class="zhezhaoCenter">
+						<view class="views">
+							<image mode="widthFix" class="imgs" src="/static/pay-paasword.png"></image>
+							<input class="inputs" type="password" placeholder="请输入支付密码" v-model="user_pay_password" @blur="user_password">
 						</view>
 					</view>
 					<button formType="submit" class="zheButton">
@@ -87,11 +93,11 @@
 					  <view class="view sure" @click="sureSearch">确定</view>
 				</view>
 				<view class="zhao" @click="showSure=false" catchtouchmove>
-				
+
 				</view>
 			</view>
 		</view>
-		
+
 
 		<view class="contents" v-show="current=='charge'">
 			<view class="mingxi  mingxiPlus">
@@ -113,7 +119,7 @@
 			</view>
 		</view>
 		<view class="contents"  v-show="current=='money'">
-			
+
 			<view class="mingxi  mingxiPlus" >
 				<view>
 					总收入:{{records.total_get}}元
@@ -147,6 +153,7 @@
 		add_template_code
 	} from "../../common/fetch";
 	import {mapActions,mapGetters} from 'vuex';
+	import {confirm, error} from "../../common";
 	export default {
 		mixins:[pageMixin],
 		data() {
@@ -160,6 +167,7 @@
 				charge_records:[],
 				records:{list:[]},
 				user_no: '', //会员号
+				user_pay_password:'',
 				money: '', // 转出金额
 				chargePage: 1, // 充值记录分页
 				moneyPage: 1,  // 资金流水分页
@@ -171,7 +179,7 @@
 			};
 		},
 		computed: {
-			...mapGetters(['initData']),
+			...mapGetters(['initData','userInfo']),
 			Money: function(){
 				return Number(this.Umoney).toFixed(2)
 			}
@@ -199,21 +207,25 @@
 		},
 		methods:{
 			...mapActions(['setUserInfo']),
+			// 用户输入密码完毕
+			user_password(e) {
+				this.user_pay_password = e.detail.value;
+			},
 			sureSearch(){
 				if(this.beginTime&&this.endTime){
 					var startTmp=this.beginTime.split("-");
 					var endTmp=this.endTime.split("-");
 					var sd=new Date(startTmp[0],startTmp[1],startTmp[2]);
 					var ed=new Date(endTmp[0],endTmp[1],endTmp[2]);
-					if(sd.getTime()>ed.getTime()){ 
+					if(sd.getTime()>ed.getTime()){
 						  uni.showToast({
 						  	title:'开始时间不得大于结束时间',
 							icon:'none'
 						  })
-						return 
-					} 
+						return
+					}
 				}
-				
+
 				if(this.current=='charge'){
 					this.get_user_money_record(1);
 				}else{
@@ -258,6 +270,17 @@
 				})
 			},
 			goFacePay(){
+
+				//改成需要密码
+				if(this.userInfo.hasOwnProperty('User_PayPassword') && !this.userInfo.User_PayPassword){
+					confirm({title: '提示', content: '该操作需要设置支付密码,是否前往设置?', confirmText: '去设置', cancelText: '暂不设置'}).then(res=>{
+						uni.navigateTo({
+							url:'/pages/person/updateUserPsw?type=1&is_back=1'
+						})
+					}).catch(err=>{error('请选择其他支付方式')})
+					return;
+				}
+
 				this.isShow=true
 				// uni.navigateTo({
 				// 	url:'/pages/storePay/storePay'
@@ -294,12 +317,21 @@
 					});
 					return;
 				}
+
+				if(!this.user_pay_password){
+					error('请输入支付密码')
+					return;
+				}
+
+
 				transferBalance({
 					money: this.money,
+					pay_passwd:this.user_pay_password,
 					user_no: this.user_no
 				}).then(res=>{
 					_self.money = ''
 					_self.user_no = ''
+					_self.user_pay_password = ''
 					uni.showToast({
 						title: res.msg,
 						duration:1500
@@ -315,6 +347,10 @@
 						});
 					},1500)
 				},err=>{
+
+					_self.money = ''
+					_self.user_no = ''
+					_self.user_pay_password = ''
 					uni.showToast({
 						title: err.msg,
 						icon: 'none'
@@ -334,7 +370,7 @@
 				}else{
 					data.money_type=2
 				}
-				
+
 				getUserMoneyRecord(data).then(res=>{
 					if(this.moneyPage != 1) {
 						let old = this.records.list;
@@ -629,11 +665,12 @@ view{
 		background:rgba(255,255,255,1);
 		border-radius:20px;
 		width: 503rpx;
-		height: 564rpx;
+		/*height: 564rpx;*/
 		position: absolute;
 		top: 50%;
 		transform: translateY(-50%);
 		left: 123rpx;
+		padding-bottom: 15px;
 	}
 	.closeZ{
 		width: 47rpx;
@@ -666,8 +703,9 @@ view{
 			}
 		}
 		.imgs{
-			width: 25rpx;
-			height: 37rpx;
+			width: 26rpx;
+			height: 38rpx;
+
 		}
 	}
 	.zheButton{
@@ -704,7 +742,7 @@ view{
 	top: 60px;
 	box-sizing: border-box;
 	padding-top: 20px;
-	
+
 	.picker{
 		background: whitesmoke;
 		border-radius: 15px;

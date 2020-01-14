@@ -95,9 +95,10 @@
 		methods:{
 			...mapActions(['getUserInfo']),
 			spreadQr(type,again){
-				uni.navigateTo({
-					url:`/pagesA/fenxiao/shareQrcode?type=${type}&again=${again}`
-				})
+				this.showQr(type,again)
+				// uni.navigateTo({
+				// 	url:`/pagesA/fenxiao/shareQrcode?type=${type}&again=${again}`
+				// })
 			},
 			showQr(type,again){
 				getDistributeWxQrcode({type,again,owner_id:this.userInfo.User_ID},{tip:'生成中'}).then(res=>{
