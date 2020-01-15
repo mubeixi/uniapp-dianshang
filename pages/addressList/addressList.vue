@@ -51,6 +51,12 @@
 			//选择地址
 			  radioChange: function (e) {
 			    var address_id = e.detail.value;  //选择的地址ID
+				uni.$emit('fire',address_id)
+				//返回上一页
+				uni.navigateBack({
+				  delta: 1
+				});
+				return
 			    if (this.from_page == 'checkout') {
 			      var pages = getCurrentPages();          //获取页面堆栈
 			      var prevPage = pages[pages.length - 2]; //上一页
@@ -68,12 +74,8 @@
 						  address_id: address_id
 						})
 					}
-				this.$vm.$emit('fire',address_id)
-				console.log(address_id);
-			    //返回上一页
-			    uni.navigateBack({
-			      delta: 1
-			    });
+				
+		
 			  },
 
 			  //删除收获地址
