@@ -8,7 +8,7 @@
 				<view class="user-avator">
 					<image class="image" :src="storeDetail.Stores_ImgPath" mode=""></image>
 				</view>
-				<view class="store-name">{{storeDetail.Stores_Name}}</view>
+				<view class="store-name">{{storeDetail.Stores_Name}}({{storeDetail.stores_sn}})</view>
 				<view class="store-money">可用余额: <text class="number">￥ {{storeDetail.User_Money}}</text> <view class="charge" @click="goCharge">充值</view> </view>
 				<view class="order-msg">
 					<view class="order">

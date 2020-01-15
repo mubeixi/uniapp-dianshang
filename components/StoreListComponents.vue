@@ -95,13 +95,13 @@
                         </div>
                     </block>
 					<div style="height: 46px;"></div>
-					
+
 
                     <div>
 
                     </div>
                 </scroll-view>
-				
+
             </div>
             <button size="large" class="subbtn" @click="subFn">确定</button>
             <div style="height: 46px;background: white;"></div>
@@ -394,6 +394,7 @@
     .wrap {
 		position: fixed;
 		z-index: 99;
+        bottom: 0px;
         width: 750rpx;
 		height: 100%;
         background: white;

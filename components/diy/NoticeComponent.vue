@@ -3,7 +3,7 @@
         <view class="flex content" :style="{background:notice.style.bgColor}">
             <view class="funicon icon-gonggao icon" :style="{color:notice.style.iconColor}"></view>
             <div class="flex1 title" :style="{color:notice.style.color}">
-                <div class="content-box" id="content" :style="{marginLeft: marginLeft + 'px'}">如意洲商城开业啦如意洲商城开业啦如意洲商城开业啦如意洲商城开业啦如意洲商城开业啦</div>
+                <div class="content-box" id="content" :style="{marginLeft: marginLeft + 'px'}">{{notice.value.content}}</div>
             </div>
         </view>
     </view>
