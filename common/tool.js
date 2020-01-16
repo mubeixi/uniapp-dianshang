@@ -317,11 +317,28 @@ export const chooseImageByPromise = ({count = 1, sizeType = ['original', 'compre
             sizeType, //可以指定是原图还是压缩图，默认二者都有
             // #endif
             success(res) {
+				uni.showToast({
+					 title: JSON.stringify(res),
+					 icon:'none',
+					duration: 10000
+				})
                 resolve(res.tempFiles)
             },
             fail(e) {
+				uni.showToast({
+					 title: JSON.stringify(e),
+					  icon:'none',
+					duration: 10000
+				})
                 reject(false)
-            }
+            },
+			complete(re){
+				uni.showToast({
+					 title: JSON.stringify(re),
+					  icon:'none',
+					duration: 10000
+				})
+			}
         })
 
     })

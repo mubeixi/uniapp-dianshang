@@ -144,7 +144,7 @@
             popupLayer
         },
         onShow: function(){
-          // this.load();
+          //this.load();
 		  if(!this.userInfo.User_Mobile){
 			  uni.showModal({
 				  confirmText:'去绑定',
@@ -166,7 +166,7 @@
 
         },
         onLoad: function(){
-			this.load();
+			this.load()
             this.objectMultiArray = [
                 utils.array_change(area.area[0]['0']),
                 utils.array_change(area.area[0]['0,1']),
@@ -526,7 +526,7 @@
             position: absolute;
             top: -19rpx;
             right: -19rpx;
-            z-index: 999;
+            z-index: 9;
         }
     }
     .shangchuan{

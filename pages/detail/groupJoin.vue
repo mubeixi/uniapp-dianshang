@@ -340,6 +340,7 @@
                 this.postData.atrid_str = check_attrid;
                 //属性判断
                 if (attr_val) {
+					this.postData.attr_id = attr_val.Product_Attr_ID;
                     this.postData.count = attr_val.Property_count;   //选择属性的库存
                     this.postData.showimg = typeof attr_val.Attr_Image != 'undefined' && attr_val.Attr_Image != '' ? attr_val.Attr_Image : this.product.Products_JSON['ImgPath'][0];// 选择属性的图片
                     this.productDetail_price = attr_val.Txt_PriceSon; // 选择属性的价格
@@ -367,7 +368,7 @@
                     return ;
                 }
                 this.postData.prod_id = this.Products_ID;
-                if(this.postData.atr_str==''||this.postData.atrid_str==''){
+                if(this.postData.atr_str==''||this.postData.attr_id==''){
                     if(this.product.skujosn){
                         wx.showToast({
                             title: '您还没有选择规格',
