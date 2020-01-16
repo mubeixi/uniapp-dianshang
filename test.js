@@ -25,13 +25,14 @@ let config = {
     ...options,
     localRoot: __dirname + '/unpackage/dist/build/h5',
     remoteRoot: '/fre/',
-    include: ['*', '**/*'], // this would upload everything except dot files
+    // include: ['*', '**/*'], // this would upload everything except dot files
+	include: ["h5.zip"],
     // include: ["*.php", "dist/*", ".*"],
     // e.g. exclude sourcemaps, and ALL files in node_modules (including dot files)
     // exclude: ["dist/**/*.map", "node_modules/**", "node_modules/**/.*", ".git/**"],
     // exclude: ['static/kindeditor/**'],
     // delete ALL existing files at destination before uploading, if true
-    deleteRemote: true,
+    deleteRemote: false,
     // Passive mode is forced (EPSV command is not sent)
     forcePasv: false,
 };
@@ -47,16 +48,15 @@ let config = {
 //       message
 //     });
 //   });
-
-// use with callback
 ftpDeploy.deploy(config, (err, res) => {
-    if (err) {
-        console.log(err);
-    } else {
-        console.log('finished:', res);
-        process.exit();
-    }
+	if (err) {
+		console.log(err);
+	} else {
+		console.log('finished:', res);
+		process.exit();
+	}
 });
+
 
 ftpDeploy.on('uploading', function(data) {
     // console.log(data.totalFilesCount); // total file count being transferred

@@ -170,15 +170,13 @@
 				sizeType =  ['original', 'compressed'] //可以指定是原图还是压缩图，默认二者都有
 				// #endif
 
-				let temp_file_list = []
-				await chooseImageByPromise({count:(9-that.imgs.length),sizeType}).then(tempFiles=>{
-					temp_file_list=tempFiles
-					for(let item of tempFiles){
-						that.imgs.push(item)
-					}
-				})
 
-				// that.imgs = [...temp_file_list]
+				let temp_file_list  = await chooseImageByPromise({count:(9-that.imgs.length),sizeType})
+				if(!temp_file_list)return;
+				for(let item of tempFiles){
+					that.imgs.push(item)
+				}
+
 				let arrs = temp_file_list.map(item=>item.path)
 
 				uploadImages(data,arrs).then(urls=>{
