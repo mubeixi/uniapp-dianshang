@@ -8,7 +8,7 @@
 			<view class="item" @click="changeAvator">
 				<view class="item-name">头像</view>
 				<view class="info">
-					<image :src="User_HeadImg" ></image>
+					<image class="image" :src="User_HeadImg" ></image>
 				</view>
 				<view class="go">
 					<image :src="'/static/client/right.png'|domain" mode=""></image>
@@ -71,11 +71,14 @@
 	import { apiBaseUrl } from '../../common/env.js';
 	import {pageMixin} from "../../common/mixin";
 	import {toast,error} from "../../common";
+	import {isWeiXin, ls} from "../../common/tool";
+
 	export default {
 		mixins:[pageMixin],
 		data() {
 			return {
-				imgs: [],
+				temppath:'',
+
 				tem_Shop_Logo: '',
 				User_HeadImg: '',
 				User_Province_name: '',
@@ -88,10 +91,12 @@
 		async created(){
 			let userInfo = this.getUserInfo(true);
 
-		},
-		onShow(){
 			this.User_HeadImg = this.userInfo.User_HeadImg;
 			this.get_user_info();
+
+		},
+		onShow(){
+
 		},
 		methods: {
 			...mapActions(['getUserInfo','setUserInfo']),
@@ -120,133 +125,161 @@
 			},
 			// 更换头像
 			changeAvator(){
-				let _this = this;
-					// let data={
-					// 	'timestamp':'1502263578',
-					// 	'sign':'DA1525TR85D6S5A9E5236FDSWD52F147WA',
-					// 	'sortToken':1,
-					// 	'act':'upload_image',
-					// 	'env': GET_ENV(),
-					// 	'Users_ID': get_Users_ID()
-					// };
+				let _self = this;
 
-					let param = {act:'upload_image'};
-					param.User_ID = get_User_ID();
-					param.Users_ID = get_Users_ID();
-					// param.appid = get_Appid();
-					param.env = GET_ENV();
+				let param = {act:'upload_image'};
+				param.User_ID = get_User_ID();
+				param.Users_ID = get_Users_ID();
+				// param.appid = get_Appid();
+				param.env = GET_ENV();
 
-					if(!param.hasOwnProperty('access_token')){
-						param.access_token = GET_ACCESS_TOKEN()
-					}
+				if(!param.hasOwnProperty('access_token')){
+					param.access_token = GET_ACCESS_TOKEN()
+				}
 
-					let data = createToken(param);
+				let data = createToken(param);
 
-					let that=this;
-					uni.chooseImage({
-						count:1,
-						// #ifndef MP-TOUTIAO
-						sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
-						// #endif
-						success(res) {
-							for(let item of res.tempFiles){
-								that.User_head = item.path;
-								that.imgs.push(item.path);
-							}
-							// #ifdef MP-TOUTIAO
-							let fileCTX = tt.getFileSystemManager()
-							console.log(fileCTX);
-							fileCTX.readFile({
-								filePath:res.tempFilePaths[0],
-								encoding:'base64',
-								success(ret) {
-									let imgs='data:image/jpeg;base64,'+ret.data;
-								   uploadImage({'image':imgs}).then(result=>{
 
-									   upDateUserInfo({
-									   	User_HeadImg: result.data.path,
-									   }).then(res=>{
-									   	console.log(res)
-									   	if(res.errorCode == 0){
-									   		uni.showToast({
-									   			title: '修改成功',
-									   			icon: 'success'
-									   		});
-									   		that.User_HeadImg = res.data.User_HeadImg;
-									   		that.userInfo.User_HeadImg = res.data.User_HeadImg;
-									   		that.setUserInfo(that.userInfo);
-									   	}else {
-									   		uni.showToast({
-									   			title: res.msg,
-									   			icon: 'none'
-									   		})
-									   	}
-									   })
-								   },err=>{
+				uni.chooseImage({
+					count:1,
+					// #ifndef MP-TOUTIAO
+					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+					// #endif
+					success(res) {
 
-								   }).catch(e=>{
 
+						// #ifdef MP-TOUTIAO
+						let fileCTX = tt.getFileSystemManager()
+						console.log(fileCTX);
+						fileCTX.readFile({
+							filePath:res.tempFilePaths[0],
+							encoding:'base64',
+							success(ret) {
+								let imgs='data:image/jpeg;base64,'+ret.data;
+							   uploadImage({'image':imgs}).then(result=>{
+
+								   upDateUserInfo({
+									User_HeadImg: result.data.path,
+								   }).then(res=>{
+									console.log(res)
+									if(res.errorCode == 0){
+										uni.showToast({
+											title: '修改成功',
+											icon: 'success'
+										});
+										_self.User_HeadImg = res.data.User_HeadImg;
+										_self.userInfo.User_HeadImg = res.data.User_HeadImg;
+										_self.setUserInfo(_self.userInfo);
+									}else {
+										uni.showToast({
+											title: res.msg,
+											icon: 'none'
+										})
+									}
 								   })
-								},
-								fail(ret) {
-								  console.log(ret,`run fail`);
-								},
-								complete(ret) {
-								  console.log(`run done`);
+							   },err=>{
+
+							   }).catch(e=>{
+
+							   })
+							},
+							fail(ret) {
+							  console.log(ret,`run fail`);
+							},
+							complete(ret) {
+							  console.log(`run done`);
+							}
+						})
+						// #endif
+
+
+						// #ifndef MP-TOUTIAO
+
+						let filePath = res.tempFilePaths[0];
+						_self.User_HeadImg = filePath;
+						_self.temppath = filePath
+
+						uni.showLoading({
+							title: '上传图片',
+							mask: true
+						})
+						//上传图片
+						uni.uploadFile({
+							url: apiBaseUrl+'/api/little_program/shopconfig.php',
+							filePath: filePath,
+							name: 'image',
+							formData: data,
+							success: (uploadFileRes) => {
+
+
+								if(typeof uploadFileRes !='object' || !uploadFileRes.hasOwnProperty('data') || !uploadFileRes.data){
+									error('上传文件失败')
+									return;
 								}
-							})
-							// #endif
+								uploadFileRes =	JSON.parse(uploadFileRes.data)
+								_self.tem_Shop_Logo = uploadFileRes.data.path;
 
+								uni.showLoading({
+									title: '更改图像',
+									mask: true
+								})
+								upDateUserInfo({
+									User_HeadImg: _self.tem_Shop_Logo,
+								}).then(ret=>{
 
+									uni.showToast({
+										title: '修改成功',
+										icon: 'success'
+									});
+									_self.User_HeadImg = res.data.User_HeadImg;
+									_self.userInfo.User_HeadImg = res.data.User_HeadImg;
+									_self.setUserInfo(_self.userInfo);
 
-							// #ifndef MP-TOUTIAO
-								let filePath = res.tempFilePaths[0];
-								console.log(filePath,JSON.stringify(data));
-								//上传图片
-								uni.uploadFile({
-										url: apiBaseUrl+'/api/little_program/shopconfig.php',
-										filePath: filePath,
-										name: 'image',
-										formData: data,
-										success: (uploadFileRes) => {
-											console.log(uploadFileRes,'ssssssssss')
-											if(typeof uploadFileRes !='object' || !uploadFileRes.hasOwnProperty('data') || !uploadFileRes.data){
-												error('上传文件失败')
-												return;
-											}
-											uploadFileRes =	JSON.parse(uploadFileRes.data)
-											that.tem_Shop_Logo = uploadFileRes.data.path;
-											upDateUserInfo({
-												User_HeadImg: that.tem_Shop_Logo,
-											}).then(res=>{
-												console.log(res)
-												if(res.errorCode == 0){
-													uni.showToast({
-														title: '修改成功',
-														icon: 'success'
-													});
-													that.User_HeadImg = res.data.User_HeadImg;
-													that.userInfo.User_HeadImg = res.data.User_HeadImg;
-													that.setUserInfo(that.userInfo);
-												}else {
-													uni.showToast({
-														title: res.msg,
-														icon: 'none'
-													})
-												}
-											})
-										}
+									uni.hideLoading()
+								}).catch(e=>{
+									uni.hideLoading()
+								})
+							},
+							fail:(err)=>{
+								// uni.showModal({
+								// 	title:'文件上传',
+								// 	content:JSON.stringify(err)
+								// })
+
+								uni.showModal({
+									title: '提示',
+									content: '上传图片错误'+JSON.stringify(err),
+									success: function (res) {
+
+									}
 								});
-							// #endif
-							// for(var i in that.imgs){
+							},
+							complete:()=>{
 
-							// }
+								uni.hideLoading()
+								// uni.showModal({
+								// 	title:'文件上传',
+								// 	content:JSON.stringify(ret)
+								// })
 
-						},
-						fail(e) {
-							console.log(e);
-						}
-					});
+							}
+						});
+
+						// #endif
+
+
+					},
+					fail(e) {
+
+						uni.showModal({
+							title: '提示',
+							content: '选择图片错误'+JSON.stringify(e),
+							success: function (res) {
+
+							}
+						});
+					}
+				});
 			},
 		},
 		computed: {
@@ -279,7 +312,7 @@
 				justify-content: flex-end;
 				font-size: 26rpx;
 				color: #999999;
-				image {
+				.image {
 					width: 88rpx;
 					height: 88rpx;
 					border-radius: 44rpx;

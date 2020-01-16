@@ -1,5 +1,5 @@
 <template>
-	<view class="myall" @click="commonClick">
+	<view class="myall" @click="commonClick" v-show="isLoad">
 		<!-- #ifdef APP-PLUS -->
 <!--		<view class="status_bar" style="background-color: rgb(248, 248, 248);"></view>-->
 		<!-- #endif -->
@@ -39,22 +39,22 @@
 			<view class="money">
 				<view>
 					<view class="moneyTop">
-						总佣金
+						{{(pro.total_sales || pro.total_sales==0)?'累计业绩':'总佣金'}}
 					</view>
 					<view class="moneyBottom">
-						￥<text>{{pro.total_sha}}</text>
+						￥<text>{{pro.total_sales||pro.total_sha}}</text>
 					</view>
 				</view>
 				<view>
 					<view class="moneyTop">
-						已发放佣金
+						{{(pro.month_sales || pro.month_sales==0)?'本月业绩':'已发放佣金'}}
 					</view>
 					<view class="moneyBottom">
-						￥<text>{{pro.sha_send_money}}</text>
+						￥<text>{{pro.month_sales||pro.sha_send_money}}</text>
 					</view>
 				</view>
 			</view>
-			<view class="chakan" @click="goFinance">
+			<view class="chakan" @click="goFinance" v-if="!pro.total_sales && pro.total_sales!=0">
 				查看明细
 				<image class="image" :src="'/static/client/fenxiao/chakan.png'|domain" ></image>
 			</view>
@@ -125,6 +125,7 @@
 		mixins:[pageMixin],
 		data() {
 			return {
+				isLoad:false,
 				pro:{
 					sha_config:{sha:{}},
 					disInfo:{}
@@ -163,6 +164,7 @@
 				shaInit().then(res=>{
 					if(res.errorCode==0){
 						this.pro=res.data;
+						this.isLoad = true
 					}
 				}).catch(e=>{
 					console.log(e);

@@ -48,8 +48,13 @@ export const WX_JSSDK_INIT = (vm, jsApiListList) => new Promise((resolve, reject
 			let config = res.data;
 			//线上环境，听服务器的，本地的一律调试
 			let debug = res.data.debug?true:false;//process.env.NODE_ENV === 'production'?config.debug?true:false:true
-			let jsApiList = jsApiListList ? jsApiListList : ['onMenuShareAppMessage', 'onMenuShareTimeline', 'openLocation', 'getLocation', 'scanQRCode'];
+			let jsApiList = jsApiListList ? jsApiListList : ['onMenuShareAppMessage', 'onMenuShareTimeline', 'openLocation', 'getLocation', 'scanQRCode','chooseImage', 'previewImage', 'uploadImage'];
 			// ['chooseImage', 'previewImage', 'uploadImage', 'openLocation','getLocation', 'chooseWXPay', 'getSystemInfo', 'onMenuShareAppMessage','onMenuShareTimeline','scanQRCode'];
+			if(debug){
+				ls.set('jssdk_debug',1)
+			}else{
+				ls.set('jssdk_debug',0)
+			}
 			let {noncestr, timestamp, appId, signature} = config;
 
 			setWxConfig({debug, appId, timestamp, nonceStr: noncestr, signature, jsApiList});

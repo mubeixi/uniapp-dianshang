@@ -298,7 +298,7 @@ export const uploadByPromise = ({url, filePath, name = 'image', formData}) => {
 
             },
             fail: (err) => {
-                reject(false)
+                reject(err)
             },
             complete: (rt) => {
                 console.log(rt)
@@ -428,6 +428,10 @@ export const uploadImages = (formData, imgs) => {
             resolve(urls)
         }).catch((error) => {
             reject(false)
+            uni.showModal({
+                title:'文件批量上传失败',
+                content:JSON.stringify(error)
+            })
             console.log(error)
         })
     })

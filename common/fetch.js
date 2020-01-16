@@ -87,7 +87,7 @@ const fetch = function (act, param, options = false, url = '/api/little_program/
 
     // 数据加密
     let data = createToken(param);
-	
+
 	//保持签名通过，同时支持传空字符串
 	Object.assign(data,param)
     return ajax(url, method, data, options);
@@ -95,6 +95,8 @@ const fetch = function (act, param, options = false, url = '/api/little_program/
 };
 
 export const GET_ACCESS_TOKEN = () => ls.get('access_token')
+
+
 
 //获取全局配置
 export const getSystemConf = (data, options) => fetch('shopconfig', data, options)
@@ -378,7 +380,7 @@ export const addPromotionArticle = (data, options) => fetch('add_promotion_artic
 
 //零售单拒单
  export const systemRefuseApply = (data, options) => fetch('system_refuse_apply', data, options);
- 
+
  //零售单确认退款
   export const systemConfirmApply = (data, options) => fetch('system_confirm_apply', data, options);
  //零售单收货

@@ -12,7 +12,11 @@ shell.cp('-r', './unpackage/dist/build/h5/*', '../shop-diy-dist/htdocs/fre');
 
 shell.cd('../shop-diy-dist');
 
+var sd = require('silly-datetime');
+var time=sd.format(new Date(), 'YYYY-MM-DD HH:mm');
+console.log(time);
+
 // 不能在一股脑全部添加了
 shell.exec('git add htdocs/fre/');
-shell.exec('git commit -m "合并双涛修改20200114 15:01"');
+shell.exec(`git commit -m "客户端发布版本${time}"`);
 shell.exec('git push origin master');
