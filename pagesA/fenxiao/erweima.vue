@@ -31,27 +31,31 @@
 <!--		</view>-->
 		<view class="last">
 			<view class="first" v-show="initData.login_methods.mp_flag==1">
-				<view class="left" @click="showQr(0,0)">
+				<view class="left" @click="spreadQr(0,0)">
 					<image class="image" :src="'/static/client/fenxiao/weixin.png'|domain" ></image>
 					<view class="haha">微信二维码</view>
 				</view>
-				<view class="right" @click="showQr(0,1)">
-					<image class="image" :src="'/static/client/fenxiao/chongsheng.png'|domain" ></image>
-					<view class="haha">重生微信二维码</view>
-				</view>
-			</view>
-			<view style="width: 100%;height: 1rpx;background-color: #F3F3F3;"></view>
-			<view class="second">
-<!--				@click="showQr(1,0)"-->
-				<view class="left"  @click="spreadQr(1,0)">
+				<view class="right" @click="spreadQr(1,0)">
 					<image class="image" :src="'/static/client/fenxiao/tuiguang.png'|domain" ></image>
 					<view class="haha">推广二维码</view>
 				</view>
-				<view class="right" @click="showQr(1,1)">
-					<image class="image"  :src="'/static/client/fenxiao/chongshengtuiguang.png'|domain" ></image>
-					<view class="haha">重生推广二维码</view>
-				</view>
+<!--				<view class="right" @click="spreadQr(0,1)">-->
+<!--					<image class="image" :src="'/static/client/fenxiao/chongsheng.png'|domain" ></image>-->
+<!--					<view class="haha">重生微信二维码</view>-->
+<!--				</view>-->
 			</view>
+			<view style="width: 100%;height: 1rpx;background-color: #F3F3F3;"></view>
+<!--			<view class="second">-->
+<!--&lt;!&ndash;				@click="showQr(1,0)"&ndash;&gt;-->
+<!--				<view class="left"  @click="spreadQr(1,0)">-->
+<!--					<image class="image" :src="'/static/client/fenxiao/tuiguang.png'|domain" ></image>-->
+<!--					<view class="haha">推广二维码</view>-->
+<!--				</view>-->
+<!--				<view class="right" @click="spreadQr(1,1)">-->
+<!--					<image class="image"  :src="'/static/client/fenxiao/chongshengtuiguang.png'|domain" ></image>-->
+<!--					<view class="haha">重生推广二维码</view>-->
+<!--				</view>-->
+<!--			</view>-->
 		</view>
 	</view>
 </template>
@@ -95,10 +99,10 @@
 		methods:{
 			...mapActions(['getUserInfo']),
 			spreadQr(type,again){
-				this.showQr(type,again)
-				// uni.navigateTo({
-				// 	url:`/pagesA/fenxiao/shareQrcode?type=${type}&again=${again}`
-				// })
+				// this.showQr(type,again)
+				uni.navigateTo({
+					url:`/pagesA/fenxiao/shareQrcode?type=${type}&again=${again}`
+				})
 			},
 			showQr(type,again){
 				getDistributeWxQrcode({type,again,owner_id:this.userInfo.User_ID},{tip:'生成中'}).then(res=>{

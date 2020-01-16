@@ -1,16 +1,21 @@
 <template>
 	<view class="page-wrap" @click="commonClick">
-		<swiper class="swiper" @change="handleChange">
-			<swiper-item class="swiper-item" v-for="(poster,idx) in poster_list">
-				<image class="swiper-itm-img" :src="poster.img"></image>
-			</swiper-item>
 
-		</swiper>
-		<div class="share-btn" @click="shareFn">
-			分享
+
+		<image @click="preFn(current_url)" :src="current_url|domain" style="width: 750rpx" mode="widthFix" />
+
+		<div class="swiper" >
+			<div class="swiper-item" @click="setSelect(poster)"  v-for="(poster,idx) in poster_list">
+				<image class="swiper-itm-img" :src="poster.img|domain" mode="widthFix"></image>
+			</div>
 		</div>
 
-		<canvas style="width: 404px; height: 718px;" canvas-id="firstCanvas"></canvas>
+
+<!--		<div class="share-btn" @click="shareFn">-->
+<!--			分享-->
+<!--		</div>-->
+
+<!--		<canvas style="width: 404px; height: 718px;" canvas-id="firstCanvas"></canvas>-->
 	</view>
 </template>
 <script>
@@ -29,6 +34,8 @@
 		mixins:[pageMixin],
 		data() {
 			return {
+				current_url:'',
+				current_poster:null,
 				currentIdx:0,
 				is_build:false,
 				qrimg:'',
@@ -55,10 +62,12 @@
 			context.draw()
 		},
 		onShow(){
-			getDisInit({},{errtip:false}).then(res=>{
+			getDisInit({pageSize:999},{errtip:false}).then(res=>{
 				this.info= res.data;
 				this.userInfo.Is_Distribute=1;
 				this.disInfo = res.data.disInfo;
+
+				this.current_url = this.disInfo[0].img
 			},err=>{
 
 			}).catch(err=>{
@@ -72,12 +81,24 @@
 			this.initFunc(type,again)
 		},
 		methods:{
+			setSelect(poster){
+				this.current_poster = poster
+				this.current_url = poster.img
+			},
+			preFn(){
+				if(!this.current_url){
+					error('请选择模板')
+					return;
+				}
+				uni.previewImage({
+					urls:[this.current_url]
+				})
+			},
 			async shareFn(){
 				if(this.is_build)return;//防止太快点击
 				this.is_build = true
 				let getPosterDataResult = await getPosterDetail({id:this.poster_list[this.currentIdx].id})
 				let posterConf = JSON.parse(getPosterDataResult.data.data)
-
 				console.log(posterConf)
 
 			},
@@ -110,24 +131,31 @@
 .page-wrap{
 
 	.swiper{
+		z-index: 9;
 		width: 750rpx;
-		height: auto;
-		position: absolute;
-		bottom: 50px;
+		height: 244rpx;
+		background: white;
+		position: fixed;
+		bottom: 0px;
 		left: 0;
-		top: 0;
+		white-space:  nowrap;
+		overflow-x: scroll;
+		overflow-y: hidden;
+		z-index: 3;
 		.swiper-item{
-			width: 750rpx;
-			height: 100%;
+			display: inline-block;
+			width: 116rpx;
+			height: 244rpx;
+			margin-left: 30rpx;
 			position: relative;
 			.swiper-itm-img{
+				width: 116rpx;
+				height: 116rpx;
 				position: absolute;
-				left: 50%;
 				top: 50%;
-				transform: translate(-50%,-50%);
-				box-shadow: 1px 1px 10px 10px rgba(0, 0, 0, 0.1);
-				width: 600rpx;
-				height: 1066rpx;
+				left: 0;
+				transform: translateY(-50%);
+				border:1px solid #e7e7e7;
 			}
 		}
 	}
