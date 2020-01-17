@@ -99,8 +99,8 @@
 		methods:{
 			...mapActions(['getUserInfo']),
 			spreadQr(type,again){
-				this.showQr(type,again)
-				return;
+				// this.showQr(type,again)
+				// return;
 				uni.navigateTo({
 					url:`/pagesA/fenxiao/shareQrcode?type=${type}&again=${again}`
 				})
