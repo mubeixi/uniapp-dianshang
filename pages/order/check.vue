@@ -334,9 +334,10 @@ export default {
 		// #ifdef H5
 		this.selfObj = this
 		// #endif
-		this.tabIdx = this.initData.order_submit_first;
-		let userInfo = this.getUserInfo(true);
-		console.log(this.initData.order_submit_first)
+		//if(this.orderInfo.all_has_stores==1)
+		//this.tabIdx = this.initData.order_submit_first;
+		// let userInfo = this.getUserInfo(true);
+		// console.log(this.initData.order_submit_first)
 	},
 	onLoad(options) {
 		console.log('options is',options)
@@ -756,6 +757,12 @@ export default {
 						}
 					}
 					this.orderInfo = res.data;
+					//如果该规格有门店 就优先后台设置的
+					if(this.orderInfo.all_has_stores==1){
+						this.tabIdx = this.initData.order_submit_first;
+					}
+					
+					
 					this.couponlist = res.data.coupon_list;
 					this.orderLoading = true;
 					this.postData.shipping_id = res.data.Order_Shipping.shipping_id;
