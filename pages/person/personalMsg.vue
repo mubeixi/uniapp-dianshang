@@ -92,11 +92,11 @@
 			let userInfo = this.getUserInfo(true);
 
 			this.User_HeadImg = this.userInfo.User_HeadImg;
-			this.get_user_info();
+			
 
 		},
 		onShow(){
-
+			this.get_user_info();
 		},
 		methods: {
 			...mapActions(['getUserInfo','setUserInfo']),
