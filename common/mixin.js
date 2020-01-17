@@ -193,6 +193,7 @@ export const Analysis = {
 			if (!currentPageName) return;
 			this.currentPageName = currentPageName
 
+
 			//进入页面
 			this.commonClick({target:{x:0,y:0,view_type:'enter'}})
 
@@ -232,6 +233,7 @@ export const pageMixin = {
 	onShow() {
 		// #ifdef APP-PLUS
 		plus.key.hideSoftKeybord();
+
 		// #endif
 	},
 	created() {
