@@ -493,8 +493,8 @@
                     width: 260rpx;
                     margin: 0 auto;
                     height: 120rpx;
-					font-size: 24rpx;
-					line-height: 24px;
+					font-size: 12px;
+					line-height: 12px;
 					text-overflow: ellipsis;
                     overflow: hidden;
                     word-wrap: break-word;
