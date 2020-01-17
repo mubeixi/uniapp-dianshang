@@ -204,8 +204,8 @@
 					<view>
 						{{ship}}
 					</view>
-					<radio-group @change="ShipRadioChange">
-						<radio :value="shipid" :checked="shipid==ship_current" style="float:right;" color="#F43131"/>
+					<radio-group @change="ShipRadioChange" class="mbx-mbx">
+						<radio :value="shipid" :checked="shipid==ship_current" class="mbxs" style="float:right;" color="#F43131"/>
 					</radio-group>
 				</view>
 			</view>
@@ -1173,4 +1173,17 @@ export default {
 }
 .disMbx{display: flex;align-items: center;}
 .zhouri{width: 9px;height: 14px;margin-left: 5px;}
+.mbx-mbx{
+	    display: flex;
+	    flex: 1;
+	    height: 100%;
+	    align-items: center;
+	    justify-content: flex-end;
+}
+.mbxs{
+	    width: 100%;
+	    display: flex;
+	    justify-content: flex-end;
+	    height: 100%;
+}
 </style>
