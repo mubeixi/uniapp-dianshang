@@ -281,8 +281,7 @@
 					User_City: this.address_info.User_City,
 					User_Area: this.address_info.User_Area,
 					User_Tow: this.address_info.User_Tow,
-					User_Address: this.User_Address,
-					User_Birthday:this.dateValue
+					User_Address: this.User_Address
 				}).then(res=>{
 					if(res.errorCode == 0) {
 						let userInfo = res.data;
