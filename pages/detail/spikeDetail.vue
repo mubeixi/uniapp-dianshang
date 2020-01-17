@@ -995,6 +995,11 @@ export default {
         	})
         },
         goBack(){
+			// #ifdef H5
+			history.go(-1);
+			return;
+
+			// #endif
 			uni.navigateBack()
         	// goBack();
         },

@@ -95,6 +95,7 @@ export const checkIsLogin = (redirect, tip) => {
                 // location.replace('/fre/pages/login/login')
                 // return;
                 // #endif
+
                 uni.navigateTo({
                     url: '/pages/login/login'
                 })

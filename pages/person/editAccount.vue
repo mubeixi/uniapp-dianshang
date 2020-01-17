@@ -17,18 +17,7 @@
 				<view>修改支付密码</view>
 				<image :src="'/static/client/right.png'|domain" mode=""></image>
 			</view>
-			<view class="item" v-if="isDev" @click="goOrderCheck">
-				<view>核销</view>
-				<image :src="'/static/client/right.png'|domain" mode=""></image>
-			</view>
-			<view class="item" v-if="isDev" @click="goRotate">
-				<view>大转盘</view>
-				<image :src="'/static/client/right.png'|domain" mode=""></image>
-			</view>
-			<view class="item" v-if="isDev" @click="goOrder">
-				<view>进货订单</view>
-				<image :src="'/static/client/right.png'|domain" mode=""></image>
-			</view>
+
 		</view>
 		<view class="btn" @click="logoutFunc">退出登录</view>
 	</view>

@@ -230,6 +230,7 @@
 		mixins: [pageMixin],
 		data() {
 			return {
+				h5_wx_login:false,
 				refreshInit:false,
 				channels:[],
 				froms: '', //跳转过来的路由
@@ -471,7 +472,7 @@
 				}
 				console.log(wxAuthUrl)
 
-				window.location.href = wxAuthUrl;
+				location.replace(wxAuthUrl)
 
 
 
@@ -632,19 +633,28 @@
 
 
 				//toast('登录成功', 'success')
-				// #ifdef H5
-				//微信登录才这么走
 
+
+				// #ifdef H5
+
+				//微信登录才这么走
 				let login_farward_url = ls.get('login_farward_url');
+				console.log('好好后退一下',this.h5_wx_login)
+				if(this.h5_wx_login){
+
+					history.go(-2);
+					return;
+				}
 
 				if(login_farward_url){
 					ls.remove('login_farward_url');
+					ls.set('is_login_redirct',1)
 					//location.replace(login_farward_url);
 					// uni.navigateBack({
 					// 	delta: 2
 					// });
 					// history.go(-2);
-					location.href = login_farward_url
+					location.replace(login_farward_url)
 					return;
 				}else{
 					uni.reLaunch({
@@ -652,32 +662,7 @@
 					})
 				}
 
-				// if(GetQueryByString(location.href,'code')){
-				// 	uni.reLaunch({
-				// 		url: '/pages/index/index'
-				// 	})
-				// }else{
 
-				// 	//不是微信登录
-				// 	if(history.length>1){
-				// 		history.back();
-				// 	}else{
-				// 		uni.reLaunch({
-				// 			url: '/pages/index/index'
-				// 		})
-				// 	}
-				// }
-				// location.href = ls.get('login_farward_url');//没办法
-				// //alert(history.length);
-				// //hack navigateBack无效
-				// if(history.length>1){
-				// 	history.back();
-				//
-				// }else{
-				// 	uni.switchTab({
-				// 		url: '/pages/index/index'
-				// 	})
-				// }
 
 				return;
 
@@ -737,6 +722,7 @@
 					}).then(res => {
 						console.log(JSON.stringify(res))
 						if(res.errorCode === 0){
+							this.h5_wx_login = true;//标记是h5微信登录
 							this.loginCall(res.data)
 						}
 					})

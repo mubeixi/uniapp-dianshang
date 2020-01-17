@@ -211,12 +211,18 @@
 			</view>
 			<scroll-view style="height:430rpx;width:95%;"  scroll-y="true" class="bMbx" v-if="type=='coupon'">
 				<view class="fMbx scroll-view-item">优惠券选择</view>
-				<view class="iMbx scroll-view-item" v-for="(coupon,i) in orderInfo.coupon_list" :key="i">
+				<label class="iMbx scroll-view-item" v-for="(coupon,i) in orderInfo.coupon_list" :key="i">
 					满{{coupon.Coupon_Condition}} - {{coupon.Coupon_Cash > 0 ? coupon.Coupon_Cash : coupon.Coupon_Discount}}
 					<radio-group @change="radioChange">
-						<radio :value="coupon.Coupon_ID" :checked="i===current" style="float:right;" color="#F43131"/>
+						<radio :value="''+coupon.Coupon_ID" :checked="i===current" style="float:right;" color="#F43131"/>
 					</radio-group>
-				</view>
+				</label>
+				<label class="iMbx scroll-view-item" >
+					不使用优惠
+					<radio-group @change="notUseCoupon">
+						<radio  :checked="''===current" style="float:right;" color="#F43131"/>
+					</radio-group>
+				</label>
 			</scroll-view>
 			<view class="sure" @click="closeMethod">
 				确定
@@ -499,7 +505,7 @@ export default {
 					this.postData.user_name = this.user_name;
 					this.postData.user_mobile = this.user_mobile;
 				}
-				
+
 				if(this.postData.shipping_id=='is_store'){
 					let obj={}
 					for(let it in this.orderInfo.CartList){
@@ -633,6 +639,11 @@ export default {
 			//#endif
 			this.postData.order_remark = e.detail.value;
 		},
+	  	//
+	  	notUseCoupon(){
+			this.postData.coupon_id = ''
+			this.current = ''
+		},
 		// 优惠券改变
 		radioChange(e){
 			var couponlist = this.orderInfo.coupon_list;
@@ -668,6 +679,13 @@ export default {
         },
 		closeMethod(){
 			if(this.type == 'coupon') {
+				//不使用优惠
+				if(!this.postData.coupon_id){
+					this.coupon_desc = '暂不使用优惠'
+					this.createOrderCheck();
+					this.$refs.popupRef.close();
+					return;
+				}
 				for(var i in this.couponlist) {
 					if(this.couponlist[i].Coupon_ID == this.postData.coupon_id) {
 						this.coupon_desc = `满${this.couponlist[i].Coupon_Condition} - ${this.couponlist[i].Coupon_Cash > 0 ? this.couponlist[i].Coupon_Cash : this.couponlist[i].Coupon_Discount}`

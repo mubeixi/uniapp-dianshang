@@ -428,6 +428,8 @@ export default {
 		const USERINFO = ls.get('userInfo');
 
 
+
+
 		// #ifdef APP-PLUS
 		var icon = plus.nativeObj.View.getViewById("icon");
 		var icons = plus.nativeObj.View.getViewById("icons");
@@ -1098,7 +1100,17 @@ export default {
 			})
 		},
 		goBack(){
+
+			// #ifdef H5
+			history.go(-1);
+			return;
+
+			// #endif
+			//肯定h5
+
+
 			uni.navigateBack()
+
 		},
 		getCommit(item){
 			let data={

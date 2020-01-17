@@ -103,7 +103,17 @@
 					uni.showToast({
 						title: res.msg
 					});
-					this.goBack()
+
+					get_user_info({},{tip:'',errtip:false}).then(res=>{
+						console.log(res.data)
+						this.setUserInfo(res.data);
+						this.goBack()
+					},err=>{
+
+					}).catch(e=>{
+						console.log(e)
+					})
+
 				},err=>{
 					uni.showToast({
 						title: res.msg,
