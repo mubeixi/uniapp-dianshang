@@ -642,7 +642,7 @@
 				console.log('好好后退一下',this.h5_wx_login)
 				if(this.h5_wx_login){
 
-					history.go(-3);
+					history.go(-2);
 					return;
 				}
 
