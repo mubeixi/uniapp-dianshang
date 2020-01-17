@@ -54,6 +54,7 @@
 		components: {uniRate},
 		data() {
 			return {
+				Note:'',
 				imgs:[],//上传图片预览
 				arr:[],//评价上传图片
 				isSubmit:true,//是否可以提交
@@ -173,7 +174,7 @@
 
 				let temp_file_list  = await chooseImageByPromise({count:(9-that.imgs.length),sizeType})
 				if(!temp_file_list)return;
-				for(let item of tempFiles){
+				for(let item of temp_file_list){
 					that.imgs.push(item)
 				}
 
