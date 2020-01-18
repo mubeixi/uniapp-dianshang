@@ -706,11 +706,10 @@ export default {
 				case 'pic':
 					//this.$toast('comming soon')
 
-					let sharePic = await getProductSharePic({'product_id':this.Products_ID},{tip:'努力加载中',mask:true}).then(res=>{
-						console.log(res)
-						ls.set('temp_sharepic_info',res.data)
-						return res.data.img_url
-					})
+					let res= await getProductSharePic({'product_id':this.Products_ID},{tip:'努力加载中',mask:true})
+					ls.set('temp_sharepic_info',res.data)
+
+					let sharePic =res.data.img_url
 
 					console.log('海报的地址是'+sharePic)
 
