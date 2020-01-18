@@ -9,7 +9,146 @@
 					<view @click="goBack" class="funicon icon icon-fanhui inline-block"></view>
 					登陆 / 注册
 				</h1>
-				<div class="codeLogin">
+
+				<!-- #ifdef H5 -->
+				<div class="otherLogin-top" v-if="isShowWeiXin==1 && !showCodeLogin">
+					<div class="box">
+
+						<div class="otherLogin-top-item" v-for="(channel,idx) in channels" v-if="channel.type=='wx_mp'" @click="weixinlogin(channel)">
+<!--							<i   class="icon funicon icon-weixin"></i>-->
+							<image class="fun-icon-weixin icon" src="/static/login/icon_wx.png"></image>
+							<div class="text">微信登录</div>
+						</div>
+
+					</div>
+				</div>
+				<!-- #endif -->
+
+				<!-- #ifdef MP-WEIXIN -->
+				<div class="otherLogin-top" v-if="!showCodeLogin">
+					<div class="box">
+						<div class="otherLogin-top-item" v-for="(channel,idx) in channels" v-if="channel.type=='wx_lp'" @click="openLoginDialog">
+<!--							<i  class="icon funicon icon-weixin" ></i>-->
+							<image class="fun-icon-weixin icon" src="/static/login/icon_wx.png"></image>
+							<div class="text">微信登录</div>
+						</div>
+					</div>
+				</div>
+				<!-- #endif -->
+
+				<!-- #ifdef APP-PLUS -->
+				<div class="otherLogin-top" v-if="!showCodeLogin">
+					<div class="box">
+						<div class="otherLogin-top-item" v-for="(channel,idx) in channels" v-if="channel.type=='wx_app'" @click="weixinlogin">
+<!--							<i  class="icon funicon icon-weixin"></i>-->
+							<image class="fun-icon-weixin icon" src="/static/login/icon_wx.png"></image>
+							<div class="text">微信登录</div>
+						</div>
+					</div>
+				</div>
+				<!-- #endif -->
+
+
+
+
+
+				<!-- #ifdef H5 -->
+				<div class="otherLogin" v-show="!showCodeLogin">
+					<div class="flex box" style="width: 100px;text-align: center;margin: 0 auto;">
+						<div class="inline-block flex1 text-center" >
+<!--							<i v-if="channel.type=='wx_mp'" @click="weixinlogin(channel)" class="funicon icon-weixin"></i>-->
+<!--							<i v-if="channel.type=='qq'" @click="qqlogin(channel)" style="color: #2eb1f1;font-size: 32px;margin-top: 2px" class="funicon icon-QQ1"></i>-->
+							<i @click="showCodeLoginFn" v-if="!showCodeLogin" class="funicon icon-icon_mobilephonelanding"></i>
+						</div>
+
+					</div>
+				</div>
+
+				<div class="otherLogin" v-show="showCodeLogin">
+					<div class="flex box" style="width: 100px;text-align: center;margin: 0 auto;">
+						<div class="inline-block flex1 text-center" v-for="(channel,idx) in channels">
+							<i v-if="channel.type=='wx_mp'" @click="weixinlogin(channel)" class="funicon icon-weixin"></i>
+							<i v-if="channel.type=='qq'" @click="qqlogin(channel)" style="color: #2eb1f1;font-size: 32px;margin-top: 2px" class="funicon icon-QQ1"></i>
+						</div>
+					</div>
+				</div>
+				<!-- #endif -->
+
+				<!-- #ifdef MP-WEIXIN -->
+				<div class="otherLogin mp-weixin" v-show="!showCodeLogin">
+					<div class="box" style="margin: 0 30px;">
+
+						<div class="inline-block flex1 text-center" >
+
+							<!--							<button v-if="channel.type=='wx_lp'" size="mini" type="primary" class="text-center" open-type="getUserInfo"  @getuserinfo="weixinlogin">登录</button>-->
+<!--							<i v-if="channel.type=='wx_lp'" @click="openLoginDialog" class="funicon icon-weixin font24" ></i>-->
+							<i @click="showCodeLoginFn" v-if="!showCodeLogin" class="funicon icon-icon_mobilephonelanding"></i>
+							<!-- <i v-if="channel.type=='wx_mp'" @click="weixinlogin(channel)" class="funicon icon-weixin"></i>
+							<i v-if="channel.type=='qq'" @click="qqlogin(channel)" style="color: #2eb1f1;font-size: 32px;margin-top: 2px" class="funicon icon-QQ1"></i> -->
+						</div>
+
+					</div>
+				</div>
+
+				<div class="otherLogin mp-weixin"  v-show="showCodeLogin">
+					<div class="box" style="margin: 0 30px;">
+						<div class="inline-block flex1 text-center" v-for="(channel,idx) in channels">
+							<!--							<button v-if="channel.type=='wx_lp'" size="mini" type="primary" class="text-center" open-type="getUserInfo"  @getuserinfo="weixinlogin">登录</button>-->
+							<i v-if="channel.type=='wx_lp'" @click="openLoginDialog" class="funicon icon-weixin font24" ></i>
+							<!-- <i v-if="channel.type=='wx_mp'" @click="weixinlogin(channel)" class="funicon icon-weixin"></i>
+							<i v-if="channel.type=='qq'" @click="qqlogin(channel)" style="color: #2eb1f1;font-size: 32px;margin-top: 2px" class="funicon icon-QQ1"></i> -->
+						</div>
+					</div>
+				</div>
+				<!-- #endif -->
+
+				<!-- #ifdef APP-PLUS -->
+				<div class="otherLogin" v-show="!showCodeLogin">
+					<div class="flex box" style="width: 100px;text-align: center;margin: 0 auto;">
+						<div class="inline-block flex1 text-center">
+
+							<!--							<button  size="mini" type="primary" class="text-center" open-type="getUserInfo"  @getuserinfo="weixinlogin">登录</button>-->
+							<!-- <i v-if="channel.type=='wx_lp'" @click="weixinlogin" class="funicon icon-weixin font24" ></i> -->
+							<!-- <i v-if="channel.type=='wx_mp'" @click="weixinlogin(channel)" class="funicon icon-weixin"></i>
+							<i v-if="channel.type=='qq'" @click="qqlogin(channel)" style="color: #2eb1f1;font-size: 32px;margin-top: 2px" class="funicon icon-QQ1"></i> -->
+<!--							<div v-if="channel.type=='wx_app'" class="inline-block flex1 text-center" @click="weixinlogin"><i class="funicon icon-weixin"></i></div>-->
+							<i @click="showCodeLoginFn" v-if="!showCodeLogin" class="funicon icon-icon_mobilephonelanding"></i>
+						</div>
+
+
+					</div>
+				</div>
+
+				<div class="otherLogin" v-show="showCodeLogin">
+					<div class="flex box" style="width: 100px;text-align: center;margin: 0 auto;">
+						<div class="inline-block flex1 text-center" v-for="(channel,idx) in channels">
+							<!--							<button  size="mini" type="primary" class="text-center" open-type="getUserInfo"  @getuserinfo="weixinlogin">登录</button>-->
+							<!-- <i v-if="channel.type=='wx_lp'" @click="weixinlogin" class="funicon icon-weixin font24" ></i> -->
+							<!-- <i v-if="channel.type=='wx_mp'" @click="weixinlogin(channel)" class="funicon icon-weixin"></i>
+							<i v-if="channel.type=='qq'" @click="qqlogin(channel)" style="color: #2eb1f1;font-size: 32px;margin-top: 2px" class="funicon icon-QQ1"></i> -->
+							<div v-if="channel.type=='wx_app'" class="inline-block flex1 text-center" @click="weixinlogin"><i class="funicon icon-weixin"></i></div>
+						</div>
+					</div>
+				</div>
+				<!-- #endif -->
+
+
+
+				<!-- #ifdef H5 -->
+				<div class="codeLogin" v-if="!isShowWeiXin || showCodeLogin">
+					<label class="inputLable flex line20">
+						<span>+{{ telNum }}</span>
+						<input type="number" placeholder="请输入手机号" v-model="mobile" />
+					</label>
+					<button type="primary" class="submitBtn sendCode" @click="codeSendVerification(4)" :disabled="isCodeDisabled">发送验证码</button>
+					<div class="passwordLogin" @click="(status = 2), (loginStatus = 2)">
+						使用密码登陆
+					</div>
+				</div>
+				<!-- #endif -->
+
+				<!-- #ifndef H5 -->
+				<div class="codeLogin" v-if="showCodeLogin">
 					<label class="inputLable flex line20">
 
 						<span>+{{ telNum }}</span>
@@ -20,50 +159,10 @@
 						使用密码登陆
 					</div>
 				</div>
-
-				<!-- #ifdef H5 -->
-				<div class="otherLogin" v-show="isShowWeiXin==1">
-					<div class="flex box" style="width: 100px;text-align: center;margin: 0 auto;">
-						<div class="inline-block flex1 text-center" v-for="(channel,idx) in channels">
-							<i v-if="channel.type=='wx_mp'" @click="weixinlogin(channel)" class="funicon icon-weixin"></i>
-							<i v-if="channel.type=='qq'" @click="qqlogin(channel)" style="color: #2eb1f1;font-size: 32px;margin-top: 2px" class="funicon icon-QQ1"></i>
-						</div>
-
-					</div>
-				</div>
-				<!-- #endif -->
-				<!-- #ifdef MP-WEIXIN -->
-				<div class="otherLogin mp-weixin">
-					<div class="box" style="margin: 0 30px;">
-
-						<div class="inline-block flex1 text-center" v-for="(channel,idx) in channels">
-
-<!--							<button v-if="channel.type=='wx_lp'" size="mini" type="primary" class="text-center" open-type="getUserInfo"  @getuserinfo="weixinlogin">登录</button>-->
-							 <i v-if="channel.type=='wx_lp'" @click="openLoginDialog" class="funicon icon-weixin font24" ></i>
-							<!-- <i v-if="channel.type=='wx_mp'" @click="weixinlogin(channel)" class="funicon icon-weixin"></i>
-							<i v-if="channel.type=='qq'" @click="qqlogin(channel)" style="color: #2eb1f1;font-size: 32px;margin-top: 2px" class="funicon icon-QQ1"></i> -->
-						</div>
-
-					</div>
-				</div>
 				<!-- #endif -->
 
-				<!-- #ifdef APP-PLUS -->
-				<div class="otherLogin">
-					<div class="flex box" style="width: 100px;text-align: center;margin: 0 auto;">
-						<div class="inline-block flex1 text-center" v-for="(channel,idx) in channels">
-
-<!--							<button  size="mini" type="primary" class="text-center" open-type="getUserInfo"  @getuserinfo="weixinlogin">登录</button>-->
-							<!-- <i v-if="channel.type=='wx_lp'" @click="weixinlogin" class="funicon icon-weixin font24" ></i> -->
-							<!-- <i v-if="channel.type=='wx_mp'" @click="weixinlogin(channel)" class="funicon icon-weixin"></i>
-							<i v-if="channel.type=='qq'" @click="qqlogin(channel)" style="color: #2eb1f1;font-size: 32px;margin-top: 2px" class="funicon icon-QQ1"></i> -->
-							<div v-if="channel.type=='wx_app'" class="inline-block flex1 text-center" @click="weixinlogin"><i class="funicon icon-weixin"></i></div>
-						</div>
 
 
-					</div>
-				</div>
-				<!-- #endif -->
 
 			</li>
 			<li class="phoneContent" v-else-if="status == 2">
@@ -230,6 +329,7 @@
 		mixins: [pageMixin],
 		data() {
 			return {
+				showCodeLogin:false,
 				h5_wx_login:false,
 				refreshInit:false,
 				channels:[],
@@ -307,6 +407,9 @@
 			}
 		},
 		methods: {
+			showCodeLoginFn(){
+				this.showCodeLogin = !this.showCodeLogin
+			},
 			openLoginDialog(){
 				this.$refs.refLogin.show()
 			},
@@ -748,7 +851,10 @@
 
 <style scoped lang="scss">
 	@import "../../static/css/scssConfig";
-
+	.icon-icon_mobilephonelanding{
+		color: #E6A23C !important;
+		font-size: 80rpx !important;
+	}
 	.joinForm{
 		background: white;
 		width: 500rpx;
@@ -997,6 +1103,7 @@
 			position: fixed;
 			bottom: 60px;
 			left: 0;
+			/*margin: 55px 0 0;*/
 			text-align: center;
 			width: 100%;
 
@@ -1046,6 +1153,72 @@
 
 			.funicon {
 				background-color: white;
+				color: $weixinColor;
+				font-size: 72upx;
+				vertical-align: top;
+				display: inline-block;
+			}
+			/* #ifdef APP-PLUS */
+			.icon-weixin{
+				font-size: 88upx;
+			}
+			/* #endif */
+
+		}
+
+		.otherLogin-top {
+			/*position: fixed;*/
+			/*bottom: 60px;*/
+			/*left: 0;*/
+			/*margin: 55px 0 0;*/
+			position: absolute;
+			top: 50%;
+			transform: translateY(-50%);
+			text-align: center;
+			width: 100%;
+
+
+			.otherLogin-top-item{
+				width: 650rpx;
+				height: 94rpx;
+				background: #59a228;
+				display: flex;
+				border-radius: 4px;
+				margin: 0 auto;
+				align-items: center;
+				justify-content: center;
+
+				.text{
+					padding-left: 6px;
+					color: white;
+				}
+				.fun-icon-weixin{
+					color: white;
+					width: 70rpx;
+					height: 60rpx;
+				}
+
+
+			}
+
+			&.mp-weixin {
+
+				.box {
+
+					&:after,
+					&:before {
+						display: none;
+					}
+				}
+
+			}
+
+			.box {
+
+			}
+
+			.funicon {
+
 				color: $weixinColor;
 				font-size: 72upx;
 				vertical-align: top;

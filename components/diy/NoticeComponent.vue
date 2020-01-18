@@ -66,7 +66,7 @@
 
                 const query = uni.createSelectorQuery().in(this);
                 query.select('#content').boundingClientRect(data => {
-                    //console.log(data)
+                    console.log(data)
                     width = data.width
                 }).exec();
 

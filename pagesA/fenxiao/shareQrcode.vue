@@ -34,6 +34,8 @@
 		mixins:[pageMixin],
 		data() {
 			return {
+				type:'',
+				again:'',
 				current_url:'',
 				current_poster:null,
 				currentIdx:0,
@@ -62,28 +64,30 @@
 			context.draw()
 		},
 		onShow(){
-			getDisInit({pageSize:999},{errtip:false}).then(res=>{
-				this.info= res.data;
-				this.userInfo.Is_Distribute=1;
-				this.disInfo = res.data.disInfo;
-
-
-			},err=>{
-
-			}).catch(err=>{
-				console.log(err)
-			})
+			// getDisInit({pageSize:999},{errtip:false}).then(res=>{
+			// 	this.info= res.data;
+			// 	this.userInfo.Is_Distribute=1;
+			// 	this.disInfo = res.data.disInfo;
+			//
+			//
+			// },err=>{
+			//
+			// }).catch(err=>{
+			// 	console.log(err)
+			// })
 
 			//this.userInfo = this.getUserInfo()
 		},
 		onLoad(options){
 			let {type,again} = options
+			this.type = type
+			this.again = again
 			this.initFunc(type,again)
 		},
 		methods:{
 			setSelect(poster){
 				this.current_poster = poster
-				getDistributeWxQrcode({type,again,owner_id:this.userInfo.User_ID,poster_id:poster.id},{tip:'生成中'}).then(res=>{
+				getDistributeWxQrcode({type:this.type,again:this.again,owner_id:this.userInfo.User_ID,poster_id:poster.id},{tip:'生成中'}).then(res=>{
 					this.current_url = res.data.img_url
 				})
 				//this.current_url = poster.img
@@ -117,7 +121,12 @@
 					// this.qrimg = qrRet.data.img_url;
 
 					let getPosterListResult = await getPosterList({pageSize:999})
-					this.poster_list = getPosterListResult.data
+					let lists = getPosterListResult.data
+					this.poster_list = lists.map(item=>{
+						item.img += '-r200'
+						return item;
+					})
+					 
 
 					if(this.poster_list.length>0){
 						getDistributeWxQrcode({type,again,owner_id:this.userInfo.User_ID,poster_id:this.poster_list[0].id},{tip:'生成中'}).then(res=>{
