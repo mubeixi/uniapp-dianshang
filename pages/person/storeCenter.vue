@@ -128,9 +128,8 @@
 
 <style lang="scss" scoped>
 	.wrap {
-		display: flex;
-		flex-direction: column;
-		height: 100vh;
+
+		min-height: 100vh;
 		background-color: #F8F8F8;
 		.top {
 			position: relative;
@@ -268,10 +267,10 @@
 		.main {
 			display: flex;
 			flex-wrap: wrap;
-			flex: 1;
+
 			width: 100%;
 			background-color: #fff;
-			// padding-bottom: 50rpx;
+
 			.item {
 				position: relative;
 				width: 33%;
