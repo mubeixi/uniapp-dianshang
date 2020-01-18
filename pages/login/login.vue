@@ -15,7 +15,8 @@
 					<div class="box">
 
 						<div class="otherLogin-top-item" v-for="(channel,idx) in channels" v-if="channel.type=='wx_mp'" @click="weixinlogin(channel)">
-							<i   class="icon funicon icon-weixin"></i>
+<!--							<i   class="icon funicon icon-weixin"></i>-->
+							<image class="fun-icon-weixin icon" src="/static/login/icon_wx.png"></image>
 							<div class="text">微信登录</div>
 						</div>
 
@@ -27,7 +28,8 @@
 				<div class="otherLogin-top" v-if="!showCodeLogin">
 					<div class="box">
 						<div class="otherLogin-top-item" v-for="(channel,idx) in channels" v-if="channel.type=='wx_lp'" @click="openLoginDialog">
-							<i  class="icon funicon icon-weixin" ></i>
+<!--							<i  class="icon funicon icon-weixin" ></i>-->
+							<image class="fun-icon-weixin icon" src="/static/login/icon_wx.png"></image>
 							<div class="text">微信登录</div>
 						</div>
 					</div>
@@ -38,7 +40,8 @@
 				<div class="otherLogin-top" v-if="!showCodeLogin">
 					<div class="box">
 						<div class="otherLogin-top-item" v-for="(channel,idx) in channels" v-if="channel.type=='wx_app'" @click="weixinlogin">
-							<i  class="icon funicon icon-weixin"></i>
+<!--							<i  class="icon funicon icon-weixin"></i>-->
+							<image class="fun-icon-weixin icon" src="/static/login/icon_wx.png"></image>
 							<div class="text">微信登录</div>
 						</div>
 					</div>
@@ -1167,23 +1170,35 @@
 			/*position: fixed;*/
 			/*bottom: 60px;*/
 			/*left: 0;*/
-			margin: 55px 0 0;
+			/*margin: 55px 0 0;*/
+			position: absolute;
+			top: 50%;
+			transform: translateY(-50%);
 			text-align: center;
 			width: 100%;
 
+
 			.otherLogin-top-item{
-				background: white;
+				width: 650rpx;
+				height: 94rpx;
+				background: #59a228;
 				display: flex;
-				padding: 6px 15px;
-				border:1px solid #dfdfdf;
 				border-radius: 4px;
 				margin: 0 auto;
 				align-items: center;
 				justify-content: center;
-				width: 200px;
+
 				.text{
-					flex: 1;
+					padding-left: 6px;
+					color: white;
 				}
+				.fun-icon-weixin{
+					color: white;
+					width: 70rpx;
+					height: 60rpx;
+				}
+
+
 			}
 
 			&.mp-weixin {
@@ -1203,7 +1218,7 @@
 			}
 
 			.funicon {
-				background-color: white;
+
 				color: $weixinColor;
 				font-size: 72upx;
 				vertical-align: top;
