@@ -850,7 +850,7 @@
 	@import "../../static/css/scssConfig";
 	.icon-icon_mobilephonelanding{
 		color: #E6A23C !important;
-		font-size: 20px !important;
+		font-size: 80rpx !important;
 	}
 	.joinForm{
 		background: white;

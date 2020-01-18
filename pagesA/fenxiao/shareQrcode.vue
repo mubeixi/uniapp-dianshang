@@ -121,7 +121,12 @@
 					// this.qrimg = qrRet.data.img_url;
 
 					let getPosterListResult = await getPosterList({pageSize:999})
-					this.poster_list = getPosterListResult.data
+					let lists = getPosterListResult.data
+					this.poster_list = lists.map(item=>{
+						item.img += '-r200'
+						return item;
+					})
+					 
 
 					if(this.poster_list.length>0){
 						getDistributeWxQrcode({type,again,owner_id:this.userInfo.User_ID,poster_id:this.poster_list[0].id},{tip:'生成中'}).then(res=>{
