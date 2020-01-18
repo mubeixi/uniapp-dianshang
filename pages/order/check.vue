@@ -725,14 +725,16 @@ export default {
 					return false;
 				}
 				if(res.errorCode == 0) {
-					for(let i in res.data){
-						for(let j in res.data[i]){
-							if(j=='Address_Is_Default'){
-								res.data[i][j] == 1;
-								this.addressinfo = res.data[i]
-							}
-						}
-					}
+					if(!res.data) return
+					this.addressinfo = res.data[0]
+					// for(let i in res.data){
+					// 	for(let j in res.data[i]){
+					// 		if(j=='Address_Is_Default'){
+					// 			res.data[i][j] == 1;
+					// 			this.addressinfo = res.data[i]
+					// 		}
+					// 	}
+					// }
 					this.postData.address_id = this.addressinfo.Address_ID;
 				}
 				this.back_address_id = 0;
