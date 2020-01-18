@@ -634,6 +634,11 @@ export default {
 			return newContent;
 		},
 		async shareFunc(channel) {
+			
+			// #ifdef APP-PLUS
+					const share = uni.getSubNVueById('share')
+					share.hide()
+			// #endif
 
 			let _self = this
 			let path = 'pages/detail/detail?Products_ID='+this.Products_ID;
