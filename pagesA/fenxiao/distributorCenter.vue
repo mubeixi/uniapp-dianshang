@@ -679,6 +679,14 @@
 							icon:"none"
 						})
 						this.submitM=true;
+						setTimeout(function(){
+							uni.navigateBack({
+							    delta: 1
+							});
+							// uni.redirectTo({
+							// 	url:'/pages/fenxiao/distributorLevel'
+							// })
+						},1000)
 						if(res.errorCode==0){
 							this.textShen=res.msg;
 						}else{

@@ -204,8 +204,8 @@
 					<view>
 						{{ship}}
 					</view>
-					<radio-group @change="ShipRadioChange">
-						<radio :value="shipid" :checked="shipid==ship_current" style="float:right;" color="#F43131"/>
+					<radio-group @change="ShipRadioChange" class="mbx-mbx">
+						<radio :value="shipid" :checked="shipid==ship_current" class="mbxs" style="float:right;" color="#F43131"/>
 					</radio-group>
 				</view>
 			</view>
@@ -334,9 +334,10 @@ export default {
 		// #ifdef H5
 		this.selfObj = this
 		// #endif
-		this.tabIdx = this.initData.order_submit_first;
-		let userInfo = this.getUserInfo(true);
-		console.log(this.initData.order_submit_first)
+		//if(this.orderInfo.all_has_stores==1)
+		//this.tabIdx = this.initData.order_submit_first;
+		// let userInfo = this.getUserInfo(true);
+		// console.log(this.initData.order_submit_first)
 	},
 	onLoad(options) {
 		console.log('options is',options)
@@ -724,14 +725,16 @@ export default {
 					return false;
 				}
 				if(res.errorCode == 0) {
-					for(let i in res.data){
-						for(let j in res.data[i]){
-							if(j=='Address_Is_Default'){
-								res.data[i][j] == 1;
-								this.addressinfo = res.data[i]
-							}
-						}
-					}
+					if(!res.data) return
+					this.addressinfo = res.data[0]
+					// for(let i in res.data){
+					// 	for(let j in res.data[i]){
+					// 		if(j=='Address_Is_Default'){
+					// 			res.data[i][j] == 1;
+					// 			this.addressinfo = res.data[i]
+					// 		}
+					// 	}
+					// }
 					this.postData.address_id = this.addressinfo.Address_ID;
 				}
 				this.back_address_id = 0;
@@ -756,6 +759,12 @@ export default {
 						}
 					}
 					this.orderInfo = res.data;
+					//如果该规格有门店 就优先后台设置的
+					if(this.orderInfo.all_has_stores==1){
+						this.tabIdx = this.initData.order_submit_first;
+					}
+					
+					
 					this.couponlist = res.data.coupon_list;
 					this.orderLoading = true;
 					this.postData.shipping_id = res.data.Order_Shipping.shipping_id;
@@ -1166,4 +1175,17 @@ export default {
 }
 .disMbx{display: flex;align-items: center;}
 .zhouri{width: 9px;height: 14px;margin-left: 5px;}
+.mbx-mbx{
+	    display: flex;
+	    flex: 1;
+	    height: 100%;
+	    align-items: center;
+	    justify-content: flex-end;
+}
+.mbxs{
+	    width: 100%;
+	    display: flex;
+	    justify-content: flex-end;
+	    height: 100%;
+}
 </style>
