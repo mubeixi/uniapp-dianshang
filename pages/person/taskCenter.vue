@@ -241,9 +241,9 @@
 			left: 304rpx;
 		}
 		.shengji{
-			width:38rpx;
+			//width:38rpx;
 			height:22rpx;
-			font-size: 16rpx;
+			font-size: 10px;
 			color: #FFFFFF;
 			line-height: 22rpx;
 			background:rgba(133,99,72,1);
@@ -252,6 +252,8 @@
 			top: 132rpx;
 			left: 399rpx;
 			text-align: center;
+			padding-left: 4px;
+			padding-right: 4px;
 		}
 		.numberValue{
 			height:32rpx;
