@@ -116,7 +116,7 @@
 				</div>
 				<!-- #endif -->
 
-				<div class="codeLogin" v-if="showCodeLogin">
+				<div class="codeLogin" v-if="!isShowWeiXin || showCodeLogin">
 					<label class="inputLable flex line20">
 
 						<span>+{{ telNum }}</span>
