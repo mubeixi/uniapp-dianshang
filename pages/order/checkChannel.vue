@@ -13,11 +13,14 @@
 
 <script>
     import {isWeiXin} from "../../common/tool";
-    import {scanMixin} from "../../common/mixin";
+    import {
+        scanMixin,
+        pageMixin
+    } from "../../common/mixin";
     import {error} from "../../common";
 
     export default {
-        mixins:[scanMixin],
+        mixins:[pageMixin,scanMixin],
         name: "checkChannel",
         data(){
             return {

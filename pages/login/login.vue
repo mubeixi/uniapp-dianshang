@@ -654,7 +654,8 @@
 					// 	delta: 2
 					// });
 					// history.go(-2);
-					location.replace(login_farward_url)
+					history.go(-1);
+					//location.replace(login_farward_url)
 					return;
 				}else{
 					uni.reLaunch({

@@ -325,15 +325,20 @@
 			}
 		},
 		onShow() {
-			this.loading = false;
 			if(this.$fun.checkIsLogin()){
 				this.getCart();
 			}
-			this.getProd();
-			this.reset();
 		},
 		async created(){
+
+			this.loading = false;
+
+			this.getProd();
+			this.reset();
+
 			let UserInfo = this.getUserInfo();
+
+
 		},
 		// 上拉触底
 		onReachBottom() {
