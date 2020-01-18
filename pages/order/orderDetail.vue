@@ -79,6 +79,14 @@
 				</div>
 			</div>
 		</div>
+		<view class="other bgwhite" v-if="orderInfo.Order_IsRecieve == 1">
+			<view class="bd">
+		        <view class="o_title">
+		            <span>卡密</span>
+		            <span class="c8">{{orderInfo.Order_Virtual_Cards}}</span>
+		        </view>
+		    </view>
+		</view>
 		<view class="other bgwhite" v-if="orderInfo.Order_IsVirtual == 1">
 			<view class="bd">
                 <view class="o_title">
