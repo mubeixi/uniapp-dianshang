@@ -10,31 +10,44 @@
 					登陆 / 注册
 				</h1>
 
+				<!-- #ifdef H5 -->
 				<div class="otherLogin-top" v-if="isShowWeiXin==1 && !showCodeLogin">
 					<div class="box">
-						<!-- #ifdef H5 -->
+
 						<div class="otherLogin-top-item" v-for="(channel,idx) in channels" v-if="channel.type=='wx_mp'" @click="weixinlogin(channel)">
 							<i   class="icon funicon icon-weixin"></i>
 							<div class="text">微信登录</div>
 						</div>
-						<!-- #endif -->
 
+					</div>
+				</div>
+				<!-- #endif -->
 
-						<!-- #ifdef MP-WEIXIN -->
+				<!-- #ifdef MP-WEIXIN -->
+				<div class="otherLogin-top" v-if="!showCodeLogin">
+					<div class="box">
 						<div class="otherLogin-top-item" v-for="(channel,idx) in channels" v-if="channel.type=='wx_lp'" @click="openLoginDialog">
 							<i  class="icon funicon icon-weixin" ></i>
 							<div class="text">微信登录</div>
 						</div>
-						<!-- #endif -->
-						<!-- #ifdef APP-PLUS -->
-						<div class="otherLogin-top-item" v-for="(channel,idx) in channels" v-if="channel.type=='wx_mp'" @click="weixinlogin">
+					</div>
+				</div>
+				<!-- #endif -->
+
+				<!-- #ifdef APP-PLUS -->
+				<div class="otherLogin-top" v-if="!showCodeLogin">
+					<div class="box">
+						<div class="otherLogin-top-item" v-for="(channel,idx) in channels" v-if="channel.type=='wx_app'" @click="weixinlogin">
 							<i  class="icon funicon icon-weixin"></i>
 							<div class="text">微信登录</div>
 						</div>
-						<!-- #endif -->
-
 					</div>
 				</div>
+				<!-- #endif -->
+
+
+
+
 
 				<!-- #ifdef H5 -->
 				<div class="otherLogin" v-show="!showCodeLogin">
@@ -116,7 +129,23 @@
 				</div>
 				<!-- #endif -->
 
+
+
+				<!-- #ifdef H5 -->
 				<div class="codeLogin" v-if="!isShowWeiXin || showCodeLogin">
+					<label class="inputLable flex line20">
+						<span>+{{ telNum }}</span>
+						<input type="number" placeholder="请输入手机号" v-model="mobile" />
+					</label>
+					<button type="primary" class="submitBtn sendCode" @click="codeSendVerification(4)" :disabled="isCodeDisabled">发送验证码</button>
+					<div class="passwordLogin" @click="(status = 2), (loginStatus = 2)">
+						使用密码登陆
+					</div>
+				</div>
+				<!-- #endif -->
+
+				<!-- #ifndef H5 -->
+				<div class="codeLogin" v-if="showCodeLogin">
 					<label class="inputLable flex line20">
 
 						<span>+{{ telNum }}</span>
@@ -127,6 +156,8 @@
 						使用密码登陆
 					</div>
 				</div>
+				<!-- #endif -->
+
 
 
 
@@ -819,6 +850,7 @@
 	@import "../../static/css/scssConfig";
 	.icon-icon_mobilephonelanding{
 		color: #E6A23C !important;
+		font-size: 20px !important;
 	}
 	.joinForm{
 		background: white;
