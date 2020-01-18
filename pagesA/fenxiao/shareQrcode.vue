@@ -67,7 +67,7 @@
 				this.userInfo.Is_Distribute=1;
 				this.disInfo = res.data.disInfo;
 
-				this.current_url = this.disInfo[0].img
+
 			},err=>{
 
 			}).catch(err=>{
@@ -83,7 +83,10 @@
 		methods:{
 			setSelect(poster){
 				this.current_poster = poster
-				this.current_url = poster.img
+				getDistributeWxQrcode({type,again,owner_id:this.userInfo.User_ID,poster_id:poster.id},{tip:'生成中'}).then(res=>{
+					this.current_url = res.data.img_url
+				})
+				//this.current_url = poster.img
 			},
 			preFn(){
 				if(!this.current_url){
@@ -110,11 +113,20 @@
 
 				try {
 					//先获取二维码
-					let qrRet = await getDistributeWxQrcode({type,again,owner_id:this.userInfo.User_ID},{tip:'生成中'})
-					this.qrimg = qrRet.data.img_url;
+					// let qrRet = await getDistributeWxQrcode({type,again,owner_id:this.userInfo.User_ID},{tip:'生成中'})
+					// this.qrimg = qrRet.data.img_url;
 
 					let getPosterListResult = await getPosterList({pageSize:999})
 					this.poster_list = getPosterListResult.data
+
+					if(this.poster_list.length>0){
+						getDistributeWxQrcode({type,again,owner_id:this.userInfo.User_ID,poster_id:this.poster_list[0].id},{tip:'生成中'}).then(res=>{
+							this.current_url = res.data.img_url
+						})
+						// = this.poster_list[0].img
+					}
+
+
 				}catch (e) {
 					error(e.msg||'获取海报模板失败')
 				}

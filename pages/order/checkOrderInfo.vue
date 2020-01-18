@@ -50,7 +50,7 @@
             <div class="row" v-if="orderInfo.Integral_Money > 0"><div class="label">积分抵扣</div><div class="form-item">￥-{{orderInfo.Integral_Money}}</div></div>
             <div class="row" v-if="orderInfo.Manjian_Cash > 0"><div class="label">满减优惠</div><div class="form-item">￥-{{orderInfo.Manjian_Cash}}</div></div>
             <div class="row" v-if="orderInfo.user_curagio_money > 0"><div class="label">会员折扣</div><div class="form-item">￥-{{orderInfo.user_curagio_money}}</div></div>
-            <div class="row"><div class="label">实付</div><div class="form-item danger-color">￥{{orderInfo.Order_Fyepay}}</div></div>
+            <div class="row"><div class="label">实付</div><div class="form-item danger-color">￥{{orderInfo.Order_TotalPrice}}</div></div>
             <div class="row"><div class="label">获取积分</div><div class="form-item">{{orderInfo.Integral_Get}}</div></div>
             <div class="row"><div class="label">下单时间</div><div class="form-item">{{orderInfo.Order_CreateTime | formatTime}}</div></div>
             <div class="row"><div class="label">付款时间</div><div class="form-item">{{orderInfo.Pay_time | formatTime}}</div></div>
