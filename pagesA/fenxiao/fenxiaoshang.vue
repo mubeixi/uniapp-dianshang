@@ -18,7 +18,7 @@
 <script>
 	import {getUserDisInfo,updateUserDisInfo,uploadImage,GET_ENV,get_Users_ID,get_User_ID,createToken,GET_ACCESS_TOKEN} from '../../common/fetch.js';
 
-	import { staticUrl } from '../../common/env.js';
+	import { staticUrl,apiBaseUrl } from '../../common/env.js';
 	import {pageMixin} from "../../common/mixin";
 	import {error,toast} from "../../common";
 	import {mapActions} from 'vuex';
@@ -115,7 +115,7 @@
 									// #ifndef MP-TOUTIAO
 										//上传图片
 										uni.uploadFile({
-												url: staticUrl+'/api/little_program/shopconfig.php',
+												url: apiBaseUrl+'/api/little_program/shopconfig.php',
 												filePath: that.imgs[0],
 												name: 'image',
 												formData: data,
