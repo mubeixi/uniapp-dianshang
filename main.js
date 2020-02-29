@@ -19,14 +19,12 @@ Vue.component('wzw-dialog',ModelComponents)
 
 
 // #ifdef H5
-// var fundebug = require("fundebug-javascript");
-// fundebug.apikey = "d9ecce9bd55749ebd486148b15e172c36198bb3ce03d0946d5969557f58f2985";
 
 // import * as fundebug from "fundebug-javascript";
 // import fundebugVue from "fundebug-vue";
-
+//
 // fundebug.init({
-//     apikey: "d9ecce9bd55749ebd486148b15e172c36198bb3ce03d0946d5969557f58f2985"
+//     apikey: "61884c104ad275ca895d62af695b5f1aaef3f4f382fd392627e239b7e24a6583"
 // })
 // fundebugVue(fundebug, Vue);
 // require('fundebug-revideo');

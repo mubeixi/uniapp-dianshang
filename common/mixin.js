@@ -142,27 +142,27 @@ export const Analysis = {
 		// #endif
 
 	},
-	onTabItemTap(onTabItemTap){
-
-		let {pagePath,index,text} = onTabItemTap
-
-		const res = uni.getSystemInfoSync();
-		const fullWidth = res.screenWidth;
-		const fullHeight = res.screenHeight
-
-		let x = fullWidth/5*(index+1.5);//这样坐标就是正中间了
-		let y = fullHeight-25;//正好50px底部
-
-		//合并内容
-		//Object.assign(this.analysisExt,{onTabItemTap})
-		this.analysisExt.onTabItemTap = JSON.stringify(onTabItemTap)
-
-		this.currentPageName = ls.get('temp_tab_url')
-		this.commonClick({target:{x,y,view_type:'tap'}})
-
-		ls.set('temp_tab_url',pagePath)
-
-	},
+    // onTabItemTap(onTabItemTap){
+	//
+	// 	let {pagePath,index,text} = onTabItemTap
+	//
+	// 	const res = uni.getSystemInfoSync();
+	// 	const fullWidth = res.screenWidth;
+	// 	const fullHeight = res.screenHeight
+	//
+	// 	let x = fullWidth/5*(index+1.5);//这样坐标就是正中间了
+	// 	let y = fullHeight-25;//正好50px底部
+	//
+	// 	//合并内容
+	// 	//Object.assign(this.analysisExt,{onTabItemTap})
+	// 	this.analysisExt.onTabItemTap = JSON.stringify(onTabItemTap)
+	//
+	// 	this.currentPageName = ls.get('temp_tab_url')
+	// 	this.commonClick({target:{x,y,view_type:'tap'}})
+	//
+	// 	ls.set('temp_tab_url',pagePath)
+	//
+	// },
 	methods:{
 		commonClick(evt){
 

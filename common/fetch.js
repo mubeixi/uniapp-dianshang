@@ -47,7 +47,7 @@ const fetch = function (act, param, options = false, url = '/api/little_program/
         });
         return;
     }
-    ;
+
     const d = new Date();
     //console.log(options)
     if (options.hasOwnProperty('is_tap') && options.is_tap) {

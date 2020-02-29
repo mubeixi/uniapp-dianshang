@@ -24,13 +24,13 @@
         //目前只有app和小程序用到了应用的全局onLaunch，h5环境下这里不执行的
 		onLaunch: function(option) {
 
-            // console.log('App Launch')
+            console.log('App Launch')
 
 			// #ifndef H5
 			if(checkIsLogin()){
 				upUserLog({},{errtip:false}).then(res=>{
 				    console.log('success',res)
-				},err=>{console.log('error',err)}).catch(e=>{console.log('catch',e)})
+				}).catch(e=>{console.log('catch',e)})
 			}
 			// #endif
 
@@ -92,21 +92,25 @@
             //每次加载都清空全站配置
             ls.remove('initData');
             getSystemConf().then(res => {
+                console.log('每次加载都清空全站配置 success')
                 ls.set('initData',res.data)
-            },err=>{}).catch(error=>{})
+            }).catch(error=>{
+                console.log(error)
+            })
 
 		},
 		onShow: function() {
-			// console.log('App Show')
+			console.log('App Show')
 		},
 		onHide: function() {
-			// console.log('App Hide')
+			console.log('App Hide')
 		},
         //后期可以接自定义的错误上报
         onError:function(err){
 
 			let msg = err?JSON.stringify(err):'程序错误'
 
+            //检查完了再放出来
 			if(isDev && msg && msg!='{}'){
 				uni.showModal({
 				    title:'错误',

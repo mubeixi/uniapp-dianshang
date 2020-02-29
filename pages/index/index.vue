@@ -169,25 +169,32 @@
 					url:tabbarRouter[idx]
 				})
 			},
-			async get_tmpl_data(){
+			get_tmpl_data(){
+                let rt = {}
+			    return new Promise((resolve, reject) => {
 
-				let rt = {}
-				await getSkinConfig({}).then(res => {
-					if(res.data.Home_Json){
-						rt = JSON.parse(res.data.Home_Json)
-					}
-				}).catch(e=>{
-					console.log('获取首页模板信息失败')
-					console.log(e)
+                    getSkinConfig().then(res => {
+                        if(res.data.Home_Json){
+                            rt = JSON.parse(res.data.Home_Json)
+							resolve(rt)
+                        }else{
+                            reject(false)
+						}
+                    }).catch(e=>{
+                        console.log('获取首页模板信息失败')
+                        console.log(e)
+						reject(false)
+                    })
+
 				})
 
-				return rt
+
 			},
 			async initFunc(){
 				let _self = this;
 
 				let mixinData = await this.get_tmpl_data()
-
+				if(mixinData === false)return;
 				let templateData = mixinData.plugin;
 				this.system = mixinData.system;
 
