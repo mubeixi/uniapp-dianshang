@@ -725,7 +725,7 @@ export default {
 					return false;
 				}
 				if(res.errorCode == 0) {
-					if(!res.data) return
+					if(!res.data[0]) return
 					this.addressinfo = res.data[0]
 					// for(let i in res.data){
 					// 	for(let j in res.data[i]){
