@@ -1,5 +1,5 @@
 <template>
-    <div class="goods wrap" id="goods" v-if="goodsList.length>0"
+    <div class="goods wrap" id="goods" v-if="loadFinish && goodsList.length>0"
          :style="{background:goods.style.bgColor,paddingLeft:goods.style.wrapmargin+'px',paddingRight:goods.style.wrapmargin+'px'}">
         <div :class="className">
             <ul class="list">
@@ -31,8 +31,7 @@
                                 {{item.Products_BriefDescription||'暂无介绍'}}
                             </div>
                             <div v-if="goods.config.style!=1" v-show="goods.config.attr.price.show" class="price"><span
-                                    class="graytext2 font12">秒杀价 </span><span class="sign">￥</span><span
-                                    style="font-weight: 600">{{item.attr_json.price}}</span><span
+                                    class="graytext2 font12">秒杀价 </span><span class="sign">￥</span><span style="font-weight: 600">{{item.attr_json.price}}</span><span
                                     class="graytext2 market-price font12"> ￥{{item.Products_PriceX}} </span>
                             </div>
                         </div>
@@ -79,6 +78,7 @@
         data() {
             return {
                 goodsList: [],
+                loadFinish:false,
                 infoTmpl: {
                     Products_ID: 33,
                     Products_Name: '商品名称',
@@ -221,6 +221,8 @@
                             item.countdown = {}
                             return item
                         })
+
+                        this.loadFinish = true
 
 
                     })
