@@ -30,8 +30,8 @@
 <!--			</view>-->
 <!--		</view>-->
 		<view class="last">
-			<view class="first" v-show="initData.login_methods.mp_flag==1">
-				<view class="left" @click="spreadQr(0,0)">
+			<view class="first" >
+				<view class="left" @click="spreadQr(0,0)" v-show="initData.login_methods.mp_flag==1">
 					<image class="image" :src="'/static/client/fenxiao/weixin.png'|domain" ></image>
 					<view class="haha">微信二维码</view>
 				</view>
