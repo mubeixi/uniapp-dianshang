@@ -20,14 +20,36 @@ Vue.component('wzw-dialog',ModelComponents)
 
 // #ifdef H5
 
-// import * as fundebug from "fundebug-javascript";
-// import fundebugVue from "fundebug-vue";
-//
-// fundebug.init({
-//     apikey: "61884c104ad275ca895d62af695b5f1aaef3f4f382fd392627e239b7e24a6583"
-// })
-// fundebugVue(fundebug, Vue);
-// require('fundebug-revideo');
+import * as fundebug from "fundebug-javascript";
+import fundebugVue from "fundebug-vue";
+
+fundebug.init({
+    apikey: "61884c104ad275ca895d62af695b5f1aaef3f4f382fd392627e239b7e24a6583"
+})
+fundebugVue(fundebug, Vue);
+require('fundebug-revideo');
+
+
+window.onerror=handleErr
+
+var txt=""
+
+function handleErr(errorMessage, scriptURI, lineNumber,columnNumber,errorObj)
+{
+  txt="There was an error on this page.\n\n"
+  txt+="Error: " + errorMessage + "\n"
+  txt+="URL: " + scriptURI + "\n"
+  txt+="行: " + lineNumber + "\n\n"
+  txt+="列: " + columnNumber + "\n\n"
+  txt+="错误详情: " + JSON.stringify(errorObj) + "\n\n"
+  txt+="Click OK to continue.\n\n"
+  
+  if ("fundebug" in window) {
+      fundebug.notify("handleErr", txt);
+  }
+  //alert(txt)
+  return true
+}
 
 // #endif
 

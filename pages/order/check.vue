@@ -725,11 +725,10 @@ export default {
 					return false;
 				}
 				if(res.errorCode == 0) {
-					if(!res.data) return
+					if(!res.data[0]) return
 					if(res.data.length>0){
 						this.addressinfo = res.data[0]
 					}
-					
 					// for(let i in res.data){
 					// 	for(let j in res.data[i]){
 					// 		if(j=='Address_Is_Default'){
