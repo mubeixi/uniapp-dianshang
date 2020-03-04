@@ -54,7 +54,7 @@
 					</view>
 				</view>
 			</view>
-			<view class="chakan" @click="goFinance" v-if="!pro.total_sales && pro.total_sales!=0">
+			<view class="chakan" @click="goFinance" v-if="pro.total_sales && pro.total_sales!=0">
 				查看明细
 				<image class="image" :src="'/static/client/fenxiao/chakan.png'|domain" ></image>
 			</view>
