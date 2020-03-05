@@ -21,7 +21,7 @@
 							<!--<block v-if="is_has_child(classifyData)">-->
 								<block v-if="j==0">
 									<view v-if="first.Category_Img" class="imgTop">
-										<img  class="imgs" :src="foods.Category_Img">
+										<img  class="imgs" :src="first.Category_Img">
 									</view>
 								</block>
 								<view class="titles">
