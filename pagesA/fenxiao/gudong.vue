@@ -64,7 +64,7 @@
 			<view class="xiangTop">
 				{{item.sha_name}}
 			</view>
-			<view class="xiangCenter">
+			<view class="xiangCenter" v-if="(!pro.total_sales && pro.total_sales!=0)">
 				<view class="xiangLeft">
 					申请条件:
 				</view>
@@ -88,7 +88,7 @@
 					所需金额:
 				</view>
 				<view class="xiangBottomB">
-					¥<text class="text">{{item.price}}</text><block v-if="item.is_apply">(已达到申请条件)</block>
+					¥<text class="text">{{item.price}}</text><block v-if="(!pro.total_sales && pro.total_sales!=0) ? item.team_sales :(item.is_apply)">(已达到申请条件)</block>
 				</view>
 			</view>
 		</view>
