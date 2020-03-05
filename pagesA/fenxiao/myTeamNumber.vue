@@ -55,7 +55,7 @@
 			getDisTeamList(){
 				let data={
 					level:this.index,
-					pgae:this.page,
+					page:this.page,
 					pageSize:this.pageSize
 				}
 				getDisTeamList(data,{errtip:false}).then(res=>{
