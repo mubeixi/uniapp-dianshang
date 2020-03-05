@@ -104,31 +104,39 @@ export const getTabBar = async ({commit, state},refresh) => {
 
 export const getInitData = async ({commit, state},refresh) => {
 
-  let data = null;
-  if(!refresh){
-    data = state.initData
-    if (data) return data;
-    if (!data) {
-      let data2 = ls.get('initData')
-      if (data2) {
-        commit('SET_INIT_DATA', data2);
-        return data2
+  try{
+    let data = null;
+    if(!refresh){
+      data = state.initData
+      if (data) return data;
+      if (!data) {
+        let data2 = ls.get('initData')
+        if (data2) {
+          commit('SET_INIT_DATA', data2);
+          return data2
+        }
+  
       }
-
+      return {}
     }
-    return {}
-  }
-
-
-  let systemConf = await getSystemConf()
-
+  
+  
+    let systemConf = await getSystemConf()
     console.log(systemConf)
     commit('SET_INIT_DATA', systemConf.data);
     data = systemConf.data
-
     return data;
 
+  }catch(err) {
+    uni.showModal({
+      content:'获取initData失败'
+    })
 
+    console.log('获取initData失败')
+    console.log(err);
+    return false
+  }  
+  
 
 };
 

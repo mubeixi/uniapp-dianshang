@@ -6,7 +6,7 @@
 	</div>
 
 	<!-- 轮播 -->
-	<view class="uni-padding-wrap">
+	<view class="uni-padding-wrap" v-if="product.Products_JSON && product.Products_JSON.ImgPath">
 		<view class="page-section swiper">
 			<view class="page-section-spacing">
 				<swiper class="swiper" circular="true" indicator-dots="indicatorDots" autoplay="autoplay" interval="4000" duration="500" indicator-color="#fff" indicator-active-color="#ff5000">
@@ -41,13 +41,13 @@
 	<view class="prices">
 		<view class="price">
 			<text class="leftPrice">
-				秒杀价<text class="rmb">¥<text class="priceX">{{product.attr_json.price}}</text></text>
+				秒杀价<text class="rmb">¥<text class="priceX" v-if="product.attr_json">{{product.attr_json.price}}</text></text>
 			</text>
 			<text class="rightPrice">
 				￥{{product.Products_PriceX}}
 			</text>
 		</view>
-		<view class="btn">
+		<view class="btn" v-if="product.attr_json">
 			库存{{product.attr_json.count}}
 		</view>
 	</view>
@@ -167,7 +167,7 @@
 	<popupLayer ref="cartPopu" :direction="'top'">
 		<div class="cartSku">
 			<div class="cartTop">
-				<image  class="image" @click="yulanDetail" :src="skuImg?skuImg+'-r200':product.Products_JSON.ImgPath[0]+'-r200'" ></image>
+				<image v-if="product.Products_JSON && product.Products_JSON.ImgPath" class="image" @click="yulanDetail" :src="skuImg?skuImg+'-r200':product.Products_JSON.ImgPath[0]+'-r200'" ></image>
 				<div class="cartTitle">
 					<div class="cartTitles">{{product.Products_Name}}</div>
 					<div class="addInfo">
