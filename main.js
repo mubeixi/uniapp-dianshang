@@ -29,6 +29,8 @@ fundebug.init({
 fundebugVue(fundebug, Vue);
 require('fundebug-revideo');
 
+window.FUNDEBUG = fundebug
+
 
 window.onerror=handleErr
 
@@ -43,7 +45,7 @@ function handleErr(errorMessage, scriptURI, lineNumber,columnNumber,errorObj)
   txt+="列: " + columnNumber + "\n\n"
   txt+="错误详情: " + JSON.stringify(errorObj) + "\n\n"
   txt+="Click OK to continue.\n\n"
-  
+
   if ("fundebug" in window) {
       fundebug.notify("handleErr", txt);
   }

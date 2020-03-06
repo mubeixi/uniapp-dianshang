@@ -243,14 +243,16 @@
 		async created(){
 			this.initFunc()
 
-			let initData = await this.getInitData(1)
+			let systemConf = await getSystemConf()
 
-			if(initData.hasOwnProperty('ShopName') && initData.ShopName){
+            let initData = systemConf?systemConf.data:null
+            console.log('首页自己获取initData', initData)
 
+            if(initData && initData.hasOwnProperty('ShopName') && initData.ShopName){
                 uni.setNavigationBarTitle({
                     title:initData.ShopName
                 })
-			}
+            }
 
 		},
 		mounted(){

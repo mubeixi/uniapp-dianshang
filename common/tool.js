@@ -66,8 +66,16 @@ export const ls = {
     },
 
     get(key) {
-        var val = uni.getStorageSync(key);
-        return val;
+
+        try {
+            var val = uni.getStorageSync(key);
+            return val;
+        } catch (e) {
+            // error
+            uni.showModal(`获取Storage失败，key：${key}`)
+        }
+
+
         // if(!val) return '';
         // try{
         //   return JSON.parse(val)
