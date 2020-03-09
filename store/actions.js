@@ -1,7 +1,6 @@
 import {getSystemConf} from "../common/fetch";
 import {ls} from "../common/tool";
 import {confirm, fun} from "../common";
-import * as fundebug from "fundebug-javascript";
 
 export const setUserInfo = ({commit}, data) => {
     commit('SET_USER_INFO', data);
@@ -140,9 +139,6 @@ export const getInitData = async ({commit, state}, refresh) => {
 
         console.log('获取initData失败')
         console.log(err);
-        if ("fundebug" in window) {
-            window.FUNDEBUG.notify("获取initData失败", JSON.stringify(err));
-        }
 
         let systemConf = await getSystemConf()
         console.log('获取initData', systemConf)
