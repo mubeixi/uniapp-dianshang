@@ -1,10 +1,7 @@
 <template>
-	<view>
-		<view v-show="ifshow" @tap="ableClose" @touchmove.stop.prevent class="popup-layer" >
-
-		</view>
-<!--		-->
-		<view ref="popRef" v-show="ifshow"  class="popup-content"   @tap.stop="stopEvent" :style="_location">
+	<view >
+		<view @tap="ableClose" @touchmove.stop.prevent class="popup-layer" :style="_mask" ></view>
+		<view ref="popRef" class="popup-content"   @tap.stop="stopEvent" :style="_location">
 			<slot></slot>
 			<div class="safearea-box2"></div>
 		</view>
@@ -47,6 +44,13 @@
 			};
 		},
 		computed: {
+			_mask(){
+				const obj = {
+					show: 'opacity:0.6;top:0',
+					hide: 'opacity:0;top:100%',
+				};
+				return this.ifshow?obj.show:obj.hide
+			},
 			_translate() {
 				const transformObj = {
 					'top': `transform:translateY(${-this.translateValue}%)`,
@@ -57,6 +61,7 @@
 				return transformObj[this.direction]
 			},
 			_location() {
+				if(!this.ifshow) return ''
 				const positionValue = {
 					'top': `bottom:${this.bottomHeight}px;width:100%;`,
 					'bottom': 'top:0px;width:100%;',
@@ -134,21 +139,23 @@
 	.popup-layer {
 		position: fixed;
 		z-index: 999999;
-		background: rgba(0, 0, 0, .3);
+		background: rgba(0, 0, 0,1);
 		height: 100%;
 		width: 100%;
 		top: 0px;
 		left: 0px;
 		overflow: hidden;
-		transition: all .3s ease;
+		transition: all .3s;
 	}
 
 	.popup-content {
 		position: fixed;
 		left: 0;
+		bottom:0;
+		transform:translateY(100%);
 		z-index: 1000000;
 		background: #FFFFFF;
-		transition: all .3s ease;
+		transition: all .3s;
 		overflow: hidden;
 		// border:1px solid red;
 		border-top-left-radius: 20rpx;

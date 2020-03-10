@@ -23,7 +23,7 @@ export const formatTime = function (date) {
 
 export const formatRichTextByUparseFn = (html)=>{
 
-  console.log('staticUrlstaticUrlstaticUrlstaticUrl',staticUrl)
+  // console.log('staticUrlstaticUrlstaticUrlstaticUrl',staticUrl)
 
   if(!html) return;
   let newContent= html.replace(/<embed[^>]*>/gi,function(match,capture){

@@ -22,9 +22,17 @@
 			videoInstance:[]
 		},
         //目前只有app和小程序用到了应用的全局onLaunch，h5环境下这里不执行的
-		onLaunch: function(option) {
+		onLaunch: function(options) {
 
-            console.log('App Launch')
+            console.log('App Launch',options)
+			
+			// #ifdef MP
+			let owner_id = null
+			owner_id = options.owner_id
+			if (owner_id >= 0) {
+				ls.set('owner_id', owner_id);
+			}
+			// #endif
 
 			// #ifndef H5
 			if(checkIsLogin()){

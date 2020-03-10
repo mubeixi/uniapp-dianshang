@@ -108,6 +108,7 @@ export const login = (data, options) => {
         owner_id = 0;
     }
     data = {...data, owner_id}
+    console.log('login action data is',JSON.stringify(data))
     return fetch('user_login', data, options)
 }
 
