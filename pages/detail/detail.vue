@@ -218,7 +218,6 @@
 		</button>
 		</form>
 	</popupLayer>
-
   </div>
 </template>
 <script>
@@ -407,7 +406,7 @@ export default {
 		this.$nextTick().then(res=>{
 
 			if(_self.$refs.cartPopu){
-				_self.$refs.cartPopu.close()
+				//_self.$refs.cartPopu.close()
 				this.postData.qty = 1;
 			}
 
