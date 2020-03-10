@@ -225,6 +225,8 @@ export const pageMixin = {
 	onLoad(options) {
 
 		let opt = {...options}
+		
+		console.log('page onload options is',opt)
 
 		//这样简洁多了
 		this.default_init_func(opt)
@@ -254,6 +256,12 @@ export const pageMixin = {
 			/*商户id机制*/
 			// #ifdef H5|| MP-WEIXIN || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO
 			let owner_id = null, users_id = null
+			owner_id = options.owner_id
+			if (owner_id >= 0) {
+				ls.set('owner_id', owner_id);
+			}
+			
+			
 			users_id = options.users_id || ls.get('users_id')
 
 			if(!users_id){
@@ -303,10 +311,7 @@ export const pageMixin = {
 
 			}
 
-			owner_id = options.owner_id
-			if (owner_id >= 0) {
-				ls.set('owner_id', owner_id);
-			}
+			
 			// #endif
 
 
@@ -360,10 +365,9 @@ export const pageMixin = {
 		...mapActions(['getInitData', 'setUserInfo', 'getUserInfo', 'setInitData'])
 	},
 	// #ifdef MP-WEIXIN || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO
-	async onShareAppMessage() {
-
+	onShareAppMessage() {
 		//getInitData是async，而且retrun一个data,相当于返回了一个promise
-		let initData = await this.getInitData()
+		let initData = this.getInitData()
 		let path = '/pages/index/index';
 		let shareObj = {
 			title: initData.ShopName,
@@ -371,7 +375,7 @@ export const pageMixin = {
 			imageUrl: domainFn(initData.ShareLogo),
 			path: buildSharePath(path)
 		};
-		console.log(shareObj)
+		console.log(JSON.stringify(shareObj))
 		return shareObj
 	}
 	// #endif

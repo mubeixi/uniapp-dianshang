@@ -233,11 +233,18 @@
 					}
 				}
 
+				let lsobj = {owner_id:ls.get('owner_id'),users_id:ls.get("users_id")}
+				console.log('lsobj is ',lsobj)
+				// uni.showModal({
+				// 	content:JSON.stringify(lsobj)
+				// })
+
 
 			},
 			...mapActions(['getInitData'])
 		},
-		onLoad() {
+		onLoad(opt) {
+			console.log('index page options is',opt)
 			// uni.hideTabBar()
 		},
 		async created(){
