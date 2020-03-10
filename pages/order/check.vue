@@ -328,7 +328,7 @@ export default {
 			})
 		}
 		this.getAddress();
-		this.createOrderCheck();
+		this.createOrderCheck(1);
 	},
 	async created(){
 		// #ifdef H5
@@ -751,7 +751,7 @@ export default {
 
 
 		},
-		createOrderCheck(){
+		createOrderCheck(i){
 			createOrderCheck(this.postData).then(res=>{
 				if(res.errorCode == 0){
 
@@ -762,7 +762,7 @@ export default {
 					}
 					this.orderInfo = res.data;
 					//如果该规格有门店 就优先后台设置的
-					if(this.orderInfo.all_has_stores==1){
+					if(this.orderInfo.all_has_stores==1&&i==1){
 						this.tabIdx = this.initData.order_submit_first;
 					}
 					
