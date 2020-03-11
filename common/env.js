@@ -10,7 +10,7 @@ export const apiBaseUrl = isDev ? '' : '';//h5调试为了跨域https://new401.b
 // #endif
 
 // #ifndef H5
-export const apiBaseUrl = 'https://new401.bafangka.com';
+export const apiBaseUrl = 'http://www.qiyeban.com';
 // #endif
 
 //后面的正式环境地址,每次打包要从新切换.

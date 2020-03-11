@@ -626,7 +626,9 @@
 													userInfoData = val;
 													userInfoData.rawData = JSON.parse(userInfoData.rawData)
 													login({code:CODE,login_method:'wx_lp',lp_raw_data:JSON.stringify(userInfoData)},{tip:'登录中'}).then(ret=>{
-														_self.loginCall(ret.data)
+														if(ret.errorCode === 0){
+															_self.loginCall(ret.data)
+														}
 													}).catch(err=>{})
 												}
 											})
@@ -645,7 +647,10 @@
 											console.log('userInfoData data is ',userInfoData)
 											userInfoData.rawData = JSON.parse(userInfoData.rawData)
 											login({code:CODE,login_method:'wx_lp',lp_raw_data:JSON.stringify(userInfoData)},{tip:'登录中'}).then(ret=>{
-												_self.loginCall(ret.data)
+												
+												if(ret.errorCode === 0){
+													_self.loginCall(ret.data)
+												}
 											}).catch(err=>{})
 										}
 									})
@@ -655,16 +660,7 @@
 							}
 						})
 						
-						login({code:CODE,login_method:'wx_lp'},{tip:'登录中'}).then(result=>{
 						
-							if(result.errorCode === 0){
-								_self.loginCall(result.data)
-							}
-						
-							
-						
-						}).catch(e=>{})
-
 						// login({code:CODE,login_method:'wx_lp'},{tip:'登录中'}).then(result=>{
 
 						// 	if(result.errorCode === 0){
