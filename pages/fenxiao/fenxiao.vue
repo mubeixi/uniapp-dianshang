@@ -1,4 +1,4 @@
-<template>
+	<template>
 	<view @click="commonClick" class="all">
 		<!-- #ifdef APP-PLUS -->
 		<view class="status_bar" style="background: #f81111;"><!-- 这里是状态栏 --></view>
@@ -200,7 +200,7 @@
 				})
 			}
 			// 获取首页功能
-			this.getFuncModule(); 
+			this.getFuncModule();
 			//获取分销首页
 			this.getDisInit();
 			//this.userInfo = await this.getUserInfo();
