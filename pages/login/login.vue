@@ -584,79 +584,155 @@
 				// #ifdef MP-WEIXIN
 
 				uni.login({
-
+					fail:(err)=>{
+						uni.showModal({
+							title:'登录失败',
+							content:'获取code失败'+JSON.stringify(err)
+						})
+					},
 					success: function (loginRes) {
 						console.log(loginRes);
 						let CODE = loginRes.code
-
-						login({code:CODE,login_method:'wx_lp'},{tip:'登录中'}).then(result=>{
-
-							if(result.errorCode === 0){
-								_self.loginCall(result.data)
-							}
-
-							if(result.errorCode === 88001){
-
-								// 可以通过 wx.getSetting 先查询一下用户是否授权了 "scope.record" 这个 scope
-								wx.getSetting({
-									success(res) {
-										if (!res.authSetting['scope.userInfo']) {
-											wx.authorize({
-												scope: 'scope.userInfo',
-												success (res) {
-													console.log(res)
-
-
-
-													let userInfoData = null;
-
-													wx.getUserInfo({
-														lang:'zh_CN',
-														success:function (val) {
-															console.log(val	)
-															userInfoData = val;
-
-															const lp_raw_data = {...userInfoData.userInfo,...result.data}
-															console.log(lp_raw_data)
-
-															login({code:CODE,login_method:'wx_lp',lp_raw_data:JSON.stringify(lp_raw_data)},{tip:'更新用户信息'}).then(ret=>{
-																_self.loginCall(ret.data)
-															}).catch(err=>{})
-														}
-													})
-
-												},
-												fail(err){
-													console.log(err)
-													error('请点击授权登录1')
-												}
+						
+						// 可以通过 wx.getSetting 先查询一下用户是否授权了 "scope.record" 这个 scope
+						wx.getSetting({
+							fail: (err) => {
+								uni.showModal({
+									title:'未获得获取用户信息权限',
+									content:JSON.stringify(err)
+								})
+							},
+							success:(res)=>{
+								
+								//未获得用户信息权限,需要让用户授权
+								if (!res.authSetting['scope.userInfo']) {
+									
+									wx.authorize({
+										scope: 'scope.userInfo',
+										fail: (err) => {
+											uni.showModal({
+												title:'请点击授权登录',
+												content:JSON.stringify(err)
 											})
-										}else{
+										},
+										success (res) {
+											console.log('权限校验成功',JSON.stringify(res))
 
 											let userInfoData = null;
-
 											wx.getUserInfo({
 												lang:'zh_CN',
 												success:function (val) {
-													console.log(val	)
+													console.log('userInfoData data is ',userInfoData)
 													userInfoData = val;
-
-													const lp_raw_data = {...userInfoData.userInfo,...result.data}
-													console.log(lp_raw_data)
-
-													login({code:CODE,login_method:'wx_lp',lp_raw_data:JSON.stringify(lp_raw_data)},{tip:'更新用户信息'}).then(ret=>{
+													userInfoData.rawData = JSON.parse(userInfoData.rawData)
+													login({code:CODE,login_method:'wx_lp',lp_raw_data:JSON.stringify(userInfoData)},{tip:'登录中'}).then(ret=>{
 														_self.loginCall(ret.data)
 													}).catch(err=>{})
 												}
 											})
-											//console.log(res)
-											//error('请点击授权登录2')
+												
 										}
-									}
-								})
+									})
+								}else{
+									
+									console.log('已经有授权，直接获取用户信息')		
+									let userInfoData = null;
+												
+									wx.getUserInfo({
+										lang:'zh_CN',
+										success:function (val) {
+											userInfoData = val
+											console.log('userInfoData data is ',userInfoData)
+											userInfoData.rawData = JSON.parse(userInfoData.rawData)
+											login({code:CODE,login_method:'wx_lp',lp_raw_data:JSON.stringify(userInfoData)},{tip:'登录中'}).then(ret=>{
+												_self.loginCall(ret.data)
+											}).catch(err=>{})
+										}
+									})
+									//console.log(res)
+									//error('请点击授权登录2')
+								}
 							}
-
+						})
+						
+						login({code:CODE,login_method:'wx_lp'},{tip:'登录中'}).then(result=>{
+						
+							if(result.errorCode === 0){
+								_self.loginCall(result.data)
+							}
+						
+							
+						
 						}).catch(e=>{})
+
+						// login({code:CODE,login_method:'wx_lp'},{tip:'登录中'}).then(result=>{
+
+						// 	if(result.errorCode === 0){
+						// 		_self.loginCall(result.data)
+						// 	}
+
+						// 	if(result.errorCode === 88001){
+
+						// 		// 可以通过 wx.getSetting 先查询一下用户是否授权了 "scope.record" 这个 scope
+						// 		wx.getSetting({
+						// 			success(res) {
+						// 				if (!res.authSetting['scope.userInfo']) {
+						// 					wx.authorize({
+						// 						scope: 'scope.userInfo',
+						// 						success (res) {
+						// 							console.log(res)
+
+
+
+						// 							let userInfoData = null;
+
+						// 							wx.getUserInfo({
+						// 								lang:'zh_CN',
+						// 								success:function (val) {
+						// 									console.log(val	)
+						// 									userInfoData = val;
+
+						// 									const lp_raw_data = {...userInfoData.userInfo,...result.data}
+						// 									console.log(lp_raw_data)
+
+						// 									login({code:CODE,login_method:'wx_lp',lp_raw_data:JSON.stringify(lp_raw_data)},{tip:'更新用户信息'}).then(ret=>{
+						// 										_self.loginCall(ret.data)
+						// 									}).catch(err=>{})
+						// 								}
+						// 							})
+
+						// 						},
+						// 						fail(err){
+						// 							console.log(err)
+						// 							error('请点击授权登录1')
+						// 						}
+						// 					})
+						// 				}else{
+
+						// 					let userInfoData = null;
+
+						// 					wx.getUserInfo({
+						// 						lang:'zh_CN',
+						// 						success:function (val) {
+						// 							console.log(val	)
+						// 							userInfoData = val;
+
+						// 							const lp_raw_data = {...userInfoData.userInfo,...result.data}
+						// 							console.log(lp_raw_data)
+
+						// 							login({code:CODE,login_method:'wx_lp',lp_raw_data:JSON.stringify(lp_raw_data)},{tip:'更新用户信息'}).then(ret=>{
+						// 								_self.loginCall(ret.data)
+						// 							}).catch(err=>{})
+						// 						}
+						// 					})
+						// 					//console.log(res)
+						// 					//error('请点击授权登录2')
+						// 				}
+						// 			}
+						// 		})
+						// 	}
+
+						// }).catch(e=>{})
 					}
 				});
 				// #endif
