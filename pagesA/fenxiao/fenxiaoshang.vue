@@ -112,7 +112,12 @@
 										}
 									})
 									// #endif
+
 									// #ifndef MP-TOUTIAO
+										uni.showLoading({
+											title: '上传图片',
+											mask: true
+										})
 										//上传图片
 										uni.uploadFile({
 												url: apiBaseUrl+'/api/little_program/shopconfig.php',
@@ -129,6 +134,22 @@
 													that.tem_Shop_Logo = uploadFileRes.data.path;
 													//是否可以提交
 													that.isSubmit=true;
+													toast('图片上传成功')
+												},
+												fail:(err)=>{
+													uni.showModal({
+														title: '提示',
+														content: '上传图片错误'+JSON.stringify(err)
+													});
+												},
+												complete:()=>{
+
+													uni.hideLoading()
+													// uni.showModal({
+													// 	title:'文件上传',
+													// 	content:JSON.stringify(ret)
+													// })
+
 												}
 										});
 									// #endif

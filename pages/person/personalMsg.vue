@@ -92,7 +92,7 @@
 			let userInfo = this.getUserInfo(true);
 
 			this.User_HeadImg = this.userInfo.User_HeadImg;
-			
+
 
 		},
 		onShow(){
@@ -238,6 +238,10 @@
 									uni.hideLoading()
 								}).catch(e=>{
 									uni.hideLoading()
+									uni.showModal({
+										title: '提示',
+										content: '设置图片为头像失败'
+									});
 								})
 							},
 							fail:(err)=>{
@@ -248,10 +252,7 @@
 
 								uni.showModal({
 									title: '提示',
-									content: '上传图片错误'+JSON.stringify(err),
-									success: function (res) {
-
-									}
+									content: '上传图片错误'+JSON.stringify(err)
 								});
 							},
 							complete:()=>{
