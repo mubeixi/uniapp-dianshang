@@ -643,7 +643,8 @@
 									wx.getUserInfo({
 										lang:'zh_CN',
 										success:function (val) {
-											userInfoData = val
+											console.log(val)
+											userInfoData = {...val}
 											console.log('userInfoData data is ',userInfoData)
 											userInfoData.rawData = JSON.parse(userInfoData.rawData)
 											login({code:CODE,login_method:'wx_lp',lp_raw_data:JSON.stringify(userInfoData)},{tip:'登录中'}).then(ret=>{
