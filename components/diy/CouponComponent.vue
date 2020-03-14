@@ -2,25 +2,25 @@
     <div class="coupon coupon-list wrap" v-if="couponList.length>0" :style="{background:coupon.style.bgColor}">
         <div v-if="coupon.config.type==1 && couponList.length>0">
             <div v-if="couponList.length<4" class="list style1 style1flex">
-                <div @click="getCoupon(item)" class="item" v-for="(item,idx) in couponList">
+                <div @click="getCoupon(item)" class="item" v-for="(item,idx) in couponList" :key="idx">
                     <p class="title">满{{item.Coupon_Condition}}享</p>
                     <p class="info"> {{item.Coupon_UseType ==
                         0?item.Coupon_Discount+'折扣':'￥'+item.Coupon_Cash+'减免'}}</p>
-                    <p class="area">({{item.Coupon_UseArea==0?'实体店':'微商城'}})</p>
+                    <!-- <p class="area">({{item.Coupon_UseArea==0?'实体店':'微商城'}})</p> -->
                 </div>
             </div>
             <div v-else class="list style1 style1block">
-                <div class="item" v-for="(item,idx) in couponList">
+                <div class="item" v-for="(item,idx) in couponList"  :key="idx">
                     <p class="title">满{{item.Coupon_Condition}}享</p>
                     <p class="info"> {{item.Coupon_UseType ==
                         0?item.Coupon_Discount+'折扣':'￥'+item.Coupon_Cash+'减免'}}</p>
-                    <p class="area">({{item.Coupon_UseArea==0?'实体店':'微商城'}})</p>
+                    <!-- <p class="area">({{item.Coupon_UseArea==0?'实体店':'微商城'}})</p> -->
                 </div>
             </div>
         </div>
 
         <div class="list style2" v-if="coupon.config.type== 2 && couponList.length>0">
-            <div @click="getCoupon(item)" class="item" v-for="(item,idx) in couponList">
+            <div @click="getCoupon(item)" class="item" v-for="(item,idx) in couponList"  :key="idx">
                 <div class="c">
                     <p v-if="item.Coupon_UseType == 0">满￥{{item.Coupon_Condition}} {{item.Coupon_Discount+'折'}}</p>
                     <p v-else><span>满￥{{item.Coupon_Condition}} 减 {{item.Coupon_Cash+'元'}}</span></p>
@@ -28,7 +28,7 @@
             </div>
         </div>
         <div class="list style3" v-if="coupon.config.type== 3 && couponList.length>0">
-            <div @click="getCoupon(item)" class="item" v-for="(item,idx) in couponList">
+            <div @click="getCoupon(item)" class="item" v-for="(item,idx) in couponList"  :key="idx">
                 <div class="c">
                     <p v-if="item.Coupon_UseType == 0">满￥{{item.Coupon_Condition}} {{item.Coupon_Discount+'折'}}</p>
                     <p v-else><span>满￥{{item.Coupon_Condition}} 减 {{item.Coupon_Cash+'元'}}</span></p>
@@ -39,7 +39,7 @@
             </div>
         </div>
         <div class="list style4" v-if="coupon.config.type== 4 && couponList.length>0">
-            <div @click="getCoupon(item)" class="item" v-for="(item,idx) in couponList">
+            <div @click="getCoupon(item)" class="item" v-for="(item,idx) in couponList"  :key="idx">
                 <div class="c">
                     <div class="cwrap">
                         <p v-if="item.Coupon_UseType == 0">满￥{{item.Coupon_Condition}} {{item.Coupon_Discount+'折'}}</p>
@@ -125,7 +125,9 @@
             getCoupon(couponInfo) {
 
                 getUserCoupon({coupon_id: couponInfo.Coupon_ID}).then(res => {
-
+					uni.showToast({
+						title:'领取成功'
+					})
                     getCoupon({pageSize: 999}, {errtip: false}).then(res => {
                         this.isAllowCouponList = res.data
                     })
@@ -428,6 +430,11 @@
             }
         }
     }
+	.style1{
+		.item{
+			padding: 15px 20px !important;
+		}
+	}
 
     .style1flex {
         height: 72px;
