@@ -328,7 +328,7 @@ export default {
 			})
 		}
 		this.getAddress();
-		this.createOrderCheck(1);
+		this.createOrderCheck();
 	},
 	async created(){
 		// #ifdef H5
@@ -340,7 +340,7 @@ export default {
 		// console.log(this.initData.order_submit_first)
 	},
 	onLoad(options) {
-		console.log('options is',options)
+		//console.log('options is',options)
 		this.postData.cart_key = options.cart_key;
 		if(options.cart_buy){
 			this.postData.cart_buy = options.cart_buy;
@@ -475,6 +475,15 @@ export default {
 						})
 						return;
 					}
+				}
+				
+				if(this.tabIdx==1&&this.postData.shipping_id!='is_store'){
+					this.submited = false;
+					uni.showToast({
+						title: '请选择门店',
+						icon:  'none'
+					})
+					return;
 				}
 				if(this.orderInfo.is_virtual == 0) {
 					if(!this.postData.shipping_id) {
@@ -683,7 +692,7 @@ export default {
 				//不使用优惠
 				if(!this.postData.coupon_id){
 					this.coupon_desc = '暂不使用优惠'
-					this.createOrderCheck();
+					this.createOrderCheck(2);
 					this.$refs.popupRef.close();
 					return;
 				}
@@ -699,7 +708,7 @@ export default {
 					}
 				}
 			};
-			this.createOrderCheck();
+			this.createOrderCheck(2);
 			this.$refs.popupRef.close();
 		},
 		async getAddress(){
@@ -751,7 +760,7 @@ export default {
 
 
 		},
-		createOrderCheck(i){
+		createOrderCheck(num){
 			createOrderCheck(this.postData).then(res=>{
 				if(res.errorCode == 0){
 
@@ -762,7 +771,7 @@ export default {
 					}
 					this.orderInfo = res.data;
 					//如果该规格有门店 就优先后台设置的
-					if(this.orderInfo.all_has_stores==1&&i==1){
+					if(this.orderInfo.all_has_stores==1&&num!=2){
 						this.tabIdx = this.initData.order_submit_first;
 					}
 					
