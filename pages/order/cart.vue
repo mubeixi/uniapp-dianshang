@@ -44,7 +44,8 @@
 									<span class="span">￥</span>{{attr.ProductsPriceX}}
 									<span class="amount">
 									  <span class="plus" :class="attr.Qty == 1 ? 'disabled' : ''" @click="updateCart(pro_id,attr_id,-1)">-</span>
-									  <span class="num">{{attr.Qty}}</span>
+									  <input class="attr_num" v-model="attr.Qty" type="number" @focus="setActiveAttr(pro_id,attr_id)" @blur="setAttrNum" />
+									  <!-- <span class="num"></span> -->
 									  <span class="plus" @click="updateCart(pro_id,attr_id,1)">+</span>
 									</span>
 								</div>
@@ -126,6 +127,9 @@
 			cart_buy: '',
 			loading: false,
 			isfirst: true,
+			active_pro_id:null,
+			active_attr_id:null,
+			active_attr_qty:0
 		}
 		},
 		computed: {
@@ -135,6 +139,7 @@
 		},
 		methods: {
 			...mapActions(['getUserInfo']),
+			
 			goProductDetail,
 			// 去逛逛
 			gotoBuy(){
@@ -250,6 +255,50 @@
 				}
 				this.cal_total();
 			},
+			setActiveAttr(pro_id,attr_id){
+				this.active_pro_id = pro_id
+				this.active_attr_id = attr_id
+				this.active_attr_qty = this.CartList[pro_id][attr_id]['Qty']
+			},
+			// 用户手动输入数量
+			setAttrNum(e){
+				console.log(e)
+				let num = e.detail.value;
+				if(num <= 0) {
+					this.postData.qty = 1;
+					error('至少购买一件')
+					return;
+				}
+				let pro_id = this.active_pro_id,attr_id = this.active_attr_id
+				console.log(this.CartList[pro_id])
+				this.postData.prod_id = pro_id;
+				this.postData.qty = num-this.active_attr_qty; //直接相减，可正可负。至于库存够不够，后台来判定
+				this.postData.attr_id = attr_id;
+				if(this.postData.qty == 0)return;
+				
+				if(this.active_attr_qty == 1 && num == -1) {
+					uni.showToast({
+						title: '购买数量不能小于1',
+						icon: 'none'
+					});
+					return;
+				}
+				
+				//不论成功与否都重新刷新，因为数值被更改了
+				updateCart(this.postData).then(()=>{
+					this.getCart();
+					this.cal_total();
+				})
+				.catch(err=>{
+					this.CartList[pro_id][attr_id]['Qty'] = this.active_attr_qty //原来的值
+					console.log(err)
+				})
+				
+				
+				
+				
+				
+			},
 			// 更新购物车
 			updateCart(pro_id,attr_id,num){
 				this.postData.prod_id = pro_id;
@@ -299,11 +348,12 @@
 						this.total_count= res.data.total_count;
 						this.total_price= res.data.total_price;
 						this.shop_config = res.data.shop_config;
-						this.CartList = res.data.CartList;
+						// 把状态存起来
+						this.initCheck();
 					}
+					this.CartList = res.data.CartList;
 					this.loading = true;
-					// 把状态存起来
-					this.initCheck();
+					
 
 				}).catch(e=>console.log(e))
 			},
@@ -476,7 +526,7 @@
 		width: 168rpx;
     }
     .amount {
-		.num {
+		.attr_num {
 			width: 72rpx;
 			height: 50rpx;
 			line-height: 50rpx;
