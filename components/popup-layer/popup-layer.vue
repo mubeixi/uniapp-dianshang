@@ -46,7 +46,7 @@
 		computed: {
 			_mask(){
 				const obj = {
-					show: 'opacity:0.6;top:0',
+					show: 'transform:translateY(0)',
 					hide: '',//opacity:0;top:100%
 				};
 				return this.ifshow?obj.show:obj.hide
@@ -139,13 +139,12 @@
 	.popup-layer {
 		position: fixed;
 		z-index: 999999;
-		background: rgba(0, 0, 0,1);
+		background: rgba(0, 0, 0,.6);
 		height: 100%;
 		width: 100%;
 		left: 0px;
-		opacity:0;
-		top:100%;
-		overflow: hidden;
+		top:0;
+		transform:translateY(100%);
 		transition: all .3s;
 	}
 
