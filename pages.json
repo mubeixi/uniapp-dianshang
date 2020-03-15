@@ -32,6 +32,12 @@
 			}
 		},
 		{
+			"path": "pages/order/paySuccess",
+			"style": {
+				"navigationBarTitleText": "支付成功"
+			}
+		},
+		{
 			"path": "pages/order/cart",
 			"style": {
 				"navigationBarTitleText": "购物车",
