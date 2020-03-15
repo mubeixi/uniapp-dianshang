@@ -221,11 +221,11 @@
 
 	  <view class="liveBox" style="bottom: 70px" v-if="liveList.length===1">
 		  <navigator  :url="'plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id='+liveList[0].roomid">
-			  <i class="funicon icon-live"></i>
+			  <image class="icon-live" src="/static/live/logo.png"></image>
 		  </navigator>
 	  </view>
 	  <view class="liveBox" style="bottom: 70px" v-if="liveList.length>1">
-		  <i @click="toLive"  class="funicon icon-live"></i>
+		  <image @click="toLive" class="icon-live" src="/static/live/logo.png"></image>
 	  </view>
   </div>
 </template>
