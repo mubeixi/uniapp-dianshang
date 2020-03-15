@@ -101,6 +101,15 @@
 			<div class="item" @click="tabbarFn(3)">购物车</div>
 			<div class="item" @click="tabbarFn(4)">个人中心</div>
 		</div> -->
+		<view class="liveBox" v-if="liveList.length===1">
+			<navigator  :url="'plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id='+liveList[0].roomid">
+				<i class="funicon icon-live"></i>
+			</navigator>
+		</view>
+		<view class="liveBox" v-if="liveList.length>1">
+			<i @click="toLive"  class="funicon icon-live"></i>
+		</view>
+
 	</view>
 
 </template>
@@ -124,7 +133,9 @@
 	import FlashComponent from "../../components/diy/FlashComponent";
 	import KillComponent from "../../components/diy/KillComponent";
 
-	import {getSkinConfig,getSystemConf} from "../../common/fetch";
+	import {
+		getSkinConfig,getSystemConf,getLiveInfo
+	} from "../../common/fetch";
 
 	import {pageMixin} from "../../common/mixin";
 	import {error,toast} from "../../common";
@@ -141,6 +152,8 @@
 		mixins:[pageMixin],
 		data() {
 			return {
+				liveList:[],
+				liveCount:0,
 				templateList:[],
 				templateData:[],
 				tagIndex:0,
@@ -157,6 +170,11 @@
 			...mapGetters(['initData']),
 		},
 		methods: {
+			toLive(){
+				uni.navigateTo({
+					url:'/pagesA/live/live'
+				})
+			},
 			callFn(){
 				uni.makePhoneCall({
 				    phoneNumber: this.initData.CallPhoneNumber
@@ -261,6 +279,12 @@
                 })
             }
 
+			getLiveInfo().then(res=>{
+				console.log('getLiveInfo data is ',res)
+				this.liveList = res.data.room_info
+				this.liveCount = res.data.count
+			})
+
 		},
 		mounted(){
 			let that =this
@@ -302,6 +326,7 @@
 </script>
 
 <style lang="less" scope="scope">
+
 	.telphone{
 		width: 27px;
 		height: 101px;
