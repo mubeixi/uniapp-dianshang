@@ -36,16 +36,38 @@ export const GET_ENV = () => {
     // #endif
 }
 
-
+/**
+ * 允许通过act和url参数，配置请求接口。推荐使用url方式，这样便于控制台调试
+ * @param act
+ * @param param
+ * @param options
+ * @param url
+ * @param method
+ * @returns {Promise<any>}
+ */
 const fetch = function (act, param, options = false, url = '/api/little_program/shopconfig.php', method = 'post') {
 
+
     if (!act) {
-        uni.showToast({
-            title: 'act参数必传',
-            mask: true,
-            duration: 2000
-        });
-        return;
+        if(act === false){
+            if(!url){
+                uni.showToast({
+                    title: 'url和act参数不能同时为空',
+                    mask: true,
+                    duration: 2000
+                });
+                return;
+            }
+            url = url +'.html'
+        }else{
+            uni.showToast({
+                title: 'act参数必传',
+                mask: true,
+                duration: 2000
+            });
+            return;
+        }
+
     }
 
     const d = new Date();
@@ -113,7 +135,7 @@ export const login = (data, options) => {
 }
 
 //获取直播信息
-export const getLiveInfo = (data, options) => fetch('getLiveInfo', data, options)
+export const getLiveInfo = (data, options) => fetch('', data, options,'/api/v1/getLiveInfo')
 
 //大转盘初始化
 export const rotateInit = (data, options) => fetch('initTurn', data, options)
