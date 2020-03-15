@@ -135,7 +135,7 @@ export const login = (data, options) => {
 }
 
 //获取直播信息
-export const getLiveInfo = (data, options) => fetch('', data, options,'/api/v1/getLiveInfo')
+export const getLiveInfo = (data, options) => fetch(false, data, options,'/api/v1/getLiveInfo')
 
 //大转盘初始化
 export const rotateInit = (data, options) => fetch('initTurn', data, options)
