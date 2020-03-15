@@ -47,7 +47,7 @@
 			_mask(){
 				const obj = {
 					show: 'opacity:0.6;top:0',
-					hide: 'opacity:0;top:100%',
+					hide: '',//opacity:0;top:100%
 				};
 				return this.ifshow?obj.show:obj.hide
 			},
@@ -142,8 +142,9 @@
 		background: rgba(0, 0, 0,1);
 		height: 100%;
 		width: 100%;
-		top: 0px;
 		left: 0px;
+		opacity:0;
+		top:100%;
 		overflow: hidden;
 		transition: all .3s;
 	}
