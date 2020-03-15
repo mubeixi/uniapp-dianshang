@@ -19,8 +19,9 @@
 							<image mode="widthFix" class="status-icon padding10-c" :src="getLiveIconUrl(live.live_status)"></image>
 						</view>
 					</view>
-					<view class="row">
+					<view class="row fun-live">
 						<navigator :class="{active:live.live_status===101}" class="btn"  :url="'plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id='+live.roomid">观看直播</navigator>
+						<!-- <subscribe :class="{active:live.live_status===101}" class="btn"  :room-id="'['+live.roomid+']'">开播提醒</subscribe> -->
 					</view>
 				</view>
 			</view>
