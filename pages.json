@@ -547,6 +547,7 @@
             	"navigationBarTitleText": "文章"
             }
         }
+
     ],
 	"subPackages": [{
 		"root": "pagesA",
@@ -555,6 +556,11 @@
 				"path": "marketing/rotate",
 				"style": {
 					"navigationBarTitleText": "大转盘"
+				}
+			},{
+				"path" : "live/live",
+				"style" : {
+					"navigationBarTitleText": "直播列表"
 				}
 			},
 			{
@@ -825,7 +831,13 @@
                     	"navigationBarTitleText": "门店退货单"
                     }
                 }
-            ]
+		],
+		"plugins": {
+			"live-player-plugin": {
+				"version": "1.0.0",
+				"provider": "wx2b03c6e691cd7370"
+			}
+		}
 	}],
 	"preloadRule": {
 		"pages/index/index": {

@@ -225,7 +225,7 @@ export const pageMixin = {
 	onLoad(options) {
 
 		let opt = {...options}
-		
+
 		console.log('page onload options is',opt)
 
 		//这样简洁多了
@@ -260,8 +260,8 @@ export const pageMixin = {
 			if (owner_id >= 0) {
 				ls.set('owner_id', owner_id);
 			}
-			
-			
+
+
 			users_id = options.users_id || ls.get('users_id')
 
 			if(!users_id){
@@ -311,7 +311,7 @@ export const pageMixin = {
 
 			}
 
-			
+
 			// #endif
 
 

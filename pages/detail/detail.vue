@@ -218,12 +218,21 @@
 		</button>
 		</form>
 	</popupLayer>
+
+	  <view class="liveBox" style="bottom: 70px" v-if="liveList.length===1">
+		  <navigator  :url="'plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id='+liveList[0].roomid">
+			  <i class="funicon icon-live"></i>
+		  </navigator>
+	  </view>
+	  <view class="liveBox" style="bottom: 70px" v-if="liveList.length>1">
+		  <i @click="toLive"  class="funicon icon-live"></i>
+	  </view>
   </div>
 </template>
 <script>
 import bottom from '../../components/bottom/bottom'
 import popupLayer from '../../components/popup-layer/popup-layer.vue'
-import {getProductDetail,getCommit,updateCart,addCollection,getCoupon,getUserCoupon,checkProdCollected,cancelCollection,judgeReceiveGift,getProductSharePic} from '../../common/fetch.js';
+import {getProductDetail,getCommit,updateCart,addCollection,getCoupon,getUserCoupon,checkProdCollected,cancelCollection,judgeReceiveGift,getProductSharePic,getLiveInfo} from '../../common/fetch.js';
 import {goBack as goBackFn,numberSort,getProductThumb}  from '../../common/tool.js'
 import {buildSharePath, isWeiXin, ls} from "../../common/tool";
 
@@ -241,6 +250,7 @@ export default {
 	mixins:[pageMixin],
     data(){
         return {
+
 			isLoad:false,
 			// #ifdef APP-PLUS
 					wxMiniOriginId:'',
@@ -287,6 +297,8 @@ export default {
 			isSubmit: false, // 是否提交过了
 			skuImg:'',
 			showCorver:true,
+			liveList:[],
+			liveCount:0,
 			//imgIndex:-1
         }
     },
@@ -426,9 +438,6 @@ export default {
 
 		const USERINFO = ls.get('userInfo');
 
-
-
-
 		// #ifdef APP-PLUS
 		var icon = plus.nativeObj.View.getViewById("icon");
 		var icons = plus.nativeObj.View.getViewById("icons");
@@ -441,6 +450,13 @@ export default {
 			_self.createtabs();
 		}
 		// #endif
+
+
+		getLiveInfo().then(res=>{
+			this.liveList = res.data.room_info
+			this.liveCount = res.data.count
+		})
+
 
 	},
 	onUnload(){
@@ -485,6 +501,11 @@ export default {
 		...mapState(['initData'])
 	},
     methods: {
+		toLive(){
+			uni.navigateTo({
+				url:'/pagesA/live/live'
+			})
+		},
 		yulanDetail(){
 			let arr=[]
 			let str
@@ -633,7 +654,7 @@ export default {
 			return newContent;
 		},
 		async shareFunc(channel) {
-			
+
 			// #ifdef APP-PLUS
 					const share = uni.getSubNVueById('share')
 					share.hide()
