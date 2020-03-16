@@ -546,7 +546,17 @@
             "style": {
             	"navigationBarTitleText": "文章"
             }
-        }
+        },{
+			"path" : "pages/live/live",
+			"style" : {
+				"navigationBarTitleText": "直播列表",
+				"mp-weixin": {
+				  "usingComponents": {
+					"subscribe": "plugin-private://wx2b03c6e691cd7370/components/subscribe/subscribe"
+				  }
+				}
+			}
+		}
 
     ],
 	"subPackages": [{
@@ -556,16 +566,6 @@
 				"path": "marketing/rotate",
 				"style": {
 					"navigationBarTitleText": "大转盘"
-				}
-			},{
-				"path" : "live/live",
-				"style" : {
-					"navigationBarTitleText": "直播列表",
-					"mp-weixin": {
-					  "usingComponents": {
-						"subscribe": "plugin-private://wx2b03c6e691cd7370/components/subscribe/subscribe"
-					  }
-					}
 				}
 			},
 			{

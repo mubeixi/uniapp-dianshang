@@ -508,7 +508,7 @@ export default {
     methods: {
 		toLive(){
 			uni.navigateTo({
-				url:'/pagesA/live/live'
+				url:'/pages/live/live'
 			})
 		},
 		yulanDetail(){
