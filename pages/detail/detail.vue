@@ -508,7 +508,7 @@ export default {
     methods: {
 		toLive(){
 			uni.navigateTo({
-				url:'/pages/live/live'
+				url:'/pagesA/live/live'
 			})
 		},
 		yulanDetail(){
@@ -773,7 +773,7 @@ export default {
 			updateCart(this.postData).then(res=>{
 				if(res.errorCode == 0) {
 					uni.navigateTo({
-						url: '../person/gift?cart_key=DirectBuy&gift=gift'
+						url: '/pagesA/person/gift?cart_key=DirectBuy&gift=gift'
 					})
 				}else {
 					uni.showToast({

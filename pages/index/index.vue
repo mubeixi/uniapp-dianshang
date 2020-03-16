@@ -175,7 +175,7 @@
 		methods: {
 			toLive(){
 				uni.navigateTo({
-					url:'/pages/live/live'
+					url:'/pagesA/live/live'
 				})
 			},
 			callFn(){

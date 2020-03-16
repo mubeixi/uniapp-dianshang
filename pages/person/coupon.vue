@@ -112,7 +112,7 @@
 		methods:{
 			goExpired(){
 				uni.navigateTo({
-					url:"../person/expiredCoupon"
+					url:"/pagesA/person/expiredCoupon"
 				})
 			},
 			//获取用户已领取可使用的优惠券

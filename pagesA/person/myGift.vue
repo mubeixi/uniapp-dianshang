@@ -94,7 +94,7 @@
 			},
 			goGiftDetail(item){
 				uni.navigateTo({
-					url:'../person/giftDetail?Order_ID='+item.order_id
+					url:'/pagesA/person/giftDetail?Order_ID='+item.order_id
 				})
 			},
 			//去详情页

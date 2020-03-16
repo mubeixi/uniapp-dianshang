@@ -77,7 +77,7 @@ uni.navigateTo = (opt) => {
 
     console.log('endOpt is ', endOpt)
 	Object.assign(endOpt,{fail:()=>{
-		uni.switchTabCopy(endOpt)
+		switchTabCopy(endOpt)
 	}})
     navigateTOCopy(endOpt)
 
@@ -197,7 +197,7 @@ uni.switchTab = (opt) => {
     console.log('url is ' + url);
     let endOpt = {...opt, url}
 	Object.assign(endOpt,{fail:()=>{
-		uni.navigateTOCopy(endOpt)
+		navigateTOCopy(endOpt)
 	}})
     console.log('endOpt is ', endOpt)
     switchTabCopy(endOpt)
