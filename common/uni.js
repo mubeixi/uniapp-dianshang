@@ -2,9 +2,9 @@
 import {GetQueryByString, ls,isWeiXin,isIos} from "./tool";
 
 
-let navigateTOCopy = uni.navigateTo;
-let redirectToCopy = uni.redirectTo;
-let switchTabCopy = uni.switchTab;
+const navigateTOCopy = uni.navigateTo;
+const redirectToCopy = uni.redirectTo;
+const switchTabCopy = uni.switchTab;
 
 uni.navigateTo = (opt) => {
 
@@ -76,8 +76,9 @@ uni.navigateTo = (opt) => {
     // #endif
 
     console.log('endOpt is ', endOpt)
-	Object.assign(endOpt,{fail:()=>{
-		uni.switchTabCopy(endOpt)
+	Object.assign(endOpt,{fail:(err)=>{
+        console.log(err)
+		switchTabCopy(endOpt)
 	}})
     navigateTOCopy(endOpt)
 
@@ -197,7 +198,7 @@ uni.switchTab = (opt) => {
     console.log('url is ' + url);
     let endOpt = {...opt, url}
 	Object.assign(endOpt,{fail:()=>{
-		uni.navigateTOCopy(endOpt)
+		navigateTOCopy(endOpt)
 	}})
     console.log('endOpt is ', endOpt)
     switchTabCopy(endOpt)

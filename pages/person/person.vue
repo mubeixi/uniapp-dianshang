@@ -228,7 +228,7 @@
 			goIntegral(){
 				if(!this.$fun.checkIsLogin(1))return;
 				uni.navigateTo({
-					url:'../person/integralCenter'
+					url:'/pagesA/person/integralCenter'
 				})
 			},
 			goBalance(){
@@ -331,7 +331,7 @@
 			goGift(){
 				if(!this.$fun.checkIsLogin(1))return;
 				uni.navigateTo({
-					url:'../person/myGift'
+					url:'/pagesA/person/myGift'
 				})
 			},
 			goSetting(){

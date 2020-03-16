@@ -233,7 +233,7 @@ export default {
 		// 跳转地址列表页
 		goAddressList(){
 			uni.navigateTo({
-				url: '../addressList/addressList?from=checkout&addressid='+this.postData.address_id
+				url: '/pages/addressList/addressList?from=checkout&addressid='+this.postData.address_id
 			})
 		},
 		// 跳转新增地址页面
@@ -286,7 +286,7 @@ export default {
 					// 不需要运费，可以在本页面完成
 					createOrder(this.postData).then(res=>{
 						uni.navigateTo({
-							url: '../person/myGift?checked=1'
+							url: '/pagesA/person/myGift?checked=1'
 						})
 					})
 				}else if(this.orderInfo.Order_Fyepay > 0) {
@@ -294,7 +294,7 @@ export default {
 						if(res.errorCode == 0) {
 							this.Order_ID = res.data.Order_ID;
 							uni.redirectTo({
-								url: '../pay/pay?Order_ID='+ res.data.Order_ID+'&pagefrom=gift'
+								url: '/pages/pay/pay?Order_ID='+ res.data.Order_ID+'&pagefrom=gift'
 							})
 						}else {
 							uni.showToast({

@@ -158,7 +158,7 @@
 					this.isChanged = false;
 				}else {
 					uni.navigateTo({
-						url: '../person/jifenCheck?gift_id=' + item.Gift_ID
+						url: '/pagesA/person/jifenCheck?gift_id=' + item.Gift_ID
 					})
 				}
 				this.Gift_ID = item.Gift_ID;

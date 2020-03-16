@@ -309,12 +309,6 @@
 			}
 		},
 		{
-			"path": "pages/person/myGift",
-			"style": {
-				"navigationBarTitleText": "赠品中心"
-			}
-		},
-		{
 			"path": "pages/detail/sharepic/sharepic",
 			"style": {
 				"navigationBarTitleText": "分享商品"
@@ -371,23 +365,9 @@
 			}
 		},
 		{
-			"path": "pages/person/expiredCoupon",
-			"style": {
-				"navigationBarTitleText": "失效优惠券"
-			}
-		},
-		{
 			"path": "pages/person/balanceCenter",
 			"style": {
 				"navigationBarTitleText": "余额中心",
-				"navigationBarBackgroundColor": "#ff5c33",
-				"navigationBarTextStyle": "white"
-			}
-		},
-		{
-			"path": "pages/person/integralCenter",
-			"style": {
-				"navigationBarTitleText": "积分中心",
 				"navigationBarBackgroundColor": "#ff5c33",
 				"navigationBarTextStyle": "white"
 			}
@@ -429,10 +409,6 @@
 			"style": {
 				"navigationBarTitleText": "支付宝支付"
 			}
-		},
-		{
-			"path": "pages/person/jifenCheck",
-			"style": {}
 		},
 		{
 			"path": "pages/person/refundList",
@@ -482,18 +458,6 @@
 						}
 					}]
 				}
-			}
-		},
-		{
-			"path": "pages/person/gift",
-			"style": {
-				"navigationBarTitleText": "赠品"
-			}
-		},
-		{
-			"path": "pages/person/giftDetail",
-			"style": {
-				"navigationBarTitleText": "订单详情"
 			}
 		},
 		{
@@ -563,7 +527,8 @@
 				"style": {
 					"navigationBarTitleText": "大转盘"
 				}
-			},{
+			},
+			{
 				"path" : "live/live",
 				"style" : {
 					"navigationBarTitleText": "直播列表",
@@ -572,6 +537,42 @@
 						"subscribe": "plugin-private://wx2b03c6e691cd7370/components/subscribe/subscribe"
 					  }
 					}
+				}
+			},
+			{
+				"path": "person/jifenCheck",
+				"style": {}
+			},
+			{
+				"path": "person/integralCenter",
+				"style": {
+					"navigationBarTitleText": "积分中心",
+					"navigationBarBackgroundColor": "#ff5c33",
+					"navigationBarTextStyle": "white"
+				}
+			},
+			{
+				"path": "person/myGift",
+				"style": {
+					"navigationBarTitleText": "赠品中心"
+				}
+			},
+			{
+				"path": "person/expiredCoupon",
+				"style": {
+					"navigationBarTitleText": "失效优惠券"
+				}
+			},
+			{
+				"path": "person/gift",
+				"style": {
+					"navigationBarTitleText": "赠品"
+				}
+			},
+			{
+				"path": "person/giftDetail",
+				"style": {
+					"navigationBarTitleText": "订单详情"
 				}
 			},
 			{

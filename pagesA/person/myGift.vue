@@ -94,13 +94,13 @@
 			},
 			goGiftDetail(item){
 				uni.navigateTo({
-					url:'../person/giftDetail?Order_ID='+item.order_id
+					url:'/pagesA/person/giftDetail?Order_ID='+item.order_id
 				})
 			},
 			//去详情页
 			goDetail(item){
 				uni.navigateTo({
-					url:'../detail/detail?gift='+item.id+"&Products_ID=" + item.product_id
+					url:'/pages/detail/detail?gift='+item.id+"&Products_ID=" + item.product_id
 				})
 			},
 			//获取列表
