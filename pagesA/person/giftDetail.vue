@@ -217,7 +217,7 @@
 				}
 				//跳转物流追踪
 				uni.navigateTo({
-					url:'../order/logistics?shipping_id='+shipping_id + '&express=' + express + '&prod_img=' + prod_img
+					url:'/pages/order/logistics?shipping_id='+shipping_id + '&express=' + express + '&prod_img=' + prod_img
 				})
 			},
 			//取消订单
@@ -270,11 +270,11 @@
 			goPay(Order_ID){
 				if(this.orderInfo.Order_Status==2||this.orderInfo.Order_Status==3){
 					uni.navigateTo({
-						url:'../person/refund?Order_ID='+Order_ID
+						url:'/pages/person/refund?Order_ID='+Order_ID
 					})
 				}else if(this.orderInfo.Order_Status==4){
 					uni.navigateTo({
-						url:'../order/publishComment?Order_ID='+Order_ID
+						url:'/pages/order/publishComment?Order_ID='+Order_ID
 					})
 				}
 
