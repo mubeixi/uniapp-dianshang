@@ -20,7 +20,8 @@
 						</view>
 					</view>
 					<view class="row fun-live">
-						<navigator :class="{active:live.live_status===101}" class="btn"  :url="'plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id='+live.roomid">观看直播</navigator>
+						<!-- :url="'plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id='+live.roomid" -->
+						<navigator :class="{active:live.live_status===101}" class="btn" url='' >观看直播</navigator>
 						<!-- <subscribe :class="{active:live.live_status===101}" class="btn"  :room-id="'['+live.roomid+']'">开播提醒</subscribe> -->
 					</view>
 				</view>
