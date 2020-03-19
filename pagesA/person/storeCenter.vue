@@ -45,7 +45,7 @@
 				<image class="item-img" src="/static/mendian/4.png" mode=""></image>
 				<view>进货</view>
 			</view>
-			<view class="item" @click="openUrl('/pages/order/checkChannel')">
+			<view class="item" @click="openUrl('/pagesA/order/checkChannel')">
 				<image class="item-img" src="/static/mendian/5.png" mode=""></image>
 				<view>核销</view>
 			</view>

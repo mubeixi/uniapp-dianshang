@@ -34,7 +34,7 @@
                     if(res.data.Order_Status==2){
                         this.Order_Code = ''
                         uni.navigateTo({
-                            url:'/pages/order/checkOrderInfo?Order_Code='+Order_Code
+                            url:'/pagesA/order/checkOrderInfo?Order_Code='+Order_Code
                         })
 
                     }else{

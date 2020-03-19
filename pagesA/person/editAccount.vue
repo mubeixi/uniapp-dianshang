@@ -46,7 +46,7 @@
 			},
 			goOrderCheck(){
 				uni.navigateTo({
-					url:'/pages/order/checkChannel'
+					url:'/pagesA/order/checkChannel'
 				})
 			},
 			goRotate(){
