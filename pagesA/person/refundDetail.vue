@@ -122,7 +122,7 @@
 					})
 					setTimeout(function(){
 						uni.navigateTo({
-							url:'../person/refundList'
+							url:'/pagesA/person/refundList'
 						})
 					},2000)
 				},err=>{}).catch(e=>{

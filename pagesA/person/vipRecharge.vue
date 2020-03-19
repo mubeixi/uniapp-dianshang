@@ -359,7 +359,7 @@ export default {
 				title: '支付成功'
 			});
 			uni.navigateTo({
-				url:'/pages/person/balanceCenter'
+				url:'/pagesA/person/balanceCenter'
 			});
 			return;
 		},

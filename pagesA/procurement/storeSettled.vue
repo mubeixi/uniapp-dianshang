@@ -153,7 +153,7 @@
 			      success: function (res) {
 			          if (res.confirm) {
 			              uni.navigateTo({
-							  url:"/pages/person/updateUserPsw?type=3"
+							  url:"/pagesA/person/updateUserPsw?type=3"
 						  })
 			          } else if (res.cancel) {
 			             uni.navigateBack({

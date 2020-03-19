@@ -196,13 +196,13 @@
 			// 去积分商城
 			gotojifen(){
 				uni.navigateTo({
-					url: '/pages/person/jifenExchange'
+					url: '/pagesA/person/jifenExchange'
 				})
 			},
 			// 去我的兑换列表
 			gotoMyExchange() {
 				uni.navigateTo({
-					url: '/pages/person/myRedemption'
+					url: '/pagesA/person/myRedemption'
 				})
 			},
 			goBack(){

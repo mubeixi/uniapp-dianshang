@@ -119,7 +119,7 @@
 			// 跳转充值页面
 			goCharge(){
 				uni.navigateTo({
-					url: '/pages/person/vipRecharge'
+					url: '/pagesA/person/vipRecharge'
 				})
 			}
 		}

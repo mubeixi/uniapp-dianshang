@@ -153,7 +153,7 @@
 			},
 			goDetail(item){
 				uni.navigateTo({
-					url:"/pages/person/refundDetail?Back_ID="+item.Back_ID+"&store_id="+this.Stores_ID
+					url:"/pagesA/person/refundDetail?Back_ID="+item.Back_ID+"&store_id="+this.Stores_ID
 				})
 			},
             cancelRefuseApply(){

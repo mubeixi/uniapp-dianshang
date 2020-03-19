@@ -64,7 +64,7 @@ function handleErr(errorMessage, scriptURI, lineNumber,columnNumber,errorObj)
 App.mpType = 'app'
 
 // 使用pagetitle
-import pagetitle from './pages/title/title.vue'
+import pagetitle from './components/title.vue'
 Vue.component('page-title',pagetitle)
 
 // import TabbarComponents from './components/TabbarComponents.vue'

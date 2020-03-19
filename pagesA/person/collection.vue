@@ -114,7 +114,7 @@ export default {
 		//跳转详情
 		goDetail(item){
 			    uni.navigateTo({
-			    			  url:'../detail/detail?Products_ID='+item.prod_id
+			    			  url:'/pages/detail/detail?Products_ID='+item.prod_id
 			    })
 		},
 		// 取消收藏
