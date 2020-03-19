@@ -135,7 +135,7 @@
 			},
 			goMsg(){
 				uni.navigateTo({
-					url:'/pages/systemMsg/systemMsg'
+					url:'/pagesA/systemMsg/systemMsg'
 				})
 			},
 			// 去分销商页面

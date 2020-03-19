@@ -492,7 +492,7 @@
 				this.order_id=item.Order_ID;
 				//跳转到 渠道选择页面
 				uni.navigateTo({
-					url: '/pages/selectChannel/selectChannel?order_id=' + item.Order_ID
+					url: '/pagesA/selectChannel/selectChannel?order_id=' + item.Order_ID
 				});
 				return;
 			}

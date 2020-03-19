@@ -270,7 +270,7 @@
 			},
 			goMsg(){
 				uni.navigateTo({
-					url:'../systemMsg/systemMsg'
+					url:'/pagesA/systemMsg/systemMsg'
 				})
 			},
 			//签到
