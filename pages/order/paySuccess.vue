@@ -45,47 +45,26 @@
 
 <script>
 	import {pageMixin} from "../../common/mixin";
-	import {getUserReceivedCoupon,getExpiredCoupon} from '../../common/fetch.js'
+	import {getUserReceivedCoupon,getPayCoupons} from '../../common/fetch.js'
 	export default {
 		mixins:[pageMixin],
 		data() {
 			return {
 				checked:0,//选中
-				page:1,
-				pageSize:6,
 				pro:[],
-				totalCount:0
 			};
 		},
 		onShow() {
 			this.pro=[];
-			this.page=1;
 			this.getUserReceivedCoupon();
 		},
-		onReachBottom() {
-			if(this.totalCount>this.pro.length){
-				this.page++;
-				this.getUserReceivedCoupon();
-			}
-		},
-		onPullDownRefresh() {
-			this.page=1;
-			this.pro=[];
-		},
 		methods:{
-			goExpired(){
-				uni.navigateTo({
-					url:"../person/expiredCoupon"
-				})
-			},
 			//获取用户已领取可使用的优惠券
 			getUserReceivedCoupon(){
 				let data={
-					page:this.page,
-					pageSize:this.pageSize
+					order_id:4
 				}
-				getUserReceivedCoupon(data).then(res=>{
-					this.totalCount=res.totalCount;
+				getPayCoupons(data).then(res=>{
 					for(let item of res.data){
 						this.pro.push(item);
 					}
@@ -99,7 +78,7 @@
 			},
 			goIndex(){
 				uni.switchTab({
-					url:'../index/index'
+					url:'/pages/index/index'
 				})
 			}
 		// 	change(item){

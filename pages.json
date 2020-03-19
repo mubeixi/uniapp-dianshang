@@ -238,12 +238,6 @@
 			}
 		},
 		{
-			"path": "pages/selectArea/selectArea",
-			"style": {
-				"navigationBarTitleText": "选择区域"
-			}
-		},
-		{
 			"path": "pages/login/login",
 			"style": {
 				"app-plus": {
@@ -269,12 +263,7 @@
 				"navigationBarTitleText": "分享商品"
 			}
 		},
-		{
-			"path": "pages/systemMsg/systemMsg",
-			"style": {
-				"navigationBarTitleText": "系统消息"
-			}
-		},
+		
 		{
 			"path": "pages/detail/groupJoin",
 			"style": {
@@ -291,12 +280,6 @@
 			"path": "pages/order/orderDetail",
 			"style": {
 				"navigationBarTitleText": "订单详情"
-			}
-		},
-		{
-			"path": "pages/storePay/storePay",
-			"style": {
-				"navigationBarTitleText": "实体店消费"
 			}
 		},
 		{
@@ -376,12 +359,7 @@
 				}
 			}
 		},
-		{
-			"path": "pages/selectChannel/selectChannel",
-			"style": {
-				"navigationBarTitleText": "选择渠道"
-			}
-		},
+		
 		{
 			"path": "pages/fenxiao/distributorLevel",
 			"style": {
@@ -404,6 +382,30 @@
 				"path": "marketing/rotate",
 				"style": {
 					"navigationBarTitleText": "大转盘"
+				}
+			},
+			{
+				"path": "storePay/storePay",
+				"style": {
+					"navigationBarTitleText": "实体店消费"
+				}
+			},
+			{
+				"path": "systemMsg/systemMsg",
+				"style": {
+					"navigationBarTitleText": "系统消息"
+				}
+			},
+			{
+				"path": "selectChannel/selectChannel",
+				"style": {
+					"navigationBarTitleText": "选择渠道"
+				}
+			},
+			{
+				"path": "selectArea/selectArea",
+				"style": {
+					"navigationBarTitleText": "选择区域"
 				}
 			},
 			{

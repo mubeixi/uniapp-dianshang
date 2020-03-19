@@ -175,6 +175,9 @@ export const spikeProdDetail = (data, options) => fetch('spike_prod_detail', dat
 //秒杀预约
 export const flashsaleReserve = (data, options) => fetch('flashsale_reserve', data, options)
 
+//支付成功页面显示优惠券权益
+export const getPayCoupons = (data, options) => fetch('getPayCoupons', data, options)
+
 
 //获取评论详情
 export const getCommit = (data, options) => fetch('get_commit', data, options)

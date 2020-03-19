@@ -41,7 +41,7 @@
 				<view class="num" v-if="storeDetail.pifa_order_num">{{storeDetail.pifa_order_num}}</view>
 				<view>批发订单</view>
 			</view>
-			<view class="item" @click="openUrl('/pages/selectChannel/selectChannel')">
+			<view class="item" @click="openUrl('/pagesA/selectChannel/selectChannel')">
 				<image class="item-img" src="/static/mendian/4.png" mode=""></image>
 				<view>进货</view>
 			</view>

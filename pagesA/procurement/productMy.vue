@@ -459,7 +459,7 @@
 			submit(){
 				ls.set('productMy',this.productMy);
 				uni.navigateTo({
-					url: '/pages/selectChannel/selectChannel?page=productmy'
+					url: '/pagesA/selectChannel/selectChannel?page=productmy'
 				})
 				return;
 			},
