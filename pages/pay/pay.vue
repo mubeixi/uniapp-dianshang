@@ -658,13 +658,19 @@
 
 				if(Order_Type === 'pintuan'){
 					uni.redirectTo({
-						url:'/pages/detail/groupSuccess?order_id='+_that.Order_ID
+						url:'/pages/order/paySuccess?Order_Type='+Order_Type
 					})
+					// uni.redirectTo({
+					// 	url:'/pages/detail/groupSuccess?order_id='+_that.Order_ID
+					// })
 				}else{
 					if(pagefrom == 'check') {
 						uni.redirectTo({
-							url:'/pages/order/order?index=2&Order_Type='+Order_Type
+							url:'/pages/order/paySuccess?Order_Type='+Order_Type
 						})
+						// uni.redirectTo({
+						// 	url:'/pages/order/order?index=2&Order_Type='+Order_Type
+						// })
 					}else if(pagefrom == 'gift') {
 						uni.redirectTo({
 							url: '/pagesA/person/myGift?checked=1'

@@ -134,10 +134,14 @@ export default {
 		isShipping:0,//是否包邮
 		Cate_ID:0,//列表id
 		isSheng:0,//是否升序
+		Products_ID:''
     }
   },
   onLoad: function (option) {
 	  this.inputValue=option.inputValue;
+	  if(option.pid){
+		  this.Products_ID=option.pid
+	  }
 	  this.Cate_ID=option.Cate_ID;
 	  const than = this        // 注意this的指向
 	  	uni.getStorage({
@@ -306,6 +310,9 @@ export default {
 			  }else if(this.isShipping==2){
 				  data.free_shipping=0;
 			  }
+		  }
+		  if(this.Products_ID){
+			  data.Products_ID=this.Products_ID
 		  }
 		  getProd(data).then(res=>{
 			  for(var item of res.data){
