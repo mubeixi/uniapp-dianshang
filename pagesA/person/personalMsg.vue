@@ -111,7 +111,7 @@
 					}
 				}
 				uni.navigateTo({
-					url: '../person/editPersonalMsg?type=' + num
+					url: '/pagesA/person/editPersonalMsg?type=' + num
 				})
 			},
 			get_user_info(){
@@ -238,10 +238,10 @@
 									uni.hideLoading()
 								}).catch(e=>{
 									uni.hideLoading()
-									uni.showModal({
-										title: '提示',
-										content: '设置图片为头像失败'
-									});
+									// uni.showModal({
+									// 	title: '提示',
+									// 	content: '设置图片为头像失败'
+									// });
 								})
 							},
 							fail:(err)=>{

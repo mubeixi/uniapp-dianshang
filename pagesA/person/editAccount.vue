@@ -57,10 +57,10 @@
 
 			// 修改信息
 			update(type){
-				console.log('asdf')
+				//console.log('asdf')
 				// type 0 表示修改登录，1，修改支付
 				uni.navigateTo({
-					url: '../person/updateUserPsw?type='+type
+					url: '/pagesA/person/updateUserPsw?type='+type
 				})
 			},
 			logoutFunc(){

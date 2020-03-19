@@ -210,7 +210,7 @@
 			goStore(){
 				if(!this.$fun.checkIsLogin(1))return;
 				uni.navigateTo({
-					url: '/pages/person/storeCenter'
+					url: '/pagesA/person/storeCenter'
 				})
 			},
 			goNew(){
@@ -234,7 +234,7 @@
 			goBalance(){
 				if(!this.$fun.checkIsLogin(1))return;
 				uni.navigateTo({
-					url:'../person/balanceCenter'
+					url:'/pagesA/person/balanceCenter'
 				})
 			},
 			//获取角标
@@ -253,19 +253,19 @@
 			goVip(){
 				if(!this.$fun.checkIsLogin(1))return;
 				uni.navigateTo({
-					url:'../person/vipGrade'
+					url:'/pagesA/person/vipGrade'
 				})
 			},
 			goCoupon(){
 				if(!this.$fun.checkIsLogin(1))return;
 				uni.navigateTo({
-					url:'../person/coupon'
+					url:'/pagesA/person/coupon'
 				})
 			},
 			goRefundList(){
 				if(!this.$fun.checkIsLogin(1))return;
 				uni.navigateTo({
-					url:'../person/refundList'
+					url:'/pagesA/person/refundList'
 				})
 			},
 			goMsg(){
@@ -302,7 +302,7 @@
 				}else if(this.show==2){
 					this.isLodnig=false;
 					uni.navigateTo({
-						url:'../person/qiandao'
+						url:'/pagesA/person/qiandao'
 					})
 				}
 			},
@@ -337,7 +337,7 @@
 			goSetting(){
 				if(!this.$fun.checkIsLogin(1))return;
 				uni.navigateTo({
-					url: '../person/editAccount'
+					url: '/pagesA/person/editAccount'
 				})
 				// uni.navigateTo({
 				// 	url:'../setting/setting'
@@ -347,14 +347,14 @@
 			goRenwu(){
 				if(!this.$fun.checkIsLogin(1))return;
 				uni.navigateTo({
-					url:'../person/taskCenter'
+					url:'/pagesA/person/taskCenter'
 				})
 			},
 			//去收藏页
 			goCollection(){
 				if(!this.$fun.checkIsLogin(1))return;
 				uni.navigateTo({
-					url:'../person/collection'
+					url:'/pagesA/person/collection'
 				})
 			},
 			goToOrder(item){
@@ -381,7 +381,7 @@
 			goPersonMsg(){
 				if(!this.$fun.checkIsLogin(1))return;
 				uni.navigateTo({
-					url: '../person/personalMsg'
+					url: '/pagesA/person/personalMsg'
 				})
 			}
 		},

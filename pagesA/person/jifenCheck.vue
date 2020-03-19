@@ -797,7 +797,7 @@ export default {
 					title: '支付成功'
 				})
 				uni.redirectTo({
-					url: '/pages/person/myRedemption'
+					url: '/pagesA/person/myRedemption'
 				})
 			},
     }

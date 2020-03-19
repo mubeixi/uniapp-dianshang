@@ -105,7 +105,7 @@ export default {
 		},
 		goDetail(item){
 			uni.navigateTo({
-				url:"../person/refundDetail?Back_ID="+item.Back_ID
+				url:"/pagesA/person/refundDetail?Back_ID="+item.Back_ID
 			})
 		},
 		//跳转申请退款 支付   发表评论
@@ -116,7 +116,7 @@ export default {
 				})
 			}else if(item.Order_Status==2||item.Order_Status==3){
 				uni.navigateTo({
-					url:'../person/refund?Order_ID='+item.Order_ID
+					url:'/pagesA/person/refund?Order_ID='+item.Order_ID
 				})
 			}else if(item.Order_Status==4){
 				uni.navigateTo({

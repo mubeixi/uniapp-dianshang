@@ -95,7 +95,7 @@
 				if(this.isClicked) {return;}
 				this.isClicked = true;
 				uni.navigateTo({
-					url: '../person/myRedemption'
+					url: '/pagesA/person/myRedemption'
 				})
 				return;
 			},
@@ -121,7 +121,7 @@
 					});
 					setTimeout(()=>{
 						uni.navigateTo({
-							url: '../person/myRedemption'
+							url: '/pagesA/person/myRedemption'
 						})
 					},1500)
 				},err=>{

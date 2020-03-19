@@ -136,7 +136,7 @@
 			},
 			goIndex(){
 				uni.switchTab({
-					url:'../index/index'
+					url:'/pages/index/index'
 				})
 			}
 		// 	change(item){

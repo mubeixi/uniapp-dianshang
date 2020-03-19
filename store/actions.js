@@ -32,7 +32,7 @@ function getTabBarConf() {
         "text": "首页1"
     },
         {
-            "pagePath": "pages/person/storeCenter",
+            "pagePath": "pagesA/person/storeCenter",
             "iconPath": "http://dev.jingjin.site/static/tabbar.jpg",
             "selectedIconPath": "http://dev.jingjin.site/static/tabbar.jpg",
             "text": "门店"

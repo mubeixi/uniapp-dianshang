@@ -17,10 +17,8 @@
 </template>
 
 <script>
-import {pageMixin} from "../../common/mixin";
 
 export default {
-	mixins:[pageMixin],
     // props: ['title','right','hiddenBack','rightHidden'],
 	props: {
 		title: {
