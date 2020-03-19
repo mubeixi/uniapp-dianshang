@@ -30,7 +30,7 @@
         methods:{
             toCode(){
               uni.navigateTo({
-                  url:'/pages/order/checkByCode'
+                  url:'/pagesA/order/checkByCode'
               })
             },
             scanFn(){
@@ -45,7 +45,7 @@
 
 					if(act ==='IsVirtualOrderCheck' && params.Order_Code){
 						uni.navigateTo({
-                            url:'/pages/order/checkOrderInfo?Order_Code='+params.Order_Code
+                            url:'/pagesA/order/checkOrderInfo?Order_Code='+params.Order_Code
                         })
 					}else{
 						error('参数有误')

@@ -161,7 +161,7 @@
 					//需要跳转到一个页面
                     // setTimeout(()=>{
                     //     uni.navigateTo({
-                    //         url:'/pages/order/checkChannel'
+                    //         url:'/pagesA/order/checkChannel'
                     //     })
                     // },1000)
                     uni.navigateBack()

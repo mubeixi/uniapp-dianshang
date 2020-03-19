@@ -179,24 +179,6 @@
 				"navigationBarTitleText": "我的订单"
 			}
 		},
-		{
-			"path": "pages/order/checkChannel",
-			"style": {
-				"navigationBarTitleText": "核销方式"
-			}
-		},
-		{
-			"path": "pages/order/checkByCode",
-			"style": {
-				"navigationBarTitleText": "券码核销"
-			}
-		},
-		{
-			"path": "pages/order/checkOrderInfo",
-			"style": {
-				"navigationBarTitleText": "核销"
-			}
-		},
 		
 		{
 			"path": "pages/classify/classify",
@@ -382,6 +364,25 @@
 				"path": "marketing/rotate",
 				"style": {
 					"navigationBarTitleText": "大转盘"
+				}
+			},
+			{
+				"path": "order/checkChannel",
+				"style": {
+					"navigationBarTitleText": "核销方式"
+				}
+			},
+			{
+				"path": "order/checkByCode",
+				"style": {
+					"navigationBarTitleText": "券码核销"
+				}
+			},
+			
+			{
+				"path": "order/checkOrderInfo",
+				"style": {
+					"navigationBarTitleText": "核销"
 				}
 			},
 			{
