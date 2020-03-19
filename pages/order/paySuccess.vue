@@ -7,8 +7,8 @@
 				支付成功
 			</view>
 			<view class="pay-button">
-				<view class="button-all button-goon">继续购买</view>
-				<view class="button-all button-next">查看订单</view>
+				<view class="button-all button-goon" @click="goIndexs">继续购买</view>
+				<view class="button-all button-next" @click="goOrder">查看订单</view>
 			</view>
 			<view  class="pay-succ-last">
 				本次购物可享权益
@@ -24,19 +24,16 @@
 				<view class="times">
 					有效期：{{item.Coupon_StartTime}}至{{item.Coupon_EndTime}}
 				</view>
-				<view class="all-coupon">
-					*部分商品可用
-				</view>
 				<view class="prices" v-if="item.Coupon_Discount<=0">
 					¥<text>{{item.Coupon_Cash}}</text>
 				</view>
 				<view class="prices" v-else>
 					{{item.Coupon_Discount*10}}折优惠
 				</view>
-				<view class="man">
+				<view class="man" v-if="item.Coupon_Subject">
 					[{{item.Coupon_Subject}}]
 				</view>
-				<view class="button" @click="goIndex()">
+				<view class="button" @click="goIndex(item.coupon_prod)">
 					去使用
 				</view>
 			</view>
@@ -52,17 +49,33 @@
 			return {
 				checked:0,//选中
 				pro:[],
+				Order_Type:''
 			};
+		},
+		onLoad(option) {
+			this.Order_Type=option.Order_Type
 		},
 		onShow() {
 			this.pro=[];
 			this.getUserReceivedCoupon();
 		},
 		methods:{
+			goOrder(){
+				//去订单列表
+				if(this.Order_Type === 'pintuan'){
+					uni.redirectTo({
+						url:'/pages/order/pintuanOrderlist'
+					})
+				}else{
+					uni.redirectTo({
+						url:'/pages/order/order?index=2&Order_Type='+this.Order_Type
+					})
+				}
+			},
 			//获取用户已领取可使用的优惠券
 			getUserReceivedCoupon(){
 				let data={
-					order_id:4
+					order_id:1831
 				}
 				getPayCoupons(data).then(res=>{
 					for(let item of res.data){
@@ -76,10 +89,22 @@
 				})
 
 			},
-			goIndex(){
+			goIndexs(){
 				uni.switchTab({
 					url:'/pages/index/index'
 				})
+			},
+			goIndex(i){
+				if(i=='0'){
+					uni.switchTab({
+						url:'/pages/index/index'
+					})
+				}else{
+					uni.redirectTo({
+					    url: '/pages/classify/result?pid='+i
+					});
+				}
+				
 			}
 		// 	change(item){
 		// 		this.checked=item;
