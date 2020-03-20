@@ -10,56 +10,105 @@
 				<view class="button-all button-goon" @click="goIndexs">继续购买</view>
 				<view class="button-all button-next" @click="goOrder">查看订单</view>
 			</view>
-			<view  class="pay-succ-last">
-				本次购物可享权益
-			</view>
-			<view class="youhuijuan" v-for="(item,index) of pro" :key="index">
-				<image class="allImg" src="/static/mbxcoupon.png"></image>
-				<view class="infoImg">
-					<image class="image" :src="item.Coupon_PhotoPath"></image>
+			<block v-if="pro.length>0">
+				<view  class="pay-succ-last">
+					本次购物可享权益
 				</view>
-				<view class="storeTitle">
-					店铺优惠券
+				<view class="youhuijuan" v-for="(item,index) of pro" :key="index">
+					<image class="allImg" src="/static/mbxcoupon.png"></image>
+					<view class="infoImg">
+						<image class="image" :src="item.Coupon_PhotoPath"></image>
+					</view>
+					<view class="storeTitle">
+						店铺优惠券
+					</view>
+					<view class="times">
+						有效期：{{item.Coupon_StartTime}}至{{item.Coupon_EndTime}}
+					</view>
+					<view class="prices" v-if="item.Coupon_Discount<=0">
+						¥<text>{{item.Coupon_Cash}}</text>
+					</view>
+					<view class="prices" v-else>
+						{{item.Coupon_Discount*10}}折优惠
+					</view>
+					<view class="man" v-if="item.Coupon_Subject">
+						[{{item.Coupon_Subject}}]
+					</view>
+					<view class="button" @click="goIndex(item.coupon_prod)">
+						去使用
+					</view>
 				</view>
-				<view class="times">
-					有效期：{{item.Coupon_StartTime}}至{{item.Coupon_EndTime}}
-				</view>
-				<view class="prices" v-if="item.Coupon_Discount<=0">
-					¥<text>{{item.Coupon_Cash}}</text>
-				</view>
-				<view class="prices" v-else>
-					{{item.Coupon_Discount*10}}折优惠
-				</view>
-				<view class="man" v-if="item.Coupon_Subject">
-					[{{item.Coupon_Subject}}]
-				</view>
-				<view class="button" @click="goIndex(item.coupon_prod)">
-					去使用
-				</view>
-			</view>
+			</block>
+			<block v-else>
+				<!-- 猜你喜欢 -->
+				<div class=" container">
+					  <div class="fenge"><span class="red"></span><span class="caini">猜你喜欢</span><span class="red"></span></div>
+					  <div class="prolist">
+						  <div class="pro-item" v-for="(item,index) in prodList" :key="index" @click="gotoDetail(item.Products_ID)" >
+							  <img :src="item.ImgPath" alt="">
+							  <div class="item-name">{{item.Products_Name}}</div>
+							  <div class="price">
+								  <span class="n_price"><span>￥</span>{{item.Products_PriceX}}</span>
+								  <span class="o_price"><span>￥</span>{{item.Products_PriceY}}</span>
+							  </div>
+						  </div>
+					  </div>
+				</div>
+			</block>
 	</view>
 </template>
 
 <script>
 	import {pageMixin} from "../../common/mixin";
-	import {getUserReceivedCoupon,getPayCoupons} from '../../common/fetch.js'
+	import {getUserReceivedCoupon,getPayCoupons,getProd} from '../../common/fetch.js'
 	export default {
 		mixins:[pageMixin],
 		data() {
 			return {
 				checked:0,//选中
 				pro:[],
-				Order_Type:''
+				Order_Type:'',
+				OrderId:'',
+				prodList:[],
+				prod_arg: {
+					page: 1,
+					pageSize: 4,
+				},
 			};
 		},
 		onLoad(option) {
 			this.Order_Type=option.Order_Type
+			this.OrderId=option.OrderId
 		},
 		onShow() {
 			this.pro=[];
 			this.getUserReceivedCoupon();
+			this.getProd()
+			
+		},
+		// 上拉触底
+		onReachBottom() {
+			if(this.hasMore) {
+				this.getProd();
+			}
 		},
 		methods:{
+			gotoDetail(e){
+				uni.navigateTo({
+					url: '/pages/detail/detail?Products_ID=' + e
+				});
+			},
+			getProd(){
+				this.prod_arg.Users_ID = this.Users_ID;
+				let oldlist = this.prodList;
+				getProd(this.prod_arg).then(res=>{
+					if(res.errorCode == 0){
+						this.prodList = oldlist.concat(res.data);
+						this.hasMore = (res.totalCount / this.prod_arg.pageSize) > this.prod_arg.page ? true : false ;
+						this.prod_arg.page += 1;
+					}
+				}).catch(e=>console.log(e))
+			},
 			goOrder(){
 				//去订单列表
 				if(this.Order_Type === 'pintuan'){
@@ -75,7 +124,7 @@
 			//获取用户已领取可使用的优惠券
 			getUserReceivedCoupon(){
 				let data={
-					order_id:1831
+					order_id:this.OrderId
 				}
 				getPayCoupons(data).then(res=>{
 					for(let item of res.data){
@@ -324,6 +373,70 @@
 			width: 640rpx;
 			height: 480rpx;
 			padding-top: 100rpx;
+		}
+		/* 猜你喜欢 */
+		.container{
+			margin-top: 30rpx;
+			padding: 0 20rpx;
+		}
+		.fenge {
+			text-align: center;
+			padding: 30rpx 0;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		.caini{
+			font-size: 30rpx;
+			margin-left: 13rpx;
+			margin-right: 13rpx;
+		}
+		.prolist {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-between;
+		}
+		.pro-item {
+			width: 48%;
+			margin-bottom: 15px;
+			background: #fff;
+		}
+		.pro-item img {
+			width: 345rpx;
+			height: 345rpx;
+		}
+		.item-name {
+			font-size: 24rpx;
+			padding: 0 10rpx;
+			color: #333;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			display: -webkit-box;
+			-webkit-line-clamp: 2;
+			-webkit-box-orient: vertical;
+		}
+		.red {
+			background-color: #F43131;
+			display: inline-block;
+			height: 3rpx;
+			width: 44rpx;
+		}
+		.price {
+		    margin-top: 20rpx;
+		    padding: 0 10rpx 20rpx;
+		}
+		.n_price {
+		    color: #ff0000;
+		    font-size: 34rpx;
+			span{
+				font-size: 24rpx;
+			}
+		}
+		.o_price {
+			margin-left: 15rpx;
+		    color: #afafaf;
+		    font-size: 24rpx;
+		    text-decoration: line-through;
 		}
 
 </style>

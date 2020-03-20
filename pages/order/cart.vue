@@ -370,7 +370,7 @@
 			},
 			gotoDetail(e){
 				uni.navigateTo({
-					url: '../detail/detail?Products_ID=' + e
+					url: '/pages/detail/detail?Products_ID=' + e
 				});
 			}
 		},
