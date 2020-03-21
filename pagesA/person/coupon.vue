@@ -32,6 +32,9 @@
 				<view class="times">
 					有效期：{{item.Coupon_StartTime}}至{{item.Coupon_EndTime}}
 				</view>
+				<view class="subject">
+					{{item.limit_txt}}
+				</view>
 				<view class="prices" v-if="item.Coupon_Discount<=0">
 					¥<text>{{item.Coupon_Cash}}</text>
 				</view>
@@ -41,7 +44,7 @@
 				<view class="man">
 					[{{item.Coupon_Subject}}]
 				</view>
-				<view class="button" @click="goIndex()">
+				<view class="button" @click="goIndex(item.coupon_prod)">
 					去使用
 				</view>
 			</view>
@@ -134,10 +137,16 @@
 				})
 
 			},
-			goIndex(){
-				uni.switchTab({
-					url:'/pages/index/index'
-				})
+			goIndex(i){
+				if(i=='0'){
+					uni.switchTab({
+						url:'/pages/index/index'
+					})
+				}else{
+					uni.redirectTo({
+					    url: '/pages/classify/result?pid='+i
+					});
+				}
 			}
 		// 	change(item){
 		// 		this.checked=item;
@@ -221,15 +230,22 @@
 		color: #333333;
 		line-height: 28rpx;
 		position: absolute;
-		top: 69rpx;
+		top: 48rpx;
 		left: 150rpx;
 	}
 	.times{
 		font-size: 20rpx;
 		color: #666666;
 		position: absolute;
-		top: 118rpx;
+		top: 92rpx;
 		left: 148rpx;
+	}
+	.subject {
+		font-size: 16rpx;
+		color: #FF565F;
+		position: absolute;
+		left: 148rpx;
+		top: 130rpx;
 	}
 	.prices{
 		width: 110rpx;

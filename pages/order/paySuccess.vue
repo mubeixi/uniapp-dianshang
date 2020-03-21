@@ -25,6 +25,9 @@
 					<view class="times">
 						有效期：{{item.Coupon_StartTime}}至{{item.Coupon_EndTime}}
 					</view>
+					<view class="limit">
+						{{item.limit_txt}}
+					</view>
 					<view class="prices" v-if="item.Coupon_Discount<=0">
 						¥<text>{{item.Coupon_Cash}}</text>
 					</view>
@@ -298,6 +301,13 @@
 		position: absolute;
 		top: 105rpx;
 		left: 148rpx;
+	}
+	.limit {
+		font-size: 16rpx;
+		color: #FF565F;
+		position: absolute;
+		left: 148rpx;
+		top: 140rpx;
 	}
 	.all-coupon{
 		font-size: 10px;
