@@ -11,10 +11,15 @@
 	  <view class="uni-padding-wrap" style="background: #f2f2f2;">
 		  <view class="page-section swiper">
 			  <view class="page-section-spacing" v-if="(product.video_url && showVideo)">
-				  <video class="video" @play="play" @pause="pause" :src="product.video_url"   bindfullscreenchange="changeHiddenBtns" :poster="product.cover_url?product.cover_url:''" id="myVideo1" ref="video1" show-center-play-btn	 controls>
-
+				  <video class="video" @play="play" @pause="pause"
+						 :src="product.video_url|domain"
+						 bindfullscreenchange="changeHiddenBtns"
+						 :poster="product.cover_url?product.cover_url:''"
+						 id="myVideo1" ref="video1"
+						 show-center-play-btn
+						 controls>
 				  </video>
-				  <view class="change-btn" >
+				  <view class="change-btn" v-if="!hideNativeEleShow">
 					  <cover-view  v-if="showVideo&&showCorver" :class="[showVideo?'active':'','shipin']" @click="change_view(1)">视频</cover-view>
 					  <cover-view  v-if="showVideo&&showCorver"  :class="[showVideo?'':'active','tupian']" @click="change_view(2)">图片</cover-view>
 				  </view>
@@ -114,7 +119,7 @@
 
 	<div style="height:60px;background: white;"></div>
  	<div class="safearea-box"></div>
-	<popupLayer ref="popupLayer" :direction="'top'" >
+	<popupLayer ref="popupLayer" :direction="'top'" @maskClicked="handClicked2" >
 		<div class="shareinfo" v-if="type=='share'">
 			<div class="s_top">
 				<!-- #ifdef APP-PLUS -->
@@ -165,7 +170,7 @@
 	<popupLayer ref="cartPopu" :direction="'top'" @maskClicked="handClicked">
 		<div class="cartSku">
 			<div class="cartTop">
-				<image  class="image" @click="yulanDetail" :src="skuImg?skuImg+'-r200':product.Products_JSON.ImgPath[0]+'-r200'" ></image>
+				<image  class="image" @click="yulanDetail" :src="skuImg?skuImg+'-r200':(product.Products_JSON.ImgPath[0]?product.Products_JSON.ImgPath[0]+'-r200':'')" ></image>
 				<div class="cartTitle">
 					<div class="cartTitles">{{product.Products_Name}}</div>
 					<div class="addInfo">
@@ -220,14 +225,14 @@
 	</popupLayer>
 
 	  <!-- #ifdef MP-WEIXIN -->
-	  <view class="liveBox" style="bottom: 70px" v-if="liveList.length===1">
-	  		  <navigator  :url="'plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id='+liveList[0].roomid">
-	  			  <image class="icon-live" src="/static/live/logo.png"></image>
-	  		  </navigator>
-	  </view>
-	  <view class="liveBox" style="bottom: 70px" v-if="liveList.length>1">
-	  		  <image @click="toLive" class="icon-live" src="/static/live/logo.png"></image>
-	  </view>
+<!--	  <view class="liveBox" style="bottom: 70px" v-if="liveList.length===1">-->
+<!--	  		  <navigator  :url="'plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id='+liveList[0].roomid">-->
+<!--	  			  <image class="icon-live" src="/static/live/logo.png"></image>-->
+<!--	  		  </navigator>-->
+<!--	  </view>-->
+<!--	  <view class="liveBox" style="bottom: 70px" v-if="liveList.length>1">-->
+<!--	  		  <image @click="toLive" class="icon-live" src="/static/live/logo.png"></image>-->
+<!--	  </view>-->
 	  <!-- #endif -->
   </div>
 </template>
@@ -244,15 +249,11 @@ import uParse from '../../components/gaoyia-parse/parse.vue'
 import {pageMixin} from "../../common/mixin";
 import {error, toast} from "../../common";
 
-import {add_template_code} from "../../common/fetch";
-
-import {staticUrl} from "../../common/env";
-
 export default {
 	mixins:[pageMixin],
     data(){
         return {
-
+			hideNativeEleShow:false,
 			isLoad:false,
 			// #ifdef APP-PLUS
 					wxMiniOriginId:'',
@@ -420,7 +421,6 @@ export default {
 		this.$nextTick().then(res=>{
 
 			if(_self.$refs.cartPopu){
-				//_self.$refs.cartPopu.close()
 				this.postData.qty = 1;
 			}
 
@@ -527,10 +527,14 @@ export default {
 			});
 
 		},
-			handClicked(){
-				this.postData.qty = 1;
-				this.showCorver=true
-			},
+		handClicked2(){
+			this.hideNativeEleShow = false;
+		},
+		handClicked(){
+			this.postData.qty = 1;
+			this.hideNativeEleShow = false;
+			this.showCorver=true
+		},
 		async _init_func(option){
 
 			await this.getDetail(this.Products_ID);
@@ -889,11 +893,12 @@ export default {
 					// #endif
 					if(this.couponList.length<=0){
 						// #ifndef APP-PLUS
-							this.$refs.popupLayer.close();
+						this.hideNativeEleShow = false
+						this.$refs.popupLayer.close();
 						// #endif
 						// #ifdef APP-PLUS
-							const coupon = uni.getSubNVueById('coupon')
-							coupon.hide()
+						const coupon = uni.getSubNVueById('coupon')
+						coupon.hide()
 						// #endif
 					}
 			}).catch(e=>{
@@ -1044,6 +1049,7 @@ export default {
 				}
 			})
 			//确定加入购物车
+			this.hideNativeEleShow = false
 			this.$refs.cartPopu.close();
 			this.postData.qty = 1;
 		},
@@ -1248,7 +1254,9 @@ export default {
 				return;
 			}
 			this.showCorver=true
+
 			this.postData.cart_key = 'CartList';
+
 			// #ifdef APP-PLUS
 			const goodsSpecNvue = uni.getSubNVueById('goodsSpec')
 			goodsSpecNvue.show('slide-in-bottom',200)
@@ -1256,8 +1264,8 @@ export default {
 			// #endif
 
 			// #ifndef APP-PLUS
+			this.hideNativeEleShow = true
 			this.$refs.cartPopu.show();
-
 			// #endif
 
 		},
@@ -1284,6 +1292,7 @@ export default {
 			// #endif
 
 			// #ifndef APP-PLUS
+			this.hideNativeEleShow = true
 			this.$refs.cartPopu.show();
 			// #endif
 
@@ -1297,8 +1306,10 @@ export default {
         showTick(e){
 			this.type = e.currentTarget.dataset.type
 			// #ifndef APP-PLUS
-				this.$refs.popupLayer.show();
+			this.hideNativeEleShow = true
+			this.$refs.popupLayer.show();
 			// #endif
+
 			// #ifdef APP-PLUS
 				if(this.type=='ticks'){
 					const coupon = uni.getSubNVueById('coupon')
@@ -1313,9 +1324,11 @@ export default {
 
         },
         close(){
+			this.hideNativeEleShow = false
 			this.$refs.popupLayer.close();
         },
         cancel(){
+			this.hideNativeEleShow = false
             this.$refs.popupLayer.close();
         },
 		...mapActions(['getUserInfo'])

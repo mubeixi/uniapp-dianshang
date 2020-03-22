@@ -213,7 +213,7 @@
 		left: 0px;
 		top:100%;
 		opacity: 0;
-		transition: all .4s linear;
+		transition: all .2s linear;
 	}
 
 	.popup-content {
@@ -225,7 +225,7 @@
 
 		z-index: 1000000;
 		background: #FFFFFF;
-		transition: all .4s linear;
+		transition: all .2s linear;
 		overflow: hidden;
 		// border:1px solid red;
 		border-top-left-radius: 20rpx;

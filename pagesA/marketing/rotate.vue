@@ -159,7 +159,7 @@
 
     import {findArrayIdx} from "../../common/tool";
     import uParse from '../../components/gaoyia-parse/parse.vue'
-    import {staticUrl} from "../../common/env";
+
     import {error,toast} from "../../common";
 
     export default {

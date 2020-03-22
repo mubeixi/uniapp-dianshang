@@ -67,8 +67,6 @@ App.mpType = 'app'
 import pagetitle from './components/title.vue'
 Vue.component('page-title',pagetitle)
 
-// import TabbarComponents from './components/TabbarComponents.vue'
-// Vue.component('tabbar-components', TabbarComponents)
 
 Vue.prototype.$vm = new Vue();
 

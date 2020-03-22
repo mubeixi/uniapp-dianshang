@@ -1,5 +1,5 @@
 import {staticUrl} from "./env";
-
+console.log('staticUrl is',staticUrl)
 export const domainFn = (url) => {
   if (!url) return '';
   if (url.indexOf('http') == -1) return staticUrl + url;
@@ -38,10 +38,6 @@ export const formatRichTextByUparseFn = (html)=>{
 
     match = match.replace(/\/>/gi, '></video>')
 
-
-    //相对地址
-    //match = match.replace(/src="\/uploadfiles/gi, `src="${staticUrl}/uploadfiles`)
-
     return match;
   });
 
@@ -54,12 +50,11 @@ export const formatRichTextByUparseFn = (html)=>{
     match = match.replace(/url/gi, 'src')
 
     match = match.replace(/\/>/gi, '></video>')
-    // //相对地址
-    //match = match.replace(/="\/uploadfiles/gi, `="${staticUrl}/uploadfiles`)
 
     return match;
   });
 
+  // console.log(newContent,staticUrl)
   //替换地址
   newContent= newContent.replace(/="\/uploadfiles/gi, `="${staticUrl}/uploadfiles`)
 
@@ -81,7 +76,7 @@ export const formatRichTextByUparseFn = (html)=>{
 
   newContent = newContent.replace(/oembed/gi, 'video');
 
-  // console.log(newContent)
+  console.log(newContent)
   return newContent
 }
 

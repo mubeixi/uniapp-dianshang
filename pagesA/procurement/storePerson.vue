@@ -54,7 +54,7 @@
 
 
 	import {GET_ENV,getStoreDetail,get_User_ID,get_Users_ID,updateStoreInfo,uploadImage,createToken,GET_ACCESS_TOKEN} from '../../common/fetch';
-	import { staticUrl } from '../../common/env.js'
+	import { apiBaseUrl } from '../../common/env.js'
 	import {pageMixin} from "../../common/mixin";
 	export default {
 		mixins:[pageMixin],
@@ -166,7 +166,7 @@
 								console.log(filePath);
 								//上传图片
 								uni.uploadFile({
-										url: staticUrl+'/api/little_program/shopconfig.php',
+										url: apiBaseUrl+'/api/little_program/shopconfig.php',
 										filePath: filePath,
 										name: 'image',
 										formData: data,
