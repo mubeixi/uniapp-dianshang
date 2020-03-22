@@ -862,9 +862,6 @@
 		"app-plus": {}
 	},
 	"tabBar": {
-		// #ifdef MP-WEIXIN
-		//"custom": true,
-		// #endif
 		"color": "#7A7E83",
 		"selectedColor": "#F43131",
 		"borderStyle": "black",
