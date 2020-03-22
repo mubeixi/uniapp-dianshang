@@ -228,7 +228,7 @@ export default {
 		// 跳转地址列表页
 		goAddressList(){
 			uni.navigateTo({
-				url: '/pages/person/addressList/addressList?from=checkout&addressid='+this.address_id
+				url: '/pages/addressList/addressList?from=checkout&addressid='+this.address_id
 			})
 		},
 		// 跳转新增地址页面
