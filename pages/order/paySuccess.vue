@@ -21,7 +21,7 @@
 							<image class="image" :src="item.Coupon_PhotoPath"></image>
 						</view>
 						<view class="storeTitle">
-							店铺优惠券
+							{{item.Coupon_Subject}}
 						</view>
 						<view class="times">
 							有效期：{{item.Coupon_StartTime}}至{{item.Coupon_EndTime}}
@@ -36,7 +36,7 @@
 							{{item.Coupon_Discount*10}}折优惠
 						</view>
 						<view class="man" v-if="item.Coupon_Subject">
-							[{{item.Coupon_Subject}}]
+							满{{item.Coupon_Condition}}可用
 						</view>
 						<view class="button" @click="goIndex(item.coupon_prod)">
 							去使用
@@ -83,13 +83,15 @@
 			};
 		},
 		onLoad(option) {
+			this.pro=[];
 			this.Order_Type=option.Order_Type
 			this.OrderId=option.OrderId
-		},
-		onShow() {
-			this.pro=[];
 			this.getUserReceivedCoupon();
 			this.getProd()
+		},
+		onShow() {
+			
+			
 			
 		},
 		// 上拉触底
