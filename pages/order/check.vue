@@ -187,7 +187,7 @@
 		<popup-layer ref="popupMX" :direction="'top'" @maskClicked="handClicked" :bottomHeight="bottomHeight">
 			<view class="mxdetail">
 				<view class="mxtitle">明细</view>
-				<view class="mxitem">产品原价 <text class="num">{{orderInfo.Order_TotalAmount}}</text></view>
+				<view class="mxitem">产品原价 <text class="num">{{orderInfo.Order_TotalAmount-orderInfo.Order_Shipping.Price}}</text></view>
 				<view class="mxitem" v-if="checkfrom">{{active_name}} <text class="num">{{orderInfo.Order_Fyepay}}</text></view>
 				<view class="mxitem" v-if="orderInfo.user_curagio_money > 0">会员折扣 <text class="num">-{{orderInfo.user_curagio_money}}</text></view>
 				<view class="mxitem" v-if="orderInfo.Manjian_Cash > 0">满减 <text class="num">-{{orderInfo.Manjian_Cash}}</text></view>
@@ -833,6 +833,9 @@ export default {
     font-size: 28rpx;
     line-height: 80rpx;
     padding: 20rpx 30rpx;
+	/* #ifndef APP-PLUS */
+		padding-bottom: 100rpx;
+	/* #endif */
     .mxtitle {
         font-size: 28rpx;
         text-align: center;
