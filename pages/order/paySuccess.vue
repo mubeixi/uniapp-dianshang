@@ -10,53 +10,55 @@
 				<view class="button-all button-goon" @click="goIndexs">继续购买</view>
 				<view class="button-all button-next" @click="goOrder">查看订单</view>
 			</view>
-			<block v-if="pro.length>0">
-				<view  class="pay-succ-last">
-					本次购物可享权益
-				</view>
-				<view class="youhuijuan" v-for="(item,index) of pro" :key="index">
-					<image class="allImg" src="/static/mbxcoupon.png"></image>
-					<view class="infoImg">
-						<image class="image" :src="item.Coupon_PhotoPath"></image>
+			<block v-if="showMain">
+				<block v-if="pro.length>0">
+					<view  class="pay-succ-last">
+						本次购物可享权益
 					</view>
-					<view class="storeTitle">
-						店铺优惠券
+					<view class="youhuijuan" v-for="(item,index) of pro" :key="index">
+						<image class="allImg" src="/static/mbxcoupon.png"></image>
+						<view class="infoImg">
+							<image class="image" :src="item.Coupon_PhotoPath"></image>
+						</view>
+						<view class="storeTitle">
+							店铺优惠券
+						</view>
+						<view class="times">
+							有效期：{{item.Coupon_StartTime}}至{{item.Coupon_EndTime}}
+						</view>
+						<view class="limit">
+							{{item.limit_txt}}
+						</view>
+						<view class="prices" v-if="item.Coupon_Discount<=0">
+							¥<text>{{item.Coupon_Cash}}</text>
+						</view>
+						<view class="prices" v-else>
+							{{item.Coupon_Discount*10}}折优惠
+						</view>
+						<view class="man" v-if="item.Coupon_Subject">
+							[{{item.Coupon_Subject}}]
+						</view>
+						<view class="button" @click="goIndex(item.coupon_prod)">
+							去使用
+						</view>
 					</view>
-					<view class="times">
-						有效期：{{item.Coupon_StartTime}}至{{item.Coupon_EndTime}}
-					</view>
-					<view class="limit">
-						{{item.limit_txt}}
-					</view>
-					<view class="prices" v-if="item.Coupon_Discount<=0">
-						¥<text>{{item.Coupon_Cash}}</text>
-					</view>
-					<view class="prices" v-else>
-						{{item.Coupon_Discount*10}}折优惠
-					</view>
-					<view class="man" v-if="item.Coupon_Subject">
-						[{{item.Coupon_Subject}}]
-					</view>
-					<view class="button" @click="goIndex(item.coupon_prod)">
-						去使用
-					</view>
-				</view>
-			</block>
-			<block v-else>
-				<!-- 猜你喜欢 -->
-				<div class=" container">
-					  <div class="fenge"><span class="red"></span><span class="caini">猜你喜欢</span><span class="red"></span></div>
-					  <div class="prolist">
-						  <div class="pro-item" v-for="(item,index) in prodList" :key="index" @click="gotoDetail(item.Products_ID)" >
-							  <img :src="item.ImgPath" alt="">
-							  <div class="item-name">{{item.Products_Name}}</div>
-							  <div class="price">
-								  <span class="n_price"><span>￥</span>{{item.Products_PriceX}}</span>
-								  <span class="o_price"><span>￥</span>{{item.Products_PriceY}}</span>
+				</block>
+				<block v-else>
+					<!-- 猜你喜欢 -->
+					<div class=" container">
+						  <div class="fenge"><span class="red"></span><span class="caini">猜你喜欢</span><span class="red"></span></div>
+						  <div class="prolist">
+							  <div class="pro-item" v-for="(item,index) in prodList" :key="index" @click="gotoDetail(item.Products_ID)" >
+								  <img :src="item.ImgPath" alt="">
+								  <div class="item-name">{{item.Products_Name}}</div>
+								  <div class="price">
+									  <span class="n_price"><span>￥</span>{{item.Products_PriceX}}</span>
+									  <span class="o_price"><span>￥</span>{{item.Products_PriceY}}</span>
+								  </div>
 							  </div>
 						  </div>
-					  </div>
-				</div>
+					</div>
+				</block>
 			</block>
 	</view>
 </template>
@@ -77,6 +79,7 @@
 					page: 1,
 					pageSize: 4,
 				},
+				showMain:false
 			};
 		},
 		onLoad(option) {
@@ -133,6 +136,7 @@
 					for(let item of res.data){
 						this.pro.push(item);
 					}
+					this.showMain=true
 
 				},err=>{
 
