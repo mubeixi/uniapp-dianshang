@@ -1,5 +1,5 @@
 import {staticUrl} from "./env";
-
+console.log('staticUrl is',staticUrl)
 export const domainFn = (url) => {
   if (!url) return '';
   if (url.indexOf('http') == -1) return staticUrl + url;
