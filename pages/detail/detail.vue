@@ -244,10 +244,6 @@ import uParse from '../../components/gaoyia-parse/parse.vue'
 import {pageMixin} from "../../common/mixin";
 import {error, toast} from "../../common";
 
-import {add_template_code} from "../../common/fetch";
-
-import {staticUrl} from "../../common/env";
-
 export default {
 	mixins:[pageMixin],
     data(){
