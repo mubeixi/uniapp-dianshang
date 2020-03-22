@@ -131,7 +131,7 @@
                 index:  0,
                 arrlist: [],
                 imglist: [],
-
+                
             }
         },
         computed: {
@@ -144,7 +144,7 @@
             popupLayer
         },
         onShow: function(){
-          //this.load();
+          // this.load();
 		  if(!this.userInfo.User_Mobile){
 			  uni.showModal({
 				  confirmText:'去绑定',
@@ -166,7 +166,7 @@
 
         },
         onLoad: function(){
-			this.load()
+			this.load();
             this.objectMultiArray = [
                 utils.array_change(area.area[0]['0']),
                 utils.array_change(area.area[0]['0,1']),
@@ -385,60 +385,45 @@
                 }
 
                 let data = createToken(param);
-
-
-                let sizeType = null
-                // #ifndef MP-TOUTIAO
-                sizeType =  ['original', 'compressed'] //可以指定是原图还是压缩图，默认二者都有
-                // #endif
-                let that = this;
-                let temp_file_list = []
-                if(arg == 0) {
-                    temp_file_list = await chooseImageByPromise({count:1,sizeType})
-                    if(!temp_file_list)return;
-                    that.imgs = [...temp_file_list]
-
-                    let arrs = temp_file_list.map(item=>item.path)
-                    uni.showLoading({
-                        title: '上传图片',
-                        mask: true
-                    })
-                    uploadImages(data,arrs).then(urls=>{
-                        for(let item of urls){
-                            that.arr.push(item)
-                        }
-                        //that.arr = that.arr.concat(urls);
-                        //是否可以提交
-                        that.isSubmit = true;
-                        uni.hideLoading()
-                    }).catch(()=>{
-                        uni.hideLoading()
-                    })
-                }else if(arg == 1){
-
-                    temp_file_list = await chooseImageByPromise({count:(9-that.imglist.length),sizeType})
-                    if(!temp_file_list)return;
-
-                    that.imglist = that.imglist.concat(temp_file_list);
-                    let arrs = temp_file_list.map(item=>item.path)
-
-                    uni.showLoading({
-                        title: '上传图片',
-                        mask: true
-                    })
-                    uploadImages(data,arrs).then(urls=>{
-                        console.log(urls)
-                        for(let item of urls){
-                            that.arrlist.push(item)
-                        }
-                        //that.arrlist = that.arrlist.concat(urls);
-                        //是否可以提交
-                        that.isSubmit = true;
-                        uni.hideLoading()
-                    }).catch(()=>{
-                        uni.hideLoading()
-                    })
-                }
+                    let sizeType = null
+                    // #ifndef MP-TOUTIAO
+                    sizeType =  ['original', 'compressed'] //可以指定是原图还是压缩图，默认二者都有
+                    // #endif
+                    let that = this;
+                    let temp_file_list = []
+                    if(arg == 0) {
+						await chooseImageByPromise({count:1,sizeType}).then(tempFiles=>{
+						    temp_file_list = tempFiles
+						})
+                        that.imgs = [...temp_file_list]
+    
+                        let arrs = temp_file_list.map(item=>item.path)
+                        uploadImages(data,arrs).then(urls=>{
+							for(let item of urls){
+								that.arr.push(item)	
+							}
+                            //that.arr = that.arr.concat(urls);
+                            //是否可以提交
+                            that.isSubmit = true;
+                        });
+                    }else if(arg == 1){
+						await chooseImageByPromise({count:(9-that.imgs.length),sizeType}).then(tempFiles=>{
+						    temp_file_list = tempFiles
+						})
+                        // that.imglist = [...temp_file_list]
+							that.imglist = that.imglist.concat(temp_file_list);
+                        let arrs = temp_file_list.map(item=>item.path)
+						console.log(arrs,"ssss")
+                        uploadImages(data,arrs).then(urls=>{
+                            console.log(urls)
+							for(let item of urls){
+								that.arrlist.push(item)	
+							}
+                            //that.arrlist = that.arrlist.concat(urls);
+                            //是否可以提交
+                            that.isSubmit = true;
+                        });
+                    }
             },
         }
     }
@@ -526,7 +511,7 @@
             position: absolute;
             top: -19rpx;
             right: -19rpx;
-            z-index: 9;
+            z-index: 999;
         }
     }
     .shangchuan{

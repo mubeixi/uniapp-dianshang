@@ -190,8 +190,7 @@
 				TweenLite.to(this.$data, 0.5, {Umoney: newValue})
 			}
 		},
-		onReachBottom(){
-			console.log("11111")
+		onReachBottom() {
 			if(this.current=='charge') {
 				// 充值记录
 				if(this.moneyMore) {
@@ -443,7 +442,7 @@ view{
 	background: #F8F8F8;
 	width: 750rpx;
 	overflow-x: hidden;
-	min-height: 100vh;
+	height: 100vh;
 }
 	.top{
 		width: 750rpx;
