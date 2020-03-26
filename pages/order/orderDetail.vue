@@ -72,7 +72,7 @@
 			<div class="bd">
 				<div class="o_title">
 					<span>运费选择</span>
-					<span style="text-align:right;" class="c8">
+					<span style="text-align:right;" class="c8" v-if="orderInfo.Order_Shipping">
 						<span>{{orderInfo.Order_Shipping.Express}}</span>
 						<span> {{orderInfo.Order_Shipping.Price > 0 ? (' 运费：' + orderInfo.Order_Shipping.Price) : ' 免运费'}}</span>
 					</span>
@@ -191,11 +191,14 @@
 				<view class="mxitem" v-if="orderInfo.Coupon_Money > 0">优惠券 <text class="num">-{{orderInfo.Coupon_Money}}</text></view>
 				<view class="mxitem" v-if="orderInfo.Integral_Money > 0">积分抵用 <text class="num">-{{orderInfo.Integral_Money}}</text></view>
 				<view class="mxitem" v-if="user_money > 0">余额 <text class="num">-{{user_money}}</text></view>
-				<view class="mxitem" v-if="orderInfo.Order_Shipping.Price > 0">运费 <text class="num">+{{orderInfo.Order_Shipping.Price}}</text></view>
+				<block v-if="orderInfo.Order_Shipping">
+					<view class="mxitem" v-if="orderInfo.Order_Shipping.Price > 0">运费 <text class="num">+{{orderInfo.Order_Shipping.Price}}</text></view>
+				</block>
+				
 			</view>
 		</popup-layer>
 		<div class="order_total">
-			<div class="totalinfo">
+			<div class="totalinfo" v-if="orderInfo.prod_list">
 				<div class="info">共{{orderInfo.prod_list.length}}件商品 总计：<span class="mbxa">￥<span>{{orderInfo.Order_TotalPrice}}</span></span></div>
 				<view class="tips" v-if="orderInfo.obtain_desc">{{orderInfo.obtain_desc}}</view>
 			</div>
@@ -310,7 +313,8 @@
 				user_money: 0,
 				user_name: '',
 				user_mobile: '',
-				isSlide: false
+				isSlide: false,
+				invoice_info:''
 			}
 		},
 		onLoad(options) {
@@ -952,7 +956,7 @@ i {
 /* 订单其他信息 end */
 /* 提交订单 */
 .order_total {
-	height: 50px;
+	min-height: 50px;
 	position: fixed;
 	bottom: 0;
 	width: 100%;
@@ -986,8 +990,10 @@ i {
 .totalinfo {
 	// flex: 1;
 	text-align: center;
+	width: 260rpx;
 }
 .btn-group {
+	//flex: 1;
 	span {
 		display: inline-block;
 		//width: 150rpx;
