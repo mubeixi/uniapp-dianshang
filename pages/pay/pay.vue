@@ -124,6 +124,7 @@
 		<div class="safearea-box"></div>
 		<pay-components
 			ref="payLayer"
+			:is_use_money="is_use"
 			:isOpen = "isOpen"
 			:Order_ID="Order_ID"
 			:pay_money="pay_money"
@@ -198,7 +199,8 @@
 				pagefrom: 'check', // 页面来源，支付成功跳转路径不同
 				isSlide: false, // 明细是否已经打开
 				isGetOrder: false, // orderinfo 数据是否已拿到，防止页面报错
-				zIndex: 99
+				zIndex: 99,
+				is_use:1
 			}
 		},
 		onLoad(options) {
@@ -308,6 +310,8 @@
 						}
 						this.orderInfo = res.data;
 						this.Order_Type = res.data.Order_Type;
+						this.is_use=this.orderInfo.is_use_money
+						this.openMoney=this.orderInfo.is_use_money==1?true:false
 						ls.set('type',this.Order_Type);
 						ls.set('pagefrom', this.pagefrom);
 						// pay_money 应该支付的钱
@@ -315,6 +319,9 @@
 						this.pay_money = this.orderInfo.Order_Fyepay;
 						this.user_money = this.orderInfo.Order_Yebc;
 						this.openMoney = this.orderInfo.Order_Yebc > 0;
+						if(!this.openMoney){
+							this.is_use=0
+						}
 						this.need_invoice = this.orderInfo.Order_NeedInvoice;
 						this.openInvoice = this.orderInfo.Order_NeedInvoice > 0;
 						this.invoice_info = this.orderInfo.Order_InvoiceInfo;
@@ -360,11 +367,13 @@
 			moneyChange(e) {
 				var checked = e.detail.value;
 				if (checked) {
+					this.is_use=1
 					this.openMoney = true;
 					this.user_money = Number(this.orderInfo.Order_Yebc).toFixed(2);
 					this.orderInfo.Order_Fyepay = Number(this.orderInfo.Order_TotalPrice - this.user_money).toFixed(2);
 					this.pay_money = Number(this.orderInfo.Order_TotalPrice - this.user_money).toFixed(2);
 				} else {
+					this.is_use=0
 					this.openMoney = false;
 					this.orderInfo.Order_Fyepay = Number(this.orderInfo.Order_TotalPrice).toFixed(2);
 					this.pay_money = Number(this.orderInfo.Order_TotalPrice).toFixed(2);
