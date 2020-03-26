@@ -201,6 +201,30 @@ export const Analysis = {
 	}
 }
 
+export const safeAreaMixin = {
+	data(){
+
+		return {
+			// #ifdef MP-WEIXIN
+			//专门记录安全区域的
+			systemInfo:{},
+			menuButtonInfo:{},
+			safeArea:{}
+			// #endif
+		}
+
+	},
+	onLoad(){
+		// #ifdef MP-WEIXIN
+		this.menuButtonInfo = wx.getMenuButtonBoundingClientRect()
+		const systemInfo = wx.getSystemInfoSync()
+		this.systemInfo = systemInfo
+		this.safeArea = systemInfo.safeArea
+		// #endif
+
+	}
+}
+
 
 
 /**

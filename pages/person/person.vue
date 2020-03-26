@@ -499,9 +499,9 @@
 					transform: translateY(-50%);
 				}
 				.nickName{
-					font-size:15px;
-					height: 29rpx;
-					line-height: 29rpx;
+					font-size:30rpx;
+					height: 30rpx;
+					line-height: 30rpx;
 					//overflow: hidden;
 					color: #FFFFFF;
 					font-weight:bold;

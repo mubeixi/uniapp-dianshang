@@ -187,6 +187,10 @@ uni-toast .uni-toast {
   border-radius: 50%;
   overflow: hidden;
   z-index: 99;
+  /* #ifdef MP */
+  margin-bottom: constant(safe-area-inset-bottom);
+  margin-bottom: env(safe-area-inset-bottom);
+  /* #endif */
   // animation: box 5s .15s linear;
   .icon-live{
 	width: 24px;
@@ -202,7 +206,7 @@ uni-toast .uni-toast {
 	&::before{
 		content: '' !important;
 	}
-	
+
   }
 
 }
