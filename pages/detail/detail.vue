@@ -225,12 +225,12 @@
 	</popupLayer>
 
 	  <!-- #ifdef MP-WEIXIN -->
-	  <view class="liveBox" style="bottom: 70px" v-if="liveList.length===1">
+	  <view class="liveBox" :style="{bottom: '70px'}" v-if="liveList.length===1">
 	  		  <navigator  :url="'plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id='+liveList[0].roomid">
 	  			  <image class="icon-live" src="/static/live/logo.png"></image>
 	  		  </navigator>
 	  </view>
-	  <view class="liveBox" style="bottom: 70px" v-if="liveList.length>1">
+	  <view class="liveBox" :style="{bottom: '70px'}" v-if="liveList.length>1">
 	  		  <image @click="toLive" class="icon-live" src="/static/live/logo.png"></image>
 	  </view>
 	  <!-- #endif -->
@@ -246,17 +246,17 @@ import {buildSharePath, isWeiXin, ls} from "../../common/tool";
 import { mapGetters, mapActions, Store,mapState } from "vuex";
 
 import uParse from '../../components/gaoyia-parse/parse.vue'
-import {pageMixin} from "../../common/mixin";
+import {pageMixin,safeAreaMixin} from "../../common/mixin";
 import {error, toast} from "../../common";
 
 export default {
-	mixins:[pageMixin],
+	mixins:[pageMixin,safeAreaMixin],
     data(){
         return {
 			hideNativeEleShow:false,
 			isLoad:false,
 			// #ifdef APP-PLUS
-					wxMiniOriginId:'',
+			wxMiniOriginId:'',
 			// #endif
 			JSSDK_INIT:false,//自己有分享的业务
 			type: '', // 优惠券内容， 分享内容
