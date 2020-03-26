@@ -14,12 +14,17 @@
         </div>
 
         <view ref="popRef" class="popup-content" @tap.stop="stopEvent" :style="_location">
-            <div class="iMbx">
-                <div class="c_method" v-for="(item,index) in initData.pay_arr" @click="chooseType(index)" :key="index">
-                    {{item}}
-                    <text>￥{{pay_money}}</text>
-                </div>
-            </div>
+           
+				<block v-for="(item,index) in initData.pay_arr"  :key="index">
+					<div class="iMbx" v-if="index!='remainder_pay'||(is_use_money==1)"   @click="chooseType(index)">
+						<div class="c_method" >
+								{{item}}
+								<text>￥{{pay_money}}</text>
+						</div>
+					</div>
+				</block>
+          
+            
             <div class="safearea-box2"></div>
         </view>
 
@@ -45,6 +50,10 @@
 
     export default {
         props: {
+			is_use_money:{
+				type: Number,
+				default: 1,
+			},
             //是否自动显示
             isOpen: {
                 type: Boolean,
