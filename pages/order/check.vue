@@ -212,17 +212,22 @@
 			<scroll-view style="height:430rpx;width:95%;"  scroll-y="true" class="bMbx" v-if="type=='coupon'">
 				<view class="fMbx scroll-view-item">优惠券选择</view>
 				<label class="iMbx scroll-view-item" v-for="(coupon,i) in orderInfo.coupon_list" :key="i">
-					满{{coupon.Coupon_Condition}} - {{coupon.Coupon_Cash > 0 ? coupon.Coupon_Cash : coupon.Coupon_Discount}}
+					<block v-if="coupon.Coupon_ID">
+						满{{coupon.Coupon_Condition}} - {{coupon.Coupon_Cash > 0 ? coupon.Coupon_Cash : coupon.Coupon_Discount}}
+					</block>
+					<block v-else>
+						不使用优惠
+					</block>
 					<radio-group @change="radioChange">
 						<radio :value="''+coupon.Coupon_ID" :checked="i===current" style="float:right;" color="#F43131"/>
 					</radio-group>
 				</label>
-				<label class="iMbx scroll-view-item" >
+				<!-- <label class="iMbx scroll-view-item" >
 					不使用优惠
 					<radio-group @change="notUseCoupon">
 						<radio  :checked="''===current" style="float:right;" color="#F43131"/>
 					</radio-group>
-				</label>
+				</label> -->
 			</scroll-view>
 			<view class="sure" @click="closeMethod">
 				确定
@@ -650,10 +655,10 @@ export default {
 			this.postData.order_remark = e.detail.value;
 		},
 	  	//
-	  	notUseCoupon(){
-			this.postData.coupon_id = ''
-			this.current = ''
-		},
+	 //  	notUseCoupon(){
+		// 	this.postData.coupon_id = ''
+		// 	this.current = ''
+		// },
 		// 优惠券改变
 		radioChange(e){
 			var couponlist = this.orderInfo.coupon_list;
@@ -770,6 +775,7 @@ export default {
 						}
 					}
 					this.orderInfo = res.data;
+					this.orderInfo.coupon_list.push({Coupon_ID:''})
 					//如果该规格有门店 就优先后台设置的
 					if(this.orderInfo.all_has_stores==1&&num!=2){
 						this.tabIdx = this.initData.order_submit_first;
