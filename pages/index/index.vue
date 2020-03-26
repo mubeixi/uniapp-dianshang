@@ -101,18 +101,18 @@
 			<div class="item" @click="tabbarFn(3)">购物车</div>
 			<div class="item" @click="tabbarFn(4)">个人中心</div>
 		</div> -->
-		
+
 		<!-- #ifdef MP-WEIXIN -->
-		<!-- <view class="liveBox" v-if="liveList.length===1">
-			<navigator  :url="'plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id='+liveList[0].roomid">
-				<image class="icon-live" src="/static/live/logo.png"></image>
-			</navigator>
-		</view>
-		<view class="liveBox" v-if="liveList.length>1">
-		<image @click="toLive" class="icon-live" src="/static/live/logo.png"></image>
-		</view> -->
+<!--		<view class="liveBox" v-if="liveList.length===1">-->
+<!--			<navigator  :url="'plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id='+liveList[0].roomid">-->
+<!--				<image class="icon-live" src="/static/live/logo.png"></image>-->
+<!--			</navigator>-->
+<!--		</view>-->
+<!--		<view class="liveBox" v-if="liveList.length>1">-->
+<!--		<image @click="toLive" class="icon-live" src="/static/live/logo.png"></image>-->
+<!--		</view>-->
 		<!-- #endif -->
-		
+
 	</view>
 
 </template>
@@ -289,7 +289,7 @@
 			// 	this.liveCount = res.data.count
 			// })
 			// #endif
-			
+
 
 		},
 		mounted(){

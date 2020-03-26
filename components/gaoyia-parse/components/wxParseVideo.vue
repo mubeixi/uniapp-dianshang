@@ -3,7 +3,17 @@
   <div>
     <!--增加video标签支持，并循环添加-->
       <view :class="node.classStr" :style="node.styleStr" style="position: relative;z-index: 2;width: 750rpx;height: 375rpx;">
-          <video id="myVideo1" ref="video1" controls :class="node.classStr" class="video-video" :src="node.attr.src" style="position: absolute;width: 100%;height: 100%;"></video>
+          <video
+                  id="myVideo1"
+                  ref="video1"
+                  controls
+                  show-center-play-btn
+                  poster=""
+                  :class="node.classStr"
+                  class="video-video"
+                  :src="node.attr.src"
+                  style="position: absolute;width: 100%;height: 100%;"
+          ></video>
       </view>
     <!-- #ifndef APP-PLUS -->
 
@@ -48,7 +58,6 @@ export default {
 
     this.$nextTick().then(() => {
       let videoContext = uni.createVideoContext('myVideo1', _self)
-
       //添加到这里
       getApp().globalData.videoInstance.push(videoContext)
     })

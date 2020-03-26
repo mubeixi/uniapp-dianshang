@@ -2,7 +2,7 @@
 export const isDev = process.env.NODE_ENV === 'production' ? false : true;
 
 // #ifdef APP-PLUS || MP-TOUTIAO
-export const APP_USERS_ID = 'wkbq6nc2kc';//'	mrw5iqvhs2 xjgjd88jee  wkbq6nc2kc  05eiz8cqtw';
+export const APP_USERS_ID = 'wkbq6nc2kc';//'	mrw5iqvhs2 xjgjd88jee  wkbq6nc2kc  05eiz8cqtw o1rcshfk39';
 // #endif
 
 // #ifdef H5
@@ -10,7 +10,7 @@ export const apiBaseUrl = isDev ? '' : '';//h5调试为了跨域https://new401.b
 // #endif
 
 // #ifndef H5
-export const apiBaseUrl = 'https://new401t.bafangka.com';
+export const apiBaseUrl = 'https://new401.bafangka.com';
 // #endif
 
 //后面的正式环境地址,每次打包要从新切换.

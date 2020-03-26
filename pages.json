@@ -179,7 +179,7 @@
 				"navigationBarTitleText": "我的订单"
 			}
 		},
-		
+
 		{
 			"path": "pages/classify/classify",
 			"style": {
@@ -245,7 +245,7 @@
 				"navigationBarTitleText": "分享商品"
 			}
 		},
-		
+
 		{
 			"path": "pages/detail/groupJoin",
 			"style": {
@@ -270,7 +270,7 @@
 				"navigationBarTitleText": "支付宝支付"
 			}
 		},
-		
+
 		{
 			"path": "pages/page/page",
 			"style": {
@@ -341,7 +341,7 @@
 				}
 			}
 		},
-		
+
 		{
 			"path": "pages/fenxiao/distributorLevel",
 			"style": {
@@ -378,7 +378,7 @@
 					"navigationBarTitleText": "券码核销"
 				}
 			},
-			
+
 			{
 				"path": "order/checkOrderInfo",
 				"style": {
@@ -522,17 +522,17 @@
 					"navigationBarTitleText": "优惠券"
 				}
 			},
-			{
-				"path" : "live/live",
-				"style" : {
-					"navigationBarTitleText": "直播列表",
-					"mp-weixin": {
-					 //  "usingComponents": {
-						// "subscribe": "plugin-private://wx2b03c6e691cd7370/components/subscribe/subscribe"
-					 //  }
-					}
-				}
-			},
+//			{
+//				"path" : "live/live",
+//				"style" : {
+//					"navigationBarTitleText": "直播列表",
+//					"mp-weixin": {
+//					  "usingComponents": {
+//						"subscribe": "plugin-private://wx2b03c6e691cd7370/components/subscribe/subscribe"
+//					  }
+//					}
+//				}
+//			},
 			{
 				"path": "person/jifenCheck",
 				"style": {}
@@ -837,13 +837,13 @@
                     	"navigationBarTitleText": "门店退货单"
                     }
                 }
-		]
-		// "plugins": {
-		// 	"live-player-plugin": {
-		// 		"version": "1.0.2",
-		// 		"provider": "wx2b03c6e691cd7370"
-		// 	}
-		// }
+		],
+		 "plugins": {
+//		 	"live-player-plugin": {
+//		 		"version": "1.0.3",
+//		 		"provider": "wx2b03c6e691cd7370"
+//		 	}
+		 }
 	}],
 	"preloadRule": {
 		"pages/index/index": {
