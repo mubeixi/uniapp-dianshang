@@ -148,8 +148,8 @@
 			// 	// that.setData(json)
 			// },
 			stopMove(event){
-				console.log(11);
-				console.log(event);
+				// console.log(11);
+				// console.log(event);
 				return;
 			},
 			show(events) {
@@ -157,9 +157,9 @@
 
 
 				const { windowHeight } = uni.getSystemInfoSync();
-				console.log(windowHeight)
+				// console.log(windowHeight)
 				this.animationStr = this.slideupshow(`-${windowHeight}px`,0.6)
-				console.log('this.animationStr',this.animationStr)
+				// console.log('this.animationStr',this.animationStr)
 				let _open = setTimeout(() => {
 					this.ifshow = true;
 					this.translateValue = 0;
@@ -172,7 +172,7 @@
 				}, 300);
 			},
 			close() {
-				console.log('close popup')
+				// console.log('close popup')
 				if (this.timer !== null || !this.iftoggle) {
 					return;
 				}

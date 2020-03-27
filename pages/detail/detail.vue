@@ -370,22 +370,22 @@ export default {
 		})
 
 		uni.$on('collectHandle',(data)=>{
-			console.log('触发收藏事件')
+			// console.log('触发收藏事件')
 			vm.collect()
 		})
 		uni.$on('getMyCoupon',(data)=>{
-			console.log('触发领取事件')
+			// console.log('触发领取事件')
 			vm.getMyCoupon(data.item,data.i)
 		})
 		uni.$on('goNextPage',(data)=>{
-			console.log('触发优惠券下一页事件')
+			// console.log('触发优惠券下一页事件')
 			vm.goNextPage()
 		})
 
 		uni.$on('shareDetail',(data)=>{
 
 			if(data.detail!='detail') return
-				console.log('触发普通详情分享')
+				// console.log('触发普通详情分享')
 				vm.shareFunc(data.item)
 
 
@@ -393,7 +393,7 @@ export default {
 
 		uni.$on('goodsSkuSub',(data)=>{
 			if(data.detail!='detail') return
-			console.log('触发这么多次事件????')
+			// console.log('触发这么多次事件????')
 			let {check_attr,check_attrid_arr,submit_flag,postData} = data
 			this.check_attr = check_attr
 			this.check_attrid_arr = check_attrid_arr
@@ -579,7 +579,7 @@ export default {
 				   delta: 1
 			   });
 			}, false);
-			console.log('成功创建')
+			// console.log('成功创建')
 			view.show();
 		},
 		createtabs: function(){
@@ -589,7 +589,7 @@ export default {
 
 			let leftOffset = fullWidth-40
 
-			console.log('第二个的left为'+leftOffset)
+			// console.log('第二个的left为'+leftOffset)
 			// 设置水平居中位置
 			//var bitmap = new plus.nativeObj.Bitmap('bmp2');
 			var view = new plus.nativeObj.View('icons', {
@@ -694,10 +694,10 @@ export default {
 						summary: shareObj.desc,
 						imageUrl: shareObj.imageUrl,
 						success: function (res) {
-							console.log("success:" + JSON.stringify(res));
+							// console.log("success:" + JSON.stringify(res));
 						},
 						fail: function (err) {
-							console.log("fail:" + JSON.stringify(err));
+							// console.log("fail:" + JSON.stringify(err));
 						}
 					});
 					break;
@@ -711,10 +711,10 @@ export default {
 						summary: shareObj.desc,
 						imageUrl: shareObj.imageUrl,
 						success: function (res) {
-							console.log("success:" + JSON.stringify(res));
+							// console.log("success:" + JSON.stringify(res));
 						},
 						fail: function (err) {
-							console.log("fail:" + JSON.stringify(err));
+							// console.log("fail:" + JSON.stringify(err));
 						}
 					});
 					break;
@@ -733,7 +733,7 @@ export default {
 							webUrl: 'http://uniapp.dcloud.io'
 						},
 						success: ret => {
-							console.log(JSON.stringify(ret));
+							// console.log(JSON.stringify(ret));
 						}
 					});
 					break;
@@ -745,7 +745,7 @@ export default {
 
 					let sharePic =res.data.img_url
 
-					console.log('海报的地址是'+sharePic)
+					// console.log('海报的地址是'+sharePic)
 
 					if(!sharePic){
 						error('获取分享参数失败');
@@ -794,7 +794,7 @@ export default {
 				return
 			}
 			judgeReceiveGift({gift: this.gift}).then(res=>{
-				console.log(res)
+				// console.log(res)
 				if(res.errorCode ==0){
 
 					this.gift_attr_id = res.data.attr_id;
@@ -817,12 +817,12 @@ export default {
 		//评价预览
 		yulanImg(i,j){
 
-			console.log(this.commit[i].ImgPath)
+			// console.log(this.commit[i].ImgPath)
 			//换大图。。。
 			let tempArr = this.commit[i].ImgPath.map((img,idx)=>{
 				return img.replace(/\/n3\//,'/');
 			});
-			console.log(tempArr)
+			// console.log(tempArr)
 			uni.previewImage({
 			        urls: tempArr,
 					indicator:'number',
@@ -1003,7 +1003,7 @@ export default {
 			}
 
 			if(this.isSubmit) {return}
-			console.log(e);
+			// console.log(e);
 			if(!this.submit_flag) {
 				return ;
 			}
@@ -1169,10 +1169,10 @@ export default {
 
 			let product = null;
 
-			console.log(1)
+
 			//返回的就是一个pormise了
 			await getProductDetail(data).then(res=>{
-				console.log(2)
+
 				product = res.data
 				this.product = res.data;
 				this.postData.productDetail_price =this.product.Products_PriceX;
@@ -1205,9 +1205,6 @@ export default {
 			}).catch(e=>{
 				console.log(e)
 			})
-
-			console.log(3)
-
 
             //let _self = this;
 			// #ifdef H5
@@ -1339,7 +1336,7 @@ export default {
 
 		let initData = await this.getInitData();
 
-		console.log('初始化信息',initData)
+		// console.log('初始化信息',initData)
 		let WX_MINI_ORIGIN_ID = ls.get('WX_MINI_ORIGIN_ID');
 		if(!WX_MINI_ORIGIN_ID){
 
