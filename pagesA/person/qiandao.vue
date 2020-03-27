@@ -76,7 +76,7 @@
 					})
 				}else{
 					uni.navigateTo({
-						url:'../person/person'
+						url:'/pages/person/person'
 					})
 				}
 
