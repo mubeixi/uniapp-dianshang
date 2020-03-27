@@ -24,8 +24,8 @@
         //目前只有app和小程序用到了应用的全局onLaunch，h5环境下这里不执行的
 		onLaunch: function(options) {
 
-            //console.log('App Launch',options)
-
+            console.log('App Launch',options)
+			
 			// #ifdef MP
 			let owner_id = null
 			owner_id = options.owner_id
@@ -100,7 +100,7 @@
             //每次加载都清空全站配置
             ls.remove('initData');
             getSystemConf().then(res => {
-                //console.log('每次加载都清空全站配置 success')
+                console.log('每次加载都清空全站配置 success')
                 ls.set('initData',res.data)
             }).catch(error=>{
                 console.log(error)
@@ -108,10 +108,10 @@
 
 		},
 		onShow: function() {
-			//console.log('App Show')
+			console.log('App Show')
 		},
 		onHide: function() {
-			//console.log('App Hide')
+			console.log('App Hide')
 		},
         //后期可以接自定义的错误上报
         onError:function(err){
@@ -135,6 +135,7 @@
 @import "./static/css/icon.css";
 @import "./components/gaoyia-parse/parse.css";
 /* #endif */
+
 
 </style>
 
