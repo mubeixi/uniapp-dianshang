@@ -766,7 +766,7 @@ export default {
 		//返回首页
 		goHome(){
 			uni.switchTab({
-				url:'../index/index'
+				url:'/pages/index/index'
 			})
 		},
         // 选择属性

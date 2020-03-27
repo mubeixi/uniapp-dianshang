@@ -136,7 +136,7 @@
 					this.isQing=false
 					setTimeout(function () {
 						uni.navigateTo({
-							url:"../fenxiao/addWithdrawal?form="+this.withdraw_from
+							url:"/pagesA/fenxiao/addWithdrawal?form="+this.withdraw_from
 						})
 					},1000)
 					return;
@@ -185,11 +185,11 @@
 					if(this.withdraw_from==2){
 						this.balance=res.data.user_money
 					}
-					
-					
+
+
 					if(res.errorCode==0){
 							// this.$vm.$on('fires', (data) =>{
-							
+
 							// 	this.User_Method_ID = data;
 							// })
 							this.User_Method_ID=ls.get("myMethod")
@@ -219,13 +219,13 @@
 			//我的提现方式
 			goMethod(){
 				uni.navigateTo({
-					url:"../fenxiao/withdrawalMethod?User_Method_ID="+this.data.User_Method_ID+"&from="+this.withdraw_from
+					url:"/pagesA/fenxiao/withdrawalMethod?User_Method_ID="+this.data.User_Method_ID+"&from="+this.withdraw_from
 				})
 			},
 			//管理提现方式
 			guanWithdrawal(){
 				uni.navigateTo({
-					url:"../fenxiao/addWithdrawal?form="+this.withdraw_from
+					url:"/pagesA/fenxiao/addWithdrawal?form="+this.withdraw_from
 				})
 			}
 		}

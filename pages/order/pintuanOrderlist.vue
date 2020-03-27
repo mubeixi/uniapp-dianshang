@@ -103,7 +103,7 @@ export default {
 		if(option.index){
 			this.index=option.index;
 		}
-		
+
 		this._getOrder();
 		this.getOrderNum();
 	},
@@ -117,7 +117,7 @@ export default {
 		goPintuan(item){
 			if(item.teamstatus == 0) {
 				uni.navigateTo({
-					url:'../detail/groupJoin?Team_ID='+item.teamid+'&Products_ID='+item.prod_list[0].prod_id
+					url:'/pages/detail/groupJoin?Team_ID='+item.teamid+'&Products_ID='+item.prod_list[0].prod_id
 				})
 			}
 		},
@@ -181,20 +181,20 @@ export default {
 		// 订单详情
 		goDetail(item){
 			uni.navigateTo({
-				url:"../order/orderDetail?Order_ID="+item.Order_ID+'&pagefrom=order'
+				url:"/pages/order/orderDetail?Order_ID="+item.Order_ID+'&pagefrom=order'
 			})
 		},
 		goLogistics(item){
 			//跳转物流追踪
 			uni.navigateTo({
-				url:'../order/logistics?Order_ID='+item.Order_ID
+				url:'/pages/order/logistics?Order_ID='+item.Order_ID
 			})
 		},
 		//跳转订单详情
 		goPay(item){
 			if(item.Order_Status==1){
 				uni.navigateTo({
-					url:"../pay/pay?Order_ID="+item.Order_ID
+					url:"/pages/pay/pay?Order_ID="+item.Order_ID
 				})
 			}else if(item.Order_Status==2||item.Order_Status==3){
 				uni.navigateTo({
@@ -202,7 +202,7 @@ export default {
 				})
 			}else if(item.Order_Status==4){
 				uni.navigateTo({
-					url:'../order/publishComment?Order_ID='+item.Order_ID
+					url:'/pages/order/publishComment?Order_ID='+item.Order_ID
 				})
 			}
 

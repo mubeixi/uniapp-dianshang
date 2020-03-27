@@ -179,7 +179,7 @@ export default {
 	  //跳转搜索页
 	  goSearch(){
 		  uni.navigateTo({
-		  	url:'../classify/search'
+		  	url:'/pages/classify/search'
 		  })
 	  },
 	  shipping(i){
@@ -332,7 +332,7 @@ export default {
 	  },
       gotoDetail(item){
           uni.navigateTo({
-          			  url:'../detail/detail?Products_ID='+item
+			  url:'/pages/detail/detail?Products_ID='+item
           })
       },
 	  changeCate(){

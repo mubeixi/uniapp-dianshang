@@ -194,7 +194,7 @@
 				<block v-if="orderInfo.Order_Shipping">
 					<view class="mxitem" v-if="orderInfo.Order_Shipping.Price > 0">运费 <text class="num">+{{orderInfo.Order_Shipping.Price}}</text></view>
 				</block>
-				
+
 			</view>
 		</popup-layer>
 		<div class="order_total">
@@ -202,7 +202,7 @@
 				<div class="info">共{{orderInfo.prod_list.length}}件商品 总计：<span class="mbxa">￥<span>{{orderInfo.Order_TotalPrice}}</span></span></div>
 				<view class="tips" v-if="orderInfo.obtain_desc">{{orderInfo.obtain_desc}}</view>
 			</div>
-			<view class="mx" @click="seeDetail">明细 <image class="image" :class="isSlide?'slidedown':''" src="../../static/top.png"></image></view>
+			<view class="mx" @click="seeDetail">明细 <image class="image" :class="isSlide?'slidedown':''" src="/static/top.png"></image></view>
 			<div class="btn-group" v-if="orderInfo.Order_Status==0">
 				<span @click="cancelOrder(orderInfo.Order_ID)">取消订单</span>
 			</div>
@@ -400,7 +400,7 @@
 				}
 				//跳转物流追踪
 				uni.navigateTo({
-					url:'../order/logistics?shipping_id='+shipping_id + '&express=' + express + '&prod_img=' + prod_img
+					url:'/pages/order/logistics?shipping_id='+shipping_id + '&express=' + express + '&prod_img=' + prod_img
 				})
 			},
 			//取消订单
@@ -457,7 +457,7 @@
 					})
 				}else if(this.orderInfo.Order_Status==4){
 					uni.navigateTo({
-						url:'../order/publishComment?Order_ID='+Order_ID
+						url:'/pages/order/publishComment?Order_ID='+Order_ID
 					})
 				}
 

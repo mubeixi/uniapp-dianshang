@@ -145,7 +145,7 @@
 
 
 <style scoped lang="less">
-    @import "../../static/css/app.less";
+    @import "../../assets/css/app.less";
 
     .single {
         image {

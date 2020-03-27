@@ -734,7 +734,7 @@
 </script>
 
 <style scoped lang="scss">
-	@import "../../static/css/scssConfig";
+
 	.icon-icon_mobilephonelanding{
 		color: #E6A23C !important;
 		font-size: 80rpx !important;
@@ -785,9 +785,6 @@
 		}
 	}
 
-
-
-
 	.icon-fanhui {
 		padding-right: 4px;
 		color: #999;
@@ -797,7 +794,6 @@
 		height: 400px;
 		overflow: auto;
 	}
-
 	.editSearchPassword {
 
 		input[type="text"],

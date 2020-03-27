@@ -4,7 +4,7 @@
 
 			<image class="back" :src="'/static/client/fenxiao/top.png'|domain" ></image>
 			<!-- #ifdef H5 -->
-			<image class="go" @click="goBack" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAeCAYAAAAsEj5rAAABnElEQVRIS73WzUsVcRTG8e+TmUr9Ty5auBAVUjE0git4F1eowBYR4gvUxkWBBSaCgoISCSW4cBHkHxVqvvTIyIwcrnPfhsHfboY5nzkzvzPnjCi4bPcDh8CTQCyriGf7KXAAPA7x85I+dgzaHgB+An0pZuCdpJXkuCPQ9iCwD/QGbE7S5yzTtkHbI8B3oCdgryR9ja+tLdD2KLALPEqD/wM1Sev1e9AStP0c2AEepsFXQFXSZt6GNgVtvwC26rBpSduNqqMhaLsCbABdafAl8FLSXrNSywVtzwDfgAdp8AUwJelHq7q9A9quAV8Cdg5MSPrVCrtTh7ZfA0lNZTf6B4xJSj6xttZthrbfAkm1Z+dOgWeSjtqS0otugm2/Bz4E7AQYkfS7E+zmkW0vAMsh8C8wLOlPp1gGLgJLdeCQpONCYOmPnGVR6qYE9A3wKWzOGTBeqGwCOgusllLYAa0Ca3Wf3qSkpLk2XffTHEKmee2rIinpj7nrfhtsyDQZAUkf7E7PFR8BAS1vSAW0vDEa0PIGfUDL+xUJaO7P0jXD8a8ZBpbm8AAAAABJRU5ErkJggg==" mode=""></image>
+			<image class="go" @click="goBack" src="/static/white-arrow-left.png" mode=""></image>
 			<!-- #endif -->
 
 			<view class="person">

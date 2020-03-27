@@ -44,7 +44,7 @@
 </script>
 
 <style lang="less" scoped>
-@import "../../../static/css/app.less";
+@import "../../../assets/css/app.less";
 .wrap{
 	padding: 20rpx;
 	position: relative;
