@@ -100,7 +100,7 @@
             //每次加载都清空全站配置
             ls.remove('initData');
             getSystemConf().then(res => {
-                console.log('每次加载都清空全站配置 success')
+                //console.log('每次加载都清空全站配置 success')
                 ls.set('initData',res.data)
             }).catch(error=>{
                 console.log(error)

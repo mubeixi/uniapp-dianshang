@@ -1354,7 +1354,6 @@ export default {
 		}
 
 		this.wxMiniOriginId = WX_MINI_ORIGIN_ID;
-		console.log('wxMiniOriginId is '+this.wxMiniOriginId)
 
 	}
 }

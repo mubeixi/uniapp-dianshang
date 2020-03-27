@@ -172,7 +172,7 @@ export const Analysis = {
 			const d = new Date()
 			//,
 			let postData = {view_type,router:this.currentPageName,y_coordinate:y,x_coordinate:x,_timeStamp:parseInt(d.getTime()/1000)}
-
+			
 			if(!emptyObject(postData,1))return;//距离和坐标是肯定要有的
 			Object.assign(postData,this.analysisExt);
 
@@ -180,7 +180,7 @@ export const Analysis = {
 			if(!history)history=[]
 			history.push(postData)
 			ls.set('analysis',history)
-			//console.log(JSON.stringify(postData))
+
 
 			sendAnalysisData(postData).then(res=>{}).catch(e=>{})
 		},
