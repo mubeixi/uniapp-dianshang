@@ -165,7 +165,7 @@ export const goProductDetail = (id, is_group) => {
 const tabbarRouter = ['/pages/index/index', '/pages/classify/classify', '/pages/detail/groupSuccess', '/pages/order/cart', '/pages/person/person', '/pages/fenxiao/fenxiao'];
 const isHasTabbarRouter = (link) => {
     for (var item of tabbarRouter) {
-        console.log(item, link, item.indexOf(link));
+        // console.log(item, link, item.indexOf(link));
         //反的了。。
         if (item.indexOf(link) != -1 || link.indexOf(item) != -1) {
             console.log('has');
@@ -183,7 +183,7 @@ export const linkTo =  (linkObj) => {
         return;
     }
 
-    console.log('跳转link:' + link + '===type:' + linkType)
+    // console.log('跳转link:' + link + '===type:' + linkType)
 
     //跳转到小程序
     if (linkType === 'mini') {

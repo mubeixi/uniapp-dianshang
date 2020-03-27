@@ -255,7 +255,7 @@
 				}
 
 				let lsobj = {owner_id:ls.get('owner_id'),users_id:ls.get("users_id")}
-				console.log('lsobj is ',lsobj)
+				// console.log('lsobj is ',lsobj)
 				// uni.showModal({
 				// 	content:JSON.stringify(lsobj)
 				// })
@@ -265,7 +265,7 @@
 			...mapActions(['getInitData'])
 		},
 		onLoad(opt) {
-			console.log('index page options is',opt)
+			//console.log('index page options is',opt)
 			// uni.hideTabBar()
 		},
 		async created(){
@@ -274,7 +274,7 @@
 			let systemConf = await getSystemConf()
 
             let initData = systemConf?systemConf.data:null
-            console.log('首页自己获取initData', initData)
+            //console.log('首页自己获取initData', initData)
 
             if(initData && initData.hasOwnProperty('ShopName') && initData.ShopName){
                 uni.setNavigationBarTitle({

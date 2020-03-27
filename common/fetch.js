@@ -519,7 +519,7 @@ export const updateStoreInfo = (data, options) => fetch('update_store_info', dat
 export const getUserStoreApply = (data, options) => fetch('get_user_store_apply', data, options);
 //写入用户日志
 export const upUserLog = (data, options) => {
-    console.log('上报用户信息', data, options)
+    //console.log('上报用户信息', data, options)
     return fetch('write_user_log', data, options)
 }
 

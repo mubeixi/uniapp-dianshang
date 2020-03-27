@@ -21,7 +21,7 @@ export const SET_USER_INFO = function (state, value) {
   }else{
     ls.set('Stores_ID',null,1)
   }
-  console.log('action value is ',value)
+  // console.log('action value is ',value)
   ls.set('userInfo',value);
   //要覆盖，不然有时候user_id删不掉
   ls.set("user_id",value.User_ID,1);
