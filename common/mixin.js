@@ -180,7 +180,7 @@ export const Analysis = {
 			if(!history)history=[]
 			history.push(postData)
 			ls.set('analysis',history)
-			//console.log(JSON.stringify(postData))
+
 
 			sendAnalysisData(postData).then(res=>{}).catch(e=>{})
 		},
@@ -241,16 +241,12 @@ export const pageMixin = {
 			JSSDK_READY: false,
 			JSSDK_INIT: true,//是否需要微信签名
 			// #endif
-
 		}
 	},
 	//option为object类型，会序列化上个页面传递的参数
 	//页面的初始化
 	onLoad(options) {
-
 		let opt = {...options}
-
-		console.log('page onload options is',opt)
 
 		//这样简洁多了
 		this.default_init_func(opt)
@@ -259,7 +255,6 @@ export const pageMixin = {
 	onShow() {
 		// #ifdef APP-PLUS
 		plus.key.hideSoftKeybord();
-
 		// #endif
 	},
 	created() {
@@ -270,12 +265,10 @@ export const pageMixin = {
 	},
 	methods: {
 		async default_init_func(options){
-			// #ifdef H5
-			//微信里面强制刷新
-			this.refreshInit = true
-			// #endif
 
-			//console.log('options is',options)
+			// #ifdef H5
+			this.refreshInit = true //微信里面强制刷新
+			// #endif
 
 			/*商户id机制*/
 			// #ifdef H5|| MP-WEIXIN || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO
@@ -285,9 +278,7 @@ export const pageMixin = {
 				ls.set('owner_id', owner_id);
 			}
 
-
 			users_id = options.users_id || ls.get('users_id')
-
 			if(!users_id){
 				uni.showModal({
 					title: '提示',
@@ -300,7 +291,6 @@ export const pageMixin = {
 			if (users_id) {
 				//暂存一下，会用到
 				let old_users_id = ls.get('users_id')
-
 				//不管ls有没有，都存一次
 				ls.set('users_id', users_id);
 
@@ -334,15 +324,13 @@ export const pageMixin = {
 				// #endif
 
 			}
-
-
 			// #endif
-
 
 			//根据配置决定是否刷新配置
 			let initData = await this.getInitData(this.refreshInit)
 
 			// #ifdef H5
+
 			//上报用户信息
 			if (checkIsLogin() && !sessionStorage.getItem('is_send_usrlog')) {
 				upUserLog({}, {errtip: false}).then(res => {
@@ -352,11 +340,12 @@ export const pageMixin = {
 				})
 			}
 
+
+
 			//页面默认全都是分享出去是首页的
 			if (isWeiXin() && this.JSSDK_INIT) {
 
 				WX_JSSDK_INIT(this).then((env) => {
-
 					this.$wx.onMenuShareTimeline({
 						title: initData.ShopName, // 分享标题
 						link: buildSharePath(initData.front_url), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
@@ -365,7 +354,6 @@ export const pageMixin = {
 							// 用户点击了分享后执行的回调函数
 						}
 					});
-
 					//两种方式都可以
 					this.$wx.onMenuShareAppMessage({
 						title: initData.ShopName, // 分享标题
@@ -390,7 +378,7 @@ export const pageMixin = {
 	},
 	// #ifdef MP-WEIXIN || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO
 	onShareAppMessage() {
-		//getInitData是async，而且retrun一个data,相当于返回了一个promise
+
 		let initData = this.getInitData()
 		let path = '/pages/index/index';
 		let shareObj = {
