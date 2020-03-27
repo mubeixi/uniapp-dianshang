@@ -177,7 +177,7 @@
 					<view class="info">共{{orderInfo.prod_count}}件商品 总计：<text class="money"><text class="m_icon">￥</text> {{orderInfo.Order_Fyepay}}</text></view>
 					<view class="tips" v-if="orderInfo.obtain_desc">{{orderInfo.obtain_desc}}</view>
 				</view>
-				<view class="mx" @click="seeDetail">明细 <image class="image" :class="isSlide?'slidedown': ''" src="../../static/top.png"></image></view>
+				<view class="mx" @click="seeDetail">明细 <image class="image" :class="isSlide?'slidedown': ''" src="/static/top.png"></image></view>
 				<form report-submit @submit="form_submit">
 					<button formType="submit" class="submit">提交订单</button>
 				</form>
