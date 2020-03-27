@@ -13,7 +13,6 @@
 				<!-- #ifdef H5 -->
 				<div class="otherLogin-top" v-if="isShowWeiXin==1 && !showCodeLogin">
 					<div class="box">
-
 						<div class="otherLogin-top-item" v-for="(channel,idx) in channels" v-if="channel.type=='wx_mp'" @click="weixinlogin(channel)">
 <!--							<i   class="icon funicon icon-weixin"></i>-->
 							<image class="fun-icon-weixin icon" src="/static/login/icon_wx.png"></image>
@@ -923,18 +922,47 @@
 </script>
 
 <style scoped lang="scss">
-	@import "../../static/css/scssConfig";
+
 	.icon-icon_mobilephonelanding{
 		color: #E6A23C !important;
 		font-size: 80rpx !important;
 	}
 	.joinForm{
 		background: white;
-		width: 500rpx;
-		padding: 30rpx;
-		text-align: center;
-		border-radius: 4px;
-
+		z-index: 3;
+		.logo{
+			width: 130rpx;
+			margin-bottom: 90rpx;
+			overflow: hidden;
+		}
+		/*.logo2{*/
+		/*	width: 218rpx;*/
+		/*	height: 58rpx;*/
+		/*	margin-bottom: 90rpx;*/
+		/*}*/
+		.control{
+			margin-top: 76rpx;
+			display: flex;
+			justify-content: center;
+			.btn{
+				width: 290rpx;
+				height: 76rpx;
+				padding: 0;
+				line-height: 76rpx;
+				border-radius: 6rpx;
+				border: none;
+				margin: 0;
+			}
+			.allow{
+				background: #59a228;
+				color: #fff;
+				margin-left: 40rpx;
+			}
+			.reject{
+				background: #f2f2f2;
+				color: #555;
+			}
+		}
 	}
 
 	.icon-fanhui {
@@ -946,7 +974,6 @@
 		height: 400px;
 		overflow: auto;
 	}
-
 	.editSearchPassword {
 
 		input[type="text"],

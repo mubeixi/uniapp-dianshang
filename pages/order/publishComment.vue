@@ -119,7 +119,7 @@
 								})
 								setTimeout(function(){
 									 uni.redirectTo({
-										url:"../order/order?index=4"
+										url:"/pages/order/order?index=4"
 									})
 								},2000)
 								this.isLoadong=false

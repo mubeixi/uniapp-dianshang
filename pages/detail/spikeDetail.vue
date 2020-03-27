@@ -791,7 +791,7 @@ export default {
 			}
 			//零售价购买
 			uni.navigateTo({
-				url:'../detail/detail?Products_ID='+this.Products_ID
+				url:'/pages/detail/detail?Products_ID='+this.Products_ID
 			})
 		},
 		//单独购买
@@ -823,7 +823,7 @@ export default {
 		//返回首页
 		goHome(){
 			uni.switchTab({
-				url:'../index/index'
+				url:'/pages/index/index'
 			})
 		},
         // 选择属性

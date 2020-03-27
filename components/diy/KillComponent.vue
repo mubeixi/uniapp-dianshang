@@ -353,24 +353,17 @@
 </script>
 
 <style scoped lang="less">
-    @import "../../static/css/app.less";
+    @import "../../assets/css/app.less";
 
     .wrap {
         background: #f8f8f8;
-        /*padding-top: 110rpx;*/
-        /*position: relative;*/
     }
 
     .bgimg {
-        /*position: absolute;*/
-        /*top: 0;*/
-        /*left: 0;*/
-        /*width: 750rpx;*/
-        /*height: 282rpx;*/
+
     }
 
     //无边框白底 有边框白底 无边框透明底
-    /*'noborder-bgwhite','border-bgwhite','noborder-nobg'*/
     .noborder-bgwhite {
 
     }
@@ -465,7 +458,6 @@
     .cover {
         .stamp {
             font-size: 12px;
-
             background: rgba(0, 0, 0, .5);
             padding: 6px 2px;
             position: absolute;
@@ -473,7 +465,6 @@
             right: 0;
             bottom: 0;
             color: #fff;
-
             .countdown_tag {
                 background: #F43131;
                 color: white;
@@ -503,13 +494,6 @@
         .count {
             font-size: 12px;
             color: #999;
-            /*background: rgba(0,0,0,.5);*/
-            /*padding: 2px;*/
-            /*position: absolute;*/
-            /*right: 0;*/
-            /*bottom: 0;*/
-            /*color: #fff;*/
-
         }
     }
 
@@ -528,13 +512,10 @@
             }
         }
     }
-
-
     .round {
         border-radius: 2%;
         overflow: hidden;
     }
-
     .desc {
         height: 12px;
         line-height: 12px;
