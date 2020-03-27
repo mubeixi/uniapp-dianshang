@@ -590,13 +590,13 @@
 			//跳转商品详情
 			goDetail(item){
 				uni.navigateTo({
-					url:'../detail/detail?Products_ID='+item
+					url:'/pages/detail/detail?Products_ID='+item
 				})
 			},
 			//跳转去列表页
 			goResult(){
 				uni.navigateTo({
-					url:'../classify/result'
+					url:'/paegs/classify/result'
 				})
 			},
 			application(){
