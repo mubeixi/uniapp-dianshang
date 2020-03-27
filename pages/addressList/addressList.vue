@@ -2,7 +2,7 @@
 
 	<view @click="commonClick" class="myall">
 		<radio-group class="radio-group" @change="radioChange">
-		  <label class="radio" :class="!check_flag ? 'no-redio' : ''" v-for="(item,idx) in addresslist" :key="idx">
+		  <label class="radio" :class="!check_flag ? 'no-redio' : ''" v-for="item in addresslist" :key="">
 			<radio :value="item.Address_ID" color="#F43131" :checked="item.Address_ID == check_address_id" v-if="check_flag" :disabled="!check_flag"/>
 			<view class="flex-main">
 			  <view class='flex-top'>
@@ -50,33 +50,32 @@
 		methods: {
 			//选择地址
 			  radioChange: function (e) {
-
 			    var address_id = e.detail.value;  //选择的地址ID
 				uni.$emit('fire',address_id)
 				//返回上一页
 				uni.navigateBack({
 				  delta: 1
 				});
-				return;
-			    // if (this.from_page == 'checkout') {
-			    //   var pages = getCurrentPages();          //获取页面堆栈
-			    //   var prevPage = pages[pages.length - 2]; //上一页
-				// 		prevPage.setData({
-				// 			back_address_id: address_id
-				// 		})
-				//   // #ifdef APP-PLUS
-				// 	prevPage.$getAppWebview().back_address_id = address_id;
-				//   // #endif
-			    // }
-				// if(this.from_page == 'jifen') {
-				// 	var pages = getCurrentPages();          //获取页面堆栈
-				// 	var prevPage = pages[pages.length - 2]; //上一页
-				// 	prevPage.setData({
-				// 	  address_id: address_id
-				// 	})
-				// }
-
-
+				return
+			    if (this.from_page == 'checkout') {
+			      var pages = getCurrentPages();          //获取页面堆栈
+			      var prevPage = pages[pages.length - 2]; //上一页
+						prevPage.setData({
+							back_address_id: address_id
+						})
+				  // #ifdef APP-PLUS
+					prevPage.$getAppWebview().back_address_id = address_id;
+				  // #endif
+			    }
+					if(this.from_page == 'jifen') {
+						var pages = getCurrentPages();          //获取页面堆栈
+						var prevPage = pages[pages.length - 2]; //上一页
+						prevPage.setData({
+						  address_id: address_id
+						})
+					}
+				
+		
 			  },
 
 			  //删除收获地址

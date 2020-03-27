@@ -20,11 +20,11 @@ export const userInfo = function (state, value) {
 };
 
 export const initData = function (state, value) {
-    let rt = state.initData
-    if(!rt){
-        rt = ls.get('initData') || {}
+    if(!state.initData){
+        if(ls.get('initData'))return ls.get('initData')
+        return {};
     }
-    return rt;
+    return state.initData;
 };
 
 export const commi_rename = function (state, value) {

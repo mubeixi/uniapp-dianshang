@@ -332,7 +332,8 @@ export default {
 				console.log(e)
 			})
 		}
-		this.initFn()
+		this.getAddress();
+		this.createOrderCheck();
 	},
 	async created(){
 		// #ifdef H5
@@ -370,10 +371,6 @@ export default {
 		...mapGetters(['userInfo','initData'])
 	},
   methods: {
-		async initFn(){
-			await this.getAddressFn();
-			await this.createOrderCheckFn();
-		},
 	  changgeTabIdx(index){
 		  this.tabIdx=index
 		  if(index==0){
@@ -484,7 +481,7 @@ export default {
 						return;
 					}
 				}
-
+				
 				if(this.tabIdx==1&&this.postData.shipping_id!='is_store'){
 					this.submited = false;
 					uni.showToast({
@@ -581,7 +578,7 @@ export default {
 			if(!this.intergralChecked) {
 				this.postData.use_integral = 0;
 			};
-			this.createOrderCheckFn();
+			this.createOrderCheck();
 		},
 		// 余额支付开关
 		userMoneyChange(e){
@@ -589,7 +586,7 @@ export default {
 			if(!this.userMoneyChecked) {
 				this.postData.use_money = 0;
 			}
-			this.createOrderCheckFn();
+			this.createOrderCheck();
 		},
 		// 发票开关
 		faPiaoChange(e) {
@@ -641,11 +638,11 @@ export default {
 					showCancel: false
 				});
 				this.postData.use_money = user_money;
-				this.createOrderCheckFn();
+				this.createOrderCheck();
 				return;
 			}
 			this.postData.use_money = Number(input_money).toFixed(2);
-			this.createOrderCheckFn();
+			this.createOrderCheck();
 		},
 		// 留言
 		remarkConfirm(e) {
@@ -700,7 +697,7 @@ export default {
 				//不使用优惠
 				if(!this.postData.coupon_id){
 					this.coupon_desc = '暂不使用优惠'
-					this.createOrderCheckFn(2);
+					this.createOrderCheck(2);
 					this.$refs.popupRef.close();
 					return;
 				}
@@ -716,90 +713,91 @@ export default {
 					}
 				}
 			};
-			this.createOrderCheckFn(2);
+			this.createOrderCheck(2);
 			this.$refs.popupRef.close();
 		},
-		async getAddressFn(){
+		async getAddress(){
 			uni.$on('fire', (data) =>{
 				this.back_address_id = data;
-				// console.log(data,"ssssssss")
+				console.log(data,"ssssssss")
 			})
-			// console.log(this.back_address_id)
+			console.log(this.back_address_id)
 			var Address_ID;
 			if (this.back_address_id) {  //添加、选择收获地址返回
 			    Address_ID = this.back_address_id;
 			} else if (this.addressinfo.Address_ID) { //有收获地址，则更新（防止收获地址编辑后返回）
 			    Address_ID = this.addressinfo.Address_ID;
 			}
-			// console.log(Address_ID)
-
-			try{
-				const res = await getAddress({Address_ID: Address_ID?Address_ID:0})
+			console.log(Address_ID)
+			await getAddress({Address_ID: Address_ID?Address_ID:0}).then(res=>{
 				if (this.back_address_id && res.errorCode != 0) {  //添加、选择收获地址返回
+					uni.showModal({
+					  title: '错误',
+					  content: '收货地址获取失败',
+					  showCancel: false
+					});
 					return false;
 				}
-
-				if(!res.data[0]) return
-				if(res.data.length>0){
-					this.addressinfo = res.data[0]
+				if(res.errorCode == 0) {
+					if(!res.data[0]) return
+					if(res.data.length>0){
+						this.addressinfo = res.data[0]
+					}
+					// for(let i in res.data){
+					// 	for(let j in res.data[i]){
+					// 		if(j=='Address_Is_Default'){
+					// 			res.data[i][j] == 1;
+					// 			this.addressinfo = res.data[i]
+					// 		}
+					// 	}
+					// }
+					this.postData.address_id = this.addressinfo.Address_ID;
 				}
-				this.postData.address_id = this.addressinfo.Address_ID;
-
 				this.back_address_id = 0;
 
-				this.addressLoading = true;
-			}
-			catch(e) {
-				uni.showModal({
-					title: '错误',
-					content: '收货地址获取失败',
-					showCancel: false
-				});
+				// 获取用户收货地址，获取订单信息，后台判断运费信息
+				this.createOrderCheck();
+			},err=>{
 
-			}
+			})
 
+			this.addressLoading = true;
 
 
 		},
-		async createOrderCheckFn(num){
+		createOrderCheck(num){
+			createOrderCheck(this.postData).then(res=>{
+				if(res.errorCode == 0){
 
-			try {
-
-				const res = await createOrderCheck(this.postData)
-
-				for(var i in res.data.CartList){
-					for(var j in res.data.CartList[i]){
-						res.data.CartList[i][j].store = {}
+					for(var i in res.data.CartList){
+						for(var j in res.data.CartList[i]){
+							res.data.CartList[i][j].store = {}
+						}
+					}
+					this.orderInfo = res.data;
+					this.orderInfo.coupon_list.push({Coupon_ID:''})
+					//如果该规格有门店 就优先后台设置的
+					if(this.orderInfo.all_has_stores==1&&num!=2){
+						this.tabIdx = this.initData.order_submit_first;
+					}
+					
+					
+					this.couponlist = res.data.coupon_list;
+					this.orderLoading = true;
+					this.postData.shipping_id = res.data.Order_Shipping.shipping_id;
+					this.idD=this.postData.shipping_id
+					for(var i in this.orderInfo.shipping_company) {
+						if(i == this.postData.shipping_id) {
+							this.shipping_name = `${this.orderInfo.shipping_company[i]}`
+						}
 					}
 				}
-				this.orderInfo = res.data;
-				this.orderInfo.coupon_list.push({Coupon_ID:''})
-				//如果该规格有门店 就优先后台设置的
-				if(this.orderInfo.all_has_stores==1&&num!=2){
-					this.tabIdx = this.initData.order_submit_first;
-				}
-
-
-				this.couponlist = res.data.coupon_list;
-				this.orderLoading = true;
-				this.postData.shipping_id = res.data.Order_Shipping.shipping_id;
-				this.idD=this.postData.shipping_id
-				for(var i in this.orderInfo.shipping_company) {
-					if(i == this.postData.shipping_id) {
-						this.shipping_name = `${this.orderInfo.shipping_company[i]}`
-					}
-				}
-
-			}catch (e) {
-				uni.showModal({
-					title:'错误提示',
-					content:e.message
+			}).catch(e=>{
+				uni.showToast({
+					title: e.data,
+					icon: 'none'
 				})
-			}
-
-
-
-
+			})
 		}
     }
 }

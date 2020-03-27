@@ -665,7 +665,7 @@ function checkValue(val, vals) {
     if (Number.isNaN(val)) {
         _val = 'NaN'
     }
-    return vals.indexOf(_val) !== -1;
+    return vals.indexOf(_val) === -1;
 }
 
 /**
@@ -682,7 +682,7 @@ export const emptyObject = (obj, strice,tip,clearValues = [null, undefined, '','
         if (checkValue(obj[prop],clearValues)) {
             if (strice) {
                 tip && error('参数' + prop + '不能为空');
-                console.log('参数' + prop + '不能为空',obj[prop]);
+                console.log('参数' + prop + '不能为空');
                 return false;
             }
             delete obj[prop];
