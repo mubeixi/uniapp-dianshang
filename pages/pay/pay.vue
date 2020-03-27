@@ -319,9 +319,9 @@
 						this.pay_money = this.orderInfo.Order_Fyepay;
 						this.user_money = this.orderInfo.Order_Yebc;
 						this.openMoney = this.orderInfo.Order_Yebc > 0;
-						if(!this.openMoney){
-							this.is_use=0
-						}
+						// if(!this.openMoney){
+						// 	this.is_use=0
+						// }
 						this.need_invoice = this.orderInfo.Order_NeedInvoice;
 						this.openInvoice = this.orderInfo.Order_NeedInvoice > 0;
 						this.invoice_info = this.orderInfo.Order_InvoiceInfo;
