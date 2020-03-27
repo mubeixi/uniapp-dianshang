@@ -1,12 +1,15 @@
 <template>
 	<div @click="commonClick" class="loginSign font16">
-		<!-- #ifdef APP-PLUS || MP -->
+		<!-- #ifdef APP-PLUS-->
 		<view class="status_bar" ></view>
+		<!-- #endif -->
+		<!-- #ifdef MP-->
+		<view :style="{height:menuButtonInfo.top+'px'}" ></view>
 		<!-- #endif -->
 		<ul>
 			<li class="codeContent" v-if="status == 1">
-				<div class="topTitle" :style="{height:menuButtonInfo.height+'px'}">
-					<view @click="goBack" class="funicon icon icon-fanhui inline-block"></view>
+				<div  @click="goBack" class="topTitle" :style="{height:menuButtonInfo.height+'px'}">
+					<view class="funicon icon icon-fanhui inline-block"></view>
 					<div>登陆</div>
 				</div>
 
@@ -122,8 +125,8 @@
 				<!-- #endif -->
 			</li>
 			<li class="phoneContent" v-else-if="status == 2">
-				<div class="topTitle"  :style="{height:menuButtonInfo.height+'px'}">
-					<view @click="(status = 1), (loginStatus = 1)" class="funicon icon icon-fanhui inline-block"></view>
+				<div @click="(status = 1), (loginStatus = 1)" class="topTitle"  :style="{height:menuButtonInfo.height+'px'}">
+					<view  class="funicon icon icon-fanhui inline-block"></view>
 					<div>手机账号登陆</div>
 				</div>
 <!--				<div class="title">-->
@@ -151,8 +154,8 @@
 <!--					<view @click="(status = 2), (loginStatus = 2)" class="funicon icon icon-fanhui inline-block prebBtn"></view>-->
 <!--					找回密码-->
 <!--				</div>-->
-				<div class="topTitle"  :style="{height:menuButtonInfo.height+'px'}">
-					<view @click="(status = 2), (loginStatus = 2)" class="funicon icon icon-fanhui inline-block"></view>
+				<div @click="(status = 2), (loginStatus = 2)" class="topTitle"  :style="{height:menuButtonInfo.height+'px'}">
+					<view class="funicon icon icon-fanhui inline-block"></view>
 					<div>找回密码</div>
 				</div>
 				<div class="content">
@@ -196,9 +199,13 @@
 			</li>
 		</ul>
 
-		<div :animation="animationData" id="joinForm"  class="joinForm text-center" :style="{paddingTop:menuButtonInfo.bottom+85+'px'}">
-			<view class="status_bar" ></view>
-			<image mode="widthFix" class="logo" :src="initData.ShopLogo"></image>
+		<div :animation="animationData" id="joinForm"  class="joinForm text-center" >
+			<view :style="{height:menuButtonInfo.top+'px'}" ></view>
+			<div @click="cancelLoginDialog" class="topTitle" :style="{height:menuButtonInfo.height+'px'}">
+				<view  class="funicon icon icon-fanhui inline-block"></view>
+				<div>返回</div>
+			</div>
+			<image :style="{marginTop:85+'px'}" mode="widthFix" class="logo" :src="initData.ShopLogo"></image>
 			<div class="large line15 font20">「{{initData.ShopName}}」申请获得以下权限</div>
 			<div class="mini graytext2 font14">获得你的公开信息（昵称、头像、地区等）</div>
 			<div class="control">
