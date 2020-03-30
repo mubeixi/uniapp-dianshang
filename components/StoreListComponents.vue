@@ -259,7 +259,7 @@
                     postData.lat = this.lat
                     postData.lng = this.lng
                 }
-                getStoreList(postData, {tip: '搜索中', mask: true}).then(res => {
+                getStoreList(emptyObject(postData), {tip: '搜索中', mask: true}).then(res => {
 
                     this.stores = res.data;
 					if(storeId){

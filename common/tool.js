@@ -659,13 +659,18 @@ export const findArrayIdx = (arr, key_val_arr, full) => {
     return false
 }
 
-
-function checkValue(val, vals) {
+/**
+ * 查看某个值是否在指定数组内
+ * @param val
+ * @param arr
+ * @returns {boolean}
+ */
+function checkValue(val, arr) {
     let _val = val;
     if (Number.isNaN(val)) {
         _val = 'NaN'
     }
-    return vals.indexOf(_val) === -1;
+    return arr.indexOf(_val) !== -1;
 }
 
 /**

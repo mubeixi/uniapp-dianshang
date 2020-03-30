@@ -8,10 +8,20 @@
 		<!-- #endif -->
 		<ul>
 			<li class="codeContent" v-if="status == 1">
+				<!-- #ifdef MP-WEIXIN -->
 				<div  @click="goBack" class="topTitle" :style="{height:menuButtonInfo.height+'px'}">
 					<view class="funicon icon icon-fanhui inline-block"></view>
 					<div>登陆</div>
 				</div>
+				<!-- #endif -->
+
+				<!-- #ifndef MP-WEIXIN -->
+				<div  @click="goBack" class="topTitle">
+					<view class="funicon icon icon-fanhui inline-block"></view>
+					<div>登陆</div>
+				</div>
+				<!-- #endif -->
+
 				<!-- #ifdef H5 -->
 				<div class="otherLogin-top" v-if="isShowWeiXin==1 && !showCodeLogin">
 					<div class="box">
@@ -48,6 +58,7 @@
 					</div>
 				</div>
 				<!-- #endif -->
+
 				<!-- #ifdef MP-WEIXIN -->
 				<div class="otherLogin-top" v-if="!showCodeLogin">
 					<div class="box">
@@ -73,6 +84,7 @@
 					</div>
 				</div>
 				<!-- #endif -->
+
 				<!-- #ifdef APP-PLUS -->
 				<div class="otherLogin-top" v-if="!showCodeLogin">
 					<div class="box">
@@ -98,6 +110,7 @@
 					</div>
 				</div>
 				<!-- #endif -->
+
 				<!-- #ifndef H5 -->
 				<div class="codeLogin" v-if="showCodeLogin">
 					<label class="inputLable flex line20">
@@ -112,14 +125,20 @@
 				<!-- #endif -->
 			</li>
 			<li class="phoneContent" v-else-if="status == 2">
+				<!-- #ifdef MP-WEIXIN -->
 				<div @click="(status = 1), (loginStatus = 1)" class="topTitle"  :style="{height:menuButtonInfo.height+'px'}">
 					<view  class="funicon icon icon-fanhui inline-block"></view>
 					<div>手机账号登陆</div>
 				</div>
-				<!--				<div class="title">-->
-				<!--					<view @click="(status = 1), (loginStatus = 1)" class="funicon icon icon-fanhui inline-block prebBtn"></view>-->
-				<!--					手机账号登陆-->
-				<!--				</div>-->
+				<!-- #endif -->
+
+				<!-- #ifndef MP-WEIXIN -->
+				<div @click="(status = 1), (loginStatus = 1)" class="topTitle">
+					<view  class="funicon icon icon-fanhui inline-block"></view>
+					<div>手机账号登陆</div>
+				</div>
+				<!-- #endif -->
+
 				<div class="content">
 					<label class="inputLable flex line20">
 						<span>+{{ telNum }}</span>
@@ -136,14 +155,18 @@
 				</div>
 			</li>
 			<li class="searchPassword" v-else-if="status == 3">
-				<!--				<div class="title">-->
-				<!--					<view @click="(status = 2), (loginStatus = 2)" class="funicon icon icon-fanhui inline-block prebBtn"></view>-->
-				<!--					找回密码-->
-				<!--				</div>-->
+				<!-- #ifdef MP-WEIXIN -->
 				<div @click="(status = 2), (loginStatus = 2)" class="topTitle"  :style="{height:menuButtonInfo.height+'px'}">
 					<view class="funicon icon icon-fanhui inline-block"></view>
 					<div>找回密码</div>
 				</div>
+				<!-- #endif -->
+				<!-- #ifndef MP-WEIXIN -->
+				<div @click="(status = 2), (loginStatus = 2)" class="topTitle">
+					<view class="funicon icon icon-fanhui inline-block"></view>
+					<div>找回密码</div>
+				</div>
+				<!-- #endif -->
 				<div class="content">
 					<label class="inputLable flex ">
 						<!-- <span @click="tel.show = true">+{{ telNum }}</span> -->
@@ -154,7 +177,18 @@
 				</div>
 			</li>
 			<li class="fillCode" v-else-if="status == 4">
-				<div class="title">请输入验证码</div>
+				<!-- #ifdef MP-WEIXIN -->
+				<div class="topTitle"  :style="{height:menuButtonInfo.height+'px'}">
+					<div>请输入验证码</div>
+				</div>
+				<!-- #endif -->
+
+				<!-- #ifndef MP-WEIXIN -->
+				<div class="topTitle">
+					<div>请输入验证码</div>
+				</div>
+				<!-- #endif -->
+
 				<p class="description">
 					验证码已发送至手机 {{ mobile }}
 					<span :class="{ disabled: countdownStatus }" @click="againSendCode">重新发送{{ countdownStr }}</span>
@@ -172,7 +206,16 @@
 				</div>
 			</li>
 			<li class="setNewPass" v-else-if="status == 5">
-				<div class="title"><view @click="setStatusFunc" class="funicon icon icon-fanhui inline-block prebBtn"></view>设置新密码</div>
+				<!-- #ifdef MP-WEIXIN -->
+				<div class="topTitle"  :style="{height:menuButtonInfo.height+'px'}">
+					<view @click="setStatusFunc" class="funicon icon icon-fanhui inline-block prebBtn"></view>设置新密码
+				</div>
+				<!-- #endif -->
+				<!-- #ifndef MP-WEIXIN -->
+				<div class="topTitle">
+					<view @click="setStatusFunc" class="funicon icon icon-fanhui inline-block prebBtn"></view>设置新密码
+				</div>
+				<!-- #endif -->
 				<div class="content">
 					<label class="inputLable flex lin20">
 						<span>密码</span>
@@ -182,6 +225,7 @@
 				</div>
 			</li>
 		</ul>
+		<!-- #ifdef MP-WEIXIN -->
 		<div :animation="animationData" id="joinForm"  class="joinForm text-center" >
 			<view :style="{height:menuButtonInfo.top+'px'}" ></view>
 			<div @click="cancelLoginDialog" class="topTitle" :style="{height:menuButtonInfo.height+'px'}">
@@ -195,21 +239,8 @@
 				<button @click="cancelLoginDialog" class="btn reject">拒绝</button>
 				<button open-type="getUserInfo" @getuserinfo="weixinlogin" class="btn allow">允许</button>
 			</div>
-			<!--				<div class="line15">登录提示</div>-->
-			<!--				<div class="line10 graytext">为了更好的为您服务，需要获取您的资料</div>-->
-			<!--				<div class="line10"><button type="primary" open-type="getUserInfo"  @getuserinfo="weixinlogin">立即登录</button></div>-->
-			<!--				<div><button @click="cancelLoginDialog">暂不登录</button></div>-->
 		</div>
-		<!--    <popup v-model="tel.show" class="telContent">-->
-		<!--      <popup-header title="选择国际电话区号"></popup-header>-->
-		<!--      <group gutter="0" class="content">-->
-		<!--        <radio-->
-		<!--          v-model="tel.model"-->
-		<!--          :options="telData"-->
-		<!--          @on-change="tel.show = false"-->
-		<!--        ></radio>-->
-		<!--      </group>-->
-		<!--    </popup>-->
+		<!-- #endif -->
 	</div>
 </template>
 <script>
@@ -244,7 +275,7 @@
 		data() {
 			return {
 				animationData: {},
-				menuButtonInfo: {},
+				menuButtonInfo: {height:0,top:0},
 				systemInfo: {},
 				showCodeLogin:false,
 				h5_wx_login:false,
@@ -584,6 +615,16 @@
 					}
 				}
 				console.log('login channels is',this.channels)
+				
+				//如果channels长度为0，则
+				if(this.channels.length<1){
+					this.showCodeLogin = true
+					
+					// #ifdef H5
+					this.isShowWeiXin = false
+					// #endif
+					
+				}
 			},
 			async loginCall(userData){
 				console.log('userDatauserDatauserDatauserData',userData)
@@ -628,8 +669,11 @@
 			...mapActions(["getInitData", "setUserInfo"]),
 		},
 		onLoad(){
+			// #ifdef MP
 			this.menuButtonInfo = uni.getMenuButtonBoundingClientRect()
 			this.systemInfo = uni.getSystemInfoSync()
+			// #endif
+
 		},
 		onShow(){
 			//如果已经登录，就自动退回
@@ -638,6 +682,7 @@
 				uni.navigateBack()
 				return;
 			}
+			
 			// #ifdef H5
 			if (isWeiXin()) {
 				let code = GetQueryByString(location.href, 'code');
@@ -737,6 +782,7 @@
 		overflow: hidden;
 		width: 100vw;
 		.topTitle {
+			padding-top: 10px;
 			font-size: 16px;
 			font-weight: 400;
 			display: flex;
@@ -760,6 +806,7 @@
 			transform: translate(-20px, -50%);
 		}
 		.fillCode {
+			padding: 0 15px;
 			.title {
 				margin-top: 34px;
 			}
