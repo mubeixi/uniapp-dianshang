@@ -252,7 +252,6 @@
                     stores_name: this.stores_name,
                 }
 
-
                 postData.prod_json = JSON.stringify(this.prod_ids)
 
 
