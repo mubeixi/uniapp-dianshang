@@ -118,7 +118,7 @@
 				<div class="info">共{{orderInfo.prod_list.length}}件商品 总计：<span class="mbxa">￥<span>{{orderInfo.Order_Fyepay}}</span></span></div>
 				<view class="tips" v-if="orderInfo.obtain_desc">{{orderInfo.obtain_desc}}</view>
 			</div>
-			<view class="mx" @click="seeDetail">明细 <image class="image" :class="isSlide?'slidedown':''" src="../../static/top.png"></image></view>
+			<view class="mx" @click="seeDetail">明细 <image class="image" :class="isSlide?'slidedown':''" src="/static/top.png"></image></view>
 			<div class="submit" @click="submit">去支付</div>
 		</div>
 		<div class="safearea-box"></div>
@@ -319,9 +319,9 @@
 						this.pay_money = this.orderInfo.Order_Fyepay;
 						this.user_money = this.orderInfo.Order_Yebc;
 						this.openMoney = this.orderInfo.Order_Yebc > 0;
-						if(!this.openMoney){
-							this.is_use=0
-						}
+						// if(!this.openMoney){
+						// 	this.is_use=0
+						// }
 						this.need_invoice = this.orderInfo.Order_NeedInvoice;
 						this.openInvoice = this.orderInfo.Order_NeedInvoice > 0;
 						this.invoice_info = this.orderInfo.Order_InvoiceInfo;

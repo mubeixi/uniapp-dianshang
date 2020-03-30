@@ -131,11 +131,10 @@
 
 <style lang="less">
 /* #ifndef APP-NVUE */
-@import "./static/css/app.less";
-@import "./static/css/icon.css";
+@import "assets/css/app.less";
+@import "assets/css/icon.less";
 @import "./components/gaoyia-parse/parse.css";
 /* #endif */
-
-
 </style>
+
 

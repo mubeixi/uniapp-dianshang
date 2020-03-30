@@ -300,7 +300,7 @@
 
 
 <style scoped lang="less">
-    @import "../../static/css/app.less";
+    @import "../../assets/css/app.less";
 
     .wrap {
         background: #f8f8f8;
