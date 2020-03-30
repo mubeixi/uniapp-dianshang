@@ -252,7 +252,6 @@
                     stores_name: this.stores_name,
                 }
 
-
                 postData.prod_json = JSON.stringify(this.prod_ids)
 
 
@@ -260,7 +259,7 @@
                     postData.lat = this.lat
                     postData.lng = this.lng
                 }
-                getStoreList(emptyObject(postData), {tip: '搜索中', mask: true}).then(res => {
+                getStoreList(postData, {tip: '搜索中', mask: true}).then(res => {
 
                     this.stores = res.data;
 					if(storeId){
