@@ -378,6 +378,8 @@ export const pageMixin = {
 							// 用户点击了分享后执行的回调函数
 						}
 					});
+				}).catch(err => {
+					console.log(err)
 				})
 			}
 			// #endif

@@ -222,6 +222,8 @@
 		{
 			"path": "pages/login/login",
 			"style": {
+				"navigationBarTitleText": "登录",
+				"navigationStyle": "custom",
 				"app-plus": {
 					"titleNView": false
 				}
