@@ -225,7 +225,6 @@
 					latitude: this.storeInfo.wx_lat,
 					longitude: this.storeInfo.wx_lng,
 					success: function () {
-						console.log('success');
 					}
 				});
 			},

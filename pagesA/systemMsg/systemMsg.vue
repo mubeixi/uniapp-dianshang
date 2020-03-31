@@ -62,10 +62,7 @@
 					readUserMessage(data).then(res=>{
 							this.pro[index].isShow=!this.pro[index].isShow;
 							this.pro[index].is_read=1;
-					},err=>{
-
 					}).catch(e=>{
-						console.log(e)
 					})
 				}else{
 					this.pro[index].isShow=!this.pro[index].isShow;
@@ -78,10 +75,7 @@
 							item.isShow=true;
 						}
 						this.pro=res.data;
-				},err=>{
-					console.log(err)
 				}).catch(e=>{
-					console.log(e);
 				})
 			}
 		}

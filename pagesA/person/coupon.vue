@@ -109,10 +109,7 @@
 						this.pro.push(item);
 					}
 
-				},err=>{
-
 				}).catch(e=>{
-					console.log(e)
 				})
 
 			},

@@ -57,7 +57,7 @@
 
 			// 修改信息
 			update(type){
-				//console.log('asdf')
+
 				// type 0 表示修改登录，1，修改支付
 				uni.navigateTo({
 					url: '/pagesA/person/updateUserPsw?type='+type
@@ -66,7 +66,7 @@
 			logoutFunc(){
 				confirm({title:'操作提示',content:'是否退出登录'}).then(res=>{
 
-					bindUserClientId({action:'clear'},{errtip:false}).then(res=>{console.log('设备注销成功')},err=>{}).catch(error=>{})
+					bindUserClientId({action:'clear'},{errtip:false}).then(()=>{}).catch(()=>{})
 
 
 					let users_id = ls.get('users_id');
@@ -76,7 +76,6 @@
 					ls.set('users_id',users_id);
 
 					// #ifdef H5
-					console.log('清空is_send_usrlog')
 					sessionStorage.removeItem('is_send_usrlog')
 					// #endif
 

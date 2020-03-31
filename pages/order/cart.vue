@@ -139,7 +139,7 @@
 		},
 		methods: {
 			...mapActions(['getUserInfo']),
-			
+
 			goProductDetail,
 			// 去逛逛
 			gotoBuy(){
@@ -262,7 +262,6 @@
 			},
 			// 用户手动输入数量
 			setAttrNum(e){
-				console.log(e)
 				let num = e.detail.value;
 				if(num <= 0) {
 					this.postData.qty = 1;
@@ -270,12 +269,11 @@
 					return;
 				}
 				let pro_id = this.active_pro_id,attr_id = this.active_attr_id
-				console.log(this.CartList[pro_id])
 				this.postData.prod_id = pro_id;
 				this.postData.qty = num-this.active_attr_qty; //直接相减，可正可负。至于库存够不够，后台来判定
 				this.postData.attr_id = attr_id;
 				if(this.postData.qty == 0)return;
-				
+
 				if(this.active_attr_qty == 1 && num == -1) {
 					uni.showToast({
 						title: '购买数量不能小于1',
@@ -283,7 +281,7 @@
 					});
 					return;
 				}
-				
+
 				//不论成功与否都重新刷新，因为数值被更改了
 				updateCart(this.postData).then(()=>{
 					this.getCart();
@@ -291,13 +289,12 @@
 				})
 				.catch(err=>{
 					this.CartList[pro_id][attr_id]['Qty'] = this.active_attr_qty //原来的值
-					console.log(err)
 				})
-				
-				
-				
-				
-				
+
+
+
+
+
 			},
 			// 更新购物车
 			updateCart(pro_id,attr_id,num){
@@ -321,7 +318,7 @@
 							icon: 'none'
 						})
 					}
-				}).catch(e=>console.log(e));
+				}).catch(e=>{});
 			},
 			handle(){
 				this.handleShow = !this.handleShow;
@@ -353,9 +350,9 @@
 					}
 					this.CartList = res.data.CartList;
 					this.loading = true;
-					
 
-				}).catch(e=>console.log(e))
+
+				}).catch(e=>{})
 			},
 			getProd(){
 				this.prod_arg.Users_ID = this.Users_ID;
@@ -366,7 +363,7 @@
 						this.hasMore = (res.totalCount / this.prod_arg.pageSize) > this.prod_arg.page ? true : false ;
 						this.prod_arg.page += 1;
 					}
-				}).catch(e=>console.log(e))
+				}).catch(e=>{})
 			},
 			gotoDetail(e){
 				uni.navigateTo({

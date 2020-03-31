@@ -191,7 +191,7 @@ export default {
 		//获取申请退货退款页面
 		getRefund(){
 			getRefund({Order_ID:this.Order_ID}).then(res=>{
-				console.log(res)
+
 					for(var i in res.data) {
 						if(i=='refund_prod_list'){
 							for(var j in res.data[i]) {
@@ -206,9 +206,9 @@ export default {
 						}
 					}
 					this.refundInfo=res.data;
-					console.log(this.refundInfo)
+
 			}).catch(e=>{
-				console.log(e)
+
 			})
 		},
 		//提交
@@ -237,7 +237,6 @@ export default {
 					// 	let lp_template = initData.lp_template
 					// 	let tmplIds = lp_template.back_commit
 					// 	//调就是了，是否成功都可以
-					// 	console.log('调用wx.requestSubscribeMessage',tmplIds)
 					// 	wx.requestSubscribeMessage({tmplIds})
 					// }
 					// #endif
@@ -310,7 +309,6 @@ export default {
 
 				},
 				fail(e) {
-					console.log(e);
 				}
 			})
 		},

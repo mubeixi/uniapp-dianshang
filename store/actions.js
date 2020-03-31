@@ -97,7 +97,6 @@ export const getTabBar = async ({commit, state}, refresh) => {
     commit('SET_TABBAR', res.data);
     data = res.data
 
-    console.log('获取tabbar', data)
     return data;
 
 };
@@ -124,7 +123,6 @@ export const getInitData = async ({commit, state}, refresh) => {
 
 
         let systemConf = await getSystemConf()
-        console.log('获取initData', systemConf)
         commit('SET_INIT_DATA', systemConf.data);
         data = systemConf.data
         return data;
@@ -137,11 +135,8 @@ export const getInitData = async ({commit, state}, refresh) => {
         // })
 
 
-        console.log('获取initData失败')
-        console.log(err);
 
         let systemConf = await getSystemConf()
-        console.log('获取initData', systemConf)
         commit('SET_INIT_DATA', systemConf.data);
         return systemConf.data;
 

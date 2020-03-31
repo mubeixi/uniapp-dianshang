@@ -91,7 +91,6 @@
             this.base = this.confData;
 
             getProductCountInfo().then(res => {
-                // console.log(res)
 
                 this.info = res.data
 

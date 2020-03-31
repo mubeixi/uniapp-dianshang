@@ -163,11 +163,11 @@ export default {
 		// #ifdef H5
 		if (isWeiXin()) {
 			this.code = GetQueryByString(location.href, 'code');
-			console.log(this.code)
+
 			if (this.code) {
 
 				this.pay_type = 'wx_mp';//需要手动设置一下
-				// console.log(this.pay_type)
+
 				// ls.set('code',this.code)
 				this.pay(1);
 			}
@@ -217,10 +217,10 @@ export default {
 			jifenProdDetail({
 				Gift_ID: this.gift_id
 			}).then(res=>{
-				console.log(res)
+
 				this.giftLoading = true;
 				this.giftInfo = res.data;
-			})
+			}).catch(()=>{})
 		},
 		goback(){
 			goBack();
@@ -253,8 +253,7 @@ export default {
 				this.Order_ID = res.data.Orders_ID;
 				// 判断是否是待支付状态
 				if(res.data.Order_Status == 1) {
-					console.log('222')
-					//console.log(this.$refs.dialog)
+
 					this.$refs.popMethod.show();
 				}else if(res.data.Order_Status == 2) {
 					this.paySuccessCall();
@@ -303,7 +302,7 @@ export default {
 		changeShip(){
 			this.type = 'shipping';
 			this.ship_current = this.shipping_id;
-			console.log(this.ship_current);
+
 			this.$refs.popupRef.show();
 		},
 		closeMethod(){
@@ -321,14 +320,14 @@ export default {
 			uni.$on('fire', (data) =>{
 				this.back_address_id = data;
 			})
-			console.log(this.back_address_id)
+
 			var Address_ID;
 			if (this.back_address_id) {  //添加、选择收获地址返回
 			    Address_ID = this.back_address_id;
 			} else if (this.addressinfo.Address_ID) { //有收获地址，则更新（防止收获地址编辑后返回）
 			    Address_ID = this.addressinfo.Address_ID;
 			}
-			console.log(Address_ID)
+
 			await getAddress({Address_ID: Address_ID?Address_ID:0}).then(res=>{
 				if (this.back_address_id && res.errorCode != 0) {  //添加、选择收获地址返回
 					uni.showModal({
@@ -382,18 +381,14 @@ export default {
 					// 用户选择余额支付
 					if(this.pay_type == 'remainder_pay') {
 						jifenProdPay(payConf,{errtip:false}).then(res=>{
-							console.log(res)
-							if(res.errorCode == 0) {
-								this.paySuccessCall();
-							}
-						},err=>{
+
+							this.paySuccessCall();
+						}).catch(err=>{
 							uni.showModal({
 								title: '提示',
 								content: err.msg,
 								showCancel: false
 							});
-						}).catch(e=>{
-							console.log(e)
 						});
 						return;
 					}
@@ -434,8 +429,6 @@ export default {
 				//公众号需要code
 				if(this.pay_type === 'wx_mp'){
 
-					console.log('选择了微信支付的')
-
 					if (!isWeiXin()) {
 						this.$error('请在微信内打开')
 						return;
@@ -470,11 +463,10 @@ export default {
 				// #ifdef MP-WEIXIN
 
 				payConf.pay_type = 'wx_lp';
-				console.log(payConf)
+
 				await new Promise((resolve) => {
 					uni.login({
 						success: function (loginRes) {
-							console.log(loginRes);
 							payConf.code = loginRes.code
 							resolve()
 						}
@@ -482,10 +474,7 @@ export default {
 				})
 				// #endif
 
-
-				console.log('payConf',payConf)
 				jifenProdPay(payConf,{tip:'正在加载中',mask:true}).then(res => {
-					console.log(res);
 
 					unipayFunc(this,this.pay_type,res);
 					return;
@@ -496,17 +485,14 @@ export default {
 
 						let provider = 'alipay';
 						let orderInfo = res.data.arg;
-						console.log('支付宝参数',orderInfo)
 
 						uni.requestPayment({
 							provider,
 							orderInfo, //微信、支付宝订单数据
 							success: function (res) {
 								_self.paySuccessCall(res)
-								console.log('success:' + JSON.stringify(res));
 							},
 							fail: function (err) {
-								console.log('fail:' + JSON.stringify(err));
 								uni.showModal({
 									title:'支付错误',
 									content:JSON.stringify(err)
@@ -544,7 +530,6 @@ export default {
 
 
 							fromurl = fromurl.replace(/openapi.alipay.com/,'wangjing666')
-							console.log(fromurl);
 
 							let str = origin+`/fre/pages/pay/wx/wx?users_id=${users_id}&formurl=`+encodeURIComponent(fromurl);
 							let url = str;
@@ -554,7 +539,6 @@ export default {
 								url:`/pages/pay/wx/wx?users_id=${users_id}&formurl=`+encodeURIComponent(fromurl)
 							})
 
-							console.log(url)
 							//这样就避免了users_id瞎跳的机制
 							//location.href = url;
 						}else{
@@ -592,7 +576,6 @@ export default {
 						});
 
 					}).catch((e) => {
-						console.log('支付失败')
 					})
 
 					return;
@@ -632,7 +615,6 @@ export default {
 					delete orderInfo.Order_ID
 
 					//固定值：1（拉起小程序收银台）开发者如果不希望使用头条小程序收银台，service设置为3/4时，可以直接拉起微信/支付宝进行支付：service=3： 微信API支付，不拉起小程序收银台；service=4： 支付宝API支付，不拉起小程序收银台。其中service=3、4，仅在1.35.0.1+基础库(头条743+)支持
-					//console.log(orderInfo)
 
 
 
@@ -643,10 +625,8 @@ export default {
 						orderInfo, //微信、支付宝订单数据
 						success: function (res) {
 							_self.paySuccessCall(res)
-							console.log('success:' + JSON.stringify(res));
 						},
 						fail: function (err) {
-							console.log('fail:' + JSON.stringify(err));
 							uni.showModal({
 								title:'支付错误',
 								content:JSON.stringify(err)
@@ -661,7 +641,6 @@ export default {
 					orderInfo = res.data
 					delete orderInfo.timestamp
 
-					console.log(provider,orderInfo,'支付数据222222222222222222');
 					let prepay_id = orderInfo.package.split('=')[1];
 					uni.requestPayment({
 					...orderInfo,
@@ -671,11 +650,9 @@ export default {
 								code: prepay_id,
 								times: 3
 							})
-							console.log('success:' + JSON.stringify(res));
 							_self.paySuccessCall(res)
 						},
 						fail: function (err) {
-							console.log('fail:' + JSON.stringify(err));
 							_self.payFailCall(err);
 						}
 					});
@@ -684,17 +661,14 @@ export default {
 					// #ifdef APP-PLUS
 					provider = 'wxpay';
 					orderInfo = res.data
-					console.log(provider,orderInfo,'支付数据222222222222222222');
 
 					uni.requestPayment({
 						provider,
 						orderInfo, //微信、支付宝订单数据
 						success: function (res) {
 							_self.paySuccessCall(res)
-							console.log('success:' + JSON.stringify(res));
 						},
 						fail: function (err) {
-							console.log('fail:' + JSON.stringify(err));
 							_self.payFailCall(err);
 						}
 					});
@@ -777,7 +751,6 @@ export default {
 					wxAuthUrl =
 						`https://open.weixin.qq.com/connect/oauth2/authorize?appid=${channel.appid}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect`
 				}
-				console.log(wxAuthUrl)
 
 				window.location.href = wxAuthUrl;
 

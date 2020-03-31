@@ -81,7 +81,6 @@
 			// },
 			get_jifen_prod(){
 				getJifenProd({errtip: false}).then(res=>{
-					console.log(res)
 					let old = this.prod_list;
 					this.prod_list = old.concat(res.data);
 					if(this.prod_list.length < res.totalCount) {

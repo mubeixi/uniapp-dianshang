@@ -59,14 +59,12 @@ const fetch = function (act, param, options = false, url = '/api/little_program/
     url = `/api/v1/${act}.html`;//替换url
 
     const d = new Date();
-    //console.log(options)
     if (options.hasOwnProperty('is_tap') && options.is_tap) {
 
         let temp_act_info = ls.get('temp_act_info')
         if (temp_act_info && temp_act_info.hasOwnProperty('act') && temp_act_info.hasOwnProperty('time') && temp_act_info.act && temp_act_info.time) {
             //同一个请求，不能在0.5s内连点两次
 
-            console.log(temp_act_info.time + 500 - d.getTime())
             if (act == temp_act_info.act && d.getTime() < (temp_act_info.time + 500)) {
                 error('请求过快')
                 return new Promise((resolve, reject) => {
@@ -118,7 +116,6 @@ export const login = (data, options) => {
         owner_id = 0;
     }
     data = {...data, owner_id}
-    console.log('login action data is',JSON.stringify(data))
     return fetch('user_login', data, options)
 }
 
@@ -519,7 +516,6 @@ export const updateStoreInfo = (data, options) => fetch('update_store_info', dat
 export const getUserStoreApply = (data, options) => fetch('get_user_store_apply', data, options);
 //写入用户日志
 export const upUserLog = (data, options) => {
-    console.log('上报用户信息', data, options)
     return fetch('write_user_log', data, options)
 }
 
@@ -615,7 +611,6 @@ export const createToken = function (object) {
     var timestamp = parseInt(new Date().getTime() / 1000).toString();
     var key = '458f_$#@$*!fdjisdJDFHUk4%%653154%^@#(FSD#$@0-T';
     var dataStr = signString + key + timestamp;
-    // console.log(Base64)
     var sign = hexMD5(Base64.toBase64(dataStr)).toUpperCase();
     object['timestamp'] = timestamp;
     object['sign'] = sign;

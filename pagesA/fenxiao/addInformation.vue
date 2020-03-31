@@ -87,7 +87,7 @@
 									</view>
 					</picker>
 				</view>
-				
+
 			</view>
 			<view class="threes" v-if="current==3">
 					<view class="haha">
@@ -274,10 +274,8 @@
 									url:'/pagesA/fenxiao/region'
 								})
 							},1000)
-						},err=>{
-							this.isAgr=false;
 						}).catch(e=>{
-							console.log(e);
+							this.isAgr=false;
 						})
 					}
 				}else{

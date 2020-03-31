@@ -99,7 +99,7 @@ export default {
         // #ifdef H5
         if (isWeiXin()) {
             this.code = GetQueryByString(location.href, 'code');
-            console.log(this.code)
+
             if (this.code) {
 
             	if(ls.get('recharge_money')){
@@ -107,7 +107,6 @@ export default {
 				}
             	this.payChannel = 'wx_mp';
                 this.pay_type = 'wx_mp';//需要手动设置一下
-                // console.log(this.pay_type)
                 // ls.set('code',this.code)
                 this.sub(1);
             }
@@ -122,8 +121,7 @@ export default {
 		getBalance(){
 			getBalance().then(res=>{
 				this.pro=res.data;
-			},err=>{}).catch(e=>{
-				console.log(e)
+			}).catch(e=>{
 			})
 		},
 		confirm(){
@@ -148,7 +146,7 @@ export default {
 					error('支付渠道必选')
 					return;
 				}
-				console.log(this.payChannel)
+
 				payConf = {
 					pay_type: this.payChannel,
 					money: this.money || ls.get('recharge_money')
@@ -190,8 +188,6 @@ export default {
 			//公众号需要code
 			if(this.pay_type === 'wx_mp'){
 
-				console.log('选择了微信支付的')
-
 				if (!isWeiXin()) {
 					this.$error('请在微信内打开')
 					return;
@@ -226,22 +222,20 @@ export default {
 			// #ifdef MP-WEIXIN
 
 			payConf.pay_type = 'wx_lp';
-			console.log(payConf)
+
 			await new Promise((resolve) => {
 				uni.login({
 					success: function (loginRes) {
-						console.log(loginRes);
 						payConf.code = loginRes.code
 						resolve()
 					}
 				});
 			})
 			// #endif
-			console.log('payConf',payConf)
+
 			let that = this;
 			depositBalance(payConf,{tip:'正在加载中',mask:true}).then(res => {
 
-				console.log(this);
 				unipayFunc(this,this.pay_type,res);
 				return;
 
@@ -350,7 +344,7 @@ export default {
 			// 	let lp_template = initData.lp_template
 			// 	let tmplIds = lp_template.charge_pay
 			// 	//调就是了，是否成功都可以
-			// 	console.log('调用wx.requestSubscribeMessage',tmplIds)
+
 			// 	wx.requestSubscribeMessage({tmplIds})
 			// }
 			// #endif

@@ -143,10 +143,7 @@ export default {
 		checkProdCollected() {
 			if(!this.$fun.checkIsLogin()) return
 			checkProdCollected({prod_id: this.Products_ID}).then(res => {
-				console.log(res)
-				if(res.errorCode == 0) {
-					this.isCollected = res.data.is_favourite == 1
-				}
+				this.isCollected = res.data.is_favourite == 1
 			}).catch(e => {
 
 			})
@@ -155,12 +152,11 @@ export default {
 		selectAttr(index,i){
 			var value_index = index; //选择的属性值索引
 			var attr_index = i;   //选择的属性索引
-			console.log(value_index)
-			console.log(attr_index)
+
 			// if (this.check_attrid_arr.indexOf(value_index) > -1) return false;
 			//记录选择的属性
 			var check_attr = Object.assign(this.check_attr, { [attr_index]: value_index }); //记录选择的属性  attr_index外的[]必须
-			console.log(check_attr)
+
 			//属性处理
 			var check_attrid = [];
 			var check_attrname = [];
@@ -222,23 +218,16 @@ export default {
 					return;
 				}
 			}
-			console.log(this.postData)
+
 			updateCart(this.postData).then(res=>{
-				//console.log(res)
-				if(res.errorCode == 0) {
-					if(this.postData.cart_key == 'CartList') {
-						uni.showLoading({
-							title: '加入购物车成功',
-							icon: 'success'
-						})
-					}else {
-						uni.navigateTo({
-							url: '/pages/order/check?cart_key=DirectBuy'
-						})
-					}
+				if(this.postData.cart_key == 'CartList') {
+					uni.showLoading({
+						title: '加入购物车成功',
+						icon: 'success'
+					})
 				}else {
-					uni.showToast({
-						title: res.msg
+					uni.navigateTo({
+						url: '/pages/order/check?cart_key=DirectBuy'
 					})
 				}
 			})
@@ -272,28 +261,19 @@ export default {
 			// 检查是否已收藏
 			if(this.isCollected) {
 				cancelCollection({prod_id: this.Products_ID}).then(res=>{
-					console.log(res)
-					if(res.errorCode == 0) {
-						uni.showToast({
-							title: res.msg
-						});
-						this.isCollected = false;
-					}
+
+					uni.showToast({
+						title: res.msg
+					});
+					this.isCollected = false;
 
 				})
 			}else {
 				addCollection({prod_id: this.Products_ID,}).then(res=>{
-					if(res.errorCode == 0) {
-						uni.showToast({
-							title: '收藏成功'
-						});
-						this.isCollected = true;
-					}else {
-						uni.showToast({
-							title: res.msg,
-							icon: 'fail'
-						})
-					};
+					uni.showToast({
+						title: '收藏成功'
+					});
+					this.isCollected = true;
 				})
 			}
 		},
@@ -308,7 +288,6 @@ export default {
 				Users_ID:'wkbq6nc2kc'
 			}
 			getProductDetail(data).then(res=>{
-				console.log(res)
 				this.product = res.data;
 				this.postData.count = res.data.Products_Count;
 				this.postData.productDetail_price =this.product.Products_PriceX;
@@ -316,9 +295,7 @@ export default {
 					this.product.skujosn = JSON.parse(res.data.skujosn);
 					this.product.skuvaljosn = JSON.parse(res.data.skuvaljosn);
 				}
-				console.log(this.product.skujosn)
 			}).catch(e=>{
-				console.log(e)
 			})
 		},
 		addCart(){

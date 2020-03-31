@@ -183,7 +183,6 @@
 						top += rect.height;
 						arr.push(top)
 					})
-					//console.log(arr)
 					_this.arr = arr
 				}).exec()
 			},

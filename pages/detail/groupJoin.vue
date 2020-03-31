@@ -294,14 +294,12 @@
 
             //分享的是Team_ID
             let path = '/pages/detail/groupJoin?Team_ID='+this.Team_ID+'&Products_ID='+this.Prod_ID;
-            console.log(path)
             let shareObj = {
                 title: this.product.Products_Name,
                 desc:this.product.Products_BriefDescription,
                 imageUrl:this.product.ImgPath,
                 path: buildSharePath(path)
             };
-            console.log(shareObj)
             return shareObj
 
         },
@@ -378,19 +376,11 @@
                 }
 								this.postData.active_id = this.Team_ID;
 								this.postData.prod_id = this.Prod_ID;
-                console.log(this.postData)
                 updateCart(this.postData).then(res=>{
-                    console.log(res)
-                    if(res.errorCode == 0) {
-                        uni.navigateTo({
-                            url: '/pages/order/check?cart_key=DirectBuy&checkfrom=group'
-                        })
-                    }else {
-
-                    }
-
+                    uni.navigateTo({
+                        url: '/pages/order/check?cart_key=DirectBuy&checkfrom=group'
+                    })
                 }).catch(e=>{
-                    console.log(e)
                     uni.showToast({
                         title: e.msg
                     })
@@ -444,7 +434,6 @@
                 let _self = this
                 let path = 'pages/detail/groupJoin?Team_ID='+this.Team_ID+'&Products_ID='+this.Prod_ID;
                 let front_url = this.initData.front_url;
-                console.log('front_url is '+front_url)
 
                 let shareObj = {
                     title: this.product.Products_Name,
@@ -453,7 +442,6 @@
                     path: buildSharePath(path)
                 };
 
-                console.log(shareObj)
 
                 switch (channel) {
                     case 'wx':
@@ -466,10 +454,8 @@
                             summary: shareObj.desc,
                             imageUrl: shareObj.imageUrl,
                             success: function (res) {
-                                console.log("success:" + JSON.stringify(res));
                             },
                             fail: function (err) {
-                                console.log("fail:" + JSON.stringify(err));
                             }
                         });
                         break;
@@ -483,10 +469,8 @@
                             summary: shareObj.desc,
                             imageUrl: shareObj.imageUrl,
                             success: function (res) {
-                                console.log("success:" + JSON.stringify(res));
                             },
                             fail: function (err) {
-                                console.log("fail:" + JSON.stringify(err));
                             }
                         });
                         break;
@@ -505,7 +489,6 @@
                                 webUrl: 'http://uniapp.dcloud.io'
                             },
                             success: ret => {
-                                console.log(JSON.stringify(ret));
                             }
                         });
                         break;
@@ -513,12 +496,10 @@
                         //this.$toast('comming soon')
 
                         let sharePic = await getProductSharePic({'product_id': this.Prod_ID,'act_price': this.product.Products_PriceX}).then(res => {
-                            console.log(res)
                             ls.set('temp_sharepic_info', res.data)
                             return res.data.img_url
                         })
 
-                        console.log('海报的地址是' + sharePic)
 
                         if (!sharePic) {
                             error('获取分享参数失败');
@@ -671,13 +652,11 @@
                         });
 
                     }).catch(()=>{
-                        // console.log('不是微信环境')
                     })
 
                     // #endif
 
                 }).catch(e=>{
-                    console.log(e)
                 })
 
             },
@@ -688,7 +667,6 @@
                 await getOrderDetail({
                     Order_ID: this.Order_ID,
                 }).then(res => {
-                    console.log(res)
                     if (res.errorCode == 0) {
                         for (var i in res.data) {
                             if (i == 'Order_Shipping') {
@@ -712,9 +690,7 @@
                         this.Team_ID = res.data.teamid;
 
                     }
-                },err=>{
-                    console.log(err)
-                })
+                }).catch(()=>{})
             },
             stampCount(){
 
@@ -731,7 +707,6 @@
                     }
                 }
 
-                //console.log(rt)
 
                 this.countdown = rt
             },
@@ -744,14 +719,13 @@
                         this.hasMore = (res.totalCount / this.prod_arg.pageSize) > this.prod_arg.page ? true : false ;
                         this.prod_arg.page += 1;
                     }
-                }).catch(e=>console.log(e))
+                }).catch(e=>{})
             },
         },
         async created(){
 
             let initData = await this.getInitData();
 
-            console.log('初始化信息',initData)
             let WX_MINI_ORIGIN_ID = ls.get('WX_MINI_ORIGIN_ID');
             if(!WX_MINI_ORIGIN_ID){
 
@@ -766,7 +740,6 @@
             }
 
             this.wxMiniOriginId = WX_MINI_ORIGIN_ID;
-            console.log('wxMiniOriginId is '+this.wxMiniOriginId)
 
         }
 

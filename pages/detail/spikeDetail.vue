@@ -330,7 +330,6 @@ export default {
 			imageUrl:this.product.ImgPath,
 			path: buildSharePath(path)
 		};
-		console.log(shareObj)
 		return shareObj
 
 	},
@@ -366,14 +365,10 @@ export default {
 				this.classSelect=true
 			}
 
-			console.log(str,this.classSelect,"ssss")
-
-
 
 			const vm =this
 			uni.$on('collectSpike',(data)=>{
 				if(data.detail!='spike') return
-				console.log('触发秒杀收藏事件')
 				vm.collect()
 			})
 
@@ -383,24 +378,23 @@ export default {
 
 
 			uni.$on('cartSpike',(data)=>{
-				console.log('触发秒杀零售价购买')
+
 				vm.myPays()
 			})
 
 			uni.$on('directSpike',(data)=>{
-				console.log('触发秒杀预约')
+
 				vm.flashsaleReserve()
 			})
 
 			uni.$on('spikeBuy',(data)=>{
 				if(data.detail!='spike') return
-				console.log('触发秒杀抢购')
+
 				vm.myPay()
 			})
 
 			uni.$on('goodsSkuSub',(data)=>{
 				if(data.detail!='spike') return
-				console.log('触发这么多次事件????')
 				let {check_attr,check_attrid_arr,submit_flag,postData} = data
 				this.check_attr = check_attr
 				this.check_attrid_arr = check_attrid_arr
@@ -430,10 +424,9 @@ export default {
 			//时间戳格式转换
 			current = parseInt(current/1000)
 
-			// console.log(end_timeStamp,current)
 			let countTime = end_timeStamp - current
 			if(countTime<0){
-				console.log('已经结束')
+
 				return false
 			};
 
@@ -534,7 +527,6 @@ export default {
 			let _self = this
 			let path = 'pages/detail/groupDetail?Products_ID=' + this.Products_ID;
 			let front_url = this.initData.front_url;
-			console.log('front_url is '+front_url)
 
 			let shareObj = {
 				title: this.product.Products_Name,
@@ -543,7 +535,6 @@ export default {
 				path: buildSharePath(path)
 			};
 
-			console.log(shareObj)
 
 			switch (channel) {
 				case 'wx':
@@ -556,10 +547,10 @@ export default {
 						summary: shareObj.desc,
 						imageUrl: shareObj.imageUrl,
 						success: function (res) {
-							console.log("success:" + JSON.stringify(res));
+
 						},
 						fail: function (err) {
-							console.log("fail:" + JSON.stringify(err));
+
 						}
 					});
 					break;
@@ -573,10 +564,10 @@ export default {
 						summary: shareObj.desc,
 						imageUrl: shareObj.imageUrl,
 						success: function (res) {
-							console.log("success:" + JSON.stringify(res));
+
 						},
 						fail: function (err) {
-							console.log("fail:" + JSON.stringify(err));
+
 						}
 					});
 					break;
@@ -595,7 +586,7 @@ export default {
 							webUrl: 'http://uniapp.dcloud.io'
 						},
 						success: ret => {
-							console.log(JSON.stringify(ret));
+
 						}
 					});
 					break;
@@ -603,12 +594,10 @@ export default {
 					//this.$toast('comming soon')
 
 					let sharePic = await getProductSharePic({'product_id': this.Products_ID,'act_price':this.product.attr_json.price}).then(res => {
-						console.log(res)
 						ls.set('temp_sharepic_info', res.data)
 						return res.data.img_url
 					})
 
-					console.log('海报的地址是' + sharePic)
 
 					if (!sharePic) {
 						error('获取分享参数失败');
@@ -655,7 +644,6 @@ export default {
 			newContent = newContent.replace(/\<img/gi, '<img style="width:100%;float:left;"');
 			newContent = newContent.replace(/src="\/\//gi, 'src="http://');
 			//newContent = newContent.replace(/>[\s]*</gi, "><");
-			// console.log(newContent);
 			return newContent;
 		},
 		//评价预览
@@ -666,7 +654,6 @@ export default {
 			let tempArr = this.commit[i].ImgPath.map((img,idx)=>{
 				return img.replace(/\/n3\//,'/');
 			});
-			console.log(tempArr)
 
 			uni.previewImage({
 			            urls: tempArr,
@@ -742,7 +729,6 @@ export default {
 			if (!this.$fun.checkIsLogin(1, 1)) {
 				return;
 			}
-			console.log(e);
 			// add_template_code({
 			// 	code: e.detail.formId,
 			// 	times: 1
@@ -799,7 +785,6 @@ export default {
 
 
 			if(e){
-				console.log(e);
 				add_template_code({
 					code: e.detail.formId,
 					times: 1
@@ -894,7 +879,6 @@ export default {
         skuSub(e){
 				if(this.isSubmit) return;
 			if(e){
-				console.log(e);
 				add_template_code({
 					code: e.detail.formId,
 					times: 1
@@ -916,9 +900,9 @@ export default {
         		}
         	}
 					this.isSubmit = true;
-        	console.log(this.postData)
+
         	updateCart(this.postData).then(res=>{
-        		console.log(res)
+
 						this.isSubmit = false;
         		if(res.errorCode == 0) {
         				uni.navigateTo({
@@ -929,7 +913,7 @@ export default {
         		}
 
         	}).catch(e=>{
-				console.log(e)
+
 				this.isSubmit = false;
 				uni.showToast({
 					title: e.msg,
@@ -1012,11 +996,7 @@ export default {
 
         	getCommit(data,{errtip:false}).then(res=>{
 				this.commit=res.data;
-        	},err=>{
-        		console.log('获取评论失败',err)
-			}).catch(e=>{
-
-			})
+        	}).catch(e=>{})
         },
 		stampCount(){
 			let rt  = {};
@@ -1046,9 +1026,6 @@ export default {
 			}
 
 
-
-			//console.log(rt)
-
 			this.countdown = rt
 		},
 		getDetail(item){
@@ -1061,10 +1038,6 @@ export default {
 				let product = null;
 
 				flashsaleDetail(data).then(res=>{
-
-					if(res.errorCode != 0){
-						return;
-					}
 					this.product = res.data;
 					this.Products_ID = res.data.Products_ID;
 					this.postData.count = res.data.attr_json.count;
@@ -1098,7 +1071,7 @@ export default {
 
 						this.product.skujosn_new = skujosn_new;
 						this.product.skuvaljosn = res.data.skuvaljosn;
-						//console.log(this.product.skujosn);
+
 					}
 					// #ifdef APP-PLUS
 						//规格选择
@@ -1147,21 +1120,20 @@ export default {
 						});
 
 					}).catch(()=>{
-						// console.log('不是微信环境')
+
 					})
 
 					// #endif
 
-
 					resolve(res.data.Products_ID);
 				}).catch(e=>{
-					console.log(e)
+
 				})
 			})
         },
         addCart(){
         	this.$refs.cartPopu.show();
-        	console.log('cart')
+
         	this.postData.cart_key = 'CartList';
         },
         gotoComments(){
@@ -1185,7 +1157,6 @@ export default {
 
 		let initData = await this.getInitData();
 
-		console.log('初始化信息',initData)
 		let WX_MINI_ORIGIN_ID = ls.get('WX_MINI_ORIGIN_ID');
 		if(!WX_MINI_ORIGIN_ID){
 
@@ -1200,7 +1171,7 @@ export default {
 		}
 
 		this.wxMiniOriginId = WX_MINI_ORIGIN_ID;
-		console.log('wxMiniOriginId is '+this.wxMiniOriginId)
+
 
 	}
 }

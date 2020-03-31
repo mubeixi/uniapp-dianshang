@@ -66,24 +66,19 @@
 
                 const query = uni.createSelectorQuery().in(this);
                 query.select('#content').boundingClientRect(data => {
-                    console.log(data)
                     width = data.width
                 }).exec();
-
-                //console.log(width)
 
                 _self.an = setInterval(()=>{
                     if (_self.marginLeft*(-1) > width) {
                         _self.marginLeft = _self.fullWidth;
                     }
-					//console.log(_self.marginLeft)
                     _self.marginLeft -= 2;
                 }, _self.time);
             },
             stopAn: function () { // 停止
                 this.prevLeft = this.marginLeft;
                 this.marginLeft = this.fullWidth;
-				console.log('stopstop')
                 clearInterval(this.an);
                 //this.$emit('on-stop-An');
             },
@@ -110,8 +105,8 @@
             // this.$nextTick().then(res => {
             //   this.startMove()
             // })
-			
-			
+
+
 
         },
         created() {
@@ -121,11 +116,11 @@
 			// this.fullWidth = res.screenWidth;
 			this.fullWidth = res.screenWidth;//document.getElementById('canvas').offsetWidth;
 			this.marginLeft = this.fullWidth;
-			
+
             this.notice = this.confData;
 
             this.$nextTick(function () {
-				
+
                 this.startAn();
             })
 

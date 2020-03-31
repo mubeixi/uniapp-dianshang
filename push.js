@@ -14,7 +14,6 @@ shell.cd('../shop-diy-dist');
 
 var sd = require('silly-datetime');
 var time=sd.format(new Date(), 'YYYY-MM-DD HH:mm');
-console.log(time);
 
 // 不能在一股脑全部添加了
 shell.exec('git add htdocs/fre/');

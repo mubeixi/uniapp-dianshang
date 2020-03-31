@@ -385,7 +385,6 @@
 			},
 			setData(from) {
 				this.froms = from;
-				//console.log(this.froms);
 			},
 			setNewPasswordOk() {
 				let old = this.editPass.oldPass;
@@ -437,7 +436,7 @@
 			 */
 			async login(scall,ecall) {
 				//登录 - 多个地方用了
-				//console.log(this.fromId, "这是fromId");
+
 				if (this.loginStatus === 1) {
 					// 短信登录
 					await login({mobile:this.mobile, captcha:this.verificationCode,login_method:'sms_login'}).then(res =>
@@ -516,7 +515,7 @@
 						})
 					},
 					success: function (loginRes) {
-						console.log(loginRes);
+
 						let CODE = loginRes.code
 						// 可以通过 wx.getSetting 先查询一下用户是否授权了 "scope.record" 这个 scope
 						wx.getSetting({
@@ -538,12 +537,12 @@
 											})
 										},
 										success (res) {
-											console.log('权限校验成功',JSON.stringify(res))
+
 											let userInfoData = null;
 											wx.getUserInfo({
 												lang:'zh_CN',
 												success:function (val) {
-													console.log('userInfoData data is ',userInfoData)
+
 													userInfoData = val;
 													userInfoData.rawData = JSON.parse(userInfoData.rawData)
 													login({code:CODE,login_method:'wx_lp',lp_raw_data:JSON.stringify(userInfoData)},{tip:'登录中'}).then(ret=>{
@@ -556,14 +555,14 @@
 										}
 									})
 								}else{
-									console.log('已经有授权，直接获取用户信息')
+
 									let userInfoData = null;
 									wx.getUserInfo({
 										lang:'zh_CN',
 										success:function (val) {
-											console.log(val)
+
 											userInfoData = {...val}
-											console.log('userInfoData data is ',userInfoData)
+
 											userInfoData.rawData = JSON.parse(userInfoData.rawData)
 											login({code:CODE,login_method:'wx_lp',lp_raw_data:JSON.stringify(userInfoData)},{tip:'登录中'}).then(ret=>{
 												if(ret.errorCode === 0){
@@ -572,7 +571,7 @@
 											}).catch(err=>{})
 										}
 									})
-									//console.log(res)
+
 									//error('请点击授权登录2')
 								}
 							}
@@ -585,7 +584,6 @@
 					provider: 'weixin',
 					success: function (loginRes) {
 						login({login_method:'wx_app',...loginRes.authResult}).then(res=>{
-							console.log('wx app login result is ',JSON.stringify(res))
 							_self.loginCall(res.data)
 						}).catch(e=>{
 						})
@@ -593,7 +591,6 @@
 						// 	titile:'微信登录信息',
 						// content:JSON.stringify(loginRes.authResult)
 						// })
-						console.log(JSON.stringify(loginRes.authResult));
 					}
 				});
 				// #endif
@@ -614,28 +611,26 @@
 						this.channels.push(['wx_mp','wx_lp'].indexOf(login_methods[i].type)===-1?{...login_methods[i]}:{...login_methods[i],component_appid})
 					}
 				}
-				console.log('login channels is',this.channels)
-				
+
 				//如果channels长度为0，则
 				if(this.channels.length<1){
 					this.showCodeLogin = true
-					
+
 					// #ifdef H5
 					this.isShowWeiXin = false
 					// #endif
-					
+
 				}
 			},
 			async loginCall(userData){
-				console.log('userDatauserDatauserDatauserData',userData)
 				this.setUserInfo(userData);
 				ls.set("access_token",userData.access_token,1);
 				// #ifdef APP-PLUS
 				//注册设备
 				let clientid = ls.get('user_client_id')
 				if(clientid){
-					console.log("注册设备",clientid,userData)
-					await bindUserClientId({uuid:clientid,action:'save'},{errtip:false}).then(res=>{console.log('注册设备成功')},err=>{}).catch(error=>{})
+					await bindUserClientId({uuid:clientid,action:'save'},{errtip:false}).then(res=>{
+					}).catch(error=>{})
 				}
 				// #endif
 				//手动绑定一下
@@ -643,11 +638,10 @@
 					// #ifdef H5
 					sessionStorage.setItem('is_send_usrlog',1)
 					// #endif
-				},err=>{console.log('error',err)}).catch(e=>{console.log('catch',e)})
+				}).catch(e=>{})
 				// #ifdef H5
 				//微信登录才这么走
 				let login_farward_url = ls.get('login_farward_url');
-				console.log('好好后退一下',this.h5_wx_login)
 				if(this.h5_wx_login){
 					history.go(-2);
 					return;
@@ -682,18 +676,16 @@
 				uni.navigateBack()
 				return;
 			}
-			
+
 			// #ifdef H5
 			if (isWeiXin()) {
 				let code = GetQueryByString(location.href, 'code');
 				if (code && !access_token) {
 					this.setUserInfo({});
-					console.log('code is'+code)
 					login({
 						login_method: 'wx_mp',
 						code: code
 					}).then(res => {
-						console.log(JSON.stringify(res))
 						if(res.errorCode === 0){
 							this.h5_wx_login = true;//标记是h5微信登录
 							this.loginCall(res.data)

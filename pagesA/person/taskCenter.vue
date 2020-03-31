@@ -63,7 +63,7 @@
 						{{it.desc}}
 					</view>
 				</view>
-				
+
 				<view class="submit" @click="yulan(it)"  v-if="it.done==0&&ind=='focus'">
 					去完成
 				</view>
@@ -113,15 +113,12 @@
 				}else{
 					this.goJump(item)
 				}
-				
+
 			},
 			getTaskCenter(){
 				getTaskCenter().then(res=>{
 					this.pro=res.data;
-				},err=>{
-
 				}).catch(e=>{
-					console.log(e)
 				})
 			},
 			goJump(item){

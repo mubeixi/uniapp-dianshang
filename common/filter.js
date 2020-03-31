@@ -1,5 +1,4 @@
 import {staticUrl} from "./env";
-console.log('staticUrl is',staticUrl)
 export const domainFn = (url) => {
   if (!url) return '';
   if (url.indexOf('http') == -1) return staticUrl + url;
@@ -23,7 +22,6 @@ export const formatTime = function (date) {
 
 export const formatRichTextByUparseFn = (html)=>{
 
-  // console.log('staticUrlstaticUrlstaticUrlstaticUrl',staticUrl)
 
   if(!html) return;
   let newContent= html.replace(/<embed[^>]*>/gi,function(match,capture){
@@ -54,7 +52,6 @@ export const formatRichTextByUparseFn = (html)=>{
     return match;
   });
 
-  // console.log(newContent,staticUrl)
   //替换地址
   newContent= newContent.replace(/="\/uploadfiles/gi, `="${staticUrl}/uploadfiles`)
 
@@ -76,7 +73,6 @@ export const formatRichTextByUparseFn = (html)=>{
 
   newContent = newContent.replace(/oembed/gi, 'video');
 
-  console.log(newContent)
   return newContent
 }
 
@@ -118,7 +114,6 @@ export default [
     methods: (start_timeStamp, end_timeStamp, type) => {
 
       let data = getCountdownFunc({start_timeStamp, end_timeStamp}), rt = null;
-      console.log(data)
       switch (type) {
         case 'd':
           rt = data.d;
@@ -143,7 +138,6 @@ export default [
     name: 'cutstr',
     methods: (str, len, tip) => {
       if (!str) return '';
-      console.log(str, len, tip)
       if (str.length < len) return str;
       return str.substring(0, len) + tip
     },

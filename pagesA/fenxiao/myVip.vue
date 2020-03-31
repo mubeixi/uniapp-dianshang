@@ -58,9 +58,9 @@
 						this.pro.push(item);
 					}
 					this.totalCount=res.totalCount;
-				},err=>{})
+				})
 				.catch(e=>{
-					console.log(e)
+
 				})
 			}
 		}

@@ -149,7 +149,6 @@ export default {
 				this.collect_list=[];
 				this.rightText = this.rightClicked ? '取消' : '管理';
 			}).catch(e=>{
-				console.log(e)
 			})
 		},
 		// 单选
@@ -182,19 +181,16 @@ export default {
 		// 获取收藏列表
 		getFavouritePro(){
 			getFavouritePro({Users_ID:this.Users_ID,User_ID: this.User_ID ,page: this.page,pageSize:this.pageSize}).then(res=>{
-				console.log(res)
 				let oldlist = this.collect_list;
-				if(res.errorCode == 0) {
-					this.collect_list = oldlist.concat(res.data);
-					if(this.collect_list.length<=0){
-						this.rightText='';
-					}else{
-						this.rightText='管理';
-					}
-					//this.collect_list = res.data;
-					this.hasMore = (res.totalCount / this.pageSize) > this.page ? true : false ;
-					this.page += 1;
-				};
+                this.collect_list = oldlist.concat(res.data);
+                if(this.collect_list.length<=0){
+                    this.rightText='';
+                }else{
+                    this.rightText='管理';
+                }
+                //this.collect_list = res.data;
+                this.hasMore = (res.totalCount / this.pageSize) > this.page ? true : false ;
+                this.page += 1;
 				this.checked = [];
 				for(var i in this.collect_list) {
 					this.checked.push({
@@ -208,7 +204,6 @@ export default {
             this.handleShow = !this.handleShow;
         },
         buy(e){
-		    console.log(e);
             // add_template_code({
             //     code: e.detail.formId,
             //     times: 1

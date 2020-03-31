@@ -166,7 +166,6 @@
 
 			  //提交地址
 			  formSubmit: function (e) {
-				  console.log(e)
 
 			  	// add_template_code({
 				// 	code: e.detail.formId,

@@ -297,7 +297,6 @@
 			confirm(e){
 
 				let _self = this
-				console.log(e)
 				add_template_code({
 					code: e.detail.formId,
 					times: 1

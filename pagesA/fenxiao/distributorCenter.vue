@@ -303,7 +303,6 @@
 			paySuccessCall(res){
 
 				var _that = this;
-				console.log('支付成功回调',res)
 				if(res && res.code && res.code==2){
 
 					return;
@@ -352,7 +351,6 @@
 				// 	let lp_template = initData.lp_template
 				// 	let tmplIds = lp_template.dis_buy
 				// 	//调就是了，是否成功都可以
-				// 	console.log('调用wx.requestSubscribeMessage',tmplIds)
 				// 	wx.requestSubscribeMessage({tmplIds})
 				// }
 				// #endif
@@ -425,7 +423,6 @@
 				//公众号需要code
 				if(this.pay_type === 'wx_mp'){
 
-				    console.log('选择了微信支付的')
 
 				    if (!isWeiXin()) {
 				        error('请在微信内打开')
@@ -476,7 +473,6 @@
 							})
 						},2000)
 					}).catch(e=>{
-						console.log(e);
 					})
 				}else{
 					disBuy(data,{tip:'正在加载中',mask:true}).then(res=>{
@@ -487,7 +483,6 @@
 							icon:'none'
 						})
 					}).catch(e=>{
-						console.log(e);
 					})
 				}
 
@@ -500,16 +495,13 @@
 				// 		disBuy(data).then(res=>{
 				// 			let provider = 'alipay';
 				// 			let orderInfo = res.data.arg;
-				// 			console.log('支付宝参数',orderInfo)
 				// 			uni.requestPayment({
 				// 			    provider,
 				// 			    orderInfo, //微信、支付宝订单数据
 				// 			    success: function (res) {
 				// 			        _self.paySuccessCall(res)
-				// 			        console.log('success:' + JSON.stringify(res));
 				// 			    },
 				// 			    fail: function (err) {
-				// 			        console.log('fail:' + JSON.stringify(err));
 				// 			        uni.showModal({
 				// 			            title:'支付错误',
 				// 			            content:JSON.stringify(err)
@@ -523,7 +515,6 @@
 				// 				icon:'none'
 				// 			})
 				// 		}).catch(e=>{
-				// 			console.log(e);
 				// 		})
 				// }else{
 				// 	//不用余额调微信支付
@@ -696,9 +687,7 @@
 							})
 							this.textShen=res.data.msg;
 						}
-						console.log(res)
 					}).catch(e=>{
-						console.log(e)
 					})
 
 
@@ -831,13 +820,11 @@
 			        let tempArr = search.split('&');
 			        for (var i of tempArr) {
 
-			            console.log(i,i.indexOf('code') === -1, i.indexOf('state') === -1,i.indexOf('appid')===-1)
 			            //过滤多余的参数
 			            if (i.indexOf('code') === -1 && i.indexOf('state') === -1 && i.indexOf('appid')===-1) {
 			                strArr.push(i)
 			            }
 			        }
-			        console.log(strArr);
 			        let newSearchStr = strArr.join('&');
 			        if (newSearchStr.indexOf('?') === -1) {
 			            newSearchStr = '?' + newSearchStr
@@ -862,7 +849,6 @@
 			        wxAuthUrl =
 			            `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${channel.appid}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect`
 			    }
-			    console.log(wxAuthUrl)
 
 			    window.location.href = wxAuthUrl;
 
@@ -909,7 +895,6 @@
 			    //公众号需要code
 			    if(this.pay_type === 'wx_mp'){
 
-			        console.log('选择了微信支付的')
 
 			        if (!isWeiXin()) {
 			            error('请在微信内打开')
@@ -950,7 +935,6 @@
 			    await new Promise((resolve) => {
 			        uni.login({
 			            success: function (loginRes) {
-			                console.log(loginRes);
 			                payConf.code = loginRes.code
 			                resolve()
 			            }
@@ -1020,9 +1004,7 @@
 										if(dislist.apply_order.status==2){
 											this.textShen=dislist.apply_order.status_desc
 										}
-										console.log(myInfo,"ssss")
 										for(let item in myInfo){
-											console.log(item,"sss")
 											if(myInfo[item].type=="address"){
 												this.address_info.Address_Province=myInfo[item].pro_id;
 												this.address_info.Address_City=myInfo[item].city_id;
@@ -1106,7 +1088,6 @@
 
 					}
 				}).catch(e=>{
-					console.log(e)
 				})
 			},
 			changes(){
@@ -1118,11 +1099,9 @@
 			// #ifdef H5
 			if (isWeiXin()) {
 			    this.code = GetQueryByString(location.href, 'code');
-			    console.log(this.code)
 			    if (this.code) {
 
 			        this.pay_type = 'wx_mp';//需要手动设置一下
-			        // console.log(this.pay_type)
 			        // ls.set('code',this.code)
 			        this.self_orderPay(1);
 			    }

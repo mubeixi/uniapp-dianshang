@@ -83,7 +83,6 @@ export default {
 	// 			src:vm.node.attr.src
 	// 		});
 	// 		const subNVue1 = uni.getSubNVueById('video')
-	// 		console.log(subNVue1)
 	// 		subNVue1.show()
 	// 		this.ifshow = true
 	// 		// #endif

@@ -48,7 +48,6 @@
         created(){
             const vm = this;
             uni.$on('spike_bottom_setval', (data) => {
-				console.log(data,"sss")
                 for(var key in data){
                     vm[key] = data[key]
                 }
@@ -61,7 +60,6 @@
                 uni.$emit('kefu',{});
             },
             collectFn(){
-                console.log("click collect")
                 uni.$emit('collectSpike',{detail:this.detail});
             },
             toHome(){
