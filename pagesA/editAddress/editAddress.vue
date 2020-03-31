@@ -111,23 +111,21 @@
 			  // 获取乡镇
 			address_town: function () {
 			    getTown({'a_id': this.address_info.Address_Area }).then(res => {
-			      if (res.errorCode == 0) {
-			            var t_arr = [];
-			            var t_index = 0;
-			            var idx = 0;
-			            for (var i in res.data) {
-			               for (var j in res.data[i]) {
-			                t_arr.push({ 'id': j, 'name': res.data[i][j] });
-			                if (j == this.address_info.Address_Town) {
-			                    t_index = idx;
-			                }
-			                  idx++;
-			                }
-			              }
-			            this.t_arr = t_arr;
-			            this.t_index = t_index;
-			        }
-				})
+					var t_arr = [];
+					var t_index = 0;
+					var idx = 0;
+					for (var i in res.data) {
+						for (var j in res.data[i]) {
+							t_arr.push({ 'id': j, 'name': res.data[i][j] });
+							if (j == this.address_info.Address_Town) {
+								t_index = idx;
+							}
+							idx++;
+						}
+					}
+					this.t_arr = t_arr;
+					this.t_index = t_index;
+				}).catch(()=>{})
 			},
 			  // 乡镇地址 点击确定
 			  t_pickerChange: function (e) {
@@ -233,7 +231,7 @@
 					  	title: res.msg
 					  })
 					  this.addeditAddress(res)
-				  })
+				  }).catch(()=>{})
 				} else {
 				  // 添加
 				  var data = this.address_info;
@@ -244,7 +242,7 @@
 					  	title: res.msg
 					  });
 					  this.addeditAddress(res)
-				  })
+				  }).catch(()=>{})
 
 				  // app.http_req(data, app.globalData.init.api_url, 'POST', this.addeditAddress);
 				}
@@ -253,100 +251,87 @@
 			  //添加、编辑收货地址回调
 			  addeditAddress: function (res) {
 				var that = this;
-				if (res.errorCode == 0) {
 				  //返回来时页面
 				  uni.showToast({
-					title: (that.address_info.Address_ID ? '编辑成功' : '添加成功'),
-					icon: 'success',
-					duration: 2000,
-					success: function () {
-					  if (that.address_info.Address_ID) {  //编辑
-						//跳回收货地址列表页面  不需操
-					  } else {  //添加
-						//从提交订单页来的，跳回提交订单页
-						if (that.from_page == 'checkout') {
-						  if (typeof res.data.send_flag != 'undefined' && res.data.Address_ID) {
-							// 判断添加的收货地址是否是在配送范围内
-							if (res.data.send_flag == 1) {
-							  var pages = getCurrentPages();          //获取页面堆栈
-							  var prevPage = pages[pages.length - 2]; //上一页
-							  prevPage.back_address_id = res.data.Address_ID;
-							} else {
-							  uni.showModal({
-								title: '提示',
-								content: '添加的收货地址不在配送范围内',
-								confirmText: '重新添加',
-								success: function (res) {
-								  if(res.confirm) {
-									that.is_first_add = false;
-								  } else if(res.cancel) {
-									uni.redirectTo({
-									  url: '../addresslist/addresslist?from=' + that.from_page
-									})
+					  title: (that.address_info.Address_ID ? '编辑成功' : '添加成功'),
+					  icon: 'success',
+					  duration: 2000,
+					  success: function () {
+						  if (that.address_info.Address_ID) {  //编辑
+							  //跳回收货地址列表页面  不需操
+						  } else {  //添加
+							  //从提交订单页来的，跳回提交订单页
+							  if (that.from_page == 'checkout') {
+								  if (typeof res.data.send_flag != 'undefined' && res.data.Address_ID) {
+									  // 判断添加的收货地址是否是在配送范围内
+									  if (res.data.send_flag == 1) {
+										  var pages = getCurrentPages();          //获取页面堆栈
+										  var prevPage = pages[pages.length - 2]; //上一页
+										  prevPage.back_address_id = res.data.Address_ID;
+									  } else {
+										  uni.showModal({
+											  title: '提示',
+											  content: '添加的收货地址不在配送范围内',
+											  confirmText: '重新添加',
+											  success: function (res) {
+												  if(res.confirm) {
+													  that.is_first_add = false;
+												  } else if(res.cancel) {
+													  uni.redirectTo({
+														  url: '/pages/addresslist/addresslist?from=' + that.from_page
+													  })
+												  }
+											  }
+										  })
+										  return;
+									  }
 								  }
-								}
-							  })
-							  return;
-							}
+							  }
 						  }
-						}
+						  //返回上一页
+						  setTimeout(function(){
+							  uni.navigateBack({
+								  delta: 1
+							  });
+						  },2000)
 					  }
-					  //返回上一页
-					  setTimeout(function(){
-						  uni.navigateBack({
-							delta: 1
-						  });
-					  },2000)
-					}
 				  });
-				} else {
-				  uni.showModal({
-					title: '错误',
-					content: res.msg,
-					showCancel: false
-				  })
-				}
+
 			  },
 
 			  //编辑地址时，获取地址信息的回调，初始化地址信息
 			  setAddressInfo: function (res) {
-				if (res.errorCode == 0) {
+
 				  var addressInfo = res.data[0];
 				  delete addressInfo['Address_Province_name'];
-			      delete addressInfo['Address_Province_code'];
-			      delete addressInfo['Address_City_name'];
-			      delete addressInfo['Address_City_code'];
-			      delete addressInfo['Address_Area_name'];
-			      delete addressInfo['Address_Area_code'];
-			      delete addressInfo['Address_Town_name'];
-			      delete addressInfo['Address_Town_code'];
+				  delete addressInfo['Address_Province_code'];
+				  delete addressInfo['Address_City_name'];
+				  delete addressInfo['Address_City_code'];
+				  delete addressInfo['Address_Area_name'];
+				  delete addressInfo['Address_Area_code'];
+				  delete addressInfo['Address_Town_name'];
+				  delete addressInfo['Address_Town_code'];
 
-			      //初始化地址选择数据
-			      let objectMultiArray = [
-			        utils.array_change(area.area[0]['0']),
-			        utils.array_change(area.area[0]['0,' + addressInfo['Address_Province']]),
-			        utils.array_change(area.area[0]['0,' + addressInfo['Address_Province'] + ',' + addressInfo['Address_City']])
-			      ];
-			      //设置初始显示列
-			      let multiIndex = [
-			        utils.get_arr_index(objectMultiArray[0], addressInfo['Address_Province']),
-			        utils.get_arr_index(objectMultiArray[1], addressInfo['Address_City']),
-			        utils.get_arr_index(objectMultiArray[2], addressInfo['Address_Area'])
-			      ];
-			      this.address_info = addressInfo;
-						this.objectMultiArray = objectMultiArray;
-						this.change_objectMultiArray = objectMultiArray;
-						this.multiIndex = multiIndex;
-						this.change_multiIndex = multiIndex;
-			      // 处理街道信息
-			      this.address_town();
-				} else {
-				  uni.showModal({
-					title: '错误',
-					content: res.msg,
-					showCancel: false
-				  })
-				}
+				  //初始化地址选择数据
+				  let objectMultiArray = [
+					  utils.array_change(area.area[0]['0']),
+					  utils.array_change(area.area[0]['0,' + addressInfo['Address_Province']]),
+					  utils.array_change(area.area[0]['0,' + addressInfo['Address_Province'] + ',' + addressInfo['Address_City']])
+				  ];
+				  //设置初始显示列
+				  let multiIndex = [
+					  utils.get_arr_index(objectMultiArray[0], addressInfo['Address_Province']),
+					  utils.get_arr_index(objectMultiArray[1], addressInfo['Address_City']),
+					  utils.get_arr_index(objectMultiArray[2], addressInfo['Address_Area'])
+				  ];
+				  this.address_info = addressInfo;
+				  this.objectMultiArray = objectMultiArray;
+				  this.change_objectMultiArray = objectMultiArray;
+				  this.multiIndex = multiIndex;
+				  this.change_multiIndex = multiIndex;
+				  // 处理街道信息
+				  this.address_town();
+
 			  },
 
 
@@ -355,11 +340,9 @@
 			  load: function () {
 				//如果有Address_ID， 则为编辑
 				if (this.address_info.Address_ID) {
-				  getAddress({Address_ID: this.address_info.Address_ID}).then(
-				  	res => {
-				  		this.setAddressInfo(res);
-				  	}
-				  )
+				  getAddress({Address_ID: this.address_info.Address_ID}).then(res => {
+				  	this.setAddressInfo(res);
+				  }).catch(()=>{})
 				} else {  //添加收货地址  初始化地址选择数据
 				  //地区数据处理
 					this.objectMultiArray = [
@@ -378,16 +361,16 @@
 				  var addressArgs = {
 					act: 'get_address',
 				  };
-					getAddress({}).then(
-						res =>{
-							if(res.errorCode == 0){
-								//设是否为第一条收获地址状态
-								if ((res.errorCode == 0 && res.data.length <= 0) || res.errorCode == 2) {
-								  this.is_first_add = true;
-								}
+					getAddress({}).then(res =>{
+							//设是否为第一条收获地址状态
+							if ((res.data.length <= 0)) {
+								this.is_first_add = true;
 							}
+						}).catch((e)=>{
+						if(e.errMsg === 2){
+							this.is_first_add = true;
 						}
-					)
+					})
 				}
 			  },
 		  },

@@ -162,17 +162,15 @@
 				}
 
 				updateStoreMobile(data).then(res=>{
-					if(res.errorCode == 0) {
-						uni.showToast({
-							title: '修改成功'
-						});
-						setTimeout(() => {
-							uni.navigateBack({
-								delta: 1
-							})
-						}, 1500);
-					}
-				})
+					uni.showToast({
+						title: '修改成功'
+					});
+					setTimeout(() => {
+						uni.navigateBack({
+							delta: 1
+						})
+					}, 1500);
+				}).catch(() => {})
 			},
 			startCountdown() {
 				//倒计时
@@ -219,16 +217,14 @@
 					store_area: this.address_info.Address_Area,
 					store_address: this.User_Address
 				}).then(res=>{
-					if(res.errorCode == 0) {
-						uni.showToast({
-							title: '修改成功'
-						});
-						setTimeout(() => {
-							uni.navigateBack({
-								delta: 1
-							})
-						}, 1500);
-					}
+					uni.showToast({
+						title: '修改成功'
+					});
+					setTimeout(() => {
+						uni.navigateBack({
+							delta: 1
+						})
+					}, 1500);
 				})
 			},
 			//处理省市区联动信息

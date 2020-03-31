@@ -441,23 +441,19 @@
 					// 短信登录
 					await login({mobile:this.mobile, captcha:this.verificationCode,login_method:'sms_login'}).then(res =>
 					{
-						if(res.errorCode === 0){
-							//么有自定义回调，就默认的额
-							!scall && this.loginCall(res.data)
-							scall && scall()
-						}else{
-							ecall && ecall()
-						}
-					}).catch(e=>{ecall && ecall()})
+						//么有自定义回调，就默认的额
+						!scall && this.loginCall(res.data)
+						scall && scall()
+					}).catch(()=>{
+						ecall && ecall()
+					})
 				} else if (this.loginStatus === 2) {
 					// 账号密码登录
 					await login({mobile:this.mobile,passwd:this.phone.password,login_method:'mobile_login'}).then(res =>
 							{
-								if(res.errorCode === 0) {
-									this.loginCall(res.data)
-								}
+								this.loginCall(res.data)
 							}
-					);
+					).catch(()=>{});
 				} else if (this.loginStatus === 3) {
 					// 找回密码
 					// await login({mobile:this.mobile, captcha:this.verificationCode,login_method:'sms_login'})
@@ -686,11 +682,9 @@
 						login_method: 'wx_mp',
 						code: code
 					}).then(res => {
-						if(res.errorCode === 0){
-							this.h5_wx_login = true;//标记是h5微信登录
-							this.loginCall(res.data)
-						}
-					})
+						this.h5_wx_login = true;//标记是h5微信登录
+						this.loginCall(res.data)
+					}).catch(()=>{})
 					return;
 				}
 			}

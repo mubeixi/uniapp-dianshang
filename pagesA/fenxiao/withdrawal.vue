@@ -151,22 +151,14 @@
 					setTimeout(() => {
 							that.isQing=false;
 					}, 4000)
-					if(res.errorCode==0){
+					this.getUserWithdrawMethod();
 
-						this.getUserWithdrawMethod();
-
-						//提现成功清除金额
-						that.price='';
-						uni.showToast({
-							title:res.msg,
-							icon:'none'
-						})
-					}else{
-						uni.showToast({
-							title:res.msg,
-							icon:'none'
-						})
-					}
+					//提现成功清除金额
+					that.price='';
+					uni.showToast({
+						title:res.msg,
+						icon:'none'
+					})
 				}).catch(e=>{
 					that.isQing=false;
 				})

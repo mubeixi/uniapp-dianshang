@@ -151,9 +151,7 @@
 			},
 			nobiInfo(){
 				nobiInfo().then(res=>{
-					if(res.errorCode==0){
-						this.pro=res.data;
-					}
+					this.pro=res.data;
 				}).catch(e=>{
 
 				})

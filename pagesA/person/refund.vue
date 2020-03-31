@@ -228,37 +228,30 @@ export default {
 				refund_desc: this.refund_desc,
 				Order_ID: this.Order_ID
 			}).then(res=>{
-				if(res.errorCode == 0){
 
-					//微信小程序下需要模板消息
-					// #ifdef MP-WEIXIN
-					// const initData = this.initData
-					// if(initData.hasOwnProperty('lp_template') && initData.lp_template){
-					// 	let lp_template = initData.lp_template
-					// 	let tmplIds = lp_template.back_commit
-					// 	//调就是了，是否成功都可以
-					// 	wx.requestSubscribeMessage({tmplIds})
-					// }
-					// #endif
+				//微信小程序下需要模板消息
+				// #ifdef MP-WEIXIN
+				// const initData = this.initData
+				// if(initData.hasOwnProperty('lp_template') && initData.lp_template){
+				// 	let lp_template = initData.lp_template
+				// 	let tmplIds = lp_template.back_commit
+				// 	//调就是了，是否成功都可以
+				// 	wx.requestSubscribeMessage({tmplIds})
+				// }
+				// #endif
 
-					uni.showToast({
-						title: '提交成功',
-						duration: 1500,
-						complete: function(){
-							setTimeout(()=>{
-							  uni.navigateBack({
+				uni.showToast({
+					title: '提交成功',
+					duration: 1500,
+					complete: function(){
+						setTimeout(()=>{
+							uni.navigateBack({
 								delta: 1
-							  });
-							},1500)
-						}
-					});
-				}else {
-					uni.showToast({
-						title: res.msg,
-						icon: 'none'
-					})
-				}
-			})
+							});
+						},1500)
+					}
+				});
+			}).catch(()=>{})
 		},
 		//删除某张预览图片
 		delImg(index){

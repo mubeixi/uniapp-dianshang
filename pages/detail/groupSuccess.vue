@@ -391,10 +391,7 @@
             },
             async getPintuanTeamList(id){
                 await getPintuanTeam({prod_id:id},{errtip:false}).then(res=>{
-                    if(res.errorCode === 0){
-                        this.teamList = res.data
-                    }
-
+                    this.teamList = res.data
                 }).catch(e=>{
 
                 })
@@ -522,11 +519,9 @@
 
                 let oldlist = this.prodList;
                 await getProd(this.prod_arg).then(res=>{
-                    if(res.errorCode == 0){
-                        this.prodList = oldlist.concat(res.data);
-                        this.hasMore = (res.totalCount / this.prod_arg.pageSize) > this.prod_arg.page ? true : false ;
-                        this.prod_arg.page += 1;
-                    }
+                    this.prodList = oldlist.concat(res.data);
+                    this.hasMore = (res.totalCount / this.prod_arg.pageSize) > this.prod_arg.page ? true : false ;
+                    this.prod_arg.page += 1;
                 }).catch(e=>{})
             },
         },

@@ -102,10 +102,8 @@
 			//获取用户提现方式
 			getUserWithdrawMethod(){
 				getUserWithdrawMethod().then(res=>{
-					if(res.errorCode==0){
-						this.data=res.data.list;
-					}
-				})
+					this.data=res.data.list;
+				}).catch(()=>{})
 			},
 			//添加提现方式
 			addMethod(){

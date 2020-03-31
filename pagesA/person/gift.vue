@@ -286,19 +286,10 @@ export default {
 					})
 				}else if(this.orderInfo.Order_Fyepay > 0) {
 					createOrder(this.postData).then(res=>{
-						if(res.errorCode == 0) {
-							this.Order_ID = res.data.Order_ID;
-							uni.redirectTo({
-								url: '/pages/pay/pay?Order_ID='+ res.data.Order_ID+'&pagefrom=gift'
-							})
-						}else {
-							uni.showToast({
-								title: res.data.msg,
-								icon: 'none'
-							});
-							this.submited = false;
-						}
-						this.submited = false;
+						this.Order_ID = res.data.Order_ID;
+						uni.redirectTo({
+							url: '/pages/pay/pay?Order_ID='+ res.data.Order_ID+'&pagefrom=gift'
+						})
 					}).catch(e=>{
 						uni.showToast({
 								title: e.msg,
@@ -452,31 +443,26 @@ export default {
 			    Address_ID = this.addressinfo.Address_ID;
 			}
 			await getAddress({Address_ID: Address_ID?Address_ID:0}).then(res=>{
-				if (this.back_address_id && res.errorCode != 0) {  //添加、选择收获地址返回
-					uni.showModal({
-					  title: '错误',
-					  content: '收货地址获取失败',
-					  showCancel: false
-					});
-					return false;
-				}
-				if(res.errorCode == 0) {
-					for(let i in res.data){
-						for(let j in res.data[i]){
-							if(j=='Address_Is_Default'){
-								res.data[i][j] == 1;
-								this.addressinfo = res.data[i]
-							}
+				for(let i in res.data){
+					for(let j in res.data[i]){
+						if(j=='Address_Is_Default'){
+							res.data[i][j] == 1;
+							this.addressinfo = res.data[i]
 						}
 					}
-					this.postData.address_id = this.addressinfo.Address_ID;
-					// 获取用户收货地址，获取订单信息，后台判断运费信息
-					this.createOrderCheck();
 				}
+				this.postData.address_id = this.addressinfo.Address_ID;
+				// 获取用户收货地址，获取订单信息，后台判断运费信息
+				this.createOrderCheck();
 				this.back_address_id = 0;
 
-			},err=>{
-
+			}).catch(() => {
+				uni.showModal({
+					title: '错误',
+					content: '收货地址获取失败',
+					showCancel: false
+				});
+				return false;
 			})
 
 			this.addressLoading = true;
@@ -485,15 +471,13 @@ export default {
 		},
 		createOrderCheck(){
 			createOrderCheck(this.postData).then(res=>{
-				if(res.errorCode == 0){
-					this.orderInfo = res.data;
-					this.couponlist = res.data.coupon_list;
-					this.orderLoading = true;
-					this.postData.shipping_id = res.data.Order_Shipping.shipping_id;
-					for(var i in this.orderInfo.shipping_company) {
-						if(i == this.postData.shipping_id) {
-							this.shipping_name = `${this.orderInfo.shipping_company[i]}`
-						}
+				this.orderInfo = res.data;
+				this.couponlist = res.data.coupon_list;
+				this.orderLoading = true;
+				this.postData.shipping_id = res.data.Order_Shipping.shipping_id;
+				for(var i in this.orderInfo.shipping_company) {
+					if(i == this.postData.shipping_id) {
+						this.shipping_name = `${this.orderInfo.shipping_company[i]}`
 					}
 				}
 			}).catch(e=>{

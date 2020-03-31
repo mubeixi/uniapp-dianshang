@@ -452,7 +452,7 @@ export default {
 		// 跳转地址列表页
 		goAddressList(){
 			uni.navigateTo({
-				url: '../addressList/addressList?from=checkout&addressid='+this.postData.address_id
+				url: '/pages/addressList/addressList?from=checkout&addressid='+this.postData.address_id
 			})
 		},
 		// 跳转新增地址页面
@@ -534,27 +534,18 @@ export default {
 					this.postData.shipping_store_id = this.shipping_store_id
 				}
 				createOrder(this.postData).then(res=>{
-					if(res.errorCode == 0) {
-						// 如果order_totalPrice <= 0  直接跳转 订单列表页
-						if(res.data.Order_Status != 1) {
-							// 直接跳转订单列表页
-							uni.redirectTo({
-								url: '../order/order'
-							});
-							return ;
-						}
-						this.Order_ID = res.data.Order_ID;
+					// 如果order_totalPrice <= 0  直接跳转 订单列表页
+					if(res.data.Order_Status != 1) {
+						// 直接跳转订单列表页
 						uni.redirectTo({
-							url: '../pay/pay?Order_ID='+ res.data.Order_ID+'&pagefrom=check'
-						})
-					}else {
-						uni.showToast({
-							title: res.data.msg,
-							icon: 'none'
+							url: '/pages/order/order'
 						});
-						this.submited = false;
+						return ;
 					}
-					this.submited = false;
+					this.Order_ID = res.data.Order_ID;
+					uni.redirectTo({
+						url: 'pages/pay/pay?Order_ID='+ res.data.Order_ID+'&pagefrom=check'
+					})
 				}).catch(e=>{
 					uni.showToast({
 							title: e.msg,
@@ -719,7 +710,7 @@ export default {
 			    Address_ID = this.addressinfo.Address_ID;
 			}
 			await getAddress({Address_ID: Address_ID?Address_ID:0}).then(res=>{
-				if (this.back_address_id && res.errorCode != 0) {  //添加、选择收获地址返回
+				if (this.back_address_id) {  //添加、选择收获地址返回
 					uni.showModal({
 					  title: '错误',
 					  content: '收货地址获取失败',
@@ -727,28 +718,17 @@ export default {
 					});
 					return false;
 				}
-				if(res.errorCode == 0) {
-					if(!res.data[0]) return
-					if(res.data.length>0){
-						this.addressinfo = res.data[0]
-					}
-					// for(let i in res.data){
-					// 	for(let j in res.data[i]){
-					// 		if(j=='Address_Is_Default'){
-					// 			res.data[i][j] == 1;
-					// 			this.addressinfo = res.data[i]
-					// 		}
-					// 	}
-					// }
-					this.postData.address_id = this.addressinfo.Address_ID;
+				if(!res.data[0]) return
+				if(res.data.length>0){
+					this.addressinfo = res.data[0]
 				}
+
+				this.postData.address_id = this.addressinfo.Address_ID;
 				this.back_address_id = 0;
 
 				// 获取用户收货地址，获取订单信息，后台判断运费信息
 				this.createOrderCheck();
-			},err=>{
-
-			})
+			}).catch(()=>{})
 
 			this.addressLoading = true;
 
@@ -756,29 +736,26 @@ export default {
 		},
 		createOrderCheck(num){
 			createOrderCheck(this.postData).then(res=>{
-				if(res.errorCode == 0){
-
-					for(var i in res.data.CartList){
-						for(var j in res.data.CartList[i]){
-							res.data.CartList[i][j].store = {}
-						}
+				for(var i in res.data.CartList){
+					for(var j in res.data.CartList[i]){
+						res.data.CartList[i][j].store = {}
 					}
-					this.orderInfo = res.data;
-					this.orderInfo.coupon_list.push({Coupon_ID:''})
-					//如果该规格有门店 就优先后台设置的
-					if(this.orderInfo.all_has_stores==1&&num!=2){
-						this.tabIdx = this.initData.order_submit_first;
-					}
+				}
+				this.orderInfo = res.data;
+				this.orderInfo.coupon_list.push({Coupon_ID:''})
+				//如果该规格有门店 就优先后台设置的
+				if(this.orderInfo.all_has_stores==1&&num!=2){
+					this.tabIdx = this.initData.order_submit_first;
+				}
 
 
-					this.couponlist = res.data.coupon_list;
-					this.orderLoading = true;
-					this.postData.shipping_id = res.data.Order_Shipping.shipping_id;
-					this.idD=this.postData.shipping_id
-					for(var i in this.orderInfo.shipping_company) {
-						if(i == this.postData.shipping_id) {
-							this.shipping_name = `${this.orderInfo.shipping_company[i]}`
-						}
+				this.couponlist = res.data.coupon_list;
+				this.orderLoading = true;
+				this.postData.shipping_id = res.data.Order_Shipping.shipping_id;
+				this.idD=this.postData.shipping_id
+				for(var i in this.orderInfo.shipping_company) {
+					if(i == this.postData.shipping_id) {
+						this.shipping_name = `${this.orderInfo.shipping_company[i]}`
 					}
 				}
 			}).catch(e=>{

@@ -144,7 +144,7 @@
 			// 去逛逛
 			gotoBuy(){
 				uni.switchTab({
-					url: '../index/index'
+					url: '/pages/index/index'
 				})
 			},
 			// 重置信息
@@ -191,13 +191,11 @@
 						return;
 					}
 					delCart({ cart_key: 'CartList', prod_attr: JSON.stringify(obj)}).then(res=>{
-						if(res.errorCode == 0) {
-							uni.showToast({
-								icon: 'success',
-								title: res.msg
-							});
-							this.getCart();
-						}
+						uni.showToast({
+							icon: 'success',
+							title: res.msg
+						});
+						this.getCart();
 					}).catch(e=>{})
 				};
 			},
@@ -309,16 +307,9 @@
 					return;
 				}
 				updateCart(this.postData).then(res=>{
-					if(res.errorCode == 0) {
-						this.getCart();
-						this.cal_total();
-					}else {
-						uni.showToast({
-							title: res.msg,
-							icon: 'none'
-						})
-					}
-				}).catch(e=>{});
+					this.getCart();
+					this.cal_total();
+				}).catch(()=>{});
 			},
 			handle(){
 				this.handleShow = !this.handleShow;
@@ -341,13 +332,11 @@
 			},
 			getCart() {
 				getCart({cart_key:'CartList'}).then(res=>{
-					if(res.errorCode == 0){
-						this.total_count= res.data.total_count;
-						this.total_price= res.data.total_price;
-						this.shop_config = res.data.shop_config;
-						// 把状态存起来
-						this.initCheck();
-					}
+					this.total_count= res.data.total_count;
+					this.total_price= res.data.total_price;
+					this.shop_config = res.data.shop_config;
+					// 把状态存起来
+					this.initCheck();
 					this.CartList = res.data.CartList;
 					this.loading = true;
 
@@ -358,11 +347,9 @@
 				this.prod_arg.Users_ID = this.Users_ID;
 				let oldlist = this.prodList;
 				getProd(this.prod_arg).then(res=>{
-					if(res.errorCode == 0){
-						this.prodList = oldlist.concat(res.data);
-						this.hasMore = (res.totalCount / this.prod_arg.pageSize) > this.prod_arg.page ? true : false ;
-						this.prod_arg.page += 1;
-					}
+					this.prodList = oldlist.concat(res.data);
+					this.hasMore = (res.totalCount / this.prod_arg.pageSize) > this.prod_arg.page ? true : false ;
+					this.prod_arg.page += 1;
 				}).catch(e=>{})
 			},
 			gotoDetail(e){

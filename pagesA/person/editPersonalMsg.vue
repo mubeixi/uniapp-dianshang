@@ -245,22 +245,20 @@
 									User_Address: that.User_Address,
 									User_Birthday:that.dateValue
 								}).then(res=>{
-									if(res.errorCode == 0) {
-										let userInfo = res.data;
-										userInfo.User_Name = res.data.User_Name;
-										userInfo.User_NickName = res.data.User_NickName;
-										userInfo.User_Email = res.data.User_Email;
-										userInfo.User_Birthday = res.data.User_Birthday;
-										that.setUserInfo(userInfo);
-										uni.showToast({
-											title: '修改成功'
-										});
-										setTimeout(() => {
-											uni.navigateBack({
-												delta: 1
-											})
-										}, 1500);
-									}
+									let userInfo = res.data;
+									userInfo.User_Name = res.data.User_Name;
+									userInfo.User_NickName = res.data.User_NickName;
+									userInfo.User_Email = res.data.User_Email;
+									userInfo.User_Birthday = res.data.User_Birthday;
+									that.setUserInfo(userInfo);
+									uni.showToast({
+										title: '修改成功'
+									});
+									setTimeout(() => {
+										uni.navigateBack({
+											delta: 1
+										})
+									}, 1500);
 								}).catch(e=>{
 									that.loading=false
 								})
@@ -283,22 +281,20 @@
 					User_Tow: this.address_info.User_Tow,
 					User_Address: this.User_Address
 				}).then(res=>{
-					if(res.errorCode == 0) {
-						let userInfo = res.data;
-						userInfo.User_Name = res.data.User_Name;
-						userInfo.User_NickName = res.data.User_NickName;
-						userInfo.User_Email = res.data.User_Email;
-						userInfo.User_Birthday = res.data.User_Birthday;
-						this.setUserInfo(userInfo);
-						uni.showToast({
-							title: '修改成功'
-						});
-						setTimeout(() => {
-							uni.navigateBack({
-								delta: 1
-							})
-						}, 1500);
-					}
+					let userInfo = res.data;
+					userInfo.User_Name = res.data.User_Name;
+					userInfo.User_NickName = res.data.User_NickName;
+					userInfo.User_Email = res.data.User_Email;
+					userInfo.User_Birthday = res.data.User_Birthday;
+					this.setUserInfo(userInfo);
+					uni.showToast({
+						title: '修改成功'
+					});
+					setTimeout(() => {
+						uni.navigateBack({
+							delta: 1
+						})
+					}, 1500);
 				}).catch(e=>{
 					this.loading=false
 				})
@@ -321,23 +317,21 @@
 			  // 获取乡镇
 			address_town: function () {
 			    getTown({'a_id': this.address_info.User_Area }).then(res => {
-			      if (res.errorCode == 0) {
-			            var t_arr = [];
-			            var t_index = 0;
-			            var idx = 0;
-			            for (var i in res.data) {
-			               for (var j in res.data[i]) {
-			                t_arr.push({ 'id': j, 'name': res.data[i][j] });
-			                if (j == this.address_info.User_Tow) {
-			                    t_index = idx;
-			                }
-			                  idx++;
-			                }
-			              }
-			            this.t_arr = t_arr;
-			            this.t_index = t_index;
-			        }
-				})
+					var t_arr = [];
+					var t_index = 0;
+					var idx = 0;
+					for (var i in res.data) {
+						for (var j in res.data[i]) {
+							t_arr.push({ 'id': j, 'name': res.data[i][j] });
+							if (j == this.address_info.User_Tow) {
+								t_index = idx;
+							}
+							idx++;
+						}
+					}
+					this.t_arr = t_arr;
+					this.t_index = t_index;
+				}).catch(() => {})
 			},
 			  // 乡镇地址 点击确定
 			  t_pickerChange: function (e) {
