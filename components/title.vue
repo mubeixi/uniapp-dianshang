@@ -1,6 +1,6 @@
 <template>
 	  <div class="component-wrap" :style="{backgroundColor: bgcolor}">
-		  <img class="img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAlCAMAAACeRoI0AAAAvVBMVEVHcEwzMzMzMzM2NjY1NTUwMDAxMTEzMzMyMjIxMTEzMzMtLS0zMzMyMjIrKyszMzMzMzMzMzMyMjIzMzMuLi4zMzMxMTEyMjIzMzMyMjIyMjIxMTEsLCwzMzMyMjIyMjIyMjIzMzMzMzMvLy8yMjIyMjIyMjIzMzMzMzMyMjIzMzMzMzMxMTE1NTUuLi4zMzMzMzMyMjIzMzMyMjIyMjIzMzMxMTEyMjIuLi4xMTExMTEzMzM0NDQyMjIzMzPVDEorAAAAPnRSTlMAfM0TGCCB/v0VzhHPyxIUg37Q0xbSc3XUcdVtF9jWa99vGRtlZ9vcHtrZaRodHN3eenl2e3h3wSFjYmSeYZ0V3m0AAAC1SURBVCjPddPHEsIwEANQ0yH0Fjqh997r/v9noWTggrw5Pnky9lo25v9LZ0WkQJwLg+PEEQdcJM5nwCHiVAl8Yq6CD8SVMvhC3K6Da8TRJthl7ookGsSDDrhPvFqAW8TDOdgj3kzAS+L1VCQ5Jp5twSPi2A78ZO6BH8TmilO+mM3NX/+2BMH/75ZA2Y+6f/W86nzUearzV+9LvV+1D9/+HC1B0LezLfD7ubcESp/V/qvv5fe+PtJeIwkJchrWAAAAAElFTkSuQmCC"  @click="goBack" v-show="!hiddenBack">
+		  <img class="img" src="/static/title-arrow-left.png"  @click="goBack" v-show="!hiddenBack">
 		  {{title}}
           <view v-if="dot" class="dotted">
               <view class="dotlist" @click="changeMethod">
