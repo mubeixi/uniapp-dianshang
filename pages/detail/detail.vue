@@ -87,9 +87,7 @@
 				  </div>
 				  <div class="c_content_msg">{{item.Note}}</div>
 				  <div class="c_content_img">
-					  <block v-for="(i,j) of item.ImgPath" :key="j">
-						  <img :src="i"  @click="yulanImg(index,j)">
-					  </block>
+					  <image class="img" v-for="(i,j) in item.ImgPath" :key="j" :src="i"  @click="yulanImg(index,j)"></image>
 				  </div>
 			  </div>
 		  </block>
@@ -1696,7 +1694,7 @@ export default {
         padding: 18rpx 0;
         border-bottom: 2rpx solid #f8f8f8;
     }
-    .c_content_img img {
+    .c_content_img .img {
         width: 140rpx;
         height: 140rpx;
         margin-right: 20rpx;
