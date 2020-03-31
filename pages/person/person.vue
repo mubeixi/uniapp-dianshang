@@ -316,7 +316,7 @@
 			goPintuanOrderlist(){
 				if(!this.$fun.checkIsLogin(1))return;
 				uni.navigateTo({
-					url: '../order/pintuanOrderlist'
+					url: '/pages/order/pintuanOrderlist'
 				})
 			},
 			//去赠品中心

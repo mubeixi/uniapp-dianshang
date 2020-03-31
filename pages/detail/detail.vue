@@ -761,17 +761,10 @@ export default {
 			// 领取礼物
 			this.postData.attr_id = this.gift_attr_id;
 			updateCart(this.postData).then(res=>{
-				if(res.errorCode == 0) {
-					uni.navigateTo({
-						url: '/pagesA/person/gift?cart_key=DirectBuy&gift=gift'
-					})
-				}else {
-					uni.showToast({
-						title: res.msg,
-						icon: 'none'
-					})
-				}
-			})
+				uni.navigateTo({
+					url: '/pagesA/person/gift?cart_key=DirectBuy&gift=gift'
+				})
+			}).catch(()=>{})
 
 		},
 		// 赠品
@@ -781,12 +774,8 @@ export default {
 			}
 			judgeReceiveGift({gift: this.gift}).then(res=>{
 
-				if(res.errorCode ==0){
-
-					this.gift_attr_id = res.data.attr_id;
-					this.skuval = res.data.skuval.split(';');
-
-				}
+				this.gift_attr_id = res.data.attr_id;
+				this.skuval = res.data.skuval.split(';');
 				// #ifdef APP-PLUS
 					uni.$emit('goods_bottom_setval', {isCollected:this.isCollected,canSubmit:this.canSubmit});
 				// #endif
@@ -829,13 +818,10 @@ export default {
 				return
 			}
 			checkProdCollected({prod_id: this.Products_ID}).then(res => {
-				if(res.errorCode == 0) {
-					this.isCollected = res.data.is_favourite == 1
-
-					// #ifdef APP-PLUS
-					uni.$emit('goods_bottom_setval', {isCollected:this.isCollected});
-					// #endif
-				}
+				this.isCollected = res.data.is_favourite == 1
+				// #ifdef APP-PLUS
+				uni.$emit('goods_bottom_setval', {isCollected:this.isCollected});
+				// #endif
 			}).catch(e => {
 
 			})
@@ -901,12 +887,10 @@ export default {
 				page:this.page,
 			}
 			getCoupon(data).then(res=>{
-				if(res.errorCode==0){
-					for(let i of res.data){
-						this.couponList.push(i);
-					}
-					this.totalCount=res.totalCount;
+				for(let i of res.data){
+					this.couponList.push(i);
 				}
+				this.totalCount=res.totalCount;
 			}).catch(e=>{
 
 			})
@@ -1014,26 +998,18 @@ export default {
 
 			this.isSubmit = true;
 			updateCart(this.postData).then(res=>{
-				if(res.errorCode == 0) {
-					this.isSubmit = false;
-					if(this.postData.cart_key == 'CartList') {
-						uni.showToast({
-							title: '加入购物车成功',
-							icon: 'success'
-						})
-					}else {
-						uni.navigateTo({
-							url: '/pages/order/check?cart_key=DirectBuy'
-						})
-					}
-				}else {
+				this.isSubmit = false;
+				if(this.postData.cart_key == 'CartList') {
 					uni.showToast({
-						title: res.msg,
-						icon: 'none'
+						title: '加入购物车成功',
+						icon: 'success'
 					})
-					this.isSubmit = false;
+				}else {
+					uni.navigateTo({
+						url: '/pages/order/check?cart_key=DirectBuy'
+					})
 				}
-			})
+			}).catch(()=>{})
 			//确定加入购物车
 			this.hideNativeEleShow = false
 			this.$refs.cartPopu.close();
@@ -1084,40 +1060,29 @@ export default {
 			// 检查是否已收藏
 			if(this.isCollected) {
 				cancelCollection({prod_id: this.Products_ID}).then(res=>{
-					if(res.errorCode == 0) {
-						uni.showToast({
-							title: res.msg
-						});
-						this.isCollected = false;
-						// #ifdef APP-PLUS
-						uni.$emit('goods_bottom_setval',{isCollected:this.isCollected})
-						// #endif
-					}
-
+					uni.showToast({
+						title: res.msg
+					});
+					this.isCollected = false;
+					// #ifdef APP-PLUS
+					uni.$emit('goods_bottom_setval',{isCollected:this.isCollected})
+					// #endif
 				})
 			}else {
 				addCollection({prod_id: this.Products_ID,}).then(res=>{
-					if(res.errorCode == 0) {
-						uni.showToast({
-							title: '收藏成功'
-						});
-						this.isCollected = true;
-						// #ifdef APP-PLUS
-						uni.$emit('goods_bottom_setval',{isCollected:this.isCollected})
-						// #endif
-
-					}else {
-						uni.showToast({
-							title: res.msg,
-							icon: 'fail'
-						})
-					};
+					uni.showToast({
+						title: '收藏成功'
+					});
+					this.isCollected = true;
+					// #ifdef APP-PLUS
+					uni.$emit('goods_bottom_setval',{isCollected:this.isCollected})
+					// #endif
 				})
 			}
 		},
 		goCart(){
 			uni.switchTab({
-				url: '../order/cart'
+				url: '/pages/order/cart'
 			})
 		},
 		goBack(){
@@ -1140,9 +1105,7 @@ export default {
 				pageSize:2
 			}
 			getCommit(data,{errtip:false}).then(res=>{
-				if(res.errorCode == 0){
-					this.commit=res.data;
-				}
+				this.commit=res.data;
 			}).catch(e=>{
 
 			})
@@ -1283,7 +1246,7 @@ export default {
 		},
         gotoComments(){
             uni.navigateTo({
-            	url: '../order/comments?pro_id='+this.Products_ID
+            	url: '/pages/order/comments?pro_id='+this.Products_ID
             });
         },
         showTick(e){

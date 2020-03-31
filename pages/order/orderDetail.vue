@@ -407,22 +407,15 @@
 			cancelOrder(Order_ID){
 				if(Order_ID){
 					cancelOrder({Order_ID}).then(res=>{
-						if(res.errorCode==0){
-							uni.showToast({
-								title:res.msg,
-								icon:"none"
-							});
-							setTimeout(() => {
-								uni.navigateBack({
-									delta: 1
-								})
-							}, 1000);
-						}else{
-							uni.showToast({
-								title:res.msg,
-								icon:"none"
+						uni.showToast({
+							title:res.msg,
+							icon:"none"
+						});
+						setTimeout(() => {
+							uni.navigateBack({
+								delta: 1
 							})
-						}
+						}, 1000);
 
 					}).catch(e=>{
 						this.isLoading=false;
@@ -433,17 +426,15 @@
 			confirmOrder(Order_ID){
 				let that=this;
 				confirmOrder({Order_ID: Order_ID}).then(res=>{
-					if(res.errorCode==0){
-						uni.showToast({
-							title:res.msg,
-							icon:'none'
+					uni.showToast({
+						title:res.msg,
+						icon:'none'
+					})
+					setTimeout(() => {
+						uni.navigateBack({
+							delta: 1
 						})
-						setTimeout(() => {
-							uni.navigateBack({
-								delta: 1
-							})
-						}, 1000);
-					}
+					}, 1000);
 				}).catch(e=>{
 				})
 			},

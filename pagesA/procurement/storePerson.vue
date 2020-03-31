@@ -124,25 +124,15 @@
 									   	store_img: result.data.path,
 										store_id:that.Stores_ID
 									   }).then(res=>{
+										   uni.showToast({
+											   title: '修改成功',
+											   icon: 'success'
+										   });
+										   getStoreDetail({store_id:_this.Stores_ID}).then(res=>{
+											   _this.User_HeadImg=res.data.Stores_ImgPath
+										   }).catch(e=>{
 
-									   	if(res.errorCode == 0){
-									   		uni.showToast({
-									   			title: '修改成功',
-									   			icon: 'success'
-									   		});
-											getStoreDetail({store_id:_this.Stores_ID}).then(res=>{
-												_this.User_HeadImg=res.data.Stores_ImgPath
-											}).catch(e=>{
-
-											})
-									   		// that.User_HeadImg = res.data.User_HeadImg;
-									   		// that.userInfo.User_HeadImg = res.data.User_HeadImg;
-									   	}else {
-									   		uni.showToast({
-									   			title: res.msg,
-									   			icon: 'none'
-									   		})
-									   	}
+										   })
 									   })
 								   },err=>{
 

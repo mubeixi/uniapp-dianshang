@@ -279,7 +279,7 @@ export default {
 		},
 		goCart(){
 			uni.switchTab({
-				url: '../order/cart'
+				url: '/pages/order/cart'
 			})
 		},
 		getDetail(item){
@@ -334,13 +334,11 @@ export default {
 		},
 		getComments(){
 			getComments(this.commentArgs,{errtip:false}).then(res=>{
-				if(res.errorCode==0){
-					for(let i of res.data){
-						this.comment_list.push(i);
-					}
-					this.totalCount=res.totalCount;
+				for(let i of res.data){
+					this.comment_list.push(i);
 				}
-			},err=>{
+				this.totalCount=res.totalCount;
+			}).catch(err=>{
 				uni.showToast({
 					title: err.msg,
 					icon: 'none'

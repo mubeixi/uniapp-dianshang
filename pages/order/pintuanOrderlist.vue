@@ -155,19 +155,12 @@ export default {
 			}
 			if(Order_ID){
 				cancelOrder({Order_ID}).then(res=>{
-					if(res.errorCode==0){
-						this.data.splice(index,1);
-						this.getOrderNum();
-						uni.showToast({
-							title:res.msg,
-							icon:"none"
-						})
-					}else{
-						uni.showToast({
-							title:res.msg,
-							icon:"none"
-						})
-					}
+					this.data.splice(index,1);
+					this.getOrderNum();
+					uni.showToast({
+						title:res.msg,
+						icon:"none"
+					})
 
 				}).catch(e=>{
 
@@ -224,28 +217,26 @@ export default {
 				data['Order_Status'] = this.index;
 			}
 			getOrder(data).then(res=>{
-				if(res.errorCode==0){
-					for(var i in res.data) {
-						for(var m in res.data[i]){
-							if(m == 'prod_list'){
-								for(var j in res.data[i][m]) {
-										for( var k in res.data[i][m][j]) {
-											if(k == 'attr_info') {
-												if(res.data[i][m][j][k]){
-													res.data[i][m][j][k] = JSON.parse(res.data[i][m][j][k])
-												}
-											}
+				for(var i in res.data) {
+					for(var m in res.data[i]){
+						if(m == 'prod_list'){
+							for(var j in res.data[i][m]) {
+								for( var k in res.data[i][m][j]) {
+									if(k == 'attr_info') {
+										if(res.data[i][m][j][k]){
+											res.data[i][m][j][k] = JSON.parse(res.data[i][m][j][k])
 										}
 									}
+								}
 							}
 						}
 					}
-					for(let item of res.data){
-						this.data.push(item)
-					}
-					this.totalCount=res.totalCount;
-					this.isQing=false;
 				}
+				for(let item of res.data){
+					this.data.push(item)
+				}
+				this.totalCount=res.totalCount;
+				this.isQing=false;
 			}).catch(e=>{
 				this.isQing=false;
 			})

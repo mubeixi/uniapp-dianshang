@@ -293,42 +293,40 @@
 					Order_ID: this.Order_ID,
 				}).then(res => {
 
-					if (res.errorCode == 0) {
-						for (var i in res.data) {
-							if (i == 'Order_Shipping') {
-								res.data[i] = JSON.parse(res.data[i])
-							}
-							if (i == 'prod_list') {
-								for (var j in res.data[i]) {
-									for (var k in res.data[i][j]) {
-										if (k == 'attr_info') {
-											res.data[i][j][k] = res.data[i][j][k] && JSON.parse(res.data[i][j][k])
-										}
+					for (var i in res.data) {
+						if (i == 'Order_Shipping') {
+							res.data[i] = JSON.parse(res.data[i])
+						}
+						if (i == 'prod_list') {
+							for (var j in res.data[i]) {
+								for (var k in res.data[i][j]) {
+									if (k == 'attr_info') {
+										res.data[i][j][k] = res.data[i][j][k] && JSON.parse(res.data[i][j][k])
 									}
 								}
 							}
 						}
-						this.orderInfo = res.data;
-						this.Order_Type = res.data.Order_Type;
-						this.is_use=this.orderInfo.is_use_money
-						this.openMoney=this.orderInfo.is_use_money==1?true:false
-						ls.set('type',this.Order_Type);
-						ls.set('pagefrom', this.pagefrom);
-						// pay_money 应该支付的钱
-						// user_money 使用的余额
-						this.pay_money = this.orderInfo.Order_Fyepay;
-						this.user_money = this.orderInfo.Order_Yebc;
-						this.openMoney = this.orderInfo.Order_Yebc > 0;
-						// if(!this.openMoney){
-						// 	this.is_use=0
-						// }
-						this.need_invoice = this.orderInfo.Order_NeedInvoice;
-						this.openInvoice = this.orderInfo.Order_NeedInvoice > 0;
-						this.invoice_info = this.orderInfo.Order_InvoiceInfo;
-						this.order_remark = this.orderInfo.Order_Remark;
-						this.isGetOrder = true;
 					}
-				})
+					this.orderInfo = res.data;
+					this.Order_Type = res.data.Order_Type;
+					this.is_use=this.orderInfo.is_use_money
+					this.openMoney=this.orderInfo.is_use_money==1?true:false
+					ls.set('type',this.Order_Type);
+					ls.set('pagefrom', this.pagefrom);
+					// pay_money 应该支付的钱
+					// user_money 使用的余额
+					this.pay_money = this.orderInfo.Order_Fyepay;
+					this.user_money = this.orderInfo.Order_Yebc;
+					this.openMoney = this.orderInfo.Order_Yebc > 0;
+					// if(!this.openMoney){
+					// 	this.is_use=0
+					// }
+					this.need_invoice = this.orderInfo.Order_NeedInvoice;
+					this.openInvoice = this.orderInfo.Order_NeedInvoice > 0;
+					this.invoice_info = this.orderInfo.Order_InvoiceInfo;
+					this.order_remark = this.orderInfo.Order_Remark;
+					this.isGetOrder = true;
+				}).catch(()=>{})
 			},
 			// 用户重新更改了余额
 			moneyInputHandle(e) {

@@ -329,31 +329,26 @@ export default {
 			}
 
 			await getAddress({Address_ID: Address_ID?Address_ID:0}).then(res=>{
-				if (this.back_address_id && res.errorCode != 0) {  //添加、选择收获地址返回
-					uni.showModal({
-					  title: '错误',
-					  content: '收货地址获取失败',
-					  showCancel: false
-					});
-					return false;
-				}
-				if(res.errorCode == 0) {
-					for(let i in res.data){
-						for(let j in res.data[i]){
-							if(j=='Address_Is_Default'){
-								res.data[i][j] == 1;
-								this.addressinfo = res.data[i]
-							}
+				for(let i in res.data){
+					for(let j in res.data[i]){
+						if(j=='Address_Is_Default'){
+							res.data[i][j] == 1;
+							this.addressinfo = res.data[i]
 						}
 					}
-					this.address_id = this.addressinfo.Address_ID;
 				}
+				this.address_id = this.addressinfo.Address_ID;
 				this.back_address_id = 0;
 
 				// 获取用户收货地址，获取订单信息，后台判断运费信息
 
-			},err=>{
-
+			}).catch(()=>{
+				uni.showModal({
+					title: '错误',
+					content: '收货地址获取失败',
+					showCancel: false
+				});
+				return false;
 			})
 
 			this.addressLoading = true;

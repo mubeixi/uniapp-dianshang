@@ -678,16 +678,11 @@
 							// 	url:'/pages/fenxiao/distributorLevel'
 							// })
 						},1000)
-						if(res.errorCode==0){
-							this.textShen=res.msg;
-						}else{
-							uni.showToast({
-								title:res.data.msg,
-								icon:"none"
-							})
-							this.textShen=res.data.msg;
-						}
-					}).catch(e=>{
+
+						this.textShen=res.msg;
+					}).catch(res=>{
+
+						this.textShen=res.msg;
 					})
 
 
@@ -721,23 +716,21 @@
 			},
 			address_town: function () {
 			    getTown({'a_id': this.address_info.Address_Area }).then(res => {
-			      if (res.errorCode == 0) {
-			            var t_arr = [];
-			            var t_index = 0;
-			            var idx = 0;
-			            for (var i in res.data) {
-			               for (var j in res.data[i]) {
-			                t_arr.push({ 'id': j, 'name': res.data[i][j] });
-			                if (j == this.address_info.Address_Town) {
-			                    t_index = idx;
-			                }
-			                  idx++;
-			                }
-			              }
-			            this.t_arr = t_arr;
-			            this.t_index = t_index;
-			        }
-				})
+					var t_arr = [];
+					var t_index = 0;
+					var idx = 0;
+					for (var i in res.data) {
+						for (var j in res.data[i]) {
+							t_arr.push({ 'id': j, 'name': res.data[i][j] });
+							if (j == this.address_info.Address_Town) {
+								t_index = idx;
+							}
+							idx++;
+						}
+					}
+					this.t_arr = t_arr;
+					this.t_index = t_index;
+				}).catch(()=>{})
 			},
 			//处理省市区联动信息
 			  addressChange: function (columnValue) {
@@ -946,7 +939,7 @@
 			},
 			disApplyInit(){
 				disApplyInit().then(res=>{
-					if(res.errorCode==0){
+
 						this.pro=res.data;
 						if(this.type=='edit'){
 							// 处理自定义  select  和text
@@ -1085,10 +1078,7 @@
 							            this.disLevelInfo=dislist['Distribute_Form'];
 						}
 
-
-					}
-				}).catch(e=>{
-				})
+				}).catch(e=>{})
 			},
 			changes(){
 				this.isAgree=!this.isAgree;

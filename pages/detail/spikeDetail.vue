@@ -677,34 +677,25 @@ export default {
 			// 检查是否已收藏
 			if(this.isCollected) {
 				cancelCollection({prod_id: this.Products_ID}).then(res=>{
-					if(res.errorCode == 0) {
-						uni.showToast({
-							title: res.msg
-						});
-						this.isCollected = false;
-						// #ifdef APP-PLUS
-							uni.$emit('spike_bottom_setval', {isCollected:this.isCollected,isKai:this.isKai,detail:'spike'});
-						// #endif
-					}
+					uni.showToast({
+						title: res.msg
+					});
+					this.isCollected = false;
+					// #ifdef APP-PLUS
+					uni.$emit('spike_bottom_setval', {isCollected:this.isCollected,isKai:this.isKai,detail:'spike'});
+					// #endif
 
 				})
 			}else {
 				addCollection({prod_id: this.Products_ID,}).then(res=>{
-					if(res.errorCode == 0) {
-						uni.showToast({
-							title: '收藏成功'
-						});
-						this.isCollected = true;
-						// #ifdef APP-PLUS
-							uni.$emit('spike_bottom_setval', {isCollected:this.isCollected,isKai:this.isKai,detail:'spike'});
-						// #endif
-					}else {
-						uni.showToast({
-							title: res.msg,
-							icon: 'fail'
-						})
-					};
-				})
+					uni.showToast({
+						title: '收藏成功'
+					});
+					this.isCollected = true;
+					// #ifdef APP-PLUS
+					uni.$emit('spike_bottom_setval', {isCollected:this.isCollected,isKai:this.isKai,detail:'spike'});
+					// #endif
+				}).catch(()=>{})
 			}
 		},
 		// 检查产品是否已收藏
@@ -713,13 +704,11 @@ export default {
 				return
 			}
 			checkProdCollected({prod_id: item}).then(res => {
-				if(res.errorCode == 0) {
-					this.isCollected = res.data.is_favourite == 1
+				this.isCollected = res.data.is_favourite == 1
 
-					// #ifdef APP-PLUS
-						uni.$emit('spike_bottom_setval', {isCollected:this.isCollected,isKai:this.isKai,detail:'spike'});
-					// #endif
-				}
+				// #ifdef APP-PLUS
+				uni.$emit('spike_bottom_setval', {isCollected:this.isCollected,isKai:this.isKai,detail:'spike'});
+				// #endif
 			}).catch(e => {
 
 			})
@@ -904,13 +893,9 @@ export default {
         	updateCart(this.postData).then(res=>{
 
 						this.isSubmit = false;
-        		if(res.errorCode == 0) {
-        				uni.navigateTo({
-        					url: '/pages/order/check?cart_key=DirectBuy&checkfrom=spike'
-        				})
-        		}else {
-
-        		}
+				uni.navigateTo({
+					url: '/pages/order/check?cart_key=DirectBuy&checkfrom=spike'
+				})
 
         	}).catch(e=>{
 
@@ -975,7 +960,7 @@ export default {
         },
         goCart(){
         	uni.switchTab({
-        		url: '../order/cart'
+        		url: '/pages/order/cart'
         	})
         },
         goBack(){
@@ -1138,7 +1123,7 @@ export default {
         },
         gotoComments(){
             uni.navigateTo({
-            	url: '../order/comments?pro_id='+this.Products_ID
+            	url: '/pages/order/comments?pro_id='+this.Products_ID
             });
         },
         showTick(e){

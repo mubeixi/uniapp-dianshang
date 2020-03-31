@@ -355,35 +355,33 @@ export default {
 				data['Order_Status'] = this.index;
 			}
 			getOrder(data).then(res=>{
-				if(res.errorCode==0){
-					for(var i in res.data) {
-						res.data[i].Order_Shipping=JSON.parse(res.data[i].Order_Shipping)
-						for(var m in res.data[i]){
-							if(m == 'prod_list'){
-								for(var j in res.data[i][m]) {
-										for( var k in res.data[i][m][j]) {
-											if(k == 'attr_info') {
-												if(res.data[i][m][j][k]){
-													res.data[i][m][j][k] = JSON.parse(res.data[i][m][j][k])
-												}
-											}
+				for(var i in res.data) {
+					res.data[i].Order_Shipping=JSON.parse(res.data[i].Order_Shipping)
+					for(var m in res.data[i]){
+						if(m == 'prod_list'){
+							for(var j in res.data[i][m]) {
+								for( var k in res.data[i][m][j]) {
+									if(k == 'attr_info') {
+										if(res.data[i][m][j][k]){
+											res.data[i][m][j][k] = JSON.parse(res.data[i][m][j][k])
 										}
 									}
+								}
 							}
 						}
 					}
-					if(index==1){
-						this.data=res.data
-					}else{
-						for(let item of res.data){
-							this.data.push(item)
-						}
-					}
-
-					this.totalCount=res.totalCount;
-					this.isQing=false;
 				}
-			}).catch(e=>{
+				if(index==1){
+					this.data=res.data
+				}else{
+					for(let item of res.data){
+						this.data.push(item)
+					}
+				}
+
+				this.totalCount=res.totalCount;
+				this.isQing=false;
+			}).catch(()=>{
 				this.isQing=false;
 			})
 		}

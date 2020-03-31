@@ -110,11 +110,9 @@
 				this.prod_arg.Users_ID = this.Users_ID;
 				let oldlist = this.prodList;
 				getProd(this.prod_arg).then(res=>{
-					if(res.errorCode == 0){
-						this.prodList = oldlist.concat(res.data);
-						this.hasMore = (res.totalCount / this.prod_arg.pageSize) > this.prod_arg.page ? true : false ;
-						this.prod_arg.page += 1;
-					}
+					this.prodList = oldlist.concat(res.data);
+					this.hasMore = (res.totalCount / this.prod_arg.pageSize) > this.prod_arg.page ? true : false ;
+					this.prod_arg.page += 1;
 				}).catch(e=>{})
 			},
 			goOrder(){

@@ -716,13 +716,8 @@
 				}, {
 					errtip: false
 				}).then(res => {
-					if (res.errorCode === 0) {
-						this.teamList = res.data.splice(0, 3)
-					}
-
-				}).catch(e => {
-
-				})
+					this.teamList = res.data.splice(0, 3)
+				}).catch(e => {})
 			},
 			formatRichTexts(html) {
 				if (!html) return;
@@ -790,40 +785,31 @@
 					cancelCollection({
 						prod_id: this.Products_ID
 					}).then(res => {
-						if (res.errorCode == 0) {
-							uni.showToast({
-								title: res.msg
-							});
-							this.isCollected = false;
-							// #ifdef APP-PLUS
-							uni.$emit('goods_bottom_setvals', {
-								isCollected: this.isCollected
-							})
-							// #endif
-						}
+						uni.showToast({
+							title: res.msg
+						});
+						this.isCollected = false;
+						// #ifdef APP-PLUS
+						uni.$emit('goods_bottom_setvals', {
+							isCollected: this.isCollected
+						})
+						// #endif
 
 					})
 				} else {
 					addCollection({
 						prod_id: this.Products_ID,
 					}).then(res => {
-						if (res.errorCode == 0) {
-							uni.showToast({
-								title: '收藏成功'
-							});
-							this.isCollected = true;
-							// #ifdef APP-PLUS
-							uni.$emit('goods_bottom_setvals', {
-								isCollected: this.isCollected
-							})
-							// #endif
-						} else {
-							uni.showToast({
-								title: res.msg,
-								icon: 'fail'
-							})
-						};
-					})
+						uni.showToast({
+							title: '收藏成功'
+						});
+						this.isCollected = true;
+						// #ifdef APP-PLUS
+						uni.$emit('goods_bottom_setvals', {
+							isCollected: this.isCollected
+						})
+						// #endif
+					}).catch(()=>{})
 				}
 			},
 			// 检查产品是否已收藏
@@ -834,15 +820,13 @@
 				checkProdCollected({
 					prod_id: this.Products_ID
 				}).then(res => {
-					if (res.errorCode == 0) {
-						this.isCollected = res.data.is_favourite == 1
+					this.isCollected = res.data.is_favourite == 1
 
-						// #ifdef APP-PLUS
-						uni.$emit('goods_bottom_setvals', {
-							isCollected: this.isCollected
-						});
-						// #endif
-					}
+					// #ifdef APP-PLUS
+					uni.$emit('goods_bottom_setvals', {
+						isCollected: this.isCollected
+					});
+					// #endif
 				}).catch(e => {
 
 				})
@@ -910,7 +894,7 @@
 			//返回首页
 			goHome() {
 				uni.switchTab({
-					url: '../index/index'
+					url: '/pages/index/index'
 				})
 			},
 			// 选择属性
@@ -1067,7 +1051,7 @@
 			},
 			goCart() {
 				uni.switchTab({
-					url: '../order/cart'
+					url: '/pages/order/cart'
 				})
 			},
 			goBack() {
@@ -1225,7 +1209,7 @@
 			},
 			gotoComments() {
 				uni.navigateTo({
-					url: '../order/comments?pro_id=' + this.Products_ID
+					url: '/pages/order/comments?pro_id=' + this.Products_ID
 				});
 			},
 			showTick(e) {

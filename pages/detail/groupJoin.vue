@@ -570,10 +570,7 @@
             },
             async getPintuanTeamList(id){
                 await getPintuanTeam({prod_id:id},{errtip:false}).then(res=>{
-                    if(res.errorCode === 0){
-                        this.teamList = res.data
-                    }
-
+                    this.teamList = res.data
                 }).catch(e=>{
 
                 })
@@ -667,29 +664,26 @@
                 await getOrderDetail({
                     Order_ID: this.Order_ID,
                 }).then(res => {
-                    if (res.errorCode == 0) {
-                        for (var i in res.data) {
-                            if (i == 'Order_Shipping') {
-                                res.data[i] = JSON.parse(res.data[i])
-                            }
-                            if (i == 'prod_list') {
-                                for (var j in res.data[i]) {
-                                    for (var k in res.data[i][j]) {
-                                        if (k == 'attr_info') {
-                                            res.data[i][j][k] = res.data[i][j][k] && JSON.parse(res.data[i][j][k])
-                                        }
+                    for (var i in res.data) {
+                        if (i == 'Order_Shipping') {
+                            res.data[i] = JSON.parse(res.data[i])
+                        }
+                        if (i == 'prod_list') {
+                            for (var j in res.data[i]) {
+                                for (var k in res.data[i][j]) {
+                                    if (k == 'attr_info') {
+                                        res.data[i][j][k] = res.data[i][j][k] && JSON.parse(res.data[i][j][k])
                                     }
                                 }
                             }
                         }
-
-                        this.orderInfo = res.data;
-
-                        this.Prod_ID = res.data.prod_list[0].prod_id
-
-                        this.Team_ID = res.data.teamid;
-
                     }
+
+                    this.orderInfo = res.data;
+
+                    this.Prod_ID = res.data.prod_list[0].prod_id
+
+                    this.Team_ID = res.data.teamid;
                 }).catch(()=>{})
             },
             stampCount(){
@@ -714,11 +708,9 @@
 
                 let oldlist = this.prodList;
                 await getProd(this.prod_arg).then(res=>{
-                    if(res.errorCode == 0){
-                        this.prodList = oldlist.concat(res.data);
-                        this.hasMore = (res.totalCount / this.prod_arg.pageSize) > this.prod_arg.page ? true : false ;
-                        this.prod_arg.page += 1;
-                    }
+                    this.prodList = oldlist.concat(res.data);
+                    this.hasMore = (res.totalCount / this.prod_arg.pageSize) > this.prod_arg.page ? true : false ;
+                    this.prod_arg.page += 1;
                 }).catch(e=>{})
             },
         },
