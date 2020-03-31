@@ -221,7 +221,6 @@
 				if(!this.$fun.checkIsLogin(1))return;
 
 				if(rotateInstance.is_start){
-				    console.log('已经在跑了')
                     return //已经启动过程中无法再触发
                 }
 
@@ -251,9 +250,7 @@
                     let {desc,id,prize} = res.data
                     //获取中奖的下标
                     let idx = findArrayIdx(this.itemList,{id:id})
-                    // console.log(`中奖下标${idx}`)
                     // //修改限制圈数
-                    // console.log(rotateInstance.rotate_count,rotateInstance.rotate_count+2)
                     rotateInstance.setRotateNum(rotateInstance.rotate_count+5)
                     //设置跳转的方块
                     rotateInstance.setLuckNum(idx+1)

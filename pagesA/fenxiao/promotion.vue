@@ -155,7 +155,7 @@
 						this.pro=res.data;
 					}
 				}).catch(e=>{
-					console.log(e);
+
 				})
 			}
 		}

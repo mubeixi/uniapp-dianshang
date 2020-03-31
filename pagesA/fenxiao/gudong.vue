@@ -162,12 +162,9 @@
 			},
 			shaInit(){
 				shaInit().then(res=>{
-					if(res.errorCode==0){
-						this.pro=res.data;
-						this.isLoad = true
-					}
+					this.pro=res.data;
+					this.isLoad = true
 				}).catch(e=>{
-					console.log(e);
 				})
 			}
 		}

@@ -14,7 +14,7 @@
         </div>
 
         <view ref="popRef" class="popup-content" @tap.stop="stopEvent" :style="_location">
-           
+
 				<block v-for="(item,index) in initData.pay_arr"  :key="index">
 					<div class="iMbx" v-if="index!='remainder_pay'||(is_use_money==1)"   @click="chooseType(index)">
 						<div class="c_method" >
@@ -23,8 +23,8 @@
 						</div>
 					</div>
 				</block>
-          
-            
+
+
             <div class="safearea-box2"></div>
         </view>
 
@@ -162,7 +162,6 @@
             self.payFailCall = self.$store.state.payTempObj.payFailCall
             self.payCanceCall = self.$store.state.payTempObj.payCanceCall
             // #endif
-            // console.log('paySuccessCall is 3333333333',self.paySuccessCall)
 
             //自动打开
             if (this.isOpen) {
@@ -170,16 +169,15 @@
                     self.show();
                 }, 100)
             }
-            //console.log(this.use_money)
 
             // #ifdef H5
             if (isWeiXin()) {
                 this.code = GetQueryByString(location.href, 'code');
-                console.log(this.code)
+
                 if (this.code) {
 
                     this.pay_type = 'wx_mp';//需要手动设置一下
-                    // console.log(this.pay_type)
+
                     // ls.set('code',this.code)
                     this.self_orderPay(1);
                 }
@@ -242,7 +240,7 @@
             },
             //获取用户支付方式
             chooseType(name) {
-                console.log('支付方式', name)
+
                 this.pay_type = name;
                 this.close();
 
@@ -312,13 +310,11 @@
                     let tempArr = search.split('&');
                     for (var i of tempArr) {
 
-                        console.log(i, i.indexOf('code') === -1, i.indexOf('state') === -1, i.indexOf('appid') === -1)
                         //过滤多余的参数
                         if (i.indexOf('code') === -1 && i.indexOf('state') === -1 && i.indexOf('appid') === -1) {
                             strArr.push(i)
                         }
                     }
-                    console.log(strArr);
                     let newSearchStr = strArr.join('&');
                     if (newSearchStr.indexOf('?') === -1) {
                         newSearchStr = '?' + newSearchStr
@@ -343,7 +339,6 @@
                     wxAuthUrl =
                         `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${channel.appid}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect`
                 }
-                console.log(wxAuthUrl)
 
                 window.location.href = wxAuthUrl;
 
@@ -382,7 +377,6 @@
                     if (this.pay_type == 'remainder_pay') {
 
                         orderPay(payConf, {errtip: false,mask:true,tip:'正在加载中'}).then(res => {
-                            console.log(res)
                             _self.paySuccessCall();
                         }, err => {
                             uni.showModal({
@@ -391,7 +385,7 @@
                                 showCancel: false
                             });
                         }).catch(e => {
-                            console.log(e)
+
                         });
                         return;
                     }
@@ -429,7 +423,6 @@
                 //公众号需要code
                 if (this.pay_type === 'wx_mp') {
 
-                    console.log('选择了微信支付的')
 
                     if (!isWeiXin()) {
                         error('请在微信内打开')
@@ -470,7 +463,7 @@
                 await new Promise((resolve) => {
                     uni.login({
                         success: function (loginRes) {
-                            console.log(loginRes);
+
                             payConf.code = loginRes.code
                             resolve()
                         }
@@ -478,21 +471,13 @@
                 })
                 // #endif
 
-                console.log('payConf', payConf)
                 orderPay(payConf,{mask:true,tip:'正在加载中'}).then(res => {
-
-                    console.log(this.paySuccessCall);
-                    console.log(res);
-
-                    //console.log(isWeiXin())
                     unipayFunc(this, this.pay_type, res);
-                }, err => {
+                }).catch(err => {
                     uni.showModal({
                         title: '提示',
                         content: '获取支付参数失败:' + err.msg
                     })
-                }).catch(e => {
-
                 })
             },
             stopEvent(event) {

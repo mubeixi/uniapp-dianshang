@@ -82,9 +82,9 @@
 		<div class="defaults" v-if="data.length<=0">
 			<image :src="'/static/client/defaultImg.png'|domain" ></image>
 		</div>
-		
-		
-		
+
+
+
 		<wzw-dialog ref="sureReason" >
 		    <div class="refuseApplyDialog">
 				<div style="width: 110px;height: 110px;margin: 0 auto;">
@@ -191,15 +191,13 @@ export default {
 						})
 				}).catch(e=>{
 					this.$refs.sureReason.close();
-					console.log(e);
 				})
 		},
 		cancelReason(){
 			this.$refs.sureReason.close();
-			
+
 		},
 		openExtendReceiptFn(order){
-			console.log(order)
 			let extend = order.extend?false:true;
 			// order.extend = true;
 			this.$set(order,'extend',extend)
@@ -235,10 +233,8 @@ export default {
 			// 				icon:'none'
 			// 			})
 			// 	}).catch(e=>{
-			// 		console.log(e);
 			// 	})
 			// }).catch(e=>{
-			// 	console.log(e)
 			// })
 		},
 		goLogistics(item){
@@ -259,9 +255,7 @@ export default {
 		getOrderNum(){
 			getOrderNum({Order_Type:this.Order_Type}).then(res=>{
 				this.orderNum=res.data;
-				console.log(res)
 			}).catch(e=>{
-				console.log(e)
 			})
 		},
 		// 删除订单
@@ -270,7 +264,6 @@ export default {
 			this.isLoading=true;
 			let Order_ID;
 			for(let i in item){
-				console.log(i)
 				if(item[i].Order_ID){
 					Order_ID=item[i].Order_ID;
 				}
@@ -285,7 +278,6 @@ export default {
 							icon:"none"
 						})
 				}).catch(e=>{
-					console.log(e);
 					this.isLoading=false;
 				})
 			}
@@ -296,7 +288,6 @@ export default {
 			this.isLoading=true;
 			let Order_ID;
 			for(let i in item){
-				console.log(i)
 				if(item[i].Order_ID){
 					Order_ID=item[i].Order_ID;
 				}
@@ -312,7 +303,6 @@ export default {
 							icon:"none"
 						})
 				}).catch(e=>{
-					console.log(e);
 					this.isLoading=false;
 				})
 			}
@@ -645,7 +635,7 @@ export default {
 		.reasons{
 			min-height: 20px;
 		}
-	   
+
 	}
 	.control{
 		width: 100%;
@@ -660,7 +650,7 @@ export default {
 			line-height: 40px;
 			text-align: center;
 		}
-	   
+
 	}
 	.my-huo{
 		margin-top: 20px;

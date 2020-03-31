@@ -46,8 +46,8 @@
 				</view>
 			</view>
 		</view>
-			
-			
+
+
 		<div class="defaults" v-if="data.length<=0">
 			<image :src="'/static/client/defaultImg.png'|domain" ></image>
 		</div>
@@ -96,14 +96,12 @@
 					pageSize:this.pageSize,
 				}
 				getWithdrawRecordList(data).then(res=>{
-					if(res.errorCode==0){
-						this.totalCount=res.totalCount;
-						for(let item of res.data){
-							this.data.push(item);
-						}
+					this.totalCount=res.totalCount;
+					for(let item of res.data){
+						this.data.push(item);
 					}
 				}).catch(e=>{
-					console.log(e)
+
 				})
 			}
 		}

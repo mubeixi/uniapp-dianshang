@@ -326,10 +326,7 @@ export default {
 		if(JSON.stringify(this.userInfo) != "{}"){
 			get_user_info().then(res=>{
 				this.setUserInfo(res.data);
-			},err=>{
-
 			}).catch(e=>{
-				console.log(e)
 			})
 		}
 		this.getAddress();
@@ -342,10 +339,8 @@ export default {
 		//if(this.orderInfo.all_has_stores==1)
 		//this.tabIdx = this.initData.order_submit_first;
 		// let userInfo = this.getUserInfo(true);
-		// console.log(this.initData.order_submit_first)
 	},
 	onLoad(options) {
-		//console.log('options is',options)
 		this.postData.cart_key = options.cart_key;
 		if(options.cart_buy){
 			this.postData.cart_buy = options.cart_buy;
@@ -382,7 +377,6 @@ export default {
 	  },
 	  bindStores(storeInfo){
 		 this.selectStore=false
-		 console.log(storeInfo)
 		 this.postData.shipping_id='is_store'
 		 this.shipping_store_id = storeInfo.Stores_ID;
 	  	if(this.setStoreMode==='all'){
@@ -481,7 +475,7 @@ export default {
 						return;
 					}
 				}
-				
+
 				if(this.tabIdx==1&&this.postData.shipping_id!='is_store'){
 					this.submited = false;
 					uni.showToast({
@@ -562,7 +556,6 @@ export default {
 					}
 					this.submited = false;
 				}).catch(e=>{
-					console.log(e)
 					uni.showToast({
 							title: e.msg,
 							icon: 'none'
@@ -689,7 +682,6 @@ export default {
         changeShip(){
 					this.type = 'shipping';
 					this.ship_current = this.postData.shipping_id;
-					console.log(this.ship_current);
           this.$refs.popupRef.show();
         },
 		closeMethod(){
@@ -719,16 +711,13 @@ export default {
 		async getAddress(){
 			uni.$on('fire', (data) =>{
 				this.back_address_id = data;
-				console.log(data,"ssssssss")
 			})
-			console.log(this.back_address_id)
 			var Address_ID;
 			if (this.back_address_id) {  //添加、选择收获地址返回
 			    Address_ID = this.back_address_id;
 			} else if (this.addressinfo.Address_ID) { //有收获地址，则更新（防止收获地址编辑后返回）
 			    Address_ID = this.addressinfo.Address_ID;
 			}
-			console.log(Address_ID)
 			await getAddress({Address_ID: Address_ID?Address_ID:0}).then(res=>{
 				if (this.back_address_id && res.errorCode != 0) {  //添加、选择收获地址返回
 					uni.showModal({
@@ -780,8 +769,8 @@ export default {
 					if(this.orderInfo.all_has_stores==1&&num!=2){
 						this.tabIdx = this.initData.order_submit_first;
 					}
-					
-					
+
+
 					this.couponlist = res.data.coupon_list;
 					this.orderLoading = true;
 					this.postData.shipping_id = res.data.Order_Shipping.shipping_id;

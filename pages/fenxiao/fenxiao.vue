@@ -159,7 +159,6 @@
 					// 	icon:  'none'
 					// })
 				}).catch(err=>{
-					console.log(err)
 				})
 			},
 			//去提现
@@ -181,7 +180,6 @@
 			// 获取功能模块
 			getFuncModule(){
 				getFuncModule({type:1}).then(res=>{
-					console.log(res)
 					this.funcModules = res.data;
 				})
 			}
@@ -190,10 +188,7 @@
 			if(this.$fun.checkIsLogin()){
 				get_user_info({},{errtip: false}).then(res=>{
 					this.setUserInfo(res.data);
-				},err=>{
-
 				}).catch(e=>{
-					console.log(e)
 				})
 			}
 			// 获取首页功能

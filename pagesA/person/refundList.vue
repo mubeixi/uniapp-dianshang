@@ -86,10 +86,7 @@ export default {
 						icon:'none'
 					})
 					this.data.splice(index,1);
-			},err=>{
-
 			}).catch(e=>{
-				console.log(e);
 			})
 			this.isLoading=false;
 		},
@@ -97,10 +94,7 @@ export default {
 			getBackOrder().then(res=>{
 				this.data=res.data;
 				this.totalCount=res.totalCount;
-			},err=>{
-
 			}).catch(e=>{
-				console.log(e)
 			})
 		},
 		goDetail(item){

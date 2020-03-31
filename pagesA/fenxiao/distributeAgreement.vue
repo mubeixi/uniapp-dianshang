@@ -30,8 +30,8 @@
 			disApplyInit(){
 				disApplyInit().then(res=>{
 						this.pro=res.data;
-				},err=>{}).catch(e=>{
-					console.log(e)
+				}).catch(e=>{
+
 				})
 			},
 			formatRichTexts(html){
@@ -65,7 +65,7 @@
 				newContent = newContent.replace(/\<img/gi, '<img style="width:100%;float:left;"');
 				newContent = newContent.replace(/src="\/\//gi, 'src="http://');
 				//newContent = newContent.replace(/>[\s]*</gi, "><");
-				// console.log(newContent);
+
 				return newContent;
 			},
 		},

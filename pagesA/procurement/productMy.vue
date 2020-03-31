@@ -423,11 +423,9 @@
 			}
 		},
 		onUnload(){
-			console.log('hide', this.productMy)
 			ls.set('productMy', this.productMy);
 		},
 		onHide(){
-			console.log('haahide', this.productMy)
 		},
 		onReachBottom() {
 			if(this.productMy.length<this.totalCount){
@@ -481,7 +479,6 @@
 						arr.push(item)
 					}
 				})
-				console.log(arr)
 				let prod_json = {};
 				for(let i in arr) {
 					if(!arr[i].Products_ID){
@@ -543,7 +540,6 @@
 			},
 			// 删除不含属性的
 			delListNoAttr(pro,index,qty) {
-				console.log(this.productMy,index,qty)
 				this.productMy[index].myqty = 0;
 				this.productMy[index].prod_stock+=qty
 			},
@@ -613,7 +609,6 @@
 				this.$refs.detail.close();
 			},
 			delList(index,qty,attr_id){
-				console.log(index,this.productMy)
 				this.productMy[index].skuvaljosn[attr_id].myqty=0
 				this.productMy[index].prod_stock+=qty
 				this.productMy[index].skuvaljosn[attr_id].Property_count += qty;
@@ -641,8 +636,6 @@
 			},
 			// 确认退货
 			confirm(prosku){
-				console.log(prosku);
-				console.log(this.prosku_index);//产品下表
 				if(!this.submit_flag) {return;}
 
 				if(prosku.skuvaljosn && !this.postData.attr_id) {
@@ -671,8 +664,6 @@
 				// this.amount += this.postData.qty;
 				this.isHiddenMask = true;
 				this.showSku = false;
-				console.log('this.productMy')
-				console.log(this.productMy)
 			},
 			// 申请退货
 			apply_back(item,index){
@@ -759,12 +750,9 @@
 			        return false;
 			    }
 					this.check_attr = {};
-					console.log(check_attr);
-					console.log(check_attrid);
 					//存取1；2；3
 					this.check_attrid=check_attrid;
 					this.check_attrnames=mySku;
-					console.log(check_attrid_arr);
 			    this.check_attr = check_attr;
 			    this.check_attrid_arr = check_attrid_arr;
 			    this.submit_flag = (!this.check_attr || Object.getOwnPropertyNames(this.check_attr).length != Object.getOwnPropertyNames(this.prosku.skujosn).length) || Object.getOwnPropertyNames(this.prosku.skuvaljosn).indexOf(check_attrid)==-1 ? false : true;
@@ -800,7 +788,6 @@
 				this.showSum = false;
 				this.isHiddenMask = true;
 				this.isChangeChannel = false;
-				console.log(this.isClicked);
 			},
 			allSum(){
 				let arr=[];
@@ -823,7 +810,6 @@
 				getStoreProdMoney(data).then(res=>{
 					this.prod_money=res.data.prod_money
 				}).catch(e=>{
-					console.log(e)
 				});
 				this.showSum=true
 				this.isHiddenMask = false;
@@ -845,7 +831,6 @@
 				}
 				getSelfStoreProd(data).then(res=>{
 					let oldProductMy = ls.get('productMy') || [];
-					console.log(oldProductMy);
 					// this.productMy = this.productMy.concat(res.data);
 					this.productlist = this.productlist.concat(res.data);
 					this.checked = [];
@@ -895,7 +880,6 @@
 							}
 						})
 					})
-					console.log(this.productMy);
 					// 库存紧张
 					this.productMy_soldout = this.productlist.filter(item=>{
 						return item.prod_stock <= 10

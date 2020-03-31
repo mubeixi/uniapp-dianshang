@@ -155,7 +155,6 @@
 		},
         methods:{
 					show_pro_tip(apply,index){
-						console.log(apply,index)
 						// apply.order_tip_show = true;
 						apply.prod_list[index].pro_tip_show = true;
 					},
@@ -191,7 +190,6 @@
 										}
 									})
 									data.prod_json = JSON.stringify(prod_json);
-									console.log(data)
 
 									subStorePurchaseApply(data).then(res=>{
 										uni.showToast({
@@ -223,21 +221,16 @@
 							latitude: this.storeInfo.wx_lat,
 							longitude: this.storeInfo.wx_lng,
 							success: function () {
-								console.log('success');
 							}
 						});
 					},
 			showAdress(){
-				console.log(JSON.stringify({lat:this.storeInfo.wx_lat,lng:this.storeInfo.wx_lng}))
 				uni.openLocation({
 					latitude: this.storeInfo.wx_lat,
 					longitude: this.storeInfo.wx_lng,
 					success: function (res) {
-						console.log(JSON.stringify(res))
-						console.log('open location success');
 					},
 					fail:function(err){
-						console.log(JSON.stringify(err))
 					}
 				});
 			},
@@ -255,7 +248,6 @@
             },
             refuseApply(){
 
-                console.log(this.reason)
                 if(!this.reason){
                     error('请填写理由')
                     return;
@@ -276,9 +268,7 @@
                 this.reason = e.detail.value
             },
             showStore(store_id){
-                console.log(store_id)
                 let idx = findArrayIdx(this.stores,{Stores_ID:store_id})
-                console.log(idx)
 
 				let lat='';
 				let lng='';
@@ -336,7 +326,7 @@
 				if(this.order_status){
 					data.order_status=this.order_status
 				}
-				
+
                 await getStorePurchaseSales(data,{tip:'加载中'}).then(res=>{
 
                     this.paginate.totalCount = res.totalCount
@@ -351,7 +341,6 @@
                         return {...item}
                     })
 
-                    console.log(this.paginate.page)
                     if(this.paginate.page===1){
                         this.applys = rt
                     }else{
@@ -375,7 +364,6 @@
             this.loadInfo()
         },
         created(){
-            console.log(this.$store.state)
 
 
             // getStoreList({pageSize:999}).then(res=>{

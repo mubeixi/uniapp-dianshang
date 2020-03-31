@@ -100,7 +100,6 @@
 					this.objectMultiArray = objectMultiArray;
 					this.multiIndex = multiIndex;
 				}).catch(e=>{
-					console.log(e)
 				})
 			},
 			//发送验证码

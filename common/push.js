@@ -7,7 +7,7 @@ class Push {
     static pushListener = function () {
         var _this = this;
         plus.push.addEventListener("click", function (msg) {
-            console.log('click event ', msg)
+
             switch (msg.payload) {
                 case "LocalMSG":
                     //toast('点击本地创建消息启动：')
@@ -21,13 +21,13 @@ class Push {
             }
         }, false);
         plus.push.addEventListener("receive", function (msg) {
-            console.log('receive event ', msg)
+
             if (msg.aps) {
                 // Apple APNS message
-                console.log('接收到在线APNS消息')
+
                 return;
             } else {
-                console.log('接收到在线透传消息')
+
             }
 
             if (isDev) {
@@ -57,7 +57,6 @@ class Push {
     static handle = function (msg) {
         var _this = this;
 
-        console.log('click handle:', msg)
         //清除ios推送小红点
         _this.cancelPushClear();
 
@@ -66,7 +65,7 @@ class Push {
             return;
         }
         payload = JSON.parse(payloadStr);
-        console.log("handle arugment is:", payload)
+
         // {
         //     "action": "redirect",
         //     "channel": "moneychange",
@@ -147,8 +146,6 @@ class Push {
 
         jsonData.local = 1;//本地模拟的
 
-
-        console.log('手动添加到通知中心的数据是', jsonData)
         plus.push.createMessage(str, JSON.stringify(jsonData), options);
     }
 
@@ -169,7 +166,6 @@ export const pushHandle = ({type = 'receive', info = {__UUID__: '', title: '', c
 
     let {title, content, payload} = info, data = null;
 
-    console.log(info)
     if (!payload) return;
     //data = JSON.parse(payload);
     uni.showModal({

@@ -245,9 +245,7 @@
 				}
 				getOrderNum({Order_Type:this.Order_Type}).then(res=>{
 					this.orderNum=res.data;
-					console.log(res)
 				}).catch(e=>{
-					console.log(e)
 				})
 			},
 			goVip(){
@@ -294,10 +292,7 @@
 						})
 						this.signin=1;
 						this.isLodnig=false;
-					},err=>{
-
 					}).catch(e=>{
-						console.log(e);
 					})
 				}else if(this.show==2){
 					this.isLodnig=false;
@@ -311,10 +306,7 @@
 				judgeSignin({},{errtip:false}).then(res=>{
 					this.show=res.data.show;
 					this.signin=res.data.signin;
-				},err=>{
-
 				}).catch(e=>{
-					console.log(e)
 				})
 			},
 
@@ -385,12 +377,8 @@
 		onShow() {
 			if(JSON.stringify(this.userInfo) != "{}"){
 				get_user_info({},{tip:'',errtip:false}).then(res=>{
-					console.log(res.data)
 					this.setUserInfo(res.data);
-				},err=>{
-
 				}).catch(e=>{
-					console.log(e)
 				})
 			}
 			this.getOrderNum();
@@ -402,26 +390,18 @@
 			if(JSON.stringify(this.userInfo) != "{}"){
 				await get_user_info({},{tip:'',errtip:false}).then(res=>{
 					this.setUserInfo(res.data);
-				},err=>{
-
 				}).catch(e=>{
-					console.log(e)
 				})
 
 				await getOrderNum({Order_Type:this.Order_Type}).then(res=>{
 					this.orderNum=res.data;
-					console.log(res)
 				}).catch(e=>{
-					console.log(e)
 				});
 
 				await judgeSignin({},{errtip:false}).then(res=>{
 					this.show=res.data.show;
 					this.signin=res.data.signin;
-				},err=>{
-
 				}).catch(e=>{
-					console.log(e)
 				});
 
 			}

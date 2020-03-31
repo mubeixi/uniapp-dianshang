@@ -73,7 +73,6 @@
                     this.swipwerH = e.detail.height + 'rpx'
                 }
                 this.height_list.push(e.detail.height + 'rpx')
-                //console.log(e)
             },
             //滚动的时候灵活设置个高度
             changeHeightFn(e) {
@@ -83,25 +82,19 @@
                 // const query = uni.createSelectorQuery().in(this);
                 // query.select(`#js-swiper-item${idx}`).boundingClientRect(style => {
                 //     _self.swipwerH = style.height + 'px'
-                //     // console.log("得到布局位置信息" + JSON.stringify(data));
-                //     // console.log("节点离页面顶部的距离为" + data.top);
-                //     console.log("图片高度" + style.height);
                 // }).exec();
 
             },
             getSingleStyle() {
 
-                console.log(this.singleH, this.singleW)
                 if (this.singleH && this.singleW) {
                     let h = this.fullWidth * this.singleH / this.singleW;
                     let w = this.fullWidth;
-                    console.log({height: h + 'px', width: w + 'px'})
                     return {height: h + 'px', width: w + 'px'}
                 }
                 return {}
             },
             HandleImgLoad(e) {
-                console.log(e)
                 this.singleW = e.detail.width;
                 this.singleH = e.detail.height;
 
@@ -124,11 +117,7 @@
             //
             //     const query = uni.createSelectorQuery().in(_self);
             //     query.select(`#js-swiper-item${idx}`).boundingClientRect(style => {
-            //         console.log("得到布局位置信息" + JSON.stringify(style));
             //         // _self.swipwerH = style.height+'px'
-            //         // console.log("得到布局位置信息" + JSON.stringify(data));
-            //         // console.log("节点离页面顶部的距离为" + data.top);
-            //         console.log("图片高度" + style.height);
             //     }).exec();
             // })
 

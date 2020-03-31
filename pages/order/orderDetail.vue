@@ -425,7 +425,6 @@
 						}
 
 					}).catch(e=>{
-						console.log(e);
 						this.isLoading=false;
 					})
 				}
@@ -446,7 +445,6 @@
 						}, 1000);
 					}
 				}).catch(e=>{
-					console.log(e);
 				})
 			},
 			//跳转申请退款  发表评论
@@ -464,7 +462,6 @@
 			},
 			//获取用户支付方式
 			chooseType(name) {
-				console.log(name)
 				this.pay_type = name;
 				this.$refs.popupLayer.close();
 				// 判断是否使用了余额，
@@ -483,56 +480,53 @@
 				getOrderDetail({
 					Order_ID: this.Order_ID,
 				}).then(res => {
-					console.log(res)
-					if (res.errorCode == 0) {
-						for (var i in res.data) {
-							if (i == 'Order_Shipping') {
-								res.data[i] = JSON.parse(res.data[i])
-							}
-							if (i == 'prod_list') {
-								for (var j in res.data[i]) {
-									for (var k in res.data[i][j]) {
-										if (k == 'attr_info') {
-											res.data[i][j][k] = res.data[i][j][k] && JSON.parse(res.data[i][j][k])
-										}
+					for (var i in res.data) {
+						if (i == 'Order_Shipping') {
+							res.data[i] = JSON.parse(res.data[i])
+						}
+						if (i == 'prod_list') {
+							for (var j in res.data[i]) {
+								for (var k in res.data[i][j]) {
+									if (k == 'attr_info') {
+										res.data[i][j][k] = res.data[i][j][k] && JSON.parse(res.data[i][j][k])
 									}
 								}
 							}
 						}
-						let orderInfo = res.data
+					}
+					let orderInfo = res.data
 
-						// let aa = await new Promise(resolve=>{
-						// 	setTimeout(()=>{
-						// 		resolve(true)
-						// 	},3000)
-						// })
+					// let aa = await new Promise(resolve=>{
+					// 	setTimeout(()=>{
+					// 		resolve(true)
+					// 	},3000)
+					// })
 
-						this.orderInfo = res.data;
+					this.orderInfo = res.data;
 
-						// pay_money 应该支付的钱
-						// user_money 使用的余额
-						this.pay_money = this.orderInfo.Order_Fyepay;
-						this.user_money = this.orderInfo.Order_Yebc;
-						this.openMoney = this.orderInfo.Order_Yebc > 0;
-						this.need_invoice = this.orderInfo.Order_NeedInvoice;
-						this.openInvoice = this.orderInfo.Order_NeedInvoice > 0;
-						this.invoice_info = this.orderInfo.Order_InvoiceInfo;
-						this.order_remark = this.orderInfo.Order_Remark;
-						this.user_name = this.orderInfo.Address_Name;
-						this.user_mobile = this.orderInfo.Address_Mobile;
+					// pay_money 应该支付的钱
+					// user_money 使用的余额
+					this.pay_money = this.orderInfo.Order_Fyepay;
+					this.user_money = this.orderInfo.Order_Yebc;
+					this.openMoney = this.orderInfo.Order_Yebc > 0;
+					this.need_invoice = this.orderInfo.Order_NeedInvoice;
+					this.openInvoice = this.orderInfo.Order_NeedInvoice > 0;
+					this.invoice_info = this.orderInfo.Order_InvoiceInfo;
+					this.order_remark = this.orderInfo.Order_Remark;
+					this.user_name = this.orderInfo.Address_Name;
+					this.user_mobile = this.orderInfo.Address_Mobile;
 
 
-						if(orderInfo.Order_IsVirtual){
-							this.qrVal = `IsVirtualOrderCheck##Order_Code::${orderInfo.Order_Code}`
-						}
+					if(orderInfo.Order_IsVirtual){
+						this.qrVal = `IsVirtualOrderCheck##Order_Code::${orderInfo.Order_Code}`
+					}
 
-						if(this.showDirect && this.orderInfo.Order_Fyepay > 0) {
-							// 需要支付的金额大于0 ，直接弹出支付方式，简化支付流程
-							_self.$nextTick().then(()=>{
-								//_self.$refs.popupLayer.show();
-							})
+					if(this.showDirect && this.orderInfo.Order_Fyepay > 0) {
+						// 需要支付的金额大于0 ，直接弹出支付方式，简化支付流程
+						_self.$nextTick().then(()=>{
+							//_self.$refs.popupLayer.show();
+						})
 
-						}
 					}
 				})
 			},
@@ -646,7 +640,6 @@
 			paySuccessCall(res){
 
 				var _that = this;
-				console.log('支付成功回调',res)
 				if(res && res.code && res.code==2){
 					_that.payFailCall()
 					return;

@@ -131,7 +131,6 @@
 							}
 						}).catch(e=>{
 							this.isLoadong=false
-							console.log(e);
 						})
 					}else{
 						uni.showToast({

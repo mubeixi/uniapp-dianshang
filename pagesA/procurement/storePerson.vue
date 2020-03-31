@@ -83,7 +83,7 @@
 					this.storeData=res.data
 					this.User_HeadImg=res.data.Stores_ImgPath
 				}).catch(e=>{
-					console.log(e)
+
 				})
 			},
 			// 更换头像
@@ -112,7 +112,7 @@
 							}
 							// #ifdef MP-TOUTIAO
 							let fileCTX = tt.getFileSystemManager()
-							console.log(fileCTX);
+
 							fileCTX.readFile({
 								filePath:res.tempFilePaths[0],
 								encoding:'base64',
@@ -124,7 +124,7 @@
 									   	store_img: result.data.path,
 										store_id:that.Stores_ID
 									   }).then(res=>{
-									   	console.log(res)
+
 									   	if(res.errorCode == 0){
 									   		uni.showToast({
 									   			title: '修改成功',
@@ -133,7 +133,7 @@
 											getStoreDetail({store_id:_this.Stores_ID}).then(res=>{
 												_this.User_HeadImg=res.data.Stores_ImgPath
 											}).catch(e=>{
-												console.log(e)
+
 											})
 									   		// that.User_HeadImg = res.data.User_HeadImg;
 									   		// that.userInfo.User_HeadImg = res.data.User_HeadImg;
@@ -151,10 +151,8 @@
 								   })
 								},
 								fail(ret) {
-								  console.log(ret,`run fail`);
 								},
 								complete(ret) {
-								  console.log(`run done`);
 								}
 							})
 							// #endif
@@ -163,7 +161,6 @@
 
 							// #ifndef MP-TOUTIAO
 								let filePath = res.tempFilePaths[0];
-								console.log(filePath);
 								//上传图片
 								uni.uploadFile({
 										url: apiBaseUrl+'/api/little_program/shopconfig.php',
@@ -171,32 +168,22 @@
 										name: 'image',
 										formData: data,
 										success: (uploadFileRes) => {
-											console.log(uploadFileRes,'ssssssssss')
 											uploadFileRes =	JSON.parse(uploadFileRes.data)
 											that.tem_Shop_Logo = uploadFileRes.data.path;
 											updateStoreInfo({
 												store_img: that.tem_Shop_Logo,
 												store_id:that.Stores_ID
 											}).then(res=>{
-												console.log(res)
-												if(res.errorCode == 0){
-													uni.showToast({
-														title: '修改成功',
-														icon: 'success'
-													});
-													getStoreDetail({store_id:_this.Stores_ID}).then(res=>{
-														_this.User_HeadImg=res.data.Stores_ImgPath
-													}).catch(e=>{
-														console.log(e)
-													})
-													// that.User_HeadImg = res.data.User_HeadImg;
-													// that.userInfo.User_HeadImg = res.data.User_HeadImg;
-												}else {
-													uni.showToast({
-														title: res.msg,
-														icon: 'none'
-													})
-												}
+												uni.showToast({
+													title: '修改成功',
+													icon: 'success'
+												});
+												getStoreDetail({store_id:_this.Stores_ID}).then(res=>{
+													_this.User_HeadImg=res.data.Stores_ImgPath
+												}).catch(e=>{
+												})
+												// that.User_HeadImg = res.data.User_HeadImg;
+												// that.userInfo.User_HeadImg = res.data.User_HeadImg;
 											})
 										}
 								});
@@ -207,7 +194,6 @@
 
 						},
 						fail(e) {
-							console.log(e);
 						}
 					});
 			},

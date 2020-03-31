@@ -79,13 +79,12 @@
 		methods: {
 			get_jifen_order(){
 				jifenProdOrder({errtip: false}).then(res=>{
-					console.log(res)
 					let old = this.prod_list;
 					this.prod_list = old.concat(res.data);
 					if(this.prod_list.length < res.totalCount) {
 						this.hasMore = true;
 					}
-				},err=>{
+				}).catch(err=>{
 					uni.showToast({
 						title: err.msg,
 						icon: 'none'

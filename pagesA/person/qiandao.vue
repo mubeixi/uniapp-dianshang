@@ -69,10 +69,7 @@
 							duration:2500,
 							icon:"none"
 						})
-					},err=>{
-
 					}).catch(e=>{
-						console.log(e);
 					})
 				}else{
 					uni.navigateTo({

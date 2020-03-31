@@ -181,12 +181,7 @@
                     if (!val) return;
                     let {list = [], cate_id = [], limit} = val;
 
-                    //if(!cate_id)cate_id = []
-
-                    // console.log(list,cate_id,limit)
                     //如果值还没有设置的话
-
-
                     let param = {pageSize: limit};//cate_id.length===0 && limit ? limit : 900}
                     if (cate_id.length > 0) {
                         param.Cate_ID = cate_id.join(',')
@@ -216,8 +211,7 @@
         methods: {
             goProductDetail,
             goDetail(goods) {
-                //console.log(goods)
-                // Products_ID=243
+
                 let linkObj = {link: '/pages/detail/detail?Products_ID=' + goods.Products_ID, linkType: 'default'};
 
                 this.$fun.linkTo(linkObj)
@@ -246,20 +240,12 @@
                         right = 0;
                         break;
                     case 2:
-                        // console.log(idx)
-                        // top = 0;
+
                         left = idx % 2 == 0 ? 0 : conf / 2;
                         right = idx % 2 == 0 ? conf / 2 : 0;
                         break;
                 }
-                // console.log({
-                //   marginTop: top + 'px',
-                //   marginBottom: bottom + 'px',
-                //   marginLeft: left + 'px',
-                //   marginRight: right + 'px'
-                // })
 
-                //6666
                 if (idx === 0) top = 0
                 //这个需要是2
                 if (idx === 1 && this.goods.config.style == 2) top = 0
@@ -290,7 +276,6 @@
         created() {
             const res = uni.getSystemInfoSync();
             this.fullWidth = res.screenWidth;
-            // console.log(this.fullWidth)
 
             this.goods = this.confData;
         }

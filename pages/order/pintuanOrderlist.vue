@@ -128,31 +128,27 @@ export default {
 			}
 			let that=this;
 			confirmOrder(data).then(res=>{
-				if(res.errorCode==0){
-					uni.showToast({
-						title:res.msg,
-						icon:'none'
-					})
-					that._getOrder();
-				}
+				uni.showToast({
+					title:res.msg,
+					icon:'none'
+				})
+				that._getOrder();
 			}).catch(e=>{
-				console.log(e);
+
 			})
 		},
 		//获取订单角标数
 		getOrderNum(){
 			getOrderNum({Order_Type: this.Order_Type}).then(res=>{
 				this.orderNum=res.data;
-				console.log(res)
 			}).catch(e=>{
-				console.log(e)
 			})
 		},
 		//取消订单
 		cancelOrder(item,index){
 			let Order_ID;
 			for(let i in item){
-				console.log(i)
+
 				if(item[i].Order_ID){
 					Order_ID=item[i].Order_ID;
 				}
@@ -174,7 +170,7 @@ export default {
 					}
 
 				}).catch(e=>{
-					console.log(e)
+
 				})
 			}
 		},

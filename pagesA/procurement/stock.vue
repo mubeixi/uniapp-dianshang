@@ -217,8 +217,6 @@
             this.getProductCategory()
         },
         onReachBottom() {
-            console.log('ahahah')
-            console.log(this.get_more)
             if(this.get_more) {
                 this.page += 1;
                 if(this.is_pingtai) {
@@ -242,13 +240,11 @@
                     longitude: this.storeAdress.wx_lng,
                     name:this.storeAdress.Stores_Name,
                     success: function () {
-                        console.log('success');
                     }
                 });
             },
             getStoreDetail(){
                 getLocation(this).then(res=>{
-                    console.log('address info is'+JSON.stringify(res))
                     if(res.code===0){
                         let lng=0,lat=0;
                         lng=res.data.longitude
@@ -371,7 +367,6 @@
                 obj = {
                     [pro_id]: [attr_id]
                 }
-                console.log(obj)
                 delCart({
                     cart_key: 'StorePifa',
                     prod_attr: JSON.stringify(obj)
@@ -388,7 +383,6 @@
                     cart_key: 'StorePifa',
                     store_pifa_receive_id: this.purchase_store_id
                 }).then(res=>{
-                    console.log(res)
                     this.cartList = res.data.CartList;
                     this.total_cart_count = res.data.total_count;
                     if(this.total_cart_count == 0) {
@@ -621,7 +615,6 @@
                 this.showSku = false;
             },
             confirm(){
-                console.log(this.postData)
                 if(!this.submit_flag)return;
                 if(this.prosku.skuvaljosn && !this.postData.attr_id) {
                     uni.showToast({

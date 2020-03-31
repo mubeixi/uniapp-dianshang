@@ -242,7 +242,6 @@
 						}
 
 					}).catch(e=>{
-						console.log(e);
 						this.isLoading=false;
 					})
 				}
@@ -263,7 +262,6 @@
 						}, 1000);
 					}
 				}).catch(e=>{
-					console.log(e);
 				})
 			},
 			//跳转申请退款  发表评论
@@ -281,7 +279,6 @@
 			},
 			//获取用户支付方式
 			chooseType(name) {
-				console.log(name)
 				this.pay_type = name;
 				this.$refs.popupLayer.close();
 				// 判断是否使用了余额，
@@ -300,7 +297,6 @@
 				getOrderDetail({
 					Order_ID: this.Order_ID,
 				}).then(res => {
-					console.log(res)
 					if (res.errorCode == 0) {
 						for (var i in res.data) {
 							if (i == 'Order_Shipping') {
@@ -445,7 +441,6 @@
 			paySuccessCall(res){
 
 				var _that = this;
-				console.log('支付成功回调',res)
 				if(res && res.code && res.code==2){
 					_that.payFailCall()
 					return;

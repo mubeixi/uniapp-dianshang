@@ -57,7 +57,6 @@
         },
         watch: {
             showPop(value) {
-                console.log(value)
                 if (value) {
                     this.show();
                 } else {

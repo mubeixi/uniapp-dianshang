@@ -45,16 +45,11 @@
 		methods: {
 			getUserDisInfo() {
 				getUserDisInfo({}).then(res=>{
-					if(res.errorCode == 0) {
-						this.userDisInfo = res.data;
-						console.log(this.userDisInfo)
-						this.Shop_Name = this.userDisInfo.Shop_Name;
-						this.Shop_Logo = this.userDisInfo.Shop_Logo;
-						this.Shop_Announce = this.userDisInfo.Shop_Announce;
-					}else {
-
-					}
-				})
+					this.userDisInfo = res.data;
+					this.Shop_Name = this.userDisInfo.Shop_Name;
+					this.Shop_Logo = this.userDisInfo.Shop_Logo;
+					this.Shop_Announce = this.userDisInfo.Shop_Announce;
+				}).catch(()=>{})
 			},
 			// 更换头像
 			changeAvator(){
@@ -90,7 +85,6 @@
 
 									// #ifdef MP-TOUTIAO
 									let fileCTX = tt.getFileSystemManager()
-									console.log(fileCTX);
 									fileCTX.readFile({
 										filePath:res.tempFilePaths[0],
 										encoding:'base64',
@@ -105,10 +99,8 @@
 										   })
 										},
 										fail(ret) {
-										  console.log(ret,`run fail`);
 										},
 										complete(ret) {
-										  console.log(`run done`);
 										}
 									})
 									// #endif
@@ -129,7 +121,6 @@
 														error('上传文件失败')
 														return;
 													}
-													console.log(uploadFileRes)
 													uploadFileRes =	JSON.parse(uploadFileRes.data)
 													that.tem_Shop_Logo = uploadFileRes.data.path;
 													//是否可以提交
@@ -158,7 +149,6 @@
 
 						},
 						fail(e) {
-							console.log(e);
 						}
 					});
 
@@ -170,23 +160,15 @@
 						Shop_Logo: this.tem_Shop_Logo,
 						Shop_Announce: this.Shop_Announce
 					}).then(res=>{
-						console.log(res)
-						if(res.errorCode == 0){
-							uni.showToast({
-								title: '修改成功',
-								icon: 'success'
+						uni.showToast({
+							title: '修改成功',
+							icon: 'success'
+						})
+						setTimeout(function(){
+							uni.switchTab({
+								url:"/pages/fenxiao/fenxiao"
 							})
-							setTimeout(function(){
-								uni.switchTab({
-									url:"/pages/fenxiao/fenxiao"
-								})
-							},1000)
-						}else {
-							uni.showToast({
-								title: res.msg,
-								icon: 'none'
-							})
-						}
+						},1000)
 					})
 			},
 			...mapActions(['getInitData'])

@@ -135,7 +135,6 @@
             },
             refuseApply(){
 
-                console.log(this.reason)
                 if(!this.reason){
                     error('请填写理由')
                     return;
@@ -153,9 +152,7 @@
                 this.reason = e.detail.value
             },
             showStore(store_id){
-                console.log(store_id)
                 let idx = findArrayIdx(this.stores,{Stores_ID:store_id})
-                console.log(idx)
                 if(idx!==false){
                     this.storeInfo = this.stores[idx]
                     this.$refs.storeInfo.show()
@@ -194,7 +191,6 @@
                         return {...item}
                     })
 
-                    console.log(this.paginate.page)
                     if(this.paginate.page===1){
                         this.applys = rt
                     }else{
@@ -218,7 +214,6 @@
             this.loadInfo()
         },
         created(){
-            console.log(this.$store.state)
             this.loadInfo()
 
             getStoreList({pageSize:999}).then(res=>{

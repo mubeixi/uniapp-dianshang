@@ -75,10 +75,7 @@
 								})
 								that.getUserWithdrawMethod();
 				           }).catch(e=>{
-				           	console.log(e)
 				           })
-				        } else if (res.cancel) {
-
 				        }
 				    }
 				});
@@ -96,7 +93,7 @@
 				}
 				this.User_Method_ID=item.User_Method_ID;
 				ls.set("myMethod",this.User_Method_ID)
-				//this.$vm.$emit('fires',this.User_Method_ID)
+
 				//返回上一页
 				uni.navigateBack({
 				  delta: 1

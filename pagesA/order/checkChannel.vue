@@ -38,7 +38,6 @@
 				let _self = this
                 this.openScanFn(1,true,1,1).then(origin=>{
 					let rt = _self.translateQrData(origin)
-					console.log('识别结果',rt)
 
                     //params默认空对象不报错
                     let {act='',params={}} = rt

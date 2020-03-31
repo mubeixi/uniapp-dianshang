@@ -74,8 +74,8 @@
 						  address_id: address_id
 						})
 					}
-				
-		
+
+
 			  },
 
 			  //删除收获地址
@@ -101,7 +101,6 @@
 							  that.addresslist = addresslist;
 							  del_address_id = 0;
 
-							 console.log(that.addresslist)
 							  uni.showToast({
 							    title: '删除成功',
 							    icon: 'success',
@@ -134,7 +133,7 @@
 				if(id !== 'a') {
 					address_id = id;
 				}
-				console.log(address_id)
+
 			    uni.navigateTo({
 			    	url: '/pagesA/editAddress/editAddress?from=addresslist' + (address_id ? '&addressid=' + address_id : '')
 			    })

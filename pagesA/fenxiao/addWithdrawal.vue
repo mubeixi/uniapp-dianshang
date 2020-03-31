@@ -139,26 +139,20 @@
 							});
 						}, 1000)
 
-				},err=>{
-
 				}).catch(e=>{
-					console.log(e)
+
 				})
 			},
 			//获取商城提现方式
 			getShopWithdrawMethod(){
 				getShopWithdrawMethod().then(res=>{
-					if(res.errorCode==0){
-						this.array=res.data;
-						//初始化第一个提现类型默认选择的
-						this.data.Method_Type=this.array[0].Method_Type;
-						this.data.Method_Name=this.array[0].Method_Name;
-						this.data.Method_ID=this.array[0].Method_ID;
-
-
-					}
+					this.array=res.data;
+					//初始化第一个提现类型默认选择的
+					this.data.Method_Type=this.array[0].Method_Type;
+					this.data.Method_Name=this.array[0].Method_Name;
+					this.data.Method_ID=this.array[0].Method_ID;
 				}).catch(err=>{
-					console.log(err);
+
 				})
 			},
 			bindPickerChange(e){

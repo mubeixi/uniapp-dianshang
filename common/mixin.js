@@ -22,7 +22,6 @@ export const defaultMixin = {
 // #ifdef H5
 import wx from 'weixin-js-sdk';
 function setWxConfig(config) {
-	console.log('wx seting', config)
 	wx.config(config);
 }
 
@@ -32,7 +31,6 @@ export const WX_JSSDK_INIT = (vm, jsApiListList) => new Promise((resolve, reject
 	if (!isWeiXin()) reject(false);
 
 	if (vm.JSSDK_READY) {
-		console.log('wx env already ready')
 		resolve(wx);
 		return;
 	}
@@ -62,7 +60,6 @@ export const WX_JSSDK_INIT = (vm, jsApiListList) => new Promise((resolve, reject
 			wx.ready(function () {
 
 				vm.JSSDK_READY = true;
-				console.log('wx ready')
 				//将微信这个变量传进去，所以在页面就不需要传了
 				resolve(wx);
 				// config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
@@ -87,7 +84,6 @@ import {sendAnalysisData} from "./fetch";
 // #ifdef H5
 //目前只支持h5环境下录屏
 // var rrweb = require('rrweb')
-// console.log(rrweb)
 // #endif
 
 export const Analysis = {
@@ -116,7 +112,6 @@ export const Analysis = {
 		//   const body = JSON.stringify(events);
 
 		//   events = [];
-		//   console.log('发送一次')
 		//   let postData = {func:body};
 		//   postData.User_ID = get_User_ID();
 		//   postData.Users_ID = get_Users_ID();   //Users_ID  写死
@@ -128,7 +123,6 @@ export const Analysis = {
 		//       method:'post',
 		//       data:emptyObject(postData),
 		// 	  success: (res) => {
-		// 	  	console.log(res)
 		// 	  }
 
 		//   })
@@ -180,7 +174,6 @@ export const Analysis = {
 			if(!history)history=[]
 			history.push(postData)
 			ls.set('analysis',history)
-			//console.log(JSON.stringify(postData))
 
 			sendAnalysisData(postData).then(res=>{}).catch(e=>{})
 		},
@@ -250,7 +243,6 @@ export const pageMixin = {
 
 		let opt = {...options}
 
-		console.log('page onload options is',opt)
 
 		//这样简洁多了
 		this.default_init_func(opt)
@@ -275,7 +267,6 @@ export const pageMixin = {
 			this.refreshInit = true
 			// #endif
 
-			//console.log('options is',options)
 
 			/*商户id机制*/
 			// #ifdef H5|| MP-WEIXIN || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO
@@ -321,14 +312,12 @@ export const pageMixin = {
 				}
 				//比较新旧users_id,只有h5有这个问题，app和小程序都是有单独分配的
 				if (old_users_id && old_users_id != users_id) {
-					console.log('清空本地配置和登录信息')
 					this.setUserInfo({})
 					this.setInitData(null)
 
 					//返回了promise,这样就阻塞了
 				 	let rt = await getSystemConf({})
                     this.refreshInit = false //已经更新过最新的initData,所以后面没有必要再强制ajax获取了，拿ls或者state中的就好
-					console.log(rt.data)
                     this.setInitData(rt.data)
 				}
 				// #endif
@@ -348,7 +337,6 @@ export const pageMixin = {
 				upUserLog({}, {errtip: false}).then(res => {
 					sessionStorage.setItem('is_send_usrlog', 1)
 				}).catch(e => {
-					console.log('catch', e)
 				})
 			}
 
@@ -379,7 +367,6 @@ export const pageMixin = {
 						}
 					});
 				}).catch(err => {
-					console.log(err)
 				})
 			}
 			// #endif
@@ -401,7 +388,6 @@ export const pageMixin = {
 			imageUrl: domainFn(initData.ShareLogo),
 			path: buildSharePath(path)
 		};
-		console.log(JSON.stringify(shareObj))
 		return shareObj
 	}
 	// #endif
@@ -420,11 +406,9 @@ export const payMixin = {
 
 		if (isWeiXin()) {
 			this.code = GetQueryByString(location.href, 'code');
-			console.log(this.code)
 			if (this.code) {
 
 				this.pay_type = 'wx_mp';//需要手动设置一下
-				// console.log(this.pay_type)
 				// ls.set('code',this.code)
 				this.self_orderPay(1);
 			}
@@ -511,13 +495,10 @@ export const scanMixin = {
 
 
 				// #ifndef H5
-				console.log('手机扫码')
 				// 只允许通过相机扫码
 				uni.scanCode({
 					onlyFromCamera,
 					success: function (res) {
-						console.log('条码类型：' + res.scanType);
-						console.log('条码内容：' + res.result);
 						resolve(res.result)
 					},
 					fail: function (err) {

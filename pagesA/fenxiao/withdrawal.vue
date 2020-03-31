@@ -167,10 +167,8 @@
 							icon:'none'
 						})
 					}
-				},err=>{
-					that.isQing=false;
 				}).catch(e=>{
-					console.log(e)
+					that.isQing=false;
 				})
 			},
 			//全部提现
@@ -186,34 +184,26 @@
 						this.balance=res.data.user_money
 					}
 
-
-					if(res.errorCode==0){
-							// this.$vm.$on('fires', (data) =>{
-
-							// 	this.User_Method_ID = data;
-							// })
-							this.User_Method_ID=ls.get("myMethod")
-							ls.remove("myMethod")
-							if(res.data.list.length>0){
-								this.isShow=true;
-							}else{
-								this.isShow=false;
-								this.User_Method_ID=0
+					this.User_Method_ID=ls.get("myMethod")
+					ls.remove("myMethod")
+					if(res.data.list.length>0){
+						this.isShow=true;
+					}else{
+						this.isShow=false;
+						this.User_Method_ID=0
+					}
+					if(this.User_Method_ID){
+						for(let item of res.data.list){
+							if(item.User_Method_ID==this.User_Method_ID){
+								this.data=item;
 							}
-							if(this.User_Method_ID){
-									for(let item of res.data.list){
-										if(item.User_Method_ID==this.User_Method_ID){
-											this.data=item;
-										}
-									}
-							}else{
-								this.data=res.data.list[0];
-								this.User_Method_ID=res.data.list[0].User_Method_ID;
-							}
-
+						}
+					}else{
+						this.data=res.data.list[0];
+						this.User_Method_ID=res.data.list[0].User_Method_ID;
 					}
 				}).catch(err=>{
-					console.log(err)
+
 				})
 			},
 			//我的提现方式

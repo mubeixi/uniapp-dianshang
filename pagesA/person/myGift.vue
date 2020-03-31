@@ -118,7 +118,6 @@
 						this.totalCount=res.totalCount;
 					}
 				}).catch(e=>{
-					console.log(e);
 				})
 			},
 			change(item){

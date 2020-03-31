@@ -140,7 +140,7 @@
 						})
 					},1000)
 				}).catch(e=>{
-					console.log(e)
+
 				})
 			},
 			payFailCall(){
@@ -153,13 +153,11 @@
 				}
 				shaApplyPay(data,{tip:'正在加载中',mask:true}).then(res=>{
 					unipayFunc(this,this.pay_type,res);
-				},err=>{
+				}).catch(err=>{
 					uni.showToast({
 						title:res.msg,
 						icon:'none'
 					})
-				}).catch(e=>{
-					console.log(e);
 				})
 			},
 			//选择支付方式
@@ -190,9 +188,9 @@
 				this.$refs.popupLayer.show();
 			},
 			paySuccessCall(res){
-				console.log("111")
+
 				var _that = this;
-				console.log('支付成功回调',res)
+
 				if(res && res.code && res.code==2){
 
 					return;
@@ -253,14 +251,14 @@
 						})
 					},1000)
 				}).catch(e=>{
-					console.log(e)
+
 				})
 			},
 			getAgentApply(){
 				getShaApply({Order_ID:this.Order_ID}).then(res=>{
 					this.proData=res.data[0]
 				}).catch(e=>{
-					console.log(e)
+
 				})
 			},
 			// 取消输入支付密码

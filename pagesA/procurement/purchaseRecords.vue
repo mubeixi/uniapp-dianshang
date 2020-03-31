@@ -236,9 +236,7 @@
 			},
 			// 点击查看订单驳回原因
 			show_order_tip(index){
-				console.log(index)
 				this.orderList[index].show_order_tip = true;
-				console.log(this.orderList[index])
 			},
 			//提交订单
 			submitOrder(id,index){
@@ -269,7 +267,9 @@
 				}
 				storePifaOrderCalc({store_id:this.Stores_ID,order_id:id,prod_json:JSON.stringify(data)}).then(res=>{
 					this.orderList[index].Order_TotalPrice=res.data.Order_TotalPrice
-				}).catch(e=>{console.log(e);this.orderList[index].prod_list[ind].prod_count--;})
+				}).catch(e=>{
+					this.orderList[index].prod_list[ind].prod_count--;
+				})
 
 			},
 			minus(index,ind,it,id){
@@ -282,7 +282,9 @@
 					}
 					storePifaOrderCalc({store_id:this.Stores_ID,order_id:id,prod_json:JSON.stringify(data)}).then(res=>{
 						this.orderList[index].Order_TotalPrice=res.data.Order_TotalPrice
-					}).catch(e=>{console.log(e);this.orderList[index].prod_list[ind].prod_count++})
+					}).catch(e=>{
+						this.orderList[index].prod_list[ind].prod_count++
+					})
 			    } else {
 			        uni.showToast({
 			            title: '购买数量不能小于0',
@@ -310,15 +312,17 @@
 									setTimeout(function(){
 										that.getStorePurchaseApply()
 									},1000)
-								}).catch(e=>{console.log(e)})
-							
+								}).catch(e=>{
+
+								})
+
 				        } else if (res.cancel) {
-				
+
 				        }
 				    }
 				});
-				
-				
+
+
 			},
 			//撤回采购单
 			recallOrder(id){
@@ -340,9 +344,9 @@
 								setTimeout(function(){
 									that.getStorePurchaseApply()
 								},1000)
-							}).catch(e=>{console.log(e)})
-				        } else if (res.cancel) {
+							}).catch(e=>{
 
+							})
 				        }
 				    }
 				});
@@ -368,7 +372,9 @@
 								setTimeout(function(){
 									that.getStorePurchaseApply()
 								},1000)
-							}).catch(e=>{console.log(e)})
+							}).catch(e=>{
+
+							})
 				        } else if (res.cancel) {
 
 				        }
@@ -407,7 +413,9 @@
 						}
 					}
 
-				}).catch(e=>{console.log(e)})
+				}).catch(e=>{
+
+				})
 			},
 			show_pro_tip(item,ind){
 				item.prod_list[ind].pro_tip_show = true;
@@ -425,7 +433,6 @@
 				            latitude: this.storeAdress.wx_lat,
 				            longitude: this.storeAdress.wx_lng,
 				            success: function () {
-				                console.log('success');
 				            }
 				        });
 			},
