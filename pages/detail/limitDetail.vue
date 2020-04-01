@@ -512,7 +512,7 @@ export default {
 		async shareFunc(channel) {
 
 			let _self = this
-			let path = 'pages/detail/groupDetail?Products_ID=' + this.Products_ID;
+			let path = '/pages/detail/groupDetail?Products_ID=' + this.Products_ID;
 			let front_url = this.initData.front_url;
 
 			let shareObj = {
@@ -983,7 +983,7 @@ export default {
 
 				// #ifdef H5
 
-				let path = 'pages/detail/limitDetail?spikeGoodId='+this.spike_good_id;
+				let path = '/pages/detail/limitDetail?spikeGoodId='+this.spike_good_id;
 				let front_url = this.initData.front_url;
 
 
