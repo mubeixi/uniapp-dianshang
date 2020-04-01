@@ -356,7 +356,7 @@
 			goOrder(item){
 				if(!this.$fun.checkIsLogin(1))return;
 				uni.navigateTo({
-					url:'pages/order/order?index='+item
+					url:'/pages/order/order?index='+item
 				})
 			},
 			// 去地址管理

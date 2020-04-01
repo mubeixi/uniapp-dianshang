@@ -259,11 +259,12 @@
 		orderPay,
 		get_user_info,
 		cancelOrder,
-		confirmOrder
+		confirmOrder,getOrderExpressCode
 	} from '../../common/fetch.js';
 	import {
 		pageMixin
 	} from "../../common/mixin";
+	import {KDNWidget} from '../../common/kdj.js'
 	import {
 		mapGetters,
 		mapActions
@@ -389,19 +390,33 @@
 			},
 			//物流追踪
 			goLogistics(orderInfo){
-				let {
-					shipping_id,
-					express,
-					prod_img
-				} = {
-					shipping_id: orderInfo.Order_ShippingID,
-					express: orderInfo.Order_Shipping.Express,
-					prod_img: orderInfo.prod_list[0].prod_img
-				}
-				//跳转物流追踪
-				uni.navigateTo({
-					url:'/pages/order/logistics?shipping_id='+shipping_id + '&express=' + express + '&prod_img=' + prod_img
-				})
+				
+				// #ifndef MP-WEIXIN
+				getOrderExpressCode({shipping_id:item.Order_ShippingID}).then(res=>{
+					
+					  KDNWidget.run({
+						  serviceType: "A",
+						  expCode: res.data.ShipperCode,
+						  expNo: res.data.LogisticCode
+					  })
+				
+				}).catch(e=>{})
+				// #endif
+				// #ifdef MP-WEIXIN
+					let {
+						shipping_id,
+						express,
+						prod_img
+					} = {
+						shipping_id: orderInfo.Order_ShippingID,
+						express: orderInfo.Order_Shipping.Express,
+						prod_img: orderInfo.prod_list[0].prod_img
+					}
+					//跳转物流追踪
+					uni.navigateTo({
+						url:'/pages/order/logistics?shipping_id='+shipping_id + '&express=' + express + '&prod_img=' + prod_img
+					})
+				// #endif
 			},
 			//取消订单
 			cancelOrder(Order_ID){
