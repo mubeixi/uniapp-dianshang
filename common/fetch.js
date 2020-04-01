@@ -119,6 +119,9 @@ export const login = (data, options) => {
     return fetch('user_login', data, options)
 }
 
+
+//物流编号获取
+export const getOrderExpressCode = (data, options) => fetch('getOrderExpressCode', data, options)
 //获取直播信息
 export const getLiveInfo = (data, options) => fetch('getLiveInfo', data, options)
 

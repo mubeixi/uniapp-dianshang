@@ -114,8 +114,10 @@ import {
 	getOrderNum,
 	confirmOrder,
 	delOrder,
-	extendOrderConfirm
+	extendOrderConfirm,
+	getOrderExpressCode
 } from '../../common/fetch.js'
+import {KDNWidget} from '../../common/kdj.js'
 import {pageMixin} from "../../common/mixin";
 import {confirm, error} from '../../common'
 export default {
@@ -238,18 +240,34 @@ export default {
 			// })
 		},
 		goLogistics(item){
-			// 处理物流名称
-			let express ={}
-			if(typeof item.Order_Shipping =='object'){
-				express =item.Order_Shipping.Express;
-			}else{
-				express = JSON.parse( item.Order_Shipping).Express;
-			}
+			
 
-			//跳转物流追踪
-			uni.navigateTo({
-				url:'/pages/order/logistics?shipping_id='+item.Order_ShippingID + '&express=' + express + '&prod_img=' + item.prod_list[0].prod_img
-			})
+			// #ifndef MP-WEIXIN
+				getOrderExpressCode({shipping_id:item.Order_ShippingID}).then(res=>{
+					
+					  KDNWidget.run({
+						  serviceType: "A",
+						  expCode: res.data.ShipperCode,
+						  expNo: res.data.LogisticCode
+					  })
+				
+				}).catch(e=>{})
+			
+			// #endif
+			// #ifdef MP-WEIXIN
+				// 处理物流名称
+				let express ={}
+				if(typeof item.Order_Shipping =='object'){
+					express =item.Order_Shipping.Express;
+				}else{
+					express = JSON.parse( item.Order_Shipping).Express;
+				}
+				
+				//跳转物流追踪
+				uni.navigateTo({
+					url:'/pages/order/logistics?shipping_id='+item.Order_ShippingID + '&express=' + express + '&prod_img=' + item.prod_list[0].prod_img
+				})
+			// #endif
 		},
 		//获取订单角标数
 		getOrderNum(){

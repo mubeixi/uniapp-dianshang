@@ -76,9 +76,9 @@
 
 <script>
 // import pagetitle from '@/components/title'
-import {getOrder,cancelOrder,getOrderNum,confirmOrder} from '@/common/fetch.js'
+import {getOrder,cancelOrder,getOrderNum,confirmOrder,getOrderExpressCode} from '@/common/fetch.js'
 import {pageMixin} from "../../common/mixin";
-
+import {KDNWidget} from '../../common/kdj.js'
 export default {
 	mixins:[pageMixin],
     data(){
@@ -174,10 +174,25 @@ export default {
 			})
 		},
 		goLogistics(item){
+			// #ifndef MP-WEIXIN
+				getOrderExpressCode({shipping_id:item.Order_ShippingID}).then(res=>{
+					
+					  KDNWidget.run({
+						  serviceType: "A",
+						  expCode: res.data.ShipperCode,
+						  expNo: res.data.LogisticCode
+					  })
+				
+				}).catch(e=>{})
+			
+			// #endif
+			// #ifdef MP-WEIXIN
+				uni.navigateTo({
+					url:'/pages/order/logistics?Order_ID='+item.Order_ID
+				})
+			// #endif
 			//跳转物流追踪
-			uni.navigateTo({
-				url:'/pages/order/logistics?Order_ID='+item.Order_ID
-			})
+			
 		},
 		//跳转订单详情
 		goPay(item){
