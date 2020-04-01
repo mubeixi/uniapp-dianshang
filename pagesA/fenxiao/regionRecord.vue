@@ -71,7 +71,7 @@
 	import {pageMixin} from "../../common/mixin";
 	import {getShaApply,getAgentApply} from '../../common/fetch.js'
 	import {mapGetters} from 'vuex';
-	
+
 	export default {
 		mixins:[pageMixin],
 		data() {
@@ -117,25 +117,21 @@
 				}
 				if(this.index==1){
 					getAgentApply(data).then(res=>{
-						if(res.errorCode==0){
-							this.totalCount=res.totalCount;
-							for(let item of res.data){
-								this.data.push(item);
-							}
+						this.totalCount=res.totalCount;
+						for(let item of res.data){
+							this.data.push(item);
 						}
 					}).catch(e=>{
-						console.log(e)
+
 					})
 				}else{
 					getShaApply(data).then(res=>{
-						if(res.errorCode==0){
-							this.totalCount=res.totalCount;
-							for(let item of res.data){
-								this.data.push(item);
-							}
+						this.totalCount=res.totalCount;
+						for(let item of res.data){
+							this.data.push(item);
 						}
 					}).catch(e=>{
-						console.log(e)
+
 					})
 				}
 			}

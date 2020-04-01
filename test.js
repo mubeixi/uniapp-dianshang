@@ -38,16 +38,6 @@ let config = {
 };
 
 // use with promises
-// ftpDeploy
-//   .deploy(config)
-//   .then(res => console.log('finished:', res))
-//   .catch(err => {
-//     let { message, name } = err;
-//     console.log({
-//       name,
-//       message
-//     });
-//   });
 ftpDeploy.deploy(config, (err, res) => {
 	if (err) {
 		console.log(err);
@@ -59,9 +49,7 @@ ftpDeploy.deploy(config, (err, res) => {
 
 
 ftpDeploy.on('uploading', function(data) {
-    // console.log(data.totalFilesCount); // total file count being transferred
-    // console.log(data.transferredFileCount); // number of files transferred
-    // console.log(`start up ${data.filename} ，fileSize ${data.totalFilesCount}`); // partial path with filename being uploaded
+
 });
 ftpDeploy.on('uploaded', function(data) {
     console.log('\033[33m '+data.filename+' upload done \033[39m'); // same data as uploading event

@@ -150,7 +150,6 @@
 
 						// #ifdef MP-TOUTIAO
 						let fileCTX = tt.getFileSystemManager()
-						console.log(fileCTX);
 						fileCTX.readFile({
 							filePath:res.tempFilePaths[0],
 							encoding:'base64',
@@ -161,33 +160,20 @@
 								   upDateUserInfo({
 									User_HeadImg: result.data.path,
 								   }).then(res=>{
-									console.log(res)
-									if(res.errorCode == 0){
-										uni.showToast({
-											title: '修改成功',
-											icon: 'success'
-										});
-										_self.User_HeadImg = res.data.User_HeadImg;
-										_self.userInfo.User_HeadImg = res.data.User_HeadImg;
-										_self.setUserInfo(_self.userInfo);
-									}else {
-										uni.showToast({
-											title: res.msg,
-											icon: 'none'
-										})
-									}
+									   uni.showToast({
+										   title: '修改成功',
+										   icon: 'success'
+									   });
+									   _self.User_HeadImg = res.data.User_HeadImg;
+									   _self.userInfo.User_HeadImg = res.data.User_HeadImg;
+									   _self.setUserInfo(_self.userInfo);
+
 								   })
-							   },err=>{
-
-							   }).catch(e=>{
-
-							   })
+							   }).catch(e=>{})
 							},
 							fail(ret) {
-							  console.log(ret,`run fail`);
 							},
 							complete(ret) {
-							  console.log(`run done`);
 							}
 						})
 						// #endif

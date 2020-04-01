@@ -65,7 +65,7 @@ export const unipayFunc = (vm, pay_type, payRequestData) => {
         service,
         orderInfo
     };
-    console.log(conf)
+
 
     //固定值：1（拉起小程序收银台）开发者如果不希望使用头条小程序收银台，service设置为3/4时，可以直接拉起微信/支付宝进行支付：service=3： 微信API支付，不拉起小程序收银台；service=4： 支付宝API支付，不拉起小程序收银台。其中service=3、4，仅在1.35.0.1+基础库(头条743+)支持
     uni.requestPayment({
@@ -75,7 +75,7 @@ export const unipayFunc = (vm, pay_type, payRequestData) => {
         orderInfo, //微信、支付宝订单数据
         getOrderStatus(res) {
             let {out_order_no} = res;
-            console.log('out_order_no is ' + out_order_no);
+
             return new Promise(function (resolve, reject) {
                 // 商户前端根据 out_order_no 请求商户后端查询微信支付订单状态
 
@@ -96,18 +96,14 @@ export const unipayFunc = (vm, pay_type, payRequestData) => {
             });
         },
         success: function (res) {
-            console.log('success:' + JSON.stringify(res));
-            console.log(_self.paySuccessCall)
+
             _self.paySuccessCall(res)
 
         },
         complete: function (res) {
-            console.log('complete:' + JSON.stringify(res));
-            console.log(_self.paySuccessCall)
+
         },
         fail: function (err) {
-            console.log('fail:' + JSON.stringify(err));
-
             _self.payFailCall(res)
             // uni.showModal({
             //     title:'支付错误',
@@ -164,7 +160,6 @@ export const unipayFunc = (vm, pay_type, payRequestData) => {
             //
             // let str = `/fre/pages/pay/wx/wx?users_id=${users_id}&formurl=`+encodeURIComponent(fromurl);
             // let url = location.origin + str;
-            // console.log(url)
             //
             // this.aliPayUrl = url;
             //location.href = url;
@@ -203,7 +198,6 @@ export const unipayFunc = (vm, pay_type, payRequestData) => {
         });
 
     }).catch((e) => {
-        console.log('支付失败')
     })
     return;
 
@@ -220,7 +214,6 @@ export const unipayFunc = (vm, pay_type, payRequestData) => {
     orderInfo = res.data
     delete orderInfo.timestamp
 
-    console.log(provider, orderInfo, '支付数据222222222222222222');
     let prepay_id = orderInfo.package.split('=')[1];
     uni.requestPayment({
         ...orderInfo,
@@ -230,11 +223,9 @@ export const unipayFunc = (vm, pay_type, payRequestData) => {
             //     code: prepay_id,
             //     times: 3
             // })
-            console.log('success:' + JSON.stringify(res));
             _self.paySuccessCall(res)
         },
         fail: function (err) {
-            console.log('fail:' + JSON.stringify(err));
             _self.payFailCall(err);
         }
     });
@@ -250,17 +241,14 @@ export const unipayFunc = (vm, pay_type, payRequestData) => {
 
         let provider = 'alipay';
         let orderInfo = res.data.arg;
-        console.log('支付宝参数', orderInfo)
 
         uni.requestPayment({
             provider,
             orderInfo, //微信、支付宝订单数据
             success: function (res) {
                 _self.paySuccessCall(res)
-                console.log('success:' + JSON.stringify(res));
             },
             fail: function (err) {
-                console.log('fail:' + JSON.stringify(err));
                 // uni.showModal({
                 //     title:'支付错误',
                 //     content:JSON.stringify(err)
@@ -282,10 +270,8 @@ export const unipayFunc = (vm, pay_type, payRequestData) => {
             orderInfo, //微信、支付宝订单数据
             success: function (res) {
                 _self.paySuccessCall(res)
-                console.log('success:' + JSON.stringify(res));
             },
             fail: function (err) {
-                console.log('fail:' + JSON.stringify(err));
                 _self.payFailCall(err);
             }
         });

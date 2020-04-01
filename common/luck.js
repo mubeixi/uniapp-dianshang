@@ -161,8 +161,7 @@ export class Rotate {
                 this.speed -= 10
             }
         }
-        //console.log('this.speed is',this.speed)
-        //console.log(this.luckNum,this.idx,this.rotate_count,this.rotateNum,this.rotate_count === this.rotateNum && this.idx === this.luckNum)
+
         //满这么多圈
         //下标对了
         if(this.rotate_count === this.rotateNum && this.idx+1 === this.luckNum){
@@ -173,7 +172,7 @@ export class Rotate {
     }
 
     setRotateNum(num){
-        // console.log('动态设置圈数')
+
         this.rotateNum = parseInt(num)
     }
     setLuckNum(id){
@@ -205,8 +204,6 @@ export class Rotate {
         this.idx = 0;//恢复光标
 
         this.rotateNum = parseInt(Math.random()*offest+num) //5圈起步，最多10圈
-
-        // console.log(this.luckNum,this.rotateNum)
 
         this.is_start = 1
         this.rotateFn();

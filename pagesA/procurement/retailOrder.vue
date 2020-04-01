@@ -199,9 +199,7 @@
 			getOrderNum(){
 				// getOrderNum({store_id:this.Stores_ID}).then(res=>{
 				// 	this.orderNum=res.data;
-				// 	console.log(res)
 				// }).catch(e=>{
-				// 	console.log(e)
 				// })
 			},
 			changIndex(i){
@@ -390,7 +388,7 @@
 		    line-height: 80rpx;
 		    background: #F8F8F8;
 		    font-size: 14px;
-		    padding: 0 10px;			
+		    padding: 0 10px;
 		    .nav-item {
 		        flex: 1;
 		        box-sizing: border-box;

@@ -66,12 +66,12 @@
 								已完成
 							</view>
 							<view class="bottoms" v-else-if="dis_level[inds].level_rules_edit.buy_prod.value.arrive_status=='2'">
-									订单付款后计入	
+									订单付款后计入
 							</view>
 							<view class="bottoms" v-else>
-									订单确认收货后计入	
+									订单确认收货后计入
 							</view>
-							
+
 						</view>
 						<view class="submit submitMbx" v-if="dis_level[inds].level_rules_edit.buy_prod.user_data>0">
 							已完成
@@ -337,8 +337,7 @@
 					}
 
 
-				},err=>{}).catch(e=>{
-					console.log(e)
+				}).catch(e=>{
 				})
 			},
 			...mapActions(['getInitData'])

@@ -45,9 +45,8 @@
 					// document.write(redirect)
 					document.getElementById('alipaysubmit').submit()
 
-				},error=>{})
-				// redirect = redirect.replace(/wangjing666/,'openapi.alipay.com')
-				// console.log(redirect)
+				}).catch(()=>{})
+
 
 			}
 		},

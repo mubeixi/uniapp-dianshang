@@ -125,8 +125,8 @@
 							url:'/pagesA/person/refundList'
 						})
 					},2000)
-				},err=>{}).catch(e=>{
-					console.log(e)
+				}).catch(e=>{
+
 				})
 			},
 			getBackOrderDetail(){
@@ -134,13 +134,11 @@
 				if(this.store_id){
 					data.store_id=this.store_id
 				}
-				
+
 				getBackOrderDetail(data).then(res=>{
 					this.pro=res.data;
 					this.prod_list=res.data.prod_list[0];
-				},err=>{
-
-				}).catch(e=>{console.log(e)})
+				}).catch(e=>{})
 			}
 		}
 	}

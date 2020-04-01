@@ -111,14 +111,11 @@
 					status:this.checked
 				}
 				getGiftList(data).then(res=>{
-					if(res.errorCode==0){
-						for(let item of res.data){
-							this.data.push(item)
-						}
-						this.totalCount=res.totalCount;
+					for(let item of res.data){
+						this.data.push(item)
 					}
+					this.totalCount=res.totalCount;
 				}).catch(e=>{
-					console.log(e);
 				})
 			},
 			change(item){

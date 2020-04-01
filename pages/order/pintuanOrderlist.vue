@@ -76,9 +76,9 @@
 
 <script>
 // import pagetitle from '@/components/title'
-import {getOrder,cancelOrder,getOrderNum,confirmOrder} from '@/common/fetch.js'
+import {getOrder,cancelOrder,getOrderNum,confirmOrder,getOrderExpressCode} from '@/common/fetch.js'
 import {pageMixin} from "../../common/mixin";
-
+import {KDNWidget} from '../../common/kdj.js'
 export default {
 	mixins:[pageMixin],
     data(){
@@ -128,53 +128,42 @@ export default {
 			}
 			let that=this;
 			confirmOrder(data).then(res=>{
-				if(res.errorCode==0){
-					uni.showToast({
-						title:res.msg,
-						icon:'none'
-					})
-					that._getOrder();
-				}
+				uni.showToast({
+					title:res.msg,
+					icon:'none'
+				})
+				that._getOrder();
 			}).catch(e=>{
-				console.log(e);
+
 			})
 		},
 		//获取订单角标数
 		getOrderNum(){
 			getOrderNum({Order_Type: this.Order_Type}).then(res=>{
 				this.orderNum=res.data;
-				console.log(res)
 			}).catch(e=>{
-				console.log(e)
 			})
 		},
 		//取消订单
 		cancelOrder(item,index){
 			let Order_ID;
 			for(let i in item){
-				console.log(i)
+
 				if(item[i].Order_ID){
 					Order_ID=item[i].Order_ID;
 				}
 			}
 			if(Order_ID){
 				cancelOrder({Order_ID}).then(res=>{
-					if(res.errorCode==0){
-						this.data.splice(index,1);
-						this.getOrderNum();
-						uni.showToast({
-							title:res.msg,
-							icon:"none"
-						})
-					}else{
-						uni.showToast({
-							title:res.msg,
-							icon:"none"
-						})
-					}
+					this.data.splice(index,1);
+					this.getOrderNum();
+					uni.showToast({
+						title:res.msg,
+						icon:"none"
+					})
 
 				}).catch(e=>{
-					console.log(e)
+
 				})
 			}
 		},
@@ -185,10 +174,25 @@ export default {
 			})
 		},
 		goLogistics(item){
+			// #ifndef MP-WEIXIN
+				getOrderExpressCode({shipping_id:item.Order_ShippingID}).then(res=>{
+					
+					  KDNWidget.run({
+						  serviceType: "A",
+						  expCode: res.data.ShipperCode,
+						  expNo: res.data.LogisticCode
+					  })
+				
+				}).catch(e=>{})
+			
+			// #endif
+			// #ifdef MP-WEIXIN
+				uni.navigateTo({
+					url:'/pages/order/logistics?Order_ID='+item.Order_ID
+				})
+			// #endif
 			//跳转物流追踪
-			uni.navigateTo({
-				url:'/pages/order/logistics?Order_ID='+item.Order_ID
-			})
+			
 		},
 		//跳转订单详情
 		goPay(item){
@@ -228,28 +232,26 @@ export default {
 				data['Order_Status'] = this.index;
 			}
 			getOrder(data).then(res=>{
-				if(res.errorCode==0){
-					for(var i in res.data) {
-						for(var m in res.data[i]){
-							if(m == 'prod_list'){
-								for(var j in res.data[i][m]) {
-										for( var k in res.data[i][m][j]) {
-											if(k == 'attr_info') {
-												if(res.data[i][m][j][k]){
-													res.data[i][m][j][k] = JSON.parse(res.data[i][m][j][k])
-												}
-											}
+				for(var i in res.data) {
+					for(var m in res.data[i]){
+						if(m == 'prod_list'){
+							for(var j in res.data[i][m]) {
+								for( var k in res.data[i][m][j]) {
+									if(k == 'attr_info') {
+										if(res.data[i][m][j][k]){
+											res.data[i][m][j][k] = JSON.parse(res.data[i][m][j][k])
 										}
 									}
+								}
 							}
 						}
 					}
-					for(let item of res.data){
-						this.data.push(item)
-					}
-					this.totalCount=res.totalCount;
-					this.isQing=false;
 				}
+				for(let item of res.data){
+					this.data.push(item)
+				}
+				this.totalCount=res.totalCount;
+				this.isQing=false;
 			}).catch(e=>{
 				this.isQing=false;
 			})

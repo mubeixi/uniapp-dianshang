@@ -160,7 +160,7 @@
 								latitude: this.storeInfo.wx_lat,
 								longitude: this.storeInfo.wx_lng,
 								success: function () {
-									console.log('success');
+
 								}
 							});
 						},
@@ -175,7 +175,6 @@
                 }
                 //这种骚操作需要看是不是兼容
                 let goods = this.currentGoods
-                console.log(e,e.detail.value)
 
 
                 let Attr_ID = null
@@ -194,7 +193,6 @@
                 this.updateGoodsStock(this.apply.Order_ID,goods.prod_id,Attr_ID,e.target.value,function(){
                     goods.prod_count = newVal
                 },function(){
-                    console.log('errorerror')
                     //e.target.value = oldVal
                 })
             },
@@ -236,7 +234,6 @@
                     call && call()
                 },err=>{
                     toast(err.msg)
-                    console.log('error')
                     errcall && errcall()
                 })
 
@@ -280,13 +277,10 @@
               this.exprss_index = e.detail.value
             },
             changeNeedShipping(e){
-							console.log(e.detail.value)
                 this.is_need_shipping = e.detail.value?1:0
             },
             showStore(store_id){
-                console.log(store_id)
                 let idx = findArrayIdx(this.stores,{Stores_ID:store_id})
-                console.log(idx)
                 if(idx!==false){
                     this.storeInfo = this.stores[idx]
                     this.$refs.storeInfo.show()
@@ -331,7 +325,6 @@
             this.loadInfo()
         },
         created(){
-            console.log(this.$store.state)
             this.loadInfo()
 
             getStoreList({pageSize:999}).then(res=>{

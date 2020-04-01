@@ -201,7 +201,6 @@
 
                     //if(!cate_id)cate_id = []
 
-                    // console.log(list,cate_id,limit)
                     //如果值还没有设置的话
                     if (list.length === 0 && cate_id.length === 0) {
                         return;
@@ -244,7 +243,6 @@
                 // let start_timeStamp = item.pintuan_start_time,end_timeStamp = item.pintuan_end_time;
                 //
                 // let data = getCountdownFunc({start_timeStamp,end_timeStamp}),rt = null;
-                // console.log(data)
                 // switch (type) {
                 //   case 'd':
                 //     rt = data.d;
@@ -267,7 +265,7 @@
             },
             goProductDetail,
             goDetail(goods) {
-                console.log(goods)
+
                 // Products_ID=243
                 let linkObj = {link: '/pages/detail/spikeDetail?flashsale_id=' + goods.id, linkType: 'default'};
 
@@ -297,20 +295,13 @@
                         right = 0;
                         break;
                     case 2:
-                        // console.log(idx)
+
                         // top = 0;
                         left = idx % 2 == 0 ? 0 : conf / 2;
                         right = idx % 2 == 0 ? conf / 2 : 0;
                         break;
                 }
-                // console.log({
-                //   marginTop: top + 'px',
-                //   marginBottom: bottom + 'px',
-                //   marginLeft: left + 'px',
-                //   marginRight: right + 'px'
-                // })
 
-                //6666
                 if (idx === 0) top = 0
                 //这个需要是2
                 if (idx === 1 && this.goods.config.style == 2) top = 0
@@ -341,7 +332,6 @@
         created() {
             const res = uni.getSystemInfoSync();
             this.fullWidth = res.screenWidth;
-            // console.log(this.fullWidth)
 
             this.goods = this.confData;
 

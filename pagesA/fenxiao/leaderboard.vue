@@ -164,16 +164,14 @@
 					data.is_my_friend=1;
 				}
 				getBalanceRank(data).then(res=>{
-					if(res.errorCode==0){
-						for(let item of res.data.list){
-							this.pro.push(item);
-						}
-						this.totalCount=res.totalCount;
-						this.myInfo=res.data.my_rank;
-						this.rank_config=res.data.rank_config.HIncomelist_Open;
+					for(let item of res.data.list){
+						this.pro.push(item);
 					}
+					this.totalCount=res.totalCount;
+					this.myInfo=res.data.my_rank;
+					this.rank_config=res.data.rank_config.HIncomelist_Open;
 				}).catch(e=>{
-					console.log(e)
+
 				})
 			}
 		}

@@ -239,14 +239,12 @@
 
             //分享的是Team_ID
             let path = '/pages/detail/groupJoin?Team_ID='+this.Team_ID+'&Products_ID='+this.Prod_ID;
-            console.log(path)
             let shareObj = {
                 title: this.product.Products_Name,
                 desc:this.product.Products_BriefDescription,
                 imageUrl:this.product.ImgPath,
                 path: buildSharePath(path)
             };
-            console.log(shareObj)
             return shareObj
 
         },
@@ -255,9 +253,8 @@
             async shareFunc(channel) {
 
                 let _self = this
-                let path = 'pages/detail/groupJoin?Team_ID='+this.Team_ID+'&Products_ID='+this.Prod_ID;
+                let path = '/pages/detail/groupJoin?Team_ID='+this.Team_ID+'&Products_ID='+this.Prod_ID;
                 let front_url = this.initData.front_url;
-                console.log('front_url is '+front_url)
 
                 let shareObj = {
                     title: this.product.Products_Name,
@@ -266,7 +263,6 @@
                     path: buildSharePath(path)
                 };
 
-                console.log(shareObj)
 
                 switch (channel) {
                     case 'wx':
@@ -279,10 +275,8 @@
                             summary: shareObj.desc,
                             imageUrl: shareObj.imageUrl,
                             success: function (res) {
-                                console.log("success:" + JSON.stringify(res));
                             },
                             fail: function (err) {
-                                console.log("fail:" + JSON.stringify(err));
                             }
                         });
                         break;
@@ -296,10 +290,8 @@
                             summary: shareObj.desc,
                             imageUrl: shareObj.imageUrl,
                             success: function (res) {
-                                console.log("success:" + JSON.stringify(res));
                             },
                             fail: function (err) {
-                                console.log("fail:" + JSON.stringify(err));
                             }
                         });
                         break;
@@ -318,7 +310,6 @@
                                 webUrl: 'http://uniapp.dcloud.io'
                             },
                             success: ret => {
-                                console.log(JSON.stringify(ret));
                             }
                         });
                         break;
@@ -326,12 +317,10 @@
                         //this.$toast('comming soon')
 
                         let sharePic = await getProductSharePic({'product_id': this.Prod_ID}).then(res => {
-                            console.log(res)
                             ls.set('temp_sharepic_info', res.data)
                             return res.data.img_url
                         })
 
-                        console.log('海报的地址是' + sharePic)
 
                         if (!sharePic) {
                             error('获取分享参数失败');
@@ -402,10 +391,7 @@
             },
             async getPintuanTeamList(id){
                 await getPintuanTeam({prod_id:id},{errtip:false}).then(res=>{
-                    if(res.errorCode === 0){
-                        this.teamList = res.data
-                    }
-
+                    this.teamList = res.data
                 }).catch(e=>{
 
                 })
@@ -445,7 +431,7 @@
                     let product = this.product
                     // #ifdef H5
 
-                    let path = 'pages/detail/groupJoin?Team_ID='+this.Team_ID+'&Products_ID='+this.Prod_ID;
+                    let path = '/pages/detail/groupJoin?Team_ID='+this.Team_ID+'&Products_ID='+this.Prod_ID;
                     let front_url = this.initData.front_url;
 
 
@@ -474,13 +460,11 @@
                         });
 
                     }).catch(()=>{
-                        // console.log('不是微信环境')
                     })
 
                     // #endif
 
                 }).catch(e=>{
-                    console.log(e)
                 })
 
             },
@@ -491,33 +475,27 @@
                 await getOrderDetail({
                     Order_ID: this.Order_ID,
                 }).then(res => {
-                    console.log(res)
-                    if (res.errorCode == 0) {
-                        for (var i in res.data) {
-                            if (i == 'Order_Shipping') {
-                                res.data[i] = JSON.parse(res.data[i])
-                            }
-                            if (i == 'prod_list') {
-                                for (var j in res.data[i]) {
-                                    for (var k in res.data[i][j]) {
-                                        if (k == 'attr_info') {
-                                            res.data[i][j][k] = res.data[i][j][k] && JSON.parse(res.data[i][j][k])
-                                        }
+                    for (var i in res.data) {
+                        if (i == 'Order_Shipping') {
+                            res.data[i] = JSON.parse(res.data[i])
+                        }
+                        if (i == 'prod_list') {
+                            for (var j in res.data[i]) {
+                                for (var k in res.data[i][j]) {
+                                    if (k == 'attr_info') {
+                                        res.data[i][j][k] = res.data[i][j][k] && JSON.parse(res.data[i][j][k])
                                     }
                                 }
                             }
                         }
-
-                        this.orderInfo = res.data;
-
-                        this.Prod_ID = res.data.prod_list[0].prod_id
-
-                        this.Team_ID = res.data.teamid;
-
                     }
-                },err=>{
-                    console.log(err)
-                })
+
+                    this.orderInfo = res.data;
+
+                    this.Prod_ID = res.data.prod_list[0].prod_id
+
+                    this.Team_ID = res.data.teamid;
+                }).catch(()=>{})
             },
             stampCount(){
 
@@ -534,7 +512,6 @@
                     }
                 }
 
-                //console.log(rt)
 
                 this.countdown = rt
             },
@@ -542,19 +519,16 @@
 
                 let oldlist = this.prodList;
                 await getProd(this.prod_arg).then(res=>{
-                    if(res.errorCode == 0){
-                        this.prodList = oldlist.concat(res.data);
-                        this.hasMore = (res.totalCount / this.prod_arg.pageSize) > this.prod_arg.page ? true : false ;
-                        this.prod_arg.page += 1;
-                    }
-                }).catch(e=>console.log(e))
+                    this.prodList = oldlist.concat(res.data);
+                    this.hasMore = (res.totalCount / this.prod_arg.pageSize) > this.prod_arg.page ? true : false ;
+                    this.prod_arg.page += 1;
+                }).catch(e=>{})
             },
         },
         async created(){
 
             let initData = await this.getInitData();
 
-            console.log('初始化信息',initData)
             let WX_MINI_ORIGIN_ID = ls.get('WX_MINI_ORIGIN_ID');
             if(!WX_MINI_ORIGIN_ID){
 
@@ -569,7 +543,6 @@
             }
 
             this.wxMiniOriginId = WX_MINI_ORIGIN_ID;
-            console.log('wxMiniOriginId is '+this.wxMiniOriginId)
 
         }
 

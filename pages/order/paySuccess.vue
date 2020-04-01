@@ -90,9 +90,9 @@
 			this.getProd()
 		},
 		onShow() {
-			
-			
-			
+
+
+
 		},
 		// 上拉触底
 		onReachBottom() {
@@ -110,12 +110,10 @@
 				this.prod_arg.Users_ID = this.Users_ID;
 				let oldlist = this.prodList;
 				getProd(this.prod_arg).then(res=>{
-					if(res.errorCode == 0){
-						this.prodList = oldlist.concat(res.data);
-						this.hasMore = (res.totalCount / this.prod_arg.pageSize) > this.prod_arg.page ? true : false ;
-						this.prod_arg.page += 1;
-					}
-				}).catch(e=>console.log(e))
+					this.prodList = oldlist.concat(res.data);
+					this.hasMore = (res.totalCount / this.prod_arg.pageSize) > this.prod_arg.page ? true : false ;
+					this.prod_arg.page += 1;
+				}).catch(e=>{})
 			},
 			goOrder(){
 				//去订单列表
@@ -140,10 +138,7 @@
 					}
 					this.showMain=true
 
-				},err=>{
-
 				}).catch(e=>{
-					console.log(e)
 				})
 
 			},
@@ -162,7 +157,7 @@
 					    url: '/pages/classify/result?pid='+i
 					});
 				}
-				
+
 			}
 		// 	change(item){
 		// 		this.checked=item;

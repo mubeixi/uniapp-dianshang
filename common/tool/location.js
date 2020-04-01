@@ -61,15 +61,12 @@ export const getLocation = async (vm) => {
             if (isWeiXin()) {
                 WX_JSSDK_INIT(vm).then(ret => {
 
-                    console.log('签名成功')
                     ret.getLocation({
                         type: 'gcj02', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
                         success: res => {
-                            console.log(2222222222222222, res)
                             resolve({code: 0, data: {latitude: res.latitude, longitude: res.longitude}})
                         },
                         fail: err => {
-                            console.log(333333333333, err)
                             reject(failOpt.notFound)
                         }
                     });

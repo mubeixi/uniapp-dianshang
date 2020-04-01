@@ -180,31 +180,29 @@
                 getOrderDetail({
                     Order_Code: this.Order_Code,
                 },{tip:'努力加载中'}).then(res => {
-                    console.log(res)
+
                     if(res.data.Order_Status!=2){
 
                         confirm({title:'操作提示',content:'该订单状态不符:'+res.data.Order_Status_desc}).then(res=>{
 
                         }).catch(err=>{})
                     }
-                    if (res.errorCode == 0) {
-                        for (var i in res.data) {
-                            if (i == 'Order_Shipping') {
-                                res.data[i] = JSON.parse(res.data[i])
-                            }
-                            if (i == 'prod_list') {
-                                for (var j in res.data[i]) {
-                                    for (var k in res.data[i][j]) {
-                                        if (k == 'attr_info') {
-                                            res.data[i][j][k] = res.data[i][j][k] && JSON.parse(res.data[i][j][k])
-                                        }
+                    for (var i in res.data) {
+                        if (i == 'Order_Shipping') {
+                            res.data[i] = JSON.parse(res.data[i])
+                        }
+                        if (i == 'prod_list') {
+                            for (var j in res.data[i]) {
+                                for (var k in res.data[i][j]) {
+                                    if (k == 'attr_info') {
+                                        res.data[i][j][k] = res.data[i][j][k] && JSON.parse(res.data[i][j][k])
                                     }
                                 }
                             }
                         }
-                        this.orderInfo = res.data;
                     }
-                })
+                    this.orderInfo = res.data;
+                }).catch(()=>{})
             }
         }
     }

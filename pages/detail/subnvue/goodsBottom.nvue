@@ -46,7 +46,6 @@
         created(){
             const vm = this;
             uni.$on('goods_bottom_setval', (data) => {
-				console.log('goods_bottom_setval',data)
                 for(var key in data){
                     vm[key] = data[key]
                 }
@@ -56,7 +55,6 @@
         },
         methods: {
             collectFn(){
-                console.log("click collect")
                 uni.$emit('collectHandle',{});
             },
             toHome(){
@@ -85,7 +83,6 @@
             },
             lingqu() {
                 if (this.canSubmit) {
-					console.log("sssss")
                     uni.$emit('goGet',{})
                 }
             }

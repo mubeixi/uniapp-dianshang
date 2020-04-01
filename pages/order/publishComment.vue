@@ -112,26 +112,18 @@
 							image_path:arr
 						}
 						comment(data).then(res=>{
-							if(res.errorCode==0){
-								uni.showToast({
-									title:res.msg,
-									icon:''
+							uni.showToast({
+								title:res.msg,
+								icon:''
+							})
+							setTimeout(function(){
+								uni.redirectTo({
+									url:"/pages/order/order?index=4"
 								})
-								setTimeout(function(){
-									 uni.redirectTo({
-										url:"/pages/order/order?index=4"
-									})
-								},2000)
-								this.isLoadong=false
-							}else{
-								uni.showToast({
-									title:res.msg,
-									icon:''
-								})
-							}
+							},2000)
+							this.isLoadong=false
 						}).catch(e=>{
 							this.isLoadong=false
-							console.log(e);
 						})
 					}else{
 						uni.showToast({

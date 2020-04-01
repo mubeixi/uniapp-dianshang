@@ -88,10 +88,7 @@
 				this.info= res.data;
 				this.userInfo.Is_Distribute=1;
 				this.disInfo = res.data.disInfo;
-			},err=>{
-
 			}).catch(err=>{
-				console.log(err)
 			})
 			this.getFuncModule();
 			//this.userInfo = this.getUserInfo()
@@ -120,7 +117,6 @@
 			getFuncModule(){
 				getFuncModule({type:1,field:'erweima'}).then(res=>{
 					this.funcModules = res.data[0];
-					console.log(this.funcModules)
 				})
 			}
 		}

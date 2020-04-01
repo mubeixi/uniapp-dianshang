@@ -40,10 +40,9 @@
 						// longPressActions: {
 						// 	 itemList: ['发送给朋友', '保存图片', '收藏'],
 						// 		success: function (res) {
-						// 			console.log('选中了第' + (res.tapIndex + 1) + '个按钮');
 						// 		},
 						// 		fail: function (res) {
-						// 			console.log(res.errMsg);
+
 						// 		}
 						// 	}
 						// }
@@ -143,7 +142,6 @@
 						this.nodes.push(item)
 					}, 0);
 				})
-				console.log(this.nodes)
 			},
 			getWidth() {
 				return new Promise((res, rej) => {
@@ -175,7 +173,6 @@
 				});
 			},
 			navigate(href, $event, attr) {
-				console.log(href, attr);
 				this.$emit('navigate', href, $event);
 			},
 			preview(src, $event) {
@@ -209,8 +206,6 @@
 		},
 		watch: {
 			content:function(newVal, oldVal){
-
-				console.log('content 变化content 变化content 变化content 变化')
 				this.setHtml()
 			}
 			// content: {

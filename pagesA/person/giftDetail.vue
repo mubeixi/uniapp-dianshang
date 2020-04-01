@@ -224,25 +224,22 @@
 			cancelOrder(Order_ID){
 				if(Order_ID){
 					cancelOrder({Order_ID}).then(res=>{
-						if(res.errorCode==0){
-							uni.showToast({
-								title:res.msg,
-								icon:"none"
-							});
-							setTimeout(() => {
-								uni.navigateBack({
-									delta: 1
-								})
-							}, 1000);
-						}else{
-							uni.showToast({
-								title:res.msg,
-								icon:"none"
+
+						uni.showToast({
+							title:res.msg,
+							icon:"none"
+						});
+						setTimeout(() => {
+							uni.navigateBack({
+								delta: 1
 							})
-						}
+						}, 1000);
 
 					}).catch(e=>{
-						console.log(e);
+						uni.showToast({
+							title:e.msg,
+							icon:"none"
+						})
 						this.isLoading=false;
 					})
 				}
@@ -251,19 +248,16 @@
 			confirmOrder(Order_ID){
 				let that=this;
 				confirmOrder({Order_ID: Order_ID}).then(res=>{
-					if(res.errorCode==0){
-						uni.showToast({
-							title:res.msg,
-							icon:'none'
+					uni.showToast({
+						title:res.msg,
+						icon:'none'
+					})
+					setTimeout(() => {
+						uni.navigateBack({
+							delta: 1
 						})
-						setTimeout(() => {
-							uni.navigateBack({
-								delta: 1
-							})
-						}, 1000);
-					}
+					}, 1000);
 				}).catch(e=>{
-					console.log(e);
 				})
 			},
 			//跳转申请退款  发表评论
@@ -281,7 +275,6 @@
 			},
 			//获取用户支付方式
 			chooseType(name) {
-				console.log(name)
 				this.pay_type = name;
 				this.$refs.popupLayer.close();
 				// 判断是否使用了余额，
@@ -300,41 +293,38 @@
 				getOrderDetail({
 					Order_ID: this.Order_ID,
 				}).then(res => {
-					console.log(res)
-					if (res.errorCode == 0) {
-						for (var i in res.data) {
-							if (i == 'Order_Shipping') {
-								res.data[i] = JSON.parse(res.data[i])
-							}
-							if (i == 'prod_list') {
-								for (var j in res.data[i]) {
-									for (var k in res.data[i][j]) {
-										if (k == 'attr_info') {
-											res.data[i][j][k] = res.data[i][j][k] && JSON.parse(res.data[i][j][k])
-										}
+					for (var i in res.data) {
+						if (i == 'Order_Shipping') {
+							res.data[i] = JSON.parse(res.data[i])
+						}
+						if (i == 'prod_list') {
+							for (var j in res.data[i]) {
+								for (var k in res.data[i][j]) {
+									if (k == 'attr_info') {
+										res.data[i][j][k] = res.data[i][j][k] && JSON.parse(res.data[i][j][k])
 									}
 								}
 							}
 						}
-						this.orderInfo = res.data;
-						// pay_money 应该支付的钱
-						// user_money 使用的余额
-						this.pay_money = this.orderInfo.Order_Fyepay;
-						this.user_money = this.orderInfo.Order_Yebc;
-						this.openMoney = this.orderInfo.Order_Yebc > 0;
-						this.need_invoice = this.orderInfo.Order_NeedInvoice;
-						this.openInvoice = this.orderInfo.Order_NeedInvoice > 0;
-						this.invoice_info = this.orderInfo.Order_InvoiceInfo;
-						this.order_remark = this.orderInfo.Order_Remark;
-						if(this.showDirect && this.orderInfo.Order_Fyepay > 0) {
-							// 需要支付的金额大于0 ，直接弹出支付方式，简化支付流程
-							_self.$nextTick().then(()=>{
-								//_self.$refs.popupLayer.show();
-							})
-
-						}
 					}
-				})
+					this.orderInfo = res.data;
+					// pay_money 应该支付的钱
+					// user_money 使用的余额
+					this.pay_money = this.orderInfo.Order_Fyepay;
+					this.user_money = this.orderInfo.Order_Yebc;
+					this.openMoney = this.orderInfo.Order_Yebc > 0;
+					this.need_invoice = this.orderInfo.Order_NeedInvoice;
+					this.openInvoice = this.orderInfo.Order_NeedInvoice > 0;
+					this.invoice_info = this.orderInfo.Order_InvoiceInfo;
+					this.order_remark = this.orderInfo.Order_Remark;
+					if(this.showDirect && this.orderInfo.Order_Fyepay > 0) {
+						// 需要支付的金额大于0 ，直接弹出支付方式，简化支付流程
+						_self.$nextTick().then(()=>{
+							//_self.$refs.popupLayer.show();
+						})
+
+					}
+				}).catch(() => {})
 			},
 			// 用户重新更改了余额
 			moneyInputHandle(e) {
@@ -445,7 +435,6 @@
 			paySuccessCall(res){
 
 				var _that = this;
-				console.log('支付成功回调',res)
 				if(res && res.code && res.code==2){
 					_that.payFailCall()
 					return;

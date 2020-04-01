@@ -60,7 +60,7 @@
                 </div>
             </div>
         </wzw-dialog>
-		
+
 		<wzw-dialog ref="sureReason">
 		    <div class="refuseApplyDialog">
 				<input type="number" v-model="priceValue" class="inputs" placeholder="请输入退款总金额">
@@ -108,7 +108,7 @@
 			this.tabidx=5
 		},
 		onShow() {
-			
+
 			this.paginate.page=1
 			this.loadInfo()
 		},
@@ -187,7 +187,7 @@
 				if(idx==this.tabidx) return
                 this.tabidx = idx
                 this.paginate.page = 1
-  
+
                 this.loadInfo()
             },
             inArray(val,arr){
@@ -201,22 +201,21 @@
 					if(this.tabidx!=5){
 						data.Back_Status=this.tabidx
 					}
-				
+
                 await getBackOrder(data,{tip:'加载中'}).then(res=>{
                     this.totalCount = res.totalCount
 					this.applys=res.data
-					
+
 					for(let item of this.applys){
 						for(let it of  item.prod_list){
 							if(it.attr_info){
 								it.attr_info=JSON.parse(it.attr_info)
 								it.attr_name=it.attr_info.attr_name
-								console.log(it.attr_info.attr_name,'sss')
-							}	
-							
+							}
+
 						}
 					}
-                  
+
                 },err=>{
 
                 })
@@ -525,18 +524,18 @@
 		height: 480rpx;
 		margin-top: 100rpx;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
+
+
+
+
 	.order {
 	    padding: 0rpx 20rpx;
 	    background: #fff;

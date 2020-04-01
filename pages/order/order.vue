@@ -82,9 +82,9 @@
 		<div class="defaults" v-if="data.length<=0">
 			<image :src="'/static/client/defaultImg.png'|domain" ></image>
 		</div>
-		
-		
-		
+
+
+
 		<wzw-dialog ref="sureReason" >
 		    <div class="refuseApplyDialog">
 				<div style="width: 110px;height: 110px;margin: 0 auto;">
@@ -114,8 +114,10 @@ import {
 	getOrderNum,
 	confirmOrder,
 	delOrder,
-	extendOrderConfirm
+	extendOrderConfirm,
+	getOrderExpressCode
 } from '../../common/fetch.js'
+import {KDNWidget} from '../../common/kdj.js'
 import {pageMixin} from "../../common/mixin";
 import {confirm, error} from '../../common'
 export default {
@@ -191,15 +193,13 @@ export default {
 						})
 				}).catch(e=>{
 					this.$refs.sureReason.close();
-					console.log(e);
 				})
 		},
 		cancelReason(){
 			this.$refs.sureReason.close();
-			
+
 		},
 		openExtendReceiptFn(order){
-			console.log(order)
 			let extend = order.extend?false:true;
 			// order.extend = true;
 			this.$set(order,'extend',extend)
@@ -235,33 +235,45 @@ export default {
 			// 				icon:'none'
 			// 			})
 			// 	}).catch(e=>{
-			// 		console.log(e);
 			// 	})
 			// }).catch(e=>{
-			// 	console.log(e)
 			// })
 		},
 		goLogistics(item){
-			// 处理物流名称
-			let express ={}
-			if(typeof item.Order_Shipping =='object'){
-				express =item.Order_Shipping.Express;
-			}else{
-				express = JSON.parse( item.Order_Shipping).Express;
-			}
+			
 
-			//跳转物流追踪
-			uni.navigateTo({
-				url:'/pages/order/logistics?shipping_id='+item.Order_ShippingID + '&express=' + express + '&prod_img=' + item.prod_list[0].prod_img
-			})
+			// #ifndef MP-WEIXIN
+				getOrderExpressCode({shipping_id:item.Order_ShippingID}).then(res=>{
+					
+					  KDNWidget.run({
+						  serviceType: "A",
+						  expCode: res.data.ShipperCode,
+						  expNo: res.data.LogisticCode
+					  })
+				
+				}).catch(e=>{})
+			
+			// #endif
+			// #ifdef MP-WEIXIN
+				// 处理物流名称
+				let express ={}
+				if(typeof item.Order_Shipping =='object'){
+					express =item.Order_Shipping.Express;
+				}else{
+					express = JSON.parse( item.Order_Shipping).Express;
+				}
+				
+				//跳转物流追踪
+				uni.navigateTo({
+					url:'/pages/order/logistics?shipping_id='+item.Order_ShippingID + '&express=' + express + '&prod_img=' + item.prod_list[0].prod_img
+				})
+			// #endif
 		},
 		//获取订单角标数
 		getOrderNum(){
 			getOrderNum({Order_Type:this.Order_Type}).then(res=>{
 				this.orderNum=res.data;
-				console.log(res)
 			}).catch(e=>{
-				console.log(e)
 			})
 		},
 		// 删除订单
@@ -270,7 +282,6 @@ export default {
 			this.isLoading=true;
 			let Order_ID;
 			for(let i in item){
-				console.log(i)
 				if(item[i].Order_ID){
 					Order_ID=item[i].Order_ID;
 				}
@@ -285,7 +296,6 @@ export default {
 							icon:"none"
 						})
 				}).catch(e=>{
-					console.log(e);
 					this.isLoading=false;
 				})
 			}
@@ -296,7 +306,6 @@ export default {
 			this.isLoading=true;
 			let Order_ID;
 			for(let i in item){
-				console.log(i)
 				if(item[i].Order_ID){
 					Order_ID=item[i].Order_ID;
 				}
@@ -312,7 +321,6 @@ export default {
 							icon:"none"
 						})
 				}).catch(e=>{
-					console.log(e);
 					this.isLoading=false;
 				})
 			}
@@ -365,35 +373,33 @@ export default {
 				data['Order_Status'] = this.index;
 			}
 			getOrder(data).then(res=>{
-				if(res.errorCode==0){
-					for(var i in res.data) {
-						res.data[i].Order_Shipping=JSON.parse(res.data[i].Order_Shipping)
-						for(var m in res.data[i]){
-							if(m == 'prod_list'){
-								for(var j in res.data[i][m]) {
-										for( var k in res.data[i][m][j]) {
-											if(k == 'attr_info') {
-												if(res.data[i][m][j][k]){
-													res.data[i][m][j][k] = JSON.parse(res.data[i][m][j][k])
-												}
-											}
+				for(var i in res.data) {
+					res.data[i].Order_Shipping=JSON.parse(res.data[i].Order_Shipping)
+					for(var m in res.data[i]){
+						if(m == 'prod_list'){
+							for(var j in res.data[i][m]) {
+								for( var k in res.data[i][m][j]) {
+									if(k == 'attr_info') {
+										if(res.data[i][m][j][k]){
+											res.data[i][m][j][k] = JSON.parse(res.data[i][m][j][k])
 										}
 									}
+								}
 							}
 						}
 					}
-					if(index==1){
-						this.data=res.data
-					}else{
-						for(let item of res.data){
-							this.data.push(item)
-						}
-					}
-
-					this.totalCount=res.totalCount;
-					this.isQing=false;
 				}
-			}).catch(e=>{
+				if(index==1){
+					this.data=res.data
+				}else{
+					for(let item of res.data){
+						this.data.push(item)
+					}
+				}
+
+				this.totalCount=res.totalCount;
+				this.isQing=false;
+			}).catch(()=>{
 				this.isQing=false;
 			})
 		}
@@ -645,7 +651,7 @@ export default {
 		.reasons{
 			min-height: 20px;
 		}
-	   
+
 	}
 	.control{
 		width: 100%;
@@ -660,7 +666,7 @@ export default {
 			line-height: 40px;
 			text-align: center;
 		}
-	   
+
 	}
 	.my-huo{
 		margin-top: 20px;

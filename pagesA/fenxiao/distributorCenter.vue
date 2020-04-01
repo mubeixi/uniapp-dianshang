@@ -303,7 +303,6 @@
 			paySuccessCall(res){
 
 				var _that = this;
-				console.log('支付成功回调',res)
 				if(res && res.code && res.code==2){
 
 					return;
@@ -352,7 +351,6 @@
 				// 	let lp_template = initData.lp_template
 				// 	let tmplIds = lp_template.dis_buy
 				// 	//调就是了，是否成功都可以
-				// 	console.log('调用wx.requestSubscribeMessage',tmplIds)
 				// 	wx.requestSubscribeMessage({tmplIds})
 				// }
 				// #endif
@@ -425,7 +423,6 @@
 				//公众号需要code
 				if(this.pay_type === 'wx_mp'){
 
-				    console.log('选择了微信支付的')
 
 				    if (!isWeiXin()) {
 				        error('请在微信内打开')
@@ -476,7 +473,6 @@
 							})
 						},2000)
 					}).catch(e=>{
-						console.log(e);
 					})
 				}else{
 					disBuy(data,{tip:'正在加载中',mask:true}).then(res=>{
@@ -487,7 +483,6 @@
 							icon:'none'
 						})
 					}).catch(e=>{
-						console.log(e);
 					})
 				}
 
@@ -500,16 +495,13 @@
 				// 		disBuy(data).then(res=>{
 				// 			let provider = 'alipay';
 				// 			let orderInfo = res.data.arg;
-				// 			console.log('支付宝参数',orderInfo)
 				// 			uni.requestPayment({
 				// 			    provider,
 				// 			    orderInfo, //微信、支付宝订单数据
 				// 			    success: function (res) {
 				// 			        _self.paySuccessCall(res)
-				// 			        console.log('success:' + JSON.stringify(res));
 				// 			    },
 				// 			    fail: function (err) {
-				// 			        console.log('fail:' + JSON.stringify(err));
 				// 			        uni.showModal({
 				// 			            title:'支付错误',
 				// 			            content:JSON.stringify(err)
@@ -523,7 +515,6 @@
 				// 				icon:'none'
 				// 			})
 				// 		}).catch(e=>{
-				// 			console.log(e);
 				// 		})
 				// }else{
 				// 	//不用余额调微信支付
@@ -687,18 +678,11 @@
 							// 	url:'/pages/fenxiao/distributorLevel'
 							// })
 						},1000)
-						if(res.errorCode==0){
-							this.textShen=res.msg;
-						}else{
-							uni.showToast({
-								title:res.data.msg,
-								icon:"none"
-							})
-							this.textShen=res.data.msg;
-						}
-						console.log(res)
-					}).catch(e=>{
-						console.log(e)
+
+						this.textShen=res.msg;
+					}).catch(res=>{
+
+						this.textShen=res.msg;
 					})
 
 
@@ -732,23 +716,21 @@
 			},
 			address_town: function () {
 			    getTown({'a_id': this.address_info.Address_Area }).then(res => {
-			      if (res.errorCode == 0) {
-			            var t_arr = [];
-			            var t_index = 0;
-			            var idx = 0;
-			            for (var i in res.data) {
-			               for (var j in res.data[i]) {
-			                t_arr.push({ 'id': j, 'name': res.data[i][j] });
-			                if (j == this.address_info.Address_Town) {
-			                    t_index = idx;
-			                }
-			                  idx++;
-			                }
-			              }
-			            this.t_arr = t_arr;
-			            this.t_index = t_index;
-			        }
-				})
+					var t_arr = [];
+					var t_index = 0;
+					var idx = 0;
+					for (var i in res.data) {
+						for (var j in res.data[i]) {
+							t_arr.push({ 'id': j, 'name': res.data[i][j] });
+							if (j == this.address_info.Address_Town) {
+								t_index = idx;
+							}
+							idx++;
+						}
+					}
+					this.t_arr = t_arr;
+					this.t_index = t_index;
+				}).catch(()=>{})
 			},
 			//处理省市区联动信息
 			  addressChange: function (columnValue) {
@@ -831,13 +813,11 @@
 			        let tempArr = search.split('&');
 			        for (var i of tempArr) {
 
-			            console.log(i,i.indexOf('code') === -1, i.indexOf('state') === -1,i.indexOf('appid')===-1)
 			            //过滤多余的参数
 			            if (i.indexOf('code') === -1 && i.indexOf('state') === -1 && i.indexOf('appid')===-1) {
 			                strArr.push(i)
 			            }
 			        }
-			        console.log(strArr);
 			        let newSearchStr = strArr.join('&');
 			        if (newSearchStr.indexOf('?') === -1) {
 			            newSearchStr = '?' + newSearchStr
@@ -862,7 +842,6 @@
 			        wxAuthUrl =
 			            `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${channel.appid}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect`
 			    }
-			    console.log(wxAuthUrl)
 
 			    window.location.href = wxAuthUrl;
 
@@ -909,7 +888,6 @@
 			    //公众号需要code
 			    if(this.pay_type === 'wx_mp'){
 
-			        console.log('选择了微信支付的')
 
 			        if (!isWeiXin()) {
 			            error('请在微信内打开')
@@ -950,7 +928,6 @@
 			    await new Promise((resolve) => {
 			        uni.login({
 			            success: function (loginRes) {
-			                console.log(loginRes);
 			                payConf.code = loginRes.code
 			                resolve()
 			            }
@@ -962,7 +939,7 @@
 			},
 			disApplyInit(){
 				disApplyInit().then(res=>{
-					if(res.errorCode==0){
+
 						this.pro=res.data;
 						if(this.type=='edit'){
 							// 处理自定义  select  和text
@@ -1020,9 +997,7 @@
 										if(dislist.apply_order.status==2){
 											this.textShen=dislist.apply_order.status_desc
 										}
-										console.log(myInfo,"ssss")
 										for(let item in myInfo){
-											console.log(item,"sss")
 											if(myInfo[item].type=="address"){
 												this.address_info.Address_Province=myInfo[item].pro_id;
 												this.address_info.Address_City=myInfo[item].city_id;
@@ -1103,11 +1078,7 @@
 							            this.disLevelInfo=dislist['Distribute_Form'];
 						}
 
-
-					}
-				}).catch(e=>{
-					console.log(e)
-				})
+				}).catch(e=>{})
 			},
 			changes(){
 				this.isAgree=!this.isAgree;
@@ -1118,11 +1089,9 @@
 			// #ifdef H5
 			if (isWeiXin()) {
 			    this.code = GetQueryByString(location.href, 'code');
-			    console.log(this.code)
 			    if (this.code) {
 
 			        this.pay_type = 'wx_mp';//需要手动设置一下
-			        // console.log(this.pay_type)
 			        // ls.set('code',this.code)
 			        this.self_orderPay(1);
 			    }

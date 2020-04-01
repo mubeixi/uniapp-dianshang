@@ -1,5 +1,5 @@
 import * as ENV from './env.js';
-// console.log(ENV.apiBaseUrl)
+
 import {error} from "./index";
 import {ls} from "./tool.js";
 /**
@@ -34,14 +34,10 @@ export const ajax = (url, method, data, options) => {
         'Authorization': 'Bearer ' + token,
         "content-type": "application/x-www-form-urlencoded"
     };
-    // if (wx.getStorageSync('cookie')) {
-    //   header.Cookie = wx.getStorageSync('cookie')
-    // }
 
-    // console.log('ajax action is '+data.act);
 
     // #ifdef MP-TOUTIAO || APP-PLUS
-    // console.log(data)
+
     // #endif
     let URL = ''
     // #ifdef H5
@@ -70,7 +66,6 @@ export const ajax = (url, method, data, options) => {
                 let res = ret.data;
 
                 // #ifdef MP-TOUTIAO || APP-PLUS
-                // console.log(res)
                 // #endif
 
 
@@ -113,7 +108,6 @@ export const ajax = (url, method, data, options) => {
                 reject(e)
             },
             complete: () => {
-                // console.log(res)
                 if (tip) {
                     setTimeout(function () {
                         uni.hideLoading()
@@ -125,19 +119,7 @@ export const ajax = (url, method, data, options) => {
             }
         })
 
-        //     .then(data=>{
-        //     var [error, res]  = data;
-        //     console.log(res.data);
-        //     if(hookErrorCode.indexOf(res.errorCode) != -1){
-        //     	resolve(res)
-        //     }else{
-        //         // throw new Error(res)
-        //       //error(res.data.msg)
-        //         reject(res);
-        //     }
-        // },e=>{
-        //     reject(e);
-        // })
+
 
     })
 

@@ -131,7 +131,7 @@
                 index:  0,
                 arrlist: [],
                 imglist: [],
-                
+
             }
         },
         computed: {
@@ -192,7 +192,6 @@
             },
             // 获取用户最后的申请信息
             load: function(){
-                console.log('aaaaa')
                 getUserStoreApply({},{errtip: false}).then(res=>{
                     // 判断用户是否提交过，未提交data为空
                     if(!res.data) {
@@ -267,7 +266,6 @@
             // 入驻
             settled: function(){
                 if(this.is_submitted) return;
-                console.log('11')
                 this.store_province = this.userStoreMsg.store_province;
                 this.store_city = this.userStoreMsg.store_city;
                 this.store_area = this.userStoreMsg.store_area;
@@ -285,9 +283,7 @@
                     return;
                 }
                 this.store_image = this.arr[0];
-                console.log(this.arrlist)
                 let img_info = this.arrlist.length>0?JSON.stringify(this.arrlist):'';
-                console.log(img_info)
                 userStoreApply({
                     store_name: this.store_name,
                     store_mobile: this.store_mobile,
@@ -396,11 +392,11 @@
 						    temp_file_list = tempFiles
 						})
                         that.imgs = [...temp_file_list]
-    
+
                         let arrs = temp_file_list.map(item=>item.path)
                         uploadImages(data,arrs).then(urls=>{
 							for(let item of urls){
-								that.arr.push(item)	
+								that.arr.push(item)
 							}
                             //that.arr = that.arr.concat(urls);
                             //是否可以提交
@@ -413,11 +409,9 @@
                         // that.imglist = [...temp_file_list]
 							that.imglist = that.imglist.concat(temp_file_list);
                         let arrs = temp_file_list.map(item=>item.path)
-						console.log(arrs,"ssss")
                         uploadImages(data,arrs).then(urls=>{
-                            console.log(urls)
 							for(let item of urls){
-								that.arrlist.push(item)	
+								that.arrlist.push(item)
 							}
                             //that.arrlist = that.arrlist.concat(urls);
                             //是否可以提交

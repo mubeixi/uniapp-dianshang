@@ -88,10 +88,8 @@
 						this.pro.push(item);
 					}
 
-				},err=>{
-
 				}).catch(e=>{
-					console.log(e)
+
 				})
 
 			},
@@ -100,7 +98,6 @@
 					uni.showToast({
 						title:res.msg
 					})
-					console.log(index,"ssss")
 					this.pro.splice(index,1)
 				})
 			}

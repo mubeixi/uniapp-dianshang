@@ -98,7 +98,6 @@
 			// 	this.$refs.video.map(item=>{
 			// 		item.pauseFn()
 			// 	})
-			// 	// console.log(JSON.stringify(getApp().globalData.videoInstance))
 			// 	// //停止播放
 			// 	// getApp().globalData.videoInstance.map(item=>{
 			// 	// 	item.stop()
@@ -149,8 +148,7 @@
 					}
 
 				}).catch(e=>{
-					console.log('获取首页模板信息失败')
-					console.log(e)
+
 				})
 
 			})
@@ -166,7 +164,6 @@
 						//存储页面数据
 						this.templateData = [] //页面数据的二维数组。
 						this.templateList = [] //页面组件的二维数组。
-						// console.log(templateData)
 
 						if (templateData && Array.isArray(templateData[0])) {
 							//多个页面，每个页面是一个数组
@@ -200,9 +197,8 @@
 						}
 
 
-					},err=>{})
+					})
 					.catch(err => {
-						console.log(err)
 					})
 
 		},
