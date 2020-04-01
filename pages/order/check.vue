@@ -376,8 +376,10 @@ export default {
 		  }
 	  },
 	  bindStores(storeInfo){
-		 this.selectStore=false
-		 this.postData.shipping_id='is_store'
+		  if(this.tabIdx===1){
+			  this.selectStore=false
+			  this.postData.shipping_id='is_store'
+		  }
 		 this.shipping_store_id = storeInfo.Stores_ID;
 	  	if(this.setStoreMode==='all'){
 	  		//居然是对象醉了
@@ -544,7 +546,7 @@ export default {
 					}
 					this.Order_ID = res.data.Order_ID;
 					uni.redirectTo({
-						url: 'pages/pay/pay?Order_ID='+ res.data.Order_ID+'&pagefrom=check'
+						url: '/pages/pay/pay?Order_ID='+ res.data.Order_ID+'&pagefrom=check'
 					})
 				}).catch(e=>{
 					uni.showToast({
