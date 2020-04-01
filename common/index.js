@@ -226,10 +226,16 @@ export const linkTo =  (linkObj) => {
                 appId: appid,
                 path: link,
                 success(res) {
-
+                    console.log(res)
                     // 打开成功
                 },
                 fail(err) {
+                    const {errMsg='请联系客服'} = err
+                    uni.showModal({
+                        title:'跳转小程序错误',
+                        content:errMsg
+                    })
+                    console.log(err)
                 }
             })
             return;
