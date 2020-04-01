@@ -194,7 +194,7 @@
 				<block v-if="orderInfo.Order_Shipping">
 					<view class="mxitem" v-if="orderInfo.Order_Shipping.Price > 0">运费 <text class="num">+{{orderInfo.Order_Shipping.Price}}</text></view>
 				</block>
-				
+
 			</view>
 		</popup-layer>
 		<div class="order_total">
@@ -202,7 +202,7 @@
 				<div class="info">共{{orderInfo.prod_list.length}}件商品 总计：<span class="mbxa">￥<span>{{orderInfo.Order_TotalPrice}}</span></span></div>
 				<view class="tips" v-if="orderInfo.obtain_desc">{{orderInfo.obtain_desc}}</view>
 			</div>
-			<view class="mx" @click="seeDetail">明细 <image class="image" :class="isSlide?'slidedown':''" src="../../static/top.png"></image></view>
+			<view class="mx" @click="seeDetail">明细 <image class="image" :class="isSlide?'slidedown':''" src="/static/top.png"></image></view>
 			<div class="btn-group" v-if="orderInfo.Order_Status==0">
 				<span @click="cancelOrder(orderInfo.Order_ID)">取消订单</span>
 			</div>
@@ -259,11 +259,12 @@
 		orderPay,
 		get_user_info,
 		cancelOrder,
-		confirmOrder
+		confirmOrder,getOrderExpressCode
 	} from '../../common/fetch.js';
 	import {
 		pageMixin
 	} from "../../common/mixin";
+	import {KDNWidget} from '../../common/kdj.js'
 	import {
 		mapGetters,
 		mapActions
@@ -389,43 +390,49 @@
 			},
 			//物流追踪
 			goLogistics(orderInfo){
-				let {
-					shipping_id,
-					express,
-					prod_img
-				} = {
-					shipping_id: orderInfo.Order_ShippingID,
-					express: orderInfo.Order_Shipping.Express,
-					prod_img: orderInfo.prod_list[0].prod_img
-				}
-				//跳转物流追踪
-				uni.navigateTo({
-					url:'../order/logistics?shipping_id='+shipping_id + '&express=' + express + '&prod_img=' + prod_img
-				})
+				
+				// #ifndef MP-WEIXIN
+				getOrderExpressCode({shipping_id:item.Order_ShippingID}).then(res=>{
+					
+					  KDNWidget.run({
+						  serviceType: "A",
+						  expCode: res.data.ShipperCode,
+						  expNo: res.data.LogisticCode
+					  })
+				
+				}).catch(e=>{})
+				// #endif
+				// #ifdef MP-WEIXIN
+					let {
+						shipping_id,
+						express,
+						prod_img
+					} = {
+						shipping_id: orderInfo.Order_ShippingID,
+						express: orderInfo.Order_Shipping.Express,
+						prod_img: orderInfo.prod_list[0].prod_img
+					}
+					//跳转物流追踪
+					uni.navigateTo({
+						url:'/pages/order/logistics?shipping_id='+shipping_id + '&express=' + express + '&prod_img=' + prod_img
+					})
+				// #endif
 			},
 			//取消订单
 			cancelOrder(Order_ID){
 				if(Order_ID){
 					cancelOrder({Order_ID}).then(res=>{
-						if(res.errorCode==0){
-							uni.showToast({
-								title:res.msg,
-								icon:"none"
-							});
-							setTimeout(() => {
-								uni.navigateBack({
-									delta: 1
-								})
-							}, 1000);
-						}else{
-							uni.showToast({
-								title:res.msg,
-								icon:"none"
+						uni.showToast({
+							title:res.msg,
+							icon:"none"
+						});
+						setTimeout(() => {
+							uni.navigateBack({
+								delta: 1
 							})
-						}
+						}, 1000);
 
 					}).catch(e=>{
-						console.log(e);
 						this.isLoading=false;
 					})
 				}
@@ -434,19 +441,16 @@
 			confirmOrder(Order_ID){
 				let that=this;
 				confirmOrder({Order_ID: Order_ID}).then(res=>{
-					if(res.errorCode==0){
-						uni.showToast({
-							title:res.msg,
-							icon:'none'
+					uni.showToast({
+						title:res.msg,
+						icon:'none'
+					})
+					setTimeout(() => {
+						uni.navigateBack({
+							delta: 1
 						})
-						setTimeout(() => {
-							uni.navigateBack({
-								delta: 1
-							})
-						}, 1000);
-					}
+					}, 1000);
 				}).catch(e=>{
-					console.log(e);
 				})
 			},
 			//跳转申请退款  发表评论
@@ -457,14 +461,13 @@
 					})
 				}else if(this.orderInfo.Order_Status==4){
 					uni.navigateTo({
-						url:'../order/publishComment?Order_ID='+Order_ID
+						url:'/pages/order/publishComment?Order_ID='+Order_ID
 					})
 				}
 
 			},
 			//获取用户支付方式
 			chooseType(name) {
-				console.log(name)
 				this.pay_type = name;
 				this.$refs.popupLayer.close();
 				// 判断是否使用了余额，
@@ -483,56 +486,53 @@
 				getOrderDetail({
 					Order_ID: this.Order_ID,
 				}).then(res => {
-					console.log(res)
-					if (res.errorCode == 0) {
-						for (var i in res.data) {
-							if (i == 'Order_Shipping') {
-								res.data[i] = JSON.parse(res.data[i])
-							}
-							if (i == 'prod_list') {
-								for (var j in res.data[i]) {
-									for (var k in res.data[i][j]) {
-										if (k == 'attr_info') {
-											res.data[i][j][k] = res.data[i][j][k] && JSON.parse(res.data[i][j][k])
-										}
+					for (var i in res.data) {
+						if (i == 'Order_Shipping') {
+							res.data[i] = JSON.parse(res.data[i])
+						}
+						if (i == 'prod_list') {
+							for (var j in res.data[i]) {
+								for (var k in res.data[i][j]) {
+									if (k == 'attr_info') {
+										res.data[i][j][k] = res.data[i][j][k] && JSON.parse(res.data[i][j][k])
 									}
 								}
 							}
 						}
-						let orderInfo = res.data
+					}
+					let orderInfo = res.data
 
-						// let aa = await new Promise(resolve=>{
-						// 	setTimeout(()=>{
-						// 		resolve(true)
-						// 	},3000)
-						// })
+					// let aa = await new Promise(resolve=>{
+					// 	setTimeout(()=>{
+					// 		resolve(true)
+					// 	},3000)
+					// })
 
-						this.orderInfo = res.data;
+					this.orderInfo = res.data;
 
-						// pay_money 应该支付的钱
-						// user_money 使用的余额
-						this.pay_money = this.orderInfo.Order_Fyepay;
-						this.user_money = this.orderInfo.Order_Yebc;
-						this.openMoney = this.orderInfo.Order_Yebc > 0;
-						this.need_invoice = this.orderInfo.Order_NeedInvoice;
-						this.openInvoice = this.orderInfo.Order_NeedInvoice > 0;
-						this.invoice_info = this.orderInfo.Order_InvoiceInfo;
-						this.order_remark = this.orderInfo.Order_Remark;
-						this.user_name = this.orderInfo.Address_Name;
-						this.user_mobile = this.orderInfo.Address_Mobile;
+					// pay_money 应该支付的钱
+					// user_money 使用的余额
+					this.pay_money = this.orderInfo.Order_Fyepay;
+					this.user_money = this.orderInfo.Order_Yebc;
+					this.openMoney = this.orderInfo.Order_Yebc > 0;
+					this.need_invoice = this.orderInfo.Order_NeedInvoice;
+					this.openInvoice = this.orderInfo.Order_NeedInvoice > 0;
+					this.invoice_info = this.orderInfo.Order_InvoiceInfo;
+					this.order_remark = this.orderInfo.Order_Remark;
+					this.user_name = this.orderInfo.Address_Name;
+					this.user_mobile = this.orderInfo.Address_Mobile;
 
 
-						if(orderInfo.Order_IsVirtual){
-							this.qrVal = `IsVirtualOrderCheck##Order_Code::${orderInfo.Order_Code}`
-						}
+					if(orderInfo.Order_IsVirtual){
+						this.qrVal = `IsVirtualOrderCheck##Order_Code::${orderInfo.Order_Code}`
+					}
 
-						if(this.showDirect && this.orderInfo.Order_Fyepay > 0) {
-							// 需要支付的金额大于0 ，直接弹出支付方式，简化支付流程
-							_self.$nextTick().then(()=>{
-								//_self.$refs.popupLayer.show();
-							})
+					if(this.showDirect && this.orderInfo.Order_Fyepay > 0) {
+						// 需要支付的金额大于0 ，直接弹出支付方式，简化支付流程
+						_self.$nextTick().then(()=>{
+							//_self.$refs.popupLayer.show();
+						})
 
-						}
 					}
 				})
 			},
@@ -646,7 +646,6 @@
 			paySuccessCall(res){
 
 				var _that = this;
-				console.log('支付成功回调',res)
 				if(res && res.code && res.code==2){
 					_that.payFailCall()
 					return;

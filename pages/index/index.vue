@@ -202,8 +202,6 @@
                             reject(false)
 						}
                     }).catch(e=>{
-                        console.log('获取首页模板信息失败')
-                        console.log(e)
 						reject(false)
                     })
 
@@ -222,7 +220,6 @@
 				//存储页面数据
 				this.templateData = [] //页面数据的二维数组。
 				this.templateList = [] //页面组件的二维数组。
-				// console.log(templateData)
 				if (templateData && Array.isArray(templateData[0])) {
 					//多个页面，每个页面是一个数组
 					templateData.map(item => {
@@ -255,7 +252,6 @@
 				}
 
 				let lsobj = {owner_id:ls.get('owner_id'),users_id:ls.get("users_id")}
-				console.log('lsobj is ',lsobj)
 				// uni.showModal({
 				// 	content:JSON.stringify(lsobj)
 				// })
@@ -265,7 +261,6 @@
 			...mapActions(['getInitData'])
 		},
 		onLoad(opt) {
-			console.log('index page options is',opt)
 			// uni.hideTabBar()
 		},
 		async created(){
@@ -274,7 +269,6 @@
 			let systemConf = await getSystemConf()
 
             let initData = systemConf?systemConf.data:null
-            console.log('首页自己获取initData', initData)
 
             if(initData && initData.hasOwnProperty('ShopName') && initData.ShopName){
                 uni.setNavigationBarTitle({
@@ -284,7 +278,6 @@
 
 			// #ifdef MP-WEIXIN
 			getLiveInfo().then(res=>{
-				// console.log('getLiveInfo data is ',res)
 				this.liveList = res.data.room_info
 				this.liveCount = res.data.count
 			})
@@ -308,7 +301,6 @@
 		},
 		onHide(){
 			// if(this.$refs.video){
-			// 	console.log(this.$refs.video)
 			// 	this.$refs.video.map(item=>{
 			// 		item.pauseFn()
 			// 	})

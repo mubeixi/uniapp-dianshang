@@ -86,10 +86,7 @@ export default {
 						icon:'none'
 					})
 					this.data.splice(index,1);
-			},err=>{
-
 			}).catch(e=>{
-				console.log(e);
 			})
 			this.isLoading=false;
 		},
@@ -97,10 +94,7 @@ export default {
 			getBackOrder().then(res=>{
 				this.data=res.data;
 				this.totalCount=res.totalCount;
-			},err=>{
-
 			}).catch(e=>{
-				console.log(e)
 			})
 		},
 		goDetail(item){
@@ -112,7 +106,7 @@ export default {
 		goPay(item){
 			if(item.Order_Status==1){
 				uni.navigateTo({
-					url:"../pay/pay?Order_ID="+item.Order_ID
+					url:"/pages/pay/pay?Order_ID="+item.Order_ID
 				})
 			}else if(item.Order_Status==2||item.Order_Status==3){
 				uni.navigateTo({
@@ -120,7 +114,7 @@ export default {
 				})
 			}else if(item.Order_Status==4){
 				uni.navigateTo({
-					url:'../order/publishComment?Order_ID='+item.Order_ID
+					url:'/pages/order/publishComment?Order_ID='+item.Order_ID
 				})
 			}
 

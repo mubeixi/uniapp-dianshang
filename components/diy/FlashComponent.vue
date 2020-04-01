@@ -219,9 +219,6 @@
                     if (!val) return;
                     let {list = [], cate_id = [], limit, spike_id} = val;
 
-                    //if(!cate_id)cate_id = []
-
-                    // console.log(list,cate_id,limit)
                     //如果值还没有设置的话
                     if (!spike_id) {
                         return;
@@ -257,7 +254,6 @@
                 // let start_timeStamp = item.pintuan_start_time,end_timeStamp = item.pintuan_end_time;
                 //
                 // let data = getCountdownFunc({start_timeStamp,end_timeStamp}),rt = null;
-                // console.log(data)
                 // switch (type) {
                 //   case 'd':
                 //     rt = data.d;
@@ -281,7 +277,6 @@
             goProductDetail,
             goDetail(item) {
                 //error('common soon','none');return;
-                console.log(item)
                 // Products_ID=243
                 let linkObj = {
                     link: '/pages/detail/limitDetail?spikeGoodId=' + item.spike_good_id,
@@ -313,18 +308,12 @@
                         right = 0;
                         break;
                     case 2:
-                        // console.log(idx)
+
                         // top = 0;
                         left = idx % 2 == 0 ? 0 : conf / 2;
                         right = idx % 2 == 0 ? conf / 2 : 0;
                         break;
                 }
-                // console.log({
-                //   marginTop: top + 'px',
-                //   marginBottom: bottom + 'px',
-                //   marginLeft: left + 'px',
-                //   marginRight: right + 'px'
-                // })
 
                 //6666
                 if (idx === 0) top = 0
@@ -357,7 +346,6 @@
         created() {
             const res = uni.getSystemInfoSync();
             this.fullWidth = res.screenWidth;
-            // console.log(this.fullWidth)
 
             this.goods = this.confData;
 
@@ -369,7 +357,7 @@
 </script>
 
 <style scoped lang="less">
-    @import "../../static/css/app.less";
+    @import "../../assets/css/app.less";
 
     .wrap {
         background: #f8f8f8;

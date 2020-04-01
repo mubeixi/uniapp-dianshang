@@ -70,8 +70,8 @@
 							url:'/pagesA/fenxiao/gudong'
 						})
 					},1000)
-				},err=>{}).catch(e=>{
-					console.log(e)
+				}).catch(e=>{
+
 				})
 			},
 			isTell(){

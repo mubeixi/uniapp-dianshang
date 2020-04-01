@@ -60,8 +60,6 @@ export const getRowColSpan = (areaList: object[], area: object[]) => {
  * @param full 是否要求所有点都在面里面（检测新建区域在画布内用full=1,其他的只要有一个点在就行了)
  */
 const plane_in_plane = (check: { x: number; y: number, x1: number, y1: number }, plane: Object, full: Boolean = false): boolean => {
-    console.log(check, plane);
-
 
     var {x: left, y1: bottom, x1: right, y: top} = check;
     let domA = {left, bottom, right, top};
@@ -144,7 +142,6 @@ class MagicCube {
         for (var area of this.selects) {
             areaCount += countArea(area)
         }
-        console.log(areaCount, fullAreaCount);
 
         return areaCount === fullAreaCount;
 
@@ -221,16 +218,13 @@ class MagicCube {
         let is_in_wrap = plane_in_plane(creat, this.base, true);
 
         if (!is_in_wrap) {
-            console.log("超出画布范围");
             return true;
         }
 
 
         for (var area of this.selects) {
-            console.log(area)
             //有一个冲突就不行
             if (plane_in_plane(creat, area, true)) {
-                console.log("与现有画布冲突", creat, area);
                 return true;
             }
         }

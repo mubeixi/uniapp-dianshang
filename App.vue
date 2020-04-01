@@ -24,8 +24,7 @@
         //目前只有app和小程序用到了应用的全局onLaunch，h5环境下这里不执行的
 		onLaunch: function(options) {
 
-            console.log('App Launch',options)
-			
+
 			// #ifdef MP
 			let owner_id = null
 			owner_id = options.owner_id
@@ -37,15 +36,14 @@
 			// #ifndef H5
 			if(checkIsLogin()){
 				upUserLog({},{errtip:false}).then(res=>{
-				    console.log('success',res)
-				}).catch(e=>{console.log('catch',e)})
+
+				}).catch(()=>{})
 			}
 			// #endif
 
             // #ifdef MP-WEIXIN
             //小程序需要拿这个，都拿一下覆盖吧
             let extConfig = wx.getExtConfigSync ? wx.getExtConfigSync() : {};
-            //console.log('extConfig info is',extConfig);
             let users_id = extConfig.users_id;
             //切换的时候清空资料
             if(ls.get('users_id') && users_id != ls.get('users_id')){
@@ -76,14 +74,12 @@
             let interval = null;
             if(info){
                 if(info.clientid){
-                    // console.log('device plus info ',info);
+
                     ls.set('user_client_id',info.clientid)
                 }else{
                     interval = setInterval(function(){
-                        // console.log('获取cid ing')
                         info = plus.push.getClientInfo();
                         if(info.clientid){
-                            // console.log('获取cid success',info)
                             ls.set('user_client_id',info.clientid)
                             clearInterval(interval);
                         }
@@ -100,18 +96,17 @@
             //每次加载都清空全站配置
             ls.remove('initData');
             getSystemConf().then(res => {
-                console.log('每次加载都清空全站配置 success')
                 ls.set('initData',res.data)
             }).catch(error=>{
-                console.log(error)
+
             })
 
 		},
 		onShow: function() {
-			console.log('App Show')
+
 		},
 		onHide: function() {
-			console.log('App Hide')
+
 		},
         //后期可以接自定义的错误上报
         onError:function(err){
@@ -131,11 +126,10 @@
 
 <style lang="less">
 /* #ifndef APP-NVUE */
-@import "./static/css/app.less";
-@import "./static/css/icon.css";
+@import "assets/css/app.less";
+@import "assets/css/icon.less";
 @import "./components/gaoyia-parse/parse.css";
 /* #endif */
-
-
 </style>
+
 

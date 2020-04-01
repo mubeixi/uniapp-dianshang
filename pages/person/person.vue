@@ -245,9 +245,7 @@
 				}
 				getOrderNum({Order_Type:this.Order_Type}).then(res=>{
 					this.orderNum=res.data;
-					console.log(res)
 				}).catch(e=>{
-					console.log(e)
 				})
 			},
 			goVip(){
@@ -294,10 +292,7 @@
 						})
 						this.signin=1;
 						this.isLodnig=false;
-					},err=>{
-
 					}).catch(e=>{
-						console.log(e);
 					})
 				}else if(this.show==2){
 					this.isLodnig=false;
@@ -311,10 +306,7 @@
 				judgeSignin({},{errtip:false}).then(res=>{
 					this.show=res.data.show;
 					this.signin=res.data.signin;
-				},err=>{
-
 				}).catch(e=>{
-					console.log(e)
 				})
 			},
 
@@ -324,7 +316,7 @@
 			goPintuanOrderlist(){
 				if(!this.$fun.checkIsLogin(1))return;
 				uni.navigateTo({
-					url: '../order/pintuanOrderlist'
+					url: '/pages/order/pintuanOrderlist'
 				})
 			},
 			//去赠品中心
@@ -339,9 +331,6 @@
 				uni.navigateTo({
 					url: '/pagesA/person/editAccount'
 				})
-				// uni.navigateTo({
-				// 	url:'../setting/setting'
-				// })
 			},
 			//去任务中心
 			goRenwu(){
@@ -360,21 +349,21 @@
 			goToOrder(item){
 				if(!this.$fun.checkIsLogin(1))return;
 				uni.navigateTo({
-					url:'../order/order?Order_Type='+item
+					url:'/pages/order/order?Order_Type='+item
 				})
 			},
 			//去订单页
 			goOrder(item){
 				if(!this.$fun.checkIsLogin(1))return;
 				uni.navigateTo({
-					url:'../order/order?index='+item
+					url:'/pages/order/order?index='+item
 				})
 			},
 			// 去地址管理
 			gotoAddresslist() {
 				if(!this.$fun.checkIsLogin(1))return;
 				uni.navigateTo({
-					url: '../addressList/addressList'
+					url: '/pages/addressList/addressList'
 				})
 			},
 			// 去个人信息页
@@ -388,12 +377,8 @@
 		onShow() {
 			if(JSON.stringify(this.userInfo) != "{}"){
 				get_user_info({},{tip:'',errtip:false}).then(res=>{
-					console.log(res.data)
 					this.setUserInfo(res.data);
-				},err=>{
-
 				}).catch(e=>{
-					console.log(e)
 				})
 			}
 			this.getOrderNum();
@@ -405,26 +390,18 @@
 			if(JSON.stringify(this.userInfo) != "{}"){
 				await get_user_info({},{tip:'',errtip:false}).then(res=>{
 					this.setUserInfo(res.data);
-				},err=>{
-
 				}).catch(e=>{
-					console.log(e)
 				})
 
 				await getOrderNum({Order_Type:this.Order_Type}).then(res=>{
 					this.orderNum=res.data;
-					console.log(res)
 				}).catch(e=>{
-					console.log(e)
 				});
 
 				await judgeSignin({},{errtip:false}).then(res=>{
 					this.show=res.data.show;
 					this.signin=res.data.signin;
-				},err=>{
-
 				}).catch(e=>{
-					console.log(e)
 				});
 
 			}

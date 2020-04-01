@@ -29,7 +29,7 @@ export const GetQueryByString = (str, name) => {
 
     //获取？号出现几次
     var tempArr = str.split('?');
-    // console.log(tempArr)
+
     // //如果大于1
     if (tempArr.length - 1 > 1) {
         var rt = null;
@@ -48,7 +48,7 @@ export const GetQueryByString = (str, name) => {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
     if (!str.split("?")[1]) return null;
     var r = str.split("?")[1].match(reg); //匹配目标参数
-    // console.log(r)
+
     if (r != null) {
         return decodeURIComponent(r[2]);
 
@@ -228,7 +228,7 @@ export const arrayUnique = (arr) => {
 
 /**
  * 对象=>字符串=>对象
- * 一般用于console.log立即显示（有时候虽然在前面打印，但是会由于引用的问题，打印的不是即时结果)
+ * 一般用于og立即显示（有时候虽然在前面打印，但是会由于引用的问题，打印的不是即时结果)
  * 同时可以用于简单粗暴的避免引用传递的对象copy，但是注意这种写法只保留值，会丢失方法
  * @param obj
  */
@@ -241,7 +241,7 @@ export function mixinStyle(defaultStyle, style) {
     if (!style) style = {};
 
     let rt = objTranslate(defaultStyle)
-    // console.log(rt)
+
     for (var i in style) {
         if (!style.hasOwnProperty(i)) continue;
         rt[i] = style[i]
@@ -309,7 +309,7 @@ export const uploadByPromise = ({url, filePath, name = 'image', formData}) => {
                 reject(err)
             },
             complete: (rt) => {
-                console.log(rt)
+
             }
         })
     })
@@ -349,7 +349,7 @@ export const uploadImages = (formData, imgs) => {
     for (let i = 0; i < imgs.length; i++) {
         // #ifdef MP-TOUTIAO
         // let fileCTX = tt.getFileSystemManager()
-        // // console.log(fileCTX);
+
         // fileCTX.readFile({
         // 	filePath:imgs[i],
         // 	encoding:'base64',
@@ -366,10 +366,9 @@ export const uploadImages = (formData, imgs) => {
         // 		   })
         // 	},
         // 	fail(ret) {
-        // 	  console.log(ret,`run fail`);
+
         // 	},
         // 	complete(ret) {
-        // 	  console.log(`run done`);
         // 	}
         // })
         // #endif
@@ -384,7 +383,7 @@ export const uploadImages = (formData, imgs) => {
             formData: formData
         })
         taskList.push(taskItem)
-        //console.log(formData)
+
         // uni.uploadFile({
         // 		url: apiBaseUrl+'/api/little_program/shopconfig.php',
         // 		filePath: imgs[i],
@@ -394,10 +393,8 @@ export const uploadImages = (formData, imgs) => {
         // 		    if(!uploadFileRes.data || !uploadFileRes.data.path){
         //
         //             }
-        // 		    console.log(uploadFileRes)
         // 			sum++;
         // 			let msg=JSON.parse(uploadFileRes.data);
-        // 			// console.log(msg)
         // 			arr.push(msg.data.path);
         // 			if(sum==imgs.length){
         // 				uni.showToast({
@@ -418,7 +415,6 @@ export const uploadImages = (formData, imgs) => {
 
     return new Promise((resolve, reject) => {
         Promise.all(taskList).then((urls) => {
-            console.log(urls)
             resolve(urls)
         }).catch((error) => {
             reject(false)
@@ -426,7 +422,6 @@ export const uploadImages = (formData, imgs) => {
                 title:'文件批量上传失败',
                 content:JSON.stringify(error)
             })
-            console.log(error)
         })
     })
 
@@ -448,8 +443,6 @@ export const buildSharePath = (path) => {
     let userInfo = store.state.userInfo || ls.get('userInfo');
     const User_ID = ls.get('user_id')
 
-
-    console.log(User_ID,userInfo,users_ID)
     let search = '';
 
     if (path.indexOf('users_id') === -1) {
@@ -474,8 +467,6 @@ export const buildSharePath = (path) => {
         ret = path + (search ? '?' : '') + search
     }
 
-
-    console.log(ret)
     if (ret.indexOf('users_id') === -1) {
         error('组建分享参数失败');
         throw "必须有users_id"
@@ -524,10 +515,8 @@ export const getGroupCountdown = ({end_timeStamp = 1571221631, current = (new Da
     //时间戳格式转换
     current = parseInt(current / 1000)
 
-    // console.log(end_timeStamp,current)
     let countTime = end_timeStamp - current
     if (countTime < 0) {
-        console.log('已经结束')
         return false
     }
     ;
@@ -547,10 +536,10 @@ export const getGroupCountdown = ({end_timeStamp = 1571221631, current = (new Da
 //     //时间戳格式转换
 //     current = parseInt(current/1000)
 //
-//     // console.log(end_timeStamp,current)
+
 //     let countTime = end_timeStamp - current
 //     if(countTime<0){
-//         console.log('已经结束')
+
 //         return false
 //     };
 //
@@ -572,23 +561,22 @@ export const getCountdownFunc = ({start_timeStamp, end_timeStamp, current = (new
     //时间戳格式转换
     current = parseInt(current / 1000)
 
-    // console.log(end_timeStamp,current)
     let countTime = 0, is_start = false,is_end=false;
 
 
     //还没开始
     if (start_timeStamp > current && end_timeStamp > current) {
-        //console.log('还没开始')
+
         countTime = start_timeStamp - current;
 
     } else if (end_timeStamp > current && start_timeStamp < current) {
         //还在进行中
-        //console.log('还在进行中')
+
         is_start = true;
         countTime = end_timeStamp - current;
     } else {
         is_end = true
-        //console.warn('活动信息无效');
+
         // throw "活动信息无效";
     }
 
@@ -659,13 +647,18 @@ export const findArrayIdx = (arr, key_val_arr, full) => {
     return false
 }
 
-
-function checkValue(val, vals) {
+/**
+ * 查看某个值是否在指定数组内
+ * @param val
+ * @param arr
+ * @returns {boolean}
+ */
+function checkValue(val, arr) {
     let _val = val;
     if (Number.isNaN(val)) {
         _val = 'NaN'
     }
-    return vals.indexOf(_val) === -1;
+    return arr.indexOf(_val) !== -1;
 }
 
 /**
@@ -682,7 +675,6 @@ export const emptyObject = (obj, strice,tip,clearValues = [null, undefined, '','
         if (checkValue(obj[prop],clearValues)) {
             if (strice) {
                 tip && error('参数' + prop + '不能为空');
-                console.log('参数' + prop + '不能为空');
                 return false;
             }
             delete obj[prop];

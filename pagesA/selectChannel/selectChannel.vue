@@ -184,7 +184,6 @@
 				let arr = []; // 选中的产品数组
 				let prod_json = {};
 				productMy.forEach(item=>{
-					console.log(item)
 					if(item.skuvaljosn) {
 						for(let attr_id in item.skuvaljosn) {
 							if(item.skuvaljosn[attr_id].myqty > 0) {
@@ -196,7 +195,6 @@
 					}
 				})
 
-				console.log(arr)
 
 				for(let i in arr) {
 					if(!arr[i].Products_ID){
@@ -229,7 +227,6 @@
 						}
 					}
 				}
-				console.log(prod_json)
 				this.prod_json = prod_json;
 
 
@@ -240,13 +237,11 @@
 					longitude: store.wx_lng,
 					name: store.Stores_Name,
 					success: function () {
-						console.log('success');
 					}
 				});
 			},
 			get_store_detail(){
 				getStoreDetail({store_id: this.Stores_ID}).then(res=>{
-					console.log(res,'hha')	//allow_from_plat
 					this.allow_from_plat = res.data.allow_from_plat;
 				})
 			},
@@ -283,7 +278,6 @@
 			        if(res.code===0){
 			            localInfo = res.data
 			            // rt = true
-						console.log('获取到的位置信息',localInfo)
 
 						// if(!rt)return;
 						this.lat = localInfo.latitude
@@ -292,7 +286,6 @@
 
 			        }
 			    }).catch(err=>{
-			        console.log(err)
 			        error('获取位置信息失败:'+err.msg)
 			    })
 

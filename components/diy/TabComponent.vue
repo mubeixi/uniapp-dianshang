@@ -247,8 +247,6 @@
         methods: {
             goProductDetail,
             goDetail(goods) {
-                console.log(goods)
-                // Products_ID=243
 
                 let linkObj = {link: '/pages/detail/detail?Products_ID=' + goods.Products_ID, linkType: 'default'};
 
@@ -272,7 +270,6 @@
                 if (!val) return;
                 let {list = [], cate_id = [], limit} = val;
 
-                console.log(list, cate_id, limit)
                 //如果值还没有设置的话
                 if (cate_id.length === 0) {
                     this.goodsList = []
@@ -313,19 +310,12 @@
                         right = 0;
                         break;
                     case 2:
-                        // console.log(idx)
-                        // top = 0;
+
                         left = idx % 2 == 0 ? 0 : conf / 2;
                         right = idx % 2 == 0 ? conf / 2 : 0;
                         break;
                 }
-                // console.log({
-                //   marginTop: top + 'px',
-                //   marginBottom: bottom + 'px',
-                //   marginLeft: left + 'px',
-                //   marginRight: right + 'px'
-                // })
-                //6666
+
                 if (idx === 0) top = 0
                 //这个需要是2
                 if (idx === 1 && this.tab.config.style == 2) top = 0
@@ -361,8 +351,6 @@
             const res = uni.getSystemInfoSync();
             _self.fullWidth = res.screenWidth;
             _self.fullHeight = res.screenHeight;
-            console.log(res)
-
 
             this.tab = this.confData;
             this.currentTab = this.tab.value.list[0]
@@ -377,7 +365,7 @@
 
 
 <style scoped lang="less">
-    @import "../../static/css/app.less";
+    @import "../../assets/css/app.less";
 
 
     .wrap {

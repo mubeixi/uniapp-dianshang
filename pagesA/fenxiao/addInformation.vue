@@ -87,7 +87,7 @@
 									</view>
 					</picker>
 				</view>
-				
+
 			</view>
 			<view class="threes" v-if="current==3">
 					<view class="haha">
@@ -274,10 +274,8 @@
 									url:'/pagesA/fenxiao/region'
 								})
 							},1000)
-						},err=>{
-							this.isAgr=false;
 						}).catch(e=>{
-							console.log(e);
+							this.isAgr=false;
 						})
 					}
 				}else{
@@ -358,23 +356,21 @@
 			},
 			address_town: function () {
 			    getTown({'a_id': this.address_info.Address_Area }).then(res => {
-			      if (res.errorCode == 0) {
-			            var t_arr = [];
-			            var t_index = 0;
-			            var idx = 0;
-			            for (var i in res.data) {
-			               for (var j in res.data[i]) {
-			                t_arr.push({ 'id': j, 'name': res.data[i][j] });
-			                if (j == this.address_info.Address_Town) {
-			                    t_index = idx;
-			                }
-			                  idx++;
-			                }
-			              }
-			            this.t_arr = t_arr;
-			            this.t_index = t_index;
-			        }
-				})
+					var t_arr = [];
+					var t_index = 0;
+					var idx = 0;
+					for (var i in res.data) {
+						for (var j in res.data[i]) {
+							t_arr.push({ 'id': j, 'name': res.data[i][j] });
+							if (j == this.address_info.Address_Town) {
+								t_index = idx;
+							}
+							idx++;
+						}
+					}
+					this.t_arr = t_arr;
+					this.t_index = t_index;
+				}).catch(()=>{})
 			},
 			//处理省市区联动信息
 			  addressChange: function (columnValue) {

@@ -310,7 +310,6 @@ export default {
 			imageUrl:this.product.ImgPath,
 			path: buildSharePath(path)
 		};
-		console.log(shareObj)
 		return shareObj
 
 	},
@@ -342,7 +341,6 @@ export default {
 			const vm =this
 			uni.$on('collectSpike',(data)=>{
 				//if(data.detail!='limit') return
-				console.log('触发limit收藏事件')
 				vm.collect()
 			})
 
@@ -352,13 +350,11 @@ export default {
 
 			uni.$on('spikeBuy',(data)=>{
 				//if(data.detail!='limit') return
-				console.log('触发limit抢购')
 				vm.myPin()
 			})
 
 			uni.$on('goodsSkuSub',(data)=>{
 				if(data.detail!='limit') return
-				console.log('触发这么多次事件????')
 				let {check_attr,check_attrid_arr,submit_flag,postData} = data
 				this.check_attr = check_attr
 				this.check_attrid_arr = check_attrid_arr
@@ -394,10 +390,8 @@ export default {
 			//时间戳格式转换
 			current = parseInt(current/1000)
 
-			// console.log(end_timeStamp,current)
 			let countTime = end_timeStamp - current
 			if(countTime<0){
-				console.log('已经结束')
 				return false
 			};
 
@@ -494,11 +488,9 @@ export default {
 			});
 		},
 		toJoinGroup(tid,team){
-			console.log(team)
 			if(!this.$fun.checkIsLogin())return;
 
 			for(var usr of team.join_user){
-				console.log(usr)
 				if(this.userInfo.User_ID == usr){
 
 					this.$fun.confirm({title:'操作提示',content:'您已经参加该团,是否继续查看?'}).then(res=>{
@@ -520,9 +512,8 @@ export default {
 		async shareFunc(channel) {
 
 			let _self = this
-			let path = 'pages/detail/groupDetail?Products_ID=' + this.Products_ID;
+			let path = '/pages/detail/groupDetail?Products_ID=' + this.Products_ID;
 			let front_url = this.initData.front_url;
-			console.log('front_url is '+front_url)
 
 			let shareObj = {
 				title: this.product.Products_Name,
@@ -531,7 +522,6 @@ export default {
 				path: buildSharePath(path)
 			};
 
-			console.log(shareObj)
 
 			switch (channel) {
 				case 'wx':
@@ -544,10 +534,8 @@ export default {
 						summary: shareObj.desc,
 						imageUrl: shareObj.imageUrl,
 						success: function (res) {
-							console.log("success:" + JSON.stringify(res));
 						},
 						fail: function (err) {
-							console.log("fail:" + JSON.stringify(err));
 						}
 					});
 					break;
@@ -561,10 +549,8 @@ export default {
 						summary: shareObj.desc,
 						imageUrl: shareObj.imageUrl,
 						success: function (res) {
-							console.log("success:" + JSON.stringify(res));
 						},
 						fail: function (err) {
-							console.log("fail:" + JSON.stringify(err));
 						}
 					});
 					break;
@@ -583,7 +569,6 @@ export default {
 							webUrl: 'http://uniapp.dcloud.io'
 						},
 						success: ret => {
-							console.log(JSON.stringify(ret));
 						}
 					});
 					break;
@@ -591,12 +576,10 @@ export default {
 					//this.$toast('comming soon')
 
 					let sharePic = await getProductSharePic({'product_id': this.Products_ID,'act_price':this.product.price}).then(res => {
-						console.log(res)
 						ls.set('temp_sharepic_info', res.data)
 						return res.data.img_url
 					})
 
-					console.log('海报的地址是' + sharePic)
 
 					if (!sharePic) {
 						error('获取分享参数失败');
@@ -648,7 +631,6 @@ export default {
 			newContent = newContent.replace(/\<img/gi, '<img style="width:100%;float:left;"');
 			newContent = newContent.replace(/src="\/\//gi, 'src="http://');
 			//newContent = newContent.replace(/>[\s]*</gi, "><");
-			// console.log(newContent);
 			return newContent;
 		},
 		//评价预览
@@ -659,7 +641,6 @@ export default {
 			let tempArr = this.commit[i].ImgPath.map((img,idx)=>{
 				return img.replace(/\/n3\//,'/');
 			});
-			console.log(tempArr)
 
 			uni.previewImage({
 			            urls: tempArr,
@@ -683,35 +664,25 @@ export default {
 			// 检查是否已收藏
 			if(this.isCollected) {
 				cancelCollection({prod_id: this.Products_ID}).then(res=>{
-					if(res.errorCode == 0) {
-						uni.showToast({
-							title: res.msg,
-							icon:'none'
-						});
-						this.isCollected = false;
-						// #ifdef APP-PLUS
-							uni.$emit('spike_bottom_setval', {isCollected:this.isCollected,detail:'limit'});
-						// #endif
-					}
-
-				})
+					uni.showToast({
+						title: res.msg,
+						icon:'none'
+					});
+					this.isCollected = false;
+					// #ifdef APP-PLUS
+					uni.$emit('spike_bottom_setval', {isCollected:this.isCollected,detail:'limit'});
+					// #endif
+				}).catch(()=>{})
 			}else {
 				addCollection({prod_id: this.Products_ID,}).then(res=>{
-					if(res.errorCode == 0) {
-						uni.showToast({
-							title: '收藏成功'
-						});
-						this.isCollected = true;
-						// #ifdef APP-PLUS
-							uni.$emit('spike_bottom_setval', {isCollected:this.isCollected,detail:'limit'});
-						// #endif
-					}else {
-						uni.showToast({
-							title: res.msg,
-							icon: 'fail'
-						})
-					};
-				})
+					uni.showToast({
+						title: '收藏成功'
+					});
+					this.isCollected = true;
+					// #ifdef APP-PLUS
+					uni.$emit('spike_bottom_setval', {isCollected:this.isCollected,detail:'limit'});
+					// #endif
+				}).catch(()=>{})
 			}
 		},
 		// 检查产品是否已收藏
@@ -720,12 +691,10 @@ export default {
 				return
 			}
 			checkProdCollected({prod_id: item}).then(res => {
-				if(res.errorCode == 0) {
-					this.isCollected = res.data.is_favourite == 1
-					// #ifdef APP-PLUS
-						uni.$emit('spike_bottom_setval', {isCollected:this.isCollected,detail:'limit'});
-					// #endif
-				}
+				this.isCollected = res.data.is_favourite == 1
+				// #ifdef APP-PLUS
+				uni.$emit('spike_bottom_setval', {isCollected:this.isCollected,detail:'limit'});
+				// #endif
 			}).catch(e => {
 
 			})
@@ -752,7 +721,6 @@ export default {
 			}
 
 			if(e){
-				console.log(e);
 				add_template_code({
 					code: e.detail.formId,
 					times: 1
@@ -766,7 +734,7 @@ export default {
 		//返回首页
 		goHome(){
 			uni.switchTab({
-				url:'../index/index'
+				url:'/pages/index/index'
 			})
 		},
         // 选择属性
@@ -837,7 +805,6 @@ export default {
         skuSub(e){
 				if(this.isSubmit) return;
 			if(e){
-				console.log(e);
 				add_template_code({
 					code: e.detail.formId,
 					times: 1
@@ -858,20 +825,13 @@ export default {
         		}
         	}
 					this.isSubmit = true;
-        	console.log(this.postData)
         	updateCart(this.postData).then(res=>{
-        		console.log(res)
 						this.isSubmit = false;
-        		if(res.errorCode == 0) {
-        				uni.navigateTo({
-        					url: '/pages/order/check?cart_key=DirectBuy'
-        				})
-        		}else {
-
-        		}
+				uni.navigateTo({
+					url: '/pages/order/check?cart_key=DirectBuy'
+				})
 
         	}).catch(e=>{
-				console.log(e)
 				this.isSubmit = false;
 				uni.showToast({
 					title: e.msg,
@@ -919,7 +879,7 @@ export default {
         },
         goCart(){
         	uni.switchTab({
-        		url: '../order/cart'
+        		url: '/pages/order/cart'
         	})
         },
         goBack(){
@@ -940,11 +900,7 @@ export default {
 
         	getCommit(data,{errtip:false}).then(res=>{
 				this.commit=res.data;
-        	},err=>{
-        		console.log('获取评论失败',err)
-			}).catch(e=>{
-
-			})
+        	}).catch(e=>{})
         },
 		stampCount(){
 			let rt  = {};
@@ -982,10 +938,7 @@ export default {
 			let product = null;
 
 			spikeProdDetail(data).then(res=>{
-				//console.log(res)
-				if(res.errorCode != 0){
-					return;
-				}
+
 				this.product = res.data;
 				this.postData.productDetail_price=res.data.price;
 				this.Products_ID=res.data.Products_ID;
@@ -1021,9 +974,7 @@ export default {
 
 					this.product.skujosn_new = skujosn_new;
 					this.product.skuvaljosn = res.data.skuvaljosn;
-					//console.log(this.product.skujosn);
 				}
-				//console.log(this.product.skujosn_new,"ssssssssssssssssssss")
 				// #ifdef APP-PLUS
 				//规格选择
 				uni.$emit('goods_spec_setval',{product:this.product,detail:'limit'})
@@ -1032,7 +983,7 @@ export default {
 
 				// #ifdef H5
 
-				let path = 'pages/detail/limitDetail?spikeGoodId='+this.spike_good_id;
+				let path = '/pages/detail/limitDetail?spikeGoodId='+this.spike_good_id;
 				let front_url = this.initData.front_url;
 
 
@@ -1061,7 +1012,6 @@ export default {
 					});
 
 				}).catch(()=>{
-					console.log('不是微信环境')
 				})
 
 				// #endif
@@ -1069,17 +1019,15 @@ export default {
 				//resolve(res.data.Products_ID);
 
 			}).catch(e=>{
-				console.log(e)
 			})
         },
         addCart(){
         	this.$refs.cartPopu.show();
-        	console.log('cart')
         	this.postData.cart_key = 'CartList';
         },
         gotoComments(){
             uni.navigateTo({
-            	url: '../order/comments?pro_id='+this.Products_ID
+            	url: '/pages/order/comments?pro_id='+this.Products_ID
             });
         },
         showTick(e){
@@ -1098,7 +1046,6 @@ export default {
 
 		let initData = await this.getInitData();
 
-		console.log('初始化信息',initData)
 		let WX_MINI_ORIGIN_ID = ls.get('WX_MINI_ORIGIN_ID');
 		if(!WX_MINI_ORIGIN_ID){
 
@@ -1113,7 +1060,6 @@ export default {
 		}
 
 		this.wxMiniOriginId = WX_MINI_ORIGIN_ID;
-		console.log('wxMiniOriginId is '+this.wxMiniOriginId)
 
 	}
 }

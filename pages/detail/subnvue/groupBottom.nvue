@@ -59,7 +59,6 @@
                 for(var key in data){
                     vm[key] = data[key]
                 }
-				console.log(this.isCollected,"ss")
                 // vm.title = data.title;
                 // vm.content = data.content;
             })
@@ -69,7 +68,6 @@
                 uni.$emit('kefu',{});
             },
             collectFn(){
-                console.log("click collect")
                 uni.$emit('collectHandles',{});
             },
             toHome(){

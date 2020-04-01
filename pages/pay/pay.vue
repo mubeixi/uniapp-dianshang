@@ -118,7 +118,7 @@
 				<div class="info">共{{orderInfo.prod_list.length}}件商品 总计：<span class="mbxa">￥<span>{{orderInfo.Order_Fyepay}}</span></span></div>
 				<view class="tips" v-if="orderInfo.obtain_desc">{{orderInfo.obtain_desc}}</view>
 			</div>
-			<view class="mx" @click="seeDetail">明细 <image class="image" :class="isSlide?'slidedown':''" src="../../static/top.png"></image></view>
+			<view class="mx" @click="seeDetail">明细 <image class="image" :class="isSlide?'slidedown':''" src="/static/top.png"></image></view>
 			<div class="submit" @click="submit">去支付</div>
 		</div>
 		<div class="safearea-box"></div>
@@ -243,7 +243,7 @@
 				this.code = GetQueryByString(location.href, 'code');
 				if (this.code) {
 					this.pay_type = 'wx_mp';//需要手动设置一下
-					// console.log(this.pay_type)
+
 					// ls.set('code',this.code)
 					this.self_orderPay(1);
 				}
@@ -254,7 +254,7 @@
 			//...mapActions(['getInitData']),
 			//获取用户支付方式
 			chooseType(name) {
-				console.log('支付方式',name)
+
 				this.pay_type = name;
 				this.$refs.popupLayer.close();
 				// 判断是否使用了余额，
@@ -292,43 +292,41 @@
 				getOrderDetail({
 					Order_ID: this.Order_ID,
 				}).then(res => {
-					console.log(res)
-					if (res.errorCode == 0) {
-						for (var i in res.data) {
-							if (i == 'Order_Shipping') {
-								res.data[i] = JSON.parse(res.data[i])
-							}
-							if (i == 'prod_list') {
-								for (var j in res.data[i]) {
-									for (var k in res.data[i][j]) {
-										if (k == 'attr_info') {
-											res.data[i][j][k] = res.data[i][j][k] && JSON.parse(res.data[i][j][k])
-										}
+
+					for (var i in res.data) {
+						if (i == 'Order_Shipping') {
+							res.data[i] = JSON.parse(res.data[i])
+						}
+						if (i == 'prod_list') {
+							for (var j in res.data[i]) {
+								for (var k in res.data[i][j]) {
+									if (k == 'attr_info') {
+										res.data[i][j][k] = res.data[i][j][k] && JSON.parse(res.data[i][j][k])
 									}
 								}
 							}
 						}
-						this.orderInfo = res.data;
-						this.Order_Type = res.data.Order_Type;
-						this.is_use=this.orderInfo.is_use_money
-						this.openMoney=this.orderInfo.is_use_money==1?true:false
-						ls.set('type',this.Order_Type);
-						ls.set('pagefrom', this.pagefrom);
-						// pay_money 应该支付的钱
-						// user_money 使用的余额
-						this.pay_money = this.orderInfo.Order_Fyepay;
-						this.user_money = this.orderInfo.Order_Yebc;
-						this.openMoney = this.orderInfo.Order_Yebc > 0;
-						if(!this.openMoney){
-							this.is_use=0
-						}
-						this.need_invoice = this.orderInfo.Order_NeedInvoice;
-						this.openInvoice = this.orderInfo.Order_NeedInvoice > 0;
-						this.invoice_info = this.orderInfo.Order_InvoiceInfo;
-						this.order_remark = this.orderInfo.Order_Remark;
-						this.isGetOrder = true;
 					}
-				})
+					this.orderInfo = res.data;
+					this.Order_Type = res.data.Order_Type;
+					this.is_use=this.orderInfo.is_use_money
+					this.openMoney=this.orderInfo.is_use_money==1?true:false
+					ls.set('type',this.Order_Type);
+					ls.set('pagefrom', this.pagefrom);
+					// pay_money 应该支付的钱
+					// user_money 使用的余额
+					this.pay_money = this.orderInfo.Order_Fyepay;
+					this.user_money = this.orderInfo.Order_Yebc;
+					this.openMoney = this.orderInfo.Order_Yebc > 0;
+					// if(!this.openMoney){
+					// 	this.is_use=0
+					// }
+					this.need_invoice = this.orderInfo.Order_NeedInvoice;
+					this.openInvoice = this.orderInfo.Order_NeedInvoice > 0;
+					this.invoice_info = this.orderInfo.Order_InvoiceInfo;
+					this.order_remark = this.orderInfo.Order_Remark;
+					this.isGetOrder = true;
+				}).catch(()=>{})
 			},
 			// 用户重新更改了余额
 			moneyInputHandle(e) {
@@ -457,7 +455,7 @@
 					// 不使用余额支付
 					if (this.orderInfo.Order_Fyepay > 0) {
 						// 待支付金额
-						// console.log('去支付了',this.$refs)
+
 						this.$refs.payLayer.show();
 						//this.$refs.popupLayer.show();
 					} else {
@@ -522,7 +520,7 @@
 
 
 				let REDIRECT_URI = urlencode(origin + pathname + search + hash);
-				console.log(REDIRECT_URI);
+
 
 				let wxAuthUrl = null;
 
@@ -535,7 +533,6 @@
 					wxAuthUrl =
 						`https://open.weixin.qq.com/connect/oauth2/authorize?appid=${channel.appid}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect`
 				}
-				console.log(wxAuthUrl)
 
 				window.location.href = wxAuthUrl;
 
@@ -566,7 +563,6 @@
 				ls.remove('pagefrom');
 				ls.remove('type');
 
-				console.log('支付成功回调',res)
 				if(res && res.code && res.code==2){
 					_that.payFailCall()
 					return;
@@ -635,32 +631,6 @@
 
 				toast('支付成功');
 
-				//微信小程序下需要模板消息
-				// #ifdef MP-WEIXIN
-				// const initData = this.initData
-				// if(initData.hasOwnProperty('lp_template') && initData.lp_template){
-				// 	let lp_template = initData.lp_template
-				// 	let tmplIds = []
-				// 	switch(Order_Type){
-				// 		case 'spike':
-				// 			tmplIds = lp_template.spike_buy
-				// 			break;
-				// 		case 'pintuan':
-				// 			tmplIds = lp_template.pt_buy
-				// 			break;
-				// 		case 'shop':
-				// 			tmplIds = lp_template.normal_buy
-				// 			break;
-				// 		case 'flashsale':
-				// 			tmplIds = lp_template.flash_buy
-				// 			break;
-				// 	}
-				// 	//调就是了，是否成功都可以
-				// 	console.log('调用wx.requestSubscribeMessage',tmplIds)
-				// 	wx.requestSubscribeMessage({tmplIds,success (res) {console.log('success',res)},fail(err) {console.log('fail',err)}})
-				// }
-
-				// #endif
 
 				//拼团订单则跳转到开团成功
 
@@ -755,7 +725,6 @@ return;
 						await new Promise((resolve => {
 							uni.login({
 								success: function (loginRes) {
-									console.log(loginRes);
 									payConf.code = loginRes.code
 									resolve()
 								}
@@ -764,12 +733,7 @@ return;
 
 						// #endif
 
-
-
-						console.log('payConf is', payConf)
 						orderPay(payConf,{mask:true,tip:'正在加载中'}).then(res => {
-							console.log(res);
-
 
 							// #ifdef H5
 							let {
@@ -796,7 +760,7 @@ return;
 								});
 
 							}).catch((e) => {
-								console.log('支付失败')
+
 							})
 
 							return;
@@ -819,16 +783,15 @@ return;
 							orderInfo = res.data
 							delete orderInfo.timestamp
 
-							console.log(provider,orderInfo,'支付数据222222222222222222');
 							uni.requestPayment({
 							...orderInfo,
 								provider,
 								success: function (res) {
-									console.log('success:' + JSON.stringify(res));
+
 									_self.paySuccessCall(res)
 								},
 								fail: function (err) {
-									console.log('fail:' + JSON.stringify(err));
+
 									uni.showModal({
 										title:'支付错误',
 										content:JSON.stringify(err)
@@ -840,17 +803,16 @@ return;
 							// #ifdef APP-PLUS
 							provider = 'wxpay';
 							orderInfo = res.data
-							console.log(provider,orderInfo,'支付数据222222222222222222');
 
 							uni.requestPayment({
 								provider,
 								orderInfo, //微信、支付宝订单数据
 								success: function (res) {
 									_self.paySuccessCall(res)
-									console.log('success:' + JSON.stringify(res));
+
 								},
 								fail: function (err) {
-									console.log('fail:' + JSON.stringify(err));
+
 									uni.showModal({
 										title:'支付错误',
 										content:JSON.stringify(err)
@@ -881,7 +843,7 @@ return;
 							invoice_info: this.invoice_info,
 							order_remark: this.order_remark
 						},{mask:true,tip:'正在加载中'}).then(res => {
-							console.log(res);
+
 
 						})
 					}
@@ -894,7 +856,7 @@ return;
 			},
 			// 用户输入密码完毕
 			user_password(e) {
-				console.log(e)
+
 				this.user_pay_password = e.detail.value;
 			},
 			// 确定输入支付密码

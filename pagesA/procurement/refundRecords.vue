@@ -91,7 +91,7 @@
 								<view>平台进货</view>
 		        </view>
 		        <view class="skulist">
-								<image class="selected" src="../../static/selected.png" mode=""></image>
+								<image class="selected" src="/static/selected.png" mode=""></image>
 								<view>门店进货</view>
 		        </view>
 		        <view class="skulist">
@@ -225,7 +225,6 @@
 					latitude: this.storeInfo.wx_lat,
 					longitude: this.storeInfo.wx_lng,
 					success: function () {
-						console.log('success');
 					}
 				});
 			},

@@ -81,13 +81,13 @@
 		},
 		mounted(){
 			if(this.showPop){
-				console.log(22222222222222222);
+
 				this.show();
 			}
 		},
 		watch:{
 			showPop(value){
-				console.log(value)
+
 				if(value){
 					this.show();
 				}else{
@@ -148,18 +148,15 @@
 			// 	// that.setData(json)
 			// },
 			stopMove(event){
-				console.log(11);
-				console.log(event);
+
 				return;
 			},
 			show(events) {
-				console.log('show popup')
-
 
 				const { windowHeight } = uni.getSystemInfoSync();
-				console.log(windowHeight)
+
 				this.animationStr = this.slideupshow(`-${windowHeight}px`,0.6)
-				console.log('this.animationStr',this.animationStr)
+
 				let _open = setTimeout(() => {
 					this.ifshow = true;
 					this.translateValue = 0;
@@ -172,7 +169,7 @@
 				}, 300);
 			},
 			close() {
-				console.log('close popup')
+
 				if (this.timer !== null || !this.iftoggle) {
 					return;
 				}
@@ -196,7 +193,7 @@
 			},
 			stopEvent(event) {},
 			doSome(){
-				console.log(111222111111111);
+
 			}
 
 		}

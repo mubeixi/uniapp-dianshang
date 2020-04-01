@@ -74,8 +74,8 @@
 						  address_id: address_id
 						})
 					}
-				
-		
+
+
 			  },
 
 			  //删除收获地址
@@ -89,31 +89,22 @@
 			        if (res.confirm) {
 			          if (del_address_id) {
 						delAddress({Address_ID: del_address_id}).then(res=>{
-							if (res.errorCode == 0) {
-							  //更新收货地址列表
-							  var addresslist = that.addresslist;
-							  for (var i in addresslist) {
-							    if (addresslist[i]['Address_ID'] == del_address_id) {
-							      addresslist.splice(i, 1);
-							    }
-							  }
-							  //重置删除收货地址id
-							  that.addresslist = addresslist;
-							  del_address_id = 0;
-
-							 console.log(that.addresslist)
-							  uni.showToast({
-							    title: '删除成功',
-							    icon: 'success',
-							    duration: 1000
-							  });
-							} else {
-							  uni.showModal({
-							    title: '错误',
-							    content: '删除失败',
-							    showCancel: false
-							  });
+							//更新收货地址列表
+							var addresslist = that.addresslist;
+							for (var i in addresslist) {
+								if (addresslist[i]['Address_ID'] == del_address_id) {
+									addresslist.splice(i, 1);
+								}
 							}
+							//重置删除收货地址id
+							that.addresslist = addresslist;
+							del_address_id = 0;
+
+							uni.showToast({
+								title: '删除成功',
+								icon: 'success',
+								duration: 1000
+							});
 						})
 			          } else {
 			            uni.showModal({
@@ -134,7 +125,7 @@
 				if(id !== 'a') {
 					address_id = id;
 				}
-				console.log(address_id)
+
 			    uni.navigateTo({
 			    	url: '/pagesA/editAddress/editAddress?from=addresslist' + (address_id ? '&addressid=' + address_id : '')
 			    })
@@ -143,17 +134,9 @@
 			  //获取收货地址列表
 			  getAddressList: function () {
 					getAddress({}).then(res => {
-						if (res.errorCode == 0) {
-							var addresslist = res.data;
-							this.addresslist = addresslist;
-						} else if (res.errorCode == 1) {
-							uni.showModal({
-							title: '错误',
-							content: res.msg,
-							showCancel: false
-							})
-						}
-					})
+						var addresslist = res.data;
+						this.addresslist = addresslist;
+					}).catch(()=>{})
 			  },
 		},
 		/**

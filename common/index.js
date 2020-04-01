@@ -51,10 +51,10 @@ export const confirm = (options) => {
             ...options,
             success: function (res) {
                 if (res.confirm) {
-                    console.log('用户点击111');
+
                     resolve(res)
                 } else if (res.cancel) {
-                    console.log('用户点击取消');
+
                     reject(res)
                 }
             },
@@ -120,7 +120,7 @@ export const checkIsDistribute = (redirect, tip) => {
     //需要先确认是否已经登录了。。。。。
 
     let userInfo = store.state.userInfo || ls.get('userInfo')
-    console.log(userInfo)
+
     if (userInfo.Is_Distribute != 1) {
         if (redirect) {
             if (!tip) {
@@ -165,10 +165,10 @@ export const goProductDetail = (id, is_group) => {
 const tabbarRouter = ['/pages/index/index', '/pages/classify/classify', '/pages/detail/groupSuccess', '/pages/order/cart', '/pages/person/person', '/pages/fenxiao/fenxiao'];
 const isHasTabbarRouter = (link) => {
     for (var item of tabbarRouter) {
-        console.log(item, link, item.indexOf(link));
+
         //反的了。。
         if (item.indexOf(link) != -1 || link.indexOf(item) != -1) {
-            console.log('has');
+
             return true;
         }
     }
@@ -183,13 +183,11 @@ export const linkTo =  (linkObj) => {
         return;
     }
 
-    console.log('跳转link:' + link + '===type:' + linkType)
-
     //跳转到小程序
     if (linkType === 'mini') {
 
         let {url, appid, origin_id} = ext
-        console.log(link, url, appid, origin_id)
+
         // #ifdef APP-PLUS
         if (!origin_id) {
             error('origin_id_缺失')
@@ -213,7 +211,7 @@ export const linkTo =  (linkObj) => {
             }) : toast('跳转小程序参数错误');
 
         }, function (e) {
-            console.log("获取分享服务列表失败：" + e.message);
+
             if (ext.url) {
 
             }
@@ -232,6 +230,11 @@ export const linkTo =  (linkObj) => {
                     // 打开成功
                 },
                 fail(err) {
+                    const {errMsg='请联系客服'} = err
+                    uni.showModal({
+                        title:'跳转小程序错误',
+                        content:errMsg
+                    })
                     console.log(err)
                 }
             })
@@ -260,7 +263,7 @@ export const linkTo =  (linkObj) => {
     if (linkType === 'third' || link.indexOf('http') !== -1) {
 
         // #ifndef H5
-        console.log('/pages/common/webview?url=' + link)
+
         uni.navigateTo({
             url: '/pages/common/webview?encode=1&url=' + encodeURIComponent(link)
         })
@@ -318,7 +321,7 @@ export const fun = {
         uni.navigateBack()
     }
 };
-// console.log(filter)
+
 
 
 export default {

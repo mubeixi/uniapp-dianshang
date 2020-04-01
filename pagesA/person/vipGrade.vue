@@ -129,8 +129,8 @@
 				getLevelCenter().then(res=>{
 					this.pro=res.data;
 					this.tequan=res.data.levels[0];
-				},err=>{}).catch(e=>{
-					console.log(e)
+				}).catch(e=>{
+
 				})
 			},
 			goBack(){

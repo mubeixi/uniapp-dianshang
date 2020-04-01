@@ -192,7 +192,6 @@
         },
         methods: {
             radioChange(e) {
-                console.log(e)
 				this.index=e.detail.value
                 this.select_info = this.stores[e.detail.value]
             },
@@ -204,17 +203,7 @@
                 this.$emit('callFn', this.select_info)
             },
             async get_user_location() {
-                // console.log('让你等就等')
-                // await new Promise((resolve, reject) => {
-                //     setTimeout(function () {
-                //         console.log('等到了')
-                //         resolve(false)
-                //     },2000)
-                // })
-                //
-                // console.log('没等到就跑了')
-                //真实环境不跑下面逻辑，供参考
-                //return;
+
                 let localInfo = null;
 
 
@@ -223,11 +212,7 @@
                 getLocation(this.pageEl).then(res => {
                     if (res.code === 0) {
                         localInfo = res.data
-                        // rt = true
 
-                        console.log('获取到的位置信息', localInfo)
-
-                        // if (!rt) return;
                         this.lat = localInfo.latitude
                         this.lng = localInfo.longitude
 
@@ -235,7 +220,6 @@
 
                     }
                 }).catch(err => {
-                    console.log(err)
                     error('获取位置信息失败:' + err.msg)
                 })
 
@@ -251,7 +235,6 @@
                     area: this.area.id,
                     stores_name: this.stores_name,
                 }
-
 
                 postData.prod_json = JSON.stringify(this.prod_ids)
 
@@ -292,7 +275,7 @@
 
             },
             bindCityChange(e) {
-                console.log(e.detail.value)
+
                 this.city_idx = e.detail.value
                 this.city = this.city_list[e.detail.value]
             },
@@ -301,8 +284,7 @@
                 this.area = this.area_list[e.detail.value]
             },
             stopMove(event) {
-                console.log(11);
-                console.log(event);
+
                 return;
             },
             show(prod_ids,storeId) {
@@ -320,7 +302,6 @@
 				}
 
 
-                console.log('show popup')
                 this.ifshow = true;
 
                 let _open = setTimeout(() => {
@@ -333,7 +314,6 @@
                 }, 300);
             },
             close() {
-                console.log('close popup')
                 if (this.timer !== null || !this.iftoggle) {
                     return;
                 }
@@ -347,7 +327,6 @@
                 }, 100);
             },
             ableClose() {
-                console.log(this.autoClose)
                 if (this.autoClose) {
                     this.close();
                 }
@@ -355,7 +334,6 @@
             stopEvent(event) {
             },
             doSome() {
-                console.log(111222111111111);
             }
 
         },

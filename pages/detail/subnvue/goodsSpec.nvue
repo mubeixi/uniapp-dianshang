@@ -80,14 +80,12 @@
 			const vm = this;
 			uni.$on('goods_spec_setval', (data) => {
 
-				console.log('goods_spec_setval', data.product)
 				this.detail=data.detail
 				for (var key in data) {
 					vm[key] = data[key]
 				}
 				// vm.title = data.title;
 				// vm.content = data.content;
-				//console.log(vm.product.Products_JSON.imgPath)
 			})
 		},
 		beforeDestroy() {

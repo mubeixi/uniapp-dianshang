@@ -90,7 +90,6 @@
 			},
 			// 下拉选择
 			pickHandle(e) {
-				console.log(e);
 				this.index = e.detail.value;
 				this.postData.link_url = e.detail.value;
 			},
@@ -145,13 +144,11 @@
 				}).then(res=>{
 						uni.showToast({
 							title: res.msg
-						}),err=>{
-							uni.showToast({
-								title: err.msg
-							})
-						}
-				}).catch(e=>{
-					console.log(e)
+						})
+				}).catch(err=>{
+					uni.showToast({
+						title: err.msg
+					})
 				})
 			}
 		}

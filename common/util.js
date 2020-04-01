@@ -269,10 +269,8 @@ function format_money_string(money, mtype = 0) {
 //输入金额时时验证
 function check_money_in(money) {
     if (!(/(^[1-9]([0-9]+)?(\.[0-9]{0,2})?$)|(^(0){1}$)|(^[0-9]\.([0-9]){0,2}?$)/.test(money))) {
-        console.log('false')
         return false;
     } else {
-        console.log('true')
         return true;
     }
 }
@@ -281,8 +279,6 @@ function check_money_in(money) {
 //数组转化
 export const array_change = function (arr) {
     var array = [];
-    // console.log('utls')
-    // console.log(arr)
     for (var i in arr) {
         array.push({'id': i, 'name': arr[i]});
     }

@@ -17,8 +17,6 @@
 				this.url = options.url
 			}
 
-
-			console.log('url is',this.url)
 		}
 	}
 </script>

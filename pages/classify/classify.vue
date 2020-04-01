@@ -146,7 +146,7 @@
 
 			goSearch(){
 				uni.navigateTo({
-					url:'../classify/search'
+					url:'/pages/classify/search'
 				})
 			},
 			getList(){
@@ -183,7 +183,6 @@
 						top += rect.height;
 						arr.push(top)
 					})
-					//console.log(arr)
 					_this.arr = arr
 				}).exec()
 			},
@@ -216,7 +215,7 @@
 			},
 			cart(item) {
 				uni.navigateTo({
-					url:'../classify/result?Cate_ID='+item.Category_ID
+					url:'/pages/classify/result?Cate_ID='+item.Category_ID
 				})
 			}
 		},

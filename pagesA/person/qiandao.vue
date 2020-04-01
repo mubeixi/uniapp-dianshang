@@ -69,14 +69,11 @@
 							duration:2500,
 							icon:"none"
 						})
-					},err=>{
-
 					}).catch(e=>{
-						console.log(e);
 					})
 				}else{
 					uni.navigateTo({
-						url:'../person/person'
+						url:'/pages/person/person'
 					})
 				}
 

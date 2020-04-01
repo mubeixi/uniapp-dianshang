@@ -41,7 +41,7 @@
         components: {},
         methods: {
             pauseFn() {
-                console.log('暂停视频', this.videoContext)
+
                 if (this.videoContext) {
                     this.videoContext.pause()
                 }
@@ -73,7 +73,7 @@
         created() {
 
             this.video = this.confData
-            // console.log(this.video)
+
         }
     }
 </script>

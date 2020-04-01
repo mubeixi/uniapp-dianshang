@@ -91,7 +91,7 @@
 								<view>平台进货</view>
 		        </view>
 		        <view class="skulist">
-								<image class="selected" src="../../static/selected.png" mode=""></image>
+								<image class="selected" src="/static/selected.png" mode=""></image>
 								<view>门店进货</view>
 		        </view>
 		        <view class="skulist">
@@ -105,7 +105,7 @@
 		</view>
 		<!--  遮罩层	-->
 		<view class="mask" :hidden="isHidden" @click="hiddenMask"></view>
-		
+
 		<wzw-dialog ref="refuseApply">
 		    <div class="refuseApplyDialog">
 		        <textarea class="reason" @input="bingReasonInput" :value="reason" placeholder-style="color:#999" placeholder="请输入驳回原因" auto-height />
@@ -115,8 +115,8 @@
 		        </div>
 		    </div>
 		</wzw-dialog>
-		
-		
+
+
 	</view>
 </template>
 
@@ -170,12 +170,12 @@
 								},1000)
 							})
 				        } else if (res.cancel) {
-				          
+
 				        }
 				    }
 				});
-				
-				
+
+
 			},
 			sureOrder(item){
 				let data={
@@ -195,11 +195,11 @@
 								},1000)
 							})
 				        } else if (res.cancel) {
-				          
+
 				        }
 				    }
 				});
-				
+
 			},
 			bohui(item){
 				this.id=item
@@ -212,20 +212,20 @@
 			    }
 				let that=this
 				let data={
-					reason:this.reason, 
+					reason:this.reason,
 					store_id: this.Stores_ID,
 					order_id:this.id
 				}
 				storeProdBackOrderReject(data,{tip:'处理中'}).then(res=>{
 				    this.$refs.refuseApply.close()
-				
+
 				    this.reason = ''
 				    toast(res.msg)
 					setTimeout(function(){
 						that.load();
 					},1000)
 				},err=>{})
-			   
+
 			},
 			cancelRefuseApply(){
 			    this.$refs.refuseApply.close()
@@ -275,7 +275,6 @@
 					latitude: this.storeInfo.wx_lat,
 					longitude: this.storeInfo.wx_lng,
 					success: function () {
-						console.log('success');
 					}
 				});
 			},

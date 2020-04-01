@@ -98,37 +98,31 @@
 				}
 				if(this.index==0){
 					getDisRecordList(data).then(res=>{
-						if(res.errorCode==0){
-							for(let item of res.data){
-								this.pro.push(item)
-							}
-							this.totalCount=res.totalCount;
+						for(let item of res.data){
+							this.pro.push(item)
 						}
+						this.totalCount=res.totalCount;
 
 					}).catch(e=>{
-						console.log(e);
+
 					})
 				}else if(this.index==1){
 					getNobiRecordList(data).then(res=>{
-						if(res.errorCode==0){
-							for(let item of res.data){
-								this.pro.push(item)
-							}
-							this.totalCount=res.totalCount;
+						for(let item of res.data){
+							this.pro.push(item)
 						}
+						this.totalCount=res.totalCount;
 					}).catch(e=>{
-						console.log(e);
+
 					})
 				}else if(this.index==2){
 					getShaRecordList(data).then(res=>{
-						if(res.errorCode==0){
-							for(let item of res.data){
-								this.pro.push(item)
-							}
-							this.totalCount=res.totalCount;
+						for(let item of res.data){
+							this.pro.push(item)
 						}
+						this.totalCount=res.totalCount;
 					}).catch(e=>{
-						console.log(e);
+
 					})
 				}else if(this.index == 4) {
 					getManageRecordList(data).then(res=>{
@@ -139,14 +133,12 @@
 					})
 				}else{
 					getAgentRecordList(data).then(res=>{
-						if(res.errorCode==0){
-							for(let item of res.data){
-								this.pro.push(item)
-							}
-							this.totalCount=res.totalCount;
+						for(let item of res.data){
+							this.pro.push(item)
 						}
+						this.totalCount=res.totalCount;
 					}).catch(e=>{
-						console.log(e);
+
 					})
 				}
 			}

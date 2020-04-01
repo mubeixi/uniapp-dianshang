@@ -96,7 +96,6 @@
 			};
 		},
 		onLoad(options) {
-			console.log(options)
 			let {
 				express,
 				prod_img,
@@ -124,10 +123,7 @@
 				}
 				getOrderExpress(data).then(res=>{
 					this.pro=res.data;
-				},err=>{
-
 				}).catch(e=>{
-					console.log(e)
 				})
 			}
 		}

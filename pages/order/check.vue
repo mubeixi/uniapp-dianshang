@@ -177,7 +177,7 @@
 					<view class="info">共{{orderInfo.prod_count}}件商品 总计：<text class="money"><text class="m_icon">￥</text> {{orderInfo.Order_Fyepay}}</text></view>
 					<view class="tips" v-if="orderInfo.obtain_desc">{{orderInfo.obtain_desc}}</view>
 				</view>
-				<view class="mx" @click="seeDetail">明细 <image class="image" :class="isSlide?'slidedown': ''" src="../../static/top.png"></image></view>
+				<view class="mx" @click="seeDetail">明细 <image class="image" :class="isSlide?'slidedown': ''" src="/static/top.png"></image></view>
 				<form report-submit @submit="form_submit">
 					<button formType="submit" class="submit">提交订单</button>
 				</form>
@@ -326,10 +326,7 @@ export default {
 		if(JSON.stringify(this.userInfo) != "{}"){
 			get_user_info().then(res=>{
 				this.setUserInfo(res.data);
-			},err=>{
-
 			}).catch(e=>{
-				console.log(e)
 			})
 		}
 		this.getAddress();
@@ -342,10 +339,8 @@ export default {
 		//if(this.orderInfo.all_has_stores==1)
 		//this.tabIdx = this.initData.order_submit_first;
 		// let userInfo = this.getUserInfo(true);
-		// console.log(this.initData.order_submit_first)
 	},
 	onLoad(options) {
-		//console.log('options is',options)
 		this.postData.cart_key = options.cart_key;
 		if(options.cart_buy){
 			this.postData.cart_buy = options.cart_buy;
@@ -381,9 +376,10 @@ export default {
 		  }
 	  },
 	  bindStores(storeInfo){
-		 this.selectStore=false
-		 console.log(storeInfo)
-		 this.postData.shipping_id='is_store'
+		  if(this.tabIdx===1){
+			  this.selectStore=false
+			  this.postData.shipping_id='is_store'
+		  }
 		 this.shipping_store_id = storeInfo.Stores_ID;
 	  	if(this.setStoreMode==='all'){
 	  		//居然是对象醉了
@@ -458,7 +454,7 @@ export default {
 		// 跳转地址列表页
 		goAddressList(){
 			uni.navigateTo({
-				url: '../addressList/addressList?from=checkout&addressid='+this.postData.address_id
+				url: '/pages/addressList/addressList?from=checkout&addressid='+this.postData.address_id
 			})
 		},
 		// 跳转新增地址页面
@@ -481,7 +477,7 @@ export default {
 						return;
 					}
 				}
-				
+
 				if(this.tabIdx==1&&this.postData.shipping_id!='is_store'){
 					this.submited = false;
 					uni.showToast({
@@ -540,29 +536,19 @@ export default {
 					this.postData.shipping_store_id = this.shipping_store_id
 				}
 				createOrder(this.postData).then(res=>{
-					if(res.errorCode == 0) {
-						// 如果order_totalPrice <= 0  直接跳转 订单列表页
-						if(res.data.Order_Status != 1) {
-							// 直接跳转订单列表页
-							uni.redirectTo({
-								url: '../order/order'
-							});
-							return ;
-						}
-						this.Order_ID = res.data.Order_ID;
+					// 如果order_totalPrice <= 0  直接跳转 订单列表页
+					if(res.data.Order_Status != 1) {
+						// 直接跳转订单列表页
 						uni.redirectTo({
-							url: '../pay/pay?Order_ID='+ res.data.Order_ID+'&pagefrom=check'
-						})
-					}else {
-						uni.showToast({
-							title: res.data.msg,
-							icon: 'none'
+							url: '/pages/order/order'
 						});
-						this.submited = false;
+						return ;
 					}
-					this.submited = false;
+					this.Order_ID = res.data.Order_ID;
+					uni.redirectTo({
+						url: '/pages/pay/pay?Order_ID='+ res.data.Order_ID+'&pagefrom=check'
+					})
 				}).catch(e=>{
-					console.log(e)
 					uni.showToast({
 							title: e.msg,
 							icon: 'none'
@@ -689,7 +675,6 @@ export default {
         changeShip(){
 					this.type = 'shipping';
 					this.ship_current = this.postData.shipping_id;
-					console.log(this.ship_current);
           this.$refs.popupRef.show();
         },
 		closeMethod(){
@@ -719,18 +704,15 @@ export default {
 		async getAddress(){
 			uni.$on('fire', (data) =>{
 				this.back_address_id = data;
-				console.log(data,"ssssssss")
 			})
-			console.log(this.back_address_id)
 			var Address_ID;
 			if (this.back_address_id) {  //添加、选择收获地址返回
 			    Address_ID = this.back_address_id;
 			} else if (this.addressinfo.Address_ID) { //有收获地址，则更新（防止收获地址编辑后返回）
 			    Address_ID = this.addressinfo.Address_ID;
 			}
-			console.log(Address_ID)
 			await getAddress({Address_ID: Address_ID?Address_ID:0}).then(res=>{
-				if (this.back_address_id && res.errorCode != 0) {  //添加、选择收获地址返回
+				if (this.back_address_id) {  //添加、选择收获地址返回
 					uni.showModal({
 					  title: '错误',
 					  content: '收货地址获取失败',
@@ -738,28 +720,17 @@ export default {
 					});
 					return false;
 				}
-				if(res.errorCode == 0) {
-					if(!res.data[0]) return
-					if(res.data.length>0){
-						this.addressinfo = res.data[0]
-					}
-					// for(let i in res.data){
-					// 	for(let j in res.data[i]){
-					// 		if(j=='Address_Is_Default'){
-					// 			res.data[i][j] == 1;
-					// 			this.addressinfo = res.data[i]
-					// 		}
-					// 	}
-					// }
-					this.postData.address_id = this.addressinfo.Address_ID;
+				if(!res.data[0]) return
+				if(res.data.length>0){
+					this.addressinfo = res.data[0]
 				}
+
+				this.postData.address_id = this.addressinfo.Address_ID;
 				this.back_address_id = 0;
 
 				// 获取用户收货地址，获取订单信息，后台判断运费信息
 				this.createOrderCheck();
-			},err=>{
-
-			})
+			}).catch(()=>{})
 
 			this.addressLoading = true;
 
@@ -767,29 +738,26 @@ export default {
 		},
 		createOrderCheck(num){
 			createOrderCheck(this.postData).then(res=>{
-				if(res.errorCode == 0){
+				for(var i in res.data.CartList){
+					for(var j in res.data.CartList[i]){
+						res.data.CartList[i][j].store = {}
+					}
+				}
+				this.orderInfo = res.data;
+				this.orderInfo.coupon_list.push({Coupon_ID:''})
+				//如果该规格有门店 就优先后台设置的
+				if(this.orderInfo.all_has_stores==1&&num!=2){
+					this.tabIdx = this.initData.order_submit_first;
+				}
 
-					for(var i in res.data.CartList){
-						for(var j in res.data.CartList[i]){
-							res.data.CartList[i][j].store = {}
-						}
-					}
-					this.orderInfo = res.data;
-					this.orderInfo.coupon_list.push({Coupon_ID:''})
-					//如果该规格有门店 就优先后台设置的
-					if(this.orderInfo.all_has_stores==1&&num!=2){
-						this.tabIdx = this.initData.order_submit_first;
-					}
-					
-					
-					this.couponlist = res.data.coupon_list;
-					this.orderLoading = true;
-					this.postData.shipping_id = res.data.Order_Shipping.shipping_id;
-					this.idD=this.postData.shipping_id
-					for(var i in this.orderInfo.shipping_company) {
-						if(i == this.postData.shipping_id) {
-							this.shipping_name = `${this.orderInfo.shipping_company[i]}`
-						}
+
+				this.couponlist = res.data.coupon_list;
+				this.orderLoading = true;
+				this.postData.shipping_id = res.data.Order_Shipping.shipping_id;
+				this.idD=this.postData.shipping_id
+				for(var i in this.orderInfo.shipping_company) {
+					if(i == this.postData.shipping_id) {
+						this.shipping_name = `${this.orderInfo.shipping_company[i]}`
 					}
 				}
 			}).catch(e=>{

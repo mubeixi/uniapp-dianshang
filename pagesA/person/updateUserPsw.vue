@@ -105,13 +105,9 @@
 					});
 
 					get_user_info({},{tip:'',errtip:false}).then(res=>{
-						console.log(res.data)
 						this.setUserInfo(res.data);
 						this.goBack()
-					},err=>{
-
 					}).catch(e=>{
-						console.log(e)
 					})
 
 				},err=>{
@@ -162,7 +158,6 @@
 			},
 			save(e){
 
-				console.log(e)
 				// add_template_code({
 				// 	code: e.detail.formId,
 				// 	times: 1
@@ -221,13 +216,11 @@
 
 							//更新信息
 							get_user_info({},{tip:'',errtip:false}).then(res=>{
-								console.log(res.data)
 								this.setUserInfo(res.data);
 								setTimeout(()=>{
 									uni.navigateBack()
 								},100)
 							}).catch(e=>{
-								console.log(e)
 							})
 
 
@@ -258,7 +251,6 @@
 			});
 			uni.getSystemInfo({
 				success: res => {
-					console.log(res)
 					this.height = res.screenHeight
 				}
 			})
