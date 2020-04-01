@@ -737,13 +737,15 @@ export default {
 
 		},
 		createOrderCheck(num){
+
+	  		const oldOrderInfo = {...this.orderInfo}
 			createOrderCheck(this.postData).then(res=>{
 				for(var i in res.data.CartList){
 					for(var j in res.data.CartList[i]){
 						res.data.CartList[i][j].store = {}
 					}
 				}
-				this.orderInfo = res.data;
+				this.orderInfo = Object.assign(oldOrderInfo,res.data);
 				this.orderInfo.coupon_list.push({Coupon_ID:''})
 				//如果该规格有门店 就优先后台设置的
 				if(this.orderInfo.all_has_stores==1&&num!=2){
