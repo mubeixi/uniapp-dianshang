@@ -712,13 +712,21 @@ export default {
 			    Address_ID = this.addressinfo.Address_ID;
 			}
 			await getAddress({Address_ID: Address_ID?Address_ID:0}).then(res=>{
-				if (this.back_address_id) {  //添加、选择收获地址返回
-					uni.showModal({
-					  title: '错误',
-					  content: '收货地址获取失败',
-					  showCancel: false
-					});
-					return false;
+				// if (this.back_address_id) {  //添加、选择收获地址返回
+				// 	uni.showModal({
+				// 	  title: '错误',
+				// 	  content: '收货地址获取失败',
+				// 	  showCancel: false
+				// 	});
+				// 	return false;
+				// }
+				if (this.back_address_id && res.errorCode != 0) {  //添加、选择收获地址返回
+						uni.showModal({
+						  title: '错误',
+						  content: '收货地址获取失败',
+						  showCancel: false
+						});
+						return false;
 				}
 				if(!res.data[0]) return
 				if(res.data.length>0){

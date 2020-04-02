@@ -175,22 +175,21 @@ export default {
 		},
 		goLogistics(item){
 			// #ifndef MP-WEIXIN
-				getOrderExpressCode({shipping_id:item.Order_ShippingID}).then(res=>{
+				// getOrderExpressCode({shipping_id:item.Order_ShippingID}).then(res=>{
 					
-					  KDNWidget.run({
-						  serviceType: "A",
-						  expCode: res.data.ShipperCode,
-						  expNo: res.data.LogisticCode
-					  })
+				// 	  KDNWidget.run({
+				// 		  serviceType: "A",
+				// 		  expCode: res.data.ShipperCode,
+				// 		  expNo: res.data.LogisticCode
+				// 	  })
 				
-				}).catch(e=>{})
+				// }).catch(e=>{})
 			
 			// #endif
-			// #ifdef MP-WEIXIN
+			
 				uni.navigateTo({
-					url:'/pages/order/logistics?Order_ID='+item.Order_ID
+					url:'/pages/order/logistics?order_id='+item.Order_ID
 				})
-			// #endif
 			//跳转物流追踪
 			
 		},
