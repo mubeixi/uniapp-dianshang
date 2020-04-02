@@ -35,7 +35,7 @@
 					<view class="left">
 						派送员电话:
 					</view>
-					<view>
+					<view @click="call">
 						{{pro.delivery_man_phone}}
 					</view>
 				</view>
@@ -118,6 +118,11 @@
 			this.getOrderExpress();
 		},
 		methods:{
+			call(){
+				uni.makePhoneCall({
+				    phoneNumber: this.pro.delivery_man_phone
+				});
+			},
 			getOrderExpress(){
 				let data={
 					shipping_id: this.shipping_id,
