@@ -488,8 +488,6 @@
 			this.getDetail(this.Products_ID);
 			this.getCommit(this.Products_ID);
 
-
-
 			//获取正在拼团的团队
 			this.getPintuanTeamList(this.Products_ID)
 
@@ -1097,13 +1095,12 @@
 			},
 			getDetail(item) {
 				let data = {
-					prod_id: item,
-					Users_ID: 'wkbq6nc2kc'
+					prod_id: item
 				}
 				let _self = this;
 				let product = null;
 
-				getProductDetail(data).then(res => {
+				getProductDetail(data,{tip:'加载中'}).then(res => {
 
 
 					if (!res.data.is_pintuan) {

@@ -472,6 +472,8 @@ export const buildSharePath = (path) => {
         throw "必须有users_id"
     }
 
+    console.log(`share path is ${ret}`)
+
     return ret
 }
 
