@@ -660,7 +660,7 @@ export default {
 			// #endif
 
 			let _self = this
-			let path = '/pages/detail/detail?Products_ID='+this.Products_ID;
+			let path = 'pages/detail/detail?Products_ID='+this.Products_ID;
 			let front_url = this.initData.front_url;
 
 			let shareObj = {
@@ -1160,7 +1160,7 @@ export default {
 
 			if(!isWeiXin())return;
 
-			let path = '/pages/detail/detail?Products_ID='+this.Products_ID;
+			let path = 'pages/detail/detail?Products_ID='+this.Products_ID;
 			let front_url = this.initData.front_url;
 
 
