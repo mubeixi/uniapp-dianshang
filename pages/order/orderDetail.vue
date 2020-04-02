@@ -392,17 +392,17 @@
 			goLogistics(orderInfo){
 				
 				// #ifndef MP-WEIXIN
-				getOrderExpressCode({shipping_id:item.Order_ShippingID}).then(res=>{
+				// getOrderExpressCode({shipping_id:item.Order_ShippingID}).then(res=>{
 					
-					  KDNWidget.run({
-						  serviceType: "A",
-						  expCode: res.data.ShipperCode,
-						  expNo: res.data.LogisticCode
-					  })
+				// 	  KDNWidget.run({
+				// 		  serviceType: "A",
+				// 		  expCode: res.data.ShipperCode,
+				// 		  expNo: res.data.LogisticCode
+				// 	  })
 				
-				}).catch(e=>{})
+				// }).catch(e=>{})
 				// #endif
-				// #ifdef MP-WEIXIN
+			
 					let {
 						shipping_id,
 						express,
@@ -414,9 +414,9 @@
 					}
 					//跳转物流追踪
 					uni.navigateTo({
-						url:'/pages/order/logistics?shipping_id='+shipping_id + '&express=' + express + '&prod_img=' + prod_img
+						url:'/pages/order/logistics?shipping_id='+shipping_id + '&express=' + express + '&prod_img=' + prod_img+'&order_id='+orderInfo.Order_ID
 					})
-				// #endif
+	
 			},
 			//取消订单
 			cancelOrder(Order_ID){
