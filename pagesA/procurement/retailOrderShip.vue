@@ -1,5 +1,5 @@
 <template>
-	<view style="padding-bottom: 100rpx;" @click="commonClick">
+	<view style="padding-bottom: 100rpx;" >
 
 		<view class="marginAuto">
 			<view class="blockDiv" v-for="(item,index) in orderInfo.prod_list" :key="index">
@@ -87,20 +87,31 @@
 				</view>
 
 				<view class="inputView">
-					<view style="width: 160rpx;">
+					快递方式： {{orderInfo.Order_Shipping.Express}}
+					<!-- <view style="width: 160rpx;">
 						配送方式
 					</view>
 					<view style="width: 100%;">
 						<input type="text" v-model="ship_method" placeholder="请输入快递公司" style="width: 100%;">
-					</view>
+					</view> -->
 				</view>
-				<view class="inputView">
+				<view class="inputView" v-if="orderInfo.Order_Shipping.Express!='同城配送'">
 					<view style="width: 160rpx;">
-						快递单号
+						快递单号:
 					</view>
 					<view style="width: 100%;">
 						<input type="text" v-model="ship_num" placeholder="请输入快递单号" style="width: 100%;">
 					</view>
+				</view>
+				<view class="inputView" v-else>
+					<view style="width: 140rpx;">
+						配送方式：
+					</view>
+					<picker @change="bindPickerChange" :value="index" :range="arr" class="picker">
+						<view class="uni-input">{{arr[index]}}</view>
+						<view class="funicon icon-fanhui icon" ></view>
+					</picker>
+					
 				</view>
 
 				<view class="inputView">
@@ -125,7 +136,7 @@
 <script>
 	import {domainFn} from "../../common/filter";
 	import {mapGetters} from 'vuex'
-	import {getOrderDetail,systemSendOrder} from '../../common/fetch';
+	import {getOrderDetail,systemSendOrder,getAvailableCityExpress} from '../../common/fetch';
 	import {error} from '../../common'
 	import {formatTime} from '../../common/filter'
 	export default {
@@ -133,12 +144,15 @@
 			return {
 				index:0,
 				Order_ID: 0,
-				orderInfo: {},
+				orderInfo: {Order_Shipping:{}},
 				name: '',
 				mobile: '',
 				ship_method: '',
 				ship_num: '',
-				remark: ''
+				remark: '',
+				tong:[],
+				arr:[],
+				index:0
 			};
 		},
 		computed: {
@@ -148,11 +162,14 @@
 			timeFormat: formatTime
 		},
 		methods:{
+			bindPickerChange(e){
+				this.index=e.detail.value
+			},
 			getOrderDetail: function(){
 				getOrderDetail({Order_ID: this.Order_ID,store_id:this.Stores_ID}).then(res=>{
-					res.data.Order_Shipping = res.data.Order_Shipping && JSON.stringify(res.data.Order_Shipping) ||''
+					//res.data.Order_Shipping = res.data.Order_Shipping && JSON.stringify(res.data.Order_Shipping) ||''
 					this.orderInfo = res.data;
-
+					this.orderInfo.Order_Shipping=JSON.parse(res.data.Order_Shipping)	
 						for(let it of  this.orderInfo.prod_list){
 							if(it.attr_info){
 								it.attr_info=JSON.parse(it.attr_info)
@@ -162,20 +179,38 @@
 						}
 			
 				})
+
+					getAvailableCityExpress().then(res=>{
+						for(let item in res.data){
+							let it={}
+							it[item]=res.data[item]
+							this.tong.push(it)
+							this.arr.push(res.data[item])
+						}
+						
+					})
+
 			},
 			send: function(){
-				if(!this.ship_num) {
-					error('请填写物流单号')
-					return;
-				}
+				
 				let data = {
 					Order_ID: this.orderInfo.Order_ID,
-					ShippingID: this.ship_num,
 					Express: this.ship_method,
 					Address_Name: this.name,
 					Address_Mobile: this.mobile,
 					Order_Remark: this.remark,
 					store_id: this.Stores_ID
+				}
+				if(this.orderInfo.Order_Shipping.Express=='同城配送'){
+					for(let item in this.tong[this.index]){
+						data.city_express=item
+					}
+				}else{
+					if(!this.ship_num) {
+						error('请填写物流单号')
+						return;
+					}
+					data.ShippingID=this.ship_num
 				}
 				systemSendOrder(data).then(res=>{
 					uni.showToast({
@@ -370,6 +405,13 @@
 			height: 100rpx;
 			width: 670rpx;
 			border-bottom: 1px solid #EBEBEB;
+			display: flex;
+			align-items: center;
+		}
+		.picker{
+			flex: 1;
+			height: 100rpx;
+			line-height: 100rpx;
 			display: flex;
 			align-items: center;
 		}

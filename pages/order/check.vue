@@ -381,6 +381,8 @@ export default {
 			  this.postData.shipping_id='is_store'
 		  }
 		 this.shipping_store_id = storeInfo.Stores_ID;
+		 //新增
+		 this.postData.shipping_store_id=this.shipping_store_id 
 	  	if(this.setStoreMode==='all'){
 	  		//居然是对象醉了
 	  		for(var i in this.orderInfo.CartList){
@@ -396,6 +398,11 @@ export default {
 			this.orderInfo.Stores_Name=storeInfo.Stores_Name
 		}
 		  this.$refs.stroeComp.close()
+		  //新增
+		  if(this.tabIdx==0){
+			  this.createOrderCheck()
+		  }
+		  
 
 	  },
 	  multipleSelectStore(){
