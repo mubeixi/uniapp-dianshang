@@ -63,9 +63,10 @@
             <div class="row" v-if="is_need_shipping">
                 <div class="label">配送方式</div>
                 <div class="form-item express">
-                    <picker @change="bindPickerChange" :value="exprss_index" :range="exprss_list">
+					{{exprss_list[0]}}
+                   <!-- <picker @change="bindPickerChange" :value="exprss_index" :range="exprss_list">
                         <view class="uni-input">{{exprss_list[exprss_index]}}</view> <view class="funicon icon-fanhui icon" ></view>
-                    </picker>
+                    </picker> -->
                 </div>
             </div>
             <div class="row" v-if="is_need_shipping">
@@ -247,7 +248,7 @@
                         is_need_shipping:this.is_need_shipping,
                         Express_Price:this.ShippingID,
                         ShippingID:this.ShippingID,
-                        Express:this.exprss_list[this.exprss_index],
+                        // Express:this.exprss_list[this.exprss_index],
                         store_id:this.Stores_ID,
                         order_id:this.apply_id
                     }

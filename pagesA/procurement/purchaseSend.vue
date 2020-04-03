@@ -89,13 +89,14 @@
 						<view style="margin-left: 20rpx;">否</view>
 					</template>
 				</view>
-				<view class="inputView" v-if="index == 1" @click="changeMethod">
+				<view class="inputView" v-if="index == 1" >
 					<view style="width: 200rpx;">
 						配送方式
 					</view>
 					<view style="width: 100%;text-align: right;">
-						{{ship_name?ship_name:'请选择快递公司'}}
-						<image class="right" src="/static/top.png" mode=""></image>
+						<!-- {{ship_name?ship_name:'请选择快递公司'}}
+						<image class="right" src="/static/top.png" mode=""></image> -->
+						{{this.shipping[1]}}
 					</view>
 				</view>
 				<view class="inputView" v-if="index == 1">
@@ -197,21 +198,21 @@
 				}
 				if(this.index == 1) {
 					// 需要物流
-					if(this.current == 0) {
-						uni.showToast({
-							title: '请选择快递公司',
-							icon: 'none'
-						});
-						return;
-					}
-					if(!this.shipping_no) {
-						uni.showToast({
-							title: '请输入快递单号',
-							icon:  'none'
-						});
-						return;
-					}
-					arg.express = this.ship_name;
+					// if(this.current == 0) {
+					// 	uni.showToast({
+					// 		title: '请选择快递公司',
+					// 		icon: 'none'
+					// 	});
+					// 	return;
+					// }
+					// if(!this.shipping_no) {
+					// 	uni.showToast({
+					// 		title: '请输入快递单号',
+					// 		icon:  'none'
+					// 	});
+					// 	return;
+					// }
+					// arg.express = this.ship_name;
 					arg.shipping_no = this.shipping_no;
 				}
 				storeProdBackOrderSend(arg).then(res=>{
