@@ -893,6 +893,7 @@ return;
 		font-size: 28rpx;
 		line-height: 80rpx;
 		padding: 20rpx 30rpx;
+		padding-bottom: 100rpx;
 		.mxtitle {
 			font-size: 28rpx;
 			text-align: center;

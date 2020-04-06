@@ -217,7 +217,7 @@
 				</block>
 			</div>
 			<div class="btn-group" v-else-if="orderInfo.Order_Status==3">
-				<span @click="goLogistics(orderInfo)">查看物流</span>
+				<span @click="goLogistics(orderInfo)"   v-if="orderInfo.Order_Shipping.shipping_id!=2">查看物流</span>
 				<!-- <span @click="goPay(orderInfo.Order_ID)" style="margin-left: 14rpx;">申请退款退货</span> -->
 			  <span class="active" @click="confirmOrder(orderInfo.Order_ID)">确认收货</span>
 			</div>
@@ -732,6 +732,7 @@
 	font-size: 28rpx;
 	line-height: 80rpx;
 	padding: 20rpx 30rpx;
+	padding-bottom: 100rpx;
 	.mxtitle {
 		font-size: 28rpx;
 		text-align: center;
