@@ -379,6 +379,9 @@ export default {
 		  if(this.tabIdx===1){
 			  this.selectStore=false
 			  this.postData.shipping_id='is_store'
+		  }else{
+			  //为了选择门店的时候的用户体验
+			  this.postData.shipping_id='1'
 		  }
 		 this.shipping_store_id = storeInfo.Stores_ID;
 		 //新增
