@@ -379,8 +379,13 @@ export default {
 		  if(this.tabIdx===1){
 			  this.selectStore=false
 			  this.postData.shipping_id='is_store'
+		  }else{
+			  //为了选择门店的时候的用户体验
+			  this.postData.shipping_id='1'
 		  }
 		 this.shipping_store_id = storeInfo.Stores_ID;
+		 //新增
+		 this.postData.shipping_store_id=this.shipping_store_id 
 	  	if(this.setStoreMode==='all'){
 	  		//居然是对象醉了
 	  		for(var i in this.orderInfo.CartList){
@@ -396,6 +401,11 @@ export default {
 			this.orderInfo.Stores_Name=storeInfo.Stores_Name
 		}
 		  this.$refs.stroeComp.close()
+		  //新增
+		  if(this.tabIdx==0){
+			  this.createOrderCheck()
+		  }
+		  
 
 	  },
 	  multipleSelectStore(){
@@ -772,7 +782,7 @@ export default {
 				}
 			}).catch(e=>{
 				uni.showToast({
-					title: e.data,
+					title: e.msg,
 					icon: 'none'
 				})
 			})

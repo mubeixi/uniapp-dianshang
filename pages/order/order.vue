@@ -66,8 +66,8 @@
 						<div class="funicon icon-more1 icon font22 " style="color: #777;"></div>
 						<div @click.stop="extendReceiptFn(item)" v-if="item.extend" class="tooltip">确认延迟</div>
 					</div>
-					<span @click.stop="goLogistics(item)">查看物流</span>
-					<span @click.stop="goPay(item)" style="margin-left: 15rpx;">申请退款退货</span>
+					<span @click.stop="goLogistics(item)"  v-if="item.Order_Shipping.shipping_id!=2">查看物流</span>
+					<span @click.stop="goPay(item)" style="margin-left: 15rpx;"    v-if="item.Order_Shipping.shipping_id!=2">申请退款退货</span>
 					<span class="active" @click.stop="confirmOrder(item,index)">确认收货</span>
 					<!-- @click="goPay(item)"跳转退款 -->
 				</div>
