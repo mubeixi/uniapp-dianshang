@@ -10,7 +10,7 @@ export const apiBaseUrl = isDev ? '' : '';//h5调试为了跨域https://new401.b
 // #endif
 
 // #ifndef H5
-export const apiBaseUrl = 'https://new401.bafangka.com';
+export const apiBaseUrl = 'https://new401t.bafangka.com';
 // #endif
 
 //后面的正式环境地址,每次打包要从新切换.
@@ -20,7 +20,7 @@ const devStatic = 'https://new401t.bafangka.com'
 
 // #ifndef H5
 //app 和小程序还是需要手动设置staticUrl
-const prodStatic = 'https://new401.bafangka.com'
+const prodStatic = 'https://new401t.bafangka.com'
 // #endif
 
 // #ifdef H5

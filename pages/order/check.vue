@@ -779,7 +779,7 @@ export default {
 				}
 			}).catch(e=>{
 				uni.showToast({
-					title: e.data,
+					title: e.msg,
 					icon: 'none'
 				})
 			})
