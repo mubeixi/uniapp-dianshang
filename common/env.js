@@ -20,7 +20,7 @@ const devStatic = 'https://new401t.bafangka.com'
 
 // #ifndef H5
 //app 和小程序还是需要手动设置staticUrl
-const prodStatic = 'https://new401t.bafangka.com'
+const prodStatic = 'https://new401.bafangka.com'
 // #endif
 
 // #ifdef H5
