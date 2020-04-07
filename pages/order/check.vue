@@ -12,7 +12,7 @@
 				<image class="loc_icon" :src="'/static/client/location.png'|domain" alt="" ></image>
 				<view class="add_msg" v-if="addressinfo.Address_Name">
 					<view class="name">收货人：{{addressinfo.Address_Name}} <span>{{addressinfo.Address_Mobile | formatphone}}</span></view>
-					<view class="location">收货地址：{{addressinfo.Address_Province_name}}{{addressinfo.Address_City_name}}{{addressinfo.Address_Area_name}}{{addressinfo.Address_Town_name}}</view>
+					<view class="location">收货地址：{{addressinfo.Address_Province_name}}{{addressinfo.Address_City_name}}{{addressinfo.Address_Area_name}}{{addressinfo.Address_Town_name}}{{addressinfo.Address_Detailed}}</view>
 				</view>
 				<view class="add_msg" v-else>
 					<view>暂无收货地址，去添加</view>

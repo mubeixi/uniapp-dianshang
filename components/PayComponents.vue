@@ -523,7 +523,7 @@
 
         .c_method {
             padding: 37rpx 0;
-            border-bottom: 2rpx solid #E6E6E6;
+            border-bottom: 2rpx solid #E6E6E6 !important;
         }
 
         & .c_method:first-child {
