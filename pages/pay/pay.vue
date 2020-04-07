@@ -365,13 +365,13 @@
 			moneyChange(e) {
 				var checked = e.detail.value;
 				if (checked) {
-					this.is_use=1
+					//this.is_use=1
 					this.openMoney = true;
 					this.user_money = Number(this.orderInfo.Order_Yebc).toFixed(2);
 					this.orderInfo.Order_Fyepay = Number(this.orderInfo.Order_TotalPrice - this.user_money).toFixed(2);
 					this.pay_money = Number(this.orderInfo.Order_TotalPrice - this.user_money).toFixed(2);
 				} else {
-					this.is_use=0
+					//this.is_use=0
 					this.openMoney = false;
 					this.orderInfo.Order_Fyepay = Number(this.orderInfo.Order_TotalPrice).toFixed(2);
 					this.pay_money = Number(this.orderInfo.Order_TotalPrice).toFixed(2);
