@@ -1,7 +1,7 @@
 <template>
     <view @click="commonClick" v-if="loading" :class="selectStore?'over':''">
       <!--  <pagetitle title="提交订单"></pagetitle> v-if="orderInfo.all_has_stores" -->
-        <div class="top"  v-if="orderInfo.all_has_stores==1">
+        <div class="top"  v-if="orderInfo.all_has_stores==1&&orderInfo.is_virtual == 0">
             <div class="tabs">
                 <div class="tabs-item" :class="{active:tabIdx==0}" @click="changgeTabIdx(0)">快递发货</div>
                 <div class="tabs-item" :class="{active:tabIdx==1}" @click="changgeTabIdx(1)">到店自提</div>
@@ -12,7 +12,7 @@
 				<image class="loc_icon" :src="'/static/client/location.png'|domain" alt="" ></image>
 				<view class="add_msg" v-if="addressinfo.Address_Name">
 					<view class="name">收货人：{{addressinfo.Address_Name}} <span>{{addressinfo.Address_Mobile | formatphone}}</span></view>
-					<view class="location">收货地址：{{addressinfo.Address_Province_name}}{{addressinfo.Address_City_name}}{{addressinfo.Address_Area_name}}{{addressinfo.Address_Town_name}}</view>
+					<view class="location">收货地址：{{addressinfo.Address_Province_name}}{{addressinfo.Address_City_name}}{{addressinfo.Address_Area_name}}{{addressinfo.Address_Town_name}}{{addressinfo.Address_Detailed}}</view>
 				</view>
 				<view class="add_msg" v-else>
 					<view>暂无收货地址，去添加</view>

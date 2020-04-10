@@ -31,14 +31,24 @@
 <!--		</view>-->
 		<view class="last">
 			<view class="first" >
-				<view class="left" @click="spreadQr(0,0)" v-show="initData.login_methods.mp_flag==1">
+				<block v-for="(item,index) of funcModules.child" :key="index"> 
+					<view class="left" @click="spreadQr(0,0)"  v-if="item.field=='erweima_weixin'">
+						<image class="image" :src="'/static/client/fenxiao/weixin.png'|domain" ></image>
+						<view class="haha">微信二维码</view>
+					</view>
+					<view class="right" @click="spreadQr(1,0)"  v-if="item.field=='erweima_tuiguang'">
+						<image class="image" :src="'/static/client/fenxiao/tuiguang.png'|domain" ></image>
+						<view class="haha">推广二维码</view>
+					</view>
+				</block>
+				<!-- <view class="left" @click="spreadQr(0,0)" v-show="initData.login_methods.mp_flag==1">
 					<image class="image" :src="'/static/client/fenxiao/weixin.png'|domain" ></image>
 					<view class="haha">微信二维码</view>
 				</view>
 				<view class="right" @click="spreadQr(1,0)">
 					<image class="image" :src="'/static/client/fenxiao/tuiguang.png'|domain" ></image>
 					<view class="haha">推广二维码</view>
-				</view>
+				</view> -->
 <!--				<view class="right" @click="spreadQr(0,1)">-->
 <!--					<image class="image" :src="'/static/client/fenxiao/chongsheng.png'|domain" ></image>-->
 <!--					<view class="haha">重生微信二维码</view>-->
