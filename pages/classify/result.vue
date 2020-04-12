@@ -13,7 +13,7 @@
 		</div> -->
        <!-- #endif -->
 		<icon type="search" size="34rpx" class="search_icon"/>
-		<input type="text" v-model="inputValue" class="searchs" @confirm="success"  @click="goSearch" disabled/>
+		<input type="text" v-model="inputValue" class="searchs"  @click="goSearch" disabled/>
 		<div class="clear" v-if="inputValue">
 			<icon type="clear" class="clears" size="37rpx" @click="close"></icon>
 		</div>
@@ -134,10 +134,13 @@ export default {
 		isShipping:0,//是否包邮
 		Cate_ID:0,//列表id
 		isSheng:0,//是否升序
-		Products_ID:''
+		Products_ID:'',
+		refer:''//来源
     }
   },
   onLoad: function (option) {
+		const {refer=''} = option
+	  this.refer = refer
 	  this.inputValue=option.inputValue;
 	  if(option.pid){
 		  this.Products_ID=option.pid
@@ -178,9 +181,13 @@ export default {
 	  goProductDetail,
 	  //跳转搜索页
 	  goSearch(){
-		  uni.navigateTo({
-		  	url:'/pages/classify/search'
-		  })
+	  	if(this.refer === 'searchPage'){
+			uni.navigateBack()
+			return;
+		}
+	  uni.navigateTo({
+		url:'/pages/classify/search'
+	  })
 	  },
 	  shipping(i){
 		  if(i){

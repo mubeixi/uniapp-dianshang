@@ -5,13 +5,21 @@ export const isDev = process.env.NODE_ENV === 'production' ? false : true;
 export const APP_USERS_ID = 'wkbq6nc2kc';//'	mrw5iqvhs2 xjgjd88jee  wkbq6nc2kc  05eiz8cqtw o1rcshfk39';
 // #endif
 
+let _apiBaseUrl =''
 // #ifdef H5
-export const apiBaseUrl = isDev ? '' : '';//h5调试为了跨域https://new401.bafangka.com
+_apiBaseUrl = isDev ? '' : '';//h5调试为了跨域https://new401.bafangka.com
 // #endif
 
 // #ifndef H5
-export const apiBaseUrl = 'https://new401.bafangka.com';
+_apiBaseUrl = 'https://new401.bafangka.com';
 // #endif
+
+//app单独用测试地址吧
+// #ifdef APP-PLUS
+_apiBaseUrl = 'https://new401t.bafangka.com';
+// #endif
+
+export const apiBaseUrl = _apiBaseUrl;
 
 //后面的正式环境地址,每次打包要从新切换.
 //许总又要求,可以打包一套多个站点部署
