@@ -1009,7 +1009,10 @@ export default {
 						url: '/pages/order/check?cart_key=DirectBuy'
 					})
 				}
-			}).catch(()=>{})
+			}).catch(()=>{
+				this.isSubmit = false;
+			})
+			this.isSubmit = false;
 			//确定加入购物车
 			this.hideNativeEleShow = false
 			this.$refs.cartPopu.close();
