@@ -666,11 +666,14 @@
 
 		},
 		onShow(){
+
+			/** 登录也不管了 **/
 			//如果已经登录，就自动退回
 			let uid = ls.get('user_id'),access_token = ls.get('access_token')
 			if(uid && access_token){
-				uni.navigateBack()
-				return;
+				console.log('已经登录过')
+				// uni.navigateBack()
+				// return;
 			}
 
 			// #ifdef H5

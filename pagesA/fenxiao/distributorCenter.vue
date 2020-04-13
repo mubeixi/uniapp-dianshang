@@ -22,7 +22,7 @@
 		    </div>
 		</div>
 		<view class="titleImg">
-			<image class="image" src="/static/fenxiao/join.jpg" mode=""></image>
+			<image class="image" :src="'/static/client/fenxiao/join.jpg'|domain" mode=""></image>
 		</view>
 
 		<!--  申请逻辑 -->

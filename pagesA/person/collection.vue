@@ -35,7 +35,7 @@
           </div>
       </div>
 	  <div class="defaults" v-if="collect_list.length<=0">
-	  	<image src="/static/empty.png" ></image>
+	  	<image :src="'/static/client/empty.png'|domain" ></image>
 	  </div>
       <div class="bottom" v-if="rightClicked" >
             <div class="b_left" @click="checkAll">

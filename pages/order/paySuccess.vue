@@ -1,7 +1,7 @@
 <template>
 	<view @click="commonClick" class="myall">
 			<view class="img-div">
-				<image src="/static/paySuccess.png" style="width: 100%;height: 100%;"></image>
+				<image :src="'/static/client/paySuccess.png'|domain" style="width: 100%;height: 100%;"></image>
 			</view>
 			<view class="pay-succ">
 				支付成功

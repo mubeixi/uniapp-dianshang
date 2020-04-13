@@ -2,7 +2,7 @@
 	<view @click="commonClick" class="wrap">
 		<view class="top">
 			<view class="bgimg">
-				<image class="image" src="/static/mendian/bg.jpg" mode=""></image>
+				<image class="image" :src="'/static/client/mendian/bg.jpg'|domain" mode=""></image>
 			</view>
 			<view class="user-info">
 				<view class="user-avator">
@@ -12,65 +12,65 @@
 				<view class="store-money">可用余额: <text class="number">￥ {{storeDetail.User_Money}}</text> <view class="charge" @click="goCharge">充值</view> </view>
 				<view class="order-msg">
 					<view class="order">
-						<view class="order-title"><image class="order-img" src="/static/mendian/pic.png" mode=""></image> 今日订单数</view>
+						<view class="order-title"><image class="order-img" :src="'/static/client/mendian/pic.png'|domain" mode=""></image> 今日订单数</view>
 						<view class="order-num">{{storeDetail.today_order_num}}</view>
 					</view>
 					<view class="order">
-						<view class="order-title"><image class="order-img" src="/static/mendian/pic.png" mode=""></image> 今日订单金额</view>
+						<view class="order-title"><image class="order-img" :src="'/static/client/mendian/pic.png'|domain" mode=""></image> 今日订单金额</view>
 						<view class="order-num"> <text class="icon">￥</text> {{storeDetail.today_order_sales}}</view>
 					</view>
 				</view>
 			</view>
 			<view class="tips" v-if="storeDetail.lower_prod_num > 0">
-				<image class="tip" src="/static/mendian/i.png" mode=""></image>
+				<image class="tip" :src="'/static/client/mendian/i.png'|domain" mode=""></image>
 				<view>您有商品即将售罄，<text class="see" @click="goSolded">立即查看</text></view>
 			</view>
 		</view>
 		<view class="main">
 			<view class="item" @click="openUrl('/pagesA/procurement/productMy')">
-				<image class="item-img" src="/static/mendian/1.png" mode=""></image>
+				<image class="item-img" :src="'/static/client/mendian/1.png'|domain" mode=""></image>
 				<view>我的商品</view>
 			</view>
 			<view class="item" @click="openUrl('/pagesA/procurement/retailOrder')">
-				<image class="item-img" src="/static/mendian/2.png" mode=""></image>
+				<image class="item-img" :src="'/static/client/mendian/2.png'|domain" mode=""></image>
 				<view class="num" v-if="storeDetail.shop_order_num">{{storeDetail.shop_order_num}}</view>
 				<view>零售订单</view>
 			</view>
 			<view class="item" @click="openUrl('/pagesA/procurement/storeWholesale')">
-				<image class="item-img" src="/static/mendian/3.png" mode=""></image>
+				<image class="item-img" :src="'/static/client/mendian/3.png'|domain" mode=""></image>
 				<view class="num" v-if="storeDetail.pifa_order_num">{{storeDetail.pifa_order_num}}</view>
 				<view>批发订单</view>
 			</view>
 			<view class="item" @click="openUrl('/pagesA/selectChannel/selectChannel')">
-				<image class="item-img" src="/static/mendian/4.png" mode=""></image>
+				<image class="item-img" :src="'/static/client/mendian/4.png'|domain" mode=""></image>
 				<view>进货</view>
 			</view>
 			<view class="item" @click="openUrl('/pagesA/order/checkChannel')">
-				<image class="item-img" src="/static/mendian/5.png" mode=""></image>
+				<image class="item-img" :src="'/static/client/mendian/5.png'|domain" mode=""></image>
 				<view>核销</view>
 			</view>
 			<view class="item" @click="openUrl('/pagesA/procurement/storePerson')">
-				<image class="item-img" src="/static/mendian/6.png" mode=""></image>
+				<image class="item-img" :src="'/static/client/mendian/6.png'|domain" mode=""></image>
 				<view>修改资料</view>
 			</view>
 			<view class="item" @click="openUrl('/pagesA/procurement/storeSettlement')">
-				<image class="item-img" src="/static/mendian/7.png" mode=""></image>
+				<image class="item-img" :src="'/static/client/mendian/7.png'|domain" mode=""></image>
 				<view>结算</view>
 			</view>
 			<view class="item" @click="openUrl('/pagesA/procurement/purchaseRecords')">
-				<image class="item-img" src="/static/mendian/8.png" mode=""></image>
+				<image class="item-img" :src="'/static/client/mendian/8.png'|domain" mode=""></image>
 				<view>进货记录</view>
 			</view>
 			<view class="item" @click="openUrl('/pagesA/procurement/refundRecords')">
-				<image class="item-img" src="/static/mendian/9.png" mode=""></image>
+				<image class="item-img" :src="'/static/client/mendian/9.png'|domain" mode=""></image>
 				<view>我的退货单</view>
 			</view>
 			<view class="item" @click="openUrl('/pagesA/procurement/refundList')">
-				<image class="item-img" src="/static/mendian/10.png" mode=""></image>
+				<image class="item-img" :src="'/static/client/mendian/10.png'|domain" mode=""></image>
 				<view>零售订单退款</view>
 			</view>
 			<view class="item" @click="openUrl('/pagesA/procurement/storeRefundList')">
-				<image class="item-img" src="/static/mendian/11.png" mode=""></image>
+				<image class="item-img" :src="'/static/client/mendian/11.png'|domain" mode=""></image>
 				<view>门店退货单</view>
 			</view>
 		</view>
