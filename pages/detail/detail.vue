@@ -660,7 +660,7 @@ export default {
 			// #endif
 
 			let _self = this
-			let path = '/pages/detail/detail?Products_ID='+this.Products_ID;
+			let path = 'pages/detail/detail?Products_ID='+this.Products_ID;
 			let front_url = this.initData.front_url;
 
 			let shareObj = {
@@ -1009,7 +1009,10 @@ export default {
 						url: '/pages/order/check?cart_key=DirectBuy'
 					})
 				}
-			}).catch(()=>{})
+			}).catch(()=>{
+				this.isSubmit = false;
+			})
+			this.isSubmit = false;
 			//确定加入购物车
 			this.hideNativeEleShow = false
 			this.$refs.cartPopu.close();
@@ -1160,7 +1163,7 @@ export default {
 
 			if(!isWeiXin())return;
 
-			let path = '/pages/detail/detail?Products_ID='+this.Products_ID;
+			let path = 'pages/detail/detail?Products_ID='+this.Products_ID;
 			let front_url = this.initData.front_url;
 
 

@@ -620,7 +620,7 @@
 			async shareFunc(channel) {
 
 				let _self = this
-				let path = '/pages/detail/groupDetail?Products_ID=' + this.Products_ID;
+				let path = 'pages/detail/groupDetail?Products_ID=' + this.Products_ID;
 				let front_url = this.initData.front_url;
 
 				let shareObj = {
@@ -1162,7 +1162,7 @@
 					// #ifdef H5
 
 					if (!isWeiXin()) return;
-					let path = '/pages/detail/groupDetail?Products_ID=' + this.Products_ID;
+					let path = 'pages/detail/groupDetail?Products_ID=' + this.Products_ID;
 					let front_url = this.initData.front_url;
 
 					this.WX_JSSDK_INIT(this).then((wxEnv) => {

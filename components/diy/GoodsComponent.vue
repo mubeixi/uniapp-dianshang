@@ -84,11 +84,14 @@
         },
         computed: {
             limit() {
-                if (this.goods.value) {
-                    return this.goods.value.cate_id ? this.goods.value.limit : 20
-                }
-                return 20
 
+                if(Array.isArray(this.goods.value.cate_id) && this.goods.value.cate_id.length>0){
+                    return this.goods.value.limit
+                }else if(Array.isArray(this.goods.value.list) && this.goods.value.list.length>0){
+                    return this.goods.value.list.length
+                }else{
+                    return 20
+                }
             },
             isEmpeyInfo() {
                 return !this.goods.config.attr.title.show && !this.goods.config.attr.desc.show && !this.goods.config.attr.price.show && !this.goods.config.attr.buybtn.show
@@ -182,7 +185,7 @@
                     let {list = [], cate_id = [], limit} = val;
 
                     //如果值还没有设置的话
-                    let param = {pageSize: limit};//cate_id.length===0 && limit ? limit : 900}
+                    let param = {pageSize: this.limit};//cate_id.length===0 && limit ? limit : 900}
                     if (cate_id.length > 0) {
                         param.Cate_ID = cate_id.join(',')
                     }

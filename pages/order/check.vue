@@ -211,6 +211,7 @@
 			</view>
 			<scroll-view style="height:430rpx;width:95%;"  scroll-y="true" class="bMbx" v-if="type=='coupon'">
 				<view class="fMbx scroll-view-item">优惠券选择</view>
+				<radio-group @change="radioChange">
 				<label class="iMbx scroll-view-item" v-for="(coupon,i) in orderInfo.coupon_list" :key="i">
 					<block v-if="coupon.Coupon_ID">
 						满{{coupon.Coupon_Condition}} - {{coupon.Coupon_Cash > 0 ? coupon.Coupon_Cash : coupon.Coupon_Discount}}
@@ -218,10 +219,11 @@
 					<block v-else>
 						不使用优惠
 					</block>
-					<radio-group @change="radioChange">
+
 						<radio :value="''+coupon.Coupon_ID" :checked="i===current" style="float:right;" color="#F43131"/>
-					</radio-group>
+
 				</label>
+				</radio-group>
 				<!-- <label class="iMbx scroll-view-item" >
 					不使用优惠
 					<radio-group @change="notUseCoupon">
@@ -780,7 +782,10 @@ export default {
 					}
 				}
 				this.orderInfo = Object.assign(oldOrderInfo,res.data);
-				this.orderInfo.coupon_list.push({Coupon_ID:''})
+				if(this.orderInfo.coupon_list.length>0){
+					this.orderInfo.coupon_list.push({Coupon_ID:''})
+				}
+
 				//如果该规格有门店 就优先后台设置的
 				if(this.orderInfo.all_has_stores==1&&num==2){
 					this.tabIdx = this.initData.order_submit_first;
@@ -788,6 +793,7 @@ export default {
 
 
 				this.couponlist = res.data.coupon_list;
+
 				this.orderLoading = true;
 				this.postData.shipping_id = res.data.Order_Shipping.shipping_id;
 				this.idD=this.postData.shipping_id
