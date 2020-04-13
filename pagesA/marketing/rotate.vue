@@ -87,7 +87,7 @@
         </div>
 
         <div class="num-count">
-            <image class="num-count-img" src="/static/marketing/num_count.png" />
+            <image class="num-count-img" :src="'/static/marketing/num_count.png'|domain" />
             <div class=" text font14">今日剩余抽奖次数<span class="font16 danger-color" style="">{{day_count}}</span>次,总剩余抽奖次数<span class="font16 danger-color" style="">{{total_count}}</span>次</div>
         </div>
 
@@ -109,7 +109,7 @@
         <wzw-dialog positions="top" ref="record" bgColor="rgba(0,0,0,.7)" mainBgColor="none">
             <div class="record-container" >
                 <div class="top">
-                    <image class="record-bg" :src="'/static/marketing/records_bg.png'" />
+                    <image class="record-bg" :src="'/static/client/marketing/records_bg.png'|domain" />
                     <div class="record-box">
                         <div class="title">我的中奖记录</div>
                         <scroll-view scroll-y class="table">

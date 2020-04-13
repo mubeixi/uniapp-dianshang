@@ -23,7 +23,7 @@
     "weixin-js-sdk": "^1.4.0-test"
   },
   "devDependencies": {
-    "shelljs": "^0.8.3",
-    "ftp-deploy": "^2.3.6"
+    "ftp-deploy": "^2.3.6",
+    "shelljs": "^0.8.3"
   }
 }
