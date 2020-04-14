@@ -235,7 +235,7 @@
 				确定
 			</view>
 		</popup-layer>
-        <store-list-components :pageEl="selfObj" direction="top" ref="stroeComp" @callFn="bindStores" @change="selectStore=false" catchtouchmove/>
+        <store-list-components style="z-index: 10000;" :pageEl="selfObj" direction="top" ref="stroeComp" @callFn="bindStores" @change="selectStore=false" catchtouchmove/>
     </view>
 </template>
 
@@ -332,7 +332,7 @@ export default {
 			})
 		}
 		this.getAddress();
-		this.createOrderCheck();
+		this.createOrderCheck(2);
 	},
 	async created(){
 		// #ifdef H5
@@ -403,14 +403,29 @@ export default {
 			this.orderInfo.Stores_Name=storeInfo.Stores_Name
 		}
 		  this.$refs.stroeComp.close()
-		  //新增
-		  if(this.tabIdx==0){
-			  this.createOrderCheck()
-		  }
 		  
+		  // if(this.postData.shipping_id=='is_store'){
+		  // 	let obj={}
+		  // 	for(let it in this.orderInfo.CartList){
+		  // 		for(let iq in this.orderInfo.CartList[it]){
+		  // 			obj[it]={
+		  // 					[iq]:this.orderInfo.CartList[it][iq].store.Stores_ID
+		  // 				}
+		  // 		}
+		  // 	}
+		  // 	this.postData.self_pick_store_id=JSON.stringify(obj)
+		  // }
+		  
+		  //新增
+		  //if(this.tabIdx==0){
+			  this.createOrderCheck()
+		  //}
+		  
+		  this.zIndex=999999
 
 	  },
 	  multipleSelectStore(){
+		  this.zIndex=9
 		  this.selectStore=true
 		  this.setStoreMode = 'all'
 		  //let ids = Object.keys(this.orderInfo.CartList)
@@ -426,6 +441,7 @@ export default {
 
 	  },
       openStores(prod_id,attr_id,store){
+		  this.zIndex=9
 		  this.selectStore=true
 		  this.setStoreMode = prod_id+'::'+attr_id
 		  let ids ={[prod_id]:[attr_id]}
@@ -694,7 +710,7 @@ export default {
 				//不使用优惠
 				if(!this.postData.coupon_id){
 					this.coupon_desc = '暂不使用优惠'
-					this.createOrderCheck(2);
+					this.createOrderCheck();
 					this.$refs.popupRef.close();
 					return;
 				}
@@ -710,7 +726,7 @@ export default {
 					}
 				}
 			};
-			this.createOrderCheck(2);
+			this.createOrderCheck();
 			this.$refs.popupRef.close();
 		},
 		async getAddress(){
@@ -771,7 +787,7 @@ export default {
 				}
 
 				//如果该规格有门店 就优先后台设置的
-				if(this.orderInfo.all_has_stores==1&&num!=2){
+				if(this.orderInfo.all_has_stores==1&&num==2){
 					this.tabIdx = this.initData.order_submit_first;
 				}
 
