@@ -331,11 +331,15 @@
                     check_attrnames.push(attr_name + ':' + this.product.skujosn[attr_name][attr_id]);
                 }
                 check_attrid = check_attrid.join(';');
+				
                 var attr_val = this.product.skuvaljosn[check_attrid];   //选择属性对应的属性值
                 //数组转化为字符串
                 check_attrnames = check_attrnames.join(';');
                 this.postData.atr_str = check_attrnames;
                 this.postData.atrid_str = check_attrid;
+				if(attr_val.Product_Attr_ID){
+					this.postData.attr_id=attr_val.Product_Attr_ID
+				}
                 //属性判断
                 if (attr_val) {
                     this.postData.count = attr_val.Property_count;   //选择属性的库存
