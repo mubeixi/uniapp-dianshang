@@ -381,6 +381,8 @@ export default {
 		  if(this.tabIdx===1){
 			  this.selectStore=false
 			  this.postData.shipping_id='is_store'
+		  }else if(this.orderInfo.is_virtual == 1){
+			  this.postData.shipping_id=''
 		  }else{
 			  //为了选择门店的时候的用户体验
 			  this.postData.shipping_id='1'
@@ -404,17 +406,17 @@ export default {
 		}
 		  this.$refs.stroeComp.close()
 		  
-		  // if(this.postData.shipping_id=='is_store'){
-		  // 	let obj={}
-		  // 	for(let it in this.orderInfo.CartList){
-		  // 		for(let iq in this.orderInfo.CartList[it]){
-		  // 			obj[it]={
-		  // 					[iq]:this.orderInfo.CartList[it][iq].store.Stores_ID
-		  // 				}
-		  // 		}
-		  // 	}
-		  // 	this.postData.self_pick_store_id=JSON.stringify(obj)
-		  // }
+		  if(this.postData.shipping_id=='is_store'){
+		  	let obj={}
+		  	for(let it in this.orderInfo.CartList){
+		  		for(let iq in this.orderInfo.CartList[it]){
+		  			obj[it]={
+		  					[iq]:this.orderInfo.CartList[it][iq].store.Stores_ID
+		  				}
+		  		}
+		  	}
+		  	this.postData.self_pick_store_id=JSON.stringify(obj)
+		  }
 		  
 		  //新增
 		  //if(this.tabIdx==0){
@@ -779,6 +781,13 @@ export default {
 				for(var i in res.data.CartList){
 					for(var j in res.data.CartList[i]){
 						res.data.CartList[i][j].store = {}
+						console.log(res.data.CartList[i][j],"sss")
+						if(res.data.CartList[i][j].choose_store_info){
+							res.data.CartList[i][j].store['Stores_Name'] = res.data.CartList[i][j].choose_store_info.Stores_Name
+							res.data.CartList[i][j].store['Stores_ID'] = res.data.CartList[i][j].choose_store_info.Stores_ID
+						}
+						
+						
 					}
 				}
 				this.orderInfo = Object.assign(oldOrderInfo,res.data);
@@ -787,7 +796,7 @@ export default {
 				}
 
 				//如果该规格有门店 就优先后台设置的
-				if(this.orderInfo.all_has_stores==1&&num==2){
+				if(this.orderInfo.all_has_stores==1&&num==2&&this.orderInfo.is_virtual!=1){
 					this.tabIdx = this.initData.order_submit_first;
 				}
 
