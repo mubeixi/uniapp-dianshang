@@ -675,11 +675,12 @@ export default {
 			}
 			judgeReceiveGift({gift: this.gift}).then(res=>{
 				this.gift_attr_id = res.data.attr_id;
-				this.skuval = res.data.skuval.split(';');
+				this.skuval = res.data.skuval//.split(';');
 				// #ifdef APP-PLUS
 					uni.$emit('goods_bottom_setval', {isCollected:this.isCollected,canSubmit:this.canSubmit});
 				// #endif
 			}).catch(res=>{
+				console.log(res,"sss")
 				setTimeout(function(){
 					uni.navigateBack({
 					    delta: 1
