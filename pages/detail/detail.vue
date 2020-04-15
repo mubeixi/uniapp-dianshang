@@ -777,6 +777,7 @@ export default {
 			let data={
 				pageSize:this.pageSize,
 				page:this.page,
+				prod_id:this.Products_ID
 			}
 			getCoupon(data).then(res=>{
 				for(let i of res.data){

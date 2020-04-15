@@ -262,7 +262,7 @@
 
 <script>
 import popupLayer from '../../components/popup-layer/popup-layer.vue'
-import {flashsaleReserve,flashsaleDetail,getCommit,updateCart,addCollection,getCoupon,getUserCoupon,cancelCollection,checkProdCollected,getPintuanTeam,getProductSharePic} from '../../common/fetch.js'
+import {flashsaleReserve,flashsaleDetail,getCommit,updateCart,addCollection,cancelCollection,checkProdCollected,getPintuanTeam,getProductSharePic} from '../../common/fetch.js'
 import {goBack,numberSort,getGroupCountdown,buildSharePath,getProductThumb,ls}  from '../../common/tool.js'
 import {pageMixin} from "../../common/mixin";
 import {error} from "../../common";
