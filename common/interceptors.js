@@ -71,24 +71,30 @@ export const ajax = (url, method, data, options) => {
 
                 if (res.hasOwnProperty('errorCode') && hookErrorCode.indexOf(res.errorCode) != -1) {
                     if (res.errorCode === 66001) {
-                        error(res.msg)
+                        console.log(JSON.stringify(store.state.lockToLogin))
+                        //为了避免多个请求
+                        if(!store.state.lockToLogin){
+                            store.state.lockToLogin = true
+                            error(res.msg)
 
-                        //重置用户信息
-
-                        let users_id = ls.get('users_id');
-                        ls.clear();
-                        ls.set('users_id', users_id);
-                        // #ifdef H5
-                        sessionStorage.removeItem('is_send_usrlog')
-                        // #endif
-                        store.commit('SET_USER_INFO', {})
-                        store.commit('SET_STORES_ID', null)
-
-                        setTimeout(() => {
+                            //重置用户信息
+                            let users_id = ls.get('users_id');
+                            ls.clear();
+                            ls.set('users_id', users_id);
+                            // #ifdef H5
+                            sessionStorage.removeItem('is_send_usrlog')
+                            // #endif
+                            store.commit('SET_USER_INFO', {})
+                            store.commit('SET_STORES_ID', null)
+                            console.log('66001跳转',url,data)
                             uni.navigateTo({
-                                url: '/pages/login/login'
+                                url: '/pages/login/login',
+                                success:()=>{
+                                    //ls.remove('lockToLogin')
+                                }
                             })
-                        }, 1000)
+                        }
+
                         return;
                     }
                     resolve(res)

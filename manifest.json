@@ -82,9 +82,7 @@
                         "UniversalLinks" : "https://new401.bafangka.com/"
                     }
                 },
-                "push" : {
-                    "unipush" : {}
-                },
+                "push" : {},
                 "maps" : {
                     "amap" : {
                         "appkey_ios" : "85cd1bf51d07fa3689fe1f957f226967",

@@ -75,15 +75,21 @@ export const checkIsLogin = (redirect, tip) => {
     let userInfo = store.state.userInfo || ls.get('userInfo')
 
     if (!userInfo || JSON.stringify(userInfo) === '{}') {
+
+        //重置用户信息
+        let users_id = ls.get('users_id');
+        ls.clear();
+        ls.set('users_id', users_id);
+
         if (redirect) {
 
             if (!tip) {
 
                 // #ifdef H5
                 ls.set('login_farward_url', location.href);
-                // location.replace('/fre/pages/login/login')
                 // return;
                 // #endif
+
                 uni.navigateTo({
                     url: '/pages/login/login'
                 })
@@ -92,8 +98,6 @@ export const checkIsLogin = (redirect, tip) => {
             confirm({title: '提示', content: '该操作需要登录,请问是否登录?', confirmText: '去登录', cancelText: '暂不登录'}).then(() => {
                 // #ifdef H5
                 ls.set('login_farward_url', location.href);
-                // location.replace('/fre/pages/login/login')
-                // return;
                 // #endif
 
                 uni.navigateTo({

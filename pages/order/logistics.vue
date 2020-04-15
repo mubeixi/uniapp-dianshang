@@ -35,7 +35,7 @@
 					<view class="left">
 						派送员电话:
 					</view>
-					<view>
+					<view @click="call">
 						{{pro.delivery_man_phone}}
 					</view>
 				</view>
@@ -93,15 +93,18 @@
 			return {
 				height:1000,//获取手机屏幕高度
 				pro:[],
+				order_id:''
 			};
 		},
 		onLoad(options) {
 			let {
 				express,
 				prod_img,
-				shipping_id
+				shipping_id,
+				order_id
 			} = options ;
 			this.express = express;
+			this.order_id = order_id;
 			this.prod_img = prod_img;
 			this.shipping_id = shipping_id;
 			let that=this;
@@ -115,11 +118,17 @@
 			this.getOrderExpress();
 		},
 		methods:{
+			call(){
+				uni.makePhoneCall({
+				    phoneNumber: this.pro.delivery_man_phone
+				});
+			},
 			getOrderExpress(){
 				let data={
 					shipping_id: this.shipping_id,
 					express: this.express,
-					prod_img: this.prod_img
+					prod_img: this.prod_img,
+					order_id:this.order_id
 				}
 				getOrderExpress(data).then(res=>{
 					this.pro=res.data;

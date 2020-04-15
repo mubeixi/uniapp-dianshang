@@ -575,7 +575,7 @@ export default {
 					share.hide()
 			// #endif
 			let _self = this
-			let path = '/pages/detail/detail?Products_ID='+this.Products_ID;
+			let path = 'pages/detail/detail?Products_ID='+this.Products_ID;
 			let front_url = this.initData.front_url;
 			let shareObj = {
 				title: this.product.Products_Name,
@@ -675,11 +675,12 @@ export default {
 			}
 			judgeReceiveGift({gift: this.gift}).then(res=>{
 				this.gift_attr_id = res.data.attr_id;
-				this.skuval = res.data.skuval.split(';');
+				this.skuval = res.data.skuval//.split(';');
 				// #ifdef APP-PLUS
 					uni.$emit('goods_bottom_setval', {isCollected:this.isCollected,canSubmit:this.canSubmit});
 				// #endif
 			}).catch(res=>{
+				console.log(res,"sss")
 				setTimeout(function(){
 					uni.navigateBack({
 					    delta: 1
@@ -776,6 +777,7 @@ export default {
 			let data={
 				pageSize:this.pageSize,
 				page:this.page,
+				prod_id:this.Products_ID
 			}
 			getCoupon(data).then(res=>{
 				for(let i of res.data){
@@ -885,7 +887,10 @@ export default {
 						url: '/pages/order/check?cart_key=DirectBuy'
 					})
 				}
-			}).catch(()=>{})
+			}).catch(()=>{
+				this.isSubmit = false;
+			})
+			this.isSubmit = false;
 			//确定加入购物车
 			this.hideNativeEleShow = false
 			this.$refs.cartPopu.close();
@@ -1014,7 +1019,8 @@ export default {
             //let _self = this;
 			// #ifdef H5
 			if(!isWeiXin())return;
-			let path = '/pages/detail/detail?Products_ID='+this.Products_ID;
+
+			let path = 'pages/detail/detail?Products_ID='+this.Products_ID;
 			let front_url = this.initData.front_url;
             this.WX_JSSDK_INIT(this).then((wxEnv)=>{
                 this.$wx.onMenuShareTimeline({

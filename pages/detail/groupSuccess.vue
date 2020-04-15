@@ -253,7 +253,7 @@
             async shareFunc(channel) {
 
                 let _self = this
-                let path = '/pages/detail/groupJoin?Team_ID='+this.Team_ID+'&Products_ID='+this.Prod_ID;
+                let path = 'pages/detail/groupJoin?Team_ID='+this.Team_ID+'&Products_ID='+this.Prod_ID;
                 let front_url = this.initData.front_url;
 
                 let shareObj = {
@@ -431,7 +431,7 @@
                     let product = this.product
                     // #ifdef H5
 
-                    let path = '/pages/detail/groupJoin?Team_ID='+this.Team_ID+'&Products_ID='+this.Prod_ID;
+                    let path = 'pages/detail/groupJoin?Team_ID='+this.Team_ID+'&Products_ID='+this.Prod_ID;
                     let front_url = this.initData.front_url;
 
 

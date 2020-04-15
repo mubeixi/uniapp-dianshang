@@ -66,8 +66,8 @@
 						<div class="funicon icon-more1 icon font22 " style="color: #777;"></div>
 						<div @click.stop="extendReceiptFn(item)" v-if="item.extend" class="tooltip">确认延迟</div>
 					</div>
-					<span @click.stop="goLogistics(item)">查看物流</span>
-					<span @click.stop="goPay(item)" style="margin-left: 15rpx;">申请退款退货</span>
+					<span @click.stop="goLogistics(item)"  v-if="item.Order_Shipping.shipping_id!=2">查看物流</span>
+					<span @click.stop="goPay(item)" style="margin-left: 15rpx;"    v-if="item.Order_Shipping.shipping_id!=2">申请退款退货</span>
 					<span class="active" @click.stop="confirmOrder(item,index)">确认收货</span>
 					<!-- @click="goPay(item)"跳转退款 -->
 				</div>
@@ -243,18 +243,17 @@ export default {
 			
 
 			// #ifndef MP-WEIXIN
-				getOrderExpressCode({shipping_id:item.Order_ShippingID}).then(res=>{
+				// getOrderExpressCode({shipping_id:item.Order_ShippingID}).then(res=>{
 					
-					  KDNWidget.run({
-						  serviceType: "A",
-						  expCode: res.data.ShipperCode,
-						  expNo: res.data.LogisticCode
-					  })
+				// 	  KDNWidget.run({
+				// 		  serviceType: "A",
+				// 		  expCode: res.data.ShipperCode,
+				// 		  expNo: res.data.LogisticCode
+				// 	  })
 				
-				}).catch(e=>{})
+				// }).catch(e=>{})
 			
 			// #endif
-			// #ifdef MP-WEIXIN
 				// 处理物流名称
 				let express ={}
 				if(typeof item.Order_Shipping =='object'){
@@ -262,12 +261,12 @@ export default {
 				}else{
 					express = JSON.parse( item.Order_Shipping).Express;
 				}
-				
+				console.log(item)
 				//跳转物流追踪
 				uni.navigateTo({
-					url:'/pages/order/logistics?shipping_id='+item.Order_ShippingID + '&express=' + express + '&prod_img=' + item.prod_list[0].prod_img
+					url:'/pages/order/logistics?shipping_id='+item.Order_ShippingID + '&express=' + express + '&prod_img=' + item.prod_list[0].prod_img+'&order_id='+item.Order_ID
 				})
-			// #endif
+
 		},
 		//获取订单角标数
 		getOrderNum(){

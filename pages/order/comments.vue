@@ -7,8 +7,8 @@
 			 <!-- <page-title title="评论" rightHidden="true" bgcolor="#F8F8F8"></page-title> -->
 
         <div class="navs">
-            <div class="nav" :class="index == 0 ? 'active' : ''" @click="getComment(0)">全部</div>
-            <div class="nav" :class="index == 1 ? 'active' : ''" @click="getComment(1)">有图</div>
+            <div class="nav" :class="index == 0 ? 'active' : ''" @click="getComment(0,1)">全部</div>
+            <div class="nav" :class="index == 1 ? 'active' : ''" @click="getComment(1,1)">有图</div>
         </div>
         <block v-for="(item,index) of comment_list" :key="item">
 			<div class="c_content" v-if="!item.ImgPath">
@@ -77,7 +77,7 @@
 
 <script>
 import bottom from '../../components/bottom/bottom'
-import {getComments,getProductDetail,updateCart,addCollection,getCoupon,getUserCoupon,checkProdCollected,cancelCollection} from '../../common/fetch.js'
+import {getComments,getProductDetail,updateCart,addCollection,checkProdCollected,cancelCollection} from '../../common/fetch.js'
 import popupLayer from '../../components/popup-layer/popup-layer.vue'
 import {goBack,numberSort}  from '../../common/tool.js'
 import {pageMixin} from "../../common/mixin";
@@ -325,11 +325,14 @@ export default {
 			            }
 			});
 		},
-		getComment(i){
-			this.commentArgs.page=1;
+		getComment(i,j){
+			if(j===1){
+				this.commentArgs.page=1;
+				this.comment_list=[];
+			}
 			this.index = i;
 			this.commentArgs.has_img = i;
-			this.comment_list=[];
+
 			this.getComments();
 		},
 		getComments(){

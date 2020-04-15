@@ -283,7 +283,6 @@
 		getCommit,
 		updateCart,
 		addCollection,
-		getCoupon,
 		getUserCoupon,
 		cancelCollection,
 		checkProdCollected,
@@ -488,8 +487,6 @@
 			this.getDetail(this.Products_ID);
 			this.getCommit(this.Products_ID);
 
-
-
 			//获取正在拼团的团队
 			this.getPintuanTeamList(this.Products_ID)
 
@@ -622,7 +619,7 @@
 			async shareFunc(channel) {
 
 				let _self = this
-				let path = '/pages/detail/groupDetail?Products_ID=' + this.Products_ID;
+				let path = 'pages/detail/groupDetail?Products_ID=' + this.Products_ID;
 				let front_url = this.initData.front_url;
 
 				let shareObj = {
@@ -1097,13 +1094,12 @@
 			},
 			getDetail(item) {
 				let data = {
-					prod_id: item,
-					Users_ID: 'wkbq6nc2kc'
+					prod_id: item
 				}
 				let _self = this;
 				let product = null;
 
-				getProductDetail(data).then(res => {
+				getProductDetail(data,{tip:'加载中'}).then(res => {
 
 
 					if (!res.data.is_pintuan) {
@@ -1165,7 +1161,7 @@
 					// #ifdef H5
 
 					if (!isWeiXin()) return;
-					let path = '/pages/detail/groupDetail?Products_ID=' + this.Products_ID;
+					let path = 'pages/detail/groupDetail?Products_ID=' + this.Products_ID;
 					let front_url = this.initData.front_url;
 
 					this.WX_JSSDK_INIT(this).then((wxEnv) => {

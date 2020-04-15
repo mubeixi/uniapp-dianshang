@@ -105,11 +105,13 @@
         },
         computed: {
             limit() {
-                if (this.goods.value) {
-                    return this.goods.value.cate_id ? this.goods.value.limit : 20
+                if(Array.isArray(this.goods.value.cate_id) && this.goods.value.cate_id.length>0){
+                    return this.goods.value.limit
+                }else if(Array.isArray(this.goods.value.list) && this.goods.value.list.length>0){
+                    return this.goods.value.list.length
+                }else{
+                    return 20
                 }
-                return 20
-
             },
             isEmpeyInfo() {
                 return !this.goods.config.attr.title.show && !this.goods.config.attr.desc.show && !this.goods.config.attr.price.show && !this.goods.config.attr.buybtn.show
@@ -224,7 +226,7 @@
                         return;
                     }
 
-                    let param = {pageSize: limit};//cate_id.length===0 && limit ? limit : 900}
+                    let param = {pageSize: this.limit};//cate_id.length===0 && limit ? limit : 900}
 
                     //拼团
                     //param.pintuan_flag = 1;

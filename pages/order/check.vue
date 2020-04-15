@@ -1,7 +1,7 @@
 <template>
     <view @click="commonClick" v-if="loading" :class="selectStore?'over':''">
       <!--  <pagetitle title="提交订单"></pagetitle> v-if="orderInfo.all_has_stores" -->
-        <div class="top"  v-if="orderInfo.all_has_stores==1">
+        <div class="top"  v-if="orderInfo.all_has_stores==1&&orderInfo.is_virtual == 0">
             <div class="tabs">
                 <div class="tabs-item" :class="{active:tabIdx==0}" @click="changgeTabIdx(0)">快递发货</div>
                 <div class="tabs-item" :class="{active:tabIdx==1}" @click="changgeTabIdx(1)">到店自提</div>
@@ -12,7 +12,7 @@
 				<image class="loc_icon" :src="'/static/client/location.png'|domain" alt="" ></image>
 				<view class="add_msg" v-if="addressinfo.Address_Name">
 					<view class="name">收货人：{{addressinfo.Address_Name}} <span>{{addressinfo.Address_Mobile | formatphone}}</span></view>
-					<view class="location">收货地址：{{addressinfo.Address_Province_name}}{{addressinfo.Address_City_name}}{{addressinfo.Address_Area_name}}{{addressinfo.Address_Town_name}}</view>
+					<view class="location">收货地址：{{addressinfo.Address_Province_name}}{{addressinfo.Address_City_name}}{{addressinfo.Address_Area_name}}{{addressinfo.Address_Town_name}}{{addressinfo.Address_Detailed}}</view>
 				</view>
 				<view class="add_msg" v-else>
 					<view>暂无收货地址，去添加</view>
@@ -211,6 +211,7 @@
 			</view>
 			<scroll-view style="height:430rpx;width:95%;"  scroll-y="true" class="bMbx" v-if="type=='coupon'">
 				<view class="fMbx scroll-view-item">优惠券选择</view>
+				<radio-group @change="radioChange">
 				<label class="iMbx scroll-view-item" v-for="(coupon,i) in orderInfo.coupon_list" :key="i">
 					<block v-if="coupon.Coupon_ID">
 						满{{coupon.Coupon_Condition}} - {{coupon.Coupon_Cash > 0 ? coupon.Coupon_Cash : coupon.Coupon_Discount}}
@@ -218,10 +219,11 @@
 					<block v-else>
 						不使用优惠
 					</block>
-					<radio-group @change="radioChange">
+
 						<radio :value="''+coupon.Coupon_ID" :checked="i===current" style="float:right;" color="#F43131"/>
-					</radio-group>
+
 				</label>
+				</radio-group>
 				<!-- <label class="iMbx scroll-view-item" >
 					不使用优惠
 					<radio-group @change="notUseCoupon">
@@ -233,7 +235,7 @@
 				确定
 			</view>
 		</popup-layer>
-        <store-list-components :pageEl="selfObj" direction="top" ref="stroeComp" @callFn="bindStores" @change="selectStore=false" catchtouchmove/>
+        <store-list-components style="z-index: 10000;" :pageEl="selfObj" direction="top" ref="stroeComp" @callFn="bindStores" @change="selectStore=false" catchtouchmove/>
     </view>
 </template>
 
@@ -330,7 +332,7 @@ export default {
 			})
 		}
 		this.getAddress();
-		this.createOrderCheck();
+		this.createOrderCheck(2);
 	},
 	async created(){
 		// #ifdef H5
@@ -379,8 +381,15 @@ export default {
 		  if(this.tabIdx===1){
 			  this.selectStore=false
 			  this.postData.shipping_id='is_store'
+		  }else if(this.orderInfo.is_virtual == 1){
+			  this.postData.shipping_id=''
+		  }else{
+			  //为了选择门店的时候的用户体验
+			  this.postData.shipping_id='1'
 		  }
 		 this.shipping_store_id = storeInfo.Stores_ID;
+		 //新增
+		 this.postData.shipping_store_id=this.shipping_store_id 
 	  	if(this.setStoreMode==='all'){
 	  		//居然是对象醉了
 	  		for(var i in this.orderInfo.CartList){
@@ -396,9 +405,29 @@ export default {
 			this.orderInfo.Stores_Name=storeInfo.Stores_Name
 		}
 		  this.$refs.stroeComp.close()
+		  
+		  if(this.postData.shipping_id=='is_store'){
+		  	let obj={}
+		  	for(let it in this.orderInfo.CartList){
+		  		for(let iq in this.orderInfo.CartList[it]){
+		  			obj[it]={
+		  					[iq]:this.orderInfo.CartList[it][iq].store.Stores_ID
+		  				}
+		  		}
+		  	}
+		  	this.postData.self_pick_store_id=JSON.stringify(obj)
+		  }
+		  
+		  //新增
+		  //if(this.tabIdx==0){
+			  this.createOrderCheck()
+		  //}
+		  
+		  this.zIndex=999999
 
 	  },
 	  multipleSelectStore(){
+		  this.zIndex=9
 		  this.selectStore=true
 		  this.setStoreMode = 'all'
 		  //let ids = Object.keys(this.orderInfo.CartList)
@@ -414,6 +443,7 @@ export default {
 
 	  },
       openStores(prod_id,attr_id,store){
+		  this.zIndex=9
 		  this.selectStore=true
 		  this.setStoreMode = prod_id+'::'+attr_id
 		  let ids ={[prod_id]:[attr_id]}
@@ -682,7 +712,7 @@ export default {
 				//不使用优惠
 				if(!this.postData.coupon_id){
 					this.coupon_desc = '暂不使用优惠'
-					this.createOrderCheck(2);
+					this.createOrderCheck();
 					this.$refs.popupRef.close();
 					return;
 				}
@@ -698,7 +728,7 @@ export default {
 					}
 				}
 			};
-			this.createOrderCheck(2);
+			this.createOrderCheck();
 			this.$refs.popupRef.close();
 		},
 		async getAddress(){
@@ -712,13 +742,21 @@ export default {
 			    Address_ID = this.addressinfo.Address_ID;
 			}
 			await getAddress({Address_ID: Address_ID?Address_ID:0}).then(res=>{
-				if (this.back_address_id) {  //添加、选择收获地址返回
-					uni.showModal({
-					  title: '错误',
-					  content: '收货地址获取失败',
-					  showCancel: false
-					});
-					return false;
+				// if (this.back_address_id) {  //添加、选择收获地址返回
+				// 	uni.showModal({
+				// 	  title: '错误',
+				// 	  content: '收货地址获取失败',
+				// 	  showCancel: false
+				// 	});
+				// 	return false;
+				// }
+				if (this.back_address_id && res.errorCode != 0) {  //添加、选择收获地址返回
+						uni.showModal({
+						  title: '错误',
+						  content: '收货地址获取失败',
+						  showCancel: false
+						});
+						return false;
 				}
 				if(!res.data[0]) return
 				if(res.data.length>0){
@@ -743,17 +781,28 @@ export default {
 				for(var i in res.data.CartList){
 					for(var j in res.data.CartList[i]){
 						res.data.CartList[i][j].store = {}
+						console.log(res.data.CartList[i][j],"sss")
+						if(res.data.CartList[i][j].choose_store_info){
+							res.data.CartList[i][j].store['Stores_Name'] = res.data.CartList[i][j].choose_store_info.Stores_Name
+							res.data.CartList[i][j].store['Stores_ID'] = res.data.CartList[i][j].choose_store_info.Stores_ID
+						}
+						
+						
 					}
 				}
 				this.orderInfo = Object.assign(oldOrderInfo,res.data);
-				this.orderInfo.coupon_list.push({Coupon_ID:''})
+				if(this.orderInfo.coupon_list.length>0){
+					this.orderInfo.coupon_list.push({Coupon_ID:''})
+				}
+
 				//如果该规格有门店 就优先后台设置的
-				if(this.orderInfo.all_has_stores==1&&num!=2){
+				if(this.orderInfo.all_has_stores==1&&num==2&&this.orderInfo.is_virtual!=1){
 					this.tabIdx = this.initData.order_submit_first;
 				}
 
 
 				this.couponlist = res.data.coupon_list;
+
 				this.orderLoading = true;
 				this.postData.shipping_id = res.data.Order_Shipping.shipping_id;
 				this.idD=this.postData.shipping_id
@@ -764,7 +813,7 @@ export default {
 				}
 			}).catch(e=>{
 				uni.showToast({
-					title: e.data,
+					title: e.msg,
 					icon: 'none'
 				})
 			})

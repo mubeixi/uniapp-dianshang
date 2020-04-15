@@ -120,6 +120,8 @@ export const login = (data, options) => {
 }
 
 
+//获取可用的同城配送方式
+export const getAvailableCityExpress = (data, options) => fetch('getAvailableCityExpress', data, options)
 //物流编号获取
 export const getOrderExpressCode = (data, options) => fetch('getOrderExpressCode', data, options)
 //获取直播信息
@@ -141,7 +143,7 @@ export const getArticle = (data, options) => fetch('getArticle', data, options)
 
 export const sendAnalysisData = (data, options) => fetch('clickRecord', data, options)
 
-export const getCouponList = (data, options) => fetch('get_unaccalimed_coupon', data, options)
+//export const getCouponList = (data, options) => fetch('get_unaccalimed_coupon', data, options)
 
 export const getProductList = (data, options) => fetch('get_prod', data, options)
 

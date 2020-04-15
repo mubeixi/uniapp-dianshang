@@ -243,7 +243,7 @@
 
 <script>
 import popupLayer from '../../components/popup-layer/popup-layer.vue'
-import {spikeProdDetail,getCommit,updateCart,addCollection,getCoupon,getUserCoupon,cancelCollection,checkProdCollected,getPintuanTeam,getProductSharePic} from '../../common/fetch.js'
+import {spikeProdDetail,getCommit,updateCart,addCollection,cancelCollection,checkProdCollected,getPintuanTeam,getProductSharePic} from '../../common/fetch.js'
 import {goBack,numberSort,getGroupCountdown,buildSharePath,getProductThumb,ls}  from '../../common/tool.js'
 import {pageMixin} from "../../common/mixin";
 import {error} from "../../common";
@@ -512,7 +512,7 @@ export default {
 		async shareFunc(channel) {
 
 			let _self = this
-			let path = '/pages/detail/groupDetail?Products_ID=' + this.Products_ID;
+			let path = 'pages/detail/groupDetail?Products_ID=' + this.Products_ID;
 			let front_url = this.initData.front_url;
 
 			let shareObj = {
@@ -983,7 +983,7 @@ export default {
 
 				// #ifdef H5
 
-				let path = '/pages/detail/limitDetail?spikeGoodId='+this.spike_good_id;
+				let path = 'pages/detail/limitDetail?spikeGoodId='+this.spike_good_id;
 				let front_url = this.initData.front_url;
 
 

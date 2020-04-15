@@ -26,13 +26,14 @@
 <script>
 	import {pageMixin} from "../../common/mixin";
 	import{getDisTeamList } from '../../common/fetch.js'
+	import {toast} from "../../common";
 	export default {
 		mixins:[pageMixin],
 		data() {
 			return {
 				index:0,
 				page:1,
-				pageSize:10,
+				pageSize:15,
 				pro:[],
 				totalCount:0
 			};
@@ -44,6 +45,8 @@
 			if(this.totalCount>this.pro.length){
 				this.page++;
 				this.getDisTeamList();
+			}else{
+				toast('到底啦','none')
 			}
 		},
 		onShow() {
@@ -58,17 +61,18 @@
 					page:this.page,
 					pageSize:this.pageSize
 				}
-				getDisTeamList(data,{errtip:false}).then(res=>{
-					for(let item of res.data){
-						this.pro.push(item);
-					}
+
+				getDisTeamList(data,{errtip:false,tip:'加载中'}).then(res=>{
+
+					this.pro = this.pro.concat(res.data)
 					this.totalCount=res.totalCount;
 				})
 				.catch(e=>{
 
 				})
 			}
-		}
+		},
+
 	}
 </script>
 
