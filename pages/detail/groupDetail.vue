@@ -283,7 +283,6 @@
 		getCommit,
 		updateCart,
 		addCollection,
-		getCoupon,
 		getUserCoupon,
 		cancelCollection,
 		checkProdCollected,
