@@ -21,7 +21,7 @@
 				</view>
 			</view>
 			<view class="nav">
-				<view class="navList first" @click="goBalance">
+				<view class="navList first" @click="goBalance"  v-if="initData.charge_switch==1">
 					<image class="imgr" :src="'/static/client/person/yue.png'|domain" mode=""></image>
 					<view class="viewr">
 						余额
