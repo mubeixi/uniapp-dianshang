@@ -1,6 +1,5 @@
 <template>
   <div @click="commonClick" style="position:relative;" class="wrap">
-
 	<!-- #ifndef APP-PLUS -->
 		<view class="top">
 			<image class="imgm" src="/static/back.png" @click="goBack" ></image>
@@ -62,7 +61,6 @@
 		  <div class="btn">领券</div>
 		  <div class="right" >店铺优惠券 <image class="img" :src="'/static/client/detail/right.png'|domain" alt="" /></div>
 	  </div>
-
 	  <!-- 评价 -->
 	  <div class="comment bgwhite">
 		  <div class="c_title">
@@ -100,21 +98,14 @@
 		  <!-- #ifdef H5||APP-PLUS -->
 		  <!-- <div v-html="formatRichTexts(product.Products_Description)" class="p_detail_des"></div> -->
 		  <!-- #endif -->
-
 		  <!-- #ifdef MP -->
 		  <!-- <rich-text :nodes="product.Products_Description|formatRichText" class="p_detail_des"></rich-text> -->
 		  <!-- #endif -->
-
 	  </div>
-
 	<div style="clear: both;"></div>
-
-
 	<!-- #ifndef APP-PLUS -->
 	<bottom @kefu="contact" @cartHandle="addCart" @directHandle="directBuy" @goGet="lingqu" @collect="collect" :collected="isCollected" :recieve="recieve" :isVirtual="isVirtual" :canSubmit="canSubmit"></bottom>
 	<!-- #endif -->
-
-
 	<div style="height:60px;background: white;"></div>
  	<div class="safearea-box"></div>
 	<popupLayer ref="popupLayer" :direction="'top'" @maskClicked="handClicked2" >
@@ -135,16 +126,12 @@
 					<div>微信小程序</div>
 				</div>
 				<!-- #endif -->
-
-
 				<!-- #ifndef MP-TOUTIAO -->
 				<div class="flex1" @click="shareFunc('pic')">
 					<image class='img' :src="'/static/client/detail/share2.png'|domain" alt=""></image>
 					<div>分享海报</div>
 				</div>
 				<!-- #endif -->
-
-
 			</div>
 			<div class="s_bottom" @click="cancel">取消</div>
 		</div>
@@ -221,16 +208,15 @@
 		</button>
 		</form>
 	</popupLayer>
-
 	  <!-- #ifdef MP-WEIXIN -->
-<!--	  <view class="liveBox" :style="{bottom: '70px'}" v-if="liveList.length===1">-->
-<!--	  		  <navigator  :url="'plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id='+liveList[0].roomid">-->
-<!--	  			  <image class="icon-live" src="/static/live/logo.png"></image>-->
-<!--	  		  </navigator>-->
-<!--	  </view>-->
-<!--	  <view class="liveBox" :style="{bottom: '70px'}" v-if="liveList.length>1">-->
-<!--	  		  <image @click="toLive" class="icon-live" src="/static/live/logo.png"></image>-->
-<!--	  </view>-->
+	 <!-- <view class="liveBox" :style="{bottom: '70px'}" v-if="liveList.length===1">
+	  		  <navigator  :url="'plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id='+liveList[0].roomid">
+	  			  <image class="icon-live" src="/static/live/logo.png"></image>
+	  		  </navigator>
+	  </view>
+	  <view class="liveBox" :style="{bottom: '70px'}" v-if="liveList.length>1">
+	  		  <image @click="toLive" class="icon-live" src="/static/live/logo.png"></image>
+	  </view> -->
 	  <!-- #endif -->
   </div>
 </template>
@@ -240,13 +226,10 @@ import popupLayer from '../../components/popup-layer/popup-layer.vue'
 import {getProductDetail,getCommit,updateCart,addCollection,getCoupon,getUserCoupon,checkProdCollected,cancelCollection,judgeReceiveGift,getProductSharePic,getLiveInfo} from '../../common/fetch.js';
 import {goBack as goBackFn,numberSort,getProductThumb}  from '../../common/tool.js'
 import {buildSharePath, isWeiXin, ls} from "../../common/tool";
-
 import { mapGetters, mapActions, Store,mapState } from "vuex";
-
 import uParse from '../../components/gaoyia-parse/parse.vue'
 import {pageMixin,safeAreaMixin} from "../../common/mixin";
 import {error, toast} from "../../common";
-
 export default {
 	mixins:[pageMixin,safeAreaMixin],
     data(){
@@ -311,7 +294,6 @@ export default {
 	// #ifdef MP-WEIXIN || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO
 	//自定义小程序分享
 	onShareAppMessage(){
-
 		let path = '/pages/detail/detail?Products_ID='+this.Products_ID;
 		let shareObj = {
 			title: this.product.Products_Name,
@@ -319,41 +301,28 @@ export default {
 			imageUrl:this.product.ImgPath,
 			path: buildSharePath(path)
 		};
-
 		return shareObj
-
 	},
 	// #endif
 	onLoad: function (option) {
-
 		this.Products_ID = option.Products_ID;
 		this.postData.prod_id = option.Products_ID;
-
 		//参与统计的
 		this.analysisExt.prod_id = option.Products_ID
-
 		this._init_func(option)
-
-
 		// #ifdef APP-PLUS
 			const vm = this;
-
-
 			//隐藏规格框
 			// const goodsSpecNvue = uni.getSubNVueById('goodsSpec')
 			// goodsSpecNvue.hide()
-
 			// //隐藏优惠券
 			// const coupon = uni.getSubNVueById('coupon')
 			// coupon.hide()
-
 			// //隐藏优惠券
 			// const share = uni.getSubNVueById('share')
 			// share.hide()
-
 			const subNVue2 = uni.getSubNVueById('goodsBottom')
 			subNVue2.show()
-
 		//hack app的商品详情页购买
 		//const vm = this;
 		uni.$on('cartHandle', (data) => {
@@ -362,11 +331,9 @@ export default {
 		uni.$on('directHandle',(data)=>{
 			vm.directBuy()
 		})
-
 		uni.$on('kefu', (data) => {
 			vm.contact()
 		})
-
 		uni.$on('collectHandle',(data)=>{
 			vm.collect()
 		})
@@ -374,18 +341,12 @@ export default {
 			vm.getMyCoupon(data.item,data.i)
 		})
 		uni.$on('goNextPage',(data)=>{
-
 			vm.goNextPage()
 		})
-
 		uni.$on('shareDetail',(data)=>{
-
 			if(data.detail!='detail') return
 				vm.shareFunc(data.item)
-
-
 		})
-
 		uni.$on('goodsSkuSub',(data)=>{
 			if(data.detail!='detail') return
 			let {check_attr,check_attrid_arr,submit_flag,postData} = data
@@ -398,45 +359,31 @@ export default {
 			const goodsSpecNvue = uni.getSubNVueById('goodsSpec')
 			goodsSpecNvue.hide()
 		})
-
-
 		uni.$on('goGet',(data)=>{
 			vm.lingqu()
 		})
 		// #endif
-
-
 	 },
-
 	mounted(){
-
 		let _self = this
 		this.$nextTick().then(res=>{
-
 			if(_self.$refs.cartPopu){
 				this.postData.qty = 1;
 			}
-
 		})
-
-
 		this.$nextTick().then(()=>{
 			let videoContext = uni.createVideoContext('myVideo1')
 			_self.videoContext = videoContext
 			//添加到这里
 			// getApp().globalData.videoInstance.push(videoContext)
 		})
-
 	},
 	onShow(){
 		let _self = this
-
 		const USERINFO = ls.get('userInfo');
-
 		// #ifdef APP-PLUS
 		var icon = plus.nativeObj.View.getViewById("icon");
 		var icons = plus.nativeObj.View.getViewById("icons");
-
 		if(icon&&icons){
 			icon.show();
 			icons.show();
@@ -445,16 +392,12 @@ export default {
 			_self.createtabs();
 		}
 		// #endif
-
-
 		// #ifdef MP-WEIXIN
-		// getLiveInfo().then(res=>{
-		// 	this.liveList = res.data.room_info
-		// 	this.liveCount = res.data.count
-		// })
+		getLiveInfo().then(res=>{
+			this.liveList = res.data.room_info
+			this.liveCount = res.data.count
+		})
 		// #endif
-
-
 	},
 	onUnload(){
 		// #ifdef APP-PLUS
@@ -462,37 +405,28 @@ export default {
 			var icons = plus.nativeObj.View.getViewById("icons");
 			icon.hide();
 			icons.hide();
-
 			uni.$off('cartHandle')
 			uni.$off('directHandle')
-
 			uni.$off('collectHandle')
 			uni.$off('getMyCoupon')
 			uni.$off('goNextPage')
-
 			uni.$off('shareDetail')
 			uni.$off('kefu')
-
 			uni.$off('goodsSkuSub')
-
 			uni.$off('goGet')
 		// #endif
 	},
 	onHide(){
 		//停止播放
-
 		// #ifdef APP-PLUS
 			var icon = plus.nativeObj.View.getViewById("icon");
 			var icons = plus.nativeObj.View.getViewById("icons");
 			icon.hide();
 			icons.hide();
-
 		// #endif
-
 		if(this.videoContext){
 			this.videoContext.pause()
 		}
-
 	},
 	computed:{
 		...mapState(['initData'])
@@ -517,7 +451,6 @@ export default {
 				indicator:'default',
 				current:0
 			});
-
 		},
 		handClicked2(){
 			this.hideNativeEleShow = false;
@@ -528,9 +461,7 @@ export default {
 			this.showCorver=true
 		},
 		async _init_func(option){
-
 			await this.getDetail(this.Products_ID);
-
 			// 是否是赠品，赠品不能选择属性
 			if(option.gift) {
 				this.gift = option.gift;
@@ -539,21 +470,14 @@ export default {
 				await this.judgeReceiveGift();
 				this.recieve = true;
 			}
-
 			await this.getCommit(this.Products_ID);
-
 			await this.checkProdCollected();
-
 			await this.getCoupon();//获取可领取的优惠券
-
-
 			this.isLoad = true;
-
 		},
 		createtab: function(){
 			// 设置水平居中位置
 			//var bitmap = new plus.nativeObj.Bitmap('bmp1');
-
 			var view = new plus.nativeObj.View('icon', {
 				top: '30px',
 				left: '10px',
@@ -571,16 +495,12 @@ export default {
 				   delta: 1
 			   });
 			}, false);
-
 			view.show();
 		},
 		createtabs: function(){
-
 			const res = uni.getSystemInfoSync();
 			const fullWidth = res.screenWidth;
-
 			let leftOffset = fullWidth-40
-
 			// 设置水平居中位置
 			//var bitmap = new plus.nativeObj.Bitmap('bmp2');
 			var view = new plus.nativeObj.View('icons', {
@@ -625,12 +545,10 @@ export default {
 				match = match.replace(/style="[^"]+"/gi, '')//.replace(/style='[^']+'/gi, '');
 				match = match.replace(/width="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
 				match = match.replace(/height="[^"]+"/gi, '')//.replace(/height='[^']+'/gi, '');
-
 				//图片app不支持
 				// #ifdef APP-PLUS
 				match = match.replace(/!*.webp/gi, '')
 				// #endif
-
 				return match;
 			});
 			newContent= newContent.replace(/<div[^>]*>/gi,function(match,capture){
@@ -645,7 +563,6 @@ export default {
 				match = match.replace(/width:[^;]+;/gi, 'width:100%;').replace(/width:[^;]+;/gi, 'width:100%;');
 				return match;
 			});
-
 			newContent = newContent.replace(/<br[^>]*\/>/gi, '');
 			newContent = newContent.replace(/\<img/gi, '<img style="width:100%;float:left;"');
 			newContent = newContent.replace(/src="\/\//gi, 'src="http://');
@@ -653,24 +570,19 @@ export default {
 			return newContent;
 		},
 		async shareFunc(channel) {
-
 			// #ifdef APP-PLUS
 					const share = uni.getSubNVueById('share')
 					share.hide()
 			// #endif
-
 			let _self = this
 			let path = 'pages/detail/detail?Products_ID='+this.Products_ID;
 			let front_url = this.initData.front_url;
-
 			let shareObj = {
 				title: this.product.Products_Name,
 				desc: this.product.Products_BriefDescription,
 				imageUrl: getProductThumb(this.product.ImgPath),
 				path: buildSharePath(path)
 			};
-
-
 			switch (channel) {
 				case 'wx':
 					uni.share({
@@ -682,10 +594,8 @@ export default {
 						summary: shareObj.desc,
 						imageUrl: shareObj.imageUrl,
 						success: function (res) {
-
 						},
 						fail: function (err) {
-
 						}
 					});
 					break;
@@ -699,15 +609,12 @@ export default {
 						summary: shareObj.desc,
 						imageUrl: shareObj.imageUrl,
 						success: function (res) {
-
 						},
 						fail: function (err) {
-
 						}
 					});
 					break;
 				case 'wxmini':
-
 					uni.share({
 						provider: 'weixin',
 						scene: "WXSceneSession",
@@ -721,23 +628,18 @@ export default {
 							webUrl: 'http://uniapp.dcloud.io'
 						},
 						success: ret => {
-
 						}
 					});
 					break;
 				case 'pic':
 					//this.$toast('comming soon')
-
 					let res= await getProductSharePic({'product_id':this.Products_ID},{tip:'努力加载中',mask:true})
 					ls.set('temp_sharepic_info',res.data)
-
 					let sharePic =res.data.img_url
-
 					if(!sharePic){
 						error('获取分享参数失败');
 						return;
 					}
-
 					setTimeout(function(){
 						uni.navigateTo({
 							url:'/pages/detail/sharepic/sharepic'
@@ -765,7 +667,6 @@ export default {
 					url: '/pagesA/person/gift?cart_key=DirectBuy&gift=gift'
 				})
 			}).catch(()=>{})
-
 		},
 		// 赠品
 		judgeReceiveGift(){
@@ -773,13 +674,11 @@ export default {
 				return
 			}
 			judgeReceiveGift({gift: this.gift}).then(res=>{
-
 				this.gift_attr_id = res.data.attr_id;
 				this.skuval = res.data.skuval//.split(';');
 				// #ifdef APP-PLUS
 					uni.$emit('goods_bottom_setval', {isCollected:this.isCollected,canSubmit:this.canSubmit});
 				// #endif
-
 			}).catch(res=>{
 				console.log(res,"sss")
 				setTimeout(function(){
@@ -792,13 +691,10 @@ export default {
 		},
 		//评价预览
 		yulanImg(i,j){
-
-
 			//换大图。。。
 			let tempArr = this.commit[i].ImgPath.map((img,idx)=>{
 				return img.replace(/\/n3\//,'/');
 			});
-
 			uni.previewImage({
 			        urls: tempArr,
 					indicator:'number',
@@ -824,7 +720,6 @@ export default {
 				uni.$emit('goods_bottom_setval', {isCollected:this.isCollected});
 				// #endif
 			}).catch(e => {
-
 			})
 		},
 		//下一页优惠券
@@ -836,14 +731,12 @@ export default {
 		},
 		//领取优惠券
 		getMyCoupon(item,i){
-
 			// #ifdef APP-PLUS
 				if(!this.$fun.checkIsLogin()){
 					const coupon = uni.getSubNVueById('coupon')
 					coupon.hide()
 				}
 			// #endif
-
 			if(!this.$fun.checkIsLogin(1,1))return;
 			if(this.isLoading==true)return;
 			this.isLoading=true;
@@ -875,10 +768,8 @@ export default {
 						// #endif
 					}
 			}).catch(e=>{
-
 				this.isLoading=false;
 			})
-
 			//this.getCoupon();
 		},
 		//获取可领取的优惠券
@@ -894,12 +785,10 @@ export default {
 				}
 				this.totalCount=res.totalCount;
 			}).catch(e=>{
-
 			})
 		},
 		// 选择属性
 		selectAttr(index,i){
-
 			var value_index = index; //选择的属性值索引
 			var attr_index = i;   //选择的属性索引
 			// if (this.check_attrid_arr.indexOf(value_index) > -1) return false;
@@ -927,8 +816,6 @@ export default {
 			var attr_val = this.product.skuvaljosn[check_attrid];   //选择属性对应的属性值
 			//数组转化为字符串
 			check_attrnames = check_attrnames.join(';');
-
-
 			//更改第一个规格显示图片
 			for(let mbx in this.product.skuvaljosn){
 				let arr=mbx.split(';')
@@ -938,13 +825,10 @@ export default {
 					break
 				}
 			}
-
-
 			//属性判断
 			if (attr_val) {
 				this.postData.attr_id = attr_val.Product_Attr_ID;   //选择属性的id
 				this.postData.count = attr_val.Property_count;   //选择属性的库存
-
 				//this.skuImg=attr_val.Attr_Image
 				// this.postData.showimg = typeof attr_val.Attr_Image != 'undefined' && attr_val.Attr_Image != '' ? attr_val.Attr_Image : this.product.Products_JSON['ImgPath'][0];// 选择属性的图片
 				this.postData.productDetail_price = attr_val.Attr_Price?attr_val.Attr_Price:this.product.Products_PriceX; // 选择属性的价格
@@ -969,13 +853,10 @@ export default {
 			}
 		},
 		skuSub(e){
-
 			if(!this.$fun.checkIsLogin(1,1)){
 				return;
 			}
-
 			if(this.isSubmit) {return}
-
 			if(!this.submit_flag) {
 				return ;
 			}
@@ -989,15 +870,10 @@ export default {
 					return;
 				}
 			}
-
 			// add_template_code({
 			// 	code: e.detail.formId,
 			// 	times: 1
 			// })
-
-
-
-
 			this.isSubmit = true;
 			updateCart(this.postData).then(res=>{
 				this.isSubmit = false;
@@ -1058,7 +934,6 @@ export default {
 		},
 		// 收藏
 		collect(){
-
 			if(!this.$fun.checkIsLogin(1,1)){
 				return;
 			}
@@ -1091,17 +966,12 @@ export default {
 			})
 		},
 		goBack(){
-
 			// #ifdef H5
 			history.go(-1);
 			return;
-
 			// #endif
 			//肯定h5
-
-
 			uni.navigateBack()
-
 		},
 		getCommit(item){
 			let data={
@@ -1112,25 +982,19 @@ export default {
 			getCommit(data,{errtip:false}).then(res=>{
 				this.commit=res.data;
 			}).catch(e=>{
-
 			})
 		},
 		async getDetail(item){
-
 			let data={
 				prod_id:item,
 			}
-
 			let product = null;
-
 			//返回的就是一个pormise了
 			await getProductDetail(data).then(res=>{
-
 				product = res.data
 				this.product = res.data;
 				this.postData.productDetail_price =this.product.Products_PriceX;
 				this.isVirtual = res.data.Products_IsVirtual == 1;
-
 				this.postData.count = res.data.Products_Count;
 				if(res.data.skujosn) {
 					let skujosn = res.data.skujosn;
@@ -1141,36 +1005,24 @@ export default {
 							val: skujosn[i]
 						});
 					}
-
 					this.product.skujosn_new = skujosn_new;
 					this.product.skuvaljosn = res.data.skuvaljosn;
-
 				}
-
 				// #ifdef APP-PLUS
-
 				//规格选择
 				uni.$emit('goods_spec_setval',{product:this.product,detail:'detail'})
 				uni.$emit('goods_spec_setval',{postData:this.postData,detail:'detail'})
-
 				uni.$emit('goods_bottom_setval', {isVirtual:this.isVirtual});
 				// #endif
 			}).catch(e=>{
-
 			})
-
-
             //let _self = this;
 			// #ifdef H5
-
 			if(!isWeiXin())return;
 
 			let path = 'pages/detail/detail?Products_ID='+this.Products_ID;
 			let front_url = this.initData.front_url;
-
-
             this.WX_JSSDK_INIT(this).then((wxEnv)=>{
-
                 this.$wx.onMenuShareTimeline({
                     title: product.Products_Name, // 分享标题
                     link: front_url+buildSharePath(path), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
@@ -1179,7 +1031,6 @@ export default {
                         // 用户点击了分享后执行的回调函数
                     }
                 });
-
                 //两种方式都可以
                 wxEnv.onMenuShareAppMessage({
                     title: product.Products_Name, // 分享标题
@@ -1192,33 +1043,25 @@ export default {
                         // 用户点击了分享后执行的回调函数
                     }
                 });
-
             }).catch(()=>{
-
 			})
-
 			// #endif
-
 		},
 		addCart(){
 			if(!this.$fun.checkIsLogin(1,1)){
 				return;
 			}
 			this.showCorver=true
-
 			this.postData.cart_key = 'CartList';
-
 			// #ifdef APP-PLUS
 			const goodsSpecNvue = uni.getSubNVueById('goodsSpec')
 			goodsSpecNvue.show('slide-in-bottom',200)
 			uni.$emit('goods_spec_setval',{postData:this.postData,detail:'detail'})
 			// #endif
-
 			// #ifndef APP-PLUS
 			this.hideNativeEleShow = true
 			this.$refs.cartPopu.show();
 			// #endif
-
 		},
 		/**
 		 * 客服
@@ -1230,24 +1073,17 @@ export default {
 			if(!this.$fun.checkIsLogin(1,1)){
 				return;
 			}
-
 			this.showCorver=true
 			this.postData.cart_key = 'DirectBuy'
-
 			// #ifdef APP-PLUS
-
 			const goodsSpecNvue = uni.getSubNVueById('goodsSpec')
 			goodsSpecNvue.show('slide-in-bottom',200)
 			uni.$emit('goods_spec_setval',{postData:this.postData,detail:'detail'})
-
 			// #endif
-
 			// #ifndef APP-PLUS
 			this.hideNativeEleShow = true
 			this.$refs.cartPopu.show();
 			// #endif
-
-
 		},
         gotoComments(){
             uni.navigateTo({
@@ -1260,7 +1096,6 @@ export default {
 			this.hideNativeEleShow = true
 			this.$refs.popupLayer.show();
 			// #endif
-
 			// #ifdef APP-PLUS
 				if(this.type=='ticks'){
 					const coupon = uni.getSubNVueById('coupon')
@@ -1272,7 +1107,6 @@ export default {
 					uni.$emit('share',{wxMiniOriginId:this.wxMiniOriginId,detail:'detail'})
 				}
 			// #endif
-
         },
         close(){
 			this.hideNativeEleShow = false
@@ -1283,16 +1117,11 @@ export default {
             this.$refs.popupLayer.close();
         },
 		...mapActions(['getUserInfo'])
-
     },
 	async created(){
-
-
 		let initData = await this.getInitData();
-
 		let WX_MINI_ORIGIN_ID = ls.get('WX_MINI_ORIGIN_ID');
 		if(!WX_MINI_ORIGIN_ID){
-
 			let login_methods = initData.login_methods
 			for(var i in login_methods){
 				if(i!='component_appid' && login_methods[i].authorizer_user_name){
@@ -1300,17 +1129,12 @@ export default {
 					break;
 				}
 			}
-
 		}
-
 		this.wxMiniOriginId = WX_MINI_ORIGIN_ID;
-
 	}
 }
 </script>
-
 <style scoped lang="scss" >
-
 .info-wrap{
 	/*height: 100vh;*/
 	/*padding-bottom: 60px;*/
@@ -1360,7 +1184,6 @@ export default {
 		}
 	}
     /* 返回按钮和购物车按钮 */
-
     .top {
         position: fixed;
         top: 10px;
@@ -1596,7 +1419,6 @@ export default {
         display: flex;
         flex-wrap: wrap;
         font-size: 0rpx;
-
     }
     .section3>span {
         display: flex;
@@ -1670,9 +1492,7 @@ export default {
     /* 评价 end */
     /* 商品详情 start */
     .pro_detail {
-
 		.p_detail_des {
-
 			width:100%;
 			font-size: 28rpx;
 			color: #999;
@@ -1826,5 +1646,4 @@ export default {
 		color: #fff !important;
 		background-color: #ff4200 !important;
 	}
-
 </style>
