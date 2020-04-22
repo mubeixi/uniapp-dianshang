@@ -261,7 +261,7 @@
 		                        </view>
 		                        <view class="proPrice">
 		                            <view class="newPrice">￥<text class="number">{{pro.Products_PriceX}}</text></view>
-		                            <view class="oldPrice">￥{{pro.Products_PriceY}}</view>
+		                            <view class="oldPrice" v-if="pro.Products_PriceY!=pro.Products_PriceX">￥{{pro.Products_PriceY}}</view>
 		                            <view class="amount">
 		                                <view class="icon" @click="delNumber(attr,pro)">-</view>
 		                                <view class="num">{{attr.myqty}}</view>

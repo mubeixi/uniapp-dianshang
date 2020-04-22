@@ -53,7 +53,7 @@
 								  <div class="item-name">{{item.Products_Name}}</div>
 								  <div class="price">
 									  <span class="n_price"><span>￥</span>{{item.Products_PriceX}}</span>
-									  <span class="o_price"><span>￥</span>{{item.Products_PriceY}}</span>
+									  <span class="o_price" v-if="item.Products_PriceY!=item.Products_PriceX"><span>￥</span>{{item.Products_PriceY}}</span>
 								  </div>
 							  </div>
 						  </div>
