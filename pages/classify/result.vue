@@ -77,7 +77,7 @@
 					<div class="title">{{item.Products_Name}}</div>
 					<div class="price">
 						<span class="n_price"><text>￥</text>{{item.Products_PriceX}}</span>
-						<span class="o_price"><text>￥</text>{{item.Products_PriceY}}</span>
+						<span class="o_price" v-if="item.Products_PriceY!=item.Products_PriceX"><text>￥</text>{{item.Products_PriceY}}</span>
 					</div>
 					<div class="sold">已售{{item.Products_Sales}}件</div>
 				</div>
@@ -95,7 +95,7 @@
 					<div class="title">{{item.Products_Name}}</div>
 					<div class="price">
 						<span class="n_price"><text class="text">￥</text>{{item.Products_PriceX}}</span>
-						<span class="o_price"><text class="text">￥</text>{{item.Products_PriceY}}</span>
+						<span class="o_price"><text class="text" v-if="item.Products_PriceY!=item.Products_PriceX">￥</text>{{item.Products_PriceY}}</span>
 					</div>
 				</div>
 			</div>

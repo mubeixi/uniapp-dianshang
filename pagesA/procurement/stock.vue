@@ -71,7 +71,7 @@
                 <view class="pro-name">{{item.Products_Name}}</view>
                 <view class="pro-price">
                     <view class="now-price"><text class="money-icon">￥</text>{{item.Products_PriceX}}</view>
-                    <view class="old-price"><text class="money-icon">￥</text>{{item.Products_PriceY}}</view>
+                    <view class="old-price" v-if="item.Products_PriceY!=item.Products_PriceX"><text class="money-icon">￥</text>{{item.Products_PriceY}}</view>
                 </view>
                 <view class="pro-count">月销{{item.Products_Sales}}</view>
             </view>
