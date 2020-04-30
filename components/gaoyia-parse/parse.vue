@@ -206,7 +206,7 @@
 		},
 		watch: {
 			content:function(newVal, oldVal){
-				this.setHtml()
+				newVal && this.setHtml()
 			}
 			// content: {
 			// 	handler: function(newVal, oldVal) {
