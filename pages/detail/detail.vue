@@ -394,8 +394,8 @@ export default {
 		// #endif
 		// #ifdef MP-WEIXIN
 		getLiveInfo().then(res=>{
-			this.liveList = res.data.room_info
-			this.liveCount = res.data.count
+			this.liveList = res.data
+			this.liveCount = res.data.totalCount
 		})
 		// #endif
 	},
