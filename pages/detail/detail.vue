@@ -40,7 +40,7 @@
 	  <div class="section1">
 		  <div class="price">
 			  <span class="n_price"><span class="mm">￥</span>{{product.Products_PriceX}}</span>
-			  <span class="o_price"><span class="mm">￥</span>{{product.Products_PriceY}}</span>
+			  <span class="o_price" v-if="product.Products_PriceY!=product.Products_PriceX"><span class="mm">￥</span>{{product.Products_PriceY}}</span>
 			  <span class="share" @click="showTick" data-type="share">分享此产品</span>
 		  </div>
 		  <div class="name">{{product.Products_Name}}</div>
@@ -393,10 +393,13 @@ export default {
 		}
 		// #endif
 		// #ifdef MP-WEIXIN
-		getLiveInfo().then(res=>{
-			this.liveList = res.data
-			this.liveCount = res.data.totalCount
-		})
+		// getLiveInfo().then(res=>{
+			
+		// 	this.liveList = res.data
+		// 	this.liveCount = res.data.totalCount
+		// }).catch((e)=>{
+		// 	console.log(e)
+		// })
 		// #endif
 	},
 	onUnload(){

@@ -277,10 +277,13 @@
             }
 
 			// #ifdef MP-WEIXIN
-			getLiveInfo().then(res=>{
-				this.liveList = res.data
-				this.liveCount = res.data.totalCount
-			})
+			// getLiveInfo().then(res=>{
+				
+			// 	this.liveList = res.data
+			// 	this.liveCount = res.data.totalCount
+			// }).catch((e)=>{
+			// 	console.log(e)
+			// })
 			// #endif
 
 
