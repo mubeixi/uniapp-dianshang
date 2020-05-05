@@ -161,6 +161,11 @@
 					<view class="pintuan">门店</view>
 					<image :src="'/static/client/person/right.png'|domain" class="right"></image>
 				</view>
+				<view class="setting cell" @click="goDistributor" v-if="initData.DisSwitch">
+					<image src="/static/tabbar/fenxiao.png" class="left"></image>
+					<view class="pintuan">分销中心</view>
+					<image :src="'/static/client/person/right.png'|domain" class="right"></image>
+				</view>
 			</block>
 
 			<view class="setting cell" @click="goSetting">
@@ -207,6 +212,11 @@
 		},
 		methods:{
 			...mapActions(['setUserInfo','getUserInfo']),
+			goDistributor() {
+				uni.navigateTo({
+					url:'/pages/fenxiao/fenxiao'
+				})
+			},
 			goStore(){
 				if(!this.$fun.checkIsLogin(1))return;
 				uni.navigateTo({
@@ -385,6 +395,7 @@
 			if(this.$fun.checkIsLogin()){
 				this.judgeSignin();
 			}
+
 		},
 		async onPullDownRefresh(){
 			if(JSON.stringify(this.userInfo) != "{}"){
