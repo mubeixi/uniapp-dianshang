@@ -887,12 +887,6 @@
 				"text": "分类"
 			},
 			{
-				"pagePath": "pages/fenxiao/fenxiao",
-				"iconPath": "/static/tabbar/fenxiao.png",
-				"selectedIconPath": "/static/tabbar/fenxiaoCheck.png",
-				"text": "分销"
-			},
-			{
 				"pagePath": "pages/order/cart",
 				"iconPath": "/static/tabbar/cart.png",
 				"selectedIconPath": "/static/tabbar/cartCheck.png",
