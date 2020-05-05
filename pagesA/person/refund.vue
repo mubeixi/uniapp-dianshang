@@ -87,7 +87,7 @@
 			</div>
         </popup-layer> -->
         <!-- 退款原因 -->
-		<popup-layer ref="popup" :direction="'top'">
+		<popup-layer ref="popup" :direction="'top'"  style="z-index: 999;">
 			<div class="bMbx">
 				<div class="fMbx">退款原因</div>
 				<div class="iMbx" v-for="(item,index) in refundInfo.shop_reason" :key="index">
@@ -470,7 +470,7 @@ export default {
         color: #fff;
         text-align: center;
         background: #F43131;
-		z-index: 9999;
+		z-index: 99;
     }
     /* 退款 */
     .methods,
