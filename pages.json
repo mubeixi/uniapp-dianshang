@@ -839,7 +839,13 @@
                     	"navigationBarTitleText": "门店退货单"
                     }
                 }
-		],
+		    ,{
+                    "path" : "store/store",
+                    "style": {
+                    	"navigationStyle": "custom"
+                    }
+                }
+            ],
 		 "plugins": {
 		 	// "live-player-plugin": {
 		 	// 	"version": "1.0.7",
