@@ -24,11 +24,8 @@ export const SET_USER_INFO = function (state, value) {
 
   //跟着清空access_token
   if(!value.hasOwnProperty('User_ID') || !value.User_ID){
-    ls.remove('access_token')
-  }
-
-  if(!value.hasOwnProperty('user_id') || !value.User_ID){
     ls.remove('user_id')
+    ls.remove('access_token')
   }else{
     ls.set("user_id",value.User_ID);
   }

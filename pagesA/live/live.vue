@@ -49,13 +49,11 @@
 			}
 		},
 		onShow(){
-			// getLiveInfo().then(res=>{
-				
-			// 	this.liveList = res.data
-			// 	this.liveCount = res.data.totalCount
-			// }).catch((e)=>{
-			// 	console.log(e)
-			// })
+			getLiveInfo().then(res=>{
+
+				this.liveList = res.data
+				this.liveCount = res.data.totalCount
+			})
 		},
 		methods: {
 			getLiveStatusStyle(status_code){
