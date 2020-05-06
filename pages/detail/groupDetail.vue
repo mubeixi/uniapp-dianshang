@@ -1802,7 +1802,7 @@
 		/* #endif */
 		width: 100%;
 		background-color: #F8F8F8;
-		z-index: 9999;
+		z-index: 99;
 
 		.leftss,
 		.rightss {
