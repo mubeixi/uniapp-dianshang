@@ -103,14 +103,14 @@
 		</div> -->
 
 		<!-- #ifdef MP-WEIXIN -->
-		<view class="liveBox" v-if="liveList.length===1">
-			<navigator  :url="'plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id='+liveList[0].roomid">
-				<image class="icon-live" src="/static/live/logo.png"></image>
-			</navigator>
-		</view>
-		<view class="liveBox" v-if="liveList.length>1">
-		<image @click="toLive" class="icon-live" src="/static/live/logo.png"></image>
-		</view>
+<!--		<view class="liveBox" v-if="liveList.length===1">-->
+<!--			<navigator  :url="'plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id='+liveList[0].roomid">-->
+<!--				<image class="icon-live" src="/static/live/logo.png"></image>-->
+<!--			</navigator>-->
+<!--		</view>-->
+<!--		<view class="liveBox" v-if="liveList.length>1">-->
+<!--		<image @click="toLive" class="icon-live" src="/static/live/logo.png"></image>-->
+<!--		</view>-->
 		<!-- #endif -->
 
 	</view>
@@ -277,13 +277,13 @@
             }
 
 			// #ifdef MP-WEIXIN
-			getLiveInfo().then(res=>{
-
-				this.liveList = res.data
-				this.liveCount = res.data.totalCount
-			}).catch((e)=>{
-				console.log(e)
-			})
+			// getLiveInfo().then(res=>{
+			//
+			// 	this.liveList = res.data
+			// 	this.liveCount = res.data.totalCount
+			// }).catch((e)=>{
+			// 	console.log(e)
+			// })
 			// #endif
 
 
