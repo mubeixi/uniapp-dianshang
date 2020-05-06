@@ -77,11 +77,7 @@ export const checkIsLogin = (redirect, tip) => {
     if (!userInfo || JSON.stringify(userInfo) === '{}') {
 
         //重置用户信息
-        let users_id = ls.get('users_id');
-        let owner_id = ls.get('owner_id');
-        ls.clear();
-        ls.set('owner_id', owner_id);
-        ls.set('users_id', users_id);
+        store.commit('SET_USER_INFO',{})
 
         if (redirect) {
 
