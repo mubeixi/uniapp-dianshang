@@ -845,6 +845,24 @@
                     	"navigationStyle": "custom"
                     }
                 }
+                ,{
+                    "path" : "store/storeBuyRecord",
+                    "style": {
+                    	"navigationBarTitleText": "店铺购买记录"
+                    }
+                }
+                ,{
+                    "path" : "store/storeApplyList",
+                    "style": {
+                    	"navigationBarTitleText": "审核列表"
+                    }
+                }
+                ,{
+                    "path" : "store/storeAgree",
+                    "style": {
+                    	"navigationBarTitleText": "审核"
+                    }
+                }
             ],
 		 "plugins": {
 		 	// "live-player-plugin": {
