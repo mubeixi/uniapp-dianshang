@@ -19,14 +19,21 @@ export const SET_USER_INFO = function (state, value) {
     state.Stores_ID = value.bind_stores.Stores_ID
     ls.set('Stores_ID',state.Stores_ID)
   }else{
-    ls.set('Stores_ID',null,1)
+    ls.remove('Stores_ID')
   }
-  ls.set('userInfo',value);
-  //要覆盖，不然有时候user_id删不掉
-  ls.set("user_id",value.User_ID,1);
+
   //跟着清空access_token
   if(!value.hasOwnProperty('User_ID') || !value.User_ID){
+    ls.remove('user_id')
     ls.remove('access_token')
+  }else{
+    ls.set("user_id",value.User_ID);
+  }
+
+  if(!value || JSON.stringify(value)==='{}'){
+    ls.remove('userInfo')
+  }else{
+    ls.set('userInfo',value);
   }
 };
 

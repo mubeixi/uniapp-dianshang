@@ -16,7 +16,7 @@
                 :indicator-dots="swiper.value.list.length>1" :autoplay="swiper.config.autoplay" circular="true"
                 :interval="swiper.config.interval|str2num" :duration="500">
             <swiper-item @click="go(item)" v-for="(item,idx) in swiper.value.list" :key="idx">
-                <image @load="imgLoad" mode="widthFix" :id="'js-swiper-item'+idx" class="swiper-item "
+                <image @load="imgLoad($event,idx)" mode="widthFix" :id="'js-swiper-item'+idx" class="swiper-item "
                        style="width: 750rpx;vertical-align: top;height: 100%;" :src="domainFunc(item.img_src)"></image>
                 <!-- <view class="swiper-item" :style="{backgroundImage:'url('+domainFunc(item.img_src)+')'}"></view> -->
             </swiper-item>
@@ -67,18 +67,20 @@
         components: {},
         methods: {
             //用第一张图片做初始化高度
-            imgLoad(e) {
+            imgLoad(e,idx) {
                 //只有第一个的时候才改
                 if (e.currentTarget.id = 'js-swiper-item0') {
-                    this.swipwerH = e.detail.height + 'rpx'
+                    this.swipwerH = e.detail.height/e.detail.width * 750  + 'rpx'
                 }
-                this.height_list.push(e.detail.height + 'rpx')
+                // this.height_list.push(e.detail.height + 'rpx')
+                //换成宽高比
+                this.$set(this.height_list,idx,e.detail.height/e.detail.width)
             },
             //滚动的时候灵活设置个高度
             changeHeightFn(e) {
                 let _self = this
                 let idx = e.detail.current;
-                _self.swipwerH = this.height_list[idx]
+                _self.swipwerH = this.height_list[idx]*750+'rpx'
                 // const query = uni.createSelectorQuery().in(this);
                 // query.select(`#js-swiper-item${idx}`).boundingClientRect(style => {
                 //     _self.swipwerH = style.height + 'px'
