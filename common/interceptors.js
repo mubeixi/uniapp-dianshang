@@ -18,7 +18,7 @@ export const ajax = (url, method, data, options) => {
     if (!data) data = {}
 
 
-    let {tip = '', mask = false, timelen = 2000, timeout = 2000, errtip = true} = options;
+    let {tip = '', mask = false, timelen = 2000, timeout = 2000, errtip = false} = options;
 
     if (tip) {
         uni.showLoading({
@@ -102,6 +102,7 @@ export const ajax = (url, method, data, options) => {
                     } else {
                         error('请求未成功')
                     }
+                    console.log('ajax error',JSON.stringify(res))
 
                     reject(res)
                 }
@@ -110,6 +111,7 @@ export const ajax = (url, method, data, options) => {
             },
             fail: (e) => {
                 reject(e)
+                console.log('http error',JSON.stringify(e))
             },
             complete: () => {
                 if (tip) {
