@@ -24,6 +24,30 @@ export const toast = (title, icon, image, duration) => {
     })
 }
 
+export const modal = function () {
+    const opt = {
+        title: '提示',
+        content: ''
+    }
+    if (typeof arguments[0] === 'string') {
+        opt.content = arguments[0]
+    } else if (typeof arguments[0] === 'object') {
+        Object.assign(opt, arguments[0])
+    }
+    uni.showModal(opt)
+}
+
+export const showLoading = (title = 'loading', mask = true) => {
+    uni.showLoading({
+        title,
+        mask
+    })
+}
+export const hideLoading = () => {
+    uni.hideLoading()
+}
+
+
 /**
  * 根据长度会自动切换模式，优先保障显示所有文字
  * @param title
