@@ -1,6 +1,10 @@
 {
 	"pages": [
 		{
+		    "path" : "pages/index/chooseIndex",
+		    "style" : {}
+		},
+		{
 			"path": "pages/index/index",
 			"style": {
 				// #ifndef H5
@@ -358,6 +362,7 @@
             }
         }
 
+        
     ],
 	"subPackages": [{
 		"root": "pagesA",
@@ -863,6 +868,18 @@
                     	"navigationBarTitleText": "审核"
                     }
                 }
+				,{
+                    "path" : "store/storeTeam",
+                    "style": {
+                    	"navigationBarTitleText": "我的团队"
+                    }
+                }
+				,{
+				    "path" : "store/storeTeamList",
+				    "style": {
+				    	"navigationBarTitleText": "我的团队"
+				    }
+				}
             ],
 		 "plugins": {
 //		 	"live-player-plugin": {
@@ -872,7 +889,7 @@
 		 }
 	}],
 	"preloadRule": {
-		"pages/index/index": {
+		"pages/index/chooseIndex": {
 			"network": "all",
 			"packages": ["onther"]
 		}
@@ -893,7 +910,7 @@
 		"borderStyle": "black",
 		"backgroundColor": "#ffffff",
 		"list": [{
-				"pagePath": "pages/index/index",
+				"pagePath": "pages/index/chooseIndex",
 				"iconPath": "/static/tabbar/home.png",
 				"selectedIconPath": "/static/tabbar/homeCheck.png",
 				"text": "首页"

@@ -16,13 +16,13 @@
     </div>
     <div class="flex flex-between">
       <div class="flex flex-vertical-center"  @click="goStoreBuy">
-        <block v-for="(it,ind) of userPay" :key="ind">
+        <block v-for="(it,ind) of pro.buyer" :key="ind">
           <image :src="it.User_HeadImg"
                  class="info-img"></image>
         </block>
 
 
-        <image  v-if="userPay"  :src="'/static/client/right.png'|domain" style="width: 16rpx;height: 26rpx;margin-left: 18px"></image>
+        <image  v-if="pro.buyer.length>0"  :src="'/static/client/right.png'|domain" style="width: 16rpx;height: 26rpx;margin-left: 18px"></image>
       </div>
 
       <div class="flex flex-vertical-center" v-if="cartData.Qty">
@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import  {getSelfStoreProd} from '../common/fetch'
+
 import {error} from '../common';
 export default {
 
@@ -97,7 +97,6 @@ export default {
             this.$emit('updaCart',this.pro)
         },
         initCart(){
-
             for(let item in this.myCart){
                 if(item==this.pro.Products_ID){
                     for(let it in this.myCart[item]){
@@ -107,19 +106,9 @@ export default {
                 }
             }
         },
-        init(){
-            let data={
-                store_id:this.storeId,
-                prod_id:this.pro.Products_ID
-            }
-            getSelfStoreProd(data).then(res=>{
-              this.userPay=res.data?res.data.buyer:[]
-            })
-        }
+       
     },
-    created(){
-        this.init()
-    }
+  
 
 }
 </script>
@@ -127,7 +116,7 @@ export default {
 <style scoped lang="scss">
   .store-swiper-item {
     width: 710rpx;
-    height: 700rpx;
+    //height: 700rpx;
     border-radius: 10rpx;
     background-color: #FFFFFF;
     margin-bottom: 10px;
@@ -149,6 +138,7 @@ export default {
   .store-item-title {
     width: 658rpx;
     height: 72rpx;
+	line-height: 36rpx;
     font-size: 15px;
     color: #333333;
     overflow: hidden;

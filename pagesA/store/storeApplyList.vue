@@ -55,6 +55,7 @@
 <script>
 	import{getStoreApplyList} from'../../common/fetch.js'
 	import {pageMixin} from "../../common/mixin";
+	import {mapGetters} from 'vuex'
 	export default {
 		mixins:[pageMixin],
 		data() {
@@ -65,6 +66,9 @@
 				totalCount:0,
 				proList:[],
 			};
+		},
+		computed: {
+			...mapGetters(['Stores_ID']),
 		},
 		methods:{
 			goNext(id){
@@ -91,7 +95,8 @@
 			init(item){
 				let data={
 					page:this.page,
-					pageSize:this.pageSize
+					pageSize:this.pageSize,
+					store_id:this.Stores_ID
 				}
 				if(this.index>0){
 					data.status=this.index
