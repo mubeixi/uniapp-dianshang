@@ -1,11 +1,11 @@
 <template>
   <div class="store-swiper-item"   >
     <image :src="pro.ImgPath+'-r420'"
-           class="store-item-img"></image>
-    <div class="store-item-title">
+           class="store-item-img"  @click="goPro"></image>
+    <div class="store-item-title"  @click="goPro">
       {{pro.Products_Name}}
     </div>
-    <div class="flex flex-between store-price">
+    <div class="flex flex-between store-price" @click="goPro">
       <div class="font10">
         <span class="price-x">¥<span class="font16">{{pro.Products_PriceX}}</span></span>
         <span class="price-y">¥<span class="font14">{{pro.Products_PriceY}}</span></span>
@@ -77,6 +77,11 @@ export default {
         },
     },
     methods: {
+        goPro(){
+            uni.navigateTo({
+                url:'/pages/detail/detail?Products_ID='+this.pro.Products_ID
+            })
+        },
         goStoreBuy(){
             uni.navigateTo({
                 url:'/pagesA/store/storeBuyRecord?pid='+this.pro.Products_ID
@@ -106,9 +111,9 @@ export default {
                 }
             }
         },
-       
+
     },
-  
+
 
 }
 </script>

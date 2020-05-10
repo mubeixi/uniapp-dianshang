@@ -17,6 +17,7 @@
 				}
 			}
 		},
+		
 		{
 			"path": "pages/index/pre",
 			"style": {
@@ -842,12 +843,6 @@
                     "path" : "procurement/storeRefundList",
                     "style": {
                     	"navigationBarTitleText": "门店退货单"
-                    }
-                }
-		    ,{
-                    "path" : "store/store",
-                    "style": {
-                    	"navigationStyle": "custom"
                     }
                 }
                 ,{

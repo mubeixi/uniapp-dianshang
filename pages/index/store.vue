@@ -275,7 +275,7 @@ export default {
             this.submit_flag = (!this.check_attr || Object.getOwnPropertyNames(this.check_attr).length != Object.getOwnPropertyNames(this.prosku.skujosn).length) || Object.getOwnPropertyNames(this.prosku.skuvaljosn).indexOf(check_attrid)==-1 ? false : true;
         },
         updaCart(data){
-      
+
 
 
             if(data.skujosn) {
@@ -359,13 +359,13 @@ export default {
                     pageSize:999,
                     with_buyer:1,
                     buyer_count:6,
-					store_id:getStoreID()
+					          store_id:getStoreID()
                    // store_id:sessionStorage.getItem('store_id')
                 }
                 data.cate_id=this.productCate[this.goodsNavIndex-1].Category_ID
                 await getSelfStoreProd(data,{tip:'加载中'}).then(res=>{
 
-                
+
 
                     this.$set(that.prodList,this.goodsNavIndex,res.data)
 
@@ -379,7 +379,7 @@ export default {
                     const query = uni.createSelectorQuery()
                     console.log(str,"ss")
                     query.select(str).boundingClientRect(data => {
-                      
+
                         this.scrollHeightS[this.goodsNavIndex] = data.height
                         this.upSwiperHeight()
                     }).exec()
@@ -417,7 +417,8 @@ export default {
                 const query = uni.createSelectorQuery()
 
                 query.select('#scrollView').boundingClientRect(data => {
-                    this.scrollHeightS[0] = data.height
+                    console.log(data,"sss")
+                    //this.scrollHeightS[0] = data.height
                     this.goodsNavIndex === 0 && this.upSwiperHeight()
                 }).exec()
 
@@ -438,12 +439,10 @@ export default {
             }
         }
     },
-    onLoad(options) {
-        //this.store_id=options.store_id
+
+    created(){
         this.systemInfo = uni.getSystemInfoSync()
         this.init()
-		
-		
     }
 }
 </script>
