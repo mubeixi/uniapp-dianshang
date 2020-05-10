@@ -42,9 +42,12 @@
             		</div>
             		<div class="btn-group">
             			<span class="span" style="border: 0rpx;color: red;">{{item.Back_Status_desc}}</span>
-            			<span class="span" v-if='item.Back_Status==0'  @click="openRefuseDialog(item.Back_ID)">拒单</span>
-            			<span class="span" v-if='item.Back_Status==0||item.Back_Status==1'  @click="sureOrder(item.Back_ID)">确认</span>
-						<span class="span" v-if='item.Back_Status==2'  @click="sureShou(item.Back_ID)">收货</span>
+						<block v-if="item.Order_Store==Stores_ID"> 
+							<span class="span" v-if='item.Back_Status==0'  @click="openRefuseDialog(item.Back_ID)">拒单</span>
+							<span class="span" v-if='item.Back_Status==0||item.Back_Status==1'  @click="sureOrder(item.Back_ID)">确认</span>
+							<span class="span" v-if='item.Back_Status==2'  @click="sureShou(item.Back_ID)">收货</span>
+						</block>
+            			
             		</div>
             	</template>
             </div>

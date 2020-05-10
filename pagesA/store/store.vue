@@ -33,7 +33,7 @@
     </div>
 
     <div class="store-search-div" @click="goSearch">
-      <input type="text" class="store-search"/>
+      <input type="text" class="store-search" disabled=""/>
 <!--      <i class="funicon  icon-del1"></i>-->
       <i class="funicon  icon-search1"></i>
     </div>
@@ -107,11 +107,11 @@
   </view>
 </template>
 <script>
-import {getStoreDetail,getProductCategory,getProd,getCart,updateCart} from '../../common/fetch'
+import {getStoreDetail,getProductCategory,getSelfStoreProd,getCart,updateCart} from '../../common/fetch'
 import {pageMixin} from "../../common/mixin";
 import WzwStore from '../../components/wzw-store'
 import {error, toast} from '../../common';
-import {numberSort} from '../../common/tool.js'
+import {numberSort,getStoreID} from '../../common/tool.js'
 export default {
     mixins:[pageMixin],
     components:{WzwStore},
@@ -152,12 +152,13 @@ export default {
                 cart_key:'CartList',
                 prod_id: item.prod_id,
                 qty: -1,
+				store_id:getStoreID()
             }
             if(item.Productsattrkeystrval){
                 data.attr_id=item.Productsattrkeystrval.Product_Attr_ID
             }
 
-            updateCart(data).then(res=>{
+            updateCart(data,{tip:'加载中'}).then(res=>{
                 toast(res.msg)
                 this.myCart=res.data.CartList
                 this.showPro=false
@@ -172,12 +173,13 @@ export default {
                 cart_key:'CartList',
                 prod_id: item.prod_id,
                 qty: 1,
+				store_id:getStoreID()
             }
             if(item.Productsattrkeystrval){
                 data.attr_id=item.Productsattrkeystrval.Product_Attr_ID
             }
 
-            updateCart(data).then(res=>{
+            updateCart(data,{tip:'加载中'}).then(res=>{
                 toast(res.msg)
                 this.myCart=res.data.CartList
                 this.showPro=false
@@ -273,7 +275,7 @@ export default {
             this.submit_flag = (!this.check_attr || Object.getOwnPropertyNames(this.check_attr).length != Object.getOwnPropertyNames(this.prosku.skujosn).length) || Object.getOwnPropertyNames(this.prosku.skuvaljosn).indexOf(check_attrid)==-1 ? false : true;
         },
         updaCart(data){
-            console.log(data,"ss")
+      
 
 
             if(data.skujosn) {
@@ -310,12 +312,13 @@ export default {
                 cart_key:'CartList',
                 prod_id: this.postData.prod_id,
                 qty: this.postData.qty,
+				store_id:getStoreID()
             }
             if(this.postData.attr_id){
                 data.attr_id=this.postData.attr_id
             }
 
-            updateCart(data).then(res=>{
+            updateCart(data,{tip:'加载中'}).then(res=>{
                   toast(res.msg)
                   this.myCart=res.data.CartList
                   this.showPro=false
@@ -353,12 +356,16 @@ export default {
             if(!this.prodList[this.goodsNavIndex]&&this.goodsNavIndex!=0){
                 let data={
                     page:1,
-                    pageSize:999
+                    pageSize:999,
+                    with_buyer:1,
+                    buyer_count:6,
+					store_id:getStoreID()
+                   // store_id:sessionStorage.getItem('store_id')
                 }
-                data.Cate_ID=this.productCate[this.goodsNavIndex-1].Category_ID
-                await getProd(data,{tip:'加载中'}).then(res=>{
+                data.cate_id=this.productCate[this.goodsNavIndex-1].Category_ID
+                await getSelfStoreProd(data,{tip:'加载中'}).then(res=>{
 
-                    // that.prodList[this.goodsNavIndex]=res.data
+                
 
                     this.$set(that.prodList,this.goodsNavIndex,res.data)
 
@@ -372,7 +379,7 @@ export default {
                     const query = uni.createSelectorQuery()
                     console.log(str,"ss")
                     query.select(str).boundingClientRect(data => {
-                        console.log(data,'qq')
+                      
                         this.scrollHeightS[this.goodsNavIndex] = data.height
                         this.upSwiperHeight()
                     }).exec()
@@ -395,10 +402,14 @@ export default {
 
             let data={
               page:1,
-              pageSize:999
+              pageSize:999,
+			  with_buyer:1,
+			  buyer_count:6,
+			  store_id:getStoreID()
+			  //store_id:sessionStorage.getItem('store_id')
             }
             this.prodList=[]
-            let pro=await getProd(data).catch(e=>{error(e.msg||'获取产品列表失败')})
+            let pro=await getSelfStoreProd(data,{tip:'加载中'}).catch(e=>{error(e.msg||'获取产品列表失败')})
             this.prodList.push(pro.data)
 
             this.$nextTick().then(() => {
@@ -406,7 +417,6 @@ export default {
                 const query = uni.createSelectorQuery()
 
                 query.select('#scrollView').boundingClientRect(data => {
-                    console.log(data)
                     this.scrollHeightS[0] = data.height
                     this.goodsNavIndex === 0 && this.upSwiperHeight()
                 }).exec()
@@ -432,6 +442,8 @@ export default {
         //this.store_id=options.store_id
         this.systemInfo = uni.getSystemInfoSync()
         this.init()
+		
+		
     }
 }
 </script>
@@ -522,6 +534,7 @@ export default {
   .store-search {
     width: 710rpx;
     height: 66rpx;
+	line-height: 66rpx;
     box-sizing: border-box;
     padding: 20rpx 30rpx;
     padding-right: 200rpx;
