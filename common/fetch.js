@@ -138,6 +138,10 @@ export const getBuyerByProd = (data, options) => fetch('getBuyerByProd', data, o
 //大转盘初始化
 export const rotateInit = (data, options) => fetch('initTurn', data, options)
 
+
+
+//门店推广下级二维码
+export const getStoreShare = (data, options) => fetch('getStoreShare', data, options)
 //大转盘开始
 export const rotateBegin = (data, options) => fetch('beginTurn', data, options)
 

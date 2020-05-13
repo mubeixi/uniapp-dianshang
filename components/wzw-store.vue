@@ -79,7 +79,7 @@ export default {
     methods: {
         goPro(){
             uni.navigateTo({
-                url:'/pages/detail/detail?Products_ID='+this.pro.Products_ID
+                url:'/pages/detail/detail?Products_ID='+this.pro.Products_ID+'&store_id='+this.pro.Stores_ID
             })
         },
         goStoreBuy(){

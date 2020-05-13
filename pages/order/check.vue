@@ -12,7 +12,7 @@
 				<image class="loc_icon" :src="'/static/client/location.png'|domain" alt="" ></image>
 				<view class="add_msg" v-if="addressinfo.Address_Name">
 					<view class="name">收货人：{{addressinfo.Address_Name}} <span>{{addressinfo.Address_Mobile | formatphone}}</span></view>
-					<view class="location">收货地址：{{addressinfo.Address_Province_name}}{{addressinfo.Address_City_name}}{{addressinfo.Address_Area_name}}{{addressinfo.Address_Town_name}}{{addressinfo.Address_Detailed}}</view>
+					<view class="location">收货地址：{{addressinfo.Address_Province_name}}{{addressinfo.Address_City_name}}{{addressinfo.Address_Area_name}}{{addressinfo.Address_Town_name?addressinfo.Address_Town_name:''}}{{addressinfo.Address_Detailed}}</view>
 				</view>
 				<view class="add_msg" v-else>
 					<view>暂无收货地址，去添加</view>
@@ -562,7 +562,7 @@ export default {
 				// 	code: e.detail.formId,
 				// 	times: 1
 				// })
-				if(this.shipping_store_id) {
+				if(this.shipping_store_id&&this.orderInfo.shipping_has_stores==1) {
 					this.postData.shipping_store_id = this.shipping_store_id
 				}
 				createOrder(this.postData).then(res=>{
@@ -784,13 +784,14 @@ export default {
 						res.data.CartList[i][j].store = {}
 
 						//新增
-						if(res.data.CartList[i][j].store_name&&num==2){
+						if(res.data.CartList[i][j].store_name&&num==2&&res.data.shipping_has_stores==1){
+							
 							res.data.CartList[i][j].store['Stores_Name'] = res.data.CartList[i][j].store_name
 							res.data.CartList[i][j].store['Stores_ID'] = res.data.CartList[i][j].store_id
 							res.data.Stores_Name=res.data.CartList[i][j].store_name
 							this.postData.shipping_id='is_store'
 							this.postData.shipping_store_id=res.data.CartList[i][j].store_id
-							
+						
 							
 						}
 						if(res.data.CartList[i][j].choose_store_info){

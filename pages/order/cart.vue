@@ -93,11 +93,12 @@
 <script>
 	// import tabs from "@/components/tabs";
 	// import pagetitle from "@/components/title";
-	import {getCart,getProd,updateCart,delCart} from '../../common/fetch.js';
+	import {getCart,getProd,updateCart,delCart,getSelfStoreProd} from '../../common/fetch.js';
 	import {pageMixin} from "../../common/mixin";
-	import {ls} from '../../common/tool.js';
+	import {ls,getStoreID} from '../../common/tool.js';
 	import {mapActions} from 'vuex';
 	import {goProductDetail} from "../../common";
+	
 
 	export default {
 		mixins:[pageMixin],
@@ -346,7 +347,12 @@
 			getProd(){
 				this.prod_arg.Users_ID = this.Users_ID;
 				let oldlist = this.prodList;
-				getProd(this.prod_arg).then(res=>{
+				let store_id=getStoreID()
+				if(store_id){
+					this.prod_arg.store_id=store_id
+					this.prod_arg.is_selling=1
+				}
+				getSelfStoreProd(this.prod_arg).then(res=>{
 					this.prodList = oldlist.concat(res.data);
 					this.hasMore = (res.totalCount / this.prod_arg.pageSize) > this.prod_arg.page ? true : false ;
 					this.prod_arg.page += 1;
