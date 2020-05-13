@@ -57,6 +57,8 @@ export const GetQueryByString = (str, name) => {
 
 }
 
+
+
 export const ls = {
     set(key, val, cover) {
 
@@ -715,4 +717,16 @@ export const plainArray = (arr,key,newArr)=>{
 
     }
 
+}
+
+export const getStoreID = ()=>{
+		let store_id=''
+		// #ifndef H5
+			store_id=ls.get('store_id')
+		// #endif
+		// #ifdef H5
+			store_id=sessionStorage.getItem('store_id')
+		// #endif
+		return store_id
+	
 }

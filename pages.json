@@ -1,7 +1,11 @@
 {
 	"pages": [
 		{
-			"path": "pages/index/index",
+		    "path" : "pages/index/index",
+		    "style" : {}
+		},
+		{
+			"path": "pages/index/chooseIndex",
 			"style": {
 				// #ifndef H5
 				//"navigationBarTitleText": "新零售",
@@ -13,6 +17,7 @@
 				}
 			}
 		},
+		
 		{
 			"path": "pages/index/pre",
 			"style": {
@@ -358,6 +363,7 @@
             }
         }
 
+        
     ],
 	"subPackages": [{
 		"root": "pagesA",
@@ -839,7 +845,49 @@
                     	"navigationBarTitleText": "门店退货单"
                     }
                 }
-		],
+                ,{
+                    "path" : "store/storeBuyRecord",
+                    "style": {
+                    	"navigationBarTitleText": "店铺购买记录"
+                    }
+                }
+                ,{
+                    "path" : "store/storeApplyList",
+                    "style": {
+                    	"navigationBarTitleText": "审核列表"
+                    }
+                }
+                ,{
+                    "path" : "store/storeAgree",
+                    "style": {
+                    	"navigationBarTitleText": "审核"
+                    }
+                }
+				,{
+                    "path" : "store/storeTeam",
+                    "style": {
+                    	"navigationBarTitleText": "我的团队"
+                    }
+                }
+				,{
+				    "path" : "store/storeTeamList",
+				    "style": {
+				    	"navigationBarTitleText": "我的团队"
+				    }
+				}
+                ,{
+                    "path" : "store/StoreExtension",
+                    "style": {
+                    	"navigationBarTitleText": "推广下级"
+                    }
+                }
+                ,{
+                    "path" : "store/storeShare",
+                    "style": {
+                    	"navigationBarTitleText": "推广海报"
+                    }
+                }
+            ],
 		 "plugins": {
 //		 	"live-player-plugin": {
 //		 		"version": "1.0.8",

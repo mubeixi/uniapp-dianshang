@@ -27,7 +27,7 @@
 			</view>
 		</view>
 		<view class="main">
-			<view class="item" @click="openUrl('/pagesA/procurement/productMy')">
+			<view class="item" @click="openUrl('/pagesA/procurement/productMy')" v-if="storeDetail.stores_type==1">
 				<image class="item-img" :src="'/static/client/mendian/1.png'|domain" mode=""></image>
 				<view>我的商品</view>
 			</view>
@@ -36,12 +36,12 @@
 				<view class="num" v-if="storeDetail.shop_order_num">{{storeDetail.shop_order_num}}</view>
 				<view>零售订单</view>
 			</view>
-			<view class="item" @click="openUrl('/pagesA/procurement/storeWholesale')">
+			<view class="item" @click="openUrl('/pagesA/procurement/storeWholesale')" v-if="storeDetail.stores_type==1">
 				<image class="item-img" :src="'/static/client/mendian/3.png'|domain" mode=""></image>
 				<view class="num" v-if="storeDetail.pifa_order_num">{{storeDetail.pifa_order_num}}</view>
 				<view>批发订单</view>
 			</view>
-			<view class="item" @click="openUrl('/pagesA/selectChannel/selectChannel')">
+			<view class="item" @click="openUrl('/pagesA/selectChannel/selectChannel')" v-if="storeDetail.stores_type==1">
 				<image class="item-img" :src="'/static/client/mendian/4.png'|domain" mode=""></image>
 				<view>进货</view>
 			</view>
@@ -57,11 +57,11 @@
 				<image class="item-img" :src="'/static/client/mendian/7.png'|domain" mode=""></image>
 				<view>结算</view>
 			</view>
-			<view class="item" @click="openUrl('/pagesA/procurement/purchaseRecords')">
+			<view class="item" @click="openUrl('/pagesA/procurement/purchaseRecords')"  v-if="storeDetail.stores_type==1">
 				<image class="item-img" :src="'/static/client/mendian/8.png'|domain" mode=""></image>
 				<view>进货记录</view>
 			</view>
-			<view class="item" @click="openUrl('/pagesA/procurement/refundRecords')">
+			<view class="item" @click="openUrl('/pagesA/procurement/refundRecords')" v-if="storeDetail.stores_type==1">
 				<image class="item-img" :src="'/static/client/mendian/9.png'|domain" mode=""></image>
 				<view>我的退货单</view>
 			</view>
@@ -69,9 +69,21 @@
 				<image class="item-img" :src="'/static/client/mendian/10.png'|domain" mode=""></image>
 				<view>零售订单退款</view>
 			</view>
-			<view class="item" @click="openUrl('/pagesA/procurement/storeRefundList')">
+			<view class="item" @click="openUrl('/pagesA/procurement/storeRefundList')"  v-if="storeDetail.stores_type==1">
 				<image class="item-img" :src="'/static/client/mendian/11.png'|domain" mode=""></image>
 				<view>门店退货单</view>
+			</view>
+			<view class="item" @click="openUrl('/pagesA/store/storeTeam')"  v-if="storeDetail.stores_type==1">
+				<image class="item-img" src="/static/store/myTeam.png" mode=""></image>
+				<view>我的团队</view>
+			</view>
+			<view class="item" @click="openUrl('/pagesA/store/storeApplyList')"  v-if="storeDetail.stores_type==1">
+				<image class="item-img" src="/static/store/teamAgree.png" mode=""></image>
+				<view>团队入驻审核</view>
+			</view>
+			<view class="item" @click="openUrl('/pagesA/store/StoreExtension')"  v-if="storeDetail.stores_type==1">
+				<image class="item-img" src="/static/store/xiaji.png" mode=""></image>
+				<view>推广下级</view>
 			</view>
 		</view>
 	</view>
