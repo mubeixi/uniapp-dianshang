@@ -1,11 +1,11 @@
 {
 	"pages": [
 		{
-		    "path" : "pages/index/chooseIndex",
+		    "path" : "pages/index/index",
 		    "style" : {}
 		},
 		{
-			"path": "pages/index/index",
+			"path": "pages/index/chooseIndex",
 			"style": {
 				// #ifndef H5
 				//"navigationBarTitleText": "新零售",
@@ -875,6 +875,18 @@
 				    	"navigationBarTitleText": "我的团队"
 				    }
 				}
+                ,{
+                    "path" : "store/StoreExtension",
+                    "style": {
+                    	"navigationBarTitleText": "推广下级"
+                    }
+                }
+                ,{
+                    "path" : "store/storeShare",
+                    "style": {
+                    	"navigationBarTitleText": "推广海报"
+                    }
+                }
             ],
 		 "plugins": {
 //		 	"live-player-plugin": {
@@ -884,7 +896,7 @@
 		 }
 	}],
 	"preloadRule": {
-		"pages/index/chooseIndex": {
+		"pages/index/index": {
 			"network": "all",
 			"packages": ["onther"]
 		}
@@ -905,7 +917,7 @@
 		"borderStyle": "black",
 		"backgroundColor": "#ffffff",
 		"list": [{
-				"pagePath": "pages/index/chooseIndex",
+				"pagePath": "pages/index/index",
 				"iconPath": "/static/tabbar/home.png",
 				"selectedIconPath": "/static/tabbar/homeCheck.png",
 				"text": "首页"

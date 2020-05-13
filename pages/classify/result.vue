@@ -109,8 +109,8 @@
 
 <script>
 import popupLayer from '../../components/popup-layer/popup-layer.vue'
-import {getProd} from '../../common/fetch.js';
-import {goBack}  from '../../common/tool.js'
+import {getProd,getSelfStoreProd} from '../../common/fetch.js';
+import {goBack,getStoreID}  from '../../common/tool.js'
 import {pageMixin} from "../../common/mixin";
 import {goProductDetail} from "../../common";
 
@@ -321,7 +321,14 @@ export default {
 		  if(this.Products_ID){
 			  data.Products_ID=this.Products_ID
 		  }
-		  getProd(data).then(res=>{
+		  let store_id=getStoreID()
+		  if(store_id){
+			  data.store_id=store_id
+			  data.is_selling=1
+		  }
+		  
+		  
+		  getSelfStoreProd(data).then(res=>{
 			  for(var item of res.data){
 				  this.pro.push(item);
 			  }
