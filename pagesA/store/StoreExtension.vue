@@ -1,13 +1,13 @@
 <template>
 	<view class="store-bg">
 			<div class="store-item" @click="open(1)">
-				<image src="/static/store/dailishang.png" class="img-full"></image>
+				<image :src="'/static/store/dailishang.png'|domain" class="img-full"></image>
 				<div class="store-title">代理商</div>
 				<image src="/static/store/dailishanggo.png" class="store-img"></image>
 			</div>
 			
 			<div class="store-item"  @click="open(2)">
-				<image src="/static/store/shequ.png" class="img-full"></image>
+				<image :src="'/static/store/shequ.png'|domain" class="img-full"></image>
 				<div class="store-title">社区门店</div>
 				<image src="/static/store/shequgo.png" class="store-img"></image>
 			</div>

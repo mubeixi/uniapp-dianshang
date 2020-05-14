@@ -440,7 +440,9 @@ export const urlencode = (str) => {
  * @return {string}
  */
 export const buildSharePath = (path) => {
-
+	let store_id=getStoreID()
+	
+	
     let users_ID = ls.get('users_id');
     let userInfo = store.state.userInfo || ls.get('userInfo');
     const User_ID = ls.get('user_id')
@@ -460,6 +462,10 @@ export const buildSharePath = (path) => {
         }
         search += ('&owner_id=' + owner_id)
     }
+	
+	if(store_id){
+		search+=('&store_id='+store_id)
+	}
 
 
     let ret = ''

@@ -1,5 +1,5 @@
 <template>
-	<view v-if="showIndex">
+	<view v-if="showIndex" style="width: 750rpx;overflow-x: hidden;">
 		<block v-if="storeID">
 			<view class="store-all" :style="{backgroundImage:'url('+domainFn('/static/client/storeBg.png')+')'}">
 				<div class='store-title' >
@@ -560,7 +560,6 @@
 					storeData.lat = this.lat
 					storeData.lng = this.lng
 				}
-				console.log(storeData,this.lat,this.lng,"sss")
 				let arr =await getStoreDetail(storeData,{tip:'加载中'}).catch(e=>{
 
 				})
@@ -618,10 +617,12 @@
 
 			    let localInfo = null;
 
-
+		
 			    let rt = false
+				let that=this
 			    //这里是返回了一个promise，而且不具备阻断后面的作用。不能用await promise.then()这样的古怪语法。要么就是await，要么就是promise.then()
-			    getLocation().then(res => {
+			    getLocation(that).then(res => {
+			
 			        if (res.code === 0) {
 			            localInfo = res.data
 
@@ -632,10 +633,12 @@
 
 			        }
 			    }).catch(err => {
+
 							this.storeID=''
 							this.showIndex=true
-			        //error('获取位置信息失败:' + err.msg)
+					
 			    })
+			
 
 
 
@@ -644,10 +647,10 @@
 
 				let localInfo = null;
 
-
+				let that=this
 				let rt = false
 				//这里是返回了一个promise，而且不具备阻断后面的作用。不能用await promise.then()这样的古怪语法。要么就是await，要么就是promise.then()
-				getLocation().then(res => {
+				getLocation(that).then(res => {
 					if (res.code === 0) {
 						localInfo = res.data
 
@@ -668,7 +671,7 @@
 			loadInfoStore() {
 
 				let postData = {
-					pageSize: 5,
+					pageSize: 1,
 					page: 1,
 					stores_type:2
 				}
@@ -678,9 +681,11 @@
 					postData.lng = this.lng
 				}
 				let that=this
+				alert(JSON.stringify(postData))
 				getStoreList(emptyObject(postData), {tip: '搜索中', mask: true}).then(res => {
+					if(res.data.length>0){
 						this.storeID=res.data[0].Stores_ID
-
+						
 						that.init()
 						// #ifndef H5
 						ls.set('store_id', this.storeID)
@@ -688,14 +693,26 @@
 						// #ifdef H5
 						sessionStorage.setItem('store_id', this.storeID)
 						// #endif
+					}else{
+						this.storeID=''
+						// #ifndef H5
+						ls.set('store_id', this.storeID)
+						//#endif
+						// #ifdef H5
+						sessionStorage.setItem('store_id', this.storeID)
+						// #endif
+					}
+						
 				}).catch(e=>{error(e.msg||'获取门店错误')})
 			},
 			initStore(){
 				this.storeID=getStoreID()
+				this.showIndex=true
 				if(this.storeID){
 					this.systemInfo = uni.getSystemInfoSync()
 					this.get_user_location_init()
 				}else if(this.initData.store_positing==1){
+		
 					this.systemInfo = uni.getSystemInfoSync()
 					this.get_user_location()
 				}else{
@@ -1207,6 +1224,7 @@
 		z-index: 100;
 		border-top-left-radius: 10rpx;
 		border-top-right-radius: 10rpx;
+		margin-bottom: 50px;
 	}
 	.ticks{
 		max-height: 1050rpx;

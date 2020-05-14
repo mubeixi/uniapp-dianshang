@@ -329,7 +329,8 @@
                     store_city: this.store_city,
                     store_area: this.store_area,
 					store_type:this.type==0?1:2,
-                    img_info: img_info
+                    img_info: img_info,
+					pid:this.pid?this.pid:0
                 },{mask:true}).then(res=>{
 										uni.showToast({
 											title: res.msg,
