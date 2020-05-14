@@ -1,6 +1,6 @@
 <template>
 	<view class="store-share" @click="initAll">
-		<image id="scream" src="/static/store/shareStore.png" class="store-img"></image>
+		<image id="scream" :src="'/static/client/store/shareStore.png'|domain" class="store-img"></image>
 		<image :src="userInfo.User_HeadImg" class="user-img"></image>
 		<div class="store-type">
 			<image src="/static/store/storeType.png" class="store-img"></image>
@@ -17,6 +17,8 @@
 </template>
 
 <script>
+	import {domainFn} from '../../common/filter';
+
 	let canvasInstance = null
 	const cutstrFun = (str, len, tip = '..') => {
 	  if (!str) return ''
@@ -64,7 +66,7 @@
 				}
 				getStoreShare(data).then(res=>{
 					this.qrcode=res.data.qrcode
-					
+
 				}).catch(e=>{error(e.msg||'获取二维码失败')})
 
 
@@ -75,51 +77,49 @@
 				try {
 					showLoading('生成中')
 					const thumbTempFile = await Promisify('getImageInfo', { src: this.userInfo.User_HeadImg }).catch(e => { throw Error(e.errMsg || '缓存商品缩略图失败') })
-					
+
 					const wrapHeight=718
 					 const ctx = canvasInstance
 					 ctx.fillRect(0, 0, 414, wrapHeight)
-					 ctx.drawImage('/static/store/shareStore.png', 0, 0, 414, wrapHeight)
-					
-					
-					
-					
-					
-					
+
+					const bgTempFile = await Promisify('getImageInfo', { src: domainFn('/static/client/store/shareStore.png') }).catch(e => { throw Error(e.errMsg || '缓存背景图失败') })
+					 ctx.drawImage(bgTempFile.path, 0, 0, 414, wrapHeight)
+
+
 					 ctx.drawImage('/static/store/storeType.png', 90, 140,214, 35)
-					
+
 					 ctx.setFillStyle('#FEFEFE')
 					 ctx.setFontSize(16)
 					 ctx.textAlign = 'center'
 					 const showProductNameAgree = cutstrFun('邀请你开通', parseInt(640 / 24)) // 只显示一行
 					 ctx.fillText(showProductNameAgree, 170, 162)
-					
+
 					 let str=this.type==1?'代理商':'社区门店'
 					 ctx.setFillStyle('#EBED24')
 					 ctx.setFontSize(16)
 					 ctx.textAlign = 'center'
 					 const typeName = cutstrFun(str, parseInt(640 / 24)) // 只显示一行
 					 ctx.fillText(typeName, 244, 162)
-					
-					
-					
+
+
+
 					 // 商品名称
 					 ctx.setFillStyle('#F64E25')
 					 ctx.setFontSize(11)
 					 ctx.textAlign = 'center'
 					 const showProductNames = cutstrFun('长按识别图中二维码', parseInt(640 / 24)) // 只显示一行
 					 ctx.fillText(showProductNames, 196, 594)
-					
+
 					// 商品名称
 					ctx.setFillStyle('#FFFFFF')
 					ctx.setFontSize(17)
 					ctx.textAlign = 'center'
 					const showProductName = cutstrFun(this.userInfo.User_NickName, parseInt(640 / 24)) // 只显示一行
 					ctx.fillText(showProductName, 270, 100)
-					
-					
-					
-					
+
+
+
+
 					// 头像(需要画个圆角)
 					ctx.save()
 					ctx.beginPath()
@@ -127,32 +127,32 @@
 					ctx.clip()
 					ctx.drawImage(thumbTempFile.path,134,66,50,50)
 					ctx.restore()
-					
-					
+
+
 					const qrcode = await Promisify('getImageInfo', { src: this.qrcode }).catch(e => { throw Error(e.errMsg || '缓存商品缩略图失败') })
 					ctx.fillRect(120, 410, 312/2, 312/2)
 					ctx.drawImage(qrcode.path, 120, 410,312/2, 312/2)
-					
-		
-					
-					
+
+
+
+
 					await new Promise(resolve => {
 					  ctx.draw(false, function () {
 					    resolve()
 					  })
 					})
-					
+
 					const { tempFilePath } = await Promisify('canvasToTempFilePath', { canvasId: 'myCanvas' })
 					console.log(tempFilePath)
 					uni.previewImage({
 					  urls: [tempFilePath] // 需要预览的图片http链接列表
 					})
-					
+
 				} catch(e){
-					
+
 				} finally {
 					hideLoading()
-			   }	
+			   }
 			}
 		},
 		mounted() {
