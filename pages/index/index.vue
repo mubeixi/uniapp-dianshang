@@ -1,35 +1,49 @@
 <template>
-	<view>
+	<view v-if="showIndex">
 		<block v-if="storeID">
 			<view class="store-all" :style="{backgroundImage:'url('+domainFn('/static/client/storeBg.png')+')'}">
-				<div class='store-title'>
-					{{storeInfo.Stores_Name}}
+				<div class='store-title' >
+					{{storeInfo.Stores_Name?storeInfo.Stores_Name:''}}
 				</div>
-				<div class="store-info flex">
-					<image :src="storeInfo.Stores_ImgPath"
-								 class="store-img"></image>
-					<div class="store-info-content">
-						<div class="store-name">
-							{{storeInfo.Stores_Name}}
+				<div class="store-info ">
+					<div class="flex">
+						<image :src="storeInfo.Stores_ImgPath"
+									 class="store-img"></image>
+						<div class="store-info-content">
+							<div class="store-name" v-if="storeInfo.Stores_Name">
+								{{storeInfo.Stores_Name}}
+							</div>
+							<div class="store-promise" v-if="storeInfo.city_express_config">
+								<block v-if="storeInfo.city_express_config">
+									{{storeInfo.city_express_config.limit_config.start_send_money}}元起送
+								</block>
+							</div>
 						</div>
-						<div class="store-promise" >
-							<block v-if="storeInfo.city_express_config">
-								{{storeInfo.city_express_config.limit_config.start_send_money}}元起送
-							</block>
+						<div class="store-list">
+							<div class="store-list-name" @click="changeStore">
+								切换门店<image class="store-list-image" :src="'/static/client/person/right.png'|domain" ></image>
+							</div>
+							<div class="store-list-distance" v-if="storeInfo.distance">
+								距你{{parseInt(storeInfo.distance)}}m
+							</div>
 						</div>
 					</div>
 
-					<div class="store-icon" @click="openLocation">
-						<i class="funicon  icon-address"></i>
-						<div style="margin-top: 5px">定位</div>
-					</div>
-					<div class="store-icon" @click="cellStore(storeInfo.Stores_Telephone)">
-						<i class="funicon  icon-cell"></i>
-						<div style="margin-top: 5px">拨号</div>
-					</div>
-					<div class="store-icon">
-						<i class="funicon  icon-share-t"></i>
-						<div style="margin-top: 5px">分享</div>
+					<div class="flex flex-vertical-center">
+						<div class="store-icon" @click="openLocation">
+							<i class="funicon  icon-address"></i>
+							<div style="margin-top: 5px">定位</div>
+						</div>
+						<div class="store-line"></div>
+						<div class="store-icon" @click="cellStore(storeInfo.Stores_Telephone)">
+							<i class="funicon  icon-cell"></i>
+							<div style="margin-top: 5px">拨号</div>
+						</div>
+						<div class="store-line"></div>
+						<div class="store-icon" @click="openShare">
+							<i class="funicon  icon-share-t"></i>
+							<div style="margin-top: 5px">分享</div>
+						</div>
 					</div>
 				</div>
 
@@ -112,6 +126,38 @@
 		</block>
 
 
+		<popupLayer ref="popupLayer" :direction="'top'"  >
+			<div class="shareinfo" >
+				<div class="s_top">
+					<!-- #ifdef APP-PLUS -->
+					<div class="flex1" @click="shareFunc('wx')">
+						<image class='img' :src="'/static/client/detail/share1.png'|domain" alt=""></image>
+						<div>发送好友</div>
+					</div>
+					<div class="flex1" @click="shareFunc('wxtimeline')">
+						<image class='img' :src="'/static/client/detail/sahre3.png'|domain" alt=""></image>
+						<div>朋友圈</div>
+					</div>
+					<!--只有配置了这个参数的app，才有分享到小程序选项-->
+					<div class="flex1" @click="shareFunc('wxmini')" v-if="wxMiniOriginId">
+						<img class='img' :src="'/static/client/detail/share4.png'|domain" alt="">
+						<div>微信小程序</div>
+					</div>
+					<!-- #endif -->
+					<!-- #ifndef MP-TOUTIAO -->
+					<div class="flex1" @click="shareFunc('pic')">
+						<image class='img' :src="'/static/client/detail/share2.png'|domain" alt=""></image>
+						<div>分享海报</div>
+					</div>
+					<!-- #endif -->
+				</div>
+				<div class="s_bottom" @click="cancelShare">取消</div>
+			</div>
+		</popupLayer>
+
+		<store-list-components style="z-index: 10000;" :pageEl="selfObj" :isDistance="true" :isProduct="true" direction="top" ref="stroeComp" @callFn="bindStores" catchtouchmove/>
+
+
 
 	</view>
 </template>
@@ -123,21 +169,27 @@
 
 
 
-	import {getStoreDetail,getProductCategory,getSelfStoreProd,getCart,updateCart,getSystemConf} from '../../common/fetch'
+	import {getStoreDetail,getProductCategory,getSelfStoreProd,getCart,updateCart,getSystemConf,getStoreList} from '../../common/fetch'
 	import WzwStore from '../../components/wzw-store'
 	import {error, toast} from '../../common';
-	import {numberSort,getStoreID} from '../../common/tool.js'
+	import {numberSort,getStoreID,emptyObject,ls,buildSharePath, isWeiXin,getProductThumb} from '../../common/tool.js'
 	import {domainFn} from '../../common/filter';
-
+	import StoreListComponents from "../../components/StoreListComponents";
 	import {mapGetters,mapActions, mapState} from 'vuex';
+	import popupLayer from '../../components/popup-layer/popup-layer.vue'
 	import {getLocation} from "../../common/tool/location";
+
+
 	export default {
 		mixins:[pageMixin],
-		components:{NoStore,WzwStore},
+		components:{NoStore,WzwStore,StoreListComponents,popupLayer},
 		data() {
 			return {
+				showIndex:false,
 				initData:{},
 				storeID:'',
+				lat:'',
+				lng:'',
 				childSwiperHeight:'auto',
 				productCate:[],
 				scrollHeightS:[0,0,0,0],
@@ -164,6 +216,93 @@
 		},
 		methods:{
 			domainFn,
+			async shareFunc(channel) {
+				if(!this.$fun.checkIsLogin(1,1))return;
+				let _self = this
+				let path = 'pages/index/index?store_id='+this.storeID;
+				let front_url = this.initData.front_url;
+				let shareObj = {
+					title: this.storeInfo.Stores_Name,
+					desc: '万千好货疯抢中',
+					imageUrl: getProductThumb(this.storeInfo.Stores_ImgPath),
+					path: buildSharePath(path)
+				};
+				switch (channel) {
+					case 'wx':
+						uni.share({
+							provider: "weixin",
+							scene: "WXSceneSession",
+							type: 0,
+							href: front_url + shareObj.path,
+							title: shareObj.title,
+							summary: shareObj.desc,
+							imageUrl: shareObj.imageUrl,
+							success: function (res) {
+							},
+							fail: function (err) {
+							}
+						});
+						break;
+					case 'wxtimeline':
+						uni.share({
+							provider: "weixin",
+							scene: "WXSenceTimeline",
+							type: 0,
+							href: front_url + shareObj.path,
+							title: shareObj.title,
+							summary: shareObj.desc,
+							imageUrl: shareObj.imageUrl,
+							success: function (res) {
+							},
+							fail: function (err) {
+							}
+						});
+						break;
+					case 'wxmini':
+						uni.share({
+							provider: 'weixin',
+							scene: "WXSceneSession",
+							type: 5,
+							imageUrl: shareObj.imageUrl,
+							title: shareObj.title,
+							miniProgram: {
+								id: _self.wxMiniOriginId,
+								path: '/' + shareObj.path,
+								type: 0,
+								webUrl: 'http://uniapp.dcloud.io'
+							},
+							success: ret => {
+							}
+						});
+						break;
+					case 'pic':
+
+							uni.navigateTo({
+								url:'/pagesA/store/storeShare?type=3'
+							})
+
+				}
+			},
+			openShare(){
+				this.$refs.popupLayer.show()
+			},
+			cancelShare(){
+				this.$refs.popupLayer.close()
+			},
+			bindStores(storeInfo){
+				this.$refs.stroeComp.close()
+				this.storeID=storeInfo.Stores_ID
+				// #ifndef H5
+				ls.set('store_id', this.storeID)
+				//#endif
+				// #ifdef H5
+				sessionStorage.setItem('store_id', this.storeID)
+				// #endif
+				this.get_user_location_init()
+			},
+			changeStore(){
+				this.$refs.stroeComp.show()
+			},
 			goSearch(){
 				uni.navigateTo({
 					url:'/pages/classify/search'
@@ -413,7 +552,16 @@
 
 			},
 			async init(){
-				let arr =await getStoreDetail({store_id:this.store_id}).catch(e=>{
+				this.showIndex=true
+				let storeData={
+					store_id:this.storeID
+				}
+				if (this.lat && this.lng) {
+					storeData.lat = this.lat
+					storeData.lng = this.lng
+				}
+				console.log(storeData,this.lat,this.lng,"sss")
+				let arr =await getStoreDetail(storeData,{tip:'加载中'}).catch(e=>{
 
 				})
 				this.storeInfo=arr.data
@@ -480,23 +628,78 @@
 			            this.lat = localInfo.latitude
 			            this.lng = localInfo.longitude
 
-			            this.loadInfo()
+			            this.loadInfoStore()
 
 			        }
 			    }).catch(err => {
+							this.storeID=''
+							this.showIndex=true
 			        error('获取位置信息失败:' + err.msg)
 			    })
 
 
 
 			},
+			async get_user_location_init() {
+
+				let localInfo = null;
+
+
+				let rt = false
+				//这里是返回了一个promise，而且不具备阻断后面的作用。不能用await promise.then()这样的古怪语法。要么就是await，要么就是promise.then()
+				getLocation().then(res => {
+					if (res.code === 0) {
+						localInfo = res.data
+
+						this.lat = localInfo.latitude
+						this.lng = localInfo.longitude
+
+						this.init()
+
+					}
+				}).catch(err => {
+					this.init()
+					error('获取位置信息失败:' + err.msg)
+				})
+
+
+
+			},
+			loadInfoStore() {
+
+				let postData = {
+					pageSize: 5,
+					page: 1,
+					stores_type:2
+				}
+
+				if (this.lat && this.lng) {
+					postData.lat = this.lat
+					postData.lng = this.lng
+				}
+				let that=this
+				getStoreList(emptyObject(postData), {tip: '搜索中', mask: true}).then(res => {
+						this.storeID=res.data[0].Stores_ID
+
+						that.init()
+						// #ifndef H5
+						ls.set('store_id', this.storeID)
+						//#endif
+						// #ifdef H5
+						sessionStorage.setItem('store_id', this.storeID)
+						// #endif
+				}).catch(e=>{error(e.msg||'获取门店错误')})
+			},
 			initStore(){
 				this.storeID=getStoreID()
 				if(this.storeID){
 					this.systemInfo = uni.getSystemInfoSync()
-					this.init()
-				}else if(this.initData.store_positing==0){
+					this.get_user_location_init()
+				}else if(this.initData.store_positing==1){
+					this.systemInfo = uni.getSystemInfoSync()
 					this.get_user_location()
+				}else{
+					this.showIndex=true
 				}
 
 
@@ -534,7 +737,7 @@
 
 	.store-info {
 		width: 710rpx;
-		height: 140rpx;
+		//height: 240rpx;
 		margin: 40rpx auto 40rpx;
 		background: rgba(255, 255, 255, 1);
 		box-shadow: 0px 0px 46rpx 0px rgba(198, 26, 19, 0.17);
@@ -558,11 +761,34 @@
 	.store-name {
 		margin-top: 6px;
 		height: 30rpx;
-		font-size: 16px;
+		font-size: 30rpx;
 		line-height: 30rpx;
-		width: 200rpx;
+		width: 300rpx;
 		overflow: hidden;
 		white-space: nowrap;
+	}
+	.store-list{
+		margin-left: auto;
+		text-align: right;
+		&-name{
+			height: 40rpx;
+			line-height: 30rpx;
+			font-size: 30rpx;
+			color: #777777;
+			padding-top: 6px;
+			margin-bottom: 16rpx;
+		}
+		&-image{
+			width: 16rpx;
+			height: 24rpx;
+			margin-left: 14rpx;
+		}
+		&-distance{
+			height: 24rpx;
+			line-height: 24rpx;
+			color: #FF4E00;
+			font-size: 24rpx;
+		}
 	}
 
 	.store-promise {
@@ -580,12 +806,11 @@
 	}
 
 	.store-icon {
-		width: 48rpx;
+		width: 234rpx;
 		text-align: center;
 		font-size: 12px;
 		color: #666666;
-		margin-top: 10rpx;
-		margin-left: 50rpx;
+		padding-top: 30rpx;
 	}
 
 	.icon-address, .icon-cell, .icon-share-t {
@@ -970,6 +1195,128 @@
 			color: #fff;
 			text-align: center;
 		}
+	}
+
+
+	//分享
+	.ticks,.shareinfo {
+		background: #fff;
+		width: 100%;
+		padding: 30rpx 0 60rpx;
+		color: #333;
+		z-index: 100;
+		border-top-left-radius: 10rpx;
+		border-top-right-radius: 10rpx;
+	}
+	.ticks{
+		max-height: 1050rpx;
+		position: relative;
+		padding-top: 0rpx !important;
+		// overflow: scroll;
+	}
+	.t_title {
+		font-size: 30rpx;
+		color: #333;
+		text-align:center;
+		//margin-bottom: 40rpx;
+		// position: fixed;
+		width: 100%;
+		z-index: 999;
+		height: 90rpx;
+		line-height: 90rpx;
+		background-color: #FFFFFF;
+	}
+	.t_title image {
+		height: 24rpx;
+		width: 24rpx;
+		position: absolute;
+		top: 33rpx;
+		right: 20rpx;
+	}
+	.t_content {
+		position: relative;
+		width: 720rpx;
+		height: 160rpx;
+		background-color: #FDF1E5;
+		background-size: cover;
+		margin: 0 auto 30rpx;
+		padding: 20rpx 0 28rpx 40rpx;
+		box-sizing: border-box;
+		font-size: 22rpx;
+		color:  #F43131 ;
+	}
+	.t_left {
+		float: left;
+	}
+	.t_left .t_left_t .money {
+		font-size: 42rpx;
+		margin-right: 10rpx;
+	}
+	.t_left .t_left_t {
+		font-size: 24rpx;
+		margin-bottom: 10rpx;
+	}
+	.t_left .t_left_b{
+		margin-top: 6rpx;
+	}
+	.t_left .t_left_t i {
+		font-size: 22rpx;
+		font-style: normal;
+	}
+	.t_left .t_left_c,.t_left .t_left_b{
+		font-size: 22rpx;
+	}
+	.t_right {
+		float: right;
+		height: 116rpx;
+		line-height: 116rpx;
+		padding: 0 36rpx;
+		font-size: 30rpx;
+		border-left: 2rpx dotted #999;
+		//width: 124rpx;
+		text-align: center;
+	}
+	.aleady {
+		color: #999;
+	}
+	.shareinfo{
+		padding-bottom: 0;
+		color: #333;
+		font-size: 24rpx;
+	}
+	.shareinfo>div {
+		text-align: center;
+	}
+	.s_top {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	.s_top .img {
+		width: 76rpx;
+		height: 76rpx;
+		display: block;
+		margin: 0 auto 10rpx;
+	}
+	.s_top>div:nth-child(1) {
+		/*margin-right: 120rpx;*/
+	}
+	.s_bottom {
+		position: relative;
+		bottom: 0;
+		width: 100%;
+		background: #e8e8e8;
+		color: #666;
+		font-size: 26rpx;
+		text-align: center;
+		line-height: 60rpx;
+		margin-top: 16rpx;
+	}
+	//分享结束
+	.store-line{
+		width: 2px;
+		height: 40rpx;
+		background-color: #FFCBCB;
 	}
 
 

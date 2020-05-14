@@ -55,7 +55,7 @@
                 </div>
             </div>
             <div class="text-center">
-                <div class="search" @click="loadInfo">搜索</div>
+                <div class="search" @click="loadInfoCheck">搜索</div>
             </div>
             <div class="space-box"></div>
             <div class="label-title" style="justify-content: space-between;">
@@ -144,6 +144,16 @@
             }
         },
         props: {
+            //是否距离最近
+            isDistance:{
+                type: Boolean,
+                default: false,
+            },
+            //是否根据产品来
+            isProduct:{
+                type: Boolean,
+                default: false,
+            },
             pageEl: {
                 type: Object,
                 require: true
@@ -226,7 +236,15 @@
 
 
             },
+            loadInfoCheck(storeId){
+                if(this.isDistance){
+                    this.get_user_location()
+                }else{
+                    this.loadInfo(storeId)
+                }
+            },
             loadInfo(storeId) {
+
                 let postData = {
                     pageSize: 10000,
                     page: 1,
@@ -236,7 +254,12 @@
                     stores_name: this.stores_name,
                 }
 
-                postData.prod_json = JSON.stringify(this.prod_ids)
+                if(this.isProduct){
+                    postData.stores_type=2
+                }else{
+                    postData.prod_json = JSON.stringify(this.prod_ids)
+                }
+
 
 
                 if (this.lat && this.lng) {
@@ -296,9 +319,9 @@
                 }
 
 				if(storeId){
-					this.loadInfo(storeId)
+					this.loadInfoCheck(storeId)
 				}else{
-					this.loadInfo()
+					this.loadInfoCheck()
 				}
 
 
