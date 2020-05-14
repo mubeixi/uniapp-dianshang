@@ -155,7 +155,7 @@
 			</div>
 		</popupLayer>
 
-		<store-list-components style="z-index: 10000;" :pageEl="selfObj" :isDistance="true" :isProduct="true" direction="top" ref="stroeComp" @callFn="bindStores" catchtouchmove/>
+		<store-list-components style="z-index: 10000;"  :isDistance="true" :isProduct="true" direction="top" ref="stroeComp" @callFn="bindStores" catchtouchmove/>
 
 
 
@@ -634,7 +634,7 @@
 			    }).catch(err => {
 							this.storeID=''
 							this.showIndex=true
-			        error('获取位置信息失败:' + err.msg)
+			        //error('获取位置信息失败:' + err.msg)
 			    })
 
 
@@ -659,7 +659,7 @@
 					}
 				}).catch(err => {
 					this.init()
-					error('获取位置信息失败:' + err.msg)
+					//error('获取位置信息失败:' + err.msg)
 				})
 
 
