@@ -14,7 +14,7 @@
         已售{{pro.Products_Sales}}
       </div>
     </div>
-    <div class="flex flex-between">
+    <div class="flex flex-between" v-if="pro.buyer">
       <div class="flex flex-vertical-center"  @click="goStoreBuy">
         <block v-for="(it,ind) of pro.buyer" :key="ind">
           <image :src="it.User_HeadImg"
