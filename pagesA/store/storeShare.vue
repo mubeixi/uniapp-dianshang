@@ -4,8 +4,11 @@
 		<image :src="userInfo.User_HeadImg" class="user-img"></image>
 		<div class="store-type">
 			<image src="/static/store/storeType.png" class="store-img"></image>
-			<div class='store-type-title'>
+			<div class='store-type-title' v-if="type!=3">
 				邀请你开通 <span class="store-color">{{type==1?'代理商':'社区门店'}}</span>
+			</div>
+			<div class='store-type-title' v-else-if="type==3">
+				邀请你进入我的店铺
 			</div>
 		</div>
 		<div class="user-name">{{userInfo.User_NickName}}</div>
@@ -64,6 +67,9 @@
 					qrcode_type:'wx_mp'
 					// #endif
 				}
+				if(this.type==3){
+					data.act_type=2
+				}
 				getStoreShare(data).then(res=>{
 					this.qrcode=res.data.qrcode
 
@@ -88,18 +94,28 @@
 
 					 ctx.drawImage('/static/store/storeType.png', 90, 140,214, 35)
 
-					 ctx.setFillStyle('#FEFEFE')
-					 ctx.setFontSize(16)
-					 ctx.textAlign = 'center'
-					 const showProductNameAgree = cutstrFun('邀请你开通', parseInt(640 / 24)) // 只显示一行
-					 ctx.fillText(showProductNameAgree, 170, 162)
 
-					 let str=this.type==1?'代理商':'社区门店'
-					 ctx.setFillStyle('#EBED24')
-					 ctx.setFontSize(16)
-					 ctx.textAlign = 'center'
-					 const typeName = cutstrFun(str, parseInt(640 / 24)) // 只显示一行
-					 ctx.fillText(typeName, 244, 162)
+					if(this.type==3){
+						ctx.setFillStyle('#FEFEFE')
+						ctx.setFontSize(16)
+						ctx.textAlign = 'center'
+						const showProductNameAgree = cutstrFun('邀请你进入我的店铺', parseInt(640 / 24)) // 只显示一行
+						ctx.fillText(showProductNameAgree, 170, 162)
+					}else{
+						ctx.setFillStyle('#FEFEFE')
+						ctx.setFontSize(16)
+						ctx.textAlign = 'center'
+						const showProductNameAgree = cutstrFun('邀请你开通', parseInt(640 / 24)) // 只显示一行
+						ctx.fillText(showProductNameAgree, 170, 162)
+
+						let str=this.type==1?'代理商':'社区门店'
+						ctx.setFillStyle('#EBED24')
+						ctx.setFontSize(16)
+						ctx.textAlign = 'center'
+						const typeName = cutstrFun(str, parseInt(640 / 24)) // 只显示一行
+						ctx.fillText(typeName, 244, 162)
+					}
+
 
 
 
@@ -129,7 +145,7 @@
 					ctx.restore()
 
 
-					const qrcode = await Promisify('getImageInfo', { src: this.qrcode }).catch(e => { throw Error(e.errMsg || '缓存商品缩略图失败') })
+					const qrcode = await Promisify('getImageInfo', { src: this.qrcode }).catch(e => { throw Error(e.errMsg || '二维码失败') })
 					ctx.fillRect(120, 410, 312/2, 312/2)
 					ctx.drawImage(qrcode.path, 120, 410,312/2, 312/2)
 

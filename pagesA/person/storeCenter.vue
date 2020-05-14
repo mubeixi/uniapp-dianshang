@@ -12,12 +12,20 @@
 				<view class="store-money">可用余额: <text class="number">￥ {{storeDetail.User_Money}}</text> <view class="charge" @click="goCharge">充值</view> </view>
 				<view class="order-msg">
 					<view class="order">
-						<view class="order-title"><image class="order-img" :src="'/static/client/mendian/pic.png'|domain" mode=""></image> 今日订单数</view>
 						<view class="order-num">{{storeDetail.today_order_num}}</view>
+						<view class="order-title">今日订单数</view>
+
 					</view>
+					<view class="store-line"></view>
 					<view class="order">
-						<view class="order-title"><image class="order-img" :src="'/static/client/mendian/pic.png'|domain" mode=""></image> 今日订单金额</view>
 						<view class="order-num"> <text class="icon">￥</text> {{storeDetail.today_order_sales}}</view>
+						<view class="order-title">今日订单金额</view>
+
+					</view>
+					<view class="store-line"></view>
+					<view class="order"  @click="openShare">
+						<view class="order-num"><i class="funicon  icon-share-t"></i></view>
+						<view class="order-title">分享</view>
 					</view>
 				</view>
 			</view>
@@ -86,6 +94,37 @@
 				<view>推广下级</view>
 			</view>
 		</view>
+
+
+		<popupLayer ref="popupLayer" :direction="'top'"  >
+			<div class="shareinfo" >
+				<div class="s_top">
+					<!-- #ifdef APP-PLUS -->
+					<div class="flex1" @click="shareFunc('wx')">
+						<image class='img' :src="'/static/client/detail/share1.png'|domain" alt=""></image>
+						<div>发送好友</div>
+					</div>
+					<div class="flex1" @click="shareFunc('wxtimeline')">
+						<image class='img' :src="'/static/client/detail/sahre3.png'|domain" alt=""></image>
+						<div>朋友圈</div>
+					</div>
+					<!--只有配置了这个参数的app，才有分享到小程序选项-->
+					<div class="flex1" @click="shareFunc('wxmini')" v-if="wxMiniOriginId">
+						<img class='img' :src="'/static/client/detail/share4.png'|domain" alt="">
+						<div>微信小程序</div>
+					</div>
+					<!-- #endif -->
+					<!-- #ifndef MP-TOUTIAO -->
+					<div class="flex1" @click="shareFunc('pic')">
+						<image class='img' :src="'/static/client/detail/share2.png'|domain" alt=""></image>
+						<div>分享海报</div>
+					</div>
+					<!-- #endif -->
+				</div>
+				<div class="s_bottom" @click="cancelShare">取消</div>
+			</div>
+		</popupLayer>
+
 	</view>
 </template>
 
@@ -93,21 +132,96 @@
 	import {storeInit} from '../../common/fetch.js';
 	import {mapGetters} from 'vuex'
 	import {pageMixin} from "../../common/mixin";
-
+	import popupLayer from '../../components/popup-layer/popup-layer.vue'
+	import {buildSharePath,getProductThumb} from '../../common/tool.js'
 	export default {
 		mixins:[pageMixin],
+		components:{popupLayer},
 		data: function(){
 			return {
 				storeDetail: {}
 			}
 		},
 		computed: {
-			...mapGetters(['Stores_ID']),
+			...mapGetters(['Stores_ID','initData']),
 		},
 		onLoad() {
 			this.getStoreDetail();
 		},
 		methods: {
+			async shareFunc(channel) {
+				if(!this.$fun.checkIsLogin(1,1))return;
+				let _self = this
+				let path = 'pages/index/index?store_id='+this.storeID;
+				let front_url = this.initData.front_url;
+				let shareObj = {
+					title: this.storeDetail.Stores_Name,
+					desc: '万千好货疯抢中',
+					imageUrl: getProductThumb(this.storeDetail.Stores_ImgPath),
+					path: buildSharePath(path)
+				};
+				switch (channel) {
+					case 'wx':
+						uni.share({
+							provider: "weixin",
+							scene: "WXSceneSession",
+							type: 0,
+							href: front_url + shareObj.path,
+							title: shareObj.title,
+							summary: shareObj.desc,
+							imageUrl: shareObj.imageUrl,
+							success: function (res) {
+							},
+							fail: function (err) {
+							}
+						});
+						break;
+					case 'wxtimeline':
+						uni.share({
+							provider: "weixin",
+							scene: "WXSenceTimeline",
+							type: 0,
+							href: front_url + shareObj.path,
+							title: shareObj.title,
+							summary: shareObj.desc,
+							imageUrl: shareObj.imageUrl,
+							success: function (res) {
+							},
+							fail: function (err) {
+							}
+						});
+						break;
+					case 'wxmini':
+						uni.share({
+							provider: 'weixin',
+							scene: "WXSceneSession",
+							type: 5,
+							imageUrl: shareObj.imageUrl,
+							title: shareObj.title,
+							miniProgram: {
+								id: _self.wxMiniOriginId,
+								path: '/' + shareObj.path,
+								type: 0,
+								webUrl: 'http://uniapp.dcloud.io'
+							},
+							success: ret => {
+							}
+						});
+						break;
+					case 'pic':
+
+						uni.navigateTo({
+							url:'/pagesA/store/storeShare?type=3'
+						})
+
+				}
+			},
+			openShare(){
+				this.$refs.popupLayer.show()
+			},
+			cancelShare(){
+				this.$refs.popupLayer.close()
+			},
 			// 跳转即将售罄的商品
 			goSolded(){
 				uni.navigateTo({
@@ -220,13 +334,15 @@
 				}
 				.order-msg {
 					display: flex;
-					justify-content: center;
+					//justify-content: center;
 					margin-top: 30rpx;
+					align-items: center;
+					color: #4A4A4A;
 					.order {
-						width: 260rpx;
+						width: 240rpx;
 						height: 140rpx;
 						text-align: center;
-						background-color: #FFF4F4;
+						/*background-color: #FFF4F4;*/
 						padding: 34rpx 0;
 						box-sizing: border-box;
 						font-size: 26rpx;
@@ -244,15 +360,13 @@
 						.order-num {
 							font-size: 34rpx;
 							color: $wzw-primary-color;
-							margin-top: 16rpx;
+							margin-bottom: 16rpx;
 							.icon {
 								font-size: 26rpx;
 							}
 						}
 					}
-					.order:nth-child(1) {
-						margin-right: 50rpx;
-					}
+
 				}
 			}
 			.tips {
@@ -325,4 +439,128 @@
 			}
 		}
 	}
+	.store-line{
+		width: 1px;
+		height: 60rpx;
+		background-color: #FFCBCB;
+	}
+	.icon-share-t {
+		color: #ff774d;
+		font-size: 22px;
+	}
+	//分享
+	.ticks,.shareinfo {
+		background: #fff;
+		width: 100%;
+		padding: 30rpx 0 60rpx;
+		color: #333;
+		z-index: 100;
+		border-top-left-radius: 10rpx;
+		border-top-right-radius: 10rpx;
+	}
+	.ticks{
+		max-height: 1050rpx;
+		position: relative;
+		padding-top: 0rpx !important;
+		// overflow: scroll;
+	}
+	.t_title {
+		font-size: 30rpx;
+		color: #333;
+		text-align:center;
+		//margin-bottom: 40rpx;
+		// position: fixed;
+		width: 100%;
+		z-index: 999;
+		height: 90rpx;
+		line-height: 90rpx;
+		background-color: #FFFFFF;
+	}
+	.t_title image {
+		height: 24rpx;
+		width: 24rpx;
+		position: absolute;
+		top: 33rpx;
+		right: 20rpx;
+	}
+	.t_content {
+		position: relative;
+		width: 720rpx;
+		height: 160rpx;
+		background-color: #FDF1E5;
+		background-size: cover;
+		margin: 0 auto 30rpx;
+		padding: 20rpx 0 28rpx 40rpx;
+		box-sizing: border-box;
+		font-size: 22rpx;
+		color:  #F43131 ;
+	}
+	.t_left {
+		float: left;
+	}
+	.t_left .t_left_t .money {
+		font-size: 42rpx;
+		margin-right: 10rpx;
+	}
+	.t_left .t_left_t {
+		font-size: 24rpx;
+		margin-bottom: 10rpx;
+	}
+	.t_left .t_left_b{
+		margin-top: 6rpx;
+	}
+	.t_left .t_left_t i {
+		font-size: 22rpx;
+		font-style: normal;
+	}
+	.t_left .t_left_c,.t_left .t_left_b{
+		font-size: 22rpx;
+	}
+	.t_right {
+		float: right;
+		height: 116rpx;
+		line-height: 116rpx;
+		padding: 0 36rpx;
+		font-size: 30rpx;
+		border-left: 2rpx dotted #999;
+		//width: 124rpx;
+		text-align: center;
+	}
+	.aleady {
+		color: #999;
+	}
+	.shareinfo{
+		padding-bottom: 0;
+		color: #333;
+		font-size: 24rpx;
+	}
+	.shareinfo>div {
+		text-align: center;
+	}
+	.s_top {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	.s_top .img {
+		width: 76rpx;
+		height: 76rpx;
+		display: block;
+		margin: 0 auto 10rpx;
+	}
+	.s_top>div:nth-child(1) {
+		/*margin-right: 120rpx;*/
+	}
+	.s_bottom {
+		position: relative;
+		bottom: 0;
+		width: 100%;
+		background: #e8e8e8;
+		color: #666;
+		font-size: 26rpx;
+		text-align: center;
+		line-height: 60rpx;
+		margin-top: 16rpx;
+	}
+	//分享结束
 </style>
