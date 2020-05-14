@@ -37,6 +37,16 @@
 	    })
 	  })
 	}
+	
+	const getImg = (params) => {
+	  return new Promise((resolve, reject) => {
+	    uni.getImageInfo({
+	    	src: params,
+	    	success: res => resolve(res),
+	    	fail: res => reject(res)
+	    })
+	  })
+	}
 	import {showLoading,hideLoading} from '../../common/index.js'
 
 	import {mapGetters,mapActions, mapState} from 'vuex';
@@ -82,13 +92,15 @@
 			async initAll(){
 				try {
 					showLoading('生成中')
-					const thumbTempFile = await Promisify('getImageInfo', { src: this.userInfo.User_HeadImg }).catch(e => { throw Error(e.errMsg || '缓存商品缩略图失败') })
+					
+	
+					const thumbTempFile = await getImg( { src: this.userInfo.User_HeadImg }).catch(e => { throw Error(e.errMsg || '缓存商品缩略图失败') })
 
 					const wrapHeight=718
 					 const ctx = canvasInstance
 					 ctx.fillRect(0, 0, 414, wrapHeight)
 
-					const bgTempFile = await Promisify('getImageInfo', { src: domainFn('/static/client/store/shareStore.png') }).catch(e => { throw Error(e.errMsg || '缓存背景图失败') })
+					const bgTempFile = await getImg({ src: domainFn('/static/client/store/shareStore.png') }).catch(e => { throw Error(e.errMsg || '缓存背景图失败') })
 					 ctx.drawImage(bgTempFile.path, 0, 0, 414, wrapHeight)
 
 
@@ -145,7 +157,7 @@
 					ctx.restore()
 
 
-					const qrcode = await Promisify('getImageInfo', { src: this.qrcode }).catch(e => { throw Error(e.errMsg || '二维码失败') })
+					const qrcode = await getImg({ src: this.qrcode }).catch(e => { throw Error(e.errMsg || '二维码失败') })
 					ctx.fillRect(120, 410, 312/2, 312/2)
 					ctx.drawImage(qrcode.path, 120, 410,312/2, 312/2)
 

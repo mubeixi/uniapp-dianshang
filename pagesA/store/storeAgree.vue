@@ -25,14 +25,14 @@
 			主图
 		</div>
 		<div class="store-img-list">
-				<image class="store-img-list-img" :src="storeData.store_image"></image>
+				<image class="store-img-list-img" :src="storeData.store_image"  @click="yulan(storeData.store_image)"></image>
 		</div>
 		<div class="store-line-btm">
 			资质
 		</div>
 		<div class="store-img-list">
 			<block v-for="(item,index) of storeData.img_info" :key="index">
-				<image class="store-img-list-img" :src='item'></image>
+				<image class="store-img-list-img" :src='item' @click="yulanArr(index)"></image>
 			</block>
 
 		</div>
@@ -70,7 +70,7 @@
 						</picker>
 					</div>
 
-					<div class="store-picker flex flex-vertical-center">
+					<div class="store-picker flex flex-vertical-center"  v-if="index==0">
 						<div>
 							代理等级
 						</div>
@@ -100,6 +100,7 @@
 	import popupLayer from '../../components/popup-layer/popup-layer.vue'
 	import{getStoreApplyList,storeApplyReject,getStoreTypes,storeApplyPass} from'../../common/fetch.js'
 	import {pageMixin} from "../../common/mixin";
+		import {mapGetters,mapActions, mapState} from 'vuex';
 	import {error, toast} from '../../common';
 	export default {
 		mixins:[pageMixin],
@@ -109,7 +110,7 @@
 				retailer_fee:'',
 				id:'',
 				reason:'',
-				typeList:[],
+				typeList:[{titile:''}],
 				index:0,
 				ind:0,
 				array:['代理商','社区门店'],
@@ -117,7 +118,25 @@
 				storeData:{store_province_name:'',store_city_name:'',store_area_name:'',store_address:''},
 			};
 		},
+		computed:{
+			...mapGetters(['Stores_ID'])
+		},
 		methods:{
+			yulanArr(index){
+				uni.previewImage({
+				    urls: this.storeData.img_info,
+				    indicator:'default',
+				    current:index
+				});
+			},
+			yulan(item){
+				let arr=[]
+				arr.push(item)
+				uni.previewImage({
+				    urls: arr,
+				    indicator:'default'
+				});
+			},
 			sureBtn(){
 				if(!this.retailer_fee||this.retailer_fee<0||this.retailer_fee>100){
 					error('门店折扣在0-100之间')
@@ -125,9 +144,12 @@
 				}
 				let data={
 					apply_id:this.id,
-					type_id:this.typeList[this.ind].id,
 					store_type:this.index==0?1:2,
+					store_id:this.Stores_ID,
 					retailer_fee:this.retailer_fee
+				}
+				if(this.index==0){
+					data.type_id=this.typeList[this.ind].id
 				}
 
 				storeApplyPass(data).then(res=>{
@@ -137,12 +159,13 @@
 						uni.navigateBack()
 					},1000)
 				}).catch(e=>{
-
+					error(e.msg||'审核失败')
 				})
 
 			},
 			bindPickerChanges(e){
 				this.ind = e.target.value
+				this.retailer_fee=this.typeList[this.ind].retailer_fee
 			},
 			bindPickerChange(e){
 				this.index = e.target.value
@@ -166,21 +189,22 @@
 			init(){
 				let data={
 					page:1,
-					pageSize:999
+					pageSize:999,
+					apply_id:this.id
 				}
 
 				getStoreApplyList(data,{tip:'加载中'}).then(res=>{
 
-					for(let item of res.data){
-						item.id==this.id
-						this.storeData=item
-					}
+			
+							this.storeData=res.data[0]
+							
 
 
 				})
 
 				getStoreTypes().then(res=>{
 						this.typeList=res.data
+						this.retailer_fee=this.typeList[this.ind].retailer_fee
 				}).catch(e=>{})
 
 			}
@@ -373,6 +397,8 @@
 		flex: 1;
 		box-sizing: border-box;
 		padding-left: 40rpx;
+		text-align: right;
+		padding-right: 10px;
 	}
 	.btn-sure{
 		width:750rpx;
