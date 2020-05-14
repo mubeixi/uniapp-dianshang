@@ -123,16 +123,19 @@
 
 
 
-	import {getStoreDetail,getProductCategory,getSelfStoreProd,getCart,updateCart} from '../../common/fetch'
+	import {getStoreDetail,getProductCategory,getSelfStoreProd,getCart,updateCart,getSystemConf} from '../../common/fetch'
 	import WzwStore from '../../components/wzw-store'
 	import {error, toast} from '../../common';
 	import {numberSort,getStoreID} from '../../common/tool.js'
 
+	import {mapGetters,mapActions, mapState} from 'vuex';
+	import {getLocation} from "../../common/tool/location";
 	export default {
 		mixins:[pageMixin],
 		components:{NoStore,WzwStore},
 		data() {
 			return {
+				initData:{},
 				storeID:'',
 				childSwiperHeight:'auto',
 				productCate:[],
@@ -415,9 +418,13 @@
 				let cate= await getProductCategory().catch(e=>{
 
 				})
+
+				uni.setNavigationBarTitle({
+				    title:this.storeInfo.Stores_Name
+				})
 				this.productCate=cate.data
 
-				
+
 				let data={
 					page:1,
 					pageSize:999,
@@ -457,16 +464,47 @@
 					if (this.systemInfo.windowHeight) this.childSwiperHeight = this.systemInfo.windowHeight + 'px'
 				}
 			},
+			async get_user_location() {
+
+			    let localInfo = null;
+
+
+			    let rt = false
+			    //这里是返回了一个promise，而且不具备阻断后面的作用。不能用await promise.then()这样的古怪语法。要么就是await，要么就是promise.then()
+			    getLocation().then(res => {
+			        if (res.code === 0) {
+			            localInfo = res.data
+
+			            this.lat = localInfo.latitude
+			            this.lng = localInfo.longitude
+
+			            this.loadInfo()
+
+			        }
+			    }).catch(err => {
+			        error('获取位置信息失败:' + err.msg)
+			    })
+
+
+
+			},
 			initStore(){
 				this.storeID=getStoreID()
 				if(this.storeID){
 					this.systemInfo = uni.getSystemInfoSync()
 					this.init()
+				}else if(this.initData.store_positing==0){
+					this.get_user_location()
 				}
+
 
 			}
 		},
-		onLoad() {
+		async onLoad() {
+			let systemConf = await getSystemConf()
+			let initData = systemConf?systemConf.data:null
+			this.initData=initData
+
 			this.initStore()
 		}
 	}

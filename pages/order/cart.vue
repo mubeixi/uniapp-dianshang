@@ -283,7 +283,7 @@
 
 				//不论成功与否都重新刷新，因为数值被更改了
 				updateCart(this.postData).then(()=>{
-					this.getCart();
+					this.getCartUpdate();
 					this.cal_total();
 				})
 				.catch(err=>{
@@ -295,6 +295,27 @@
 
 
 			},
+			getCartUpdate() {
+				getCart({cart_key:'CartList'}).then(res=>{
+					this.total_count= res.data.total_count;
+					this.total_price=''
+					this.total_price= res.data.total_price;
+					this.shop_config = res.data.shop_config;
+					// 把状态存起来
+					// this.initCheck();
+					let CartList=res.data.CartList
+					for(var i in CartList) {
+						for(var j in CartList[i]) {							
+							this.CartList[i][j].Qty =CartList[i][j].Qty
+						}
+					};
+
+					this.loading = true;
+			
+			
+				}).catch(e=>{})
+			},
+			
 			// 更新购物车
 			updateCart(pro_id,attr_id,num){
 				this.postData.prod_id = pro_id;
@@ -308,7 +329,7 @@
 					return;
 				}
 				updateCart(this.postData).then(res=>{
-					this.getCart();
+					this.getCartUpdate();
 					this.cal_total();
 				}).catch(()=>{});
 			},
