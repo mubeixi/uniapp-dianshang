@@ -33,7 +33,7 @@
 						<block v-else>
 							{{item.status_desc}}
 						</block>
-						
+
 						<view class="tips" v-if="item.show&&item.status==3">
 							<view class="sanjiaoxing"></view>{{item.reason}}
 						</view>
@@ -125,7 +125,9 @@
 				this.init('init')
 			}
 		},
-		onLoad() {
+		onShow() {
+			this.page=1
+			this.proList=[]
 			this.init()
 		}
 	}
@@ -237,7 +239,7 @@
 		height: 28rpx;
 		margin-left: 10rpx;
 	}
-	
+
 	.tips {
 		position: absolute;
 		top:50rpx;

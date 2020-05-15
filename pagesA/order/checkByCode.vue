@@ -41,7 +41,7 @@
                         error('订单状态不符')
                     }
                 }).catch(e=>{
-
+					error(e.msg)
                 })
 
 

@@ -152,7 +152,7 @@
             //是否根据产品来
             isProduct:{
                 type: Boolean,
-                default: false,
+                default: true,
             },
             pageEl: {
                 type: Object,
@@ -213,7 +213,7 @@
                 this.$emit('callFn', this.select_info)
             },
             async get_user_location() {
-				console.log("222")
+
 
                 let localInfo = null;
 
@@ -222,7 +222,7 @@
 
                 //这里是返回了一个promise，而且不具备阻断后面的作用。不能用await promise.then()这样的古怪语法。要么就是await，要么就是promise.then()
                 getLocation(this.pageEl).then(res => {
-						console.log(res,"ssss")
+
                     if (res.code === 0) {
                         localInfo = res.data
 
@@ -233,7 +233,7 @@
 
                     }
                 }).catch(err => {
-					console.log(err,"sssserr")
+
                     error('获取位置信息失败:' + err.msg)
                 })
 
@@ -261,9 +261,9 @@
                 }
 
                 if(this.isProduct){
-                    postData.stores_type=2
-                }else{
                     postData.prod_json = JSON.stringify(this.prod_ids)
+                }else{
+                    postData.stores_type=2
                 }
 
 

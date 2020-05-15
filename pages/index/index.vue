@@ -1,5 +1,5 @@
 <template>
-	<view v-if="showIndex" style="width: 750rpx;overflow-x: hidden;padding-bottom: 50px;height: 100vh;box-sizing: border-box;">
+	<view v-if="showIndex" class="index-all">
 		<block v-if="storeID">
 			<view class="store-all" :style="{backgroundImage:'url('+domainFn('/static/client/store/storeBg.png')+')'}">
 				<div class='store-title' >
@@ -161,7 +161,7 @@
 			</div>
 		</popupLayer>
 
-		<store-list-components style="z-index: 10000;"  :pageEl="selfObj" :isDistance="true" :isProduct="true" direction="top" ref="stroeComp" @callFn="bindStores" catchtouchmove/>
+		<store-list-components style="z-index: 10000;"  :pageEl="selfObj" :isDistance="true" :isProduct="false" direction="top" ref="stroeComp" @callFn="bindStores" catchtouchmove/>
 
 
 
@@ -220,6 +220,16 @@
 					productDetail_price: 0
 				},
 			};
+		},
+		onShareAppMessage() {
+			let path = '/pages/index/index';
+			let shareObj = {
+				title: this.storeInfo.Stores_Name,
+				desc: '万千好货疯抢中',
+				imageUrl: this.storeInfo.Stores_ImgPath,
+				path: buildSharePath(path)
+			};
+			return shareObj
 		},
 		methods:{
 			domainFn,
@@ -567,7 +577,7 @@
 					storeData.lat = this.lat
 					storeData.lng = this.lng
 				}
-				let arr =await getStoreDetail(storeData,{tip:'加载中'}).catch(e=>{
+				let arr =await getStoreDetail(storeData,{tip:'智能定位中'}).catch(e=>{
 
 				})
 				this.storeInfo=arr.data
@@ -688,7 +698,7 @@
 					postData.lng = this.lng
 				}
 				let that=this
-				getStoreList(emptyObject(postData), {tip: '搜索中', mask: true}).then(res => {
+				getStoreList(emptyObject(postData), {mask: true}).then(res => {
 					if(res.data.length>0){
 						this.storeID=res.data[0].Stores_ID
 
@@ -742,12 +752,21 @@
 </script>
 
 <style lang="scss" scoped>
+	.index-all{
+		width: 750rpx;
+		overflow-x: hidden;
+		box-sizing: border-box;
+		background-color: #FFFFFF;
+		height: 100vh;
+		overflow-y: scroll;
+		position: relative;
+	}
 	.store-all {
 		width: 750rpx;
-		height: 100vh;
+		//height: 100vh;
 		//overflow-x: hidden;
 		background-repeat: no-repeat;
-		background-size: 100% 60%;
+		background-size: 100% auto;
 	}
 
 	.store-title {

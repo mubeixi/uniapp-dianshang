@@ -341,11 +341,11 @@ export default {
 			 			  }
 			 			 //this.pro=res.data;
 			 			 this.count=res.totalCount;
-			 }).catch(e=>{}) 
+			 }).catch(e=>{})
 		  }
-		  
-		  
-		  
+
+
+
 	  },
 	  close(){
 		  this.inputValue="";

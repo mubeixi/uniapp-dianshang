@@ -197,7 +197,7 @@
 				<view class="mxitem" v-if="orderInfo.Order_Shipping.Price > 0">运费 <text class="num">+{{orderInfo.Order_Shipping.Price}}</text></view>
 			</view>
 		</popup-layer>
-		<popup-layer ref="popupRef" :direction="'top'">
+		<popup-layer ref="popupRef" :direction="'top'"  @maskClicked="handClickeds">
 			<view class="bMbx" v-if="type=='shipping'">
 				<view class="fMbx">运费选择</view>
 				<view class="iMbx" v-for="(ship,shipid) in orderInfo.shipping_company" :key="shipid">
@@ -389,7 +389,7 @@ export default {
 		  }
 		 this.shipping_store_id = storeInfo.Stores_ID;
 		 //新增
-		 this.postData.shipping_store_id=this.shipping_store_id 
+		 this.postData.shipping_store_id=this.shipping_store_id
 	  	if(this.setStoreMode==='all'){
 	  		//居然是对象醉了
 	  		for(var i in this.orderInfo.CartList){
@@ -405,7 +405,7 @@ export default {
 			this.orderInfo.Stores_Name=storeInfo.Stores_Name
 		}
 		  this.$refs.stroeComp.close()
-		  
+
 		  if(this.postData.shipping_id=='is_store'){
 		  	let obj={}
 		  	for(let it in this.orderInfo.CartList){
@@ -417,12 +417,12 @@ export default {
 		  	}
 		  	this.postData.self_pick_store_id=JSON.stringify(obj)
 		  }
-		  
+
 		  //新增
 		  //if(this.tabIdx==0){
 			  this.createOrderCheck()
 		  //}
-		  
+
 		  this.zIndex=9
 
 	  },
@@ -480,6 +480,13 @@ export default {
 				this.zIndex = 99999;
 				this.bottomHeight = 0;
 			},500)
+		},
+		handClickeds(){
+			this.$refs.popupRef.close();
+			setTimeout(function () {
+				this.zIndex = 99999;
+			},1000)
+
 		},
 		// 跳转地址列表页
 		goAddressList(){
@@ -697,15 +704,22 @@ export default {
 			this.postData.shipping_id = e.target.value;
 		},
 		changeCoupon(){
+
 			this.type = 'coupon';
 			if(this.couponlist.length == 0) {return;}
 			this.$refs.popupRef.show();
+
+				this.zIndex=99
+
 		},
         // 选择运费
         changeShip(){
 					this.type = 'shipping';
 					this.ship_current = this.postData.shipping_id;
           this.$refs.popupRef.show();
+
+						this.zIndex=99
+
         },
 		closeMethod(){
 			if(this.type == 'coupon') {
@@ -785,21 +799,21 @@ export default {
 
 						//新增
 						if(res.data.CartList[i][j].store_name&&num==2&&res.data.shipping_has_stores==1){
-							
+
 							res.data.CartList[i][j].store['Stores_Name'] = res.data.CartList[i][j].store_name
 							res.data.CartList[i][j].store['Stores_ID'] = res.data.CartList[i][j].store_id
 							res.data.Stores_Name=res.data.CartList[i][j].store_name
 							this.postData.shipping_id='is_store'
 							this.postData.shipping_store_id=res.data.CartList[i][j].store_id
-						
-							
+
+
 						}
 						if(res.data.CartList[i][j].choose_store_info){
 							res.data.CartList[i][j].store['Stores_Name'] = res.data.CartList[i][j].choose_store_info.Stores_Name
 							res.data.CartList[i][j].store['Stores_ID'] = res.data.CartList[i][j].choose_store_info.Stores_ID
 						}
-						
-						
+
+
 					}
 				}
 				this.orderInfo = Object.assign(oldOrderInfo,res.data);
@@ -816,7 +830,7 @@ export default {
 				this.couponlist = res.data.coupon_list;
 
 				this.orderLoading = true;
-				
+
 				this.idD=this.postData.shipping_id
 				for(var i in this.orderInfo.shipping_company) {
 					if(i == this.postData.shipping_id) {

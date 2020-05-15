@@ -16,6 +16,12 @@
 		<div class="store-qc-text">长按识别图中二维码</div>
 
 		<canvas class="myCanvas" id="myCanvas" canvas-id="myCanvas"/>
+
+		<div class="button-store" @click="saveAll" >
+
+			<image src="/static/store/saveHai.png"  style="width: 100%;height: 100%"></image>
+			<div class="button-text">保存海报</div>
+		</div>
 	</view>
 </template>
 
@@ -37,7 +43,7 @@
 	    })
 	  })
 	}
-	
+
 	const getImg = (params) => {
 	  return new Promise((resolve, reject) => {
 	    uni.getImageInfo({
@@ -53,6 +59,7 @@
 	import {pageMixin} from "../../common/mixin";
 	import {getStoreShare} from '../../common/fetch.js'
 	import {error} from '../../common/index.js'
+	import {toast} from '../../common/index';
 	export default {
 		mixins:[pageMixin],
 		data() {
@@ -66,8 +73,29 @@
 			...mapGetters(['userInfo','Stores_ID'])
 		},
 		methods:{
+			saveAll(){
+				// #ifdef H5
+					uni.previewImage({
+					  urls: [this.imgSave] // 需要预览的图片http链接列表
+					})
+				// #endif
+				// #ifndef H5
+					uni.saveImageToPhotosAlbum({
+						filePath: this.imgSave,
+						success: function () {
+							toast('保存成功')
+						},
+						fail(){
+							error('保存失败')
+						}
+					});
+				// #endif
+
+
+			},
 			init(){
 				let data={
+					imgSave:'',
 					store_id:this.Stores_ID,
 					stores_type:this.type,
 					// #ifdef MP-WEIXIN
@@ -80,20 +108,20 @@
 				if(this.type==3){
 					data.act_type=2
 				}
-				getStoreShare(data).then(res=>{
+				 getStoreShare(data).then(res=>{
 					this.qrcode=res.data.qrcode
 
 				}).catch(e=>{error(e.msg||'获取二维码失败')})
 
-
+				this.initAll()
 
 
 			},
 			async initAll(){
 				try {
-					showLoading('生成中')
-					
-	
+
+					showLoading('加载中')
+
 					const thumbTempFile = await getImg(this.userInfo.User_HeadImg ).catch(e => { throw Error(e.errMsg || '缓存商品缩略图失败') })
 
 					const wrapHeight=718
@@ -112,7 +140,7 @@
 						ctx.setFontSize(16)
 						ctx.textAlign = 'center'
 						const showProductNameAgree = cutstrFun('邀请你进入我的店铺', parseInt(640 / 24)) // 只显示一行
-						ctx.fillText(showProductNameAgree, 170, 162)
+						ctx.fillText(showProductNameAgree, 198, 162)
 					}else{
 						ctx.setFillStyle('#FEFEFE')
 						ctx.setFontSize(16)
@@ -171,17 +199,15 @@
 					})
 
 					const { tempFilePath } = await Promisify('canvasToTempFilePath', { canvasId: 'myCanvas' })
-					console.log(tempFilePath,"sss")
-					uni.previewImage({
-					  urls: [tempFilePath] // 需要预览的图片http链接列表
-					})
+					this.imgSave=tempFilePath
+					// uni.previewImage({
+					//   urls: [tempFilePath] // 需要预览的图片http链接列表
+					// })
 
 				} catch(e){
 
 				} finally {
-					setTimeout(function(){
 						hideLoading()
-					},1000)
 			   }
 			}
 		},
@@ -272,6 +298,30 @@
 	text-align: center;
 	position: absolute;
 	left: 0;
-	top: 82%;
+	top: 82.5%;
 }
+	.button-store{
+		width: 680rpx;
+		height: 90rpx;
+		line-height: 90rpx;
+		text-align: center;
+		font-size: 32rpx;
+		color: #FFFFFF;
+		background-color: #ff542b;
+		border-radius: 90rpx;
+		position: fixed;
+		left: 34rpx;
+		bottom: 30rpx;
+		.button-text{
+			width: 680rpx;
+			height: 80rpx;
+			line-height: 80rpx;
+			text-align: center;
+			font-size: 32rpx;
+			color: #FFFFFF;
+			position: absolute;
+			left: 0;
+			top: 0;
+		}
+	}
 </style>

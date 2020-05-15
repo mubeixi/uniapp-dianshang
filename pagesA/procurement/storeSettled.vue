@@ -8,12 +8,12 @@
 		</view>
 		<view class="item flex-vertical-center">
 		    <view class="item-left">入驻门店类型</view>
-			
+
 			<picker @change="bindPickerChange" :value="type" :range="array" :disabled="typeDisable"  class="item-right flex justify-end flex-vertical-center">
 					{{array[type]}}
 				 <image :src="'/static/client/person/right.png'|domain" class="right"></image>
 			</picker>
-		    
+
 		</view>
         <!-- <view class="item flex-vertical-center">
             <view class="item-left">入驻类目</view>
@@ -195,9 +195,9 @@
 				this.typeDisable=true
 				this.type=options.type-1
 			}
-			
-			
-			
+
+
+
 			this.load();
             this.objectMultiArray = [
                 utils.array_change(area.area[0]['0']),
@@ -213,7 +213,7 @@
         },
         methods: {
 			bindPickerChange(e){
-			
+
 				this.type = e.target.value
 			},
             // 用户选择类型
@@ -289,8 +289,8 @@
                             showCancel: false,
                             success: function (res) {
                                 if (res.confirm) {
-                                    uni.navigateBack({
-                                        delta: 1
+                                    uni.navigateTo({
+                                        url:'/pages/index/index'
                                     })
                                 }
                             }

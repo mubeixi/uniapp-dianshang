@@ -6,7 +6,7 @@
 					<image :src="item.Stores_ImgPath" class="store-img"></image>
 					<div class="store-name">{{item.Stores_Name}}</div>
 					<div class='store-desc flex flex-vertical-center'>
-						
+
 <!--					<span class='status-store' @click="goNext(item.Stores_ID)">查看</span>-->
 
 					</div>
