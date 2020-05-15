@@ -11,9 +11,11 @@
     import {isWeiXin} from "../../common/tool";
     import {checkOrderByCode,getOrderDetail} from "../../common/fetch";
     import {confirm, error} from "../../common";
+    import {pageMixin} from '../../common/mixin';
 
     export default {
         name: "checkByCode",
+        mixins:[pageMixin],
         data(){
             return {
                 Order_Code:''
