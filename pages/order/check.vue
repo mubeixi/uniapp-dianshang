@@ -803,7 +803,7 @@ export default {
 							res.data.CartList[i][j].store['Stores_Name'] = res.data.CartList[i][j].store_name
 							res.data.CartList[i][j].store['Stores_ID'] = res.data.CartList[i][j].store_id
 							res.data.Stores_Name=res.data.CartList[i][j].store_name
-							this.postData.shipping_id='is_store'
+							// this.postData.shipping_id='is_store'
 							this.postData.shipping_store_id=res.data.CartList[i][j].store_id
 
 
