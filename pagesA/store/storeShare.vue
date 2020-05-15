@@ -1,7 +1,7 @@
 <template>
-	<view class="store-share" @click="initAll">
+	<view class="store-share" >
 		<image id="scream" :src="'/static/client/store/shareStore.png'|domain" class="store-img"></image>
-		<image :src="userInfo.User_HeadImg" class="user-img"></image>
+		<image :src="storeDetail.Stores_ImgPath" class="user-img"></image>
 		<div class="store-type">
 			<image src="/static/store/storeType.png" class="store-img"></image>
 			<div class='store-type-title' v-if="type!=3">
@@ -11,7 +11,7 @@
 				邀请你进入我的店铺
 			</div>
 		</div>
-		<div class="user-name">{{userInfo.User_NickName}}</div>
+		<div class="user-name">{{storeDetail.Stores_Name}}</div>
 		<image :src="qrcode" class="store-qrcode"></image>
 		<div class="store-qc-text">长按识别图中二维码</div>
 
@@ -45,6 +45,7 @@
 	}
 
 	const getImg = (params) => {
+		console.log(params)
 	  return new Promise((resolve, reject) => {
 	    uni.getImageInfo({
 	    	src: params,
@@ -57,7 +58,7 @@
 
 	import {mapGetters,mapActions, mapState} from 'vuex';
 	import {pageMixin} from "../../common/mixin";
-	import {getStoreShare} from '../../common/fetch.js'
+	import {getStoreShare,storeInit} from '../../common/fetch.js'
 	import {error} from '../../common/index.js'
 	import {toast} from '../../common/index';
 	export default {
@@ -66,6 +67,8 @@
 			return {
 				type:1,
 				qrcode:'',
+				imgSave:'',
+				storeDetail:{}
 			};
 		},
 
@@ -75,6 +78,7 @@
 		methods:{
 			saveAll(){
 				// #ifdef H5
+					toast('长按保存分享海报')
 					uni.previewImage({
 					  urls: [this.imgSave] // 需要预览的图片http链接列表
 					})
@@ -93,9 +97,8 @@
 
 
 			},
-			init(){
+			async init(){
 				let data={
-					imgSave:'',
 					store_id:this.Stores_ID,
 					stores_type:this.type,
 					// #ifdef MP-WEIXIN
@@ -108,10 +111,18 @@
 				if(this.type==3){
 					data.act_type=2
 				}
-				 getStoreShare(data).then(res=>{
+				await getStoreShare(data).then(res=>{
 					this.qrcode=res.data.qrcode
-
 				}).catch(e=>{error(e.msg||'获取二维码失败')})
+
+
+
+					await storeInit({
+						store_id: this.Stores_ID
+					}).then(res=>{
+						this.storeDetail = res.data;
+					})
+
 
 				this.initAll()
 
@@ -122,7 +133,7 @@
 
 					showLoading('加载中')
 
-					const thumbTempFile = await getImg(this.userInfo.User_HeadImg ).catch(e => { throw Error(e.errMsg || '缓存商品缩略图失败') })
+					const thumbTempFile = await getImg(this.storeDetail.Stores_ImgPath ).catch(e => { throw Error(e.errMsg || '缓存商品缩略图失败') })
 
 					const wrapHeight=718
 					 const ctx = canvasInstance
@@ -170,8 +181,8 @@
 					ctx.setFillStyle('#FFFFFF')
 					ctx.setFontSize(17)
 					ctx.textAlign = 'center'
-					const showProductName = cutstrFun(this.userInfo.User_NickName, parseInt(640 / 24)) // 只显示一行
-					ctx.fillText(showProductName, 270, 100)
+					const showProductName = cutstrFun(this.storeDetail.Stores_Name, parseInt(640 / 24)) // 只显示一行
+					ctx.fillText(showProductName, 260, 100)
 
 
 
@@ -199,24 +210,37 @@
 					})
 
 					const { tempFilePath } = await Promisify('canvasToTempFilePath', { canvasId: 'myCanvas' })
+					console.log(tempFilePath)
 					this.imgSave=tempFilePath
 					// uni.previewImage({
 					//   urls: [tempFilePath] // 需要预览的图片http链接列表
 					// })
 
 				} catch(e){
-
+					console.log(e)
 				} finally {
 						hideLoading()
 			   }
 			}
 		},
+		created(){
+			// uni.getImageInfo({
+			// 	src: 'https://new401t.bafangka.com/static/client/store/shareStore.png',
+			// 	success: res => {
+			// 		console.log(res)
+			// 	},
+			// 	fail: err=>{
+			// 		console.log(err)
+			// 	}
+			// })
+		},
 		mounted() {
 				canvasInstance = uni.createCanvasContext('myCanvas')
+				this.init()
 		},
 		onLoad(options) {
 			this.type=options.type
-			this.init()
+
 		}
 	}
 </script>

@@ -191,9 +191,9 @@
 			if(this.pid){
 				this.pidDisable=true
 			}
-			if(options.type){
+			if(options.stores_type){
 				this.typeDisable=true
-				this.type=options.type-1
+				this.type=options.stores_type-1
 			}
 
 

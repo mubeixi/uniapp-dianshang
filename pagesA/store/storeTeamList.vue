@@ -15,8 +15,8 @@
 					<div>
 						名称: {{item.Stores_Name}}
 					</div>
-					<div @click="cell(item.mobile)">
-						联系电话: {{item.mobile}} <image src="/static/cellstore.png" class="iconCell"></image>
+					<div @click="cell(item.Stores_Telephone)">
+						联系电话: {{item.Stores_Telephone}} <image src="/static/cellstore.png" class="iconCell"></image>
 					</div>
 					<div class="store-add" @click="openLocation(item)">
 						地址: <span  class="store-address">{{item.Stores_Province_name}} {{item.Stores_City_name}}{{item.Stores_Area_name}}{{item.Stores_Address}}</span><i class="funicon  icon-address"></i></image>
