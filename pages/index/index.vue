@@ -88,7 +88,6 @@
 						<div :id="'scrollView'+index" class="store-item-swiper">
 							<block v-for="(it,ind) of prodList[index+1]" :key="ind">
 								<wzw-store @updaCart="updaCart" @delQty="delQty" @addQty="addQty" :storeId="store_id" :myCart="myCart" :pro="it"></wzw-store>
-
 							</block>
 
 						</div>
@@ -769,6 +768,9 @@
 		background-size: 100% auto;
 	}
 
+	.store-item-swiper{
+		padding-bottom: 42px;
+	}
 	.store-title {
 		font-size: 22px;
 		height: 42rpx;

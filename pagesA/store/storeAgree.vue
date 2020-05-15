@@ -9,13 +9,13 @@
 			<span class="store-info">名称</span>
 			<span class="fz-14-c9">{{storeData.store_name}}</span>
 		</div>
-		<div class="store-line flex flex-vertical-center">
+		<div class="store-line flex flex-vertical-center" @click="cellPhone(storeData.store_mobile)">
 			<span class="store-info">电话</span>
 			<span class="fz-14-c9">{{storeData.store_mobile}}</span>
 			<image src="/static/cellstore.png" class="store-cell" v-if="storeData.store_mobile"></image>
 		</div>
 
-		<div class="store-line flex flex-vertical-center">
+		<div class="store-line flex flex-vertical-center" @click="openLoca(storeData.store_lat,storeData.store_lng)">
 			<span class="store-info">地址</span>
 			<span class="fz-14-c9 fz-address">{{storeData.store_province_name}}{{storeData.store_city_name}}{{storeData.store_area_name}}{{storeData.store_address}}<image v-if="storeData.store_province_name" src="/static/addressStore.png" class="store-address"></image></span>
 
@@ -122,6 +122,20 @@
 			...mapGetters(['Stores_ID'])
 		},
 		methods:{
+			openLoca(lat,lnt){
+				uni.openLocation({
+					latitude: Number(lat),
+					longitude: Number(lnt),
+					success: function () {
+
+					}
+				});
+			},
+			cellPhone(phone){
+				uni.makePhoneCall({
+					phoneNumber: phone
+				});
+			},
 			yulanArr(index){
 				uni.previewImage({
 				    urls: this.storeData.img_info,
@@ -171,6 +185,7 @@
 				this.index = e.target.value
 			},
 			showAgree(){
+				this.index=this.storeData.stores_type-1
 				this.$refs.store.show()
 			},
 			confirmInput(){
@@ -195,9 +210,9 @@
 
 				getStoreApplyList(data,{tip:'加载中'}).then(res=>{
 
-			
+
 							this.storeData=res.data[0]
-							
+
 
 
 				})
