@@ -27,9 +27,8 @@
                     return;
                 }
 
-                getOrderDetail({
-                    Order_Code,
-                }).then(res => {
+                //不要穿User_ID
+                getOrderDetail({Order_Code},{noUid:true}).then(res => {
 
                     if(res.data.Order_Status==2){
                         this.Order_Code = ''
