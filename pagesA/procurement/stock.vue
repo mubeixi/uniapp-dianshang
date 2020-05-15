@@ -202,10 +202,10 @@
             this.get_cart();
         },
         onLoad(options){
-            if(options.purchase_store_sn) {
+            if(options.purchase_store_id) {
                 this.is_pingtai = 0;
                 // 获取门店产品
-                this.purchase_store_sn = options.purchase_store_sn;
+                //this.purchase_store_sn = options.purchase_store_sn;
                 this.purchase_store_id = options.purchase_store_id;
                 this.getStoreDetail();
                 this.getProlist();
@@ -252,7 +252,7 @@
                         let data={
                             lat:lat,
                             lng:lng,
-                            store_sn:this.purchase_store_sn
+                            store_id:this.purchase_store_id
                         }
 
                         getStoreDetail(data).then(res=>{
@@ -262,7 +262,7 @@
                     }
                 }).catch(err=>{
                     let data={
-                        store_sn:this.purchase_store_sn
+                        store_id:this.purchase_store_id
                     }
                     getStoreDetail(data).then(res=>{
                         this.storeAdress=res.data
@@ -343,7 +343,9 @@
                     this.showSku = false;
                     this.get_cart();
                     return;
-                })
+                }).catch(e=>{
+					error(e.msg)
+				})
             },
             // 数量加1
             increase(pro_id,attr_id){
@@ -359,7 +361,9 @@
                     this.showSku = false;
                     this.get_cart();
                     return;
-                })
+                }).catch(e=>{
+					error(e.msg)
+				})
             },
             //  删除购物车中的产品
             del(pro_id,attr_id){
@@ -438,7 +442,7 @@
             search(){
                 if(this.is_pingtai == 0) {
                     getPifaStoreProd({
-                        purchase_store_sn: this.purchase_store_sn,
+                        purchase_store_id: this.purchase_store_id,
                         store_id: this.Stores_ID,
                         prod_name: this.prod_name,
                     }).then(res=>{
@@ -456,7 +460,7 @@
             // 门店产品
             getProlist(index){
                 let data={
-                    purchase_store_sn: this.purchase_store_sn,
+                    purchase_store_id: this.purchase_store_id,
                     store_id: this.Stores_ID
                 }
                 data.page = this.page;
@@ -638,7 +642,9 @@
                     this.showSku = false;
                     this.get_cart();
                     return;
-                })
+                }).catch(e=>{
+					error(e.msg||'添加购物车错误')
+				})
             }
         }
     }
@@ -911,6 +917,7 @@
         max-height: 70vh;
         overflow: scroll;
         padding: 20rpx;
+		padding-bottom: 90rpx;
         .product {
             display: flex;
             margin-bottom: 40rpx;

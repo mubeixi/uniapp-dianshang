@@ -41,7 +41,7 @@
 				</div>
 				<div class="store-btm">
 					<div>
-						名称: {{item.User_NickName}}
+						名称: {{item.store_name}}
 					</div>
 					<div @click="cell(item.store_mobile)">
 						联系电话: {{item.store_mobile}} <image src="/static/cellstore.png" class="iconCell"></image>
