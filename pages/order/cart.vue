@@ -98,13 +98,14 @@
 	import {ls,getStoreID} from '../../common/tool.js';
 	import {mapActions} from 'vuex';
 	import {goProductDetail} from "../../common";
-	
+
 
 	export default {
 		mixins:[pageMixin],
 		name: "App",
 		data(){
 		return {
+			boo:true,
 			checked: [],
 			CartList:[],
 			prodList: [],
@@ -298,24 +299,25 @@
 			getCartUpdate() {
 				getCart({cart_key:'CartList'}).then(res=>{
 					this.total_count= res.data.total_count;
-					this.total_price=''
 					this.total_price= res.data.total_price;
+
+
 					this.shop_config = res.data.shop_config;
 					// 把状态存起来
 					// this.initCheck();
 					let CartList=res.data.CartList
 					for(var i in CartList) {
-						for(var j in CartList[i]) {							
+						for(var j in CartList[i]) {
 							this.CartList[i][j].Qty =CartList[i][j].Qty
 						}
 					};
-
+					this.cal_total()
 					this.loading = true;
-			
-			
+
+
 				}).catch(e=>{})
 			},
-			
+
 			// 更新购物车
 			updateCart(pro_id,attr_id,num){
 				this.postData.prod_id = pro_id;
@@ -384,10 +386,10 @@
 						this.prod_arg.page += 1;
 					}).catch(e=>{})
 				}
-				
-				
-				
-				
+
+
+
+
 			},
 			gotoDetail(e){
 				uni.navigateTo({

@@ -62,7 +62,8 @@
 					</view>
 				</block>
 				<view style="text-align: right;padding-right:20rpx;" v-if="item.Order_Status == 2">
-					<span class="spanJu" @click="goFa(item.Order_ID)" v-if="item.Order_IsVirtual == 0&&item.send_store_id==this.Stores_ID">发货</span>
+					<span class="spanJu" @click="goFa(item.Order_ID)" v-if="item.Order_IsVirtual == 0&&item.send_store_id==Stores_ID">发货</span>
+					<span class="spanJu" @click="goFa(item.Order_ID)" v-if="item.Order_IsVirtual == 0&&item.send_store_id==0&&item.Order_Store==Stores_ID">发货</span>
 					<span class="spanJu" @click="refund(item.Order_ID)">拒单</span>
 				</view>
 			</view>

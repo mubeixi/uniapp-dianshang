@@ -466,7 +466,7 @@
 						url: '/pagesA/selectChannel/selectChannel?page=productmy&pid='+pid
 					})
 				}
-				
+
 				return;
 			},
 			sub_cancel(){
@@ -1276,6 +1276,7 @@
 		    padding: 20rpx;
 				max-height: 70vh;
 				overflow-y: scroll;
+
 		    .product {
 		        display: flex;
 		        margin-bottom: 40rpx;
@@ -1379,6 +1380,7 @@
 				font-size: 28rpx;
 				line-height: 80rpx;
 				padding: 20rpx 30rpx;
+				padding-bottom: 90rpx;
 				.mxtitle {
 					font-size: 28rpx;
 					text-align: center;

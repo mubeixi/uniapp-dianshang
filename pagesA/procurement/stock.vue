@@ -151,6 +151,7 @@
     import {pageMixin} from "../../common/mixin";
     import {error} from "../../common";
     export default {
+        mixins:[pageMixin],
         data() {
             return {
                 isHidden: true,
@@ -327,7 +328,9 @@
                             url: '/pagesA/procurement/purchaseRecords'
                         })
                     },1500)
-                })
+                }).catch(e=>{
+					error(e.msg)
+				})
             },
             // 更新购物车中产品的数量，数量-1
             reduce(pro_id,attr_id) {
