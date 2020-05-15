@@ -179,7 +179,7 @@
                 let _self = this;
                 getOrderDetail({
                     Order_Code: this.Order_Code,
-                },{tip:'努力加载中'}).then(res => {
+                },{tip:'努力加载中',noUid:true}).then(res => {
 
                     if(res.data.Order_Status!=2){
 
