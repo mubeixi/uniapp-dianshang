@@ -178,7 +178,7 @@
 					error('驳回原因必填')
 					return
 				}
-				storeApplyReject({apply_id:this.id,reason:this.reason}).then(res=>{
+				storeApplyReject({apply_id:this.id,reason:this.reason,store_id:this.Stores_ID,}).then(res=>{
 							toast(res.msg)
 							this.showReason=false
 							setTimeout(function () {

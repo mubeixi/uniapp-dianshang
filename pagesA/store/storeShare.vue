@@ -94,13 +94,13 @@
 					showLoading('生成中')
 					
 	
-					const thumbTempFile = await getImg( { src: this.userInfo.User_HeadImg }).catch(e => { throw Error(e.errMsg || '缓存商品缩略图失败') })
+					const thumbTempFile = await getImg(this.userInfo.User_HeadImg ).catch(e => { throw Error(e.errMsg || '缓存商品缩略图失败') })
 
 					const wrapHeight=718
 					 const ctx = canvasInstance
 					 ctx.fillRect(0, 0, 414, wrapHeight)
 
-					const bgTempFile = await getImg({ src: domainFn('/static/client/store/shareStore.png') }).catch(e => { throw Error(e.errMsg || '缓存背景图失败') })
+					const bgTempFile = await getImg( domainFn('/static/client/store/shareStore.png') ).catch(e => { throw Error(e.errMsg || '缓存背景图失败') })
 					 ctx.drawImage(bgTempFile.path, 0, 0, 414, wrapHeight)
 
 
@@ -157,7 +157,7 @@
 					ctx.restore()
 
 
-					const qrcode = await getImg({ src: this.qrcode }).catch(e => { throw Error(e.errMsg || '二维码失败') })
+					const qrcode = await getImg(this.qrcode).catch(e => { throw Error(e.errMsg || '二维码失败') })
 					ctx.fillRect(120, 410, 312/2, 312/2)
 					ctx.drawImage(qrcode.path, 120, 410,312/2, 312/2)
 
@@ -171,7 +171,7 @@
 					})
 
 					const { tempFilePath } = await Promisify('canvasToTempFilePath', { canvasId: 'myCanvas' })
-					console.log(tempFilePath)
+					console.log(tempFilePath,"sss")
 					uni.previewImage({
 					  urls: [tempFilePath] // 需要预览的图片http链接列表
 					})
@@ -179,7 +179,9 @@
 				} catch(e){
 
 				} finally {
-					hideLoading()
+					setTimeout(function(){
+						hideLoading()
+					},1000)
 			   }
 			}
 		},

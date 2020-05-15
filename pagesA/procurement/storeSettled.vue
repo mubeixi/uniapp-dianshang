@@ -235,6 +235,10 @@
                         return;
                     }
                     this.is_submitted = true;
+					this.pidDisable=true
+					this.pid=res.data.pid
+					this.type=parseInt(res.data.stores_type-1)
+					this.typeDisable=true
                     this.userStoreMsg = res.data
                     this.store_province = res.data.store_province_name
                     this.store_city = res.data.store_city_name
@@ -250,6 +254,8 @@
                     if(res.data.status == 3) {
                         //    被驳回了
                         this.is_submitted = false;
+						this.pidDisable=false
+						this.typeDisable=false
                         this.status = 3;
                     }
                     // getStoreTypes().then(res=>{

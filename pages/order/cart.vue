@@ -372,12 +372,22 @@
 				if(store_id){
 					this.prod_arg.store_id=store_id
 					this.prod_arg.is_selling=1
+					getSelfStoreProd(this.prod_arg).then(res=>{
+						this.prodList = oldlist.concat(res.data);
+						this.hasMore = (res.totalCount / this.prod_arg.pageSize) > this.prod_arg.page ? true : false ;
+						this.prod_arg.page += 1;
+					}).catch(e=>{})
+				}else{
+					getProd(this.prod_arg).then(res=>{
+						this.prodList = oldlist.concat(res.data);
+						this.hasMore = (res.totalCount / this.prod_arg.pageSize) > this.prod_arg.page ? true : false ;
+						this.prod_arg.page += 1;
+					}).catch(e=>{})
 				}
-				getSelfStoreProd(this.prod_arg).then(res=>{
-					this.prodList = oldlist.concat(res.data);
-					this.hasMore = (res.totalCount / this.prod_arg.pageSize) > this.prod_arg.page ? true : false ;
-					this.prod_arg.page += 1;
-				}).catch(e=>{})
+				
+				
+				
+				
 			},
 			gotoDetail(e){
 				uni.navigateTo({

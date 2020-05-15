@@ -8,7 +8,7 @@
 				<view class="user-avator">
 					<image class="image" :src="storeDetail.Stores_ImgPath" mode=""></image>
 				</view>
-				<view class="store-name">{{storeDetail.Stores_Name}}({{storeDetail.stores_sn}})</view>
+				<view class="store-name">{{storeDetail.Stores_Name}}(ID:{{storeDetail.Stores_ID}})</view>
 				<view class="store-money">可用余额: <text class="number">￥ {{storeDetail.User_Money}}</text> <view class="charge" @click="goCharge">充值</view> </view>
 				<view class="order-msg">
 					<view class="order">
@@ -49,7 +49,7 @@
 				<view class="num" v-if="storeDetail.pifa_order_num">{{storeDetail.pifa_order_num}}</view>
 				<view>批发订单</view>
 			</view>
-			<view class="item" @click="openUrl('/pagesA/selectChannel/selectChannel')" v-if="storeDetail.stores_type==1">
+			<view class="item" @click="goStock" v-if="storeDetail.stores_type==1">
 				<image class="item-img" :src="'/static/client/mendian/4.png'|domain" mode=""></image>
 				<view>进货</view>
 			</view>
@@ -133,7 +133,7 @@
 	import {mapGetters} from 'vuex'
 	import {pageMixin} from "../../common/mixin";
 	import popupLayer from '../../components/popup-layer/popup-layer.vue'
-	import {buildSharePath,getProductThumb} from '../../common/tool.js'
+	import {buildSharePath,getProductThumb,ls} from '../../common/tool.js'
 	export default {
 		mixins:[pageMixin],
 		components:{popupLayer},
@@ -149,6 +149,19 @@
 			this.getStoreDetail();
 		},
 		methods: {
+			goStock(){
+				let pid=ls.get('pid')
+				if(pid==0){
+					uni.navigateTo({
+						url:'/pagesA/procurement/stock'
+					})
+				}else{
+					uni.navigateTo({
+						url: '/pagesA/procurement/stock?purchase_store_id=' +pid
+					})
+				}
+				
+			},
 			async shareFunc(channel) {
 				if(!this.$fun.checkIsLogin(1,1))return;
 				let _self = this
@@ -240,6 +253,7 @@
 					store_id: this.Stores_ID
 				}).then(res=>{
 					this.storeDetail = res.data;
+					ls.set('pid',this.storeDetail.pid)
 				})
 			},
 			// 跳转充值页面

@@ -277,6 +277,7 @@ export default {
 			 data={
 				 Users_ID:'wkbq6nc2kc',
 				 Products_Name:this.inputValue,
+				 prod_name:this.inputValue,
 				 page:this.page,
 				 pageSize:this.pageSize
 			 }
@@ -284,6 +285,7 @@ export default {
 			data={
 				Users_ID:'wkbq6nc2kc',
 				Cate_ID:this.Cate_ID,
+				cate_id:this.Cate_ID,
 				page:this.page,
 				pageSize:this.pageSize
 			}
@@ -325,16 +327,25 @@ export default {
 		  if(store_id){
 			  data.store_id=store_id
 			  data.is_selling=1
+			  getSelfStoreProd(data).then(res=>{
+			  			  for(var item of res.data){
+			  				  this.pro.push(item);
+			  			  }
+			  			 //this.pro=res.data;
+			  			 this.count=res.totalCount;
+			  }).catch(e=>{})
+		  }else{
+			 getProd(data).then(res=>{
+			 			  for(var item of res.data){
+			 				  this.pro.push(item);
+			 			  }
+			 			 //this.pro=res.data;
+			 			 this.count=res.totalCount;
+			 }).catch(e=>{}) 
 		  }
 		  
 		  
-		  getSelfStoreProd(data).then(res=>{
-			  for(var item of res.data){
-				  this.pro.push(item);
-			  }
-			 //this.pro=res.data;
-			 this.count=res.totalCount;
-		  }).catch(e=>{})
+		  
 	  },
 	  close(){
 		  this.inputValue="";

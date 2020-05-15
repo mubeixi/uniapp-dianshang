@@ -456,9 +456,17 @@
 			// 提交退货
 			submit(){
 				ls.set('productMy',this.productMy);
-				uni.navigateTo({
-					url: '/pagesA/selectChannel/selectChannel?page=productmy'
-				})
+				let pid=ls.get('pid')
+				if(pid==0){
+					uni.navigateTo({
+						url: '/pagesA/selectChannel/selectChannel?page=productmy'
+					})
+				}else{
+					uni.navigateTo({
+						url: '/pagesA/selectChannel/selectChannel?page=productmy&pid='+pid
+					})
+				}
+				
 				return;
 			},
 			sub_cancel(){

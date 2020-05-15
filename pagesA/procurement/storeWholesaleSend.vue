@@ -271,7 +271,9 @@
                             url:'/pagesA/procurement/storeWholesale'
                         })
                     },1000)
-                },err=>{})
+                },err=>{
+					error(e.msg)
+				})
 
             },
             bindPickerChange(e){

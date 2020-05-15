@@ -1,13 +1,13 @@
 <template>
 	<view style="background-color: #F8F8F8;height: 100vh;">
-		
+
 		<div class="store-apply" v-for="(item,index) of storeList" :key="index">
 				<div class="store-apply-title">
 					<image :src="item.Stores_ImgPath" class="store-img"></image>
 					<div class="store-name">{{item.Stores_Name}}</div>
 					<div class='store-desc flex flex-vertical-center'>
 						
-					<span class='status-store' @click="goNext(item.Stores_ID)">查看</span>
+<!--					<span class='status-store' @click="goNext(item.Stores_ID)">查看</span>-->
 
 					</div>
 				</div>
@@ -23,7 +23,7 @@
 					</div>
 				</div>
 		</div>
-		
+
 		<div class="defaults" v-if="storeList.length<=0">
 			<image :src="'/static/client/defaultImg.png'|domain" ></image>
 		</div>
@@ -63,7 +63,7 @@
 			        latitude: Number(item.Stores_PrimaryLat),
 			        longitude: Number(item.Stores_PrimaryLng),
 			        success: function () {
-			
+
 			        }
 			    });
 			},
@@ -84,16 +84,16 @@
 				}else{
 					data.self_store_id=this.Stores_ID
 				}
-				
+
 				getStoreList(data).then(res=>{
 						this.totalCount=res.totalCount
 						for(let item of  res.data){
 							this.storeList.push(item)
 						}
-						
+
 				})
 			}
-		
+
 		},
 		onReachBottom() {
 			if(this.storeList.length<this.totalCount){
@@ -214,7 +214,7 @@
 		height: 28rpx;
 		margin-left: 10rpx;
 	}
-	
+
 	.tips {
 		position: absolute;
 		top:50rpx;
