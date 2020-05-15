@@ -781,9 +781,9 @@ export default {
 				this.back_address_id = 0;
 
 				// 获取用户收货地址，获取订单信息，后台判断运费信息
-				this.createOrderCheck(2);
-			}).catch(()=>{})
 
+			}).catch(()=>{})
+			this.createOrderCheck(2);
 			this.addressLoading = true;
 
 
