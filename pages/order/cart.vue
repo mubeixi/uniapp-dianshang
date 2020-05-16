@@ -171,6 +171,7 @@
 						}
 					}
 				}
+				this.checkAllFlag=false
 				this.cart_buy = JSON.stringify(obj);
 				if(this.handleShow) {
 					// 结算

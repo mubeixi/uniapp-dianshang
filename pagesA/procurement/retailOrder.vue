@@ -317,14 +317,14 @@
 	}
 }
 .spanJu{
-	width:80rpx;
-	height:45rpx;
+	width:156rpx;
+	height:60rpx;
+	line-height: 60rpx;
 	background:#EEEEEE;
 	border-radius:5px;
 	font-size: 24rpx;
 	color: #666666;
 	display: inline-block;
-	line-height: 45rpx;
 	text-align: center;
 }
 .spanJu:nth-child(1) {

@@ -548,6 +548,10 @@
             .acion-btn{
                 margin-bottom: 10px;
                 margin-left: 10px;
+				width:156rpx;
+				height:60rpx;
+				line-height: 60rpx;
+				text-align: center;
             }
 
 
