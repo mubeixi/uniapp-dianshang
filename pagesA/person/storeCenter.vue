@@ -9,8 +9,32 @@
           <image class="image" :src="storeDetail.Stores_ImgPath" mode=""></image>
         </view>
         <view class="store-name">{{storeDetail.Stores_Name}}(ID:{{storeDetail.Stores_ID}})</view>
-        <view class="store-money">可用余额:
-          <text class="number">￥ {{storeDetail.User_Money}}</text>
+        <view class="store-name-item" style="border-bottom: 1px solid  #EFEFEF">
+              <view>
+                级别 : {{storeDetail.type_name}}
+              </view>
+              <view class="store-fz-12">
+                查看权益
+                <image :src="'/static/client/person/right.png'|domain" class="store-img-right"></image>
+              </view>
+        </view>
+        <view class="store-name-item">
+          <view>
+            我的上级
+          </view>
+          <view  class="store-fz-12">
+            立即查看
+            <image :src="'/static/client/person/right.png'|domain" class="store-img-right"></image>
+          </view>
+        </view>
+      </view>
+
+      <view class="user-info-all">
+        <view class="store-money">
+          <view>
+            可用余额:
+            <text class="number">￥ <span style="font-size: 32rpx">{{storeDetail.User_Money}}</span></text>
+          </view>
           <view class="charge" @click="goCharge">充值</view>
         </view>
         <view class="order-msg">
@@ -283,9 +307,9 @@ export default {
 
     .top {
       position: relative;
-      height: 636rpx;
+      height: 850rpx;
       margin-bottom: 20rpx;
-      background-color: #fff;
+      background-color: #F8F8F8;
 
       .bgimg {
         position: relative;
@@ -302,14 +326,23 @@ export default {
         }
       }
 
+      .user-info-all{
+        width: 710rpx;
+        height: 260rpx;
+        border-radius: 16rpx;
+        background-color: #FFFFFF;
+        position: absolute;
+        top: 510rpx;
+        left: 20rpx;
+      }
       .user-info {
         position: absolute;
         top: 145rpx;
         left: 50%;
         transform: translateX(-50%);
         z-index: 10;
-        width: 656rpx;
-        height: 395rpx;
+        width: 710rpx;
+        height: 330rpx;
         background: rgba(255, 255, 255, 1);
         box-shadow: 0px 13rpx 21rpx 0rpx rgba(244, 49, 49, 0.14);
         border-radius: 15rpx;
@@ -338,80 +371,19 @@ export default {
 
         .store-name {
           margin-top: 97rpx;
-          margin-bottom: 37rpx;
+          margin-bottom: 10rpx;
           text-align: center;
           font-size: 30rpx;
           color: #333;
           font-weight: 700;
         }
 
-        .store-money {
-          display: flex;
-          justify-content: center;
-          font-size: 24rpx;
 
-          .number {
-            color: $wzw-primary-color;
-          }
-
-          .charge {
-            width: 75rpx;
-            height: 38rpx;
-            background: $wzw-primary-color;
-            border-radius: 5rpx;
-            color: #fff;
-            font-size: 24rpx;
-            text-align: center;
-            margin-left: 33rpx;
-          }
-        }
-
-        .order-msg {
-          display: flex;
-          //justify-content: center;
-          margin-top: 30rpx;
-          align-items: center;
-          color: #4A4A4A;
-
-          .order {
-            width: 240rpx;
-            height: 140rpx;
-            text-align: center;
-            /*background-color: #FFF4F4;*/
-            padding: 34rpx 0;
-            box-sizing: border-box;
-            font-size: 26rpx;
-
-            .order-title {
-              position: relative;
-
-              .order-img {
-                position: absolute;
-                left: 14rpx;
-                top: 50%;
-                transform: translateY(-50%);
-                width: 24rpx;
-                height: 24rpx;
-              }
-            }
-
-            .order-num {
-              font-size: 34rpx;
-              color: $wzw-primary-color;
-              margin-bottom: 16rpx;
-
-              .icon {
-                font-size: 26rpx;
-              }
-            }
-          }
-
-        }
       }
 
       .tips {
         position: absolute;
-        bottom: 30rpx;
+        bottom: 20rpx;
         left: 50%;
         display: flex;
         justify-content: center;
@@ -431,6 +403,73 @@ export default {
           text-decoration: underline;
         }
       }
+    }
+    .store-money {
+      display: flex;
+      justify-content: space-between;
+      font-size: 24rpx;
+      height: 110rpx;
+      align-items: center;
+      padding: 0rpx 48rpx;
+
+      .number {
+        color: $wzw-primary-color;
+        margin-left: 4px;
+      }
+
+      .charge {
+        width: 80rpx;
+        height: 46rpx;
+        line-height: 46rpx;
+        background: $wzw-primary-color;
+        border-radius: 5rpx;
+        color: #fff;
+        font-size: 24rpx;
+        text-align: center;
+
+      }
+    }
+
+    .order-msg {
+      display: flex;
+      //justify-content: center;
+      //margin-top: 30rpx;
+      align-items: center;
+      color: #4A4A4A;
+
+      .order {
+        width: 240rpx;
+        height: 140rpx;
+        text-align: center;
+        /*background-color: #FFF4F4;*/
+        padding: 34rpx 0;
+        box-sizing: border-box;
+        font-size: 26rpx;
+
+        .order-title {
+          position: relative;
+
+          .order-img {
+            position: absolute;
+            left: 14rpx;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 24rpx;
+            height: 24rpx;
+          }
+        }
+
+        .order-num {
+          font-size: 34rpx;
+          color: $wzw-primary-color;
+          margin-bottom: 16rpx;
+
+          .icon {
+            font-size: 26rpx;
+          }
+        }
+      }
+
     }
 
     .main {
@@ -484,6 +523,30 @@ export default {
         border-right: 0;
       }
     }
+  }
+
+  .store-name-item{
+    width: 670rpx;
+    height: 90rpx;
+    box-sizing: border-box;
+    padding: 0rpx 10rpx;
+    margin: 0 auto;
+    font-size: 14px;
+    color: #333333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .store-img-right{
+    width: 14rpx;
+    height: 22rpx;
+    margin-left: 14rpx;
+  }
+  .store-fz-12{
+    font-size: 12px;
+    color: #999999;
+    display: flex;
+    align-items: center;
   }
 
   .store-line {
