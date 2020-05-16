@@ -222,10 +222,12 @@
 					uni.showToast({
 					    title: res.msg,
 					    icon: 'none',
-					});
+					})
 					setTimeout(function(){
 						that.getStorePurchaseApply();
 					},1000)
+				}).catch(e=>{
+					error(e.msg)
 				})
 			},
 			cancelInput(){
