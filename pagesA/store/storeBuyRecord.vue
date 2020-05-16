@@ -1,7 +1,7 @@
 <template>
  <div style="background-color: #FFFFFF;height: 100vh;">
    <div class="store-buy">
-     <span class="store-buy-title">520</span>人正在购买，总销量 <span class="store-buy-title">2628</span>
+     <span class="store-buy-title">{{total_person}}</span>人正在购买，总销量 <span class="store-buy-title">{{total_buy_times}}</span>
    </div>
 
    <div class="store-buy-item flex flex-vertical-center" v-for="(it,ind) of prodata" :key="ind">
@@ -35,7 +35,9 @@ export default {
           page:1,
           pageSzie:10,
           totalCount:0,
-          prodata:[]
+          prodata:[],
+		  total_buy_times:'',
+		  total_person:''
         }
     },
     methods: {
@@ -47,6 +49,8 @@ export default {
       }
       getBuyerByProd(data).then(res=>{
            this.totalCount= res.totalCount
+		   this.total_person=res.data.total_person
+		   this.total_buy_times=res.data.total_buy_times
             let arr=[]
             for(let it in res.data.list){
                 arr=res.data.list[it]
