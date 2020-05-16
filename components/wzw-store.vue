@@ -79,7 +79,7 @@ export default {
     methods: {
         goPro(){
             uni.navigateTo({
-                url:'/pages/detail/detail?Products_ID='+this.pro.Products_ID+'&store_id='+this.pro.Stores_ID
+                url:'/pages/detail/detail?Products_ID='+this.pro.Products_ID+'&store_id='+this.storeId
             })
         },
         goStoreBuy(){
@@ -99,6 +99,7 @@ export default {
             this.$emit('delQty',this.cartData)
         },
         updaCart(){
+            if(!this.$fun.checkIsLogin(1,1))return;
             this.$emit('updaCart',this.pro)
         },
         initCart(){
