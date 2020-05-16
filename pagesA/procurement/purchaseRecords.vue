@@ -281,13 +281,22 @@
 			    if (this.orderList[index].prod_list[ind].prod_count>0) {
 			        this.orderList[index].prod_list[ind].prod_count--
 					let data={
-						[it.prod_id]:{
-							[it.attr_id]:this.orderList[index].prod_list[ind].prod_count
-						}
+						// [it.prod_id]:{
+						// 	[it.attr_id]:this.orderList[index].prod_list[ind].prod_count
+						// }
 					}
+
+					let prod_list = this.orderList[index].prod_list;
+			        console.log(prod_list,"ss")
+						prod_list.forEach(item=>{
+								data[item.prod_id]={
+									[item.attr_id] : item.prod_count
+								}
+						})
 					storePifaOrderCalc({store_id:this.Stores_ID,order_id:id,prod_json:JSON.stringify(data)}).then(res=>{
 						this.orderList[index].Order_TotalPrice=res.data.Order_TotalPrice
 					}).catch(e=>{
+						error(e.msg)
 						this.orderList[index].prod_list[ind].prod_count++
 					})
 			    } else {
