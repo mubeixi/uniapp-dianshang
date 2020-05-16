@@ -150,7 +150,7 @@
                     confirmConf.content = '核销成功'
                     //toast('核销成功')
                 }).catch(err=>{
-					error(e.msg||'核销失败')
+					error(err.msg||'核销失败')
                 })
 
                 if(!confirmConf.content)return;

@@ -78,7 +78,7 @@
 					<swiper-item >
 						<div id="scrollView" class="store-item-swiper">
 							<block v-for="(it,ind) of prodList[0]" :key="ind">
-								<wzw-store  @updaCart="updaCart" @delQty="delQty" @addQty="addQty" :storeId="store_id" :myCart="myCart" :pro="it"></wzw-store>
+								<wzw-store  @updaCart="updaCart" @delQty="delQty" @addQty="addQty" :storeId="storeID" :myCart="myCart" :pro="it"></wzw-store>
 							</block>
 						</div>
 					</swiper-item>
@@ -87,7 +87,7 @@
 
 						<div :id="'scrollView'+index" class="store-item-swiper">
 							<block v-for="(it,ind) of prodList[index+1]" :key="ind">
-								<wzw-store @updaCart="updaCart" @delQty="delQty" @addQty="addQty" :storeId="store_id" :myCart="myCart" :pro="it"></wzw-store>
+								<wzw-store @updaCart="updaCart" @delQty="delQty" @addQty="addQty" :storeId="storeID" :myCart="myCart" :pro="it"></wzw-store>
 							</block>
 
 						</div>

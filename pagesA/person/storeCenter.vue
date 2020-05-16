@@ -13,17 +13,21 @@
               <view>
                 级别 : {{storeDetail.type_name}}
               </view>
-              <view class="store-fz-12">
+              <view class="store-fz-12"   @click="lookModelStore">
                 查看权益
                 <image :src="'/static/client/person/right.png'|domain" class="store-img-right"></image>
               </view>
         </view>
-        <view class="store-name-item">
+        <view class="store-name-item" >
           <view>
             我的上级
           </view>
-          <view  class="store-fz-12">
+          <view  class="store-fz-12" @click="lookModel"  v-if="storeDetail.parent_store">
             立即查看
+            <image :src="'/static/client/person/right.png'|domain" class="store-img-right"></image>
+          </view>
+          <view  class="store-fz-12" @click="lookModel"  v-else>
+            暂无上级
             <image :src="'/static/client/person/right.png'|domain" class="store-img-right"></image>
           </view>
         </view>
@@ -157,22 +161,59 @@
       </div>
     </popupLayer>
 
+
+    <model ref="storeModel" >
+      <div class="store-model">
+          <div class="store-model-desc">
+            <div> 1、你当前的进货折扣为{{storeDetail.retailer_fee}}%</div>
+            <div> 2、当下级和你级别相同时，下级结算的金额会按照{{storeDetail.same_level_reward}}%的比例给你发放奖励</div>
+            <div> 3、当下级升级到该级别时，将一次性给你{{storeDetail.upgrade_reward}}元</div>
+          </div>
+          <div class="store-model-title">
+            级别升级
+          </div>
+          <div class="store-table">
+            <tr class="flex store-tr">
+              <td class="store-td"></td>
+              <td class="store-td">一次性进货</td>
+              <td class="store-td">累计进货</td>
+            </tr>
+            <tr class="flex store-tr store-tr-tr"  v-for="(item,index) of disList" :key="index">
+              <td class="store-td">{{item.title}}</td>
+              <td class="store-td"><block v-if="item.upgrade_type==1">{{item.upgrade_money}}元</block></td>
+              <td class="store-td"><block v-if="item.upgrade_type==2">{{item.upgrade_money}}元</block></td>
+            </tr>
+          </div>
+      </div>
+    </model>
+
+    <model ref="storeInfo">
+      <div class="storeInfo">
+        <div class="storeInfo-title">
+          名称：{{storeDetail.parent_store.Stores_Name}}
+        </div>
+        <div class="storeInfo-title" @click="cellPhone(storeDetail.parent_store.Stores_Telephone)">
+          联系方式：{{storeDetail.parent_store.Stores_Telephone}}
+        </div>
+      </div>
+    </model>
   </view>
 </template>
 
 <script>
-import {storeInit} from '../../common/fetch.js';
+import {storeInit,getStoreTypes} from '../../common/fetch.js';
 import {mapGetters} from 'vuex'
 import {pageMixin} from '../../common/mixin';
 import popupLayer from '../../components/popup-layer/popup-layer.vue'
 import {buildSharePath, getProductThumb, ls} from '../../common/tool.js'
-
+import  Model from  '../../components/ModelComponents'
 export default {
     mixins: [pageMixin],
-    components: {popupLayer},
+    components: {popupLayer,Model},
     data: function () {
         return {
             storeDetail: {},
+            disList:[],
         }
     },
     computed: {
@@ -182,6 +223,17 @@ export default {
         this.getStoreDetail();
     },
     methods: {
+        cellPhone(phone){
+            uni.makePhoneCall({
+                phoneNumber: phone
+            });
+        },
+        lookModelStore(){
+            this.$refs.storeModel.show()
+        },
+        lookModel(){
+            this.$refs.storeInfo.show()
+        },
         goStock() {
             let pid = ls.get('pid')
             if (pid == 0) {
@@ -288,6 +340,9 @@ export default {
                 this.storeDetail = res.data;
                 ls.set('pid', this.storeDetail.pid)
             })
+            getStoreTypes().then(res=>{
+                this.disList=res.data
+            })
         },
         // 跳转充值页面
         goCharge() {
@@ -300,6 +355,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  .storeInfo{
+    width:500rpx;
+    .storeInfo-title{
+      padding-left: 40rpx;
+      height: 80rpx;
+      line-height: 80rpx;
+    }
+  }
+
+
   .wrap {
 
     min-height: 100vh;
@@ -523,6 +588,49 @@ export default {
         border-right: 0;
       }
     }
+  }
+  .store-model{
+    width: 650rpx;
+    box-sizing: border-box;
+  }
+  .store-model-desc{
+    font-size: 14px;
+    line-height: 40rpx;
+    margin-bottom: 20rpx;
+    color: #999999;
+  }
+  .store-td{
+    flex: 1;
+    text-align: center;
+    border-right: 1px solid #CCCCCC;
+    &:last-child{
+      border-right: 0px;
+    }
+  }
+  .store-tr{
+    border-bottom: 1px solid #CCCCCC;
+    height: 70rpx;
+    line-height: 70rpx;
+    &:last-child{
+      border-bottom: 0px;
+    }
+  }
+  .store-tr-tr{
+    color: #666666;
+  }
+  .store-table{
+    border: 1px solid #CCCCCC;
+  }
+
+
+  .store-model-title{
+    height: 60rpx;
+    line-height: 60rpx;
+    font-size: 16px;
+    font-weight: bold;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20rpx;
   }
 
   .store-name-item{

@@ -178,6 +178,7 @@
 
 		</view>
 		<view style="height: 118rpx;"></view>
+
 <!--		<tabbar-components/>-->
 
 <!--		<div class="space" style="height:60px"></div>-->
@@ -191,6 +192,7 @@
 	import {mapGetters,mapActions, mapState} from 'vuex';
 	import { judgeSignin,signin,getOrderNum,get_user_info} from "../../common/fetch.js"
 	// import TabbarComponents from "../../components/TabbarComponents";
+
 	export default {
 		mixins:[pageMixin],
 		components:{
