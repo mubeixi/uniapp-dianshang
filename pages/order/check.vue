@@ -825,6 +825,9 @@ export default {
 				if(this.orderInfo.all_has_stores==1&&num==2&&this.orderInfo.is_virtual!=1){
 					this.tabIdx = this.initData.order_submit_first;
 				}
+				if(this.tabIdx==1){
+					this.postData.shipping_id='is_store'
+				}
 
 
 				this.couponlist = res.data.coupon_list;
