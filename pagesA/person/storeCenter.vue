@@ -1,6 +1,6 @@
 <template>
   <view @click="commonClick" class="wrap">
-    <view class="top">
+    <view class="top"  :style="{height:storeDetail.lower_prod_num > 0?'850rpx':'780rpx'}">
       <view class="bgimg">
         <image class="image" :src="'/static/client/mendian/bg.jpg'|domain" mode=""></image>
       </view>
@@ -188,7 +188,7 @@
     </model>
 
     <model ref="storeInfo">
-      <div class="storeInfo">
+      <div class="storeInfo" v-if="storeDetail.parent_store">
         <div class="storeInfo-title">
           名称：{{storeDetail.parent_store.Stores_Name}}
         </div>
@@ -372,7 +372,6 @@ export default {
 
     .top {
       position: relative;
-      height: 850rpx;
       margin-bottom: 20rpx;
       background-color: #F8F8F8;
 
