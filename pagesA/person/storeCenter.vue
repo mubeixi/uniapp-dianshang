@@ -26,7 +26,7 @@
             立即查看
             <image :src="'/static/client/person/right.png'|domain" class="store-img-right"></image>
           </view>
-          <view  class="store-fz-12" @click="lookModel"  v-else>
+          <view  class="store-fz-12"  v-else>
             暂无上级
             <image :src="'/static/client/person/right.png'|domain" class="store-img-right"></image>
           </view>
