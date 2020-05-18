@@ -11,31 +11,42 @@
 					<view class="msg">
 						<view class="tops">
 							{{item.Shop_Name}}<text>{{item.User_Mobile}}</text>
-						</view>
+						</view>            
 						<view class="rights">
 							{{item.Account_CreateTime}}
 						</view>
 					</view>
-					<view class="bots">
-						<view>会员号：{{item.User_No}}</view>
+					<view class="bots" @click="getNewTeam(item.User_ID)">
+						<view>会员号：{{item.User_No}}</view>	
+                        <view @click.stop="seeQrcode(item)" class="">查看二维码</view>
+						<view>查看下级({{item.usercount}})</view>	
 					</view>
 				</view>
 			</view>
+            <view v-show="isShowQrcode" class="qrcode-wrap" @click="closeQrcode">
+                <image :src="qrcodePath" class="qrcode"></image>
+            </view>
 	</view>
 </template>
 <script>
+    // const qrcodePath = '/data/poster/wabkok4fpr212_1.png?t=20181101'
+    // const qrcodePathDefault = '/data/poster/default1tem-none.png?t=20181101'
 	import {pageMixin} from "../../common/mixin";
 	import{getDisTeamList } from '../../common/fetch.js'
-	import {toast} from "../../common";
+    import {toast} from "../../common";
+    import { staticUrl } from '../../common/env'
+    import { ls } from '../../common/tool'
 	export default {
-		mixins:[pageMixin],
+        mixins:[pageMixin],
 		data() {
 			return {
 				index:0,
 				page:1,
 				pageSize:15,
 				pro:[],
-				totalCount:0
+                totalCount:0,
+                isShowQrcode: false , // 是否显示二维码
+                qrcodePath: ''
 			};
 		},
 		onLoad(options) {
@@ -55,6 +66,18 @@
 			this.getDisTeamList();
 		},
 		methods:{
+            closeQrcode(){
+                this.isShowQrcode = false
+            },
+            // 显示二维码
+            seeQrcode(item){
+                this.isShowQrcode = true
+                // this.qrcodePath = staticUrl + '/data/poster/' + ls.get('users_id') + user_id + '_1.png?t=20181101'
+                this.qrcodePath = staticUrl + item.qrcodeimg
+            },
+			getNewTeam(userid){
+				this.getDisTeamList(userid)
+			},
 			getDisTeamList(userid){
 				let data={
 					level:this.index,
@@ -83,6 +106,23 @@
 .myall{
 	background-color: #FFFFFF !important;
 	min-height: 100vh;
+}
+.qrcode-wrap {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 100%;
+    height: 100%;
+    background-color: rgba($color: #000000, $alpha: .5);
+}
+.qrcode {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 80%;
+    height: 60%;
 }
 .centers{
 	width: 710rpx;

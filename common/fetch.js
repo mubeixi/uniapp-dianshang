@@ -588,6 +588,8 @@ export const systemSendOrder = (data, options) => fetch('system_send_order', dat
 
 // 获取分销功能模块
 export const getFuncModule = (data,options) => fetch('getFuncModule', data, options);
+// 获取礼包产品信息
+export const getGitfpackRecordList = (data,options) => fetch('getGitfpackRecordList', data, options);
 
 //普通环境noop就行了
 //let add_template_code = ()=>{}

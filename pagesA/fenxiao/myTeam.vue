@@ -31,7 +31,14 @@
 					<text>{{item.count}}</text><image class="img" :src="'/static/client/fenxiao/right.png'|domain"></image>
 				</view>
 			</view>
-
+			<view class="teamGrade" @click="goMyAllNumber">
+				<view class="views">
+					下级分销商
+				</view>
+				<!-- <view class="views">
+					<text>{{item.count}}</text><image class="img" :src="'/static/client/fenxiao/right.png'|domain"></image>
+				</view> -->
+			</view>	
 		</view>
 	</view>
 </template>
@@ -64,6 +71,11 @@
 				let items=item+1;
 				uni.navigateTo({
 					url:'/pagesA/fenxiao/myTeamNumber?index='+items
+				})
+			},
+			goMyAllNumber(){
+				uni.navigateTo({
+					url: '/pagesA/fenxiao/myAllTeam?index=0'
 				})
 			},
 			getDisTeamCount(){

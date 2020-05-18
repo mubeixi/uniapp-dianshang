@@ -602,6 +602,12 @@
 				}
 			},
 			{
+				"path": "fenxiao/myAllTeam",
+				"style": {
+					"navigationBarTitleText": "我的会员"
+				}
+			},
+			{
 				"path": "fenxiao/myTeamNumber",
 				"style": {
 					"navigationBarTitleText": "我的会员"
