@@ -11,7 +11,7 @@ _apiBaseUrl = isDev ? '' : '';//h5调试为了跨域https://new401.bafangka.com
 // #endif
 
 // #ifndef H5
-_apiBaseUrl = 'https://new401t.bafangka.com';
+_apiBaseUrl = 'https://new401.bafangka.com';
 // #endif
 
 //app单独用测试地址吧
