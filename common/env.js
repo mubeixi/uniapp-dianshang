@@ -1,4 +1,6 @@
-// export const apiBaseUrl = 'http://www.qiyeban.com';
+//是否为定制项目
+export const isCustom = false;
+
 export const isDev = process.env.NODE_ENV === 'production' ? false : true;
 
 // #ifdef APP-PLUS || MP-TOUTIAO
@@ -6,16 +8,8 @@ export const APP_USERS_ID = 'wkbq6nc2kc';//'	mrw5iqvhs2 xjgjd88jee  wkbq6nc2kc  
 // #endif
 
 let _apiBaseUrl =''
-// #ifdef H5
-_apiBaseUrl = isDev ? '' : '';//h5调试为了跨域https://new401.bafangka.com
-// #endif
 
 // #ifndef H5
-_apiBaseUrl = 'https://new401t.bafangka.com';
-// #endif
-
-//app单独用测试地址吧
-// #ifdef APP-PLUS
 _apiBaseUrl = 'https://new401t.bafangka.com';
 // #endif
 
@@ -26,23 +20,21 @@ export const apiBaseUrl = _apiBaseUrl;
 
 const devStatic = 'https://new401t.bafangka.com'
 
-// #ifndef H5
+let prodStatic = ''
+
 //app 和小程序还是需要手动设置staticUrl
-const prodStatic = 'https://new401t.bafangka.com'
+// #ifndef H5
+prodStatic = 'https://new401.bafangka.com'
 // #endif
 
-// #ifdef H5
 //h5就自动获取
+// #ifdef H5
 const { origin } = location
-export const prodStatic =  origin
+prodStatic =  origin
 // #endif
 
-
-export const staticUrl = isDev ?devStatic:prodStatic;
-
-export const apiKey = '458f_$#@$*!fdjisdJDFHUk4%%653154%^@#(FSD#$@0-T';
-
+export const staticUrl = prodStatic;
 
 export default {
-    apiBaseUrl, apiKey
+    apiBaseUrl
 }
