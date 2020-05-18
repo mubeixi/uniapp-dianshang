@@ -825,6 +825,8 @@ export default {
 				if(this.orderInfo.all_has_stores==1&&num==2&&this.orderInfo.is_virtual!=1){
 					this.tabIdx = this.initData.order_submit_first;
 				}
+				this.idD=this.postData.shipping_id
+				this.shipping_name = this.orderInfo.shipping_company[this.idD]
 				if(this.tabIdx==1){
 					this.postData.shipping_id='is_store'
 				}
@@ -834,7 +836,7 @@ export default {
 
 				this.orderLoading = true;
 
-				this.idD=this.postData.shipping_id
+				
 				for(var i in this.orderInfo.shipping_company) {
 					if(i == this.postData.shipping_id) {
 						this.shipping_name = `${this.orderInfo.shipping_company[i]}`
