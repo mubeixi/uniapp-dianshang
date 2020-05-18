@@ -330,12 +330,13 @@
 	import {domainFn} from "../../common/filter";
 	import {mapGetters} from 'vuex'
 	import {numberSort,ls} from '../../common/tool.js'
-	import {getStoreProdMoney,getSelfStoreProd,storeProdBackSubmit,getProductAtts}  from '../../common/fetch'
+	import {getStoreProdMoney,getSelfStoreProd,storeProdBackSubmit,getProductAtts,storeInit}  from '../../common/fetch'
 
 	export default {
 		mixins:[pageMixin],
 		data() {
 			return {
+				storeDetail:{},
 				checked_img_url:'/static/client/checked.png',
 				uncheck_img_url:'/static/client/uncheck.png',
 				isShow:true,
@@ -384,7 +385,7 @@
 		    popupLayer
 		},
 		computed: {
-		    ...mapGetters(['Stores_ID']),
+		    ...mapGetters(['Stores_ID','initData']),
 				amount: function(){
 					let amount = 0;
 					if(this.productMy) {
@@ -452,6 +453,17 @@
 				this.productlist = [];
 				this.page = 1;
 				this.getSelfStoreProd();
+				this.getStoreDetail()
+				
+			},
+			getStoreDetail() {
+			    storeInit({
+			        store_id: this.Stores_ID,
+			    }).then(res => {
+			        this.storeDetail = res.data;
+
+			    })
+			   
 			},
 			// 提交退货
 			submit(){
@@ -462,9 +474,17 @@
 						url: '/pagesA/selectChannel/selectChannel?page=productmy'
 					})
 				}else{
-					uni.navigateTo({
-						url: '/pagesA/selectChannel/selectChannel?page=productmy&pid='+pid
-					})
+					
+					if(this.initData.same_level_purchase==0&&this.storeDetail.type_id<=this.storeDetail.parent_store.type_id){
+						uni.navigateTo({
+							url: '/pagesA/selectChannel/selectChannel?page=productmy'
+						})
+					}else{
+						uni.navigateTo({
+							url: '/pagesA/selectChannel/selectChannel?page=productmy&pid='+pid
+						})
+					}
+					
 				}
 
 				return;
