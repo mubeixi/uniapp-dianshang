@@ -6,6 +6,7 @@ const shell = require('shelljs');
 
 
 //shell.exec('git pull origin master');
+shell.rm('-rf', '../shop-diy-dist/htdocs/fre/*');// 删除
 
 // 由于我的用另外一个仓库存放dist目录，所以这里要将文件增量复制到目标目录。并切换到对应目录。
 shell.cp('-r', './unpackage/dist/build/h5/*', '../shop-diy-dist/htdocs/fre');

@@ -203,7 +203,7 @@
 <style scoped lang="scss">
 	.popup-layer {
 		position: fixed;
-		z-index: 999999;
+		z-index: 102;
 		background: rgba(0, 0, 0,1);
 		width: 100%;
 		height:100%;
@@ -220,7 +220,7 @@
 		width: 100%;
 		transform:translateY(100%);
 
-		z-index: 1000000;
+		z-index: 105;
 		background: #FFFFFF;
 		transition: all .2s linear;
 		overflow: hidden;

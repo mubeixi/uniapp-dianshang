@@ -842,7 +842,7 @@
 		],
 		 "plugins": {
 		 	"live-player-plugin": {
-		 		"version": "1.0.5",
+		 		"version": "1.0.8",
 		 		"provider": "wx2b03c6e691cd7370"
 		 	}
 		 }
@@ -879,12 +879,6 @@
 				"iconPath": "/static/tabbar/fenlei.png",
 				"selectedIconPath": "/static/tabbar/fenleiCheck.png",
 				"text": "分类"
-			},
-			{
-				"pagePath": "pages/fenxiao/fenxiao",
-				"iconPath": "/static/tabbar/fenxiao.png",
-				"selectedIconPath": "/static/tabbar/fenxiaoCheck.png",
-				"text": "分销"
 			},
 			{
 				"pagePath": "pages/order/cart",

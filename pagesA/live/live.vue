@@ -19,7 +19,12 @@
 							<image mode="widthFix" class="status-icon padding10-c" :src="getLiveIconUrl(live.live_status)"></image>
 						</view>
 					</view>
-					<view class="row fun-live">
+					<view class="row fun-live" v-if="live.live_status==103">
+						<!-- :url="'plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id='+live.roomid" -->
+						<navigator style="color: #07c160;" class="btn" :url="'plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id='+live.roomid" >观看回放</navigator>
+						<!-- <subscribe :class="{active:live.live_status===101}" class="btn"  :room-id="'['+live.roomid+']'">开播提醒</subscribe> -->
+					</view>
+					<view class="row fun-live" v-else>
 						<!-- :url="'plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id='+live.roomid" -->
 						<navigator :class="{active:live.live_status===101}" class="btn" :url="'plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id='+live.roomid" >观看直播</navigator>
 						<!-- <subscribe :class="{active:live.live_status===101}" class="btn"  :room-id="'['+live.roomid+']'">开播提醒</subscribe> -->
@@ -46,8 +51,8 @@
 		onShow(){
 			getLiveInfo().then(res=>{
 
-				this.liveList = res.data.room_info
-				this.liveCount = res.data.count
+				this.liveList = res.data
+				this.liveCount = res.data.totalCount
 			})
 		},
 		methods: {

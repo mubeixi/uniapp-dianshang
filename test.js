@@ -32,7 +32,7 @@ let config = {
     // exclude: ["dist/**/*.map", "node_modules/**", "node_modules/**/.*", ".git/**"],
     // exclude: ['static/kindeditor/**'],
     // delete ALL existing files at destination before uploading, if true
-    deleteRemote: false,
+    deleteRemote: true,
     // Passive mode is forced (EPSV command is not sent)
     forcePasv: false,
 };

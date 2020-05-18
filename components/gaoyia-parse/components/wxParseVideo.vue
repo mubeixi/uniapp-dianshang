@@ -8,7 +8,6 @@
                   ref="video1"
                   controls
                   show-center-play-btn
-                  poster=""
                   :class="node.classStr"
                   class="video-video"
                   :src="node.attr.src"

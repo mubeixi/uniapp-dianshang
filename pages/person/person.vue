@@ -21,7 +21,7 @@
 				</view>
 			</view>
 			<view class="nav">
-				<view class="navList first" @click="goBalance">
+				<view class="navList first" @click="goBalance"  v-if="initData.charge_switch==1">
 					<image class="imgr" :src="'/static/client/person/yue.png'|domain" mode=""></image>
 					<view class="viewr">
 						余额
@@ -162,6 +162,11 @@
 					<image :src="'/static/client/person/right.png'|domain" class="right"></image>
 				</view>
 			</block>
+			<view class="setting cell" @click="goDistributor" v-if="initData.DisSwitch">
+				<image src="/static/tabbar/fenxiao.png" class="left"></image>
+				<view class="pintuan">管理中心</view>
+				<image :src="'/static/client/person/right.png'|domain" class="right"></image>
+			</view>
 
 			<view class="setting cell" @click="goSetting">
 				<image :src="'/static/client/person/she.png'|domain" class="left"></image>
@@ -207,6 +212,11 @@
 		},
 		methods:{
 			...mapActions(['setUserInfo','getUserInfo']),
+			goDistributor() {
+				uni.navigateTo({
+					url:'/pages/fenxiao/fenxiao'
+				})
+			},
 			goStore(){
 				if(!this.$fun.checkIsLogin(1))return;
 				uni.navigateTo({
@@ -385,6 +395,7 @@
 			if(this.$fun.checkIsLogin()){
 				this.judgeSignin();
 			}
+
 		},
 		async onPullDownRefresh(){
 			if(JSON.stringify(this.userInfo) != "{}"){
