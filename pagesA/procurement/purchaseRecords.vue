@@ -12,7 +12,10 @@
 					<view class="list-msg">
 						<view class="biz-msg">
 							<image class="avator" :src="item.supplier_img" mode=""></image>
-							<view class="biz-name">{{item.supplier_name}}<view class="biz-links" v-if="(item.Order_Status==20||item.Order_Status==22||item.Order_Status==25)||item.active_id>0">(<text v-if="item.active_id>0" class="text-d" @click="showStore(item)">查看信息</text><block v-if="(item.Order_Status==20||item.Order_Status==22||item.Order_Status==25)&&item.active_id>0">/</block><block v-if="item.Order_Status==20||item.Order_Status==22||item.Order_Status==25"><text class="text-d" @click="changeChannel(item)">修改渠道</text></block>)</view></view>
+							<view class="biz-name">{{item.supplier_name}}<view class="biz-links" v-if="item.active_id>0">(<text v-if="item.active_id>0" class="text-d" @click="showStore(item)">查看信息</text>
+							<block v-if="(item.Order_Status==20||item.Order_Status==22||item.Order_Status==25)&&item.active_id>0">/</block>
+							<!-- <block v-if="item.Order_Status==20||item.Order_Status==22||item.Order_Status==25"><text class="text-d" @click="changeChannel(item)">修改渠道</text></block> (item.Order_Status==20||item.Order_Status==22||item.Order_Status==25)||-->
+							)</view></view>
 							<view class="status">{{item.Order_Status_desc}}
 								<block v-if="item.Order_Status == 22 && item.reason">
 									<image class="qty-icon" src="/static/procurement/i.png" mode="" @click.stop="show_order_tip(index)"></image>
@@ -52,11 +55,11 @@
 							</view>
 						</view>
 
-						<view class="totalinfo">总计：<text class="price-icon">￥</text><text class="price-num">{{item.Order_TotalPrice}}</text> <block v-if="item.Order_Shipping.price>0">(含运费{{item.Order_Shipping.price}}元)</block></view>
+						<view class="totalinfo">总计：<text class="price-icon">￥</text><text class="price-num">{{item.Order_TotalPrice}}</text> <block v-if="item.Order_Shipping.Price>0">(含运费{{item.Order_Shipping.Price}}元)</block></view>
 						<view class="btns">
 							<view class="btn back" @click="cancelOrder(item.Order_ID)" v-if="item.Order_Status==20||item.Order_Status==21||item.Order_Status==25">取消进货单</view>
 							<view class="btn back" @click="recallOrder(item.Order_ID)" v-if="item.Order_Status==21">撤回进货单</view>
-							<view class="btn back" @click="wuliu(item)" v-if="item.Order_Status==23">查看物流</view>
+							<view class="btn back" @click="wuliu(item)" v-if="item.Order_Status==23&&item.Order_Shipping.Express">查看物流</view>
 							<view class="btn back" @click="completedOrder(item.Order_ID)" v-if="item.Order_Status==23">确认收货</view>
 							<view class="btn back" @click="submitOrder(item.Order_ID,index)" v-if="item.Order_Status==20||item.Order_Status==22||item.Order_Status==25">提交进货单</view>
 						</view>
@@ -219,10 +222,12 @@
 					uni.showToast({
 					    title: res.msg,
 					    icon: 'none',
-					});
+					})
 					setTimeout(function(){
 						that.getStorePurchaseApply();
 					},1000)
+				}).catch(e=>{
+					error(e.msg)
 				})
 			},
 			cancelInput(){
@@ -260,11 +265,25 @@
 			plus(index,ind,it,id){
 
 			    this.orderList[index].prod_list[ind].prod_count++;
+				// let data={
+				// 	[it.prod_id]:{
+				// 		[it.attr_id]:this.orderList[index].prod_list[ind].prod_count
+				// 	}
+				// }
+
 				let data={
-					[it.prod_id]:{
-						[it.attr_id]:this.orderList[index].prod_list[ind].prod_count
-					}
+					// [it.prod_id]:{
+					// 	[it.attr_id]:this.orderList[index].prod_list[ind].prod_count
+					// }
 				}
+
+				let prod_list = this.orderList[index].prod_list;
+				console.log(prod_list,"ss")
+				prod_list.forEach(item=>{
+					data[item.prod_id]={
+						[item.attr_id] : item.prod_count
+					}
+				})
 				storePifaOrderCalc({store_id:this.Stores_ID,order_id:id,prod_json:JSON.stringify(data)}).then(res=>{
 					this.orderList[index].Order_TotalPrice=res.data.Order_TotalPrice
 				}).catch(e=>{
@@ -276,13 +295,22 @@
 			    if (this.orderList[index].prod_list[ind].prod_count>0) {
 			        this.orderList[index].prod_list[ind].prod_count--
 					let data={
-						[it.prod_id]:{
-							[it.attr_id]:this.orderList[index].prod_list[ind].prod_count
-						}
+						// [it.prod_id]:{
+						// 	[it.attr_id]:this.orderList[index].prod_list[ind].prod_count
+						// }
 					}
+
+					let prod_list = this.orderList[index].prod_list;
+			        console.log(prod_list,"ss")
+						prod_list.forEach(item=>{
+								data[item.prod_id]={
+									[item.attr_id] : item.prod_count
+								}
+						})
 					storePifaOrderCalc({store_id:this.Stores_ID,order_id:id,prod_json:JSON.stringify(data)}).then(res=>{
 						this.orderList[index].Order_TotalPrice=res.data.Order_TotalPrice
 					}).catch(e=>{
+						error(e.msg)
 						this.orderList[index].prod_list[ind].prod_count++
 					})
 			    } else {

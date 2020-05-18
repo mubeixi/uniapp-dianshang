@@ -86,87 +86,101 @@
 			</view>
 		</view>
 		<view class="list">
-			<view class="group cell" @click="goPintuanOrderlist">
-				<image :src="'/static/client/person/pin.png'|domain" class="left"></image>
-				<view class="pintuan">
-					拼团订单
-				</view>
-				<image :src="'/static/client/person/right.png'|domain" class="right"></image>
-			</view>
-			<view class="group cell" @click="goToOrder('spike')">
-				<image src="/static/limitOrder.png" class="left"></image>
-				<view class="pintuan">
-					限时抢购订单
-				</view>
-				<image :src="'/static/client/person/right.png'|domain" class="right"></image>
-			</view>
-			<view class="group cell" @click="goToOrder('flashsale')">
-				<image src="/static/spikeOrder.png" class="left"></image>
-				<view class="pintuan">
-					秒杀订单
-				</view>
-				<image :src="'/static/client/person/right.png'|domain" class="right"></image>
-			</view>
-			<!-- <view class="bargain">
-				<image :src="'/client/person/kan.png'|domain" class="left"></image>
-				<view class="pintuan">
-					砍价订单
-				</view>
-				<image :src="'/static/client/person/right.png'|domain" class="right"></image>
-			</view> -->
-			<view class="bargain cell" @click="goGift">
-				<image :src="'/static/client/person/zengpin.png'|domain" class="left"></image>
-				<view class="pintuan">
-					赠品中心
-				</view>
-				<image :src="'/static/client/person/right.png'|domain" class="right"></image>
-			</view>
-			<view class="bargain cell"  @click="goRenwu">
-				<image :src="'/static/client/person/renwu.png'|domain" class="left"></image>
-				<view class="pintuan">
-					任务中心
-				</view>
-				<image :src="'/static/client/person/right.png'|domain" class="right"></image>
-			</view>
-			<view class="bargain cell"  @click="gotoAddresslist" >
-				<image :src="'/static/client/person/di.png'|domain" class="left"></image>
-				<view class="pintuan">
-					地址管理
-				</view>
-				<image :src="'/static/client/person/right.png'|domain" class="right"></image>
-			</view>
-			<!-- <view class="bargain">
-				<image :src="'/static/client/person/wo.png'|domain" class="left"></image>
-				<view class="pintuan">
-					我的预约
-				</view>
-				<image :src="'/static/client/person/right.png'|domain" class="right"></image>
-			</view> -->
 
-			<view class="bargain cell" @click="goRefundList()">
-				<image :src="'/static/client/person/tui.png'|domain" class="left"></image>
-				<view class="pintuan">
-					退款/售后
-				</view>
-				<image :src="'/static/client/person/right.png'|domain" class="right"></image>
-			</view>
-			<block v-if="!!initData.is_store_apply">
-				<view class="setting cell" @click="goNew" v-if="!Stores_ID">
-					<image :src="'/static/client/mendian/mendian.png'|domain" class="left"></image>
-					<view class="pintuan">门店入驻</view>
-					<image :src="'/static/client/person/right.png'|domain" class="right"></image>
-				</view>
-				<view class="setting cell" @click="goStore" v-else>
-					<image :src="'/static/client/mendian/mendian.png'|domain" class="left"></image>
-					<view class="pintuan">门店</view>
+
+			<block v-for="(item,index) of personInit" :key="index">
+
+				<block v-if="item.field=='store_apply'||item.field=='store'">
+						<block v-if="!!initData.is_store_apply">
+							<view class="setting cell" @click="goUrl(item.url)" v-if="!Stores_ID&&item.field=='store_apply'">
+								<image :src="item.img" class="left"></image>
+								<view class="pintuan">{{item.name}}</view>
+								<image :src="'/static/client/person/right.png'|domain" class="right"></image>
+							</view>
+							<view class="setting cell" @click="goUrl(item.url)" v-else-if="item.field=='store'&&Stores_ID">
+								<image :src="item.img" class="left"></image>
+								<view class="pintuan">{{item.name}}</view>
+								<image :src="'/static/client/person/right.png'|domain" class="right"></image>
+							</view>
+						</block>
+				</block>
+				<view class="group cell" @click="goUrl(item.url)" v-else>
+					<image :src="item.img" class="left"></image>
+					<view class="pintuan">
+						{{item.name}}
+					</view>
 					<image :src="'/static/client/person/right.png'|domain" class="right"></image>
 				</view>
 			</block>
-			<view class="setting cell" @click="goDistributor" v-if="initData.DisSwitch">
-				<image src="/static/tabbar/fenxiao.png" class="left"></image>
-				<view class="pintuan">管理中心</view>
-				<image :src="'/static/client/person/right.png'|domain" class="right"></image>
-			</view>
+
+
+
+<!--			<view class="group cell" @click="goPintuanOrderlist">-->
+<!--				<image :src="'/static/client/person/pin.png'|domain" class="left"></image>-->
+<!--				<view class="pintuan">-->
+<!--					拼团订单-->
+<!--				</view>-->
+<!--				<image :src="'/static/client/person/right.png'|domain" class="right"></image>-->
+<!--			</view>-->
+<!--			<view class="group cell" @click="goToOrder('spike')">-->
+<!--				<image src="/static/limitOrder.png" class="left"></image>-->
+<!--				<view class="pintuan">-->
+<!--					限时抢购订单-->
+<!--				</view>-->
+<!--				<image :src="'/static/client/person/right.png'|domain" class="right"></image>-->
+<!--			</view>-->
+<!--			<view class="group cell" @click="goToOrder('flashsale')">-->
+<!--				<image src="/static/spikeOrder.png" class="left"></image>-->
+<!--				<view class="pintuan">-->
+<!--					秒杀订单-->
+<!--				</view>-->
+<!--				<image :src="'/static/client/person/right.png'|domain" class="right"></image>-->
+<!--			</view>-->
+<!--			<view class="bargain cell" @click="goGift">-->
+<!--				<image :src="'/static/client/person/zengpin.png'|domain" class="left"></image>-->
+<!--				<view class="pintuan">-->
+<!--					赠品中心-->
+<!--				</view>-->
+<!--				<image :src="'/static/client/person/right.png'|domain" class="right"></image>-->
+<!--			</view>-->
+<!--			<view class="bargain cell"  @click="goRenwu">-->
+<!--				<image :src="'/static/client/person/renwu.png'|domain" class="left"></image>-->
+<!--				<view class="pintuan">-->
+<!--					任务中心-->
+<!--				</view>-->
+<!--				<image :src="'/static/client/person/right.png'|domain" class="right"></image>-->
+<!--			</view>-->
+<!--			<view class="bargain cell"  @click="gotoAddresslist" >-->
+<!--				<image :src="'/static/client/person/di.png'|domain" class="left"></image>-->
+<!--				<view class="pintuan">-->
+<!--					地址管理-->
+<!--				</view>-->
+<!--				<image :src="'/static/client/person/right.png'|domain" class="right"></image>-->
+<!--			</view>-->
+<!--			<view class="bargain cell" @click="goRefundList()">-->
+<!--				<image :src="'/static/client/person/tui.png'|domain" class="left"></image>-->
+<!--				<view class="pintuan">-->
+<!--					退款/售后-->
+<!--				</view>-->
+<!--				<image :src="'/static/client/person/right.png'|domain" class="right"></image>-->
+<!--			</view>-->
+<!--			<block v-if="!!initData.is_store_apply">-->
+<!--				<view class="setting cell" @click="goNew" v-if="!Stores_ID">-->
+<!--					<image :src="'/static/client/mendian/mendian.png'|domain" class="left"></image>-->
+<!--					<view class="pintuan">门店入驻</view>-->
+<!--					<image :src="'/static/client/person/right.png'|domain" class="right"></image>-->
+<!--				</view>-->
+<!--				<view class="setting cell" @click="goStore" v-else>-->
+<!--					<image :src="'/static/client/mendian/mendian.png'|domain" class="left"></image>-->
+<!--					<view class="pintuan">门店</view>-->
+<!--					<image :src="'/static/client/person/right.png'|domain" class="right"></image>-->
+<!--				</view>-->
+<!--			</block>-->
+<!--			<view class="setting cell" @click="goDistributor" v-if="initData.DisSwitch">-->
+<!--				<image src="/static/tabbar/fenxiao.png" class="left"></image>-->
+<!--				<view class="pintuan">管理中心</view>-->
+<!--				<image :src="'/static/client/person/right.png'|domain" class="right"></image>-->
+<!--			</view>-->
 
 			<view class="setting cell" @click="goSetting">
 				<image :src="'/static/client/person/she.png'|domain" class="left"></image>
@@ -178,6 +192,7 @@
 
 		</view>
 		<view style="height: 118rpx;"></view>
+
 <!--		<tabbar-components/>-->
 
 <!--		<div class="space" style="height:60px"></div>-->
@@ -189,8 +204,9 @@
 <script>
 	import {pageMixin} from "../../common/mixin";
 	import {mapGetters,mapActions, mapState} from 'vuex';
-	import { judgeSignin,signin,getOrderNum,get_user_info} from "../../common/fetch.js"
+	import { judgeSignin,signin,getOrderNum,get_user_info,getFuncModule} from "../../common/fetch.js"
 	// import TabbarComponents from "../../components/TabbarComponents";
+
 	export default {
 		mixins:[pageMixin],
 		components:{
@@ -204,14 +220,30 @@
 				isLodnig:false,
 				orderNum:'',//订单状态角标数
 				Order_Type: 'shop' , //请求的订单类型
+				personInit:[]
 			};
 		},
 		computed:{
 			...mapGetters(['userInfo','initData']),
 			...mapState(['Stores_ID'])
 		},
+		onLoad(){
+			this.initPerson()
+		},
 		methods:{
 			...mapActions(['setUserInfo','getUserInfo']),
+			goUrl(item){
+				uni.navigateTo({
+					url:item
+				})
+			},
+			initPerson(){
+				getFuncModule({type:'2'}).then(res=>{
+						this.personInit=res.data
+				}).catch(e=>{
+					error(e.msg||'初始化个人中心失败')
+				})
+			},
 			goDistributor() {
 				uni.navigateTo({
 					url:'/pages/fenxiao/fenxiao'
@@ -385,6 +417,7 @@
 			}
 		},
 		onShow() {
+
 			if(JSON.stringify(this.userInfo) != "{}"){
 				get_user_info({},{tip:'',errtip:false}).then(res=>{
 					this.setUserInfo(res.data);

@@ -12,7 +12,7 @@
 				<image class="loc_icon" :src="'/static/client/location.png'|domain" alt="" ></image>
 				<view class="add_msg" v-if="addressinfo.Address_Name">
 					<view class="name">收货人：{{addressinfo.Address_Name}} <span>{{addressinfo.Address_Mobile | formatphone}}</span></view>
-					<view class="location">收货地址：{{addressinfo.Address_Province_name}}{{addressinfo.Address_City_name}}{{addressinfo.Address_Area_name}}{{addressinfo.Address_Town_name}}{{addressinfo.Address_Detailed}}</view>
+					<view class="location">收货地址：{{addressinfo.Address_Province_name}}{{addressinfo.Address_City_name}}{{addressinfo.Address_Area_name}}{{addressinfo.Address_Town_name?addressinfo.Address_Town_name:''}}{{addressinfo.Address_Detailed}}</view>
 				</view>
 				<view class="add_msg" v-else>
 					<view>暂无收货地址，去添加</view>
@@ -197,7 +197,7 @@
 				<view class="mxitem" v-if="orderInfo.Order_Shipping.Price > 0">运费 <text class="num">+{{orderInfo.Order_Shipping.Price}}</text></view>
 			</view>
 		</popup-layer>
-		<popup-layer ref="popupRef" :direction="'top'">
+		<popup-layer ref="popupRef" :direction="'top'"  @maskClicked="handClickeds">
 			<view class="bMbx" v-if="type=='shipping'">
 				<view class="fMbx">运费选择</view>
 				<view class="iMbx" v-for="(ship,shipid) in orderInfo.shipping_company" :key="shipid">
@@ -332,7 +332,7 @@ export default {
 			})
 		}
 		this.getAddress();
-		this.createOrderCheck(2);
+		//this.createOrderCheck(2);
 	},
 	async created(){
 		// #ifdef H5
@@ -389,7 +389,7 @@ export default {
 		  }
 		 this.shipping_store_id = storeInfo.Stores_ID;
 		 //新增
-		 this.postData.shipping_store_id=this.shipping_store_id 
+		 this.postData.shipping_store_id=this.shipping_store_id
 	  	if(this.setStoreMode==='all'){
 	  		//居然是对象醉了
 	  		for(var i in this.orderInfo.CartList){
@@ -405,7 +405,7 @@ export default {
 			this.orderInfo.Stores_Name=storeInfo.Stores_Name
 		}
 		  this.$refs.stroeComp.close()
-		  
+
 		  if(this.postData.shipping_id=='is_store'){
 		  	let obj={}
 		  	for(let it in this.orderInfo.CartList){
@@ -417,13 +417,13 @@ export default {
 		  	}
 		  	this.postData.self_pick_store_id=JSON.stringify(obj)
 		  }
-		  
+
 		  //新增
 		  //if(this.tabIdx==0){
 			  this.createOrderCheck()
 		  //}
-		  
-		  this.zIndex=999999
+
+		  this.zIndex=9
 
 	  },
 	  multipleSelectStore(){
@@ -480,6 +480,13 @@ export default {
 				this.zIndex = 99999;
 				this.bottomHeight = 0;
 			},500)
+		},
+		handClickeds(){
+			this.$refs.popupRef.close();
+			setTimeout(function () {
+				this.zIndex = 99999;
+			},1000)
+
 		},
 		// 跳转地址列表页
 		goAddressList(){
@@ -562,7 +569,7 @@ export default {
 				// 	code: e.detail.formId,
 				// 	times: 1
 				// })
-				if(this.shipping_store_id) {
+				if(this.shipping_store_id&&this.orderInfo.shipping_has_stores==1) {
 					this.postData.shipping_store_id = this.shipping_store_id
 				}
 				createOrder(this.postData).then(res=>{
@@ -697,15 +704,22 @@ export default {
 			this.postData.shipping_id = e.target.value;
 		},
 		changeCoupon(){
+
 			this.type = 'coupon';
 			if(this.couponlist.length == 0) {return;}
 			this.$refs.popupRef.show();
+
+				this.zIndex=99
+
 		},
         // 选择运费
         changeShip(){
 					this.type = 'shipping';
 					this.ship_current = this.postData.shipping_id;
           this.$refs.popupRef.show();
+
+						this.zIndex=99
+
         },
 		closeMethod(){
 			if(this.type == 'coupon') {
@@ -767,9 +781,9 @@ export default {
 				this.back_address_id = 0;
 
 				// 获取用户收货地址，获取订单信息，后台判断运费信息
-				this.createOrderCheck();
-			}).catch(()=>{})
 
+			}).catch(()=>{})
+			this.createOrderCheck(2);
 			this.addressLoading = true;
 
 
@@ -778,16 +792,28 @@ export default {
 
 	  		const oldOrderInfo = {...this.orderInfo}
 			createOrderCheck(this.postData).then(res=>{
+				this.postData.shipping_id = res.data.Order_Shipping.shipping_id;
 				for(var i in res.data.CartList){
 					for(var j in res.data.CartList[i]){
 						res.data.CartList[i][j].store = {}
-						console.log(res.data.CartList[i][j],"sss")
+
+						//新增
+						if(res.data.CartList[i][j].store_name&&num==2&&res.data.shipping_has_stores==1){
+
+							res.data.CartList[i][j].store['Stores_Name'] = res.data.CartList[i][j].store_name
+							res.data.CartList[i][j].store['Stores_ID'] = res.data.CartList[i][j].store_id
+							res.data.Stores_Name=res.data.CartList[i][j].store_name
+							// this.postData.shipping_id='is_store'
+							this.postData.shipping_store_id=res.data.CartList[i][j].store_id
+
+
+						}
 						if(res.data.CartList[i][j].choose_store_info){
 							res.data.CartList[i][j].store['Stores_Name'] = res.data.CartList[i][j].choose_store_info.Stores_Name
 							res.data.CartList[i][j].store['Stores_ID'] = res.data.CartList[i][j].choose_store_info.Stores_ID
 						}
-						
-						
+
+
 					}
 				}
 				this.orderInfo = Object.assign(oldOrderInfo,res.data);
@@ -799,13 +825,18 @@ export default {
 				if(this.orderInfo.all_has_stores==1&&num==2&&this.orderInfo.is_virtual!=1){
 					this.tabIdx = this.initData.order_submit_first;
 				}
+				this.idD=this.postData.shipping_id
+				this.shipping_name = this.orderInfo.shipping_company[this.idD]
+				if(this.tabIdx==1){
+					this.postData.shipping_id='is_store'
+				}
 
 
 				this.couponlist = res.data.coupon_list;
 
 				this.orderLoading = true;
-				this.postData.shipping_id = res.data.Order_Shipping.shipping_id;
-				this.idD=this.postData.shipping_id
+
+				
 				for(var i in this.orderInfo.shipping_company) {
 					if(i == this.postData.shipping_id) {
 						this.shipping_name = `${this.orderInfo.shipping_company[i]}`

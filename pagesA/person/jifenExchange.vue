@@ -51,6 +51,7 @@
 				hasMore: false,
 				psdInput: false,
 				Gift_ID: 0,
+				page:1,
 				isClicked: false, // 防止重复点击
 				isChanged: false, //防止兑换重复点击
 			}
@@ -80,11 +81,15 @@
 			// 	})
 			// },
 			get_jifen_prod(){
-				getJifenProd({errtip: false}).then(res=>{
+
+				getJifenProd({page:this.page},{errtip: false}).then(res=>{
 					let old = this.prod_list;
+					this.page++;
 					this.prod_list = old.concat(res.data);
 					if(this.prod_list.length < res.totalCount) {
 						this.hasMore = true;
+					}else{
+						this.hasMore = false
 					}
 				},err=>{
 
@@ -162,6 +167,12 @@
 				}
 				this.Gift_ID = item.Gift_ID;
 			}
+		},
+		onReachBottom(){
+			if(this.hasMore){
+				this.get_jifen_prod()
+			}
+
 		}
 	}
 </script>

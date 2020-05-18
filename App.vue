@@ -23,6 +23,13 @@
 		},
         //目前只有app和小程序用到了应用的全局onLaunch，h5环境下这里不执行的
 		onLaunch: function(options) {
+			// #ifndef H5
+					// let store_id=ls.get('store_id')
+					// if(store_id){
+					// 	ls.remove('store_id')
+					// }
+			// #endif
+
 
 
 			// #ifdef MP

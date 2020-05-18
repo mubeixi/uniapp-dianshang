@@ -127,7 +127,7 @@
 	import area from '../../common/area.js';
 	import utils from '../../common/util.js';
 	import {getTown,agentApply} from '../../common/fetch.js';
-	import {fun} from "../../common";
+	import {fun,error} from "../../common";
 	export default {
 		mixins:[pageMixin],
 		data() {
@@ -275,6 +275,7 @@
 								})
 							},1000)
 						}).catch(e=>{
+							error(e.msg||'提交失败')
 							this.isAgr=false;
 						})
 					}

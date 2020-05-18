@@ -93,17 +93,19 @@
 <script>
 	// import tabs from "@/components/tabs";
 	// import pagetitle from "@/components/title";
-	import {getCart,getProd,updateCart,delCart} from '../../common/fetch.js';
+	import {getCart,getProd,updateCart,delCart,getSelfStoreProd} from '../../common/fetch.js';
 	import {pageMixin} from "../../common/mixin";
-	import {ls} from '../../common/tool.js';
+	import {ls,getStoreID} from '../../common/tool.js';
 	import {mapActions} from 'vuex';
 	import {goProductDetail} from "../../common";
+
 
 	export default {
 		mixins:[pageMixin],
 		name: "App",
 		data(){
 		return {
+			boo:true,
 			checked: [],
 			CartList:[],
 			prodList: [],
@@ -169,6 +171,7 @@
 						}
 					}
 				}
+				this.checkAllFlag=false
 				this.cart_buy = JSON.stringify(obj);
 				if(this.handleShow) {
 					// 结算
@@ -282,7 +285,7 @@
 
 				//不论成功与否都重新刷新，因为数值被更改了
 				updateCart(this.postData).then(()=>{
-					this.getCart();
+					this.getCartUpdate();
 					this.cal_total();
 				})
 				.catch(err=>{
@@ -294,6 +297,28 @@
 
 
 			},
+			getCartUpdate() {
+				getCart({cart_key:'CartList'}).then(res=>{
+					this.total_count= res.data.total_count;
+					this.total_price= res.data.total_price;
+
+
+					this.shop_config = res.data.shop_config;
+					// 把状态存起来
+					// this.initCheck();
+					let CartList=res.data.CartList
+					for(var i in CartList) {
+						for(var j in CartList[i]) {
+							this.CartList[i][j].Qty =CartList[i][j].Qty
+						}
+					};
+					this.cal_total()
+					this.loading = true;
+
+
+				}).catch(e=>{})
+			},
+
 			// 更新购物车
 			updateCart(pro_id,attr_id,num){
 				this.postData.prod_id = pro_id;
@@ -307,7 +332,7 @@
 					return;
 				}
 				updateCart(this.postData).then(res=>{
-					this.getCart();
+					this.getCartUpdate();
 					this.cal_total();
 				}).catch(()=>{});
 			},
@@ -346,11 +371,26 @@
 			getProd(){
 				this.prod_arg.Users_ID = this.Users_ID;
 				let oldlist = this.prodList;
-				getProd(this.prod_arg).then(res=>{
-					this.prodList = oldlist.concat(res.data);
-					this.hasMore = (res.totalCount / this.prod_arg.pageSize) > this.prod_arg.page ? true : false ;
-					this.prod_arg.page += 1;
-				}).catch(e=>{})
+				let store_id=getStoreID()
+				if(store_id){
+					this.prod_arg.store_id=store_id
+					this.prod_arg.is_selling=1
+					getSelfStoreProd(this.prod_arg).then(res=>{
+						this.prodList = oldlist.concat(res.data);
+						this.hasMore = (res.totalCount / this.prod_arg.pageSize) > this.prod_arg.page ? true : false ;
+						this.prod_arg.page += 1;
+					}).catch(e=>{})
+				}else{
+					getProd(this.prod_arg).then(res=>{
+						this.prodList = oldlist.concat(res.data);
+						this.hasMore = (res.totalCount / this.prod_arg.pageSize) > this.prod_arg.page ? true : false ;
+						this.prod_arg.page += 1;
+					}).catch(e=>{})
+				}
+
+
+
+
 			},
 			gotoDetail(e){
 				uni.navigateTo({
