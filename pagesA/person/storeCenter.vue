@@ -220,6 +220,7 @@ export default {
         ...mapGetters(['Stores_ID', 'initData']),
     },
     onLoad() {
+		if(!this.$fun.checkIsLogin(1))return;
         this.getStoreDetail();
     },
     methods: {
