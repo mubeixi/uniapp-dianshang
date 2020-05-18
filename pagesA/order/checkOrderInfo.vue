@@ -150,7 +150,7 @@
                     confirmConf.content = '核销成功'
                     //toast('核销成功')
                 }).catch(err=>{
-
+					error(err.msg||'核销失败')
                 })
 
                 if(!confirmConf.content)return;
@@ -168,7 +168,7 @@
 
                 }).catch(err=>{
                     uni.switchTab({
-                        url:'/pages/index/index'
+                        url:'/pagesA/person/storeCenter'
                     })
                 })
             },
@@ -179,7 +179,7 @@
                 let _self = this;
                 getOrderDetail({
                     Order_Code: this.Order_Code,
-                },{tip:'努力加载中'}).then(res => {
+                },{tip:'努力加载中',noUid:true}).then(res => {
 
                     if(res.data.Order_Status!=2){
 

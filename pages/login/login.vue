@@ -444,7 +444,8 @@
 						//么有自定义回调，就默认的额
 						!scall && this.loginCall(res.data)
 						scall && scall()
-					}).catch(()=>{
+					}).catch((e)=>{
+						error(e.msg)
 						ecall && ecall()
 					})
 				} else if (this.loginStatus === 2) {
@@ -453,7 +454,7 @@
 							{
 								this.loginCall(res.data)
 							}
-					).catch(()=>{});
+					).catch((e)=>{ error(e.msg)});
 				} else if (this.loginStatus === 3) {
 					// 找回密码
 					// await login({mobile:this.mobile, captcha:this.verificationCode,login_method:'sms_login'})

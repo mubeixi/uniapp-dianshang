@@ -56,7 +56,7 @@
 					付款时间：{{orderInfo.Order_CreateTime | timeFormat}}
 				</view>
 				<view class="viewHeight">
-					收货信息： {{orderInfo.Address_Name}} {{orderInfo.Address_Province}} {{orderInfo.Address_City}} {{orderInfo.Address_Area}} {{orderInfo.Address_Town}} {{orderInfo.Address_Detailed}}
+					收货信息： {{orderInfo.Address_Name}} {{orderInfo.Address_Province_name}} {{orderInfo.Address_City_name}} {{orderInfo.Address_Area_name}} {{orderInfo.Address_Town_name}} {{orderInfo.Address_Detailed}}
 				</view>
 			</view>
 		</view>
@@ -216,9 +216,12 @@
 					uni.showToast({
 						title: res.msg,
 					})
-					uni.navigateBack({
-						delta: 1
-					})
+					setTimeout(function(){
+						uni.navigateBack({
+							delta: 1
+						})
+					},1000)
+					
 				}).catch(err=>{
 					error(err.msg)
 				})

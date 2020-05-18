@@ -263,6 +263,21 @@ export const pageMixin = {
 			// #endif
 
 
+			//新增门店store_id
+			
+				let store_id=options.store_id
+				if(store_id){
+					// #ifndef H5
+						ls.set('store_id', store_id)
+					//#endif
+					// #ifdef H5
+						sessionStorage.setItem('store_id', store_id)
+					// #endif
+				}
+		
+			
+			
+
 			/*商户id机制*/
 			// #ifdef H5|| MP-WEIXIN || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO
 			let owner_id = null, users_id = null

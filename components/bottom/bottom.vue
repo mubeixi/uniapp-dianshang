@@ -26,7 +26,7 @@
             </div>
         </div>
         <div class="rightss">
-            <block v-if="!(recieve || isVirtual)">
+            <block v-if="!(recieve || isVirtual || isGiftPackage)">
                 <div class="dan bTitle" @click="addCart">
                     {{first}}
                 </div>
@@ -34,7 +34,7 @@
                     {{second}}
                 </div>
             </block>
-            <div class="all" @click="lingqu" :class="canSubmit?'':'disable'" v-else>{{isVirtual ? '立即购买' : '立即领取'}}
+            <div class="all" @click="lingqu" :class="canSubmit?'':'disable'" v-else>{{isVirtual ? '立即购买' : (isGiftPackage?'立即购买':'立即领取') }}
             </div>
         </div>
     </div>
@@ -71,6 +71,11 @@
             canSubmit: {
                 type: Boolean,
                 default: true
+            },
+            // 是否是礼包产品,礼包产品不能加入购物车
+            isGiftPackage: {
+                type: Boolean,
+                default: false
             }
         },
         methods: {

@@ -109,8 +109,8 @@
 
 <script>
 import popupLayer from '../../components/popup-layer/popup-layer.vue'
-import {getProd} from '../../common/fetch.js';
-import {goBack}  from '../../common/tool.js'
+import {getProd,getSelfStoreProd} from '../../common/fetch.js';
+import {goBack,getStoreID}  from '../../common/tool.js'
 import {pageMixin} from "../../common/mixin";
 import {goProductDetail} from "../../common";
 
@@ -277,6 +277,7 @@ export default {
 			 data={
 				 Users_ID:'wkbq6nc2kc',
 				 Products_Name:this.inputValue,
+				 prod_name:this.inputValue,
 				 page:this.page,
 				 pageSize:this.pageSize
 			 }
@@ -284,6 +285,7 @@ export default {
 			data={
 				Users_ID:'wkbq6nc2kc',
 				Cate_ID:this.Cate_ID,
+				cate_id:this.Cate_ID,
 				page:this.page,
 				pageSize:this.pageSize
 			}
@@ -321,13 +323,29 @@ export default {
 		  if(this.Products_ID){
 			  data.Products_ID=this.Products_ID
 		  }
-		  getProd(data).then(res=>{
-			  for(var item of res.data){
-				  this.pro.push(item);
-			  }
-			 //this.pro=res.data;
-			 this.count=res.totalCount;
-		  }).catch(e=>{})
+		  let store_id=getStoreID()
+		  if(store_id){
+			  data.store_id=store_id
+			  data.is_selling=1
+			  getSelfStoreProd(data).then(res=>{
+			  			  for(var item of res.data){
+			  				  this.pro.push(item);
+			  			  }
+			  			 //this.pro=res.data;
+			  			 this.count=res.totalCount;
+			  }).catch(e=>{})
+		  }else{
+			 getProd(data).then(res=>{
+			 			  for(var item of res.data){
+			 				  this.pro.push(item);
+			 			  }
+			 			 //this.pro=res.data;
+			 			 this.count=res.totalCount;
+			 }).catch(e=>{})
+		  }
+
+
+
 	  },
 	  close(){
 		  this.inputValue="";

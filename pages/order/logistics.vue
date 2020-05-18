@@ -87,6 +87,7 @@
 <script>
 	import {pageMixin} from "../../common/mixin";
 	import {getOrderExpress} from '../../common/fetch.js'
+	import {error,toast,confirm} from "../../common";
 	export default {
 		mixins:[pageMixin],
 		data(){
@@ -133,6 +134,7 @@
 				getOrderExpress(data).then(res=>{
 					this.pro=res.data;
 				}).catch(e=>{
+					error(e.msg)
 				})
 			}
 		}

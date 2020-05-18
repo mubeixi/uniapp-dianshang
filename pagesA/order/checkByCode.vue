@@ -11,9 +11,11 @@
     import {isWeiXin} from "../../common/tool";
     import {checkOrderByCode,getOrderDetail} from "../../common/fetch";
     import {confirm, error} from "../../common";
+    import {pageMixin} from '../../common/mixin';
 
     export default {
         name: "checkByCode",
+        mixins:[pageMixin],
         data(){
             return {
                 Order_Code:''
@@ -27,9 +29,8 @@
                     return;
                 }
 
-                getOrderDetail({
-                    Order_Code,
-                }).then(res => {
+                //不要穿User_ID
+                getOrderDetail({Order_Code},{noUid:true}).then(res => {
 
                     if(res.data.Order_Status==2){
                         this.Order_Code = ''
@@ -41,7 +42,7 @@
                         error('订单状态不符')
                     }
                 }).catch(e=>{
-
+					error(e.msg)
                 })
 
 

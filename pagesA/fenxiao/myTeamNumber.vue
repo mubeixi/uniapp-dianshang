@@ -17,7 +17,7 @@
 						</view>
 					</view>
 					<view class="bots">
-						会员号：{{item.User_No}}
+						<view>会员号：{{item.User_No}}</view>
 					</view>
 				</view>
 			</view>
@@ -55,13 +55,16 @@
 			this.getDisTeamList();
 		},
 		methods:{
-			getDisTeamList(){
+			getDisTeamList(userid){
 				let data={
 					level:this.index,
 					page:this.page,
 					pageSize:this.pageSize
 				}
-
+				if(userid) {
+					this.pro = []
+					data.userid = userid
+				}
 				getDisTeamList(data,{errtip:false,tip:'加载中'}).then(res=>{
 
 					this.pro = this.pro.concat(res.data)
@@ -105,6 +108,9 @@
 		width: 100%;
 		height: 98rpx;
 		.bots{
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
 			margin-top: 15rpx;
 			height:23rpx;
 			font-size:24rpx;

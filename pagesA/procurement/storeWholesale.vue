@@ -281,7 +281,7 @@
 							lng:lng,
 							store_id: store_id
 						}
-						getStoreDetail(data).then(res=>{
+						getStoreDetail(data,{tip:'加载中'}).then(res=>{
 							this.storeInfo=res.data
 							this.storeInfo.distance=(res.data.distance/1000).toFixed(2)
 						})
@@ -548,6 +548,10 @@
             .acion-btn{
                 margin-bottom: 10px;
                 margin-left: 10px;
+				width:156rpx;
+				height:60rpx;
+				line-height: 60rpx;
+				text-align: center;
             }
 
 
