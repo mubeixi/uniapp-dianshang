@@ -99,7 +99,7 @@
 		</view>
 
 
-		<view class="contents" v-show="current=='charge'">
+		<view class="contents" v-if="current=='charge'">
 			<view class="mingxi  mingxiPlus">
 				<view>
 					总收入:{{records.total_get}}元
@@ -118,7 +118,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="contents"  v-show="current=='money'">
+		<view class="contents"  v-if="current=='money'">
 
 			<view class="mingxi  mingxiPlus" >
 				<view>
@@ -191,6 +191,7 @@
 			}
 		},
 		onReachBottom() {
+			console.log("ssss")
 			if(this.current=='charge') {
 				// 充值记录
 				if(this.moneyMore) {
@@ -414,6 +415,7 @@
 			}
 		},
 		onLoad(){
+
 			this.$fun.checkIsLogin(1);
 			// this.initData=this.getInitData()
 
@@ -441,7 +443,7 @@ view{
 	background: #F8F8F8;
 	width: 750rpx;
 	overflow-x: hidden;
-	height: 100vh;
+	min-height: 100vh;
 }
 	.top{
 		width: 750rpx;
