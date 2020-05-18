@@ -62,7 +62,8 @@
 					</view>
 				</block>
 				<view style="text-align: right;padding-right:20rpx;" v-if="item.Order_Status == 2">
-					<span class="spanJu" @click="goFa(item.Order_ID)" v-if="item.Order_IsVirtual == 0">发货</span>
+					<span class="spanJu" @click="goFa(item.Order_ID)" v-if="item.Order_IsVirtual == 0&&item.send_store_id==Stores_ID">发货</span>
+					<span class="spanJu" @click="goFa(item.Order_ID)" v-if="item.Order_IsVirtual == 0&&item.send_store_id==0&&item.Order_Store==Stores_ID">发货</span>
 					<span class="spanJu" @click="refund(item.Order_ID)">拒单</span>
 				</view>
 			</view>
@@ -316,14 +317,14 @@
 	}
 }
 .spanJu{
-	width:80rpx;
-	height:45rpx;
+	width:156rpx;
+	height:60rpx;
+	line-height: 60rpx;
 	background:#EEEEEE;
 	border-radius:5px;
 	font-size: 24rpx;
 	color: #666666;
 	display: inline-block;
-	line-height: 45rpx;
 	text-align: center;
 }
 .spanJu:nth-child(1) {

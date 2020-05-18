@@ -127,9 +127,21 @@ export const getOrderExpressCode = (data, options) => fetch('getOrderExpressCode
 //获取直播信息
 export const getLiveInfo = (data, options) => fetch('getLiveInfo', data, options)
 
+
+
+//查询商品的购买者信息
+export const storeApplyReject = (data, options) => fetch('store_apply_reject', data, options)
+//查询商品的购买者信息
+export const getStoreApplyList = (data, options) => fetch('get_store_apply_list', data, options)
+//查询商品的购买者信息
+export const getBuyerByProd = (data, options) => fetch('getBuyerByProd', data, options)
 //大转盘初始化
 export const rotateInit = (data, options) => fetch('initTurn', data, options)
 
+
+
+//门店推广下级二维码
+export const getStoreShare = (data, options) => fetch('getStoreShare', data, options)
 //大转盘开始
 export const rotateBegin = (data, options) => fetch('beginTurn', data, options)
 
@@ -142,6 +154,8 @@ export const getBalanceDetail = (data, options) => fetch('getBalanceDetail', dat
 export const getArticle = (data, options) => fetch('getArticle', data, options)
 
 export const sendAnalysisData = (data, options) => fetch('clickRecord', data, options)
+
+
 
 //export const getCouponList = (data, options) => fetch('get_unaccalimed_coupon', data, options)
 
@@ -583,11 +597,16 @@ export const storeProdBackOrderConfirm = (data, options) => fetch('store_prod_ba
 export const storePifaOrderCalc = (data, options) => fetch('store_pifa_order_calc', data, options);
 // 获取门店类型列表
 export const getStoreTypes = (data, options) => fetch('get_store_types', data, options);
+
+// 获取门店类型列表
+export const storeApplyPass = (data, options) => fetch('store_apply_pass', data, options);
 // 门店发货
 export const systemSendOrder = (data, options) => fetch('system_send_order', data, options);
 
 // 获取分销功能模块
 export const getFuncModule = (data,options) => fetch('getFuncModule', data, options);
+// 获取礼包产品信息
+export const getGitfpackRecordList = (data,options) => fetch('getGitfpackRecordList', data, options);
 
 //普通环境noop就行了
 //let add_template_code = ()=>{}

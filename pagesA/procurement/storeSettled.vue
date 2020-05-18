@@ -1,12 +1,27 @@
 <template>
     <view class="wrap" @click="commonClick">
-        <view class="item flex-vertical-center">
-            <view class="item-left">门店类型</view>
+		<view class="item">
+		    <view class="item-left">上级代理商ID</view>
+		    <view class="item-input">
+		        <input type="text" v-model="pid" :disabled="pidDisable" placeholder="请输入邀请码" placeholder-style="color:#CAC8C8"/>
+		    </view>
+		</view>
+		<view class="item flex-vertical-center">
+		    <view class="item-left">入驻门店类型</view>
+
+			<picker @change="bindPickerChange" :value="type" :range="array" :disabled="typeDisable"  class="item-right flex justify-end flex-vertical-center">
+					{{array[type]}}
+				 <image :src="'/static/client/person/right.png'|domain" class="right"></image>
+			</picker>
+
+		</view>
+        <!-- <view class="item flex-vertical-center">
+            <view class="item-left">入驻类目</view>
             <view class="item-right flex justify-end flex-vertical-center" @click="getType">
                 <view style="margin-right: 20rpx;">{{store_title_name}}</view>
                 <image :src="'/static/client/person/right.png'|domain" class="right"></image>
             </view>
-        </view>
+        </view> -->
         <view class="item">
             <view class="item-left">门店名称</view>
             <view class="item-input">
@@ -78,8 +93,8 @@
             <view class="item-left">驳回原因</view>
             <view class="item-input">{{userStoreMsg.reason}}</view>
         </view>
-        <popup-layer ref="storetypes"  :direction="'top'" >
-            <view class="search-title">请选择门店类型</view>
+       <!-- <popup-layer ref="storetypes"  :direction="'top'" >
+            <view class="search-title">请选择入驻类目</view>
             <view class="search-content">
                 <view class="search-item" v-for="(store,index) of storeTypes" @click="changeType(index)" :key="index">
                     <view>{{store.title}}</view>
@@ -89,7 +104,7 @@
                     <view class="box" v-else></view>
                 </view>
             </view>
-        </popup-layer>
+        </popup-layer> -->
     </view>
 </template>
 
@@ -107,6 +122,11 @@
         mixins: [pageMixin],
         data() {
             return {
+				pid:'',
+				type:0,
+				pidDisable:false,
+				typeDisable:false,
+				array:['代理商','社区门店'],
                 arr: [],
                 imgs: [],
                 //用于收货地址展示用
@@ -144,6 +164,7 @@
             popupLayer
         },
         onShow: function(){
+			if(!this.$fun.checkIsLogin(1))return;
           // this.load();
 		  if(!this.userInfo.User_Mobile){
 			  uni.showModal({
@@ -165,7 +186,18 @@
 		  }
 
         },
-        onLoad: function(){
+        onLoad(options){
+			this.pid=options.pid
+			if(this.pid){
+				this.pidDisable=true
+			}
+			if(options.stores_type){
+				this.typeDisable=true
+				this.type=options.stores_type-1
+			}
+
+
+
 			this.load();
             this.objectMultiArray = [
                 utils.array_change(area.area[0]['0']),
@@ -180,6 +212,10 @@
             this.get_store_types();
         },
         methods: {
+			bindPickerChange(e){
+
+				this.type = e.target.value
+			},
             // 用户选择类型
             changeType(index){
                 this.index = index;
@@ -199,6 +235,10 @@
                         return;
                     }
                     this.is_submitted = true;
+					this.pidDisable=true
+					this.pid=res.data.pid
+					this.type=parseInt(res.data.stores_type-1)
+					this.typeDisable=true
                     this.userStoreMsg = res.data
                     this.store_province = res.data.store_province_name
                     this.store_city = res.data.store_city_name
@@ -214,18 +254,20 @@
                     if(res.data.status == 3) {
                         //    被驳回了
                         this.is_submitted = false;
+						this.pidDisable=false
+						this.typeDisable=false
                         this.status = 3;
                     }
-                    getStoreTypes().then(res=>{
-                        let storeTypes = res.data;
-                        for(let i = 0 ; i<storeTypes.length - 1; i++) {
-                            if(storeTypes[i].id) {
-                                if(storeTypes[i].id == this.userStoreMsg.type_id) {
-                                    this.index = i;
-                                }
-                            }
-                        }
-                    })
+                    // getStoreTypes().then(res=>{
+                    //     let storeTypes = res.data;
+                    //     for(let i = 0 ; i<storeTypes.length - 1; i++) {
+                    //         if(storeTypes[i].id) {
+                    //             if(storeTypes[i].id == this.userStoreMsg.type_id) {
+                    //                 this.index = i;
+                    //             }
+                    //         }
+                    //     }
+                    // })
                     //初始化地址选择数据
                     let objectMultiArray = [
                         utils.array_change(area.area[0]['0']),
@@ -247,8 +289,8 @@
                             showCancel: false,
                             success: function (res) {
                                 if (res.confirm) {
-                                    uni.navigateBack({
-                                        delta: 1
+                                    uni.navigateTo({
+                                        url:'/pages/index/index'
                                     })
                                 }
                             }
@@ -258,10 +300,10 @@
             },
             // 获取门店类型
             get_store_types(){
-                getStoreTypes().then(res=>{
-                    this.storeTypes = res.data;
-                    this.current = res.data && res.data[0].id;
-                })
+                // getStoreTypes().then(res=>{
+                //     this.storeTypes = res.data;
+                //     this.current = res.data && res.data[0].id;
+                // })
             },
             // 入驻
             settled: function(){
@@ -269,7 +311,7 @@
                 this.store_province = this.userStoreMsg.store_province;
                 this.store_city = this.userStoreMsg.store_city;
                 this.store_area = this.userStoreMsg.store_area;
-                this.store_type = this.current;
+                 //this.store_type = this.current;
                 if((this.store_name && this.store_mobile && this.store_address && this.store_province && this.store_city && this.store_area ) == '') {
                     error('请完善资料')
                     return;
@@ -278,10 +320,10 @@
                     error('请上传图片')
                     return;
                 }
-                if(!this.store_type) {
-                    error('请选择门店类型')
-                    return;
-                }
+                // if(!this.store_type) {
+                //     error('请选择门店类型')
+                //     return;
+                // }
                 this.store_image = this.arr[0];
                 let img_info = this.arrlist.length>0?JSON.stringify(this.arrlist):'';
                 userStoreApply({
@@ -292,8 +334,9 @@
                     store_province: this.store_province,
                     store_city: this.store_city,
                     store_area: this.store_area,
-                    store_type: this.store_type,
-                    img_info: img_info
+					store_type:this.type==0?1:2,
+                    img_info: img_info,
+					pid:this.pid?this.pid:0
                 },{mask:true}).then(res=>{
 										uni.showToast({
 											title: res.msg,

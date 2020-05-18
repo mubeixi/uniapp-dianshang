@@ -57,6 +57,8 @@ export const GetQueryByString = (str, name) => {
 
 }
 
+
+
 export const ls = {
     set(key, val, cover) {
 
@@ -438,7 +440,9 @@ export const urlencode = (str) => {
  * @return {string}
  */
 export const buildSharePath = (path) => {
-
+	let store_id=getStoreID()
+	
+	
     let users_ID = ls.get('users_id');
     let userInfo = store.state.userInfo || ls.get('userInfo');
     const User_ID = ls.get('user_id')
@@ -458,6 +462,10 @@ export const buildSharePath = (path) => {
         }
         search += ('&owner_id=' + owner_id)
     }
+	
+	if(store_id){
+		search+=('&store_id='+store_id)
+	}
 
 
     let ret = ''
@@ -715,4 +723,16 @@ export const plainArray = (arr,key,newArr)=>{
 
     }
 
+}
+
+export const getStoreID = ()=>{
+		let store_id=''
+		// #ifndef H5
+			store_id=ls.get('store_id')
+		// #endif
+		// #ifdef H5
+			store_id=sessionStorage.getItem('store_id')
+		// #endif
+		return store_id
+	
 }

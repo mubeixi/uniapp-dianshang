@@ -5,11 +5,14 @@
 			<view class="c-item">
 				<view class="item-left">{{is_purchase?'退':'进'}}货渠道</view>
 				<view class="item-right" @click="changeChannel">
-					<text>{{channelName}}</text>
+					<text v-if="is_purchase">
+						{{pid?'门店退货':'平台退货'}}
+					</text>
+					<text v-else>{{channelName}}</text>
 					<image :src="'/static/client/person/right.png'|domain" class="right" v-if="allow_from_plat == 1 "></image>
 				</view>
 			</view>
-			<view class="c-item" v-if="selectitem == 1">
+			<view class="c-item" v-if="selectitem == 1&&!is_purchase">
 				<view class="item-left">地址选择</view>
 				<view class="item-area">
 					<picker class="a-item" mode = "selector" :range="provinceList"  range-key="name" :value="p_index" @change="p_change_handle">
@@ -23,12 +26,13 @@
 					</picker>
 				</view>
 			</view>
-			<view class="c-item" v-if="selectitem == 1">
+			<view class="c-item" v-if="selectitem == 1&&!is_purchase">
 				<view class="item-left">门店编号</view>
 				<view class="item-input"><input type="text" v-model="purchase_store_sn" placeholder="请输入门店编号" placeholder-style="color: #c9c9c9;font-size:24rpx;" /></view>
 			</view>
 		</view>
-		<view class="search" @click="goPurchase">{{is_purchase && selectitem == 2 ? '确定' : '搜索'}}</view>
+		<view class="search" @click="goPurchase" v-if="is_purchase">确定</view>
+		<!-- <view class="search" @click="goPurchase">{{is_purchase && selectitem == 2 ? '确定' : '搜索'}}</view> -->
 		<div class="label-title" v-if="selectitem == 1 && stores.length > 0" style="justify-content: space-between;">
 			<div class="line"></div>
 			<div>门店列表</div>
@@ -105,6 +109,7 @@
 		},
 		data() {
 			return {
+				pid:'',
 				selectitem: 1,
 				purchase_store_sn: '',
 				provinceList: [],
@@ -133,6 +138,9 @@
 					this.is_purchase = true;
 					this.productMy = ls.get('productMy');
 					this.load();
+					if(options.pid){
+						this.pid=options.pid
+					}
 				}
 			}
 			if(options.order_id) {
@@ -322,8 +330,37 @@
 				})
 			},
 			goPurchase(){
-				if(this.selectitem == 1) {
-					this.getStoreList();
+				if(this.pid != 0) {
+					//this.getStoreList();
+					uni.showModal({
+						content: '确定退货？',
+						cancelText: '我再想想',
+						confirmText: '我意已决',
+						success: (res) => {
+							if(res.confirm) {
+								// 退货，并且是门店退货
+								storeProdBackSubmit({
+									store_id: this.Stores_ID,
+									prod_json: JSON.stringify(this.prod_json),
+									purchase_type: 'store',
+									purchase_store_id: this.pid
+								}).then(res=>{
+									ls.remove('productMy');
+									uni.showToast({
+										title: res.msg
+									});
+									setTimeout(()=>{
+										// 跳转选择渠道页面
+										uni.redirectTo({
+											url: '/pagesA/procurement/refundRecords'
+										})
+									},1000)
+								})
+							}else {
+								return;
+							}
+						}
+					})
 					return;
 				}else {
 					if(this.is_purchase) {
@@ -440,6 +477,9 @@
 				this.selectitem = this.selectitem;
 			},
 			changeChannel(){
+				if(this.is_purchase){
+					return
+				}
 				if(!this.allow_from_plat){return}
 				this.$refs.searchLayer.show();
 			},

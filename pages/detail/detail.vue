@@ -104,7 +104,7 @@
 	  </div>
 	<div style="clear: both;"></div>
 	<!-- #ifndef APP-PLUS -->
-	<bottom @kefu="contact" @cartHandle="addCart" @directHandle="directBuy" @goGet="lingqu" @collect="collect" :collected="isCollected" :recieve="recieve" :isVirtual="isVirtual" :canSubmit="canSubmit"></bottom>
+	<bottom @kefu="contact" @cartHandle="addCart" @directHandle="directBuy" @goGet="lingqu" @collect="collect" :collected="isCollected" :recieve="recieve" :isGiftPackage="is_gift_package_pro" :isVirtual="isVirtual" :canSubmit="canSubmit"></bottom>
 	<!-- #endif -->
 	<div style="height:60px;background: white;"></div>
  	<div class="safearea-box"></div>
@@ -223,9 +223,9 @@
 <script>
 import bottom from '../../components/bottom/bottom'
 import popupLayer from '../../components/popup-layer/popup-layer.vue'
-import {getProductDetail,getCommit,updateCart,addCollection,getCoupon,getUserCoupon,checkProdCollected,cancelCollection,judgeReceiveGift,getProductSharePic,getLiveInfo} from '../../common/fetch.js';
+import {getProductDetail,getCommit,updateCart,addCollection,getCoupon,getUserCoupon,checkProdCollected,cancelCollection,judgeReceiveGift,getProductSharePic,getLiveInfo,getGitfpackRecordList} from '../../common/fetch.js';
 import {goBack as goBackFn,numberSort,getProductThumb}  from '../../common/tool.js'
-import {buildSharePath, isWeiXin, ls} from "../../common/tool";
+import {buildSharePath, isWeiXin, ls,getStoreID} from "../../common/tool";
 import { mapGetters, mapActions, Store,mapState } from "vuex";
 import uParse from '../../components/gaoyia-parse/parse.vue'
 import {pageMixin,safeAreaMixin} from "../../common/mixin";
@@ -234,6 +234,7 @@ export default {
 	mixins:[pageMixin,safeAreaMixin],
     data(){
         return {
+			store_id:'',
 			hideNativeEleShow:false,
 			isLoad:false,
 			// #ifdef APP-PLUS
@@ -284,6 +285,7 @@ export default {
 			liveList:[],
 			liveCount:0,
 			//imgIndex:-1
+			is_gift_package_pro: false,  //是否是礼包产品，礼包产品不能加入购物车
         }
     },
     components: {
@@ -306,6 +308,7 @@ export default {
 	// #endif
 	onLoad: function (option) {
 		this.Products_ID = option.Products_ID;
+		this.store_id=getStoreID()
 		this.postData.prod_id = option.Products_ID;
 		//参与统计的
 		this.analysisExt.prod_id = option.Products_ID
@@ -397,8 +400,8 @@ export default {
 			this.liveList = res.data
 			this.liveCount = res.data.totalCount
 		}).catch((e)=>{
-				console.log(e)
-			})
+			console.log(e)
+		})
 		// #endif
 	},
 	onUnload(){
@@ -876,6 +879,10 @@ export default {
 			// 	code: e.detail.formId,
 			// 	times: 1
 			// })
+
+			if(this.store_id){
+				this.postData.store_id=this.store_id
+			}
 			this.isSubmit = true;
 			updateCart(this.postData).then(res=>{
 				this.isSubmit = false;
@@ -921,6 +928,10 @@ export default {
 			        icon: 'none',
 			    });
 				this.postData.qty = this.postData.count;
+			}
+			if(this.is_gift_package_pro) {
+				// 限购1件
+				this.postData.qty = 1
 			}
 		},
 		delNum(){
@@ -990,6 +1001,9 @@ export default {
 			let data={
 				prod_id:item,
 			}
+			if(this.store_id){
+				data.store_id=this.store_id
+			}
 			let product = null;
 			//返回的就是一个pormise了
 			await getProductDetail(data).then(res=>{
@@ -998,6 +1012,7 @@ export default {
 				this.postData.productDetail_price =this.product.Products_PriceX;
 				this.isVirtual = res.data.Products_IsVirtual == 1;
 				this.postData.count = res.data.Products_Count;
+				this.is_gift_package_pro = res.data.Gift_Packtype > 0 ? true : false
 				if(res.data.skujosn) {
 					let skujosn = res.data.skujosn;
 					let skujosn_new = [];

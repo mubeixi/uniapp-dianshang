@@ -55,7 +55,7 @@
                 </div>
             </div>
             <div class="text-center">
-                <div class="search" @click="loadInfo">搜索</div>
+                <div class="search" @click="loadInfoCheck">搜索</div>
             </div>
             <div class="space-box"></div>
             <div class="label-title" style="justify-content: space-between;">
@@ -144,6 +144,16 @@
             }
         },
         props: {
+            //是否距离最近
+            isDistance:{
+                type: Boolean,
+                default: false,
+            },
+            //是否根据产品来
+            isProduct:{
+                type: Boolean,
+                default: true,
+            },
             pageEl: {
                 type: Object,
                 require: true
@@ -204,12 +214,15 @@
             },
             async get_user_location() {
 
+
                 let localInfo = null;
 
 
                 let rt = false
+
                 //这里是返回了一个promise，而且不具备阻断后面的作用。不能用await promise.then()这样的古怪语法。要么就是await，要么就是promise.then()
                 getLocation(this.pageEl).then(res => {
+
                     if (res.code === 0) {
                         localInfo = res.data
 
@@ -220,13 +233,24 @@
 
                     }
                 }).catch(err => {
+
                     error('获取位置信息失败:' + err.msg)
                 })
 
 
 
             },
+            loadInfoCheck(storeId){
+
+                if(this.isDistance){
+
+                    this.get_user_location()
+                }else{
+                    this.loadInfo(storeId)
+                }
+            },
             loadInfo(storeId) {
+
                 let postData = {
                     pageSize: 10000,
                     page: 1,
@@ -236,7 +260,12 @@
                     stores_name: this.stores_name,
                 }
 
-                postData.prod_json = JSON.stringify(this.prod_ids)
+                if(this.isProduct){
+                    postData.prod_json = JSON.stringify(this.prod_ids)
+                }else{
+                    postData.stores_type=2
+                }
+
 
 
                 if (this.lat && this.lng) {
@@ -296,9 +325,9 @@
                 }
 
 				if(storeId){
-					this.loadInfo(storeId)
+					this.loadInfoCheck(storeId)
 				}else{
-					this.loadInfo()
+					this.loadInfoCheck()
 				}
 
 
