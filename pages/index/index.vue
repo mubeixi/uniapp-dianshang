@@ -190,6 +190,7 @@
 		components:{NoStore,WzwStore,StoreListComponents,popupLayer},
 		data() {
 			return {
+				JSSDK_INIT:false,
 				showIndex:false,
 				initData:{},
 				storeID:'',
@@ -580,15 +581,15 @@
 
 				})
 				this.storeInfo=arr.data
-				
-				
+
+
 				// #ifdef H5
 				if(!isWeiXin())return;
-				
+
 				let path = 'pages/index/index?store_id='+this.storeID;
 				let front_url = this.initData.front_url;
 				this.WX_JSSDK_INIT(this).then((wxEnv)=>{
-				    this.$wx.onMenuShareTimeline({
+						wxEnv.onMenuShareTimeline({
 				        title:  this.storeInfo.Stores_Name, // 分享标题
 				        link: front_url+buildSharePath(path), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
 				        imgUrl: this.storeInfo.Stores_ImgPath, // 分享图标
@@ -612,8 +613,8 @@
 				}).catch(()=>{
 				})
 				// #endif
-				
-				
+
+
 				let cate= await getProductCategory().catch(e=>{
 
 				})
