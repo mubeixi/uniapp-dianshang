@@ -8,7 +8,7 @@
 				<div class="store-info ">
 					<div class="flex">
 						<image :src="storeInfo.Stores_ImgPath"
-									 class="store-img"></image>
+						       class="store-img"></image>
 						<div class="store-info-content">
 							<div class="store-name" v-if="storeInfo.Stores_Name">
 								{{storeInfo.Stores_Name}}
@@ -30,9 +30,11 @@
 								<block v-else>
 									距你{{parseInt(storeInfo.distance)}}m
 								</block>
+
 							</div>
 						</div>
 					</div>
+
 					<div class="flex flex-vertical-center">
 						<div class="store-icon" @click="openLocation">
 							<i class="funicon  icon-address"></i>
@@ -50,22 +52,29 @@
 						</div>
 					</div>
 				</div>
+
 				<div class="store-search-div" @click="goSearch">
 					<input type="text" class="store-search" disabled=""/>
 					<!--      <i class="funicon  icon-del1"></i>-->
 					<i class="funicon  icon-search1"></i>
 				</div>
+
+
 				<ul class="store-ul flex"  :style="{marginLeft:-30*goodsNavIndex+'px'}">
 					<li class="store-li" :class="goodsNavIndex==0?'active':''"  @click="changeTab(0)">全部</li>
 					<block v-for="(cate,ind) of productCate" :key="ind">
 						<li class="store-li" :class="goodsNavIndex==(ind+1)?'active':''" @click="changeTab(ind+1)">{{cate.Category_Name}}</li>
 					</block>
+
+
 				</ul>
+
+
 				<swiper
-					class="store-swiper"
-					:style="{height:childSwiperHeight}"
-					@change="prodIndexChangeEvent"
-					:current="goodsNavIndex">
+				class="store-swiper"
+				:style="{height:childSwiperHeight}"
+				@change="prodIndexChangeEvent"
+				:current="goodsNavIndex">
 					<swiper-item >
 						<div id="scrollView" class="store-item-swiper">
 							<block v-for="(it,ind) of prodList[0]" :key="ind">
@@ -73,14 +82,20 @@
 							</block>
 						</div>
 					</swiper-item>
+
 					<swiper-item   v-for="(cate,index) of productCate" :key="index">
+
 						<div :id="'scrollView'+index" class="store-item-swiper">
 							<block v-for="(it,ind) of prodList[index+1]" :key="ind">
 								<wzw-store @updaCart="updaCart" @delQty="delQty" @addQty="addQty" :storeId="storeID" :myCart="myCart" :pro="it"></wzw-store>
 							</block>
+
 						</div>
 					</swiper-item>
+
 				</swiper>
+
+
 				<!--  遮罩层	-->
 				<view class="mask" v-if="showPro"  @click="showPro=false"></view>
 				<!--  产品属性弹窗	-->
@@ -107,11 +122,15 @@
 						</view>
 					</view>
 				</view>
+
+
 			</view>
 		</block>
 		<block v-else>
 			<no-store></no-store>
 		</block>
+
+
 		<popupLayer ref="popupLayer" :direction="'top'"  >
 			<div class="shareinfo" >
 				<div class="s_top">
@@ -140,12 +159,21 @@
 				<div class="s_bottom" @click="cancelShare">取消</div>
 			</div>
 		</popupLayer>
+
 		<store-list-components style="z-index: 10000;"  :pageEl="selfObj" :isDistance="true" :isProduct="false" direction="top" ref="stroeComp" @callFn="bindStores" catchtouchmove/>
+
+
+
 	</view>
 </template>
+
 <script>
 import {pageMixin} from "../../common/mixin";
 import NoStore from "./chooseIndex";
+
+
+
+
 import {getStoreDetail,getProductCategory,getSelfStoreProd,getCart,updateCart,getSystemConf,getStoreList} from '../../common/fetch'
 import WzwStore from '../../components/wzw-store'
 import {error, toast} from '../../common';
@@ -155,11 +183,14 @@ import StoreListComponents from "../../components/StoreListComponents";
 import {mapGetters,mapActions, mapState} from 'vuex';
 import popupLayer from '../../components/popup-layer/popup-layer.vue'
 import {getLocation} from "../../common/tool/location";
+
+
 export default {
 	mixins:[pageMixin],
 	components:{NoStore,WzwStore,StoreListComponents,popupLayer},
 	data() {
 		return {
+			JSSDK_INIT:false,
 			showIndex:false,
 			initData:{},
 			storeID:'',
@@ -191,7 +222,7 @@ export default {
 		};
 	},
 	onShareAppMessage() {
-		let path = '/pages/index/index';
+		let path = 'pages/index/index?store_id='+this.storeID;
 		let shareObj = {
 			title: this.storeInfo.Stores_Name,
 			desc: '万千好货疯抢中',
@@ -262,9 +293,11 @@ export default {
 					});
 					break;
 				case 'pic':
+
 					uni.navigateTo({
 						url:'/pagesA/store/storeShare?type=3'
 					})
+
 			}
 		},
 		openShare(){
@@ -302,6 +335,7 @@ export default {
 			if(item.Productsattrkeystrval){
 				data.attr_id=item.Productsattrkeystrval.Product_Attr_ID
 			}
+
 			updateCart(data,{tip:'加载中'}).then(res=>{
 				toast(res.msg)
 				this.myCart=res.data.CartList
@@ -312,6 +346,7 @@ export default {
 			})
 		},
 		addQty(item){
+
 			let data={
 				cart_key:'CartList',
 				prod_id: item.prod_id,
@@ -321,6 +356,7 @@ export default {
 			if(item.Productsattrkeystrval){
 				data.attr_id=item.Productsattrkeystrval.Product_Attr_ID
 			}
+
 			updateCart(data,{tip:'加载中'}).then(res=>{
 				toast(res.msg)
 				this.myCart=res.data.CartList
@@ -329,6 +365,7 @@ export default {
 				error(e.msg)
 				this.showPro=false
 			})
+
 		},
 		plus(){
 			if (this.postData.qty < this.postData.count) {
@@ -416,6 +453,9 @@ export default {
 			this.submit_flag = (!this.check_attr || Object.getOwnPropertyNames(this.check_attr).length != Object.getOwnPropertyNames(this.prosku.skujosn).length) || Object.getOwnPropertyNames(this.prosku.skuvaljosn).indexOf(check_attrid)==-1 ? false : true;
 		},
 		updaCart(data){
+
+
+
 			if(data.skujosn) {
 				let skujosn = data.skujosn;
 				let skujosn_new = [];
@@ -433,10 +473,12 @@ export default {
 			this.postData.qty=1
 			this.postData.prod_id=data.Products_ID
 			this.postData.attr_id=''
+
 			this.showPro=true
 		},
 		confirm(){
 			if(!this.submit_flag) {return;}
+
 			if(this.prosku.skuvaljosn && !this.postData.attr_id) {
 				uni.showToast({
 					title: '请选择规格',
@@ -453,6 +495,7 @@ export default {
 			if(this.postData.attr_id){
 				data.attr_id=this.postData.attr_id
 			}
+
 			updateCart(data,{tip:'加载中'}).then(res=>{
 				toast(res.msg)
 				this.myCart=res.data.CartList
@@ -461,6 +504,9 @@ export default {
 				error(e.msg)
 				this.showPro=false
 			})
+
+
+
 		},
 		changeTab(item){
 			this.goodsNavIndex=item
@@ -471,6 +517,7 @@ export default {
 				latitude: Number(this.storeInfo.Stores_PrimaryLat),
 				longitude: Number(this.storeInfo.Stores_PrimaryLng),
 				success: function () {
+
 				}
 			});
 		},
@@ -483,6 +530,7 @@ export default {
 			const {current} = event.detail
 			this.goodsNavIndex = current
 			let that=this
+
 			if(!this.prodList[this.goodsNavIndex]&&this.goodsNavIndex!=0){
 				let data={
 					page:1,
@@ -494,7 +542,11 @@ export default {
 				}
 				data.cate_id=this.productCate[this.goodsNavIndex-1].Category_ID
 				await getSelfStoreProd(data,{tip:'加载中'}).then(res=>{
+
+
+
 					this.$set(that.prodList,this.goodsNavIndex,res.data)
+
 				}).catch(e=>{error(e.msg||'获取产品列表失败')})
 			}
 			this.$nextTick().then(() => {
@@ -505,11 +557,16 @@ export default {
 					const query = uni.createSelectorQuery()
 					console.log(str,"ss")
 					query.select(str).boundingClientRect(data => {
+
 						this.scrollHeightS[this.goodsNavIndex] = data.height
 						this.upSwiperHeight()
 					}).exec()
 				}
+
+
 			})
+
+
 		},
 		async init(){
 			this.showIndex=true
@@ -521,14 +578,53 @@ export default {
 				storeData.lng = this.lng
 			}
 			let arr =await getStoreDetail(storeData,{tip:'智能定位中'}).catch(e=>{
+
 			})
 			this.storeInfo=arr.data
-			let cate= await getProductCategory().catch(e=>{
+
+
+			// #ifdef H5
+			if(!isWeiXin())return;
+
+			let path = 'pages/index/index?store_id='+this.storeID;
+			let front_url = this.initData.front_url;
+			this.WX_JSSDK_INIT(this).then((wxEnv)=>{
+				wxEnv.onMenuShareTimeline({
+					title:  this.storeInfo.Stores_Name, // 分享标题
+					link: front_url+buildSharePath(path), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+					imgUrl: this.storeInfo.Stores_ImgPath, // 分享图标
+					desc: '万千好货疯抢中',
+					success: function() {
+						// 用户点击了分享后执行的回调函数
+					}
+				});
+				//两种方式都可以
+				wxEnv.onMenuShareAppMessage({
+					title: this.storeInfo.Stores_Name, // 分享标题
+					link: front_url+buildSharePath(path), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+					imgUrl: this.storeInfo.Stores_ImgPath, // 分享图标
+					desc: '万千好货疯抢中',
+					type: 'link', // 分享类型,music、video或link，不填默认为link
+					// dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+					success: function() {
+						// 用户点击了分享后执行的回调函数
+					}
+				});
+			}).catch(()=>{
 			})
+			// #endif
+
+
+			let cate= await getProductCategory().catch(e=>{
+
+			})
+
 			uni.setNavigationBarTitle({
 				title:this.storeInfo.Stores_Name
 			})
 			this.productCate=cate.data
+
+
 			let data={
 				page:1,
 				pageSize:999,
@@ -541,16 +637,23 @@ export default {
 			this.prodList=[]
 			let pro=await getSelfStoreProd(data,{tip:'加载中'}).catch(e=>{error(e.msg||'获取产品列表失败')})
 			this.prodList.push(pro.data)
+
 			this.$nextTick().then(() => {
+
 				const query = uni.createSelectorQuery()
+
 				query.select('#scrollView').boundingClientRect(data => {
+
 					this.scrollHeightS[0] = data.height
 					this.goodsNavIndex === 0 && this.upSwiperHeight()
 				}).exec()
+
 			})
+
 			getCart({cart_key: 'CartList'}).then(res=>{
 				this.myCart=res.data.CartList
 			})
+
 		},
 		upSwiperHeight(){
 			try {
@@ -562,45 +665,68 @@ export default {
 			}
 		},
 		async get_user_location() {
+
 			let localInfo = null;
+
+
 			let rt = false
 			let that=this
 			//这里是返回了一个promise，而且不具备阻断后面的作用。不能用await promise.then()这样的古怪语法。要么就是await，要么就是promise.then()
 			getLocation(that).then(res => {
+
 				if (res.code === 0) {
 					localInfo = res.data
+
 					this.lat = localInfo.latitude
 					this.lng = localInfo.longitude
+
 					this.loadInfoStore()
+
 				}
 			}).catch(err => {
+
 				this.storeID=''
 				this.showIndex=true
+
 			})
+
+
+
+
 		},
 		async get_user_location_init() {
+
 			let localInfo = null;
+
 			let that=this
 			let rt = false
 			//这里是返回了一个promise，而且不具备阻断后面的作用。不能用await promise.then()这样的古怪语法。要么就是await，要么就是promise.then()
 			getLocation(that).then(res => {
 				if (res.code === 0) {
 					localInfo = res.data
+
 					this.lat = localInfo.latitude
 					this.lng = localInfo.longitude
+
 					this.init()
+
 				}
 			}).catch(err => {
 				this.init()
 				//error('获取位置信息失败:' + err.msg)
 			})
+
+
+
 		},
 		loadInfoStore() {
+
 			let postData = {
 				pageSize: 1,
 				page: 1,
 				stores_type:2
 			}
+
 			if (this.lat && this.lng) {
 				postData.lat = this.lat
 				postData.lng = this.lng
@@ -609,6 +735,7 @@ export default {
 			getStoreList(emptyObject(postData), {mask: true}).then(res => {
 				if(res.data.length>0){
 					this.storeID=res.data[0].Stores_ID
+
 					that.init()
 					// #ifndef H5
 					ls.set('store_id', this.storeID)
@@ -625,6 +752,7 @@ export default {
 					sessionStorage.setItem('store_id', this.storeID)
 					// #endif
 				}
+
 			}).catch(e=>{error(e.msg||'获取门店错误')})
 		},
 		initStore(){
@@ -634,11 +762,14 @@ export default {
 				this.systemInfo = uni.getSystemInfoSync()
 				this.get_user_location_init()
 			}else if(this.initData.store_positing==1){
+
 				this.systemInfo = uni.getSystemInfoSync()
 				this.get_user_location()
 			}else{
 				this.showIndex=true
 			}
+
+
 		}
 	},
 	async onLoad() {
@@ -648,10 +779,12 @@ export default {
 		let systemConf = await getSystemConf()
 		let initData = systemConf?systemConf.data:null
 		this.initData=initData
+
 		this.initStore()
 	}
 }
 </script>
+
 <style lang="scss" scoped>
 	.index-all{
 		width: 750rpx;
@@ -669,6 +802,7 @@ export default {
 		background-repeat: no-repeat;
 		background-size: 100% auto;
 	}
+
 	.store-item-swiper{
 		padding-bottom: 42px;
 	}
@@ -682,6 +816,7 @@ export default {
 		padding-top: 70rpx;
 		color: #FFFFFF;
 	}
+
 	.store-info {
 		width: 710rpx;
 		//height: 240rpx;
@@ -692,16 +827,19 @@ export default {
 		padding: 24rpx;
 		box-sizing: border-box;
 	}
+
 	.store-img {
 		width: 92rpx;
 		height: 92rpx;
 		border-radius: 50%;
 		margin-right: 20rpx;
 	}
+
 	.store-info-content {
 		width: 200rpx;
 		margin-right: 50rpx;
 	}
+
 	.store-name {
 		margin-top: 6px;
 		height: 30rpx;
@@ -734,6 +872,7 @@ export default {
 			font-size: 24rpx;
 		}
 	}
+
 	.store-promise {
 		padding: 0rpx 8rpx;
 		border: 1px solid #FF4E00;
@@ -747,6 +886,7 @@ export default {
 		display: inline-block;
 		margin-top: 7px;
 	}
+
 	.store-icon {
 		width: 234rpx;
 		text-align: center;
@@ -754,10 +894,12 @@ export default {
 		color: #666666;
 		padding-top: 30rpx;
 	}
+
 	.icon-address, .icon-cell, .icon-share-t {
 		color: #ff774d;
 		font-size: 22px;
 	}
+
 	.store-search {
 		width: 710rpx;
 		height: 66rpx;
@@ -770,12 +912,14 @@ export default {
 		color: #FFFFFF;
 		border: 1px solid #FFFFFF;
 	}
+
 	.store-search-div {
 		position: relative;
 		width: 710rpx;
 		margin: 0 auto;
 		height: 66rpx;
 	}
+
 	.icon-del1 {
 		font-size: 32rpx;
 		color: #ffd2be;
@@ -783,6 +927,7 @@ export default {
 		top: 16rpx;
 		left: 590rpx;
 	}
+
 	.icon-search1 {
 		font-size: 38rpx;
 		color: #ffd2be;
@@ -790,6 +935,7 @@ export default {
 		top: 10rpx;
 		left: 644rpx;
 	}
+
 	.store-ul {
 		width: 750rpx;
 		height: 50rpx;
@@ -802,6 +948,7 @@ export default {
 		font-size: 30rpx;
 		line-height: 32rpx;
 	}
+
 	.store-li {
 		height: 50rpx;
 		padding-bottom: 16rpx;
@@ -814,9 +961,11 @@ export default {
 		zoom: 1;
 		font-size: 14px;
 	}
+
 	.active {
 		font-size: 17px;
 		font-weight: bold;
+
 		&:after {
 			content: "";
 			display: block;
@@ -830,10 +979,13 @@ export default {
 			transform: translateX(-50%);
 		}
 	}
+
 	.store-swiper {
 		padding: 0rpx 20rpx;
 		box-sizing: border-box;
 	}
+
+
 	.mask {
 		background-color: rgba(0,0,0,.5);
 		position: fixed;
@@ -1052,6 +1204,8 @@ export default {
 			text-align: center;
 		}
 	}
+
+
 	//分享
 	.ticks,.shareinfo {
 		background: #fff;
@@ -1061,7 +1215,9 @@ export default {
 		z-index: 100;
 		border-top-left-radius: 10rpx;
 		border-top-right-radius: 10rpx;
+		/* #ifdef H5 */
 		margin-bottom: 50px;
+		/* #endif */
 	}
 	.ticks{
 		max-height: 1050rpx;
@@ -1173,4 +1329,6 @@ export default {
 		height: 40rpx;
 		background-color: #FFCBCB;
 	}
+
+
 </style>

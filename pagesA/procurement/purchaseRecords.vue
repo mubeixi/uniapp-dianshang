@@ -208,10 +208,14 @@
 					if(prod_json[item.prod_id]) {
 						prod_json[item.prod_id][item.attr_id] = item.prod_count
 					}else {
-						prod_json[item.prod_id] = {
-							[item.attr_id]: item.prod_count
-						}
+			
+							prod_json[item.prod_id]={}
+						
+						prod_json[item.prod_id][item.attr_id]=item.prod_count
+				
 					}
+					
+					
 				})
 				data.prod_json = JSON.stringify(prod_json);
 				let that=this
@@ -280,12 +284,16 @@
 				let prod_list = this.orderList[index].prod_list;
 				console.log(prod_list,"ss")
 				prod_list.forEach(item=>{
-					data[item.prod_id]={
-						[item.attr_id] : item.prod_count
+					
+					if(!data[item.prod_id]){
+						data[item.prod_id]={}
 					}
+					data[item.prod_id][item.attr_id]=item.prod_count
+				
 				})
 				storePifaOrderCalc({store_id:this.Stores_ID,order_id:id,prod_json:JSON.stringify(data)}).then(res=>{
 					this.orderList[index].Order_TotalPrice=res.data.Order_TotalPrice
+					this.orderList[index].Order_Shipping=res.data.Order_Shipping
 				}).catch(e=>{
 					this.orderList[index].prod_list[ind].prod_count--;
 				})
@@ -303,12 +311,14 @@
 					let prod_list = this.orderList[index].prod_list;
 			        console.log(prod_list,"ss")
 						prod_list.forEach(item=>{
-								data[item.prod_id]={
-									[item.attr_id] : item.prod_count
+								if(!data[item.prod_id]){
+									data[item.prod_id]={}
 								}
+								data[item.prod_id][item.attr_id]=item.prod_count
 						})
 					storePifaOrderCalc({store_id:this.Stores_ID,order_id:id,prod_json:JSON.stringify(data)}).then(res=>{
 						this.orderList[index].Order_TotalPrice=res.data.Order_TotalPrice
+						this.orderList[index].Order_Shipping=res.data.Order_Shipping
 					}).catch(e=>{
 						error(e.msg)
 						this.orderList[index].prod_list[ind].prod_count++
