@@ -569,90 +569,105 @@ export default {
 
 		},
 		async init(){
-			this.showIndex=true
-			let storeData={
-				store_id:this.storeID
+			try {
+				this.showIndex=true
+				let storeData={
+					store_id:this.storeID
+				}
+				if (this.lat && this.lng) {
+					storeData.lat = this.lat
+					storeData.lng = this.lng
+				}
+				let arr =await getStoreDetail(storeData,{tip:'智能定位中',noUid:1}).catch(e=>{
+
+					this.storeID=''
+					// #ifndef H5
+					ls.set('store_id', '')
+					//#endif
+					// #ifdef H5
+					sessionStorage.setItem('store_id', '')
+					// #endif
+
+					throw Error(e.msg||'获取门店错误')
+				})
+				this.storeInfo=arr.data
+
+
+				// #ifdef H5
+				if(!isWeiXin())return;
+
+				let path = 'pages/index/index?store_id='+this.storeID;
+				let front_url = this.initData.front_url;
+				this.WX_JSSDK_INIT(this).then((wxEnv)=>{
+					wxEnv.onMenuShareTimeline({
+						title:  this.storeInfo.Stores_Name, // 分享标题
+						link: front_url+buildSharePath(path), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+						imgUrl: this.storeInfo.Stores_ImgPath, // 分享图标
+						desc: '万千好货疯抢中',
+						success: function() {
+							// 用户点击了分享后执行的回调函数
+						}
+					});
+					//两种方式都可以
+					wxEnv.onMenuShareAppMessage({
+						title: this.storeInfo.Stores_Name, // 分享标题
+						link: front_url+buildSharePath(path), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+						imgUrl: this.storeInfo.Stores_ImgPath, // 分享图标
+						desc: '万千好货疯抢中',
+						type: 'link', // 分享类型,music、video或link，不填默认为link
+						// dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+						success: function() {
+							// 用户点击了分享后执行的回调函数
+						}
+					});
+				}).catch((e)=>{
+					throw Error('初始化微信分享错误')
+				})
+				// #endif
+
+
+				let cate= await getProductCategory().catch(e=>{
+
+				})
+
+				uni.setNavigationBarTitle({
+					title:this.storeInfo.Stores_Name
+				})
+				this.productCate=cate.data
+
+
+				let data={
+					page:1,
+					pageSize:999,
+					with_buyer:1,
+					is_selling:1,
+					buyer_count:6,
+					store_id:getStoreID()
+					//store_id:sessionStorage.getItem('store_id')
+				}
+				this.prodList=[]
+				let pro=await getSelfStoreProd(data,{tip:'加载中'}).catch(e=>{error(e.msg||'获取产品列表失败')})
+				this.prodList.push(pro.data)
+
+				this.$nextTick().then(() => {
+
+					const query = uni.createSelectorQuery()
+
+					query.select('#scrollView').boundingClientRect(data => {
+
+						this.scrollHeightS[0] = data.height
+						this.goodsNavIndex === 0 && this.upSwiperHeight()
+					}).exec()
+
+				})
+
+				getCart({cart_key: 'CartList'}).then(res=>{
+					this.myCart=res.data.CartList
+				})
+			}catch (e) {
+				// console.log(e)
+				error(e.message)
 			}
-			if (this.lat && this.lng) {
-				storeData.lat = this.lat
-				storeData.lng = this.lng
-			}
-			let arr =await getStoreDetail(storeData,{tip:'智能定位中'}).catch(e=>{
-
-			})
-			this.storeInfo=arr.data
-
-
-			// #ifdef H5
-			if(!isWeiXin())return;
-
-			let path = 'pages/index/index?store_id='+this.storeID;
-			let front_url = this.initData.front_url;
-			this.WX_JSSDK_INIT(this).then((wxEnv)=>{
-				wxEnv.onMenuShareTimeline({
-					title:  this.storeInfo.Stores_Name, // 分享标题
-					link: front_url+buildSharePath(path), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-					imgUrl: this.storeInfo.Stores_ImgPath, // 分享图标
-					desc: '万千好货疯抢中',
-					success: function() {
-						// 用户点击了分享后执行的回调函数
-					}
-				});
-				//两种方式都可以
-				wxEnv.onMenuShareAppMessage({
-					title: this.storeInfo.Stores_Name, // 分享标题
-					link: front_url+buildSharePath(path), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-					imgUrl: this.storeInfo.Stores_ImgPath, // 分享图标
-					desc: '万千好货疯抢中',
-					type: 'link', // 分享类型,music、video或link，不填默认为link
-					// dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
-					success: function() {
-						// 用户点击了分享后执行的回调函数
-					}
-				});
-			}).catch(()=>{
-			})
-			// #endif
-
-
-			let cate= await getProductCategory().catch(e=>{
-
-			})
-
-			uni.setNavigationBarTitle({
-				title:this.storeInfo.Stores_Name
-			})
-			this.productCate=cate.data
-
-
-			let data={
-				page:1,
-				pageSize:999,
-				with_buyer:1,
-				is_selling:1,
-				buyer_count:6,
-				store_id:getStoreID()
-				//store_id:sessionStorage.getItem('store_id')
-			}
-			this.prodList=[]
-			let pro=await getSelfStoreProd(data,{tip:'加载中'}).catch(e=>{error(e.msg||'获取产品列表失败')})
-			this.prodList.push(pro.data)
-
-			this.$nextTick().then(() => {
-
-				const query = uni.createSelectorQuery()
-
-				query.select('#scrollView').boundingClientRect(data => {
-
-					this.scrollHeightS[0] = data.height
-					this.goodsNavIndex === 0 && this.upSwiperHeight()
-				}).exec()
-
-			})
-
-			getCart({cart_key: 'CartList'}).then(res=>{
-				this.myCart=res.data.CartList
-			})
 
 		},
 		upSwiperHeight(){
