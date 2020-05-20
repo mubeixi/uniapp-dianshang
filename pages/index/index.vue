@@ -295,7 +295,7 @@ export default {
 				case 'pic':
 
 					uni.navigateTo({
-						url:'/pagesA/store/storeShare?type=3&store='+this.$store.getters.getCurrentStoreId()
+						url:'/pagesA/store/storeShare?type=3&store='+_self.$store.getters.getCurrentStoreId()
 					})
 
 			}
