@@ -190,6 +190,7 @@
 		components:{NoStore,WzwStore,StoreListComponents,popupLayer},
 		data() {
 			return {
+				JSSDK_INIT:false,
 				showIndex:false,
 				initData:{},
 				storeID:'',
@@ -221,7 +222,7 @@
 			};
 		},
 		onShareAppMessage() {
-			let path = '/pages/index/index';
+			let path = 'pages/index/index?store_id='+this.storeID;
 			let shareObj = {
 				title: this.storeInfo.Stores_Name,
 				desc: '万千好货疯抢中',
@@ -580,6 +581,40 @@
 
 				})
 				this.storeInfo=arr.data
+
+
+				// #ifdef H5
+				if(!isWeiXin())return;
+
+				let path = 'pages/index/index?store_id='+this.storeID;
+				let front_url = this.initData.front_url;
+				this.WX_JSSDK_INIT(this).then((wxEnv)=>{
+						wxEnv.onMenuShareTimeline({
+				        title:  this.storeInfo.Stores_Name, // 分享标题
+				        link: front_url+buildSharePath(path), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+				        imgUrl: this.storeInfo.Stores_ImgPath, // 分享图标
+						 desc: '万千好货疯抢中',
+				        success: function() {
+				            // 用户点击了分享后执行的回调函数
+				        }
+				    });
+				    //两种方式都可以
+				    wxEnv.onMenuShareAppMessage({
+				        title: this.storeInfo.Stores_Name, // 分享标题
+				        link: front_url+buildSharePath(path), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+				        imgUrl: this.storeInfo.Stores_ImgPath, // 分享图标
+				        desc: '万千好货疯抢中',
+				        type: 'link', // 分享类型,music、video或link，不填默认为link
+				        // dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+				        success: function() {
+				            // 用户点击了分享后执行的回调函数
+				        }
+				    });
+				}).catch(()=>{
+				})
+				// #endif
+
+
 				let cate= await getProductCategory().catch(e=>{
 
 				})
@@ -1180,7 +1215,9 @@
 		z-index: 100;
 		border-top-left-radius: 10rpx;
 		border-top-right-radius: 10rpx;
+		/* #ifdef H5 */
 		margin-bottom: 50px;
+		/* #endif */
 	}
 	.ticks{
 		max-height: 1050rpx;

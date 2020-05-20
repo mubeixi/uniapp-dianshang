@@ -143,7 +143,8 @@
 
 <script>
 	// import TweenLite from 'gsap'
-	import "../../common/tool/TweenMax.min.js"
+	//import "../../common/tool/TweenMax.min.js"
+	import TweenMax from '@/common/tool/TweenMax.min'
 	import {pageMixin} from "../../common/mixin";
 	import {
 		get_user_info,
@@ -187,7 +188,7 @@
 		watch: {
 			s_money: function(newVal, oldVal){
 				var newValue = parseFloat(newVal)
-				TweenLite.to(this.$data, 0.5, {Umoney: newValue})
+				TweenMax.TweenLite.to(this.$data, 0.5, {Umoney: newValue})
 			}
 		},
 		onReachBottom() {

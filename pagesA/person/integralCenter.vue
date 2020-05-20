@@ -85,7 +85,8 @@
 
 <script>
 	// import TweenLite from 'gsap'
-	import "../../common/tool/TweenMax.min.js"
+	//import "../../common/tool/TweenMax.min.js"
+	import TweenMax from '@/common/tool/TweenMax.min'
 	import {mapGetters,mapActions} from 'vuex'
 	import {userIntegralRecord,transferIntegral,get_user_info} from '../../common/fetch.js';
 	import {pageMixin} from "../../common/mixin";
@@ -113,7 +114,7 @@
 		},
 		watch: {
 			user_intergatal: function(newVal,oldVal){
-				TweenLite.to(this.$data, 0.5, {U_intergatal: newVal})
+				TweenMax.TweenLite.to(this.$data, 0.5, {U_intergatal: newVal})
 			}
 		},
 		onShow() {
