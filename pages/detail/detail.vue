@@ -225,7 +225,7 @@ import bottom from '../../components/bottom/bottom'
 import popupLayer from '../../components/popup-layer/popup-layer.vue'
 import {getProductDetail,getCommit,updateCart,addCollection,getCoupon,getUserCoupon,checkProdCollected,cancelCollection,judgeReceiveGift,getProductSharePic,getLiveInfo,getGitfpackRecordList} from '../../common/fetch.js';
 import {goBack as goBackFn,numberSort,getProductThumb}  from '../../common/tool.js'
-import {buildSharePath, isWeiXin, ls,getStoreID} from "../../common/tool";
+import {buildSharePath, isWeiXin, ls} from "../../common/tool";
 import { mapGetters, mapActions, Store,mapState } from "vuex";
 import uParse from '../../components/gaoyia-parse/parse.vue'
 import {pageMixin,safeAreaMixin} from "../../common/mixin";
@@ -308,7 +308,7 @@ export default {
 	// #endif
 	onLoad: function (option) {
 		this.Products_ID = option.Products_ID;
-		this.store_id=getStoreID()
+		this.store_id=this.$store.getters.getCurrentStoreId()
 		this.postData.prod_id = option.Products_ID;
 		//参与统计的
 		this.analysisExt.prod_id = option.Products_ID

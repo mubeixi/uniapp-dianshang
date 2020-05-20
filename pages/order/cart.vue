@@ -95,7 +95,7 @@
 	// import pagetitle from "@/components/title";
 	import {getCart,getProd,updateCart,delCart,getSelfStoreProd} from '../../common/fetch.js';
 	import {pageMixin} from "../../common/mixin";
-	import {ls,getStoreID} from '../../common/tool.js';
+	import {ls} from '../../common/tool.js';
 	import {mapActions} from 'vuex';
 	import {goProductDetail} from "../../common";
 
@@ -371,7 +371,7 @@
 			getProd(){
 				this.prod_arg.Users_ID = this.Users_ID;
 				let oldlist = this.prodList;
-				let store_id=getStoreID()
+				let store_id=this.$store.getters.getCurrentStoreId()
 				if(store_id){
 					this.prod_arg.store_id=store_id
 					this.prod_arg.is_selling=1

@@ -10,6 +10,18 @@ export const SET_STORES_ID = function (state, value) {
   ls.set('Stores_ID',value,1)
 }
 
+export const SET_FRE_STORE_ID = function(state,value){
+  state.current_store_id = value
+  // #ifndef H5
+  ls.set('current_store_id',value,1)
+  //#endif
+
+  // #ifdef H5
+  sessionStorage.setItem('current_store_id', value)
+  // #endif
+
+}
+
 
 export const SET_USER_INFO = function (state, value) {
 
