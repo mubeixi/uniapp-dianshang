@@ -593,37 +593,7 @@ export default {
 				this.storeInfo=arr.data
 
 
-				// #ifdef H5
-				if(!isWeiXin())return;
 
-				let path = 'pages/index/index?store_id='+this.storeID;
-				let front_url = this.initData.front_url;
-				this.WX_JSSDK_INIT(this).then((wxEnv)=>{
-					wxEnv.onMenuShareTimeline({
-						title:  this.storeInfo.Stores_Name, // 分享标题
-						link: front_url+buildSharePath(path), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-						imgUrl: this.storeInfo.Stores_ImgPath, // 分享图标
-						desc: '万千好货疯抢中',
-						success: function() {
-							// 用户点击了分享后执行的回调函数
-						}
-					});
-					//两种方式都可以
-					wxEnv.onMenuShareAppMessage({
-						title: this.storeInfo.Stores_Name, // 分享标题
-						link: front_url+buildSharePath(path), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-						imgUrl: this.storeInfo.Stores_ImgPath, // 分享图标
-						desc: '万千好货疯抢中',
-						type: 'link', // 分享类型,music、video或link，不填默认为link
-						// dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
-						success: function() {
-							// 用户点击了分享后执行的回调函数
-						}
-					});
-				}).catch((e)=>{
-					throw Error('初始化微信分享错误')
-				})
-				// #endif
 
 
 				let cate= await getProductCategory().catch(e=>{
@@ -664,6 +634,40 @@ export default {
 				getCart({cart_key: 'CartList'}).then(res=>{
 					this.myCart=res.data.CartList
 				})
+
+				// #ifdef H5
+				if(isWeiXin()){
+					let path = 'pages/index/index?store_id='+this.storeID;
+					let front_url = this.initData.front_url;
+					this.WX_JSSDK_INIT(this).then((wxEnv)=>{
+						wxEnv.onMenuShareTimeline({
+							title:  this.storeInfo.Stores_Name, // 分享标题
+							link: front_url+buildSharePath(path), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+							imgUrl: this.storeInfo.Stores_ImgPath, // 分享图标
+							desc: '万千好货疯抢中',
+							success: function() {
+								// 用户点击了分享后执行的回调函数
+							}
+						});
+						//两种方式都可以
+						wxEnv.onMenuShareAppMessage({
+							title: this.storeInfo.Stores_Name, // 分享标题
+							link: front_url+buildSharePath(path), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+							imgUrl: this.storeInfo.Stores_ImgPath, // 分享图标
+							desc: '万千好货疯抢中',
+							type: 'link', // 分享类型,music、video或link，不填默认为link
+							// dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+							success: function() {
+								// 用户点击了分享后执行的回调函数
+							}
+						});
+					}).catch((e)=>{
+						throw Error('初始化微信分享错误')
+					})
+				}
+
+				// #endif
+
 			}catch (e) {
 				// console.log(e)
 				error(e.message)
