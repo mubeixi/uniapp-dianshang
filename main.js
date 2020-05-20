@@ -20,16 +20,16 @@ Vue.component('wzw-dialog',ModelComponents)
 
 // #ifdef H5
 
-import * as fundebug from "fundebug-javascript";
-import fundebugVue from "fundebug-vue";
-
-fundebug.init({
-    apikey: "61884c104ad275ca895d62af695b5f1aaef3f4f382fd392627e239b7e24a6583"
-})
-fundebugVue(fundebug, Vue);
-require('fundebug-revideo');
-
-window.FUNDEBUG = fundebug
+// import * as fundebug from "fundebug-javascript";
+// import fundebugVue from "fundebug-vue";
+//
+// fundebug.init({
+//     apikey: "61884c104ad275ca895d62af695b5f1aaef3f4f382fd392627e239b7e24a6583"
+// })
+// fundebugVue(fundebug, Vue);
+// require('fundebug-revideo');
+//
+// window.FUNDEBUG = fundebug
 
 
 window.onerror=handleErr

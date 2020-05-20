@@ -71,6 +71,10 @@ export const getLocation = async (vm) => {
                         }
                     });
 
+                }).catch(err=>{
+
+                    reject(failOpt.osNotAllow)
+                    console.log(err)
                 })
 
             } else {
