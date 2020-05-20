@@ -8,7 +8,7 @@
 				<div class="store-info ">
 					<div class="flex">
 						<image :src="storeInfo.Stores_ImgPath"
-									 class="store-img"></image>
+						       class="store-img"></image>
 						<div class="store-info-content">
 							<div class="store-name" v-if="storeInfo.Stores_Name">
 								{{storeInfo.Stores_Name}}
@@ -71,10 +71,10 @@
 
 
 				<swiper
-					class="store-swiper"
-					:style="{height:childSwiperHeight}"
-					@change="prodIndexChangeEvent"
-					:current="goodsNavIndex">
+				class="store-swiper"
+				:style="{height:childSwiperHeight}"
+				@change="prodIndexChangeEvent"
+				:current="goodsNavIndex">
 					<swiper-item >
 						<div id="scrollView" class="store-item-swiper">
 							<block v-for="(it,ind) of prodList[0]" :key="ind">
@@ -168,407 +168,408 @@
 </template>
 
 <script>
-	import {pageMixin} from "../../common/mixin";
-	import NoStore from "./chooseIndex";
+import {pageMixin} from "../../common/mixin";
+import NoStore from "./chooseIndex";
 
 
 
 
-	import {getStoreDetail,getProductCategory,getSelfStoreProd,getCart,updateCart,getSystemConf,getStoreList} from '../../common/fetch'
-	import WzwStore from '../../components/wzw-store'
-	import {error, toast} from '../../common';
-	import {numberSort,getStoreID,emptyObject,ls,buildSharePath, isWeiXin,getProductThumb} from '../../common/tool.js'
-	import {domainFn} from '../../common/filter';
-	import StoreListComponents from "../../components/StoreListComponents";
-	import {mapGetters,mapActions, mapState} from 'vuex';
-	import popupLayer from '../../components/popup-layer/popup-layer.vue'
-	import {getLocation} from "../../common/tool/location";
+import {getStoreDetail,getProductCategory,getSelfStoreProd,getCart,updateCart,getSystemConf,getStoreList} from '../../common/fetch'
+import WzwStore from '../../components/wzw-store'
+import {error, toast} from '../../common';
+import {numberSort,getStoreID,emptyObject,ls,buildSharePath, isWeiXin,getProductThumb} from '../../common/tool.js'
+import {domainFn} from '../../common/filter';
+import StoreListComponents from "../../components/StoreListComponents";
+import {mapGetters,mapActions, mapState} from 'vuex';
+import popupLayer from '../../components/popup-layer/popup-layer.vue'
+import {getLocation} from "../../common/tool/location";
 
 
-	export default {
-		mixins:[pageMixin],
-		components:{NoStore,WzwStore,StoreListComponents,popupLayer},
-		data() {
-			return {
-				JSSDK_INIT:false,
-				showIndex:false,
-				initData:{},
-				storeID:'',
-				lat:'',
-				lng:'',
-				selfObj:null,
-				childSwiperHeight:'auto',
-				productCate:[],
-				scrollHeightS:[0,0,0,0],
-				store_id:'10',
-				systemInfo: {city_express_config:{}},
-				goodsNavIndex: 0,
-				storeInfo:{},
-				prodList:[],
-				myCart:[],
-				prosku:{},
-				showPro:false,
-				submit_flag:true,
-				check_attr: {},
-				check_attrid_arr: [],
-				postData: {
-					prod_id: 0,    //产品ID  在 onLoad中赋值
-					attr_id: 0,    //选择属性id
-					count: 0,         //选择属性的库存
-					// showimg: '',      //选择属性的图片(用产品图片代替)
-					qty: 1,           //退货数量
-					productDetail_price: 0
-				},
-			};
-		},
-		onShareAppMessage() {
+export default {
+	mixins:[pageMixin],
+	components:{NoStore,WzwStore,StoreListComponents,popupLayer},
+	data() {
+		return {
+			JSSDK_INIT:false,
+			showIndex:false,
+			initData:{},
+			storeID:'',
+			lat:'',
+			lng:'',
+			selfObj:null,
+			childSwiperHeight:'auto',
+			productCate:[],
+			scrollHeightS:[0,0,0,0],
+			store_id:'10',
+			systemInfo: {city_express_config:{}},
+			goodsNavIndex: 0,
+			storeInfo:{},
+			prodList:[],
+			myCart:[],
+			prosku:{},
+			showPro:false,
+			submit_flag:true,
+			check_attr: {},
+			check_attrid_arr: [],
+			postData: {
+				prod_id: 0,    //产品ID  在 onLoad中赋值
+				attr_id: 0,    //选择属性id
+				count: 0,         //选择属性的库存
+				// showimg: '',      //选择属性的图片(用产品图片代替)
+				qty: 1,           //退货数量
+				productDetail_price: 0
+			},
+		};
+	},
+	onShareAppMessage() {
+		let path = 'pages/index/index?store_id='+this.storeID;
+		let shareObj = {
+			title: this.storeInfo.Stores_Name,
+			desc: '万千好货疯抢中',
+			imageUrl: this.storeInfo.Stores_ImgPath,
+			path: buildSharePath(path)
+		};
+		return shareObj
+	},
+	methods:{
+		domainFn,
+		async shareFunc(channel) {
+			if(!this.$fun.checkIsLogin(1,1))return;
+			let _self = this
 			let path = 'pages/index/index?store_id='+this.storeID;
+			let front_url = this.initData.front_url;
 			let shareObj = {
 				title: this.storeInfo.Stores_Name,
 				desc: '万千好货疯抢中',
 				imageUrl: this.storeInfo.Stores_ImgPath,
 				path: buildSharePath(path)
 			};
-			return shareObj
+			switch (channel) {
+				case 'wx':
+					uni.share({
+						provider: "weixin",
+						scene: "WXSceneSession",
+						type: 0,
+						href: front_url + shareObj.path,
+						title: shareObj.title,
+						summary: shareObj.desc,
+						imageUrl: shareObj.imageUrl,
+						success: function (res) {
+						},
+						fail: function (err) {
+						}
+					});
+					break;
+				case 'wxtimeline':
+					uni.share({
+						provider: "weixin",
+						scene: "WXSenceTimeline",
+						type: 0,
+						href: front_url + shareObj.path,
+						title: shareObj.title,
+						summary: shareObj.desc,
+						imageUrl: shareObj.imageUrl,
+						success: function (res) {
+						},
+						fail: function (err) {
+						}
+					});
+					break;
+				case 'wxmini':
+					uni.share({
+						provider: 'weixin',
+						scene: "WXSceneSession",
+						type: 5,
+						imageUrl: shareObj.imageUrl,
+						title: shareObj.title,
+						miniProgram: {
+							id: _self.wxMiniOriginId,
+							path: '/' + shareObj.path,
+							type: 0,
+							webUrl: 'http://uniapp.dcloud.io'
+						},
+						success: ret => {
+						}
+					});
+					break;
+				case 'pic':
+
+					uni.navigateTo({
+						url:'/pagesA/store/storeShare?type=3'
+					})
+
+			}
 		},
-		methods:{
-			domainFn,
-			async shareFunc(channel) {
-				if(!this.$fun.checkIsLogin(1,1))return;
-				let _self = this
-				let path = 'pages/index/index?store_id='+this.storeID;
-				let front_url = this.initData.front_url;
-				let shareObj = {
-					title: this.storeInfo.Stores_Name,
-					desc: '万千好货疯抢中',
-					imageUrl: this.storeInfo.Stores_ImgPath,
-					path: buildSharePath(path)
-				};
-				switch (channel) {
-					case 'wx':
-						uni.share({
-							provider: "weixin",
-							scene: "WXSceneSession",
-							type: 0,
-							href: front_url + shareObj.path,
-							title: shareObj.title,
-							summary: shareObj.desc,
-							imageUrl: shareObj.imageUrl,
-							success: function (res) {
-							},
-							fail: function (err) {
-							}
-						});
-						break;
-					case 'wxtimeline':
-						uni.share({
-							provider: "weixin",
-							scene: "WXSenceTimeline",
-							type: 0,
-							href: front_url + shareObj.path,
-							title: shareObj.title,
-							summary: shareObj.desc,
-							imageUrl: shareObj.imageUrl,
-							success: function (res) {
-							},
-							fail: function (err) {
-							}
-						});
-						break;
-					case 'wxmini':
-						uni.share({
-							provider: 'weixin',
-							scene: "WXSceneSession",
-							type: 5,
-							imageUrl: shareObj.imageUrl,
-							title: shareObj.title,
-							miniProgram: {
-								id: _self.wxMiniOriginId,
-								path: '/' + shareObj.path,
-								type: 0,
-								webUrl: 'http://uniapp.dcloud.io'
-							},
-							success: ret => {
-							}
-						});
-						break;
-					case 'pic':
+		openShare(){
+			this.$refs.popupLayer.show()
+		},
+		cancelShare(){
+			this.$refs.popupLayer.close()
+		},
+		bindStores(storeInfo){
+			this.$refs.stroeComp.close()
+			this.storeID=storeInfo.Stores_ID
+			// #ifndef H5
+			ls.set('store_id', this.storeID)
+			//#endif
+			// #ifdef H5
+			sessionStorage.setItem('store_id', this.storeID)
+			// #endif
+			this.get_user_location_init()
+		},
+		changeStore(){
+			this.$refs.stroeComp.show()
+		},
+		goSearch(){
+			uni.navigateTo({
+				url:'/pages/classify/search'
+			})
+		},
+		delQty(item){
+			let data={
+				cart_key:'CartList',
+				prod_id: item.prod_id,
+				qty: -1,
+				store_id:getStoreID()
+			}
+			if(item.Productsattrkeystrval){
+				data.attr_id=item.Productsattrkeystrval.Product_Attr_ID
+			}
 
-							uni.navigateTo({
-								url:'/pagesA/store/storeShare?type=3'
-							})
+			updateCart(data,{tip:'加载中'}).then(res=>{
+				toast(res.msg)
+				this.myCart=res.data.CartList
+				this.showPro=false
+			}).catch(e=>{
+				error(e.msg)
+				this.showPro=false
+			})
+		},
+		addQty(item){
 
-				}
-			},
-			openShare(){
-				this.$refs.popupLayer.show()
-			},
-			cancelShare(){
-				this.$refs.popupLayer.close()
-			},
-			bindStores(storeInfo){
-				this.$refs.stroeComp.close()
-				this.storeID=storeInfo.Stores_ID
-				// #ifndef H5
-				ls.set('store_id', this.storeID)
-				//#endif
-				// #ifdef H5
-				sessionStorage.setItem('store_id', this.storeID)
-				// #endif
-				this.get_user_location_init()
-			},
-			changeStore(){
-				this.$refs.stroeComp.show()
-			},
-			goSearch(){
-				uni.navigateTo({
-					url:'/pages/classify/search'
-				})
-			},
-			delQty(item){
-				let data={
-					cart_key:'CartList',
-					prod_id: item.prod_id,
-					qty: -1,
-					store_id:getStoreID()
-				}
-				if(item.Productsattrkeystrval){
-					data.attr_id=item.Productsattrkeystrval.Product_Attr_ID
-				}
+			let data={
+				cart_key:'CartList',
+				prod_id: item.prod_id,
+				qty: 1,
+				store_id:getStoreID()
+			}
+			if(item.Productsattrkeystrval){
+				data.attr_id=item.Productsattrkeystrval.Product_Attr_ID
+			}
 
-				updateCart(data,{tip:'加载中'}).then(res=>{
-					toast(res.msg)
-					this.myCart=res.data.CartList
-					this.showPro=false
-				}).catch(e=>{
-					error(e.msg)
-					this.showPro=false
-				})
-			},
-			addQty(item){
+			updateCart(data,{tip:'加载中'}).then(res=>{
+				toast(res.msg)
+				this.myCart=res.data.CartList
+				this.showPro=false
+			}).catch(e=>{
+				error(e.msg)
+				this.showPro=false
+			})
 
-				let data={
-					cart_key:'CartList',
-					prod_id: item.prod_id,
-					qty: 1,
-					store_id:getStoreID()
-				}
-				if(item.Productsattrkeystrval){
-					data.attr_id=item.Productsattrkeystrval.Product_Attr_ID
-				}
-
-				updateCart(data,{tip:'加载中'}).then(res=>{
-					toast(res.msg)
-					this.myCart=res.data.CartList
-					this.showPro=false
-				}).catch(e=>{
-					error(e.msg)
-					this.showPro=false
-				})
-
-			},
-			plus(){
-				if (this.postData.qty < this.postData.count) {
-					this.postData.qty = Number(this.postData.qty) + 1;
-				}else {
-					uni.showToast({
-						title: '数量不能大于库存量',
-						icon: 'none',
-					});
-					this.postData.qty = this.postData.count;
-				}
-			},
-			minus(){
-				if(this.postData.qty == 0) return;
-				if (this.postData.qty > 1) {
-					this.postData.qty -= 1;
-				} else {
-					uni.showToast({
-						title: '数量不能小于1',
-						icon: 'none',
-					});
-					this.postData.qty = 1;
-				}
-			},
-			// 选择属性
-			selectAttr(index,i){
-				this.zIndex = 100;
-				var value_index = index; //选择的属性值索引
-				var attr_index = i;   //选择的属性索引
-				// if (this.check_attrid_arr.indexOf(value_index) > -1) return false;
-				//记录选择的属性
-				var check_attr = Object.assign(this.check_attr, { [attr_index]: value_index }); //记录选择的属性  attr_index外的[]必须
-				//属性处理
-				var check_attrid = [];
-				var check_attrname = [];
-				var check_attrnames = [];
-				var check_name=[]
-				for (var i in check_attr) {
-					var attr_id = check_attr[i];
-					check_attrid.push(attr_id);
-					check_attrname[attr_id] = i;
-				}
-				//数组排序  按从小到大排
-				var check_attrid_arr = check_attrid;
-				check_attrid = numberSort(check_attrid);
-				//获取对应的属性名称
-				for (var i = 0; i < check_attrid.length; i++) {
-					var attr_id = check_attrid[i];
-					var attr_name = check_attrname[attr_id];
-					check_attrnames.push(attr_name + ':' + this.prosku.skujosn[attr_name][attr_id]);
-					check_name.push(this.prosku.skujosn[attr_name][attr_id])
-				}
-				let mySku='';
-				for(let item of check_name){
-					mySku+=item+";"
-				}
-				mySku=mySku.substring(0,mySku.length-1)
-				check_attrid = check_attrid.join(';');
-				var attr_val = this.prosku.skuvaljosn[check_attrid];   //选择属性对应的属性值
-				//数组转化为字符串
-				check_attrnames = check_attrnames.join(';');
-				//属性判断
-				if (attr_val) {
-					this.postData.attr_id = attr_val.Product_Attr_ID;   //选择属性的id
-					this.postData.count = attr_val.Property_count;   //选择属性的库存
-					// this.postData.showimg = typeof attr_val.Attr_Image != 'undefined' && attr_val.Attr_Image != '' ? attr_val.Attr_Image : this.product.Products_JSON['ImgPath'][0];// 选择属性的图片
-					this.postData.productDetail_price = attr_val.Attr_Price?attr_val.Attr_Price:this.prosku.Products_PriceX; // 选择属性的价格
-					this.submit_flag = (!this.check_attr || Object.getOwnPropertyNames(this.check_attr).length != Object.getOwnPropertyNames(this.prosku.skujosn).length) ? false : true;
-				}
-				//判断属性库存
-				if (attr_val && attr_val.Property_count <= 0) {
-					// uni.showToast({
-					//     title: '您选择的 ' + check_attrnames + ' 库存不足，请选择其他属性',
-					//     icon: 'none'
-					// })
-					this.submit_flag =  false;
-					return false;
-				}
-				this.check_attr = {};
-				//存取1；2；3
-				this.check_attrid=check_attrid;
-				this.check_attrnames=mySku;
-				this.check_attr = check_attr;
-				this.check_attrid_arr = check_attrid_arr;
-				this.submit_flag = (!this.check_attr || Object.getOwnPropertyNames(this.check_attr).length != Object.getOwnPropertyNames(this.prosku.skujosn).length) || Object.getOwnPropertyNames(this.prosku.skuvaljosn).indexOf(check_attrid)==-1 ? false : true;
-			},
-			updaCart(data){
-
-
-
-				if(data.skujosn) {
-					let skujosn = data.skujosn;
-					let skujosn_new = [];
-					for (let i in data.skujosn) {
-						skujosn_new.push({
-							sku: i,
-							val: skujosn[i]
-						});
-					}
-					data.skujosn_new = skujosn_new;
-					data.skuvaljosn = data.skuvaljosn;
-				}
-				this.prosku=data
-				this.postData.count=data.Products_Count
-				this.postData.qty=1
-				this.postData.prod_id=data.Products_ID
-				this.postData.attr_id=''
-
-				this.showPro=true
-			},
-			confirm(){
-				if(!this.submit_flag) {return;}
-
-				if(this.prosku.skuvaljosn && !this.postData.attr_id) {
-					uni.showToast({
-						title: '请选择规格',
-						icon: 'none'
-					});
-					return;
-				}
-				let data={
-					cart_key:'CartList',
-					prod_id: this.postData.prod_id,
-					qty: this.postData.qty,
-					store_id:getStoreID()
-				}
-				if(this.postData.attr_id){
-					data.attr_id=this.postData.attr_id
-				}
-
-				updateCart(data,{tip:'加载中'}).then(res=>{
-					toast(res.msg)
-					this.myCart=res.data.CartList
-					this.showPro=false
-				}).catch(e=>{
-					error(e.msg)
-					this.showPro=false
-				})
-
-
-
-			},
-			changeTab(item){
-				this.goodsNavIndex=item
-			},
-			openLocation(){
-				uni.openLocation({
-					name:this.storeInfo.Stores_Address,
-					latitude: Number(this.storeInfo.Stores_PrimaryLat),
-					longitude: Number(this.storeInfo.Stores_PrimaryLng),
-					success: function () {
-
-					}
+		},
+		plus(){
+			if (this.postData.qty < this.postData.count) {
+				this.postData.qty = Number(this.postData.qty) + 1;
+			}else {
+				uni.showToast({
+					title: '数量不能大于库存量',
+					icon: 'none',
 				});
-			},
-			cellStore(item){
-				uni.makePhoneCall({
-					phoneNumber: item
+				this.postData.qty = this.postData.count;
+			}
+		},
+		minus(){
+			if(this.postData.qty == 0) return;
+			if (this.postData.qty > 1) {
+				this.postData.qty -= 1;
+			} else {
+				uni.showToast({
+					title: '数量不能小于1',
+					icon: 'none',
 				});
-			},
-			async prodIndexChangeEvent(event) {
-				const {current} = event.detail
-				this.goodsNavIndex = current
-				let that=this
+				this.postData.qty = 1;
+			}
+		},
+		// 选择属性
+		selectAttr(index,i){
+			this.zIndex = 100;
+			var value_index = index; //选择的属性值索引
+			var attr_index = i;   //选择的属性索引
+			// if (this.check_attrid_arr.indexOf(value_index) > -1) return false;
+			//记录选择的属性
+			var check_attr = Object.assign(this.check_attr, { [attr_index]: value_index }); //记录选择的属性  attr_index外的[]必须
+			//属性处理
+			var check_attrid = [];
+			var check_attrname = [];
+			var check_attrnames = [];
+			var check_name=[]
+			for (var i in check_attr) {
+				var attr_id = check_attr[i];
+				check_attrid.push(attr_id);
+				check_attrname[attr_id] = i;
+			}
+			//数组排序  按从小到大排
+			var check_attrid_arr = check_attrid;
+			check_attrid = numberSort(check_attrid);
+			//获取对应的属性名称
+			for (var i = 0; i < check_attrid.length; i++) {
+				var attr_id = check_attrid[i];
+				var attr_name = check_attrname[attr_id];
+				check_attrnames.push(attr_name + ':' + this.prosku.skujosn[attr_name][attr_id]);
+				check_name.push(this.prosku.skujosn[attr_name][attr_id])
+			}
+			let mySku='';
+			for(let item of check_name){
+				mySku+=item+";"
+			}
+			mySku=mySku.substring(0,mySku.length-1)
+			check_attrid = check_attrid.join(';');
+			var attr_val = this.prosku.skuvaljosn[check_attrid];   //选择属性对应的属性值
+			//数组转化为字符串
+			check_attrnames = check_attrnames.join(';');
+			//属性判断
+			if (attr_val) {
+				this.postData.attr_id = attr_val.Product_Attr_ID;   //选择属性的id
+				this.postData.count = attr_val.Property_count;   //选择属性的库存
+				// this.postData.showimg = typeof attr_val.Attr_Image != 'undefined' && attr_val.Attr_Image != '' ? attr_val.Attr_Image : this.product.Products_JSON['ImgPath'][0];// 选择属性的图片
+				this.postData.productDetail_price = attr_val.Attr_Price?attr_val.Attr_Price:this.prosku.Products_PriceX; // 选择属性的价格
+				this.submit_flag = (!this.check_attr || Object.getOwnPropertyNames(this.check_attr).length != Object.getOwnPropertyNames(this.prosku.skujosn).length) ? false : true;
+			}
+			//判断属性库存
+			if (attr_val && attr_val.Property_count <= 0) {
+				// uni.showToast({
+				//     title: '您选择的 ' + check_attrnames + ' 库存不足，请选择其他属性',
+				//     icon: 'none'
+				// })
+				this.submit_flag =  false;
+				return false;
+			}
+			this.check_attr = {};
+			//存取1；2；3
+			this.check_attrid=check_attrid;
+			this.check_attrnames=mySku;
+			this.check_attr = check_attr;
+			this.check_attrid_arr = check_attrid_arr;
+			this.submit_flag = (!this.check_attr || Object.getOwnPropertyNames(this.check_attr).length != Object.getOwnPropertyNames(this.prosku.skujosn).length) || Object.getOwnPropertyNames(this.prosku.skuvaljosn).indexOf(check_attrid)==-1 ? false : true;
+		},
+		updaCart(data){
 
-				if(!this.prodList[this.goodsNavIndex]&&this.goodsNavIndex!=0){
-					let data={
-						page:1,
-						pageSize:999,
-						with_buyer:1,
-						buyer_count:6,
-						store_id:getStoreID()
-						// store_id:sessionStorage.getItem('store_id')
-					}
-					data.cate_id=this.productCate[this.goodsNavIndex-1].Category_ID
-					await getSelfStoreProd(data,{tip:'加载中'}).then(res=>{
 
 
-
-						this.$set(that.prodList,this.goodsNavIndex,res.data)
-
-					}).catch(e=>{error(e.msg||'获取产品列表失败')})
+			if(data.skujosn) {
+				let skujosn = data.skujosn;
+				let skujosn_new = [];
+				for (let i in data.skujosn) {
+					skujosn_new.push({
+						sku: i,
+						val: skujosn[i]
+					});
 				}
-				this.$nextTick().then(() => {
-					if(this.goodsNavIndex===0){
+				data.skujosn_new = skujosn_new;
+				data.skuvaljosn = data.skuvaljosn;
+			}
+			this.prosku=data
+			this.postData.count=data.Products_Count
+			this.postData.qty=1
+			this.postData.prod_id=data.Products_ID
+			this.postData.attr_id=''
+
+			this.showPro=true
+		},
+		confirm(){
+			if(!this.submit_flag) {return;}
+
+			if(this.prosku.skuvaljosn && !this.postData.attr_id) {
+				uni.showToast({
+					title: '请选择规格',
+					icon: 'none'
+				});
+				return;
+			}
+			let data={
+				cart_key:'CartList',
+				prod_id: this.postData.prod_id,
+				qty: this.postData.qty,
+				store_id:getStoreID()
+			}
+			if(this.postData.attr_id){
+				data.attr_id=this.postData.attr_id
+			}
+
+			updateCart(data,{tip:'加载中'}).then(res=>{
+				toast(res.msg)
+				this.myCart=res.data.CartList
+				this.showPro=false
+			}).catch(e=>{
+				error(e.msg)
+				this.showPro=false
+			})
+
+
+
+		},
+		changeTab(item){
+			this.goodsNavIndex=item
+		},
+		openLocation(){
+			uni.openLocation({
+				name:this.storeInfo.Stores_Address,
+				latitude: Number(this.storeInfo.Stores_PrimaryLat),
+				longitude: Number(this.storeInfo.Stores_PrimaryLng),
+				success: function () {
+
+				}
+			});
+		},
+		cellStore(item){
+			uni.makePhoneCall({
+				phoneNumber: item
+			});
+		},
+		async prodIndexChangeEvent(event) {
+			const {current} = event.detail
+			this.goodsNavIndex = current
+			let that=this
+
+			if(!this.prodList[this.goodsNavIndex]&&this.goodsNavIndex!=0){
+				let data={
+					page:1,
+					pageSize:999,
+					with_buyer:1,
+					buyer_count:6,
+					store_id:getStoreID()
+					// store_id:sessionStorage.getItem('store_id')
+				}
+				data.cate_id=this.productCate[this.goodsNavIndex-1].Category_ID
+				await getSelfStoreProd(data,{tip:'加载中'}).then(res=>{
+
+
+
+					this.$set(that.prodList,this.goodsNavIndex,res.data)
+
+				}).catch(e=>{error(e.msg||'获取产品列表失败')})
+			}
+			this.$nextTick().then(() => {
+				if(this.goodsNavIndex===0){
+					this.upSwiperHeight()
+				}else{
+					let str='#scrollView'+(this.goodsNavIndex-1)
+					const query = uni.createSelectorQuery()
+					console.log(str,"ss")
+					query.select(str).boundingClientRect(data => {
+
+						this.scrollHeightS[this.goodsNavIndex] = data.height
 						this.upSwiperHeight()
-					}else{
-						let str='#scrollView'+(this.goodsNavIndex-1)
-						const query = uni.createSelectorQuery()
-						console.log(str,"ss")
-						query.select(str).boundingClientRect(data => {
-
-							this.scrollHeightS[this.goodsNavIndex] = data.height
-							this.upSwiperHeight()
-						}).exec()
-					}
+					}).exec()
+				}
 
 
-				})
+			})
 
 
-			},
-			async init(){
+		},
+		async init(){
+			try {
 				this.showIndex=true
 				let storeData={
 					store_id:this.storeID
@@ -577,42 +578,22 @@
 					storeData.lat = this.lat
 					storeData.lng = this.lng
 				}
-				let arr =await getStoreDetail(storeData,{tip:'智能定位中'}).catch(e=>{
+				let arr =await getStoreDetail(storeData,{tip:'智能定位中',noUid:1}).catch(e=>{
 
+					this.storeID=''
+					// #ifndef H5
+					ls.set('store_id', '')
+					//#endif
+					// #ifdef H5
+					sessionStorage.setItem('store_id', '')
+					// #endif
+
+					throw Error(e.msg||'获取门店错误')
 				})
 				this.storeInfo=arr.data
 
 
-				// #ifdef H5
-				if(!isWeiXin())return;
 
-				let path = 'pages/index/index?store_id='+this.storeID;
-				let front_url = this.initData.front_url;
-				this.WX_JSSDK_INIT(this).then((wxEnv)=>{
-						wxEnv.onMenuShareTimeline({
-				        title:  this.storeInfo.Stores_Name, // 分享标题
-				        link: front_url+buildSharePath(path), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-				        imgUrl: this.storeInfo.Stores_ImgPath, // 分享图标
-						 desc: '万千好货疯抢中',
-				        success: function() {
-				            // 用户点击了分享后执行的回调函数
-				        }
-				    });
-				    //两种方式都可以
-				    wxEnv.onMenuShareAppMessage({
-				        title: this.storeInfo.Stores_Name, // 分享标题
-				        link: front_url+buildSharePath(path), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-				        imgUrl: this.storeInfo.Stores_ImgPath, // 分享图标
-				        desc: '万千好货疯抢中',
-				        type: 'link', // 分享类型,music、video或link，不填默认为link
-				        // dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
-				        success: function() {
-				            // 用户点击了分享后执行的回调函数
-				        }
-				    });
-				}).catch(()=>{
-				})
-				// #endif
 
 
 				let cate= await getProductCategory().catch(e=>{
@@ -620,7 +601,7 @@
 				})
 
 				uni.setNavigationBarTitle({
-				    title:this.storeInfo.Stores_Name
+					title:this.storeInfo.Stores_Name
 				})
 				this.productCate=cate.data
 
@@ -654,135 +635,173 @@
 					this.myCart=res.data.CartList
 				})
 
-			},
-			upSwiperHeight(){
-				try {
-					const num = this.scrollHeightS[this.goodsNavIndex]
-					if (num < 1 || num < this.systemInfo.windowHeight) throw Error('高度无效或者低于屏幕，直接设置为屏幕高度好了')
-					this.childSwiperHeight = num + 'px'
-				} catch (e) {
-					if (this.systemInfo.windowHeight) this.childSwiperHeight = this.systemInfo.windowHeight + 'px'
-				}
-			},
-			async get_user_location() {
-
-			    let localInfo = null;
-
-
-			    let rt = false
-				let that=this
-			    //这里是返回了一个promise，而且不具备阻断后面的作用。不能用await promise.then()这样的古怪语法。要么就是await，要么就是promise.then()
-			    getLocation(that).then(res => {
-
-			        if (res.code === 0) {
-			            localInfo = res.data
-
-			            this.lat = localInfo.latitude
-			            this.lng = localInfo.longitude
-
-			            this.loadInfoStore()
-
-			        }
-			    }).catch(err => {
-
-							this.storeID=''
-							this.showIndex=true
-
-			    })
-
-
-
-
-			},
-			async get_user_location_init() {
-
-				let localInfo = null;
-
-				let that=this
-				let rt = false
-				//这里是返回了一个promise，而且不具备阻断后面的作用。不能用await promise.then()这样的古怪语法。要么就是await，要么就是promise.then()
-				getLocation(that).then(res => {
-					if (res.code === 0) {
-						localInfo = res.data
-
-						this.lat = localInfo.latitude
-						this.lng = localInfo.longitude
-
-						this.init()
-
-					}
-				}).catch(err => {
-					this.init()
-					//error('获取位置信息失败:' + err.msg)
-				})
-
-
-
-			},
-			loadInfoStore() {
-
-				let postData = {
-					pageSize: 1,
-					page: 1,
-					stores_type:2
+				// #ifdef H5
+				if(isWeiXin()){
+					let path = 'pages/index/index?store_id='+this.storeID;
+					let front_url = this.initData.front_url;
+					this.WX_JSSDK_INIT(this).then((wxEnv)=>{
+						wxEnv.onMenuShareTimeline({
+							title:  this.storeInfo.Stores_Name, // 分享标题
+							link: front_url+buildSharePath(path), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+							imgUrl: this.storeInfo.Stores_ImgPath, // 分享图标
+							desc: '万千好货疯抢中',
+							success: function() {
+								// 用户点击了分享后执行的回调函数
+							}
+						});
+						//两种方式都可以
+						wxEnv.onMenuShareAppMessage({
+							title: this.storeInfo.Stores_Name, // 分享标题
+							link: front_url+buildSharePath(path), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+							imgUrl: this.storeInfo.Stores_ImgPath, // 分享图标
+							desc: '万千好货疯抢中',
+							type: 'link', // 分享类型,music、video或link，不填默认为link
+							// dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+							success: function() {
+								// 用户点击了分享后执行的回调函数
+							}
+						});
+					}).catch((e)=>{
+						throw Error('初始化微信分享错误')
+					})
 				}
 
-				if (this.lat && this.lng) {
-					postData.lat = this.lat
-					postData.lng = this.lng
-				}
-				let that=this
-				getStoreList(emptyObject(postData), {mask: true}).then(res => {
-					if(res.data.length>0){
-						this.storeID=res.data[0].Stores_ID
+				// #endif
 
-						that.init()
-						// #ifndef H5
-						ls.set('store_id', this.storeID)
-						//#endif
-						// #ifdef H5
-						sessionStorage.setItem('store_id', this.storeID)
-						// #endif
-					}else{
-						this.storeID=''
-						// #ifndef H5
-						ls.set('store_id', this.storeID)
-						//#endif
-						// #ifdef H5
-						sessionStorage.setItem('store_id', this.storeID)
-						// #endif
-					}
+			}catch (e) {
+				// console.log(e)
+				error(e.message)
+			}
 
-				}).catch(e=>{error(e.msg||'获取门店错误')})
-			},
-			initStore(){
-				this.storeID=getStoreID()
-				this.showIndex=true
-				if(this.storeID){
-					this.systemInfo = uni.getSystemInfoSync()
-					this.get_user_location_init()
-				}else if(this.initData.store_positing==1){
-
-					this.systemInfo = uni.getSystemInfoSync()
-					this.get_user_location()
-				}else{
-					this.showIndex=true
-				}
-
-
+		},
+		upSwiperHeight(){
+			try {
+				const num = this.scrollHeightS[this.goodsNavIndex]
+				if (num < 1 || num < this.systemInfo.windowHeight) throw Error('高度无效或者低于屏幕，直接设置为屏幕高度好了')
+				this.childSwiperHeight = num + 'px'
+			} catch (e) {
+				if (this.systemInfo.windowHeight) this.childSwiperHeight = this.systemInfo.windowHeight + 'px'
 			}
 		},
-		async onLoad() {
-			// #ifdef H5
-			this.selfObj = this
-			// #endif
-			let systemConf = await getSystemConf()
-			let initData = systemConf?systemConf.data:null
-			this.initData=initData
+		async get_user_location() {
 
-			this.initStore()
+			let localInfo = null;
+
+
+			let rt = false
+			let that=this
+			//这里是返回了一个promise，而且不具备阻断后面的作用。不能用await promise.then()这样的古怪语法。要么就是await，要么就是promise.then()
+			getLocation(that).then(res => {
+
+				if (res.code === 0) {
+					localInfo = res.data
+
+					this.lat = localInfo.latitude
+					this.lng = localInfo.longitude
+
+					this.loadInfoStore()
+
+				}
+			}).catch(err => {
+
+				this.storeID=''
+				this.showIndex=true
+
+			})
+
+
+
+
+		},
+		async get_user_location_init() {
+
+			let localInfo = null;
+
+			let that=this
+			let rt = false
+			//这里是返回了一个promise，而且不具备阻断后面的作用。不能用await promise.then()这样的古怪语法。要么就是await，要么就是promise.then()
+			getLocation(that).then(res => {
+				if (res.code === 0) {
+					localInfo = res.data
+
+					this.lat = localInfo.latitude
+					this.lng = localInfo.longitude
+
+					this.init()
+
+				}
+			}).catch(err => {
+				this.init()
+				//error('获取位置信息失败:' + err.msg)
+			})
+
+
+
+		},
+		loadInfoStore() {
+
+			let postData = {
+				pageSize: 1,
+				page: 1,
+				stores_type:2
+			}
+
+			if (this.lat && this.lng) {
+				postData.lat = this.lat
+				postData.lng = this.lng
+			}
+			let that=this
+			getStoreList(emptyObject(postData), {mask: true}).then(res => {
+				if(res.data.length>0){
+					this.storeID=res.data[0].Stores_ID
+
+					that.init()
+					// #ifndef H5
+					ls.set('store_id', this.storeID)
+					//#endif
+					// #ifdef H5
+					sessionStorage.setItem('store_id', this.storeID)
+					// #endif
+				}else{
+					this.storeID=''
+					// #ifndef H5
+					ls.set('store_id', this.storeID)
+					//#endif
+					// #ifdef H5
+					sessionStorage.setItem('store_id', this.storeID)
+					// #endif
+				}
+
+			}).catch(e=>{error(e.msg||'获取门店错误')})
+		},
+		initStore(){
+			this.storeID=getStoreID()
+			this.showIndex=true
+			if(this.storeID){
+				this.systemInfo = uni.getSystemInfoSync()
+				this.get_user_location_init()
+			}else if(this.initData.store_positing==1){
+
+				this.systemInfo = uni.getSystemInfoSync()
+				this.get_user_location()
+			}else{
+				this.showIndex=true
+			}
+
+
 		}
+	},
+	async onLoad() {
+		// #ifdef H5
+		this.selfObj = this
+		// #endif
+		let systemConf = await getSystemConf()
+		let initData = systemConf?systemConf.data:null
+		this.initData=initData
+
+		this.initStore()
 	}
+}
 </script>
 
 <style lang="scss" scoped>
