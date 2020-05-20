@@ -293,6 +293,7 @@
 				})
 				storePifaOrderCalc({store_id:this.Stores_ID,order_id:id,prod_json:JSON.stringify(data)}).then(res=>{
 					this.orderList[index].Order_TotalPrice=res.data.Order_TotalPrice
+					this.orderList[index].Order_Shipping=res.data.Order_Shipping
 				}).catch(e=>{
 					this.orderList[index].prod_list[ind].prod_count--;
 				})
@@ -317,6 +318,7 @@
 						})
 					storePifaOrderCalc({store_id:this.Stores_ID,order_id:id,prod_json:JSON.stringify(data)}).then(res=>{
 						this.orderList[index].Order_TotalPrice=res.data.Order_TotalPrice
+						this.orderList[index].Order_Shipping=res.data.Order_Shipping
 					}).catch(e=>{
 						error(e.msg)
 						this.orderList[index].prod_list[ind].prod_count++
