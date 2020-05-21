@@ -11,15 +11,15 @@
 					<view class="msg">
 						<view class="tops">
 							{{item.Shop_Name}}<text>{{item.User_Mobile}}</text>
-						</view>            
+						</view>
 						<view class="rights">
 							{{item.Account_CreateTime}}
 						</view>
 					</view>
 					<view class="bots" @click="getNewTeam(item.User_ID)">
-						<view>会员号：{{item.User_No}}</view>	
+						<view>会员号：{{item.User_No}}</view>
                         <view @click.stop="seeQrcode(item)" class="">查看二维码</view>
-						<view>查看下级({{item.usercount}})</view>	
+						<view>查看下级({{item.usercount}})</view>
 					</view>
 				</view>
 			</view>
@@ -34,8 +34,8 @@
 	import {pageMixin} from "../../common/mixin";
 	import{getDisTeamList } from '../../common/fetch.js'
     import {toast} from "../../common";
-    import { staticUrl } from '../../common/env'
     import { ls } from '../../common/tool'
+    import {domainFn} from '../../common/filter';
 	export default {
         mixins:[pageMixin],
 		data() {
@@ -73,7 +73,7 @@
             seeQrcode(item){
                 this.isShowQrcode = true
                 // this.qrcodePath = staticUrl + '/data/poster/' + ls.get('users_id') + user_id + '_1.png?t=20181101'
-                this.qrcodePath = staticUrl + item.qrcodeimg
+                this.qrcodePath = domainFn(item.qrcodeimg)
             },
 			getNewTeam(userid){
 				this.getDisTeamList(userid)

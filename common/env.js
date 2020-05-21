@@ -8,19 +8,20 @@ export const APP_USERS_ID = 'wkbq6nc2kc';//'	mrw5iqvhs2 xjgjd88jee  wkbq6nc2kc  
 
 export const apiBaseUrl = 'https://new401t.bafangka.com';
 
-let staticUrl = ''
+let _staticUrl = ''
 //app 和小程序还是需要手动设置staticUrl
 // #ifndef H5
 const appProdStatic = 'https://new401.bafangka.com'
-staticUrl = appProdStatic
+_staticUrl = appProdStatic
 // #endif
 
 //h5就自动获取
 // #ifdef H5
 const { origin } = location
-staticUrl = origin
+_staticUrl = origin
 // #endif
-export const staticUrl = staticUrl;
+
+export const staticUrl = _staticUrl
 
 
 export default {
