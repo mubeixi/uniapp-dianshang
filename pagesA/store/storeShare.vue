@@ -165,7 +165,7 @@ export default {
           ctx.setFontSize(16)
           ctx.textAlign = 'center'
           const showProductNameAgree = cutstrFun('邀请你开通', parseInt(640 / 24)) // 只显示一行
-          ctx.fillText(showProductNameAgree, 170, 162)
+          ctx.fillText(showProductNameAgree, 160, 162)
 
           let str = this.type == 1 ? '经销商' : '社区服务店'
           ctx.setFillStyle('#EBED24')
@@ -186,8 +186,9 @@ export default {
         ctx.setFillStyle('#FFFFFF')
         ctx.setFontSize(17)
         ctx.textAlign = 'center'
+        ctx.direction = "ltr";
         const showProductName = cutstrFun(this.storeDetail.Stores_Name, parseInt(640 / 24)) // 只显示一行
-        ctx.fillText(showProductName, 260, 100)
+        ctx.fillText(showProductName, 246, 100)
 
         // 头像(需要画个圆角)
         ctx.save()
