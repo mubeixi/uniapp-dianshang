@@ -1,5 +1,5 @@
 
-import {ls} from "../common/tool";
+import {ls,checkValue} from "../common/tool";
 
 export const Stores_ID = function (state, value) {
     if(!state.Stores_ID){
@@ -24,6 +24,10 @@ export const getCurrentStoreId = (state)=>{
             data = sessionStorage.getItem('current_store_id')
             // #endif
 
+        }
+
+        if(!data || checkValue(data,[null, undefined, '','null','undefined'])){
+            return ''
         }
         return data
     }

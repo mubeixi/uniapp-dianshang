@@ -177,7 +177,7 @@ import NoStore from "./chooseIndex";
 import {getStoreDetail,getProductCategory,getSelfStoreProd,getCart,updateCart,getSystemConf,getStoreList} from '../../common/fetch'
 import WzwStore from '../../components/wzw-store'
 import {error, toast,modal} from '../../common';
-import {numberSort,emptyObject,ls,buildSharePath, isWeiXin,getProductThumb} from '../../common/tool.js'
+import {numberSort,emptyObject,ls,buildSharePath, isWeiXin,getProductThumb,objTranslate} from '../../common/tool.js'
 import {domainFn} from '../../common/filter';
 import StoreListComponents from "../../components/StoreListComponents";
 import {mapGetters,mapActions, mapState} from 'vuex';
@@ -695,8 +695,9 @@ export default {
 
 				}
 			}).catch(err => {
-
+				console.log('定位失败')
 				this.storeID=''
+				this.setFreStoreId('')
 				this.showIndex=true
 
 			})
@@ -723,8 +724,9 @@ export default {
 
 				}
 			}).catch(err => {
+
 				this.init()
-				//error('获取位置信息失败:' + err.msg)
+				// error('获取位置信息失败:' + err.msg)
 			})
 
 
@@ -758,9 +760,11 @@ export default {
 		},
 		initStore(){
 			this.storeID = this.$store.getters.getCurrentStoreId()
-			console.log('this.storeID',this.storeID)
+
 			this.showIndex=true
+
 			if(this.storeID){
+
 				this.systemInfo = uni.getSystemInfoSync()
 				this.get_user_location_init()
 			}else if(this.initData.store_positing==1){
