@@ -17,7 +17,7 @@
         </div>
       </div>
     </div>
-    
+
     <div class="other">
       <div class="bd">
         <div class="o_title">
@@ -122,7 +122,7 @@ export default {
   mixins: [pageMixin],
   components: {
     popupLayer,
-    PayComponents,
+    PayComponents
 
   },
   data () {
@@ -148,7 +148,7 @@ export default {
       showDirect: false, // 是否直接显示付款方式
       pay_arr: [], // 支付方式
       isOpen: false, // 是否自动弹出
-      user_money: 0,
+      user_money: 0
     }
   },
   onLoad (options) {
@@ -157,7 +157,7 @@ export default {
     }
   },
   filters: {
-    formatTime: formatTime,
+    formatTime: formatTime
   },
   onShow () {
     this.getOrderDetail()
@@ -169,7 +169,7 @@ export default {
     },
     moneyChecked () {
       return this.openMoney
-    },
+    }
   },
   created () {
     // #ifdef MP-TOUTIAO
@@ -192,15 +192,15 @@ export default {
       const {
         shipping_id,
         express,
-        prod_img,
+        prod_img
       } = {
         shipping_id: orderInfo.Order_ShippingID,
         express: orderInfo.Order_Shipping.Express,
-        prod_img: orderInfo.prod_list[0].prod_img,
+        prod_img: orderInfo.prod_list[0].prod_img
       }
       // 跳转物流追踪
       uni.navigateTo({
-        url: '/pages/order/logistics?shipping_id=' + shipping_id + '&express=' + express + '&prod_img=' + prod_img,
+        url: '/pages/order/logistics?shipping_id=' + shipping_id + '&express=' + express + '&prod_img=' + prod_img
       })
     },
     // 取消订单
@@ -209,17 +209,17 @@ export default {
         cancelOrder({ Order_ID }).then(res => {
           uni.showToast({
             title: res.msg,
-            icon: 'none',
+            icon: 'none'
           })
           setTimeout(() => {
             uni.navigateBack({
-              delta: 1,
+              delta: 1
             })
           }, 1000)
         }).catch(e => {
           uni.showToast({
             title: e.msg,
-            icon: 'none',
+            icon: 'none'
           })
           this.isLoading = false
         })
@@ -231,11 +231,11 @@ export default {
       confirmOrder({ Order_ID: Order_ID }).then(res => {
         uni.showToast({
           title: res.msg,
-          icon: 'none',
+          icon: 'none'
         })
         setTimeout(() => {
           uni.navigateBack({
-            delta: 1,
+            delta: 1
           })
         }, 1000)
       }).catch(e => {
@@ -245,11 +245,11 @@ export default {
     goPay (Order_ID) {
       if (this.orderInfo.Order_Status == 2 || this.orderInfo.Order_Status == 3) {
         uni.navigateTo({
-          url: '/pagesA/person/refund?Order_ID=' + Order_ID,
+          url: '/pagesA/person/refund?Order_ID=' + Order_ID
         })
       } else if (this.orderInfo.Order_Status == 4) {
         uni.navigateTo({
-          url: '/pages/order/publishComment?Order_ID=' + Order_ID,
+          url: '/pages/order/publishComment?Order_ID=' + Order_ID
         })
       }
     },
@@ -270,7 +270,7 @@ export default {
     getOrderDetail () {
       const _self = this
       getOrderDetail({
-        Order_ID: this.Order_ID,
+        Order_ID: this.Order_ID
       }).then(res => {
         for (var i in res.data) {
           if (i == 'Order_Shipping') {
@@ -318,7 +318,7 @@ export default {
       if (this.user_money < 0 || isNaN(this.user_money)) {
         uni.showToast({
           title: '您输入的金额有误',
-          icon: 'none',
+          icon: 'none'
         })
         this.user_money = 0
         this.submit_flag = false
@@ -327,7 +327,7 @@ export default {
       if (this.orderInfo.Order_TotalPrice - money < 0) {
         uni.showToast({
           title: '最大金额不能超过订单金额',
-          icon: 'none',
+          icon: 'none'
         })
         this.user_money = this.orderInfo.Order_TotalPrice
         // this.orderInfo.Order_TotalPrice = money;
@@ -402,7 +402,7 @@ export default {
       uni.showToast({
         title: '支付失败',
         icon: 'none',
-        duration: 2000,
+        duration: 2000
       })
       // setTimeout(function(){
       // 	uni.redirectTo({
@@ -431,12 +431,12 @@ export default {
           success: function (res) {
             if (res.confirm) {
               uni.redirectTo({
-                url: '/pages/order/order?index=2',
+                url: '/pages/order/order?index=2'
               })
             } else if (res.cancel) {
 
             }
-          },
+          }
         })
         return
       }
@@ -449,7 +449,7 @@ export default {
       }
 
       uni.redirectTo({
-        url: '/pages/order/order?index=2',
+        url: '/pages/order/order?index=2'
       })
     },
     // 取消输入支付密码
@@ -464,8 +464,8 @@ export default {
     confirmInput (e) {
       this.self_orderPay()
       this.password_input = false
-    },
-  },
+    }
+  }
 }
 </script>
 
@@ -473,29 +473,29 @@ export default {
   .wrap {
     background: #fff;
   }
-  
+
   .state {
     padding: 20rpx 28rpx;
     font-size: 28rpx;
     display: flex;
     align-items: center;
     border-top: 30rpx solid #F3F3F3;
-    
+
     .img {
       width: 60rpx;
       height: 60rpx;
     }
   }
-  
+
   .state-desc {
     margin-left: 24rpx;
   }
-  
+
   .c8 {
     color: #888;
     font-size: 26rpx;
   }
-  
+
   /* 收货地址 start */
   .address {
     /* margin: 15px 0 10px; */
@@ -506,87 +506,87 @@ export default {
     border-bottom: 20rpx solid #F3F3F3;
     font-size: 28rpx;
   }
-  
+
   // 订单号
   .order-id {
     border-bottom: none;
   }
-  
+
   .loc_icon {
     width: 41rpx;
     height: 51rpx;
     margin-right: 30rpx;
   }
-  
+
   .right {
     width: 18rpx;
     height: 27rpx;
     margin-left: 28rpx;
   }
-  
+
   .name {
     margin-bottom: 30rpx;
     font-size: 26rpx;
   }
-  
+
   .name > span {
     margin-left: 10rpx;
   }
-  
+
   .location {
     font-size: 24rpx;
     color: #444;
   }
-  
+
   /* 收货地址 end */
   /* 订单信息 start */
   .order_msg {
     padding: 20rpx 30rpx 0px;
   }
-  
+
   .biz_msg {
     display: flex;
     align-items: center;
     margin-bottom: 30rpx;
   }
-  
+
   .biz_logo {
     width: 70rpx;
     height: 70rpx;
     border-radius: 35rpx;
     margin-right: 20rpx;
   }
-  
+
   .biz_name {
     font-size: 28rpx;
   }
-  
+
   .pro {
     display: flex;
     margin-bottom: 50rpx;
   }
-  
+
   .pro-msg {
     margin-left: 27rpx;
     width: 451rpx;
   }
-  
+
   .pro-div {
     width: 200rpx;
     height: 200rpx;
   }
-  
+
   .pro-img {
     width: 200rpx;
     height: 200rpx;
     margin-right: 28rpx;
   }
-  
+
   .pro-name {
     font-size: 26rpx;
     margin-bottom: 20rpx;
   }
-  
+
   .attr {
     display: inline-block;
     height: 50rpx;
@@ -597,60 +597,60 @@ export default {
     padding: 0 20rpx;
     margin-bottom: 20rpx;
   }
-  
+
   .pro-price {
     color: #F43131;
     font-size: 36rpx;
   }
-  
+
   .pro-price span {
     font-size: 24rpx;
     font-style: normal;
   }
-  
+
   .amount {
     font-size: 30rpx;
     float: right;
     color: #333;
   }
-  
+
   /* 订单信息 end */
   /* 订单其他信息 start */
   .other {
     padding: 34rpx 45rpx 0rpx 31rpx;
     font-size: 28rpx;
   }
-  
+
   .other .bd {
     padding-bottom: 30rpx;
     border-bottom: 2rpx solid $wzw-border-color;
   }
-  
+
   .o_title {
     display: flex;
     align-items: center;
     justify-content: space-between;
     font-size: 28rpx;
   }
-  
+
   .o_title .van-switch {
     float: right;
   }
-  
+
   .o_desc {
     margin-top: 10rpx;
     font-size: 24rpx;
   }
-  
+
   .msg {
     margin-left: 20rpx;
     font-size: 24rpx;
   }
-  
+
   .words {
     justify-content: flex-start;
   }
-  
+
   .words {
     .inpu {
       border: 0;
@@ -658,7 +658,7 @@ export default {
       flex: 1;
     }
   }
-  
+
   .total {
     display: flex;
     justify-content: flex-end;
@@ -667,16 +667,16 @@ export default {
     font-size: 24rpx;
     padding-right: 44rpx;
   }
-  
+
   i {
     font-style: normal;
   }
-  
+
   .total .money {
     font-size: 30rpx;
     color: #F43131;
   }
-  
+
   /* 订单其他信息 end */
   /* 提交订单 */
   .order_total {
@@ -690,7 +690,7 @@ export default {
     z-index: 100;
     justify-content: space-around;
   }
-  
+
   .submit {
     width: 230rpx;
     background: #F43131;
@@ -698,12 +698,12 @@ export default {
     color: #fff;
     line-height: 100rpx;
   }
-  
+
   .totalinfo {
     // flex: 1;
     text-align: center;
   }
-  
+
   .btn-group {
     span {
       display: inline-block;
@@ -716,11 +716,11 @@ export default {
       border-radius: 10rpx;
       color: #999;
       font-size: 26rpx;
-      
+
       &:last-child {
         margin-left: 14rpx;
       }
-      
+
       &.active {
         color: #fff;
         background: #F43131;
@@ -728,43 +728,43 @@ export default {
       }
     }
   }
-  
+
   .info {
     font-size: 24rpx;
   }
-  
+
   .tips {
     font-size: 20rpx;
     color: #979797;
   }
-  
+
   .iMbx {
     text-align: center;
     padding: 0 20rpx;
     font-size: 28rpx;
     color: #333;
-    
+
     .c_method {
       padding: 37rpx 0;
       border-bottom: 2rpx solid $wzw-border-color;
     }
-    
+
     & .c_method:first-child {
       color: #F43131;
     }
-    
+
     & .c_method:nth-last-child(1) {
       border: none;
     }
   }
-  
+
   .zhezhao {
     position: fixed;
     width: 100%;
     height: 100%;
     background: rgba($color: #000000, $alpha: 0.3);
     z-index: 1000;
-    
+
     .input-wrap {
       background: #fff;
       color: #000;
@@ -775,20 +775,20 @@ export default {
       box-sizing: border-box;
       font-size: 28rpx;
       border-radius: 10rpx;
-      
+
       .input {
         margin: 40rpx 0;
         border: 1px solid $wzw-border-color;
         height: 80rpx;
         line-height: 80rpx;
       }
-      
+
       .btns {
         display: flex;
         justify-content: space-around;
         height: 60rpx;
         line-height: 60rpx;
-        
+
         .btn {
           flex: 1;
         }

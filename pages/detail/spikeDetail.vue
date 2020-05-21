@@ -4,7 +4,7 @@
       <image @click="goBack" class="imgm" src="/static/back.png"></image>
       <image @click="goCart" class="imgm cart" src="/static/cart.png"></image>
     </div>
-    
+
     <!-- 轮播 -->
     <view class="uni-padding-wrap" v-if="product.Products_JSON && product.Products_JSON.ImgPath">
       <view class="page-section swiper">
@@ -115,17 +115,17 @@
       <!--    	<rich-text :nodes="product.Products_Description|formatRichText" class="p_detail_des"></rich-text>-->
       <!-- <u-parse :content="product.Products_Description"  /> -->
       <u-parse :content.sync="Products_Description"></u-parse>
-      
+
       <!-- #ifdef H5||APP-PLUS -->
       <!-- <div v-html="formatRichTexts(product.Products_Description)" class="p_detail_des"></div> -->
       <!-- #endif -->
-      
+
       <!-- #ifdef MP -->
       <!-- <rich-text :nodes="product.Products_Description|formatRichText" class="p_detail_des"></rich-text> -->
       <!-- #endif -->
     </div>
     <div style="clear: both;">
-    
+
     </div>
     <div style="height:60px;background: white;"></div>
     <div class="safearea-box"></div>
@@ -147,7 +147,7 @@
             <div>微信小程序</div>
           </div>
           <!-- #endif -->
-          
+
           <!-- #ifndef MP-TOUTIAO -->
           <div @click="shareFunc('pic')" class="flex1">
             <image :src="'/static/client/detail/share2.png'|domain" alt="" class='img'></image>
@@ -216,7 +216,7 @@
           确定
         </button>
       </form>
-    
+
     </popupLayer>
     <div :class="classSelect?'errorMsg':'errorMsgs'" v-if="!isKai">
       <image class="errImg" src="/static/error.png"></image>
@@ -288,7 +288,7 @@ import {
   flashsaleReserve,
   getCommit,
   getProductSharePic,
-  updateCart,
+  updateCart
 } from '../../common/fetch.js'
 import { buildSharePath, getGroupCountdown, getProductThumb, ls, numberSort } from '../../common/tool.js'
 import { pageMixin } from '../../common/mixin'
@@ -330,7 +330,7 @@ export default {
         d: 0,
         h: 0,
         m: 0,
-        s: 0,
+        s: 0
       },
       isKai: true, // 是否开始秒杀
       isLoading: false,
@@ -342,12 +342,12 @@ export default {
         qty: 1, // 购买数量
         cart_key: 'DirectBuy', // 购物车类型   CartList（加入购物车）、DirectBuy（立即购买）、PTCartList（不能加入购物车）
         active: 'flashsale', // 拼团时候选，不是拼团不选
-        productDetail_price: 0,
+        productDetail_price: 0
       },
       isCollected: false, // 该产品是否已收藏
       isSubmit: false,
       classSelect: true,
-      skuImg: '',
+      skuImg: ''
     }
   },
   // #ifdef MP-WEIXIN || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO
@@ -355,22 +355,22 @@ export default {
   onShareAppMessage () {
     const path = '/pages/detail/spikeDetail?flashsale_id=' + this.flashsale_id
 
-    let shareObj = {
+    const shareObj = {
       title: this.product.Products_Name,
       desc: this.product.Products_BriefDescription,
       imageUrl: this.product.ImgPath,
-      path: buildSharePath(path),
+      path: buildSharePath(path)
     }
     return shareObj
   },
   // #endif
   components: {
     popupLayer,
-    uParse,
+    uParse
   },
   computed: {
     ...mapGetters(['userInfo']),
-    ...mapState(['initData']),
+    ...mapState(['initData'])
   },
   onUnload () {
     // #ifdef APP-PLUS
@@ -389,7 +389,7 @@ export default {
     // this.checkProdCollected();
 
     // #ifdef APP-PLUS
-    let str = plus.os.name
+    const str = plus.os.name
     if (str == 'iOS') {
       this.classSelect = false
     } else if (str == 'Android') {
@@ -422,7 +422,7 @@ export default {
 
     uni.$on('goodsSkuSub', (data) => {
       if (data.detail != 'spike') return
-      let { check_attr, check_attrid_arr, submit_flag, postData } = data
+      const { check_attr, check_attrid_arr, submit_flag, postData } = data
       this.check_attr = check_attr
       this.check_attrid_arr = check_attrid_arr
       this.submit_flag = submit_flag
@@ -443,18 +443,17 @@ export default {
   filters: {
     endtime (timeStamp) {
       // 一天过期
-      let end_timeStamp = timeStamp + 60 * 60 * 24
+      const end_timeStamp = timeStamp + 60 * 60 * 24
       let current = (new Date()).getTime()
 
       let { d = 0, h = 0, m = 0, s = 0 } = {}
-      //时间戳格式转换
+      // 时间戳格式转换
       current = parseInt(current / 1000)
 
-      let countTime = end_timeStamp - current
+      const countTime = end_timeStamp - current
       if (countTime < 0) {
         return false
       }
-      
 
       h = parseInt(countTime / (60 * 60))
       m = parseInt((countTime - h * 60 * 60) / 60)
@@ -498,9 +497,9 @@ export default {
 
       newContent = newContent.replace(/<br[^>]*\/>/gi, '')
       newContent = newContent.replace(/\<img/gi, '<img style="width:100%;float:left;"')
-      //newContent = newContent.replace(/>[\s]*</gi, "><");
+      // newContent = newContent.replace(/>[\s]*</gi, "><");
       return newContent
-    },
+    }
   },
   methods: {
     ...mapActions(['getUserInfo']),
@@ -511,7 +510,7 @@ export default {
       this.$fun.contact()
     },
     yulanDetail () {
-      let arr = []
+      const arr = []
       let str
       if (this.skuImg) {
         str = this.skuImg + '-r420'
@@ -522,42 +521,39 @@ export default {
       uni.previewImage({
         urls: arr,
         indicator: 'default',
-        current: 0,
+        current: 0
       })
-
     },
     async _init_func () {
       await this.getDetail(this.flashsale_id)
         .then(id => {
           this.getCommit(id)
           this.checkProdCollected(id)
-
         })
       // await this.getCommit(this.Products_ID);
       //
       // await this.checkProdCollected();
 
       this.isLoad = true
-
     },
     // 轮播图图片预览
     yulan (index) {
       uni.previewImage({
         urls: this.product.Products_JSON.ImgPath,
         indicator: 'default',
-        current: index,
+        current: index
       })
     },
     async shareFunc (channel) {
       const _self = this
-      let path = 'pages/detail/spikeDetail?flashsale_id=' + this.flashsale_id
-      let front_url = this.initData.front_url
+      const path = 'pages/detail/spikeDetail?flashsale_id=' + this.flashsale_id
+      const front_url = this.initData.front_url
 
-      let shareObj = {
+      const shareObj = {
         title: this.product.Products_Name,
         desc: this.product.Products_BriefDescription,
         imageUrl: getProductThumb(this.product.ImgPath),
-        path: buildSharePath(path),
+        path: buildSharePath(path)
       }
 
       switch (channel) {
@@ -575,7 +571,7 @@ export default {
             },
             fail: function (err) {
 
-            },
+            }
           })
           break
         case 'wxtimeline':
@@ -592,7 +588,7 @@ export default {
             },
             fail: function (err) {
 
-            },
+            }
           })
           break
         case 'wxmini':
@@ -607,19 +603,19 @@ export default {
               id: _self.wxMiniOriginId,
               path: '/' + shareObj.path,
               type: 0,
-              webUrl: 'http://uniapp.dcloud.io',
+              webUrl: 'http://uniapp.dcloud.io'
             },
             success: ret => {
 
-            },
+            }
           })
           break
         case 'pic':
           // this.$toast('comming soon')
 
-          let sharePic = await getProductSharePic({
-            'product_id': this.Products_ID,
-            'act_price': this.product.attr_json.price,
+          const sharePic = await getProductSharePic({
+            product_id: this.Products_ID,
+            act_price: this.product.attr_json.price
           }).then(res => {
             ls.set('temp_sharepic_info', res.data)
             return res.data.img_url
@@ -632,7 +628,7 @@ export default {
 
           setTimeout(function () {
             uni.navigateTo({
-              url: '/pages/detail/sharepic/sharepic',
+              url: '/pages/detail/sharepic/sharepic'
             })
           }, 200)
           break
@@ -668,7 +664,7 @@ export default {
       newContent = newContent.replace(/<br[^>]*\/>/gi, '')
       newContent = newContent.replace(/\<img/gi, '<img style="width:100%;float:left;"')
       newContent = newContent.replace(/src="\/\//gi, 'src="http://')
-      //newContent = newContent.replace(/>[\s]*</gi, "><");
+      // newContent = newContent.replace(/>[\s]*</gi, "><");
       return newContent
     },
     // 评价预览
@@ -687,8 +683,8 @@ export default {
           },
           fail: function (err) {
 
-          },
-        },
+          }
+        }
       })
     },
     // 收藏
@@ -700,29 +696,28 @@ export default {
       if (this.isCollected) {
         cancelCollection({ prod_id: this.Products_ID }).then(res => {
           uni.showToast({
-            title: res.msg,
+            title: res.msg
           })
           this.isCollected = false
           // #ifdef APP-PLUS
           uni.$emit('spike_bottom_setval', {
             isCollected: this.isCollected,
             isKai: this.isKai,
-            detail: 'spike',
+            detail: 'spike'
           })
           // #endif
-
         })
       } else {
         addCollection({ prod_id: this.Products_ID }).then(res => {
           uni.showToast({
-            title: '收藏成功',
+            title: '收藏成功'
           })
           this.isCollected = true
           // #ifdef APP-PLUS
           uni.$emit('spike_bottom_setval', {
             isCollected: this.isCollected,
             isKai: this.isKai,
-            detail: 'spike',
+            detail: 'spike'
           })
           // #endif
         }).catch(() => {
@@ -741,7 +736,7 @@ export default {
         uni.$emit('spike_bottom_setval', {
           isCollected: this.isCollected,
           isKai: this.isKai,
-          detail: 'spike',
+          detail: 'spike'
         })
         // #endif
       }).catch(e => {
@@ -772,23 +767,23 @@ export default {
       if (e) {
         add_template_code({
           code: e.detail.formId,
-          times: 1,
+          times: 1
         })
       }
       if (!this.$fun.checkIsLogin(1)) return
-      let data = {
-        flashsale_id: this.flashsale_id,
+      const data = {
+        flashsale_id: this.flashsale_id
       }
       flashsaleReserve(data).then(res => {
         uni.showToast({
           title: res.msg,
-          icon: 'none',
+          icon: 'none'
         })
         this.isLoading = false
       }, err => {
         uni.showToast({
           title: res.msg,
-          icon: 'none',
+          icon: 'none'
         })
         this.isLoading = false
       }).catch(e => {
@@ -801,7 +796,7 @@ export default {
       }
       // 零售价购买
       uni.navigateTo({
-        url: '/pages/detail/detail?Products_ID=' + this.Products_ID,
+        url: '/pages/detail/detail?Products_ID=' + this.Products_ID
       })
     },
     // 单独购买
@@ -809,7 +804,7 @@ export default {
       if (e) {
         add_template_code({
           code: e.detail.formId,
-          times: 1,
+          times: 1
         })
       }
       if (!this.$fun.checkIsLogin(1, 1)) {
@@ -822,11 +817,11 @@ export default {
       goodsSpecNvue.show('slide-in-bottom', 200)
       uni.$emit('goods_spec_setval', {
         product: this.product,
-        detail: 'spike',
+        detail: 'spike'
       })
       uni.$emit('goods_spec_setval', {
         postData: this.postData,
-        detail: 'spike',
+        detail: 'spike'
       })
       // #endif
       // #ifndef APP-PLUS
@@ -836,17 +831,17 @@ export default {
     // 返回首页
     goHome () {
       uni.switchTab({
-        url: '/pages/index/index',
+        url: '/pages/index/index'
       })
     },
     // 选择属性
     selectAttr (index, i) {
-      var value_index = index //选择的属性值索引
-      var attr_index = i   //选择的属性索引
+      var value_index = index // 选择的属性值索引
+      var attr_index = i // 选择的属性索引
       // if (this.check_attrid_arr.indexOf(value_index) > -1) return false;
-      //记录选择的属性
-      var check_attr = Object.assign(this.check_attr, { [attr_index]: value_index }) //记录选择的属性  attr_index外的[]必须
-      //属性处理
+      // 记录选择的属性
+      var check_attr = Object.assign(this.check_attr, { [attr_index]: value_index }) // 记录选择的属性  attr_index外的[]必须
+      // 属性处理
       var check_attrid = []
       var check_attrname = []
       var check_attrnames = []
@@ -858,20 +853,20 @@ export default {
       // 数组排序  按从小到大排
       var check_attrid_arr = check_attrid
       check_attrid = numberSort(check_attrid)
-      //获取对应的属性名称
+      // 获取对应的属性名称
       for (var i = 0; i < check_attrid.length; i++) {
         var attr_id = check_attrid[i]
         var attr_name = check_attrname[attr_id]
         check_attrnames.push(attr_name + ':' + this.product.skujosn[attr_name][attr_id])
       }
       check_attrid = check_attrid.join(';')
-      var attr_val = this.product.skuvaljosn[check_attrid]   //选择属性对应的属性值
-      //数组转化为字符串
+      var attr_val = this.product.skuvaljosn[check_attrid] // 选择属性对应的属性值
+      // 数组转化为字符串
       check_attrnames = check_attrnames.join(';')
 
-      //更改第一个规格显示图片
+      // 更改第一个规格显示图片
       for (const mbx in this.product.skuvaljosn) {
-        let arr = mbx.split(';')
+        const arr = mbx.split(';')
         if (arr[0] == index) {
           this.skuImg = this.product.skuvaljosn[mbx].Attr_Image
           break
@@ -879,9 +874,9 @@ export default {
       }
       // 属性判断
       if (attr_val) {
-        this.postData.attr_id = attr_val.Product_Attr_ID   //选择属性的id
-        this.postData.count = attr_val.Property_count   //选择属性的库存
-        //this.skuImg=attr_val.Attr_Image//选择属性的图片
+        this.postData.attr_id = attr_val.Product_Attr_ID // 选择属性的id
+        this.postData.count = attr_val.Property_count // 选择属性的库存
+        // this.skuImg=attr_val.Attr_Image//选择属性的图片
         this.postData.showimg = typeof attr_val.Attr_Image !== 'undefined' && attr_val.Attr_Image != '' ? attr_val.Attr_Image : this.product.Products_JSON.ImgPath[0]// 选择属性的图片
         this.postData.productDetail_price = attr_val.Attr_Price // 选择属性的价格
         this.submit_flag = !((!this.check_attr || Object.getOwnPropertyNames(this.check_attr).length != Object.getOwnPropertyNames(this.product.skujosn).length))
@@ -909,7 +904,7 @@ export default {
       if (e) {
         add_template_code({
           code: e.detail.formId,
-          times: 1,
+          times: 1
         })
       }
       if (!this.submit_flag) {
@@ -922,7 +917,7 @@ export default {
         if (this.product.skujosn) {
           wx.showToast({
             title: '您还没有选择规格',
-            icon: 'none',
+            icon: 'none'
           })
           return
         }
@@ -932,13 +927,13 @@ export default {
       updateCart(this.postData).then(res => {
         this.isSubmit = false
         uni.navigateTo({
-          url: '/pages/order/check?cart_key=DirectBuy&checkfrom=spike',
+          url: '/pages/order/check?cart_key=DirectBuy&checkfrom=spike'
         })
       }).catch(e => {
         this.isSubmit = false
         uni.showToast({
           title: e.msg,
-          icon: 'none',
+          icon: 'none'
         })
       })
       // 确定加入购物车
@@ -946,7 +941,7 @@ export default {
     },
     // 用户手动输入数量
     setCount (e) {
-      let amount = e.detail.value
+      const amount = e.detail.value
       if (amount <= 0) {
         this.postData.qty = 1
         error('至少购买一件')
@@ -955,7 +950,6 @@ export default {
       if (amount > this.postData.count) {
         this.postData.qty = this.postData.count
         error('购买数量不能超过库存量')
-        return
       }
     },
     addNum () {
@@ -965,7 +959,7 @@ export default {
         } else {
           uni.showToast({
             title: '购买数量不能大于库存量',
-            icon: 'none',
+            icon: 'none'
           })
           this.postData.qty = this.product.attr_json.count
         }
@@ -975,7 +969,7 @@ export default {
         } else {
           uni.showToast({
             title: '购买数量不能大于库存量',
-            icon: 'none',
+            icon: 'none'
           })
           this.postData.qty = this.product.attr_json.count
         }
@@ -987,14 +981,14 @@ export default {
       } else {
         uni.showToast({
           title: '购买数量不能小于1',
-          icon: 'none',
+          icon: 'none'
         })
         this.postData.qty = 1
       }
     },
     goCart () {
       uni.switchTab({
-        url: '/pages/order/cart',
+        url: '/pages/order/cart'
       })
     },
     goBack () {
@@ -1007,10 +1001,10 @@ export default {
       // goBack();
     },
     getCommit (item) {
-      let data = {
+      const data = {
         Products_ID: item,
         page: 1,
-        pageSize: 2,
+        pageSize: 2
       }
 
       getCommit(data, { errtip: false }).then(res => {
@@ -1020,11 +1014,11 @@ export default {
     },
     stampCount () {
       let rt = {}
-      let times = new Date().getTime()
+      const times = new Date().getTime()
       if (times < this.product.start_time * 1000) {
         this.isKai = false
         if (this.product && this.product.end_time) {
-          let computedStamp = getGroupCountdown({ end_timeStamp: this.product.start_time })
+          const computedStamp = getGroupCountdown({ end_timeStamp: this.product.start_time })
           if (computedStamp) {
             rt = computedStamp
           } else {
@@ -1035,7 +1029,7 @@ export default {
       } else {
         this.isKai = true
         if (this.product && this.product.end_time) {
-          let computedStamp = getGroupCountdown({ end_timeStamp: this.product.end_time })
+          const computedStamp = getGroupCountdown({ end_timeStamp: this.product.end_time })
           if (computedStamp) {
             rt = computedStamp
           } else {
@@ -1049,11 +1043,11 @@ export default {
     },
     getDetail (item) {
       return new Promise((resolve, reject) => {
-        let data = {
+        const data = {
           flashsale_id: item,
-          Users_ID: 'wkbq6nc2kc',
+          Users_ID: 'wkbq6nc2kc'
         }
-        let _self = this
+        const _self = this
         let product = null
 
         flashsaleDetail(data).then(res => {
@@ -1077,31 +1071,30 @@ export default {
           product = res.data
 
           if (res.data.skujosn) {
-            let skujosn = res.data.skujosn
-            let skujosn_new = []
+            const skujosn = res.data.skujosn
+            const skujosn_new = []
             for (const i in res.data.skujosn) {
               skujosn_new.push({
                 sku: i,
-                val: skujosn[i],
+                val: skujosn[i]
               })
             }
 
             this.product.skujosn_new = skujosn_new
             this.product.skuvaljosn = res.data.skuvaljosn
-
           }
           // #ifdef APP-PLUS
           // 规格选择
           uni.$emit('goods_spec_setval', {
             product: this.product,
-            detail: 'spike',
+            detail: 'spike'
           })
           uni.$emit('goods_spec_setval', {
             postData: this.postData,
-            detail: 'spike',
+            detail: 'spike'
           })
 
-          let times = new Date().getTime()
+          const times = new Date().getTime()
           if (times < this.product.start_time * 1000) {
             this.isKai = false
           } else {
@@ -1110,15 +1103,15 @@ export default {
           uni.$emit('spike_bottom_setval', {
             isCollected: this.isCollected,
             isKai: this.isKai,
-            detail: 'spike',
+            detail: 'spike'
           })
 
           // #endif
 
           // #ifdef H5
 
-          let path = 'pages/detail/spikeDetail?flashsale_id=' + this.flashsale_id
-          let front_url = this.initData.front_url
+          const path = 'pages/detail/spikeDetail?flashsale_id=' + this.flashsale_id
+          const front_url = this.initData.front_url
 
           this.WX_JSSDK_INIT(this).then((wxEnv) => {
             this.$wx.onMenuShareTimeline({
@@ -1127,10 +1120,10 @@ export default {
               imgUrl: product.ImgPath, // 分享图标
               success: function () {
                 // 用户点击了分享后执行的回调函数
-              },
+              }
             })
 
-            //两种方式都可以
+            // 两种方式都可以
             wxEnv.onMenuShareAppMessage({
               title: product.Products_Name, // 分享标题
               link: front_url + buildSharePath(path), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
@@ -1140,9 +1133,8 @@ export default {
               // dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
               success: function () {
                 // 用户点击了分享后执行的回调函数
-              },
+              }
             })
-
           }).catch(() => {
 
           })
@@ -1162,7 +1154,7 @@ export default {
     },
     gotoComments () {
       uni.navigateTo({
-        url: '/pages/order/comments?pro_id=' + this.Products_ID,
+        url: '/pages/order/comments?pro_id=' + this.Products_ID
       })
     },
     showTick (e) {
@@ -1174,7 +1166,7 @@ export default {
     },
     cancel () {
       this.$refs.popupLayer.close()
-    },
+    }
 
   },
   async created () {
@@ -1192,8 +1184,7 @@ export default {
     }
 
     this.wxMiniOriginId = WX_MINI_ORIGIN_ID
-
-  },
+  }
 }
 </script>
 
@@ -1203,23 +1194,23 @@ export default {
     background-color: #f8f8f8;
     overflow-x: hidden;
   }
-  
+
   // 轮播样式
   .uni-padding-wrap {
-    width: 750 rpx;
-    height: 750 rpx;
-    
+    width: 750rpx;
+    height: 750rpx;
+
     .page-section, .page-section-spacing, .swiper, .uni-swiper-wrapper, .uni-swiper-slides {
-      width: 750 rpx;
-      height: 750 rpx;
-      
+      width: 750rpx;
+      height: 750rpx;
+
       .imgs {
         width: 100%;
         height: 100%;
       }
     }
   }
-  
+
   /* 返回按钮和购物车按钮 */
   .top {
     position: fixed;
@@ -1233,32 +1224,32 @@ export default {
     z-index: 10;
     width: 95%;
   }
-  
+
   .top .myImg {
     width: 30px;
     height: 30px;
   }
-  
+
   .ticks, .shareinfo {
     background: #fff;
     width: 100%;
-    padding: 30 rpx 0 60 rpx;
+    padding: 30rpx 0 60rpx;
     color: #333;
     z-index: 100;
-    border-top-left-radius: 10 rpx;
-    border-top-right-radius: 10 rpx;
+    border-top-left-radius: 10rpx;
+    border-top-right-radius: 10rpx;
   }
-  
+
   .t_title {
     text-align: center;
     margin-bottom: 20px;
   }
-  
+
   .t_title img {
     float: right;
     margin-right: 10px;
   }
-  
+
   .t_content {
     position: relative;
     width: 355px;
@@ -1271,26 +1262,26 @@ export default {
     font-size: 11px;
     color: #F43131;
   }
-  
+
   .t_left {
     float: left;
   }
-  
+
   .t_left .t_left_t .money {
     font-size: 18px;
     margin-right: 5px;
   }
-  
+
   .t_left .t_left_t {
     font-size: 13px;
     margin-bottom: 5px;
   }
-  
+
   .t_left .t_left_t i {
     font-size: 11px;
     font-style: normal;
   }
-  
+
   .t_right {
     float: right;
     height: 58px;
@@ -1301,38 +1292,38 @@ export default {
     width: 62px;
     text-align: center;
   }
-  
+
   .aleady {
     color: #999;
   }
-  
+
   .shareinfo {
     padding-bottom: 0;
     color: #333;
     font-size: 12px;
   }
-  
+
   .shareinfo > div {
     text-align: center;
   }
-  
+
   .s_top {
     display: flex;
     justify-content: center;
     align-items: center;
   }
-  
+
   .s_top .img {
     width: 38px;
     height: 38px;
     display: block;
     margin: 0 auto 5px;
   }
-  
+
   .s_top > div:nth-child(1) {
     /*margin-right: 60px;*/
   }
-  
+
   .s_bottom {
     position: relative;
     bottom: 0;
@@ -1344,90 +1335,90 @@ export default {
     line-height: 30px;
     margin-top: 25px;
   }
-  
+
   /* 轮播图 */
   .van-swipe-item img {
     width: 100%;
     height: 100%;
   }
-  
+
   /* 产品描述部分 start */
   .section1 {
-    height: 70 rpx;
+    height: 70rpx;
     background-color: #fff;
   }
-  
+
   .price {
     margin-top: 22px;
   }
-  
+
   .price i {
     font-size: 10px;
     font-style: normal;
   }
-  
+
   .price
   .n_price {
     color: #ff0000;
     font-size: 18px;
   }
-  
+
   .o_price {
     color: #afafaf;
     font-size: 14px;
     text-decoration: line-through;
   }
-  
+
   .name {
     color: #333;
     font-size: 14px;
     font-weight: 700;
     margin: 5px 0;
   }
-  
+
   .sold span {
     color: #999;
     font-size: 13px;
   }
-  
+
   .sold span:nth-child(2) {
     float: right;
   }
-  
+
   /* 产品描述部分 end */
   /* 领券start */
   .section2 {
     position: relative;
-    padding-left: 26 rpx;
-    padding-top: 20 rpx;
-    padding-right: 20 rpx;
-    padding-bottom: 20 rpx;
-    font-size: 22 rpx;
+    padding-left: 26rpx;
+    padding-top: 20rpx;
+    padding-right: 20rpx;
+    padding-bottom: 20rpx;
+    font-size: 22rpx;
     // display: flex;
     // align-items: center;
     // justify-content: space-between;
     background-color: #fff;
   }
-  
+
   .section2 .btn {
     padding: 0 5px;
     color: #f43131;
     border: 1px solid #f43131;
   }
-  
+
   .right {
     display: flex;
     align-items: center;
-    font-size: 24 rpx;
+    font-size: 24rpx;
     color: #666666;
   }
-  
+
   .right .img {
-    width: 19 rpx;
-    height: 30 rpx;
-    margin-left: 20 rpx;
+    width: 19rpx;
+    height: 30rpx;
+    margin-left: 20rpx;
   }
-  
+
   /* 领券 end */
   /* 包邮信息等 start */
   //   .section3 {
@@ -1453,62 +1444,62 @@ export default {
   /* 包邮信息等 end */
   /* 评价 start */
   .comment {
-    padding: 30 rpx 26 rpx;
+    padding: 30rpx 26rpx;
     border-bottom: 10px solid #f8f8f8;
     background-color: #fff;
   }
-  
+
   .c_title {
     display: flex;
     justify-content: space-between;
   }
-  
+
   .c_title > span {
-    font-size: 30 rpx;
+    font-size: 30rpx;
     color: #333;
   }
-  
+
   .c_content {
     margin-top: 15px;
   }
-  
+
   .c_content_title {
     display: flex;
     align-items: center;
     font-size: 15px;
     color: #333;
   }
-  
+
   .c_content_title > .imggs {
-    width: 70 rpx;
-    height: 70 rpx;
-    margin-right: 20 rpx;
+    width: 70rpx;
+    height: 70rpx;
+    margin-right: 20rpx;
   }
-  
+
   .user_name {
     flex: 1;
-    font-size: 30 rpx;
+    font-size: 30rpx;
   }
-  
+
   .c_time {
-    font-size: 26 rpx;
+    font-size: 26rpx;
     color: #777;
   }
-  
+
   .c_content_msg {
-    font-size: 24 rpx;
+    font-size: 24rpx;
     color: #333;
     line-height: 18px;
     padding: 9px 0;
     border-bottom: 1px solid #f8f8f8;
   }
-  
+
   .c_content_img img {
-    width: 142 rpx;
-    height: 142 rpx;
-    margin-right: 20 rpx;
+    width: 142rpx;
+    height: 142rpx;
+    margin-right: 20rpx;
   }
-  
+
   /* 评价 end */
   /* 商品详情 start */
   // .pro_detail {
@@ -1519,26 +1510,26 @@ export default {
   //     color: #333;
   //     font-size: 30rpx;
   // }
-  
+
   .pro_detail {
     background: white;
-    
+
     .p_detail_des {
       width: 100%;
-      
+
       img {
         width: 100% !important;
       }
     }
   }
-  
+
   .p_detail_title {
-    padding: 30 rpx 20 rpx;
+    padding: 30rpx 20rpx;
     color: #333;
-    font-size: 30 rpx;
-    
+    font-size: 30rpx;
+
   }
-  
+
   /* 商品详情 end */
   /* 遮罩层 */
   .modal {
@@ -1548,95 +1539,95 @@ export default {
     background: rgba(0, 0, 0, .7);
     z-index: 1000;
   }
-  
+
   .section1 {
     display: flex;
-    padding-left: 15 rpx;
-    padding-right: 15 rpx;
+    padding-left: 15rpx;
+    padding-right: 15rpx;
     align-items: center;
     justify-content: space-between;
     background-color: #F43131;
     color: #fff;
-    
+
     .leftss {
-      font-size: 36 rpx;
+      font-size: 36rpx;
       color: #FFFFFF;
-      
+
       .pricef {
-        font-size: 36 rpx;
+        font-size: 36rpx;
       }
-      
+
       .prices {
-        font-size: 50 rpx;
+        font-size: 50rpx;
         margin-left: 4px;
         font-weight: 500;
       }
-      
+
       .pricet {
-        font-size: 28 rpx;
+        font-size: 28rpx;
         margin-left: 6px;
         color: #ddd;
         text-decoration: line-through;
       }
     }
-    
+
     .rightss {
       .countdown {
         color: #FFFFFF;
-        font-size: 24 rpx;
-        line-height: 37 rpx;
+        font-size: 24rpx;
+        line-height: 37rpx;
         overflow: hidden;
-        height: 37 rpx;
+        height: 37rpx;
         display: flex;
         align-items: center;
-        
+
         .spans {
           margin: 0 2px;
           padding: 0 2px;
-          height: 37 rpx;
-          width: 37 rpx;
-          line-height: 32 rpx;
+          height: 37rpx;
+          width: 37rpx;
+          line-height: 32rpx;
           text-align: center;
           background: #FFFFFF;
           color: #F43131;
-          font-size: 26 rpx;
+          font-size: 26rpx;
           box-shadow: 0px 1px 1px 0px rgba(4, 0, 0, 0.5), 0px 1px 1px 0px rgba(255, 255, 255, 0.65);
           display: inline-block;
         }
-        
+
         .spanss {
           margin: 0 2px;
           padding: 0 2px;
-          height: 37 rpx;
-          width: 37 rpx;
-          line-height: 32 rpx;
+          height: 37rpx;
+          width: 37rpx;
+          line-height: 32rpx;
           text-align: center;
           color: #FFFFFF;
-          font-size: 26 rpx;
+          font-size: 26rpx;
           display: inline-block;
         }
       }
-      
+
       .haha {
-        font-size: 24 rpx;
-        line-height: 32 rpx;
+        font-size: 24rpx;
+        line-height: 32rpx;
       }
     }
   }
-  
+
   .titles {
     position: relative;
-    
+
     .title {
-      font-size: 28 rpx;
+      font-size: 28rpx;
       font-family: PingFang SC;
       font-weight: bold;
       color: rgba(51, 51, 51, 1);
-      line-height: 34 rpx;
-      max-height: 68 rpx;
+      line-height: 34rpx;
+      max-height: 68rpx;
       overflow: hidden;
     }
-    
+
     .share {
       position: absolute;
       right: 0;
@@ -1652,41 +1643,41 @@ export default {
       border-bottom-left-radius: 20px;
     }
   }
-  
+
   .titlet {
     margin-top: 12px;
-    padding-right: 36 rpx;
+    padding-right: 36rpx;
     font-size: 12px;
     font-family: PingFang SC;
     font-weight: 500;
     color: rgba(110, 110, 110, 1);
     line-height: 20px;
   }
-  
+
   .pintuan {
-    margin-bottom: 20 rpx;
+    margin-bottom: 20rpx;
     background-color: #fff;
-    padding: 30 rpx 27 rpx 30 rpx 19 rpx;
-    
+    padding: 30rpx 27rpx 30rpx 19rpx;
+
     .pinTitle {
-      font-size: 28 rpx;
+      font-size: 28rpx;
       font-family: PingFang SC;
       font-weight: 500;
       color: rgba(51, 51, 51, 1);
       line-height: 20px;
     }
-    
+
     .mbxtext {
-      margin-top: 21 rpx;
-      font-size: 22 rpx;
+      margin-top: 21rpx;
+      font-size: 22rpx;
       color: #888888;
-      line-height: 36 rpx;
+      line-height: 36rpx;
     }
-    
+
   }
-  
+
   .fixed {
-    height: 98 rpx;
+    height: 98rpx;
     display: flex;
     position: fixed;
     bottom: 0;
@@ -1697,83 +1688,83 @@ export default {
     width: 100%;
     background-color: #F8F8F8;
     z-index: 99;
-    
+
     .leftss, .rightss {
       width: 50%;
-      height: 98 rpx;
+      height: 98rpx;
       display: flex;
     }
-    
+
     .leftss {
       .first {
         width: 33.3%;
-        height: 98 rpx;
+        height: 98rpx;
         text-align: center;
-        padding-top: 15 rpx;
-        
+        padding-top: 15rpx;
+
         .img {
-          width: 38 rpx;
-          height: 38 rpx;
+          width: 38rpx;
+          height: 38rpx;
           display: block;
           margin: 0 auto;
         }
-        
+
         .txt {
-          font-size: 22 rpx;
-          margin-top: 10 rpx;
+          font-size: 22rpx;
+          margin-top: 10rpx;
         }
       }
     }
-    
+
     .rightss {
       display: flex;
-      
+
       .form {
         flex: 1;
       }
-      
+
       .dan {
         /*width: 50%;*/
         background-color: #FA6B27;
       }
-      
+
       .tuan {
         /*width: 50%;*/
         background-color: #F43131;
       }
-      
+
       .bTitle {
-        height: 98 rpx;
+        height: 98rpx;
         overflow: hidden;
         color: #fff;
         text-align: center;
-        padding: 10 rpx 0;
+        padding: 10rpx 0;
         box-sizing: border-box;
-        
+
         .danLeft {
-          height: 32 rpx;
+          height: 32rpx;
           //overflow: hidden;
         }
-        
+
         .bF {
-          font-size: 24 rpx;
-          line-height: 32 rpx;
+          font-size: 24rpx;
+          line-height: 32rpx;
         }
-        
+
         .bS {
-          font-size: 32 rpx;
-          line-height: 32 rpx;
-          
+          font-size: 32rpx;
+          line-height: 32rpx;
+
         }
-        
+
         .danRight {
-          font-size: 30 rpx;
+          font-size: 30rpx;
           border-radius: 0;
           border: none !important;
           color: white;
           background: none;
           display: block;
-          
+
           &::after {
             display: none;
           }
@@ -1781,243 +1772,243 @@ export default {
       }
     }
   }
-  
+
   //规格
   .cartSku {
-    padding: 0 rpx 20 rpx;
-    
+    padding: 0rpx 20rpx;
+
     .cartTop {
       position: relative;
       display: flex;
-      padding-top: 20 rpx;
-      
+      padding-top: 20rpx;
+
       .image {
-        width: 220 rpx;
-        height: 220 rpx;
+        width: 220rpx;
+        height: 220rpx;
       }
-      
+
       .cartTitle {
-        margin-left: 20 rpx;
-        font-size: 32 rpx;
+        margin-left: 20rpx;
+        font-size: 32rpx;
         //width: 420rpx;
         flex: 1;
-        
+
         .cartTitles {
-          height: 80 rpx;
+          height: 80rpx;
           overflow: hidden;
-          line-height: 40 rpx;
-          margin-top: 20 rpx;
+          line-height: 40rpx;
+          margin-top: 20rpx;
         }
-        
+
         .addInfo {
-          width: 450 rpx;
-          margin-top: 70 rpx;
+          width: 450rpx;
+          margin-top: 70rpx;
           display: flex;
           flex-flow: row;
           justify-content: space-between;
           align-items: flex-end;
-          
+
           .addPrice {
-            font-size: 42 rpx;
+            font-size: 42rpx;
             color: #ff4200;
           }
-          
+
           .proSale {
-            font-size: 24 rpx;
+            font-size: 24rpx;
             color: #999;
             justify-content: flex-end;
           }
         }
       }
     }
-    
+
     .cartCenter {
-      margin-top: 20 rpx;
-      
+      margin-top: 20rpx;
+
       .cartAttr {
         //display: flex;
-        padding: 15 rpx 0 rpx;
-        
+        padding: 15rpx 0rpx;
+
         .sku {
-          font-size: 28 rpx;
-          height: 70 rpx;
-          line-height: 70 rpx;
-          width: 140 rpx;
+          font-size: 28rpx;
+          height: 70rpx;
+          line-height: 70rpx;
+          width: 140rpx;
           padding-left: 10px;
           margin-bottom: 5px;
         }
-        
+
         .skuValue {
           display: flex;
           //flex:1;
           flex-wrap: wrap;
-          
+
           .skuview {
             margin-bottom: 10px;
-            height: 70 rpx;
-            line-height: 70 rpx;
+            height: 70rpx;
+            line-height: 70rpx;
             font-size: 14px;
-            border-radius: 10 rpx;
+            border-radius: 10rpx;
             color: #000;
             background-color: #F2F2F2;
-            padding-left: 20 rpx;
-            padding-right: 20 rpx;
-            margin-right: 20 rpx;
+            padding-left: 20rpx;
+            padding-right: 20rpx;
+            margin-right: 20rpx;
             //border: 1px solid #ccc;
           }
         }
       }
     }
-    
+
     .numBer {
-      margin-top: 20 rpx;
+      margin-top: 20rpx;
       display: flex;
-      padding: 15 rpx 0 rpx;
+      padding: 15rpx 0rpx;
       justify-content: space-between;
-      
+
       .numBers {
-        font-size: 28 rpx;
-        height: 70 rpx;
-        line-height: 70 rpx;
-        width: 140 rpx;
+        font-size: 28rpx;
+        height: 70rpx;
+        line-height: 70rpx;
+        width: 140rpx;
       }
-      
+
       .inputNumber {
         border: 1px solid #ccc;
-        border-radius: 6 rpx;
-        height: 50 rpx;
+        border-radius: 6rpx;
+        height: 50rpx;
         //margin-right: 50rpx;
         display: flex;
-        
+
         .inputs {
           color: black;
           margin: 0 auto;
-          width: 80 rpx;
-          height: 50 rpx;
+          width: 80rpx;
+          height: 50rpx;
           text-align: center;
-          font-size: 24 rpx;
-          border-left: 2 rpx solid #ccc;
-          border-right: 2 rpx solid #ccc;
+          font-size: 24rpx;
+          border-left: 2rpx solid #ccc;
+          border-right: 2rpx solid #ccc;
         }
-        
+
         .clicks {
-          height: 50 rpx;
-          line-height: 50 rpx;
-          width: 60 rpx;
+          height: 50rpx;
+          line-height: 50rpx;
+          width: 60rpx;
           text-align: center;
         }
       }
     }
   }
-  
+
   .cartSub {
     width: 100%;
-    height: 90 rpx;
+    height: 90rpx;
     background-color: #F43131;
     font-size: 20px;
-    line-height: 90 rpx;
+    line-height: 90rpx;
     text-align: center;
     color: #FFFFFF;
-    margin-top: 30 rpx;
+    margin-top: 30rpx;
     border-radius: 0;
     border: none;
-    
+
     &.disabled {
       background: #999;
     }
   }
-  
+
   .skuCheck {
     color: #fff !important;
     background-color: #ff4200 !important;
   }
-  
+
   .prices {
-    width: 750 rpx;
+    width: 750rpx;
     box-sizing: border-box;
-    height: 50 rpx;
-    padding-left: 20 rpx;
-    padding-right: 21 rpx;
+    height: 50rpx;
+    padding-left: 20rpx;
+    padding-right: 21rpx;
     display: flex;
     justify-content: space-between;
     background-color: #FFFFFF;
-    
+
     .btn {
-      font-size: 22 rpx;
+      font-size: 22rpx;
       color: #666666;
-      height: 50 rpx;
-      line-height: 50 rpx;
+      height: 50rpx;
+      line-height: 50rpx;
     }
-    
+
     .price {
-      height: 27 rpx;
-      margin-top: 0 rpx !important;
-      
+      height: 27rpx;
+      margin-top: 0rpx !important;
+
       .leftPrice {
-        font-size: 22 rpx;
+        font-size: 22rpx;
         color: #777777;
-        
+
         .rmb {
           color: #F43131;
-          font-size: 24 rpx;
-          margin-left: 5 rpx;
-          margin-right: 5 rpx;
+          font-size: 24rpx;
+          margin-left: 5rpx;
+          margin-right: 5rpx;
         }
-        
+
         .priceX {
-          font-size: 30 rpx;
+          font-size: 30rpx;
           color: #F43131;
           font-weight: bold;
         }
       }
-      
+
       .rightPrice {
-        font-size: 24 rpx;
+        font-size: 24rpx;
         color: #B4B4B4;
         text-decoration: line-through;
-        margin-left: 23 rpx;
+        margin-left: 23rpx;
       }
     }
   }
-  
+
   .errorMsg {
-    width: 750 rpx;
-    height: 44 rpx;
+    width: 750rpx;
+    height: 44rpx;
     background-color: #F7F6BD;
     display: flex;
     align-items: center;
-    padding-left: 21 rpx;
+    padding-left: 21rpx;
     position: fixed;
-    bottom: 98 rpx;
+    bottom: 98rpx;
     color: #F43131;
-    font-size: 20 rpx;
-    
+    font-size: 20rpx;
+
     .errImg {
-      width: 19 rpx;
-      height: 19 rpx;
-      margin-right: 12 rpx;
+      width: 19rpx;
+      height: 19rpx;
+      margin-right: 12rpx;
     }
   }
-  
+
   .errorMsgs {
-    width: 750 rpx;
-    height: 44 rpx;
+    width: 750rpx;
+    height: 44rpx;
     background-color: #F7F6BD;
     display: flex;
     align-items: center;
-    padding-left: 21 rpx;
+    padding-left: 21rpx;
     position: fixed;
-    bottom: 0 rpx;
+    bottom: 0rpx;
     color: #F43131;
-    font-size: 20 rpx;
-    
+    font-size: 20rpx;
+
     .errImg {
-      width: 19 rpx;
-      height: 19 rpx;
-      margin-right: 12 rpx;
+      width: 19rpx;
+      height: 19rpx;
+      margin-right: 12rpx;
     }
   }
-  
+
   .top {
     position: fixed;
     top: 10px;
@@ -2030,12 +2021,12 @@ export default {
     z-index: 10;
     width: 95%;
   }
-  
+
   .imgm {
     width: 30px;
     height: 30px;
   }
-  
+
   .imgms {
     width: 30px;
     height: 30px;
@@ -2043,7 +2034,7 @@ export default {
     top: 30px;
     left: 10px;
   }
-  
+
   .carts {
     width: 30px;
     height: 30px;
@@ -2051,33 +2042,33 @@ export default {
     top: 30px;
     right: 10px !important;
   }
-  
+
   .section3 {
     display: flex;
     flex-wrap: wrap;
-    font-size: 0 rpx;
-    padding-left: 20 rpx;
-    padding-right: 20 rpx;
+    font-size: 0rpx;
+    padding-left: 20rpx;
+    padding-right: 20rpx;
     // padding: 30rpx 0;
     // padding: 30rpx 20rpx;
     // border-bottom: 20rpx solid #efefef;
   }
-  
+
   .section3 > span {
     display: flex;
     align-items: center;
     // margin-right: 20rpx;
-    margin: 20 rpx 20 rpx 20 rpx 0;
-    
+    margin: 20rpx 20rpx 20rpx 0;
+
     span {
-      font-size: 24 rpx;
+      font-size: 24rpx;
       color: #333333;
     }
   }
-  
+
   .section3 .img {
-    width: 28 rpx;
-    height: 28 rpx;
-    margin-right: 10 rpx;
+    width: 28rpx;
+    height: 28rpx;
+    margin-right: 10rpx;
   }
 </style>

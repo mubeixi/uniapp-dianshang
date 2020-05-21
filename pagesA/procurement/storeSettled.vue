@@ -9,13 +9,13 @@
     </view>
     <view class="item flex-vertical-center">
       <view class="item-left">入驻门店类型</view>
-      
+
       <picker :disabled="typeDisable" :range="array" :value="type" @change="bindPickerChange"
               class="item-right flex justify-end flex-vertical-center">
         {{array[type]}}
         <image :src="'/static/client/person/right.png'|domain" class="right"></image>
       </picker>
-    
+
     </view>
     <!-- <view class="item flex-vertical-center">
         <view class="item-left">入驻类目</view>
@@ -69,7 +69,7 @@
                v-model="store_address" />
       </view>
     </view>
-    
+
     <view class="addImg">
       门店图片
       <view class="imgs">
@@ -96,7 +96,7 @@
         </view>
       </view>
     </view>
-    
+
     <view @click="settled" class="submit">{{is_submitted?userStoreMsg.status_desc:(status == 3 ? '被驳回，重新申请' :
       '立即入驻')}}
     </view>
@@ -131,7 +131,7 @@ import {
   get_User_ID,
   get_Users_ID,
   getUserStoreApply,
-  userStoreApply,
+  userStoreApply
 } from '../../common/fetch.js'
 import { chooseImageByPromise, uploadImages } from '../../common/tool.js'
 import { error } from '../../common/index.js'
@@ -169,7 +169,7 @@ export default {
       store_type: 0, // 门店类型
       index: 0,
       arrlist: [],
-      imglist: [],
+      imglist: []
 
     }
   },
@@ -177,10 +177,10 @@ export default {
     ...mapGetters(['userInfo']),
     store_title_name: function () {
       return this.storeTypes[this.index] && this.storeTypes[this.index].title || '请选择类型'
-    },
+    }
   },
   components: {
-    popupLayer,
+    popupLayer
   },
   onShow: function () {
     if (!this.$fun.checkIsLogin(1)) return
@@ -193,14 +193,14 @@ export default {
         success: function (res) {
           if (res.confirm) {
             uni.navigateTo({
-              url: '/pagesA/person/updateUserPsw?type=3',
+              url: '/pagesA/person/updateUserPsw?type=3'
             })
           } else if (res.cancel) {
             uni.navigateBack({
-              delta: 1,
+              delta: 1
             })
           }
-        },
+        }
       })
     }
   },
@@ -218,12 +218,12 @@ export default {
     this.objectMultiArray = [
       utils.array_change(area.area[0]['0']),
       utils.array_change(area.area[0]['0,1']),
-      utils.array_change(area.area[0]['0,1,35']),
+      utils.array_change(area.area[0]['0,1,35'])
     ]
     this.change_objectMultiArray = [
       utils.array_change(area.area[0]['0']),
       utils.array_change(area.area[0]['0,1']),
-      utils.array_change(area.area[0]['0,1,35']),
+      utils.array_change(area.area[0]['0,1,35'])
     ]
     this.get_store_types()
   },
@@ -287,13 +287,13 @@ export default {
         const objectMultiArray = [
           utils.array_change(area.area[0]['0']),
           utils.array_change(area.area[0]['0,' + this.userStoreMsg.store_province]),
-          utils.array_change(area.area[0]['0,' + this.userStoreMsg.store_province + ',' + this.userStoreMsg.store_city]),
+          utils.array_change(area.area[0]['0,' + this.userStoreMsg.store_province + ',' + this.userStoreMsg.store_city])
         ]
         // 设置初始显示列
         const multiIndex = [
           utils.get_arr_index(objectMultiArray[0], this.userStoreMsg.store_province),
           utils.get_arr_index(objectMultiArray[1], this.userStoreMsg.store_city),
-          utils.get_arr_index(objectMultiArray[2], this.userStoreMsg.store_area),
+          utils.get_arr_index(objectMultiArray[2], this.userStoreMsg.store_area)
         ]
         this.objectMultiArray = objectMultiArray
         this.multiIndex = multiIndex
@@ -305,10 +305,10 @@ export default {
             success: function (res) {
               if (res.confirm) {
                 uni.navigateTo({
-                  url: '/pages/index/index',
+                  url: '/pages/index/index'
                 })
               }
-            },
+            }
           })
         }
       })
@@ -351,15 +351,15 @@ export default {
         store_area: this.store_area,
         store_type: this.type == 0 ? 1 : 2,
         img_info: img_info,
-        pid: this.pid ? this.pid : 0,
+        pid: this.pid ? this.pid : 0
       }, { mask: true }).then(res => {
         uni.showToast({
           title: res.msg,
-          icon: 'none',
+          icon: 'none'
         })
         setTimeout(() => {
           uni.navigateBack({
-            delta: 1,
+            delta: 1
           })
         }, 1500)
       }).catch(err => {
@@ -376,7 +376,7 @@ export default {
       this.change_objectMultiArray = [
         p_arr,
         c_arr,
-        a_arr,
+        a_arr
       ]
       this.change_multiIndex = columnValue
     },
@@ -398,7 +398,7 @@ export default {
       var columnValue = [
         column == 0 ? index : this.change_multiIndex[0],
         column == 0 ? 0 : (column == 1 ? index : this.change_multiIndex[1]),
-        column == 0 || column == 1 ? 0 : index,
+        column == 0 || column == 1 ? 0 : index
       ]
       this.addressChange(columnValue)
     },
@@ -414,7 +414,7 @@ export default {
       uni.previewImage({
         urls: imgs,
         indicator: 'default',
-        current: index,
+        current: index
       })
     },
     // 删除某张预览图片
@@ -448,7 +448,7 @@ export default {
       if (arg == 0) {
         await chooseImageByPromise({
           count: 1,
-          sizeType,
+          sizeType
         }).then(tempFiles => {
           temp_file_list = tempFiles
         })
@@ -466,7 +466,7 @@ export default {
       } else if (arg == 1) {
         await chooseImageByPromise({
           count: (9 - that.imgs.length),
-          sizeType,
+          sizeType
         }).then(tempFiles => {
           temp_file_list = tempFiles
         })
@@ -482,8 +482,8 @@ export default {
           that.isSubmit = true
         })
       }
-    },
-  },
+    }
+  }
 }
 </script>
 
@@ -492,13 +492,13 @@ export default {
     justify-content: flex-end;
     flex: 1;
   }
-  
+
   .wrap {
     height: 100vh;
     background-color: #fff;
     padding: 0 20rpx;
   }
-  
+
   .item {
     display: flex;
     align-items: center;
@@ -506,34 +506,34 @@ export default {
     border-bottom: 1px solid #EBEBEB;
     box-sizing: border-box;
     padding: 25rpx 0;
-    
+
     .item-left {
       height: 50rpx;
       line-height: 50rpx;
       font-size: 30rpx;
       color: #333;
     }
-    
+
     .item-input {
       color: #333;
       font-size: 28rpx;
       margin-left: 32rpx;
       flex: 1;
-      
+
       .placeholder {
         color: #CAC8C8;
       }
     }
-    
+
     .right {
       width: 18rpx;
       height: 27rpx;
     }
-    
+
     .pick {
       flex: 1;
     }
-    
+
     .picker {
       display: flex;
       align-items: center;
@@ -541,30 +541,30 @@ export default {
       color: #CAC8C8;
       margin-left: 28rpx;
       justify-content: space-between;
-      
+
       .choosed {
         color: #333;
       }
     }
   }
-  
+
   .item.noborder {
     border-bottom: none;
   }
-  
+
   .addImg {
     font-size: 30rpx;
     //height: 100rpx;
     line-height: 100rpx;
     color: #333;
   }
-  
+
   .imgs {
     display: flex;
     padding-right: 0rpx;
     flex-wrap: wrap;
   }
-  
+
   .shangchuans {
     width: 146rpx;
     height: 146rpx;
@@ -572,12 +572,12 @@ export default {
     position: relative;
     margin-right: 28rpx;
     margin-bottom: 28rpx;
-    
+
     .image {
       width: 100%;
       height: 100%;
     }
-    
+
     .del {
       width: 38rpx;
       height: 38rpx;
@@ -587,14 +587,14 @@ export default {
       z-index: 999;
     }
   }
-  
+
   .shangchuan {
     width: 146rpx;
     height: 146rpx;
     border: 1px dotted rgba(186, 186, 186, 1);
     position: relative;
     margin-bottom: 28rpx;
-    
+
     .heng {
       width: 76rpx;
       height: 3rpx;
@@ -603,7 +603,7 @@ export default {
       top: 72rpx;
       left: 35rpx;
     }
-    
+
     .shu {
       width: 3rpx;
       height: 76rpx;
@@ -611,10 +611,10 @@ export default {
       position: absolute;
       top: 35rpx;
       left: 72rpx;
-      
+
     }
   }
-  
+
   .submit {
     /*position: fixed;*/
     /*bottom: 0;*/
@@ -627,20 +627,20 @@ export default {
     color: #fff;
     background-color: #f43131;
   }
-  
+
   .search-title {
     line-height: 88rpx;
     color: #333;
     text-align: center;
     font-size: 32rpx;
   }
-  
+
   .search-content {
     padding: 20rpx;
     max-height: 600rpx;
     overflow: auto;
   }
-  
+
   .search-item {
     display: flex;
     justify-content: space-between;
@@ -651,13 +651,13 @@ export default {
     border-bottom: 1px solid #e6e6e6;
     padding: 25rpx 0;
     font-size: 28rpx;
-    
+
     .image {
       display: block;
       width: 22px;
       height: 22px;
     }
-    
+
     .box {
       width: 22px;
       height: 22px;
@@ -665,7 +665,7 @@ export default {
       box-sizing: border-box;
     }
   }
-  
+
   .search-item:nth-last-child(1) {
     border-bottom: 0;
   }

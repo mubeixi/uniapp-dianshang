@@ -1,7 +1,7 @@
 <template>
   <view :style="{height: height + 'px', background:bgcolor}" @click="commonClick" class="wrap">
     <!-- <page-title :title="title" rightHidden="true" bgcolor="#F8F8F8"></page-title> -->
-    
+
     <block v-if="type != 3">
       <form @submit="save" report-submit>
         <view class="content" v-if="type == 0">
@@ -16,7 +16,7 @@
         </view>
         <button class="save" formType="submit">保存</button>
       </form>
-    
+
     </block>
     <block v-else>
       <form @submit="confirm" report-submit>
@@ -46,7 +46,7 @@ import {
   updateMobileSms,
   updateUserLoginPsw,
   updateUserMobile,
-  updateUserPayPsw,
+  updateUserPayPsw
 } from '../../common/fetch.js'
 import { mapActions, mapGetters } from 'vuex'
 import { pageMixin } from '../../common/mixin'
@@ -66,11 +66,11 @@ export default {
       mobile: '',
       code: '',
       countdownStatus: false, // 是否开启倒计时了
-      countdownNum: 60,
+      countdownNum: 60
     }
   },
   computed: {
-    ...mapGetters(['userInfo']),
+    ...mapGetters(['userInfo'])
   },
   methods: {
     ...mapActions(['setUserInfo']),
@@ -78,7 +78,7 @@ export default {
     goBack () {
       setTimeout(() => {
         uni.navigateBack({
-          delta: 1,
+          delta: 1
         })
       }, 1000)
     },
@@ -90,28 +90,28 @@ export default {
       if (!(/^1[3456789]\d{9}$/.test(this.mobile))) {
         uni.showToast({
           title: '手机号输入错误，请重新输入',
-          icon: 'none',
+          icon: 'none'
         })
         return
       }
       if (!this.code) {
         uni.showToast({
           title: '验证码不能为空',
-          icon: 'none',
+          icon: 'none'
         })
         return
       }
       updateUserMobile({
         mobile: this.mobile,
-        code: this.code,
+        code: this.code
       }).then(res => {
         uni.showToast({
-          title: res.msg,
+          title: res.msg
         })
 
         get_user_info({}, {
           tip: '',
-          errtip: false,
+          errtip: false
         }).then(res => {
           this.setUserInfo(res.data)
           this.goBack()
@@ -120,14 +120,14 @@ export default {
       }, err => {
         uni.showToast({
           title: res.msg,
-          icon: 'none',
+          icon: 'none'
         })
       })
     },
     toast (title, icon = 'none') {
       uni.showToast({
         title: title,
-        icon: icon,
+        icon: icon
       })
     },
     startCountdown () {
@@ -152,16 +152,16 @@ export default {
       if (!isMobileOK) {
         uni.showToast({
           title: '手机号格式不正确',
-          icon: 'none',
+          icon: 'none'
         })
         return
       }
       updateMobileSms({
-        mobile: this.mobile,
+        mobile: this.mobile
       }).then(res => {
         uni.showToast({
           title: '验证码已发送',
-          icon: 'success',
+          icon: 'success'
         })
         this.startCountdown()
       })
@@ -175,7 +175,7 @@ export default {
       const arg = {
         curr_psw: this.curr_psw,
         new_psw: this.new_psw,
-        check_psw: this.check_psw,
+        check_psw: this.check_psw
       }
       if (this.type == 1) {
         // 原始密码默认为空
@@ -225,7 +225,7 @@ export default {
             // 更新信息
             get_user_info({}, {
               tip: '',
-              errtip: false,
+              errtip: false
             }).then(res => {
               this.setUserInfo(res.data)
               setTimeout(() => {
@@ -238,7 +238,7 @@ export default {
           this.toast(err.msg)
         })
       }
-    },
+    }
   },
   onLoad (options) {
     if (options.type == 0) {
@@ -256,14 +256,14 @@ export default {
       this.bgcolor = '#fff'
     }
     uni.setNavigationBarTitle({
-      title: this.title,
+      title: this.title
     })
     uni.getSystemInfo({
       success: res => {
         this.height = res.screenHeight
-      },
+      }
     })
-  },
+  }
 }
 </script>
 
@@ -272,10 +272,10 @@ export default {
     width: 100%;
     background: #efefef;
   }
-  
+
   .content {
     padding: 20rpx 0;
-    
+
     .item {
       background: #fff;
       padding-left: 20rpx;
@@ -285,7 +285,7 @@ export default {
       font-size: 30rpx;
     }
   }
-  
+
   .save {
     width: 90%;
     background: #F43131;
@@ -296,23 +296,23 @@ export default {
     line-height: 80rpx;
     border-radius: 10rpx;
   }
-  
+
   .other {
     padding: 14rpx 20rpx 0;
-    
+
     .other-item {
       display: flex;
       align-items: center;
       line-height: 98rpx;
       font-size: 28rpx;
       border-bottom: 1px solid #E3E3E3;
-      
+
       .input {
         flex: 1;
         font-size: 24rpx;
         margin-left: 42rpx;
       }
-      
+
       .get-msg {
         height: 50rpx;
         line-height: 50rpx;
@@ -324,7 +324,7 @@ export default {
         border-radius: 5rpx;
       }
     }
-    
+
     .confirm {
       height: 76rpx;
       line-height: 76rpx;

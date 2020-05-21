@@ -17,7 +17,7 @@
         <view>修改支付密码</view>
         <image :src="'/static/client/right.png'|domain" mode=""></image>
       </view>
-    
+
     </view>
     <view @click="logoutFunc" class="btn">退出登录</view>
   </view>
@@ -35,23 +35,23 @@ export default {
   mixins: [pageMixin],
   data () {
     return {
-      isDev,
+      isDev
     }
   },
   methods: {
     goOrder () {
       uni.navigateTo({
-        url: '/pagesA/procurement/purchaseRecords',
+        url: '/pagesA/procurement/purchaseRecords'
       })
     },
     goOrderCheck () {
       uni.navigateTo({
-        url: '/pagesA/order/checkChannel',
+        url: '/pagesA/order/checkChannel'
       })
     },
     goRotate () {
       uni.navigateTo({
-        url: '/pagesA/marketing/rotate?activity_id=19',
+        url: '/pagesA/marketing/rotate?activity_id=19'
       })
     },
 
@@ -59,13 +59,13 @@ export default {
     update (type) {
       // type 0 表示修改登录，1，修改支付
       uni.navigateTo({
-        url: '/pagesA/person/updateUserPsw?type=' + type,
+        url: '/pagesA/person/updateUserPsw?type=' + type
       })
     },
     logoutFunc () {
       confirm({
         title: '操作提示',
-        content: '是否退出登录',
+        content: '是否退出登录'
       }).then(res => {
         bindUserClientId({ action: 'clear' }, { errtip: false }).then(() => {
         }).catch(() => {
@@ -83,14 +83,14 @@ export default {
         this.setUserInfo({})
         this.setStoresId(null)
         uni.switchTab({
-          url: '/pages/index/index',
+          url: '/pages/index/index'
         })
       }).catch(() => {
 
       })
     },
-    ...mapActions(['setUserInfo', 'setStoresId']),
-  },
+    ...mapActions(['setUserInfo', 'setStoresId'])
+  }
 }
 </script>
 
@@ -99,11 +99,11 @@ export default {
     background-color: #FFFFFF !important;
     min-height: 100vh;
   }
-  
+
   .wrap {
     padding: 25rpx 22rpx 0;
   }
-  
+
   .item {
     display: flex;
     justify-content: space-between;
@@ -112,13 +112,13 @@ export default {
     font-size: 30rpx;
     color: #333;
     border-bottom: 1px solid #E3E3E3;
-    
+
     image {
       width: 15rpx;
       height: 23rpx;
     }
   }
-  
+
   .btn {
     width: 100%;
     height: 86rpx;

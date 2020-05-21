@@ -23,7 +23,7 @@ export default {
   mixins: [pageMixin],
   data () {
     return {
-      isShowGuide: true,
+      isShowGuide: true
     }
   },
   onLoad (options) {
@@ -46,7 +46,7 @@ export default {
       }).catch(() => {
       })
     }
-  },
+  }
 }
 </script>
 
@@ -62,40 +62,40 @@ export default {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
-    
+
     .mask {
       position: absolute;
       width: 100%;
       height: 100%;
       background: rgba(0, 0, 0, .6);
       z-index: 2;
-      
+
     }
-    
+
     .guide {
       /*width: 750rpx;*/
       /*height: 100vh;*/
       position: absolute;
       top: 0;
-      
+
       .guideimg {
-        width: 750 rpx;
-        height: 1334 rpx;
+        width: 750rpx;
+        height: 1334rpx;
       }
-      
+
     }
-    
+
     .guide_point {
       position: relative;
       z-index: 33;
-      width: 375 rpx;
-      height: 475 rpx;
+      width: 375rpx;
+      height: 475rpx;
       margin-right: 10px;
     }
-    
+
     .guide_btn {
-      width: 189 rpx;
-      height: 63 rpx;
+      width: 189rpx;
+      height: 63rpx;
       margin-right: 20px;
     }
   }

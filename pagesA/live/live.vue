@@ -51,7 +51,7 @@ export default {
     return {
 
       liveList: [],
-      liveCount: 0,
+      liveCount: 0
     }
   },
   onShow () {
@@ -98,8 +98,8 @@ export default {
       }
 
       return rt
-    },
-  },
+    }
+  }
 }
 </script>
 
@@ -108,11 +108,11 @@ export default {
     /*background: #f2f2f2;*/
     /*min-height: 100vh;*/
   }
-  
+
   .page-wrap {
-  
+
   }
-  
+
   .live-list {
     .live-item {
       width: 700rpx;
@@ -122,58 +122,58 @@ export default {
       background: white;
       display: flex;
       align-items: center;
-      
+
       .cover {
         width: 260rpx;
         height: 180rpx;
       }
-      
+
       .info {
         flex: 1;
         padding-left: 20rpx;
-        
+
       }
     }
   }
-  
+
   .info {
     .row {
       display: flex;
       margin-bottom: 16rpx;
-      
+
       .label {
         color: #999;
-        
+
       }
-      
+
       .content {
         color: #444;
-        
+
         &.status {
           align-items: center;
-          
+
           .status-icon {
             width: 28rpx;
             height: 24rpx;
           }
-          
+
           .status-text {
             &.red {
               color: #F5192E;
             }
-            
+
             &.green {
               color: #1AAD21;
             }
-            
+
             &.blue {
               color: #2B4AE7;
             }
           }
         }
-        
+
       }
-      
+
       .btn {
         width: 256rpx;
         height: 46rpx;
@@ -182,7 +182,7 @@ export default {
         background: #B7B7B7;
         border-radius: 2rpx;
         color: white;
-        
+
         &.active {
           background: #F5192E;
         }

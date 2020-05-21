@@ -74,11 +74,11 @@ export default {
       countdownStatus: false, // 是否开启倒计时了
       countdownNum: 60,
       storeData: [],
-      User_Address: '',
+      User_Address: ''
     }
   },
   computed: {
-    ...mapGetters(['Stores_ID']),
+    ...mapGetters(['Stores_ID'])
   },
   methods: {
     getStoreDetail () {
@@ -90,13 +90,13 @@ export default {
         const objectMultiArray = [
           utils.array_change(area.area[0]['0']),
           utils.array_change(area.area[0]['0,' + addressInfo.Stores_Province]),
-          utils.array_change(area.area[0]['0,' + addressInfo.Stores_Province + ',' + addressInfo.Stores_City]),
+          utils.array_change(area.area[0]['0,' + addressInfo.Stores_Province + ',' + addressInfo.Stores_City])
         ]
         // 设置初始显示列
         const multiIndex = [
           utils.get_arr_index(objectMultiArray[0], addressInfo.Stores_Province),
           utils.get_arr_index(objectMultiArray[1], addressInfo.Stores_City),
-          utils.get_arr_index(objectMultiArray[2], addressInfo.Stores_Area),
+          utils.get_arr_index(objectMultiArray[2], addressInfo.Stores_Area)
         ]
         this.address_info = addressInfo
         this.objectMultiArray = objectMultiArray
@@ -113,13 +113,13 @@ export default {
       if (!isMobileOK) {
         uni.showToast({
           title: '手机号格式不正确',
-          icon: 'none',
+          icon: 'none'
         })
         return
       }
       const data = {
         mobile: this.mobile,
-        store_id: this.Stores_ID,
+        store_id: this.Stores_ID
       }
       if (this.type == 2) {
         data.type = 'sms_mobile'
@@ -130,7 +130,7 @@ export default {
       updateStoreMobileSms(data).then(res => {
         uni.showToast({
           title: '验证码已发送',
-          icon: 'success',
+          icon: 'success'
         })
         this.startCountdown()
       })
@@ -140,14 +140,14 @@ export default {
         if (!(/^1[3456789]\d{9}$/.test(this.mobile))) {
           uni.showToast({
             title: '手机号输入错误，请重新输入',
-            icon: 'none',
+            icon: 'none'
           })
           return
         }
         if (!this.code) {
           uni.showToast({
             title: '验证码不能为空',
-            icon: 'none',
+            icon: 'none'
           })
           return
         }
@@ -156,7 +156,7 @@ export default {
       const data = {
         store_id: this.Stores_ID,
         mobile: this.mobile,
-        code: this.code,
+        code: this.code
       }
       if (this.type == 2) {
         data.type = 'sms_mobile'
@@ -167,11 +167,11 @@ export default {
 
       updateStoreMobile(data).then(res => {
         uni.showToast({
-          title: '修改成功',
+          title: '修改成功'
         })
         setTimeout(() => {
           uni.navigateBack({
-            delta: 1,
+            delta: 1
           })
         }, 1500)
       }).catch(() => {
@@ -202,9 +202,9 @@ export default {
           this.title = '修改联系电话'
           break
       }
-      
+
       uni.setNavigationBarTitle({
-        title: this.title,
+        title: this.title
       })
     },
     save () {
@@ -212,13 +212,13 @@ export default {
         if (!this.address_info.Address_Province || !this.address_info.Address_City || !this.address_info.Address_Area) {
           uni.showToast({
             title: '请选择完整地址',
-            icon: 'none',
+            icon: 'none'
           })
           return
         } else if (this.User_Address == '') {
           uni.showToast({
             title: '请填写详细信息',
-            icon: 'none',
+            icon: 'none'
           })
           return
         }
@@ -228,14 +228,14 @@ export default {
         store_province: this.address_info.Address_Province,
         store_city: this.address_info.Address_City,
         store_area: this.address_info.Address_Area,
-        store_address: this.User_Address,
+        store_address: this.User_Address
       }).then(res => {
         uni.showToast({
-          title: '修改成功',
+          title: '修改成功'
         })
         setTimeout(() => {
           uni.navigateBack({
-            delta: 1,
+            delta: 1
           })
         }, 1500)
       })
@@ -250,7 +250,7 @@ export default {
       this.change_objectMultiArray = [
         p_arr,
         c_arr,
-        a_arr,
+        a_arr
       ]
       this.change_multiIndex = columnValue
     },
@@ -275,23 +275,23 @@ export default {
       var columnValue = [
         column == 0 ? index : this.change_multiIndex[0],
         column == 0 ? 0 : (column == 1 ? index : this.change_multiIndex[1]),
-        column == 0 || column == 1 ? 0 : index,
+        column == 0 || column == 1 ? 0 : index
       ]
       this.addressChange(columnValue)
-    },
+    }
   },
   onShow () {
     this.objectMultiArray = [
       utils.array_change(area.area[0]['0']),
       utils.array_change(area.area[0]['0,1']),
-      utils.array_change(area.area[0]['0,1,35']),
+      utils.array_change(area.area[0]['0,1,35'])
     ]
     this.change_objectMultiArray = [
       utils.array_change(area.area[0]['0']),
       utils.array_change(area.area[0]['0,1']),
-      utils.array_change(area.area[0]['0,1,35']),
+      utils.array_change(area.area[0]['0,1,35'])
     ],
-      this.t_arr = []
+    this.t_arr = []
     this.c_t_arr = []
     this.getStoreDetail()
   },
@@ -301,10 +301,10 @@ export default {
       this.getTitle()
     } else {
       uni.navigateBack({
-        delta: 1,
+        delta: 1
       })
     }
-  },
+  }
 
 }
 </script>
@@ -314,7 +314,7 @@ export default {
     height: 100vh;
     padding-top: 20px;
   }
-  
+
   .v_input {
     border: 1px solid #efefef;
     width: 90%;
@@ -326,7 +326,7 @@ export default {
     box-sizing: border-box;
     border-radius: 10rpx;
   }
-  
+
   .save {
     height: 80rpx;
     width: 90%;
@@ -337,46 +337,46 @@ export default {
     text-align: center;
     border-radius: 10rpx;
   }
-  
+
   .area-item {
     display: flex;
     align-items: center;
     padding: 30rpx 20rpx;
     border-bottom: 1px solid #e3e3e3;
     font-size: 28rpx;
-    
+
     .area-label {
       display: inline-block;
       width: 180rpx;
       margin-right: 10rpx;
     }
   }
-  
+
   .picker {
     display: flex;
-    
+
     .p_item {
       flex: 1;
       text-align: center;
     }
   }
-  
+
   .other {
     padding: 14rpx 20rpx 0;
-    
+
     .other-item {
       display: flex;
       align-items: center;
       line-height: 98rpx;
       font-size: 28rpx;
       border-bottom: 1px solid #E3E3E3;
-      
+
       .input {
         flex: 1;
         font-size: 24rpx;
         margin-left: 42rpx;
       }
-      
+
       .get-msg {
         height: 50rpx;
         line-height: 50rpx;
@@ -388,7 +388,7 @@ export default {
         border-radius: 5rpx;
       }
     }
-    
+
     .confirm {
       height: 76rpx;
       line-height: 76rpx;

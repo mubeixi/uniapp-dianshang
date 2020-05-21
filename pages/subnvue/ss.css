@@ -1,5 +1,5 @@
 .detailAction {
-    height: 98 rpx;
+    height: 98rpx;
     width: 100%;
     background-color: #F8F8F8;
     z-index: 9999;
@@ -7,27 +7,27 @@
 
 .detailAction .leftss, .detailAction .rightss {
     width: 50%;
-    height: 98 rpx;
+    height: 98rpx;
     display: flex;
 }
 
 .detailAction .leftss div.first {
     width: 33.3%;
-    height: 98 rpx;
+    height: 98rpx;
     text-align: center;
-    padding-top: 15 rpx;
+    padding-top: 15rpx;
 }
 
 .detailAction .leftss div.first .img {
-    width: 38 rpx;
-    height: 38 rpx;
+    width: 38rpx;
+    height: 38rpx;
     display: block;
     margin: 0 auto;
 }
 
 .detailAction .leftss div.first .txt {
-    font-size: 22 rpx;
-    margin-top: 10 rpx;
+    font-size: 22rpx;
+    margin-top: 10rpx;
 }
 
 .detailAction .rightss .dan {
@@ -43,27 +43,27 @@
 .detailAction .rightss .bTitle {
     color: #fff;
     text-align: center;
-    line-height: 98 rpx;
-    font-size: 30 rpx;
+    line-height: 98rpx;
+    font-size: 30rpx;
 }
 
 .detailAction .rightss .bTitle .bF {
-    font-size: 24 rpx;
+    font-size: 24rpx;
 }
 
 .detailAction .rightss .bTitle .bS {
-    font-size: 32 rpx;
+    font-size: 32rpx;
 }
 
 .detailAction .rightss .bTitle .danRight {
-    font-size: 26 rpx;
+    font-size: 26rpx;
 }
 
 .detailAction .rightss .all {
     width: 100%;
     height: 100%;
     text-align: center;
-    line-height: 98 rpx;
+    line-height: 98rpx;
     background: #F43131;
     color: #fff;
 }

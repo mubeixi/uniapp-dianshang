@@ -23,7 +23,7 @@
         <image :src="'/static/client/right.png'|domain" alt="" class="right"></image>
       </view>
     </block>
-    
+
     <div class="container bgwhite">
       <view class="biz_msg">
         <div style="display: flex;align-items: center;">
@@ -57,7 +57,7 @@
             </div>
             <div class="goods-hr"></div>
           </div>
-        
+
         </block>
       </view>
       <block v-if="tabIdx==0">
@@ -174,7 +174,7 @@
                 <span style="margin-right:20rpx;">共<span>{{orderInfo.total_count}}</span>件商品</span>
                 <span>小计：<span>￥</span><span class="money">{{orderInfo.Order_TotalPrice}}</span></span>
             </view> -->
-      
+
       <view class="remind-wrap" v-if="remindAddress">
         <view class="remind-add">
           <view class="text-align-center mb20">新建收货地址</view>
@@ -261,9 +261,9 @@
             <block v-else>
               不使用优惠
             </block>
-            
+
             <radio :checked="i===current" :value="''+coupon.Coupon_ID" color="#F43131" style="float:right;" />
-          
+
           </label>
         </radio-group>
         <!-- <label class="iMbx scroll-view-item" >
@@ -294,7 +294,7 @@ export default {
   mixins: [pageMixin],
   components: {
     StoreListComponents,
-    popupLayer,
+    popupLayer
   },
   data () {
     return {
@@ -311,18 +311,18 @@ export default {
         {
           name: '顺丰',
           price: '免邮',
-          index: 0,
+          index: 0
         },
         {
           name: '中通',
           price: '免邮',
-          index: 1,
+          index: 1
         },
         {
           name: '圆通',
           price: '￥20',
-          index: 2,
-        },
+          index: 2
+        }
       ],
       addressinfo: {}, // 收货地址信息
       orderInfo: {},
@@ -348,7 +348,7 @@ export default {
         use_integral: 0, // 用于抵扣的积分数
         use_money: 0, // 余额支付金额
         invoice_info: '', // 发票抬头
-        order_remark: '', // 买家留言
+        order_remark: '' // 买家留言
       },
       Order_ID: 0,
       addressLoading: false, // 收货地址信息是否加载完
@@ -365,7 +365,7 @@ export default {
       setStoreMode: '',
       idD: '',
       checkfrom: '', // 支付订单的来源页面，用于展示明细活动价，spike,秒杀，limit限时抢购，group 拼团，
-      shipping_store_id: '', // 选择的门店id
+      shipping_store_id: '' // 选择的门店id
     }
   },
   filters: {
@@ -376,7 +376,7 @@ export default {
         var values = value.replace(xx, '****')
         return values
       }
-    },
+    }
   },
   onShow () {
     if (JSON.stringify(this.userInfo) != '{}') {
@@ -424,7 +424,7 @@ export default {
           return '拼团价'
       }
     },
-    ...mapGetters(['userInfo', 'initData']),
+    ...mapGetters(['userInfo', 'initData'])
   },
   methods: {
     changgeTabIdx (index) {
@@ -472,7 +472,7 @@ export default {
         for (const it in this.orderInfo.CartList) {
           for (const iq in this.orderInfo.CartList[it]) {
             obj[it] = {
-              [iq]: this.orderInfo.CartList[it][iq].store.Stores_ID,
+              [iq]: this.orderInfo.CartList[it][iq].store.Stores_ID
             }
           }
         }
@@ -547,13 +547,13 @@ export default {
     // 跳转地址列表页
     goAddressList () {
       uni.navigateTo({
-        url: '/pages/addressList/addressList?from=checkout&addressid=' + this.postData.address_id,
+        url: '/pages/addressList/addressList?from=checkout&addressid=' + this.postData.address_id
       })
     },
     // 跳转新增地址页面
     goEditAdd () {
       uni.navigateTo({
-        url: '/pagesA/editAddress/editAddress?from=checkout',
+        url: '/pagesA/editAddress/editAddress?from=checkout'
       })
     },
     // 提交订单
@@ -565,7 +565,7 @@ export default {
           if (this.postData.invoice_info == '') {
             uni.showToast({
               title: '发票信息不能为空',
-              icon: 'none',
+              icon: 'none'
             })
             return
           }
@@ -575,7 +575,7 @@ export default {
           this.submited = false
           uni.showToast({
             title: '请选择门店',
-            icon: 'none',
+            icon: 'none'
           })
           return
         }
@@ -583,13 +583,13 @@ export default {
           if (!this.postData.shipping_id) {
             uni.showToast({
               title: '请选择物流',
-              icon: 'none',
+              icon: 'none'
             })
             this.submited = false
             return
           }
         }
-        
+
         if (this.orderInfo.is_virtual == 1 || this.postData.shipping_id == 'is_store') {
           // if(!this.user_name) {
           // 	uni.showToast({
@@ -616,7 +616,7 @@ export default {
           for (const it in this.orderInfo.CartList) {
             for (const iq in this.orderInfo.CartList[it]) {
               obj[it] = {
-                [iq]: this.orderInfo.CartList[it][iq].store.Stores_ID,
+                [iq]: this.orderInfo.CartList[it][iq].store.Stores_ID
               }
             }
           }
@@ -634,18 +634,18 @@ export default {
           if (res.data.Order_Status != 1) {
             // 直接跳转订单列表页
             uni.redirectTo({
-              url: '/pages/order/order',
+              url: '/pages/order/order'
             })
             return
           }
           this.Order_ID = res.data.Order_ID
           uni.redirectTo({
-            url: '/pages/pay/pay?Order_ID=' + res.data.Order_ID + '&pagefrom=check',
+            url: '/pages/pay/pay?Order_ID=' + res.data.Order_ID + '&pagefrom=check'
           })
         }).catch(e => {
           uni.showToast({
             title: e.msg,
-            icon: 'none',
+            icon: 'none'
           })
           this.submited = false
         })
@@ -658,7 +658,7 @@ export default {
       if (!this.intergralChecked) {
         this.postData.use_integral = 0
       }
-      
+
       this.createOrderCheck()
     },
     // 余额支付开关
@@ -705,7 +705,7 @@ export default {
       if (input_money < 0 || isNaN(input_money)) {
         uni.showToast({
           title: '输入金额有误',
-          icon: 'none',
+          icon: 'none'
         })
         this.postData.use_money = 0
         return
@@ -715,7 +715,7 @@ export default {
           title: '提示',
           content: '金额大于最大使用余额',
           icon: 'none',
-          showCancel: false,
+          showCancel: false
         })
         this.postData.use_money = user_money
         this.createOrderCheck()
@@ -748,7 +748,7 @@ export default {
           break
         }
       }
-      
+
       this.postData.coupon_id = e.target.value
     },
     // 物流改变
@@ -759,7 +759,7 @@ export default {
           break
         }
       }
-      
+
       this.postData.shipping_id = e.target.value
     },
     changeCoupon () {
@@ -800,7 +800,7 @@ export default {
           }
         }
       }
-      
+
       this.createOrderCheck()
       this.$refs.popupRef.close()
     },
@@ -827,7 +827,7 @@ export default {
           uni.showModal({
             title: '错误',
             content: '收货地址获取失败',
-            showCancel: false,
+            showCancel: false
           })
           return false
         }
@@ -894,42 +894,42 @@ export default {
       }).catch(e => {
         uni.showToast({
           title: e.msg,
-          icon: 'none',
+          icon: 'none'
         })
       })
-    },
-  },
+    }
+  }
 }
 </script>
 
 <style lang="scss" scoped>
   .top {
     padding: 10px 0;
-    
+
     .tabs {
       display: flex;
       justify-content: center;
       font-size: 14px;
-      
+
       .tabs-item {
-        width: 170 rpx;
+        width: 170rpx;
         padding: 6px 0;
-        margin-right: 70 rpx;
+        margin-right: 70rpx;
         color: #333;
         text-align: center;
-        
+
         &.active {
           color: $wzw-primary-color;
           border-bottom: 2px solid $wzw-primary-color;
         }
-        
+
         &:last-child {
           margin-right: 0;
         }
       }
     }
   }
-  
+
   .wrap {
     background: #fff;
     /* #ifdef MP */
@@ -937,111 +937,111 @@ export default {
     padding-bottom: env(safe-area-inset-bottom);
     /* #endif */
   }
-  
+
   .mxdetail {
-    font-size: 28 rpx;
-    line-height: 80 rpx;
-    padding: 20 rpx 30 rpx;
+    font-size: 28rpx;
+    line-height: 80rpx;
+    padding: 20rpx 30rpx;
     /* #ifndef APP-PLUS */
-    padding-bottom: 100 rpx;
+    padding-bottom: 100rpx;
     /* #endif */
     .mxtitle {
-      font-size: 28 rpx;
+      font-size: 28rpx;
       text-align: center;
     }
-    
+
     .mxitem {
       border-bottom: 1px solid #eaeaea;
-      
+
       .num {
         float: right;
       }
     }
   }
-  
+
   /* 收货地址 start */
   .address {
     /* margin: 15px 0 10px; */
     display: flex;
     align-items: center;
-    padding: 44 rpx 38 rpx 45 rpx;
-    border-bottom: 20 rpx solid #f8f8f8;
-    
+    padding: 44rpx 38rpx 45rpx;
+    border-bottom: 20rpx solid #f8f8f8;
+
     .add_msg {
       flex: 1;
-      font-size: 28 rpx;
+      font-size: 28rpx;
     }
-    
+
     .right {
-      width: 18 rpx;
-      height: 27 rpx;
-      margin-left: 34 rpx;
+      width: 18rpx;
+      height: 27rpx;
+      margin-left: 34rpx;
     }
   }
-  
+
   .container {
     padding-bottom: 60px;
   }
-  
+
   .loc_icon {
-    width: 41 rpx;
-    height: 51 rpx;
-    margin-right: 31 rpx;
+    width: 41rpx;
+    height: 51rpx;
+    margin-right: 31rpx;
   }
-  
+
   .name {
-    margin-bottom: 30 rpx;
-    font-size: 28 rpx;
+    margin-bottom: 30rpx;
+    font-size: 28rpx;
     color: #333;
-    line-height: 22 rpx;
+    line-height: 22rpx;
   }
-  
+
   .name > span {
-    margin-left: 10 rpx;
+    margin-left: 10rpx;
   }
-  
+
   .location {
-    font-size: 24 rpx;
+    font-size: 24rpx;
     color: #333;
-    line-height: 32 rpx;
+    line-height: 32rpx;
   }
-  
+
   /* 收货地址 end */
   /* 订单信息 start */
   .order_msg {
-    padding: 0 40 rpx 0 30 rpx;
+    padding: 0 40rpx 0 30rpx;
   }
-  
+
   .biz_msg {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 30 rpx;
-    padding: 20 rpx 30 rpx 0 rpx;
+    margin-bottom: 30rpx;
+    padding: 20rpx 30rpx 0rpx;
   }
-  
+
   .biz_logo {
-    width: 70 rpx;
-    height: 70 rpx;
-    margin-right: 20 rpx;
-    border-radius: 35 rpx;
+    width: 70rpx;
+    height: 70rpx;
+    margin-right: 20rpx;
+    border-radius: 35rpx;
   }
-  
+
   .biz_name {
-    font-size: 28 rpx;
+    font-size: 28rpx;
     color: #333;
-    line-height: 30 rpx;
+    line-height: 30rpx;
   }
-  
+
   .pro {
     display: flex;
-    
+
   }
-  
+
   .order_msg .pro:last-child {
-    margin-bottom: 17 rpx
+    margin-bottom: 17rpx
   }
-  
+
   .order_msg {
     .store-box {
       padding: 15px 0 0;
@@ -1050,156 +1050,156 @@ export default {
       align-items: center;
       font-size: 14px;
       color: #555;
-      
+
       .store-name {
-      
+
       }
-      
+
       .icon-fanhui {
         font-size: 14px;
         transform: rotate(180deg);
       }
-      
+
     }
-    
+
     .goods-hr {
       margin: 15px 0;
       height: 1px;
       background: #eee;
     }
   }
-  
+
   .pro-img {
-    width: 200 rpx;
-    height: 200 rpx;
-    margin-right: 28 rpx;
+    width: 200rpx;
+    height: 200rpx;
+    margin-right: 28rpx;
   }
-  
+
   .pro-name {
-    font-size: 26 rpx;
+    font-size: 26rpx;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     overflow: hidden;
     text-overflow: ellipsis;
     -webkit-box-orient: vertical;
-    line-height: 30 rpx;
-    height: 61 rpx
+    line-height: 30rpx;
+    height: 61rpx
   }
-  
+
   .pro-msg {
     flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
   }
-  
+
   .attr {
     display: inline-block;
-    height: 50 rpx;
-    line-height: 50 rpx;
-    
+    height: 50rpx;
+    line-height: 50rpx;
+
     color: #666;
-    font-size: 24 rpx;
+    font-size: 24rpx;
     // padding: 0 20rpx;
     // margin: 25rpx 0 24rpx;
     span {
-      padding: 14 rpx 20 rpx;
-      margin: 25 rpx 0 24 rpx;
+      padding: 14rpx 20rpx;
+      margin: 25rpx 0 24rpx;
       background: #FFF5F5;
     }
   }
-  
+
   .pro-price {
     color: #F43131;
-    font-size: 36 rpx;
-    
+    font-size: 36rpx;
+
     span {
-      font-size: 24 rpx;
+      font-size: 24rpx;
       font-style: normal;
     }
-    
+
     .amount {
       float: right;
       color: #333;
-      font-size: 22 rpx;
-      
+      font-size: 22rpx;
+
       .num {
-        font-size: 30 rpx;
+        font-size: 30rpx;
       }
     }
   }
-  
+
   /* 订单信息 end */
   /* 订单其他信息 start */
   .other {
-    padding: 30 rpx 40 rpx 0 30 rpx;
-    font-size: 22 rpx;
-    
+    padding: 30rpx 40rpx 0 30rpx;
+    font-size: 22rpx;
+
     .right {
-      margin-left: 18 rpx;
-      width: 15 rpx;
-      height: 23 rpx;
+      margin-left: 18rpx;
+      width: 15rpx;
+      height: 23rpx;
     }
   }
-  
+
   .other .bd {
-    padding-bottom: 30 rpx;
-    border-bottom: 2 rpx solid #efefef;
+    padding-bottom: 30rpx;
+    border-bottom: 2rpx solid #efefef;
   }
-  
+
   .o_title {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-size: 28 rpx;
-    
+    font-size: 28rpx;
+
     .inputs {
-      font-size: 24 rpx;
+      font-size: 24rpx;
     }
   }
-  
+
   .o_title .van-switch {
     float: right;
   }
-  
+
   .o_desc,
   .o_de {
-    font-size: 22 rpx;
-    margin-top: 10 rpx;
-    
+    font-size: 22rpx;
+    margin-top: 10rpx;
+
     text {
       color: #F43131;
     }
   }
-  
+
   .o_de {
     color: #999;
   }
-  
+
   .words {
     justify-content: flex-start;
   }
-  
+
   .words .inputs {
     border: 0;
-    margin-left: 20 rpx;
+    margin-left: 20rpx;
     flex: 1;
   }
-  
+
   .total {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    margin: 40 rpx 0;
-    font-size: 24 rpx;
-    padding-right: 30 rpx;
+    margin: 40rpx 0;
+    font-size: 24rpx;
+    padding-right: 30rpx;
   }
-  
+
   .total .money {
-    font-size: 30 rpx;
+    font-size: 30rpx;
     color: #F43131;
   }
-  
+
   /* 订单其他信息 end */
   /* 提交订单 */
   .order_total {
@@ -1213,90 +1213,90 @@ export default {
     display: flex;
     align-items: center;
     background: #fff;
-    
+
     .mx {
-      font-size: 22 rpx;
-      margin-right: 10 rpx;
-      
+      font-size: 22rpx;
+      margin-right: 10rpx;
+
       .image {
-        width: 20 rpx;
-        height: 20 rpx;
-        margin-left: 10 rpx;
+        width: 20rpx;
+        height: 20rpx;
+        margin-left: 10rpx;
       }
-      
+
       .slidedown {
         transform: rotate(180deg);
       }
     }
   }
-  
+
   .submit {
-    width: 270 rpx;
+    width: 270rpx;
     background: #F43131;
     text-align: center;
     color: #fff;
     line-height: 50px;
-    font-size: 34 rpx;
+    font-size: 34rpx;
     border-radius: 0;
     border: none;
   }
-  
+
   .totalinfo {
     flex: 1;
     text-align: center;
-    line-height: 30 rpx;
+    line-height: 30rpx;
   }
-  
+
   .info {
-    font-size: 24 rpx;
-    
+    font-size: 24rpx;
+
     .money {
       color: #F43131;
-      font-size: 30 rpx;
-      
+      font-size: 30rpx;
+
       .m_icon {
-        font-size: 24 rpx;
+        font-size: 24rpx;
       }
     }
   }
-  
+
   .tips {
-    font-size: 20 rpx;
+    font-size: 20rpx;
     color: #979797;
   }
-  
+
   .bMbx {
-    padding: 0 rpx 20 rpx;
-    
+    padding: 0rpx 20rpx;
+
     .fMbx {
-      font-size: 32 rpx;
-      height: 30 rpx;
-      line-height: 30 rpx;
+      font-size: 32rpx;
+      height: 30rpx;
+      line-height: 30rpx;
       text-align: center;
-      padding: 36 rpx 0 rpx;
+      padding: 36rpx 0rpx;
     }
-    
+
     .iMbx {
       display: flex;
       justify-content: space-between;
-      height: 104 rpx;
+      height: 104rpx;
       border-bottom: 1px solid rgba(230, 230, 230, 1);
       align-items: center;
-      font-size: 28 rpx;
+      font-size: 28rpx;
     }
   }
-  
+
   .sure {
-    height: 90 rpx;
+    height: 90rpx;
     width: 100%;
     background-color: #F43131;
     color: #fff;
-    font-size: 32 rpx;
-    margin-top: 96 rpx;
-    line-height: 90 rpx;
+    font-size: 32rpx;
+    margin-top: 96rpx;
+    line-height: 90rpx;
     text-align: center;
   }
-  
+
   // 提醒用户添加收货地址信息
   .remind-wrap {
     position: fixed;
@@ -1309,38 +1309,38 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    
+
     .remind-add {
       background: #fff;
       width: 90%;
-      padding: 50 rpx 0 0;
-      border-radius: 20 rpx;
+      padding: 50rpx 0 0;
+      border-radius: 20rpx;
       overflow: hidden;
-      
+
       .text-align-center {
         text-align: center;
       }
-      
+
       .mb20 {
-        margin-bottom: 20 rpx;
+        margin-bottom: 20rpx;
       }
-      
+
       .remind_desc {
-        padding: 0 20 rpx;
-        font-size: 30 rpx;
-        margin: 40 rpx 0;
+        padding: 0 20rpx;
+        font-size: 30rpx;
+        margin: 40rpx 0;
         color: #666;
       }
-      
+
       .remind_btns {
         display: flex;
-        border-top: 1 rpx solid #efefef;
-        line-height: 90 rpx;
-        
+        border-top: 1rpx solid #efefef;
+        line-height: 90rpx;
+
         .fl1 {
           flex: 1;
         }
-        
+
         .confirm {
           background: #F43131;
           color: #fff;
@@ -1348,26 +1348,26 @@ export default {
       }
     }
   }
-  
+
   .over {
     position: fixed;
-    width: 750 rpx;
+    width: 750rpx;
     z-index: 90;
     height: 100%;
     overflow: hidden;
   }
-  
+
   .disMbx {
     display: flex;
     align-items: center;
   }
-  
+
   .zhouri {
     width: 9px;
     height: 14px;
     margin-left: 5px;
   }
-  
+
   .mbx-mbx {
     display: flex;
     flex: 1;
@@ -1375,7 +1375,7 @@ export default {
     align-items: center;
     justify-content: flex-end;
   }
-  
+
   .mbxs {
     width: 100%;
     display: flex;

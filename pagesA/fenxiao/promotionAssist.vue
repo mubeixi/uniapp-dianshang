@@ -54,16 +54,16 @@ export default {
       radioArr: [
         {
           value: '1',
-          name: '商城链接',
+          name: '商城链接'
         },
         {
           value: '2',
-          name: '图文展示',
-        },
+          name: '图文展示'
+        }
       ],
       arr: [],
       arr1: [
-        '商城首页', '全部分类', '服装', '鞋子',
+        '商城首页', '全部分类', '服装', '鞋子'
       ],
       index: 0,
       arr2: ['微砍价', '微助力', '微众筹'],
@@ -74,8 +74,8 @@ export default {
         name: '',
         mobile: '',
         qq: '',
-        email: '',
-      },
+        email: ''
+      }
     }
   },
   onLoad () {
@@ -112,31 +112,31 @@ export default {
       if (!isMobileOK) {
         uni.showToast({
           title: '手机格式不正确',
-          icon: 'none',
+          icon: 'none'
         })
         return
       } else if (!isEmailOK) {
         uni.showToast({
           title: '邮箱不正确',
-          icon: 'none',
+          icon: 'none'
         })
         return
       } else if (!isQQ) {
         uni.showToast({
           title: 'qq号不正确',
-          icon: 'none',
+          icon: 'none'
         })
         return
       } else if (this.postData.name == '') {
         uni.showToast({
           title: '姓名不能为空',
-          icon: 'none',
+          icon: 'none'
         })
         return
       } else if (this.postData.wx_url == '') {
         uni.showToast({
           title: '链接不能为空',
-          icon: 'none',
+          icon: 'none'
         })
         return
       }
@@ -147,18 +147,18 @@ export default {
         name: this.postData.name,
         mobile: this.postData.mobile,
         qq: this.postData.qq,
-        email: this.postData.email,
+        email: this.postData.email
       }).then(res => {
         uni.showToast({
-          title: res.msg,
+          title: res.msg
         })
       }).catch(err => {
         uni.showToast({
-          title: err.msg,
+          title: err.msg
         })
       })
-    },
-  },
+    }
+  }
 }
 </script>
 
@@ -166,40 +166,40 @@ export default {
   .banner {
     width: 100%;
     height: 400rpx;
-    
+
     .src {
       width: 100%;
       height: 100%;
     }
   }
-  
+
   .content {
     font-size: 28rpx;
     padding: 0 30rpx;
-    
+
     .title {
       line-height: 100rpx;
       font-size: 32rpx;
       font-weight: 700;
     }
-    
+
     .item {
       .sub-title {
         font-size: 30rpx;
         font-weight: 700;
         line-height: 80rpx;
       }
-      
+
       .website {
         border: 1px solid #efefef;
         height: 70rpx;
         line-height: 70rpx;
         padding-left: 20rpx;
       }
-      
+
     }
   }
-  
+
   .msg .input {
     border: 1px solid #efefef;
     margin: 20rpx 0;
@@ -207,7 +207,7 @@ export default {
     line-height: 70rpx;
     padding-left: 60rpx;
   }
-  
+
   /*form .msg input[type='text']:nth-of-type(1) {*/
   /*	background: url(/static/client/tuiguang/center.png) no-repeat 10rpx center ;*/
   /*	background-size: 40rpx 40rpx;*/
@@ -230,7 +230,7 @@ export default {
     align-items: center;
     margin-top: 40rpx;
     color: #fff;
-    
+
     .submit, .share {
       background: #F43131;
       color: #fff;
@@ -241,7 +241,7 @@ export default {
       font-size: 28rpx;
     }
   }
-  
+
   .picker {
     position: relative;
     text-align: center;
@@ -249,7 +249,7 @@ export default {
     margin: 10rpx 0;
     height: 70rpx;
     line-height: 70rpx;
-    
+
     .down {
       position: absolute;
       right: 0;

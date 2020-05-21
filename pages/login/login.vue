@@ -14,14 +14,14 @@
           <div>登陆</div>
         </div>
         <!-- #endif -->
-        
+
         <!-- #ifndef MP-WEIXIN -->
         <div @click="goBack" class="topTitle">
           <view class="funicon icon icon-fanhui inline-block"></view>
           <div>登陆</div>
         </div>
         <!-- #endif -->
-        
+
         <!-- #ifdef H5 -->
         <div class="otherLogin-top" v-if="isShowWeiXin==1 && !showCodeLogin">
           <div class="box">
@@ -61,7 +61,7 @@
           </div>
         </div>
         <!-- #endif -->
-        
+
         <!-- #ifdef MP-WEIXIN -->
         <div class="otherLogin-top" v-if="!showCodeLogin">
           <div class="box">
@@ -87,7 +87,7 @@
           </div>
         </div>
         <!-- #endif -->
-        
+
         <!-- #ifdef APP-PLUS -->
         <div class="otherLogin-top" v-if="!showCodeLogin">
           <div class="box">
@@ -114,7 +114,7 @@
           </div>
         </div>
         <!-- #endif -->
-        
+
         <!-- #ifndef H5 -->
         <div class="codeLogin" v-if="showCodeLogin">
           <label class="inputLable flex line20">
@@ -137,14 +137,14 @@
           <div>手机账号登陆</div>
         </div>
         <!-- #endif -->
-        
+
         <!-- #ifndef MP-WEIXIN -->
         <div @click="(status = 1), (loginStatus = 1)" class="topTitle">
           <view class="funicon icon icon-fanhui inline-block"></view>
           <div>手机账号登陆</div>
         </div>
         <!-- #endif -->
-        
+
         <div class="content">
           <label class="inputLable flex line20">
             <span>+{{ telNum }}</span>
@@ -189,13 +189,13 @@
           <div>请输入验证码</div>
         </div>
         <!-- #endif -->
-        
+
         <!-- #ifndef MP-WEIXIN -->
         <div class="topTitle">
           <div>请输入验证码</div>
         </div>
         <!-- #endif -->
-        
+
         <p class="description">
           验证码已发送至手机 {{ mobile }}
           <span :class="{ disabled: countdownStatus }" @click="againSendCode">重新发送{{ countdownStr }}</span>
@@ -274,7 +274,7 @@ export default {
       animationData: {},
       menuButtonInfo: {
         height: 0,
-        top: 0,
+        top: 0
       },
       systemInfo: {},
       showCodeLogin: false,
@@ -290,14 +290,14 @@ export default {
       fromId: 0, // 推荐人的ID 没有推荐人为0，有推荐人传推荐人ID
       phone: {
         password: '',
-        inputType: false,
+        inputType: false
       },
       countdownNum: 60, // 倒计时数字
       countdownStatus: false,
       tel: {
         show: false,
         // data: telData,
-        model: '中国 86',
+        model: '中国 86'
       },
       editPass: {
         oldPassShow: false,
@@ -305,14 +305,14 @@ export default {
         okNewPassShow: false,
         oldPass: '',
         newPass: '',
-        okNewPass: '',
+        okNewPass: ''
       },
-      isShowWeiXin: 0,
+      isShowWeiXin: 0
     }
   },
   computed: {
     ...mapGetters([
-      'userInfo', 'initData',
+      'userInfo', 'initData'
     ]),
     hasVisibleIcon () {
       return this.phone.inputType ? 'iconyanjing' : 'iconyanjing1'
@@ -350,7 +350,7 @@ export default {
       const password = this.phone.password
       const isOkPhone = /^1(3|5|6|7|8|9)[0-9]{9}$/.test(mobile)
       return !(isOkPhone && password !== '')
-    },
+    }
   },
   methods: {
     showCodeLoginFn () {
@@ -360,7 +360,7 @@ export default {
       // this.$refs.refLogin.show()
       var animation = uni.createAnimation({
         duration: 400,
-        timingFunction: 'ease',
+        timingFunction: 'ease'
       })
       animation.translateX(0).step()
       this.animationData = animation.export()
@@ -369,14 +369,14 @@ export default {
       // this.$refs.refLogin.close()
       var animation = uni.createAnimation({
         duration: 400,
-        timingFunction: 'ease',
+        timingFunction: 'ease'
       })
       animation.translateX(this.systemInfo.windowWidth).step()
       this.animationData = animation.export()
     },
     goBack () {
       uni.navigateBack({
-        delta: 1,
+        delta: 1
       })
     },
     setStatusFunc () {
@@ -444,7 +444,7 @@ export default {
         await login({
           mobile: this.mobile,
           captcha: this.verificationCode,
-          login_method: 'sms_login',
+          login_method: 'sms_login'
         }).then(res => {
           // 么有自定义回调，就默认的额
           !scall && this.loginCall(res.data)
@@ -458,10 +458,10 @@ export default {
         await login({
           mobile: this.mobile,
           passwd: this.phone.password,
-          login_method: 'mobile_login',
+          login_method: 'mobile_login'
         }).then(res => {
-            this.loginCall(res.data)
-          },
+          this.loginCall(res.data)
+        }
         ).catch((e) => {
           error(e.msg)
         })
@@ -474,14 +474,14 @@ export default {
       const data = {
         mobile: this.mobile,
         code: this.verificationCode,
-        newpwd: this.newPassword,
+        newpwd: this.newPassword
       }
       resetPwd(data).then(res => {
         toast(res.msg)
         confirm({
           content: '密码设置成功，是否直接登录？',
           confirmText: '直接登录',
-          cancelText: '暂不登录',
+          cancelText: '暂不登录'
         }).then(() => this.login())
       })
     },
@@ -519,7 +519,7 @@ export default {
         fail: (err) => {
           uni.showModal({
             title: '登录失败',
-            content: '获取code失败' + JSON.stringify(err),
+            content: '获取code失败' + JSON.stringify(err)
           })
         },
         success: function (loginRes) {
@@ -529,7 +529,7 @@ export default {
             fail: (err) => {
               uni.showModal({
                 title: '未获得获取用户信息权限',
-                content: JSON.stringify(err),
+                content: JSON.stringify(err)
               })
             },
             success: (res) => {
@@ -540,7 +540,7 @@ export default {
                   fail: (err) => {
                     uni.showModal({
                       title: '请点击授权登录',
-                      content: JSON.stringify(err),
+                      content: JSON.stringify(err)
                     })
                   },
                   success (res) {
@@ -553,16 +553,16 @@ export default {
                         login({
                           code: CODE,
                           login_method: 'wx_lp',
-                          lp_raw_data: JSON.stringify(userInfoData),
+                          lp_raw_data: JSON.stringify(userInfoData)
                         }, { tip: '登录中' }).then(ret => {
                           if (ret.errorCode === 0) {
                             _self.loginCall(ret.data)
                           }
                         }).catch(err => {
                         })
-                      },
+                      }
                     })
-                  },
+                  }
                 })
               } else {
                 let userInfoData = null
@@ -575,21 +575,21 @@ export default {
                     login({
                       code: CODE,
                       login_method: 'wx_lp',
-                      lp_raw_data: JSON.stringify(userInfoData),
+                      lp_raw_data: JSON.stringify(userInfoData)
                     }, { tip: '登录中' }).then(ret => {
                       if (ret.errorCode === 0) {
                         _self.loginCall(ret.data)
                       }
                     }).catch(err => {
                     })
-                  },
+                  }
                 })
 
                 // error('请点击授权登录2')
               }
-            },
+            }
           })
-        },
+        }
       })
       // #endif
       // #ifdef APP-PLUS
@@ -604,7 +604,7 @@ export default {
           // 	titile:'微信登录信息',
           // content:JSON.stringify(loginRes.authResult)
           // })
-        },
+        }
       })
       // #endif
     },
@@ -623,7 +623,7 @@ export default {
         if (i != 'component_appid' && login_methods[i].state) {
           this.channels.push(['wx_mp', 'wx_lp'].indexOf(login_methods[i].type) === -1 ? { ...login_methods[i] } : {
             ...login_methods[i],
-            component_appid,
+            component_appid
           })
         }
       }
@@ -646,7 +646,7 @@ export default {
       if (clientid) {
         await bindUserClientId({
           uuid: clientid,
-          action: 'save',
+          action: 'save'
         }, { errtip: false }).then(res => {
         }).catch(error => {
         })
@@ -673,14 +673,14 @@ export default {
         return
       } else {
         uni.reLaunch({
-          url: '/pages/index/index',
+          url: '/pages/index/index'
         })
       }
       return
       // #endif
       uni.navigateBack()
     },
-    ...mapActions(['getInitData', 'setUserInfo']),
+    ...mapActions(['getInitData', 'setUserInfo'])
   },
   onLoad () {
     // #ifdef MP
@@ -690,7 +690,7 @@ export default {
   },
   onShow () {
     /** 登录也不管了 **/
-      // 如果已经登录，就自动退回
+    // 如果已经登录，就自动退回
     const uid = ls.get('user_id')
     const access_token = ls.get('access_token')
     if (uid && access_token) {
@@ -706,7 +706,7 @@ export default {
         this.setUserInfo({})
         login({
           login_method: 'wx_mp',
-          code: code,
+          code: code
         }).then(res => {
           this.h5_wx_login = true// 标记是h5微信登录
           this.loginCall(res.data)
@@ -722,15 +722,15 @@ export default {
     this.initDataFn()
   },
   created () {
-  },
+  }
 }
 </script>
 <style lang="scss" scoped>
   .icon-icon_mobilephonelanding {
     color: #E6A23C !important;
-    font-size: 80 rpx !important;
+    font-size: 80rpx !important;
   }
-  
+
   .joinForm {
     transform: translateX(100%);
     position: fixed;
@@ -742,56 +742,56 @@ export default {
     text-align: center;
     background: white;
     z-index: 3;
-    
+
     .logo {
-      width: 130 rpx;
-      margin-bottom: 90 rpx;
+      width: 130rpx;
+      margin-bottom: 90rpx;
       overflow: hidden;
     }
-    
+
     /*.logo2{*/
     /*	width: 218rpx;*/
     /*	height: 58rpx;*/
     /*	margin-bottom: 90rpx;*/
     /*}*/
     .control {
-      margin-top: 76 rpx;
+      margin-top: 76rpx;
       display: flex;
       justify-content: center;
-      
+
       .btn {
-        width: 290 rpx;
-        height: 76 rpx;
+        width: 290rpx;
+        height: 76rpx;
         padding: 0;
-        line-height: 76 rpx;
-        border-radius: 6 rpx;
+        line-height: 76rpx;
+        border-radius: 6rpx;
         border: none;
         margin: 0;
       }
-      
+
       .allow {
         background: #59a228;
         color: #fff;
-        margin-left: 40 rpx;
+        margin-left: 40rpx;
       }
-      
+
       .reject {
         background: #f2f2f2;
         color: #555;
       }
     }
   }
-  
+
   .icon-fanhui {
     padding-right: 4px;
     color: #999;
   }
-  
+
   .telContent .content {
     height: 400px;
     overflow: auto;
   }
-  
+
   .editSearchPassword {
     input[type="text"],
     input[type="password"] {
@@ -799,13 +799,13 @@ export default {
       width: 70%;
     }
   }
-  
+
   .loginSign {
     background: #fff;
     height: 100vh;
     overflow: hidden;
     width: 100vw;
-    
+
     .topTitle {
       padding-top: 10px;
       font-size: 16px;
@@ -814,7 +814,7 @@ export default {
       align-items: center;
       padding-left: 10px;
     }
-    
+
     .title {
       position: relative;
       font-size: 16px;
@@ -822,7 +822,7 @@ export default {
       line-height: 1;
       text-align: center;
     }
-    
+
     .prebBtn {
       position: absolute;
       color: #999;
@@ -832,25 +832,25 @@ export default {
       top: 50%;
       transform: translate(-20px, -50%);
     }
-    
+
     .fillCode {
       padding: 0 15px;
-      
+
       .title {
         margin-top: 34px;
       }
-      
+
       .description {
         color: #999;
         font-size: 14px;
         margin-top: 12px;
         text-align: center;
-        
+
         span {
           color: $mainColor;
         }
       }
-      
+
       .code {
         border-bottom: 1px solid #e6e6e6;
         display: block;
@@ -863,42 +863,42 @@ export default {
         text-align: center;
         width: 50%;
       }
-      
+
       .searchNewPass {
         margin: 20px 0px 0;
       }
     }
-    
+
     .setNewPass {
       margin: 0 20px;
-      
+
       .title {
         margin-top: 34px;
       }
-      
+
       .content {
         margin-top: 50px;
-        
+
         .sendCode {
           margin-top: 32px;
         }
       }
     }
-    
+
     .searchPassword {
       .title {
         margin-top: 34px;
       }
-      
+
       .content {
         margin: 0 20px;
         margin-top: 54px;
         overflow: hidden;
-        
+
         .submitBtn {
           margin-top: 30px;
         }
-        
+
         .inputLable {
           span {
             color: $mainColor;
@@ -907,29 +907,29 @@ export default {
         }
       }
     }
-    
+
     .phoneContent {
       margin: 0;
-      
+
       .title {
         margin-top: 34px;
       }
-      
+
       .content {
         margin: 54px 20px 0;
         overflow: hidden;
-        
+
         .inputLable:first-child {
           span {
             color: $mainColor;
             width: 50px;
           }
         }
-        
+
         .sendCode {
           margin-top: 66px;
         }
-        
+
         .searchPass {
           color: $mainColor;
           float: right;
@@ -938,11 +938,11 @@ export default {
         }
       }
     }
-    
+
     .codeLogin {
       margin: 55px 20px 0;
       overflow: hidden;
-      
+
       .passwordLogin {
         color: $mainColor;
         float: right;
@@ -950,7 +950,7 @@ export default {
         line-height: 50px;
         padding-left: 10px;
       }
-      
+
       .inputLable {
         span {
           color: $mainColor;
@@ -958,22 +958,22 @@ export default {
         }
       }
     }
-    
+
     .protocol {
       color: #999;
       font-size: 12px;
       margin-top: 20px;
       text-align: center;
-      
+
       span {
         color: $mainColor;
       }
-      
+
       p {
         margin-bottom: 0.05rem;
       }
     }
-    
+
     .otherLogin {
       position: fixed;
       bottom: 60px;
@@ -981,7 +981,7 @@ export default {
       /*margin: 55px 0 0;*/
       text-align: center;
       width: 100%;
-      
+
       &.mp-weixin {
         .box {
           &:after,
@@ -990,10 +990,10 @@ export default {
           }
         }
       }
-      
+
       .box {
         position: relative;
-        
+
         &:after,
         &:before {
           position: absolute;
@@ -1002,54 +1002,54 @@ export default {
           height: 1px;
           top: 50%;
         }
-        
+
         &:before {
           background-color: #e6e6e6;
           width: 20%;
           left: -20%;
         }
-        
+
         &:after {
           background-color: #e6e6e6;
           width: 20%;
           left: 100%;
         }
       }
-      
+
       .funicon {
         background-color: white;
         color: $weixinColor;
-        font-size: 72 rpx;
+        font-size: 72rpx;
         vertical-align: top;
         display: inline-block;
       }
-      
+
       /* #ifdef APP-PLUS */
       .icon-weixin {
-        font-size: 88 rpx;
+        font-size: 88rpx;
       }
-      
+
       /* #endif */
     }
-    
+
     .otherLogin-top {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
       text-align: center;
       width: 100%;
-      
+
       .otherLogin-top-item {
-        width: 630 rpx;
-        height: 88 rpx;
+        width: 630rpx;
+        height: 88rpx;
         background: #59a228;
         border-radius: 4px;
         margin: 0 auto;
         text-align: center;
-        line-height: 88 rpx;
+        line-height: 88rpx;
         color: white;
       }
-      
+
       &.mp-weixin {
         .box {
           &:after,
@@ -1058,19 +1058,19 @@ export default {
           }
         }
       }
-      
+
       .funicon {
         color: $weixinColor;
-        font-size: 72 rpx;
+        font-size: 72rpx;
         vertical-align: top;
         display: inline-block;
       }
-      
+
       /* #ifdef APP-PLUS */
       .icon-weixin {
-        font-size: 88 rpx;
+        font-size: 88rpx;
       }
-      
+
       /* #endif */
     }
   }

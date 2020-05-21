@@ -10,13 +10,13 @@
         {{info.User_Money}}
       </view>
     </view>
-    
+
     <input class="inputs" placeholder="请输入充值金额" type="digit" v-model="money">
     <view class="line"></view>
     <view class="payMethod">
       支付方式
     </view>
-    
+
     <view @click="changeChannelIdx(idx)" class="selectq" v-for="(channel,idx) in payChannelList">
       <view>
         {{channel}}
@@ -53,7 +53,7 @@ export default {
       payChannel: '',
       money: '',
       pro: [],
-      pay_type: '',
+      pay_type: ''
     }
   },
   onShow () {
@@ -80,7 +80,7 @@ export default {
       }
       return obj
     },
-    ...mapGetters(['initData']),
+    ...mapGetters(['initData'])
   },
   created () {
     // 设置第一个为选中
@@ -145,13 +145,13 @@ export default {
 
         payConf = {
           pay_type: this.payChannel,
-          money: this.money || ls.get('recharge_money'),
+          money: this.money || ls.get('recharge_money')
         }
       }
       this.pay_type = this.payChannel
       payConf = {
         pay_type: this.payChannel,
-        money: this.money || ls.get('recharge_money'),
+        money: this.money || ls.get('recharge_money')
       }
       if (this.pay_type === 'unionpay') {
         error('即将上线')
@@ -192,7 +192,7 @@ export default {
           payConf = {
             ...ls.get('temp_order_info'),
             code: isHasCode,
-            pay_type: 'wx_mp',
+            pay_type: 'wx_mp'
           }
         } else {
           // 存上临时的数据
@@ -218,7 +218,7 @@ export default {
           success: function (loginRes) {
             payConf.code = loginRes.code
             resolve()
-          },
+          }
         })
       })
       // #endif
@@ -226,13 +226,13 @@ export default {
       const that = this
       depositBalance(payConf, {
         tip: '正在加载中',
-        mask: true,
+        mask: true
       }).then(res => {
         unipayFunc(this, this.pay_type, res)
       }, err => {
         uni.showModal({
           title: '提示',
-          content: '获取支付参数失败:' + err.msg,
+          content: '获取支付参数失败:' + err.msg
         })
       }).catch(e => {
 
@@ -255,10 +255,10 @@ export default {
         // && login_methods[i].state ??状态呢？
         if (i != 'component_appid' && login_methods[i].state) {
           channel = ['wx_mp'].indexOf(login_methods[i].type) === -1 ? {
-            ...login_methods[i],
+            ...login_methods[i]
           } : {
             ...login_methods[i],
-            component_appid,
+            component_appid
           }
           break
         }
@@ -274,7 +274,7 @@ export default {
         origin,
         pathname,
         search,
-        hash,
+        hash
       } = window.location
       const strArr = []
       if (search.indexOf('code') != -1) {
@@ -314,11 +314,11 @@ export default {
       if (ls.get('money')) {
         this.money = ls.get('recharge_money')
       }
-      
+
       uni.showToast({
         title: '支付失败',
         icon: 'none',
-        duration: 2000,
+        duration: 2000
       })
     },
     paySuccessCall () {
@@ -337,13 +337,13 @@ export default {
       // #endif
 
       uni.showToast({
-        title: '支付成功',
+        title: '支付成功'
       })
       uni.navigateTo({
-        url: '/pagesA/person/balanceCenter',
+        url: '/pagesA/person/balanceCenter'
       })
-    },
-  },
+    }
+  }
 }
 </script>
 
@@ -353,19 +353,19 @@ export default {
     min-height: 100vh;
     background-color: #FFFFFF !important;
   }
-  
+
   .yue {
     width: 650rpx;
     height: 300rpx;
     margin: 0 auto;
     padding-top: 44rpx;
     position: relative;
-    
+
     .yue-image {
       width: 100%;
       height: 100%;
     }
-    
+
     .yueq {
       position: absolute;
       top: 83rpx;
@@ -375,7 +375,7 @@ export default {
       line-height: 27rpx;
       color: #FFFFFF;
     }
-    
+
     .pricsw {
       position: absolute;
       top: 144rpx;
@@ -387,7 +387,7 @@ export default {
       color: #FFFFFF;
     }
   }
-  
+
   .inputs {
     margin-top: 40rpx;
     height: 101rpx;
@@ -396,14 +396,14 @@ export default {
     width: 646rpx;
     font-size: 28rpx;
   }
-  
+
   .line {
     width: 650rpx;
     height: 10rpx;
     margin: 0 auto;
     background: rgba(244, 244, 244, 1);
   }
-  
+
   .payMethod {
     margin: 58rpx 0rpx 24rpx 51rpx;
     height: 29rpx;
@@ -412,7 +412,7 @@ export default {
     color: #333333;
     font-weight: bold;
   }
-  
+
   .selectq {
     margin: 0 auto;
     width: 650rpx;
@@ -426,7 +426,7 @@ export default {
     justify-content: space-between;
     padding-top: 20rpx;
   }
-  
+
   .radio {
     background-color: #EFEFEF;
     width: 28rpx;
@@ -435,19 +435,19 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    
+
     .el-radio {
       width: 12rpx;
       height: 12rpx;
       background: linear-gradient(107deg, rgba(237, 236, 238, 1), rgba(228, 228, 228, 1));
       border-radius: 50%;
-      
+
       &.check {
         background: linear-gradient(107deg, rgba(255, 187, 170, 1), rgba(254, 80, 37, 1));
       }
     }
   }
-  
+
   .queren {
     width: 648rpx;
     height: 84rpx;
@@ -462,14 +462,14 @@ export default {
     color: #FFFFFF;
     font-weight: 400;
   }
-  
+
   .youhui {
     width: 650rpx;
     margin: 0 auto;
     font-size: 25rpx;
     line-height: 40rpx;
     color: #999999;
-    
+
     .youhui-text {
       color: red;
     }

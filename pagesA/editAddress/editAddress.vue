@@ -44,7 +44,7 @@
                placeholder="请输入详细地址"
                type="text" />
       </view>
-      
+
       <view class='xinxi set_default'>
         <checkbox-group name="Address_Is_Default">
           <label class="checkbox label">
@@ -55,7 +55,7 @@
           </label>
         </checkbox-group>
       </view>
-      
+
       <button class="tianjia-btn" formType="submit">确定</button>
     </form>
   </view>
@@ -90,14 +90,14 @@ export default {
         Address_Area: 0, // 为id
         Address_Town: 0,
         Address_Detailed: '',
-        Address_Is_Default: 0, // 是否为默认地址
+        Address_Is_Default: 0 // 是否为默认地址
       },
       // 街道信息
       t_arr: [],
       t_index: 0,
       is_first_add: false, // 是否为该用户要添加的第一条收货地址
 
-      from_page: '', // 来源页面  checkout(需设置checkout页面的back_address_id)、addresslist(不需操作)
+      from_page: '' // 来源页面  checkout(需设置checkout页面的back_address_id)、addresslist(不需操作)
     }
   },
   methods: {
@@ -111,7 +111,7 @@ export default {
       this.change_objectMultiArray = [
         p_arr,
         c_arr,
-        a_arr,
+        a_arr
       ]
       this.change_multiIndex = columnValue
     },
@@ -125,7 +125,7 @@ export default {
           for (var j in res.data[i]) {
             t_arr.push({
               id: j,
-              name: res.data[i][j],
+              name: res.data[i][j]
             })
             if (j == this.address_info.Address_Town) {
               t_index = idx
@@ -168,7 +168,7 @@ export default {
       var columnValue = [
         column == 0 ? index : this.change_multiIndex[0],
         column == 0 ? 0 : (column == 1 ? index : this.change_multiIndex[1]),
-        column == 0 || column == 1 ? 0 : index,
+        column == 0 || column == 1 ? 0 : index
       ]
       this.addressChange(columnValue)
     },
@@ -184,7 +184,7 @@ export default {
       if (!address_info.Address_Name) {
         uni.showToast({
           title: '请输入收货人名称',
-          icon: 'none',
+          icon: 'none'
         })
         return false
       } else {
@@ -193,14 +193,14 @@ export default {
       if (!address_info.Address_Mobile) {
         uni.showToast({
           title: '请输入收货人电话',
-          icon: 'none',
+          icon: 'none'
         })
         return false
       } else if (!utils.check_mobile(address_info.Address_Mobile)) {
         uni.showModal({
           title: '提示',
           content: '请输入正确的电话号码',
-          showCancel: false,
+          showCancel: false
         })
         return false
       } else {
@@ -209,7 +209,7 @@ export default {
       if (!this.address_info.Address_Province || !this.address_info.Address_City || !this.address_info.Address_Area) {
         uni.showToast({
           title: '请选择收货地址',
-          icon: 'none',
+          icon: 'none'
         })
         return false
       }
@@ -223,7 +223,7 @@ export default {
       if (!address_info.Address_Detailed) {
         uni.showToast({
           title: '请填写详细的地址',
-          icon: 'none',
+          icon: 'none'
         })
         return false
       } else {
@@ -238,7 +238,7 @@ export default {
         var data = this.address_info
         editAddress(data, { is_tap: true }).then(res => {
           uni.showToast({
-            title: res.msg,
+            title: res.msg
           })
           this.addeditAddress(res)
         }).catch(() => {
@@ -250,7 +250,7 @@ export default {
         delete data.Address_ID
         addAddress(data, { is_tap: true }).then(res => {
           uni.showToast({
-            title: res.msg,
+            title: res.msg
           })
           this.addeditAddress(res)
         }).catch(() => {
@@ -290,10 +290,10 @@ export default {
                         that.is_first_add = false
                       } else if (res.cancel) {
                         uni.redirectTo({
-                          url: '/pages/addresslist/addresslist?from=' + that.from_page,
+                          url: '/pages/addresslist/addresslist?from=' + that.from_page
                         })
                       }
-                    },
+                    }
                   })
                   return
                 }
@@ -303,10 +303,10 @@ export default {
           // 返回上一页
           setTimeout(function () {
             uni.navigateBack({
-              delta: 1,
+              delta: 1
             })
           }, 2000)
-        },
+        }
       })
     },
 
@@ -326,13 +326,13 @@ export default {
       const objectMultiArray = [
         utils.array_change(area.area[0]['0']),
         utils.array_change(area.area[0]['0,' + addressInfo.Address_Province]),
-        utils.array_change(area.area[0]['0,' + addressInfo.Address_Province + ',' + addressInfo.Address_City]),
+        utils.array_change(area.area[0]['0,' + addressInfo.Address_Province + ',' + addressInfo.Address_City])
       ]
       // 设置初始显示列
       const multiIndex = [
         utils.get_arr_index(objectMultiArray[0], addressInfo.Address_Province),
         utils.get_arr_index(objectMultiArray[1], addressInfo.Address_City),
-        utils.get_arr_index(objectMultiArray[2], addressInfo.Address_Area),
+        utils.get_arr_index(objectMultiArray[2], addressInfo.Address_Area)
       ]
       this.address_info = addressInfo
       this.objectMultiArray = objectMultiArray
@@ -356,18 +356,18 @@ export default {
         this.objectMultiArray = [
           utils.array_change(area.area[0]['0']),
           utils.array_change(area.area[0]['0,1']),
-          utils.array_change(area.area[0]['0,1,35']),
+          utils.array_change(area.area[0]['0,1,35'])
         ]
         this.change_objectMultiArray = [
           utils.array_change(area.area[0]['0']),
           utils.array_change(area.area[0]['0,1']),
-          utils.array_change(area.area[0]['0,1,35']),
+          utils.array_change(area.area[0]['0,1,35'])
         ],
-          this.t_arr = []
+        this.t_arr = []
         this.c_t_arr = []
         // 查询是否是该用户要添加的第一条收货地址
         var addressArgs = {
-          act: 'get_address',
+          act: 'get_address'
         }
         getAddress({}).then(res => {
           // 设是否为第一条收获地址状态
@@ -380,7 +380,7 @@ export default {
           }
         })
       }
-    },
+    }
   },
 
   /**
@@ -389,7 +389,7 @@ export default {
   onLoad: function (options) {
     // 设置标题
     uni.setNavigationBarTitle({
-      title: options.addressid ? '编辑收货地址' : '新增收货地址',
+      title: options.addressid ? '编辑收货地址' : '新增收货地址'
     })
 
     // 有addressid 地址编辑
@@ -444,7 +444,7 @@ export default {
    */
   onReachBottom: function () {
 
-  },
+  }
 }
 </script>
 
@@ -453,11 +453,11 @@ export default {
     background-color: #FFFFFF !important;
     min-height: 100vh;
   }
-  
+
   div, view {
     box-sizing: content-box;
   }
-  
+
   .xinxi {
     width: 710rpx;
     padding: 0 20rpx;
@@ -465,14 +465,14 @@ export default {
     overflow: hidden;
     margin-bottom: 20rpx;
   }
-  
+
   .xinxi .text {
     float: left;
     width: 140rpx;
     font-size: 28rpx;
     line-height: 90rpx;
   }
-  
+
   .xinxi .input {
     width: 570rpx;
     float: left;
@@ -480,7 +480,7 @@ export default {
     line-height: 90rpx;
     height: 90rpx;
   }
-  
+
   .tianjia-btn {
     width: 710rpx;
     margin: 50rpx 20rpx 20rpx;
@@ -488,7 +488,7 @@ export default {
     background: #F43131;
     border-radius: 8rpx;
   }
-  
+
   .dizhi {
     width: 710rpx;
     padding: 0 20rpx;
@@ -496,7 +496,7 @@ export default {
     overflow: hidden;
     margin-bottom: 20rpx;
   }
-  
+
   .dizhi, .xiangzhen {
     width: 710rpx;
     padding: 0 20rpx;
@@ -504,21 +504,21 @@ export default {
     overflow: hidden;
     margin-bottom: 20rpx;
   }
-  
+
   .xiangzhen .text {
     float: left;
     width: 140rpx;
     font-size: 28rpx;
     line-height: 90rpx;
   }
-  
+
   .dizhi .text {
     float: left;
     width: 140rpx;
     font-size: 28rpx;
     line-height: 90rpx;
   }
-  
+
   .dizhi .input {
     width: 180rpx;
     float: left;
@@ -527,7 +527,7 @@ export default {
     height: 90rpx;
     margin-right: 10rpx;
   }
-  
+
   .picker .view {
     width: 180rpx;
     float: left;
@@ -536,15 +536,15 @@ export default {
     height: 90rpx;
     margin-right: 10rpx;
   }
-  
+
   .set_default {
     border-bottom: none;
   }
-  
+
   .set_default .label {
     font-size: 28rpx;
   }
-  
+
   .set_default .label .checkbox {
     transform: scale(.7);
     position: relative;

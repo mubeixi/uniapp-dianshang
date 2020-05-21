@@ -40,7 +40,7 @@ export default {
       data: [], // 用户提现方式
       User_Method_ID: -1, // 传过来选中的提现方式
       isShow: false, // 是否显示删除
-      withdraw_from: 1,
+      withdraw_from: 1
     }
   },
   onLoad (options) {
@@ -52,7 +52,7 @@ export default {
     uni.getSystemInfo({
       success: function (res) {
         that.height = res.screenHeight - 68
-      },
+      }
     })
   },
   onShow () {
@@ -66,7 +66,7 @@ export default {
     del (item) {
       const that = this
       const data = {
-        User_Method_ID: item.User_Method_ID,
+        User_Method_ID: item.User_Method_ID
       }
       uni.showModal({
         title: '确定要删除吗？',
@@ -75,13 +75,13 @@ export default {
           if (res.confirm) {
             delUserWithdrawMethod(data).then(res => {
               uni.showToast({
-                title: res.msg,
+                title: res.msg
               })
               that.getUserWithdrawMethod()
             }).catch(e => {
             })
           }
-        },
+        }
       })
     },
     // 管理切换选中 删除
@@ -99,7 +99,7 @@ export default {
 
       // 返回上一页
       uni.navigateBack({
-        delta: 1,
+        delta: 1
       })
     },
     // 获取用户提现方式
@@ -112,10 +112,10 @@ export default {
     // 添加提现方式
     addMethod () {
       uni.navigateTo({
-        url: '/pagesA/fenxiao/addWithdrawal?form=' + this.withdraw_from,
+        url: '/pagesA/fenxiao/addWithdrawal?form=' + this.withdraw_from
       })
-    },
-  },
+    }
+  }
 }
 </script>
 
@@ -125,12 +125,12 @@ export default {
     box-sizing: border-box;
     min-height: 100vh;
   }
-  
+
   .content {
     margin: 0 auto;
     margin-top: 40rpx;
     width: 710rpx;
-    
+
     .cardInfo {
       box-sizing: border-box;
       width: 710rpx;
@@ -143,11 +143,11 @@ export default {
       position: relative;
       font-size: 28rpx;
       color: #333333;
-      
+
       &:last-child {
         margin-bottom: 0rpx;
       }
-      
+
       .image {
         width: 32rpx;
         height: 23rpx;
@@ -156,14 +156,14 @@ export default {
         right: 35rpx;
       }
     }
-    
+
   }
-  
+
   .del {
     width: 25rpx !important;
     height: 30rpx !important;
   }
-  
+
   .addMethod {
     width: 460rpx;
     height: 76rpx;

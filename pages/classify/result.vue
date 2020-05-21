@@ -30,7 +30,7 @@
         <view class="xiangshang">
           <image :src="'/static/client/result/tops.png'|domain" class="image" v-if="isSheng==1"></image>
           <image :src="'/static/client/result/top.png'|domain" class="image" v-else></image>
-          
+
           <image :src="'/static/client/result/bottoms.png'|domain" class="image" style="	bottom: 0rpx;"
                  v-if="isSheng==2"></image>
           <image :src="'/static/client/result/bottom.png'|domain" class="image" style="bottom: 0rpx;" v-else></image>
@@ -38,7 +38,7 @@
         <div class="line">
         </div>
       </div>
-      
+
       <div :class="[active == 3 ? 'checked' : '','tab']" class="filterbox">
         <div :style="{color:showShai?'#F43131':''}" @click.stop="change" class="filter">筛选</div>
         <template v-show="!showShai">
@@ -46,11 +46,11 @@
                  v-if="cate==2"></image>
           <image :src="'/static/client/result/jx.png'|domain" @click="changeCate" class="imgm sorttype" v-else></image>
         </template>
-        
+
         <div class="line"></div>
       </div>
       <!--position: absolute;top: 25rpx;right: 28rpx;position: absolute;top: 0rpx;right: 0rpx;-->
-    
+
     </div>
     <div @click.stop catchtouchmove="false" class="shaixuan" v-if="showShai">
       <view class="priceInterval">价格区间(元)</view>
@@ -69,12 +69,12 @@
         <view @click="sureSearch" class="view sure">确定</view>
       </view>
       <view @click="closeShow" catchtouchmove="false" class="zhao">
-      
+
       </view>
     </div>
-    
+
     <view style="width: 100%;height: 210rpx;background: white;">
-    
+
     </view>
     <div v-if="cate==1">
       <div class="cate1">
@@ -142,7 +142,7 @@ export default {
       Cate_ID: 0, // 列表id
       isSheng: 0, // 是否升序
       Products_ID: '',
-      refer: '',// 来源
+      refer: ''// 来源
     }
   },
   onLoad: function (option) {
@@ -158,7 +158,7 @@ export default {
       key: 'searchAll',
       success (res) {
         than.searchAll = res.data
-      },
+      }
     })
     this.getProd()
   },
@@ -179,7 +179,7 @@ export default {
     }
   },
   components: {
-    popupLayer,
+    popupLayer
   },
   created () {
 
@@ -193,7 +193,7 @@ export default {
         return
       }
       uni.navigateTo({
-        url: '/pages/classify/search',
+        url: '/pages/classify/search'
       })
     },
     shipping (i) {
@@ -213,7 +213,7 @@ export default {
         uni.showToast({
           title: '价格为数字',
           icon: 'none',
-          duration: 2000,
+          duration: 2000
         })
         return
       }
@@ -221,7 +221,7 @@ export default {
         uni.showToast({
           title: '最低价不能大于最高价',
           icon: 'none',
-          duration: 2000,
+          duration: 2000
         })
       }
       this.pro = []
@@ -273,7 +273,7 @@ export default {
         this.searchAll.push(this.inputValue) // 将输入框的值添加到搜索记录数组中存储
         uni.setStorage({
           key: 'searchAll',
-          data: than.searchAll,
+          data: than.searchAll
         })
       }
     },
@@ -285,7 +285,7 @@ export default {
           Products_Name: this.inputValue,
           prod_name: this.inputValue,
           page: this.page,
-          pageSize: this.pageSize,
+          pageSize: this.pageSize
         }
       } else if (this.Cate_ID) {
         data = {
@@ -293,13 +293,13 @@ export default {
           Cate_ID: this.Cate_ID,
           cate_id: this.Cate_ID,
           page: this.page,
-          pageSize: this.pageSize,
+          pageSize: this.pageSize
         }
       } else {
         data = {
           Users_ID: 'wkbq6nc2kc',
           page: this.page,
-          pageSize: this.pageSize,
+          pageSize: this.pageSize
         }
       }
       if (item == 'sales') {
@@ -362,7 +362,7 @@ export default {
     },
     gotoDetail (item) {
       uni.navigateTo({
-        url: '/pages/detail/detail?Products_ID=' + item,
+        url: '/pages/detail/detail?Products_ID=' + item
       })
     },
     changeCate () {
@@ -375,386 +375,386 @@ export default {
         return
       }
       this.showShai = true
-    },
-  },
+    }
+  }
 }
 </script>
 
 <style lang="scss" scoped>
   .bd {
     min-height: 100vh;
-    width: 750 rpx;
+    width: 750rpx;
     overflow: hidden;
     background: white;
   }
-  
+
   .top {
     position: relative;
     display: flex;
     align-items: center;
-    padding: 30 rpx 20 rpx 0;
+    padding: 30rpx 20rpx 0;
     box-sizing: border-box;
     position: fixed;
-    left: 0 rpx;
-    top: 0 rpx;
+    left: 0rpx;
+    top: 0rpx;
     background-color: #FFFFFF;
     z-index: 999;
-    
+
     .search_icon {
       position: absolute;
-      top: 46 rpx;
-      left: 61 rpx;
+      top: 46rpx;
+      left: 61rpx;
     }
-    
+
     .back {
-      width: 23 rpx;
-      height: 37 rpx;
+      width: 23rpx;
+      height: 37rpx;
     }
-    
+
     .search {
-      width: 645 rpx;
-      height: 65 rpx;
-      line-height: 65 rpx;
+      width: 645rpx;
+      height: 65rpx;
+      line-height: 65rpx;
       background: #F4F4F4;
-      padding-left: 39 rpx;
-      font-size: 26 rpx;
+      padding-left: 39rpx;
+      font-size: 26rpx;
       color: #333;
-      margin-left: 41 rpx;
+      margin-left: 41rpx;
       box-sizing: border-box;
     }
-    
+
     .searchs {
-      width: 710 rpx;
-      height: 65 rpx;
-      line-height: 65 rpx;
+      width: 710rpx;
+      height: 65rpx;
+      line-height: 65rpx;
       background: #F4F4F4;
-      padding-left: 80 rpx;
-      font-size: 26 rpx;
+      padding-left: 80rpx;
+      font-size: 26rpx;
       color: #333;
       box-sizing: border-box;
     }
-    
+
     .clear {
       position: absolute;
-      top: 43 rpx;
-      right: 48 rpx;
-      width: 37 rpx;
-      height: 37 rpx;
+      top: 43rpx;
+      right: 48rpx;
+      width: 37rpx;
+      height: 37rpx;
       z-index: 9999;
     }
-    
+
     .clears {
-      width: 37 rpx;
-      height: 37 rpx;
+      width: 37rpx;
+      height: 37rpx;
     }
   }
-  
+
   .tabs {
     display: flex;
-    font-size: 30 rpx;
+    font-size: 30rpx;
     // justify-content: space-around;
-    padding: 0 20 rpx;
-    padding-top: 25 rpx;
+    padding: 0 20rpx;
+    padding-top: 25rpx;
     color: #333;
     position: relative;
-    height: 115 rpx;
+    height: 115rpx;
     align-content: center;
     position: fixed;
-    top: 94 rpx;
-    left: 0 rpx;
+    top: 94rpx;
+    left: 0rpx;
     background-color: #FFFFFF;
     z-index: 999;
     width: 100%;
     box-sizing: border-box;
   }
-  
+
   .tab.checked {
     color: #F43131;
   }
-  
+
   .tab.checked .line {
     background: #F43131;
   }
-  
+
   .tab {
     flex: 1;
     //width: 180rpx;
     /*width: 180rpx;*/
-    height: 60 rpx;
-    line-height: 60 rpx;
+    height: 60rpx;
+    line-height: 60rpx;
     text-align: center;
-    margin-bottom: 20 rpx;
+    margin-bottom: 20rpx;
     position: relative;
-    
+
     .line {
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
     }
-    
+
     &.pricebox {
       display: flex;
       align-items: center;
       justify-content: center;
     }
-    
+
     &.filterbox {
       display: flex;
       align-items: center;
       justify-content: center;
-      
+
       .filter {
         display: block;
-        line-height: 60 rpx;
+        line-height: 60rpx;
         //padding-right: 6px;
         margin-right: 20px;
       }
-      
+
     }
-    
+
   }
-  
+
   .tab .sorttype {
-    
-    height: 34 rpx;
-    width: 40 rpx;
+
+    height: 34rpx;
+    width: 40rpx;
     //margin-left: 10rpx;
     //vertical-align: middle;
   }
-  
+
   .tab .line {
-    width: 100 rpx;
-    height: 4 rpx;
+    width: 100rpx;
+    height: 4rpx;
     bottom: -20rpx;
     //margin: 20rpx auto 0 ;
   }
-  
+
   .cate1 {
     .pro {
       display: flex;
-      padding: 0 20 rpx;
-      margin-bottom: 20 rpx;
-      
+      padding: 0 20rpx;
+      margin-bottom: 20rpx;
+
       .pro-img {
-        margin-right: 20 rpx;
-        width: 270 rpx;
-        height: 270 rpx;
+        margin-right: 20rpx;
+        width: 270rpx;
+        height: 270rpx;
       }
-      
+
       .pro_desc {
         flex: 1;
-        padding-top: 29 rpx;
+        padding-top: 29rpx;
         text-align: left;
-        
+
         .title {
           overflow: hidden;
           text-overflow: ellipsis;
           display: -webkit-box;
           -webkit-line-clamp: 2;
           -webkit-box-orient: vertical;
-          font-size: 24 rpx;
-          line-height: 30 rpx;
-          height: 60 rpx;
+          font-size: 24rpx;
+          line-height: 30rpx;
+          height: 60rpx;
         }
-        
+
         .price {
-          margin-top: 21 rpx;
+          margin-top: 21rpx;
         }
-        
+
         .price .text {
-          font-size: 24 rpx;
+          font-size: 24rpx;
           font-style: normal;
         }
-        
+
         .n_price {
           color: #F43131;
-          font-size: 36 rpx;
-          margin-right: 10 rpx;
+          font-size: 36rpx;
+          margin-right: 10rpx;
         }
-        
+
         .o_price {
           color: #afafaf;
-          font-size: 28 rpx;
+          font-size: 28rpx;
           text-decoration: line-through;
         }
-        
+
         .sold {
           color: #666;
-          font-size: 19 rpx;
-          margin-top: 40 rpx;
+          font-size: 19rpx;
+          margin-top: 40rpx;
         }
       }
     }
   }
-  
+
   .cate2 {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 20 rpx;
+    padding: 0 20rpx;
     flex-wrap: wrap;
-    
+
     .pro {
-      width: 345 rpx;
-      
+      width: 345rpx;
+
       .pro-img {
         width: 100%;
-        height: 345 rpx;
+        height: 345rpx;
       }
-      
+
       .pro_desc {
-        padding: 17 rpx 15 rpx 34 rpx 11 rpx;
+        padding: 17rpx 15rpx 34rpx 11rpx;
         color: #333;
-        font-size: 24 rpx;
-        
+        font-size: 24rpx;
+
         .title {
           overflow: hidden;
           text-overflow: ellipsis;
           display: -webkit-box;
           -webkit-line-clamp: 2;
           -webkit-box-orient: vertical;
-          font-size: 24 rpx;
-          line-height: 30 rpx;
-          height: 60 rpx;
+          font-size: 24rpx;
+          line-height: 30rpx;
+          height: 60rpx;
         }
-        
+
         .price {
-          margin-top: 21 rpx;
+          margin-top: 21rpx;
         }
-        
+
         .price .text {
-          font-size: 20 rpx;
+          font-size: 20rpx;
           font-style: normal;
         }
-        
+
         .n_price {
           color: #F43131;
-          font-size: 36 rpx;
-          margin-right: 10 rpx;
+          font-size: 36rpx;
+          margin-right: 10rpx;
         }
-        
+
         .o_price {
           color: #afafaf;
-          font-size: 28 rpx;
+          font-size: 28rpx;
           text-decoration: line-through;
         }
-        
+
         .sold {
           color: #666;
-          font-size: 20 rpx;
-          margin-top: 40 rpx;
+          font-size: 20rpx;
+          margin-top: 40rpx;
         }
       }
     }
-    
+
   }
-  
+
   .imgm {
-    width: 36 rpx;
-    height: 34 rpx;
+    width: 36rpx;
+    height: 34rpx;
   }
-  
+
   .shaixuan {
     box-sizing: border-box;
     position: absolute;
-    top: 210 rpx;
-    width: 750 rpx;
+    top: 210rpx;
+    width: 750rpx;
     background-color: #FFFFFF;
     z-index: 999;
-    padding-top: 20 rpx;
-    left: 0 rpx;
-    
+    padding-top: 20rpx;
+    left: 0rpx;
+
     view {
-      padding-left: 20 rpx;
-      padding-right: 20 rpx;
+      padding-left: 20rpx;
+      padding-right: 20rpx;
     }
-    
+
     .priceInterval {
-      font-size: 26 rpx;
+      font-size: 26rpx;
       color: #999999;
-      margin-bottom: 24 rpx;
-      height: 27 rpx;
-      line-height: 27 rpx;
+      margin-bottom: 24rpx;
+      height: 27rpx;
+      line-height: 27rpx;
     }
-    
+
     .inputPrice {
       display: flex;
-      margin-bottom: 50 rpx;
-      
+      margin-bottom: 50rpx;
+
       .view {
-        width: 29 rpx;
-        height: 55 rpx;
-        line-height: 55 rpx;
+        width: 29rpx;
+        height: 55rpx;
+        line-height: 55rpx;
         font-weight: bold;
-        font-size: 26 rpx;
+        font-size: 26rpx;
         font-family: Microsoft YaHei;
         font-weight: 400;
         color: rgba(153, 153, 153, 1);
-        margin: 0 20 rpx;
+        margin: 0 20rpx;
       }
-      
+
       input {
-        width: 192 rpx;
-        height: 55 rpx;
+        width: 192rpx;
+        height: 55rpx;
         background: rgba(245, 245, 245, 1);
-        border-radius: 28 rpx;
+        border-radius: 28rpx;
         text-align: center;
       }
     }
-    
+
     .isShipping {
       display: flex;
-      margin-bottom: 100 rpx;
-      
+      margin-bottom: 100rpx;
+
       .span {
-        width: 110 rpx;
-        height: 55 rpx;
+        width: 110rpx;
+        height: 55rpx;
         background: #D6D6D6;
-        border-radius: 28 rpx;
+        border-radius: 28rpx;
         display: block;
-        line-height: 55 rpx;
+        line-height: 55rpx;
         text-align: center;
-        font-size: 26 rpx;
+        font-size: 26rpx;
         color: #FFFFFF;
-        margin-right: 27 rpx;
+        margin-right: 27rpx;
       }
-      
+
       .checked {
         background-color: #F43131 !important;
       }
     }
-    
+
     .submit {
       display: flex;
       width: 100%;
-      height: 80 rpx;
-      padding-left: 0 rpx;
-      padding-right: 0 rpx;
-      
+      height: 80rpx;
+      padding-left: 0rpx;
+      padding-right: 0rpx;
+
       .view {
         width: 50%;
-        height: 80 rpx;
-        line-height: 80 rpx;
+        height: 80rpx;
+        line-height: 80rpx;
         text-align: center;
         color: #FFFFFF;
-        font-size: 30 rpx;
+        font-size: 30rpx;
       }
-      
+
       .reset {
         background-color: #B9B9B9;
       }
-      
+
       .sure {
         background-color: #F43131;
       }
     }
   }
-  
+
   .zhao {
-    height: 800 rpx;
+    height: 800rpx;
     width: 100%;
-    padding-left: 0 rpx;
-    padding-right: 0 rpx;
+    padding-left: 0rpx;
+    padding-right: 0rpx;
     //background: rgba(0, 0, 0, .3);
     //position: fixed;
     z-index: 998;
@@ -762,23 +762,23 @@ export default {
     background-color: #000;
     opacity: 0.6;
   }
-  
+
   .defaults {
     margin: 0 auto;
-    width: 640 rpx;
-    height: 480 rpx;
-    margin-top: 100 rpx;
+    width: 640rpx;
+    height: 480rpx;
+    margin-top: 100rpx;
   }
-  
+
   .xiangshang {
     width: 7px;
     height: 12px;
-    
+
     .image {
       width: 7px;
       height: 4px;
       display: block;
-      
+
       &:last-child {
         margin-top: 2px;
       }

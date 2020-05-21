@@ -1,14 +1,14 @@
 <template>
   <view style="background-color: #F8F8F8;height: 100vh;">
-    
+
     <div :key="index" class="store-apply" v-for="(item,index) of storeList">
       <div class="store-apply-title">
         <image :src="item.Stores_ImgPath" class="store-img"></image>
         <div class="store-name">{{item.Stores_Name}}</div>
         <div class='store-desc flex flex-vertical-center'>
-          
+
           <!--					<span class='status-store' @click="goNext(item.Stores_ID)">查看</span>-->
-        
+
         </div>
       </div>
       <div class="store-btm">
@@ -25,11 +25,11 @@
         </div>
       </div>
     </div>
-    
+
     <div class="defaults" v-if="storeList.length<=0">
       <image :src="'/static/client/defaultImg.png'|domain"></image>
     </div>
-  
+
   </view>
 </template>
 
@@ -47,11 +47,11 @@ export default {
       totalCount: 0,
       type: '',
       storeList: [],
-      id: '',
+      id: ''
     }
   },
   computed: {
-    ...mapGetters(['Stores_ID']),
+    ...mapGetters(['Stores_ID'])
   },
   methods: {
     goNext (item) {
@@ -67,12 +67,12 @@ export default {
         longitude: Number(item.Stores_PrimaryLng),
         success: function () {
 
-        },
+        }
       })
     },
     cell (item) {
       uni.makePhoneCall({
-        phoneNumber: item,
+        phoneNumber: item
       })
     },
     init (item) {
@@ -80,7 +80,7 @@ export default {
         page: this.page,
         pageSize: this.pageSize,
         get_under: '11',
-        stores_type: this.type,
+        stores_type: this.type
       }
       if (item === 'init') {
         data.self_store_id = this.id
@@ -94,7 +94,7 @@ export default {
           this.storeList.push(item)
         }
       })
-    },
+    }
 
   },
   onReachBottom () {
@@ -106,7 +106,7 @@ export default {
   onLoad (options) {
     this.type = options.type
     this.init()
-  },
+  }
 }
 </script>
 
@@ -125,13 +125,13 @@ export default {
     background: #fff;
     font-size: 28rpx;
     padding: 0 10px;
-    
+
     .nav-item {
       flex: 1;
       box-sizing: border-box;
       text-align: center;
       position: relative;
-      
+
       .jiaobiao {
         position: absolute;
         top: 24rpx;
@@ -148,13 +148,13 @@ export default {
         color: #F43131;
       }
     }
-    
+
     .nav-item.active {
       color: #FF4E00;
       border-bottom: 2px solid #FF4E00;
     }
   }
-  
+
   .store-apply {
     width: 710rpx;
     margin: 0 auto 20rpx;
@@ -164,7 +164,7 @@ export default {
     background: rgba(255, 255, 255, 1);
     border-radius: 10rpx;
   }
-  
+
   .store-apply-title {
     height: 84rpx;
     width: 100%;
@@ -173,39 +173,39 @@ export default {
     margin-bottom: 40rpx;
     position: relative;
   }
-  
+
   .store-img {
     width: 84rpx;
     height: 84rpx;
     border-radius: 50%;
     margin-right: 20rpx;
   }
-  
+
   .store-name {
     font-size: 15px;
     color: #333333;
   }
-  
+
   .store-desc {
     font-size: 14px;
     color: #888888;
     margin-left: auto;
     position: relative;
   }
-  
+
   .iconCell {
     width: 34rpx;
     height: 34rpx;
     display: inline-block;
     margin-left: 20rpx;
   }
-  
+
   .store-btm {
     font-size: 14px;
     color: #888888;
     line-height: 48rpx;
   }
-  
+
   .status-store {
     width: 124rpx;
     height: 56rpx;
@@ -216,17 +216,17 @@ export default {
     font-size: 14px;
     color: #FFFFFF;
   }
-  
+
   .color-red {
     color: #FF4E00;
   }
-  
+
   .store-wen {
     width: 28rpx;
     height: 28rpx;
     margin-left: 10rpx;
   }
-  
+
   .tips {
     position: absolute;
     top: 50rpx;
@@ -235,7 +235,7 @@ export default {
     padding: 20rpx;
     background: #fff;
     box-shadow: 0px 0px 16px 0px rgba(4, 0, 0, 0.18);
-    
+
     .sanjiaoxing {
       position: absolute;
       top: -14rpx;
@@ -250,7 +250,7 @@ export default {
       box-shadow: 0px 0px 16px 0px rgba(4, 0, 0, 0.18);
     }
   }
-  
+
   .store-address {
     display: inline-block;
     max-width: 560rpx;
@@ -260,18 +260,18 @@ export default {
     line-height: 56rpx;
     height: 56rpx;
   }
-  
+
   .icon-address {
     color: #ff774d;
     font-size: 22px;
     display: inline-block;
   }
-  
+
   .store-add {
     display: flex;
     align-items: center;
   }
-  
+
   .defaults {
     margin: 0 auto;
     width: 640rpx;

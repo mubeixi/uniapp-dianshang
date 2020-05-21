@@ -4,7 +4,7 @@
       <span class="store-buy-title">{{total_person}}</span>人正在购买，总销量 <span
     class="store-buy-title">{{total_buy_times}}</span>
     </div>
-    
+
     <div :key="ind" class="store-buy-item flex flex-vertical-center" v-for="(it,ind) of prodata">
       <image :src="it.User_HeadImg" class="store-buy-img"></image>
       <div>
@@ -19,7 +19,7 @@
         <span class="color-red">{{it.prod_count}}</span>件
       </div>
     </div>
-  
+
   </div>
 </template>
 <script>
@@ -37,7 +37,7 @@ export default {
       totalCount: 0,
       prodata: [],
       total_buy_times: '',
-      total_person: '',
+      total_person: ''
     }
   },
   methods: {
@@ -45,7 +45,7 @@ export default {
       const data = {
         prod_id: this.pid,
         page: this.page,
-        pageSzie: this.pageSzie,
+        pageSzie: this.pageSzie
       }
       getBuyerByProd(data).then(res => {
         this.totalCount = res.totalCount
@@ -59,7 +59,7 @@ export default {
           this.prodata.push(item)
         }
       })
-    },
+    }
   },
   onReachBottom () {
     if (this.prodata.length < this.totalCount) {
@@ -70,7 +70,7 @@ export default {
   onLoad (options) {
     // this.pid=options.pid
     this.getBuyerByProd()
-  },
+  }
 }
 </script>
 
@@ -85,12 +85,12 @@ export default {
     font-size: 13px;
     color: #666666;
   }
-  
+
   .store-buy-title {
     font-size: 14px;
     color: #FF4E00;
   }
-  
+
   .store-buy-item {
     width: 710rpx;
     height: 120rpx;
@@ -100,13 +100,13 @@ export default {
     padding: 20rpx;
     box-sizing: border-box;
   }
-  
+
   .store-buy-img {
     width: 78rpx;
     height: 78rpx;
     margin-right: 22rpx;
   }
-  
+
   .store-buy-item-title {
     height: 26rpx;
     line-height: 26rpx;
@@ -117,20 +117,20 @@ export default {
     width: 450rpx;
     overflow-x: hidden;
   }
-  
+
   .store-buy-item-time {
     height: 18rpx;
     line-height: 18rpx;
     font-size: 24rpx;
     color: #888888;
   }
-  
+
   .store-buy-item-count {
     margin-left: auto;
     font-size: 28rpx;
     color: #888888;
   }
-  
+
   .color-red {
     color: #FF4E00;
   }

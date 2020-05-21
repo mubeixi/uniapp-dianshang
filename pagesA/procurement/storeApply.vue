@@ -57,9 +57,9 @@
           </div>
         </div>
       </div>
-    
+
     </div>
-    
+
     <wzw-dialog ref="storeInfo">
       <div class="storeInfoDialog">
         <div class="title text-center line15 font16">门店信息</div>
@@ -79,7 +79,7 @@
         </div>
       </div>
     </wzw-dialog>
-    
+
     <wzw-dialog ref="refuseApply">
       <div class="refuseApplyDialog">
 				<textarea @input="bingReasonInput" auto-height class="reason" placeholder="请输入驳回原因"
@@ -88,7 +88,7 @@
           <div @click="cancelRefuseApply" class="action-btn btn-cancel">取消</div>
           <div @click="refuseApply" class="btn-sub action-btn">确定</div>
         </div>
-      
+
       </div>
     </wzw-dialog>
   </div>
@@ -118,17 +118,17 @@ export default {
         page: 1,
         finish: false,
         pageSize: 20,
-        totalCount: 0,
-      },
+        totalCount: 0
+      }
     }
   },
   computed: {
-    ...mapGetters(['Stores_ID']),
+    ...mapGetters(['Stores_ID'])
   },
   methods: {
     handleApply (apply, idx) {
       uni.navigateTo({
-        url: `/pagesA/procurement/storeWholesaleSend?apply_id=${apply.Order_ID}`,
+        url: `/pagesA/procurement/storeWholesaleSend?apply_id=${apply.Order_ID}`
       })
     },
     cancelRefuseApply () {
@@ -145,7 +145,7 @@ export default {
       }
       refuseStorePurchaseApply({
         order_id: this.activeApply.Order_ID,
-        reason: this.reason,
+        reason: this.reason
       }, { tip: '处理中' }).then(res => {
         this.$refs.refuseApply.close()
         this.activeApply = null
@@ -183,7 +183,7 @@ export default {
       await getStorePurchaseSales({
         ...this.paginate,
         order_status: this.order_status,
-        store_id: this.Stores_ID,
+        store_id: this.Stores_ID
       }, { tip: '加载中' }).then(res => {
         this.paginate.totalCount = res.totalCount
 
@@ -212,7 +212,7 @@ export default {
       }, err => {
 
       })
-    },
+    }
   },
   onReachBottom () {
     this.loadInfo()
@@ -223,7 +223,7 @@ export default {
     getStoreList({ pageSize: 999 }).then(res => {
       this.stores = res.data
     })
-  },
+  }
 }
 </script>
 
@@ -242,7 +242,7 @@ export default {
     background: #fff;
     font-size: 14px;
     padding: 0 10px;
-    
+
     .nav-item {
       flex: 1;
       /*box-sizing: border-box;*/
@@ -250,37 +250,37 @@ export default {
       /*position: relative;*/
       color: #333;
     }
-    
+
     .nav-item.active {
       color: $wzw-primary-color;
       border-bottom: 2px solid $wzw-primary-color;
     }
   }
-  
+
   .space-box {
     height: 50px;
     width: 100%;
     background: white;
   }
-  
+
   .lists {
     .item {
       margin: 10px 15px 10px;
       background: white;
       border-radius: 4px;
       overflow: hidden;
-      
+
       .head {
-        
+
         .info {
           padding: 10px;
           align-items: center;
           font-size: 14px;
-          
+
           .store-info {
             align-items: center;
           }
-          
+
           .store-pic {
             width: 25px;
             height: 25px;
@@ -290,57 +290,57 @@ export default {
             background-position: center;
             margin-right: 10px;
           }
-          
+
           .store-title {
             margin-right: 10px;
             color: #333;
           }
-          
+
           .action {
             color: $wzw-primary-color;
-            
+
             .action-item {
               text-decoration: underline;
               cursor: pointer;
             }
           }
-          
+
           .order_no {
             margin-left: 30px;
             color: #666;
           }
         }
-        
+
         .status {
           font-size: 12px;
           border-bottom: 1px solid #E6E6E6;
           padding: 10px;
           align-items: center;
-          
+
           .icon-delete {
             width: 14px;
             height: 14px;
           }
-          
+
           .el-icon-delete-solid {
             cursor: pointer;
             color: #999;
-            
+
             &:hover {
               color: #F43131;
             }
           }
         }
       }
-      
+
       .goods-list {
         border-bottom: 1px solid #EDEDED;
-        
+
         .goods {
           display: flex;
           align-items: center;
           padding: 10px;
-          
+
           .l {
             width: 100px;
             height: 100px;
@@ -349,11 +349,11 @@ export default {
             background-color: #f2f2f2;
             background-position: center;
           }
-          
+
           .c {
             flex: 1;
             padding: 0 0 0 10px;
-            
+
             .title {
               font-size: 14px;
               height: 40px;
@@ -362,71 +362,71 @@ export default {
               overflow: hidden;
               text-overflow: ellipsis;
             }
-            
+
             .spec-key {
               background: #FFF5F5;
               font-size: 12px;
               padding: 6px 10px;
               color: #666666;
             }
-            
+
             .numbox {
               color: #333333
             }
           }
-          
+
         }
-        
+
       }
-      
+
       .price-box {
         text-align: right;
         padding: 10px;
         font-size: 14px;
       }
-      
+
       .actions {
         text-align: right;
         padding: 0 10px;
-        
+
         .acion-btn {
           margin-bottom: 10px;
           margin-left: 10px;
         }
-        
+
       }
-      
+
     }
   }
-  
+
   .storeInfoDialog {
     width: 560rpx;
     box-sizing: border-box;
     padding: 10px;
     font-size: 14px;
-    
+
     .row {
       display: flex;
       margin-bottom: 8px;
-      
+
       .label {
         color: #999;
         width: 70px;
       }
-      
+
       .text {
         flex: 1;
         color: #444;
       }
     }
   }
-  
+
   .refuseApplyDialog {
     width: 560rpx;
     box-sizing: border-box;
     padding: 15px;
     font-size: 14px;
-    
+
     .reason {
       font-size: 14px;
       min-height: 200px;
@@ -436,12 +436,12 @@ export default {
       width: auto;
       padding: 10px;
     }
-    
+
     .control {
       margin-top: 15px;
       display: flex;
       justify-content: center;
-      
+
       .action-btn {
         width: 70px;
         height: 36px;
@@ -450,7 +450,7 @@ export default {
         text-align: center;
         color: #666;
         background: #e9e9e9;
-        
+
         &.btn-sub {
           background: $wzw-primary-color;
           color: white;

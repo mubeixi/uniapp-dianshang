@@ -1,6 +1,6 @@
 <template>
   <view @click="commonClick">
-    
+
     <view class="navs">
       <view :class="index==0?'active':''" @click="changIndex(0)" class="nav-item">全部</view>
       <view :class="index==1?'active':''" @click="changIndex(1)" class="nav-item">
@@ -46,7 +46,7 @@
                   {{i.attr_info.attr_name}}
                 </view>
                 <view v-else>
-                
+
                 </view>
                 <view class="allPrice">
                   ×{{i.prod_count}}
@@ -72,7 +72,7 @@
     <div class="defaults" v-else>
       <image :src="'/static/client/defaultImg.png'|domain"></image>
     </div>
-    
+
     <div class="zhezhao" v-if="password_input">
       <div class="input-wrap">
         <div>请输入拒单原因</div>
@@ -83,7 +83,7 @@
         </div>
       </div>
     </div>
-  
+
   </view>
 </template>
 
@@ -104,11 +104,11 @@ export default {
       orderNum: '',
       password_input: false,
       reason: '',
-      id: 0,
+      id: 0
     }
   },
   computed: {
-    ...mapGetters(['Stores_ID']),
+    ...mapGetters(['Stores_ID'])
   },
   onShow () {
     this.pro = []
@@ -129,20 +129,20 @@ export default {
       const data = {
         Order_ID: this.id,
         reason: this.reason,
-        store_id: this.Stores_ID,
+        store_id: this.Stores_ID
       }
       const that = this
       if (!this.reason) {
         uni.showToast({
           title: '拒单原因必填',
-          icon: 'none',
+          icon: 'none'
         })
         return
       }
       systemRejectOrder(data).then(res => {
         uni.showToast({
           title: res.msg,
-          icon: 'none',
+          icon: 'none'
         })
         that.password_input = false
         setTimeout(function () {
@@ -162,14 +162,14 @@ export default {
     goFa (id) {
       // 发货 订单id
       uni.navigateTo({
-        url: '/pagesA/procurement/retailOrderShip?id=' + id,
+        url: '/pagesA/procurement/retailOrderShip?id=' + id
       })
     },
     _getOrder () {
       const data = {
         store_id: this.Stores_ID,
         page: this.page,
-        pageSize: this.pageSize,
+        pageSize: this.pageSize
       }
       if (this.index > 0) {
         data.Order_Status = this.index
@@ -210,8 +210,8 @@ export default {
       this.page = 1
       this._getOrder()
       this.getOrderNum()
-    },
-  },
+    }
+  }
 }
 </script>
 
@@ -226,7 +226,7 @@ export default {
     padding: 0rpx 0rpx 18rpx 0rpx;
     border-radius: 20rpx;
   }
-  
+
   .blockDiv {
     width: 664rpx;
     margin-bottom: 30rpx;
@@ -234,22 +234,22 @@ export default {
     display: flex;
     padding-left: 14rpx;
   }
-  
+
   .imgDiv {
     width: 220rpx;
     height: 220rpx;
   }
-  
+
   .textRight {
     padding-left: 28rpx;
     width: 440rpx;
   }
-  
+
   .imgHund {
     width: 100%;
     height: 100%;
   }
-  
+
   .productName {
     width: 100%;
     height: 60rpx;
@@ -261,13 +261,13 @@ export default {
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
   }
-  
+
   .skuMy {
     color: #666666;
     font-size: 12px;
     margin-top: 28rpx;
   }
-  
+
   .bottomDiv {
     margin-top: 26rpx;
     height: 50rpx;
@@ -275,7 +275,7 @@ export default {
     align-content: center;
     justify-content: space-between;
   }
-  
+
   .skuCount {
     height: 50rpx;
     background-color: #FFF2F1;
@@ -286,53 +286,53 @@ export default {
     padding-left: 5px;
     padding-right: 5px;
   }
-  
+
   .allPrice {
     font-size: 30rpx;
     color: #333333;
     height: 50rpx;
     line-height: 50rpx;
   }
-  
+
   .span1 {
     color: #F43131;
   }
-  
+
   .span2 {
     color: #F43131;
     font-size: 28rpx;
     margin-left: 4rpx;
   }
-  
+
   .mbxa {
     display: flex;
     align-items: center;
     margin-right: 10rpx;
-    
+
     .imgs {
       width: 34rpx;
       height: 34rpx;
     }
   }
-  
+
   .buttonLast {
     margin-top: 24rpx;
     display: flex;
     justify-content: space-between;
     height: 45rpx;
-    
+
     .viewFont {
       font-size: 24rpx;
       color: #F43131;
     }
-    
+
     .spanFont {
       font-size: 30rpx;
       color: #F43131;
       margin-left: 3px;
     }
   }
-  
+
   .spanJu {
     width: 156rpx;
     height: 60rpx;
@@ -344,13 +344,13 @@ export default {
     display: inline-block;
     text-align: center;
   }
-  
+
   .spanJu:nth-child(1) {
     background: #F43131;
     color: #fff;
     margin-right: 10px;
   }
-  
+
   .check {
     position: fixed;
     bottom: 0;
@@ -362,7 +362,7 @@ export default {
     color: #333;
     background-color: #fff;
     box-shadow: 0px 0px 22px 0px rgba(4, 0, 0, 0.12);
-    
+
     .check-msg {
       flex: 1;
       display: flex;
@@ -370,23 +370,23 @@ export default {
       justify-content: center;
       font-size: 24rpx;
       color: #333;
-      
+
       .num {
         color: $wzw-primary-color;
         fong-size: 28rpx;
       }
-      
+
       .img {
         width: 17rpx;
         height: 14rpx;
         margin-left: 12rpx;
       }
-      
+
       .turn {
         transform: rotate(180deg);
       }
     }
-    
+
     .submit {
       width: 210rpx;
       height: 100%;
@@ -397,7 +397,7 @@ export default {
       text-align: center;
     }
   }
-  
+
   .navs {
     z-index: 999;
     position: fixed;
@@ -415,13 +415,13 @@ export default {
     background: #F8F8F8;
     font-size: 14px;
     padding: 0 10px;
-    
+
     .nav-item {
       flex: 1;
       box-sizing: border-box;
       text-align: center;
       position: relative;
-      
+
       .jiaobiao {
         position: absolute;
         top: 24rpx;
@@ -438,13 +438,13 @@ export default {
         color: #F43131;
       }
     }
-    
+
     .nav-item.active {
       color: red;
       border-bottom: 2px solid red;
     }
   }
-  
+
   .orderTop {
     height: 76rpx;
     width: 100%;
@@ -458,7 +458,7 @@ export default {
     padding-left: 20rpx;
     padding-right: 20rpx;
   }
-  
+
   .zhezhao {
     left: 0;
     top: 0;
@@ -467,7 +467,7 @@ export default {
     height: 100%;
     background: rgba(0, 0, 0, .3);
     z-index: 1000;
-    
+
     .input-wrap {
       background: #fff;
       color: #000;
@@ -478,7 +478,7 @@ export default {
       box-sizing: border-box;
       font-size: 28rpx;
       border-radius: 10rpx;
-      
+
       .input {
         margin: 40rpx 0;
         border: 1px solid #efefef;
@@ -488,20 +488,20 @@ export default {
         text-align: left;
         padding-left: 10rpx;
       }
-      
+
       .btns {
         display: flex;
         justify-content: space-around;
         height: 60rpx;
         line-height: 60rpx;
-        
+
         .btn {
           flex: 1;
         }
       }
     }
   }
-  
+
   .defaults {
     margin: 0 auto;
     width: 640rpx;

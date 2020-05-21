@@ -1,6 +1,6 @@
 <template>
   <view @click="commonClick" class="myall">
-    
+
     <!-- <page-title title="添加提现方式" rightHidden="true" ></page-title> -->
     <view class="center">
       <view class="left">
@@ -14,9 +14,9 @@
         <image :src="'/static/client/right.png'|domain" class="image"></image>
       </view>
     </view>
-    
+
     <form @submit="addInfo" report-submit>
-      
+
       <block v-if="data.Method_Type=='bank_card'">
         <view class="centers">
           <view class="left">
@@ -79,9 +79,9 @@ export default {
         Method_Name: '', // 提现方式名称
         Account_Name: '', // 户名
         Account_Val: '', // 账号
-        Bank_Position: '',// 开户行
+        Bank_Position: ''// 开户行
       },
-      withdraw_from: 1,
+      withdraw_from: 1
 
     }
   },
@@ -93,7 +93,7 @@ export default {
     this.getShopWithdrawMethod()
   },
   computed: {
-    ...mapGetters(['userInfo']),
+    ...mapGetters(['userInfo'])
   },
   methods: {
     ...mapActions(['getInitData', 'setUserInfo']),
@@ -106,18 +106,18 @@ export default {
           // Method_Name:this.data.Method_Name,//提现方式名称
           Account_Name: this.data.Account_Name, // 户名
           Account_Val: this.data.Account_Val, // 账号
-          Bank_Position: this.data.Bank_Position, // 开户行
+          Bank_Position: this.data.Bank_Position // 开户行
         }
       } else if (this.data.Method_Type == 'alipay') {
         data = {
           Method_ID: this.data.Method_ID, // 提现方式类型
           // Method_Name:this.data.Method_Name,//提现方式名称
           Account_Name: this.data.Account_Name, // 户名
-          Account_Val: this.data.Account_Val,// 账号
+          Account_Val: this.data.Account_Val// 账号
         }
       } else {
         data = {
-          Method_ID: this.data.Method_ID,// 提现方式类型
+          Method_ID: this.data.Method_ID// 提现方式类型
           // Method_Name:this.data.Method_Name//提现方式名称
         }
       }
@@ -126,13 +126,13 @@ export default {
         const User_Method_ID = res.data.User_Method_ID
         uni.showToast({
           title: res.msg,
-          icon: 'success',
+          icon: 'success'
         })
         setTimeout(function () {
           that.$vm.$emit('fir', User_Method_ID)
           // 返回上一页
           uni.navigateBack({
-            delta: 1,
+            delta: 1
           })
         }, 1000)
       }).catch(e => {
@@ -156,8 +156,8 @@ export default {
       this.data.Method_Type = this.array[this.index].Method_Type
       this.data.Method_Name = this.array[this.index].Method_Name
       this.data.Method_ID = this.array[this.index].Method_ID
-    },
-  },
+    }
+  }
 }
 </script>
 
@@ -166,7 +166,7 @@ export default {
     background-color: #FFFFFF !important;
     min-height: 100vh;
   }
-  
+
   .center {
     margin-top: 19rpx;
     width: 710rpx;
@@ -176,19 +176,19 @@ export default {
     align-items: center;
     border-bottom: 1rpx solid #E3E3E3;
     justify-content: space-between;
-    
+
     .left {
       font-size: 28rpx;
       color: #333333;
       width: 125rpx;
     }
-    
+
     .right {
       font-size: 26rpx;
       color: #888888;
       display: flex;
       align-items: center;
-      
+
       .image {
         width: 15rpx;
         height: 23rpx;
@@ -196,7 +196,7 @@ export default {
       }
     }
   }
-  
+
   .centers {
     margin-top: 19rpx;
     width: 710rpx;
@@ -206,25 +206,25 @@ export default {
     align-items: center;
     border-bottom: 1rpx solid #E3E3E3;
     position: relative;
-    
+
     .left {
       width: 125rpx;
       font-size: 28rpx;
       color: #333333;
     }
-    
+
     .inputs {
       width: 570rpx;
       color: #333333;
       font-size: 24rpx;
     }
   }
-  
+
   .places {
     color: #B8B8B8;
     font-size: 24rpx;
   }
-  
+
   .addInfo {
     width: 580rpx;
     height: 76rpx;

@@ -122,7 +122,7 @@ import { error, toast } from '../../common'
 
 export default {
   components: {
-    popupLayer,
+    popupLayer
   },
   filters: {
     distanceFn: function (val) {
@@ -131,7 +131,7 @@ export default {
       }
 
       return val
-    },
+    }
   },
   data () {
     return {
@@ -154,7 +154,7 @@ export default {
       is_getted: false, // 是否已经请求过店铺，
       allow_from_plat: 0, // 是否允许向平台进货、退货
       openCity: false,
-      openArea: false,
+      openArea: false
     }
   },
   onLoad (options) {
@@ -209,7 +209,7 @@ export default {
     },
     a_id () {
       return this.arealist[this.a_index] && this.arealist[this.a_index].id
-    },
+    }
   },
   methods: {
     load () {
@@ -240,20 +240,20 @@ export default {
           } else {
             if (arr[i].Product_Attr_ID) {
               prod_json[arr[i].Products_ID].attr = {
-                [arr[i].Product_Attr_ID]: arr[i].myqty,
+                [arr[i].Product_Attr_ID]: arr[i].myqty
               }
             }
           }
         } else {
           prod_json[arr[i].Products_ID] = {
-            num: arr[i].myqty,
+            num: arr[i].myqty
           }
           if (prod_json[arr[i].Products_ID].attr) {
             prod_json[arr[i].Products_ID].attr[arr[i].Product_Attr_ID] = arr[i].myqty
           } else {
             if (arr[i].Product_Attr_ID) {
               prod_json[arr[i].Products_ID].attr = {
-                [arr[i].Product_Attr_ID]: arr[i].myqty,
+                [arr[i].Product_Attr_ID]: arr[i].myqty
               }
             }
           }
@@ -267,7 +267,7 @@ export default {
         longitude: store.wx_lng,
         name: store.Stores_Name,
         success: function () {
-        },
+        }
       })
     },
     get_store_detail () {
@@ -299,7 +299,7 @@ export default {
       for (const i in obj) {
         arr.push({
           id: i,
-          name: obj[i],
+          name: obj[i]
         })
       }
       return arr
@@ -328,7 +328,7 @@ export default {
         page: 1,
         stores_sn: this.purchase_store_sn,
         get_top: 1, // 只查询上级门店列表
-        self_store_id: this.Stores_ID, // 只查询上级门店列表必传
+        self_store_id: this.Stores_ID // 只查询上级门店列表必传
         // search_stores_sn: this.search_stores_sn,
       }
       if (this.p_clicked) {
@@ -348,7 +348,7 @@ export default {
       }
       getStoreList(postData, {
         tip: '搜索中',
-        mask: true,
+        mask: true
       }).then(res => {
         this.is_getted = true
         this.stores = res.data
@@ -368,23 +368,23 @@ export default {
                 store_id: this.Stores_ID,
                 prod_json: JSON.stringify(this.prod_json),
                 purchase_type: 'store',
-                purchase_store_id: this.pid,
+                purchase_store_id: this.pid
               }).then(res => {
                 ls.remove('productMy')
                 uni.showToast({
-                  title: res.msg,
+                  title: res.msg
                 })
                 setTimeout(() => {
                   // 跳转选择渠道页面
                   uni.redirectTo({
-                    url: '/pagesA/procurement/refundRecords',
+                    url: '/pagesA/procurement/refundRecords'
                   })
                 }, 1000)
               })
             } else {
 
             }
-          },
+          }
         })
       } else {
         if (this.is_purchase) {
@@ -399,40 +399,40 @@ export default {
                 storeProdBackSubmit({
                   store_id: this.Stores_ID,
                   prod_json: JSON.stringify(this.prod_json),
-                  purchase_type: 'shop',
+                  purchase_type: 'shop'
                 }).then(res => {
                   ls.remove('productMy')
                   uni.showToast({
-                    title: res.msg,
+                    title: res.msg
                   })
                   setTimeout(() => {
                     // 跳转选择渠道页面
                     uni.redirectTo({
-                      url: '/pagesA/procurement/refundRecords',
+                      url: '/pagesA/procurement/refundRecords'
                     })
                   }, 1000)
                 })
               } else {
 
               }
-            },
+            }
           })
         } else if (this.is_stock_records) {
           const data = {
             store_id: this.Stores_ID,
             order_id: this.order_id,
-            purchase_type: 'shop',
+            purchase_type: 'shop'
           }
           changeStoreApplyChannel(data).then(res => {
             uni.navigateBack({
-              delta: 1,
+              delta: 1
             })
           }).catch(err => {
             toast(err.msg)
           })
         } else {
           uni.navigateTo({
-            url: '/pagesA/procurement/stock',
+            url: '/pagesA/procurement/stock'
           })
         }
       }
@@ -446,11 +446,11 @@ export default {
             store_id: this.Stores_ID,
             order_id: this.order_id,
             purchase_type: 'store',
-            purchase_store_sn: stores_sn,
+            purchase_store_sn: stores_sn
           }
           changeStoreApplyChannel(data).then(res => {
             uni.navigateBack({
-              delta: 1,
+              delta: 1
             })
           }).catch(err => {
             toast(err.msg)
@@ -458,7 +458,7 @@ export default {
         } else {
           // 普通进货页面跳转过来的
           uni.navigateTo({
-            url: '/pagesA/procurement/stock?purchase_store_sn=' + stores_sn + '&purchase_store_id=' + stores_id,
+            url: '/pagesA/procurement/stock?purchase_store_sn=' + stores_sn + '&purchase_store_id=' + stores_id
           })
         }
       } else {
@@ -473,23 +473,23 @@ export default {
                 store_id: this.Stores_ID,
                 prod_json: JSON.stringify(this.prod_json),
                 purchase_type: 'store',
-                purchase_store_sn: stores_sn,
+                purchase_store_sn: stores_sn
               }).then(res => {
                 ls.remove('productMy')
                 uni.showToast({
-                  title: res.msg,
+                  title: res.msg
                 })
                 setTimeout(() => {
                   // 跳转选择渠道页面
                   uni.redirectTo({
-                    url: '/pagesA/procurement/refundRecords',
+                    url: '/pagesA/procurement/refundRecords'
                   })
                 }, 1000)
               })
             } else {
 
             }
-          },
+          }
         })
       }
     },
@@ -513,8 +513,8 @@ export default {
     closePop () {
 
       // this.$refs.searchLayer.close();
-    },
-  },
+    }
+  }
 }
 </script>
 
@@ -522,7 +522,7 @@ export default {
   .wrap {
     min-height: 100vh;
     background-color: #fff;
-    
+
     .title {
       height: 90rpx;
       background-color: #f8f8f8;
@@ -531,10 +531,10 @@ export default {
       text-align: center;
       line-height: 90rpx;
     }
-    
+
     .content {
       padding: 27rpx 17rpx 0 23rpx;
-      
+
       .c-item {
         display: flex;
         width: 100%;
@@ -544,11 +544,11 @@ export default {
         border-bottom: 2rpx solid #ebebeb;
         justify-content: space-between;
         font-size: 30rpx;
-        
+
         .item-left {
           width: 150rpx;
         }
-        
+
         .item-area {
           display: flex;
           justify-content: space-between;
@@ -556,7 +556,7 @@ export default {
           width: 600rpx;
           font-size: 22rpx;
           color: #999999;
-          
+
           .a-item {
             width: 130rpx;
             white-space: nowrap;
@@ -570,7 +570,7 @@ export default {
             align-items: center;
             background-color: #F4F4F4;
             padding: 0 18rpx;
-            
+
             .bot {
               height: 16rpx;
               width: 12rpx;
@@ -579,20 +579,20 @@ export default {
             }
           }
         }
-        
+
         .item-right {
           font-size: 28rpx;
           color: #777;
           display: flex;
           align-items: center;
-          
+
           .right {
             width: 18rpx;
             height: 27rpx;
             margin-left: 20rpx;
           }
         }
-        
+
         .item-input {
           flex: 1;
           margin-left: 30rpx;
@@ -602,12 +602,12 @@ export default {
         }
       }
     }
-    
+
     .lists {
       .item {
         display: flex;
         align-items: center;
-        
+
         .logo {
           height: 44px;
           width: 44px;
@@ -616,16 +616,16 @@ export default {
           background-repeat: no-repeat;
           background-size: cover;
           background-position: center;
-          
+
         }
-        
+
         .info {
           flex: 1;
           margin-left: 6px;
-          
+
           .align-center {
             align-items: center;
-            
+
             .icon {
               width: 20rpx;
               height: 24rpx;
@@ -635,14 +635,14 @@ export default {
         }
       }
     }
-    
+
     .label-title {
       padding: 34rpx 0;
       font-size: 14px;
       line-height: 14px;
       display: flex;
       align-items: center;
-      
+
       .line {
         margin: 0px 10px;
         width: 2px;
@@ -650,7 +650,7 @@ export default {
         background: #F43131;
       }
     }
-    
+
     .search {
       margin: 88rpx auto;
       color: #FFF;
@@ -662,18 +662,18 @@ export default {
       border-radius: 10rpx;
       width: 95%;
     }
-    
+
     .search-title {
       line-height: 88rpx;
       color: #333;
       text-align: center;
       font-size: 32rpx;
     }
-    
+
     .search-content {
       padding: 20rpx;
     }
-    
+
     .search-item {
       display: flex;
       justify-content: space-between;
@@ -684,13 +684,13 @@ export default {
       border-bottom: 1px solid #e6e6e6;
       padding: 25rpx 0;
       font-size: 28rpx;
-      
+
       .image {
         display: block;
         width: 22px;
         height: 22px;
       }
-      
+
       .box {
         width: 22px;
         height: 22px;
@@ -698,11 +698,11 @@ export default {
         box-sizing: border-box;
       }
     }
-    
+
     & .search-item:nth-last-child(1) {
       border-bottom: 0;
     }
-    
+
     .search-bottom {
       width: 100%;
       height: 80rpx;

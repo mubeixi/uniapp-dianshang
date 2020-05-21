@@ -22,7 +22,7 @@
         </view>
       </label>
     </radio-group>
-    
+
     <view style='height:82rpx;'></view>
     <view @click="addressAddEdit('a')" class='tianjia'>
       <view class='jia_img'>
@@ -48,7 +48,7 @@ export default {
       del_address_id: 0, // 存储删除收货地址id
       check_address_id: 0, // 选择的ID
       check_flag: false, // 选则框是否展示  来自会员中心->收货地址 则不展示  来自提交订单->选择收货地址 则显示
-      from_page: '', // 来源页面  checkout(需设置checkout页面的back_address_id)、会员中心(不需操作)
+      from_page: '' // 来源页面  checkout(需设置checkout页面的back_address_id)、会员中心(不需操作)
     }
   },
   methods: {
@@ -58,14 +58,14 @@ export default {
       uni.$emit('fire', address_id)
       // 返回上一页
       uni.navigateBack({
-        delta: 1,
+        delta: 1
       })
       return
       if (this.from_page == 'checkout') {
         var pages = getCurrentPages() // 获取页面堆栈
         var prevPage = pages[pages.length - 2] // 上一页
         prevPage.setData({
-          back_address_id: address_id,
+          back_address_id: address_id
         })
         // #ifdef APP-PLUS
         prevPage.$getAppWebview().back_address_id = address_id
@@ -75,7 +75,7 @@ export default {
         var pages = getCurrentPages() // 获取页面堆栈
         var prevPage = pages[pages.length - 2] // 上一页
         prevPage.setData({
-          address_id: address_id,
+          address_id: address_id
         })
       }
     },
@@ -105,18 +105,18 @@ export default {
                 uni.showToast({
                   title: '删除成功',
                   icon: 'success',
-                  duration: 1000,
+                  duration: 1000
                 })
               })
             } else {
               uni.showModal({
                 title: '错误',
                 content: '收货地址id获取失败',
-                showCancel: false,
+                showCancel: false
               })
             }
           }
-        },
+        }
       })
     },
 
@@ -129,7 +129,7 @@ export default {
       }
 
       uni.navigateTo({
-        url: '/pagesA/editAddress/editAddress?from=addresslist' + (address_id ? '&addressid=' + address_id : ''),
+        url: '/pagesA/editAddress/editAddress?from=addresslist' + (address_id ? '&addressid=' + address_id : '')
       })
     },
 
@@ -140,7 +140,7 @@ export default {
         this.addresslist = addresslist
       }).catch(() => {
       })
-    },
+    }
   },
   /**
    * 生命周期函数--监听页面加载
@@ -161,7 +161,7 @@ export default {
   },
   onShow () {
     this.getAddressList()
-  },
+  }
 }
 </script>
 
@@ -170,109 +170,109 @@ export default {
     background-color: #FFFFFF !important;
     min-height: 100vh;
   }
-  
+
   .radio {
-    width: 750 rpx;
-    padding: 20 rpx 0;
+    width: 750rpx;
+    padding: 20rpx 0;
     overflow: hidden;
     display: flex;
     flex-flow: row;
     align-items: center;
-    border-bottom: 15 rpx #f4f4f4 solid;
+    border-bottom: 15rpx #f4f4f4 solid;
   }
-  
+
   .radio radio {
     width: 14%;
     text-align: center;
   }
-  
+
   .flex-main {
     color: #666;
-    line-height: 36 rpx;
-    font-size: 28 rpx;
+    line-height: 36rpx;
+    font-size: 28rpx;
     width: 70%;
     display: flex;
     flex-flow: column;
   }
-  
+
   .flex-main .flex-top {
     display: flex;
     flex-flow: row;
-    margin-bottom: 10 rpx;
+    margin-bottom: 10rpx;
   }
-  
+
   .flex-main .flex-top .name {
     width: 65%;
   }
-  
+
   .flex-main .flex-top .pho {
     width: 35%;
     text-align: right;
   }
-  
+
   .flex-main .flex-add {
     width: 100%;
-    line-height: 36 rpx;
+    line-height: 36rpx;
     overflow: hidden;
   }
-  
+
   .flex-main .flex-add.default {
     color: #ff0000;
-    margin-top: 10 rpx;
+    margin-top: 10rpx;
   }
-  
+
   .flex-action {
     width: 16%;
     display: flex;
     flex-flow: column;
     text-align: center;
   }
-  
+
   .flex-action image {
-    width: 46 rpx;
-    height: 46 rpx;
-    margin-left: 37 rpx;
+    width: 46rpx;
+    height: 46rpx;
+    margin-left: 37rpx;
   }
-  
+
   .flex-action image:nth-child(1) {
-    margin-bottom: 20 rpx;
+    margin-bottom: 20rpx;
   }
-  
+
   /* 没有选择框样式 */
   .radio.no-redio .flex-main {
     width: 86%;
     padding: 0 3%;
   }
-  
+
   .tianjia {
     color: #666;
-    line-height: 40 rpx;
-    font-size: 28 rpx;
+    line-height: 40rpx;
+    font-size: 28rpx;
     float: left;
-    width: 710 rpx;
+    width: 710rpx;
     position: fixed;
     bottom: 0;
     z-index: 5;
-    padding: 20 rpx;
+    padding: 20rpx;
     border-top: 1px #f4f4f4 solid;
     background: #fff;
   }
-  
+
   .tianjia view.jia_img image {
-    width: 40 rpx;
-    height: 40 rpx;
+    width: 40rpx;
+    height: 40rpx;
     float: left;
   }
-  
+
   .tianjia view.go_img image {
-    width: 40 rpx;
-    height: 40 rpx;
+    width: 40rpx;
+    height: 40rpx;
     float: right;
   }
-  
+
   .tianjia text {
-    width: 200 rpx;
+    width: 200rpx;
     float: left;
-    margin-left: 10 rpx;
+    margin-left: 10rpx;
   }
 </style>

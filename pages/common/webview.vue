@@ -6,7 +6,7 @@
 export default {
   data () {
     return {
-      url: '',
+      url: ''
     }
   },
   onLoad (options) {
@@ -15,7 +15,7 @@ export default {
     } else {
       this.url = options.url
     }
-  },
+  }
 }
 </script>
 

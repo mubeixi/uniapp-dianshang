@@ -3,9 +3,9 @@
     <!-- #ifdef APP-PLUS -->
     <view class="status_bar" style="background-color: rgb(248, 248, 248);"><!-- 这里是状态栏 --></view>
     <!-- #endif -->
-    
+
     <!-- <page-title title="申请退款" rightHidden="true"></page-title> -->
-    
+
     <div :key="item" class="pro" v-for="(item,index) of refundInfo.refund_prod_list">
       <div class="pro-div">
         <image :src="item.prod_img" alt="" class="pro-img" />
@@ -24,7 +24,7 @@
       </div>
     </div>
     <div style="height: 20rpx;width: 100%;background-color: #F3F3F3;">
-    
+
     </div>
     <!-- 退款方式暂且不要 -->
     <!-- <div class="item">
@@ -125,7 +125,7 @@
         确定
       </div>
     </popup-layer>
-  
+
   </div>
 </template>
 
@@ -138,7 +138,7 @@ import {
   get_User_ID,
   get_Users_ID,
   getRefund,
-  orderRefund,
+  orderRefund
 } from '../../common/fetch.js'
 import { pageMixin } from '../../common/mixin'
 import { uploadImages } from '../../common/tool.js'
@@ -148,7 +148,7 @@ import { mapGetters } from 'vuex'
 export default {
   mixins: [pageMixin],
   components: {
-    popupLayer,
+    popupLayer
   },
   data () {
     return {
@@ -158,8 +158,8 @@ export default {
         // 如果图片 URL 中不包含类型信息，可以添加 isImage 标记来声明
         {
           url: 'https://cloud-image',
-          isImage: true,
-        },
+          isImage: true
+        }
       ],
       onlyRefund: 0,
       imgs: [], // 上传图片预览
@@ -169,7 +169,7 @@ export default {
       reasonDes: '', // 退款原因
       current: 0,
       reason_id: 0, // 退款原因id
-      refund_desc: '', // 退款说明
+      refund_desc: '' // 退款说明
     }
   },
   onLoad (option) {
@@ -182,7 +182,7 @@ export default {
 
   },
   computed: {
-    ...mapGetters(['initData']),
+    ...mapGetters(['initData'])
   },
   methods: {
     // 退款说明
@@ -198,7 +198,7 @@ export default {
       uni.previewImage({
         urls: this.imgs,
         indicator: 'default',
-        current: index,
+        current: index
       })
     },
     // 获取申请退货退款页面
@@ -237,7 +237,7 @@ export default {
         image_path: JSON.stringify(arr),
         reason_id: this.reason_id,
         refund_desc: this.refund_desc,
-        Order_ID: this.Order_ID,
+        Order_ID: this.Order_ID
       }).then(res => {
         // 微信小程序下需要模板消息
         // #ifdef MP-WEIXIN
@@ -256,10 +256,10 @@ export default {
           complete: function () {
             setTimeout(() => {
               uni.navigateBack({
-                delta: 1,
+                delta: 1
               })
             }, 1500)
-          },
+          }
         })
       }).catch(() => {
       })
@@ -311,7 +311,7 @@ export default {
           }
         },
         fail (e) {
-        },
+        }
       })
     },
     showMethod () {
@@ -327,8 +327,8 @@ export default {
       this.reasonDes = this.refundInfo.shop_reason[this.current].Reason_Name
       this.reason_id = this.refundInfo.shop_reason[this.current].Reason_ID
       this.$refs.popup.close()
-    },
-  },
+    }
+  }
 }
 </script>
 
@@ -340,12 +340,12 @@ export default {
     position: relative;
     margin-right: 28rpx;
     margin-bottom: 28rpx;
-    
+
     .image {
       width: 100%;
       height: 100%;
     }
-    
+
     .del {
       width: 38rpx;
       height: 38rpx;
@@ -355,14 +355,14 @@ export default {
       z-index: 999;
     }
   }
-  
+
   .shangchuan {
     width: 146rpx;
     height: 146rpx;
     border: 1px solid rgba(186, 186, 186, 1);
     position: relative;
     margin-bottom: 28rpx;
-    
+
     .heng {
       width: 76rpx;
       height: 3rpx;
@@ -371,7 +371,7 @@ export default {
       top: 72rpx;
       left: 35rpx;
     }
-    
+
     .shu {
       width: 3rpx;
       height: 76rpx;
@@ -379,36 +379,36 @@ export default {
       position: absolute;
       top: 35rpx;
       left: 72rpx;
-      
+
     }
   }
-  
+
   .wrap {
     /*   height: 100vh; */
     background: #fff;
   }
-  
+
   .pro {
     display: flex;
     margin-bottom: 30rpx;
     margin-top: 30rpx;
   }
-  
+
   .pro-msg {
     margin-left: 27rpx;
     width: 476rpx;
   }
-  
+
   .pro-div {
     width: 200rpx;
     height: 200rpx;
   }
-  
+
   .pro-img {
     width: 100%;
     height: 100%;
   }
-  
+
   .pro-name {
     font-size: 26rpx;
     margin-bottom: 20rpx;
@@ -419,7 +419,7 @@ export default {
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
   }
-  
+
   .attr {
     display: inline-block;
     height: 50rpx;
@@ -430,23 +430,23 @@ export default {
     padding: 0 20rpx;
     margin-bottom: 20rpx;
   }
-  
+
   .pro-price {
     color: #F43131;
     font-size: 36rpx;
   }
-  
+
   .pro-price .span {
     font-size: 24rpx;
     font-style: normal;
   }
-  
+
   .amount {
     font-size: 30rpx;
     float: right;
     color: #333;
   }
-  
+
   .item {
     display: flex;
     height: 50px;
@@ -458,31 +458,31 @@ export default {
     font-size: 14px;
     border-bottom: 1px solid #E3E3E3;
   }
-  
+
   .spe {
     justify-content: flex-start;
   }
-  
+
   .item-left {
     margin-right: 10px;
     font-size: 28rpx;
   }
-  
+
   .item-right {
     color: #888;
     font-size: 24rpx;
   }
-  
+
   .noborder {
     border: none;
   }
-  
+
   .item-right .img {
     width: 15rpx;
     height: 23rpx;
     margin-left: 25rpx;
   }
-  
+
   /* 上传图像 */
   .imgs {
     display: flex;
@@ -490,7 +490,7 @@ export default {
     padding-right: 0rpx;
     flex-wrap: wrap;
   }
-  
+
   .bottom {
     position: fixed;
     bottom: 0;
@@ -504,7 +504,7 @@ export default {
     background: #F43131;
     z-index: 99;
   }
-  
+
   /* 退款 */
   .methods,
   .reason {
@@ -516,12 +516,12 @@ export default {
     background: #fff;
     padding-top: 20px;
   }
-  
+
   .m-title {
     text-align: center;
     margin-bottom: 10px;
   }
-  
+
   .confirm-method {
     background: #F43131;
     color: #fff;
@@ -530,10 +530,10 @@ export default {
     width: 100%;
     margin-top: 20px;
   }
-  
+
   .bMbx {
     padding: 0rpx 20rpx;
-    
+
     .fMbx {
       font-size: 32rpx;
       height: 30rpx;
@@ -541,7 +541,7 @@ export default {
       text-align: center;
       padding: 36rpx 0rpx;
     }
-    
+
     .iMbx {
       display: flex;
       justify-content: space-between;
@@ -551,7 +551,7 @@ export default {
       font-size: 28rpx;
     }
   }
-  
+
   .sure {
     height: 90rpx;
     width: 100%;

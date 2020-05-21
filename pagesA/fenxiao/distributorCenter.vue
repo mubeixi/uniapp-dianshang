@@ -1,6 +1,6 @@
 <template>
   <view @click="commonClick">
-    
+
     <!-- <view class="zhezhao" v-if="password_input">
       <view class="input-wrap">
         <view>请输入余额支付密码</view>
@@ -24,7 +24,7 @@
     <view class="titleImg">
       <image :src="'/static/client/fenxiao/join.jpg'|domain" class="image" mode=""></image>
     </view>
-    
+
     <!--  申请逻辑 -->
     <block v-if="type=='edit'">
       <block>
@@ -84,20 +84,20 @@
           </view>
         </view>
       </block>
-      
+
       <view class="checks" v-if="pro.dis_config.Distribute_AgreementOpen">
         <radio :checked="isAgree" @click="changes" style="transform:scale(0.7)" />
         <text @click="goDistributeAgreement">同意
           <text class="checkq">{{pro.dis_config.Distribute_AgreementTitle}}</text>
         </text>
       </view>
-      
+
       <view @click="application" class="submits">
         {{textShen}}
         <!--				立即申请成为分销商-->
       </view>
     </block>
-    
+
     <block v-else>
       <block v-if="pro.dis_config.Level_Form">
         <view class="center" v-if="pro.dis_config.Reserve_DisplayName==1">
@@ -146,7 +146,7 @@
         立即购买成为{{commi_rename.commi}}
       </view>
     </block>
-    
+
     <popup-layer :direction="'top'" ref="popupLayer">
       <div class="iMbx">
         <div :key="index" @click="chooseType(index)" class="c_method" v-for="(item,index) in initData.pay_arr">
@@ -172,7 +172,7 @@ import { confirm, error, toast } from '../../common'
 export default {
   mixins: [pageMixin],
   components: {
-    popupLayer,
+    popupLayer
   },
   data () {
     return {
@@ -186,7 +186,7 @@ export default {
       pro: {
         dis_level: [{}],
         dis_config: {},
-        Dis_Agreement_btn: {},
+        Dis_Agreement_btn: {}
       },
       change_objectMultiArray: [], // 选择数据
       address_info: {},
@@ -199,7 +199,7 @@ export default {
       t_index: 0,
       shenArr: {
         DisplayName: '',
-        DisplayTelephone: '',
+        DisplayTelephone: ''
       },
       forIndex: 0,
       select_lists: '', // 填写下拉选
@@ -213,7 +213,7 @@ export default {
       JSSDK_INIT: false,
       pay_type: '', // 支付方式
       pay_money: 0, // 支付金额
-      level_id: '',
+      level_id: ''
     }
   },
   computed: {
@@ -223,7 +223,7 @@ export default {
       }
       return ''
     },
-    ...mapGetters(['initData', 'userInfo', 'commi_rename']),
+    ...mapGetters(['initData', 'userInfo', 'commi_rename'])
   },
   onLoad (options) {
     this.level_id = options.id
@@ -234,12 +234,12 @@ export default {
     this.objectMultiArray = [
       utils.array_change(area.area[0]['0']),
       utils.array_change(area.area[0]['0,1']),
-      utils.array_change(area.area[0]['0,1,35']),
+      utils.array_change(area.area[0]['0,1,35'])
     ]
     this.change_objectMultiArray = [
       utils.array_change(area.area[0]['0']),
       utils.array_change(area.area[0]['0,1']),
-      utils.array_change(area.area[0]['0,1,35']),
+      utils.array_change(area.area[0]['0,1,35'])
     ]
     // 获取支付方式
     const initData = this.getInitData()
@@ -251,13 +251,13 @@ export default {
       uni.showToast({
         title: err.msg ? err.msg : '支付失败',
         icon: 'none',
-        duration: 2000,
+        duration: 2000
       })
     },
     // 查看须知
     goDistributeAgreement () {
       uni.navigateTo({
-        url: '/pagesA/fenxiao/distributeAgreement',
+        url: '/pagesA/fenxiao/distributeAgreement'
       })
     },
     // 取消输入支付密码
@@ -290,10 +290,10 @@ export default {
             title: '提示',
             content: '该操作需要设置支付密码,是否前往设置?',
             confirmText: '去设置',
-            cancelText: '暂不设置',
+            cancelText: '暂不设置'
           }).then(res => {
             uni.navigateTo({
-              url: '/pagesA/person/updateUserPsw?type=1&is_back=1',
+              url: '/pagesA/person/updateUserPsw?type=1&is_back=1'
             })
           }).catch(err => {
             error('请选择其他支付方式')
@@ -327,12 +327,12 @@ export default {
             if (res.confirm) {
               toast('成为经销商')
               uni.switchTab({
-                url: '/pages/fenxiao/fenxiao',
+                url: '/pages/fenxiao/fenxiao'
               })
             } else if (res.cancel) {
 
             }
-          },
+          }
         })
         return
       }
@@ -356,13 +356,13 @@ export default {
       // #endif
       toast('成为经销商')
       uni.switchTab({
-        url: '/pages/fenxiao/fenxiao',
+        url: '/pages/fenxiao/fenxiao'
       })
     },
     // 购买提交信息
     async disBuy () {
       let data = {
-        buy_info: {},
+        buy_info: {}
       }
       data.pay_type = this.pay_type
       if (this.pro.dis_config.Level_Form) {
@@ -402,7 +402,7 @@ export default {
             success: function (loginRes) {
               _that.code = loginRes.code
               resolve()
-            },
+            }
           })
         })
       }
@@ -432,7 +432,7 @@ export default {
           data = {
             ...ls.get('temp_order_info'),
             code: isHasCode,
-            pay_type: 'wx_mp',
+            pay_type: 'wx_mp'
           }
         } else {
           // 存上临时的数据
@@ -459,11 +459,11 @@ export default {
         }, err => {
           uni.showToast({
             title: res.msg,
-            icon: 'none',
+            icon: 'none'
           })
           setTimeout(function () {
             uni.switchTab({
-              url: '/pages/fenxiao/fenxiao',
+              url: '/pages/fenxiao/fenxiao'
             })
           }, 2000)
         }).catch(e => {
@@ -471,13 +471,13 @@ export default {
       } else {
         disBuy(data, {
           tip: '正在加载中',
-          mask: true,
+          mask: true
         }).then(res => {
           unipayFunc(this, this.pay_type, res)
         }, err => {
           uni.showToast({
             title: res.msg,
-            icon: 'none',
+            icon: 'none'
           })
         }).catch(e => {
         })
@@ -519,7 +519,7 @@ export default {
         if (this.pro.dis_config.Reserve_DisplayName == 1 && this.shenArr.DisplayName == '') {
           uni.showToast({
             title: '姓名不能为空',
-            icon: 'none',
+            icon: 'none'
           })
           arr = false
           return
@@ -527,14 +527,14 @@ export default {
           if (this.pro.dis_configReserve_DisplayTelephone == 1 && this.shenArr.DisplayTelephone == '') {
             uni.showToast({
               title: '电话不能为空',
-              icon: 'none',
+              icon: 'none'
             })
             arr = false
             return
           } else if (this.pro.dis_config.Reserve_DisplayTelephone == 1 && !(/^1[3456789]\d{9}$/.test(this.shenArr.DisplayTelephone))) {
             uni.showToast({
               title: '手机号输入错误，请重新输入',
-              icon: 'none',
+              icon: 'none'
             })
             arr = false
             return
@@ -545,7 +545,7 @@ export default {
                 if (item.Value == '') {
                   uni.showToast({
                     title: item.Name + '不能为空',
-                    icon: 'none',
+                    icon: 'none'
                   })
                   arr = false
                   return
@@ -559,7 +559,7 @@ export default {
         if (!this.isAgree) {
           uni.showToast({
             title: '未同意须知',
-            icon: 'none',
+            icon: 'none'
           })
           return
         }
@@ -571,20 +571,20 @@ export default {
     // 跳转商品详情
     goDetail (item) {
       uni.navigateTo({
-        url: '/pages/detail/detail?Products_ID=' + item,
+        url: '/pages/detail/detail?Products_ID=' + item
       })
     },
     // 跳转去列表页
     goResult () {
       uni.navigateTo({
-        url: '/paegs/classify/result',
+        url: '/paegs/classify/result'
       })
     },
     application () {
       if (this.submitM) {
         uni.showToast({
           title: '当前不可申请',
-          icon: 'none',
+          icon: 'none'
         })
         return
       }
@@ -597,7 +597,7 @@ export default {
           if (item.Value == '') {
             uni.showToast({
               title: item.Name + '不能为空',
-              icon: 'none',
+              icon: 'none'
             })
             arr = false
             return
@@ -609,7 +609,7 @@ export default {
         if (JSON.stringify(this.address_info) == '{}') {
           uni.showToast({
             title: '地址不能为空',
-            icon: 'none',
+            icon: 'none'
           })
           arr = false
           return
@@ -620,7 +620,7 @@ export default {
         if (!this.isAgree) {
           uni.showToast({
             title: '未同意须知',
-            icon: 'none',
+            icon: 'none'
           })
           arr = false
           return
@@ -653,16 +653,16 @@ export default {
 
         disApply({
           apply_info: JSON.stringify(apply_info),
-          apply_level_id: this.level_id,
+          apply_level_id: this.level_id
         }).then(res => {
           uni.showToast({
             title: res.msg,
-            icon: 'none',
+            icon: 'none'
           })
           this.submitM = true
           setTimeout(function () {
             uni.navigateBack({
-              delta: 1,
+              delta: 1
             })
             // uni.redirectTo({
             // 	url:'/pages/fenxiao/distributorLevel'
@@ -677,7 +677,7 @@ export default {
         this.isXu = true
         uni.showToast({
           title: '请勾选同意购买须知',
-          icon: 'none',
+          icon: 'none'
         })
       }
     },
@@ -690,7 +690,7 @@ export default {
         if (!(/^1[3456789]\d{9}$/.test(this.shenArr.DisplayTelephone))) {
           uni.showToast({
             title: '手机号输入错误，请重新输入',
-            icon: 'none',
+            icon: 'none'
           })
         }
       }
@@ -709,7 +709,7 @@ export default {
           for (var j in res.data[i]) {
             t_arr.push({
               id: j,
-              name: res.data[i][j],
+              name: res.data[i][j]
             })
             if (j == this.address_info.Address_Town) {
               t_index = idx
@@ -732,7 +732,7 @@ export default {
       this.change_objectMultiArray = [
         p_arr,
         c_arr,
-        a_arr,
+        a_arr
       ]
       this.change_multiIndex = columnValue
     },
@@ -745,7 +745,7 @@ export default {
       var columnValue = [
         column == 0 ? index : this.change_multiIndex[0],
         column == 0 ? 0 : (column == 1 ? index : this.change_multiIndex[1]),
-        column == 0 || column == 1 ? 0 : index,
+        column == 0 || column == 1 ? 0 : index
       ]
       this.addressChange(columnValue)
     },
@@ -777,10 +777,10 @@ export default {
         // && login_methods[i].state ??状态呢？
         if (i != 'component_appid' && login_methods[i].state) {
           channel = ['wx_mp'].indexOf(login_methods[i].type) === -1 ? {
-            ...login_methods[i],
+            ...login_methods[i]
           } : {
             ...login_methods[i],
-            component_appid,
+            component_appid
           }
           break
         }
@@ -796,7 +796,7 @@ export default {
         origin,
         pathname,
         search,
-        hash,
+        hash
       } = window.location
       const strArr = []
       if (search.indexOf('code') != -1) {
@@ -879,7 +879,7 @@ export default {
           payConf = {
             ...ls.get('temp_order_info'),
             code: isHasCode,
-            pay_type: 'wx_mp',
+            pay_type: 'wx_mp'
           }
 
           ls.set('isUseCode', isHasCode)
@@ -905,7 +905,7 @@ export default {
           success: function (loginRes) {
             payConf.code = loginRes.code
             resolve()
-          },
+          }
         })
       })
       // #endif
@@ -980,14 +980,14 @@ export default {
                   utils.array_change(area.area[0]['0']),
                   utils.array_change(area.area[0]['0,' + myInfo[item].pro_id]),
                   utils.array_change(area.area[0]['0,' + myInfo[item].pro_id + ',' + myInfo[item].city_id]),
-                  utils.array_change(area.area[0]['0,' + myInfo[item].pro_id + ',' + myInfo[item].city_id] + ',' + myInfo[item].town_id),
+                  utils.array_change(area.area[0]['0,' + myInfo[item].pro_id + ',' + myInfo[item].city_id] + ',' + myInfo[item].town_id)
                 ]
                 // 设置初始显示列
                 const multiIndex = [
                   utils.get_arr_index(objectMultiArray[0], myInfo[item].pro_id),
                   utils.get_arr_index(objectMultiArray[1], myInfo[item].city_id),
                   utils.get_arr_index(objectMultiArray[2], myInfo[item].area_id),
-                  utils.get_arr_index(objectMultiArray[3], myInfo[item].town_id),
+                  utils.get_arr_index(objectMultiArray[3], myInfo[item].town_id)
                 ]
                 this.objectMultiArray = objectMultiArray
                 this.multiIndex = multiIndex
@@ -1053,7 +1053,7 @@ export default {
     },
     changes () {
       this.isAgree = !this.isAgree
-    },
+    }
   },
   async created () {
     // #ifdef H5
@@ -1069,9 +1069,9 @@ export default {
 
     const initData = await this.getInitData()
     uni.setNavigationBarTitle({
-      title: initData.commi_rename.commi + '信息',
+      title: initData.commi_rename.commi + '信息'
     })
-  },
+  }
 }
 </script>
 
@@ -1079,34 +1079,34 @@ export default {
   view {
     box-sizing: border-box;
   }
-  
+
   .titleImg {
     width: 750rpx;
     height: 330rpx;
     margin-bottom: 25rpx;
-    
+
     .image {
       width: 100%;
       height: 100%;
     }
   }
-  
+
   .fenxiao {
     margin-top: 30rpx;
     margin-left: 20rpx;
     font-size: 30rpx;
-    
+
     .textq {
       font-size: 24rpx;
       color: #666666;
-      
+
       .textw {
         font-size: 28rpx;
         color: #F43131;
       }
     }
   }
-  
+
   .isFenxiao {
     width: 620rpx;
     height: 80rpx;
@@ -1119,14 +1119,14 @@ export default {
     line-height: 80rpx;
     text-align: center;
   }
-  
+
   .line {
     width: 750rpx;
     height: 20rpx;
     background: rgba(248, 248, 248, 1);
     margin-top: 30rpx;
   }
-  
+
   .pro {
     width: 750rpx;
     padding: 30rpx 20rpx;
@@ -1136,20 +1136,20 @@ export default {
     margin-top: 50rpx;
     padding-top: 0rpx;
     padding-bottom: 0rpx;
-    
+
     .forOf {
       width: 345rpx;
-      
+
       .imgs {
         width: 345rpx;
         height: 345rpx;
-        
+
         .image {
           width: 100%;
           height: 100%;
         }
       }
-      
+
       .text {
         margin: 17rpx 15rpx 20rpx 11rpx;
         width: 319rpx;
@@ -1168,30 +1168,30 @@ export default {
       }
     }
   }
-  
+
   .prices {
     color: #F43131;
     font-size: 24rpx;
     margin-left: 15rpx;
     margin-bottom: 37rpx;
-    
+
     text {
       font-size: 34rpx;
       font-weight: bold;
     }
   }
-  
+
   .titleImg {
     width: 750rpx;
     height: 330rpx;
     margin-bottom: 25rpx;
-    
+
     .image {
       width: 100%;
       height: 100%;
     }
   }
-  
+
   .center {
     height: 98rpx;
     width: 710rpx;
@@ -1199,19 +1199,19 @@ export default {
     border-bottom: 1rpx solid #E7E7E7;
     display: flex;
     align-items: center;
-    
+
     .mbx {
       width: 140rpx;
       font-size: 30rpx;
       color: #333333;
     }
-    
+
     .inputa {
       width: 600rpx;
       font-size: 28rpx;
     }
   }
-  
+
   .checks {
     font-size: 20rpx;
     color: #333333;
@@ -1219,7 +1219,7 @@ export default {
     align-items: center;
     margin-left: 4rpx;
   }
-  
+
   .disHaihong {
     font-size: 30rpx;
     height: 60rpx;
@@ -1228,12 +1228,12 @@ export default {
     margin-top: 10px;
     margin-bottom: 10px;
   }
-  
+
   .checkq {
     color: #69A1FF;
     margin-left: 10rpx;
   }
-  
+
   .submits {
     width: 620rpx;
     height: 80rpx;
@@ -1247,7 +1247,7 @@ export default {
     margin-top: 40rpx;
     margin-bottom: 120rpx;
   }
-  
+
   .qwe {
     width: 750rpx;
     height: 100rpx;
@@ -1259,30 +1259,30 @@ export default {
     align-items: center;
     padding-left: 20rpx;
     padding-right: 24rpx;
-    
+
     .imgs {
       width: 68rpx;
       height: 68rpx;
       border-radius: 50%;
-      
+
       .image {
         width: 100%;
         height: 100%;
       }
     }
-    
+
     .nickName {
       font-size: 30rpx;
       color: #FFFFFF;
       margin-left: 16rpx;
     }
-    
+
     .liji {
       margin-left: 113rpx;
       font-size: 22rpx;
       color: #FFFFFF;
     }
-    
+
     .hahas {
       width: 140rpx;
       height: 50rpx;
@@ -1297,7 +1297,7 @@ export default {
       line-height: 50rpx;
     }
   }
-  
+
   .picker view {
     width: 160rpx;
     font-size: 28rpx;
@@ -1306,25 +1306,25 @@ export default {
     margin-right: 10rpx;
     overflow: hidden;
   }
-  
+
   .picker {
     display: flex;
-    
+
     .quyu {
       width: 120rpx;
     }
   }
-  
+
   view.haha {
     font-size: 30rpx;
     color: #333333;
     margin-right: 42rpx;
   }
-  
+
   .disConfig {
     padding-bottom: 50rpx;
   }
-  
+
   .uni-list-cell {
     display: flex;
     align-items: center;
@@ -1334,40 +1334,40 @@ export default {
     padding-top: 38rpx;
     margin-left: 20rpx;
     width: 710rpx;
-    
+
     &:last-child {
       padding-bottom: 30rpx;
       border-bottom: 1rpx solid #E7E7E7;
     }
   }
-  
+
   .iMbx {
     text-align: center;
     padding: 0 20rpx;
     font-size: 28rpx;
     color: #333;
-    
+
     .c_method {
       padding: 37rpx 0;
       border-bottom: 2rpx solid #E6E6E6;
     }
-    
+
     & .c_method:first-child {
       color: #F43131;
     }
-    
+
     & .c_method:nth-last-child(1) {
       border: none;
     }
   }
-  
+
   // .zhezhao {
   // 		position: fixed;
   // 		width: 100%;
   // 		height: 100%;
   // 		background: rgba($color: #000000, $alpha: 0.3);
   // 		z-index: 1000;
-  
+
   // 		.input-wrap {
   // 			background: #fff;
   // 			color: #000;
@@ -1377,23 +1377,23 @@ export default {
   // 			padding: 40px 50upx;
   // 			box-sizing: border-box;
   // 			font-size: 28upx;
-  
+
   // 			.inputpass {
   // 				margin: 40upx 0;
   // 				border: 1px solid #efefef;
   // 			}
-  
+
   // 			.btns {
   // 				display: flex;
   // 				justify-content: space-around;
-  
+
   // 				.btn {
   // 					flex: 1;
   // 				}
   // 			}
   // 		}
   // 	}
-  
+
   .zhezhao {
     left: 0;
     top: 0;
@@ -1402,7 +1402,7 @@ export default {
     height: 100%;
     background: rgba(0, 0, 0, .3);
     z-index: 1000;
-    
+
     .input-wrap {
       background: #fff;
       color: #000;
@@ -1413,7 +1413,7 @@ export default {
       box-sizing: border-box;
       font-size: 28rpx;
       border-radius: 10rpx;
-      
+
       .input {
         margin: 40rpx 0;
         border: 1px solid #efefef;
@@ -1421,20 +1421,20 @@ export default {
         line-height: 20px;
         padding: 10px 0px;
       }
-      
+
       .btns {
         display: flex;
         justify-content: space-around;
         height: 60rpx;
         line-height: 60rpx;
-        
+
         .btn {
           flex: 1;
         }
       }
     }
   }
-  
+
   .disMy {
     display: flex;
     align-items: center;
@@ -1442,7 +1442,7 @@ export default {
     width: 100%;
     margin-right: 0px !important;
   }
-  
+
   .disMyImg {
     width: 9px;
     height: 14px;

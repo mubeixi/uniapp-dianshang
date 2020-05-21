@@ -21,11 +21,11 @@ export default {
   mixins: [pageMixin],
   data () {
     return {
-      info: {},
+      info: {}
     }
   },
   computed: {
-    ...mapGetters(['initData']),
+    ...mapGetters(['initData'])
   },
   methods: {
     domainFunc (url) {
@@ -35,9 +35,9 @@ export default {
       uni.previewImage({
         urls: [this.info.img_url],
         indicator: 'default',
-        current: 0,
+        current: 0
       })
-    },
+    }
   },
   created () {
     this.info = ls.get('temp_sharepic_info')
@@ -45,19 +45,19 @@ export default {
     uni.showToast({
       position: 'top',
       icon: 'none',
-      title: '点击图片后,长按保存',
+      title: '点击图片后,长按保存'
     })
-  },
+  }
 }
 </script>
 
 <style lang="less" scoped>
   @import "../../../assets/css/app.less";
-  
+
   .wrap {
-    padding: 20 rpx;
+    padding: 20rpx;
     position: relative;
-    
+
     .bg {
       position: fixed;
       top: 0;
@@ -68,34 +68,34 @@ export default {
       .cover-full-bg(cover, 0, #f2f2f2);
       //background-image: url("");
     }
-    
+
     .moneybox {
       position: relative;
       z-index: 2;
-      height: 180 rpx;
-      line-height: 180 rpx;
+      height: 180rpx;
+      line-height: 180rpx;
       text-align: center;
       color: #555;
       border-radius: 6px;
       overflow: hidden;
       .cover-full-bg(contain, 0, #f2f2f2);
       background-image: url("/static/moneybox.png");
-      
+
       .money {
         color: #f43838;
         font-size: 18px;
       }
     }
-    
+
     .imgbox {
       position: relative;
       z-index: 2;
-      margin-top: 40 rpx;
-      
+      margin-top: 40rpx;
+
       .img {
-        width: 710 rpx;
-        height: 1100 rpx;
-        
+        width: 710rpx;
+        height: 1100rpx;
+
       }
     }
   }

@@ -41,11 +41,11 @@
       <div @click="startFn" class="item">
         <div class="goods start-btn">
           {{getStartTip}}
-        
+
         </div>
         <div class="mask start-btn-mask"></div>
       </div>
-      
+
       <div class="item" style="margin-right: 0">
         <div :style="{backgroundColor:getStyle(3)}" class="goods">
           <div class="picbox">
@@ -82,21 +82,21 @@
         </div>
         <div :style="{backgroundColor:getStyle(4,1)}" class="mask"></div>
       </div>
-    
+
     </div>
-    
+
     <div class="num-count">
       <image :src="'/static/marketing/num_count.png'|domain" class="num-count-img" />
       <div class=" text font14">今日剩余抽奖次数<span class="font16 danger-color" style="">{{day_count}}</span>次,总剩余抽奖次数<span
       class="font16 danger-color" style="">{{total_count}}</span>次
       </div>
     </div>
-    
+
     <div class="reward-list">
       <span @click="showRewardList">我的中奖记录</span>
       <span @click="goPerson" style="margin-left: 10px;">个人中心</span>
     </div>
-    
+
     <div class="tip-box">
       <div class="title">抽奖规则</div>
       <div style="color: white">
@@ -105,7 +105,7 @@
         </text>
       </div>
     </div>
-    
+
     <wzw-dialog bgColor="rgba(0,0,0,.7)" mainBgColor="none" positions="top" ref="record">
       <div class="record-container">
         <div class="top">
@@ -123,14 +123,14 @@
               </div>
             </scroll-view>
           </div>
-        
+
         </div>
         <div @click="cancelRecordDialog" class="btn-box">
           <image :src="'/static/client/marketing/close-btn.png'|domain" class="close" />
         </div>
       </div>
     </wzw-dialog>
-    
+
     <wzw-dialog bgColor="rgba(0,0,0,.7)" mainBgColor="none" ref="result">
       <div @click="cancelDialog" class="result-container">
         <div class="top">
@@ -140,13 +140,13 @@
             <div class="text-row reward">{{result_tip}}</div>
           </div>
         </div>
-        
+
         <div @click="cancelDialog" class="btn-box">
           <image :src="'/static/client/marketing/close-btn.png'|domain" class="close" />
         </div>
       </div>
     </wzw-dialog>
-  
+
   </view>
 </template>
 
@@ -167,7 +167,7 @@ export default {
   name: 'Rotate',
   mixins: [pageMixin],
   components: {
-    uParse,
+    uParse
   },
   data () {
     return {
@@ -181,7 +181,7 @@ export default {
       tipText: '',
       img_url: '',
       result_tip: '',
-      record_list: [],
+      record_list: []
     }
   },
 
@@ -189,14 +189,14 @@ export default {
 
     goPerson () {
       uni.switchTab({
-        url: '/pages/person/person',
+        url: '/pages/person/person'
       })
     },
     async showRewardList () {
       this.$refs.record.show()
       getRotateRecord({
         id: this.activity_id,
-        pageSize: 999,
+        pageSize: 999
       }, { tip: '获取中' }).then(res => {
         this.record_list = res.data
       })
@@ -224,7 +224,7 @@ export default {
         confirm({
           title: '提示',
           content: error.message,
-          showCancel: false,
+          showCancel: false
         }).then(() => {
           goBack()
         }).catch(() => {
@@ -313,7 +313,7 @@ export default {
 
     getTextStyle (idx) {
       if (idx == this.activeIdx) return '#fff'
-    },
+    }
   },
   computed: {
     getStartTip () {
@@ -328,7 +328,7 @@ export default {
       } catch (e) {
         return -1
       }
-    },
+    }
   },
   filters: {},
   onLoad (options) {
@@ -350,21 +350,21 @@ export default {
     // rotateInstance.setCallFn(this.showResult)
     // this.itemList = rotateInstance.getItemList()
     // rotateInstance.start()
-  },
+  }
 
 }
 </script>
 
 <style lang="scss" scoped>
   .record-container {
-    
+
     .top {
       position: relative;
       text-align: center;
       width: 656rpx;
       height: 902rpx;
       margin: 0 auto;
-      
+
       .record-bg {
         position: absolute;
         width: 656rpx;
@@ -373,46 +373,46 @@ export default {
         left: 0;
         z-index: 1;
       }
-      
+
       .record-box {
         position: relative;
         z-index: 4;
         padding: 130rpx 30rpx;
       }
-      
+
       .title {
         margin: 30rpx 0;
         color: #e84428;
         position: relative;
         z-index: 4;
       }
-      
+
       .table {
         font-size: 14px;
         height: 540rpx;
         overflow-y: scroll;
         overflow-x: hidden;
-        
+
         .tr {
           height: 60rpx;
           line-height: 60rpx;
           display: flex;
-          
+
           .td {
             text-align: center;
           }
-          
+
           .th {
             text-align: center;
             background: #fff1ee;
             color: #333333;
           }
-          
+
           .time {
             width: 200rpx;
             color: #666;
           }
-          
+
           .prize {
             color: #666;
             flex: 1;
@@ -422,22 +422,22 @@ export default {
           }
         }
       }
-      
+
     }
-    
+
     .btn-box {
       text-align: center;
       margin-top: 30rpx;
-      
+
       .close {
         width: 70rpx;
         height: 70rpx;
         margin: 0 auto;
       }
     }
-    
+
   }
-  
+
   .reward-list {
     right: 70rpx;
     text-align: right;
@@ -448,7 +448,7 @@ export default {
     text-decoration: underline;
     color: white;
   }
-  
+
   .tip-box {
     width: 650rpx;
     position: absolute;
@@ -456,20 +456,20 @@ export default {
     left: 50rpx;
     overflow: hidden;
     padding-bottom: 30px;
-    
+
     .title {
       color: #FFD800;
       margin-bottom: 10px;
     }
   }
-  
+
   .num-count {
     width: 660rpx;
     height: 90rpx;
     position: absolute;
     top: 1163rpx;
     left: 45rpx;
-    
+
     .text {
       position: absolute;
       width: 660rpx;
@@ -479,25 +479,25 @@ export default {
       z-index: 3;
       color: #925507;
     }
-    
+
     .num-count-img {
       position: absolute;
       left: 0;
       top: 0;
       width: 660rpx;
       height: 90rpx;
-      
+
     }
   }
-  
+
   .result-container {
-    
+
     .top {
       position: relative;
       text-align: center;
       width: 750rpx;
       padding-top: 580rpx;
-      
+
       .result-bg {
         position: absolute;
         width: 750rpx;
@@ -506,7 +506,7 @@ export default {
         top: 0;
         z-index: 1;
       }
-      
+
       .text {
         position: absolute;
         z-index: 3;
@@ -514,14 +514,14 @@ export default {
         text-align: center;
         top: 240rpx;
         left: 0;
-        
+
         .text-row {
           color: #FF0000;
           /*width: 228rpx;*/
           /*margin: 0 auto;*/
           text-align: center;
           line-height: 1.4;
-          
+
           &.reward {
             width: 260rpx;
             margin: 0 auto;
@@ -532,27 +532,27 @@ export default {
             overflow: hidden;
             word-wrap: break-word;
           }
-          
+
         }
       }
-      
+
     }
-    
+
     .btn-box {
       text-align: center;
       margin-top: 60rpx;
-      
+
       .close {
         width: 70rpx;
         height: 70rpx;
         margin: 0 auto;
       }
     }
-    
+
   }
-  
+
   .wrap {
-    
+
     background: #ef1828;
     height: 100vh;
     box-sizing: border-box;
@@ -561,12 +561,12 @@ export default {
     position: absolute;
     width: 750rpx;
   }
-  
+
   .bgimg {
     width: 750rpx;
     height: 1434rpx;
   }
-  
+
   .rotate-box {
     width: 460rpx;
     height: 460rpx;
@@ -583,7 +583,7 @@ export default {
     overflow: hidden;
     padding: 10rpx;
     box-sizing: border-box;
-    
+
     .item {
       width: 140rpx;
       height: 140rpx;
@@ -592,7 +592,7 @@ export default {
       margin-right: 10rpx;
       margin-bottom: 10rpx;
       position: relative;
-      
+
       .start-btn {
         height: 130rpx;
         line-height: 130rpx;
@@ -601,11 +601,11 @@ export default {
         background: #FFD800 !important;
         color: #AB6102;
       }
-      
+
       .start-btn-mask {
         background: #FFB001 !important;
       }
-      
+
       .goods {
         z-index: 3;
         position: absolute;
@@ -616,7 +616,7 @@ export default {
         background: #FFEBEB;
         border-radius: 10rpx;
       }
-      
+
       .mask {
         z-index: 2;
         width: 140rpx;
@@ -628,7 +628,7 @@ export default {
         background: #FFC2C8;
         border-radius: 10rpx;
       }
-      
+
       .picbox {
         width: 70rpx;
         height: 70rpx;
@@ -636,7 +636,7 @@ export default {
         overflow: hidden;
         position: relative;
       }
-      
+
       .pic {
         position: absolute;
         width: 70rpx;
@@ -646,7 +646,7 @@ export default {
         top: 50%;
         transform: translate(-50%, -50%);
       }
-      
+
       .name {
         margin: 10rpx auto 0;
         height: 40rpx;
@@ -658,7 +658,7 @@ export default {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        
+
         &.active {
           color: #AB6102;
         }

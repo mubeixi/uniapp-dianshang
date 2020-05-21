@@ -22,7 +22,7 @@
         </view>
         <view class="zhangValue">
           <view :style="{width:(pro.growth_value/pro.upper_growth)*100+'%'}" class="view">
-          
+
           </view>
         </view>
         <view class="myValue" v-if="pro.growth_value">
@@ -48,10 +48,10 @@
       </view>
     </view>
     <view style="height: 20rpx;width: 100%;background-color: #F8F8F8;">
-    
+
     </view>
     <circleTitle title="如何升级"></circleTitle>
-    
+
     <view class="ruhe">
       <view :key="ind" class="td" v-for="(it,ind) of pro.obtain">
         <image :src="it.img_url" class="image"></image>
@@ -63,7 +63,7 @@
             {{it.desc}}
           </view>
         </view>
-        
+
         <view @click="yulan(it)" class="submit" v-if="it.done==0&&ind=='focus'">
           去完成
         </view>
@@ -89,14 +89,14 @@ export default {
   mixins: [pageMixin],
   data () {
     return {
-      pro: [],
+      pro: []
     }
   },
   components: {
-    circleTitle,
+    circleTitle
   },
   computed: {
-    ...mapGetters(['initData']),
+    ...mapGetters(['initData'])
   },
   onShow () {
     this.getTaskCenter()
@@ -109,7 +109,7 @@ export default {
         uni.previewImage({
           urls: arr,
           indicator: 'default',
-          current: 1,
+          current: 1
         })
       } else {
         this.goJump(item)
@@ -124,18 +124,18 @@ export default {
     goJump (item) {
       if (item.cu) {
         uni.switchTab({
-          url: item.jump_url,
+          url: item.jump_url
         })
       } else {
         uni.navigateTo({
-          url: item.jump_url,
+          url: item.jump_url
         })
       }
     },
     goBack () {
       goBack()
-    },
-  },
+    }
+  }
 }
 </script>
 
@@ -144,28 +144,28 @@ export default {
     min-height: 100vh;
     background-color: #FFFFFF !important;
   }
-  
+
   .top {
     width: 750rpx;
     height: 404rpx;
     position: relative;
-    
+
     .widthTen {
       width: 100%;
       height: 100%;
     }
-    
+
     .goBack {
       width: 20rpx;
       height: 30rpx;
-      
+
       position: absolute;
       top: 30rpx;
       left: 20rpx;
     }
-    
+
     .titles {
-      
+
       color: #FFFFFF;
       font-size: 32rpx;
       position: absolute;
@@ -174,14 +174,14 @@ export default {
       height: 31rpx;
       line-height: 31rpx;
     }
-    
+
     .center {
       width: 727rpx;
       height: 344rpx;
       position: absolute;
       left: 12rpx;
       top: 110rpx;
-      
+
       .info {
         width: 93rpx;
         height: 92rpx;
@@ -191,7 +191,7 @@ export default {
         top: 64rpx;
         border-radius: 50%;
       }
-      
+
       .nickName {
         height: 29rpx;
         line-height: 29rpx;
@@ -202,7 +202,7 @@ export default {
         top: 74rpx;
         left: 165rpx;
       }
-      
+
       .vip {
         width: 121rpx;
         height: 35rpx;
@@ -215,14 +215,14 @@ export default {
         font-size: 20rpx;
         color: #FFFFFF;
         text-align: center;
-        
+
         .image {
           width: 10rpx;
           height: 17rpx;
           margin-left: 6rpx;
         }
       }
-      
+
       .zhangValue {
         width: 138rpx;
         height: 10rpx;
@@ -231,13 +231,13 @@ export default {
         position: absolute;
         top: 115rpx;
         left: 302rpx;
-        
+
         .view {
           background-color: #FFFFFF;
           height: 10rpx;
         }
       }
-      
+
       .myValue {
         height: 17rpx;
         line-height: 17rpx;
@@ -248,7 +248,7 @@ export default {
         top: 134rpx;
         left: 304rpx;
       }
-      
+
       .shengji {
         //width:38rpx;
         height: 22rpx;
@@ -264,7 +264,7 @@ export default {
         padding-left: 4px;
         padding-right: 4px;
       }
-      
+
       .numberValue {
         height: 32rpx;
         font-size: 42rpx;
@@ -275,7 +275,7 @@ export default {
         top: 196rpx;
         left: 63rpx;
       }
-      
+
       .valueM {
         height: 20rpx;
         font-size: 20rpx;
@@ -285,7 +285,7 @@ export default {
         position: absolute;
         top: 240rpx;
         left: 61rpx;
-        
+
         .image {
           width: 8rpx;
           height: 12rpx;
@@ -294,12 +294,12 @@ export default {
       }
     }
   }
-  
+
   .myPrivilege {
     margin: 0 auto;
     width: 710rpx;
     margin-bottom: 30rpx;
-    
+
     .view {
       font-size: 24rpx;
       color: #666666;
@@ -307,7 +307,7 @@ export default {
       line-height: 50rpx;
     }
   }
-  
+
   .ruhe {
     width: 710rpx;
     background: rgba(255, 255, 255, 1);
@@ -315,7 +315,7 @@ export default {
     border-radius: 10rpx;
     margin: 0 auto;
     margin-top: 10rpx;
-    
+
     .td {
       width: 690rpx;
       margin: 0 auto;
@@ -323,21 +323,21 @@ export default {
       border-bottom: 1rpx solid #ECE8E8;
       display: flex;
       align-items: center;
-      
+
       &:last-child {
         border-bottom: 0rpx;
       }
-      
+
       .image {
         width: 65rpx;
         height: 65rpx;
         margin-left: 21rpx;
       }
-      
+
       .mbx {
         height: 65rpx;
         margin-left: 24rpx;
-        
+
         .tops {
           height: 27rpx;
           line-height: 27rpx;
@@ -345,7 +345,7 @@ export default {
           font-weight: bold;
           font-size: 28rpx;
         }
-        
+
         .bottoms {
           margin-top: 15rpx;
           height: 23rpx;
@@ -354,7 +354,7 @@ export default {
           color: #999999;
         }
       }
-      
+
       .submit {
         width: 110rpx;
         height: 45rpx;
@@ -367,7 +367,7 @@ export default {
         margin-left: auto;
         margin-right: 20rpx;
       }
-      
+
       .submitMbx {
         background-color: #dedede !important;
       }

@@ -1,6 +1,6 @@
 <template>
   <view @click="commonClick" class="all">
-    
+
     <!-- <page-title  title="消息" bgcolor="#ffffff" class="titless"></page-title> -->
     <view style="height: 30rpx;"></view>
     <view :key="item" @click="readMsg(item,index)" class="centers" v-for="(item,index) of pro">
@@ -19,7 +19,7 @@
       <view class="times">
         {{item.Message_CreateTime}}
       </view>
-      
+
       <view :class="item.isShow?'':'trans'" class="msg">
         {{item.Message_Description}}
       </view>
@@ -40,7 +40,7 @@ export default {
   data () {
     return {
       height: 1000, //
-      pro: [],
+      pro: []
     }
   },
   onLoad () {
@@ -48,12 +48,12 @@ export default {
     uni.getSystemInfo({
       success: function (res) {
         that.height = res.screenHeight - 68
-      },
+      }
     })
     this.getUserMessage()
   },
   computed: {
-    ...mapGetters(['userInfo']),
+    ...mapGetters(['userInfo'])
   },
   methods: {
     readMsg (item, index) {
@@ -77,8 +77,8 @@ export default {
         this.pro = res.data
       }).catch(e => {
       })
-    },
-  },
+    }
+  }
 }
 </script>
 
@@ -90,7 +90,7 @@ export default {
     width: 750rpx;
     overflow-x: hidden;
   }
-  
+
   .centers {
     margin: 0 auto;
     width: 710rpx;
@@ -98,7 +98,7 @@ export default {
     border-radius: 20rpx;
     padding: 22rpx 28rpx 33rpx 25rpx;
     margin-bottom: 20rpx;
-    
+
     .tops {
       height: 29rpx;
       width: 100%;
@@ -109,23 +109,23 @@ export default {
       color: #222222;
       margin-bottom: 21rpx;
       position: relative;
-      
+
       .view {
         &:last-child {
           color: #F43131;
           font-size: 24rpx;
-          
+
           .image {
             position: absolute;
             top: 0rpx;
             right: 0rpx;
           }
-          
+
           .shou {
             width: 25rpx;
             height: 15rpx;
           }
-          
+
           .zhan {
             width: 15rpx;
             height: 25rpx;
@@ -133,7 +133,7 @@ export default {
         }
       }
     }
-    
+
     .times {
       height: 23rpx;
       font-size: 24rpx;
@@ -141,7 +141,7 @@ export default {
       line-height: 23rpx;
       margin-bottom: 17rpx;
     }
-    
+
     .msg {
       font-size: 24rpx;
       color: #777777;
@@ -153,13 +153,13 @@ export default {
       overflow: hidden;
       transition: max-height ease-out 0.2s;
     }
-    
+
     .trans {
       max-height: 500rpx;
       transition: max-height ease-in 0.2s;
     }
   }
-  
+
   .defaults {
     margin: 0 auto;
     width: 640rpx;

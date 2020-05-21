@@ -10,13 +10,13 @@
           <view></view>
         </view>
         <view :class="isNext?'lineW':''" class="lineQ">
-        
+
         </view>
         <view :class="isNext?'':'circleW'" class="circleQ">
           <view></view>
         </view>
         <view :class="isLast?'lineW':''" class="lineQ">
-        
+
         </view>
         <view :class="isLast?'':'circleW'" class="circleQ">
           <view></view>
@@ -60,7 +60,7 @@
             <view class="mbx">{{item.name}}</view>
           </view>
         </radio-group>
-      
+
       </view>
     </block>
     <block v-else>
@@ -89,7 +89,7 @@
             </view>
           </picker>
         </view>
-      
+
       </view>
       <view class="threes" v-if="current==3">
         <view class="haha">
@@ -106,7 +106,7 @@
         </view>
       </view>
     </block>
-    
+
     <block v-if="isLast">
       <view class="four">
         信息审核中
@@ -168,9 +168,9 @@ export default {
       t_index: 0,
       arr: {
         apply_name: '',
-        apply_mobile: '',
+        apply_mobile: ''
       },
-      isAgr: false,
+      isAgr: false
     }
   },
   onShow () {
@@ -181,25 +181,25 @@ export default {
     if (options.pro == 1) {
       this.items.push({
         name: '省级',
-        value: 'pro',
+        value: 'pro'
       })
     }
     if (options.cit == 1) {
       this.items.push({
         name: '市级',
-        value: 'cit',
+        value: 'cit'
       })
     }
     if (options.cou == 1) {
       this.items.push({
         name: '县/区',
-        value: 'cou',
+        value: 'cou'
       })
     }
     if (options.tow == 1) {
       this.items.push({
         name: '镇',
-        value: 'tow',
+        value: 'tow'
       })
     }
   },
@@ -208,7 +208,7 @@ export default {
       if (!(/^1[3456789]\d{9}$/.test(this.arr.apply_mobile))) {
         uni.showToast({
           title: '手机号输入错误，请重新输入',
-          icon: 'none',
+          icon: 'none'
         })
       }
     },
@@ -217,7 +217,7 @@ export default {
         this.isNext = false
       } else {
         uni.navigateTo({
-          url: '/pagesA/fenxiao/regionRecord?index=1',
+          url: '/pagesA/fenxiao/regionRecord?index=1'
         })
       }
     },
@@ -230,7 +230,7 @@ export default {
         if (JSON.stringify(this.address_info) == '{}') {
           uni.showToast({
             title: '请选择地区信息',
-            icon: 'none',
+            icon: 'none'
           })
         } else {
           const info = {}
@@ -252,7 +252,7 @@ export default {
             if (this.address_info.Address_Town == 0) {
               uni.showToast({
                 title: '请选择街道信息',
-                icon: 'none',
+                icon: 'none'
               })
               return
             }
@@ -267,11 +267,11 @@ export default {
             this.isLast = true
             this.isAgr = false
             uni.showToast({
-              title: res.msg,
+              title: res.msg
             })
             setTimeout(function () {
               uni.navigateTo({
-                url: '/pagesA/fenxiao/region',
+                url: '/pagesA/fenxiao/region'
               })
             }, 1000)
           }).catch(e => {
@@ -283,13 +283,13 @@ export default {
         if (!this.arr.apply_name) {
           uni.showToast({
             title: '请输入姓名',
-            icon: 'none',
+            icon: 'none'
           })
           return
         } else if (!(/^1[3456789]\d{9}$/.test(this.arr.apply_mobile))) {
           uni.showToast({
             title: '手机号输入错误，请重新输入',
-            icon: 'none',
+            icon: 'none'
           })
           return
         }
@@ -313,39 +313,39 @@ export default {
           this.objectMultiArray = [
             utils.array_change(area.area[0]['0']),
             utils.array_change(area.area[0]['0,1']),
-            utils.array_change(area.area[0]['0,1,35']),
+            utils.array_change(area.area[0]['0,1,35'])
           ]
           this.change_objectMultiArray = [
             utils.array_change(area.area[0]['0']),
             utils.array_change(area.area[0]['0,1']),
-            utils.array_change(area.area[0]['0,1,35']),
+            utils.array_change(area.area[0]['0,1,35'])
           ]
         } else if (this.current == 2) {
           this.objectMultiArray = [
             utils.array_change(area.area[0]['0']),
             utils.array_change(area.area[0]['0,1']),
-            utils.array_change(area.area[0]['0,1,35']),
+            utils.array_change(area.area[0]['0,1,35'])
           ]
           this.change_objectMultiArray = [
             utils.array_change(area.area[0]['0']),
             utils.array_change(area.area[0]['0,1']),
-            utils.array_change(area.area[0]['0,1,35']),
+            utils.array_change(area.area[0]['0,1,35'])
           ]
         } else if (this.current == 1) {
           this.objectMultiArray = [
             utils.array_change(area.area[0]['0']),
-            utils.array_change(area.area[0]['0,1']),
+            utils.array_change(area.area[0]['0,1'])
           ]
           this.change_objectMultiArray = [
             utils.array_change(area.area[0]['0']),
-            utils.array_change(area.area[0]['0,1']),
+            utils.array_change(area.area[0]['0,1'])
           ]
         } else {
           this.objectMultiArray = [
-            utils.array_change(area.area[0]['0']),
+            utils.array_change(area.area[0]['0'])
           ]
           this.change_objectMultiArray = [
-            utils.array_change(area.area[0]['0']),
+            utils.array_change(area.area[0]['0'])
           ]
         }
       }
@@ -364,7 +364,7 @@ export default {
           for (var j in res.data[i]) {
             t_arr.push({
               id: j,
-              name: res.data[i][j],
+              name: res.data[i][j]
             })
             if (j == this.address_info.Address_Town) {
               t_index = idx
@@ -391,18 +391,18 @@ export default {
       }
       if (this.current == 0) {
         this.change_objectMultiArray = [
-          p_arr,
+          p_arr
         ]
       } else if (this.current == 1) {
         this.change_objectMultiArray = [
           p_arr,
-          c_arr,
+          c_arr
         ]
       } else {
         this.change_objectMultiArray = [
           p_arr,
           c_arr,
-          a_arr,
+          a_arr
         ]
       }
 
@@ -417,7 +417,7 @@ export default {
       var columnValue = [
         column == 0 ? index : this.change_multiIndex[0],
         column == 0 ? 0 : (column == 1 ? index : this.change_multiIndex[1]),
-        column == 0 || column == 1 ? 0 : index,
+        column == 0 || column == 1 ? 0 : index
       ]
       this.addressChange(columnValue)
     },
@@ -450,8 +450,8 @@ export default {
           break
         }
       }
-    },
-  },
+    }
+  }
 }
 </script>
 
@@ -461,18 +461,18 @@ export default {
     background-color: #FFFFFF !important;
     min-height: 100vh;
   }
-  
+
   .top {
     width: 750rpx;
     padding: 50rpx 83rpx;
-    
+
     .first {
       padding-left: 33rpx;
       padding-right: 41rpxd;
       height: 30rpx;
       display: flex;
       align-items: center;
-      
+
       .circleQ {
         width: 30rpx;
         height: 30rpx;
@@ -481,7 +481,7 @@ export default {
         display: flex;
         align-items: center;
         justify-content: center;
-        
+
         view {
           width: 15rpx;
           height: 15rpx;
@@ -489,22 +489,22 @@ export default {
           border-radius: 50%;
         }
       }
-      
+
       .circleW {
         border: 1px solid #999999;
-        
+
         view {
           background-color: #999999;
         }
       }
-      
+
       .lineQ {
         width: 210rpx;
         height: 4rpx;
         background-color: #999999;
       }
     }
-    
+
     .second {
       margin-top: 21rpx;
       height: 25rpx;
@@ -512,21 +512,21 @@ export default {
       font-size: 26rpx;
       color: #999999;
       display: flex;
-      
+
       .secondQ {
         color: #F43131;
       }
-      
+
       .secondW {
         margin-left: 137rpx;
       }
-      
+
       .secondE {
         margin-left: 135rpx;
       }
     }
   }
-  
+
   .three {
     height: 88rpx;
     line-height: 88rpx;
@@ -535,38 +535,38 @@ export default {
     border-bottom: 1px solid #E7E7E7;
     display: flex;
     align-items: center;
-    
+
     .haha {
       font-size: 30rpx;
       color: #333333;
       margin-right: 42rpx;
     }
-    
+
     .inputs {
       height: 88rpx;
       line-height: 88rpx;
       font-size: 28rpx;
       color: #333333;
     }
-    
+
     .place {
       font-size: 28rpx;
       color: #CAC8C8;
     }
-    
+
     .myRadio {
       height: 88rpx;
       display: flex;
-      
+
       .myRadioQ {
         height: 88rpx;
         display: flex;
         margin-right: 17rpx;
-        
+
         .radio {
           transform: scale(0.7);
         }
-        
+
         .mbx {
           font-size: 28rpx;
           color: #777777;
@@ -574,9 +574,9 @@ export default {
         }
       }
     }
-    
+
   }
-  
+
   .four {
     width: 490rpx;
     height: 75rpx;
@@ -589,7 +589,7 @@ export default {
     font-size: 30rpx;
     color: #FFFFFF;
   }
-  
+
   .five {
     height: 23rpx;
     line-height: 23rpx;
@@ -599,14 +599,14 @@ export default {
     font-size: 24rpx;
     font-weight: 500;
     color: rgba(153, 153, 153, 1);
-    
+
     .image {
       width: 12rpx;
       height: 20rpx;
       margin-left: 10rpx;
     }
   }
-  
+
   .threes {
     height: 88rpx;
     line-height: 88rpx;
@@ -616,26 +616,26 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    
+
     .haha {
       font-size: 30rpx;
       color: #333333;
       //margin-right: 42rpx;
     }
-    
+
     .images {
       width: 16rpx;
       height: 88rpx;
       line-height: 88rpx;
-      
+
       .image {
         width: 16rpx;
         height: 25rpx;
       }
     }
-    
+
   }
-  
+
   .picker view {
     width: 180rpx;
     font-size: 28rpx;
@@ -643,15 +643,15 @@ export default {
     height: 90rpx;
     margin-right: 10rpx;
   }
-  
+
   .picker {
     display: flex;
-    
+
     .quyu {
       width: 120rpx;
     }
   }
-  
+
   .lineW {
     background-color: #F43131 !important;
   }

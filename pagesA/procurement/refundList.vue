@@ -3,7 +3,7 @@
     <div class="navs">
       <div :class="tabidx===5?'active':''" @click="changIndex(5)" class="nav-item">全部</div>
       <div :class="tabidx===0?'active':''" @click="changIndex(0)" class="nav-item">待确认</div>
-      
+
       <div :class="tabidx===1?'active':''" @click="changIndex(1)" class="nav-item">待发货</div>
       <div :class="tabidx===2?'active':''" @click="changIndex(2)" class="nav-item">待收货</div>
       <div :class="tabidx===3?'active':''" @click="changIndex(3)" class="nav-item">待退款</div>
@@ -51,13 +51,13 @@
                     v-if='item.Back_Status==0||item.Back_Status==1'>确认</span>
               <span @click="sureShou(item.Back_ID)" class="span" v-if='item.Back_Status==2'>收货</span>
             </block>
-          
+
           </div>
         </template>
       </div>
-    
+
     </div>
-    
+
     <wzw-dialog ref="refuseApply">
       <div class="refuseApplyDialog">
 				<textarea :value="reason" @input="bingReasonInput" auto-height class="reason"
@@ -68,7 +68,7 @@
         </div>
       </div>
     </wzw-dialog>
-    
+
     <wzw-dialog ref="sureReason">
       <div class="refuseApplyDialog">
         <input class="inputs" placeholder="请输入退款总金额" type="number" v-model="priceValue">
@@ -80,7 +80,7 @@
         </div>
       </div>
     </wzw-dialog>
-  
+
   </div>
 </template>
 
@@ -105,12 +105,12 @@ export default {
       backItem: '',
       paginate: {
         page: 1,
-        pageSize: 20,
-      },
+        pageSize: 20
+      }
     }
   },
   computed: {
-    ...mapGetters(['Stores_ID']),
+    ...mapGetters(['Stores_ID'])
   },
   onLoad () {
     this.tabidx = 5
@@ -129,7 +129,7 @@ export default {
         Back_ID: this.backItem,
         Amount: this.priceValue,
         reason: this.reasons,
-        store_id: this.Stores_ID,
+        store_id: this.Stores_ID
       }
       systemReceiptRefundProd(data).then(res => {
         toast(res.msg)
@@ -149,18 +149,18 @@ export default {
     sureOrder (item) {
       const data = {
         Back_ID: item,
-        store_id: this.Stores_ID,
+        store_id: this.Stores_ID
       }
       systemConfirmApply(data).then(res => {
         uni.showToast({
-          title: res.msg,
+          title: res.msg
         })
         this.loadInfo()
       })
     },
     goDetail (item) {
       uni.navigateTo({
-        url: '/pagesA/person/refundDetail?Back_ID=' + item.Back_ID + '&store_id=' + this.Stores_ID,
+        url: '/pagesA/person/refundDetail?Back_ID=' + item.Back_ID + '&store_id=' + this.Stores_ID
       })
     },
     cancelRefuseApply () {
@@ -178,12 +178,12 @@ export default {
       systemRefuseApply({
         Back_ID: this.activeApply,
         reason: this.reason,
-        store_id: this.Stores_ID,
+        store_id: this.Stores_ID
       }, { tip: '处理中' }).then(res => {
         this.$refs.refuseApply.close()
         this.reason = ''
         uni.showToast({
-          title: res.msg,
+          title: res.msg
         })
         this.loadInfo()
       }, err => {
@@ -208,7 +208,7 @@ export default {
     async loadInfo () {
       const data = {
         ...this.paginate,
-        store_id: this.Stores_ID,
+        store_id: this.Stores_ID
       }
       if (this.tabidx != 5) {
         data.Back_Status = this.tabidx
@@ -229,12 +229,12 @@ export default {
       }, err => {
 
       })
-    },
+    }
   },
   onReachBottom () {
     if (this.applys.length >= this.totalCount) return
     this.loadInfo()
-  },
+  }
 }
 </script>
 
@@ -254,7 +254,7 @@ export default {
     background-color: #F8F8F8;
     font-size: 14px;
     padding: 0 10px;
-    
+
     .nav-item {
       flex: 1;
       /*box-sizing: border-box;*/
@@ -262,37 +262,37 @@ export default {
       /*position: relative;*/
       color: #333;
     }
-    
+
     .nav-item.active {
       color: $wzw-primary-color;
       border-bottom: 2px solid $wzw-primary-color;
     }
   }
-  
+
   .space-box {
     height: 50px;
     width: 100%;
     // background: white;
   }
-  
+
   .lists {
     .item {
       margin: 10px 15px 10px;
       background: white;
       border-radius: 10px;
       overflow: hidden;
-      
+
       .head {
-        
+
         .info {
           padding: 10px;
           align-items: center;
           font-size: 14px;
-          
+
           .store-info {
             align-items: center;
           }
-          
+
           .store-pic {
             width: 25px;
             height: 25px;
@@ -302,57 +302,57 @@ export default {
             background-position: center;
             margin-right: 10px;
           }
-          
+
           .store-title {
             margin-right: 10px;
             color: #333;
           }
-          
+
           .action {
             color: $wzw-primary-color;
-            
+
             .action-item {
               text-decoration: underline;
               cursor: pointer;
             }
           }
-          
+
           .order_no {
             margin-left: 30px;
             color: #666;
           }
         }
-        
+
         .status {
           font-size: 12px;
           border-bottom: 1px solid #E6E6E6;
           padding: 10px;
           align-items: center;
-          
+
           .icon-delete {
             width: 14px;
             height: 14px;
           }
-          
+
           .el-icon-delete-solid {
             cursor: pointer;
             color: #999;
-            
+
             &:hover {
               color: #F43131;
             }
           }
         }
       }
-      
+
       .goods-list {
         border-bottom: 1px solid #EDEDED;
-        
+
         .goods {
           display: flex;
           align-items: center;
           padding: 10px;
-          
+
           .l {
             width: 100px;
             height: 100px;
@@ -361,11 +361,11 @@ export default {
             background-color: #f2f2f2;
             background-position: center;
           }
-          
+
           .c {
             flex: 1;
             padding: 0 0 0 10px;
-            
+
             .title {
               font-size: 14px;
               height: 40px;
@@ -374,18 +374,18 @@ export default {
               overflow: hidden;
               text-overflow: ellipsis;
             }
-            
+
             .spec-key {
               background: #FFF5F5;
               font-size: 12px;
               padding: 6px 10px;
               color: #666666;
             }
-            
+
             .numbox {
               position: relative;
               color: #333333;
-              
+
               .tips {
                 position: absolute;
                 top: 50rpx;
@@ -395,7 +395,7 @@ export default {
                 background: #fff;
                 z-index: 1000;
                 box-shadow: 0px 0px 16px 0px rgba(4, 0, 0, 0.18);
-                
+
                 .sanjiaoxing {
                   position: absolute;
                   top: -14rpx;
@@ -410,7 +410,7 @@ export default {
                   box-shadow: 0px 0px 16px 0px rgba(4, 0, 0, 0.18);
                 }
               }
-              
+
               .qty-icon {
                 width: 22rpx;
                 height: 22rpx;
@@ -418,59 +418,59 @@ export default {
               }
             }
           }
-          
+
         }
-        
+
       }
-      
+
       .price-box {
         text-align: right;
         padding: 10px;
         font-size: 14px;
       }
-      
+
       .actions {
         text-align: right;
         padding: 0 10px;
-        
+
         .acion-btn {
           margin-bottom: 10px;
           margin-left: 10px;
         }
-        
+
       }
-      
+
     }
   }
-  
+
   .storeInfoDialog {
     width: 560rpx;
     box-sizing: border-box;
     padding: 10px;
     font-size: 14px;
-    
+
     .row {
       display: flex;
       margin-bottom: 8px;
-      
+
       .label {
         color: #999;
         width: 70px;
       }
-      
+
       .text {
         flex: 1;
         color: #444;
       }
     }
   }
-  
+
   .refuseApplyDialog {
     width: 560rpx;
     box-sizing: border-box;
     padding: 15px;
     font-size: 14px;
-    
+
     .reason {
       font-size: 14px;
       min-height: 200px;
@@ -480,7 +480,7 @@ export default {
       width: auto;
       padding: 10px;
     }
-    
+
     .inputs {
       font-size: 14px;
       border: 1px solid #E3E3E3;
@@ -490,16 +490,16 @@ export default {
       width: auto;
       margin-bottom: 10px;
     }
-    
+
     .reasons {
       min-height: 20px;
     }
-    
+
     .control {
       margin-top: 15px;
       display: flex;
       justify-content: center;
-      
+
       .action-btn {
         width: 70px;
         height: 36px;
@@ -508,7 +508,7 @@ export default {
         text-align: center;
         color: #666;
         background: #e9e9e9;
-        
+
         &.btn-sub {
           background: $wzw-primary-color;
           color: white;
@@ -517,7 +517,7 @@ export default {
       }
     }
   }
-  
+
   .sku-item {
     display: flex;
     align-items: center;
@@ -527,7 +527,7 @@ export default {
       width: 27rpx;
       height: 32rpx;
     }
-    
+
     .sku {
       width: 80rpx;
       height: 46rpx;
@@ -539,12 +539,12 @@ export default {
       margin-right: 13rpx;
       border-radius: 5rpx;
     }
-    
+
     .active {
       background-color: $wzw-primary-color;
       color: #fff;
     }
-    
+
     .handle {
       width: 50rpx;
       height: 45rpx;
@@ -554,28 +554,28 @@ export default {
       color: #777;
       background: #f6f6f6;
     }
-    
+
     .pro-num {
       margin: 0 15rpx;
       font-size: 24rpx;
       color: #777;
       position: relative;
-      
+
     }
   }
-  
+
   .defaults {
     margin: 0 auto;
     width: 640rpx;
     height: 480rpx;
     margin-top: 100rpx;
   }
-  
+
   .order {
     padding: 0rpx 20rpx;
     background: #fff;
     position: relative;
-    
+
     .bizinfo {
       margin-top: 20rpx;
       display: flex;
@@ -592,34 +592,34 @@ export default {
         // flex: 1;
         font-size: 28rpx;
       }
-      
+
       .status {
         color: red;
         font-size: 26rpx;
       }
     }
-    
+
     .pro {
       display: flex;
       margin-bottom: 50rpx;
       margin-top: 30rpx;
     }
-    
+
     .pro-msg {
       margin-left: 27rpx;
       width: 476rpx;
     }
-    
+
     .pro-div {
       width: 200rpx;
       height: 200rpx;
     }
-    
+
     .pro-img {
       width: 100%;
       height: 100%;
     }
-    
+
     .pro-name {
       font-size: 26rpx;
       margin-bottom: 20rpx;
@@ -630,7 +630,7 @@ export default {
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
     }
-    
+
     .attr {
       display: inline-block;
       height: 50rpx;
@@ -641,42 +641,42 @@ export default {
       padding: 0 20rpx;
       margin-bottom: 20rpx;
     }
-    
+
     .pro-price {
       color: #F43131;
       font-size: 36rpx;
     }
-    
+
     .pro-price span {
       font-size: 24rpx;
       font-style: normal;
     }
-    
+
     .amount {
       font-size: 30rpx;
       float: right;
       color: #333;
     }
-    
+
     .total {
       font-size: 24rpx;
       margin: 40rpx 0rpx;
       margin-right: 15rpx;
-      
+
       .price {
         color: red;
         font-size: 30rpx;
-        
+
         .p-span {
           font-size: 24rpx;
         }
       }
     }
-    
+
     .btn-group {
       text-align: right;
       padding-bottom: 30rpx;
-      
+
       .span {
         display: inline-block;
         //width: 150rpx;
@@ -688,11 +688,11 @@ export default {
         border-radius: 10rpx;
         color: #999;
         font-size: 26rpx;
-        
+
         &:last-child {
           margin-left: 14rpx;
         }
-        
+
         &.active {
           color: #fff;
           background: #F43131;
@@ -701,11 +701,11 @@ export default {
       }
     }
   }
-  
+
   .text-right {
     text-align: right;
   }
-  
+
   .defaults {
     margin: 0 auto;
     width: 640rpx;

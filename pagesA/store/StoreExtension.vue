@@ -5,7 +5,7 @@
       <div class="store-title">代理商</div>
       <image class="store-img" src="/static/store/dailishanggo.png"></image>
     </div>
-    
+
     <div @click="open(2)" class="store-item">
       <image :src="'/static/client/store/shequ.png'|domain" class="img-full"></image>
       <div class="store-title">社区门店</div>
@@ -25,10 +25,10 @@ export default {
   methods: {
     open (item) {
       uni.navigateTo({
-        url: '/pagesA/store/storeShare?type=' + item,
+        url: '/pagesA/store/storeShare?type=' + item
       })
-    },
-  },
+    }
+  }
 }
 
 </script>
@@ -40,14 +40,14 @@ export default {
     padding-top: 60rpx;
     box-sizing: border-box;
   }
-  
+
   .store-item {
     width: 750rpx;
     height: 256rpx;
     margin-bottom: 46rpx;
     position: relative;
   }
-  
+
   .store-title {
     font-size: 36rpx;
     height: 36rpx;
@@ -58,12 +58,12 @@ export default {
     left: 320rpx;
     color: #FFFFFF;
   }
-  
+
   .img-full {
     width: 100%;
     height: 100%;
   }
-  
+
   .store-img {
     width: 100rpx;
     height: 66rpx;

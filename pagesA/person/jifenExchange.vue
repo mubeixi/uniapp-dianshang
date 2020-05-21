@@ -3,11 +3,11 @@
     <!-- #ifdef APP-PLUS -->
     <view class="status_bar" style="background-color: #FF5C33;"><!-- 这里是状态栏 --></view>
     <!-- #endif -->
-    
+
     <!-- 	<page-title title="积分兑换" rightHidden="true" bgcolor="#FF5C33"></page-title> -->
-    
+
     <view class="top">
-      
+
       <view :style="{backgroundImage:'url('+$fun.domainFn('/static/client/jifenduihuan/star.png')+')'}"
             class="img-wrap">
         <view class="t-title">我的积分</view>
@@ -57,11 +57,11 @@ export default {
       Gift_ID: 0,
       page: 1,
       isClicked: false, // 防止重复点击
-      isChanged: false, // 防止兑换重复点击
+      isChanged: false // 防止兑换重复点击
     }
   },
   computed: {
-    ...mapGetters(['userInfo']),
+    ...mapGetters(['userInfo'])
   },
   onShow () {
     this.reset()
@@ -103,7 +103,7 @@ export default {
       }
       this.isClicked = true
       uni.navigateTo({
-        url: '/pagesA/person/myRedemption',
+        url: '/pagesA/person/myRedemption'
       })
     },
     cancelPsw () {
@@ -115,25 +115,25 @@ export default {
       if (this.password == '') {
         uni.showToast({
           title: '密码不能为空',
-          icon: 'none',
+          icon: 'none'
         })
         return
       }
       jifenProdDuihuan({
         Gift_ID: this.Gift_ID,
-        password: this.password,
+        password: this.password
       }).then(res => {
         uni.showToast({
-          title: '兑换成功',
+          title: '兑换成功'
         })
         setTimeout(() => {
           uni.navigateTo({
-            url: '/pagesA/person/myRedemption',
+            url: '/pagesA/person/myRedemption'
           })
         }, 1500)
       }, err => {
         uni.showToast({
-          title: res.msg,
+          title: res.msg
         })
       })
     },
@@ -147,7 +147,7 @@ export default {
       if (item.Gift_Qty <= 0) {
         uni.showToast({
           title: '当前暂无库存',
-          icon: 'none',
+          icon: 'none'
         })
         this.isChanged = false
         return false
@@ -155,7 +155,7 @@ export default {
       if (this.userInfo.User_Integral < item.Gift_Integral) {
         uni.showToast({
           title: '您的积分不足',
-          icon: 'none',
+          icon: 'none'
         })
         this.isChanged = false
         return false
@@ -167,17 +167,17 @@ export default {
         this.isChanged = false
       } else {
         uni.navigateTo({
-          url: '/pagesA/person/jifenCheck?gift_id=' + item.Gift_ID,
+          url: '/pagesA/person/jifenCheck?gift_id=' + item.Gift_ID
         })
       }
       this.Gift_ID = item.Gift_ID
-    },
+    }
   },
   onReachBottom () {
     if (this.hasMore) {
       this.get_jifen_prod()
     }
-  },
+  }
 }
 </script>
 
@@ -185,15 +185,15 @@ export default {
   .all {
     min-height: 100vh;
     background-color: #FFFFFF !important;
-    
+
   }
-  
+
   .top {
     position: relative;
     height: 210rpx;
     width: 100%;
     background: #FF5C33;
-    
+
     .img-wrap {
       position: absolute;
       left: 50%;
@@ -204,7 +204,7 @@ export default {
       background-repeat: no-repeat;
       background-position: left top;
       background-size: cover;
-      
+
       .t-title {
         position: absolute;
         top: 63rpx;
@@ -212,7 +212,7 @@ export default {
         color: #999;
         font-size: 24rpx;
       }
-      
+
       .t-amount {
         position: absolute;
         left: 49rpx;
@@ -220,7 +220,7 @@ export default {
         color: #FF5C33;
         font-size: 60rpx;
       }
-      
+
       .my-change {
         position: absolute;
         right: 47rpx;
@@ -237,22 +237,22 @@ export default {
       }
     }
   }
-  
+
   .content {
     padding-top: 67rpx;
     overflow: hidden;
-    
+
     .product {
       float: left;
       width: 330rpx;
       margin: 0 22rpx 34rpx;
-      
+
       .p-img {
         width: 100%;
         height: 330rpx;
         vertical-align: top;
       }
-      
+
       .p-title {
         font-size: 28rpx;
         color: #333;
@@ -261,16 +261,16 @@ export default {
         text-overflow: ellipsis;
         white-space: nowrap;
       }
-      
+
       .p-count {
         font-size: 22rpx;
         color: #999;
       }
-      
+
       .p-price {
         color: #FE6444;
         font-size: 32rpx;
-        
+
         .p-buy {
           float: right;
           height: 42rpx;
@@ -282,14 +282,14 @@ export default {
           line-height: 42rpx;
           border-radius: 20rpx;
         }
-        
+
         & .nobuy {
           background: #D0D0D0;
         }
       }
     }
   }
-  
+
   .wrap {
     position: fixed;
     top: 0;
@@ -297,7 +297,7 @@ export default {
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, .3);
-    
+
     .input-box {
       position: absolute;
       top: 40%;
@@ -309,13 +309,13 @@ export default {
       font-size: 30rpx;
       background-color: #fff;
       border-radius: 20rpx;
-      
+
       .btns {
         display: flex;
         justify-content: space-around;
         line-height: 60rpx;
       }
-      
+
       .input-psw {
         border: 1px solid #efefef;
         width: 80%;

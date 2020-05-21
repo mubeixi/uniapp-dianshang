@@ -4,7 +4,7 @@
     <view class="status_bar" style="background-color: rgb(248, 248, 248);"><!-- 这里是状态栏 --></view>
     <!-- #endif -->
     <!-- <page-title title="填写信息" rightHidden="true" ></page-title> -->
-    
+
     <div class="zhezhao" v-if="password_input">
       <div class="input-wrap">
         <div>请输入余额支付密码</div>
@@ -21,13 +21,13 @@
           <view></view>
         </view>
         <view class="lineQ">
-        
+
         </view>
         <view class="circleQ">
           <view></view>
         </view>
         <view class="lineQ">
-        
+
         </view>
         <view class="circleQ">
           <view></view>
@@ -45,7 +45,7 @@
         </view>
       </view>
     </view>
-    
+
     <block v-if="proData.Applyfor_Name">
       <view class="three">
         <view class="haha">
@@ -72,7 +72,7 @@
         {{proData.Order_TotalPrice}}元
       </view>
     </block>
-    
+
     <view @click="showPay" class="four">
       立即支付
     </view>
@@ -80,7 +80,7 @@
       取消申请
       <image :src="'/static/client/fenxiao/chakan.png'|domain" class="image"></image>
     </view>
-    
+
     <popup-layer :direction="'top'" ref="popupLayer">
       <div class="iMbx">
         <div :key="index" @click="chooseType(index)" class="c_method" v-for="(item,index) in initData.pay_arr">
@@ -103,7 +103,7 @@ import { confirm, error, toast } from '../../common'
 export default {
   mixins: [pageMixin],
   components: {
-    popupLayer,
+    popupLayer
   },
   data () {
     return {
@@ -111,14 +111,14 @@ export default {
       proData: [],
       pay_type: '',
       password_input: false,
-      user_pay_password: '',// 用户输入的密码
+      user_pay_password: ''// 用户输入的密码
     }
   },
   onShow () {
 
   },
   computed: {
-    ...mapGetters(['initData', 'userInfo']),
+    ...mapGetters(['initData', 'userInfo'])
   },
   onLoad (options) {
     this.Order_ID = options.id
@@ -130,11 +130,11 @@ export default {
       cancelShaApply({ Order_ID: this.Order_ID }).then(res => {
         uni.showToast({
           title: res.msg,
-          icon: 'none',
+          icon: 'none'
         })
         setTimeout(function () {
           uni.navigateTo({
-            url: '/pagesA/fenxiao/gudong',
+            url: '/pagesA/fenxiao/gudong'
           })
         }, 1000)
       }).catch(e => {
@@ -147,17 +147,17 @@ export default {
     payMoney () {
       const data = {
         Order_ID: this.Order_ID,
-        pay_type: this.pay_type,
+        pay_type: this.pay_type
       }
       shaApplyPay(data, {
         tip: '正在加载中',
-        mask: true,
+        mask: true
       }).then(res => {
         unipayFunc(this, this.pay_type, res)
       }).catch(err => {
         uni.showToast({
           title: res.msg,
-          icon: 'none',
+          icon: 'none'
         })
       })
     },
@@ -171,10 +171,10 @@ export default {
             title: '提示',
             content: '该操作需要设置支付密码,是否前往设置?',
             confirmText: '去设置',
-            cancelText: '暂不设置',
+            cancelText: '暂不设置'
           }).then(res => {
             uni.navigateTo({
-              url: '/pagesA/person/updateUserPsw?type=1&is_back=1',
+              url: '/pagesA/person/updateUserPsw?type=1&is_back=1'
             })
           }).catch(err => {
             error('请选择其他支付方式')
@@ -213,12 +213,12 @@ export default {
             if (res.confirm) {
               toast('支付成功')
               uni.switchTab({
-                url: '/pages/fenxiao/fenxiao',
+                url: '/pages/fenxiao/fenxiao'
               })
             } else if (res.cancel) {
 
             }
-          },
+          }
         })
         return
       }
@@ -230,13 +230,13 @@ export default {
 
       toast('支付成功')
       uni.switchTab({
-        url: '/pagesA/fenxiao/fenxiao',
+        url: '/pagesA/fenxiao/fenxiao'
       })
     },
     payNow () {
       const data = {
         Order_ID: this.Order_ID,
-        pay_type: this.pay_type,
+        pay_type: this.pay_type
       }
       if (this.pay_type == 'remainder_pay') {
         data.user_pay_password = this.user_pay_password
@@ -244,11 +244,11 @@ export default {
       shaApplyPay(data).then(res => {
         uni.showToast({
           title: res.msg,
-          icon: 'none',
+          icon: 'none'
         })
         setTimeout(function () {
           uni.switchTab({
-            url: '/pages/fenxiao/fenxiao',
+            url: '/pages/fenxiao/fenxiao'
           })
         }, 1000)
       }).catch(e => {
@@ -275,9 +275,9 @@ export default {
       this.password_input = false
       // 提交信息
       this.payNow()
-    },
+    }
 
-  },
+  }
 }
 </script>
 
@@ -287,18 +287,18 @@ export default {
     background-color: #FFFFFF !important;
     min-height: 100vh;
   }
-  
+
   .top {
     width: 750rpx;
     padding: 50rpx 83rpx;
-    
+
     .first {
       padding-left: 33rpx;
       padding-right: 41rpxd;
       height: 30rpx;
       display: flex;
       align-items: center;
-      
+
       .circleQ {
         width: 30rpx;
         height: 30rpx;
@@ -307,7 +307,7 @@ export default {
         display: flex;
         align-items: center;
         justify-content: center;
-        
+
         view {
           width: 15rpx;
           height: 15rpx;
@@ -315,22 +315,22 @@ export default {
           border-radius: 50%;
         }
       }
-      
+
       .circleW {
         border: 1px solid #999999;
-        
+
         view {
           background-color: #999999;
         }
       }
-      
+
       .lineQ {
         width: 210rpx;
         height: 4rpx;
         background-color: #F43131;
       }
     }
-    
+
     .second {
       margin-top: 21rpx;
       height: 25rpx;
@@ -338,23 +338,23 @@ export default {
       font-size: 26rpx;
       color: #999999;
       display: flex;
-      
+
       .secondQ {
         color: #F43131;
       }
-      
+
       .secondW {
         margin-left: 137rpx;
         color: #F43131;
       }
-      
+
       .secondE {
         margin-left: 135rpx;
         color: #F43131;
       }
     }
   }
-  
+
   .three {
     height: 88rpx;
     line-height: 88rpx;
@@ -363,39 +363,39 @@ export default {
     border-bottom: 1px solid #E7E7E7;
     display: flex;
     align-items: center;
-    
+
     .haha {
       font-size: 30rpx;
       color: #333333;
       margin-right: 42rpx;
       width: 64px;
     }
-    
+
     .inputs {
       height: 88rpx;
       line-height: 88rpx;
       font-size: 28rpx;
       color: #333333;
     }
-    
+
     .place {
       font-size: 28rpx;
       color: #CAC8C8;
     }
-    
+
     .myRadio {
       height: 88rpx;
       display: flex;
-      
+
       .myRadioQ {
         height: 88rpx;
         display: flex;
         margin-right: 17rpx;
-        
+
         .radio {
           transform: scale(0.7);
         }
-        
+
         .mbx {
           font-size: 28rpx;
           color: #777777;
@@ -403,9 +403,9 @@ export default {
         }
       }
     }
-    
+
   }
-  
+
   .four {
     width: 490rpx;
     height: 75rpx;
@@ -418,7 +418,7 @@ export default {
     font-size: 30rpx;
     color: #FFFFFF;
   }
-  
+
   .five {
     height: 23rpx;
     line-height: 23rpx;
@@ -428,14 +428,14 @@ export default {
     font-size: 24rpx;
     font-weight: 500;
     color: rgba(153, 153, 153, 1);
-    
+
     .image {
       width: 12rpx;
       height: 20rpx;
       margin-left: 10rpx;
     }
   }
-  
+
   .threes {
     height: 88rpx;
     line-height: 88rpx;
@@ -445,26 +445,26 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    
+
     .haha {
       font-size: 30rpx;
       color: #333333;
       //margin-right: 42rpx;
     }
-    
+
     .images {
       width: 16rpx;
       height: 88rpx;
       line-height: 88rpx;
-      
+
       .image {
         width: 16rpx;
         height: 25rpx;
       }
     }
-    
+
   }
-  
+
   .picker view {
     width: 180rpx;
     font-size: 28rpx;
@@ -472,39 +472,39 @@ export default {
     height: 90rpx;
     margin-right: 10rpx;
   }
-  
+
   .picker {
     display: flex;
-    
+
     .quyu {
       width: 120rpx;
     }
   }
-  
+
   .lineW {
     background-color: #F43131 !important;
   }
-  
+
   .iMbx {
     text-align: center;
     padding: 0 20rpx;
     font-size: 28rpx;
     color: #333;
-    
+
     .c_method {
       padding: 37rpx 0;
       border-bottom: 2rpx solid #E6E6E6;
     }
-    
+
     & .c_method:first-child {
       color: #F43131;
     }
-    
+
     & .c_method:nth-last-child(1) {
       border: none;
     }
   }
-  
+
   .zhezhao {
     left: 0;
     top: 0;
@@ -513,7 +513,7 @@ export default {
     height: 100%;
     background: rgba(0, 0, 0, .3);
     z-index: 1000;
-    
+
     .input-wrap {
       background: #fff;
       color: #000;
@@ -524,7 +524,7 @@ export default {
       box-sizing: border-box;
       font-size: 28rpx;
       border-radius: 10rpx;
-      
+
       .input {
         margin: 40rpx 0;
         border: 1px solid #efefef;
@@ -532,13 +532,13 @@ export default {
         line-height: 20px;
         padding: 10px 0px;
       }
-      
+
       .btns {
         display: flex;
         justify-content: space-around;
         height: 60rpx;
         line-height: 60rpx;
-        
+
         .btn {
           flex: 1;
         }

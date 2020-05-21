@@ -5,7 +5,7 @@
       <input @confirm="search" class="input" placeholder="请输入商品关键词" placeholder-style="color:#bebdbd;" type="text"
              v-model="prod_name">
     </view>
-    
+
     <view @click="openAddress" class="storeAddress" v-if="is_pingtai==0&&(storeAdress.Stores_Name)">
       <view class="storeAddressImg">
         <image :src="storeAdress.Stores_ImgPath" class="imgWidth"></image>
@@ -28,7 +28,7 @@
         </view>
       </view>
     </view>
-    
+
     <view class="storeCate">
       <view class="storeCateLine">
         <view class="storeCateLei">一级分类:</view>
@@ -63,7 +63,7 @@
         </view>
       </view>
     </view>
-    
+
     <view class="prolist">
       <view @click="add(item)" class="pro" v-for="item in prolist">
         <view class="pro-img">
@@ -173,7 +173,7 @@ import {
   getProductList,
   getStoreDetail,
   getStoreList,
-  updateCart,
+  updateCart
 } from '../../common/fetch'
 import { mapGetters } from 'vuex'
 import { numberSort } from '../../common/tool'
@@ -202,7 +202,7 @@ export default {
         attr_id: 0, // 选择属性id
         // showimg: '',      //选择属性的图片(用产品图片代替)
         qty: 1, // 购买数量
-        productDetail_price: 0,
+        productDetail_price: 0
       },
       prod_name: '', // 根据产品名称搜索
       cartList: '',
@@ -218,17 +218,17 @@ export default {
       canClicked: true, // 是否可以点明细  防止用户一直点出现bug
       page: 1,
       pageSize: 10,
-      get_more: false,
+      get_more: false
     }
   },
   components: {
-    popupLayer,
+    popupLayer
   },
   computed: {
     ...mapGetters(['Stores_ID']),
     isScroll () {
       return this.isHidden ? 'auto' : 'hidden'
-    },
+    }
   },
   onShow () {
     this.get_cart()
@@ -272,7 +272,7 @@ export default {
         longitude: this.storeAdress.wx_lng,
         name: this.storeAdress.Stores_Name,
         success: function () {
-        },
+        }
       })
     },
     getStoreDetail () {
@@ -285,7 +285,7 @@ export default {
           const data = {
             lat: lat,
             lng: lng,
-            store_id: this.purchase_store_id,
+            store_id: this.purchase_store_id
           }
 
           getStoreDetail(data).then(res => {
@@ -295,7 +295,7 @@ export default {
         }
       }).catch(err => {
         const data = {
-          store_id: this.purchase_store_id,
+          store_id: this.purchase_store_id
         }
         getStoreDetail(data).then(res => {
           this.storeAdress = res.data
@@ -348,14 +348,14 @@ export default {
     // 提交进货单
     submit () {
       createOrder({
-        cart_key: 'StorePifa',
+        cart_key: 'StorePifa'
       }).then(res => {
         uni.showToast({
-          title: res.msg,
+          title: res.msg
         })
         setTimeout(() => {
           uni.navigateTo({
-            url: '/pagesA/procurement/purchaseRecords',
+            url: '/pagesA/procurement/purchaseRecords'
           })
         }, 1500)
       }).catch(e => {
@@ -370,7 +370,7 @@ export default {
         qty: -1,
         attr_id: attr_id,
         active: 'store_pifa',
-        active_id: this.active_id,
+        active_id: this.active_id
       }).then(res => {
         this.isHidden = true
         this.showSku = false
@@ -387,7 +387,7 @@ export default {
         qty: 1,
         attr_id: attr_id,
         active: 'store_pifa',
-        active_id: this.active_id,
+        active_id: this.active_id
       }).then(res => {
         this.isHidden = true
         this.showSku = false
@@ -400,14 +400,14 @@ export default {
     del (pro_id, attr_id) {
       let obj = {}
       obj = {
-        [pro_id]: [attr_id],
+        [pro_id]: [attr_id]
       }
       delCart({
         cart_key: 'StorePifa',
-        prod_attr: JSON.stringify(obj),
+        prod_attr: JSON.stringify(obj)
       }).then(res => {
         uni.showToast({
-          title: res.msg,
+          title: res.msg
         })
         this.get_cart()
       })
@@ -416,7 +416,7 @@ export default {
     get_cart () {
       getCart({
         cart_key: 'StorePifa',
-        store_pifa_receive_id: this.purchase_store_id,
+        store_pifa_receive_id: this.purchase_store_id
       }).then(res => {
         this.cartList = res.data.CartList
         this.total_cart_count = res.data.total_count
@@ -475,14 +475,14 @@ export default {
         getPifaStoreProd({
           purchase_store_id: this.purchase_store_id,
           store_id: this.Stores_ID,
-          prod_name: this.prod_name,
+          prod_name: this.prod_name
         }).then(res => {
           this.prolist = res.data
         })
       } else {
         // 平台产品
         getProductList({
-          Products_Name: this.prod_name,
+          Products_Name: this.prod_name
         }).then(res => {
           this.prolist = res.data
         })
@@ -492,7 +492,7 @@ export default {
     getProlist (index) {
       const data = {
         purchase_store_id: this.purchase_store_id,
-        store_id: this.Stores_ID,
+        store_id: this.Stores_ID
       }
       data.page = this.page
       data.pageSize = this.pageSize
@@ -548,12 +548,12 @@ export default {
       if (this.type == 1) {
         // 进货记录
         uni.navigateTo({
-          url: '/pagesA/procurement/purchaseRecords',
+          url: '/pagesA/procurement/purchaseRecords'
         })
       } else {
         // 门店信息
         getStoreList({
-          stores_id: this.Stores_ID,
+          stores_id: this.Stores_ID
         }).then(res => {
           this.storeInfo = res.data[0]
         })
@@ -616,7 +616,7 @@ export default {
       } else {
         uni.showToast({
           title: '购买数量不能小于1',
-          icon: 'none',
+          icon: 'none'
         })
         this.postData.qty = 1
       }
@@ -634,7 +634,7 @@ export default {
         for (const i in item.skujosn) {
           skujosn_new.push({
             sku: i,
-            val: skujosn[i],
+            val: skujosn[i]
           })
         }
         item.skujosn_new = skujosn_new
@@ -653,7 +653,7 @@ export default {
       if (this.prosku.skuvaljosn && !this.postData.attr_id) {
         uni.showToast({
           title: '请选择规格',
-          icon: 'none',
+          icon: 'none'
         })
         return
       }
@@ -663,10 +663,10 @@ export default {
         qty: this.postData.qty,
         attr_id: this.postData.attr_id,
         active: 'store_pifa',
-        active_id: this.active_id,
+        active_id: this.active_id
       }).then(res => {
         uni.showToast({
-          title: res.msg,
+          title: res.msg
         })
         this.isHidden = true
         this.showSku = false
@@ -674,8 +674,8 @@ export default {
       }).catch(e => {
         error(e.msg || '添加购物车错误')
       })
-    },
-  },
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>
@@ -685,7 +685,7 @@ export default {
     background-color: #f2f2f2;
     width: 100%;
   }
-  
+
   .mask {
     background-color: rgba(0, 0, 0, .5);
     position: fixed;
@@ -695,7 +695,7 @@ export default {
     height: 100%;
     z-index: 1000;
   }
-  
+
   .sku-pop {
     position: fixed;
     top: 50%;
@@ -704,7 +704,7 @@ export default {
     width: 526rpx;
     transform: translate(-50%, -50%);
     border-radius: 10rpx;
-    
+
     .sku-title {
       height: 60rpx;
       line-height: 60rpx;
@@ -715,36 +715,36 @@ export default {
       border-top-left-radius: 10rpx;
       border-top-right-radius: 10rpx;
     }
-    
+
     .sku-content {
       padding: 40rpx 46rpx 34rpx 40rpx;
       background-color: #fff;
       border-bottom-left-radius: 10rpx;
       border-bottom-right-radius: 10rpx;
-      
+
       .skulist {
         margin-bottom: 30rpx;
         display: flex;
         align-items: center;
-        
+
         .sku-name {
           color: #333;
           font-size: 24rpx;
           margin-right: 26rpx;
         }
-        
+
         .sku-item {
           display: flex;
           align-items: center;
           color: #666;
           flex-wrap: wrap;
           flex: 1;
-          
+
           .img {
             width: 27rpx;
             height: 32rpx;
           }
-          
+
           .sku {
             // width: 80rpx;
             padding: 0 10rpx;
@@ -758,15 +758,15 @@ export default {
             margin-top: 10rpx;
             border-radius: 5rpx;
           }
-          
+
           .active {
             background-color: $wzw-primary-color;
             color: #fff;
           }
-          
+
           .handle {
             padding: 16rpx;
-            
+
             .handle-bg {
               width: 50rpx;
               height: 45rpx;
@@ -777,7 +777,7 @@ export default {
               background: #f6f6f6;
             }
           }
-          
+
           .pro-num {
             width: 40px;
             text-align: center;
@@ -786,13 +786,13 @@ export default {
           }
         }
       }
-      
+
       .sku-btns {
         display: flex;
         justify-content: center;
         align-items: center;
         margin-top: 60rpx;
-        
+
         .btn {
           width: 130rpx;
           height: 50rpx;
@@ -800,13 +800,13 @@ export default {
           line-height: 50rpx;
           font-size: 24rpx;
         }
-        
+
         .cancel {
           background: #e9e9e9;
           color: #666;
           margin-right: 25rpx;
         }
-        
+
         .confirm {
           background-color: $wzw-primary-color;
           color: #fff;
@@ -814,37 +814,37 @@ export default {
       }
     }
   }
-  
+
   .mendian {
     .sku-content {
       .sku-name {
         marin-right: 10rpx !important;
       }
-      
+
       .sku-item {
         display: block !important;
         font-size: 26rpx !important;
-        
+
         .img {
           margin-left: 10rpx;
         }
       }
     }
   }
-  
+
   .search-wrap {
     position: relative;
     width: 710rpx;
     margin: 0rpx auto 30rpx;
     height: 65rpx;
     z-index: 10;
-    
+
     .search_icon {
       position: absolute;
       left: 41rpx;
       top: 16rpx;
     }
-    
+
     .input {
       height: 100%;
       width: 100%;
@@ -855,29 +855,29 @@ export default {
       font-size: 26rpx;
     }
   }
-  
+
   .prolist {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
     width: 710rpx;
     margin: 0 auto;
-    
+
     .pro {
       width: 345rpx;
       background-color: #fff;
       margin-bottom: 20rpx;
-      
+
       .pro-img {
         position: relative;
         width: 100%;
         height: 345rpx;
-        
+
         .img {
           width: 100%;
           height: 100%;
         }
-        
+
         .add {
           position: absolute;
           bottom: 0;
@@ -891,7 +891,7 @@ export default {
           font-size: 26rpx;
         }
       }
-      
+
       .pro-name {
         font-size: 24rpx;
         color: #333;
@@ -904,30 +904,30 @@ export default {
         line-clamp: 2;
         -webkit-box-orient: vertical;
       }
-      
+
       .pro-price {
         margin-bottom: 14rpx;
         margin-left: 12rpx;
         display: flex;
         align-items: center;
-        
+
         .now-price {
           color: $wzw-primary-color;
           margin-right: 20rpx;
           font-size: 30rpx;
         }
-        
+
         .old-price {
           color: #AFAFAF;
           font-size: 24rpx;
           text-decoration: line-through;
         }
-        
+
         .money-icon {
           font-size: 24rpx;
         }
       }
-      
+
       .pro-count {
         font-size: 24rpx;
         color: #777;
@@ -935,7 +935,7 @@ export default {
       }
     }
   }
-  
+
   .check {
     position: fixed;
     bottom: 0;
@@ -947,7 +947,7 @@ export default {
     color: #333;
     background-color: #fff;
     box-shadow: 0px 0px 22px 0px rgba(4, 0, 0, 0.12);
-    
+
     .check-msg {
       flex: 1;
       display: flex;
@@ -955,23 +955,23 @@ export default {
       justify-content: center;
       font-size: 24rpx;
       color: #333;
-      
+
       .num {
         color: $wzw-primary-color;
         fong-size: 28rpx;
       }
-      
+
       .img {
         width: 17rpx;
         height: 14rpx;
         margin-left: 12rpx;
       }
-      
+
       .turn {
         transform: rotate(180deg);
       }
     }
-    
+
     .submit {
       width: 210rpx;
       height: 100%;
@@ -982,42 +982,42 @@ export default {
       text-align: center;
     }
   }
-  
+
   .mxdetail {
     max-height: 70vh;
     overflow: scroll;
     padding: 20rpx;
     padding-bottom: 90rpx;
-    
+
     .product {
       display: flex;
       margin-bottom: 40rpx;
-      
+
       .proImg {
         width: 190rpx;
         height: 190rpx;
-        
+
         .img {
           width: 100%;
           height: 100%;
         }
       }
-      
+
       .proMsg {
         flex: 1;
         margin-left: 20rpx;
-        
+
         .proName {
           overflow: hidden;
           margin-bottom: 20rpx;
-          
+
           .name {
             width: 440rpx;
             word-wrap: break-word;
             font-size: 24rpx;
             float: left;
           }
-          
+
           .del {
             float: right;
             width: 26rpx;
@@ -1025,7 +1025,7 @@ export default {
             margin-left: 34rpx;
           }
         }
-        
+
         .attrInfo {
           display: inline-block;
           padding: 12rpx 16rpx;
@@ -1035,21 +1035,21 @@ export default {
           border-radius: 5rpx;
           margin-bottom: 24rpx;
         }
-        
+
         .proPrice {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          
+
           .newPrice {
             font-size: 24rpx;
             color: $wzw-primary-color;
-            
+
             .number {
               font-size: 30rpx;
             }
           }
-          
+
           .oldPrice {
             flex: 1;
             color: #afafaf;
@@ -1057,7 +1057,7 @@ export default {
             text-decoration: line-through;
             margin-left: 20rpx;
           }
-          
+
           .amount {
             display: flex;
             height: 45rpx;
@@ -1065,7 +1065,7 @@ export default {
             width: 160rpx;
             border: 2rpx solid #D1D1D1;
             box-sizing: border-box;
-            
+
             .icon {
               font-size: 32rpx;
               color: #777;
@@ -1074,7 +1074,7 @@ export default {
               justify-content: center;
               align-items: center;
             }
-            
+
             .num {
               flex: 1;
               color: #777;
@@ -1088,7 +1088,7 @@ export default {
       }
     }
   }
-  
+
   .storeAddress {
     width: 710rpx;
     margin: 0 auto;
@@ -1099,23 +1099,23 @@ export default {
     padding: 20rpx 17rpx 22rpx 21rpx;
     background-color: #FFFFFF;
     display: flex;
-    
+
     .storeAddressImg {
       width: 82rpx;
       height: 82rpx;
       border-radius: 50%;
       overflow: hidden;
       margin-right: 22rpx;
-      
+
       .imgWidth {
         width: 100%;
         height: 100%;
       }
     }
-    
+
     .storeAddressRight {
       width: 580rpx;
-      
+
       .storeName {
         display: flex;
         justify-content: space-between;
@@ -1125,64 +1125,64 @@ export default {
         height: 28rpx;
         align-items: center;
         margin-bottom: 17rpx;
-        
+
         .storeKm {
           display: flex;
           align-items: center;
           font-size: 24rpx;
         }
-        
+
         .imgHeight {
           margin-left: 12rpx;
           width: 16rpx;
           height: 24rpx;
         }
       }
-      
+
       .storeTell {
         height: 24rpx;
         width: 580rpx;
         color: #888888;
         font-size: 22rpx;
-        
+
         .storeTellImg {
           width: 20rpx;
           height: 24rpx;
           margin-right: 16rpx;
         }
       }
-      
+
     }
-    
+
   }
-  
+
   .storeCate {
     width: 750rpx;
     padding-left: 20rpx;
     margin-bottom: 30rpx;
     box-sizing: border-box;
     background-color: #FFFFFF;
-    
+
     .storeCateLine {
       height: 80rpx;
       display: flex;
       align-items: center;
       border-bottom: 1px dotted #C5C5C5;
-      
+
       .storeCateLei {
         width: 120rpx;
         font-size: 26rpx;
         color: #333333;
         margin-right: 10rpx;
       }
-      
+
       .storeScroll {
         width: 600rpx;
         display: flex;
         align-items: center;
         height: 80rpx;
         white-space: nowrap;
-        
+
         .skuClass {
           display: inline-block;
           height: 40rpx;
@@ -1195,7 +1195,7 @@ export default {
           padding-right: 10rpx;
           line-height: 40rpx;
         }
-        
+
         .skuSelect {
           background-color: #F43131 !important;
           color: #fff !important;
@@ -1204,19 +1204,19 @@ export default {
         }
       }
     }
-    
+
     .storeCateLast {
       height: 86rpx;
       display: flex;
       align-items: center;
-      
+
       .storeCateLei {
         width: 120rpx;
         font-size: 26rpx;
         color: #333333;
         margin-right: 20rpx;
       }
-      
+
       .selectSku {
         font-size: 24rpx;
         color: #333333;
@@ -1227,7 +1227,7 @@ export default {
         line-height: 40rpx;
         background-color: #FFECEC;
         position: relative;
-        
+
         .delSku {
           width: 25rpx;
           height: 25rpx;
@@ -1237,6 +1237,6 @@ export default {
         }
       }
     }
-    
+
   }
 </style>

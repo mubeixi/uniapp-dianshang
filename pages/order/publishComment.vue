@@ -2,7 +2,7 @@
   <view @click="commonClick" class="all">
     <!-- <page-title title="发表评论" rightHidden="true" bgcolor="#ffffff"></page-title> -->
     <view style="height: 40rpx;width: 100%;">
-    
+
     </view>
     <view class="rate">
       <view class="rates">整体评价</view>
@@ -16,7 +16,7 @@
               style="border: 0rpx;" v-model="Note">
 
 		</textarea>
-    
+
     <view class="niming">
       <view>
         匿名评价
@@ -62,7 +62,7 @@ export default {
       Order_ID: 0, // 订单id
       Score: 5, // 评价分数
       isAnonymous: 1, // 是否匿名评价
-      isLoadong: false,
+      isLoadong: false
     }
   },
   onLoad (options) {
@@ -90,7 +90,7 @@ export default {
       uni.previewImage({
         urls: arr,
         indicator: 'default',
-        current: index,
+        current: index
       })
     },
     // 提交
@@ -110,16 +110,16 @@ export default {
             Score: this.Score,
             Note: this.Note,
             is_anonymous: this.isAnonymous,
-            image_path: arr,
+            image_path: arr
           }
           comment(data).then(res => {
             uni.showToast({
               title: res.msg,
-              icon: '',
+              icon: ''
             })
             setTimeout(function () {
               uni.redirectTo({
-                url: '/pages/order/order?index=4',
+                url: '/pages/order/order?index=4'
               })
             }, 2000)
             this.isLoadong = false
@@ -129,13 +129,13 @@ export default {
         } else {
           uni.showToast({
             title: '您还未填写评价哦',
-            icon: 'none',
+            icon: 'none'
           })
         }
       } else {
         uni.showToast({
           title: '图片还没上传完成',
-          icon: 'none',
+          icon: 'none'
         })
       }
       this.isLoadong = false
@@ -164,7 +164,7 @@ export default {
 
       const temp_file_list = await chooseImageByPromise({
         count: (9 - that.imgs.length),
-        sizeType,
+        sizeType
       })
       if (!temp_file_list) return
       for (const item of temp_file_list) {
@@ -178,8 +178,8 @@ export default {
         // 是否可以提交
         that.isSubmit = true
       })
-    },
-  },
+    }
+  }
 }
 </script>
 
@@ -188,113 +188,113 @@ export default {
     background-color: #F8F8F8;
     box-sizing: border-box;
   }
-  
+
   .edit {
     box-sizing: border-box;
-    width: 710 rpx;
-    height: 338 rpx;
+    width: 710rpx;
+    height: 338rpx;
     border: 1px solid rgba(233, 233, 233, 1);
     border-radius: 10px;
     margin: 0 auto;
-    margin-top: 20 rpx;
-    padding-top: 23 rpx;
-    padding-left: 27 rpx;
-    padding-right: 40 rpx;
-    font-size: 28 rpx;
+    margin-top: 20rpx;
+    padding-top: 23rpx;
+    padding-left: 27rpx;
+    padding-right: 40rpx;
+    font-size: 28rpx;
     color: #333333;
     background-color: #FFFFFF;
   }
-  
+
   .place {
     color: #CBCBCB !important;
-    font-size: 24 rpx !important;
+    font-size: 24rpx !important;
   }
-  
+
   .submit {
-    width: 690 rpx;
-    height: 80 rpx;
+    width: 690rpx;
+    height: 80rpx;
     margin: 0 auto;
     background-color: #F43131;
-    line-height: 80 rpx;
-    font-size: 34 rpx;
+    line-height: 80rpx;
+    font-size: 34rpx;
     color: #FFFFFF;
-    border-radius: 10 rpx;
+    border-radius: 10rpx;
     text-align: center;
-    margin-top: 65 rpx;
+    margin-top: 65rpx;
   }
-  
+
   .niming {
-    width: 710 rpx;
-    height: 75 rpx;
+    width: 710rpx;
+    height: 75rpx;
     margin: 0 auto;
-    padding-left: 26 rpx;
-    padding-right: 14 rpx;
+    padding-left: 26rpx;
+    padding-right: 14rpx;
     display: flex;
     align-items: center;
     justify-content: space-between;
     background-color: #FFFFFF;
-    border-radius: 10 rpx;
-    margin-top: 20 rpx;
-    margin-bottom: 20 rpx;
-    font-size: 26 rpx;
+    border-radius: 10rpx;
+    margin-top: 20rpx;
+    margin-bottom: 20rpx;
+    font-size: 26rpx;
   }
-  
+
   .item {
     display: flex;
     height: 50px;
-    margin-left: 23 rpx;
+    margin-left: 23rpx;
     align-items: center;
     justify-content: space-between;
     font-size: 14px;
     border-bottom: 1px solid #E3E3E3;
   }
-  
+
   .spe {
     justify-content: flex-start;
   }
-  
+
   .item-left {
     margin-right: 10px;
-    font-size: 28 rpx;
+    font-size: 28rpx;
   }
-  
+
   .item-right {
     color: #888;
-    font-size: 24 rpx;
+    font-size: 24rpx;
   }
-  
+
   .noborder {
     border: none;
   }
-  
+
   .item-right img {
-    width: 15 rpx;
-    height: 23 rpx;
-    margin-left: 25 rpx;
+    width: 15rpx;
+    height: 23rpx;
+    margin-left: 25rpx;
   }
-  
+
   /* 上传图像 */
   .imgs {
     display: flex;
-    padding-right: 0 rpx;
+    padding-right: 0rpx;
     flex-wrap: wrap;
-    padding-left: 20 rpx;
+    padding-left: 20rpx;
   }
-  
+
   .bottom {
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 86 rpx;
-    line-height: 86 rpx;
-    font-size: 32 rpx;
+    height: 86rpx;
+    line-height: 86rpx;
+    font-size: 32rpx;
     color: #fff;
     text-align: center;
     background: #F43131;
     z-index: 9999;
   }
-  
+
   /* 退款 */
   .methods,
   .reason {
@@ -306,12 +306,12 @@ export default {
     background: #fff;
     padding-top: 20px;
   }
-  
+
   .m-title {
     text-align: center;
     margin-bottom: 10px;
   }
-  
+
   .confirm-method {
     background: #F43131;
     color: #fff;
@@ -320,118 +320,118 @@ export default {
     width: 100%;
     margin-top: 20px;
   }
-  
+
   .bMbx {
-    padding: 0 rpx 20 rpx;
-    
+    padding: 0rpx 20rpx;
+
     .fMbx {
-      font-size: 32 rpx;
-      height: 30 rpx;
-      line-height: 30 rpx;
+      font-size: 32rpx;
+      height: 30rpx;
+      line-height: 30rpx;
       text-align: center;
-      padding: 36 rpx 0 rpx;
+      padding: 36rpx 0rpx;
     }
-    
+
     .iMbx {
       display: flex;
       justify-content: space-between;
-      height: 104 rpx;
+      height: 104rpx;
       border-bottom: 1px solid rgba(230, 230, 230, 1);
       align-items: center;
-      font-size: 28 rpx;
+      font-size: 28rpx;
     }
   }
-  
+
   .sure {
-    height: 90 rpx;
+    height: 90rpx;
     width: 100%;
     background-color: #F43131;
     color: #fff;
-    font-size: 32 rpx;
-    margin-top: 96 rpx;
-    line-height: 90 rpx;
+    font-size: 32rpx;
+    margin-top: 96rpx;
+    line-height: 90rpx;
     text-align: center;
   }
-  
+
   .shangchuans {
-    width: 146 rpx;
-    height: 146 rpx;
+    width: 146rpx;
+    height: 146rpx;
     border: 1px solid rgba(186, 186, 186, 1);
     position: relative;
-    margin-right: 20 rpx;
-    margin-bottom: 28 rpx;
-    
+    margin-right: 20rpx;
+    margin-bottom: 28rpx;
+
     .image {
       width: 100%;
       height: 100%;
     }
-    
+
     .del {
-      width: 38 rpx;
-      height: 38 rpx;
+      width: 38rpx;
+      height: 38rpx;
       position: absolute;
       top: -19rpx;
       right: -19rpx;
       z-index: 9999;
     }
   }
-  
+
   .shangchuan {
-    width: 146 rpx;
-    height: 146 rpx;
+    width: 146rpx;
+    height: 146rpx;
     border: 1px solid rgba(186, 186, 186, 1);
     position: relative;
-    margin-bottom: 28 rpx;
-    
+    margin-bottom: 28rpx;
+
     .heng {
-      width: 76 rpx;
-      height: 3 rpx;
+      width: 76rpx;
+      height: 3rpx;
       background-color: #BABABA;
       position: absolute;
-      top: 72 rpx;
-      left: 35 rpx;
+      top: 72rpx;
+      left: 35rpx;
     }
-    
+
     .shu {
-      width: 3 rpx;
-      height: 76 rpx;
+      width: 3rpx;
+      height: 76rpx;
       background-color: #BABABA;
       position: absolute;
-      top: 35 rpx;
-      left: 72 rpx;
-      
+      top: 35rpx;
+      left: 72rpx;
+
     }
   }
-  
+
   .shangH {
     background-color: #FFFFFF;
-    width: 710 rpx;
+    width: 710rpx;
     margin: 0 auto;
   }
-  
+
   .rate {
     margin: 0 auto;
-    width: 710 rpx;
-    height: 75 rpx;
+    width: 710rpx;
+    height: 75rpx;
     background-color: #FFFFFF;
     display: flex;
     align-items: center;
-    border-radius: 10 rpx;
-    padding: 25 rpx 0 rpx;
-    
+    border-radius: 10rpx;
+    padding: 25rpx 0rpx;
+
     .rates {
-      font-size: 26 rpx;
+      font-size: 26rpx;
       color: #333333;
-      margin-left: 25 rpx;
-      margin-right: 22 rpx;
+      margin-left: 25rpx;
+      margin-right: 22rpx;
     }
-    
+
     .score {
-      padding-top: 5 rpx;
-      font-size: 26 rpx;
+      padding-top: 5rpx;
+      font-size: 26rpx;
       font-weight: 500;
       color: #F43131;
-      margin-left: 15 rpx;
+      margin-left: 15rpx;
     }
   }
 </style>

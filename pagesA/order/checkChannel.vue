@@ -6,7 +6,7 @@
     <!-- #ifdef H5 -->
     <image :src="'/static/client/check_by_scan.jpg'|domain" @click="scanFn" class="scan" v-if="iswx" />
     <!-- #endif -->
-    
+
     <image :src="'/static/client/check_by_code.jpg'|domain" @click="toCode" class="code" />
   </div>
 </template>
@@ -21,13 +21,13 @@ export default {
   name: 'checkChannel',
   data () {
     return {
-      iswx: isWeiXin(),
+      iswx: isWeiXin()
     }
   },
   methods: {
     toCode () {
       uni.navigateTo({
-        url: '/pagesA/order/checkByCode',
+        url: '/pagesA/order/checkByCode'
       })
     },
     scanFn () {
@@ -40,14 +40,14 @@ export default {
 
         if (act === 'IsVirtualOrderCheck' && params.Order_Code) {
           uni.navigateTo({
-            url: '/pagesA/order/checkOrderInfo?Order_Code=' + params.Order_Code,
+            url: '/pagesA/order/checkOrderInfo?Order_Code=' + params.Order_Code
           })
         } else {
           error('参数有误')
         }
       })
-    },
-  },
+    }
+  }
 }
 </script>
 
@@ -56,19 +56,19 @@ export default {
     height: 100vh;
     background: white;
     padding-top: 120rpx;
-    
+
     .scan, .code {
       width: 750rpx;
       height: 350rpx;
     }
-    
+
     .scan {
       /*margin-top: 120rpx;*/
       margin-bottom: 70rpx;
     }
-    
+
     .code {
-    
+
     }
   }
 </style>

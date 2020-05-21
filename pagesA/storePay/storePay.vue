@@ -10,7 +10,7 @@
         {{info.User_Money}}
       </view>
     </view>
-    
+
     <view class="inputs">
       <image :src="'/static/client/check/money.png'|domain" class="image"></image>
       <input class="input" placeholder="请输入消费金额" type="text" v-model="money">
@@ -39,7 +39,7 @@ export default {
       info: {},
       passwd: '',
       money: '',
-      isClicked: false,
+      isClicked: false
     }
   },
   methods: {
@@ -47,12 +47,12 @@ export default {
       if (this.isClicked) {
         return
       }
-      
+
       this.isClicked = true
       if (this.passwd == '') {
         uni.showToast({
           title: '密码不能为空',
-          icon: 'none',
+          icon: 'none'
         })
         this.isClicked = false
         return
@@ -60,40 +60,40 @@ export default {
       if (this.money == '' || isNaN(this.money) || this.money < 0) {
         uni.showToast({
           title: '输入金额有误',
-          icon: 'none',
+          icon: 'none'
         })
         this.isClicked = false
         return
       }
       storeConsume({
         passwd: this.passwd,
-        money: this.money,
+        money: this.money
       }).then(res => {
         uni.showToast({
           title: res.msg,
-          duration: 1500,
+          duration: 1500
         })
         setTimeout(() => {
           this.isClicked = false
           uni.navigateBack({
-            delta: 1,
+            delta: 1
           })
         }, 1500)
       }, err => {
         this.isClicked = false
         uni.showToast({
           title: err.msg,
-          icon: 'none',
+          icon: 'none'
         })
       })
-    },
+    }
   },
   onShow () {
     get_user_info().then(res => {
       this.info = res.data
     }, err => {
     }).catch()
-  },
+  }
 }
 </script>
 
@@ -103,19 +103,19 @@ export default {
     background-color: #FFFFFF !important;
     min-height: 100vh;
   }
-  
+
   .yue {
     width: 650rpx;
     height: 300rpx;
     margin: 0 auto;
     padding-top: 44rpx;
     position: relative;
-    
+
     .image {
       width: 100%;
       height: 100%;
     }
-    
+
     .yueq {
       position: absolute;
       top: 83rpx;
@@ -125,7 +125,7 @@ export default {
       line-height: 27rpx;
       color: #FFFFFF;
     }
-    
+
     .pricsw {
       position: absolute;
       top: 144rpx;
@@ -137,7 +137,7 @@ export default {
       color: #FFFFFF;
     }
   }
-  
+
   .inputs {
     margin-top: 40rpx;
     height: 101rpx;
@@ -148,12 +148,12 @@ export default {
     border-bottom: 2rpx solid #F4F4F4;
     display: flex;
     align-items: center;
-    
+
     .image {
       width: 34rpx;
       height: 40rpx;
     }
-    
+
     .input {
       margin-left: 19rpx;
       width: 100%;
@@ -161,7 +161,7 @@ export default {
       line-height: 101rpx;
     }
   }
-  
+
   .queren {
     width: 648rpx;
     height: 84rpx;
@@ -176,7 +176,7 @@ export default {
     color: #FFFFFF;
     font-weight: 400;
   }
-  
+
   .zhu {
     margin: 0 auto;
     margin-top: 28rpx;

@@ -59,7 +59,7 @@ import {
   getDisRecordList,
   getManageRecordList,
   getNobiRecordList,
-  getShaRecordList,
+  getShaRecordList
 } from '../../common/fetch.js'
 
 export default {
@@ -71,7 +71,7 @@ export default {
       pageSize: 5,
       pro: [],
       index: -1,
-      totalCount: 0,
+      totalCount: 0
     }
   },
   onShow () {
@@ -87,7 +87,7 @@ export default {
     uni.getSystemInfo({
       success: function (res) {
         that.height = res.screenHeight - 68
-      },
+      }
     })
   },
   onReachBottom () {
@@ -107,7 +107,7 @@ export default {
     geDetail () {
       const data = {
         page: this.page,
-        pageSize: this.pageSize,
+        pageSize: this.pageSize
       }
       if (this.index == 0) {
         getDisRecordList(data).then(res => {
@@ -153,8 +153,8 @@ export default {
 
         })
       }
-    },
-  },
+    }
+  }
 }
 </script>
 
@@ -163,7 +163,7 @@ export default {
     background-color: #F8F8F8 !important;
     min-height: 100vh;
     box-sizing: border-box;
-    
+
     .nav {
       padding: 0rpx 70rpx;
       padding-left: 0rpx;
@@ -180,7 +180,7 @@ export default {
       z-index: 999;
       top: 0rpx;
       left: 0rpx;
-      
+
       .views {
         width: 150rpx;
         height: 65rpx;
@@ -190,7 +190,7 @@ export default {
         text-align: center;
         position: relative;
       }
-      
+
       .checked {
         &:after {
           content: '';
@@ -202,13 +202,13 @@ export default {
           background-color: #F43131;
         }
       }
-      
+
       .marginLeft {
         margin-left: 107rpx;
         margin-right: 107rpx;
       }
     }
-    
+
     .order {
       width: 710rpx;
       margin: 0 auto;
@@ -220,22 +220,22 @@ export default {
       border-radius: 20rpx;
       padding-bottom: 30rpx;
       margin-bottom: 10px;
-      
+
       & > view {
         //height: 50rpx;
         line-height: 50rpx;
-        
+
         text {
           color: #666666;
         }
-        
+
         .price {
           color: #F43131;
         }
       }
     }
   }
-  
+
   .defaults {
     margin: 0 auto;
     width: 640rpx;

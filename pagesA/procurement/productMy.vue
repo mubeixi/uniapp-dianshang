@@ -9,7 +9,7 @@
           在售产品
         </view>
       </view>
-      
+
       <view @click="changIndex(2)" class="topAll">
         <view class="ulDiv">
           <image class="imgHund" src="/static/procurement/zai.png"></image>
@@ -18,7 +18,7 @@
           库存紧张
         </view>
       </view>
-      
+
       <view @click="changIndex(3)" class="topAll">
         <view class="ulDiv">
           <image class="imgHund" src="/static/procurement/zai.png"></image>
@@ -27,7 +27,7 @@
           统计价值
         </view>
       </view>
-      
+
       <view @click="changIndex(4)" class="topAll">
         <view class="ulDiv">
           <image class="imgHund" src="/static/procurement/zai.png"></image>
@@ -36,9 +36,9 @@
           {{is_refund && is_fourth?'取消':'退货'}}
         </view>
       </view>
-    
+
     </view>
-    
+
     <view class="marginAuto">
       <template v-if="index == 4">
         <block v-if="productMy.length > 0">
@@ -58,7 +58,7 @@
                   规格库存
                 </view>
                 <view v-else>
-                
+
                 </view>
                 <view class="allPrice">
                   <view v-if="!(is_refund&&is_fourth)">
@@ -92,7 +92,7 @@
                   规格库存
                 </view>
                 <view v-else>
-                
+
                 </view>
                 <view class="allPrice">
                   <view v-if="!(is_refund&&is_fourth)">
@@ -131,7 +131,7 @@
                   规格库存
                 </view>
                 <view v-else>
-                
+
                 </view>
                 <view class="allPrice">
                   <view v-if="!(is_refund&&is_fourth)">
@@ -165,7 +165,7 @@
                   规格库存
                 </view>
                 <view v-else>
-                
+
                 </view>
                 <view class="allPrice">
                   <view v-if="!(is_refund&&is_fourth)">
@@ -182,14 +182,14 @@
         </div>
       </template>
     </view>
-    
+
     <view style="height: 86rpx;width: 750rpx;" v-if="index==3">
-    
+
     </view>
     <view @click="allSum" class="buttonLast" v-if="index==3">
       统计价值
     </view>
-    
+
     <!--  遮罩层	-->
     <view :hidden="isHiddenMask" @click="hiddenMask" class="mask"></view>
     <!--  产品属性弹窗	-->
@@ -319,7 +319,7 @@
       <view class="sku-title">修改渠道</view>
       <view class="sku-content" style="padding-left:53rpx;">
         <view @click="active_id = 0" class="skulist">
-          
+
           <image class="selected" mode="" src="/static/procurement/selected.png" v-if="active_id == 0"></image>
           <view class="nochecked" v-else></view>
           <view>平台退货</view>
@@ -381,7 +381,7 @@ export default {
         count: 0, // 选择属性的库存
         // showimg: '',      //选择属性的图片(用产品图片代替)
         qty: 1, // 退货数量
-        productDetail_price: 0,
+        productDetail_price: 0
       },
       submit_flag: true, // 提交按钮是否可以用
       // amount: 0 , // 用户要退货的总数量
@@ -396,11 +396,11 @@ export default {
       purchase_store_sn: '', // 门店编号,
       isClicked: false,
       stock_low: 0, // 是否查询的是低库存产品
-      mySkuList: [],
+      mySkuList: []
     }
   },
   components: {
-    popupLayer,
+    popupLayer
   },
   computed: {
     ...mapGetters(['Stores_ID', 'initData']),
@@ -420,14 +420,14 @@ export default {
         })
       }
       return amount
-    },
+    }
   },
   watch: {
     amount: function (val) {
       if (val == 0) {
         this.$refs.detail.close()
       }
-    },
+    }
   },
   onShow () {
     // ls.remove('productMy')
@@ -459,11 +459,11 @@ export default {
     showSkuList (id) {
       const data = {
         store_id: this.Stores_ID,
-        product_id: id,
+        product_id: id
       }
       getProductAtts(data, {
         tip: '加载中',
-        mask: true,
+        mask: true
       }).then(res => {
         this.$refs.skuRef.show()
         this.mySkuList = res.data
@@ -478,7 +478,7 @@ export default {
     },
     getStoreDetail () {
       storeInit({
-        store_id: this.Stores_ID,
+        store_id: this.Stores_ID
       }).then(res => {
         this.storeDetail = res.data
       })
@@ -489,16 +489,16 @@ export default {
       const pid = ls.get('pid')
       if (pid == 0) {
         uni.navigateTo({
-          url: '/pagesA/selectChannel/selectChannel?page=productmy',
+          url: '/pagesA/selectChannel/selectChannel?page=productmy'
         })
       } else {
         if (this.initData.same_level_purchase == 0 && this.storeDetail.type_id <= this.storeDetail.parent_store.type_id) {
           uni.navigateTo({
-            url: '/pagesA/selectChannel/selectChannel?page=productmy',
+            url: '/pagesA/selectChannel/selectChannel?page=productmy'
           })
         } else {
           uni.navigateTo({
-            url: '/pagesA/selectChannel/selectChannel?page=productmy&pid=' + pid,
+            url: '/pagesA/selectChannel/selectChannel?page=productmy&pid=' + pid
           })
         }
       }
@@ -533,20 +533,20 @@ export default {
           } else {
             if (arr[i].Product_Attr_ID) {
               prod_json[arr[i].Products_ID].attr = {
-                [arr[i].Product_Attr_ID]: arr[i].myqty,
+                [arr[i].Product_Attr_ID]: arr[i].myqty
               }
             }
           }
         } else {
           prod_json[arr[i].Products_ID] = {
-            num: arr[i].myqty,
+            num: arr[i].myqty
           }
           if (prod_json[arr[i].Products_ID].attr) {
             prod_json[arr[i].Products_ID].attr[arr[i].Product_Attr_ID] = arr[i].myqty
           } else {
             if (arr[i].Product_Attr_ID) {
               prod_json[arr[i].Products_ID].attr = {
-                [arr[i].Product_Attr_ID]: arr[i].myqty,
+                [arr[i].Product_Attr_ID]: arr[i].myqty
               }
             }
           }
@@ -555,7 +555,7 @@ export default {
       if (this.active_id == 1 && !this.purchase_store_sn) {
         uni.uni.showToast({
           title: '门店编号必传',
-          icon: 'none',
+          icon: 'none'
         })
         return
       }
@@ -563,10 +563,10 @@ export default {
         store_id: this.Stores_ID,
         prod_json: JSON.stringify(prod_json),
         purchase_type: this.active_id == 0 ? 'shop' : 'store',
-        purchase_store_sn: this.purchase_store_sn,
+        purchase_store_sn: this.purchase_store_sn
       }).then(res => {
         uni.showToast({
-          title: res.msg,
+          title: res.msg
         })
         // 关闭遮罩
         this.isHiddenMask = true
@@ -574,7 +574,7 @@ export default {
         this.isChangeChannel = false
         setTimeout(() => {
           uni.navigateTo({
-            url: '/pagesA/procurement/refundRecords',
+            url: '/pagesA/procurement/refundRecords'
           })
         }, 500)
       })
@@ -589,7 +589,7 @@ export default {
       if (pro.myqty == 1) {
         uni.showToast({
           title: '数量最少为1，您可以删除',
-          icon: 'none',
+          icon: 'none'
         })
         return
       }
@@ -601,7 +601,7 @@ export default {
       if (pro.prod_stock == 0) {
         uni.showToast({
           title: '购买数量已超库存',
-          icon: 'none',
+          icon: 'none'
         })
         return
       }
@@ -613,7 +613,7 @@ export default {
       if (num.myqty == 1) {
         uni.showToast({
           title: '数量最少为1，您可以删除',
-          icon: 'none',
+          icon: 'none'
         })
         return
       }
@@ -637,7 +637,7 @@ export default {
       }
       uni.showToast({
         title: '该规格已经没有库存',
-        icon: 'none',
+        icon: 'none'
       })
     },
     handClicked () {
@@ -682,7 +682,7 @@ export default {
       if (prosku.skuvaljosn && !this.postData.attr_id) {
         uni.showToast({
           title: '请选择规格',
-          icon: 'none',
+          icon: 'none'
         })
         return
       }
@@ -722,7 +722,7 @@ export default {
         for (const i in item.skujosn) {
           skujosn_new.push({
             sku: i,
-            val: skujosn[i],
+            val: skujosn[i]
           })
         }
         item.skujosn_new = skujosn_new
@@ -803,7 +803,7 @@ export default {
       } else {
         uni.showToast({
           title: '退货数量不能大于库存量',
-          icon: 'none',
+          icon: 'none'
         })
         this.postData.qty = this.postData.count
       }
@@ -815,7 +815,7 @@ export default {
       } else {
         uni.showToast({
           title: '退货数量不能小于1',
-          icon: 'none',
+          icon: 'none'
         })
         this.postData.qty = 1
       }
@@ -839,13 +839,13 @@ export default {
       if (arr.length <= 0) {
         uni.showToast({
           title: '还未选择商品',
-          icon: 'none',
+          icon: 'none'
         })
         return
       }
       const data = {
         store_id: this.Stores_ID,
-        prod_ids: JSON.stringify(arr),
+        prod_ids: JSON.stringify(arr)
       }
       getStoreProdMoney(data).then(res => {
         this.prod_money = res.data.prod_money
@@ -864,7 +864,7 @@ export default {
       const data = {
         store_id: this.Stores_ID,
         page: this.page,
-        pageSize: this.pageSize,
+        pageSize: this.pageSize
       }
       if (this.stock_low != 0) {
         data.stock_low = 1
@@ -877,7 +877,7 @@ export default {
         for (const i in this.productlist) {
           this.checked.push({
             index: i,
-            checked: false,
+            checked: false
           })
         }
         for (let i = 0; i < this.checkedData.length; i++) {
@@ -957,8 +957,8 @@ export default {
       } else if (this.index == 4) {
         this.productMy = ls.get('productMy')
       }
-    },
-  },
+    }
+  }
 }
 </script>
 
@@ -971,33 +971,33 @@ export default {
     align-items: center;
     justify-content: space-around;
   }
-  
+
   .topAll {
     width: 120rpx;
     text-align: center;
-    
+
     .redColor {
       color: $wzw-primary-color;
     }
   }
-  
+
   .imgHund {
     width: 100%;
     height: 100%;
   }
-  
+
   .ulDiv {
     width: 78rpx;
     height: 78rpx;
     margin: 0 auto;
   }
-  
+
   .font-13 {
     font-size: 13px;
     color: #333333;
     margin-top: 14rpx;
   }
-  
+
   .marginAuto {
     width: 710rpx;
     margin: 0 auto;
@@ -1006,25 +1006,25 @@ export default {
     box-sizing: border-box;
     padding: 20rpx 26rpx 18rpx 10rpx;
   }
-  
+
   .blockDiv {
     width: 664rpx;
     margin-bottom: 30rpx;
     height: 220rpx;
     display: flex;
   }
-  
+
   .imgDiv {
     width: 220rpx;
     height: 220rpx;
   }
-  
+
   .textRight {
     padding-top: 16rpx;
     padding-left: 19rpx;
     width: 425rpx;
   }
-  
+
   .productName {
     width: 100%;
     height: 60rpx;
@@ -1036,13 +1036,13 @@ export default {
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
   }
-  
+
   .skuMy {
     color: #666666;
     font-size: 12px;
     margin-top: 28rpx;
   }
-  
+
   .bottomDiv {
     margin-top: 20rpx;
     height: 46rpx;
@@ -1050,7 +1050,7 @@ export default {
     align-content: center;
     justify-content: space-between;
   }
-  
+
   .skuCount {
     width: 120rpx;
     height: 46rpx;
@@ -1060,35 +1060,35 @@ export default {
     text-align: center;
     line-height: 46rpx;
   }
-  
+
   .allPrice {
     font-size: 24rpx;
     color: #666666;
     height: 46rpx;
     line-height: 46rpx;
   }
-  
+
   .span1 {
     color: #F43131;
   }
-  
+
   .span2 {
     color: #F43131;
     font-size: 28rpx;
     margin-left: 4rpx;
   }
-  
+
   .mbxa {
     display: flex;
     align-items: center;
     margin-right: 10rpx;
-    
+
     .imgs {
       width: 34rpx;
       height: 34rpx;
     }
   }
-  
+
   .buttonLast {
     width: 750rpx;
     height: 86rpx;
@@ -1101,7 +1101,7 @@ export default {
     bottom: 0px;
     left: 0px;
   }
-  
+
   .mask {
     background-color: rgba(0, 0, 0, .5);
     position: fixed;
@@ -1111,7 +1111,7 @@ export default {
     height: 100%;
     z-index: 1000;
   }
-  
+
   .sku-pop {
     position: fixed;
     top: 50%;
@@ -1120,7 +1120,7 @@ export default {
     width: 526rpx;
     transform: translate(-50%, -50%);
     border-radius: 10rpx;
-    
+
     .sku-title {
       height: 60rpx;
       line-height: 60rpx;
@@ -1131,23 +1131,23 @@ export default {
       border-top-left-radius: 10rpx;
       border-top-right-radius: 10rpx;
     }
-    
+
     .sku-content {
       padding: 40rpx 46rpx 34rpx 40rpx;
       background-color: #fff;
       border-bottom-left-radius: 10rpx;
       border-bottom-right-radius: 10rpx;
-      
+
       .skulist {
         margin-bottom: 30rpx;
         display: flex;
         align-items: center;
-        
+
         &.change-btn {
           padding-top: 43rpx;
           justify-content: center;
         }
-        
+
         .selected,
         .nochecked {
           display: block;
@@ -1155,13 +1155,13 @@ export default {
           height: 40rpx;
           margin-right: 23rpx;
         }
-        
+
         .nochecked {
           box-sizing: border-box;
           border: 2rpx solid rgba(214, 214, 214, 1);
           border-radius: 3px;
         }
-        
+
         .input {
           width: 420rpx;
           height: 60rpx;
@@ -1171,7 +1171,7 @@ export default {
           box-sizing: border-box;
           line-height: 36rpx;
         }
-        
+
         .btn {
           width: 130rpx;
           height: 50rpx;
@@ -1180,35 +1180,35 @@ export default {
           background-color: #E9E9E9;
           font-size: 24rpx;
         }
-        
+
         .cancel {
           color: #666;
           margin-right: 25rpx;
         }
-        
+
         .confirm {
           color: #fff;
           background-color: $wzw-primary-color;
         }
-        
+
         .sku-name {
           color: #333;
           font-size: 24rpx;
           margin-right: 26rpx;
         }
-        
+
         .sku-item {
           display: flex;
           align-items: center;
           color: #666;
           flex: 1;
           flex-wrap: wrap;
-          
+
           .img {
             width: 27rpx;
             height: 32rpx;
           }
-          
+
           .sku {
             padding: 0 10rpx;
             height: 46rpx;
@@ -1220,12 +1220,12 @@ export default {
             margin-right: 13rpx;
             border-radius: 5rpx;
           }
-          
+
           .active {
             background-color: $wzw-primary-color;
             color: #fff;
           }
-          
+
           .handle {
             width: 50rpx;
             height: 45rpx;
@@ -1235,7 +1235,7 @@ export default {
             color: #777;
             background: #f6f6f6;
           }
-          
+
           .pro-num {
             margin: 0 15rpx;
             font-size: 24rpx;
@@ -1243,13 +1243,13 @@ export default {
           }
         }
       }
-      
+
       .sku-btns {
         display: flex;
         justify-content: center;
         align-items: center;
         margin-top: 60rpx;
-        
+
         .btn {
           width: 130rpx;
           height: 50rpx;
@@ -1257,47 +1257,47 @@ export default {
           line-height: 50rpx;
           font-size: 24rpx;
         }
-        
+
         .cancel {
           background: #e9e9e9;
           color: #666;
           margin-right: 25rpx;
         }
-        
+
         .confirm {
           background-color: $wzw-primary-color;
           color: #fff;
         }
-        
+
         .disabled {
           background: #999;
         }
       }
     }
-    
+
     .priceSum {
       text-align: center;
       padding: 68rpx 0 104rpx;
       background-color: #fff;
-      
+
       .title {
         font-size: 28rpx;
         margin-bottom: 28rpx;
       }
-      
+
       .icon {
         color: $wzw-primary-color;
         font-size: 26rpx;
         margin-right: 10rpx;
       }
-      
+
       .span {
         color: $wzw-primary-color;
         font-size: 36rpx;
       }
     }
   }
-  
+
   .back-btn {
     height: 50rpx;
     width: 130rpx;
@@ -1307,7 +1307,7 @@ export default {
     border-radius: 25rpx;
     line-height: 50rpx;
   }
-  
+
   .check {
     position: fixed;
     bottom: 0;
@@ -1319,7 +1319,7 @@ export default {
     color: #333;
     background-color: #fff;
     box-shadow: 0px 0px 22px 0px rgba(4, 0, 0, 0.12);
-    
+
     .check-msg {
       flex: 1;
       display: flex;
@@ -1327,23 +1327,23 @@ export default {
       justify-content: center;
       font-size: 24rpx;
       color: #333;
-      
+
       .num {
         color: $wzw-primary-color;
         fong-size: 28rpx;
       }
-      
+
       .img {
         width: 17rpx;
         height: 14rpx;
         margin-left: 12rpx;
       }
-      
+
       .turn {
         transform: rotate(180deg);
       }
     }
-    
+
     .submit {
       width: 210rpx;
       height: 100%;
@@ -1354,44 +1354,44 @@ export default {
       text-align: center;
     }
   }
-  
+
   .mxdetail {
     padding: 20rpx;
     max-height: 70vh;
     overflow-y: scroll;
-    
+
     .product {
       display: flex;
       margin-bottom: 40rpx;
-      
+
       .proImg {
         width: 190rpx;
         height: 190rpx;
-        
+
         .img {
           width: 100%;
           height: 100%;
         }
       }
-      
+
       .proMsg {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         flex: 1;
         margin-left: 20rpx;
-        
+
         .proName {
           overflow: hidden;
           margin-bottom: 20rpx;
-          
+
           .name {
             width: 440rpx;
             word-wrap: break-word;
             font-size: 24rpx;
             float: left;
           }
-          
+
           .del {
             float: right;
             width: 26rpx;
@@ -1399,35 +1399,35 @@ export default {
             margin-left: 34rpx;
           }
         }
-        
+
         .attrInfo {
           display: inline-block;
           color: #666;
           font-size: 22rpx;
           border-radius: 5rpx;
           margin-bottom: 24rpx;
-          
+
           .attrVal {
             display: inline-block;
             padding: 12rpx 16rpx;
             background-color: #FFF5F5;
           }
         }
-        
+
         .proPrice {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          
+
           .newPrice {
             font-size: 24rpx;
             color: $wzw-primary-color;
-            
+
             .number {
               font-size: 30rpx;
             }
           }
-          
+
           .oldPrice {
             flex: 1;
             color: #afafaf;
@@ -1435,7 +1435,7 @@ export default {
             text-decoration: line-through;
             margin-left: 20rpx;
           }
-          
+
           .amount {
             display: flex;
             height: 45rpx;
@@ -1443,7 +1443,7 @@ export default {
             width: 160rpx;
             border: 2rpx solid #D1D1D1;
             box-sizing: border-box;
-            
+
             .icon {
               font-size: 32rpx;
               color: #777;
@@ -1452,7 +1452,7 @@ export default {
               justify-content: center;
               align-items: center;
             }
-            
+
             .num {
               flex: 1;
               color: #777;
@@ -1466,28 +1466,28 @@ export default {
       }
     }
   }
-  
+
   .defaults {
     margin: 0 auto;
     width: 640rpx;
     height: 480rpx;
     margin-top: 100rpx;
   }
-  
+
   .mxdetail {
     font-size: 28rpx;
     line-height: 80rpx;
     padding: 20rpx 30rpx;
     padding-bottom: 90rpx;
-    
+
     .mxtitle {
       font-size: 28rpx;
       text-align: center;
     }
-    
+
     .mxitem {
       border-bottom: 1px solid #eaeaea;
-      
+
       .num {
         float: right;
       }

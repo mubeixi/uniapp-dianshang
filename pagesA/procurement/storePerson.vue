@@ -1,8 +1,8 @@
 <template>
   <view @click="commonClick" class="bgColor-white">
-    
+
     <!-- <page-title title="个人信息" rightHidden="true" bgcolor="#F8F8F8"></page-title> -->
-    
+
     <view class="msg" v-if="storeData.Stores_ImgPath">
       <view class="item">
         <view class="item-name">门店图片</view>
@@ -31,7 +31,7 @@
           <image :src="'/static/client/right.png'|domain" mode=""></image>
         </view>
       </view>
-      
+
       <view @click="updateMy(1)" class="item">
         <view class="item-name">门店地址</view>
         <view class="info">
@@ -59,7 +59,7 @@ import {
   get_Users_ID,
   getStoreDetail,
   updateStoreInfo,
-  uploadImage,
+  uploadImage
 } from '../../common/fetch'
 import { apiBaseUrl } from '../../common/env.js'
 import { pageMixin } from '../../common/mixin'
@@ -71,11 +71,11 @@ export default {
       imgs: [],
       tem_Shop_Logo: '',
       User_HeadImg: '',
-      storeData: [],
+      storeData: []
     }
   },
   computed: {
-    ...mapGetters(['Stores_ID']),
+    ...mapGetters(['Stores_ID'])
   },
   onShow () {
     this.getStoreDetail()
@@ -83,7 +83,7 @@ export default {
   methods: {
     updateMy (index) {
       uni.navigateTo({
-        url: '/pagesA/procurement/storePersonEdit?type=' + index,
+        url: '/pagesA/procurement/storePersonEdit?type=' + index
       })
     },
     getStoreDetail () {
@@ -129,11 +129,11 @@ export default {
               uploadImage({ image: imgs }).then(result => {
                 updateStoreInfo({
                   store_img: result.data.path,
-                  store_id: that.Stores_ID,
+                  store_id: that.Stores_ID
                 }).then(res => {
                   uni.showToast({
                     title: '修改成功',
-                    icon: 'success',
+                    icon: 'success'
                   })
                   getStoreDetail({ store_id: _this.Stores_ID }).then(res => {
                     _this.User_HeadImg = res.data.Stores_ImgPath
@@ -150,7 +150,7 @@ export default {
             fail (ret) {
             },
             complete (ret) {
-            },
+            }
           })
           // #endif
 
@@ -167,11 +167,11 @@ export default {
               that.tem_Shop_Logo = uploadFileRes.data.path
               updateStoreInfo({
                 store_img: that.tem_Shop_Logo,
-                store_id: that.Stores_ID,
+                store_id: that.Stores_ID
               }).then(res => {
                 uni.showToast({
                   title: '修改成功',
-                  icon: 'success',
+                  icon: 'success'
                 })
                 getStoreDetail({ store_id: _this.Stores_ID }).then(res => {
                   _this.User_HeadImg = res.data.Stores_ImgPath
@@ -180,7 +180,7 @@ export default {
                 // that.User_HeadImg = res.data.User_HeadImg;
                 // that.userInfo.User_HeadImg = res.data.User_HeadImg;
               })
-            },
+            }
           })
           // #endif
           // for(var i in that.imgs){
@@ -188,10 +188,10 @@ export default {
           // }
         },
         fail (e) {
-        },
+        }
       })
-    },
-  },
+    }
+  }
 }
 </script>
 
@@ -199,21 +199,21 @@ export default {
   .bgColor-white {
     height: 100vh;
   }
-  
+
   .msg {
     padding: 0 22rpx;
-    
+
     .item {
       display: flex;
       align-items: center;
       padding: 39rpx 0;
       border-bottom: 1px solid #E3E3E3;
-      
+
       .item-name {
         font-size: 30rpx;
         color: #333;
       }
-      
+
       .info {
         display: flex;
         align-items: center;
@@ -223,20 +223,20 @@ export default {
         justify-content: flex-end;
         font-size: 26rpx;
         color: #999999;
-        
+
         image {
           width: 88rpx;
           height: 88rpx;
           border-radius: 44rpx;
         }
       }
-      
+
       .go {
         display: flex;
         align-items: center;
         width: 15rpx;
         height: 23rpx;
-        
+
         image {
           width: 100%;
           height: 100%;

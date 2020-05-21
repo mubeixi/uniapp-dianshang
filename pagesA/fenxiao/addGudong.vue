@@ -34,27 +34,27 @@ export default {
     return {
       arr: {
         apply_name: '',
-        apply_mobile: '',
-      },
+        apply_mobile: ''
+      }
     }
   },
   methods: {
     goRecord () {
       uni.navigateTo({
-        url: '/pagesA/fenxiao/regionRecord?index=2',
+        url: '/pagesA/fenxiao/regionRecord?index=2'
       })
     },
     submit () {
       if (!this.arr.apply_name) {
         uni.showToast({
           title: '请输入姓名',
-          icon: 'none',
+          icon: 'none'
         })
         return
       } else if (!(/^1[3456789]\d{9}$/.test(this.arr.apply_mobile))) {
         uni.showToast({
           title: '手机号输入错误，请重新输入',
-          icon: 'none',
+          icon: 'none'
         })
         return
       }
@@ -64,11 +64,11 @@ export default {
       shaApply(info).then(res => {
         uni.showToast({
           title: res.msg,
-          icon: 'none',
+          icon: 'none'
         })
         setTimeout(function () {
           uni.navigateTo({
-            url: '/pagesA/fenxiao/gudong',
+            url: '/pagesA/fenxiao/gudong'
           })
         }, 1000)
       }).catch(e => {
@@ -79,11 +79,11 @@ export default {
       if (!(/^1[3456789]\d{9}$/.test(this.arr.apply_mobile))) {
         uni.showToast({
           title: '手机号输入错误，请重新输入',
-          icon: 'none',
+          icon: 'none'
         })
       }
-    },
-  },
+    }
+  }
 }
 </script>
 
@@ -92,7 +92,7 @@ export default {
     background-color: #FFFFFF !important;
     min-height: 100vh;
   }
-  
+
   .three {
     height: 88rpx;
     line-height: 88rpx;
@@ -101,38 +101,38 @@ export default {
     border-bottom: 1px solid #E7E7E7;
     display: flex;
     align-items: center;
-    
+
     .haha {
       font-size: 30rpx;
       color: #333333;
       margin-right: 42rpx;
     }
-    
+
     .inputs {
       height: 88rpx;
       line-height: 88rpx;
       font-size: 28rpx;
       color: #333333;
     }
-    
+
     .place {
       font-size: 28rpx;
       color: #CAC8C8;
     }
-    
+
     .myRadio {
       height: 88rpx;
       display: flex;
-      
+
       .myRadioQ {
         height: 88rpx;
         display: flex;
         margin-right: 17rpx;
-        
+
         .radio {
           transform: scale(0.7);
         }
-        
+
         .mbx {
           font-size: 28rpx;
           color: #777777;
@@ -140,9 +140,9 @@ export default {
         }
       }
     }
-    
+
   }
-  
+
   .four {
     width: 490rpx;
     height: 75rpx;
@@ -155,7 +155,7 @@ export default {
     font-size: 30rpx;
     color: #FFFFFF;
   }
-  
+
   .five {
     height: 23rpx;
     line-height: 23rpx;
@@ -165,7 +165,7 @@ export default {
     font-size: 24rpx;
     font-weight: 500;
     color: rgba(153, 153, 153, 1);
-    
+
     .image {
       width: 12rpx;
       height: 20rpx;

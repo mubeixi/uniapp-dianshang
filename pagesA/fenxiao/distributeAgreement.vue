@@ -4,11 +4,11 @@
       <!-- #ifdef H5||APP-PLUS -->
       <div class="p_detail_des" v-html="formatRichTexts(pro.dis_config.Distribute_Agreement)"></div>
       <!-- #endif -->
-      
+
       <!-- #ifdef MP -->
       <rich-text :nodes="pro.dis_config.Distribute_Agreement|formatRichText" class="p_detail_des"></rich-text>
       <!-- #endif -->
-    
+
     </div>
   </view>
 </template>
@@ -21,7 +21,7 @@ export default {
   mixins: [pageMixin],
   data () {
     return {
-      pro: [],
+      pro: []
     }
   },
   onLoad () {
@@ -68,7 +68,7 @@ export default {
       // newContent = newContent.replace(/>[\s]*</gi, "><");
 
       return newContent
-    },
+    }
   },
   filters: {
     formatRichText (html) { // 控制小程序中图片大小
@@ -97,8 +97,8 @@ export default {
       // newContent = newContent.replace(/>[\s]*</gi, "><");
 
       return newContent
-    },
-  },
+    }
+  }
 }
 </script>
 
@@ -108,19 +108,19 @@ export default {
       width: 100%;
       font-size: 28rpx;
       color: #999;
-      
+
       img {
         width: 100% !important;
       }
     }
   }
-  
+
   .p_detail_title {
     padding: 30rpx 20rpx;
     color: #333;
     font-size: 30rpx;
   }
-  
+
   /* 商品详情 end */
   /* 遮罩层 */
   .modal {

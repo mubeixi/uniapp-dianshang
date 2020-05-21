@@ -40,7 +40,7 @@
                       <div @click="plusFn" class="clicks" style="color: #999;background: #e7e7e7">+</div>
                     </div>
                   </div>
-                
+
                 </div>
               </div>
             </div>
@@ -48,10 +48,10 @@
           <div class="price-box">
             总计:<span class="danger-color">￥<span class="total_num font16">{{apply.Order_TotalPrice}}</span></span>
           </div>
-        
+
         </div>
       </div>
-    
+
     </div>
     <div class="sendbox">
       <div class="title"><span class="tip"></span><span class="text">发货信息</span></div>
@@ -113,7 +113,7 @@
           <div @click="cancelRefuseApply" class="action-btn btn-cancel">取消</div>
           <div @click="refuseApply" class="btn-sub action-btn">确定</div>
         </div>
-      
+
       </div>
     </wzw-dialog>
   </div>
@@ -127,7 +127,7 @@ import {
   getStoreList,
   getStorePurchaseSales,
   sendStorePurchaseApply,
-  subStorePurchaseApply,
+  subStorePurchaseApply
 } from '../../common/fetch'
 import { error, toast } from '../../common'
 import { emptyObject, findArrayIdx } from '../../common/tool'
@@ -153,15 +153,15 @@ export default {
         page: 1,
         finish: false,
         pageSize: 20,
-        totalCount: 0,
-      },
+        totalCount: 0
+      }
     }
   },
   onLoad (options) {
     this.apply_id = options.apply_id
   },
   computed: {
-    ...mapGetters(['Stores_ID']),
+    ...mapGetters(['Stores_ID'])
   },
   methods: {
     showAdress () {
@@ -170,7 +170,7 @@ export default {
         longitude: this.storeInfo.wx_lng,
         success: function () {
 
-        },
+        }
       })
     },
     setCurrentGoods (obj) {
@@ -237,11 +237,11 @@ export default {
       await subStorePurchaseApply({
         order_id,
         receive_id: this.Stores_ID,
-        prod_json: JSON.stringify(prod_info),
+        prod_json: JSON.stringify(prod_info)
       }).then(res => {
         uni.showToast({
           title: res.msg,
-          icon: 'none',
+          icon: 'none'
         })
         call && call()
       }, err => {
@@ -258,13 +258,13 @@ export default {
           ShippingID: this.ShippingID,
           // Express:this.exprss_list[this.exprss_index],
           store_id: this.Stores_ID,
-          order_id: this.apply_id,
+          order_id: this.apply_id
         }
       } else {
         postData = {
           is_need_shipping: this.is_need_shipping,
           store_id: this.Stores_ID,
-          order_id: this.apply_id,
+          order_id: this.apply_id
         }
       }
 
@@ -276,7 +276,7 @@ export default {
         toast('操作成功')
         setTimeout(function () {
           uni.navigateTo({
-            url: '/pagesA/procurement/storeWholesale',
+            url: '/pagesA/procurement/storeWholesale'
           })
         }, 1000)
       }).catch(e => {
@@ -324,7 +324,7 @@ export default {
       }, err => {
 
       })
-    },
+    }
   },
   onReachBottom () {
     this.loadInfo()
@@ -340,7 +340,7 @@ export default {
       this.exprss_list = Object.values(res.data)
       this.exprss_id_list = Object.keys(res.data)
     })
-  },
+  }
 }
 </script>
 
@@ -350,7 +350,7 @@ export default {
     border-radius: 6rpx;
     height: 50rpx;
     display: flex;
-    
+
     .inputq {
       color: black;
       margin: 0 auto;
@@ -361,7 +361,7 @@ export default {
       border-left: 2rpx solid #ccc;
       border-right: 2rpx solid #ccc;
     }
-    
+
     .clicks {
       height: 50rpx;
       line-height: 50rpx;
@@ -369,7 +369,7 @@ export default {
       text-align: center;
     }
   }
-  
+
   .navs {
     z-index: 2;
     position: fixed;
@@ -384,7 +384,7 @@ export default {
     background: #fff;
     font-size: 14px;
     padding: 0 10px;
-    
+
     .nav-item {
       flex: 1;
       /*box-sizing: border-box;*/
@@ -392,37 +392,37 @@ export default {
       /*position: relative;*/
       color: #333;
     }
-    
+
     .nav-item.active {
       color: $wzw-primary-color;
       border-bottom: 2px solid $wzw-primary-color;
     }
   }
-  
+
   .space-box {
     height: 50px;
     width: 100%;
     background: white;
   }
-  
+
   .lists {
     .item {
       margin: 15px;
       background: white;
       border-radius: 4px;
       overflow: hidden;
-      
+
       .head {
-        
+
         .info {
           padding: 10px;
           align-items: center;
           font-size: 14px;
-          
+
           .store-info {
             align-items: center;
           }
-          
+
           .store-pic {
             width: 25px;
             height: 25px;
@@ -432,57 +432,57 @@ export default {
             background-position: center;
             margin-right: 10px;
           }
-          
+
           .store-title {
             margin-right: 10px;
             color: #333;
           }
-          
+
           .action {
             color: $wzw-primary-color;
-            
+
             .action-item {
               text-decoration: underline;
               cursor: pointer;
             }
           }
-          
+
           .order_no {
             margin-left: 30px;
             color: #666;
           }
         }
-        
+
         .status {
           font-size: 12px;
           border-bottom: 1px solid #E6E6E6;
           padding: 10px;
           align-items: center;
-          
+
           .icon-delete {
             width: 14px;
             height: 14px;
           }
-          
+
           .el-icon-delete-solid {
             cursor: pointer;
             color: #999;
-            
+
             &:hover {
               color: #F43131;
             }
           }
         }
       }
-      
+
       .goods-list {
         border-bottom: 1px solid #EDEDED;
-        
+
         .goods {
           display: flex;
           align-items: center;
           padding: 10px;
-          
+
           .l {
             width: 100px;
             height: 100px;
@@ -491,11 +491,11 @@ export default {
             background-color: #f2f2f2;
             background-position: center;
           }
-          
+
           .c {
             flex: 1;
             padding: 0 0 0 10px;
-            
+
             .title {
               font-size: 14px;
               height: 40px;
@@ -504,71 +504,71 @@ export default {
               overflow: hidden;
               text-overflow: ellipsis;
             }
-            
+
             .spec-key {
               background: #FFF5F5;
               font-size: 12px;
               padding: 6px 10px;
               color: #666666;
             }
-            
+
             .numbox {
               color: #333333
             }
           }
-          
+
         }
-        
+
       }
-      
+
       .price-box {
         text-align: right;
         padding: 10px;
         font-size: 14px;
       }
-      
+
       .actions {
         text-align: right;
         padding: 0 10px;
-        
+
         .acion-btn {
           margin-bottom: 10px;
           margin-left: 10px;
         }
-        
+
       }
-      
+
     }
   }
-  
+
   .storeInfoDialog {
     width: 560rpx;
     box-sizing: border-box;
     padding: 10px;
     font-size: 14px;
-    
+
     .row {
       display: flex;
       margin-bottom: 8px;
-      
+
       .label {
         color: #999;
         width: 70px;
       }
-      
+
       .text {
         flex: 1;
         color: #444;
       }
     }
   }
-  
+
   .refuseApplyDialog {
     width: 560rpx;
     box-sizing: border-box;
     padding: 15px;
     font-size: 14px;
-    
+
     .reason {
       font-size: 14px;
       min-height: 200px;
@@ -578,12 +578,12 @@ export default {
       width: auto;
       padding: 10px;
     }
-    
+
     .control {
       margin-top: 15px;
       display: flex;
       justify-content: center;
-      
+
       .action-btn {
         width: 70px;
         height: 36px;
@@ -592,7 +592,7 @@ export default {
         text-align: center;
         color: #666;
         background: #e9e9e9;
-        
+
         &.btn-sub {
           background: $wzw-primary-color;
           color: white;
@@ -601,27 +601,27 @@ export default {
       }
     }
   }
-  
+
   .subbox {
     position: fixed;
     bottom: 0;
     width: 750rpx;
-    
+
     .subbtn {
       border-radius: 0;
     }
   }
-  
+
   .sendbox {
     margin: 10px;
     background: white;
-    
+
     .title {
       border-bottom: 1px solid #eee;
       display: flex;
       align-items: center;
       padding: 10px 0;
-      
+
       .tip {
         display: inline-block;
         width: 4px;
@@ -630,12 +630,12 @@ export default {
         border-radius: 2px;
         margin: 0 10px;
       }
-      
+
       .text {
-      
+
       }
     }
-    
+
     .row {
       font-size: 14px;
       margin: 0 10px;
@@ -650,24 +650,24 @@ export default {
         width: 90px;
         color: #999;
       }
-      
+
       .form-item {
         color: #444;
         flex: 1;
-        
+
         .radio {
           margin-right: 8px;
           font-size: 14px;
         }
-        
+
         &.express {
           text-align: right;
           color: #666;
-          
+
           .uni-input {
             display: inline-block;
           }
-          
+
           .icon-fanhui {
             margin-left: 10px;
             display: inline-block;
@@ -675,7 +675,7 @@ export default {
           }
         }
       }
-      
+
       &:last-child {
         border-bottom: none;
       }

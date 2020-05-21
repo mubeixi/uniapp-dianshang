@@ -14,14 +14,14 @@
       <span class="fz-14-c9">{{storeData.store_mobile}}</span>
       <image class="store-cell" src="/static/cellstore.png" v-if="storeData.store_mobile"></image>
     </div>
-    
+
     <div @click="openLoca(storeData.store_lat,storeData.store_lng)" class="store-line flex flex-vertical-center">
       <span class="store-info">地址</span>
       <span class="fz-14-c9 fz-address">{{storeData.store_province_name}}{{storeData.store_city_name}}{{storeData.store_area_name}}{{storeData.store_address}}<image
       class="store-address" src="/static/addressStore.png" v-if="storeData.store_province_name"></image></span>
-    
+
     </div>
-    
+
     <div class="store-line-btm">
       主图
     </div>
@@ -35,15 +35,15 @@
       <block :key="index" v-for="(item,index) of storeData.img_info">
         <image :src='item' @click="yulanArr(index)" class="store-img-list-img"></image>
       </block>
-    
+
     </div>
     <div style="width:690rpx;height:1px;background:rgba(235,235,235,1);margin-top: 20rpx"></div>
-    
+
     <div class="store-btn flex flex-between">
       <div @click="showReason=true" class="store-refund">驳回</div>
       <div @click="showAgree" class="store-agree">通过</div>
     </div>
-    
+
     <div class="zhezhao" v-if="showReason">
       <div class="input-wrap">
         <textarea class="input" placeholder="请输入原因" v-model="reason"></textarea>
@@ -53,7 +53,7 @@
         </div>
       </div>
     </div>
-    
+
     <popupLayer :direction="'top'" ref="store">
       <div class="popup-title">
         请选择
@@ -67,7 +67,7 @@
           <image :src="'/static/client/right.png'|domain" class="store-right"></image>
         </picker>
       </div>
-      
+
       <div class="store-picker flex flex-vertical-center" v-if="index==0">
         <div>
           代理等级
@@ -88,9 +88,9 @@
       <div @click="sureBtn" class="btn-sure">
         确定
       </div>
-    
+
     </popupLayer>
-  
+
   </view>
 </template>
 
@@ -118,12 +118,12 @@ export default {
         store_province_name: '',
         store_city_name: '',
         store_area_name: '',
-        store_address: '',
-      },
+        store_address: ''
+      }
     }
   },
   computed: {
-    ...mapGetters(['Stores_ID']),
+    ...mapGetters(['Stores_ID'])
   },
   methods: {
     openLoca (lat, lnt) {
@@ -132,19 +132,19 @@ export default {
         longitude: Number(lnt),
         success: function () {
 
-        },
+        }
       })
     },
     cellPhone (phone) {
       uni.makePhoneCall({
-        phoneNumber: phone,
+        phoneNumber: phone
       })
     },
     yulanArr (index) {
       uni.previewImage({
         urls: this.storeData.img_info,
         indicator: 'default',
-        current: index,
+        current: index
       })
     },
     yulan (item) {
@@ -152,7 +152,7 @@ export default {
       arr.push(item)
       uni.previewImage({
         urls: arr,
-        indicator: 'default',
+        indicator: 'default'
       })
     },
     sureBtn () {
@@ -164,7 +164,7 @@ export default {
         apply_id: this.id,
         store_type: this.index == 0 ? 1 : 2,
         store_id: this.Stores_ID,
-        retailer_fee: this.retailer_fee,
+        retailer_fee: this.retailer_fee
       }
       if (this.index == 0) {
         data.type_id = this.typeList[this.ind].id
@@ -199,7 +199,7 @@ export default {
       storeApplyReject({
         apply_id: this.id,
         reason: this.reason,
-        store_id: this.Stores_ID,
+        store_id: this.Stores_ID
       }).then(res => {
         toast(res.msg)
         this.showReason = false
@@ -213,7 +213,7 @@ export default {
       const data = {
         page: 1,
         pageSize: 999,
-        apply_id: this.id,
+        apply_id: this.id
       }
 
       getStoreApplyList(data, { tip: '加载中' }).then(res => {
@@ -225,13 +225,13 @@ export default {
         this.retailer_fee = this.typeList[this.ind].retailer_fee
       }).catch(e => {
       })
-    },
+    }
   },
   onLoad (options) {
     console.log('111')
     this.id = options.id
     this.init()
-  },
+  }
 }
 </script>
 
@@ -244,7 +244,7 @@ export default {
     box-sizing: border-box;
     border-bottom: 1px solid #EBEBEB;
   }
-  
+
   .store-line-btm {
     width: 700rpx;
     margin-left: 30rpx;
@@ -252,53 +252,53 @@ export default {
     line-height: 86rpx;
     color: #333333;
     font-size: 15px;
-    
+
   }
-  
+
   .store-info {
     display: inline-block;
     width: 120rpx;
     font-size: 15px;
     color: #333333;
   }
-  
+
   .store-img {
     width: 54rpx;
     height: 54rpx;
     border-radius: 50%;
     margin-right: 14rpx;
   }
-  
+
   .fz-14-c9 {
     font-size: 14px;
     color: #999999;
   }
-  
+
   .store-cell {
     width: 40rpx;
     height: 42rpx;
     display: inline-block;
     margin-left: 20rpx;
   }
-  
+
   .store-address {
     width: 42rpx;
     height: 42rpx;
     display: inline-block;
     margin-left: 20rpx;
   }
-  
+
   .fz-address {
     line-height: 40rpx;
     flex: 1;
   }
-  
+
   .store-img-list {
     width: 700rpx;
     margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
-    
+
     &-img {
       width: 140rpx;
       height: 140rpx;
@@ -306,7 +306,7 @@ export default {
       margin-bottom: 20rpx;
     }
   }
-  
+
   .store-btn {
     width: 640rpx;
     margin: 70rpx auto 0rpx;
@@ -314,7 +314,7 @@ export default {
     font-size: 16px;
     color: #FFFFFF;
   }
-  
+
   .store-refund {
     width: 300rpx;
     text-align: center;
@@ -323,7 +323,7 @@ export default {
     background: rgba(206, 206, 206, 1);
     border-radius: 10rpx;
   }
-  
+
   .store-agree {
     width: 300rpx;
     text-align: center;
@@ -332,7 +332,7 @@ export default {
     background: #FF4E00;
     border-radius: 10rpx;
   }
-  
+
   .zhezhao {
     left: 0;
     top: 0;
@@ -341,7 +341,7 @@ export default {
     height: 100%;
     background: rgba(0, 0, 0, .3);
     z-index: 1000;
-    
+
     .input-wrap {
       background: #fff;
       color: #000;
@@ -352,7 +352,7 @@ export default {
       box-sizing: border-box;
       font-size: 28rpx;
       border-radius: 10rpx;
-      
+
       .input {
         margin: 40rpx auto 0;
         width: 424rpx;
@@ -364,7 +364,7 @@ export default {
         text-align: left;
         padding-left: 10rpx;
       }
-      
+
       .btns {
         display: flex;
         width: 330rpx;
@@ -372,7 +372,7 @@ export default {
         justify-content: space-around;
         height: 60rpx;
         line-height: 60rpx;
-        
+
         .btn {
           width: 150rpx;
           text-align: center;
@@ -382,14 +382,14 @@ export default {
           color: #FFFFFF;
           background-color: #D1D1D1;
         }
-        
+
         .btnLast {
           background-color: #FF4E00;
         }
       }
     }
   }
-  
+
   .popup-title {
     width: 750rpx;
     text-align: center;
@@ -398,14 +398,14 @@ export default {
     font-size: 16px;
     color: #333333;
   }
-  
+
   .store-picker {
     width: 690rpx;
     height: 108rpx;
     border-bottom: 1px solid #E6E6E6;
     margin: 0 auto;
   }
-  
+
   .picker-first {
     flex: 1;
     display: flex;
@@ -414,22 +414,22 @@ export default {
     text-align: right;
     justify-content: flex-end;
   }
-  
+
   .store-right {
     width: 16rpx;
     height: 24rpx;
     margin-left: 10rpx;
   }
-  
+
   .input-div {
     flex: 1;
     height: 108rpx;
     line-height: 108rpx;
     display: flex;
     font-size: 14px;
-    
+
   }
-  
+
   .flex-input {
     height: 108rpx;
     line-height: 108rpx;
@@ -439,7 +439,7 @@ export default {
     text-align: right;
     padding-right: 10px;
   }
-  
+
   .btn-sure {
     width: 750rpx;
     height: 88rpx;

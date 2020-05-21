@@ -34,9 +34,9 @@
         <text class="colorRed">¥{{list.Stores_Balance||0}}</text>
       </view>
     </view>
-    
+
     <view style="background-color: #F8F8F8;height: 10px;width: 750rpx;"></view>
-    
+
     <view class="tableTitle">
       订单数据
     </view>
@@ -56,7 +56,7 @@
         <view class="td colorRed">¥{{item.settle_money}}</view>
       </view>
     </view>
-    
+
     <view @click="goStore" class="buttons" v-if="list.orders">
       发起结算
     </view>
@@ -76,13 +76,13 @@ export default {
   mixins: [pageMixin],
   data () {
     const currentDate = this.getDate({
-      format: true,
+      format: true
     })
     return {
       index: 1,
       dateValue: '', // 开始时间
       dateValues: '', // 结束时间
-      list: [],
+      list: []
     }
   },
   onLoad: function (options) {
@@ -93,7 +93,7 @@ export default {
     this.search()
   },
   computed: {
-    ...mapGetters(['Stores_ID']),
+    ...mapGetters(['Stores_ID'])
   },
   methods: {
     goStore () {
@@ -101,15 +101,15 @@ export default {
         store_id: this.Stores_ID,
         start_time: this.list.start_time,
         end_time: this.list.end_time,
-        type: 1,
+        type: 1
       }
       settlement(data).then(res => {
         uni.showToast({
-          title: res.msg,
+          title: res.msg
         })
         setTimeout(function () {
           uni.navigateTo({
-            url: '/pagesA/procurement/storeSettlementRecord',
+            url: '/pagesA/procurement/storeSettlementRecord'
           })
         }, 1000)
       })
@@ -118,7 +118,7 @@ export default {
       const data = {
         store_id: this.Stores_ID,
         start_time: this.dateValue,
-        end_time: this.dateValues,
+        end_time: this.dateValues
       }
       settlement(data).then(res => {
         this.list = res.data
@@ -146,8 +146,8 @@ export default {
 
       day = day > 9 ? day : '0' + day
       return `${year}-${month}-${day}`
-    },
-  },
+    }
+  }
 }
 </script>
 
@@ -156,7 +156,7 @@ export default {
     background-color: #FFFFFF;
     min-height: 100vh;
   }
-  
+
   .area-item {
     display: flex;
     align-items: center;
@@ -168,27 +168,27 @@ export default {
     position: relative;
     width: 710rpx;
     box-sizing: border-box;
-    
+
     .area-label {
       display: inline-block;
       width: 140rpx;
       margin-right: 10rpx;
     }
-    
+
     .pickerView {
       width: 570rpx;
       height: 120rpx;
       line-height: 120rpx;
     }
-    
+
     .uni-input {
       color: #CAC8C8;
     }
-    
+
     .uni-inputs {
       color: #333333;
     }
-    
+
     .rightImg {
       width: 18rpx;
       height: 28rpx;
@@ -197,13 +197,13 @@ export default {
       right: 10rpx;
     }
   }
-  
+
   .viewButoon {
     margin: 0 auto;
     margin-top: 110rpx;
     width: 660rpx;
   }
-  
+
   .button {
     width: 660rpx;
     height: 76rpx;
@@ -214,42 +214,42 @@ export default {
     font-size: 30rpx;
     color: #FFFFFF;
   }
-  
+
   .msg {
     float: right;
     margin-top: 18rpx;
     font-size: 24rpx;
     color: #888888;
   }
-  
+
   .wrap {
     background-color: #FFFFFF;
     min-height: 100vh;
     padding-bottom: 85rpx;
     box-sizing: border-box;
   }
-  
+
   .myTop {
     padding: 30rpx 41rpx;
     font-size: 26rpx;
     color: #333333;
   }
-  
+
   .myView {
     height: 60rpx;
     line-height: 60rpx;
   }
-  
+
   .colorFont {
     color: #777777;
     margin-left: 16rpx;
   }
-  
+
   .colorRed {
     color: #F43131;
     margin-left: 16rpx;
   }
-  
+
   .tableTitle {
     width: 750rpx;
     height: 90rpx;
@@ -258,12 +258,12 @@ export default {
     font-size: 30rpx;
     color: #333333;
   }
-  
+
   .table {
     width: 710rpx;
     margin: 0 auto;
     border: 1px solid #eee;
-    
+
     .th {
       display: flex;
       height: 80rpx;
@@ -272,19 +272,19 @@ export default {
       border-bottom: 1px solid #eee;
       font-size: 26rpx;
       color: #333333;
-      
+
       .td {
         width: 142rpx;
         text-align: center;
         border-right: 1px solid #eee;
         box-sizing: border-box;
-        
+
         &:last-child {
           border-right: 0px;
         }
       }
     }
-    
+
     .tr {
       display: flex;
       height: 70rpx;
@@ -292,24 +292,24 @@ export default {
       font-size: 22rpx;
       color: #666666;
       border-bottom: 1px solid #E7E7E7;
-      
+
       &:last-child {
         border-bottom: 0px;
       }
-      
+
       .td {
         width: 142rpx;
         text-align: center;
         border-right: 1px solid #E7E7E7;
         box-sizing: border-box;
-        
+
         &:last-child {
           border-right: 0px;
         }
       }
     }
   }
-  
+
   .buttons {
     width: 750rpx;
     height: 85rpx;
@@ -322,11 +322,11 @@ export default {
     left: 0rpx;
     text-align: center;
   }
-  
+
   .ccc {
     background-color: #CCCCCC;
   }
-  
+
   .colorRed {
     color: #F43131;
   }

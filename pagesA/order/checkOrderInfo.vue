@@ -1,10 +1,10 @@
 <template>
   <div @click="commonClick" class="myall" v-show="orderInfo.Order_ID">
-    
+
     <div class="container">
       <div class="lists">
         <div class="item">
-          
+
           <div class="goods-list">
             <block v-if="orderInfo.prod_list">
               <div class="goods" v-for="(item,idx2) in orderInfo.prod_list">
@@ -19,18 +19,18 @@
                   </div>
                   <div class="font14"><span class="danger-color">￥<span
                   class="price-num font16">{{item.prod_price}}</span></span></div>
-                
+
                 </div>
               </div>
             </block>
-          
+
           </div>
-        
+
         </div>
       </div>
-    
+
     </div>
-    
+
     <!--        <div class="order_msg">-->
     <!--            <div class="pro" v-for="(pro,pro_id) in orderInfo.prod_list" :key="pro_id">-->
     <!--                <image class="pro-img" :src="pro.prod_img" alt="" />-->
@@ -41,7 +41,7 @@
     <!--                </div>-->
     <!--            </div>-->
     <!--        </div>-->
-    
+
     <div class="infobox">
       <div class="title"><span class="tip"></span><span class="text">订单信息</span></div>
       <div class="row">
@@ -89,11 +89,11 @@
         <div class="form-item">{{orderInfo.Pay_time | formatTime}}</div>
       </div>
     </div>
-    
+
     <div class="subbox" v-if="orderInfo.Order_Status==2">
       <button @click="subFn" class="subbtn" type="warn">立即核销</button>
     </div>
-  
+
   </div>
 </template>
 
@@ -110,7 +110,7 @@ export default {
   mixins: [pageMixin],
   components: {
     popupLayer,
-    PayComponents,
+    PayComponents
 
   },
   data () {
@@ -118,7 +118,7 @@ export default {
       JSSDK_INIT: false,
       orderInfo: {},
       Order_ID: 0,
-      Order_Code: '',
+      Order_Code: ''
     }
   },
   onLoad (options) {
@@ -139,7 +139,7 @@ export default {
     // this.pay_arr = ls.get('initData').pay_arr;
   },
   filters: {
-    formatTime: formatTime,
+    formatTime: formatTime
   },
   onShow () {
     this.getOrderDetail()
@@ -152,7 +152,7 @@ export default {
     },
     moneyChecked () {
       return this.openMoney
-    },
+    }
   },
   created () {
 
@@ -164,11 +164,11 @@ export default {
         confirmText: '继续核销',
         showCancel: true,
         cancelText: '回到首页',
-        content: '',
+        content: ''
       }
       await checkOrderByCode({
         Order_Code: this.Order_Code,
-        store_id: this.Stores_ID,
+        store_id: this.Stores_ID
       }).then(res => {
         confirmConf.content = '核销成功'
         // toast('核销成功')
@@ -188,7 +188,7 @@ export default {
         uni.navigateBack()
       }).catch(err => {
         uni.switchTab({
-          url: '/pagesA/person/storeCenter',
+          url: '/pagesA/person/storeCenter'
         })
       })
     },
@@ -197,15 +197,15 @@ export default {
     getOrderDetail () {
       const _self = this
       getOrderDetail({
-        Order_Code: this.Order_Code,
+        Order_Code: this.Order_Code
       }, {
         tip: '努力加载中',
-        noUid: true,
+        noUid: true
       }).then(res => {
         if (res.data.Order_Status != 2) {
           confirm({
             title: '操作提示',
-            content: '该订单状态不符:' + res.data.Order_Status_desc,
+            content: '该订单状态不符:' + res.data.Order_Status_desc
           }).then(res => {
 
           }).catch(err => {
@@ -228,8 +228,8 @@ export default {
         this.orderInfo = res.data
       }).catch(() => {
       })
-    },
-  },
+    }
+  }
 }
 </script>
 
@@ -237,29 +237,29 @@ export default {
   .myall {
     /*background-color: #FFFFFF;*/
   }
-  
+
   .wrap {
     background: #fff;
   }
-  
+
   .lists {
     .item {
       margin: 15px;
       background: white;
       border-radius: 4px;
       overflow: hidden;
-      
+
       .head {
-        
+
         .info {
           padding: 10px;
           align-items: center;
           font-size: 14px;
-          
+
           .store-info {
             align-items: center;
           }
-          
+
           .store-pic {
             width: 25px;
             height: 25px;
@@ -269,57 +269,57 @@ export default {
             background-position: center;
             margin-right: 10px;
           }
-          
+
           .store-title {
             margin-right: 10px;
             color: #333;
           }
-          
+
           .action {
             color: $wzw-primary-color;
-            
+
             .action-item {
               text-decoration: underline;
               cursor: pointer;
             }
           }
-          
+
           .order_no {
             margin-left: 30px;
             color: #666;
           }
         }
-        
+
         .status {
           font-size: 12px;
           border-bottom: 1px solid #E6E6E6;
           padding: 10px;
           align-items: center;
-          
+
           .icon-delete {
             width: 14px;
             height: 14px;
           }
-          
+
           .el-icon-delete-solid {
             cursor: pointer;
             color: #999;
-            
+
             &:hover {
               color: #F43131;
             }
           }
         }
       }
-      
+
       .goods-list {
         border-bottom: 1px solid #EDEDED;
-        
+
         .goods {
           display: flex;
           align-items: center;
           padding: 10px;
-          
+
           .l {
             width: 100px;
             height: 100px;
@@ -328,11 +328,11 @@ export default {
             background-color: #f2f2f2;
             background-position: center;
           }
-          
+
           .c {
             flex: 1;
             padding: 0 0 0 10px;
-            
+
             .title {
               font-size: 14px;
               height: 40px;
@@ -341,54 +341,54 @@ export default {
               overflow: hidden;
               text-overflow: ellipsis;
             }
-            
+
             .spec-key {
               background: #FFF5F5;
               font-size: 12px;
               padding: 6px 10px;
               color: #666666;
             }
-            
+
             .numbox {
               color: #333333
             }
           }
-          
+
         }
-        
+
       }
-      
+
       .price-box {
         text-align: right;
         padding: 10px;
         font-size: 14px;
       }
-      
+
       .actions {
         text-align: right;
         padding: 0 10px;
-        
+
         .acion-btn {
           margin-bottom: 10px;
           margin-left: 10px;
         }
-        
+
       }
-      
+
     }
   }
-  
+
   .infobox {
     font-size: 14px;
     margin: 10px;
     background: white;
-    
+
     .title {
       border-bottom: 1px solid #eee;
       display: flex;
       align-items: center;
       padding: 10px 0;
-      
+
       .tip {
         display: inline-block;
         width: 4px;
@@ -397,12 +397,12 @@ export default {
         border-radius: 2px;
         margin: 0 10px;
       }
-      
+
       .text {
-      
+
       }
     }
-    
+
     .row {
       margin: 0 6px;
       display: flex;
@@ -410,26 +410,26 @@ export default {
       height: 24px;
       line-height: 24px;
       padding: 4px 0;
-      
+
       .label {
         width: 90px;
         color: #666;
       }
-      
+
       .form-item {
         color: #444;
         flex: 1;
       }
-      
+
     }
   }
-  
+
   .subbox {
     position: fixed;
     bottom: 0;
     left: 0;
     width: 750rpx;
-    
+
     .subbtn {
       border-radius: 0;
     }

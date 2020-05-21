@@ -29,7 +29,7 @@ import {
   get_Users_ID,
   getUserDisInfo,
   updateUserDisInfo,
-  uploadImage,
+  uploadImage
 } from '../../common/fetch.js'
 
 import { apiBaseUrl } from '../../common/env.js'
@@ -47,7 +47,7 @@ export default {
       Shop_Announce: '', // 自定义分享与
       imgs: [],
       arr: [],
-      tem_Shop_Logo: '', // 临时图片
+      tem_Shop_Logo: '' // 临时图片
     }
   },
   onLoad () {
@@ -114,14 +114,14 @@ export default {
               fail (ret) {
               },
               complete (ret) {
-              },
+              }
             })
             // #endif
 
             // #ifndef MP-TOUTIAO
             uni.showLoading({
               title: '上传图片',
-              mask: true,
+              mask: true
             })
             // 上传图片
             uni.uploadFile({
@@ -143,7 +143,7 @@ export default {
               fail: (err) => {
                 uni.showModal({
                   title: '提示',
-                  content: '上传图片错误' + JSON.stringify(err),
+                  content: '上传图片错误' + JSON.stringify(err)
                 })
               },
               complete: () => {
@@ -152,13 +152,13 @@ export default {
                 // 	title:'文件上传',
                 // 	content:JSON.stringify(ret)
                 // })
-              },
+              }
             })
             // #endif
           }
         },
         fail (e) {
-        },
+        }
       })
     },
     // 保存
@@ -166,20 +166,20 @@ export default {
       updateUserDisInfo({
         Shop_Name: this.Shop_Name,
         Shop_Logo: this.tem_Shop_Logo,
-        Shop_Announce: this.Shop_Announce,
+        Shop_Announce: this.Shop_Announce
       }).then(res => {
         uni.showToast({
           title: '修改成功',
-          icon: 'success',
+          icon: 'success'
         })
         setTimeout(function () {
           uni.switchTab({
-            url: '/pages/fenxiao/fenxiao',
+            url: '/pages/fenxiao/fenxiao'
           })
         }, 1000)
       })
     },
-    ...mapActions(['getInitData']),
+    ...mapActions(['getInitData'])
   },
   onShow: function () {
 
@@ -187,9 +187,9 @@ export default {
   async created () {
     const initData = await this.getInitData()
     uni.setNavigationBarTitle({
-      title: initData.commi_rename.commi + '信息',
+      title: initData.commi_rename.commi + '信息'
     })
-  },
+  }
 }
 </script>
 
@@ -198,19 +198,19 @@ export default {
     background-color: #FFFFFF !important;
     min-height: 100vh;
   }
-  
+
   .user-info {
     padding-top: 47rpx;
     text-align: center;
     font-size: 26rpx;
     color: #777;
-    
+
     .user-avator {
       position: relative;
       width: 120rpx;
       height: 120rpx;
       margin: 0 auto;
-      
+
       .xiangji {
         width: 100%;
         height: 100%;
@@ -225,30 +225,30 @@ export default {
         background-size: 42rpx 34rpx;
       }
     }
-    
+
     .imgs {
       width: 100%;
       height: 100%;
       border-radius: 60rpx;
       margin-bottom: 14rpx;
     }
-    
+
     .change {
       margin-top: 14rpx;
     }
   }
-  
+
   .content {
     font-size: 30rpx;
     margin-top: 57rpx;
     color: #333;
     padding-left: 19rpx;
-    
+
     .c_1 {
       display: flex;
       align-items: center;
       margin-bottom: 39rpx;
-      
+
       .inputs {
         width: 600rpx;
         height: 62rpx;
@@ -258,11 +258,11 @@ export default {
         box-sizing: border-box;
       }
     }
-    
+
     .c_2 {
       display: flex;
       align-items: center;
-      
+
       .text-content {
         width: 600rpx;
         height: 170rpx;
@@ -274,7 +274,7 @@ export default {
       }
     }
   }
-  
+
   .submit {
     height: 80rpx;
     width: 640rpx;
@@ -286,7 +286,7 @@ export default {
     text-align: center;
     line-height: 80rpx;
   }
-  
+
   .cannot {
     background: #999;
   }

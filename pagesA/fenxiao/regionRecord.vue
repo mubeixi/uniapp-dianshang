@@ -81,7 +81,7 @@ export default {
       pageSize: 10,
       data: [],
       totalCount: 0,
-      index: 1,
+      index: 1
     }
   },
   onLoad (options) {
@@ -90,7 +90,7 @@ export default {
     uni.getSystemInfo({
       success: function (res) {
         that.height = res.screenHeight - 68
-      },
+      }
     })
   },
   onShow () {
@@ -106,14 +106,14 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['commi_rename']),
+    ...mapGetters(['commi_rename'])
   },
   methods: {
     // 获取提现记录
     getWithdrawRecordList () {
       const data = {
         page: this.page,
-        pageSize: this.pageSize,
+        pageSize: this.pageSize
       }
       if (this.index == 1) {
         getAgentApply(data).then(res => {
@@ -134,8 +134,8 @@ export default {
 
         })
       }
-    },
-  },
+    }
+  }
 }
 </script>
 
@@ -144,7 +144,7 @@ export default {
     background-color: #f8f8f8;
     min-height: 100vh;
   }
-  
+
   .main {
     width: 710rpx;
     margin: 0 auto;
@@ -152,33 +152,33 @@ export default {
     background-color: #FFFFFF;
     box-sizing: border-box;
     padding: 28rpx 0rpx 32rpx 27rpx;
-    
+
     .fir {
       height: 48rpx;
       display: flex;
       font-size: 26rpx;
       align-items: center;
-      
+
       .left {
         color: #333333;
         margin-right: 20rpx;
       }
-      
+
       .right {
         color: #888888;
       }
-      
+
       .rightt {
         color: #888888;
         margin-left: 20rpx;
       }
-      
+
       .rights {
         color: #F43131;
       }
     }
   }
-  
+
   .defaults {
     margin: 0 auto;
     width: 640rpx;

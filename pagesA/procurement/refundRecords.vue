@@ -127,7 +127,7 @@ import {
   getStoreDetail,
   getStoreProdBackOrder,
   storeProdBackOrderCancel,
-  storeProdBackOrderConfirm,
+  storeProdBackOrderConfirm
 } from '../../common/fetch.js'
 import { mapGetters } from 'vuex'
 import { getLocation } from '../../common/tool/location'
@@ -146,11 +146,11 @@ export default {
       page: 1,
       pageSize: 10,
       back_list: [], // 退货单列表
-      storeInfo: [], // 门店信息
+      storeInfo: [] // 门店信息
     }
   },
   computed: {
-    ...mapGetters(['Stores_ID']),
+    ...mapGetters(['Stores_ID'])
   },
   onShow () {
     this.getStoreProdBackOrder()
@@ -160,10 +160,10 @@ export default {
     reciveMoney (order_id) {
       storeProdBackOrderConfirm({
         store_id: this.Stores_ID,
-        order_id: order_id,
+        order_id: order_id
       }).then(res => {
         uni.showToast({
-          title: res.msg,
+          title: res.msg
         })
         setTimeout(() => {
           this.load()
@@ -173,7 +173,7 @@ export default {
     // 发货
     send (order_id) {
       uni.navigateTo({
-        url: '/pagesA/procurement/purchaseSend?order_id=' + order_id,
+        url: '/pagesA/procurement/purchaseSend?order_id=' + order_id
       })
     },
     // 取消退货单
@@ -186,10 +186,10 @@ export default {
           if (res.confirm) {
             storeProdBackOrderCancel({
               store_id: this.Stores_ID,
-              order_id: order_id,
+              order_id: order_id
             }).then((res) => {
               uni.showToast({
-                title: res.msg,
+                title: res.msg
               })
               setTimeout(() => {
                 this.load()
@@ -198,7 +198,7 @@ export default {
           } else {
 
           }
-        },
+        }
       })
     },
     changeStatus (status) {
@@ -221,7 +221,7 @@ export default {
         store_id: this.Stores_ID,
         status: this.status,
         page: this.page,
-        pageSize: this.pageSize,
+        pageSize: this.pageSize
       }, { tip: '加载中...' }).then(res => {
         res.data.forEach(item => {
           item.pro_tip_show = false
@@ -242,7 +242,7 @@ export default {
         latitude: this.storeInfo.wx_lat,
         longitude: this.storeInfo.wx_lng,
         success: function () {
-        },
+        }
       })
     },
     showStore (id) {
@@ -258,7 +258,7 @@ export default {
           const data = {
             lat: lat,
             lng: lng,
-            store_id: id,
+            store_id: id
           }
           getStoreDetail(data).then(res => {
             this.storeInfo = res.data
@@ -267,7 +267,7 @@ export default {
         }
       }).catch(err => {
         const data = {
-          store_id: id,
+          store_id: id
         }
         getStoreDetail(data).then(res => {
           this.storeInfo = res.data
@@ -282,8 +282,8 @@ export default {
     changeChannel () {
       this.isChangeChannel = true
       this.isHidden = false
-    },
-  },
+    }
+  }
 }
 </script>
 
@@ -295,16 +295,16 @@ export default {
       color: #999;
       margin-bottom: 20rpx;
     }
-    
+
     .nodata {
       margin-top: 20rpx;
     }
-    
+
     font-size: 26rpx;
     padding: 0 20rpx;
     min-height: 100vh;
     background-color: #F6F6F6;
-    
+
     .order-status {
       position: fixed;
       top: 0;
@@ -316,24 +316,24 @@ export default {
       align-items: center;
       // justify-content: center;
       text-align: center;
-      
+
       .status {
         display: inline-block;
         width: 138rpx;
         /*margin-right: 30rpx;*/
         line-height: 80rpx;
-        
+
         &.active {
           color: $wzw-primary-color;
           border-bottom: 2px solid $wzw-primary-color;
         }
       }
-      
+
       & .status:nth-last-child(1) {
         margin-right: 0;
       }
     }
-    
+
     .prolist {
       width: 710rpx;
       margin-bottom: 10px;
@@ -341,7 +341,7 @@ export default {
       background-color: #fff;
       box-sizing: border-box;
       border-radius: 10px;
-      
+
       .pro-title {
         display: flex;
         justify-content: space-between;
@@ -351,11 +351,11 @@ export default {
         color: #777777;
         // padding: 0 20rpx;
         border-bottom: 2rpx solid #E6E6E6;
-        
+
         .status {
           position: relative;
           color: $wzw-primary-color;
-          
+
           .tips {
             position: absolute;
             top: 50rpx;
@@ -364,7 +364,7 @@ export default {
             padding: 20rpx;
             background: #fff;
             box-shadow: 0px 0px 16px 0px rgba(4, 0, 0, 0.18);
-            
+
             .sanjiaoxing {
               position: absolute;
               top: -14rpx;
@@ -379,45 +379,45 @@ export default {
               box-shadow: 0px 0px 16px 0px rgba(4, 0, 0, 0.18);
             }
           }
-          
+
           .qty-icon {
             width: 22rpx;
             height: 22rpx;
             margin-left: 10rpx;
           }
         }
-        
+
         .img {
           width: 26rpx;
           height: 31rpx;
         }
       }
-      
+
       .biz-msg {
         display: flex;
         justify-content: space-between;
         align-items: center;
         height: 107rpx;
-        
+
         .avator {
           width: 70rpx;
           height: 70rpx;
           border-radius: 50%;
           margin-right: 20rpx;
         }
-        
+
         .biz-name {
           display: flex;
           align-items: center;
           flex: 1;
           font-size: 28rpx;
           color: #333;
-          
+
           .biz-links {
             color: $wzw-primary-color;
             font-size: 24rpx;
             margin-left: 14rpx;
-            
+
             .text-d {
               text-decoration: underline;
               padding: 0 10rpx;
@@ -425,31 +425,31 @@ export default {
           }
         }
       }
-      
+
       .list-msg {
         .pro-msg {
           display: flex;
           margin-top: 20rpx;
           padding-bottom: 30rpx;
           box-sizing: border-box;
-          
+
           .pro-img {
             width: 200rpx;
             height: 200rpx;
             margin-right: 28rpx;
-            
+
             .img {
               width: 200rpx;
               height: 200rpx;
             }
           }
-          
+
           .pro-info {
             display: flex;
             width: 500rpx;
             flex-direction: column;
             justify-content: space-between;
-            
+
             .pro-name {
               text-overflow: -o-ellipsis-lastline;
               overflow: hidden;
@@ -459,14 +459,14 @@ export default {
               line-clamp: 2;
               -webkit-box-orient: vertical;
             }
-            
+
             .pro-attr {
               display: flex;
               justify-content: space-between;
               align-items: center;
               margin-top: 25rpx;
               margin-bottom: 23rpx;
-              
+
               .attr-info {
                 line-height: 50rpx;
                 padding: 0 20rpx;
@@ -474,10 +474,10 @@ export default {
                 color: #666;
                 font-size: 24rpx;
               }
-              
+
               .pro-qty {
                 position: relative;
-                
+
                 .tips {
                   position: absolute;
                   top: 80rpx;
@@ -486,7 +486,7 @@ export default {
                   padding: 20rpx;
                   background: #fff;
                   box-shadow: 0px 0px 16px 0px rgba(4, 0, 0, 0.18);
-                  
+
                   .sanjiaoxing {
                     position: absolute;
                     top: -14rpx;
@@ -501,7 +501,7 @@ export default {
                     box-shadow: 0px 0px 16px 0px rgba(4, 0, 0, 0.18);
                   }
                 }
-                
+
                 .qty-icon {
                   width: 22rpx;
                   height: 22rpx;
@@ -509,11 +509,11 @@ export default {
                 }
               }
             }
-            
+
             .pro-price {
               font-size: 30rpx;
               color: $wzw-primary-color;
-              
+
               .price-icon {
                 font-size: 24rpx;
               }
@@ -521,11 +521,11 @@ export default {
           }
         }
       }
-      
+
       .btns {
         display: flex;
         justify-content: flex-end;
-        
+
         .btn {
           width: 155rpx;
           height: 60rpx;
@@ -535,7 +535,7 @@ export default {
           background-color: #EEEEEE;
           border-radius: 10rpx;
         }
-        
+
         .back {
           color: #fff;
           background: rgba(244, 49, 49, 1);
@@ -543,24 +543,24 @@ export default {
         }
       }
     }
-    
+
     .totalinfo {
       line-height: 85rpx;
       text-align: right;
       border-top: 2rpx solid #E6E6E6;
-      
+
       .price-icon {
         font-size: 24rpx;
         color: $wzw-primary-color;
       }
-      
+
       .price-num {
         font-size: 30rpx;
         color: $wzw-primary-color;
       }
     }
   }
-  
+
   .mask {
     background-color: rgba(0, 0, 0, .5);
     position: fixed;
@@ -570,7 +570,7 @@ export default {
     height: 100%;
     z-index: 1000;
   }
-  
+
   .sku-pop {
     position: fixed;
     top: 50%;
@@ -579,7 +579,7 @@ export default {
     width: 526rpx;
     transform: translate(-50%, -50%);
     border-radius: 10rpx;
-    
+
     .sku-title {
       height: 60rpx;
       line-height: 60rpx;
@@ -590,23 +590,23 @@ export default {
       border-top-left-radius: 10rpx;
       border-top-right-radius: 10rpx;
     }
-    
+
     .sku-content {
       padding: 40rpx 46rpx 34rpx 40rpx;
       background-color: #fff;
       border-bottom-left-radius: 10rpx;
       border-bottom-right-radius: 10rpx;
-      
+
       .skulist {
         margin-bottom: 30rpx;
         display: flex;
         align-items: center;
-        
+
         &.change-btn {
           padding-top: 43rpx;
           justify-content: center;
         }
-        
+
         .selected,
         .nochecked {
           display: block;
@@ -614,13 +614,13 @@ export default {
           height: 40rpx;
           margin-right: 23rpx;
         }
-        
+
         .nochecked {
           box-sizing: border-box;
           border: 2rpx solid rgba(214, 214, 214, 1);
           border-radius: 3px;
         }
-        
+
         .input {
           width: 420rpx;
           height: 60rpx;
@@ -630,7 +630,7 @@ export default {
           box-sizing: border-box;
           line-height: 36rpx;
         }
-        
+
         .btn {
           width: 130rpx;
           height: 50rpx;
@@ -639,23 +639,23 @@ export default {
           background-color: #E9E9E9;
           font-size: 24rpx;
         }
-        
+
         .cancel {
           color: #666;
           margin-right: 25rpx;
         }
-        
+
         .confirm {
           color: #fff;
           background-color: $wzw-primary-color;
         }
-        
+
         .sku-name {
           color: #333;
           font-size: 24rpx;
           margin-right: 26rpx;
         }
-        
+
         .sku-item {
           display: flex;
           align-items: center;
@@ -665,7 +665,7 @@ export default {
             width: 27rpx;
             height: 32rpx;
           }
-          
+
           .sku {
             width: 80rpx;
             height: 46rpx;
@@ -677,12 +677,12 @@ export default {
             margin-right: 13rpx;
             border-radius: 5rpx;
           }
-          
+
           .active {
             background-color: $wzw-primary-color;
             color: #fff;
           }
-          
+
           .handle {
             width: 50rpx;
             height: 45rpx;
@@ -692,7 +692,7 @@ export default {
             color: #777;
             background: #f6f6f6;
           }
-          
+
           .pro-num {
             margin: 0 15rpx;
             font-size: 24rpx;
@@ -700,13 +700,13 @@ export default {
           }
         }
       }
-      
+
       .sku-btns {
         display: flex;
         justify-content: center;
         align-items: center;
         margin-top: 60rpx;
-        
+
         .btn {
           width: 130rpx;
           height: 50rpx;
@@ -714,13 +714,13 @@ export default {
           line-height: 50rpx;
           font-size: 24rpx;
         }
-        
+
         .cancel {
           background: #e9e9e9;
           color: #666;
           margin-right: 25rpx;
         }
-        
+
         .confirm {
           background-color: $wzw-primary-color;
           color: #fff;
@@ -728,31 +728,31 @@ export default {
       }
     }
   }
-  
+
   .mendian {
     .sku-content {
       .sku-name {
         margin-right: 10rpx !important;
       }
-      
+
       .sku-item {
         display: block !important;
         font-size: 26rpx !important;
-        
+
         .img {
           margin-left: 10rpx;
         }
       }
     }
   }
-  
+
   .defaults {
     margin: 0 auto;
     width: 640rpx;
     height: 480rpx;
     margin-top: 100rpx;
   }
-  
+
   /deep/ .uni-scroll-view::-webkit-scrollbar {
     /* 隐藏滚动条，但依旧具备可以滚动的功能 */
     display: none

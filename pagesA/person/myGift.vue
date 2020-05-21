@@ -16,7 +16,7 @@
       </view>
     </view>
     <view style="height: 102rpx;width: 100%;">
-    
+
     </view>
     <view :key="index" @click="handleClick(item)" class="center" v-for="(item,index) of data">
       <view class="tops">
@@ -58,7 +58,7 @@ export default {
       data: [], // 数据
       page: 1,
       pageSize: 4,
-      totalCount: 0,// 一共多少条数据
+      totalCount: 0// 一共多少条数据
     }
   },
   onLoad (options) {
@@ -66,7 +66,7 @@ export default {
     uni.getSystemInfo({
       success: function (res) {
         that.height = res.screenHeight - 68
-      },
+      }
     })
     if (options.checked) {
       this.checked = options.checked
@@ -95,13 +95,13 @@ export default {
     },
     goGiftDetail (item) {
       uni.navigateTo({
-        url: '/pagesA/person/giftDetail?Order_ID=' + item.order_id,
+        url: '/pagesA/person/giftDetail?Order_ID=' + item.order_id
       })
     },
     // 去详情页
     goDetail (item) {
       uni.navigateTo({
-        url: '/pages/detail/detail?gift=' + item.id + '&Products_ID=' + item.product_id,
+        url: '/pages/detail/detail?gift=' + item.id + '&Products_ID=' + item.product_id
       })
     },
     // 获取列表
@@ -109,7 +109,7 @@ export default {
       const data = {
         page: this.page,
         pageSize: this.pageSize,
-        status: this.checked,
+        status: this.checked
       }
       getGiftList(data).then(res => {
         for (const item of res.data) {
@@ -125,8 +125,8 @@ export default {
       this.data = []
       this.page = 1
       this.getGiftList()
-    },
-  },
+    }
+  }
 }
 </script>
 
@@ -135,11 +135,11 @@ export default {
     background-color: #ffffff !important;
     min-height: 100vh;
   }
-  
+
   view {
     box-sizing: border-box;
   }
-  
+
   .titless {
     position: fixed;
     top: 0rpx;
@@ -147,7 +147,7 @@ export default {
     width: 100%;
     z-index: 999;
   }
-  
+
   .nav {
     z-index: 999;
     position: fixed;
@@ -162,17 +162,17 @@ export default {
     font-size: 30rpx;
     color: #333333;
     background: #f8f8f8;
-    
+
     .ins {
       width: 236rpx;
       height: 72rpx;
       line-height: 72rpx;
       text-align: center;
       position: relative;
-      
+
       &.checked {
         color: #F43131;
-        
+
         &:after {
           content: '';
           display: flex;
@@ -186,14 +186,14 @@ export default {
       }
     }
   }
-  
+
   .center {
     margin: 0 auto;
     margin-bottom: 25rpx;
     width: 710rpx;
     height: 288rpx;
     background-color: #FFFFFF;
-    
+
     .tops {
       width: 710rpx;
       height: 64rpx;
@@ -203,29 +203,29 @@ export default {
       color: #333333;
       border-bottom: 1rpx solid #ECE8E8;
     }
-    
+
     .bottoms {
       height: 224rpx;
       width: 710rpx;
       padding: 20rpx;
       display: flex;
-      
+
       .tupian {
         width: 184rpx;
         height: 184rpx;
-        
+
         .image {
           width: 100%;
           height: 100%;
         }
       }
-      
+
       .neirong {
         margin-left: 23rpx;
         height: 184rpx;
         width: 463rpx;
         position: relative;
-        
+
         .titles {
           font-size: 26rpx;
           color: #333333;
@@ -240,20 +240,20 @@ export default {
           text-overflow: ellipsis;
           -webkit-box-orient: vertical;
         }
-        
+
         .button {
           width: 463rpx;
           margin-top: 15rpx;
           height: 55rpx;
           display: flex;
-          
+
           .sku {
             font-size: 24rpx;
             color: #888888;
             height: 23rpx;
             line-height: 23rpx;
           }
-          
+
           .chakan {
             width: 155rpx;
             height: 55rpx;
@@ -269,14 +269,14 @@ export default {
       }
     }
   }
-  
+
   .defaults {
     margin: 0 auto;
     width: 640rpx;
     height: 480rpx;
     margin-top: 100rpx;
   }
-  
+
   .youxiao {
     font-size: 20rpx;
     color: #888888;

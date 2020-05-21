@@ -10,13 +10,13 @@
           <view class="view"></view>
         </view>
         <view class="lineQ lineW">
-        
+
         </view>
         <view class="circleQ">
           <view class="view"></view>
         </view>
         <view class="lineQ">
-        
+
         </view>
         <view class="circleQ circleW">
           <view class="view"></view>
@@ -76,19 +76,19 @@ export default {
       change_objectMultiArray: [], // 选择数据
       address_info: {},
       objectMultiArray: [], // 展示数据
-      multiIndex: [0, 0, 0], // 选择数据
+      multiIndex: [0, 0, 0] // 选择数据
     }
   },
   onLoad () {
     this.objectMultiArray = [
       utils.array_change(area.area[0]['0']),
       utils.array_change(area.area[0]['0,1']),
-      utils.array_change(area.area[0]['0,1,36']),
+      utils.array_change(area.area[0]['0,1,36'])
     ]
     this.change_objectMultiArray = [
       utils.array_change(area.area[0]['0']),
       utils.array_change(area.area[0]['0,1']),
-      utils.array_change(area.area[0]['0,1,36']),
+      utils.array_change(area.area[0]['0,1,36'])
     ]
   },
   methods: {
@@ -102,7 +102,7 @@ export default {
       this.change_objectMultiArray = [
         p_arr,
         c_arr,
-        a_arr,
+        a_arr
       ]
       this.change_multiIndex = columnValue
     },
@@ -115,7 +115,7 @@ export default {
       var columnValue = [
         column == 0 ? index : this.change_multiIndex[0],
         column == 0 ? 0 : (column == 1 ? index : this.change_multiIndex[1]),
-        column == 0 || column == 1 ? 0 : index,
+        column == 0 || column == 1 ? 0 : index
       ]
       this.addressChange(columnValue)
     },
@@ -140,24 +140,24 @@ export default {
           break
         }
       }
-    },
-  },
+    }
+  }
 }
 </script>
 
 <style lang="scss" scoped>
-  
+
   .top {
     width: 750rpx;
     padding: 50rpx 83rpx;
-    
+
     .first {
       padding-left: 33rpx;
       padding-right: 41rpxd;
       height: 30rpx;
       display: flex;
       align-items: center;
-      
+
       .circleQ {
         width: 30rpx;
         height: 30rpx;
@@ -166,7 +166,7 @@ export default {
         display: flex;
         align-items: center;
         justify-content: center;
-        
+
         .view {
           width: 15rpx;
           height: 15rpx;
@@ -174,26 +174,26 @@ export default {
           border-radius: 50%;
         }
       }
-      
+
       .circleW {
         border: 1px solid #999999;
-        
+
         .view {
           background-color: #999999;
         }
       }
-      
+
       .lineQ {
         width: 210rpx;
         height: 4rpx;
         background-color: #999999;
       }
-      
+
       .lineW {
         background-color: #F43131;
       }
     }
-    
+
     .second {
       margin-top: 21rpx;
       height: 25rpx;
@@ -201,22 +201,22 @@ export default {
       font-size: 26rpx;
       color: #999999;
       display: flex;
-      
+
       .secondQ {
         color: #F43131;
       }
-      
+
       .secondW {
         color: #F43131;
         margin-left: 137rpx;
       }
-      
+
       .secondE {
         margin-left: 135rpx;
       }
     }
   }
-  
+
   .three {
     height: 88rpx;
     line-height: 88rpx;
@@ -226,26 +226,26 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    
+
     .haha {
       font-size: 30rpx;
       color: #333333;
       //margin-right: 42rpx;
     }
-    
+
     .images {
       width: 16rpx;
       height: 88rpx;
       line-height: 88rpx;
-      
+
       .image {
         width: 16rpx;
         height: 25rpx;
       }
     }
-    
+
   }
-  
+
   .four {
     width: 490rpx;
     height: 75rpx;
@@ -258,7 +258,7 @@ export default {
     font-size: 30rpx;
     color: #FFFFFF;
   }
-  
+
   .five {
     height: 23rpx;
     line-height: 23rpx;
@@ -268,14 +268,14 @@ export default {
     font-size: 24rpx;
     font-weight: 500;
     color: rgba(153, 153, 153, 1);
-    
+
     .image {
       width: 12rpx;
       height: 20rpx;
       margin-left: 10rpx;
     }
   }
-  
+
   .picker .view {
     width: 160rpx;
     font-size: 28rpx;
@@ -283,10 +283,10 @@ export default {
     height: 90rpx;
     margin-right: 10rpx;
   }
-  
+
   .picker {
     display: flex;
-    
+
     .quyu {
       width: 120rpx;
     }

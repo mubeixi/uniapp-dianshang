@@ -1,18 +1,18 @@
 <template>
   <view @click="commonClick" class="page-wrap">
-    
+
     <image :src="current_url|domain" @click="preFn(current_url)" mode="widthFix" style="width: 750rpx" />
-    
+
     <div class="swiper">
       <div @click="setSelect(poster)" class="swiper-item" v-for="(poster,idx) in poster_list">
         <image :src="poster.img|domain" class="swiper-itm-img" mode="widthFix"></image>
       </div>
     </div>
-    
+
     <!--		<div class="share-btn" @click="shareFn">-->
     <!--			分享-->
     <!--		</div>-->
-    
+
     <!--		<canvas style="width: 404px; height: 718px;" canvas-id="firstCanvas"></canvas>-->
   </view>
 </template>
@@ -41,13 +41,13 @@ export default {
         dis_config: {},
         total_sales: '',
         total_income: '',
-        balance: '',
-      },//
+        balance: ''
+      }//
 
     }
   },
   computed: {
-    ...mapGetters(['initData', 'userInfo']),
+    ...mapGetters(['initData', 'userInfo'])
   },
   onReady () {
     var context = uni.createCanvasContext('firstCanvas')
@@ -72,7 +72,7 @@ export default {
         type: this.type,
         again: this.again,
         owner_id: this.userInfo.User_ID,
-        poster_id: poster.id,
+        poster_id: poster.id
       }, { tip: '生成中' }).then(res => {
         this.current_url = res.data.img_url
       })
@@ -84,7 +84,7 @@ export default {
         return
       }
       uni.previewImage({
-        urls: [this.current_url],
+        urls: [this.current_url]
       })
     },
     async shareFn () {
@@ -115,7 +115,7 @@ export default {
             type,
             again,
             owner_id: this.userInfo.User_ID,
-            poster_id: this.poster_list[0].id,
+            poster_id: this.poster_list[0].id
           }, { tip: '生成中' }).then(res => {
             this.current_url = res.data.img_url
           })
@@ -127,14 +127,14 @@ export default {
     },
     goBack () {
       goBack()
-    },
-  },
+    }
+  }
 }
 </script>
 
 <style lang="scss" scoped>
   .page-wrap {
-    
+
     .swiper {
       z-index: 9;
       width: 750rpx;
@@ -147,14 +147,14 @@ export default {
       overflow-x: scroll;
       overflow-y: hidden;
       z-index: 3;
-      
+
       .swiper-item {
         display: inline-block;
         width: 116rpx;
         height: 244rpx;
         margin-left: 30rpx;
         position: relative;
-        
+
         .swiper-itm-img {
           width: 116rpx;
           height: 116rpx;
@@ -166,7 +166,7 @@ export default {
         }
       }
     }
-    
+
     .share-btn {
       position: absolute;
       bottom: 0;

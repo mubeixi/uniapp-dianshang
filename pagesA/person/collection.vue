@@ -12,7 +12,7 @@
     <!-- #ifndef APP-PLUS -->
     <view class="spaceDiv" style=""></view>
     <!-- #endif -->
-    
+
     <div :key="index" class="pro-list" v-for="(item,index) in collect_list">
       <div @click="check(index)" class="mbxa" v-if="rightClicked">
         <img :src="checked[index].checked?checked_img_url:uncheck_img_url" class="imgs">
@@ -28,7 +28,7 @@
                       <span class="span">
                         <span class="spans">￥</span>{{item.Products_PriceX}}
                       </span>
-            
+
             <form @submit="buy" report-submit>
               <button class="button" formType="submit">立即购买</button>
             </form>
@@ -81,13 +81,13 @@ export default {
       rightHidden: false,
       rightText: '',
       rightClicked: false,
-      prod_id: [],
+      prod_id: []
     }
   },
   watch: {
     prod_id () {
 
-    },
+    }
   },
   computed: {
     totalNum () {
@@ -95,7 +95,7 @@ export default {
     },
     allChecked () {
       return this.checked.filter(item => item.checked).length == this.checked.length
-    },
+    }
 
   },
   onReachBottom () {
@@ -111,7 +111,7 @@ export default {
     // 跳转详情
     goDetail (item) {
       uni.navigateTo({
-        url: '/pages/detail/detail?Products_ID=' + item.prod_id,
+        url: '/pages/detail/detail?Products_ID=' + item.prod_id
       })
     },
     // 取消收藏
@@ -126,19 +126,19 @@ export default {
         uni.showToast({
           title: '您还没有选择商品哦！',
           icon: 'none',
-          duration: 2000,
+          duration: 2000
         })
         return
       }
       cancelCollection({
         Users_ID: this.Users_ID,
         User_ID: this.User_ID,
-        prod_id: JSON.stringify(this.prod_id),
+        prod_id: JSON.stringify(this.prod_id)
       }).then(res => {
         uni.showToast({
           title: res.msg,
           icon: 'none',
-          duration: 2000,
+          duration: 2000
         })
         this.page = 1
         this.getFavouritePro()
@@ -181,7 +181,7 @@ export default {
         Users_ID: this.Users_ID,
         User_ID: this.User_ID,
         page: this.page,
-        pageSize: this.pageSize,
+        pageSize: this.pageSize
       }).then(res => {
         const oldlist = this.collect_list
         this.collect_list = oldlist.concat(res.data)
@@ -197,7 +197,7 @@ export default {
         for (var i in this.collect_list) {
           this.checked.push({
             index: i,
-            checked: false,
+            checked: false
           })
         }
       })
@@ -211,8 +211,8 @@ export default {
       //     times: 1
       // })
       this.$router.push({ name: 'check' })
-    },
-  },
+    }
+  }
 }
 </script>
 
@@ -221,21 +221,21 @@ export default {
     background-color: #FFFFFF;
     min-height: 100vh;
   }
-  
+
   .spaces {
     margin-top: var(--status-bar-height);
   }
-  
+
   .mbxa {
     display: flex;
     align-items: center;
-    
+
     .imgs {
       width: 34rpx;
       height: 34rpx;
     }
   }
-  
+
   .titles {
     position: fixed;
     top: 0rpx;
@@ -246,32 +246,32 @@ export default {
     padding-top: var(--status-bar-height);
     /* #endif */
   }
-  
+
   .pro-list {
     display: flex;
     justify-content: space-between;
     padding: 15px 10px;
-    
+
   }
-  
+
   .pro {
     flex: 1;
     margin-left: 10px;
     display: flex;
     margin-bottom: 10px;
   }
-  
+
   .pros {
     width: 300rpx;
     height: 300rpx;
     margin-right: 29rpx;
   }
-  
+
   .pro-img {
     width: 100%;
     height: 100%;
   }
-  
+
   .pro-name {
     width: 321rpx;
     font-size: 26rpx;
@@ -284,12 +284,12 @@ export default {
     text-overflow: ellipsis;
     -webkit-box-orient: vertical;
   }
-  
+
   .collection {
     font-size: 24rpx;
     color: #888;
   }
-  
+
   .btn {
     display: flex;
     justify-content: space-between;
@@ -298,12 +298,12 @@ export default {
     color: #F43131;
     font-size: 36rpx;
   }
-  
+
   .btn .span .spans {
     font-style: normal;
     font-size: 24rpx;
   }
-  
+
   .btn .button {
     width: 135rpx;
     height: 55rpx;
@@ -315,7 +315,7 @@ export default {
     line-height: 55rpx;
     text-align: center;
   }
-  
+
   .bottom {
     position: fixed;
     bottom: 0;
@@ -332,20 +332,20 @@ export default {
     z-index: 999;
     background-color: #fff;
   }
-  
+
   .b_left {
     font-size: 28rpx;
     color: #666666;
     display: flex;
     align-items: center;
-    
+
     img {
       width: 34rpx;
       height: 34rpx;
       margin-right: 20rpx;
     }
   }
-  
+
   .b_right {
     font-size: 26rpx;
     color: #F43131;
@@ -355,20 +355,20 @@ export default {
     border-radius: 8px;
     border: 1px solid #F43131;
   }
-  
+
   .defaults {
     margin: 0 auto;
     width: 640rpx;
     height: 480rpx;
     margin-top: 100rpx;
   }
-  
+
   .space-div {
     padding-top: var(--status-bar-height);
     height: 86rpx;
     background: white;
   }
-  
+
   .spaceDiv {
     height: 86rpx;
     background: white;

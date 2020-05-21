@@ -28,7 +28,7 @@ export default {
   data () {
     return {
       article_id: '',
-      articleData: {},
+      articleData: {}
     }
   },
   onLoad (options) {
@@ -42,8 +42,8 @@ export default {
       getArticle({ article_id: this.article_id }).then(res => {
         this.articleData = res.data
       })
-    },
-  },
+    }
+  }
 }
 </script>
 
@@ -53,13 +53,13 @@ export default {
     background-color: #FFFFFF;
     min-height: 100vh;
   }
-  
+
   .articleTitle {
     font-size: 22px;
     line-height: 1.4;
     margin-bottom: 14px;
   }
-  
+
   .articleTime {
     margin-bottom: 22px;
     line-height: 20px;
@@ -68,7 +68,7 @@ export default {
     word-wrap: break-word;
     word-break: break-all;
   }
-  
+
   .ArticleBriefDescription {
     border-radius: 10px;
     background-color: #f8f8f8;

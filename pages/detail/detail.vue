@@ -254,7 +254,7 @@ import {
   getProductSharePic,
   getUserCoupon,
   judgeReceiveGift,
-  updateCart,
+  updateCart
 } from '../../common/fetch.js'
 import { buildSharePath, getProductThumb, isWeiXin, ls, numberSort } from '../../common/tool.js'
 
@@ -295,7 +295,7 @@ export default {
         // showimg: '',      //选择属性的图片(用产品图片代替)
         qty: 1, // 购买数量
         cart_key: '', // 购物车类型   CartList（加入购物车）、DirectBuy（立即购买）、PTCartList（不能加入购物车）
-        productDetail_price: 0,
+        productDetail_price: 0
       },
       submit_flag: true, // 提交按钮
       page: 1, // 优惠券页
@@ -318,13 +318,13 @@ export default {
       liveList: [],
       liveCount: 0,
       // imgIndex:-1
-      is_gift_package_pro: false, // 是否是礼包产品，礼包产品不能加入购物车
+      is_gift_package_pro: false // 是否是礼包产品，礼包产品不能加入购物车
     }
   },
   components: {
     bottom,
     popupLayer,
-    uParse,
+    uParse
   },
   // #ifdef MP-WEIXIN || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO
   // 自定义小程序分享
@@ -334,7 +334,7 @@ export default {
       title: this.product.Products_Name,
       desc: this.product.Products_BriefDescription,
       imageUrl: this.product.ImgPath,
-      path: buildSharePath(path),
+      path: buildSharePath(path)
     }
     return shareObj
   },
@@ -467,12 +467,12 @@ export default {
     }
   },
   computed: {
-    ...mapState(['initData']),
+    ...mapState(['initData'])
   },
   methods: {
     toLive () {
       uni.navigateTo({
-        url: '/pagesA/live/live',
+        url: '/pagesA/live/live'
       })
     },
     yulanDetail () {
@@ -487,7 +487,7 @@ export default {
       uni.previewImage({
         urls: arr,
         indicator: 'default',
-        current: 0,
+        current: 0
       })
     },
     handClicked2 () {
@@ -520,17 +520,17 @@ export default {
         top: '30px',
         left: '10px',
         width: '30px',
-        height: '30px',
+        height: '30px'
       })
       view.drawBitmap('/static/back.png', {
         top: '0px',
         left: '0px',
         width: '100%',
-        height: '100%',
+        height: '100%'
       })
       view.addEventListener('click', function (e) {
         uni.navigateBack({
-          delta: 1,
+          delta: 1
         })
       }, false)
       view.show()
@@ -546,17 +546,17 @@ export default {
         // left: 'auto',
         left: leftOffset + 'px',
         width: '30px',
-        height: '30px',
+        height: '30px'
       })
       view.drawBitmap('/static/cart.png', {
         top: '0px',
         left: '0px',
         width: '100%',
-        height: '100%',
+        height: '100%'
       })
       view.addEventListener('click', function (e) {
         uni.switchTab({
-          url: '/pages/order/cart',
+          url: '/pages/order/cart'
         })
       }, false)
       view.show()
@@ -619,7 +619,7 @@ export default {
         title: this.product.Products_Name,
         desc: this.product.Products_BriefDescription,
         imageUrl: getProductThumb(this.product.ImgPath),
-        path: buildSharePath(path),
+        path: buildSharePath(path)
       }
       switch (channel) {
         case 'wx':
@@ -634,7 +634,7 @@ export default {
             success: function (res) {
             },
             fail: function (err) {
-            },
+            }
           })
           break
         case 'wxtimeline':
@@ -649,7 +649,7 @@ export default {
             success: function (res) {
             },
             fail: function (err) {
-            },
+            }
           })
           break
         case 'wxmini':
@@ -663,17 +663,17 @@ export default {
               id: _self.wxMiniOriginId,
               path: '/' + shareObj.path,
               type: 0,
-              webUrl: 'http://uniapp.dcloud.io',
+              webUrl: 'http://uniapp.dcloud.io'
             },
             success: ret => {
-            },
+            }
           })
           break
         case 'pic':
           // this.$toast('comming soon')
           const res = await getProductSharePic({ product_id: this.Products_ID }, {
             tip: '努力加载中',
-            mask: true,
+            mask: true
           })
           ls.set('temp_sharepic_info', res.data)
           const sharePic = res.data.img_url
@@ -683,7 +683,7 @@ export default {
           }
           setTimeout(function () {
             uni.navigateTo({
-              url: '/pages/detail/sharepic/sharepic',
+              url: '/pages/detail/sharepic/sharepic'
             })
           }, 200)
           // uni.previewImage({
@@ -705,7 +705,7 @@ export default {
       this.postData.attr_id = this.gift_attr_id
       updateCart(this.postData).then(res => {
         uni.navigateTo({
-          url: '/pagesA/person/gift?cart_key=DirectBuy&gift=gift',
+          url: '/pagesA/person/gift?cart_key=DirectBuy&gift=gift'
         })
       }).catch(() => {
       })
@@ -721,14 +721,14 @@ export default {
         // #ifdef APP-PLUS
         uni.$emit('goods_bottom_setval', {
           isCollected: this.isCollected,
-          canSubmit: this.canSubmit,
+          canSubmit: this.canSubmit
         })
         // #endif
       }).catch(res => {
         console.log(res, 'sss')
         setTimeout(function () {
           uni.navigateBack({
-            delta: 1,
+            delta: 1
           })
         }, 1000)
         this.canSubmit = false
@@ -743,7 +743,7 @@ export default {
       uni.previewImage({
         urls: tempArr,
         indicator: 'number',
-        current: j,
+        current: j
       })
     },
     // 轮播图图片预览
@@ -751,7 +751,7 @@ export default {
       uni.previewImage({
         urls: this.product.Products_JSON.ImgPath,
         indicator: 'default',
-        current: index,
+        current: index
       })
     },
     // 检查产品是否已收藏
@@ -786,7 +786,7 @@ export default {
       if (this.isLoading == true) return
       this.isLoading = true
       const data = {
-        coupon_id: item,
+        coupon_id: item
       }
       if (this.couponList.length <= 1) {
         this.goNextPage()
@@ -794,7 +794,7 @@ export default {
       getUserCoupon(data, { errtip: false }).then(res => {
         uni.showToast({
           title: res.msg,
-          icon: 'none',
+          icon: 'none'
         })
         this.isLoading = false
         this.page = 1
@@ -822,7 +822,7 @@ export default {
       const data = {
         pageSize: this.pageSize,
         page: this.page,
-        prod_id: this.Products_ID,
+        prod_id: this.Products_ID
       }
       getCoupon(data).then(res => {
         for (const i of res.data) {
@@ -912,7 +912,7 @@ export default {
         if (this.product.skujosn) {
           wx.showToast({
             title: '您还没有选择规格',
-            icon: 'none',
+            icon: 'none'
           })
           return
         }
@@ -931,11 +931,11 @@ export default {
         if (this.postData.cart_key == 'CartList') {
           uni.showToast({
             title: '加入购物车成功',
-            icon: 'success',
+            icon: 'success'
           })
         } else {
           uni.navigateTo({
-            url: '/pages/order/check?cart_key=DirectBuy',
+            url: '/pages/order/check?cart_key=DirectBuy'
           })
         }
       }).catch(() => {
@@ -966,7 +966,7 @@ export default {
       } else {
         uni.showToast({
           title: '购买数量不能大于库存量',
-          icon: 'none',
+          icon: 'none'
         })
         this.postData.qty = this.postData.count
       }
@@ -981,7 +981,7 @@ export default {
       } else {
         uni.showToast({
           title: '购买数量不能小于1',
-          icon: 'none',
+          icon: 'none'
         })
         this.postData.qty = 1
       }
@@ -995,7 +995,7 @@ export default {
       if (this.isCollected) {
         cancelCollection({ prod_id: this.Products_ID }).then(res => {
           uni.showToast({
-            title: res.msg,
+            title: res.msg
           })
           this.isCollected = false
           // #ifdef APP-PLUS
@@ -1005,7 +1005,7 @@ export default {
       } else {
         addCollection({ prod_id: this.Products_ID }).then(res => {
           uni.showToast({
-            title: '收藏成功',
+            title: '收藏成功'
           })
           this.isCollected = true
           // #ifdef APP-PLUS
@@ -1016,7 +1016,7 @@ export default {
     },
     goCart () {
       uni.switchTab({
-        url: '/pages/order/cart',
+        url: '/pages/order/cart'
       })
     },
     goBack () {
@@ -1031,7 +1031,7 @@ export default {
       const data = {
         Products_ID: item,
         page: 1,
-        pageSize: 2,
+        pageSize: 2
       }
       getCommit(data, { errtip: false }).then(res => {
         this.commit = res.data
@@ -1040,7 +1040,7 @@ export default {
     },
     async getDetail (item) {
       const data = {
-        prod_id: item,
+        prod_id: item
       }
       if (this.store_id) {
         data.store_id = this.store_id
@@ -1060,7 +1060,7 @@ export default {
           for (const i in res.data.skujosn) {
             skujosn_new.push({
               sku: i,
-              val: skujosn[i],
+              val: skujosn[i]
             })
           }
           this.product.skujosn_new = skujosn_new
@@ -1070,11 +1070,11 @@ export default {
         // 规格选择
         uni.$emit('goods_spec_setval', {
           product: this.product,
-          detail: 'detail',
+          detail: 'detail'
         })
         uni.$emit('goods_spec_setval', {
           postData: this.postData,
-          detail: 'detail',
+          detail: 'detail'
         })
         uni.$emit('goods_bottom_setval', { isVirtual: this.isVirtual })
         // #endif
@@ -1093,7 +1093,7 @@ export default {
           imgUrl: product.ImgPath, // 分享图标
           success: function () {
             // 用户点击了分享后执行的回调函数
-          },
+          }
         })
         // 两种方式都可以
         wxEnv.onMenuShareAppMessage({
@@ -1105,7 +1105,7 @@ export default {
           // dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
           success: function () {
             // 用户点击了分享后执行的回调函数
-          },
+          }
         })
       }).catch(() => {
       })
@@ -1122,7 +1122,7 @@ export default {
       goodsSpecNvue.show('slide-in-bottom', 200)
       uni.$emit('goods_spec_setval', {
         postData: this.postData,
-        detail: 'detail',
+        detail: 'detail'
       })
       // #endif
       // #ifndef APP-PLUS
@@ -1147,7 +1147,7 @@ export default {
       goodsSpecNvue.show('slide-in-bottom', 200)
       uni.$emit('goods_spec_setval', {
         postData: this.postData,
-        detail: 'detail',
+        detail: 'detail'
       })
       // #endif
       // #ifndef APP-PLUS
@@ -1157,7 +1157,7 @@ export default {
     },
     gotoComments () {
       uni.navigateTo({
-        url: '/pages/order/comments?pro_id=' + this.Products_ID,
+        url: '/pages/order/comments?pro_id=' + this.Products_ID
       })
     },
     showTick (e) {
@@ -1176,7 +1176,7 @@ export default {
         share.show('slide-in-bottom', 200)
         uni.$emit('share', {
           wxMiniOriginId: this.wxMiniOriginId,
-          detail: 'detail',
+          detail: 'detail'
         })
       }
       // #endif
@@ -1189,7 +1189,7 @@ export default {
       this.hideNativeEleShow = false
       this.$refs.popupLayer.close()
     },
-    ...mapActions(['getUserInfo']),
+    ...mapActions(['getUserInfo'])
   },
   async created () {
     const initData = await this.getInitData()
@@ -1204,7 +1204,7 @@ export default {
       }
     }
     this.wxMiniOriginId = WX_MINI_ORIGIN_ID
-  },
+  }
 }
 </script>
 <style lang="scss" scoped>
@@ -1215,55 +1215,55 @@ export default {
     /*overflow-y: scroll;*/
     /*overflow-x: hidden;*/
   }
-  
+
   /* 轮播图样式 */
   .uni-padding-wrap {
-    width: 750 rpx;
-    height: 750 rpx;
-    
+    width: 750rpx;
+    height: 750rpx;
+
     .page-section, .page-section-spacing, .swiper, .uni-swiper-wrapper, .uni-swiper-slides {
       position: relative;
-      width: 750 rpx;
-      height: 750 rpx;
-      
+      width: 750rpx;
+      height: 750rpx;
+
       img {
         width: 100%;
         height: 100%;
       }
-      
+
       .video {
         width: 100%;
         height: 100%;
       }
-      
+
       .change-btn {
         position: absolute;
-        bottom: 50 rpx;
+        bottom: 50rpx;
         left: 50%;
         transform: translateX(-50%);
         display: flex;
-        width: 240 rpx;
+        width: 240rpx;
         justify-content: space-between;
         z-index: 10;
-        
+
         .shipin,
         .tupian {
           text-align: center;
           border-radius: 10px;
           color: #fff;
           box-sizing: border-box;
-          font-size: 28 rpx;
+          font-size: 28rpx;
           padding: 5px 10px;
           background: rgba(255, 0, 0, .5);
         }
-        
+
         .active {
           background: rgb(255, 102, 0);
         }
       }
     }
   }
-  
+
   /* 返回按钮和购物车按钮 */
   .top {
     position: fixed;
@@ -1277,12 +1277,12 @@ export default {
     z-index: 10;
     width: 95%;
   }
-  
+
   .imgm {
     width: 30px;
     height: 30px;
   }
-  
+
   .imgms {
     width: 30px;
     height: 30px;
@@ -1290,7 +1290,7 @@ export default {
     top: 30px;
     left: 10px;
   }
-  
+
   .carts {
     width: 30px;
     height: 30px;
@@ -1298,157 +1298,157 @@ export default {
     top: 30px;
     right: 10px !important;
   }
-  
+
   .ticks, .shareinfo {
     background: #fff;
     width: 100%;
-    padding: 30 rpx 0 60 rpx;
+    padding: 30rpx 0 60rpx;
     color: #333;
     z-index: 100;
-    border-top-left-radius: 10 rpx;
-    border-top-right-radius: 10 rpx;
+    border-top-left-radius: 10rpx;
+    border-top-right-radius: 10rpx;
   }
-  
+
   .ticks {
-    max-height: 1050 rpx;
+    max-height: 1050rpx;
     position: relative;
-    padding-top: 0 rpx !important;
+    padding-top: 0rpx !important;
     // overflow: scroll;
   }
-  
+
   .t_title {
-    font-size: 30 rpx;
+    font-size: 30rpx;
     color: #333;
     text-align: center;
     //margin-bottom: 40rpx;
     // position: fixed;
     width: 100%;
     z-index: 999;
-    height: 90 rpx;
-    line-height: 90 rpx;
+    height: 90rpx;
+    line-height: 90rpx;
     background-color: #FFFFFF;
   }
-  
+
   .t_title image {
-    height: 24 rpx;
-    width: 24 rpx;
+    height: 24rpx;
+    width: 24rpx;
     position: absolute;
-    top: 33 rpx;
-    right: 20 rpx;
+    top: 33rpx;
+    right: 20rpx;
   }
-  
+
   .t_content {
     position: relative;
-    width: 720 rpx;
-    height: 160 rpx;
+    width: 720rpx;
+    height: 160rpx;
     background-color: #FDF1E5;
     background-size: cover;
-    margin: 0 auto 30 rpx;
-    padding: 20 rpx 0 28 rpx 40 rpx;
+    margin: 0 auto 30rpx;
+    padding: 20rpx 0 28rpx 40rpx;
     box-sizing: border-box;
-    font-size: 22 rpx;
+    font-size: 22rpx;
     color: #F43131;
   }
-  
+
   .t_left {
     float: left;
   }
-  
+
   .t_left .t_left_t .money {
-    font-size: 42 rpx;
-    margin-right: 10 rpx;
+    font-size: 42rpx;
+    margin-right: 10rpx;
   }
-  
+
   .t_left .t_left_t {
-    font-size: 24 rpx;
-    margin-bottom: 10 rpx;
+    font-size: 24rpx;
+    margin-bottom: 10rpx;
   }
-  
+
   .t_left .t_left_b {
-    margin-top: 6 rpx;
+    margin-top: 6rpx;
   }
-  
+
   .t_left .t_left_t i {
-    font-size: 22 rpx;
+    font-size: 22rpx;
     font-style: normal;
   }
-  
+
   .t_left .t_left_c, .t_left .t_left_b {
-    font-size: 22 rpx;
+    font-size: 22rpx;
   }
-  
+
   .t_right {
     float: right;
-    height: 116 rpx;
-    line-height: 116 rpx;
-    padding: 0 36 rpx;
-    font-size: 30 rpx;
-    border-left: 2 rpx dotted #999;
+    height: 116rpx;
+    line-height: 116rpx;
+    padding: 0 36rpx;
+    font-size: 30rpx;
+    border-left: 2rpx dotted #999;
     //width: 124rpx;
     text-align: center;
   }
-  
+
   .aleady {
     color: #999;
   }
-  
+
   .shareinfo {
     padding-bottom: 0;
     color: #333;
-    font-size: 24 rpx;
+    font-size: 24rpx;
   }
-  
+
   .shareinfo > div {
     text-align: center;
   }
-  
+
   .s_top {
     display: flex;
     justify-content: center;
     align-items: center;
   }
-  
+
   .s_top .img {
-    width: 76 rpx;
-    height: 76 rpx;
+    width: 76rpx;
+    height: 76rpx;
     display: block;
-    margin: 0 auto 10 rpx;
+    margin: 0 auto 10rpx;
   }
-  
+
   .s_top > div:nth-child(1) {
     /*margin-right: 120rpx;*/
   }
-  
+
   .s_bottom {
     position: relative;
     bottom: 0;
     width: 100%;
     background: #e8e8e8;
     color: #666;
-    font-size: 26 rpx;
+    font-size: 26rpx;
     text-align: center;
-    line-height: 60 rpx;
-    margin-top: 16 rpx;
+    line-height: 60rpx;
+    margin-top: 16rpx;
   }
-  
+
   /* 产品描述部分 start */
   .section1 {
     background: white;
-    padding: 0 20 rpx 20 rpx;
-    border-bottom: 20 rpx solid #f8f8f8;
-    padding-bottom: 0 rpx;
+    padding: 0 20rpx 20rpx;
+    border-bottom: 20rpx solid #f8f8f8;
+    padding-bottom: 0rpx;
   }
-  
+
   .price {
-    padding-top: 38 rpx;
-    padding-bottom: 29 rpx;
+    padding-top: 38rpx;
+    padding-bottom: 29rpx;
   }
-  
+
   .price .mm {
-    font-size: 20 rpx;
+    font-size: 20rpx;
     font-style: normal;
   }
-  
+
   .price .share {
     float: right;
     background: red;
@@ -1456,192 +1456,192 @@ export default {
     text-align: center;
     margin-right: -20rpx;
     margin-top: -2rpx;
-    font-size: 26 rpx;
-    padding: 10 rpx;
-    border-top-left-radius: 40 rpx;
-    border-bottom-left-radius: 40 rpx;
-    height: 56 rpx;
-    width: 157 rpx;
+    font-size: 26rpx;
+    padding: 10rpx;
+    border-top-left-radius: 40rpx;
+    border-bottom-left-radius: 40rpx;
+    height: 56rpx;
+    width: 157rpx;
     box-sizing: border-box;
   }
-  
+
   .n_price {
     color: #ff0000;
-    font-size: 36 rpx;
+    font-size: 36rpx;
   }
-  
+
   .o_price {
-    margin-left: 10 rpx;
+    margin-left: 10rpx;
     color: #ababab;
-    font-size: 28 rpx;
+    font-size: 28rpx;
     text-decoration: line-through;
   }
-  
+
   .name {
     color: #333;
-    font-size: 28 rpx;
+    font-size: 28rpx;
     font-weight: 700;
-    margin: 10 rpx 0;
+    margin: 10rpx 0;
   }
-  
+
   .sold {
-    height: 50 rpx;
-    line-height: 50 rpx;
+    height: 50rpx;
+    line-height: 50rpx;
     padding-bottom: 10px;
   }
-  
+
   .sold span {
     color: #999;
-    font-size: 26 rpx;
+    font-size: 26rpx;
   }
-  
+
   .sold span:nth-child(2) {
     float: right;
   }
-  
+
   /* 产品描述部分 end */
   /* 领券start */
   .section2 {
-    padding: 30 rpx 20 rpx;
-    font-size: 24 rpx;
+    padding: 30rpx 20rpx;
+    font-size: 24rpx;
     display: flex;
     align-items: center;
     justify-content: space-between;
     background: white;
-    border-bottom: 20 rpx solid #f8f8f8;
+    border-bottom: 20rpx solid #f8f8f8;
   }
-  
+
   .section2 .btn {
-    padding: 0 10 rpx;
+    padding: 0 10rpx;
     color: #f43131;
-    border: 2 rpx solid #f43131;
+    border: 2rpx solid #f43131;
   }
-  
+
   .right {
     display: flex;
     align-items: center;
-    font-size: 26 rpx;
+    font-size: 26rpx;
     color: #666666;
     font-weight: 500;
   }
-  
+
   .right .img {
-    width: 20 rpx;
-    height: 26 rpx;
-    margin-left: 20 rpx;
+    width: 20rpx;
+    height: 26rpx;
+    margin-left: 20rpx;
   }
-  
+
   /* 领券 end */
   /* 包邮信息等 start */
   .section3 {
     display: flex;
     flex-wrap: wrap;
-    font-size: 0 rpx;
+    font-size: 0rpx;
   }
-  
+
   .section3 > span {
     display: flex;
     align-items: center;
     // margin-right: 20rpx;
-    margin: 20 rpx 20 rpx 20 rpx 0;
-    
+    margin: 20rpx 20rpx 20rpx 0;
+
     span {
-      font-size: 24 rpx;
+      font-size: 24rpx;
       color: #333333;
     }
   }
-  
+
   .section3 .img {
-    width: 28 rpx;
-    height: 28 rpx;
-    margin-right: 10 rpx;
+    width: 28rpx;
+    height: 28rpx;
+    margin-right: 10rpx;
   }
-  
+
   /* 包邮信息等 end */
   /* 评价 start */
   .comment {
-    padding: 30 rpx 20 rpx;
-    border-bottom: 20 rpx solid #f8f8f8;
+    padding: 30rpx 20rpx;
+    border-bottom: 20rpx solid #f8f8f8;
   }
-  
+
   .c_title {
     display: flex;
     justify-content: space-between;
   }
-  
+
   .c_title {
     .right {
       color: #666666;
-      font-size: 26 rpx;
+      font-size: 26rpx;
       font-weight: 500;
     }
   }
-  
+
   .c_title > span {
-    font-size: 30 rpx;
+    font-size: 30rpx;
     color: #333;
   }
-  
+
   .c_content {
-    margin-top: 30 rpx;
+    margin-top: 30rpx;
   }
-  
+
   .c_content_title {
     display: flex;
     align-items: center;
-    font-size: 30 rpx;
+    font-size: 30rpx;
     color: #333;
   }
-  
+
   .c_content_title > img {
-    width: 70 rpx;
-    height: 70 rpx;
-    margin-right: 20 rpx;
+    width: 70rpx;
+    height: 70rpx;
+    margin-right: 20rpx;
   }
-  
+
   .user_name {
     flex: 1;
   }
-  
+
   .c_time {
-    font-size: 26 rpx;
+    font-size: 26rpx;
     color: #777;
   }
-  
+
   .c_content_msg {
-    font-size: 24 rpx;
+    font-size: 24rpx;
     color: #333;
-    line-height: 36 rpx;
-    padding: 18 rpx 0;
-    border-bottom: 2 rpx solid #f8f8f8;
+    line-height: 36rpx;
+    padding: 18rpx 0;
+    border-bottom: 2rpx solid #f8f8f8;
   }
-  
+
   .c_content_img .img {
-    width: 140 rpx;
-    height: 140 rpx;
-    margin-right: 20 rpx;
+    width: 140rpx;
+    height: 140rpx;
+    margin-right: 20rpx;
   }
-  
+
   /* 评价 end */
   /* 商品详情 start */
   .pro_detail {
     .p_detail_des {
       width: 100%;
-      font-size: 28 rpx;
+      font-size: 28rpx;
       color: #999;
-      
+
       img {
         width: 100% !important;
       }
     }
   }
-  
+
   .p_detail_title {
-    padding: 30 rpx 20 rpx;
+    padding: 30rpx 20rpx;
     color: #333;
-    font-size: 30 rpx;
+    font-size: 30rpx;
   }
-  
+
   /* 商品详情 end */
   /* 遮罩层 */
   .modal {
@@ -1651,155 +1651,155 @@ export default {
     background: rgba(0, 0, 0, .7);
     z-index: 1000;
   }
-  
+
   .cartSku {
-    padding: 0 rpx 20 rpx;
-    
+    padding: 0rpx 20rpx;
+
     .cartTop {
       position: relative;
       display: flex;
-      padding-top: 20 rpx;
-      
+      padding-top: 20rpx;
+
       .image {
-        width: 220 rpx;
-        height: 220 rpx;
+        width: 220rpx;
+        height: 220rpx;
       }
-      
+
       .cartTitle {
-        margin-left: 20 rpx;
-        font-size: 32 rpx;
+        margin-left: 20rpx;
+        font-size: 32rpx;
         //width: 420rpx;
         flex: 1;
-        
+
         .cartTitles {
-          height: 80 rpx;
+          height: 80rpx;
           overflow: hidden;
-          margin-top: 20 rpx;
-          line-height: 40 rpx;
+          margin-top: 20rpx;
+          line-height: 40rpx;
         }
-        
+
         .addInfo {
-          width: 450 rpx;
-          margin-top: 70 rpx;
+          width: 450rpx;
+          margin-top: 70rpx;
           display: flex;
           flex-flow: row;
           justify-content: space-between;
           align-items: flex-end;
-          
+
           .addPrice {
-            font-size: 42 rpx;
+            font-size: 42rpx;
             color: #ff4200;
           }
-          
+
           .proSale {
-            font-size: 24 rpx;
+            font-size: 24rpx;
             color: #999;
             justify-content: flex-end;
           }
         }
       }
     }
-    
+
     .cartCenter {
-      margin-top: 20 rpx;
-      
+      margin-top: 20rpx;
+
       .cartAttr {
         //display: flex;
-        padding: 15 rpx 0 rpx;
-        
+        padding: 15rpx 0rpx;
+
         .sku {
-          font-size: 28 rpx;
-          height: 70 rpx;
-          line-height: 70 rpx;
-          width: 140 rpx;
+          font-size: 28rpx;
+          height: 70rpx;
+          line-height: 70rpx;
+          width: 140rpx;
           padding-left: 10px;
           margin-bottom: 5px;
         }
-        
+
         .skuValue {
           display: flex;
           //flex:1;
           flex-wrap: wrap;
-          
+
           .skuview {
             margin-bottom: 10px;
-            height: 70 rpx;
-            line-height: 70 rpx;
+            height: 70rpx;
+            line-height: 70rpx;
             font-size: 14px;
-            border-radius: 10 rpx;
+            border-radius: 10rpx;
             color: #000;
             background-color: #F2F2F2;
-            padding-left: 20 rpx;
-            padding-right: 20 rpx;
-            margin-right: 20 rpx;
+            padding-left: 20rpx;
+            padding-right: 20rpx;
+            margin-right: 20rpx;
             //border: 1px solid #ccc;
           }
-          
+
           .unablechoose {
             background: #ddd;
           }
         }
       }
     }
-    
+
     .numBer {
-      margin-top: 20 rpx;
+      margin-top: 20rpx;
       display: flex;
-      padding: 15 rpx 0 rpx;
+      padding: 15rpx 0rpx;
       justify-content: space-between;
-      
+
       .numBers {
-        font-size: 28 rpx;
-        height: 70 rpx;
-        line-height: 70 rpx;
-        width: 140 rpx;
+        font-size: 28rpx;
+        height: 70rpx;
+        line-height: 70rpx;
+        width: 140rpx;
       }
-      
+
       .inputNumber {
         border: 1px solid #ccc;
-        border-radius: 6 rpx;
-        height: 50 rpx;
+        border-radius: 6rpx;
+        height: 50rpx;
         //margin-right: 50rpx;
         display: flex;
-        
+
         .inputq {
           color: black;
           margin: 0 auto;
-          width: 80 rpx;
-          height: 50 rpx;
+          width: 80rpx;
+          height: 50rpx;
           text-align: center;
-          font-size: 24 rpx;
-          border-left: 2 rpx solid #ccc;
-          border-right: 2 rpx solid #ccc;
+          font-size: 24rpx;
+          border-left: 2rpx solid #ccc;
+          border-right: 2rpx solid #ccc;
         }
-        
+
         .clicks {
-          height: 50 rpx;
-          line-height: 50 rpx;
-          width: 60 rpx;
+          height: 50rpx;
+          line-height: 50rpx;
+          width: 60rpx;
           text-align: center;
         }
       }
     }
   }
-  
+
   .cartSub {
     width: 100%;
-    height: 90 rpx;
+    height: 90rpx;
     background-color: #F43131;
     font-size: 20px;
-    line-height: 90 rpx;
+    line-height: 90rpx;
     text-align: center;
     color: #FFFFFF;
-    margin-top: 30 rpx;
+    margin-top: 30rpx;
     border-radius: 0;
     border: none;
-    
+
     &.disabled {
       background: #999;
     }
   }
-  
+
   .skuCheck {
     color: #fff !important;
     background-color: #ff4200 !important;

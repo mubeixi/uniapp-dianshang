@@ -33,7 +33,7 @@ export default {
   data () {
     return {
       inputValue: '',
-      searchAll: [],
+      searchAll: []
     }
   },
   components: {},
@@ -48,13 +48,13 @@ export default {
       key: 'searchAll',
       success (res) {
         than.searchAll = res.data
-      },
+      }
     })
   },
   methods: {
     goSearch (item) {
       uni.navigateTo({
-        url: '/pages/classify/result?inputValue=' + item,
+        url: '/pages/classify/result?inputValue=' + item
       })
     },
     success () {
@@ -65,7 +65,7 @@ export default {
         for (var item of this.searchAll) {
           if (item == this.inputValue) {
             uni.navigateTo({
-              url,
+              url
             })
             return
           }
@@ -73,18 +73,18 @@ export default {
         this.searchAll.push(this.inputValue) // 将输入框的值添加到搜索记录数组中存储
         uni.setStorage({
           key: 'searchAll',
-          data: than.searchAll,
+          data: than.searchAll
         })
       }
       uni.navigateTo({
-        url,
+        url
       })
     },
     clear () {
       this.searchAll = []
       uni.setStorage({
         key: 'searchAll',
-        data: [],
+        data: []
       })
     },
     close () {
@@ -96,8 +96,8 @@ export default {
     },
     onCancel: function () {
 
-    },
-  },
+    }
+  }
 }
 </script>
 
@@ -107,66 +107,66 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 30 rpx;
-    padding: 30 rpx 22 rpx 46 rpx 20 rpx;
+    font-size: 30rpx;
+    padding: 30rpx 22rpx 46rpx 20rpx;
     box-sizing: border-box;
-    
+
     .search-input {
       float: left;
-      width: 600 rpx;
-      height: 65 rpx;
-      line-height: 65 rpx;
-      border-radius: 10 rpx;
+      width: 600rpx;
+      height: 65rpx;
+      line-height: 65rpx;
+      border-radius: 10rpx;
       background: #F4F4F4;
-      font-size: 26 rpx;
+      font-size: 26rpx;
       color: #ADADAD;
-      padding-left: 91 rpx;
+      padding-left: 91rpx;
       box-sizing: border-box;
     }
-    
+
     .search_icon {
       position: absolute;
-      top: 46 rpx;
-      left: 61 rpx;
+      top: 46rpx;
+      left: 61rpx;
     }
-    
+
     .span {
-      font-size: 30 rpx;
+      font-size: 30rpx;
       color: #333333;
     }
   }
-  
+
   .history {
-    padding: 0 20 rpx;
+    padding: 0 20rpx;
   }
-  
+
   .title {
     display: flex;
     justify-content: space-between;
-    height: 40 rpx;
+    height: 40rpx;
     align-items: center;
   }
-  
+
   .title {
-    font-size: 28 rpx;
+    font-size: 28rpx;
     color: #333;
     font-weight: 500;
-    height: 40 rpx;
-    
-    line-height: 40 rpx;
-    
+    height: 40rpx;
+
+    line-height: 40rpx;
+
     .img {
-      width: 40 rpx;
-      height: 40 rpx;
+      width: 40rpx;
+      height: 40rpx;
       /*width: 100%;*/
       /*height: 100%;*/
     }
   }
-  
+
   .dels {
-    width: 40 rpx;
+    width: 40rpx;
   }
-  
+
   .h_content .span {
     float: left;
     background: rgba(245, 245, 245, 1);
@@ -174,7 +174,7 @@ export default {
     color: #777;
     font-size: 12px;
     text-align: center;
-    padding: 16 rpx 24 rpx;
-    margin: 30 rpx 20 rpx 0 0;
+    padding: 16rpx 24rpx;
+    margin: 30rpx 20rpx 0 0;
   }
 </style>

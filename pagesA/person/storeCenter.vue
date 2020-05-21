@@ -32,7 +32,7 @@
           </view>
         </view>
       </view>
-      
+
       <view class="user-info-all">
         <view class="store-money">
           <view>
@@ -45,7 +45,7 @@
           <view class="order">
             <view class="order-num">{{storeDetail.today_order_num}}</view>
             <view class="order-title">今日订单数</view>
-          
+
           </view>
           <view class="store-line"></view>
           <view class="order">
@@ -54,7 +54,7 @@
               {{storeDetail.today_order_sales}}
             </view>
             <view class="order-title">今日订单金额</view>
-          
+
           </view>
           <view class="store-line"></view>
           <view @click="openShare" class="order">
@@ -130,7 +130,7 @@
         <view>推广下级</view>
       </view>
     </view>
-    
+
     <popupLayer :direction="'top'" ref="popupLayer">
       <div class="shareinfo">
         <div class="s_top">
@@ -159,7 +159,7 @@
         <div @click="cancelShare" class="s_bottom">取消</div>
       </div>
     </popupLayer>
-    
+
     <model ref="storeModel">
       <div class="store-model">
         <div class="store-model-desc">
@@ -188,7 +188,7 @@
         </div>
       </div>
     </model>
-    
+
     <model ref="storeInfo">
       <div class="storeInfo" v-if="storeDetail.parent_store">
         <div class="storeInfo-title">
@@ -214,16 +214,16 @@ export default {
   mixins: [pageMixin],
   components: {
     popupLayer,
-    Model,
+    Model
   },
   data: function () {
     return {
       storeDetail: {},
-      disList: [],
+      disList: []
     }
   },
   computed: {
-    ...mapGetters(['Stores_ID', 'initData']),
+    ...mapGetters(['Stores_ID', 'initData'])
   },
   onLoad () {
     if (!this.$fun.checkIsLogin(1)) return
@@ -232,7 +232,7 @@ export default {
   methods: {
     cellPhone (phone) {
       uni.makePhoneCall({
-        phoneNumber: phone,
+        phoneNumber: phone
       })
     },
     lookModelStore () {
@@ -245,16 +245,16 @@ export default {
       const pid = ls.get('pid')
       if (pid == 0) {
         uni.navigateTo({
-          url: '/pagesA/procurement/stock',
+          url: '/pagesA/procurement/stock'
         })
       } else {
         if (this.initData.same_level_purchase == 0 && this.storeDetail.type_id <= this.storeDetail.parent_store.type_id) {
           uni.navigateTo({
-            url: '/pagesA/procurement/stock',
+            url: '/pagesA/procurement/stock'
           })
         } else {
           uni.navigateTo({
-            url: '/pagesA/procurement/stock?purchase_store_id=' + pid,
+            url: '/pagesA/procurement/stock?purchase_store_id=' + pid
           })
         }
       }
@@ -268,7 +268,7 @@ export default {
         title: this.storeDetail.Stores_Name,
         desc: '万千好货疯抢中',
         imageUrl: getProductThumb(this.storeDetail.Stores_ImgPath),
-        path: buildSharePath(path),
+        path: buildSharePath(path)
       }
       switch (channel) {
         case 'wx':
@@ -283,7 +283,7 @@ export default {
             success: function (res) {
             },
             fail: function (err) {
-            },
+            }
           })
           break
         case 'wxtimeline':
@@ -298,7 +298,7 @@ export default {
             success: function (res) {
             },
             fail: function (err) {
-            },
+            }
           })
           break
         case 'wxmini':
@@ -312,16 +312,16 @@ export default {
               id: _self.wxMiniOriginId,
               path: '/' + shareObj.path,
               type: 0,
-              webUrl: 'http://uniapp.dcloud.io',
+              webUrl: 'http://uniapp.dcloud.io'
             },
             success: ret => {
-            },
+            }
           })
           break
         case 'pic':
 
           uni.navigateTo({
-            url: '/pagesA/store/storeShare?type=3',
+            url: '/pagesA/store/storeShare?type=3'
           })
       }
     },
@@ -334,19 +334,19 @@ export default {
     // 跳转即将售罄的商品
     goSolded () {
       uni.navigateTo({
-        url: '/pagesA/procurement/productMy?stock_low=1',
+        url: '/pagesA/procurement/productMy?stock_low=1'
       })
     },
     // 跳转
     openUrl (url) {
       uni.navigateTo({
-        url: url,
+        url: url
       })
     },
     // 门店信息初始化
     getStoreDetail () {
       storeInit({
-        store_id: this.Stores_ID,
+        store_id: this.Stores_ID
       }).then(res => {
         this.storeDetail = res.data
         ls.set('pid', this.storeDetail.pid)
@@ -358,34 +358,34 @@ export default {
     // 跳转充值页面
     goCharge () {
       uni.navigateTo({
-        url: '/pagesA/person/vipRecharge',
+        url: '/pagesA/person/vipRecharge'
       })
-    },
-  },
+    }
+  }
 }
 </script>
 
 <style lang="scss" scoped>
   .storeInfo {
     width: 500rpx;
-    
+
     .storeInfo-title {
       padding-left: 40rpx;
       height: 80rpx;
       line-height: 80rpx;
     }
   }
-  
+
   .wrap {
-    
+
     min-height: 100vh;
     background-color: #F8F8F8;
-    
+
     .top {
       position: relative;
       margin-bottom: 20rpx;
       background-color: #F8F8F8;
-      
+
       .bgimg {
         position: relative;
         top: 0;
@@ -393,14 +393,14 @@ export default {
         width: 100%;
         z-index: 1;
         height: 338rpx;
-        
+
         .image {
           display: block;
           height: 100%;
           width: 100%;
         }
       }
-      
+
       .user-info-all {
         width: 710rpx;
         height: 260rpx;
@@ -410,7 +410,7 @@ export default {
         top: 510rpx;
         left: 20rpx;
       }
-      
+
       .user-info {
         position: absolute;
         top: 145rpx;
@@ -422,7 +422,7 @@ export default {
         background: rgba(255, 255, 255, 1);
         box-shadow: 0px 13rpx 21rpx 0rpx rgba(244, 49, 49, 0.14);
         border-radius: 15rpx;
-        
+
         .user-avator {
           position: absolute;
           left: 50%;
@@ -432,7 +432,7 @@ export default {
           border-radius: 50%;
           background-color: #fff;
           z-index: 100;
-          
+
           .image {
             position: absolute;
             left: 50%;
@@ -444,7 +444,7 @@ export default {
             border-radius: 50%;
           }
         }
-        
+
         .store-name {
           margin-top: 97rpx;
           margin-bottom: 10rpx;
@@ -453,9 +453,9 @@ export default {
           color: #333;
           font-weight: 700;
         }
-        
+
       }
-      
+
       .tips {
         position: absolute;
         bottom: 20rpx;
@@ -466,20 +466,20 @@ export default {
         transform: translateX(-50%);
         font-size: 20rpx;
         color: #999999;
-        
+
         .tip {
           width: 20rpx;
           height: 20rpx;
           margin-right: 10rpx;
         }
-        
+
         .see {
           color: $wzw-primary-color;
           text-decoration: underline;
         }
       }
     }
-    
+
     .store-money {
       display: flex;
       justify-content: space-between;
@@ -487,12 +487,12 @@ export default {
       height: 110rpx;
       align-items: center;
       padding: 0rpx 48rpx;
-      
+
       .number {
         color: $wzw-primary-color;
         margin-left: 4px;
       }
-      
+
       .charge {
         width: 80rpx;
         height: 46rpx;
@@ -502,17 +502,17 @@ export default {
         color: #fff;
         font-size: 24rpx;
         text-align: center;
-        
+
       }
     }
-    
+
     .order-msg {
       display: flex;
       //justify-content: center;
       //margin-top: 30rpx;
       align-items: center;
       color: #4A4A4A;
-      
+
       .order {
         width: 240rpx;
         height: 140rpx;
@@ -521,10 +521,10 @@ export default {
         padding: 34rpx 0;
         box-sizing: border-box;
         font-size: 26rpx;
-        
+
         .order-title {
           position: relative;
-          
+
           .order-img {
             position: absolute;
             left: 14rpx;
@@ -534,27 +534,27 @@ export default {
             height: 24rpx;
           }
         }
-        
+
         .order-num {
           font-size: 34rpx;
           color: $wzw-primary-color;
           margin-bottom: 16rpx;
-          
+
           .icon {
             font-size: 26rpx;
           }
         }
       }
-      
+
     }
-    
+
     .main {
       display: flex;
       flex-wrap: wrap;
-      
+
       width: 100%;
       background-color: #fff;
-      
+
       .item {
         position: relative;
         width: 33%;
@@ -566,13 +566,13 @@ export default {
         border-bottom: 2rpx solid #F2F2F2;
         border-right: 2rpx solid #F2F2F2;
         font-size: 26rpx;
-        
+
         .item-img {
           width: 40rpx;
           height: 40rpx;
           margin-bottom: 18rpx;
         }
-        
+
         .num {
           position: absolute;
           top: 44rpx;
@@ -594,53 +594,53 @@ export default {
           box-sizing: border-box;
         }
       }
-      
+
       .item:nth-child(3n) {
         border-right: 0;
       }
     }
   }
-  
+
   .store-model {
     width: 650rpx;
     box-sizing: border-box;
   }
-  
+
   .store-model-desc {
     font-size: 14px;
     line-height: 40rpx;
     margin-bottom: 20rpx;
     color: #999999;
   }
-  
+
   .store-td {
     flex: 1;
     text-align: center;
     border-right: 1px solid #CCCCCC;
-    
+
     &:last-child {
       border-right: 0px;
     }
   }
-  
+
   .store-tr {
     border-bottom: 1px solid #CCCCCC;
     height: 70rpx;
     line-height: 70rpx;
-    
+
     &:last-child {
       border-bottom: 0px;
     }
   }
-  
+
   .store-tr-tr {
     color: #666666;
   }
-  
+
   .store-table {
     border: 1px solid #CCCCCC;
   }
-  
+
   .store-model-title {
     height: 60rpx;
     line-height: 60rpx;
@@ -650,7 +650,7 @@ export default {
     text-align: center;
     margin-bottom: 20rpx;
   }
-  
+
   .store-name-item {
     width: 670rpx;
     height: 90rpx;
@@ -663,31 +663,31 @@ export default {
     justify-content: space-between;
     align-items: center;
   }
-  
+
   .store-img-right {
     width: 14rpx;
     height: 22rpx;
     margin-left: 14rpx;
   }
-  
+
   .store-fz-12 {
     font-size: 12px;
     color: #999999;
     display: flex;
     align-items: center;
   }
-  
+
   .store-line {
     width: 1px;
     height: 60rpx;
     background-color: #FFCBCB;
   }
-  
+
   .icon-share-t {
     color: #ff774d;
     font-size: 22px;
   }
-  
+
   //分享
   .ticks, .shareinfo {
     background: #fff;
@@ -698,14 +698,14 @@ export default {
     border-top-left-radius: 10rpx;
     border-top-right-radius: 10rpx;
   }
-  
+
   .ticks {
     max-height: 1050rpx;
     position: relative;
     padding-top: 0rpx !important;
     // overflow: scroll;
   }
-  
+
   .t_title {
     font-size: 30rpx;
     color: #333;
@@ -718,7 +718,7 @@ export default {
     line-height: 90rpx;
     background-color: #FFFFFF;
   }
-  
+
   .t_title image {
     height: 24rpx;
     width: 24rpx;
@@ -726,7 +726,7 @@ export default {
     top: 33rpx;
     right: 20rpx;
   }
-  
+
   .t_content {
     position: relative;
     width: 720rpx;
@@ -739,34 +739,34 @@ export default {
     font-size: 22rpx;
     color: #F43131;
   }
-  
+
   .t_left {
     float: left;
   }
-  
+
   .t_left .t_left_t .money {
     font-size: 42rpx;
     margin-right: 10rpx;
   }
-  
+
   .t_left .t_left_t {
     font-size: 24rpx;
     margin-bottom: 10rpx;
   }
-  
+
   .t_left .t_left_b {
     margin-top: 6rpx;
   }
-  
+
   .t_left .t_left_t i {
     font-size: 22rpx;
     font-style: normal;
   }
-  
+
   .t_left .t_left_c, .t_left .t_left_b {
     font-size: 22rpx;
   }
-  
+
   .t_right {
     float: right;
     height: 116rpx;
@@ -777,38 +777,38 @@ export default {
     //width: 124rpx;
     text-align: center;
   }
-  
+
   .aleady {
     color: #999;
   }
-  
+
   .shareinfo {
     padding-bottom: 0;
     color: #333;
     font-size: 24rpx;
   }
-  
+
   .shareinfo > div {
     text-align: center;
   }
-  
+
   .s_top {
     display: flex;
     justify-content: center;
     align-items: center;
   }
-  
+
   .s_top .img {
     width: 76rpx;
     height: 76rpx;
     display: block;
     margin: 0 auto 10rpx;
   }
-  
+
   .s_top > div:nth-child(1) {
     /*margin-right: 120rpx;*/
   }
-  
+
   .s_bottom {
     position: relative;
     bottom: 0;
@@ -820,6 +820,6 @@ export default {
     line-height: 60rpx;
     margin-top: 16rpx;
   }
-  
+
   //分享结束
 </style>

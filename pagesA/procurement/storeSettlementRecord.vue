@@ -43,7 +43,7 @@
         </view>
       </view>
     </view>
-  
+
   </view>
 </template>
 
@@ -60,7 +60,7 @@ export default {
       list: [],
       page: 1,
       pageSize: 4,
-      totalCount: 0,
+      totalCount: 0
     }
   },
   onShow () {
@@ -73,7 +73,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['Stores_ID']),
+    ...mapGetters(['Stores_ID'])
   },
   methods: {
     noShow () {
@@ -88,7 +88,7 @@ export default {
       const data = {
         store_id: this.Stores_ID,
         page: this.page,
-        pageSize: this.pageSize,
+        pageSize: this.pageSize
       }
       getSettlements(data).then(res => {
         for (const item of res.data) {
@@ -97,8 +97,8 @@ export default {
         this.list = this.list.concat(res.data)
         this.totalCount = res.totalCount
       })
-    },
-  },
+    }
+  }
 }
 </script>
 
@@ -108,7 +108,7 @@ export default {
     min-height: 100vh;
     box-sizing: border-box;
     padding: 30rpx 20rpx 0rpx 20rpx;
-    
+
     .list {
       width: 710rpx;
       background: #FFFFFF;
@@ -118,21 +118,21 @@ export default {
       font-size: 26rpx;
       margin-bottom: 20rpx;
       color: #333333;
-      
+
       .listText {
         position: relative;
         height: 60rpx;
         line-height: 60rpx;
-        
+
         .msg {
           color: #777777;
           margin-left: 10rpx;
         }
-        
+
         .color {
           color: #F43131;
         }
-        
+
         .img {
           width: 22rpx;
           height: 22rpx;
@@ -141,7 +141,7 @@ export default {
       }
     }
   }
-  
+
   .tips {
     position: absolute;
     left: 130rpx;
@@ -151,7 +151,7 @@ export default {
     padding: 20rpx;
     background: #fff;
     box-shadow: 0px 0px 16px 0px rgba(4, 0, 0, 0.18);
-    
+
     .sanjiaoxing {
       position: absolute;
       top: -14rpx;
@@ -165,7 +165,7 @@ export default {
       box-shadow: 0px 0px 16px 0px rgba(4, 0, 0, 0.18);
     }
   }
-  
+
   .defaults {
     margin: 0 auto;
     width: 640rpx;

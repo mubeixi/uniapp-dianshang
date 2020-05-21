@@ -4,7 +4,7 @@
       <!-- #ifdef H5||APP-PLUS -->
       <div class="p_detail_des" v-html="formatRichTexts(pro.dis_config.Dis_Agreement)"></div>
       <!-- #endif -->
-      
+
       <!-- #ifdef MP -->
       <rich-text :nodes="pro.dis_config.Dis_Agreement|formatRichText" class="p_detail_des"></rich-text>
       <!-- #endif -->
@@ -30,10 +30,10 @@ export default {
       pro: {
         dis_config: {
           Dis_Agreement_btn: {
-            btn_name: '',
-          },
-        },
-      },
+            btn_name: ''
+          }
+        }
+      }
     }
   },
   onLoad () {
@@ -42,7 +42,7 @@ export default {
   methods: {
     goDis () {
       uni.navigateTo({
-        url: '/pagesA/fenxiao/distributorCenter',
+        url: '/pagesA/fenxiao/distributorCenter'
       })
     },
     disApplyInit () {
@@ -84,7 +84,7 @@ export default {
       // newContent = newContent.replace(/>[\s]*</gi, "><");
       return newContent
     },
-    ...mapActions(['getInitData']),
+    ...mapActions(['getInitData'])
   },
   filters: {
     formatRichText (html) { // 控制小程序中图片大小
@@ -113,14 +113,14 @@ export default {
       // newContent = newContent.replace(/>[\s]*</gi, "><");
 
       return newContent
-    },
+    }
   },
   async created () {
     const initData = await this.getInitData()
     uni.setNavigationBarTitle({
-      title: '成为' + initData.commi_rename.commi,
+      title: '成为' + initData.commi_rename.commi
     })
-  },
+  }
 }
 </script>
 
@@ -133,25 +133,25 @@ export default {
     line-height: 90rpx;
     margin-top: 40rpx;
   }
-  
+
   .pro_detail {
     .p_detail_des {
       width: 100%;
       font-size: 28rpx;
       color: #999;
-      
+
       img {
         width: 100% !important;
       }
     }
   }
-  
+
   .p_detail_title {
     padding: 30rpx 20rpx;
     color: #333;
     font-size: 30rpx;
   }
-  
+
   /* 商品详情 end */
   /* 遮罩层 */
   .modal {

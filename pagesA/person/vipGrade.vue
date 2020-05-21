@@ -16,17 +16,17 @@
           </view>
           <view class="mmp">
             <view class="da">
-            
+
             </view>
             <view class="tu" style="transform:rotate(180deg)" v-if="item.curlevel.length<=0&&pro.levels.length<=0">
-            
+
             </view>
             <view :style="{transform: 'rotate('+item.growth_value/item.curlevel.upper_growth*180+'deg)'}" class="tu"
                   v-else>
             </view>
-            
+
             <view class="xiao">
-            
+
             </view>
             <view class="texts">
               <view class="posiQ">我的成长值</view>
@@ -113,11 +113,11 @@ export default {
       index: 0, // 第几个会员等级
       pro: [],
       tequan: [],
-      inds: 0,
+      inds: 0
     }
   },
   components: {
-    circleTitle,
+    circleTitle
   },
   onLoad () {
 
@@ -143,8 +143,8 @@ export default {
     },
     scroll (e) {
       this.old.scrollTop = e.detail.scrollTop
-    },
-  },
+    }
+  }
 }
 </script>
 
@@ -154,13 +154,13 @@ export default {
     overflow-x: hidden;
     box-sizing: border-box;
   }
-  
+
   .top {
     width: 750rpx;
     height: 200rpx;
     background: rgba(64, 61, 61, 1);
     position: relative;
-    
+
     .goBack {
       width: 20rpx;
       height: 30rpx;
@@ -168,7 +168,7 @@ export default {
       top: 29rpx;
       left: 20rpx;
     }
-    
+
     .titles {
       color: #FFFFFF;
       font-size: 32rpx;
@@ -178,7 +178,7 @@ export default {
       height: 31rpx;
       line-height: 31rpx;
     }
-    
+
     .center {
       position: absolute;
       top: 60rpx;
@@ -186,18 +186,18 @@ export default {
       width: 750rpx;
       height: 325rpx;
       white-space: nowrap;
-      
+
       .vipFir {
         width: 665rpx !important;
         height: 325rpx !important;
         display: inline-block;
         position: relative;
-        
+
         .allImg {
           width: 100%;
           height: 100%;
         }
-        
+
         .leftImg {
           width: 31rpx;
           height: 29rpx;
@@ -205,7 +205,7 @@ export default {
           top: 39rpx;
           left: 47rpx;
         }
-        
+
         .vipGrade {
           height: 24rpx;
           font-size: 30rpx;
@@ -217,7 +217,7 @@ export default {
           top: 42rpx;
           left: 91rpx;
         }
-        
+
         .dangqian {
           height: 23rpx;
           line-height: 23rpx;
@@ -230,9 +230,9 @@ export default {
         }
       }
     }
-    
+
   }
-  
+
   .mbxa {
     margin-top: 20rpx;
     padding-left: 40rpx;
@@ -242,12 +242,12 @@ export default {
     display: flex;
     box-sizing: border-box;
     white-space: nowrap;
-    
+
     .image {
       width: 100%;
       height: 100%;
     }
-    
+
     .floats {
       width: 120rpx;
       // height: 120rpx;
@@ -256,27 +256,27 @@ export default {
       margin-right: 60rpx;
       margin-bottom: 40rpx;
       display: inline-block;
-      
+
       &:last-child {
         margin-right: 0rpx;
       }
-      
+
       .floatm {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
       }
-      
+
       .imgs {
         width: 78rpx;
         height: 78rpx;
         border-radius: 50%;
         margin-bottom: 16rpx;
       }
-      
+
     }
   }
-  
+
   .zhouri {
     margin: 0 auto;
     margin-top: 10rpx;
@@ -285,59 +285,59 @@ export default {
     border: 1rpx solid #E7E7E7;
     font-size: 26rpx;
     color: #333333;
-    
+
     .lefts {
       width: 219rpx;
       text-align: center;
       border-right: 1rpx solid #E7E7E7;
     }
-    
+
     .rights {
       width: 489rpx;
       text-align: center;
     }
-    
+
     .titles {
       width: 708rpx;
       height: 95rpx;
       background-color: #F4F4F4;
       display: flex;
       border-bottom: 1rpx solid #E7E7E7;
-      
+
       .lefts, .rights {
         line-height: 95rpx;
         height: 95rpx;
       }
     }
-    
+
     .td {
       width: 708rpx;
       height: 69rpx;
       background-color: #FFFFFF;
       display: flex;
       border-bottom: 1rpx solid #E7E7E7;
-      
+
       &:last-child {
         border-bottom: 0rpx;
       }
-      
+
       .lefts, .rights {
         line-height: 69rpx;
         height: 69rpx;
       }
     }
-    
+
   }
-  
+
   .lasts {
     padding: 35rpx 0rpx 35rpx 18rpx;
-    
+
     .image {
       width: 34rpx;
       height: 34rpx;
       margin-right: 16rpx;
     }
-    
+
     .titles {
       margin-left: 2rpx;
       height: 34rpx;
@@ -347,7 +347,7 @@ export default {
       display: flex;
       align-items: center;
     }
-    
+
     .msg {
       margin-top: 23rpx;
       width: 637rpx;
@@ -357,13 +357,13 @@ export default {
       line-height: 36rpx;
     }
   }
-  
+
   .canvass {
     position: absolute;
     top: 84rpx;
     left: 205rpx;
   }
-  
+
   .mmp {
     position: absolute;
     top: 120rpx; //84rpx;
@@ -371,7 +371,7 @@ export default {
     width: 278rpx;
     height: 139rpx;
     overflow: hidden;
-    
+
     .da {
       width: 278rpx;
       height: 278rpx;
@@ -381,7 +381,7 @@ export default {
       top: 0rpx;
       left: 0rpx;
     }
-    
+
     .xiao {
       width: 262rpx;
       height: 262rpx;
@@ -391,7 +391,7 @@ export default {
       top: 8rpx;
       left: 8rpx;
     }
-    
+
     .tu {
       width: 278rpx;
       height: 278rpx;
@@ -402,7 +402,7 @@ export default {
       left: 0rpx;
       clip: rect(139rpx, 278rpx, 278rpx, 0rpx);
     }
-    
+
     .texts {
       width: 230rpx;
       height: 230rpx;
@@ -412,13 +412,13 @@ export default {
       top: 24rpx;
       left: 24rpx;
       color: #A17000;
-      
+
       .posiQ {
         font-size: 18rpx;
         text-align: center;
         margin-top: 15rpx;
       }
-      
+
       .posiW {
         font-size: 46rpx;
         font-weight: bold;
@@ -427,7 +427,7 @@ export default {
         line-height: 20rpx;
         margin: 12rpx 0rpx;
       }
-      
+
       .posiE {
         font-size: 18rpx;
         text-align: center;

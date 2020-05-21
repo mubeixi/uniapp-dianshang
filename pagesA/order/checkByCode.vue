@@ -17,7 +17,7 @@ export default {
   mixins: [pageMixin],
   data () {
     return {
-      Order_Code: '',
+      Order_Code: ''
     }
   },
   methods: {
@@ -33,7 +33,7 @@ export default {
         if (res.data.Order_Status == 2) {
           this.Order_Code = ''
           uni.navigateTo({
-            url: '/pagesA/order/checkOrderInfo?Order_Code=' + Order_Code,
+            url: '/pagesA/order/checkOrderInfo?Order_Code=' + Order_Code
           })
         } else {
           error('订单状态不符')
@@ -41,9 +41,9 @@ export default {
       }).catch(e => {
         error(e.msg)
       })
-    },
+    }
 
-  },
+  }
 }
 </script>
 
@@ -56,14 +56,14 @@ export default {
     bottom: 0;
     background: white;
     padding: 40rpx 20rpx;
-    
+
     .input-box {
       height: 180rpx;
-      
+
       box-sizing: border-box;
       border: 1px solid $wzw-primary-color;
       border-radius: 10rpx;
-      
+
       .input {
         margin: 39rpx 0;
         padding: 20rpx;
@@ -72,14 +72,14 @@ export default {
         height: 60rpx;
         font-weight: 300;
         color: #555;
-        
+
         &::placeholder {
           color: #CAC8C8;
         }
       }
-      
+
     }
-    
+
     .sub {
       border-radius: 0;
       position: fixed;

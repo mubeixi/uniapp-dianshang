@@ -37,7 +37,7 @@ export default {
       page: 1,
       pageSize: 15,
       pro: [],
-      totalCount: 0,
+      totalCount: 0
     }
   },
   onLoad (options) {
@@ -61,7 +61,7 @@ export default {
       const data = {
         level: this.index,
         page: this.page,
-        pageSize: this.pageSize,
+        pageSize: this.pageSize
       }
       if (userid) {
         this.pro = []
@@ -69,7 +69,7 @@ export default {
       }
       getDisTeamList(data, {
         errtip: false,
-        tip: '加载中',
+        tip: '加载中'
       }).then(res => {
         this.pro = this.pro.concat(res.data)
         this.totalCount = res.totalCount
@@ -77,8 +77,8 @@ export default {
         .catch(e => {
 
         })
-    },
-  },
+    }
+  }
 
 }
 </script>
@@ -88,7 +88,7 @@ export default {
     background-color: #FFFFFF !important;
     min-height: 100vh;
   }
-  
+
   .centers {
     width: 710rpx;
     margin: 0 auto;
@@ -98,24 +98,24 @@ export default {
     display: flex;
     align-items: center;
     padding: 20rpx 0rpx;
-    
+
     .imgs {
       width: 98rpx;
       height: 98rpx;
       border-radius: 50%;
       overflow: hidden;
-      
+
       .image {
         width: 100%;
         height: 100%;
       }
     }
-    
+
     .titles {
       margin-left: 19rpx;
       width: 100%;
       height: 98rpx;
-      
+
       .bots {
         display: flex;
         align-items: center;
@@ -126,7 +126,7 @@ export default {
         font-weight: 500;
         color: rgba(136, 136, 136, 1);
       }
-      
+
       .msg {
         margin-top: 12rpx;
         font-size: 30rpx;
@@ -135,19 +135,19 @@ export default {
         align-items: center;
         justify-content: space-between;
         height: 29rpx;
-        
+
         .tops {
           height: 29rpx;
           line-height: 29rpx;
           width: 360rpx;
           overflow: hidden;
-          
+
           text {
             font-size: 28rpx;
             margin-left: 10rpx;
           }
         }
-        
+
         .rights {
           font-size: 24rpx;
           color: #888888;
@@ -155,7 +155,7 @@ export default {
       }
     }
   }
-  
+
   .defaults {
     margin: 0 auto;
     width: 640rpx;

@@ -23,7 +23,7 @@
             <div @click="checkAll" class="mbxa">
               <image :src="(checkAllFlag ? '/static/client/checked.png' : '/static/client/uncheck.png')|domain"
                      class="img" />
-            
+
             </div>
             <img :src="shop_config.ShopLogo|domain" alt class="biz_logo" />
             <text class="biz_name">{{shop_config.ShopName}}</text>
@@ -77,7 +77,7 @@
           </div>
         </div>
       </div>
-    
+
     </div>
     <!-- 购物车结算 -->
     <div class="checkout" v-if="!manage">
@@ -91,7 +91,7 @@
     </div>
     <!--		<tabbar-components/>-->
     <!-- <tabs style="background:#F3F3F3;"></tabs> -->
-  
+
   </div>
 </template>
 
@@ -119,14 +119,14 @@ export default {
       total_price: 0,
       prod_arg: {
         page: 1,
-        pageSize: 4,
+        pageSize: 4
       },
       hasMore: true, // 是否还有产品
       postData: {
         cart_key: 'CartList',
         prod_id: 0,
         qty: 0,
-        attr_id: 0,
+        attr_id: 0
       },
       checkAllFlag: false,
       totalPrice: 0,
@@ -135,13 +135,13 @@ export default {
       isfirst: true,
       active_pro_id: null,
       active_attr_id: null,
-      active_attr_qty: 0,
+      active_attr_qty: 0
     }
   },
   computed: {
     manage () {
       return this.CartList.length == 0
-    },
+    }
   },
   methods: {
     ...mapActions(['getUserInfo']),
@@ -150,7 +150,7 @@ export default {
     // 去逛逛
     gotoBuy () {
       uni.switchTab({
-        url: '/pages/index/index',
+        url: '/pages/index/index'
       })
     },
     // 重置信息
@@ -182,34 +182,33 @@ export default {
         if (this.totalPrice <= 0) {
           uni.showToast({
             title: '您还未选择商品',
-            icon: 'none',
+            icon: 'none'
           })
           return
         }
         uni.navigateTo({
-          url: `/pages/order/check?cart_key=CartList&cart_buy=${this.cart_buy}`,
+          url: `/pages/order/check?cart_key=CartList&cart_buy=${this.cart_buy}`
         })
       } else {
         if (Object.getOwnPropertyNames(obj).length == 0) {
           uni.showToast({
             title: '您选择您要删除的产品',
-            icon: 'none',
+            icon: 'none'
           })
           return
         }
         delCart({
           cart_key: 'CartList',
-          prod_attr: JSON.stringify(obj),
+          prod_attr: JSON.stringify(obj)
         }).then(res => {
           uni.showToast({
             icon: 'success',
-            title: res.msg,
+            title: res.msg
           })
           this.getCart()
         }).catch(e => {
         })
       }
-      
     },
     // 修改的单个的状态
     change (prod_id, attr_id) {
@@ -288,7 +287,7 @@ export default {
       if (this.active_attr_qty == 1 && num == -1) {
         uni.showToast({
           title: '购买数量不能小于1',
-          icon: 'none',
+          icon: 'none'
         })
         return
       }
@@ -316,7 +315,7 @@ export default {
             this.CartList[i][j].Qty = CartList[i][j].Qty
           }
         }
-        
+
         this.cal_total()
         this.loading = true
       }).catch(e => {
@@ -331,7 +330,7 @@ export default {
       if (this.CartList[pro_id][attr_id].Qty == 1 && num == -1) {
         uni.showToast({
           title: '购买数量不能小于1',
-          icon: 'none',
+          icon: 'none'
         })
         return
       }
@@ -357,7 +356,7 @@ export default {
             this.CartList[i][j].checked = ls.get((i + ';' + j))
           }
         }
-        
+
         this.cal_total()
       }
     },
@@ -397,9 +396,9 @@ export default {
     },
     gotoDetail (e) {
       uni.navigateTo({
-        url: '/pages/detail/detail?Products_ID=' + e,
+        url: '/pages/detail/detail?Products_ID=' + e
       })
-    },
+    }
   },
   onShow () {
     if (this.$fun.checkIsLogin()) {
@@ -419,7 +418,7 @@ export default {
     if (this.hasMore) {
       this.getProd()
     }
-  },
+  }
 }
 </script>
 
@@ -431,103 +430,103 @@ export default {
     //padding-top: var(--status-bar-height);
     /* #endif */
   }
-  
+
   .status_bar {
     position: fixed;
     top: 0;
     left: 0;
-    width: 750 rpx;
+    width: 750rpx;
     background: white;
   }
-  
+
   .nav-title {
     position: fixed;
-    top: 0 rpx;
-    left: 0 rpx;
+    top: 0rpx;
+    left: 0rpx;
     z-index: 999;
     width: 100%;
     /* #ifdef APP-PLUS */
     top: var(--status-bar-height);
     /* #endif */
   }
-  
+
   .space-div {
     padding-top: var(--status-bar-height);
-    height: 86 rpx;
+    height: 86rpx;
     background: white;
   }
-  
+
   .spaceDiv {
-    height: 86 rpx;
+    height: 86rpx;
     background: #f8f8f8;
   }
-  
+
   .content {
     /* #ifndef H5 */
     /*margin-top: 86rpx;*/
     /* #endif */
-    padding-top: 30 rpx;
-    padding-bottom: 160 rpx;
-    
+    padding-top: 30rpx;
+    padding-bottom: 160rpx;
+
   }
-  
+
   .cartbox {
-    margin: 0 30 rpx;
+    margin: 0 30rpx;
   }
-  
+
   .van-checkbox {
     margin-right: 5px;
   }
-  
+
   /* 订单信息 start */
   .order_msg {
-    padding: 20 rpx 19 rpx 0px;
+    padding: 20rpx 19rpx 0px;
     background: #fff;
     overflow: hidden;
     //margin-bottom: 20px;
   }
-  
+
   .biz_msg {
     display: flex;
     align-items: center;
-    margin-bottom: 30 rpx;
+    margin-bottom: 30rpx;
   }
-  
+
   .biz_logo {
-    width: 70 rpx;
-    height: 70 rpx;
-    margin-right: 20 rpx;
-    border-radius: 35 rpx;
+    width: 70rpx;
+    height: 70rpx;
+    margin-right: 20rpx;
+    border-radius: 35rpx;
   }
-  
+
   .biz_name {
-    font-size: 28 rpx;
+    font-size: 28rpx;
   }
-  
+
   .pro {
     display: flex;
-    margin-bottom: 50 rpx;
+    margin-bottom: 50rpx;
   }
-  
+
   .pro-msg {
     flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
   }
-  
+
   .pro-img {
-    width: 200 rpx;
-    height: 200 rpx;
-    margin-right: 32 rpx;
+    width: 200rpx;
+    height: 200rpx;
+    margin-right: 32rpx;
   }
-  
+
   .pro-name {
-    font-size: 26 rpx;
-    margin-bottom: 18 rpx;
-    width: 390 rpx;
-    line-height: 28 rpx;
-    height: 56 rpx;
+    font-size: 26rpx;
+    margin-bottom: 18rpx;
+    width: 390rpx;
+    line-height: 28rpx;
+    height: 56rpx;
     overflow: hidden;
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -535,46 +534,46 @@ export default {
     text-overflow: ellipsis;
     -webkit-box-orient: vertical;
   }
-  
+
   .attr {
     display: inline-block;
-    height: 50 rpx;
-    line-height: 50 rpx;
+    height: 50rpx;
+    line-height: 50rpx;
     color: #666;
-    font-size: 24 rpx;
+    font-size: 24rpx;
     // padding: 0 20rpx;
     // margin: 25rpx 0 24rpx;
     span {
-      padding: 14 rpx 20 rpx;
-      margin: 25 rpx 0 24 rpx;
+      padding: 14rpx 20rpx;
+      margin: 25rpx 0 24rpx;
       background: #FFF5F5;
     }
   }
-  
+
   .pro-price {
     color: #F43131;
-    font-size: 36 rpx;
+    font-size: 36rpx;
   }
-  
+
   .pro-price .span {
-    font-size: 24 rpx;
+    font-size: 24rpx;
     font-style: normal;
   }
-  
+
   .amount {
     float: right;
     display: flex;
     color: #666;
-    height: 50 rpx;
-    width: 168 rpx;
+    height: 50rpx;
+    width: 168rpx;
   }
-  
+
   .amount {
     .attr_num {
-      width: 72 rpx;
-      height: 50 rpx;
-      line-height: 50 rpx;
-      font-size: 28 rpx;
+      width: 72rpx;
+      height: 50rpx;
+      line-height: 50rpx;
+      font-size: 28rpx;
       text-align: center;
       border: 1px solid #D1D1D1 {
         left: 0;
@@ -584,61 +583,61 @@ export default {
       min-height: 0;
     }
   }
-  
+
   .plus {
-    width: 48 rpx;
-    height: 50 rpx;
+    width: 48rpx;
+    height: 50rpx;
     border: 1px solid #D1D1D1;
     text-align: center;
-    line-height: 50 rpx;
+    line-height: 50rpx;
     box-sizing: border-box;
-    
+
     &.disabled {
       background: #efefef;
     }
   }
-  
+
   /* 订单信息 end */
   /* 猜你喜欢 */
   .container {
-    margin-top: 30 rpx;
-    padding: 0 20 rpx;
+    margin-top: 30rpx;
+    padding: 0 20rpx;
   }
-  
+
   .fenge {
     text-align: center;
-    padding: 30 rpx 0;
+    padding: 30rpx 0;
     display: flex;
     justify-content: center;
     align-items: center;
   }
-  
+
   .caini {
-    font-size: 30 rpx;
-    margin-left: 13 rpx;
-    margin-right: 13 rpx;
+    font-size: 30rpx;
+    margin-left: 13rpx;
+    margin-right: 13rpx;
   }
-  
+
   .prolist {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
   }
-  
+
   .pro-item {
     width: 48%;
     margin-bottom: 15px;
     background: #fff;
   }
-  
+
   .pro-item img {
-    width: 345 rpx;
-    height: 345 rpx;
+    width: 345rpx;
+    height: 345rpx;
   }
-  
+
   .item-name {
-    font-size: 24 rpx;
-    padding: 0 10 rpx;
+    font-size: 24rpx;
+    padding: 0 10rpx;
     color: #333;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -646,121 +645,121 @@ export default {
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
   }
-  
+
   .red {
     background-color: #F43131;
     display: inline-block;
-    height: 3 rpx;
-    width: 44 rpx;
+    height: 3rpx;
+    width: 44rpx;
   }
-  
+
   .price {
-    margin-top: 20 rpx;
-    padding: 0 10 rpx 20 rpx;
+    margin-top: 20rpx;
+    padding: 0 10rpx 20rpx;
   }
-  
+
   .n_price {
     color: #ff0000;
-    font-size: 34 rpx;
-    
+    font-size: 34rpx;
+
     span {
-      font-size: 24 rpx;
+      font-size: 24rpx;
     }
   }
-  
+
   .o_price {
-    margin-left: 15 rpx;
+    margin-left: 15rpx;
     color: #afafaf;
-    font-size: 24 rpx;
+    font-size: 24rpx;
     text-decoration: line-through;
   }
-  
+
   /* 购物车为空 */
   .none {
     text-align: center;
-    margin-bottom: 40 rpx;
+    margin-bottom: 40rpx;
     color: #B0B0B0;
-    font-size: 26 rpx;
+    font-size: 26rpx;
   }
-  
+
   .none .img {
-    height: 220 rpx;
-    width: 200 rpx;
+    height: 220rpx;
+    width: 200rpx;
   }
-  
+
   .tobuy {
     color: #F43131;
-    border: 2 rpx solid #F43131;
-    height: 50 rpx;
-    line-height: 50 rpx;
-    padding: 4 rpx 20 rpx;
-    border-radius: 20 rpx;
-    margin-left: 20 rpx;
+    border: 2rpx solid #F43131;
+    height: 50rpx;
+    line-height: 50rpx;
+    padding: 4rpx 20rpx;
+    border-radius: 20rpx;
+    margin-left: 20rpx;
   }
-  
+
   /* 结算 */
   .checkout {
     position: fixed;
     bottom: 50px;
     width: 100%;
-    height: 100 rpx;
-    padding: 0 20 rpx;
+    height: 100rpx;
+    padding: 0 20rpx;
     display: flex;
     justify-content: space-between;
     align-items: center;
     background: #fff;
     box-sizing: border-box;
   }
-  
+
   // #ifdef  MP
   .checkout {
     bottom: 0;
   }
-  
+
   // #endif
   // #ifdef APP-PLUS
   .checkout {
     bottom: 0;
   }
-  
+
   // #endif
   .checkbtn {
     background: #F43131;
     color: #fff;
-    width: 126 rpx;
+    width: 126rpx;
     text-align: center;
-    height: 54 rpx;
-    line-height: 54 rpx;
-    font-size: 28 rpx;
+    height: 54rpx;
+    line-height: 54rpx;
+    font-size: 28rpx;
     border-radius: 8px;
   }
-  
+
   .total {
     flex: 1;
     text-align: right;
-    margin-right: 40 rpx;
-    font-size: 26 rpx;
+    margin-right: 40rpx;
+    font-size: 26rpx;
   }
-  
+
   .total > span {
     color: #F43131;
-    font-size: 26 rpx;
+    font-size: 26rpx;
   }
-  
+
   .total > span > span {
     font-style: normal;
-    font-size: 32 rpx;
+    font-size: 32rpx;
   }
-  
+
   .mbxa {
     display: flex;
     align-items: center;
-    margin-right: 17 rpx;
-    font-size: 28 rpx;
-    
+    margin-right: 17rpx;
+    font-size: 28rpx;
+
     .img {
-      width: 34 rpx;
-      height: 34 rpx;
+      width: 34rpx;
+      height: 34rpx;
     }
   }
 </style>

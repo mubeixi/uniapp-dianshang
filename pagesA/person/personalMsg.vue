@@ -1,8 +1,8 @@
 <template>
   <view @click="commonClick" class="bgColor-white">
-    
+
     <!-- <page-title title="个人信息" rightHidden="true" bgcolor="#F8F8F8"></page-title> -->
-    
+
     <view class="msg">
       <view @click="changeAvator" class="item">
         <view class="item-name">头像</view>
@@ -73,7 +73,7 @@ import {
   get_user_info,
   get_Users_ID,
   upDateUserInfo,
-  uploadImage,
+  uploadImage
 } from '../../common/fetch'
 import { apiBaseUrl } from '../../common/env.js'
 import { pageMixin } from '../../common/mixin'
@@ -91,7 +91,7 @@ export default {
       User_City_name: '',
       User_Area_name: '',
       User_Tow_name: '',
-      User_Address: '',
+      User_Address: ''
     }
   },
   async created () {
@@ -109,13 +109,13 @@ export default {
         if (this.userInfo.User_Birthday != 0) {
           uni.showToast({
             title: '生日不允许再次修改',
-            icon: 'none',
+            icon: 'none'
           })
           return
         }
       }
       uni.navigateTo({
-        url: '/pagesA/person/editPersonalMsg?type=' + num,
+        url: '/pagesA/person/editPersonalMsg?type=' + num
       })
     },
     get_user_info () {
@@ -158,11 +158,11 @@ export default {
               const imgs = 'data:image/jpeg;base64,' + ret.data
               uploadImage({ image: imgs }).then(result => {
                 upDateUserInfo({
-                  User_HeadImg: result.data.path,
+                  User_HeadImg: result.data.path
                 }).then(res => {
                   uni.showToast({
                     title: '修改成功',
-                    icon: 'success',
+                    icon: 'success'
                   })
                   _self.User_HeadImg = res.data.User_HeadImg
                   _self.userInfo.User_HeadImg = res.data.User_HeadImg
@@ -174,7 +174,7 @@ export default {
             fail (ret) {
             },
             complete (ret) {
-            },
+            }
           })
           // #endif
 
@@ -186,7 +186,7 @@ export default {
 
           uni.showLoading({
             title: '上传图片',
-            mask: true,
+            mask: true
           })
           // 上传图片
           uni.uploadFile({
@@ -204,14 +204,14 @@ export default {
 
               uni.showLoading({
                 title: '更改图像',
-                mask: true,
+                mask: true
               })
               upDateUserInfo({
-                User_HeadImg: _self.tem_Shop_Logo,
+                User_HeadImg: _self.tem_Shop_Logo
               }).then(ret => {
                 uni.showToast({
                   title: '修改成功',
-                  icon: 'success',
+                  icon: 'success'
                 })
                 _self.User_HeadImg = res.data.User_HeadImg
                 _self.userInfo.User_HeadImg = res.data.User_HeadImg
@@ -234,7 +234,7 @@ export default {
 
               uni.showModal({
                 title: '提示',
-                content: '上传图片错误' + JSON.stringify(err),
+                content: '上传图片错误' + JSON.stringify(err)
               })
             },
             complete: () => {
@@ -243,7 +243,7 @@ export default {
               // 	title:'文件上传',
               // 	content:JSON.stringify(ret)
               // })
-            },
+            }
           })
 
           // #endif
@@ -254,15 +254,15 @@ export default {
             content: '选择图片错误' + JSON.stringify(e),
             success: function (res) {
 
-            },
+            }
           })
-        },
+        }
       })
-    },
+    }
   },
   computed: {
-    ...mapGetters(['userInfo']),
-  },
+    ...mapGetters(['userInfo'])
+  }
 }
 </script>
 
@@ -270,21 +270,21 @@ export default {
   .bgColor-white {
     height: 100vh;
   }
-  
+
   .msg {
     padding: 0 22rpx;
-    
+
     .item {
       display: flex;
       align-items: center;
       padding: 39rpx 0;
       border-bottom: 1px solid #E3E3E3;
-      
+
       .item-name {
         font-size: 30rpx;
         color: #333;
       }
-      
+
       .info {
         display: flex;
         align-items: center;
@@ -294,20 +294,20 @@ export default {
         justify-content: flex-end;
         font-size: 26rpx;
         color: #999999;
-        
+
         .image {
           width: 88rpx;
           height: 88rpx;
           border-radius: 44rpx;
         }
       }
-      
+
       .go {
         display: flex;
         align-items: center;
         width: 15rpx;
         height: 23rpx;
-        
+
         image {
           width: 100%;
           height: 100%;

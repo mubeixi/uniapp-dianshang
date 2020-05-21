@@ -1,6 +1,6 @@
 <template>
   <view @click="commonClick" class="wrap">
-    
+
     <!-- <page-title :title="'进货记录'" :bgcolor="'#fff'"></page-title> -->
     <block v-if="orderList.length>0">
       <block :key="index" v-for="(item,index) of orderList">
@@ -34,7 +34,7 @@
                 </block>
               </view>
             </view>
-            
+
             <view :key="ind" class="pro-msg" v-for="(it,ind) of item.prod_list">
               <view class="pro-img">
                 <image :src="it.prod_img" class="img"></image>
@@ -66,7 +66,7 @@
                 </view>
               </view>
             </view>
-            
+
             <view class="totalinfo">总计：
               <text class="price-icon">￥</text>
               <text class="price-num">{{item.Order_TotalPrice}}</text>
@@ -143,7 +143,7 @@
     </view>
     <!--  遮罩层	-->
     <view :hidden="isHidden" @click="hiddenMask" catchtouchmove="false" class="mask"></view>
-    
+
     <div class="input-wrap" v-if="password_input">
       <div>请输入余额支付密码</div>
       <input @blur="user_password" class="input" placeholder="请输入密码" type="password" v-model="user_pay_password">
@@ -152,7 +152,7 @@
         <div @click="confirmInput" class="btn">确定</div>
       </div>
     </div>
-  
+
   </view>
 </template>
 
@@ -167,7 +167,7 @@ import {
   storePifaOrderCompleted,
   storePifaOrderDel,
   storePifaOrderRecall,
-  subStorePurchaseApply,
+  subStorePurchaseApply
 } from '../../common/fetch'
 import { mapGetters } from 'vuex'
 import { getLocation } from '../../common/tool/location'
@@ -191,7 +191,7 @@ export default {
       storeAdress: [],
       user_pay_password: '',
       password_input: false,
-      index: 0, // 提交的是第几个订单
+      index: 0 // 提交的是第几个订单
     }
   },
   onShow () {
@@ -203,7 +203,7 @@ export default {
       const express = item.Order_Shipping.Express
       // 跳转物流追踪
       uni.navigateTo({
-        url: '/pages/order/logistics?shipping_id=' + item.Order_ShippingID + '&express=' + express + '&prod_img=' + item.prod_list[0].prod_img,
+        url: '/pages/order/logistics?shipping_id=' + item.Order_ShippingID + '&express=' + express + '&prod_img=' + item.prod_list[0].prod_img
       })
     },
     del (id) {
@@ -215,12 +215,12 @@ export default {
           if (res.confirm) {
             const data = {
               store_id: that.Stores_ID,
-              order_id: id,
+              order_id: id
             }
             storePifaOrderDel(data).then(res => {
               uni.showToast({
                 title: res.msg,
-                icon: 'none',
+                icon: 'none'
               })
               setTimeout(function () {
                 that.getStorePurchaseApply()
@@ -229,14 +229,14 @@ export default {
           } else if (res.cancel) {
 
           }
-        },
+        }
       })
     },
     confirmInput () {
       const data = {
         store_id: this.Stores_ID,
         order_id: this.order_id,
-        password: this.user_pay_password,
+        password: this.user_pay_password
       }
       const prod_json = {}
       const prod_list = this.orderList[this.index].prod_list
@@ -257,7 +257,7 @@ export default {
       subStorePurchaseApply(data).then(res => {
         uni.showToast({
           title: res.msg,
-          icon: 'none',
+          icon: 'none'
         })
         setTimeout(function () {
           that.getStorePurchaseApply()
@@ -286,10 +286,10 @@ export default {
           title: '提示',
           content: '该操作需要设置支付密码,是否前往设置?',
           confirmText: '去设置',
-          cancelText: '暂不设置',
+          cancelText: '暂不设置'
         }).then(res => {
           uni.navigateTo({
-            url: '/pagesA/person/updateUserPsw?type=1&is_back=1',
+            url: '/pagesA/person/updateUserPsw?type=1&is_back=1'
           })
         }).catch(err => {
           error('请选择其他支付方式')
@@ -327,7 +327,7 @@ export default {
       storePifaOrderCalc({
         store_id: this.Stores_ID,
         order_id: id,
-        prod_json: JSON.stringify(data),
+        prod_json: JSON.stringify(data)
       }).then(res => {
         this.orderList[index].Order_TotalPrice = res.data.Order_TotalPrice
         this.orderList[index].Order_Shipping = res.data.Order_Shipping
@@ -355,7 +355,7 @@ export default {
         storePifaOrderCalc({
           store_id: this.Stores_ID,
           order_id: id,
-          prod_json: JSON.stringify(data),
+          prod_json: JSON.stringify(data)
         }).then(res => {
           this.orderList[index].Order_TotalPrice = res.data.Order_TotalPrice
           this.orderList[index].Order_Shipping = res.data.Order_Shipping
@@ -366,7 +366,7 @@ export default {
       } else {
         uni.showToast({
           title: '购买数量不能小于0',
-          icon: 'none',
+          icon: 'none'
         })
       }
     },
@@ -374,7 +374,7 @@ export default {
     completedOrder (id) {
       const data = {
         store_id: this.Stores_ID,
-        order_id: id,
+        order_id: id
       }
       const that = this
       uni.showModal({
@@ -385,7 +385,7 @@ export default {
             storePifaOrderCompleted(data).then(res => {
               uni.showToast({
                 title: res.msg,
-                icon: 'none',
+                icon: 'none'
               })
               setTimeout(function () {
                 that.getStorePurchaseApply()
@@ -396,14 +396,14 @@ export default {
           } else if (res.cancel) {
 
           }
-        },
+        }
       })
     },
     // 撤回采购单
     recallOrder (id) {
       const data = {
         store_id: this.Stores_ID,
-        order_id: id,
+        order_id: id
       }
       const that = this
       uni.showModal({
@@ -414,7 +414,7 @@ export default {
             storePifaOrderRecall(data).then(res => {
               uni.showToast({
                 title: res.msg,
-                icon: 'none',
+                icon: 'none'
               })
               setTimeout(function () {
                 that.getStorePurchaseApply()
@@ -423,14 +423,14 @@ export default {
 
             })
           }
-        },
+        }
       })
     },
     // 取消采购单
     cancelOrder (id) {
       const data = {
         store_id: this.Stores_ID,
-        order_id: id,
+        order_id: id
       }
       const that = this
       uni.showModal({
@@ -441,7 +441,7 @@ export default {
             storePifaOrderCancel(data).then(res => {
               uni.showToast({
                 title: res.msg,
-                icon: 'none',
+                icon: 'none'
               })
               setTimeout(function () {
                 that.getStorePurchaseApply()
@@ -452,14 +452,14 @@ export default {
           } else if (res.cancel) {
 
           }
-        },
+        }
       })
     },
     getStorePurchaseApply () {
       const data = {
         page: this.page,
         pageSize: this.pageSize,
-        store_id: this.Stores_ID,
+        store_id: this.Stores_ID
       }
       getStorePurchaseApply(data).then(res => {
         this.totalCount = res.totalCount
@@ -504,7 +504,7 @@ export default {
         latitude: this.storeAdress.wx_lat,
         longitude: this.storeAdress.wx_lng,
         success: function () {
-        },
+        }
       })
     },
     showStore () {
@@ -520,7 +520,7 @@ export default {
           const data = {
             lat: lat,
             lng: lng,
-            store_id: this.Stores_ID,
+            store_id: this.Stores_ID
           }
           getStoreDetail(data).then(res => {
             this.storeAdress = res.data
@@ -529,7 +529,7 @@ export default {
         }
       }).catch(err => {
         const data = {
-          store_id: this.Stores_ID,
+          store_id: this.Stores_ID
         }
         getStoreDetail(data).then(res => {
           this.storeAdress = res.data
@@ -556,7 +556,7 @@ export default {
       const data = {
         store_id: this.Stores_ID,
         order_id: this.order_id,
-        purchase_type: this.orderIndex ? 'store' : 'shop',
+        purchase_type: this.orderIndex ? 'store' : 'shop'
       }
       if (this.orderIndex == 1) {
         data.purchase_store_sn = this.inputValue
@@ -570,13 +570,13 @@ export default {
       this.order_id = item.Order_ID
       // 跳转到 渠道选择页面
       uni.navigateTo({
-        url: '/pagesA/selectChannel/selectChannel?order_id=' + item.Order_ID,
+        url: '/pagesA/selectChannel/selectChannel?order_id=' + item.Order_ID
       })
-    },
+    }
   },
   computed: {
-    ...mapGetters(['Stores_ID', 'userInfo']),
-  },
+    ...mapGetters(['Stores_ID', 'userInfo'])
+  }
 }
 </script>
 
@@ -586,14 +586,14 @@ export default {
     padding: 0 20rpx;
     min-height: 100vh;
     background-color: #F6F6F6;
-    
+
     .prolist {
       width: 710rpx;
       margin: 30rpx 0;
       padding: 0 16rpx 42rpx 14rpx;
       background-color: #fff;
       box-sizing: border-box;
-      
+
       .pro-title {
         display: flex;
         justify-content: space-between;
@@ -603,50 +603,50 @@ export default {
         color: #777777;
         // padding: 0 20rpx;
         border-bottom: 2rpx solid #E6E6E6;
-        
+
         .img {
           width: 26rpx;
           height: 31rpx;
         }
       }
-      
+
       .list-msg {
         .biz-msg {
           display: flex;
           justify-content: space-between;
           align-items: center;
           height: 107rpx;
-          
+
           .avator {
             width: 70rpx;
             height: 70rpx;
             border-radius: 50%;
             margin-right: 20rpx;
           }
-          
+
           .biz-name {
             display: flex;
             align-items: center;
             flex: 1;
             font-size: 28rpx;
             color: #333;
-            
+
             .biz-links {
               color: $wzw-primary-color;
               font-size: 24rpx;
               margin-left: 14rpx;
-              
+
               .text-d {
                 text-decoration: underline;
                 padding: 0 10rpx;
               }
             }
           }
-          
+
           .status {
             position: relative;
             color: $wzw-primary-color;
-            
+
             .tips {
               position: absolute;
               top: 50rpx;
@@ -655,7 +655,7 @@ export default {
               padding: 20rpx;
               background: #fff;
               box-shadow: 0px 0px 16px 0px rgba(4, 0, 0, 0.18);
-              
+
               .sanjiaoxing {
                 position: absolute;
                 top: -14rpx;
@@ -670,7 +670,7 @@ export default {
                 box-shadow: 0px 0px 16px 0px rgba(4, 0, 0, 0.18);
               }
             }
-            
+
             .qty-icon {
               width: 22rpx;
               height: 22rpx;
@@ -678,30 +678,30 @@ export default {
             }
           }
         }
-        
+
         .pro-msg {
           display: flex;
           padding-bottom: 30rpx;
           box-sizing: border-box;
           border-bottom: 2rpx solid #E6E6E6;
-          
+
           .pro-img {
             width: 200rpx;
             height: 200rpx;
             margin-right: 28rpx;
-            
+
             .img {
               width: 200rpx;
               height: 200rpx;
             }
           }
-          
+
           .pro-info {
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             width: 500rpx;
-            
+
             .pro-name {
               text-overflow: -o-ellipsis-lastline;
               overflow: hidden;
@@ -711,14 +711,14 @@ export default {
               line-clamp: 2;
               -webkit-box-orient: vertical;
             }
-            
+
             .pro-attr {
               display: flex;
               justify-content: space-between;
               align-items: center;
               margin-top: 25rpx;
               margin-bottom: 23rpx;
-              
+
               .attr-info {
                 line-height: 50rpx;
                 padding: 0 20rpx;
@@ -726,10 +726,10 @@ export default {
                 color: #666;
                 font-size: 24rpx;
               }
-              
+
               .pro-qty {
                 position: relative;
-                
+
                 .tips {
                   position: absolute;
                   top: 50rpx;
@@ -738,7 +738,7 @@ export default {
                   padding: 20rpx;
                   background: #fff;
                   box-shadow: 0px 0px 16px 0px rgba(4, 0, 0, 0.18);
-                  
+
                   .sanjiaoxing {
                     position: absolute;
                     top: -14rpx;
@@ -753,7 +753,7 @@ export default {
                     box-shadow: 0px 0px 16px 0px rgba(4, 0, 0, 0.18);
                   }
                 }
-                
+
                 .qty-icon {
                   width: 22rpx;
                   height: 22rpx;
@@ -761,39 +761,39 @@ export default {
                 }
               }
             }
-            
+
             .pro-price {
               font-size: 30rpx;
               color: $wzw-primary-color;
               display: flex;
               justify-content: space-between;
-              
+
               .price-icon {
                 font-size: 24rpx;
               }
             }
           }
         }
-        
+
         .totalinfo {
           line-height: 85rpx;
           text-align: right;
-          
+
           .price-icon {
             font-size: 24rpx;
             color: $wzw-primary-color;
           }
-          
+
           .price-num {
             font-size: 30rpx;
             color: $wzw-primary-color;
           }
         }
-        
+
         .btns {
           display: flex;
           justify-content: flex-end;
-          
+
           .btn {
             width: 155rpx;
             height: 60rpx;
@@ -803,7 +803,7 @@ export default {
             background-color: #EEEEEE;
             border-radius: 10rpx;
           }
-          
+
           .back {
             color: #fff;
             background: rgba(244, 49, 49, 1);
@@ -813,7 +813,7 @@ export default {
       }
     }
   }
-  
+
   .mask {
     background-color: rgba(0, 0, 0, .5);
     position: fixed;
@@ -823,7 +823,7 @@ export default {
     height: 100%;
     z-index: 1000;
   }
-  
+
   .sku-pop {
     position: fixed;
     top: 50%;
@@ -832,7 +832,7 @@ export default {
     width: 526rpx;
     transform: translate(-50%, -50%);
     border-radius: 10rpx;
-    
+
     .sku-title {
       height: 60rpx;
       line-height: 60rpx;
@@ -843,23 +843,23 @@ export default {
       border-top-left-radius: 10rpx;
       border-top-right-radius: 10rpx;
     }
-    
+
     .sku-content {
       padding: 40rpx 46rpx 34rpx 40rpx;
       background-color: #fff;
       border-bottom-left-radius: 10rpx;
       border-bottom-right-radius: 10rpx;
-      
+
       .skulist {
         margin-bottom: 30rpx;
         display: flex;
         align-items: center;
-        
+
         &.change-btn {
           padding-top: 43rpx;
           justify-content: center;
         }
-        
+
         .selected,
         .nochecked {
           display: block;
@@ -867,13 +867,13 @@ export default {
           height: 40rpx;
           margin-right: 23rpx;
         }
-        
+
         .nochecked {
           box-sizing: border-box;
           border: 2rpx solid rgba(214, 214, 214, 1);
           border-radius: 3px;
         }
-        
+
         .input {
           width: 420rpx;
           height: 60rpx;
@@ -883,7 +883,7 @@ export default {
           box-sizing: border-box;
           line-height: 36rpx;
         }
-        
+
         .btn {
           width: 130rpx;
           height: 50rpx;
@@ -892,23 +892,23 @@ export default {
           background-color: #E9E9E9;
           font-size: 24rpx;
         }
-        
+
         .cancel {
           color: #666;
           margin-right: 25rpx;
         }
-        
+
         .confirm {
           color: #fff;
           background-color: $wzw-primary-color;
         }
-        
+
         .sku-name {
           color: #333;
           font-size: 24rpx;
           margin-right: 26rpx;
         }
-        
+
         .sku-item {
           display: flex;
           align-items: center;
@@ -918,7 +918,7 @@ export default {
             width: 27rpx;
             height: 32rpx;
           }
-          
+
           .sku {
             width: 80rpx;
             height: 46rpx;
@@ -930,12 +930,12 @@ export default {
             margin-right: 13rpx;
             border-radius: 5rpx;
           }
-          
+
           .active {
             background-color: $wzw-primary-color;
             color: #fff;
           }
-          
+
           .handle {
             width: 50rpx;
             height: 45rpx;
@@ -945,7 +945,7 @@ export default {
             color: #777;
             background: #f6f6f6;
           }
-          
+
           .pro-num {
             margin: 0 15rpx;
             font-size: 24rpx;
@@ -953,13 +953,13 @@ export default {
           }
         }
       }
-      
+
       .sku-btns {
         display: flex;
         justify-content: center;
         align-items: center;
         margin-top: 60rpx;
-        
+
         .btn {
           width: 130rpx;
           height: 50rpx;
@@ -967,13 +967,13 @@ export default {
           line-height: 50rpx;
           font-size: 24rpx;
         }
-        
+
         .cancel {
           background: #e9e9e9;
           color: #666;
           margin-right: 25rpx;
         }
-        
+
         .confirm {
           background-color: $wzw-primary-color;
           color: #fff;
@@ -981,24 +981,24 @@ export default {
       }
     }
   }
-  
+
   .mendian {
     .sku-content {
       .sku-name {
         margin-right: 10rpx !important;
       }
-      
+
       .sku-item {
         display: block !important;
         font-size: 26rpx !important;
-        
+
         .img {
           margin-left: 10rpx;
         }
       }
     }
   }
-  
+
   .sku-item {
     display: flex;
     align-items: center;
@@ -1008,7 +1008,7 @@ export default {
       width: 27rpx;
       height: 32rpx;
     }
-    
+
     .sku {
       width: 80rpx;
       height: 46rpx;
@@ -1020,12 +1020,12 @@ export default {
       margin-right: 13rpx;
       border-radius: 5rpx;
     }
-    
+
     .active {
       background-color: $wzw-primary-color;
       color: #fff;
     }
-    
+
     .handle {
       width: 50rpx;
       height: 45rpx;
@@ -1035,14 +1035,14 @@ export default {
       color: #777;
       background: #f6f6f6;
     }
-    
+
     .pro-num {
       margin: 0 15rpx;
       font-size: 24rpx;
       color: #777;
     }
   }
-  
+
   .input-wrap {
     position: fixed;
     top: 50%;
@@ -1059,7 +1059,7 @@ export default {
     box-sizing: border-box;
     font-size: 28rpx;
     border-radius: 10rpx;
-    
+
     .input {
       margin: 40rpx 0;
       border: 1px solid #efefef;
@@ -1067,19 +1067,19 @@ export default {
       line-height: 20px;
       padding: 10px 0px;
     }
-    
+
     .btns {
       display: flex;
       justify-content: space-around;
       height: 60rpx;
       line-height: 60rpx;
-      
+
       .btn {
         flex: 1;
       }
     }
   }
-  
+
   .defaults {
     margin: 0 auto;
     width: 640rpx;

@@ -23,11 +23,11 @@
         </view>
       </view>
     </view>
-    
+
     <view class="top">
       <image :src="'/static/client/blance/bg.jpg'|domain" class="bgImg"></image>
       <image :src="'/static/client/check/momo.png'|domain" class="momo"></image>
-      
+
       <view class="prices">
         {{intergatal}}
       </view>
@@ -50,7 +50,7 @@
         </view>
       </view>
     </view>
-    
+
     <view class="selects">
       <image :src="'/static/client/check/qw.png'|domain" class="image"></image>
       <view class="vies">
@@ -58,7 +58,7 @@
       </view>
       <image :src="'/static/client/check/er.png'|domain" class="image"></image>
     </view>
-    
+
     <view class="contents">
       <template v-if="recordList.length > 0">
         <view class="mingxi" v-for="(item,index) in recordList">
@@ -79,7 +79,7 @@
         <view class="norecord">暂无记录</view>
       </template>
     </view>
-  
+
   </view>
 </template>
 
@@ -105,18 +105,18 @@ export default {
       info: {},
       isClicked: false, // 是否已经点击过
       U_intergatal: 0,
-      user_intergatal: 0, // 积分，用于监听
+      user_intergatal: 0 // 积分，用于监听
     }
   },
   computed: {
     intergatal: function () {
       return parseInt(this.U_intergatal)
-    },
+    }
   },
   watch: {
     user_intergatal: function (newVal, oldVal) {
       TweenMax.TweenLite.to(this.$data, 0.5, { U_intergatal: newVal })
-    },
+    }
   },
   onShow () {
     this.reset()
@@ -145,7 +145,7 @@ export default {
       if (!this.integral || this.integral < 0 || isNaN(this.integral)) {
         uni.showToast({
           title: '您输入的积分有误',
-          icon: 'none',
+          icon: 'none'
         })
         this.isClicked = false
         return
@@ -153,18 +153,18 @@ export default {
       if (!this.user_no) {
         uni.showToast({
           title: '请确认转出账号',
-          icon: 'none',
+          icon: 'none'
         })
         this.isClicked = false
         return
       }
       transferIntegral({
         integral: this.integral,
-        user_no: this.user_no,
+        user_no: this.user_no
       }).then(res => {
         uni.showToast({
           title: res.msg,
-          duration: 1500,
+          duration: 1500
         })
         setTimeout(() => {
           this.isClicked = false
@@ -181,7 +181,7 @@ export default {
         this.isClicked = false
         uni.showToast({
           title: err.msg,
-          icon: 'none',
+          icon: 'none'
         })
       })
       this.isShow = false
@@ -195,13 +195,13 @@ export default {
     // 去积分商城
     gotojifen () {
       uni.navigateTo({
-        url: '/pagesA/person/jifenExchange',
+        url: '/pagesA/person/jifenExchange'
       })
     },
     // 去我的兑换列表
     gotoMyExchange () {
       uni.navigateTo({
-        url: '/pagesA/person/myRedemption',
+        url: '/pagesA/person/myRedemption'
       })
     },
     goBack () {
@@ -210,7 +210,7 @@ export default {
     userIntegralRecord () {
       userIntegralRecord({
         page: this.page,
-        pageSize: this.pageSize,
+        pageSize: this.pageSize
       }, { errtip: false }).then(res => {
         if (this.page != 1) {
           const oldlist = this.recordList
@@ -224,8 +224,8 @@ export default {
       }).catch(e => {
 
       })
-    },
-  },
+    }
+  }
 }
 </script>
 
@@ -233,7 +233,7 @@ export default {
   view {
     box-sizing: border-box;
   }
-  
+
   .boxSizing {
     background-color: #FFFFFF;
     width: 750rpx;
@@ -241,19 +241,19 @@ export default {
     min-height: 100vh;
     background-color: #FFFFFF !important;
   }
-  
+
   .top {
     width: 750rpx;
     height: 537rpx;
     position: relative;
     background-color: #FFFFFF;
-    
+
     .bgImg {
       margin-top: -50rpx;
       width: 114%;
       height: 100%;
     }
-    
+
     .bottoms {
       width: 690rpx;
       height: 133rpx;
@@ -267,18 +267,18 @@ export default {
       align-items: center;
       justify-content: space-around;
       padding: 38rpx 97rpx 37rpx 41rpx;
-      
+
       .image {
         width: 58rpx;
         height: 58rpx;
       }
-      
+
       .line {
         width: 2rpx;
         height: 50rpx;
         background: rgba(240, 239, 240, 1);
       }
-      
+
       .qwe {
         // width: 278rpx;
         height: 58rpx;
@@ -287,19 +287,19 @@ export default {
         color: #4C4C4C;
         display: flex;
         align-items: center;
-        
+
         .image {
           width: 58rpx;
           height: 58rpx;
         }
-        
+
         text {
           margin-left: 21rpx;
         }
       }
-      
+
     }
-    
+
     .back {
       width: 21rpx;
       height: 38rpx;
@@ -310,7 +310,7 @@ export default {
       margin-top: var(--status-bar-height);
       /* #endif */
     }
-    
+
     .titleq {
       font-size: 36rpx;
       height: 34rpx;
@@ -323,7 +323,7 @@ export default {
       margin-top: var(--status-bar-height);
       /* #endif */
     }
-    
+
     .dangqian {
       font-size: 28rpx;
       color: #FFFFFF;
@@ -333,7 +333,7 @@ export default {
       left: 39rpx;
       top: 162rpx;
     }
-    
+
     .momo {
       width: 27rpx;
       height: 28rpx;
@@ -341,7 +341,7 @@ export default {
       left: 53rpx;
       top: 130rpx;
     }
-    
+
     .prices {
       font-size: 80rpx;
       font-weight: 400;
@@ -352,7 +352,7 @@ export default {
       top: 100rpx;
       color: #FFFFFF;
     }
-    
+
     .duihuan {
       font-size: 24rpx;
       height: 24rpx;
@@ -364,7 +364,7 @@ export default {
       color: #FFFFFF;
       opacity: 0.69;
     }
-    
+
     .zhuanchu {
       width: 170rpx;
       height: 74rpx;
@@ -379,9 +379,9 @@ export default {
       top: 130rpx;
       right: 24rpx;
     }
-    
+
   }
-  
+
   .selects {
     height: 30rpx;
     width: 750rpx;
@@ -390,12 +390,12 @@ export default {
     margin-top: 48rpx;
     margin-bottom: 40rpx;
     justify-content: center;
-    
+
     .image {
       width: 20rpx;
       height: 20rpx;
     }
-    
+
     .vies {
       margin-left: 20rpx;
       margin-right: 20rpx;
@@ -404,13 +404,13 @@ export default {
       font-weight: bold;
       line-height: 32rpx;
     }
-    
+
   }
-  
+
   .contents {
     width: 750rpx;
     padding: 17rpx 26rpx 32rpx 24rpx;
-    
+
     .mingxi {
       height: 115rpx;
       width: 700rpx;
@@ -420,7 +420,7 @@ export default {
       align-items: center;
       font-size: 28rpx;
       color: #333333;
-      
+
       .times {
         color: #999999;
         font-size: 20rpx;
@@ -431,13 +431,13 @@ export default {
       }
     }
   }
-  
+
   .norecord {
     text-align: center;
     color: #999;
     font-size: 28rpx;
   }
-  
+
   .zhezhao {
     width: 100%;
     height: 100%;
@@ -446,7 +446,7 @@ export default {
     left: 0rpx;
     z-index: 9999;
     background-color: rgba($color: #000000, $alpha: .3);
-    
+
     .zhezhaoView {
       background: rgba(255, 255, 255, 1);
       border-radius: 20px;
@@ -457,7 +457,7 @@ export default {
       transform: translateY(-50%);
       left: 123rpx;
     }
-    
+
     .closeZ {
       width: 47rpx;
       height: 47rpx;
@@ -466,7 +466,7 @@ export default {
       transform: translateX(-50%);
       left: 50%;
     }
-    
+
     .zhezhaoYue {
       height: 157rpx;
       width: 503rpx;
@@ -475,30 +475,30 @@ export default {
       text-align: center;
       line-height: 157rpx;
     }
-    
+
     .zhezhaoCenter {
       width: 100%;
       margin-top: 13rpx;
       padding: 0rpx 52rpx;
-      
+
       .views {
         height: 90rpx;
         display: flex;
         align-items: center;
-        
+
         .inputs {
           border-bottom: 1rpx solid #F4F4F4;
           font-size: 24rpx;
           margin-left: 16rpx;
         }
       }
-      
+
       .imgs {
         width: 25rpx;
         height: 37rpx;
       }
     }
-    
+
     .zheButton {
       width: 400rpx;
       height: 76rpx;

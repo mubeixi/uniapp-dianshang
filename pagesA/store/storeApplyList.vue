@@ -13,11 +13,11 @@
       <div :class="index==3?'active':''" @click="changIndex(3)" class="nav-item">
         已驳回
       </div>
-    
+
     </div>
     <view class="space-box" style="height: 100rpx;width: 100%;margin-bottom: 30rpx;">
     </view>
-    
+
     <div :key="index" class="store-apply" v-for="(item,index) of proList">
       <div class="store-apply-title">
         <image :src="item.store_image" class="store-img"></image>
@@ -33,7 +33,7 @@
           <block v-else>
             {{item.status_desc}}
           </block>
-          
+
           <view class="tips" v-if="item.show&&item.status==3">
             <view class="sanjiaoxing"></view>
             {{item.reason}}
@@ -50,7 +50,7 @@
         </div>
       </div>
     </div>
-  
+
   </view>
 </template>
 
@@ -67,16 +67,16 @@ export default {
       page: 1,
       pageSize: 8,
       totalCount: 0,
-      proList: [],
+      proList: []
     }
   },
   computed: {
-    ...mapGetters(['Stores_ID']),
+    ...mapGetters(['Stores_ID'])
   },
   methods: {
     goNext (id) {
       uni.navigateTo({
-        url: '/pagesA/store/storeAgree?id=' + id,
+        url: '/pagesA/store/storeAgree?id=' + id
       })
     },
     changeShow (item) {
@@ -86,7 +86,7 @@ export default {
     },
     cell (item) {
       uni.makePhoneCall({
-        phoneNumber: item,
+        phoneNumber: item
       })
     },
     changIndex (index) {
@@ -99,7 +99,7 @@ export default {
       const data = {
         page: this.page,
         pageSize: this.pageSize,
-        store_id: this.Stores_ID,
+        store_id: this.Stores_ID
       }
       if (this.index > 0) {
         data.status = this.index
@@ -117,7 +117,7 @@ export default {
           this.proList = res.data
         }
       })
-    },
+    }
   },
   onReachBottom () {
     if (this.proList.length < this.totalCount) {
@@ -129,7 +129,7 @@ export default {
     this.page = 1
     this.proList = []
     this.init()
-  },
+  }
 }
 </script>
 
@@ -148,13 +148,13 @@ export default {
     background: #fff;
     font-size: 28rpx;
     padding: 0 10px;
-    
+
     .nav-item {
       flex: 1;
       box-sizing: border-box;
       text-align: center;
       position: relative;
-      
+
       .jiaobiao {
         position: absolute;
         top: 24rpx;
@@ -171,13 +171,13 @@ export default {
         color: #F43131;
       }
     }
-    
+
     .nav-item.active {
       color: #FF4E00;
       border-bottom: 2px solid #FF4E00;
     }
   }
-  
+
   .store-apply {
     width: 710rpx;
     margin: 0 auto 20rpx;
@@ -187,7 +187,7 @@ export default {
     background: rgba(255, 255, 255, 1);
     border-radius: 10rpx;
   }
-  
+
   .store-apply-title {
     height: 84rpx;
     width: 100%;
@@ -196,39 +196,39 @@ export default {
     margin-bottom: 40rpx;
     position: relative;
   }
-  
+
   .store-img {
     width: 84rpx;
     height: 84rpx;
     border-radius: 50%;
     margin-right: 20rpx;
   }
-  
+
   .store-name {
     font-size: 15px;
     color: #333333;
   }
-  
+
   .store-desc {
     font-size: 14px;
     color: #888888;
     margin-left: auto;
     position: relative;
   }
-  
+
   .iconCell {
     width: 34rpx;
     height: 34rpx;
     display: inline-block;
     margin-left: 20rpx;
   }
-  
+
   .store-btm {
     font-size: 14px;
     color: #888888;
     line-height: 48rpx;
   }
-  
+
   .status-store {
     width: 124rpx;
     height: 56rpx;
@@ -239,17 +239,17 @@ export default {
     font-size: 14px;
     color: #FFFFFF;
   }
-  
+
   .color-red {
     color: #FF4E00;
   }
-  
+
   .store-wen {
     width: 28rpx;
     height: 28rpx;
     margin-left: 10rpx;
   }
-  
+
   .tips {
     position: absolute;
     top: 50rpx;
@@ -258,7 +258,7 @@ export default {
     padding: 20rpx;
     background: #fff;
     box-shadow: 0px 0px 16px 0px rgba(4, 0, 0, 0.18);
-    
+
     .sanjiaoxing {
       position: absolute;
       top: -14rpx;

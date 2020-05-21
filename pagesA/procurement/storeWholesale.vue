@@ -127,7 +127,7 @@ import {
   getStoreDetail,
   getStorePurchaseSales,
   refuseStorePurchaseApply,
-  subStorePurchaseApply,
+  subStorePurchaseApply
 } from '../../common/fetch'
 import { error } from '../../common'
 import { findArrayIdx } from '../../common/tool'
@@ -150,12 +150,12 @@ export default {
         page: 1,
         finish: false,
         pageSize: 20,
-        totalCount: 0,
-      },
+        totalCount: 0
+      }
     }
   },
   computed: {
-    ...mapGetters(['Stores_ID']),
+    ...mapGetters(['Stores_ID'])
   },
   onShow () {
     this.paginate.finish = false
@@ -185,7 +185,7 @@ export default {
             const that = this
             const data = {
               receive_id: that.Stores_ID,
-              order_id: order_id,
+              order_id: order_id
             }
             const prod_json = {}
             const prod_list = that.applys[idx1].prod_list
@@ -194,7 +194,7 @@ export default {
                 prod_json[item.prod_id][item.attr_id] = item.prod_count
               } else {
                 prod_json[item.prod_id] = {
-                  [item.attr_id]: item.prod_count,
+                  [item.attr_id]: item.prod_count
                 }
               }
             })
@@ -203,7 +203,7 @@ export default {
             subStorePurchaseApply(data).then(res => {
               uni.showToast({
                 title: res.msg,
-                icon: 'none',
+                icon: 'none'
               })
               setTimeout(function () {
                 that.loadInfo()
@@ -211,14 +211,14 @@ export default {
             }, err => {
               uni.showToast({
                 title: err.msg,
-                icon: 'none',
+                icon: 'none'
               })
               it.prod_count++
             })
           } else {
 
           }
-        },
+        }
       })
     },
     // 只能减少不能增加
@@ -230,7 +230,7 @@ export default {
         latitude: this.storeInfo.wx_lat,
         longitude: this.storeInfo.wx_lng,
         success: function () {
-        },
+        }
       })
     },
     showAdress () {
@@ -240,12 +240,12 @@ export default {
         success: function (res) {
         },
         fail: function (err) {
-        },
+        }
       })
     },
     handleApply (apply, idx) {
       uni.navigateTo({
-        url: `/pagesA/procurement/storeWholesaleSend?apply_id=${apply.Order_ID}`,
+        url: `/pagesA/procurement/storeWholesaleSend?apply_id=${apply.Order_ID}`
       })
     },
     cancelRefuseApply () {
@@ -263,7 +263,7 @@ export default {
       refuseStorePurchaseApply({
         order_id: this.activeApply.Order_ID,
         reason: this.reason,
-        store_id: this.Stores_ID,
+        store_id: this.Stores_ID
       }, { tip: '处理中' }).then(res => {
         this.$refs.refuseApply.close()
 
@@ -272,7 +272,7 @@ export default {
         this.activeApply.Order_Status_desc = '已驳回'
         this.activeApply = null
         uni.showToast({
-          title: res.msg,
+          title: res.msg
         })
       }, err => {
       })
@@ -292,7 +292,7 @@ export default {
           const data = {
             lat: lat,
             lng: lng,
-            store_id: store_id,
+            store_id: store_id
           }
           getStoreDetail(data, { tip: '加载中' }).then(res => {
             this.storeInfo = res.data
@@ -302,7 +302,7 @@ export default {
         }
       }).catch(err => {
         const data = {
-          store_id: store_id,
+          store_id: store_id
         }
         getStoreDetail(data).then(res => {
           this.storeInfo = res.data
@@ -333,7 +333,7 @@ export default {
       if (this.paginate.finish) return
       const data = {
         ...this.paginate,
-        store_id: this.Stores_ID,
+        store_id: this.Stores_ID
       }
       if (this.order_status) {
         data.order_status = this.order_status
@@ -367,7 +367,7 @@ export default {
       }, err => {
 
       })
-    },
+    }
   },
   onReachBottom () {
     this.loadInfo()
@@ -377,7 +377,7 @@ export default {
     // getStoreList({pageSize:999}).then(res=>{
     //     this.stores = res.data
     // })
-  },
+  }
 }
 </script>
 

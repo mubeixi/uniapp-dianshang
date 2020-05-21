@@ -1,6 +1,6 @@
 <template>
   <view @click="commonClick" class="all">
-    
+
     <!-- <page-title title="提现" rightHidden="true" bgcolor="#ffffff" ></page-title> -->
     <view class="content">
       <view @click="goMethod" class="bank" v-if="isShow">
@@ -33,7 +33,7 @@
         </view>
       </view>
       <view class="kong">
-      
+
       </view>
       <view class="tishi">
         <image :src="'/static/client/fenxiao/tishi.png'|domain" class="tishi-image"></image>
@@ -73,7 +73,7 @@ export default {
       price: '', // 提现金额
       isQing: false, // 是否发起提现
       init: {},
-      withdraw_from: 1,
+      withdraw_from: 1
     }
   },
   onLoad (options) {
@@ -90,14 +90,14 @@ export default {
     uni.getSystemInfo({
       success: function (res) {
         that.height = res.screenHeight - 68
-      },
+      }
     })
     getWithdrawConfig().then(res => {
       this.init = res.data
     })
   },
   computed: {
-    ...mapGetters(['initData']),
+    ...mapGetters(['initData'])
   },
   onShow () {
     // 获取我的提现方式
@@ -107,7 +107,7 @@ export default {
     // 申请记录
     goRecord () {
       uni.navigateTo({
-        url: '/pagesA/fenxiao/record',
+        url: '/pagesA/fenxiao/record'
       })
     },
     // 申请提现
@@ -120,7 +120,7 @@ export default {
       if (isNaN(this.price)) {
         uni.showToast({
           title: '输入金额有误,请重新输入',
-          icon: 'none',
+          icon: 'none'
         })
         this.price = ''
         that.isQing = false
@@ -130,7 +130,7 @@ export default {
       if (this.price == '') {
         uni.showToast({
           title: '未输入金额',
-          icon: 'none',
+          icon: 'none'
         })
         this.price = ''
         that.isQing = false
@@ -141,7 +141,7 @@ export default {
         this.isQing = false
         setTimeout(function () {
           uni.navigateTo({
-            url: '/pagesA/fenxiao/addWithdrawal?form=' + this.withdraw_from,
+            url: '/pagesA/fenxiao/addWithdrawal?form=' + this.withdraw_from
           })
         }, 1000)
         return
@@ -149,7 +149,7 @@ export default {
       const data = {
         User_Method_ID: this.User_Method_ID,
         money: this.price,
-        withdraw_from: this.withdraw_from,
+        withdraw_from: this.withdraw_from
       }
       withdrawApply(data).then(res => {
         setTimeout(() => {
@@ -161,7 +161,7 @@ export default {
         that.price = ''
         uni.showToast({
           title: res.msg,
-          icon: 'none',
+          icon: 'none'
         })
       }).catch(e => {
         that.isQing = false
@@ -205,16 +205,16 @@ export default {
     // 我的提现方式
     goMethod () {
       uni.navigateTo({
-        url: '/pagesA/fenxiao/withdrawalMethod?User_Method_ID=' + this.data.User_Method_ID + '&from=' + this.withdraw_from,
+        url: '/pagesA/fenxiao/withdrawalMethod?User_Method_ID=' + this.data.User_Method_ID + '&from=' + this.withdraw_from
       })
     },
     // 管理提现方式
     guanWithdrawal () {
       uni.navigateTo({
-        url: '/pagesA/fenxiao/addWithdrawal?form=' + this.withdraw_from,
+        url: '/pagesA/fenxiao/addWithdrawal?form=' + this.withdraw_from
       })
-    },
-  },
+    }
+  }
 }
 </script>
 
@@ -226,14 +226,14 @@ export default {
     overflow: hidden;
     box-sizing: border-box;
   }
-  
+
   .content {
     background-color: #FFFFFF;
     width: 710rpx;
     margin: 40rpx 20rpx 0rpx 20rpx;
     padding-bottom: 85rpx;
     border-radius: 10rpx;
-    
+
     .bank {
       width: 710rpx;
       background-color: #EEEEEE;
@@ -242,25 +242,25 @@ export default {
       display: flex;
       align-items: center;
       box-sizing: border-box;
-      
+
       .bankCard {
         width: 50rpx;
         height: 50rpx;
         margin-right: 18rpx;
       }
-      
+
       .bankName {
         font-size: 28rpx;
         color: #333333;
       }
-      
+
       .right {
         width: 18rpx;
         height: 27rpx;
         margin-left: auto;
       }
     }
-    
+
     .guanli {
       font-size: 28rpx;
       color: #5E9BFF;
@@ -268,7 +268,7 @@ export default {
       display: block;
       text-align: center;
     }
-    
+
     .tiMoney {
       width: 710rpx;
       height: 25rpx;
@@ -277,7 +277,7 @@ export default {
       font-size: 26rpx;
       color: #333333;
     }
-    
+
     .inputMoney {
       width: 650rpx;
       height: 66rpx;
@@ -288,13 +288,13 @@ export default {
       font-size: 48rpx;
       color: #333333;
       padding-bottom: 30rpx;
-      
+
       .input-money-inner {
         height: 35rpx;
         line-height: 35rpx;
         display: flex;
         align-items: center;
-        
+
         .input-money-input {
           margin-left: 20rpx;
           height: 35rpx;
@@ -302,7 +302,7 @@ export default {
         }
       }
     }
-    
+
     .canTi {
       width: 670rpx;
       height: 76rpx;
@@ -310,46 +310,46 @@ export default {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      
+
       .canTiMoney {
         font-size: 22rpx;
         color: #999999;
       }
-      
+
       .allTi {
         font-size: 22rpx;
         color: #69A1FF;
       }
     }
-    
+
     .kong {
       background-color: #F8F8F8;
       width: 690rpx;
       margin: 0 auto;
       height: 20rpx;
     }
-    
+
     .tishi {
       margin-top: 27rpx;
       margin-left: 32rpx;
       margin-right: 33rpx;
       width: 645rpx;
       display: flex;
-      
+
       .tishi-image {
         width: 22rpx;
         height: 22rpx;
         margin-right: 10rpx;
         margin-top: 5rpx;
       }
-      
+
       .tishi-view {
         width: 613rpx;
         font-size: 20rpx;
         color: #999999;
       }
     }
-    
+
     .liji {
       margin-top: 98rpx;
       width: 620rpx;
@@ -363,7 +363,7 @@ export default {
       font-size: 34rpx;
       color: #FFFFFF;
     }
-    
+
     .lishi {
       height: 21rpx;
       // width: 106rpx;
@@ -373,7 +373,7 @@ export default {
       color: #999999;
       display: flex;
       align-items: center;
-      
+
       .lishi-image {
         width: 12rpx;
         height: 20rpx;

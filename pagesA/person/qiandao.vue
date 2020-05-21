@@ -14,7 +14,7 @@
         坚持每天连续签到可以获多重奖励哦
       </view>
     </view>
-    
+
     <view class="jilu">
       <view :key="index" class="chang" v-for="(item,index) in continue_">
         <image :src="'/static/client/task/checked.png'|domain" class="image" v-if="index<continues"></image>
@@ -45,7 +45,7 @@ export default {
     return {
       continue_: [],
       continues: 0,
-      pro: null,
+      pro: null
     }
   },
   onLoad () {
@@ -58,7 +58,7 @@ export default {
       if (this.pro.signin == 1) {
         uni.showToast({
           title: '今日已经签到',
-          icon: 'none',
+          icon: 'none'
         })
       }
       if (this.pro.show == 2 && this.pro.signin != 1) {
@@ -68,13 +68,13 @@ export default {
           uni.showToast({
             title: res.msg,
             duration: 2500,
-            icon: 'none',
+            icon: 'none'
           })
         }).catch(e => {
         })
       } else {
         uni.navigateTo({
-          url: '/pages/person/person',
+          url: '/pages/person/person'
         })
       }
     },
@@ -91,8 +91,8 @@ export default {
     },
     goBack () {
       goBack()
-    },
-  },
+    }
+  }
 }
 </script>
 
@@ -101,41 +101,41 @@ export default {
     box-sizing: border-box;
     min-height: 100vh;
     background-color: #FFFFFF !important;
-    
+
     .top {
       width: 750rpx;
       height: 447rpx;
       background: linear-gradient(#E74744, #FAB067);
       position: relative;
-      
+
       .goBack {
-        
+
         width: 20rpx;
         height: 30rpx;
         position: absolute;
         top: 35rpx;
         left: 20rpx;
       }
-      
+
       .titles {
         color: #FFFFFF;
         font-size: 32rpx;
-        
+
         position: absolute;
         top: 34rpx;
         left: 310rpx;
         height: 31rpx;
         line-height: 31rpx;
       }
-      
+
       .yuan {
         width: 261rpx;
         height: 262rpx;
-        
+
         position: absolute;
         top: 108rpx;
         left: 240rpx;
-        
+
         .qiandaoliji {
           height: 26rpx;
           line-height: 26rpx;
@@ -145,7 +145,7 @@ export default {
           top: 157rpx;
           left: 75rpx;
         }
-        
+
         .qiandao {
           width: 46rpx !important;
           height: 46rpx !important;
@@ -153,13 +153,13 @@ export default {
           top: 85rpx;
           left: 107rpx;
         }
-        
+
         .image {
           width: 100%;
           height: 100%;
         }
       }
-      
+
       .msg {
         width: 750rpx;
         height: 22rpx;
@@ -172,7 +172,7 @@ export default {
         text-align: center;
       }
     }
-    
+
     .jilu {
       margin: 0 auto;
       margin-top: 44rpx;
@@ -183,19 +183,19 @@ export default {
       background: rgba(255, 255, 255, 1);
       box-shadow: 0px 0px 16rpx 0px rgba(0, 0, 0, 0.25);
       border-radius: 15rpx;
-      
+
       .chang {
         width: 107rpx;
         height: 127rpx;
         margin-bottom: 53rpx;
         margin-right: 25rpx;
         position: relative;
-        
+
         .image {
           width: 100%;
           height: 100%;
         }
-        
+
         .view {
           width: 107rpx;
           height: 45rpx;
@@ -208,7 +208,7 @@ export default {
         }
       }
     }
-    
+
     .err {
       margin-top: 47rpx;
       margin-left: 32rpx;
@@ -217,14 +217,14 @@ export default {
       color: #999999;
       display: flex;
       align-items: center;
-      
+
       .image {
         width: 22rpx;
         height: 23rpx;
         margin-right: 9rpx;
       }
     }
-    
+
     .last {
       margin-top: 19rpx;
       margin-left: 32rpx;
@@ -234,6 +234,6 @@ export default {
       height: 40rpx;
       line-height: 40rpx;
     }
-    
+
   }
 </style>

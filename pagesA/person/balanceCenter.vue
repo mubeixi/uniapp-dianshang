@@ -30,19 +30,19 @@
             确认转出
           </button>
         </form>
-      
+
       </view>
-    
+
     </view>
-    
+
     <view catchtouchmove class="top">
-      
+
       <image :src="'/static/client/blance/bg.jpg'|domain" class="bgImg"></image>
       <!-- <image class="back" @click="goBack" :src="'/static/client/check/left.png'|domain"></image>
       <view class="titleq">
         余额中心
       </view> -->
-      
+
       <view class="dangqian">
         当前余额（元）
       </view>
@@ -65,7 +65,7 @@
         </view>
       </view>
     </view>
-    
+
     <view class="selects">
       <view :class="{checked:current=='charge'}" @click="changeCurrent('charge')" class="qwes">
         收入
@@ -95,11 +95,11 @@
           <view @click="sureSearch" class="view sure">确定</view>
         </view>
         <view @click="showSure=false" catchtouchmove class="zhao">
-        
+
         </view>
       </view>
     </view>
-    
+
     <view class="contents" v-if="current=='charge'">
       <view class="mingxi  mingxiPlus">
         <view>
@@ -120,7 +120,7 @@
       </view>
     </view>
     <view class="contents" v-if="current=='money'">
-      
+
       <view class="mingxi  mingxiPlus">
         <view>
           总收入:{{records.total_get}}元
@@ -152,7 +152,7 @@ import {
   get_user_info,
   getUserChargeRecord,
   getUserMoneyRecord,
-  transferBalance,
+  transferBalance
 } from '../../common/fetch'
 import { mapActions, mapGetters } from 'vuex'
 import { confirm, error } from '../../common'
@@ -178,20 +178,20 @@ export default {
       moneyMore: false, // 资金流水是否还有更多
       chargeMore: false, // 充值记录是否还有更多
       Umoney: 0,
-      s_money: 0,
+      s_money: 0
     }
   },
   computed: {
     ...mapGetters(['initData', 'userInfo']),
     Money: function () {
       return Number(this.Umoney).toFixed(2)
-    },
+    }
   },
   watch: {
     s_money: function (newVal, oldVal) {
       var newValue = parseFloat(newVal)
       TweenMax.TweenLite.to(this.$data, 0.5, { Umoney: newValue })
-    },
+    }
   },
   onReachBottom () {
     console.log('ssss')
@@ -224,7 +224,7 @@ export default {
         if (sd.getTime() > ed.getTime()) {
           uni.showToast({
             title: '开始时间不得大于结束时间',
-            icon: 'none',
+            icon: 'none'
           })
           return
         }
@@ -270,7 +270,7 @@ export default {
     },
     goWithdraw () {
       uni.navigateTo({
-        url: '/pagesA/fenxiao/withdrawal?form=2',
+        url: '/pagesA/fenxiao/withdrawal?form=2'
       })
     },
     goFacePay () {
@@ -280,10 +280,10 @@ export default {
           title: '提示',
           content: '该操作需要设置支付密码,是否前往设置?',
           confirmText: '去设置',
-          cancelText: '暂不设置',
+          cancelText: '暂不设置'
         }).then(res => {
           uni.navigateTo({
-            url: '/pagesA/person/updateUserPsw?type=1&is_back=1',
+            url: '/pagesA/person/updateUserPsw?type=1&is_back=1'
           })
         }).catch(err => {
           error('请选择其他支付方式')
@@ -301,27 +301,27 @@ export default {
     },
     goRecharge () {
       uni.navigateTo({
-        url: '/pagesA/person/vipRecharge',
+        url: '/pagesA/person/vipRecharge'
       })
     },
     confirm (e) {
       const _self = this
       add_template_code({
         code: e.detail.formId,
-        times: 1,
+        times: 1
       })
 
       if (this.money == '' || isNaN(this.money) || (this.money < 0)) {
         uni.showToast({
           title: '输入金额有误',
-          icon: 'none',
+          icon: 'none'
         })
         return
       }
       if (this.user_no == '') {
         uni.showToast({
           title: '转出会员号不能为空',
-          icon: 'none',
+          icon: 'none'
         })
         return
       }
@@ -334,14 +334,14 @@ export default {
       transferBalance({
         money: this.money,
         pay_passwd: this.user_pay_password,
-        user_no: this.user_no,
+        user_no: this.user_no
       }).then(res => {
         _self.money = ''
         _self.user_no = ''
         _self.user_pay_password = ''
         uni.showToast({
           title: res.msg,
-          duration: 1500,
+          duration: 1500
         })
         // this.setUserInfo({});
         setTimeout(() => {
@@ -359,7 +359,7 @@ export default {
         _self.user_pay_password = ''
         uni.showToast({
           title: err.msg,
-          icon: 'none',
+          icon: 'none'
         })
       })
       this.isShow = false
@@ -369,7 +369,7 @@ export default {
         page: this.moneyPage,
         pageSize: this.pageSize,
         begin_time: this.beginTime,
-        end_time: this.endTime,
+        end_time: this.endTime
       }
       if (item == 1) {
         data.money_type = 1
@@ -395,7 +395,7 @@ export default {
     get_user_charge_record () {
       getUserChargeRecord({
         page: this.chargePage,
-        pageSize: this.pageSize,
+        pageSize: this.pageSize
       }).then(res => {
         if (this.chargePage != 1) {
           const old = this.charge_records
@@ -418,7 +418,7 @@ export default {
       // this.records = [];
       this.moneyMore = false
       this.chargeMore = false
-    },
+    }
   },
   onLoad () {
     this.$fun.checkIsLogin(1)
@@ -434,7 +434,7 @@ export default {
     }, err => {
     }).catch()
     this.get_user_money_record(1)
-  },
+  }
 }
 </script>
 
@@ -442,7 +442,7 @@ export default {
   view {
     box-sizing: border-box;
   }
-  
+
   .boxSizing {
     /*background-color: #FFFFFF;*/
     background: #F8F8F8;
@@ -450,19 +450,19 @@ export default {
     overflow-x: hidden;
     min-height: 100vh;
   }
-  
+
   .top {
     width: 750rpx;
     height: 537rpx;
     position: relative;
     background-color: #FFFFFF;
-    
+
     .bgImg {
       margin-top: -50rpx;
       width: 114%;
       height: 100%;
     }
-    
+
     .bottoms {
       width: 690rpx;
       height: 133rpx;
@@ -475,12 +475,12 @@ export default {
       display: flex;
       align-items: center;
       padding: 38rpx 40rpx 37rpx 40rpx;
-      
+
       .image {
         width: 58rpx;
         height: 58rpx;
       }
-      
+
       .line {
         width: 2rpx;
         height: 50rpx;
@@ -489,9 +489,9 @@ export default {
         /*flex: 1;*/
         background: rgba(240, 239, 240, 1);
       }
-      
+
       .qwe {
-        
+
         flex: 1;
         text-align: left;
         height: 58rpx;
@@ -500,23 +500,23 @@ export default {
         color: #4C4C4C;
         display: flex;
         align-items: center;
-        
+
         .image {
           width: 58rpx;
           height: 58rpx;
         }
-        
+
         &.lefts {
-        
+
         }
-        
+
         text {
           margin-left: 20rpx;
         }
       }
-      
+
     }
-    
+
     .back {
       width: 21rpx;
       height: 38rpx;
@@ -527,7 +527,7 @@ export default {
       margin-top: var(--status-bar-height);
       /* #endif */
     }
-    
+
     .titleq {
       font-size: 36rpx;
       height: 34rpx;
@@ -540,7 +540,7 @@ export default {
       margin-top: var(--status-bar-height);
       /* #endif */
     }
-    
+
     .dangqian {
       font-size: 28rpx;
       color: #FFFFFF;
@@ -553,7 +553,7 @@ export default {
       // margin-top: var(--status-bar-height);
       /* #endif */
     }
-    
+
     .prices {
       font-family: Arial;
       font-size: 80rpx;
@@ -568,7 +568,7 @@ export default {
       // margin-top: var(--status-bar-height);
       /* #endif */
     }
-    
+
     .zhuanchu {
       width: 170rpx;
       height: 74rpx;
@@ -583,16 +583,16 @@ export default {
       top: 130rpx;
       right: 24rpx;
     }
-    
+
   }
-  
+
   .selects {
     height: 110rpx;
     width: 750rpx;
     background-color: #FFFFFF;
     display: flex;
     position: relative;
-    
+
     .qwes {
       width: 375rpx;
       height: 110rpx;
@@ -601,7 +601,7 @@ export default {
       font-size: 32rpx;
       color: #666666;
       position: relative;
-      
+
       .imgQ {
         width: 35px;
         height: 35px;
@@ -612,10 +612,10 @@ export default {
         box-sizing: border-box;
       }
     }
-    
+
     .checked {
       color: #FF5C33;
-      
+
       &:after {
         content: '';
         display: block;
@@ -629,12 +629,12 @@ export default {
       }
     }
   }
-  
+
   .contents {
     width: 750rpx;
     padding: 17rpx 0rpx 32rpx 0rpx;
     background-color: #F8F8F8;
-    
+
     .mingxi {
       /*height: 115rpx;*/
       width: 700rpx;
@@ -648,26 +648,26 @@ export default {
       margin-left: 24rpx;
       margin-right: 26rpx;
       box-sizing: border-box;
-      
+
       &:first-child {
         padding-top: 0;
       }
-      
+
       .note {
         color: #555;
         display: flex;
         justify-content: space-between;
-        
+
         .rightNote {
           width: 200rpx;
           text-align: right;
         }
-        
+
         .leftNote {
           width: 500rpx;
         }
       }
-      
+
       .times {
         color: #999999;
         font-size: 20rpx;
@@ -678,7 +678,7 @@ export default {
       }
     }
   }
-  
+
   .zhezhao {
     width: 100%;
     height: 100%;
@@ -687,7 +687,7 @@ export default {
     left: 0rpx;
     z-index: 9999;
     background-color: rgba($color: #000000, $alpha: .3);
-    
+
     .zhezhaoView {
       background: rgba(255, 255, 255, 1);
       border-radius: 20px;
@@ -699,7 +699,7 @@ export default {
       left: 123rpx;
       padding-bottom: 15px;
     }
-    
+
     .closeZ {
       width: 47rpx;
       height: 47rpx;
@@ -708,7 +708,7 @@ export default {
       transform: translateX(-50%);
       left: 50%;
     }
-    
+
     .zhezhaoYue {
       height: 157rpx;
       width: 503rpx;
@@ -717,31 +717,31 @@ export default {
       text-align: center;
       line-height: 157rpx;
     }
-    
+
     .zhezhaoCenter {
       width: 100%;
       margin-top: 13rpx;
       padding: 0rpx 52rpx;
-      
+
       .views {
         height: 90rpx;
         display: flex;
         align-items: center;
-        
+
         .inputs {
           border-bottom: 1rpx solid #F4F4F4;
           font-size: 24rpx;
           margin-left: 16rpx;
         }
       }
-      
+
       .imgs {
         width: 26rpx;
         height: 38rpx;
-        
+
       }
     }
-    
+
     .zheButton {
       width: 400rpx;
       height: 76rpx;
@@ -755,7 +755,7 @@ export default {
       color: #FFFFFF;
     }
   }
-  
+
   .mingxiPlus {
     display: flex;
     width: 750rpx !important;
@@ -768,7 +768,7 @@ export default {
     padding-left: 26rpx !important;
     padding-right: 40px !important;
   }
-  
+
   .showCeng {
     background-color: #FFFFFF;
     position: absolute;
@@ -777,7 +777,7 @@ export default {
     top: 60px;
     box-sizing: border-box;
     padding-top: 20px;
-    
+
     .picker {
       background: whitesmoke;
       border-radius: 15px;
@@ -788,7 +788,7 @@ export default {
       text-align: center;
       width: 150px;
     }
-    
+
     .centerPicker {
       height: 30px;
       line-height: 30px;
@@ -797,7 +797,7 @@ export default {
       margin-left: 10px;
       margin-right: 10px;
     }
-    
+
     .submit {
       display: flex;
       width: 100%;
@@ -805,7 +805,7 @@ export default {
       padding-left: 0rpx;
       padding-right: 0rpx;
       margin-top: 30px;
-      
+
       .view {
         width: 50%;
         height: 80rpx;
@@ -814,16 +814,16 @@ export default {
         color: #FFFFFF;
         font-size: 30rpx;
       }
-      
+
       .reset {
         background-color: #B9B9B9;
       }
-      
+
       .sure {
         background-color: #F43131;
       }
     }
-    
+
     .zhao {
       height: 230px;
       width: 100%;
@@ -836,7 +836,7 @@ export default {
       background-color: #000;
       opacity: 0.6;
     }
-    
+
     .priceInterval {
       font-size: 26rpx;
       color: #999999;

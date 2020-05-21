@@ -33,13 +33,13 @@
         </view>
       </view>
     </view>
-    
+
     <!--		<popup-layer ref="dialog" :direction="'top'">-->
     <!--			<div style="padding: 0rpx 10rpx;">-->
     <!--				666666666666666666666666666666666666666-->
     <!--			</div>-->
     <!--		</popup-layer>-->
-    
+
     <popup-layer :direction="'top'" ref="popMethod">
       <view class="iMbx">
         <view :key="index" @click="chooseType(index)" class="c_method" v-for="(item,index) in pay_arr">
@@ -48,7 +48,7 @@
         </view>
       </view>
     </popup-layer>
-    
+
     <view class="remind-wrap" v-if="remindAddress">
       <view class="remind-add">
         <view class="text-align-center mb20">新建收货地址</view>
@@ -72,7 +72,7 @@
         </view>
       </view>
     </view>
-    
+
     <popup-layer :direction="'top'" ref="popupRef">
       <view class="bMbx" v-if="type=='shipping'">
         <view class="fMbx">请选择物流公司</view>
@@ -89,11 +89,11 @@
         确定
       </view>
     </popup-layer>
-    
+
     <view class="order_total">
       <view @click="form_submit" class="submit">立即兑换</view>
     </view>
-  
+
   </view>
 </template>
 
@@ -106,7 +106,7 @@ import {
   jifenProdDetail,
   jifenProdDuihuan,
   jifenProdPay,
-  jifenProdShippingPrice,
+  jifenProdShippingPrice
 } from '../../common/fetch.js'
 import { pageMixin } from '../../common/mixin'
 import { mapActions, mapGetters } from 'vuex'
@@ -116,7 +116,7 @@ import { GetQueryByString, goBack, isWeiXin, ls, urlencode } from '../../common/
 export default {
   mixins: [pageMixin],
   components: {
-    popupLayer,
+    popupLayer
   },
   data () {
     return {
@@ -139,7 +139,7 @@ export default {
       address_id: 0,
       shipping_price: 0, // 运费
       pay_arr: [],
-      initData: {},
+      initData: {}
     }
   },
   filters: {
@@ -150,7 +150,7 @@ export default {
         var values = value.replace(xx, '****')
         return values
       }
-    },
+    }
   },
   async onShow () {
     this.getAddress()
@@ -185,7 +185,7 @@ export default {
     remindAddress: function () {
       return this.giftInfo.Gift_Shipping == 1 && !this.addressinfo.Address_Name
     },
-    ...mapGetters(['userInfo']),
+    ...mapGetters(['userInfo'])
   },
   methods: {
     ...mapActions(['getUserInfo', 'getInitData']),
@@ -205,7 +205,7 @@ export default {
       jifenProdShippingPrice({
         Gift_ID: this.gift_id,
         Address_ID: this.address_id,
-        Shipping_ID: this.shipping_id,
+        Shipping_ID: this.shipping_id
       }).then(res => {
         this.shipping_price = res.data.shipping_price
       })
@@ -213,7 +213,7 @@ export default {
     // 积分兑换商品详情
     jifenProdDetail () {
       jifenProdDetail({
-        Gift_ID: this.gift_id,
+        Gift_ID: this.gift_id
       }).then(res => {
         this.giftLoading = true
         this.giftInfo = res.data
@@ -226,13 +226,13 @@ export default {
     // 跳转地址列表页
     goAddressList () {
       uni.navigateTo({
-        url: '/pages/addressList/addressList?from=checkout&addressid=' + this.address_id,
+        url: '/pages/addressList/addressList?from=checkout&addressid=' + this.address_id
       })
     },
     // 跳转新增地址页面
     goEditAdd () {
       uni.navigateTo({
-        url: '/pagesA/editAddress/editAddress?from=checkout',
+        url: '/pagesA/editAddress/editAddress?from=checkout'
       })
     },
     cancelPsw () {
@@ -247,7 +247,7 @@ export default {
         Gift_ID: this.gift_id,
         password: this.password,
         Address_ID: this.address_id,
-        Shipping_ID: this.shipping_id,
+        Shipping_ID: this.shipping_id
       }).then(res => {
         this.psdInput = false
         this.Order_ID = res.data.Orders_ID
@@ -260,7 +260,7 @@ export default {
       }, err => {
         uni.showToast({
           title: err.msg,
-          icon: 'none',
+          icon: 'none'
         })
         this.password = ''
       })
@@ -271,7 +271,7 @@ export default {
         if (!this.shipping_id) {
           uni.showToast({
             title: '请选择物流',
-            icon: 'none',
+            icon: 'none'
           })
 
           return
@@ -280,7 +280,7 @@ export default {
       if (!this.address_id) {
         uni.showToast({
           title: '收货地址错误',
-          icon: 'none',
+          icon: 'none'
         })
         return
       }
@@ -295,7 +295,7 @@ export default {
           break
         }
       }
-      
+
       this.shipping_id = e.target.value
     },
     // 选择运费
@@ -345,7 +345,7 @@ export default {
         uni.showModal({
           title: '错误',
           content: '收货地址获取失败',
-          showCancel: false,
+          showCancel: false
         })
         return false
       })
@@ -362,15 +362,15 @@ export default {
         if (this.need_invoice == 1 && this.invoice_info == '') {
           uni.showToast({
             title: '发票信息不能为空',
-            icon: 'none',
+            icon: 'none'
           })
           return
         }
-        
+
         payConf = {
           Order_ID: this.Order_ID,
           pay_type: this.pay_type,
-          user_pay_password: this.password, // 余额支付密码
+          user_pay_password: this.password // 余额支付密码
         }
         // 用户选择余额支付
         if (this.pay_type == 'remainder_pay') {
@@ -380,7 +380,7 @@ export default {
             uni.showModal({
               title: '提示',
               content: err.msg,
-              showCancel: false,
+              showCancel: false
             })
           })
           return
@@ -426,7 +426,7 @@ export default {
           payConf = {
             ...ls.get('temp_order_info'),
             code: isHasCode,
-            pay_type: 'wx_mp',
+            pay_type: 'wx_mp'
           }
         } else {
           // 存上临时的数据
@@ -452,14 +452,14 @@ export default {
           success: function (loginRes) {
             payConf.code = loginRes.code
             resolve()
-          },
+          }
         })
       })
       // #endif
 
       jifenProdPay(payConf, {
         tip: '正在加载中',
-        mask: true,
+        mask: true
       }).then(res => {
         unipayFunc(this, this.pay_type, res)
         return
@@ -478,9 +478,9 @@ export default {
             fail: function (err) {
               uni.showModal({
                 title: '支付错误',
-                content: JSON.stringify(err),
+                content: JSON.stringify(err)
               })
-            },
+            }
           })
 
           return
@@ -511,7 +511,7 @@ export default {
             const url = str
 
             uni.navigateTo({
-              url: `/pages/pay/wx/wx?users_id=${users_id}&formurl=` + encodeURIComponent(fromurl),
+              url: `/pages/pay/wx/wx?users_id=${users_id}&formurl=` + encodeURIComponent(fromurl)
             })
 
             // 这样就避免了users_id瞎跳的机制
@@ -528,7 +528,7 @@ export default {
           timestamp,
           nonceStr,
           signType,
-          paySign,
+          paySign
         } = res.data
 
         // 直接支付
@@ -543,7 +543,7 @@ export default {
             success: function (res) {
               // 支付成功后的回调函数
               _self.paySuccessCall(res)
-            },
+            }
           })
         }).catch((e) => {
         })
@@ -594,9 +594,9 @@ export default {
           fail: function (err) {
             uni.showModal({
               title: '支付错误',
-              content: JSON.stringify(err),
+              content: JSON.stringify(err)
             })
-          },
+          }
         })
         // #endif
 
@@ -613,13 +613,13 @@ export default {
           success: function (res) {
             add_template_code({
               code: prepay_id,
-              times: 3,
+              times: 3
             })
             _self.paySuccessCall(res)
           },
           fail: function (err) {
             _self.payFailCall(err)
-          },
+          }
         })
         // #endif
 
@@ -635,13 +635,13 @@ export default {
           },
           fail: function (err) {
             _self.payFailCall(err)
-          },
+          }
         })
         // #endif
       }, err => {
         uni.showModal({
           title: '提示',
-          content: '获取支付参数失败:' + err.msg,
+          content: '获取支付参数失败:' + err.msg
         })
       }).catch(e => {
 
@@ -661,10 +661,10 @@ export default {
         // && login_methods[i].state ??状态呢？
         if (i != 'component_appid' && login_methods[i].state) {
           channel = ['wx_mp'].indexOf(login_methods[i].type) === -1 ? {
-            ...login_methods[i],
+            ...login_methods[i]
           } : {
             ...login_methods[i],
-            component_appid,
+            component_appid
           }
           break
         }
@@ -680,7 +680,7 @@ export default {
         origin,
         pathname,
         search,
-        hash,
+        hash
       } = window.location
       const strArr = []
       if (search.indexOf('code') != -1) {
@@ -718,19 +718,19 @@ export default {
       uni.showToast({
         title: '支付失败',
         icon: 'none',
-        duration: 2000,
+        duration: 2000
       })
     },
     paySuccessCall () {
       const _self = this
       uni.showToast({
-        title: '支付成功',
+        title: '支付成功'
       })
       uni.redirectTo({
-        url: '/pagesA/person/myRedemption',
+        url: '/pagesA/person/myRedemption'
       })
-    },
-  },
+    }
+  }
 }
 </script>
 
@@ -738,7 +738,7 @@ export default {
   .wrap {
     background: #fff;
   }
-  
+
   /* 收货地址 start */
   .address {
     /* margin: 15px 0 10px; */
@@ -747,64 +747,64 @@ export default {
     padding: 44rpx 38rpx 45rpx;
     // border-top: 30rpx solid #F3F3F3;
     border-bottom: 20rpx solid #F3F3F3;
-    
+
     .add_msg {
       flex: 1;
       font-size: 28rpx;
     }
-    
+
     .right {
       width: 18rpx;
       height: 27rpx;
       margin-left: 34rpx;
     }
   }
-  
+
   .loc_icon {
     width: 41rpx;
     height: 51rpx;
     margin-right: 31rpx;
   }
-  
+
   .name {
     margin-bottom: 30rpx;
     font-size: 28rpx;
     color: #333;
     line-height: 22rpx;
   }
-  
+
   .name > span {
     margin-left: 10rpx;
   }
-  
+
   .location {
     font-size: 24rpx;
     color: #333;
     line-height: 32rpx;
   }
-  
+
   /* 收货地址 end */
   /* 订单信息 start */
   .order_msg {
     display: flex;
     padding: 30rpx 40rpx 30rpx 30rpx;
   }
-  
+
   .pro {
     display: flex;
     margin-bottom: 50rpx;
   }
-  
+
   .order_msg .pro:last-child {
     margin-bottom: 17rpx
   }
-  
+
   .pro-img {
     width: 200rpx;
     height: 200rpx;
     margin-right: 28rpx;
   }
-  
+
   .pro-name {
     font-size: 30rpx;
     display: -webkit-box;
@@ -814,81 +814,81 @@ export default {
     -webkit-box-orient: vertical;
     line-height: 60rpx;
   }
-  
+
   .pro-msg {
     flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
   }
-  
+
   .pro-price {
     color: #F43131;
     font-size: 36rpx;
-    
+
     span {
       font-size: 24rpx;
       font-style: normal;
     }
   }
-  
+
   /* 订单信息 end */
   /* 订单其他信息 start */
   .other {
     padding: 30rpx 40rpx 0 30rpx;
     font-size: 22rpx;
-    
+
     .right {
       margin-left: 18rpx;
       width: 15rpx;
       height: 23rpx;
     }
   }
-  
+
   .other .bd {
     padding-bottom: 30rpx;
     border-bottom: 2rpx solid $wzw-border-color;
   }
-  
+
   .o_title {
     display: flex;
     align-items: center;
     justify-content: space-between;
     font-size: 28rpx;
-    
+
     input {
       font-size: 24rpx;
     }
   }
-  
+
   .o_title .van-switch {
     float: right;
   }
-  
+
   .o_desc,
   .o_de {
     font-size: 22rpx;
     margin-top: 10rpx;
-    
+
     text {
       color: #F43131;
     }
   }
-  
+
   .o_de {
     color: #999;
   }
-  
+
   .words {
     justify-content: flex-start;
   }
-  
+
   .words input {
     border: 0;
     margin-left: 20rpx;
     flex: 1;
   }
-  
+
   .total {
     display: flex;
     justify-content: flex-end;
@@ -897,12 +897,12 @@ export default {
     font-size: 24rpx;
     padding-right: 30rpx;
   }
-  
+
   .total .money {
     font-size: 30rpx;
     color: #F43131;
   }
-  
+
   /* 订单其他信息 end */
   /* 提交订单 */
   .order_total {
@@ -915,7 +915,7 @@ export default {
     background: #fff;
     /*z-index: 100;*/
   }
-  
+
   .submit {
     width: 100%;
     background: #F43131;
@@ -924,34 +924,34 @@ export default {
     line-height: 100rpx;
     font-size: 34rpx;
   }
-  
+
   .totalinfo {
     flex: 1;
     padding-left: 93rpx;
     line-height: 30rpx;
   }
-  
+
   .info {
     font-size: 24rpx;
-    
+
     .money {
       color: #F43131;
       font-size: 30rpx;
-      
+
       .m_icon {
         font-size: 24rpx;
       }
     }
   }
-  
+
   .tips {
     font-size: 20rpx;
     color: #979797;
   }
-  
+
   .bMbx {
     padding: 0rpx 20rpx;
-    
+
     .fMbx {
       font-size: 32rpx;
       height: 30rpx;
@@ -959,7 +959,7 @@ export default {
       text-align: center;
       padding: 36rpx 0rpx;
     }
-    
+
     .iMbx {
       display: flex;
       justify-content: space-between;
@@ -969,7 +969,7 @@ export default {
       font-size: 28rpx;
     }
   }
-  
+
   .sure {
     height: 90rpx;
     width: 100%;
@@ -980,7 +980,7 @@ export default {
     line-height: 90rpx;
     text-align: center;
   }
-  
+
   // 提醒用户添加收货地址信息
   .remind-wrap {
     position: fixed;
@@ -993,38 +993,38 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    
+
     .remind-add {
       background: #fff;
       width: 90%;
       padding: 50rpx 0 0;
       border-radius: 20rpx;
       overflow: hidden;
-      
+
       .text-align-center {
         text-align: center;
       }
-      
+
       .mb20 {
         margin-bottom: 20rpx;
       }
-      
+
       .remind_desc {
         padding: 0 20rpx;
         font-size: 30rpx;
         margin: 40rpx 0;
         color: #666;
       }
-      
+
       .remind_btns {
         display: flex;
         border-top: 1rpx solid #efefef;
         line-height: 90rpx;
-        
+
         .fl1 {
           flex: 1;
         }
-        
+
         .confirm {
           background: #F43131;
           color: #fff;
@@ -1032,26 +1032,26 @@ export default {
       }
     }
   }
-  
+
   .iMbx {
     text-align: center;
     padding: 0 20rpx;
     font-size: 28rpx;
     color: #333;
-    
+
     .c_method {
       padding: 37rpx 0;
       border-bottom: 2rpx solid #E6E6E6;
     }
-    
+
     & .c_method:first-child {
       color: #F43131;
     }
-    
+
     & .c_method:nth-last-child(1) {
       border: none;
     }
-    
+
     .confirm-method {
       color: #fff;
       font-size: 30rpx;
@@ -1061,7 +1061,7 @@ export default {
       background: #F43131;
     }
   }
-  
+
   .pwd-wrap {
     position: fixed;
     top: 0;
@@ -1070,7 +1070,7 @@ export default {
     height: 100%;
     background: rgba(0, 0, 0, .3);
     z-index: 9999;
-    
+
     .input-box {
       position: absolute;
       top: 35%;
@@ -1081,17 +1081,17 @@ export default {
       padding: 70rpx 0 20rpx;
       font-size: 30rpx;
       background: #fff;
-      
+
       .btns {
         display: flex;
         justify-content: space-around;
         line-height: 60rpx;
-        
+
         .btn {
           flex: 1;
         }
       }
-      
+
       .input-psw {
         border: 1px solid #efefef;
         width: 80%;

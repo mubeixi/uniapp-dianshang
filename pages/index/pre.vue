@@ -5,7 +5,7 @@
     <view class="status_bar" style="position: fixed;background-color: white;top:0;left:0;z-index: 99;"></view>
     <!-- #endif -->
     <view :style="{background:system.bgcolor}" class="home-wrap">
-      
+
       <section :class="[item]" :data-name="item" :key="index" :ref="item" class="section"
                v-for="(item, index) in templateList[tagIndex]">
         <base-component :confData="templateData[tagIndex][index]" :index="index" v-if="item.indexOf('base') !== -1" />
@@ -67,7 +67,7 @@ export default {
       templateList: [],
       templateData: [],
       tagIndex: 0,
-      system: {},
+      system: {}
     }
   },
   components: {
@@ -86,7 +86,7 @@ export default {
     CubeComponent,
     TabComponent,
     FlashComponent,
-    GroupComponent,
+    GroupComponent
   },
   onShow () {
     if (this.$refs.notice) {
@@ -174,13 +174,13 @@ export default {
       })
       .catch(err => {
       })
-  },
+  }
 }
 </script>
 
 <style lang="less" scope="scope">
   .home-wrap {
-    width: 750 rpx;
+    width: 750rpx;
     /*overflow-x: hidden;*/
     background: #f2f2f2;
     position: relative;
@@ -188,7 +188,7 @@ export default {
     /* #ifdef APP-PLUS */
     padding-top: var(--status-bar-height);
     /* #endif */
-    
+
     .section {
       position: relative;
       //搜索框特殊
@@ -197,14 +197,14 @@ export default {
       }
     }
   }
-  
+
   /*.content {*/
   /*	display: flex;*/
   /*	flex-direction: column;*/
   /*	align-items: center;*/
   /*	justify-content: center;*/
   /*}*/
-  
+
   /*.logo {*/
   /*	height: 200rpx;*/
   /*	width: 200rpx;*/
@@ -213,12 +213,12 @@ export default {
   /*	margin-right: auto;*/
   /*	margin-bottom: 50rpx;*/
   /*}*/
-  
+
   /*.text-area {*/
   /*	display: flex;*/
   /*	justify-content: center;*/
   /*}*/
-  
+
   /*.title {*/
   /*	font-size: 36rpx;*/
   /*	color: #8f8f94;*/

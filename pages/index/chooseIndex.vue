@@ -321,7 +321,7 @@ export default {
   /*	}*/
   /*}*/
   .home-wrap {
-    width: 750 rpx;
+    width: 750rpx;
     overflow-x: hidden;
     background: #f8f8f8;
     position: relative;

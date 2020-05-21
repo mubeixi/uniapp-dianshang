@@ -153,14 +153,14 @@ export default {
       remark: '',
       tong: [],
       arr: [],
-      index: 0,
+      index: 0
     }
   },
   computed: {
-    ...mapGetters(['Stores_ID']),
+    ...mapGetters(['Stores_ID'])
   },
   filters: {
-    timeFormat: formatTime,
+    timeFormat: formatTime
   },
   methods: {
     bindPickerChange (e) {
@@ -169,7 +169,7 @@ export default {
     getOrderDetail: function () {
       getOrderDetail({
         Order_ID: this.Order_ID,
-        store_id: this.Stores_ID,
+        store_id: this.Stores_ID
       }).then(res => {
         // res.data.Order_Shipping = res.data.Order_Shipping && JSON.stringify(res.data.Order_Shipping) ||''
         this.orderInfo = res.data
@@ -198,7 +198,7 @@ export default {
         Address_Name: this.name,
         Address_Mobile: this.mobile,
         Order_Remark: this.remark,
-        store_id: this.Stores_ID,
+        store_id: this.Stores_ID
       }
       if (this.orderInfo.Order_Shipping.Express == '同城配送') {
         for (const item in this.tong[this.index]) {
@@ -213,17 +213,17 @@ export default {
       }
       systemSendOrder(data).then(res => {
         uni.showToast({
-          title: res.msg,
+          title: res.msg
         })
         setTimeout(function () {
           uni.navigateBack({
-            delta: 1,
+            delta: 1
           })
         }, 1000)
       }).catch(err => {
         error(err.msg)
       })
-    },
+    }
   },
   onLoad (options) {
     if (options.id) {
@@ -232,13 +232,13 @@ export default {
     } else {
       error('缺少参数')
       uni.navigateBack({
-        delta: 1,
+        delta: 1
       })
     }
   },
   onReachBottom () {
 
-  },
+  }
 }
 </script>
 
