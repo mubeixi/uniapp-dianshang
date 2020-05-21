@@ -1,8 +1,8 @@
 <template>
-  <div class="store-swiper-item"   >
+  <div class="store-swiper-item">
     <image :src="pro.ImgPath+'-r420'"
-           class="store-item-img"  @click="goPro"></image>
-    <div class="store-item-title"  @click="goPro">
+           class="store-item-img" @click="goPro"></image>
+    <div class="store-item-title" @click="goPro">
       {{pro.Products_Name}}
     </div>
     <div class="flex flex-between store-price" @click="goPro">
@@ -15,136 +15,130 @@
       </div>
     </div>
     <div class="flex flex-between" v-if="pro.buyer">
-      <div class="flex flex-vertical-center"  @click="goStoreBuy">
+      <div class="flex flex-vertical-center" @click="goStoreBuy">
         <block v-for="(it,ind) of pro.buyer" :key="ind">
           <image :src="it.User_HeadImg"
                  class="info-img"></image>
         </block>
 
-
-        <image  v-if="pro.buyer.length>0"  :src="'/static/client/right.png'|domain" style="width: 16rpx;height: 26rpx;margin-left: 18px"></image>
+        <image v-if="pro.buyer.length>0" :src="'/static/client/right.png'|domain"
+               style="width: 16rpx;height: 26rpx;margin-left: 18px"></image>
       </div>
 
       <div class="flex flex-vertical-center" v-if="cartData.Qty">
-        <image src="/static/dee.png" style="width: 40rpx;height: 40rpx" @click.stop="delQty"> </image>
+        <image src="/static/dee.png" style="width: 40rpx;height: 40rpx" @click.stop="delQty"></image>
         <div class="store-count">
           {{cartData.Qty}}
         </div>
-        <image src="/static/add.png" style="width: 40rpx;height: 40rpx" @click.stop="addQty"> </image>
+        <image src="/static/add.png" style="width: 40rpx;height: 40rpx" @click.stop="addQty"></image>
       </div>
-      <div class="store-cart" v-else  @click.stop="updaCart">
+      <div class="store-cart" v-else @click.stop="updaCart">
         加入购物车
       </div>
     </div>
-
-
-
-
 
   </div>
 </template>
 
 <script>
 
-import {error} from '../common';
+import { error } from '../common'
+
 export default {
 
-    props: {
-        myCart:{
-
-        },
-        pro:{
-            type:Object,
-            default:{}
-        },
-        storeId:{
-            type: String,
-            default: ''
+  props: {
+    myCart: {},
+    pro: {
+      type: Object,
+      default: () => {}
+    },
+    storeId: {
+      type: String,
+      default: ''
+    }
+  },
+  data () {
+    return {
+      userPay: [],
+      cartData: {}
+    }
+  },
+  watch: {
+    myCart: {
+      handler (newVal, oldVal) {
+        this.myCart = newVal
+        this.initCart()
+      }
+    }
+  },
+  methods: {
+    goPro () {
+      uni.navigateTo({
+        url: '/pages/detail/detail?Products_ID=' + this.pro.Products_ID + '&store_id=' + this.storeId
+      })
+    },
+    goStoreBuy () {
+      uni.navigateTo({
+        url: '/pagesA/store/storeBuyRecord?pid=' + this.pro.Products_ID
+      })
+    },
+    addQty () {
+      this.$emit('addQty', this.cartData)
+    },
+    delQty () {
+      if (this.cartData.Qty <= 1) {
+        error('数量最少为1')
+        return
+      }
+      this.$emit('delQty', this.cartData)
+    },
+    updaCart () {
+      if (!this.$fun.checkIsLogin(1, 1)) return
+      this.$emit('updaCart', this.pro)
+    },
+    initCart () {
+      for (const item in this.myCart) {
+        if (item === this.pro.Products_ID) {
+          for (const it in this.myCart[item]) {
+            this.cartData = this.myCart[item][it]
+            this.cartData.prod_id = item
+          }
         }
-    },
-    data() {
-        return {
-          userPay:[],
-          cartData:{}
-        }
-    },
-    watch:{
-        myCart: {
-            handler (newVal, oldVal) {
-                this.myCart=newVal
-                this.initCart()
-            },
-        },
-    },
-    methods: {
-        goPro(){
-            uni.navigateTo({
-                url:'/pages/detail/detail?Products_ID='+this.pro.Products_ID+'&store_id='+this.storeId
-            })
-        },
-        goStoreBuy(){
-            uni.navigateTo({
-                url:'/pagesA/store/storeBuyRecord?pid='+this.pro.Products_ID
-            })
-        },
-        addQty(){
+      }
+    }
 
-            this.$emit('addQty',this.cartData)
-        },
-        delQty(){
-            if(this.cartData.Qty<=1){
-                error('数量最少为1')
-                return
-            }
-            this.$emit('delQty',this.cartData)
-        },
-        updaCart(){
-            if(!this.$fun.checkIsLogin(1,1))return;
-            this.$emit('updaCart',this.pro)
-        },
-        initCart(){
-            for(let item in this.myCart){
-                if(item==this.pro.Products_ID){
-                    for(let it in this.myCart[item]){
-                        this.cartData=this.myCart[item][it]
-                        this.cartData.prod_id=item
-                    }
-                }
-            }
-        },
-
-    },
-
+  }
 
 }
 </script>
 
 <style scoped lang="scss">
   .store-swiper-item {
-    width: 710rpx;
+    width: 710 rpx;
     //height: 700rpx;
-    border-radius: 10rpx;
+    border-radius: 10 rpx;
     background-color: #FFFFFF;
     margin-bottom: 10px;
     box-sizing: border-box;
-    padding: 20rpx;
+    padding: 20 rpx;
   }
-  .store-item-swiper{
-    width: 710rpx;
+
+  .store-item-swiper {
+    width: 710 rpx;
     overflow-x: hidden;
   }
 
   .store-item-img {
-    width: 420rpx;
-    height: 420rpx;
-    margin: 0 auto 20rpx;
+    width: 420 rpx;
+    height: 420 rpx;
+    margin: 0 auto 20 rpx;
     display: block;
   }
 
   .store-item-title {
-    width: 658rpx;
-    height: 72rpx;
-	line-height: 36rpx;
+    width: 658 rpx;
+    height: 72 rpx;
+    line-height: 36 rpx;
     font-size: 15px;
     color: #333333;
     overflow: hidden;
@@ -152,12 +146,12 @@ export default {
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
-    margin-bottom: 32rpx;
+    margin-bottom: 32 rpx;
   }
 
   .store-price {
     align-items: flex-end;
-    margin-bottom: 38rpx;
+    margin-bottom: 38 rpx;
   }
 
   .price-x {
@@ -166,33 +160,36 @@ export default {
 
   .price-y {
     color: #BFBFBF;
-    margin-left: 20rpx;
+    margin-left: 20 rpx;
   }
 
   .saley {
     color: #888888;
     font-size: 13px;
   }
-  .info-img{
-    width: 46rpx;
-    height: 46rpx;
+
+  .info-img {
+    width: 46 rpx;
+    height: 46 rpx;
     border-radius: 50%;
     margin-right: -4px;
   }
-  .store-cart{
-    width:180rpx;
-    height:60rpx;
-    font-size: 28rpx;
+
+  .store-cart {
+    width: 180 rpx;
+    height: 60 rpx;
+    font-size: 28 rpx;
     color: #FFFFFF;
-    line-height: 60rpx;
+    line-height: 60 rpx;
     text-align: center;
-    background:rgba(255,78,0,1);
-    border-radius:30rpx;
+    background: rgba(255, 78, 0, 1);
+    border-radius: 30 rpx;
   }
-  .store-count{
-    width: 58rpx;
-    height: 40rpx;
-    line-height: 40rpx;
+
+  .store-count {
+    width: 58 rpx;
+    height: 40 rpx;
+    line-height: 40 rpx;
     text-align: center;
     font-size: 13px;
     color: #333333;
