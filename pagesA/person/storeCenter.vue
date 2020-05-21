@@ -321,7 +321,7 @@ export default {
         case 'pic':
 
           uni.navigateTo({
-            url: '/pagesA/store/storeShare?type=3'
+            url: '/pagesA/store/storeShare?type=2'
           })
       }
     },
