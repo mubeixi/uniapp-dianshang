@@ -270,7 +270,7 @@ export const pageMixin = {
 
       /* 商户id机制 */
 
-      // #ifdef H5|| MP-WEIXIN || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO
+      // #ifndef APP-PLUS
       let owner_id = null; let users_id = null
       owner_id = options.owner_id
       if (owner_id >= 0) {
@@ -310,7 +310,7 @@ export const pageMixin = {
           }
         }
         // 比较新旧users_id,只有h5有这个问题，app和小程序都是有单独分配的
-        if (old_users_id && old_users_id != users_id) {
+        if (old_users_id && old_users_id !== users_id) {
           this.setUserInfo({})
           this.setInitData(null)
 
@@ -338,8 +338,8 @@ export const pageMixin = {
 
       // 页面默认全都是分享出去是首页的
       if (isWeiXin() && this.JSSDK_INIT) {
-        WX_JSSDK_INIT(this).then((env) => {
-          this.$wx.onMenuShareTimeline({
+        WX_JSSDK_INIT(this).then((wxEnv) => {
+          wxEnv.onMenuShareTimeline({
             title: initData.ShopName, // 分享标题
             link: buildSharePath(initData.front_url), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
             imgUrl: domainFn(initData.ShareLogo), // 分享图标
@@ -349,7 +349,7 @@ export const pageMixin = {
           })
 
           // 两种方式都可以
-          this.$wx.onMenuShareAppMessage({
+          wxEnv.onMenuShareAppMessage({
             title: initData.ShopName, // 分享标题
             link: buildSharePath(initData.front_url), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
             imgUrl: domainFn(initData.ShareLogo), // 分享图标
@@ -361,6 +361,7 @@ export const pageMixin = {
             }
           })
         }).catch(err => {
+          console.log(err.msg || '签名失败')
         })
       }
       // #endif
@@ -371,9 +372,9 @@ export const pageMixin = {
     ...mapActions(['getInitData', 'setUserInfo', 'getUserInfo', 'setInitData'])
   },
   // #ifdef MP
+  // 这里面不能有异步的操作
   onShareAppMessage () {
-    // getInitData是async，而且retrun一个data,相当于返回了一个promise
-    const initData = this.getInitData()
+    const initData = this.$store.getters.initData
     const path = '/pages/index/index'
     const shareObj = {
       title: initData.ShopName,
@@ -394,7 +395,6 @@ export const payMixin = {
   methods: {},
   created () {
     // #ifdef H5
-
     if (isWeiXin()) {
       this.code = GetQueryByString(location.href, 'code')
       if (this.code) {
@@ -451,7 +451,7 @@ export const scanMixin = {
       return new Promise((resolve, reject) => {
         // #ifdef H5
         if (!isWeiXin()) {
-          reject('请在微信中打开此页面')
+          reject(Error('请在微信中打开此页面'))
         }
 
         const scanType = []

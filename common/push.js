@@ -3,17 +3,15 @@ import { fun } from './index'
 import { isDev } from './env'
 
 class Push {
-
-  static pushListener = function () {
+  static pushListener () {
     var _this = this
     plus.push.addEventListener('click', function (msg) {
-
       switch (msg.payload) {
         case 'LocalMSG':
-          //toast('点击本地创建消息启动：')
+          // toast('点击本地创建消息启动：')
           break
         default:
-          //toast('点击离线推送消息启动：')
+          // toast('点击离线推送消息启动：')
           break
       }
       if (msg.payload) {
@@ -21,7 +19,6 @@ class Push {
       }
     }, false)
     plus.push.addEventListener('receive', function (msg) {
-
       if (msg.aps) {
         // Apple APNS message
 
@@ -37,9 +34,9 @@ class Push {
         // })
       }
 
-      if (plus.os.name == 'iOS') {
-        //如果是自己模拟的消息，没有这个,因为local是自己加的参数
-        if (msg.payload && typeof msg.payload != 'string') {
+      if (plus.os.name === 'iOS') {
+        // 如果是自己模拟的消息，没有这个,因为local是自己加的参数
+        if (msg.payload && typeof msg.payload !== 'string') {
           _this.notificationMessage(msg)
         }
       } else {
@@ -48,17 +45,17 @@ class Push {
     }, false)
   }
 
-  static cancelPushClear = function () {
+  static cancelPushClear () {
     plus.push.clear()
   }
 
-  static handle = function (msg) {
+  static handle (msg) {
     var _this = this
 
-    //清除ios推送小红点
+    // 清除ios推送小红点
     _this.cancelPushClear()
 
-    let payloadStr = msg.payload, payload = null
+    const payloadStr = msg.payload; let payload = null
     if (!payloadStr) {
       return
     }
@@ -79,29 +76,27 @@ class Push {
 
     switch (payload.action) {
       case 'redirect':
-        let path = payload.ext.path
-        if (path[0] != '/') {
+        var path = payload.ext.path
+        if (path[0] !== '/') {
           path = '/' + path
         }
-        //用这个就不怕是switchTab了
+        // 用这个就不怕是switchTab了
         fun.linkTo({
           link: path,
           linkType: 'pushAction'
         })
         break
-
     }
-
   }
 
-  static notificationMessage = function (msg) {
-
-    var content = msg.payload.content ? msg.payload.content : '收到消息'//你要展示的提示
+  static notificationMessage (msg) {
+    var content = msg.payload.content ? msg.payload.content : '收到消息'// 你要展示的提示
 
     var _this = this
     var jsonData = ''
     switch (plus.os.name) {
       case 'Android':
+        // eslint-disable-next-line no-eval
         jsonData = eval('(' + msg.payload + ')')
         break
       case 'iOS':
@@ -116,8 +111,8 @@ class Push {
    * @param {Object} msg
    * @param {Object} content
    */
-  static createLocalPushMsg = function (content, jsonData) {
-    //创建一个符合你自己要显示推送通知
+  static createLocalPushMsg (content, jsonData) {
+    // 创建一个符合你自己要显示推送通知
     this.createMessage(content, jsonData)
   }
 
@@ -127,25 +122,24 @@ class Push {
    * @param {Object} jsonData
    * @param {Object} options
    */
-  static createMessage = function (str, jsonData) {
-
+  static createMessage (str, jsonData) {
     var options = { cover: false }
 
+    let _jsonData = null
     switch (plus.os.name) {
       case 'Android':
-        jsonData = jsonData
+        _jsonData = jsonData
         break
       case 'iOS':
         // 、、.eid
-        jsonData = jsonData
+        _jsonData = jsonData
         break
     }
 
-    jsonData.local = 1//本地模拟的
+    _jsonData.local = 1// 本地模拟的
 
-    plus.push.createMessage(str, JSON.stringify(jsonData), options)
+    plus.push.createMessage(str, JSON.stringify(_jsonData), options)
   }
-
 }
 
 export default Push
@@ -162,21 +156,14 @@ export const pushHandle = ({
     payload: ''
   }
 }) => {
-
-  // "__UUID__": "androidPushMsg91141115",
-  // "content": "\n{\"channel\":\"fff\",\"fiel\":\"fdsafsa\",\"id\":\"343\"",
-  // "payload": "\n{\"channel\":\"fff\",\"fiel\":\"fdsafsa\",\"id\":\"343\""
-
-  let { title, content, payload } = info, data = null
+  const { title, payload } = info;
 
   if (!payload) return
-  //data = JSON.parse(payload);
+
   uni.showModal({
     title: title,
     content: JSON.stringify(payload)
   })
-
-  //data = {action:"navigateTo",confirmText:"跳转到页面",data:"/pages/classify/result"};
 
 }
 // #endif

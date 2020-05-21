@@ -8,7 +8,7 @@ function album () {
   var authStatus = PHPhotoLibrary.authorizationStatus()
   if (authStatus === 0) {
     result = null
-  } else if (authStatus == 3) {
+  } else if (authStatus === 3) {
     result = 1
   } else {
     result = 0
@@ -23,7 +23,7 @@ function camera () {
   var authStatus = AVCaptureDevice.authorizationStatusForMediaType('vide')
   if (authStatus === 0) {
     result = null
-  } else if (authStatus == 3) {
+  } else if (authStatus === 3) {
     result = 1
   } else {
     result = 0
@@ -58,7 +58,7 @@ function push () {
   if (app.currentUserNotificationSettings) {
     var settings = app.currentUserNotificationSettings()
     enabledTypes = settings.plusGetAttribute('types')
-    if (enabledTypes == 0) {
+    if (enabledTypes === 0) {
       result = 0
     } else {
       result = 1
@@ -66,7 +66,7 @@ function push () {
     plus.ios.deleteObject(settings)
   } else {
     enabledTypes = app.enabledRemoteNotificationTypes()
-    if (enabledTypes == 0) {
+    if (enabledTypes === 0) {
       result = 3
     } else {
       result = 4
@@ -83,7 +83,7 @@ function contact () {
   var cnAuthStatus = CNContactStore.authorizationStatusForEntityType(0)
   if (cnAuthStatus === 0) {
     result = null
-  } else if (cnAuthStatus == 3) {
+  } else if (cnAuthStatus === 3) {
     result = 1
   } else {
     result = 0
@@ -112,7 +112,7 @@ function calendar () {
   var result = null
   var EKEventStore = plus.ios.import('EKEventStore')
   var ekAuthStatus = EKEventStore.authorizationStatusForEntityType(0)
-  if (ekAuthStatus == 3) {
+  if (ekAuthStatus === 3) {
     result = 1
   } else {
   }
@@ -124,7 +124,7 @@ function memo () {
   var result = null
   var EKEventStore = plus.ios.import('EKEventStore')
   var ekAuthStatus = EKEventStore.authorizationStatusForEntityType(1)
-  if (ekAuthStatus == 3) {
+  if (ekAuthStatus === 3) {
     result = 1
   } else {
   }
@@ -171,25 +171,23 @@ function requestIOS (permissionID) {
  * @param permissionID
  * @return {Promise<unknown>}
  *
- *
- *
  */
-// android.permission.ACCESS_FINE_LOCATION	位置权限
-// android.permission.ACCESS_COARSE_LOCATION	模糊位置权限(蓝牙\ble依赖)
-// android.permission.CAMERA	摄像头权限
-// android.permission.READ_EXTERNAL_STORAGE	外部存储(含相册)读取权限
-// android.permission.WRITE_EXTERNAL_STORAGE	外部存储(含相册)写入权限
-// android.permission.RECORD_AUDIO	麦克风权限
-// android.permission.READ_CONTACTS	通讯录读取权限
-// android.permission.WRITE_CONTACTS	通讯录写入权限
-// android.permission.READ_CALENDAR	日历读取权限
-// android.permission.WRITE_CALENDAR	日历写入权限
-// android.permission.READ_SMS	短信读取权限
-// android.permission.SEND_SMS	短信发送权限
-// android.permission.RECEIVE_SMS	接收新短信权限
-// android.permission.READ_PHONE_STATE	获取手机识别码等信息的权限
-// android.permission.CALL_PHONE	拨打电话权限
-// android.permission.READ_CALL_LOG	获取通话记录权限
+// android.permission.ACCESS_FINE_LOCATION 位置权限
+// android.permission.ACCESS_COARSE_LOCATION 模糊位置权限(蓝牙\ble依赖)
+// android.permission.CAMERA 摄像头权限
+// android.permission.READ_EXTERNAL_STORAGE 外部存储(含相册)读取权限
+// android.permission.WRITE_EXTERNAL_STORAGE 外部存储(含相册)写入权限
+// android.permission.RECORD_AUDIO 麦克风权限
+// android.permission.READ_CONTACTS 通讯录读取权限
+// android.permission.WRITE_CONTACTS 通讯录写入权限
+// android.permission.READ_CALENDAR 日历读取权限
+// android.permission.WRITE_CALENDAR 日历写入权限
+// android.permission.READ_SMS 短信读取权限
+// android.permission.SEND_SMS 短信发送权限
+// android.permission.RECEIVE_SMS 接收新短信权限
+// android.permission.READ_PHONE_STATE 获取手机识别码等信息的权限
+// android.permission.CALL_PHONE 拨打电话权限
+// android.permission.READ_CALL_LOG 获取通话记录权限
 
 function requestAndroid (permissionID) {
   return new Promise((resolve, reject) => {
@@ -198,14 +196,19 @@ function requestAndroid (permissionID) {
       function (resultObj) {
         var result = 0
         for (var i = 0; i < resultObj.granted.length; i++) {
+          // eslint-disable-next-line no-unused-vars
           var grantedPermission = resultObj.granted[i]
           result = 1
         }
+        // eslint-disable-next-line no-redeclare
         for (var i = 0; i < resultObj.deniedPresent.length; i++) {
+          // eslint-disable-next-line no-unused-vars
           var deniedPresentPermission = resultObj.deniedPresent[i]
           result = 0
         }
+        // eslint-disable-next-line no-redeclare
         for (var i = 0; i < resultObj.deniedAlways.length; i++) {
+          // eslint-disable-next-line no-unused-vars
           var deniedAlwaysPermission = resultObj.deniedAlways[i]
           result = -1
         }

@@ -10,6 +10,7 @@ module.exports = {
 	globals: {
 		getCurrentPages:'readonly',
 		wx:'readonly',
+		getApp:'readonly',
 		plus:'readonly',
 		uni: 'readonly',
 		Atomics: 'readonly',

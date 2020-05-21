@@ -19,12 +19,9 @@ const formatNumber = n => {
 /**
  * 格式化时间
  */
-function format_time (format_str, mtime) {
-  if (!mtime) {
-    var mtime = new Date()
-  } else {
-    var mtime = new Date(parseInt(mtime) * 1000)
-  }
+function format_time (format_str, _mtime) {
+  const mtime = _mtime ? new Date(parseInt(_mtime) * 1000) : new Date()
+
   var timeObject = {
     'M+': mtime.getMonth() + 1, // 月份
     'd+': mtime.getDate(), // 日
@@ -39,7 +36,7 @@ function format_time (format_str, mtime) {
   }
   for (var k in timeObject) {
     if (new RegExp('(' + k + ')').test(format_str)) {
-      format_str = format_str.replace(RegExp.$1, (RegExp.$1.length == 1) ? (timeObject[k]) : (('00' + timeObject[k]).substr(('' + timeObject[k]).length)))
+      format_str = format_str.replace(RegExp.$1, (RegExp.$1.length === 1) ? (timeObject[k]) : (('00' + timeObject[k]).substr(('' + timeObject[k]).length)))
     }
   }
   return format_str
@@ -79,7 +76,7 @@ function formatNote (lists, front_url) {
 
     for (var j in lists[i].images) {
       lists[i].images[j] = this.format_imgs(lists[i].images[j], front_url)
-      if (j == 2) {
+      if (j === 2) {
         lists[i].third = lists[i].images[j]
       }
     }
@@ -135,22 +132,22 @@ function makeid () {
 //   var md5Str = md5.hexMD5(str).toUpperCase();
 //   return md5Str;
 // }
-
-function raw (args) {
-  var keys = Object.keys(args)
-  keys = keys.sort()
-  var newArgs = {}
-  keys.forEach(function (key) {
-    newArgs[key.toLowerCase()] = args[key]
-  })
-
-  var str = ''
-  for (var k in newArgs) {
-    str += '&' + k + '=' + newArgs[k]
-  }
-  str = str.substr(1)
-  return str
-}
+//
+// function raw (args) {
+//   var keys = Object.keys(args)
+//   keys = keys.sort()
+//   var newArgs = {}
+//   keys.forEach(function (key) {
+//     newArgs[key.toLowerCase()] = args[key]
+//   })
+//
+//   var str = ''
+//   for (var k in newArgs) {
+//     str += '&' + k + '=' + newArgs[k]
+//   }
+//   str = str.substr(1)
+//   return str
+// }
 
 // 生成微信支付签名
 // function paysignjs(appid, nonceStr, wxpayPackage, signType, timeStamp, key) {
@@ -166,21 +163,21 @@ function raw (args) {
 //   return md5.hexMD5(str);
 // }
 
-function raw1 (args) {
-  var keys = Object.keys(args)
-  keys = keys.sort()
-  var newArgs = {}
-  keys.forEach(function (key) {
-    newArgs[key] = args[key]
-  })
-
-  var str = ''
-  for (var k in newArgs) {
-    str += '&' + k + '=' + newArgs[k]
-  }
-  str = str.substr(1)
-  return str
-}
+// function raw1 (args) {
+//   var keys = Object.keys(args)
+//   keys = keys.sort()
+//   var newArgs = {}
+//   keys.forEach(function (key) {
+//     newArgs[key] = args[key]
+//   })
+//
+//   var str = ''
+//   for (var k in newArgs) {
+//     str += '&' + k + '=' + newArgs[k]
+//   }
+//   str = str.substr(1)
+//   return str
+// }
 
 // 验证手机号码
 function check_mobile (mobile) {
@@ -241,9 +238,9 @@ function format_money_string (money, mtype = 0) {
   strs = String(money).split('.')
   var length = strs.length
   var str = ''
-  if (mtype == 1) {
+  if (mtype === 1) {
     str = strs[0]
-  } else if (mtype == 2) {
+  } else if (mtype === 2) {
     if (length > 1) {
       switch (strs[1].length) {
         case 1:
@@ -289,7 +286,7 @@ export const array_change = function (arr) {
 // 获取数组下标  用于收货地址选择的显示
 export const get_arr_index = function (arr, id) {
   for (var i in arr) {
-    if (arr[i].id == id) {
+    if (arr[i].id === id) {
       return parseInt(i)
     }
   }
@@ -298,7 +295,7 @@ export const get_arr_index = function (arr, id) {
 
 // 首页图片路径处理
 function img_path (front_url, ImgPath) {
-  if (ImgPath && ImgPath != '' && ImgPath.indexOf('http') == -1) { // 判断不为空且不为网络图片
+  if (ImgPath && ImgPath !== '' && ImgPath.indexOf('http') === -1) { // 判断不为空且不为网络图片
     if (ImgPath.indexOf('/api/') > -1) { // 轮播图为原始数据
       ImgPath = front_url + '/static' + ImgPath
     } else {
@@ -316,7 +313,7 @@ function date_format (Timestamp, Spacer, time) {
   const d = date.getDate()
   Spacer = Spacer || '-'
 
-  if (time && time == 1) {
+  if (time && time === 1) {
     const h = date.getHours()
     const min = date.getMinutes()
     const s = date.getSeconds()
@@ -335,7 +332,7 @@ function format_imgs (img, front_url) {
   }
   // 判断第一个字符是否.
   var length = img.length
-  if (length > 1 && img.substr(0, 1) == '.') {
+  if (length > 1 && img.substr(0, 1) === '.') {
     img = img.substr(1, length)
   }
   var reg_url = /^((http|https) ?:\/\/)[^\s]+$/
@@ -399,8 +396,8 @@ function set_cache (cachename, cache) {
 /**
  * 获取距离
  */
-function get_distance (distance) {
-  var distance = (parseInt(distance) / 1000).toFixed(2)
+function get_distance (_distance) {
+  var distance = (parseInt(_distance) / 1000).toFixed(2)
   if (distance < 0.5) {
     distance = '<500m'
   } else if (distance < 1 && distance > 0.5) {
@@ -445,7 +442,7 @@ function roomListFormat (front_url, roomList) {
 // 房间图片获取失败处理
 function roomListImgError (roomList, room_id) {
   for (var i in roomList) {
-    if (roomList[i].id == room_id) {
+    if (roomList[i].id === room_id) {
       roomList[i].img_path[0] = '/images/no_pic.png'
     }
   }
@@ -473,7 +470,7 @@ function addMessageCode (info) {
  * 默认为asc
  */
 function number_sort (arr, order_by) {
-  if (typeof order_by !== 'undefined' && order_by == 'desc') { // desc
+  if (typeof order_by !== 'undefined' && order_by === 'desc') { // desc
     return arr.sort(function (v1, v2) {
       return v2 - v1
     })
@@ -487,7 +484,7 @@ function number_sort (arr, order_by) {
 // 商家图片加载错误使用默认图片(二维产品列表处理（不含属性）)  index、search页面
 function show_default_BizImg (bizlist, bizid) {
   for (var i in bizlist) {
-    if (bizlist[i].Biz_ID == bizid) {
+    if (bizlist[i].Biz_ID === bizid) {
       bizlist[i].Biz_Logo = '/images/moren.png'
     }
   }
@@ -497,11 +494,11 @@ function show_default_BizImg (bizlist, bizid) {
 // 订单产品图片获取失败处理
 function orderListImgError (orderlist, order_id, pro_id, attr_id) {
   for (var i in orderlist) {
-    if (orderlist[i].Order_ID == order_id) {
+    if (orderlist[i].Order_ID === order_id) {
       for (var j in orderlist[i].Order_CartList) {
-        if (j == pro_id) {
+        if (j === pro_id) {
           for (var k in orderlist[i].Order_CartList[j]) {
-            if (k == attr_id) {
+            if (k === attr_id) {
               orderlist[i].Order_CartList[j][k].pro_img = '../../images/no_pic.png'
             }
           }
@@ -515,8 +512,8 @@ function orderListImgError (orderlist, order_id, pro_id, attr_id) {
 // 订单列表订单信息处理
 function formatOrder (front_url, orderlist) {
   for (var i in orderlist) {
-    var CartList = orderlist[i].Order_CartList = orderlist[i].Order_CartList != '' && typeof orderlist[i].Order_CartList !== 'object' ? JSON.parse(orderlist[i].Order_CartList) : orderlist[i].Order_CartList
-    if (CartList != '') {
+    var CartList = orderlist[i].Order_CartList = orderlist[i].Order_CartList !== '' && typeof orderlist[i].Order_CartList !== 'object' ? JSON.parse(orderlist[i].Order_CartList) : orderlist[i].Order_CartList
+    if (CartList !== '') {
       for (var pro_id in CartList) {
         for (var attr_id in CartList[pro_id]) {
           var ImgPath = CartList[pro_id][attr_id].pro_img
@@ -532,16 +529,16 @@ function formatOrder (front_url, orderlist) {
       }
     }
     // 配送费
-    orderlist[i].Order_Shipping = orderlist[i].Order_Shipping && orderlist[i].Order_Shipping != '' && typeof orderlist[i].Order_Shipping !== 'object' ? JSON.parse(orderlist[i].Order_Shipping) : orderlist[i].Order_Shipping
+    orderlist[i].Order_Shipping = orderlist[i].Order_Shipping && orderlist[i].Order_Shipping !== '' && typeof orderlist[i].Order_Shipping !== 'object' ? JSON.parse(orderlist[i].Order_Shipping) : orderlist[i].Order_Shipping
     // 订单时间
     orderlist[i].Order_CreateTime = date_format(orderlist[i].Order_CreateTime * 1000, '-', 1)
     // 优惠
     orderlist[i].free_price = Math.round((orderlist[i].Order_TotalAmount - orderlist[i].Order_TotalPrice) * 100) / 100
     // 状态颜色
-    orderlist[i].status_color = '1,2,3,4'.indexOf(orderlist[i].Order_Status) > -1 || (orderlist[i].Order_Status == 5 && orderlist[i].Is_Backup == 1) ? '#0ca400' : ('0,6'.indexOf(orderlist[i].Order_Status) > -1 ? '#ff4901' : '#333')
+    orderlist[i].status_color = '1,2,3,4'.indexOf(orderlist[i].Order_Status) > -1 || (orderlist[i].Order_Status === 5 && orderlist[i].Is_Backup === 1) ? '#0ca400' : ('0,6'.indexOf(orderlist[i].Order_Status) > -1 ? '#ff4901' : '#333')
 
     // 商家头像处理
-    orderlist[i].Biz_Logo = !orderlist[i].Biz_Logo ? '/images/moren.png' : (orderlist[i].Biz_Logo.indexOf('http') > -1 || orderlist[i].Biz_Logo.indexOf('/uploadfiles/') == -1 ? orderlist[i].Biz_Logo : front_url + orderlist[i].Biz_Logo)
+    orderlist[i].Biz_Logo = !orderlist[i].Biz_Logo ? '/images/moren.png' : (orderlist[i].Biz_Logo.indexOf('http') > -1 || orderlist[i].Biz_Logo.indexOf('/uploadfiles/') === -1 ? orderlist[i].Biz_Logo : front_url + orderlist[i].Biz_Logo)
 
     // 核销码
     orderlist[i].consumption_qrcode = !orderlist[i].consumption_qrcode ? '' : (orderlist[i].consumption_qrcode.indexOf('http') > -1 ? orderlist[i].consumption_qrcode : front_url + orderlist[i].consumption_qrcode)
@@ -563,7 +560,7 @@ function pro_format (pro_list, front_url) {
     pro_list[i].skujosn = pro_list[i].skujosn ? JSON.parse(pro_list[i].skujosn) : ''
     // 规格价格
     pro_list[i].skuvaljosn = pro_list[i].skuvaljosn ? JSON.parse(pro_list[i].skuvaljosn) : ''
-    pro_list[i].is_attr = !!(pro_list[i].skujosn != '' && pro_list[i].skuvaljosn != '')
+    pro_list[i].is_attr = !!(pro_list[i].skujosn !== '' && pro_list[i].skuvaljosn !== '')
     // 攻略处理
     if (typeof pro_list[i].gonglue !== 'undefined') {
       pro_list[i].gonglue = gonglue_format(pro_list[i].gonglue, front_url)
@@ -589,7 +586,7 @@ function gonglue_format (list, front_url) {
 // 分类处理
 function cate_format (cate_list, front_url) {
   for (var i in cate_list) {
-    cate_list[i].cate_img = cate_list[i].cate_img == '' ? '/images/none.png' : (cate_list[i].cate_img.indexOf('http') > -1 ? cate_list[i].cate_img : front_url + cate_list[i].cate_img)
+    cate_list[i].cate_img = cate_list[i].cate_img === '' ? '/images/none.png' : (cate_list[i].cate_img.indexOf('http') > -1 ? cate_list[i].cate_img : front_url + cate_list[i].cate_img)
   }
   return cate_list
 }
@@ -599,19 +596,19 @@ function activity_format (activity_list) {
   var list = []
   for (var i in activity_list) {
     const tag = activity_list[i].activity_tag
-    if (tag == 'newuser') { // 新用户
+    if (tag === 'newuser') { // 新用户
       activity_list[i].desc = '新用户优惠' + activity_list[i].activity_intro + '元'
       list.push(activity_list[i])
     }
-    if (tag == 'sendfree') { // 免费赠送
+    if (tag === 'sendfree') { // 免费赠送
       activity_list[i].desc = '达到' + activity_list[i].activity_intro + '元免配送费'
       list.push(activity_list[i])
     }
-    if (tag == 'manjian') { // 满减
+    if (tag === 'manjian') { // 满减
       const intro = activity_list[i].activity_intro = typeof activity_list[i].activity_intro !== 'object' ? JSON.parse(activity_list[i].activity_intro) : activity_list[i].activity_intro
       let desc = ''
       for (var j in intro) {
-        desc += '满' + intro[j].full + '元减' + intro[j].cut + '元' + (j % 2 == 1 ? '\n' : '　')
+        desc += '满' + intro[j].full + '元减' + intro[j].cut + '元' + (j % 2 === 1 ? '\n' : '　')
       }
       activity_list[i].desc = desc
       list.push(activity_list[i])

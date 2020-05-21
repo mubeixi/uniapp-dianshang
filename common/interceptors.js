@@ -14,6 +14,7 @@ export const ajax = (url, method, data, options) => {
   if (!options) options = {}
   if (!data) data = {}
 
+  // eslint-disable-next-line no-unused-vars
   const { tip = '', mask = false, timelen = 2000, timeout = 2000, errtip = false } = options
 
   if (tip) {
@@ -57,7 +58,7 @@ export const ajax = (url, method, data, options) => {
         // #ifdef MP-TOUTIAO || APP-PLUS
         // #endif
 
-        if (res.hasOwnProperty('errorCode') && hookErrorCode.indexOf(res.errorCode) != -1) {
+        if (res.hasOwnProperty('errorCode') && hookErrorCode.indexOf(res.errorCode) !== -1) {
           if (res.errorCode === 66001) {
             console.log(JSON.stringify(store.state.lockToLogin))
             // 为了避免多个请求

@@ -1,16 +1,12 @@
 import { WX_JSSDK_INIT } from './mixin'
-
 import { isWeiXin, ls, urlencode } from './tool'
+import { error } from '@/common/index'
 import { confirmOrderPayStatus, traslateShorten } from './fetch'
 
 /**
- *
  * @param vm 传this
  * @param pay_type 支付类型
  * @param payRequestData orderPay的res
- *
- *
- *
  */
 
 // 示例
@@ -38,7 +34,6 @@ export const unipayFunc = (vm, pay_type, payRequestData) => {
 
   // 头条的支付  会有微信和支付宝
   // #ifdef MP-TOUTIAO
-
   const service = 1
 
   // if(pay_type === 'ali_app'){
@@ -55,11 +50,11 @@ export const unipayFunc = (vm, pay_type, payRequestData) => {
 
   delete orderInfo.Order_ID
 
-  const conf = {
-    provider,
-    service,
-    orderInfo
-  }
+  // const conf = {
+  //   provider,
+  //   service,
+  //   orderInfo
+  // }
 
   // 固定值：1（拉起小程序收银台）开发者如果不希望使用头条小程序收银台，service设置为3/4时，可以直接拉起微信/支付宝进行支付：service=3： 微信API支付，不拉起小程序收银台；service=4： 支付宝API支付，不拉起小程序收银台。其中service=3、4，仅在1.35.0.1+基础库(头条743+)支持
   uni.requestPayment({
@@ -79,11 +74,9 @@ export const unipayFunc = (vm, pay_type, payRequestData) => {
           } else {
             resolve({ code: 2 })
           }
-        }, err => {
+        }).catch(() => {
+          reject(Error('核实支付状态失败'))
         })
-        // setTimeout(function(){
-        //
-        // },500)
       })
     },
     success: function (res) {
@@ -93,11 +86,7 @@ export const unipayFunc = (vm, pay_type, payRequestData) => {
 
     },
     fail: function (err) {
-      _self.payFailCall(res)
-      // uni.showModal({
-      //     title:'支付错误',
-      //     content:JSON.stringify(err)
-      // })
+      _self.payFailCall(err)
     }
   })
   return
@@ -106,6 +95,7 @@ export const unipayFunc = (vm, pay_type, payRequestData) => {
   // #ifdef H5
 
   // 微信h5
+  // eslint-disable-next-line no-unreachable
   if (pay_type === 'wx_h5') {
     const redirect_url = res.data.mweb_url + '&redirect_url=' + urlencode(location.origin + '/fre/pages/order/order?index=2')
     location.href = redirect_url
@@ -117,40 +107,20 @@ export const unipayFunc = (vm, pay_type, payRequestData) => {
     // 公众号麻烦一点
     if (isWeiXin()) {
       const users_id = ls.get('users_id')
-
       const fromurl = res.data.arg// encodeURIComponent(res.data.arg);
 
       // 字符串
       let nocestr = ''
       traslateShorten({ data: fromurl }).then(res => {
         nocestr = res.data.key
-        // uni.navigateTo({
-        //     url:`/pages/pay/wx/wx?users_id=${users_id}&nocestr=`+nocestr
-        // })
-
         const str = `/fre/pages/pay/wx/wx?users_id=${users_id}&nocestr=` + nocestr
-
         const url = location.origin + str
-
         // 强制页面刷新
         location.href = url
-      }, err => {
-        // error('获取支付宝支付参数失败');
+      }).catch(() => {
+        error('获取支付宝支付参数失败')
       })
-      // let origin = location.origin;
-
-      // fromurl = fromurl.replace(/openapi.alipay.com/,'wangjing666')
-      //
-      //
-      // let str = `/fre/pages/pay/wx/wx?users_id=${users_id}&formurl=`+encodeURIComponent(fromurl);
-      // let url = location.origin + str;
-      //
-      // this.aliPayUrl = url;
-      // location.href = url;
-
-      // uni.navigateTo({
-      //     url:`/pages/pay/wx/wx?users_id=${users_id}&formurl=`+encodeURIComponent(fromurl)
-      // })
+      // eslint-disable-next-line no-unreachable
     } else {
       document.write(res.data.arg)
       document.getElementById('alipaysubmit').submit()
@@ -160,6 +130,7 @@ export const unipayFunc = (vm, pay_type, payRequestData) => {
   }
 
   // 下面只能是微信公众号的
+  // eslint-disable-next-line no-unreachable
   if (!isWeiXin()) return
   const { timestamp, nonceStr, signType, paySign } = res.data
 
@@ -179,21 +150,16 @@ export const unipayFunc = (vm, pay_type, payRequestData) => {
     })
   }).catch((e) => {
   })
+  // eslint-disable-next-line no-unreachable
   return
 
   // #endif
 
-  // #ifdef MP-WEIXIN || MP-BAIDU || MP-TOUTIAO || MP-ALIPAY
-
-  // #endif
-
   // #ifdef MP-WEIXIN
-
   provider = 'wxpay'
   orderInfo = res.data
   delete orderInfo.timestamp
-
-  const prepay_id = orderInfo.package.split('=')[1]
+  // const prepay_id = orderInfo.package.split('=')[1]
   uni.requestPayment({
     ...orderInfo,
     provider,
@@ -208,6 +174,7 @@ export const unipayFunc = (vm, pay_type, payRequestData) => {
       _self.payFailCall(err)
     }
   })
+  // eslint-disable-next-line no-unreachable
   return
   // #endif
 
@@ -226,17 +193,16 @@ export const unipayFunc = (vm, pay_type, payRequestData) => {
         _self.paySuccessCall(res)
       },
       fail: function (err) {
-        // uni.showModal({
-        //     title:'支付错误',
-        //     content:JSON.stringify(err)
-        // })
+        _self.payFailCall(err)
       }
     })
 
+    // eslint-disable-next-line no-unreachable
     return
   }
 
   // app微信
+  // eslint-disable-next-line no-unreachable
   if (pay_type === 'wx_app') {
     provider = 'wxpay'
     orderInfo = res.data
@@ -250,6 +216,7 @@ export const unipayFunc = (vm, pay_type, payRequestData) => {
         _self.payFailCall(err)
       }
     })
+    // eslint-disable-next-line no-unreachable
     return
   }
   // #endif

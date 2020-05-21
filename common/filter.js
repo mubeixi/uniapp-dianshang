@@ -1,8 +1,9 @@
 import { staticUrl } from './env'
+import { getCountdownFunc } from '@/common/tool'
 
 export const domainFn = (url) => {
   if (!url) return ''
-  if (url.indexOf('http') == -1) return staticUrl + url
+  if (url.indexOf('http') === -1) return staticUrl + url
   return url
 }
 
@@ -94,7 +95,7 @@ export default [
   {
     name: 'num2px',
     methods: (val) => {
-      if (val.indexOf('px') == -1) return `${val}px`
+      if (val.indexOf('px') === -1) return `${val}px`
       return val
     }
   },

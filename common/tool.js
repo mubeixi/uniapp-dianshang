@@ -55,7 +55,7 @@ export const GetQueryByString = (str, name) => {
 
 export const ls = {
   set (key, val, cover) {
-    if (!cover && !val && (val != 0 || val != false)) return false
+    if (!cover && !val && (val !== 0 || val !== false)) return false
 
     return uni.setStorageSync(key, val)
   },
@@ -97,7 +97,7 @@ export const goBack = function () {
  * 默认为asc
  */
 export const numberSort = function (arr, order_by) {
-  if (typeof order_by !== 'undefined' && order_by == 'desc') { // desc
+  if (typeof order_by !== 'undefined' && order_by === 'desc') { // desc
     return arr.sort(function (v1, v2) {
       return v2 - v1
     })
@@ -125,81 +125,16 @@ function addFun (object, newobj) {
   }
 }
 
-// 会修改原数据
-// 浅拷贝对象。。
-function obj2obj (o) {
-  return o// JSON.parse(JSON.stringify(o))
-}
-
-/**
- *
- * @param current
- * @param newObj
- * @param strict 开启严格模式，模板值为false不copy
- */
-function mergeData (current, newObj, strict) {
-  for (const key in newObj) {
-    if (!newObj.hasOwnProperty(key)) continue
-    if (strict && !newObj[key]) continue
-
-    if (typeof newObj[key] === 'object' && newObj[key] !== null) {
-      // current[key] 可能是null或者undefined
-      if (!current[key]) {
-        Vue.set(current, key, obj2obj(newObj[key]))
-        continue
-      }
-      // @ts-ignore
-      mergeData(current[key], newObj[key])
-    } else {
-      if (!current) {
-        current = obj2obj(newObj)
-        continue
-      }
-
-      // if (!current[key]) {
-      //   Vue.set(current, key, newObj[key]);
-      //   continue;
-      // }
-
-      Vue.set(current, key, obj2obj(newObj[key]))
-    }
-  }
-}
-
-/**
- * 深拷贝，将tmplObj的属性和方法，都和targetObJ混合，如目标对象无属性/方法则创建，如有则根据参数cover决定是否强制覆盖。
- * @param targetObj
- * @param tmplOjb
- * @param cover
- *
- * 一般来说，无脑深拷贝就行了
- */
-function mergeObject (targetObj, tmplOjb, cover) {
-  const obj = null
-
-  return obj
-}
-
-/**
- * 深拷贝，解决引用的问题。
- * @param currentObj
- * @param newObject
- *
- * 不过很奇怪之前的人为什么要复制两遍
- */
-export function deepCopy (currentObj, newObject) {
-  addFun(currentObj, newObject)// 方法则是保留本地的新建实例  new Search()这样
-  // @ts-ignore
-  // mergeData(currentObj, newObject);
-  return currentObj
-}
-
 export function deepCopyStrict (currentObj, newObject) {
   addFun(currentObj, newObject)
-  // mergeData(currentObj, newObject, 1);
   return currentObj
 }
 
+/**
+ * 数组去重
+ * @param arr
+ * @returns {[]}
+ */
 export const arrayUnique = (arr) => {
   var res = []
   for (var i = 0, len = arr.length; i < len; i++) {
@@ -244,13 +179,13 @@ export function isWeiXin () {
   // #ifdef H5
   var ua = window.navigator.userAgent.toLowerCase()
   if (
-    ua.match(/MicroMessenger/i) == 'micromessenger' &&
+    ua.match(/MicroMessenger/i) === 'micromessenger' &&
     ua.match(/miniProgram/i) &&
-    ua.match(/miniProgram/i)[0] == 'miniprogram'
+    ua.match(/miniProgram/i)[0] === 'miniprogram'
   ) {
     return 'xcx'
   }
-  if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+  if (ua.match(/MicroMessenger/i) === 'micromessenger') {
     return true
   } else {
     return false
@@ -258,6 +193,7 @@ export function isWeiXin () {
   // #endif
 
   // #ifndef H5
+  // eslint-disable-next-line no-unreachable
   return false
   // #endif
 }
@@ -306,7 +242,7 @@ export const chooseImageByPromise = ({ count = 1, sizeType = ['original', 'compr
         resolve(res.tempFiles)
       },
       fail (e) {
-        reject(false)
+        reject(Error(e.errMsg))
       },
       complete () {
 
@@ -316,39 +252,30 @@ export const chooseImageByPromise = ({ count = 1, sizeType = ['original', 'compr
 }
 // 上传图片
 export const uploadImages = (formData, imgs) => {
-  const sum = 0
-  const arr = []
-  const that = this
-
-  // formData.env=GET_ENV();
   const taskList = []
   for (let i = 0; i < imgs.length; i++) {
     // #ifdef MP-TOUTIAO
-    // let fileCTX = tt.getFileSystemManager()
-
+    // const fileCTX = tt.getFileSystemManager()
     // fileCTX.readFile({
-    // 	filePath:imgs[i],
-    // 	encoding:'base64',
-    // 	success(ret) {
+    //   filePath: imgs[i],
+    //   encoding: 'base64',
+    //   success (ret) {
+    //     const imgs = 'data:image/jpeg;base64,' + ret.data
+    //     uploadImage({ image: imgs }).then(result => {
+    //       arr.push(result.data.path)
+    //     }, err => {
     //
-    // 		let imgs='data:image/jpeg;base64,'+ret.data;
-    // 		uploadImage({'image':imgs}).then(result=>{
+    //     }).catch(e => {
     //
-    // 			 arr.push(result.data.path);
-    // 		   },err=>{
+    //     })
+    //   },
+    //   fail (ret) {
     //
-    // 		   }).catch(e=>{
-    //
-    // 		   })
-    // 	},
-    // 	fail(ret) {
-
-    // 	},
-    // 	complete(ret) {
-    // 	}
+    //   },
+    //   complete (ret) {
+    //   }
     // })
     // #endif
-
     // #ifndef MP-TOUTIAO
 
     const taskItem = uploadByPromise({
@@ -359,31 +286,6 @@ export const uploadImages = (formData, imgs) => {
     })
     taskList.push(taskItem)
 
-    // uni.uploadFile({
-    // 		url: apiBaseUrl+'/api/little_program/shopconfig.php',
-    // 		filePath: imgs[i],
-    // 		name: 'image',
-    // 		formData: formData,
-    // 		success: (uploadFileRes) => {
-    // 		    if(!uploadFileRes.data || !uploadFileRes.data.path){
-    //
-    //             }
-    // 			sum++;
-    // 			let msg=JSON.parse(uploadFileRes.data);
-    // 			arr.push(msg.data.path);
-    // 			if(sum==imgs.length){
-    // 				uni.showToast({
-    // 					title:msg.msg
-    // 				})
-    // 				if(msg.errorCode==0){
-    //
-    // 				}else{
-    //
-    // 				}
-    //
-    // 			}
-    // 		}
-    // })
     // #endif
   }
 
@@ -391,7 +293,7 @@ export const uploadImages = (formData, imgs) => {
     Promise.all(taskList).then((urls) => {
       resolve(urls)
     }).catch((error) => {
-      reject(false)
+      reject(Error('文件上传失败'))
       uni.showModal({
         title: '文件批量上传失败',
         content: JSON.stringify(error)
@@ -415,7 +317,6 @@ export const buildSharePath = (path) => {
 
   const users_ID = ls.get('users_id')
   const userInfo = store.state.userInfo || ls.get('userInfo')
-  const User_ID = ls.get('user_id')
 
   let search = ''
 
@@ -436,7 +337,7 @@ export const buildSharePath = (path) => {
   }
 
   let ret = ''
-  if (path.indexOf('?') != -1) {
+  if (path.indexOf('?') !== -1) {
     ret = path + (search ? '&' : '') + search
   } else {
     ret = path + (search ? '?' : '') + search
@@ -594,7 +495,7 @@ export const createEmptyArray = (len, item) => {
 export const compare_obj = (obj1, obj2) => {
   for (var i in obj1) {
     if (!obj1.hasOwnProperty(i)) continue
-    if (!obj2.hasOwnProperty(i) || obj1[i] != obj2[i]) {
+    if (!obj2.hasOwnProperty(i) || obj1[i] !== obj2[i]) {
       return false
     }
   }
@@ -685,14 +586,3 @@ export const plainArray = (arr, key, newArr) => {
   }
 }
 
-// export const getStoreID = ()=>{
-// 		let store_id=''
-// 		// #ifndef H5
-// 			store_id=ls.get('store_id')
-// 		// #endif
-// 		// #ifdef H5
-// 			store_id=sessionStorage.getItem('store_id')
-// 		// #endif
-// 		return store_id
-//
-// }

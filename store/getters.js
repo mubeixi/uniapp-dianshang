@@ -1,64 +1,57 @@
 
-import {ls,checkValue} from "../common/tool";
+import { ls, checkValue } from '../common/tool'
 
 export const Stores_ID = function (state, value) {
-    if(!state.Stores_ID){
-        if(ls.get('Stores_ID'))return ls.get('Stores_ID')
-        //error('用户信息为空')
-        return null;
-    }
-    return state.Stores_ID;
-};
+  if (!state.Stores_ID) {
+    if (ls.get('Stores_ID')) return ls.get('Stores_ID')
+    // error('用户信息为空')
+    return null
+  }
+  return state.Stores_ID
+}
 
+export const getCurrentStoreId = (state) => {
+  return function () {
+    let data = state.current_store_id
+    if (!data) {
+      // #ifndef H5
+      data = ls.get('current_store_id')
+      // #endif
 
-export const getCurrentStoreId = (state)=>{
-
-    return function(){
-        let data = state.current_store_id
-        if(!data){
-            // #ifndef H5
-            data = ls.get('current_store_id');
-            //#endif
-
-            // #ifdef H5
-            data = sessionStorage.getItem('current_store_id')
-            // #endif
-
-        }
-
-        if(!data || checkValue(data,[null, undefined, '','null','undefined'])){
-            return ''
-        }
-        return data
+      // #ifdef H5
+      data = sessionStorage.getItem('current_store_id')
+      // #endif
     }
 
-
+    if (!data || checkValue(data, [null, undefined, '', 'null', 'undefined'])) {
+      return ''
+    }
+    return data
+  }
 }
 
 export const userInfo = function (state, value) {
-    if(!state.userInfo){
-        if(ls.get('userInfo'))return ls.get('userInfo')
-        //error('用户信息为空')
-        return {};
-    }
-    return state.userInfo;
-};
+  if (!state.userInfo) {
+    if (ls.get('userInfo')) return ls.get('userInfo')
+    // error('用户信息为空')
+    return {}
+  }
+  return state.userInfo
+}
 
 export const initData = function (state, value) {
-    if(!state.initData){
-        if(ls.get('initData'))return ls.get('initData')
-        return {};
-    }
-    return state.initData;
-};
+  if (!state.initData) {
+    if (ls.get('initData')) return ls.get('initData')
+    return {}
+  }
+  return state.initData
+}
 
 export const commi_rename = function (state, value) {
+  const initData = state.initData || ls.get('initData')
+  if (!initData || !initData.commi_rename) {
+    return {}
+  }
 
-    let initData = state.initData || ls.get('initData')
-    if(!initData || !initData.commi_rename){
-        return {}
-    }
-
-    return initData.commi_rename
-
-};
+  return initData.commi_rename
+}
