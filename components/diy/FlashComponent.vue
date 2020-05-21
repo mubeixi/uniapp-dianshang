@@ -353,7 +353,7 @@ export default {
 
   .wrap {
     background: #f8f8f8;
-    padding-top: 180 rpx;
+    padding-top: 180rpx;
     position: relative;
   }
 
@@ -361,17 +361,17 @@ export default {
     position: absolute;
     top: 0;
     left: 0;
-    width: 750 rpx;
-    height: 180 rpx;
+    width: 750rpx;
+    height: 180rpx;
   }
 
   .stampbox {
     position: absolute;
-    top: 120 rpx;
+    top: 120rpx;
     left: 0;
     z-index: 2;
     color: #6B1000;
-    width: 750 rpx;
+    width: 750rpx;
     font-size: 12px;
     text-align: center;
   }

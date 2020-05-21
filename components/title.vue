@@ -89,71 +89,71 @@ export default {
 
 <style scoped lang="scss">
   .component-wrap {
-    height: 86 rpx;
-    line-height: 86 rpx;
+    height: 86rpx;
+    line-height: 86rpx;
     width: 100%;
     position: relative;
     top: 0;
-    font-size: 32 rpx;
+    font-size: 32rpx;
     color: #333;
     text-align: center;
     z-index: 100;
 
     .img {
       position: absolute;
-      top: 9 rpx;
-      left: 13 rpx;
-      width: 23 rpx;
-      height: 37 rpx;
-      padding: 20 rpx;
+      top: 9rpx;
+      left: 13rpx;
+      width: 23rpx;
+      height: 37rpx;
+      padding: 20rpx;
     }
 
     .right {
       position: absolute;
       top: 0;
-      right: 20 rpx;
-      line-height: 86 rpx;
+      right: 20rpx;
+      line-height: 86rpx;
     }
 
     .dotted {
       position: absolute;
       top: 50%;
-      right: 20 rpx;
+      right: 20rpx;
       transform: translateY(-50%);
 
       .dotlist {
         display: flex;
         justify-content: center;
         align-items: center;
-        padding: 20 rpx 0 20 rpx 20 rpx;
+        padding: 20rpx 0 20rpx 20rpx;
 
         .circle {
           width: 8px;
           height: 8px;
           background: rgba(153, 153, 153, 1);
           border-radius: 50%;
-          margin-right: 5 rpx;
+          margin-right: 5rpx;
         }
       }
 
       .methods {
         position: absolute;
-        top: 50 rpx;
+        top: 50rpx;
         right: 0;
         background: #666;
         color: #fff;
         display: flex;
         flex-direction: column;
-        width: 167 rpx;
-        font-size: 24 rpx;
+        width: 167rpx;
+        font-size: 24rpx;
         z-index: 1000;
 
         .method {
-          line-height: 65 rpx;
+          line-height: 65rpx;
         }
 
         .method:nth-child(2) {
-          border-top: 2 rpx dotted #fff;
+          border-top: 2rpx dotted #fff;
         }
       }
     }

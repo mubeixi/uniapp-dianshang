@@ -135,7 +135,7 @@ export default {
 
   .swiper-box {
     .swiper-item {
-      width: 750 rpx;
+      width: 750rpx;
       height: 100%;
       background-repeat: no-repeat;
       background-size: 100% 100%;

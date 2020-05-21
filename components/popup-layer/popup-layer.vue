@@ -179,8 +179,8 @@ export default {
     transition: all .2s linear;
     overflow: hidden;
     // border:1px solid red;
-    border-top-left-radius: 20 rpx;
-    border-top-right-radius: 20 rpx;
+    border-top-left-radius: 20rpx;
+    border-top-right-radius: 20rpx;
 
   }
 

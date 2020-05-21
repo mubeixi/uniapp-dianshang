@@ -1,14 +1,13 @@
 <script>
 import { ls } from './common/tool'
 import { isDev, APP_USERS_ID, isCustom } from './common/env'
-
+import { checkIsLogin, modal } from './common'
 // #ifndef H5
 import { getSystemConf, upUserLog } from './common/fetch'
 // #endif
 
 // #ifdef APP-PLUS
 import Push from './common/push'
-import { checkIsLogin, modal } from './common'
 // #endif
 
 export default {

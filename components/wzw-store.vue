@@ -114,31 +114,31 @@ export default {
 
 <style scoped lang="scss">
   .store-swiper-item {
-    width: 710 rpx;
+    width: 710rpx;
     //height: 700rpx;
-    border-radius: 10 rpx;
+    border-radius: 10rpx;
     background-color: #FFFFFF;
     margin-bottom: 10px;
     box-sizing: border-box;
-    padding: 20 rpx;
+    padding: 20rpx;
   }
 
   .store-item-swiper {
-    width: 710 rpx;
+    width: 710rpx;
     overflow-x: hidden;
   }
 
   .store-item-img {
-    width: 420 rpx;
-    height: 420 rpx;
-    margin: 0 auto 20 rpx;
+    width: 420rpx;
+    height: 420rpx;
+    margin: 0 auto 20rpx;
     display: block;
   }
 
   .store-item-title {
-    width: 658 rpx;
-    height: 72 rpx;
-    line-height: 36 rpx;
+    width: 658rpx;
+    height: 72rpx;
+    line-height: 36rpx;
     font-size: 15px;
     color: #333333;
     overflow: hidden;
@@ -146,12 +146,12 @@ export default {
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
-    margin-bottom: 32 rpx;
+    margin-bottom: 32rpx;
   }
 
   .store-price {
     align-items: flex-end;
-    margin-bottom: 38 rpx;
+    margin-bottom: 38rpx;
   }
 
   .price-x {
@@ -160,7 +160,7 @@ export default {
 
   .price-y {
     color: #BFBFBF;
-    margin-left: 20 rpx;
+    margin-left: 20rpx;
   }
 
   .saley {
@@ -169,27 +169,27 @@ export default {
   }
 
   .info-img {
-    width: 46 rpx;
-    height: 46 rpx;
+    width: 46rpx;
+    height: 46rpx;
     border-radius: 50%;
     margin-right: -4px;
   }
 
   .store-cart {
-    width: 180 rpx;
-    height: 60 rpx;
-    font-size: 28 rpx;
+    width: 180rpx;
+    height: 60rpx;
+    font-size: 28rpx;
     color: #FFFFFF;
-    line-height: 60 rpx;
+    line-height: 60rpx;
     text-align: center;
     background: rgba(255, 78, 0, 1);
-    border-radius: 30 rpx;
+    border-radius: 30rpx;
   }
 
   .store-count {
-    width: 58 rpx;
-    height: 40 rpx;
-    line-height: 40 rpx;
+    width: 58rpx;
+    height: 40rpx;
+    line-height: 40rpx;
     text-align: center;
     font-size: 13px;
     color: #333333;

@@ -340,7 +340,7 @@ export default {
 
   .wrap {
     background: #f8f8f8;
-    padding-top: 110 rpx;
+    padding-top: 110rpx;
     position: relative;
   }
 
@@ -348,8 +348,8 @@ export default {
     position: absolute;
     top: 0;
     left: 0;
-    width: 750 rpx;
-    height: 282 rpx;
+    width: 750rpx;
+    height: 282rpx;
     z-index: 0;
   }
 

@@ -370,7 +370,7 @@ export default {
     position: fixed;
     z-index: 99;
     bottom: 0px;
-    width: 750 rpx;
+    width: 750rpx;
     height: 100%;
     background: white;
     overflow-x: hidden;
@@ -417,7 +417,7 @@ export default {
   }
 
   .label-title {
-    padding: 34 rpx 0;
+    padding: 34rpx 0;
     font-size: 14px;
     line-height: 14px;
     display: flex;
@@ -479,7 +479,7 @@ export default {
     background: #FFFFFF;
     transition: all .3s ease;
     overflow: hidden;
-    width: 750 rpx;
+    width: 750rpx;
     top: 15%;
     /*border-top-left-radius: 20rpx;*/
     /*border-top-right-radius: 20rpx;*/
@@ -509,13 +509,13 @@ export default {
     font-size: 14px;
     box-sizing: border-box;
     margin: 0 auto;
-    margin-top: 32 rpx;
-    margin-bottom: 30 rpx;
+    margin-top: 32rpx;
+    margin-bottom: 30rpx;
   }
 
   .inputs {
-    height: 50 rpx;
-    line-height: 50 rpx;
+    height: 50rpx;
+    line-height: 50rpx;
     font-size: 12px;
     text-align: left;
     padding-left: 10px;
@@ -523,19 +523,19 @@ export default {
 
   .filter-pick {
     .filter-item {
-      margin-right: 15 rpx;
+      margin-right: 15rpx;
     }
   }
 
   .uni-input-box {
     border: 1px solid #D2D2D2;
-    padding: 0px 18 rpx;
-    height: 50 rpx;
-    line-height: 50 rpx;
+    padding: 0px 18rpx;
+    height: 50rpx;
+    line-height: 50rpx;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 144 rpx;
+    width: 144rpx;
 
   }
 

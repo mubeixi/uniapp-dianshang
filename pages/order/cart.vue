@@ -82,22 +82,18 @@
     <!-- 购物车结算 -->
     <div class="checkout" v-if="!manage">
       <div @click="checkAll" class="mbxa">
-        <image :src="(checkAllFlag ? '/static/client/checked.png' : '/static/client/uncheck.png')|domain" alt=""
-               class="img" style="margin-right: 17rpx;" />
+        <image :src="(checkAllFlag ? '/static/client/checked.png' : '/static/client/uncheck.png')|domain" alt="" class="img" style="margin-right: 17rpx;" />
         全选
       </div>
       <div class="total" v-if="handleShow">合计：<span>￥<span>{{totalPrice}}</span></span></div>
       <div @click="submit" class="checkbtn">{{handleShow?'结算':'删除'}}</div>
     </div>
-    <!--		<tabbar-components/>-->
-    <!-- <tabs style="background:#F3F3F3;"></tabs> -->
 
   </div>
 </template>
 
 <script>
-// import tabs from "@/components/tabs";
-// import pagetitle from "@/components/title";
+
 import { delCart, getCart, getProd, getSelfStoreProd, updateCart } from '../../common/fetch.js'
 import { pageMixin } from '../../common/mixin'
 import { ls } from '../../common/tool.js'
@@ -701,6 +697,10 @@ export default {
   .checkout {
     position: fixed;
     bottom: 50px;
+    // #ifdef  H5
+    margin-bottom: constant(safe-area-inset-bottom);
+    margin-bottom: env(safe-area-inset-bottom);
+    // #endif
     width: 100%;
     height: 100rpx;
     padding: 0 20rpx;
@@ -711,17 +711,10 @@ export default {
     box-sizing: border-box;
   }
 
-  // #ifdef  MP
+  // #ifndef  H5
   .checkout {
     bottom: 0;
   }
-
-  // #endif
-  // #ifdef APP-PLUS
-  .checkout {
-    bottom: 0;
-  }
-
   // #endif
   .checkbtn {
     background: #F43131;

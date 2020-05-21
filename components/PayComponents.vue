@@ -500,13 +500,13 @@ export default {
 
   .iMbx {
     text-align: center;
-    padding: 0 20 rpx;
-    font-size: 28 rpx;
+    padding: 0 20rpx;
+    font-size: 28rpx;
     color: #333;
 
     .c_method {
-      padding: 37 rpx 0;
-      border-bottom: 2 rpx solid #E6E6E6 !important;
+      padding: 37rpx 0;
+      border-bottom: 2rpx solid #E6E6E6 !important;
     }
 
     & .c_method:first-child {
@@ -532,14 +532,14 @@ export default {
       color: #000;
       text-align: center;
       width: 90%;
-      margin: 400 rpx auto;
-      padding: 40 rpx 50 rpx 30 rpx;
+      margin: 400rpx auto;
+      padding: 40rpx 50rpx 30rpx;
       box-sizing: border-box;
-      font-size: 28 rpx;
-      border-radius: 10 rpx;
+      font-size: 28rpx;
+      border-radius: 10rpx;
 
       .input {
-        margin: 40 rpx 0;
+        margin: 40rpx 0;
         border: 1px solid #efefef;
         /*height: 80rpx;*/
         /*line-height: 80rpx;*/
@@ -551,8 +551,8 @@ export default {
       .btns {
         display: flex;
         justify-content: space-around;
-        height: 60 rpx;
-        line-height: 60 rpx;
+        height: 60rpx;
+        line-height: 60rpx;
 
         .btn {
           flex: 1;

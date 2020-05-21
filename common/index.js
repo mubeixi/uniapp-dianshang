@@ -4,13 +4,11 @@ import store from '../store'
 import { ls } from './tool'
 // #ifdef H5
 import wx from 'weixin-js-sdk'
+// #endif
+
 // 全局组件
 import pagetitle from '@/components/title'
 import ModelComponents from '@/components/ModelComponents'
-// #endif
-
-// const i18n = require('i18n');
-
 Vue.component('page-title', pagetitle)
 Vue.component('wzw-dialog', ModelComponents)
 
