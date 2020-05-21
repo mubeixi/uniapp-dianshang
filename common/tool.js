@@ -1,5 +1,5 @@
 import { error, toast } from './index'
-import { apiBaseUrl } from './env.js'
+import { apiBaseUrl } from './env'
 import store from '../store'
 import _ from 'underscore'
 

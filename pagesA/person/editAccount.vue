@@ -28,14 +28,14 @@ import { mapActions } from 'vuex'
 import { confirm } from '../../common'
 import { ls } from '../../common/tool'
 import { pageMixin } from '../../common/mixin'
-import { isDev } from '../../common/env'
+
 import { bindUserClientId } from '../../common/fetch'
 
 export default {
   mixins: [pageMixin],
   data () {
     return {
-      isDev
+    
     }
   },
   methods: {

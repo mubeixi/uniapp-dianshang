@@ -13,7 +13,6 @@
   </view>
 </template>
 <script>
-import { isDev } from '../../common/env.js'
 
 export default {
   props: {
@@ -48,7 +47,6 @@ export default {
       }
     },
     videoErrorCallback (e) {
-      if (!isDev) return
       const msg = '视频播放错误:' + JSON.stringify(e)
       uni.showModal({
         content: msg,

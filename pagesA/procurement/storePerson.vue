@@ -61,7 +61,7 @@ import {
   updateStoreInfo,
   uploadImage
 } from '../../common/fetch'
-import { apiBaseUrl } from '../../common/env.js'
+import { apiBaseUrl } from '../../common/env'
 import { pageMixin } from '../../common/mixin'
 
 export default {

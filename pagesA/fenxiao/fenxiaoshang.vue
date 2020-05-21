@@ -30,9 +30,9 @@ import {
   getUserDisInfo,
   updateUserDisInfo,
   uploadImage
-} from '../../common/fetch.js'
+} from '../../common/fetch'
 
-import { apiBaseUrl } from '../../common/env.js'
+import { apiBaseUrl } from '../../common/env'
 import { pageMixin } from '../../common/mixin'
 import { error, toast } from '../../common'
 import { mapActions } from 'vuex'

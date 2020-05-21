@@ -1,4 +1,4 @@
-import * as ENV from './env.js'
+import * as ENV from './env'
 import { error } from './index'
 /**
  *

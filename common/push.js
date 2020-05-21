@@ -28,10 +28,10 @@ class Push {
       }
 
       if (isDev) {
-        // uni.showModal({
-        //     title:'收到推送',
-        //     content:'receive event '+JSON.stringify(msg)
-        // })
+        uni.showModal({
+          title: '收到推送',
+          content: 'receive event ' + JSON.stringify(msg)
+        })
       }
 
       if (plus.os.name === 'iOS') {
@@ -156,7 +156,7 @@ export const pushHandle = ({
     payload: ''
   }
 }) => {
-  const { title, payload } = info;
+  const { title, payload } = info
 
   if (!payload) return
 
@@ -164,6 +164,5 @@ export const pushHandle = ({
     title: title,
     content: JSON.stringify(payload)
   })
-
 }
 // #endif
