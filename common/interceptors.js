@@ -1,7 +1,5 @@
 import * as ENV from './env.js';
-
 import {error} from "./index";
-import {ls} from "./tool.js";
 /**
  *
  * @param url
@@ -27,19 +25,16 @@ export const ajax = (url, method, data, options) => {
         })
     }
 
-    let token
+
+    //let token
 
     var header = {
-
-        'Authorization': 'Bearer ' + token,
+        //'Authorization': 'Bearer ' + token,
         "content-type": "application/x-www-form-urlencoded"
     };
 
-
-    // #ifdef MP-TOUTIAO || APP-PLUS
-
-    // #endif
     let URL = ''
+
     // #ifdef H5
     URL = url; //直接用绝对目录,这样就可以随便部署在任意域名下,会默认读取host/api/xxx接口
     // #endif
@@ -47,7 +42,6 @@ export const ajax = (url, method, data, options) => {
     // #ifndef H5
     URL = ENV.apiBaseUrl + url;
     // #endif
-
 
     const hookErrorCode = [0, 88001, 66001];
 

@@ -1,5 +1,5 @@
 
-import {ls} from "../common/tool";
+import {ls,checkValue} from "../common/tool";
 
 export const Stores_ID = function (state, value) {
     if(!state.Stores_ID){
@@ -9,6 +9,31 @@ export const Stores_ID = function (state, value) {
     }
     return state.Stores_ID;
 };
+
+
+export const getCurrentStoreId = (state)=>{
+
+    return function(){
+        let data = state.current_store_id
+        if(!data){
+            // #ifndef H5
+            data = ls.get('current_store_id');
+            //#endif
+
+            // #ifdef H5
+            data = sessionStorage.getItem('current_store_id')
+            // #endif
+
+        }
+
+        if(!data || checkValue(data,[null, undefined, '','null','undefined'])){
+            return ''
+        }
+        return data
+    }
+
+
+}
 
 export const userInfo = function (state, value) {
     if(!state.userInfo){

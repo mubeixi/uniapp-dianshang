@@ -176,8 +176,8 @@ import NoStore from "./chooseIndex";
 
 import {getStoreDetail,getProductCategory,getSelfStoreProd,getCart,updateCart,getSystemConf,getStoreList} from '../../common/fetch'
 import WzwStore from '../../components/wzw-store'
-import {error, toast} from '../../common';
-import {numberSort,getStoreID,emptyObject,ls,buildSharePath, isWeiXin,getProductThumb} from '../../common/tool.js'
+import {error, toast,modal} from '../../common';
+import {numberSort,emptyObject,ls,buildSharePath, isWeiXin,getProductThumb,objTranslate} from '../../common/tool.js'
 import {domainFn} from '../../common/filter';
 import StoreListComponents from "../../components/StoreListComponents";
 import {mapGetters,mapActions, mapState} from 'vuex';
@@ -295,7 +295,7 @@ export default {
 				case 'pic':
 
 					uni.navigateTo({
-						url:'/pagesA/store/storeShare?type=3'
+						url:'/pagesA/store/storeShare?type=3&store='+_self.$store.getters.getCurrentStoreId()
 					})
 
 			}
@@ -309,12 +309,7 @@ export default {
 		bindStores(storeInfo){
 			this.$refs.stroeComp.close()
 			this.storeID=storeInfo.Stores_ID
-			// #ifndef H5
-			ls.set('store_id', this.storeID)
-			//#endif
-			// #ifdef H5
-			sessionStorage.setItem('store_id', this.storeID)
-			// #endif
+			this.setFreStoreId(this.storeID)
 			this.get_user_location_init()
 		},
 		changeStore(){
@@ -330,7 +325,7 @@ export default {
 				cart_key:'CartList',
 				prod_id: item.prod_id,
 				qty: -1,
-				store_id:getStoreID()
+				store_id:this.$store.getters.getCurrentStoreId()
 			}
 			if(item.Productsattrkeystrval){
 				data.attr_id=item.Productsattrkeystrval.Product_Attr_ID
@@ -351,7 +346,7 @@ export default {
 				cart_key:'CartList',
 				prod_id: item.prod_id,
 				qty: 1,
-				store_id:getStoreID()
+				store_id:this.$store.getters.getCurrentStoreId()
 			}
 			if(item.Productsattrkeystrval){
 				data.attr_id=item.Productsattrkeystrval.Product_Attr_ID
@@ -490,7 +485,7 @@ export default {
 				cart_key:'CartList',
 				prod_id: this.postData.prod_id,
 				qty: this.postData.qty,
-				store_id:getStoreID()
+				store_id:this.$store.getters.getCurrentStoreId()
 			}
 			if(this.postData.attr_id){
 				data.attr_id=this.postData.attr_id
@@ -537,7 +532,7 @@ export default {
 					pageSize:999,
 					with_buyer:1,
 					buyer_count:6,
-					store_id:getStoreID()
+					store_id:this.$store.getters.getCurrentStoreId()
 					// store_id:sessionStorage.getItem('store_id')
 				}
 				data.cate_id=this.productCate[this.goodsNavIndex-1].Category_ID
@@ -569,6 +564,7 @@ export default {
 
 		},
 		async init(){
+
 			try {
 				this.showIndex=true
 				let storeData={
@@ -581,12 +577,7 @@ export default {
 				let arr =await getStoreDetail(storeData,{tip:'智能定位中',noUid:1}).catch(e=>{
 
 					this.storeID=''
-					// #ifndef H5
-					ls.set('store_id', '')
-					//#endif
-					// #ifdef H5
-					sessionStorage.setItem('store_id', '')
-					// #endif
+					this.setFreStoreId(this.storeID)
 
 					throw Error(e.msg||'获取门店错误')
 				})
@@ -612,7 +603,7 @@ export default {
 					with_buyer:1,
 					is_selling:1,
 					buyer_count:6,
-					store_id:getStoreID()
+					store_id:this.$store.getters.getCurrentStoreId()
 					//store_id:sessionStorage.getItem('store_id')
 				}
 				this.prodList=[]
@@ -662,15 +653,16 @@ export default {
 							}
 						});
 					}).catch((e)=>{
-						throw Error('初始化微信分享错误')
+						console.log(e)
+						// throw Error('初始化微信分享错误')
 					})
 				}
 
 				// #endif
 
 			}catch (e) {
-				// console.log(e)
-				error(e.message)
+				console.log(e)
+				// error(e.message)
 			}
 
 		},
@@ -703,8 +695,9 @@ export default {
 
 				}
 			}).catch(err => {
-
+				console.log('定位失败')
 				this.storeID=''
+				this.setFreStoreId('')
 				this.showIndex=true
 
 			})
@@ -731,8 +724,9 @@ export default {
 
 				}
 			}).catch(err => {
+
 				this.init()
-				//error('获取位置信息失败:' + err.msg)
+				// error('获取位置信息失败:' + err.msg)
 			})
 
 
@@ -756,28 +750,21 @@ export default {
 					this.storeID=res.data[0].Stores_ID
 
 					that.init()
-					// #ifndef H5
-					ls.set('store_id', this.storeID)
-					//#endif
-					// #ifdef H5
-					sessionStorage.setItem('store_id', this.storeID)
-					// #endif
+					this.setFreStoreId(this.storeID)
 				}else{
 					this.storeID=''
-					// #ifndef H5
-					ls.set('store_id', this.storeID)
-					//#endif
-					// #ifdef H5
-					sessionStorage.setItem('store_id', this.storeID)
-					// #endif
+					this.setFreStoreId(this.storeID)
 				}
 
 			}).catch(e=>{error(e.msg||'获取门店错误')})
 		},
 		initStore(){
-			this.storeID=getStoreID()
+			this.storeID = this.$store.getters.getCurrentStoreId()
+
 			this.showIndex=true
+
 			if(this.storeID){
+
 				this.systemInfo = uni.getSystemInfoSync()
 				this.get_user_location_init()
 			}else if(this.initData.store_positing==1){
@@ -789,17 +776,23 @@ export default {
 			}
 
 
-		}
+		},
+		async _init_func(){
+			let systemConf = await getSystemConf().catch(err=>{
+				modal(err.msg||'初始化配置失败')
+			})
+			let initData = systemConf?systemConf.data:null
+			this.initData=initData
+
+			this.initStore()
+		},
+		...mapActions(['setFreStoreId'])
 	},
-	async onLoad() {
+	onLoad() {
 		// #ifdef H5
 		this.selfObj = this
 		// #endif
-		let systemConf = await getSystemConf()
-		let initData = systemConf?systemConf.data:null
-		this.initData=initData
-
-		this.initStore()
+		this._init_func()
 	}
 }
 </script>
