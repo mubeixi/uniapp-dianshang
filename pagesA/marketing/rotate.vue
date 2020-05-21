@@ -1,44 +1,44 @@
 <template>
-	<view class="wrap" @click="commonClick" v-if="ready">
-		<image class="bgimg" :src="'/static/client/marketing/rotate-bg.jpg'|domain" />
+	<view @click="commonClick" class="wrap" v-if="ready">
+		<image :src="'/static/client/marketing/rotate-bg.jpg'|domain" class="bgimg" />
 		<div class="rotate-box" v-if="itemList.length>3">
 			<div class="item">
-				<div class="goods" :style="{backgroundColor:getStyle(0)}">
+				<div :style="{backgroundColor:getStyle(0)}" class="goods">
 					<div class="picbox">
-						<image mode="widthFix" class="pic" :src="itemList[0].img|domain" />
+						<image :src="itemList[0].img|domain" class="pic" mode="widthFix" />
 					</div>
-					<div class="name" :class="{active:activeIdx==0}">{{itemList[0].name}}</div>
+					<div :class="{active:activeIdx==0}" class="name">{{itemList[0].name}}</div>
 				</div>
-				<div class="mask" :style="{backgroundColor:getStyle(0,1)}"></div>
+				<div :style="{backgroundColor:getStyle(0,1)}" class="mask"></div>
 			</div>
 			<div class="item">
-				<div class="goods" :style="{backgroundColor:getStyle(1)}">
+				<div :style="{backgroundColor:getStyle(1)}" class="goods">
 					<div class="picbox">
-						<image mode="widthFix" class="pic" :src="itemList[1].img|domain" />
+						<image :src="itemList[1].img|domain" class="pic" mode="widthFix" />
 					</div>
-					<div class="name" :class="{active:activeIdx==1}">{{itemList[1].name}}</div>
+					<div :class="{active:activeIdx==1}" class="name">{{itemList[1].name}}</div>
 				</div>
-				<div class="mask" :style="{backgroundColor:getStyle(1,1)}"></div>
+				<div :style="{backgroundColor:getStyle(1,1)}" class="mask"></div>
 			</div>
 			<div class="item" style="margin-right: 0">
-				<div class="goods" :style="{backgroundColor:getStyle(2)}">
+				<div :style="{backgroundColor:getStyle(2)}" class="goods">
 					<div class="picbox">
-						<image mode="widthFix" class="pic" :src="itemList[2].img|domain" />
+						<image :src="itemList[2].img|domain" class="pic" mode="widthFix" />
 					</div>
-					<div class="name" :class="{active:activeIdx==2}">{{itemList[2].name}}</div>
+					<div :class="{active:activeIdx==2}" class="name">{{itemList[2].name}}</div>
 				</div>
-				<div class="mask" :style="{backgroundColor:getStyle(2,1)}"></div>
+				<div :style="{backgroundColor:getStyle(2,1)}" class="mask"></div>
 			</div>
 			<div class="item">
-				<div class="goods" :style="{backgroundColor:getStyle(7)}">
+				<div :style="{backgroundColor:getStyle(7)}" class="goods">
 					<div class="picbox">
-						<image mode="widthFix" class="pic" :src="itemList[7].img|domain" />
+						<image :src="itemList[7].img|domain" class="pic" mode="widthFix" />
 					</div>
-					<div class="name" :class="{active:activeIdx==7}">{{itemList[7].name}}</div>
+					<div :class="{active:activeIdx==7}" class="name">{{itemList[7].name}}</div>
 				</div>
-				<div class="mask" :style="{backgroundColor:getStyle(7,1)}"></div>
+				<div :style="{backgroundColor:getStyle(7,1)}" class="mask"></div>
 			</div>
-			<div class="item" @click="startFn">
+			<div @click="startFn" class="item">
 				<div class="goods start-btn">
 					{{getStartTip}}
 
@@ -47,46 +47,46 @@
 			</div>
 
 			<div class="item" style="margin-right: 0">
-				<div class="goods" :style="{backgroundColor:getStyle(3)}">
+				<div :style="{backgroundColor:getStyle(3)}" class="goods">
 					<div class="picbox">
-						<image mode="widthFix" class="pic" :src="itemList[3].img|domain" />
+						<image :src="itemList[3].img|domain" class="pic" mode="widthFix" />
 					</div>
-					<div class="name" :class="{active:activeIdx==3}">{{itemList[3].name}}</div>
+					<div :class="{active:activeIdx==3}" class="name">{{itemList[3].name}}</div>
 				</div>
-				<div class="mask" :style="{backgroundColor:getStyle(3,1)}"></div>
+				<div :style="{backgroundColor:getStyle(3,1)}" class="mask"></div>
 			</div>
 			<div class="item">
-				<div class="goods" :style="{backgroundColor:getStyle(6)}">
+				<div :style="{backgroundColor:getStyle(6)}" class="goods">
 					<div class="picbox">
-						<image mode="widthFix" class="pic" :src="itemList[6].img|domain" />
+						<image :src="itemList[6].img|domain" class="pic" mode="widthFix" />
 					</div>
-					<div class="name" :class="{active:activeIdx==6}">{{itemList[6].name}}</div>
+					<div :class="{active:activeIdx==6}" class="name">{{itemList[6].name}}</div>
 				</div>
-				<div class="mask" :style="{backgroundColor:getStyle(6,1)}"></div>
+				<div :style="{backgroundColor:getStyle(6,1)}" class="mask"></div>
 			</div>
 			<div class="item">
-				<div class="goods" :style="{backgroundColor:getStyle(5)}">
+				<div :style="{backgroundColor:getStyle(5)}" class="goods">
 					<div class="picbox">
-						<image mode="widthFix" class="pic" :src="itemList[5].img|domain" />
+						<image :src="itemList[5].img|domain" class="pic" mode="widthFix" />
 					</div>
-					<div class="name" :class="{active:activeIdx==5}">{{itemList[5].name}}</div>
+					<div :class="{active:activeIdx==5}" class="name">{{itemList[5].name}}</div>
 				</div>
-				<div class="mask" :style="{backgroundColor:getStyle(5,1)}"></div>
+				<div :style="{backgroundColor:getStyle(5,1)}" class="mask"></div>
 			</div>
 			<div class="item" style="margin-right: 0">
-				<div class="goods" :style="{backgroundColor:getStyle(4)}">
+				<div :style="{backgroundColor:getStyle(4)}" class="goods">
 					<div class="picbox">
-						<image mode="widthFix" class="pic" :src="itemList[4].img|domain" />
+						<image :src="itemList[4].img|domain" class="pic" mode="widthFix" />
 					</div>
-					<div class="name" :class="{active:activeIdx==4}">{{itemList[4].name}}</div>
+					<div :class="{active:activeIdx==4}" class="name">{{itemList[4].name}}</div>
 				</div>
-				<div class="mask" :style="{backgroundColor:getStyle(4,1)}"></div>
+				<div :style="{backgroundColor:getStyle(4,1)}" class="mask"></div>
 			</div>
 
 		</div>
 
 		<div class="num-count">
-			<image class="num-count-img" :src="'/static/marketing/num_count.png'|domain" />
+			<image :src="'/static/marketing/num_count.png'|domain" class="num-count-img" />
 			<div class=" text font14">今日剩余抽奖次数<span class="font16 danger-color" style="">{{day_count}}</span>次,总剩余抽奖次数<span
 			class="font16 danger-color" style="">{{total_count}}</span>次
 			</div>
@@ -106,13 +106,13 @@
 			</div>
 		</div>
 
-		<wzw-dialog positions="top" ref="record" bgColor="rgba(0,0,0,.7)" mainBgColor="none">
+		<wzw-dialog bgColor="rgba(0,0,0,.7)" mainBgColor="none" positions="top" ref="record">
 			<div class="record-container">
 				<div class="top">
-					<image class="record-bg" :src="'/static/client/marketing/records_bg.png'|domain" />
+					<image :src="'/static/client/marketing/records_bg.png'|domain" class="record-bg" />
 					<div class="record-box">
 						<div class="title">我的中奖记录</div>
-						<scroll-view scroll-y class="table">
+						<scroll-view class="table" scroll-y>
 							<div class="tr">
 								<div class="th time">时间</div>
 								<div class="th prize">奖品</div>
@@ -125,24 +125,24 @@
 					</div>
 
 				</div>
-				<div class="btn-box" @click="cancelRecordDialog">
-					<image class="close" :src="'/static/client/marketing/close-btn.png'|domain" />
+				<div @click="cancelRecordDialog" class="btn-box">
+					<image :src="'/static/client/marketing/close-btn.png'|domain" class="close" />
 				</div>
 			</div>
 		</wzw-dialog>
 
-		<wzw-dialog ref="result" bgColor="rgba(0,0,0,.7)" mainBgColor="none">
-			<div class="result-container" @click="cancelDialog">
+		<wzw-dialog bgColor="rgba(0,0,0,.7)" mainBgColor="none" ref="result">
+			<div @click="cancelDialog" class="result-container">
 				<div class="top">
-					<image class="result-bg" :src="'/static/client/marketing/result.png'|domain" />
+					<image :src="'/static/client/marketing/result.png'|domain" class="result-bg" />
 					<div class="text">
 						<div class="text-row line6">恭喜您</div>
 						<div class="text-row reward">{{result_tip}}</div>
 					</div>
 				</div>
 
-				<div class="btn-box" @click="cancelDialog">
-					<image class="close" :src="'/static/client/marketing/close-btn.png'|domain" />
+				<div @click="cancelDialog" class="btn-box">
+					<image :src="'/static/client/marketing/close-btn.png'|domain" class="close" />
 				</div>
 			</div>
 		</wzw-dialog>
@@ -151,17 +151,17 @@
 </template>
 
 <script>
-import {rotateBegin, rotateInit, getRotateRecord} from '../../common/fetch';
+import {getRotateRecord, rotateBegin, rotateInit} from '../../common/fetch';
 import {Rotate} from '../../common/luck';
-
-let rotateInstance = new Rotate()
 import {pageMixin} from '../../common/mixin';
 import _ from 'underscore';
 
 import {findArrayIdx, goBack} from '../../common/tool';
 import uParse from '../../components/gaoyia-parse/parse.vue'
 
-import {error, toast, confirm, showLoading, hideLoading} from '../../common';
+import {confirm, error, hideLoading, showLoading, toast} from '../../common';
+
+let rotateInstance = new Rotate()
 
 export default {
 	name: 'Rotate',
@@ -214,7 +214,7 @@ export default {
 					this.tipText = res.data.describe
 					rotateInstance.setList(res.data.prizes)
 					this.itemList = rotateInstance.getItemList()
-            this.ready = true
+					this.ready = true
 				} else {
 					throw Error('转盘信息初始化失败')
 				}
@@ -301,21 +301,21 @@ export default {
 
 		},
 		getStyle(idx, is_mask) {
-       try{
-           if(this.activeIdx>=0){
-               if ((idx != this.activeIdx) && !is_mask) return '#FFEBEB'
-               if ((idx != this.activeIdx) && is_mask) return '#FFC2C8'
-           }
+			try {
+				if (this.activeIdx >= 0) {
+					if ((idx != this.activeIdx) && !is_mask) return '#FFEBEB'
+					if ((idx != this.activeIdx) && is_mask) return '#FFC2C8'
+				}
 
 
-           // if((idx!=this.activeIdx || !rotateInstance.isStart()) && !is_mask)return '#FFEBEB'
-           // if((idx!=this.activeIdx || !rotateInstance.isStart()) && is_mask)return '#FFC2C8'
-           let bgColor = '#FFD800';//rotateInstance.getBgColor(idx)
-           return bgColor // `background-color:${bgColor}`
-       }catch (e) {
-           let bgColor = '#FFD800';//rotateInstance.getBgColor(idx)
-           return bgColor // `background-color:${bgColor}`
-       }
+				// if((idx!=this.activeIdx || !rotateInstance.isStart()) && !is_mask)return '#FFEBEB'
+				// if((idx!=this.activeIdx || !rotateInstance.isStart()) && is_mask)return '#FFC2C8'
+				let bgColor = '#FFD800';//rotateInstance.getBgColor(idx)
+				return bgColor // `background-color:${bgColor}`
+			} catch (e) {
+				let bgColor = '#FFD800';//rotateInstance.getBgColor(idx)
+				return bgColor // `background-color:${bgColor}`
+			}
 		},
 
 		getTextStyle(idx) {
@@ -332,10 +332,10 @@ export default {
 		},
 		activeIdx() {
 			try {
-          return rotateInstance.getIdx()
-      }catch (e) {
-          return -1
-      }
+				return rotateInstance.getIdx()
+			} catch (e) {
+				return -1
+			}
 		},
 	},
 	filters: {},

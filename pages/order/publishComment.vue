@@ -6,12 +6,13 @@
 		</view>
 		<view class="rate">
 			<view class="rates">整体评价</view>
-			<uni-rate value="5" active-color="#F43131" size='20' @change="show" margin="2"></uni-rate>
+			<uni-rate @change="show" active-color="#F43131" margin="2" size='20' value="5"></uni-rate>
 			<view class="score">
 				{{Score}}
 			</view>
 		</view>
-		<textarea style="border: 0rpx;" class="edit"  contenteditable="true" placeholder="宝贝是否满足了你的期待？说说你的使用心得，分享给其他想购买的朋友吧。" placeholder-style="place" v-model="Note">
+		<textarea class="edit" contenteditable="true" placeholder="宝贝是否满足了你的期待？说说你的使用心得，分享给其他想购买的朋友吧。" placeholder-style="place"
+		          style="border: 0rpx;" v-model="Note">
 
 		</textarea>
 
@@ -20,184 +21,182 @@
 				匿名评价
 			</view>
 			<view>
-				<switch checked @change="switchChange"  />
+				<switch @change="switchChange" checked />
 			</view>
 		</view>
 		<view class="shangH">
 			<div class="item noborder">上传照片(最多9张)</div>
 			<div class="imgs">
-				<view class="shangchuans" v-for="(item,index) of imgs" :key="index"  >
-					<image class="image" :src="item.path"  @click="yulan(index)"></image>
-					<image :src="'/static/client/delimg.png'|domain" class="del image" @click="delImg(index)"></image>
+				<view :key="index" class="shangchuans" v-for="(item,index) of imgs">
+					<image :src="item.path" @click="yulan(index)" class="image"></image>
+					<image :src="'/static/client/delimg.png'|domain" @click="delImg(index)" class="del image"></image>
 				</view>
-			    <view class="shangchuan" @click="addImg"  v-if="arr.length<9">
+				<view @click="addImg" class="shangchuan" v-if="arr.length<9">
 					<view class="heng"></view>
 					<view class="shu"></view>
 				</view>
 			</div>
 		</view>
-		<view class="submit" @click="submit">
+		<view @click="submit" class="submit">
 			提交
 		</view>
 	</view>
 </template>
 
 <script>
-	import {pageMixin} from "../../common/mixin";
-	import {uploadImages,ls} from '../../common/tool.js'
-	import {uploadImage,comment,GET_ENV,get_Users_ID,get_User_ID,createToken,GET_ACCESS_TOKEN} from '../../common/fetch.js'
-	import uniRate from "../../components/uni-rate/uni-rate.vue"
-	import {chooseImageByPromise, uploadByPromise} from "../../common/tool";
+import {pageMixin} from '../../common/mixin';
+import {uploadImages} from '../../common/tool.js'
+import {comment, createToken, GET_ACCESS_TOKEN, GET_ENV, get_User_ID, get_Users_ID} from '../../common/fetch.js'
+import uniRate from '../../components/uni-rate/uni-rate.vue'
+import {chooseImageByPromise} from '../../common/tool';
 
-	export default {
-		mixins:[pageMixin],
-		components: {uniRate},
-		data() {
-			return {
-				Note:'',
-				imgs:[],//上传图片预览
-				arr:[],//评价上传图片
-				isSubmit:true,//是否可以提交
-				Order_ID:0,//订单id
-				Score:5,//评价分数
-				isAnonymous:1,//是否匿名评价
-				isLoadong:false
-			};
+export default {
+	mixins: [pageMixin],
+	components: {uniRate},
+	data() {
+		return {
+			Note: '',
+			imgs: [],//上传图片预览
+			arr: [],//评价上传图片
+			isSubmit: true,//是否可以提交
+			Order_ID: 0,//订单id
+			Score: 5,//评价分数
+			isAnonymous: 1,//是否匿名评价
+			isLoadong: false,
+		};
+	},
+	onLoad(options) {
+		this.Order_ID = options.Order_ID;
+	},
+	methods: {
+		//是否匿名评价
+		switchChange(e) {
+			if (e.target.value) {
+				this.isAnonymous = 1;
+			} else {
+				this.isAnonymous = 0;
+			}
 		},
-		onLoad(options) {
-			this.Order_ID=options.Order_ID;
+		//评价分数
+		show(value) {
+			this.Score = value.value;
 		},
-		methods:{
-			//是否匿名评价
-			switchChange(e){
-				if(e.target.value){
-					this.isAnonymous=1;
-				}else{
-					this.isAnonymous=0;
-				}
-			},
-			//评价分数
-			show(value){
-				this.Score=value.value;
-			},
-			//图片预览
-			yulan(index){
-				let arr=[]
-				for(let item of this.imgs){
-					arr.push(item.path)
-				}
-				uni.previewImage({
-				            urls: arr,
-							indicator:'default',
-							current:index
-				});
-			},
-			//提交
-			submit(){
-				if(this.isLoadong)return
-				this.isLoadong=true
-				let arr=[];
-				for(let item of this.arr){
-					arr.push(item);
-				}
-				arr=JSON.stringify(arr);
-				if(this.isSubmit){
-					if(this.Note){
-						//提交评论
-						let data={
-							Order_ID:this.Order_ID,
-							Score:this.Score,
-							Note:this.Note,
-							is_anonymous:this.isAnonymous,
-							image_path:arr
-						}
-						comment(data).then(res=>{
-							uni.showToast({
-								title:res.msg,
-								icon:''
-							})
-							setTimeout(function(){
-								uni.redirectTo({
-									url:"/pages/order/order?index=4"
-								})
-							},2000)
-							this.isLoadong=false
-						}).catch(e=>{
-							this.isLoadong=false
-						})
-					}else{
-						uni.showToast({
-							title:'您还未填写评价哦',
-							icon:'none'
-						})
+		//图片预览
+		yulan(index) {
+			let arr = []
+			for (let item of this.imgs) {
+				arr.push(item.path)
+			}
+			uni.previewImage({
+				urls: arr,
+				indicator: 'default',
+				current: index,
+			});
+		},
+		//提交
+		submit() {
+			if (this.isLoadong) return
+			this.isLoadong = true
+			let arr = [];
+			for (let item of this.arr) {
+				arr.push(item);
+			}
+			arr = JSON.stringify(arr);
+			if (this.isSubmit) {
+				if (this.Note) {
+					//提交评论
+					let data = {
+						Order_ID: this.Order_ID,
+						Score: this.Score,
+						Note: this.Note,
+						is_anonymous: this.isAnonymous,
+						image_path: arr,
 					}
-				}else{
+					comment(data).then(res => {
+						uni.showToast({
+							title: res.msg,
+							icon: '',
+						})
+						setTimeout(function () {
+							uni.redirectTo({
+								url: '/pages/order/order?index=4',
+							})
+						}, 2000)
+						this.isLoadong = false
+					}).catch(e => {
+						this.isLoadong = false
+					})
+				} else {
 					uni.showToast({
-						title:'图片还没上传完成',
-						icon:'none'
+						title: '您还未填写评价哦',
+						icon: 'none',
 					})
 				}
-				this.isLoadong=false
-			},
-			//删除某张预览图片
-			delImg(index){
-				this.imgs.splice(index, 1);
-				this.arr.splice(index, 1);
-			},
-			async addImg(){
-				let that=this;
-				let param = {act:'upload_image'};
-				param.User_ID = get_User_ID();
-				param.Users_ID = get_Users_ID();
-				param.env = GET_ENV();
-				if(!param.hasOwnProperty('access_token')){
-					param.access_token = GET_ACCESS_TOKEN()
-				}
+			} else {
+				uni.showToast({
+					title: '图片还没上传完成',
+					icon: 'none',
+				})
+			}
+			this.isLoadong = false
+		},
+		//删除某张预览图片
+		delImg(index) {
+			this.imgs.splice(index, 1);
+			this.arr.splice(index, 1);
+		},
+		async addImg() {
+			let that = this;
+			let param = {act: 'upload_image'};
+			param.User_ID = get_User_ID();
+			param.Users_ID = get_Users_ID();
+			param.env = GET_ENV();
+			if (!param.hasOwnProperty('access_token')) {
+				param.access_token = GET_ACCESS_TOKEN()
+			}
 
-				let data = createToken(param);
-
-
-
-				let sizeType = null
-				// #ifndef MP-TOUTIAO
-				sizeType =  ['original', 'compressed'] //可以指定是原图还是压缩图，默认二者都有
-				// #endif
-
-
-				let temp_file_list  = await chooseImageByPromise({count:(9-that.imgs.length),sizeType})
-				if(!temp_file_list)return;
-				for(let item of temp_file_list){
-					that.imgs.push(item)
-				}
-
-				let arrs = temp_file_list.map(item=>item.path)
-
-				uploadImages(data,arrs).then(urls=>{
-
-					that.arr = that.arr.concat(urls);
-					//是否可以提交
-					that.isSubmit = true;
-				});
+			let data = createToken(param);
 
 
+			let sizeType = null
+			// #ifndef MP-TOUTIAO
+			sizeType = ['original', 'compressed'] //可以指定是原图还是压缩图，默认二者都有
+			// #endif
 
 
-			},
-		}
-	}
+			let temp_file_list = await chooseImageByPromise({count: (9 - that.imgs.length), sizeType})
+			if (!temp_file_list) return;
+			for (let item of temp_file_list) {
+				that.imgs.push(item)
+			}
+
+			let arrs = temp_file_list.map(item => item.path)
+
+			uploadImages(data, arrs).then(urls => {
+
+				that.arr = that.arr.concat(urls);
+				//是否可以提交
+				that.isSubmit = true;
+			});
+
+
+		},
+	},
+}
 </script>
 
 <style lang="scss" scoped>
-	.all{
+	.all {
 		background-color: #F8F8F8;
 		box-sizing: border-box;
 	}
-	.edit{
+
+	.edit {
 		box-sizing: border-box;
 		width: 710rpx;
 		height: 338rpx;
-		border:1px solid rgba(233,233,233,1);
-		border-radius:10px;
+		border: 1px solid rgba(233, 233, 233, 1);
+		border-radius: 10px;
 		margin: 0 auto;
 		margin-top: 20rpx;
 		padding-top: 23rpx;
@@ -207,11 +206,13 @@
 		color: #333333;
 		background-color: #FFFFFF;
 	}
-	.place{
+
+	.place {
 		color: #CBCBCB !important;
 		font-size: 24rpx !important;
 	}
-	.submit{
+
+	.submit {
 		width: 690rpx;
 		height: 80rpx;
 		margin: 0 auto;
@@ -224,7 +225,7 @@
 		margin-top: 65rpx;
 	}
 
-	.niming{
+	.niming {
 		width: 710rpx;
 		height: 75rpx;
 		margin: 0 auto;
@@ -241,95 +242,109 @@
 	}
 
 	.item {
-	    display: flex;
-	    height: 50px;
+		display: flex;
+		height: 50px;
 		margin-left: 23rpx;
-	    align-items: center;
-	    justify-content: space-between;
-	    font-size: 14px;
-	    border-bottom: 1px solid #E3E3E3;
+		align-items: center;
+		justify-content: space-between;
+		font-size: 14px;
+		border-bottom: 1px solid #E3E3E3;
 	}
+
 	.spe {
-	    justify-content: flex-start;
+		justify-content: flex-start;
 	}
+
 	.item-left {
-	    margin-right: 10px;
+		margin-right: 10px;
 		font-size: 28rpx;
 	}
+
 	.item-right {
-	    color: #888;
+		color: #888;
 		font-size: 24rpx;
 	}
+
 	.noborder {
-	    border: none;
+		border: none;
 	}
+
 	.item-right img {
-	    width: 15rpx;
-	    height: 23rpx;
-	    margin-left: 25rpx;
+		width: 15rpx;
+		height: 23rpx;
+		margin-left: 25rpx;
 	}
+
 	/* 上传图像 */
 	.imgs {
-	    display: flex;
+		display: flex;
 		padding-right: 0rpx;
 		flex-wrap: wrap;
 		padding-left: 20rpx;
 	}
+
 	.bottom {
-	    position: fixed;
-	    bottom: 0;
-	    left: 0;
-	    width: 100%;
-	    height: 86rpx;
-	    line-height: 86rpx;
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		height: 86rpx;
+		line-height: 86rpx;
 		font-size: 32rpx;
-	    color: #fff;
-	    text-align: center;
-	    background: #F43131;
+		color: #fff;
+		text-align: center;
+		background: #F43131;
 		z-index: 9999;
 	}
+
 	/* 退款 */
 	.methods,
 	.reason {
-	    position: fixed;
-	    bottom: 0;
-	    left: 0;
-	    width: 100%;
-	    z-index: 101;
-	    background: #fff;
-	    padding-top: 20px;
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		z-index: 101;
+		background: #fff;
+		padding-top: 20px;
 	}
+
 	.m-title {
-	    text-align: center;
-	    margin-bottom: 10px;
+		text-align: center;
+		margin-bottom: 10px;
 	}
+
 	.confirm-method {
-	    background: #F43131;
-	    color: #fff;
-	    text-align: center;
-	    line-height: 50px;
-	    width: 100%;
-	    margin-top: 20px;
+		background: #F43131;
+		color: #fff;
+		text-align: center;
+		line-height: 50px;
+		width: 100%;
+		margin-top: 20px;
 	}
-	.bMbx{
+
+	.bMbx {
 		padding: 0rpx 20rpx;
-		.fMbx{
+
+		.fMbx {
 			font-size: 32rpx;
 			height: 30rpx;
 			line-height: 30rpx;
 			text-align: center;
 			padding: 36rpx 0rpx;
 		}
-		.iMbx{
+
+		.iMbx {
 			display: flex;
 			justify-content: space-between;
 			height: 104rpx;
-			border-bottom:1px solid rgba(230,230,230,1);
+			border-bottom: 1px solid rgba(230, 230, 230, 1);
 			align-items: center;
 			font-size: 28rpx;
 		}
 	}
-	.sure{
+
+	.sure {
 		height: 90rpx;
 		width: 100%;
 		background-color: #F43131;
@@ -339,18 +354,21 @@
 		line-height: 90rpx;
 		text-align: center;
 	}
-	.shangchuans{
-		width:146rpx;
-		height:146rpx;
-		border:1px solid rgba(186,186,186,1);
+
+	.shangchuans {
+		width: 146rpx;
+		height: 146rpx;
+		border: 1px solid rgba(186, 186, 186, 1);
 		position: relative;
 		margin-right: 20rpx;
 		margin-bottom: 28rpx;
-		.image{
+
+		.image {
 			width: 100%;
 			height: 100%;
 		}
-		.del{
+
+		.del {
 			width: 38rpx;
 			height: 38rpx;
 			position: absolute;
@@ -359,13 +377,15 @@
 			z-index: 9999;
 		}
 	}
-	.shangchuan{
-		width:146rpx;
-		height:146rpx;
-		border:1px solid rgba(186,186,186,1);
+
+	.shangchuan {
+		width: 146rpx;
+		height: 146rpx;
+		border: 1px solid rgba(186, 186, 186, 1);
 		position: relative;
 		margin-bottom: 28rpx;
-		.heng{
+
+		.heng {
 			width: 76rpx;
 			height: 3rpx;
 			background-color: #BABABA;
@@ -373,7 +393,8 @@
 			top: 72rpx;
 			left: 35rpx;
 		}
-		.shu{
+
+		.shu {
 			width: 3rpx;
 			height: 76rpx;
 			background-color: #BABABA;
@@ -383,13 +404,14 @@
 
 		}
 	}
-	.shangH{
+
+	.shangH {
 		background-color: #FFFFFF;
 		width: 710rpx;
 		margin: 0 auto;
 	}
 
-	.rate{
+	.rate {
 		margin: 0 auto;
 		width: 710rpx;
 		height: 75rpx;
@@ -398,16 +420,18 @@
 		align-items: center;
 		border-radius: 10rpx;
 		padding: 25rpx 0rpx;
-		.rates{
+
+		.rates {
 			font-size: 26rpx;
 			color: #333333;
 			margin-left: 25rpx;
 			margin-right: 22rpx;
 		}
-		.score{
+
+		.score {
 			padding-top: 5rpx;
-			font-size:26rpx;
-			font-weight:500;
+			font-size: 26rpx;
+			font-weight: 500;
 			color: #F43131;
 			margin-left: 15rpx;
 		}

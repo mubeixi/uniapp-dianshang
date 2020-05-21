@@ -1,20 +1,20 @@
 <template>
-	<view class="wrap" @click="commonClick">
+	<view @click="commonClick" class="wrap">
 		<!-- #ifdef APP-PLUS -->
-<!--		<view class="status_bar" style="background-color: rgb(248, 248, 248);"></view>-->
+		<!--		<view class="status_bar" style="background-color: rgb(248, 248, 248);"></view>-->
 		<!-- #endif -->
 		<!-- <page-title title="财富排行榜" rightHidden="true" ></page-title> -->
 		<view class="all">
-			<view class="hahas" :class="index==0?'checked':''" @click="change(0)">
+			<view :class="index==0?'checked':''" @click="change(0)" class="hahas">
 				总部{{commi_rename.commi}}
 			</view>
-			<view class="hahas"  :class="index==1?'checked':''"   @click="change(1)">
+			<view :class="index==1?'checked':''" @click="change(1)" class="hahas">
 				我的好友
 			</view>
 		</view>
-<!--		<view style="height: 95rpx;">-->
+		<!--		<view style="height: 95rpx;">-->
 
-<!--		</view>-->
+		<!--		</view>-->
 		<view class="mains">
 			<view class="paiming">
 				<view class="pai1">
@@ -27,13 +27,13 @@
 					佣金
 				</view>
 			</view>
-			<view class="content" v-for="(item,index) of pro " :key="index" v-if="index==0">
-				<view class="contentLeft" >
+			<view :key="index" class="content" v-for="(item,index) of pro " v-if="index==0">
+				<view class="contentLeft">
 					<view class="ming">
-						<image class='image' :src="'/static/client/fenxiao/first.png'|domain" ></image>
+						<image :src="'/static/client/fenxiao/first.png'|domain" class='image'></image>
 					</view>
 					<view class="info">
-						<image class="image" :src="item.Shop_Logo" ></image>
+						<image :src="item.Shop_Logo" class="image"></image>
 					</view>
 					<view class="nickName">
 						{{item.Shop_Name}}
@@ -43,35 +43,17 @@
 					{{item.pro_title_name}}
 				</view>
 				<view class="contentRight">
-					¥<text>{{item.Total_Income}}</text>
+					¥
+					<text>{{item.Total_Income}}</text>
 				</view>
 			</view>
 			<view class="content" v-else-if="index==1">
 				<view class="contentLeft">
 					<view class="ming">
-						<image class='image' :src="'/static/client/fenxiao/second.png'|domain" ></image>
+						<image :src="'/static/client/fenxiao/second.png'|domain" class='image'></image>
 					</view>
 					<view class="info">
-							<image :src="item.Shop_Logo" ></image>
-						</view>
-						<view class="nickName">
-							{{item.Shop_Name}}
-						</view>
-					</view>
-					<view class="contentCenter">
-						{{item.pro_title_name}}
-					</view>
-					<view class="contentRight">
-						¥<text>{{item.Total_Income}}</text>
-					</view>
-			</view>
-			<view class="content" v-else-if="index==2">
-				<view class="contentLeft">
-					<view class="ming">
-						<image class='image' :src="'/static/client/fenxiao/three.png'|domain" ></image>
-					</view>
-					<view class="info">
-							<image :src="item.Shop_Logo" ></image>
+						<image :src="item.Shop_Logo"></image>
 					</view>
 					<view class="nickName">
 						{{item.Shop_Name}}
@@ -81,7 +63,28 @@
 					{{item.pro_title_name}}
 				</view>
 				<view class="contentRight">
-					¥<text>{{item.Total_Income}}</text>
+					¥
+					<text>{{item.Total_Income}}</text>
+				</view>
+			</view>
+			<view class="content" v-else-if="index==2">
+				<view class="contentLeft">
+					<view class="ming">
+						<image :src="'/static/client/fenxiao/three.png'|domain" class='image'></image>
+					</view>
+					<view class="info">
+						<image :src="item.Shop_Logo"></image>
+					</view>
+					<view class="nickName">
+						{{item.Shop_Name}}
+					</view>
+				</view>
+				<view class="contentCenter">
+					{{item.pro_title_name}}
+				</view>
+				<view class="contentRight">
+					¥
+					<text>{{item.Total_Income}}</text>
 				</view>
 			</view>
 			<view class="content" v-else>
@@ -90,7 +93,7 @@
 						{{index+1}}
 					</view>
 					<view class="info">
-							<image :src="item.Shop_Logo" ></image>
+						<image :src="item.Shop_Logo"></image>
 					</view>
 					<view class="nickName">
 						{{item.Shop_Name}}
@@ -100,7 +103,8 @@
 					{{item.pro_title_name}}
 				</view>
 				<view class="contentRight">
-					¥<text>{{item.Total_Income}}</text>
+					¥
+					<text>{{item.Total_Income}}</text>
 				</view>
 			</view>
 
@@ -110,212 +114,233 @@
 </template>
 
 <script>
-	import {pageMixin} from "../../common/mixin"
-	import {getBalanceRank} from "../../common/fetch.js"
-	import {
-		mapGetters
-	} from 'vuex'
-	export default {
-		mixins:[pageMixin],
-		data() {
-			return {
-				index:0,
-				page:1,
-				pageSize:15,
-				isFriend:0,
-				pro:[],
-				myInfo:'',
-				totalCount:0,
-				rank_config:0,
-			};
-		},
-		computed:{
-			...mapGetters(['commi_rename'])
-		},
-		onShow() {
-			this.page=1;
-			this.pro=[];
+import {pageMixin} from '../../common/mixin'
+import {getBalanceRank} from '../../common/fetch.js'
+import {mapGetters} from 'vuex'
+
+export default {
+	mixins: [pageMixin],
+	data() {
+		return {
+			index: 0,
+			page: 1,
+			pageSize: 15,
+			isFriend: 0,
+			pro: [],
+			myInfo: '',
+			totalCount: 0,
+			rank_config: 0,
+		};
+	},
+	computed: {
+		...mapGetters(['commi_rename']),
+	},
+	onShow() {
+		this.page = 1;
+		this.pro = [];
+		this.getPro();
+	},
+	onReachBottom() {
+		if (this.totalCount > this.pro.length) {
+			this.page++;
+			this.getPro();
+		}
+	},
+	methods: {
+		change(item) {
+			this.index = item;
+			if (item == 1) {
+				this.isFriend = 1;
+			} else {
+				this.isFriend = 0;
+			}
+			this.pro = [];
+			this.page = 1;
 			this.getPro();
 		},
-		onReachBottom() {
-			if(this.totalCount>this.pro.length){
-				this.page++;
-				this.getPro();
+		getPro() {
+			let data = {
+				page: this.page,
+				pageSize: this.pageSize,
 			}
-		},
-		methods:{
-			change(item){
-				this.index=item;
-				if(item==1){
-					this.isFriend=1;
-				}else{
-					this.isFriend=0;
+			if (this.isFriend) {
+				data.is_my_friend = 1;
+			}
+			getBalanceRank(data).then(res => {
+				for (let item of res.data.list) {
+					this.pro.push(item);
 				}
-				this.pro=[];
-				this.page=1;
-				this.getPro();
-			},
-			getPro(){
-				let data={
-					page:this.page,
-					pageSize:this.pageSize
-				}
-				if(this.isFriend){
-					data.is_my_friend=1;
-				}
-				getBalanceRank(data).then(res=>{
-					for(let item of res.data.list){
-						this.pro.push(item);
-					}
-					this.totalCount=res.totalCount;
-					this.myInfo=res.data.my_rank;
-					this.rank_config=res.data.rank_config.HIncomelist_Open;
-				}).catch(e=>{
+				this.totalCount = res.totalCount;
+				this.myInfo = res.data.my_rank;
+				this.rank_config = res.data.rank_config.HIncomelist_Open;
+			}).catch(e => {
 
-				})
-			}
-		}
-	}
+			})
+		},
+	},
+}
 </script>
 
 <style lang="scss" scoped>
-	view,div{
+	view, div {
 		box-sizing: border-box;
 	}
-.wrap{
-	padding-top: 95rpx;
-	background: white !important;
-	min-height: 100vh;
-}
-.all{
-	height: 95rpx;
-	width: 750rpx;
-	padding-left: 133rpx;
-	padding-right: 133rpx;
-	display: flex;
-	justify-content: space-between;
-	border-bottom: 1rpx solid #ECE8E8;
-	position: fixed;
-	top: 0rpx;
-	left: 0rpx;
-	background-color: #FFFFFF;
-	z-index: 999;
-	.hahas{
-		width: 202rpx;
+
+	.wrap {
+		padding-top: 95rpx;
+		background: white !important;
+		min-height: 100vh;
+	}
+
+	.all {
 		height: 95rpx;
-		line-height: 95rpx;
-		position: relative;
-		text-align: center;
-		font-size: 30rpx;
-		color: #333333;
-	}
-	.checked{
-		color: #F43131 !important;
-	}
-	.checked:after{
-		content: '';
-		position: absolute;
-		bottom: 0rpx;
-		left: 0rpx;
-		width: 202rpx;
-		height: 4rpx;
-		background-color: #F43131;
-	}
-}
-.mains{
-	width: 710rpx;
-	margin: 0 auto;
-	margin-top: 40rpx;
-	box-shadow:0px 0px 18rpx 0px rgba(0, 0, 0, 0.18);
-	border-radius:10rpx;
-	.paiming{
-		padding-top: 38rpx;
-		padding-bottom: 38rpx;
-		padding-left: 33rpx;
+		width: 750rpx;
+		padding-left: 133rpx;
+		padding-right: 133rpx;
 		display: flex;
-		.pai1,.pai2,.pai3{
-			font-size: 28rpx;
-			height: 26rpx;
-			line-height: 26rpx;
+		justify-content: space-between;
+		border-bottom: 1rpx solid #ECE8E8;
+		position: fixed;
+		top: 0rpx;
+		left: 0rpx;
+		background-color: #FFFFFF;
+		z-index: 999;
+
+		.hahas {
+			width: 202rpx;
+			height: 95rpx;
+			line-height: 95rpx;
+			position: relative;
+			text-align: center;
+			font-size: 30rpx;
 			color: #333333;
 		}
-		.pai1{
-			width: 320rpx;
+
+		.checked {
+			color: #F43131 !important;
 		}
-		.pai2{
-			width: 150rpx;
+
+		.checked:after {
+			content: '';
+			position: absolute;
+			bottom: 0rpx;
+			left: 0rpx;
+			width: 202rpx;
+			height: 4rpx;
+			background-color: #F43131;
 		}
-		.pai3{
-			width: 207rpx;
+	}
+
+	.mains {
+		width: 710rpx;
+		margin: 0 auto;
+		margin-top: 40rpx;
+		box-shadow: 0px 0px 18rpx 0px rgba(0, 0, 0, 0.18);
+		border-radius: 10rpx;
+
+		.paiming {
+			padding-top: 38rpx;
+			padding-bottom: 38rpx;
+			padding-left: 33rpx;
+			display: flex;
+
+			.pai1, .pai2, .pai3 {
+				font-size: 28rpx;
+				height: 26rpx;
+				line-height: 26rpx;
+				color: #333333;
+			}
+
+			.pai1 {
+				width: 320rpx;
+			}
+
+			.pai2 {
+				width: 150rpx;
+			}
+
+			.pai3 {
+				width: 207rpx;
+				text-align: center;
+			}
+		}
+
+		.contents {
+			height: 52px;
+			line-height: 52px;
+			font-size: 16px;
 			text-align: center;
 		}
-	}
-	.contents{
-		height: 52px;
-		line-height: 52px;
-		font-size: 16px;
-		text-align: center;
-	}
-	.content{
-		width: 690rpx;
-		height: 103rpx;
-		margin-left: 10rpx;
-		margin-right: 10rpx;
-		border-bottom: 1rpx solid #ECE8E8;
-		display: flex;
-		align-items: center;
-		.contentLeft{
-			width: 326rpx;
-			margin-left: 17rpx;
+
+		.content {
+			width: 690rpx;
+			height: 103rpx;
+			margin-left: 10rpx;
+			margin-right: 10rpx;
+			border-bottom: 1rpx solid #ECE8E8;
 			display: flex;
 			align-items: center;
-			.ming{
-				width: 41rpx;
-				height: 56rpx;
-				line-height: 56rpx;
-				margin-right: 24rpx;
-				text-align: center;
-				color: #777777;
-				font-size: 32rpx;
-				.image{
-					width: 100%;
-					height: 100%;
+
+			.contentLeft {
+				width: 326rpx;
+				margin-left: 17rpx;
+				display: flex;
+				align-items: center;
+
+				.ming {
+					width: 41rpx;
+					height: 56rpx;
+					line-height: 56rpx;
+					margin-right: 24rpx;
+					text-align: center;
+					color: #777777;
+					font-size: 32rpx;
+
+					.image {
+						width: 100%;
+						height: 100%;
+					}
+				}
+
+				.info {
+					width: 53rpx;
+					height: 53rpx;
+					border-radius: 50%;
+					margin-right: 14rpx;
+					overflow: hidden;
+
+					.image {
+						width: 100%;
+						height: 100%;
+					}
+				}
+
+				.nickName {
+					height: 53rpx;
+					width: 180rpx;
+					overflow: hidden;
+					line-height: 53rpx;
+					font-size: 24rpx;
+					color: #777777;
 				}
 			}
-			.info{
-				width: 53rpx;
-				height: 53rpx;
-				border-radius: 50%;
-				margin-right: 14rpx;
-				overflow: hidden;
-				.image{
-					width: 100%;
-					height: 100%;
-				}
-			}
-			.nickName{
-				height: 53rpx;
-				width: 180rpx;
-				overflow: hidden;
-				line-height: 53rpx;
+
+			.contentCenter {
+				width: 150rpx;
 				font-size: 24rpx;
 				color: #777777;
 			}
-		}
-		.contentCenter{
-			width: 150rpx;
-			font-size:24rpx;
-			color: #777777;
-		}
-		.contentRight{
-			width: 207rpx;
-			text-align: center;
-			font-size: 22rpx;
-			color: #F43131;
-			text{
-				font-size: 26rpx;
+
+			.contentRight {
+				width: 207rpx;
+				text-align: center;
+				font-size: 22rpx;
+				color: #F43131;
+
+				text {
+					font-size: 26rpx;
+				}
 			}
 		}
 	}
-}
 </style>

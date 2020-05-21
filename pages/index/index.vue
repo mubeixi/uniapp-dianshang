@@ -1,8 +1,8 @@
 <template>
-	<view v-if="showIndex" class="index-all">
+	<view class="index-all" v-if="showIndex">
 		<block v-if="storeID">
-			<view class="store-all" :style="{backgroundImage:'url('+domainFn('/static/client/store/storeBg.png')+')'}">
-				<div class='store-title' >
+			<view :style="{backgroundImage:'url('+domainFn('/static/client/store/storeBg.png')+')'}" class="store-all">
+				<div class='store-title'>
 					{{storeInfo.Stores_Name?storeInfo.Stores_Name:''}}
 				</div>
 				<div class="store-info ">
@@ -20,8 +20,9 @@
 							</div>
 						</div>
 						<div class="store-list">
-							<div class="store-list-name" @click="changeStore">
-								切换门店<image class="store-list-image" :src="'/static/client/person/right.png'|domain" ></image>
+							<div @click="changeStore" class="store-list-name">
+								切换门店
+								<image :src="'/static/client/person/right.png'|domain" class="store-list-image"></image>
 							</div>
 							<div class="store-list-distance" v-if="storeInfo.distance">
 								<block v-if="storeInfo.distance>=1000">
@@ -36,34 +37,36 @@
 					</div>
 
 					<div class="flex flex-vertical-center">
-						<div class="store-icon" @click="openLocation">
+						<div @click="openLocation" class="store-icon">
 							<i class="funicon  icon-address"></i>
 							<div style="margin-top: 5px">定位</div>
 						</div>
 						<div class="store-line"></div>
-						<div class="store-icon" @click="cellStore(storeInfo.Stores_Telephone)">
+						<div @click="cellStore(storeInfo.Stores_Telephone)" class="store-icon">
 							<i class="funicon  icon-cell"></i>
 							<div style="margin-top: 5px">拨号</div>
 						</div>
 						<div class="store-line"></div>
-						<div class="store-icon" @click="openShare">
+						<div @click="openShare" class="store-icon">
 							<i class="funicon  icon-share-t"></i>
 							<div style="margin-top: 5px">分享</div>
 						</div>
 					</div>
 				</div>
 
-				<div class="store-search-div" @click="goSearch">
-					<input type="text" class="store-search" disabled=""/>
+				<div @click="goSearch" class="store-search-div">
+					<input class="store-search" disabled="" type="text" />
 					<!--      <i class="funicon  icon-del1"></i>-->
 					<i class="funicon  icon-search1"></i>
 				</div>
 
 
-				<ul class="store-ul flex"  :style="{marginLeft:-30*goodsNavIndex+'px'}">
-					<li class="store-li" :class="goodsNavIndex==0?'active':''"  @click="changeTab(0)">全部</li>
-					<block v-for="(cate,ind) of productCate" :key="ind">
-						<li class="store-li" :class="goodsNavIndex==(ind+1)?'active':''" @click="changeTab(ind+1)">{{cate.Category_Name}}</li>
+				<ul :style="{marginLeft:-30*goodsNavIndex+'px'}" class="store-ul flex">
+					<li :class="goodsNavIndex==0?'active':''" @click="changeTab(0)" class="store-li">全部</li>
+					<block :key="ind" v-for="(cate,ind) of productCate">
+						<li :class="goodsNavIndex==(ind+1)?'active':''" @click="changeTab(ind+1)" class="store-li">
+							{{cate.Category_Name}}
+						</li>
 					</block>
 
 
@@ -71,23 +74,25 @@
 
 
 				<swiper
-				class="store-swiper"
+				:current="goodsNavIndex"
 				:style="{height:childSwiperHeight}"
 				@change="prodIndexChangeEvent"
-				:current="goodsNavIndex">
-					<swiper-item >
-						<div id="scrollView" class="store-item-swiper">
-							<block v-for="(it,ind) of prodList[0]" :key="ind">
-								<wzw-store  @updaCart="updaCart" @delQty="delQty" @addQty="addQty" :storeId="storeID" :myCart="myCart" :pro="it"></wzw-store>
+				class="store-swiper">
+					<swiper-item>
+						<div class="store-item-swiper" id="scrollView">
+							<block :key="ind" v-for="(it,ind) of prodList[0]">
+								<wzw-store :myCart="myCart" :pro="it" :storeId="storeID" @addQty="addQty" @delQty="delQty"
+								           @updaCart="updaCart"></wzw-store>
 							</block>
 						</div>
 					</swiper-item>
 
-					<swiper-item   v-for="(cate,index) of productCate" :key="index">
+					<swiper-item :key="index" v-for="(cate,index) of productCate">
 
 						<div :id="'scrollView'+index" class="store-item-swiper">
-							<block v-for="(it,ind) of prodList[index+1]" :key="ind">
-								<wzw-store @updaCart="updaCart" @delQty="delQty" @addQty="addQty" :storeId="storeID" :myCart="myCart" :pro="it"></wzw-store>
+							<block :key="ind" v-for="(it,ind) of prodList[index+1]">
+								<wzw-store :myCart="myCart" :pro="it" :storeId="storeID" @addQty="addQty" @delQty="delQty"
+								           @updaCart="updaCart"></wzw-store>
 							</block>
 
 						</div>
@@ -97,28 +102,30 @@
 
 
 				<!--  遮罩层	-->
-				<view class="mask" v-if="showPro"  @click="showPro=false"></view>
+				<view @click="showPro=false" class="mask" v-if="showPro"></view>
 				<!--  产品属性弹窗	-->
-				<view class="sku-pop"  v-if="showPro">
+				<view class="sku-pop" v-if="showPro">
 					<view class="sku-title">选择商品属性</view>
 					<view class="sku-content">
-						<view class="skulist" v-for="item in prosku.skujosn_new" :key="">
+						<view :key="idx" class="skulist" v-for="(item,idx) in prosku.skujosn_new">
 							<view class="sku-name">{{item.sku}}</view>
 							<view class="sku-item">
-								<view :class="[check_attr[item.sku]==index?'active':'','sku']" @click="selectAttr(index,item.sku)"  v-for="(attr,index) of item.val" :key="">{{attr}}</view>
+								<view :class="[check_attr[item.sku]==index?'active':'','sku']" :key=""
+								      @click="selectAttr(index,item.sku)" v-for="(attr,index) of item.val">{{attr}}
+								</view>
 							</view>
 						</view>
 						<view class="skulist">
 							<view class="sku-name">数量</view>
 							<view class="sku-item">
-								<view class="handle" @click="minus">-</view>
+								<view @click="minus" class="handle">-</view>
 								<view class="pro-num">{{postData.qty}}</view>
-								<view class="handle" @click="plus">+</view>
+								<view @click="plus" class="handle">+</view>
 							</view>
 						</view>
 						<view class="sku-btns">
-							<view class="cancel btn" @click="showPro=false">取消</view>
-							<view class="confirm btn" @click="confirm()" >确定</view>
+							<view @click="showPro=false" class="cancel btn">取消</view>
+							<view @click="confirm()" class="confirm btn">确定</view>
 						</view>
 					</view>
 				</view>
@@ -131,84 +138,90 @@
 		</block>
 
 
-		<popupLayer ref="popupLayer" :direction="'top'"  >
-			<div class="shareinfo" >
+		<popupLayer :direction="'top'" ref="popupLayer">
+			<div class="shareinfo">
 				<div class="s_top">
 					<!-- #ifdef APP-PLUS -->
-					<div class="flex1" @click="shareFunc('wx')">
-						<image class='img' :src="'/static/client/detail/share1.png'|domain" alt=""></image>
+					<div @click="shareFunc('wx')" class="flex1">
+						<image :src="'/static/client/detail/share1.png'|domain" alt="" class='img'></image>
 						<div>发送好友</div>
 					</div>
-					<div class="flex1" @click="shareFunc('wxtimeline')">
-						<image class='img' :src="'/static/client/detail/sahre3.png'|domain" alt=""></image>
+					<div @click="shareFunc('wxtimeline')" class="flex1">
+						<image :src="'/static/client/detail/sahre3.png'|domain" alt="" class='img'></image>
 						<div>朋友圈</div>
 					</div>
 					<!--只有配置了这个参数的app，才有分享到小程序选项-->
-					<div class="flex1" @click="shareFunc('wxmini')" v-if="wxMiniOriginId">
-						<img class='img' :src="'/static/client/detail/share4.png'|domain" alt="">
+					<div @click="shareFunc('wxmini')" class="flex1" v-if="wxMiniOriginId">
+						<img :src="'/static/client/detail/share4.png'|domain" alt="" class='img'>
 						<div>微信小程序</div>
 					</div>
 					<!-- #endif -->
 					<!-- #ifndef MP-TOUTIAO -->
-					<div class="flex1" @click="shareFunc('pic')">
-						<image class='img' :src="'/static/client/detail/share2.png'|domain" alt=""></image>
+					<div @click="shareFunc('pic')" class="flex1">
+						<image :src="'/static/client/detail/share2.png'|domain" alt="" class='img'></image>
 						<div>分享海报</div>
 					</div>
 					<!-- #endif -->
 				</div>
-				<div class="s_bottom" @click="cancelShare">取消</div>
+				<div @click="cancelShare" class="s_bottom">取消</div>
 			</div>
 		</popupLayer>
 
-		<store-list-components style="z-index: 10000;"  :pageEl="selfObj" :isDistance="true" :isProduct="false" direction="top" ref="stroeComp" @callFn="bindStores" catchtouchmove/>
-
+		<store-list-components :isDistance="true" :isProduct="false" :pageEl="selfObj" @callFn="bindStores"
+		                       catchtouchmove direction="top" ref="stroeComp" style="z-index: 10000;" />
 
 
 	</view>
 </template>
 
 <script>
-import {pageMixin} from "../../common/mixin";
-import NoStore from "./chooseIndex";
+import {pageMixin} from '../../common/mixin';
+import NoStore from './chooseIndex';
 
 
-
-
-import {getStoreDetail,getProductCategory,getSelfStoreProd,getCart,updateCart,getSystemConf,getStoreList} from '../../common/fetch'
+import {
+	getCart,
+	getProductCategory,
+	getSelfStoreProd,
+	getStoreDetail,
+	getStoreList,
+	getSystemConf,
+	updateCart,
+} from '../../common/fetch'
 import WzwStore from '../../components/wzw-store'
-import {error, toast,modal} from '../../common';
-import {numberSort,emptyObject,ls,buildSharePath, isWeiXin,getProductThumb,objTranslate} from '../../common/tool.js'
+import {error, modal, toast} from '../../common';
+import {buildSharePath, emptyObject, isWeiXin, numberSort} from '../../common/tool.js'
 import {domainFn} from '../../common/filter';
-import StoreListComponents from "../../components/StoreListComponents";
-import {mapGetters,mapActions, mapState} from 'vuex';
+import StoreListComponents from '../../components/StoreListComponents';
+import {mapActions} from 'vuex';
 import popupLayer from '../../components/popup-layer/popup-layer.vue'
-import {getLocation} from "../../common/tool/location";
+import {getLocation} from '../../common/tool/location';
 
 
 export default {
-	mixins:[pageMixin],
-	components:{NoStore,WzwStore,StoreListComponents,popupLayer},
+	mixins: [pageMixin],
+	components: {NoStore, WzwStore, StoreListComponents, popupLayer},
 	data() {
 		return {
-			JSSDK_INIT:false,
-			showIndex:false,
-			initData:{},
-			storeID:'',
-			lat:'',
-			lng:'',
-			selfObj:null,
-			childSwiperHeight:'auto',
-			productCate:[],
-			scrollHeightS:[0,0,0,0],
-			store_id:'10',
-			systemInfo: {city_express_config:{}},
+			JSSDK_INIT: false,
+			showIndex: false,
+			initData: {},
+			storeID: '',
+			lat: '',
+			lng: '',
+			selfObj: null,
+			childSwiperHeight: 'auto',
+			productCate: [],
+			scrollHeightS: [0, 0, 0, 0],
+			store_id: '10',
+			systemInfo: {city_express_config: {}},
 			goodsNavIndex: 0,
-			storeInfo:{},
-			prodList:[],
-			myCart:[],
-			prosku:{},
-			showPro:false,
-			submit_flag:true,
+			storeInfo: {},
+			prodList: [],
+			myCart: [],
+			prosku: {},
+			showPro: false,
+			submit_flag: true,
 			check_attr: {},
 			check_attrid_arr: [],
 			postData: {
@@ -217,38 +230,38 @@ export default {
 				count: 0,         //选择属性的库存
 				// showimg: '',      //选择属性的图片(用产品图片代替)
 				qty: 1,           //退货数量
-				productDetail_price: 0
+				productDetail_price: 0,
 			},
 		};
 	},
 	onShareAppMessage() {
-		let path = 'pages/index/index?store_id='+this.storeID;
+		let path = 'pages/index/index?store_id=' + this.storeID;
 		let shareObj = {
 			title: this.storeInfo.Stores_Name,
 			desc: '万千好货疯抢中',
 			imageUrl: this.storeInfo.Stores_ImgPath,
-			path: buildSharePath(path)
+			path: buildSharePath(path),
 		};
 		return shareObj
 	},
-	methods:{
+	methods: {
 		domainFn,
 		async shareFunc(channel) {
-			if(!this.$fun.checkIsLogin(1,1))return;
+			if (!this.$fun.checkIsLogin(1, 1)) return;
 			let _self = this
-			let path = 'pages/index/index?store_id='+this.storeID;
+			let path = 'pages/index/index?store_id=' + this.storeID;
 			let front_url = this.initData.front_url;
 			let shareObj = {
 				title: this.storeInfo.Stores_Name,
 				desc: '万千好货疯抢中',
 				imageUrl: this.storeInfo.Stores_ImgPath,
-				path: buildSharePath(path)
+				path: buildSharePath(path),
 			};
 			switch (channel) {
 				case 'wx':
 					uni.share({
-						provider: "weixin",
-						scene: "WXSceneSession",
+						provider: 'weixin',
+						scene: 'WXSceneSession',
 						type: 0,
 						href: front_url + shareObj.path,
 						title: shareObj.title,
@@ -257,13 +270,13 @@ export default {
 						success: function (res) {
 						},
 						fail: function (err) {
-						}
+						},
 					});
 					break;
 				case 'wxtimeline':
 					uni.share({
-						provider: "weixin",
-						scene: "WXSenceTimeline",
+						provider: 'weixin',
+						scene: 'WXSenceTimeline',
 						type: 0,
 						href: front_url + shareObj.path,
 						title: shareObj.title,
@@ -272,13 +285,13 @@ export default {
 						success: function (res) {
 						},
 						fail: function (err) {
-						}
+						},
 					});
 					break;
 				case 'wxmini':
 					uni.share({
 						provider: 'weixin',
-						scene: "WXSceneSession",
+						scene: 'WXSceneSession',
 						type: 5,
 						imageUrl: shareObj.imageUrl,
 						title: shareObj.title,
@@ -286,86 +299,86 @@ export default {
 							id: _self.wxMiniOriginId,
 							path: '/' + shareObj.path,
 							type: 0,
-							webUrl: 'http://uniapp.dcloud.io'
+							webUrl: 'http://uniapp.dcloud.io',
 						},
 						success: ret => {
-						}
+						},
 					});
 					break;
 				case 'pic':
 
 					uni.navigateTo({
-						url:'/pagesA/store/storeShare?type=3&store='+_self.$store.getters.getCurrentStoreId()
+						url: '/pagesA/store/storeShare?type=3&store=' + _self.$store.getters.getCurrentStoreId(),
 					})
 
 			}
 		},
-		openShare(){
+		openShare() {
 			this.$refs.popupLayer.show()
 		},
-		cancelShare(){
+		cancelShare() {
 			this.$refs.popupLayer.close()
 		},
-		bindStores(storeInfo){
+		bindStores(storeInfo) {
 			this.$refs.stroeComp.close()
-			this.storeID=storeInfo.Stores_ID
+			this.storeID = storeInfo.Stores_ID
 			this.setFreStoreId(this.storeID)
 			this.get_user_location_init()
 		},
-		changeStore(){
+		changeStore() {
 			this.$refs.stroeComp.show()
 		},
-		goSearch(){
+		goSearch() {
 			uni.navigateTo({
-				url:'/pages/classify/search'
+				url: '/pages/classify/search',
 			})
 		},
-		delQty(item){
-			let data={
-				cart_key:'CartList',
+		delQty(item) {
+			let data = {
+				cart_key: 'CartList',
 				prod_id: item.prod_id,
 				qty: -1,
-				store_id:this.$store.getters.getCurrentStoreId()
+				store_id: this.$store.getters.getCurrentStoreId(),
 			}
-			if(item.Productsattrkeystrval){
-				data.attr_id=item.Productsattrkeystrval.Product_Attr_ID
+			if (item.Productsattrkeystrval) {
+				data.attr_id = item.Productsattrkeystrval.Product_Attr_ID
 			}
 
-			updateCart(data,{tip:'加载中'}).then(res=>{
+			updateCart(data, {tip: '加载中'}).then(res => {
 				toast(res.msg)
-				this.myCart=res.data.CartList
-				this.showPro=false
-			}).catch(e=>{
+				this.myCart = res.data.CartList
+				this.showPro = false
+			}).catch(e => {
 				error(e.msg)
-				this.showPro=false
+				this.showPro = false
 			})
 		},
-		addQty(item){
+		addQty(item) {
 
-			let data={
-				cart_key:'CartList',
+			let data = {
+				cart_key: 'CartList',
 				prod_id: item.prod_id,
 				qty: 1,
-				store_id:this.$store.getters.getCurrentStoreId()
+				store_id: this.$store.getters.getCurrentStoreId(),
 			}
-			if(item.Productsattrkeystrval){
-				data.attr_id=item.Productsattrkeystrval.Product_Attr_ID
+			if (item.Productsattrkeystrval) {
+				data.attr_id = item.Productsattrkeystrval.Product_Attr_ID
 			}
 
-			updateCart(data,{tip:'加载中'}).then(res=>{
+			updateCart(data, {tip: '加载中'}).then(res => {
 				toast(res.msg)
-				this.myCart=res.data.CartList
-				this.showPro=false
-			}).catch(e=>{
+				this.myCart = res.data.CartList
+				this.showPro = false
+			}).catch(e => {
 				error(e.msg)
-				this.showPro=false
+				this.showPro = false
 			})
 
 		},
-		plus(){
+		plus() {
 			if (this.postData.qty < this.postData.count) {
 				this.postData.qty = Number(this.postData.qty) + 1;
-			}else {
+			} else {
 				uni.showToast({
 					title: '数量不能大于库存量',
 					icon: 'none',
@@ -373,8 +386,8 @@ export default {
 				this.postData.qty = this.postData.count;
 			}
 		},
-		minus(){
-			if(this.postData.qty == 0) return;
+		minus() {
+			if (this.postData.qty == 0) return;
 			if (this.postData.qty > 1) {
 				this.postData.qty -= 1;
 			} else {
@@ -386,18 +399,18 @@ export default {
 			}
 		},
 		// 选择属性
-		selectAttr(index,i){
+		selectAttr(index, i) {
 			this.zIndex = 100;
 			var value_index = index; //选择的属性值索引
 			var attr_index = i;   //选择的属性索引
 			// if (this.check_attrid_arr.indexOf(value_index) > -1) return false;
 			//记录选择的属性
-			var check_attr = Object.assign(this.check_attr, { [attr_index]: value_index }); //记录选择的属性  attr_index外的[]必须
+			var check_attr = Object.assign(this.check_attr, {[attr_index]: value_index}); //记录选择的属性  attr_index外的[]必须
 			//属性处理
 			var check_attrid = [];
 			var check_attrname = [];
 			var check_attrnames = [];
-			var check_name=[]
+			var check_name = []
 			for (var i in check_attr) {
 				var attr_id = check_attr[i];
 				check_attrid.push(attr_id);
@@ -413,11 +426,11 @@ export default {
 				check_attrnames.push(attr_name + ':' + this.prosku.skujosn[attr_name][attr_id]);
 				check_name.push(this.prosku.skujosn[attr_name][attr_id])
 			}
-			let mySku='';
-			for(let item of check_name){
-				mySku+=item+";"
+			let mySku = '';
+			for (let item of check_name) {
+				mySku += item + ';'
 			}
-			mySku=mySku.substring(0,mySku.length-1)
+			mySku = mySku.substring(0, mySku.length - 1)
 			check_attrid = check_attrid.join(';');
 			var attr_val = this.prosku.skuvaljosn[check_attrid];   //选择属性对应的属性值
 			//数组转化为字符串
@@ -427,7 +440,7 @@ export default {
 				this.postData.attr_id = attr_val.Product_Attr_ID;   //选择属性的id
 				this.postData.count = attr_val.Property_count;   //选择属性的库存
 				// this.postData.showimg = typeof attr_val.Attr_Image != 'undefined' && attr_val.Attr_Image != '' ? attr_val.Attr_Image : this.product.Products_JSON['ImgPath'][0];// 选择属性的图片
-				this.postData.productDetail_price = attr_val.Attr_Price?attr_val.Attr_Price:this.prosku.Products_PriceX; // 选择属性的价格
+				this.postData.productDetail_price = attr_val.Attr_Price ? attr_val.Attr_Price : this.prosku.Products_PriceX; // 选择属性的价格
 				this.submit_flag = (!this.check_attr || Object.getOwnPropertyNames(this.check_attr).length != Object.getOwnPropertyNames(this.prosku.skujosn).length) ? false : true;
 			}
 			//判断属性库存
@@ -436,121 +449,122 @@ export default {
 				//     title: '您选择的 ' + check_attrnames + ' 库存不足，请选择其他属性',
 				//     icon: 'none'
 				// })
-				this.submit_flag =  false;
+				this.submit_flag = false;
 				return false;
 			}
 			this.check_attr = {};
 			//存取1；2；3
-			this.check_attrid=check_attrid;
-			this.check_attrnames=mySku;
+			this.check_attrid = check_attrid;
+			this.check_attrnames = mySku;
 			this.check_attr = check_attr;
 			this.check_attrid_arr = check_attrid_arr;
-			this.submit_flag = (!this.check_attr || Object.getOwnPropertyNames(this.check_attr).length != Object.getOwnPropertyNames(this.prosku.skujosn).length) || Object.getOwnPropertyNames(this.prosku.skuvaljosn).indexOf(check_attrid)==-1 ? false : true;
+			this.submit_flag = (!this.check_attr || Object.getOwnPropertyNames(this.check_attr).length != Object.getOwnPropertyNames(this.prosku.skujosn).length) || Object.getOwnPropertyNames(this.prosku.skuvaljosn).indexOf(check_attrid) == -1 ? false : true;
 		},
-		updaCart(data){
+		updaCart(data) {
 
 
-
-			if(data.skujosn) {
+			if (data.skujosn) {
 				let skujosn = data.skujosn;
 				let skujosn_new = [];
 				for (let i in data.skujosn) {
 					skujosn_new.push({
 						sku: i,
-						val: skujosn[i]
+						val: skujosn[i],
 					});
 				}
 				data.skujosn_new = skujosn_new;
 				data.skuvaljosn = data.skuvaljosn;
 			}
-			this.prosku=data
-			this.postData.count=data.Products_Count
-			this.postData.qty=1
-			this.postData.prod_id=data.Products_ID
-			this.postData.attr_id=''
+			this.prosku = data
+			this.postData.count = data.Products_Count
+			this.postData.qty = 1
+			this.postData.prod_id = data.Products_ID
+			this.postData.attr_id = ''
 
-			this.showPro=true
+			this.showPro = true
 		},
-		confirm(){
-			if(!this.submit_flag) {return;}
+		confirm() {
+			if (!this.submit_flag) {
+				return;
+			}
 
-			if(this.prosku.skuvaljosn && !this.postData.attr_id) {
+			if (this.prosku.skuvaljosn && !this.postData.attr_id) {
 				uni.showToast({
 					title: '请选择规格',
-					icon: 'none'
+					icon: 'none',
 				});
 				return;
 			}
-			let data={
-				cart_key:'CartList',
+			let data = {
+				cart_key: 'CartList',
 				prod_id: this.postData.prod_id,
 				qty: this.postData.qty,
-				store_id:this.$store.getters.getCurrentStoreId()
+				store_id: this.$store.getters.getCurrentStoreId(),
 			}
-			if(this.postData.attr_id){
-				data.attr_id=this.postData.attr_id
+			if (this.postData.attr_id) {
+				data.attr_id = this.postData.attr_id
 			}
 
-			updateCart(data,{tip:'加载中'}).then(res=>{
+			updateCart(data, {tip: '加载中'}).then(res => {
 				toast(res.msg)
-				this.myCart=res.data.CartList
-				this.showPro=false
-			}).catch(e=>{
+				this.myCart = res.data.CartList
+				this.showPro = false
+			}).catch(e => {
 				error(e.msg)
-				this.showPro=false
+				this.showPro = false
 			})
 
 
-
 		},
-		changeTab(item){
-			this.goodsNavIndex=item
+		changeTab(item) {
+			this.goodsNavIndex = item
 		},
-		openLocation(){
+		openLocation() {
 			uni.openLocation({
-				name:this.storeInfo.Stores_Address,
+				name: this.storeInfo.Stores_Address,
 				latitude: Number(this.storeInfo.Stores_PrimaryLat),
 				longitude: Number(this.storeInfo.Stores_PrimaryLng),
 				success: function () {
 
-				}
+				},
 			});
 		},
-		cellStore(item){
+		cellStore(item) {
 			uni.makePhoneCall({
-				phoneNumber: item
+				phoneNumber: item,
 			});
 		},
 		async prodIndexChangeEvent(event) {
 			const {current} = event.detail
 			this.goodsNavIndex = current
-			let that=this
+			let that = this
 
-			if(!this.prodList[this.goodsNavIndex]&&this.goodsNavIndex!=0){
-				let data={
-					page:1,
-					pageSize:999,
-					with_buyer:1,
-					buyer_count:6,
-					store_id:this.$store.getters.getCurrentStoreId()
+			if (!this.prodList[this.goodsNavIndex] && this.goodsNavIndex != 0) {
+				let data = {
+					page: 1,
+					pageSize: 999,
+					with_buyer: 1,
+					buyer_count: 6,
+					store_id: this.$store.getters.getCurrentStoreId(),
 					// store_id:sessionStorage.getItem('store_id')
 				}
-				data.cate_id=this.productCate[this.goodsNavIndex-1].Category_ID
-				await getSelfStoreProd(data,{tip:'加载中'}).then(res=>{
+				data.cate_id = this.productCate[this.goodsNavIndex - 1].Category_ID
+				await getSelfStoreProd(data, {tip: '加载中'}).then(res => {
 
 
+					this.$set(that.prodList, this.goodsNavIndex, res.data)
 
-					this.$set(that.prodList,this.goodsNavIndex,res.data)
-
-				}).catch(e=>{error(e.msg||'获取产品列表失败')})
+				}).catch(e => {
+					error(e.msg || '获取产品列表失败')
+				})
 			}
 			this.$nextTick().then(() => {
-				if(this.goodsNavIndex===0){
+				if (this.goodsNavIndex === 0) {
 					this.upSwiperHeight()
-				}else{
-					let str='#scrollView'+(this.goodsNavIndex-1)
+				} else {
+					let str = '#scrollView' + (this.goodsNavIndex - 1)
 					const query = uni.createSelectorQuery()
-					console.log(str,"ss")
+					console.log(str, 'ss')
 					query.select(str).boundingClientRect(data => {
 
 						this.scrollHeightS[this.goodsNavIndex] = data.height
@@ -563,51 +577,50 @@ export default {
 
 
 		},
-		async init(){
+		async init() {
 
 			try {
-				this.showIndex=true
-				let storeData={
-					store_id:this.storeID
+				this.showIndex = true
+				let storeData = {
+					store_id: this.storeID,
 				}
 				if (this.lat && this.lng) {
 					storeData.lat = this.lat
 					storeData.lng = this.lng
 				}
-				let arr =await getStoreDetail(storeData,{tip:'智能定位中',noUid:1}).catch(e=>{
+				let arr = await getStoreDetail(storeData, {tip: '智能定位中', noUid: 1}).catch(e => {
 
-					this.storeID=''
+					this.storeID = ''
 					this.setFreStoreId(this.storeID)
 
-					throw Error(e.msg||'获取门店错误')
+					throw Error(e.msg || '获取门店错误')
 				})
-				this.storeInfo=arr.data
+				this.storeInfo = arr.data
 
 
-
-
-
-				let cate= await getProductCategory().catch(e=>{
+				let cate = await getProductCategory().catch(e => {
 
 				})
 
 				uni.setNavigationBarTitle({
-					title:this.storeInfo.Stores_Name
+					title: this.storeInfo.Stores_Name,
 				})
-				this.productCate=cate.data
+				this.productCate = cate.data
 
 
-				let data={
-					page:1,
-					pageSize:999,
-					with_buyer:1,
-					is_selling:1,
-					buyer_count:6,
-					store_id:this.$store.getters.getCurrentStoreId()
+				let data = {
+					page: 1,
+					pageSize: 999,
+					with_buyer: 1,
+					is_selling: 1,
+					buyer_count: 6,
+					store_id: this.$store.getters.getCurrentStoreId(),
 					//store_id:sessionStorage.getItem('store_id')
 				}
-				this.prodList=[]
-				let pro=await getSelfStoreProd(data,{tip:'加载中'}).catch(e=>{error(e.msg||'获取产品列表失败')})
+				this.prodList = []
+				let pro = await getSelfStoreProd(data, {tip: '加载中'}).catch(e => {
+					error(e.msg || '获取产品列表失败')
+				})
 				this.prodList.push(pro.data)
 
 				this.$nextTick().then(() => {
@@ -622,37 +635,37 @@ export default {
 
 				})
 
-				getCart({cart_key: 'CartList'}).then(res=>{
-					this.myCart=res.data.CartList
+				getCart({cart_key: 'CartList'}).then(res => {
+					this.myCart = res.data.CartList
 				})
 
 				// #ifdef H5
-				if(isWeiXin()){
-					let path = 'pages/index/index?store_id='+this.storeID;
+				if (isWeiXin()) {
+					let path = 'pages/index/index?store_id=' + this.storeID;
 					let front_url = this.initData.front_url;
-					this.WX_JSSDK_INIT(this).then((wxEnv)=>{
+					this.WX_JSSDK_INIT(this).then((wxEnv) => {
 						wxEnv.onMenuShareTimeline({
-							title:  this.storeInfo.Stores_Name, // 分享标题
-							link: front_url+buildSharePath(path), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+							title: this.storeInfo.Stores_Name, // 分享标题
+							link: front_url + buildSharePath(path), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
 							imgUrl: this.storeInfo.Stores_ImgPath, // 分享图标
 							desc: '万千好货疯抢中',
-							success: function() {
+							success: function () {
 								// 用户点击了分享后执行的回调函数
-							}
+							},
 						});
 						//两种方式都可以
 						wxEnv.onMenuShareAppMessage({
 							title: this.storeInfo.Stores_Name, // 分享标题
-							link: front_url+buildSharePath(path), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+							link: front_url + buildSharePath(path), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
 							imgUrl: this.storeInfo.Stores_ImgPath, // 分享图标
 							desc: '万千好货疯抢中',
 							type: 'link', // 分享类型,music、video或link，不填默认为link
 							// dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
-							success: function() {
+							success: function () {
 								// 用户点击了分享后执行的回调函数
-							}
+							},
 						});
-					}).catch((e)=>{
+					}).catch((e) => {
 						console.log(e)
 						// throw Error('初始化微信分享错误')
 					})
@@ -660,13 +673,13 @@ export default {
 
 				// #endif
 
-			}catch (e) {
+			} catch (e) {
 				console.log(e)
 				// error(e.message)
 			}
 
 		},
-		upSwiperHeight(){
+		upSwiperHeight() {
 			try {
 				const num = this.scrollHeightS[this.goodsNavIndex]
 				if (num < 1 || num < this.systemInfo.windowHeight) throw Error('高度无效或者低于屏幕，直接设置为屏幕高度好了')
@@ -681,7 +694,7 @@ export default {
 
 
 			let rt = false
-			let that=this
+			let that = this
 			//这里是返回了一个promise，而且不具备阻断后面的作用。不能用await promise.then()这样的古怪语法。要么就是await，要么就是promise.then()
 			getLocation(that).then(res => {
 
@@ -696,13 +709,11 @@ export default {
 				}
 			}).catch(err => {
 				console.log('定位失败')
-				this.storeID=''
+				this.storeID = ''
 				this.setFreStoreId('')
-				this.showIndex=true
+				this.showIndex = true
 
 			})
-
-
 
 
 		},
@@ -710,7 +721,7 @@ export default {
 
 			let localInfo = null;
 
-			let that=this
+			let that = this
 			let rt = false
 			//这里是返回了一个promise，而且不具备阻断后面的作用。不能用await promise.then()这样的古怪语法。要么就是await，要么就是promise.then()
 			getLocation(that).then(res => {
@@ -730,75 +741,76 @@ export default {
 			})
 
 
-
 		},
 		loadInfoStore() {
 
 			let postData = {
 				pageSize: 1,
 				page: 1,
-				stores_type:2
+				stores_type: 2,
 			}
 
 			if (this.lat && this.lng) {
 				postData.lat = this.lat
 				postData.lng = this.lng
 			}
-			let that=this
+			let that = this
 			getStoreList(emptyObject(postData), {mask: true}).then(res => {
-				if(res.data.length>0){
-					this.storeID=res.data[0].Stores_ID
+				if (res.data.length > 0) {
+					this.storeID = res.data[0].Stores_ID
 
 					that.init()
 					this.setFreStoreId(this.storeID)
-				}else{
-					this.storeID=''
+				} else {
+					this.storeID = ''
 					this.setFreStoreId(this.storeID)
 				}
 
-			}).catch(e=>{error(e.msg||'获取门店错误')})
+			}).catch(e => {
+				error(e.msg || '获取门店错误')
+			})
 		},
-		initStore(){
+		initStore() {
 			this.storeID = this.$store.getters.getCurrentStoreId()
 
-			this.showIndex=true
+			this.showIndex = true
 
-			if(this.storeID){
+			if (this.storeID) {
 
 				this.systemInfo = uni.getSystemInfoSync()
 				this.get_user_location_init()
-			}else if(this.initData.store_positing==1){
+			} else if (this.initData.store_positing == 1) {
 
 				this.systemInfo = uni.getSystemInfoSync()
 				this.get_user_location()
-			}else{
-				this.showIndex=true
+			} else {
+				this.showIndex = true
 			}
 
 
 		},
-		async _init_func(){
-			let systemConf = await getSystemConf().catch(err=>{
-				modal(err.msg||'初始化配置失败')
+		async _init_func() {
+			let systemConf = await getSystemConf().catch(err => {
+				modal(err.msg || '初始化配置失败')
 			})
-			let initData = systemConf?systemConf.data:null
-			this.initData=initData
+			let initData = systemConf ? systemConf.data : null
+			this.initData = initData
 
 			this.initStore()
 		},
-		...mapActions(['setFreStoreId'])
+		...mapActions(['setFreStoreId']),
 	},
 	onLoad() {
 		// #ifdef H5
 		this.selfObj = this
 		// #endif
 		this._init_func()
-	}
+	},
 }
 </script>
 
 <style lang="scss" scoped>
-	.index-all{
+	.index-all {
 		width: 750rpx;
 		overflow-x: hidden;
 		box-sizing: border-box;
@@ -807,6 +819,7 @@ export default {
 		overflow-y: scroll;
 		position: relative;
 	}
+
 	.store-all {
 		width: 750rpx;
 		//height: 100vh;
@@ -815,9 +828,10 @@ export default {
 		background-size: 100% auto;
 	}
 
-	.store-item-swiper{
+	.store-item-swiper {
 		padding-bottom: 42px;
 	}
+
 	.store-title {
 		font-size: 22px;
 		height: 42rpx;
@@ -861,10 +875,12 @@ export default {
 		overflow: hidden;
 		white-space: nowrap;
 	}
-	.store-list{
+
+	.store-list {
 		margin-left: auto;
 		text-align: right;
-		&-name{
+
+		&-name {
 			height: 40rpx;
 			line-height: 30rpx;
 			font-size: 30rpx;
@@ -872,12 +888,14 @@ export default {
 			padding-top: 6px;
 			margin-bottom: 16rpx;
 		}
-		&-image{
+
+		&-image {
 			width: 16rpx;
 			height: 24rpx;
 			margin-left: 14rpx;
 		}
-		&-distance{
+
+		&-distance {
 			height: 24rpx;
 			line-height: 24rpx;
 			color: #FF4E00;
@@ -999,7 +1017,7 @@ export default {
 
 
 	.mask {
-		background-color: rgba(0,0,0,.5);
+		background-color: rgba(0, 0, 0, .5);
 		position: fixed;
 		top: 0;
 		left: 0;
@@ -1007,14 +1025,16 @@ export default {
 		height: 100%;
 		z-index: 1000;
 	}
+
 	.sku-pop {
 		position: fixed;
 		top: 50%;
 		left: 50%;
 		z-index: 10000;
 		width: 526rpx;
-		transform: translate(-50%,-50%);
+		transform: translate(-50%, -50%);
 		border-radius: 10rpx;
+
 		.sku-title {
 			height: 60rpx;
 			line-height: 60rpx;
@@ -1025,19 +1045,23 @@ export default {
 			border-top-left-radius: 10rpx;
 			border-top-right-radius: 10rpx;
 		}
+
 		.sku-content {
 			padding: 40rpx 46rpx 34rpx 40rpx;
 			background-color: #fff;
 			border-bottom-left-radius: 10rpx;
 			border-bottom-right-radius: 10rpx;
+
 			.skulist {
 				margin-bottom: 30rpx;
 				display: flex;
 				align-items: center;
+
 				&.change-btn {
 					padding-top: 43rpx;
 					justify-content: center;
 				}
+
 				.selected,
 				.nochecked {
 					display: block;
@@ -1045,20 +1069,23 @@ export default {
 					height: 40rpx;
 					margin-right: 23rpx;
 				}
+
 				.nochecked {
 					box-sizing: border-box;
-					border:2rpx solid rgba(214,214,214,1);
-					border-radius:3px;
+					border: 2rpx solid rgba(214, 214, 214, 1);
+					border-radius: 3px;
 				}
+
 				.input {
-					width:420rpx;
-					height:60rpx;
-					border:1px solid rgba(214,214,214,1);
+					width: 420rpx;
+					height: 60rpx;
+					border: 1px solid rgba(214, 214, 214, 1);
 					font-size: 24rpx;
 					padding-left: 24rpx;
 					box-sizing: border-box;
 					line-height: 36rpx;
 				}
+
 				.btn {
 					width: 130rpx;
 					height: 50rpx;
@@ -1067,29 +1094,35 @@ export default {
 					background-color: #E9E9E9;
 					font-size: 24rpx;
 				}
+
 				.cancel {
 					color: #666;
 					margin-right: 25rpx;
 				}
+
 				.confirm {
 					color: #fff;
 					background-color: $wzw-primary-color;
 				}
+
 				.sku-name {
 					color: #333;
 					font-size: 24rpx;
-					margin-right:26rpx;
+					margin-right: 26rpx;
 				}
+
 				.sku-item {
 					display: flex;
 					align-items: center;
 					color: #666;
 					flex: 1;
 					flex-wrap: wrap;
+
 					.img {
 						width: 27rpx;
 						height: 32rpx;
 					}
+
 					.sku {
 						padding: 0 10rpx;
 						height: 46rpx;
@@ -1101,10 +1134,12 @@ export default {
 						margin-right: 13rpx;
 						border-radius: 5rpx;
 					}
+
 					.active {
 						background-color: #FF4E00;
 						color: #fff;
 					}
+
 					.handle {
 						width: 50rpx;
 						height: 45rpx;
@@ -1114,6 +1149,7 @@ export default {
 						color: #777;
 						background: #f6f6f6;
 					}
+
 					.pro-num {
 						margin: 0 15rpx;
 						font-size: 24rpx;
@@ -1121,11 +1157,13 @@ export default {
 					}
 				}
 			}
+
 			.sku-btns {
 				display: flex;
 				justify-content: center;
 				align-items: center;
 				margin-top: 60rpx;
+
 				.btn {
 					width: 130rpx;
 					height: 50rpx;
@@ -1133,39 +1171,47 @@ export default {
 					line-height: 50rpx;
 					font-size: 24rpx;
 				}
+
 				.cancel {
 					background: #e9e9e9;
 					color: #666;
 					margin-right: 25rpx;
 				}
+
 				.confirm {
 					background-color: #FF4E00;
 					color: #fff;
 				}
+
 				.disabled {
 					background: #999;
 				}
 			}
 		}
+
 		.priceSum {
 			text-align: center;
 			padding: 68rpx 0 104rpx;
 			background-color: #fff;
+
 			.title {
 				font-size: 28rpx;
 				margin-bottom: 28rpx;
 			}
+
 			.icon {
 				color: $wzw-primary-color;
 				font-size: 26rpx;
 				margin-right: 10rpx;
 			}
+
 			.span {
 				color: $wzw-primary-color;
 				font-size: 36rpx;
 			}
 		}
 	}
+
 	.back-btn {
 		height: 50rpx;
 		width: 130rpx;
@@ -1175,6 +1221,7 @@ export default {
 		border-radius: 25rpx;
 		line-height: 50rpx;
 	}
+
 	.check {
 		position: fixed;
 		bottom: 0;
@@ -1185,7 +1232,8 @@ export default {
 		font-size: 24rpx;
 		color: #333;
 		background-color: #fff;
-		box-shadow: 0px 0px 22px 0px rgba(4,0,0,0.12);
+		box-shadow: 0px 0px 22px 0px rgba(4, 0, 0, 0.12);
+
 		.check-msg {
 			flex: 1;
 			display: flex;
@@ -1193,19 +1241,23 @@ export default {
 			justify-content: center;
 			font-size: 24rpx;
 			color: #333;
+
 			.num {
 				color: $wzw-primary-color;
 				fong-size: 28rpx;
 			}
+
 			.img {
 				width: 17rpx;
 				height: 14rpx;
 				margin-left: 12rpx;
 			}
+
 			.turn {
 				transform: rotate(180deg);
 			}
 		}
+
 		.submit {
 			width: 210rpx;
 			height: 100%;
@@ -1219,7 +1271,7 @@ export default {
 
 
 	//分享
-	.ticks,.shareinfo {
+	.ticks, .shareinfo {
 		background: #fff;
 		width: 100%;
 		padding: 30rpx 0 60rpx;
@@ -1231,16 +1283,18 @@ export default {
 		margin-bottom: 50px;
 		/* #endif */
 	}
-	.ticks{
+
+	.ticks {
 		max-height: 1050rpx;
 		position: relative;
 		padding-top: 0rpx !important;
 		// overflow: scroll;
 	}
+
 	.t_title {
 		font-size: 30rpx;
 		color: #333;
-		text-align:center;
+		text-align: center;
 		//margin-bottom: 40rpx;
 		// position: fixed;
 		width: 100%;
@@ -1249,6 +1303,7 @@ export default {
 		line-height: 90rpx;
 		background-color: #FFFFFF;
 	}
+
 	.t_title image {
 		height: 24rpx;
 		width: 24rpx;
@@ -1256,6 +1311,7 @@ export default {
 		top: 33rpx;
 		right: 20rpx;
 	}
+
 	.t_content {
 		position: relative;
 		width: 720rpx;
@@ -1266,29 +1322,36 @@ export default {
 		padding: 20rpx 0 28rpx 40rpx;
 		box-sizing: border-box;
 		font-size: 22rpx;
-		color:  #F43131 ;
+		color: #F43131;
 	}
+
 	.t_left {
 		float: left;
 	}
+
 	.t_left .t_left_t .money {
 		font-size: 42rpx;
 		margin-right: 10rpx;
 	}
+
 	.t_left .t_left_t {
 		font-size: 24rpx;
 		margin-bottom: 10rpx;
 	}
-	.t_left .t_left_b{
+
+	.t_left .t_left_b {
 		margin-top: 6rpx;
 	}
+
 	.t_left .t_left_t i {
 		font-size: 22rpx;
 		font-style: normal;
 	}
-	.t_left .t_left_c,.t_left .t_left_b{
+
+	.t_left .t_left_c, .t_left .t_left_b {
 		font-size: 22rpx;
 	}
+
 	.t_right {
 		float: right;
 		height: 116rpx;
@@ -1299,31 +1362,38 @@ export default {
 		//width: 124rpx;
 		text-align: center;
 	}
+
 	.aleady {
 		color: #999;
 	}
-	.shareinfo{
+
+	.shareinfo {
 		padding-bottom: 0;
 		color: #333;
 		font-size: 24rpx;
 	}
-	.shareinfo>div {
+
+	.shareinfo > div {
 		text-align: center;
 	}
+
 	.s_top {
 		display: flex;
 		justify-content: center;
 		align-items: center;
 	}
+
 	.s_top .img {
 		width: 76rpx;
 		height: 76rpx;
 		display: block;
 		margin: 0 auto 10rpx;
 	}
-	.s_top>div:nth-child(1) {
+
+	.s_top > div:nth-child(1) {
 		/*margin-right: 120rpx;*/
 	}
+
 	.s_bottom {
 		position: relative;
 		bottom: 0;
@@ -1335,8 +1405,9 @@ export default {
 		line-height: 60rpx;
 		margin-top: 16rpx;
 	}
+
 	//分享结束
-	.store-line{
+	.store-line {
 		width: 2px;
 		height: 40rpx;
 		background-color: #FFCBCB;

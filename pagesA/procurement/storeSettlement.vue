@@ -1,209 +1,214 @@
 <template>
-    <view class="wrap" @click="commonClick">
+	<view @click="commonClick" class="wrap">
 		<block v-if="index==1">
-			<view class="area-item" >
+			<view class="area-item">
 				<text class="area-label">开始时间</text>
-				<picker class="pickerView" mode="date" :value="date" :start="startDate" :end="endDate" @change="bindDateChangeStart">
+				<picker :end="endDate" :start="startDate" :value="date" @change="bindDateChangeStart" class="pickerView"
+				        mode="date">
 					<view class="uni-inputs" v-if="dateValue">{{dateValue}}</view>
 					<view class="uni-input" v-if="!dateValue">请选择开始时间</view>
-					<image class="rightImg"  :src="'/static/client/person/right.png' | domain" ></image>
+					<image :src="'/static/client/person/right.png' | domain" class="rightImg"></image>
 				</picker>
 
 			</view>
 
-			<view class="area-item"  >
+			<view class="area-item">
 				<text class="area-label">结束时间</text>
-				<picker class="pickerView" mode="date" :value="date" :start="startDate" :end="endDate" @change="bindDateChangeEnd">
+				<picker :end="endDate" :start="startDate" :value="date" @change="bindDateChangeEnd" class="pickerView"
+				        mode="date">
 					<view class="uni-inputs" v-if="dateValues">{{dateValues}}</view>
 					<view class="uni-input" v-if="!dateValues">请选择结束时间</view>
-					<image class="rightImg"  :src="'/static/client/person/right.png' | domain"  ></image>
+					<image :src="'/static/client/person/right.png' | domain" class="rightImg"></image>
 				</picker>
 			</view>
 
 			<view class="viewButoon">
-				<view class="button" @click="search">
+				<view @click="search" class="button">
 					搜索
 				</view>
-				<view class="msg" @click="goStoreSettlement">
+				<view @click="goStoreSettlement" class="msg">
 					历史结算
 				</view>
 			</view>
 		</block>
-<!--		<block v-if="index==2">-->
-<!--			<view class="myTop">-->
-<!--				<view class="myView">-->
-<!--					开放时间: <text class="colorFont">{{list.start_time}}</text>-->
-<!--				</view>-->
-<!--				<view class="myView">-->
-<!--					结算时间: <text class="colorFont">{{list.end_time}}</text>-->
-<!--				</view>-->
-<!--				<view class="myView">-->
-<!--					订单总金额: <text class="colorRed">¥{{list.Order_TotalAmount||0}}</text>-->
-<!--				</view>-->
-<!--				<view class="myView">-->
-<!--					结算比例: <text class="colorFont">{{list.Distribute_Balance||'0:0'}}</text>-->
-<!--				</view>-->
-<!--				<view class="myView">-->
-<!--					运费金额: <text class="colorFont">¥{{list.Shipping_fee||0}}</text>-->
-<!--				</view>-->
-<!--				<view class="myView">-->
-<!--					服务费: <text class="colorFont">¥{{list.service_fee||0}}</text>-->
-<!--				</view>-->
-<!--				<view class="myView">-->
-<!--					退款金额: <text class="colorFont">¥{{list.back_amount||0}}</text>-->
-<!--				</view>-->
-<!--				<view class="myView">-->
-<!--					实际结算: <text class="colorRed">¥{{list.Stores_Balance||0}}</text>-->
-<!--				</view>-->
-<!--			</view>-->
-<!--			-->
-<!--			<view style="background-color: #F8F8F8;height: 10px;width: 750rpx;"></view>-->
-<!--			-->
-<!--			<view class="tableTitle">-->
-<!--				订单数据-->
-<!--			</view>-->
-<!--			<view class="table">-->
-<!--				<view class="th">-->
-<!--					<view class="td">订单号</view>-->
-<!--					<view class="td">总价</view>-->
-<!--					<view class="td">实付</view>-->
-<!--					<view class="td">退款</view>-->
-<!--					<view class="td">结算</view>-->
-<!--				</view>-->
-<!--				<view class="tr" v-for="(item,index) of list.orders" :key="index">-->
-<!--					<view class="td">{{item.order_id}}</view>-->
-<!--					<view class="td">¥{{item.order_totalamount}}</view>-->
-<!--					<view class="td">¥{{item.order_totalprice}}</view>-->
-<!--					<view class="td">¥{{item.back_amount}}</view>-->
-<!--					<view class="td colorRed">¥{{item.settle_money}}</view>-->
-<!--				</view>-->
-<!--			</view>-->
-<!--			-->
-<!--			<view class="buttons" v-if="list.orders" @click="goStore">-->
-<!--				发起结算-->
-<!--			</view>-->
-<!--			<view class="buttons ccc" v-if="!list.orders">-->
-<!--				发起结算-->
-<!--			</view>-->
-<!--		</block>-->
-    </view>
+		<!--		<block v-if="index==2">-->
+		<!--			<view class="myTop">-->
+		<!--				<view class="myView">-->
+		<!--					开放时间: <text class="colorFont">{{list.start_time}}</text>-->
+		<!--				</view>-->
+		<!--				<view class="myView">-->
+		<!--					结算时间: <text class="colorFont">{{list.end_time}}</text>-->
+		<!--				</view>-->
+		<!--				<view class="myView">-->
+		<!--					订单总金额: <text class="colorRed">¥{{list.Order_TotalAmount||0}}</text>-->
+		<!--				</view>-->
+		<!--				<view class="myView">-->
+		<!--					结算比例: <text class="colorFont">{{list.Distribute_Balance||'0:0'}}</text>-->
+		<!--				</view>-->
+		<!--				<view class="myView">-->
+		<!--					运费金额: <text class="colorFont">¥{{list.Shipping_fee||0}}</text>-->
+		<!--				</view>-->
+		<!--				<view class="myView">-->
+		<!--					服务费: <text class="colorFont">¥{{list.service_fee||0}}</text>-->
+		<!--				</view>-->
+		<!--				<view class="myView">-->
+		<!--					退款金额: <text class="colorFont">¥{{list.back_amount||0}}</text>-->
+		<!--				</view>-->
+		<!--				<view class="myView">-->
+		<!--					实际结算: <text class="colorRed">¥{{list.Stores_Balance||0}}</text>-->
+		<!--				</view>-->
+		<!--			</view>-->
+		<!--			-->
+		<!--			<view style="background-color: #F8F8F8;height: 10px;width: 750rpx;"></view>-->
+		<!--			-->
+		<!--			<view class="tableTitle">-->
+		<!--				订单数据-->
+		<!--			</view>-->
+		<!--			<view class="table">-->
+		<!--				<view class="th">-->
+		<!--					<view class="td">订单号</view>-->
+		<!--					<view class="td">总价</view>-->
+		<!--					<view class="td">实付</view>-->
+		<!--					<view class="td">退款</view>-->
+		<!--					<view class="td">结算</view>-->
+		<!--				</view>-->
+		<!--				<view class="tr" v-for="(item,index) of list.orders" :key="index">-->
+		<!--					<view class="td">{{item.order_id}}</view>-->
+		<!--					<view class="td">¥{{item.order_totalamount}}</view>-->
+		<!--					<view class="td">¥{{item.order_totalprice}}</view>-->
+		<!--					<view class="td">¥{{item.back_amount}}</view>-->
+		<!--					<view class="td colorRed">¥{{item.settle_money}}</view>-->
+		<!--				</view>-->
+		<!--			</view>-->
+		<!--			-->
+		<!--			<view class="buttons" v-if="list.orders" @click="goStore">-->
+		<!--				发起结算-->
+		<!--			</view>-->
+		<!--			<view class="buttons ccc" v-if="!list.orders">-->
+		<!--				发起结算-->
+		<!--			</view>-->
+		<!--		</block>-->
+	</view>
 </template>
 
 <script>
- import {pageMixin} from "../../common/mixin";
+import {pageMixin} from '../../common/mixin';
 
-    import {settlement} from '../../common/fetch.js'
-	import {mapGetters} from 'vuex'
-    export default {
-			mixins: [pageMixin],
-        data() {
-			const currentDate = this.getDate({
-			         format: true
-			})
-            return {
-				index:1,
-				dateValue:'',//开始时间
-				dateValues:'',//结束时间
-				list:[],
-            }
-        },
-        onLoad: function(){
+import {settlement} from '../../common/fetch.js'
+import {mapGetters} from 'vuex'
 
-        },
-		computed: {
-		    ...mapGetters(['Stores_ID'])
-		},
-        methods: {
-			goStore(){
-				let data={
-					store_id:this.Stores_ID,
-					start_time:this.list.start_time,
-					end_time:this.list.end_time,
-					type:1
-				}
-				settlement(data).then(res=>{
-					uni.showToast({
-						title:res.msg
-					})
-					setTimeout(function(){
-						uni.navigateTo({
-							url:'/pagesA/procurement/storeSettlementRecord'
-						})
-					},1000)
-				})
-			},
-			goStoreSettlement(){
-				uni.navigateTo({
-					url:'/pagesA/procurement/storeSettlementRecord'
-				})
-			},
-			search(){
-				if(!this.dateValue){
-					uni.showToast({
-						title:'请选择开始时间',
-						icon:'none'
-					})
-					return
-				}
-				if(!this.dateValues){
-					uni.showToast({
-						title:'请选择结束时间',
-						icon:'none'
-					})
-					return
-				}
-				let d=new Date(this.dateValues)
-				let c=new Date(this.dateValue)
-				if(d<c){
-					uni.showToast({
-						title:'结束时间不能小于开始时间',
-						icon:'none'
-					})
-					return
-				}
-				uni.navigateTo({
-					url:'/pagesA/procurement/storeSettlementLast?start_time='+this.dateValue+'&&end_time='+this.dateValues
-				})
-				// let data={
-				// 	store_id:this.Stores_ID,
-				// 	start_time:this.dateValue,
-				// 	end_time:this.dateValues
-				// }
-				// settlement(data).then(res=>{
-				// 	this.list=res.data
-				// 	this.index=2
-				// })
-			},
-			bindDateChangeEnd(e){
-				this.dateValues=e.target.value
-			},
-			bindDateChangeStart(e){
-				this.dateValue=e.target.value
-			},
-			getDate(type) {
-				const date = new Date();
-				let year = date.getFullYear();
-				let month = date.getMonth() + 1;
-				let day = date.getDate();
+export default {
+	mixins: [pageMixin],
+	data() {
+		const currentDate = this.getDate({
+			format: true,
+		})
+		return {
+			index: 1,
+			dateValue: '',//开始时间
+			dateValues: '',//结束时间
+			list: [],
+		}
+	},
+	onLoad: function () {
 
-				if (type === 'start') {
-					year = year - 60;
-				} else if (type === 'end') {
-					year = year + 2;
-				}
-				month = month > 9 ? month : '0' + month;;
-				day = day > 9 ? day : '0' + day;
-				return `${year}-${month}-${day}`;
+	},
+	computed: {
+		...mapGetters(['Stores_ID']),
+	},
+	methods: {
+		goStore() {
+			let data = {
+				store_id: this.Stores_ID,
+				start_time: this.list.start_time,
+				end_time: this.list.end_time,
+				type: 1,
 			}
-        }
-    }
+			settlement(data).then(res => {
+				uni.showToast({
+					title: res.msg,
+				})
+				setTimeout(function () {
+					uni.navigateTo({
+						url: '/pagesA/procurement/storeSettlementRecord',
+					})
+				}, 1000)
+			})
+		},
+		goStoreSettlement() {
+			uni.navigateTo({
+				url: '/pagesA/procurement/storeSettlementRecord',
+			})
+		},
+		search() {
+			if (!this.dateValue) {
+				uni.showToast({
+					title: '请选择开始时间',
+					icon: 'none',
+				})
+				return
+			}
+			if (!this.dateValues) {
+				uni.showToast({
+					title: '请选择结束时间',
+					icon: 'none',
+				})
+				return
+			}
+			let d = new Date(this.dateValues)
+			let c = new Date(this.dateValue)
+			if (d < c) {
+				uni.showToast({
+					title: '结束时间不能小于开始时间',
+					icon: 'none',
+				})
+				return
+			}
+			uni.navigateTo({
+				url: '/pagesA/procurement/storeSettlementLast?start_time=' + this.dateValue + '&&end_time=' + this.dateValues,
+			})
+			// let data={
+			// 	store_id:this.Stores_ID,
+			// 	start_time:this.dateValue,
+			// 	end_time:this.dateValues
+			// }
+			// settlement(data).then(res=>{
+			// 	this.list=res.data
+			// 	this.index=2
+			// })
+		},
+		bindDateChangeEnd(e) {
+			this.dateValues = e.target.value
+		},
+		bindDateChangeStart(e) {
+			this.dateValue = e.target.value
+		},
+		getDate(type) {
+			const date = new Date();
+			let year = date.getFullYear();
+			let month = date.getMonth() + 1;
+			let day = date.getDate();
+
+			if (type === 'start') {
+				year = year - 60;
+			} else if (type === 'end') {
+				year = year + 2;
+			}
+			month = month > 9 ? month : '0' + month;
+			;
+			day = day > 9 ? day : '0' + day;
+			return `${year}-${month}-${day}`;
+		},
+	},
+}
 </script>
 
 <style lang="scss" scoped>
-	.wrap{
+	.wrap {
 		background-color: #FFFFFF;
 		min-height: 100vh;
 	}
+
 	.area-item {
 		display: flex;
 		align-items: center;
@@ -215,23 +220,28 @@
 		position: relative;
 		width: 710rpx;
 		box-sizing: border-box;
+
 		.area-label {
 			display: inline-block;
 			width: 140rpx;
 			margin-right: 10rpx;
 		}
-		.pickerView{
+
+		.pickerView {
 			width: 570rpx;
 			height: 120rpx;
 			line-height: 120rpx;
 		}
-		.uni-input{
+
+		.uni-input {
 			color: #CAC8C8;
 		}
-		.uni-inputs{
+
+		.uni-inputs {
 			color: #333333;
 		}
-		.rightImg{
+
+		.rightImg {
 			width: 18rpx;
 			height: 28rpx;
 			position: absolute;
@@ -239,22 +249,25 @@
 			right: 10rpx;
 		}
 	}
-	.viewButoon{
+
+	.viewButoon {
 		margin: 0 auto;
 		margin-top: 110rpx;
-		width:660rpx;
+		width: 660rpx;
 	}
-	.button{
-		width:660rpx;
-		height:76rpx;
+
+	.button {
+		width: 660rpx;
+		height: 76rpx;
 		text-align: center;
 		line-height: 76rpx;
-		background-color:$wzw-primary-color;
-		border-radius:10rpx;
+		background-color: $wzw-primary-color;
+		border-radius: 10rpx;
 		font-size: 30rpx;
 		color: #FFFFFF;
 	}
-	.msg{
+
+	.msg {
 		float: right;
 		margin-top: 18rpx;
 		font-size: 24rpx;
@@ -262,30 +275,35 @@
 	}
 
 
-	.wrap{
+	.wrap {
 		background-color: #FFFFFF;
 		min-height: 100vh;
 		padding-bottom: 85rpx;
 		box-sizing: border-box;
 	}
-	.myTop{
+
+	.myTop {
 		padding: 30rpx 41rpx;
 		font-size: 26rpx;
 		color: #333333;
 	}
-	.myView{
+
+	.myView {
 		height: 60rpx;
 		line-height: 60rpx;
 	}
-	.colorFont{
+
+	.colorFont {
 		color: #777777;
 		margin-left: 16rpx;
 	}
-	.colorRed{
+
+	.colorRed {
 		color: #F43131;
 		margin-left: 16rpx;
 	}
-	.tableTitle{
+
+	.tableTitle {
 		width: 750rpx;
 		height: 90rpx;
 		line-height: 90rpx;
@@ -293,11 +311,13 @@
 		font-size: 30rpx;
 		color: #333333;
 	}
-	.table{
+
+	.table {
 		width: 710rpx;
 		margin: 0 auto;
 		border: 1px solid #eee;
-		.th{
+
+		.th {
 			display: flex;
 			height: 80rpx;
 			line-height: 80rpx;
@@ -305,38 +325,45 @@
 			border-bottom: 1px solid #eee;
 			font-size: 26rpx;
 			color: #333333;
-			.td{
+
+			.td {
 				width: 142rpx;
 				text-align: center;
 				border-right: 1px solid #eee;
 				box-sizing: border-box;
-				&:last-child{
+
+				&:last-child {
 					border-right: 0px;
 				}
 			}
 		}
-		.tr{
+
+		.tr {
 			display: flex;
 			height: 70rpx;
 			line-height: 70rpx;
 			font-size: 22rpx;
 			color: #666666;
 			border-bottom: 1px solid #E7E7E7;
-			&:last-child{
+
+			&:last-child {
 				border-bottom: 0px;
 			}
-			.td{
+
+			.td {
 				width: 142rpx;
 				text-align: center;
 				border-right: 1px solid #E7E7E7;
 				box-sizing: border-box;
-				&:last-child{
+
+				&:last-child {
 					border-right: 0px;
 				}
 			}
 		}
 	}
-	.buttons{
+
+	.buttons {
 		width: 750rpx;
 		height: 85rpx;
 		line-height: 85rpx;
@@ -348,10 +375,12 @@
 		left: 0rpx;
 		text-align: center;
 	}
-	.ccc{
+
+	.ccc {
 		background-color: #CCCCCC;
 	}
-	.colorRed{
+
+	.colorRed {
 		color: #F43131;
 	}
 </style>

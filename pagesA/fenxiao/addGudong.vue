@@ -5,93 +5,95 @@
 			<view class="haha">
 				姓名
 			</view>
-			<input class="inputs" type="text" placeholder="请输入您的姓名" placeholder-class="place" v-model="arr.apply_name">
+			<input class="inputs" placeholder="请输入您的姓名" placeholder-class="place" type="text" v-model="arr.apply_name">
 		</view>
 		<view class="three">
 			<view class="haha">
 				电话
 			</view>
-			<input  class="inputs" type="number" placeholder="请输入您的电话" placeholder-class="place" v-model="arr.apply_mobile" @blur="isTell">
+			<input @blur="isTell" class="inputs" placeholder="请输入您的电话" placeholder-class="place" type="number"
+			       v-model="arr.apply_mobile">
 		</view>
-		<view class="four" @click="submit">
+		<view @click="submit" class="four">
 			提交申请
 		</view>
-		<view class="five" @click="goRecord">
+		<view @click="goRecord" class="five">
 			查看申请记录
-			<image class="image" :src="'/static/client/fenxiao/chakan.png'|domain" ></image>
+			<image :src="'/static/client/fenxiao/chakan.png'|domain" class="image"></image>
 		</view>
 	</view>
 </template>
 
 <script>
-	import {pageMixin} from "../../common/mixin";
-	import {shaApply} from '../../common/fetch.js'
-	import {fun} from "../../common";
-	export default {
-		mixins:[pageMixin],
-		data() {
-			return {
-				arr:{
-					apply_name:'',
-					apply_mobile:''
-				},
-			};
-		},
-		methods:{
-			goRecord(){
-				uni.navigateTo({
-					url:'/pagesA/fenxiao/regionRecord?index=2'
-				})
-			},
-			submit(){
-				if(!this.arr.apply_name){
-					uni.showToast({
-						title:"请输入姓名",
-						icon:'none'
-					})
-					return;
-				}else if(!(/^1[3456789]\d{9}$/.test(this.arr.apply_mobile))){
-					uni.showToast({
-						title:'手机号输入错误，请重新输入',
-						icon:"none"
-					})
-					return;
-				}
-				let info={};
-				info.apply_name=this.arr.apply_name;
-				info.apply_mobile=this.arr.apply_mobile;
-				shaApply(info).then(res=>{
-					uni.showToast({
-						title:res.msg,
-						icon:'none'
-					})
-					setTimeout(function () {
-						uni.navigateTo({
-							url:'/pagesA/fenxiao/gudong'
-						})
-					},1000)
-				}).catch(e=>{
+import {pageMixin} from '../../common/mixin';
+import {shaApply} from '../../common/fetch.js'
 
-				})
+export default {
+	mixins: [pageMixin],
+	data() {
+		return {
+			arr: {
+				apply_name: '',
+				apply_mobile: '',
 			},
-			isTell(){
-				if(!(/^1[3456789]\d{9}$/.test(this.arr.apply_mobile))){
-					uni.showToast({
-						title:'手机号输入错误，请重新输入',
-						icon:"none"
-					})
-				}
+		};
+	},
+	methods: {
+		goRecord() {
+			uni.navigateTo({
+				url: '/pagesA/fenxiao/regionRecord?index=2',
+			})
+		},
+		submit() {
+			if (!this.arr.apply_name) {
+				uni.showToast({
+					title: '请输入姓名',
+					icon: 'none',
+				})
+				return;
+			} else if (!(/^1[3456789]\d{9}$/.test(this.arr.apply_mobile))) {
+				uni.showToast({
+					title: '手机号输入错误，请重新输入',
+					icon: 'none',
+				})
+				return;
 			}
-		}
-	}
+			let info = {};
+			info.apply_name = this.arr.apply_name;
+			info.apply_mobile = this.arr.apply_mobile;
+			shaApply(info).then(res => {
+				uni.showToast({
+					title: res.msg,
+					icon: 'none',
+				})
+				setTimeout(function () {
+					uni.navigateTo({
+						url: '/pagesA/fenxiao/gudong',
+					})
+				}, 1000)
+			}).catch(e => {
+
+			})
+		},
+		isTell() {
+			if (!(/^1[3456789]\d{9}$/.test(this.arr.apply_mobile))) {
+				uni.showToast({
+					title: '手机号输入错误，请重新输入',
+					icon: 'none',
+				})
+			}
+		},
+	},
+}
 </script>
 
 <style lang="scss" scoped>
-	.myall{
+	.myall {
 		background-color: #FFFFFF !important;
 		min-height: 100vh;
 	}
-.three{
+
+	.three {
 		height: 88rpx;
 		line-height: 88rpx;
 		width: 710rpx;
@@ -99,32 +101,39 @@
 		border-bottom: 1px solid #E7E7E7;
 		display: flex;
 		align-items: center;
-		.haha{
+
+		.haha {
 			font-size: 30rpx;
 			color: #333333;
 			margin-right: 42rpx;
 		}
-		.inputs{
+
+		.inputs {
 			height: 88rpx;
 			line-height: 88rpx;
 			font-size: 28rpx;
 			color: #333333;
 		}
-		.place{
+
+		.place {
 			font-size: 28rpx;
 			color: #CAC8C8;
 		}
-		.myRadio{
+
+		.myRadio {
 			height: 88rpx;
 			display: flex;
-			.myRadioQ{
+
+			.myRadioQ {
 				height: 88rpx;
 				display: flex;
 				margin-right: 17rpx;
-				.radio{
-					transform:scale(0.7);
+
+				.radio {
+					transform: scale(0.7);
 				}
-				.mbx{
+
+				.mbx {
 					font-size: 28rpx;
 					color: #777777;
 					margin-left: 13rpx;
@@ -133,32 +142,35 @@
 		}
 
 	}
-.four{
-	width:490rpx;
-	height:75rpx;
-	line-height: 75rpx;
-	text-align: center;
-	background:rgba(244,49,49,1);
-	border-radius:10rpx;
-	margin: 0 auto;
-	margin-top: 70rpx;
-	font-size: 30rpx;
-	color: #FFFFFF;
-}
-.five{
-	height:23rpx;
-	line-height: 23rpx;
-	width: 174rpx;
-	margin: 0 auto;
-	margin-top: 21rpx;
-	font-size:24rpx;
-	font-weight:500;
-	color:rgba(153,153,153,1);
-	.image{
-		width: 12rpx;
-		height: 20rpx;
-		margin-left: 10rpx;
+
+	.four {
+		width: 490rpx;
+		height: 75rpx;
+		line-height: 75rpx;
+		text-align: center;
+		background: rgba(244, 49, 49, 1);
+		border-radius: 10rpx;
+		margin: 0 auto;
+		margin-top: 70rpx;
+		font-size: 30rpx;
+		color: #FFFFFF;
 	}
-}
+
+	.five {
+		height: 23rpx;
+		line-height: 23rpx;
+		width: 174rpx;
+		margin: 0 auto;
+		margin-top: 21rpx;
+		font-size: 24rpx;
+		font-weight: 500;
+		color: rgba(153, 153, 153, 1);
+
+		.image {
+			width: 12rpx;
+			height: 20rpx;
+			margin-left: 10rpx;
+		}
+	}
 
 </style>

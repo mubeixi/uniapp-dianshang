@@ -1,10 +1,10 @@
 <template>
-	<view class="all"  @click="commonClick">
+	<view @click="commonClick" class="all">
 		<!-- <page-title title="申请记录" rightHidden="true" bgcolor="#ffffff"></page-title> -->
 		<div class="defaults" v-if="data.length<=0">
-			<image :src="'/static/client/defaultImg.png'|domain" ></image>
+			<image :src="'/static/client/defaultImg.png'|domain"></image>
 		</div>
-		<view class="main" v-for="(item,ind) of data" :key="ind">
+		<view :key="ind" class="main" v-for="(item,ind) of data">
 			<block v-if="index==1">
 				<view class="fir">
 					<view class="left">
@@ -16,7 +16,7 @@
 				</view>
 				<view class="fir">
 					<view class="left">
-				        状态：
+						状态：
 					</view>
 					<view class="rights">
 						{{item.Order_Status_desc}}
@@ -45,7 +45,7 @@
 				</view>
 				<view class="fir">
 					<view class="left">
-				        状态：
+						状态：
 					</view>
 					<view class="rights">
 						{{item.Order_Status_desc}}
@@ -57,10 +57,10 @@
 			</block>
 			<view class="fir">
 				<view class="left">
-			        时间：
+					时间：
 				</view>
 				<view class="right">
-                    {{item.Order_CreateTime}}
+					{{item.Order_CreateTime}}
 				</view>
 			</view>
 		</view>
@@ -68,111 +68,118 @@
 </template>
 
 <script>
-	import {pageMixin} from "../../common/mixin";
-	import {getShaApply,getAgentApply} from '../../common/fetch.js'
-	import {mapGetters} from 'vuex';
+import {pageMixin} from '../../common/mixin';
+import {getAgentApply, getShaApply} from '../../common/fetch.js'
+import {mapGetters} from 'vuex';
 
-	export default {
-		mixins:[pageMixin],
-		data() {
-			return {
-				height:1000,//获取手机屏幕高度
-				page:1,
-				pageSize:10,
-				data:[],
-				totalCount:0,
-				index:1,
-			};
-		},
-		onLoad(options) {
-			let that=this;
-			that.index=options.index;
-			uni.getSystemInfo({
-			    success: function (res) {
-			        that.height=res.screenHeight-68;
-			    }
-			});
-		},
-		onShow() {
-			this.data=[];
-			this.page=1;
-			//获取申请记录
+export default {
+	mixins: [pageMixin],
+	data() {
+		return {
+			height: 1000,//获取手机屏幕高度
+			page: 1,
+			pageSize: 10,
+			data: [],
+			totalCount: 0,
+			index: 1,
+		};
+	},
+	onLoad(options) {
+		let that = this;
+		that.index = options.index;
+		uni.getSystemInfo({
+			success: function (res) {
+				that.height = res.screenHeight - 68;
+			},
+		});
+	},
+	onShow() {
+		this.data = [];
+		this.page = 1;
+		//获取申请记录
+		this.getWithdrawRecordList();
+	},
+	onReachBottom() {
+		if (this.totalCount > this.data.length) {
+			this.page++;
 			this.getWithdrawRecordList();
-		},
-		onReachBottom() {
-			if(this.totalCount>this.data.length){
-				this.page++;
-				this.getWithdrawRecordList();
-			}
-		},
-		computed:{
-			...mapGetters(['commi_rename'])
-		},
-		methods:{
-			//获取提现记录
-			getWithdrawRecordList(){
-				let data={
-					page:this.page,
-					pageSize:this.pageSize,
-				}
-				if(this.index==1){
-					getAgentApply(data).then(res=>{
-						this.totalCount=res.totalCount;
-						for(let item of res.data){
-							this.data.push(item);
-						}
-					}).catch(e=>{
-
-					})
-				}else{
-					getShaApply(data).then(res=>{
-						this.totalCount=res.totalCount;
-						for(let item of res.data){
-							this.data.push(item);
-						}
-					}).catch(e=>{
-
-					})
-				}
-			}
 		}
-	}
+	},
+	computed: {
+		...mapGetters(['commi_rename']),
+	},
+	methods: {
+		//获取提现记录
+		getWithdrawRecordList() {
+			let data = {
+				page: this.page,
+				pageSize: this.pageSize,
+			}
+			if (this.index == 1) {
+				getAgentApply(data).then(res => {
+					this.totalCount = res.totalCount;
+					for (let item of res.data) {
+						this.data.push(item);
+					}
+				}).catch(e => {
+
+				})
+			} else {
+				getShaApply(data).then(res => {
+					this.totalCount = res.totalCount;
+					for (let item of res.data) {
+						this.data.push(item);
+					}
+				}).catch(e => {
+
+				})
+			}
+		},
+	},
+}
 </script>
 
 <style lang="scss" scoped>
-	.all{
+	.all {
 		background-color: #f8f8f8;
 		min-height: 100vh;
 	}
-	.main{
+
+	.main {
 		width: 710rpx;
 		margin: 0 auto;
 		margin-top: 40rpx;
 		background-color: #FFFFFF;
 		box-sizing: border-box;
 		padding: 28rpx 0rpx 32rpx 27rpx;
-		.fir{
+
+		.fir {
 			height: 48rpx;
 			display: flex;
 			font-size: 26rpx;
 			align-items: center;
-			.left{
+
+			.left {
 				color: #333333;
 				margin-right: 20rpx;
 			}
-			.right{
+
+			.right {
 				color: #888888;
 			}
-			.rightt{
+
+			.rightt {
 				color: #888888;
 				margin-left: 20rpx;
 			}
-			.rights{
+
+			.rights {
 				color: #F43131;
 			}
 		}
 	}
-	.defaults{
+
+	.defaults {
 		margin: 0 auto;
 		width: 640rpx;
 		height: 480rpx;
