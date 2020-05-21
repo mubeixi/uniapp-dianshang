@@ -112,7 +112,7 @@ export default {
       typeList: [{ titile: '' }],
       index: 0,
       ind: 0,
-      array: ['代理商', '社区门店'],
+      array: ['经销商', '社区服务店'],
       showReason: false,
       storeData: {
         store_province_name: '',

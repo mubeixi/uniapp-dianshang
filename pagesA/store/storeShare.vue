@@ -5,7 +5,7 @@
     <div class="store-type">
       <image class="store-img" src="/static/store/storeType.png"></image>
       <div class='store-type-title' v-if="type!=3">
-        邀请你开通 <span class="store-color">{{type==1?'代理商':'社区门店'}}</span>
+        邀请你开通 <span class="store-color">{{type==1?'经销商':'社区服务店'}}</span>
       </div>
       <div class='store-type-title' v-else-if="type==3">
         邀请你进入我的店铺
@@ -14,11 +14,11 @@
     <div class="user-name">{{storeDetail.Stores_Name}}</div>
     <image :src="qrcode" class="store-qrcode"></image>
     <div class="store-qc-text">长按识别图中二维码</div>
-    
+
     <canvas canvas-id="myCanvas" class="myCanvas" id="myCanvas" />
-    
+
     <div @click="saveAll" class="button-store">
-      
+
       <image src="/static/store/saveHai.png" style="width: 100%;height: 100%"></image>
       <div class="button-text">保存海报</div>
     </div>
@@ -109,7 +109,7 @@ export default {
       }
       if (this.type == 3) {
         data.act_type = 2
-        data.store_id = this.storeid
+        data.store_id = this.$store.getters.getCurrentStoreId()//this.storeid
       } else {
         data.store_id = this.Stores_ID
       }
@@ -119,9 +119,13 @@ export default {
         error(e.msg || '获取二维码失败')
       })
 
-      await storeInit({
-        store_id: this.Stores_ID,
-      }).then(res => {
+      let storeData={}
+      if (this.type == 3) {
+        storeData.store_id =this.$store.getters.getCurrentStoreId() //this.storeid
+      } else {
+        storeData.store_id = this.Stores_ID
+      }
+      await storeInit(storeData).then(res => {
         this.storeDetail = res.data
       }).catch(err => {
         console.log(err.msg || '初始化门店失败')
@@ -161,9 +165,9 @@ export default {
           ctx.setFontSize(16)
           ctx.textAlign = 'center'
           const showProductNameAgree = cutstrFun('邀请你开通', parseInt(640 / 24)) // 只显示一行
-          ctx.fillText(showProductNameAgree, 170, 162)
+          ctx.fillText(showProductNameAgree, 160, 162)
 
-          let str = this.type == 1 ? '代理商' : '社区门店'
+          let str = this.type == 1 ? '经销商' : '社区服务店'
           ctx.setFillStyle('#EBED24')
           ctx.setFontSize(16)
           ctx.textAlign = 'center'
@@ -182,8 +186,9 @@ export default {
         ctx.setFillStyle('#FFFFFF')
         ctx.setFontSize(17)
         ctx.textAlign = 'center'
+        ctx.direction = "ltr";
         const showProductName = cutstrFun(this.storeDetail.Stores_Name, parseInt(640 / 24)) // 只显示一行
-        ctx.fillText(showProductName, 260, 100)
+        ctx.fillText(showProductName, 246, 100)
 
         // 头像(需要画个圆角)
         ctx.save()
@@ -236,10 +241,10 @@ export default {
   },
   onLoad (options) {
     this.type = options.type
-    console.log(options, 'sss')
-    if (options.store) {
-      this.storeid = options.store
-    }
+    // console.log(options, 'sss')
+    // if (options.store) {
+    //   this.storeid = options.store
+    // }
 
   },
 }
@@ -254,19 +259,19 @@ export default {
     width: 414px;
     height: 718px;
   }
-  
+
   .store-share {
     width: 750rpx;
     height: 100vh;
     position: relative;
     overflow: hidden;
   }
-  
+
   .store-img {
     width: 100%;
     height: 100%;
   }
-  
+
   .user-img {
     width: 98rpx;
     height: 98rpx;
@@ -275,7 +280,7 @@ export default {
     top: 88rpx;
     left: 230rpx;
   }
-  
+
   .user-name {
     height: 34rpx;
     line-height: 34rpx;
@@ -290,7 +295,7 @@ export default {
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-  
+
   .store-type {
     width: 428rpx;
     height: 70rpx;
@@ -298,9 +303,9 @@ export default {
     top: 226rpx;
     left: 160rpx;
   }
-  
+
   .store-type-title {
-    width: 298rpx;
+    width: 310rpx;
     height: 32rpx;
     font-size: 32rpx;
     line-height: 32rpx;
@@ -309,11 +314,11 @@ export default {
     top: 16rpx;
     left: 68rpx;
   }
-  
+
   .store-color {
     color: #EBED24;
   }
-  
+
   .store-qrcode {
     width: 312rpx;
     height: 312rpx;
@@ -321,7 +326,7 @@ export default {
     top: 55.8%;
     left: 218rpx;
   }
-  
+
   .store-qc-text {
     height: 22rpx;
     line-height: 22rpx;
@@ -333,7 +338,7 @@ export default {
     left: 0;
     top: 82.5%;
   }
-  
+
   .button-store {
     width: 680rpx;
     height: 90rpx;
@@ -346,7 +351,7 @@ export default {
     position: fixed;
     left: 34rpx;
     bottom: 30rpx;
-    
+
     .button-text {
       width: 680rpx;
       height: 80rpx;
