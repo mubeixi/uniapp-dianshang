@@ -670,7 +670,7 @@ export default {
           })
           break
         case 'pic':
-          // this.$toast('comming soon')
+
           const res = await getProductSharePic({ product_id: this.Products_ID }, {
             tip: '努力加载中',
             mask: true

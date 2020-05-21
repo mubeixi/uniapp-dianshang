@@ -319,8 +319,7 @@ export default {
           })
           break
         case 'pic':
-          // this.$toast('comming soon')
-
+  
           const sharePic = await getProductSharePic({ product_id: this.Prod_ID }).then(res => {
             ls.set('temp_sharepic_info', res.data)
             return res.data.img_url

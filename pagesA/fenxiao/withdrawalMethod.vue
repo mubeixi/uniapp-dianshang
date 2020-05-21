@@ -56,7 +56,7 @@ export default {
     })
   },
   onShow () {
-    this.$vm.$on('fir', (data) => {
+    uni.$on('fir', (data) => {
       this.User_Method_ID = data
     })
     this.getUserWithdrawMethod()

@@ -464,7 +464,7 @@ export default {
       this.$refs.popupRef.close()
     },
     async getAddress () {
-      this.$vm.$on('fire', (data) => {
+      uni.$on('fire', (data) => {
         this.back_address_id = data
       })
       var Address_ID

@@ -594,7 +594,6 @@ export default {
           })
           break
         case 'pic':
-          // this.$toast('comming soon')
 
           const sharePic = await getProductSharePic({
             product_id: this.Products_ID,

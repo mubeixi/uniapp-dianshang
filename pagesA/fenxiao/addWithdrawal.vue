@@ -129,7 +129,7 @@ export default {
           icon: 'success'
         })
         setTimeout(function () {
-          that.$vm.$emit('fir', User_Method_ID)
+          uni.$emit('fir', User_Method_ID)
           // 返回上一页
           uni.navigateBack({
             delta: 1
