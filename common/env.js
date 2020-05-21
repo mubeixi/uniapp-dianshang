@@ -1,4 +1,5 @@
-//是否为定制项目
+
+// 是否为定制项目
 export const isCustom = false;
 
 export const isDev = process.env.NODE_ENV === 'production' ? false : true;
