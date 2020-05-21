@@ -127,7 +127,7 @@ export default {
         if (res.data.Home_Json) {
           resolve(JSON.parse(res.data.Home_Json))
         } else {
-          reject(false)
+          reject(Error('获取预览数据失败'))
         }
       }).catch(e => {
 

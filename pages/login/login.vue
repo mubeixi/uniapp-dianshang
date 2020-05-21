@@ -263,7 +263,7 @@ import { GetQueryByString, isWeiXin, ls, urlencode } from '../../common/tool'
 // #ifdef APP-PLUS
 // #endif
 import { bindUserClientId, getSmsCode, login, upUserLog } from '../../common/fetch'
-import { confirm, error, toast } from '../../common'
+import { confirm, error, modal, toast } from '../../common'
 import { mapActions, mapGetters } from 'vuex'
 import { pageMixin } from '../../common/mixin'
 
@@ -404,7 +404,9 @@ export default {
       // this.countdownStatus=true;
       return getSmsCode({ mobile })
         .then(() => toast('发送短信成功', 'success'))
-        .then(() => this.startCountdown())
+        .then(() => this.startCountdown()).catch(() => {
+          modal('发送短信失败')
+        })
     },
     async codeSendVerification (status) {
       // 发送验证码并设置 status（更新页面）

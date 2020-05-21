@@ -88,7 +88,7 @@
 import { pageMixin } from '../../common/mixin'
 import { mapGetters } from 'vuex'
 import { getBackOrder, systemConfirmApply, systemReceiptRefundProd, systemRefuseApply } from '../../common/fetch'
-import { error, toast } from '../../common'
+import { error, modal, toast } from '../../common'
 
 export default {
   mixins: [pageMixin],
@@ -134,6 +134,8 @@ export default {
       systemReceiptRefundProd(data).then(res => {
         toast(res.msg)
         this.loadInfo()
+      }).catch(() => {
+        modal('操作失败')
       })
     },
     cancelRefuseApplys () {
@@ -156,6 +158,8 @@ export default {
           title: res.msg
         })
         this.loadInfo()
+      }).catch(() => {
+        modal('操作失败')
       })
     },
     goDetail (item) {
@@ -186,7 +190,8 @@ export default {
           title: res.msg
         })
         this.loadInfo()
-      }, err => {
+      }).catch(() => {
+        modal('操作失败')
       })
     },
     bingReasonInput (e) {
@@ -226,8 +231,8 @@ export default {
             }
           }
         }
-      }, err => {
-
+      }).catch(() => {
+        modal('获取信息失败')
       })
     }
   },

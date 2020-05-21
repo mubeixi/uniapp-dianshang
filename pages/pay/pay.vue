@@ -741,7 +741,7 @@ export default {
                 }
               })
             }).catch((e) => {
-
+              _self.payFailCall(e)
             })
 
             return
@@ -819,6 +819,8 @@ export default {
             tip: '正在加载中'
           }).then(res => {
 
+          }).catch(() => {
+          
           })
         }
       }

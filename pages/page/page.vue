@@ -60,6 +60,7 @@ import { getDiySkinConfig } from '../../common/fetch'
 import { GetQueryByString } from '../../common/tool'
 
 import { pageMixin } from '../../common/mixin'
+import { modal } from '@/common'
 
 export default {
   mixins: [pageMixin],
@@ -151,7 +152,7 @@ export default {
         if (res.data.Home_Json) {
           resolve(JSON.parse(res.data.Home_Json))
         } else {
-          reject(false)
+          reject(Error('获取模板数据失败'))
         }
       }).catch(e => {
 
@@ -201,6 +202,7 @@ export default {
         }
       })
       .catch(err => {
+        modal(err.msg || '初始化模板信息错误')
       })
   }
 }

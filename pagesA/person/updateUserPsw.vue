@@ -50,6 +50,7 @@ import {
 } from '../../common/fetch.js'
 import { mapActions, mapGetters } from 'vuex'
 import { pageMixin } from '../../common/mixin'
+import { error, modal } from '@/common'
 
 export default {
   mixins: [pageMixin],
@@ -116,10 +117,11 @@ export default {
           this.setUserInfo(res.data)
           this.goBack()
         }).catch(e => {
+          error('获取用户信息失败')
         })
       }, err => {
         uni.showToast({
-          title: res.msg,
+          title: err.msg,
           icon: 'none'
         })
       })
@@ -164,6 +166,8 @@ export default {
           icon: 'success'
         })
         this.startCountdown()
+      }).catch(() => {
+        modal('验证码发送失败')
       })
     },
     save (e) {

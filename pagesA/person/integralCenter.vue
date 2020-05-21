@@ -90,6 +90,7 @@ import TweenMax from '@/common/tool/TweenMax.min'
 import { mapActions } from 'vuex'
 import { get_user_info, transferIntegral, userIntegralRecord } from '../../common/fetch.js'
 import { pageMixin } from '../../common/mixin'
+import { error } from '@/common'
 
 export default {
   mixins: [pageMixin],
@@ -127,7 +128,9 @@ export default {
     get_user_info().then(res => {
       this.info = res.data
       this.user_intergatal = res.data.User_Integral
-    }).catch()
+    }).catch(() => {
+      error('获取用户信息失败')
+    })
   },
   // 下拉加载
   onReachBottom () {
@@ -174,8 +177,9 @@ export default {
             this.info = res.data
             this.user_intergatal = res.data.User_Integral
             this.setUserInfo(this.info)
-          }, err => {
-          }).catch()
+          }).catch(() => {
+            error('获取用户信息失败')
+          })
         }, 1500)
       }, err => {
         this.isClicked = false

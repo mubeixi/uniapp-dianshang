@@ -39,6 +39,7 @@
 <script>
 import { delAddress, getAddress } from '../../common/fetch.js'
 import { pageMixin } from '../../common/mixin'
+import { modal } from '@/common'
 
 export default {
   mixins: [pageMixin],
@@ -107,6 +108,8 @@ export default {
                   icon: 'success',
                   duration: 1000
                 })
+              }).catch(() => {
+                modal('删除失败')
               })
             } else {
               uni.showModal({

@@ -71,6 +71,7 @@
 import { settlement } from '../../common/fetch.js'
 import { mapGetters } from 'vuex'
 import { pageMixin } from '../../common/mixin'
+import { modal } from '@/common'
 
 export default {
   mixins: [pageMixin],
@@ -112,6 +113,8 @@ export default {
             url: '/pagesA/procurement/storeSettlementRecord'
           })
         }, 1000)
+      }).catch(() => {
+        modal('操作失败')
       })
     },
     search () {
@@ -123,6 +126,8 @@ export default {
       settlement(data).then(res => {
         this.list = res.data
         this.index = 2
+      }).catch(() => {
+        modal('操作失败')
       })
     },
     bindDateChangeEnd (e) {

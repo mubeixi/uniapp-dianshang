@@ -54,6 +54,7 @@ import utils from '../../common/util.js'
 import { getStoreDetail, updateStoreInfo, updateStoreMobile, updateStoreMobileSms } from '../../common/fetch.js'
 import { mapGetters } from 'vuex'
 import { pageMixin } from '../../common/mixin'
+import { error, modal } from '@/common'
 
 export default {
   mixins: [pageMixin],
@@ -133,6 +134,8 @@ export default {
           icon: 'success'
         })
         this.startCountdown()
+      }).catch(() => {
+        error('发送验证码失败')
       })
     },
     confirm (e) {
@@ -175,6 +178,7 @@ export default {
           })
         }, 1500)
       }).catch(() => {
+        modal('修改失败')
       })
     },
     startCountdown () {
@@ -238,6 +242,8 @@ export default {
             delta: 1
           })
         }, 1500)
+      }).catch(() => {
+        modal('修改失败')
       })
     },
     // 处理省市区联动信息

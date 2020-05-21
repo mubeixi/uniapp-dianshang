@@ -90,6 +90,7 @@ import {
 import popupLayer from '../../components/popup-layer/popup-layer.vue'
 import { numberSort } from '../../common/tool.js'
 import { pageMixin } from '../../common/mixin'
+import { error, modal } from '@/common'
 
 export default {
   mixins: [pageMixin],
@@ -239,6 +240,8 @@ export default {
             url: '/pages/order/check?cart_key=DirectBuy'
           })
         }
+      }).catch((e) => {
+      
       })
       // 确定加入购物车
       this.$refs.cartPopu.close()
@@ -274,6 +277,8 @@ export default {
             title: res.msg
           })
           this.isCollected = false
+        }).catch(() => {
+          modal('操作失败')
         })
       } else {
         addCollection({ prod_id: this.Products_ID }).then(res => {
@@ -281,6 +286,8 @@ export default {
             title: '收藏成功'
           })
           this.isCollected = true
+        }).catch(() => {
+          error('收藏失败')
         })
       }
     },

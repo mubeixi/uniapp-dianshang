@@ -61,11 +61,11 @@ export const getLocation = async (vm) => {
             success: res => {
               resolve({ code: 0, data: { latitude: res.latitude, longitude: res.longitude } })
             },
-            fail: err => {
+            fail: () => {
               reject(failOpt.notFound)
             }
           })
-        }).catch(err => {
+        }).catch(() => {
           reject(failOpt.osNotAllow)
           // console.log(err)
         })

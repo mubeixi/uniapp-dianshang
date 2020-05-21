@@ -131,6 +131,7 @@ import {
 } from '../../common/fetch.js'
 import { mapGetters } from 'vuex'
 import { getLocation } from '../../common/tool/location'
+import { error, modal } from '@/common'
 
 export default {
   mixins: [pageMixin],
@@ -168,6 +169,8 @@ export default {
         setTimeout(() => {
           this.load()
         }, 1000)
+      }).catch(() => {
+        modal('操作失败')
       })
     },
     // 发货
@@ -194,6 +197,8 @@ export default {
               setTimeout(() => {
                 this.load()
               }, 1000)
+            }).catch(() => {
+              modal('操作失败')
             })
           } else {
 
@@ -227,6 +232,8 @@ export default {
           item.pro_tip_show = false
         })
         this.back_list = res.data
+      }).catch(() => {
+        modal('获取信息失败')
       })
     },
     show_pro_tip (index) {
@@ -263,6 +270,8 @@ export default {
           getStoreDetail(data).then(res => {
             this.storeInfo = res.data
             this.storeInfo.distance = (res.data.distance / 1000).toFixed(2)
+          }).catch(() => {
+            error('获取信息失败')
           })
         }
       }).catch(err => {
@@ -271,6 +280,8 @@ export default {
         }
         getStoreDetail(data).then(res => {
           this.storeInfo = res.data
+        }).catch(() => {
+          error('获取信息失败')
         })
       })
     },

@@ -212,6 +212,7 @@ import { pageMixin } from '../../common/mixin'
 import { mapActions, mapGetters, mapState } from 'vuex'
 import { get_user_info, getFuncModule, getOrderNum, judgeSignin, signin } from '../../common/fetch.js'
 // import TabbarComponents from "../../components/TabbarComponents";
+import { error } from '@/common'
 
 export default {
   mixins: [pageMixin],

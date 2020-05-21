@@ -195,7 +195,7 @@ export const Analysis = {
           view_type: 'enter'
         }
       })
-    })
+    }).catch(() => {})
   }
 }
 
@@ -332,7 +332,7 @@ export const pageMixin = {
       if (checkIsLogin() && !sessionStorage.getItem('is_send_usrlog')) {
         upUserLog({}, { errtip: false }).then(res => {
           sessionStorage.setItem('is_send_usrlog', 1)
-        }).catch(e => {
+        }).catch(() => {
         })
       }
 
@@ -470,6 +470,8 @@ export const scanMixin = {
               reject(err)
             }
           })
+        }).catch(() => {
+          reject(Error('jssdk签名错误'))
         })
         // #endif
 

@@ -261,7 +261,7 @@ import { buildSharePath, getProductThumb, isWeiXin, ls, numberSort } from '../..
 import { mapActions, mapState } from 'vuex'
 import uParse from '../../components/gaoyia-parse/parse.vue'
 import { pageMixin, safeAreaMixin } from '../../common/mixin'
-import { error } from '../../common'
+import { error, modal } from '../../common'
 
 export default {
   mixins: [pageMixin, safeAreaMixin],
@@ -406,13 +406,13 @@ export default {
       if (_self.$refs.cartPopu) {
         this.postData.qty = 1
       }
-    })
+    }).catch(() => {})
     this.$nextTick().then(() => {
       const videoContext = uni.createVideoContext('myVideo1')
       _self.videoContext = videoContext
       // 添加到这里
       // getApp().globalData.videoInstance.push(videoContext)
-    })
+    }).catch(() => {})
   },
   onShow () {
     const _self = this
@@ -1001,6 +1001,8 @@ export default {
           // #ifdef APP-PLUS
           uni.$emit('goods_bottom_setval', { isCollected: this.isCollected })
           // #endif
+        }).catch(() => {
+          console.log('获取收藏转状态失败')
         })
       } else {
         addCollection({ prod_id: this.Products_ID }).then(res => {
@@ -1011,6 +1013,8 @@ export default {
           // #ifdef APP-PLUS
           uni.$emit('goods_bottom_setval', { isCollected: this.isCollected })
           // #endif
+        }).catch((e) => {
+          modal(e.msg || '收藏失败')
         })
       }
     },

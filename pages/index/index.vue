@@ -678,7 +678,7 @@ export default {
 
           this.loadInfoStore()
         }
-      }).catch(err => {
+      }).catch(() => {
         console.log('定位失败')
         this.storeID = ''
         this.setFreStoreId('')
@@ -700,7 +700,7 @@ export default {
 
           this.init()
         }
-      }).catch(err => {
+      }).catch(() => {
         this.init()
         // error('获取位置信息失败:' + err.msg)
       })

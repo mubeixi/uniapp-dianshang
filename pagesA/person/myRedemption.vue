@@ -56,6 +56,7 @@
 import { cancelJifenProdOrder, confirmJifenProdOrder, jifenProdOrder } from '../../common/fetch.js'
 import { formatTime } from '../../common/filter'
 import { pageMixin } from '../../common/mixin'
+import { modal } from '@/common'
 
 export default {
   mixins: [pageMixin],
@@ -126,6 +127,8 @@ export default {
         })
         this.prod_list = []
         this.get_jifen_order()
+      }).catch(() => {
+        modal('操作失败')
       })
     },
     //	确认订单
@@ -136,6 +139,8 @@ export default {
         })
         this.prod_list = []
         this.get_jifen_order()
+      }).catch(() => {
+        modal('操作失败')
       })
     }
   }

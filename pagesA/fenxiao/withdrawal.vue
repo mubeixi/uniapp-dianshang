@@ -60,6 +60,7 @@ import { pageMixin } from '../../common/mixin'
 import { mapGetters } from 'vuex'
 import { ls } from '../../common/tool.js'
 import { getUserWithdrawMethod, getWithdrawConfig, withdrawApply } from '../../common/fetch.js'
+import { modal } from '@/common'
 
 export default {
   mixins: [pageMixin],
@@ -94,6 +95,8 @@ export default {
     })
     getWithdrawConfig().then(res => {
       this.init = res.data
+    }).catch(() => {
+      modal('获取配置失败')
     })
   },
   computed: {
@@ -199,7 +202,7 @@ export default {
           this.User_Method_ID = res.data.list[0].User_Method_ID
         }
       }).catch(err => {
-
+        modal(err.msg || '获取信息失败')
       })
     },
     // 我的提现方式

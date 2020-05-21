@@ -61,6 +61,7 @@ import {
   getNobiRecordList,
   getShaRecordList
 } from '../../common/fetch.js'
+import { error } from '@/common'
 
 export default {
   mixins: [pageMixin],
@@ -142,6 +143,8 @@ export default {
             this.pro.push(item)
           }
           this.totalCount = res.totalCount
+        }).catch(() => {
+          error('获取数据失败')
         })
       } else {
         getAgentRecordList(data).then(res => {
