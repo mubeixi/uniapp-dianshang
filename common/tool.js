@@ -664,7 +664,7 @@ export const findArrayIdx = (arr, key_val_arr, full) => {
  * @param arr
  * @returns {boolean}
  */
-function checkValue(val, arr) {
+export function checkValue(val, arr) {
     let _val = val;
     if (Number.isNaN(val)) {
         _val = 'NaN'

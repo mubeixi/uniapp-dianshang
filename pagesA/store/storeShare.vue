@@ -245,8 +245,9 @@
 		},
 		onLoad(options) {
 			this.type=options.type
+			console.log(options,"sss")
 			if(options.store){
-				this.storeid=store
+				this.storeid=options.store
 			}
 
 		}
