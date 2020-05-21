@@ -7,6 +7,7 @@ import {domainFn} from "./filter";
 import {checkIsLogin, error} from "./index";
 import {mapActions} from "vuex";
 import {get_Users_ID,get_User_ID,GET_ENV} from "./fetch";
+import store from '../store'
 
 
 /**
@@ -66,7 +67,7 @@ export const WX_JSSDK_INIT = (vm, jsApiListList) => new Promise((resolve, reject
 		});
 
 	}).catch(res => {
-		reject(new Error(false))
+		reject(res.msg||'jssdk签名失败')
 	})
 
 })
@@ -264,19 +265,12 @@ export const pageMixin = {
 
 
 			//新增门店store_id
-			
+
 				let store_id=options.store_id
-				if(store_id){
-					// #ifndef H5
-						ls.set('store_id', store_id)
-					//#endif
-					// #ifdef H5
-						sessionStorage.setItem('store_id', store_id)
-					// #endif
-				}
-		
-			
-			
+				store.commit('SET_FRE_STORE_ID',store_id)
+
+
+
 
 			/*商户id机制*/
 			// #ifdef H5|| MP-WEIXIN || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO

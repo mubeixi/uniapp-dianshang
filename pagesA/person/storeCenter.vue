@@ -220,6 +220,7 @@ export default {
         ...mapGetters(['Stores_ID', 'initData']),
     },
     onLoad() {
+		if(!this.$fun.checkIsLogin(1))return;
         this.getStoreDetail();
     },
     methods: {
@@ -241,9 +242,16 @@ export default {
                     url: '/pagesA/procurement/stock',
                 })
             } else {
-                uni.navigateTo({
-                    url: '/pagesA/procurement/stock?purchase_store_id=' + pid,
-                })
+				if(this.initData.same_level_purchase==0&&this.storeDetail.type_id<=this.storeDetail.parent_store.type_id){
+					uni.navigateTo({
+					    url: '/pagesA/procurement/stock',
+					})
+				}else{
+					uni.navigateTo({
+					    url: '/pagesA/procurement/stock?purchase_store_id=' + pid,
+					})
+				}
+                
             }
 
         },

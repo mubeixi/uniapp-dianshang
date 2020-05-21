@@ -2,8 +2,8 @@
 	<view style="background-color: #FFFFFF;height: 100vh;">
 		<div class="store-line flex flex-vertical-center">
 			<span class="store-info">申请人</span>
-			<image :src="storeData.User_HeadImg" class="store-img"></image>
-			<span class="fz-14-c9">{{storeData.User_NickName}}</span>
+			<image :src="storeData.store_image" class="store-img"></image>
+			<span class="fz-14-c9">{{storeData.store_name}}</span>
 		</div>
 		<div class="store-line flex flex-vertical-center">
 			<span class="store-info">名称</span>

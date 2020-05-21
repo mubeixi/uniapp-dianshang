@@ -68,7 +68,8 @@
 				type:1,
 				qrcode:'',
 				imgSave:'',
-				storeDetail:{}
+				storeDetail:{},
+				storeid:''
 			};
 		},
 
@@ -99,7 +100,6 @@
 			},
 			async init(){
 				let data={
-					store_id:this.Stores_ID,
 					stores_type:this.type,
 					// #ifdef MP-WEIXIN
 					qrcode_type:'wx_lp'
@@ -110,6 +110,9 @@
 				}
 				if(this.type==3){
 					data.act_type=2
+					data.store_id=this.storeid
+				}else{
+					data.store_id=this.Stores_ID
 				}
 				await getStoreShare(data).then(res=>{
 					this.qrcode=res.data.qrcode
@@ -121,6 +124,8 @@
 						store_id: this.Stores_ID
 					}).then(res=>{
 						this.storeDetail = res.data;
+					}).catch(err=>{
+						console.log(err.msg||'初始化门店失败')
 					})
 
 
@@ -240,6 +245,10 @@
 		},
 		onLoad(options) {
 			this.type=options.type
+			console.log(options,"sss")
+			if(options.store){
+				this.storeid=options.store
+			}
 
 		}
 	}

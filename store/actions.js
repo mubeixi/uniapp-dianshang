@@ -10,6 +10,10 @@ export const setStoresId = ({commit}, data) => {
     commit('SET_STORES_ID', data);
 };
 
+export const setFreStoreId = ({commit}, data) => {
+    commit('SET_FRE_STORE_ID', data);
+};
+
 export const setInitData = ({commit}, data) => {
     commit('SET_INIT_DATA', data);
 };

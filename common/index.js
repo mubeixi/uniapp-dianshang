@@ -151,7 +151,7 @@ export const checkIsDistribute = (redirect, tip) => {
         if (redirect) {
             if (!tip) {
                 uni.navigateTo({
-                    url: '/pages/fenxiao/distributorCenter'
+                    url: '/pages/fenxiao/distributorLevel'
                 })
                 return;
             }
@@ -160,7 +160,7 @@ export const checkIsDistribute = (redirect, tip) => {
             const commi = commi_rename.commi
             confirm({title: '提示', content: `该操作需要是${commi},请问是否成为${commi}?`, confirmText: '确定', cancelText: '暂不成为'}).then(() => {
                 uni.navigateTo({
-                    url: '/pages/fenxiao/distributorCenter'
+                    url: '/pages/fenxiao/distributorLevel'
                 })
 
             }).catch(() => {

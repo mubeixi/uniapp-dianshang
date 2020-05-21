@@ -440,9 +440,10 @@ export const urlencode = (str) => {
  * @return {string}
  */
 export const buildSharePath = (path) => {
-	let store_id=getStoreID()
-	
-	
+
+	let store_id= store.getters.getCurrentStoreId()
+
+
     let users_ID = ls.get('users_id');
     let userInfo = store.state.userInfo || ls.get('userInfo');
     const User_ID = ls.get('user_id')
@@ -462,7 +463,7 @@ export const buildSharePath = (path) => {
         }
         search += ('&owner_id=' + owner_id)
     }
-	
+
 	if(store_id){
 		search+=('&store_id='+store_id)
 	}
@@ -663,7 +664,7 @@ export const findArrayIdx = (arr, key_val_arr, full) => {
  * @param arr
  * @returns {boolean}
  */
-function checkValue(val, arr) {
+export function checkValue(val, arr) {
     let _val = val;
     if (Number.isNaN(val)) {
         _val = 'NaN'
@@ -725,14 +726,14 @@ export const plainArray = (arr,key,newArr)=>{
 
 }
 
-export const getStoreID = ()=>{
-		let store_id=''
-		// #ifndef H5
-			store_id=ls.get('store_id')
-		// #endif
-		// #ifdef H5
-			store_id=sessionStorage.getItem('store_id')
-		// #endif
-		return store_id
-	
-}
+// export const getStoreID = ()=>{
+// 		let store_id=''
+// 		// #ifndef H5
+// 			store_id=ls.get('store_id')
+// 		// #endif
+// 		// #ifdef H5
+// 			store_id=sessionStorage.getItem('store_id')
+// 		// #endif
+// 		return store_id
+//
+// }
