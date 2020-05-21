@@ -1,7 +1,7 @@
 <template>
   <view @click="commonClick" class="wrap">
     <view class="item">
-      <view class="item-left">上级代理商ID</view>
+      <view class="item-left">上级经销商ID</view>
       <view class="item-input">
         <input :disabled="pidDisable" placeholder="请输入邀请码" placeholder-style="color:#CAC8C8" type="text"
                v-model="pid" />
@@ -145,7 +145,7 @@ export default {
       type: 0,
       pidDisable: false,
       typeDisable: false,
-      array: ['代理商', '社区门店'],
+      array: ['经销商', '社区服务店'],
       arr: [],
       imgs: [],
       // 用于收货地址展示用
