@@ -1,109 +1,103 @@
 <template>
-	<view @click="commonClick">
-		<!--		请按提示完成支付宝支付-->
-		<!--分享引导框开始-->
-		<div @click="isShowGuide=false" class="hide guide_box" v-show="isShowGuide">
-			<!--			<div class="mask"></div>-->
-			<div class="guide">
-				<image :src="'/static/client/pay/alipay.jpg'|domain" class="guideimg" mode="aspectFit" />
-			</div>
-			<!--			<div><image  :src="'/static/client/share/guide_point.png'|domain"  class="guide_point" /></div>-->
-			<!--			<div><image  :src="'/static/client/share/guide_btn.png'|domain"  class="guide_btn"  /></div>-->
-		</div>
-		<!--分享引导框结束-->
-	</view>
+  <view @click="commonClick">
+    <!--		请按提示完成支付宝支付-->
+    <!--分享引导框开始-->
+    <div @click="isShowGuide=false" class="hide guide_box" v-show="isShowGuide">
+      <!--			<div class="mask"></div>-->
+      <div class="guide">
+        <image :src="'/static/client/pay/alipay.jpg'|domain" class="guideimg" mode="aspectFit" />
+      </div>
+      <!--			<div><image  :src="'/static/client/share/guide_point.png'|domain"  class="guide_point" /></div>-->
+      <!--			<div><image  :src="'/static/client/share/guide_btn.png'|domain"  class="guide_btn"  /></div>-->
+    </div>
+    <!--分享引导框结束-->
+  </view>
 </template>
 
 <script>
-import {GetQueryByString, isWeiXin, ls} from '../../../common/tool';
-import {getTempData} from '../../../common/fetch';
-import {pageMixin} from '../../../common/mixin';
+import { GetQueryByString, isWeiXin, ls } from '../../../common/tool'
+import { getTempData } from '../../../common/fetch'
+import { pageMixin } from '../../../common/mixin'
 
 export default {
-	mixins: [pageMixin],
-	data() {
-		return {
-			isShowGuide: true,
-		};
-	},
-	onLoad(options) {
+  mixins: [pageMixin],
+  data () {
+    return {
+      isShowGuide: true,
+    }
+  },
+  onLoad (options) {
+    // 字符串进行解密
+    // if(!ls.get('is_reload_alipay')){
+    // 	ls.set('is_reload_alipay',1);
+    // 	location.reload()
+    // 	return;
+    // }
 
-		//字符串进行解密
-		// if(!ls.get('is_reload_alipay')){
-		// 	ls.set('is_reload_alipay',1);
-		// 	location.reload()
-		// 	return;
-		// }
+    ls.set('users_id', GetQueryByString(location.href, 'users_id'))
 
-		ls.set('users_id', GetQueryByString(location.href, 'users_id'));
+    if (!isWeiXin() && options.nocestr) {
+      const nocestr = options.nocestr
 
-		if (!isWeiXin() && options.nocestr) {
-
-			let nocestr = options.nocestr
-
-			getTempData({key: nocestr}).then(res => {
-
-				document.body.innerHTML = res.data;
-				// document.write(redirect)
-				document.getElementById('alipaysubmit').submit()
-
-			}).catch(() => {
-			})
-
-
-		}
-	},
+      getTempData({ key: nocestr }).then(res => {
+        document.body.innerHTML = res.data
+        // document.write(redirect)
+        document.getElementById('alipaysubmit').submit()
+      }).catch(() => {
+      })
+    }
+  },
 }
 </script>
 
 <style lang="less">
-	.guide_box {
-		position: fixed;
-		top: 0;
-		bottom: 0;
-		left: 0;
-		right: 0;
-		z-index: 9;
-		text-align: right;
-		background-size: cover;
-		background-repeat: no-repeat;
-		background-position: center center;
-
-		.mask {
-			position: absolute;
-			width: 100%;
-			height: 100%;
-			background: rgba(0, 0, 0, .6);
-			z-index: 2;
-
-		}
-
-		.guide {
-			/*width: 750rpx;*/
-			/*height: 100vh;*/
-			position: absolute;
-			top: 0;
-
-			.guideimg {
-				width: 750rpx;
-				height: 1334rpx;
-			}
-
-		}
-
-		.guide_point {
-			position: relative;
-			z-index: 33;
-			width: 375rpx;
-			height: 475rpx;
-			margin-right: 10px;
-		}
-
-		.guide_btn {
-			width: 189rpx;
-			height: 63rpx;
-			margin-right: 20px;
-		}
-	}
+  .guide_box {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 9;
+    text-align: right;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    
+    .mask {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, .6);
+      z-index: 2;
+      
+    }
+    
+    .guide {
+      /*width: 750rpx;*/
+      /*height: 100vh;*/
+      position: absolute;
+      top: 0;
+      
+      .guideimg {
+        width: 750 rpx;
+        height: 1334 rpx;
+      }
+      
+    }
+    
+    .guide_point {
+      position: relative;
+      z-index: 33;
+      width: 375 rpx;
+      height: 475 rpx;
+      margin-right: 10px;
+    }
+    
+    .guide_btn {
+      width: 189 rpx;
+      height: 63 rpx;
+      margin-right: 20px;
+    }
+  }
 
 </style>
