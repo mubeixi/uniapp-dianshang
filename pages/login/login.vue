@@ -261,8 +261,9 @@ import wx from 'weixin-js-sdk'
 // #endif
 import { GetQueryByString, isWeiXin, ls, urlencode } from '../../common/tool'
 // #ifdef APP-PLUS
+import { bindUserClientId } from "@/common/fetch"
 // #endif
-import { bindUserClientId, getSmsCode, login, upUserLog } from '../../common/fetch'
+import { getSmsCode, login, upUserLog } from '@/common/fetch'
 import { confirm, error, modal, toast } from '../../common'
 import { mapActions, mapGetters } from 'vuex'
 import { pageMixin } from '../../common/mixin'
@@ -623,10 +624,7 @@ export default {
       for (var i in login_methods) {
         // && login_methods[i].state ??状态呢？
         if (i != 'component_appid' && login_methods[i].state) {
-          this.channels.push(['wx_mp', 'wx_lp'].indexOf(login_methods[i].type) === -1 ? { ...login_methods[i] } : {
-            ...login_methods[i],
-            component_appid
-          })
+          this.channels.push(['wx_mp', 'wx_lp'].indexOf(login_methods[i].type) === -1 ? { ...login_methods[i] } : { ...login_methods[i], component_appid })
         }
       }
 
