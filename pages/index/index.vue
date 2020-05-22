@@ -744,36 +744,38 @@ export default {
       })
     },
     async shareH5 () {
+      console.log('shareH5')
       // #ifdef H5
       // 根据配置决定是否刷新配置
       const initData = await this.getInitData(true)
+      console.log(initData)
       // 页面默认全都是分享出去是首页的
       if (isWeiXin()) {
-				  this.WX_JSSDK_INIT(this).then((wxEnv) => {
+        this.WX_JSSDK_INIT(this).then((wxEnv) => {
           wxEnv.onMenuShareTimeline({
-					  title: initData.ShopName, // 分享标题
-					  link: buildSharePath(initData.front_url), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-					  imgUrl: domainFn(initData.ShareLogo), // 分享图标
-					  success: function () {
+            title: initData.ShopName, // 分享标题
+            link: buildSharePath(initData.front_url), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+            imgUrl: domainFn(initData.ShareLogo), // 分享图标
+            success: function () {
               // 用户点击了分享后执行的回调函数
-					  }
+            }
           })
 
           // 两种方式都可以
           wxEnv.onMenuShareAppMessage({
-					  title: initData.ShopName, // 分享标题
-					  link: buildSharePath(initData.front_url), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-					  imgUrl: domainFn(initData.ShareLogo), // 分享图标
-					  desc: initData.ShareIntro,
-					  type: 'link', // 分享类型,music、video或link，不填默认为link
-					  // dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
-					  success: function () {
+            title: initData.ShopName, // 分享标题
+            link: buildSharePath(initData.front_url), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+            imgUrl: domainFn(initData.ShareLogo), // 分享图标
+            desc: initData.ShareIntro,
+            type: 'link', // 分享类型,music、video或link，不填默认为link
+            // dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+            success: function () {
               // 用户点击了分享后执行的回调函数
-					  }
+            }
           })
-				  }).catch(err => {
+        }).catch(err => {
           console.log(err.msg || '签名失败')
-				  })
+        })
       }
       // #endif
     },
@@ -785,7 +787,7 @@ export default {
       if (this.storeID) {
         this.systemInfo = uni.getSystemInfoSync()
         this.get_user_location_init()
-      } else if (this.initData.store_positing == 1) {
+      } else if (this.initData.store_positing === 1) {
         this.systemInfo = uni.getSystemInfoSync()
         this.get_user_location()
       } else {
