@@ -179,13 +179,13 @@ export function isWeiXin () {
   // #ifdef H5
   var ua = window.navigator.userAgent.toLowerCase()
   if (
-    ua.match(/MicroMessenger/i) === 'micromessenger' &&
+    ua.match(/MicroMessenger/i) == 'micromessenger' &&
     ua.match(/miniProgram/i) &&
-    ua.match(/miniProgram/i)[0] === 'miniprogram'
+    ua.match(/miniProgram/i)[0] == 'miniprogram'
   ) {
     return 'xcx'
   }
-  if (ua.match(/MicroMessenger/i) === 'micromessenger') {
+  if (ua.match(/MicroMessenger/i) == 'micromessenger') {
     return true
   } else {
     return false
