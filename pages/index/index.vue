@@ -231,14 +231,26 @@ export default {
     }
   },
   onShareAppMessage () {
-    const path = 'pages/index/index?store_id=' + this.storeID
-    const shareObj = {
-      title: this.storeInfo.Stores_Name,
-      desc: '万千好货疯抢中',
-      imageUrl: this.storeInfo.Stores_ImgPath,
-      path: buildSharePath(path)
-    }
-    return shareObj
+	  if (this.$store.getters.getCurrentStoreId()) {
+		  const path = 'pages/index/index?store_id=' + this.storeID
+		  const shareObj = {
+		    title: this.storeInfo.Stores_Name,
+		    desc: '万千好货疯抢中',
+		    imageUrl: this.storeInfo.Stores_ImgPath,
+		    path: buildSharePath(path)
+		  }
+		  return shareObj
+	  } else {
+		  const initData = this.$store.getters.initData
+		  const path = '/pages/index/index'
+		  const shareObj = {
+		    title: initData.ShopName,
+		    desc: initData.ShareIntro,
+		    imageUrl: domainFn(initData.ShareLogo),
+		    path: buildSharePath(path)
+		  }
+		  return shareObj
+	  }
   },
   methods: {
     domainFn,
@@ -731,6 +743,40 @@ export default {
         error(e.msg || '获取门店错误')
       })
     },
+    async shareH5 () {
+      // #ifdef H5
+      // 根据配置决定是否刷新配置
+      const initData = await this.getInitData(true)
+      // 页面默认全都是分享出去是首页的
+      if (isWeiXin()) {
+				  WX_JSSDK_INIT(this).then((wxEnv) => {
+          wxEnv.onMenuShareTimeline({
+					  title: initData.ShopName, // 分享标题
+					  link: buildSharePath(initData.front_url), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+					  imgUrl: domainFn(initData.ShareLogo), // 分享图标
+					  success: function () {
+              // 用户点击了分享后执行的回调函数
+					  }
+          })
+
+          // 两种方式都可以
+          wxEnv.onMenuShareAppMessage({
+					  title: initData.ShopName, // 分享标题
+					  link: buildSharePath(initData.front_url), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+					  imgUrl: domainFn(initData.ShareLogo), // 分享图标
+					  desc: initData.ShareIntro,
+					  type: 'link', // 分享类型,music、video或link，不填默认为link
+					  // dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+					  success: function () {
+              // 用户点击了分享后执行的回调函数
+					  }
+          })
+				  }).catch(err => {
+          console.log(err.msg || '签名失败')
+				  })
+      }
+      // #endif
+    },
     initStore () {
       this.storeID = this.$store.getters.getCurrentStoreId()
 
@@ -743,6 +789,7 @@ export default {
         this.systemInfo = uni.getSystemInfoSync()
         this.get_user_location()
       } else {
+        this.shareH5()
         this.showIndex = true
       }
     },
@@ -755,7 +802,7 @@ export default {
 
       this.initStore()
     },
-    ...mapActions(['setFreStoreId'])
+    ...mapActions(['setFreStoreId', 'getInitData'])
   },
   onLoad () {
     // #ifdef H5
