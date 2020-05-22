@@ -749,7 +749,7 @@ export default {
       const initData = await this.getInitData(true)
       // 页面默认全都是分享出去是首页的
       if (isWeiXin()) {
-				  WX_JSSDK_INIT(this).then((wxEnv) => {
+				  this.WX_JSSDK_INIT(this).then((wxEnv) => {
           wxEnv.onMenuShareTimeline({
 					  title: initData.ShopName, // 分享标题
 					  link: buildSharePath(initData.front_url), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
