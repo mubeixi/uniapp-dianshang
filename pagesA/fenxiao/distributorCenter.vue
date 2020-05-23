@@ -670,8 +670,9 @@ export default {
           }, 1000)
 
           this.textShen = res.msg
-        }).catch(res => {
-          this.textShen = res.msg
+        }).catch(err => {
+			error(err.msg||'申请失败')
+          this.textShen = err.msg
         })
       } else if (arr) {
         this.isXu = true
