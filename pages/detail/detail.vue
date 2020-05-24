@@ -938,7 +938,8 @@ export default {
             url: '/pages/order/check?cart_key=DirectBuy'
           })
         }
-      }).catch(() => {
+      }).catch((e) => {
+		error(e.msg)
         this.isSubmit = false
       })
       this.isSubmit = false

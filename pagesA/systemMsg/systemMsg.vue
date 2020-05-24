@@ -40,7 +40,10 @@ export default {
   data () {
     return {
       height: 1000, //
-      pro: []
+      pro: [],
+	  page:1,
+	  pageSize:10,
+	  totalCount:0
     }
   },
   onLoad () {
@@ -70,14 +73,28 @@ export default {
       }
     },
     getUserMessage () {
-      getUserMessage().then(res => {
+		let data={
+			page:this.page,
+			pageSize:this.pageSize
+		}
+      getUserMessage(data).then(res => {
         for (const item of res.data) {
           item.isShow = true
         }
-        this.pro = res.data
+		this.totalCount=res.totalCount
+		for(let item of  res.data){
+			this.pro.push(item)
+		}
+     
       }).catch(e => {
       })
     }
+  },
+  onReachBottom() {
+  	if(this.pro.length<this.totalCount){
+		this.page++
+		this.getUserMessage()
+	}
   }
 }
 </script>
