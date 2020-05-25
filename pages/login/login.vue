@@ -255,16 +255,10 @@
   </div>
 </template>
 <script>
-// import telData from "../../common/tool/tel";
-// #ifdef H5
-import wx from 'weixin-js-sdk'
-// #endif
+
 import { GetQueryByString, isWeiXin, ls, urlencode } from '../../common/tool'
-// #ifdef APP-PLUS
-import { bindUserClientId } from "@/common/fetch"
-// #endif
-import { getSmsCode, login, upUserLog } from '@/common/fetch'
-import { confirm, error, modal, toast } from '../../common'
+import { bindUserClientId, getSmsCode, login, upUserLog } from '@/common/fetch'
+import { error, modal, toast } from '../../common'
 import { mapActions, mapGetters } from 'vuex'
 import { pageMixin } from '../../common/mixin'
 
@@ -321,11 +315,6 @@ export default {
     telNum () {
       return this.tel.model.split(' ')[1]
     },
-    // telData() {
-    // 	return this.tel.data.map(v => {
-    // 		return `${v.name} ${v.tel}`;
-    // 	});
-    // },
     countdownStr () {
       if (this.countdownStatus) {
         return `(${this.countdownNum})`
@@ -342,7 +331,7 @@ export default {
       return old && newPass && okNewPass
     },
     isNewPassDisabled () {
-      const verifi = this.verificationCode.length != 6
+      const verifi = this.verificationCode.length !== 6
       const password = !/^.{6,30}$/.test(this.newPassword)
       return verifi && password
     },
@@ -387,20 +376,11 @@ export default {
     setData (from) {
       this.froms = from
     },
-    setNewPasswordOk () {
-      const old = this.editPass.oldPass
-      const newPass = this.editPass.newPass
-      const okNewPass = this.editPass.okNewPass
-      if (newPass !== okNewPass) return toast('新密码和确认密码不一致')
-      editPassword(old, newPass, okNewPass).then(() => {
-      })
-    },
     sendCode () {
       const mobile = this.mobile
-      if (mobile == '' || !mobile) {
+      if (mobile === '' || !mobile) {
         return error('请先填入手机号')
       }
-      let event
       if (this.countdownStatus) return
       // this.countdownStatus=true;
       return getSmsCode({ mobile })
@@ -427,7 +407,7 @@ export default {
       // 填写验证码
       // this.substr();
       this.verificationCode = event.target.value
-      if (this.verificationCode.length == 4) {
+      if (this.verificationCode.length === 4) {
         this.login(null, function () {
           _self.verificationCode = ''
         })
@@ -474,19 +454,19 @@ export default {
       }
     },
     setNewPassOk () {
-      const data = {
-        mobile: this.mobile,
-        code: this.verificationCode,
-        newpwd: this.newPassword
-      }
-      resetPwd(data).then(res => {
-        toast(res.msg)
-        confirm({
-          content: '密码设置成功，是否直接登录？',
-          confirmText: '直接登录',
-          cancelText: '暂不登录'
-        }).then(() => this.login())
-      })
+      // const data = {
+      //   mobile: this.mobile,
+      //   code: this.verificationCode,
+      //   newpwd: this.newPassword
+      // }
+      // resetPwd(data).then(res => {
+      //   toast(res.msg)
+      //   confirm({
+      //     content: '密码设置成功，是否直接登录？',
+      //     confirmText: '直接登录',
+      //     cancelText: '暂不登录'
+      //   }).then(() => this.login())
+      // })
     },
     startCountdown () {
       // 倒计时
@@ -508,7 +488,7 @@ export default {
       const REDIRECT_URI = urlencode(location.href)
       let wxAuthUrl = null
       const scope = 'snsapi_userinfo'// snsapi_userinfo //snsapi_base
-      if (channel.type == 'wx_mp' && channel.component_appid) {
+      if (channel.type === 'wx_mp' && channel.component_appid) {
         // 服务商模式登录
         wxAuthUrl = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${channel.appid}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=${scope}&connect_redirect=1&state=STATE&component_appid=${channel.component_appid}#wechat_redirect`
       } else {
@@ -562,6 +542,7 @@ export default {
                             _self.loginCall(ret.data)
                           }
                         }).catch(err => {
+                          modal(err.msg)
                         })
                       }
                     })
@@ -584,6 +565,7 @@ export default {
                         _self.loginCall(ret.data)
                       }
                     }).catch(err => {
+                      modal(err.msg)
                     })
                   }
                 })
@@ -603,10 +585,6 @@ export default {
             _self.loginCall(res.data)
           }).catch(e => {
           })
-          // uni.showModal({
-          // 	titile:'微信登录信息',
-          // content:JSON.stringify(loginRes.authResult)
-          // })
         }
       })
       // #endif
@@ -623,7 +601,7 @@ export default {
       // 而且状态可以灵活控制 state为1
       for (var i in login_methods) {
         // && login_methods[i].state ??状态呢？
-        if (i != 'component_appid' && login_methods[i].state) {
+        if (i !== 'component_appid' && login_methods[i].state) {
           this.channels.push(['wx_mp', 'wx_lp'].indexOf(login_methods[i].type) === -1 ? { ...login_methods[i] } : { ...login_methods[i], component_appid })
         }
       }
@@ -648,8 +626,7 @@ export default {
           uuid: clientid,
           action: 'save'
         }, { errtip: false }).then(res => {
-        }).catch(error => {
-        })
+        }).catch(() => {})
       }
       // #endif
       // 手动绑定一下
@@ -678,6 +655,7 @@ export default {
       }
       return
       // #endif
+      // eslint-disable-next-line no-unreachable
       uni.navigateBack()
     },
     ...mapActions(['getInitData', 'setUserInfo'])
@@ -748,12 +726,6 @@ export default {
       margin-bottom: 90rpx;
       overflow: hidden;
     }
-
-    /*.logo2{*/
-    /*	width: 218rpx;*/
-    /*	height: 58rpx;*/
-    /*	margin-bottom: 90rpx;*/
-    /*}*/
     .control {
       margin-top: 76rpx;
       display: flex;

@@ -1,14 +1,11 @@
 <template>
   <view @click="commonClick">
-    <!--		请按提示完成支付宝支付-->
+    <!--请按提示完成支付宝支付-->
     <!--分享引导框开始-->
     <div @click="isShowGuide=false" class="hide guide_box" v-show="isShowGuide">
-      <!--			<div class="mask"></div>-->
       <div class="guide">
         <image :src="'/static/client/pay/alipay.jpg'|domain" class="guideimg" mode="aspectFit" />
       </div>
-      <!--			<div><image  :src="'/static/client/share/guide_point.png'|domain"  class="guide_point" /></div>-->
-      <!--			<div><image  :src="'/static/client/share/guide_btn.png'|domain"  class="guide_btn"  /></div>-->
     </div>
     <!--分享引导框结束-->
   </view>
@@ -27,13 +24,6 @@ export default {
     }
   },
   onLoad (options) {
-    // 字符串进行解密
-    // if(!ls.get('is_reload_alipay')){
-    // 	ls.set('is_reload_alipay',1);
-    // 	location.reload()
-    // 	return;
-    // }
-
     ls.set('users_id', GetQueryByString(location.href, 'users_id'))
 
     if (!isWeiXin() && options.nocestr) {

@@ -1,6 +1,5 @@
 <template>
   <view :class="selectStore?'over':''" @click="commonClick" v-if="loading">
-    <!--  <pagetitle title="提交订单"></pagetitle> v-if="orderInfo.all_has_stores" -->
     <div class="top" v-if="orderInfo.all_has_stores==1&&orderInfo.is_virtual == 0">
       <div class="tabs">
         <div :class="{active:tabIdx==0}" @click="changgeTabIdx(0)" class="tabs-item">快递发货</div>
@@ -66,9 +65,9 @@
             <view @click="changeShip" class="o_title">
               <span>运费选择</span>
               <span style="text-align:right; color: #888;">
-							<span>{{shipping_name?(shipping_name + ' ' + (orderInfo.Order_Shipping.Price > 0 ? orderInfo.Order_Shipping.Price : '免运费')):'请选择物流'}}</span>
-				            <image :src="'/static/client/right.png'|domain" alt="" class="right"></image>
-				        </span>
+                <span>{{shipping_name?(shipping_name + ' ' + (orderInfo.Order_Shipping.Price > 0 ? orderInfo.Order_Shipping.Price : '免运费')):'请选择物流'}}</span>
+                <image :src="'/static/client/right.png'|domain" alt="" class="right"></image>
+              </span>
             </view>
           </view>
         </view>
@@ -112,9 +111,9 @@
           <view @click="changeCoupon" class="o_title">
             <span>优惠券选择</span>
             <span style="text-align: right; color: #888;display: flex;align-items: center;">
-						<span>{{couponlist.length>0?(coupon_desc?coupon_desc:'您有优惠券使用'): '暂无可用优惠券'}}</span>
-						<image :src="'/static/client/right.png'|domain" alt="" class="right"></image>
-					</span>
+              <span>{{couponlist.length>0?(coupon_desc?coupon_desc:'您有优惠券使用'): '暂无可用优惠券'}}</span>
+              <image :src="'/static/client/right.png'|domain" alt="" class="right"></image>
+            </span>
           </view>
         </view>
       </view>
@@ -144,13 +143,8 @@
             <span>是否使用余额</span>
             <switch :checked="userMoneyChecked" @change="userMoneyChange" color="#04B600" />
           </view>
-          <view class="o_de">您当前最多使用余额:
-            <text>{{userInfo.User_Money < orderInfo.Order_TotalPrice ? userInfo.User_Money :
-              orderInfo.Order_TotalPrice}}
-            </text>
-          </view>
-          <input @blur="confirm_user_money" @focus="postData.use_money = 0" class="o_desc"
-                 placeholder="请输入金额" type="number" v-if="userMoneyChecked" v-model.number="postData.use_money">
+          <view class="o_de">您当前最多使用余额:{{ userInfo.User_Money<orderInfo.Order_TotalPrice ? userInfo.User_Money:orderInfo.Order_TotalPrice }}</view>
+          <input @blur="confirm_user_money" @focus="postData.use_money = 0" class="o_desc" placeholder="请输入金额" type="number" v-if="userMoneyChecked" v-model.number="postData.use_money" />
         </view>
       </view>
       <view class="other" v-if="initData.invoice_switch == 1">
@@ -379,7 +373,7 @@ export default {
     }
   },
   onShow () {
-    if (JSON.stringify(this.userInfo) != '{}') {
+    if (JSON.stringify(this.userInfo) !== '{}') {
       get_user_info().then(res => {
         this.setUserInfo(res.data)
       }).catch(e => {
@@ -406,32 +400,34 @@ export default {
     }
   },
   computed: {
-    loading: function () {
+    loading () {
       return this.addressLoading && this.orderLoading
     },
-    remindAddress: function () {
-      return this.orderInfo.is_virtual == 0 && !this.addressinfo.Address_Name
+    remindAddress () {
+      return this.orderInfo.is_virtual === 0 && !this.addressinfo.Address_Name
     },
-    active_name: function () {
+    active_name () {
+      var str = ''
       switch (this.checkfrom) {
         case 'spike' :
-          return '秒杀价'
+          str = '秒杀价'
           break
         case 'limit' :
-          return '限时抢购价'
+          str = '限时抢购价'
           break
         case 'group' :
-          return '拼团价'
+          str = '拼团价'
       }
+      return str
     },
     ...mapGetters(['userInfo', 'initData'])
   },
   methods: {
     changgeTabIdx (index) {
       this.tabIdx = index
-      if (index == 0) {
+      if (index === 0) {
         this.postData.shipping_id = this.idD
-      } else if (index == 1) {
+      } else if (index === 1) {
         this.idD = this.postData.shipping_id
         this.postData.shipping_id = 'is_store'
       }
@@ -440,7 +436,7 @@ export default {
       if (this.tabIdx === 1) {
         this.selectStore = false
         this.postData.shipping_id = 'is_store'
-      } else if (this.orderInfo.is_virtual == 1) {
+      } else if (this.orderInfo.is_virtual === 1) {
         this.postData.shipping_id = ''
       } else {
         // 为了选择门店的时候的用户体验
@@ -467,7 +463,7 @@ export default {
       }
       this.$refs.stroeComp.close()
 
-      if (this.postData.shipping_id == 'is_store') {
+      if (this.postData.shipping_id === 'is_store') {
         const obj = {}
         for (const it in this.orderInfo.CartList) {
           for (const iq in this.orderInfo.CartList[it]) {
@@ -560,9 +556,9 @@ export default {
     form_submit (e) {
       if (!this.submited) {
         this.submited = true
-        if (this.postData.need_invoice == 1 && this.postData.invoice_info == '' && this.initData.invoice_switch == 1) {
+        if (this.postData.need_invoice === 1 && this.postData.invoice_info === '' && this.initData.invoice_switch === 1) {
           this.submited = false
-          if (this.postData.invoice_info == '') {
+          if (this.postData.invoice_info === '') {
             uni.showToast({
               title: '发票信息不能为空',
               icon: 'none'
@@ -571,7 +567,7 @@ export default {
           }
         }
 
-        if (this.tabIdx == 1 && this.postData.shipping_id != 'is_store') {
+        if (this.tabIdx === 1 && this.postData.shipping_id !== 'is_store') {
           this.submited = false
           uni.showToast({
             title: '请选择门店',
@@ -579,7 +575,7 @@ export default {
           })
           return
         }
-        if (this.orderInfo.is_virtual == 0) {
+        if (this.orderInfo.is_virtual === 0) {
           if (!this.postData.shipping_id) {
             uni.showToast({
               title: '请选择物流',
@@ -590,28 +586,12 @@ export default {
           }
         }
 
-        if (this.orderInfo.is_virtual == 1 || this.postData.shipping_id == 'is_store') {
-          // if(!this.user_name) {
-          // 	uni.showToast({
-          // 		title: '请填写购买人姓名',
-          // 		icon: 'none'
-          // 	});
-          // 	this.submited = false;
-          // 	return;
-          // };
-          // if(!this.user_mobile) {
-          // 	uni.showToast({
-          // 		title: '请填写购买人手机号',
-          // 		icon: 'none'
-          // 	});
-          // 	this.submited = false;
-          // 	return;
-          // };
+        if (this.orderInfo.is_virtual === 1 || this.postData.shipping_id === 'is_store') {
           this.postData.user_name = this.user_name
           this.postData.user_mobile = this.user_mobile
         }
 
-        if (this.postData.shipping_id == 'is_store') {
+        if (this.postData.shipping_id === 'is_store') {
           const obj = {}
           for (const it in this.orderInfo.CartList) {
             for (const iq in this.orderInfo.CartList[it]) {
@@ -622,16 +602,13 @@ export default {
           }
           this.postData.self_pick_store_id = JSON.stringify(obj)
         }
-        // add_template_code({
-        // 	code: e.detail.formId,
-        // 	times: 1
-        // })
-        if (this.shipping_store_id && this.orderInfo.shipping_has_stores == 1) {
+
+        if (this.shipping_store_id && this.orderInfo.shipping_has_stores === 1) {
           this.postData.shipping_store_id = this.shipping_store_id
         }
         createOrder(this.postData).then(res => {
           // 如果order_totalPrice <= 0  直接跳转 订单列表页
-          if (res.data.Order_Status != 1) {
+          if (res.data.Order_Status !== 1) {
             // 直接跳转订单列表页
             uni.redirectTo({
               url: '/pages/order/order'
@@ -681,10 +658,6 @@ export default {
     // 发票抬头输入完成
     faPiaoConfirm (e) {
       // #ifdef H5
-      // uni.pageScrollTo({
-      // 	scrollTop: 0,
-      // 	duration: 200
-      // });
       // #endif
       const invoice_info = e.detail.value
 
@@ -693,10 +666,6 @@ export default {
     // 余额支付输入完成
     confirm_user_money (e) {
       // #ifdef H5
-      // uni.pageScrollTo({
-      // 	scrollTop: 0,
-      // 	duration: 200
-      // });
       // #endif
       const input_money = e.detail.value
       // let user_money = this.userInfo.User_Money;
@@ -727,23 +696,15 @@ export default {
     // 留言
     remarkConfirm (e) {
       // #ifdef H5
-      // uni.pageScrollTo({
-      // 	scrollTop: 0,
-      // 	duration: 200
-      // });
       // #endif
       this.postData.order_remark = e.detail.value
     },
-    //
-    //  	notUseCoupon(){
-    // 	this.postData.coupon_id = ''
-    // 	this.current = ''
-    // },
+
     // 优惠券改变
     radioChange (e) {
       var couponlist = this.orderInfo.coupon_list
       for (var i = 0; i < couponlist.length; i++) {
-        if (couponlist[i].Coupon_ID == e.target.value) {
+        if (couponlist[i].Coupon_ID === e.target.value) {
           this.current = i
           break
         }
@@ -754,7 +715,7 @@ export default {
     // 物流改变
     ShipRadioChange (e) {
       for (var i in this.orderInfo.shipping_company) {
-        if (i == e.target.value) {
+        if (i === e.target.value) {
           this.ship_current = i
           break
         }
@@ -764,7 +725,7 @@ export default {
     },
     changeCoupon () {
       this.type = 'coupon'
-      if (this.couponlist.length == 0) {
+      if (this.couponlist.length === 0) {
         return
       }
       this.$refs.popupRef.show()
@@ -780,7 +741,7 @@ export default {
       this.zIndex = 99
     },
     closeMethod () {
-      if (this.type == 'coupon') {
+      if (this.type === 'coupon') {
         // 不使用优惠
         if (!this.postData.coupon_id) {
           this.coupon_desc = '暂不使用优惠'
@@ -789,14 +750,14 @@ export default {
           return
         }
         for (var i in this.couponlist) {
-          if (this.couponlist[i].Coupon_ID == this.postData.coupon_id) {
+          if (this.couponlist[i].Coupon_ID === this.postData.coupon_id) {
             this.coupon_desc = `满${this.couponlist[i].Coupon_Condition} - ${this.couponlist[i].Coupon_Cash > 0 ? this.couponlist[i].Coupon_Cash : this.couponlist[i].Coupon_Discount}`
           }
         }
       } else {
-        for (var i in this.orderInfo.shipping_company) {
-          if (i == this.postData.shipping_id) {
-            this.shipping_name = `${this.orderInfo.shipping_company[i]}`
+        for (var j in this.orderInfo.shipping_company) {
+          if (j === this.postData.shipping_id) {
+            this.shipping_name = `${this.orderInfo.shipping_company[j]}`
           }
         }
       }
@@ -816,14 +777,8 @@ export default {
       }
       await getAddress({ Address_ID: Address_ID || 0 }).then(res => {
         // if (this.back_address_id) {  //添加、选择收获地址返回
-        // 	uni.showModal({
-        // 	  title: '错误',
-        // 	  content: '收货地址获取失败',
-        // 	  showCancel: false
-        // 	});
-        // 	return false;
-        // }
-        if (this.back_address_id && res.errorCode != 0) { // 添加、选择收获地址返回
+
+        if (this.back_address_id && res.errorCode !== 0) { // 添加、选择收获地址返回
           uni.showModal({
             title: '错误',
             content: '收货地址获取失败',
@@ -854,7 +809,7 @@ export default {
             res.data.CartList[i][j].store = {}
 
             // 新增
-            if (res.data.CartList[i][j].store_name && num == 2 && res.data.shipping_has_stores == 1) {
+            if (res.data.CartList[i][j].store_name && num === 2 && res.data.shipping_has_stores === 1) {
               res.data.CartList[i][j].store.Stores_Name = res.data.CartList[i][j].store_name
               res.data.CartList[i][j].store.Stores_ID = res.data.CartList[i][j].store_id
               res.data.Stores_Name = res.data.CartList[i][j].store_name
@@ -873,12 +828,12 @@ export default {
         }
 
         // 如果该规格有门店 就优先后台设置的
-        if (this.orderInfo.all_has_stores == 1 && num == 2 && this.orderInfo.is_virtual != 1) {
+        if (this.orderInfo.all_has_stores === 1 && num === 2 && this.orderInfo.is_virtual !== 1) {
           this.tabIdx = this.initData.order_submit_first
         }
         this.idD = this.postData.shipping_id
         this.shipping_name = this.orderInfo.shipping_company[this.idD]
-        if (this.tabIdx == 1) {
+        if (this.tabIdx === 1) {
           this.postData.shipping_id = 'is_store'
         }
 
@@ -886,9 +841,9 @@ export default {
 
         this.orderLoading = true
 
-        for (var i in this.orderInfo.shipping_company) {
-          if (i == this.postData.shipping_id) {
-            this.shipping_name = `${this.orderInfo.shipping_company[i]}`
+        for (var k in this.orderInfo.shipping_company) {
+          if (k === this.postData.shipping_id) {
+            this.shipping_name = `${this.orderInfo.shipping_company[k]}`
           }
         }
       }).catch(e => {
@@ -912,9 +867,9 @@ export default {
       font-size: 14px;
 
       .tabs-item {
-        width: 170rpx;
+        width: 170 rpx;
         padding: 6px 0;
-        margin-right: 70rpx;
+        margin-right: 70 rpx;
         color: #333;
         text-align: center;
 
@@ -939,14 +894,14 @@ export default {
   }
 
   .mxdetail {
-    font-size: 28rpx;
-    line-height: 80rpx;
-    padding: 20rpx 30rpx;
+    font-size: 28 rpx;
+    line-height: 80 rpx;
+    padding: 20 rpx 30 rpx;
     /* #ifndef APP-PLUS */
-    padding-bottom: 100rpx;
+    padding-bottom: 100 rpx;
     /* #endif */
     .mxtitle {
-      font-size: 28rpx;
+      font-size: 28 rpx;
       text-align: center;
     }
 
@@ -964,18 +919,18 @@ export default {
     /* margin: 15px 0 10px; */
     display: flex;
     align-items: center;
-    padding: 44rpx 38rpx 45rpx;
-    border-bottom: 20rpx solid #f8f8f8;
+    padding: 44 rpx 38 rpx 45 rpx;
+    border-bottom: 20 rpx solid #f8f8f8;
 
     .add_msg {
       flex: 1;
-      font-size: 28rpx;
+      font-size: 28 rpx;
     }
 
     .right {
-      width: 18rpx;
-      height: 27rpx;
-      margin-left: 34rpx;
+      width: 18 rpx;
+      height: 27 rpx;
+      margin-left: 34 rpx;
     }
   }
 
@@ -984,53 +939,53 @@ export default {
   }
 
   .loc_icon {
-    width: 41rpx;
-    height: 51rpx;
-    margin-right: 31rpx;
+    width: 41 rpx;
+    height: 51 rpx;
+    margin-right: 31 rpx;
   }
 
   .name {
-    margin-bottom: 30rpx;
-    font-size: 28rpx;
+    margin-bottom: 30 rpx;
+    font-size: 28 rpx;
     color: #333;
-    line-height: 22rpx;
+    line-height: 22 rpx;
   }
 
   .name > span {
-    margin-left: 10rpx;
+    margin-left: 10 rpx;
   }
 
   .location {
-    font-size: 24rpx;
+    font-size: 24 rpx;
     color: #333;
-    line-height: 32rpx;
+    line-height: 32 rpx;
   }
 
   /* 收货地址 end */
   /* 订单信息 start */
   .order_msg {
-    padding: 0 40rpx 0 30rpx;
+    padding: 0 40 rpx 0 30 rpx;
   }
 
   .biz_msg {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 30rpx;
-    padding: 20rpx 30rpx 0rpx;
+    margin-bottom: 30 rpx;
+    padding: 20 rpx 30 rpx 0 rpx;
   }
 
   .biz_logo {
-    width: 70rpx;
-    height: 70rpx;
-    margin-right: 20rpx;
-    border-radius: 35rpx;
+    width: 70 rpx;
+    height: 70 rpx;
+    margin-right: 20 rpx;
+    border-radius: 35 rpx;
   }
 
   .biz_name {
-    font-size: 28rpx;
+    font-size: 28 rpx;
     color: #333;
-    line-height: 30rpx;
+    line-height: 30 rpx;
   }
 
   .pro {
@@ -1039,7 +994,7 @@ export default {
   }
 
   .order_msg .pro:last-child {
-    margin-bottom: 17rpx
+    margin-bottom: 17 rpx
   }
 
   .order_msg {
@@ -1070,20 +1025,20 @@ export default {
   }
 
   .pro-img {
-    width: 200rpx;
-    height: 200rpx;
-    margin-right: 28rpx;
+    width: 200 rpx;
+    height: 200 rpx;
+    margin-right: 28 rpx;
   }
 
   .pro-name {
-    font-size: 26rpx;
+    font-size: 26 rpx;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     overflow: hidden;
     text-overflow: ellipsis;
     -webkit-box-orient: vertical;
-    line-height: 30rpx;
-    height: 61rpx
+    line-height: 30 rpx;
+    height: 61 rpx
   }
 
   .pro-msg {
@@ -1095,36 +1050,36 @@ export default {
 
   .attr {
     display: inline-block;
-    height: 50rpx;
-    line-height: 50rpx;
+    height: 50 rpx;
+    line-height: 50 rpx;
 
     color: #666;
-    font-size: 24rpx;
+    font-size: 24 rpx;
     // padding: 0 20rpx;
     // margin: 25rpx 0 24rpx;
     span {
-      padding: 14rpx 20rpx;
-      margin: 25rpx 0 24rpx;
+      padding: 14 rpx 20 rpx;
+      margin: 25 rpx 0 24 rpx;
       background: #FFF5F5;
     }
   }
 
   .pro-price {
     color: #F43131;
-    font-size: 36rpx;
+    font-size: 36 rpx;
 
     span {
-      font-size: 24rpx;
+      font-size: 24 rpx;
       font-style: normal;
     }
 
     .amount {
       float: right;
       color: #333;
-      font-size: 22rpx;
+      font-size: 22 rpx;
 
       .num {
-        font-size: 30rpx;
+        font-size: 30 rpx;
       }
     }
   }
@@ -1132,29 +1087,29 @@ export default {
   /* 订单信息 end */
   /* 订单其他信息 start */
   .other {
-    padding: 30rpx 40rpx 0 30rpx;
-    font-size: 22rpx;
+    padding: 30 rpx 40 rpx 0 30 rpx;
+    font-size: 22 rpx;
 
     .right {
-      margin-left: 18rpx;
-      width: 15rpx;
-      height: 23rpx;
+      margin-left: 18 rpx;
+      width: 15 rpx;
+      height: 23 rpx;
     }
   }
 
   .other .bd {
-    padding-bottom: 30rpx;
-    border-bottom: 2rpx solid #efefef;
+    padding-bottom: 30 rpx;
+    border-bottom: 2 rpx solid #efefef;
   }
 
   .o_title {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-size: 28rpx;
+    font-size: 28 rpx;
 
     .inputs {
-      font-size: 24rpx;
+      font-size: 24 rpx;
     }
   }
 
@@ -1164,8 +1119,8 @@ export default {
 
   .o_desc,
   .o_de {
-    font-size: 22rpx;
-    margin-top: 10rpx;
+    font-size: 22 rpx;
+    margin-top: 10 rpx;
 
     text {
       color: #F43131;
@@ -1182,7 +1137,7 @@ export default {
 
   .words .inputs {
     border: 0;
-    margin-left: 20rpx;
+    margin-left: 20 rpx;
     flex: 1;
   }
 
@@ -1190,13 +1145,13 @@ export default {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    margin: 40rpx 0;
-    font-size: 24rpx;
-    padding-right: 30rpx;
+    margin: 40 rpx 0;
+    font-size: 24 rpx;
+    padding-right: 30 rpx;
   }
 
   .total .money {
-    font-size: 30rpx;
+    font-size: 30 rpx;
     color: #F43131;
   }
 
@@ -1215,13 +1170,13 @@ export default {
     background: #fff;
 
     .mx {
-      font-size: 22rpx;
-      margin-right: 10rpx;
+      font-size: 22 rpx;
+      margin-right: 10 rpx;
 
       .image {
-        width: 20rpx;
-        height: 20rpx;
-        margin-left: 10rpx;
+        width: 20 rpx;
+        height: 20 rpx;
+        margin-left: 10 rpx;
       }
 
       .slidedown {
@@ -1231,12 +1186,12 @@ export default {
   }
 
   .submit {
-    width: 270rpx;
+    width: 270 rpx;
     background: #F43131;
     text-align: center;
     color: #fff;
     line-height: 50px;
-    font-size: 34rpx;
+    font-size: 34 rpx;
     border-radius: 0;
     border: none;
   }
@@ -1244,56 +1199,56 @@ export default {
   .totalinfo {
     flex: 1;
     text-align: center;
-    line-height: 30rpx;
+    line-height: 30 rpx;
   }
 
   .info {
-    font-size: 24rpx;
+    font-size: 24 rpx;
 
     .money {
       color: #F43131;
-      font-size: 30rpx;
+      font-size: 30 rpx;
 
       .m_icon {
-        font-size: 24rpx;
+        font-size: 24 rpx;
       }
     }
   }
 
   .tips {
-    font-size: 20rpx;
+    font-size: 20 rpx;
     color: #979797;
   }
 
   .bMbx {
-    padding: 0rpx 20rpx;
+    padding: 0 rpx 20 rpx;
 
     .fMbx {
-      font-size: 32rpx;
-      height: 30rpx;
-      line-height: 30rpx;
+      font-size: 32 rpx;
+      height: 30 rpx;
+      line-height: 30 rpx;
       text-align: center;
-      padding: 36rpx 0rpx;
+      padding: 36 rpx 0 rpx;
     }
 
     .iMbx {
       display: flex;
       justify-content: space-between;
-      height: 104rpx;
+      height: 104 rpx;
       border-bottom: 1px solid rgba(230, 230, 230, 1);
       align-items: center;
-      font-size: 28rpx;
+      font-size: 28 rpx;
     }
   }
 
   .sure {
-    height: 90rpx;
+    height: 90 rpx;
     width: 100%;
     background-color: #F43131;
     color: #fff;
-    font-size: 32rpx;
-    margin-top: 96rpx;
-    line-height: 90rpx;
+    font-size: 32 rpx;
+    margin-top: 96 rpx;
+    line-height: 90 rpx;
     text-align: center;
   }
 
@@ -1313,8 +1268,8 @@ export default {
     .remind-add {
       background: #fff;
       width: 90%;
-      padding: 50rpx 0 0;
-      border-radius: 20rpx;
+      padding: 50 rpx 0 0;
+      border-radius: 20 rpx;
       overflow: hidden;
 
       .text-align-center {
@@ -1322,20 +1277,20 @@ export default {
       }
 
       .mb20 {
-        margin-bottom: 20rpx;
+        margin-bottom: 20 rpx;
       }
 
       .remind_desc {
-        padding: 0 20rpx;
-        font-size: 30rpx;
-        margin: 40rpx 0;
+        padding: 0 20 rpx;
+        font-size: 30 rpx;
+        margin: 40 rpx 0;
         color: #666;
       }
 
       .remind_btns {
         display: flex;
-        border-top: 1rpx solid #efefef;
-        line-height: 90rpx;
+        border-top: 1 rpx solid #efefef;
+        line-height: 90 rpx;
 
         .fl1 {
           flex: 1;
@@ -1351,7 +1306,7 @@ export default {
 
   .over {
     position: fixed;
-    width: 750rpx;
+    width: 750 rpx;
     z-index: 90;
     height: 100%;
     overflow: hidden;

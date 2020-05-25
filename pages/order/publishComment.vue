@@ -1,6 +1,6 @@
 <template>
   <view @click="commonClick" class="all">
-    <!-- <page-title title="发表评论" rightHidden="true" bgcolor="#ffffff"></page-title> -->
+
     <view style="height: 40rpx;width: 100%;">
 
     </view>
@@ -11,11 +11,7 @@
         {{Score}}
       </view>
     </view>
-    <textarea class="edit" contenteditable="true" placeholder="宝贝是否满足了你的期待？说说你的使用心得，分享给其他想购买的朋友吧。"
-              placeholder-style="place"
-              style="border: 0rpx;" v-model="Note">
-
-		</textarea>
+    <textarea class="edit" contenteditable="true" placeholder="宝贝是否满足了你的期待？说说你的使用心得，分享给其他想购买的朋友吧。" placeholder-style="place" style="border: 0rpx;" v-model="Note"></textarea>
 
     <view class="niming">
       <view>
@@ -191,58 +187,58 @@ export default {
 
   .edit {
     box-sizing: border-box;
-    width: 710rpx;
-    height: 338rpx;
+    width: 710 rpx;
+    height: 338 rpx;
     border: 1px solid rgba(233, 233, 233, 1);
     border-radius: 10px;
     margin: 0 auto;
-    margin-top: 20rpx;
-    padding-top: 23rpx;
-    padding-left: 27rpx;
-    padding-right: 40rpx;
-    font-size: 28rpx;
+    margin-top: 20 rpx;
+    padding-top: 23 rpx;
+    padding-left: 27 rpx;
+    padding-right: 40 rpx;
+    font-size: 28 rpx;
     color: #333333;
     background-color: #FFFFFF;
   }
 
   .place {
     color: #CBCBCB !important;
-    font-size: 24rpx !important;
+    font-size: 24 rpx !important;
   }
 
   .submit {
-    width: 690rpx;
-    height: 80rpx;
+    width: 690 rpx;
+    height: 80 rpx;
     margin: 0 auto;
     background-color: #F43131;
-    line-height: 80rpx;
-    font-size: 34rpx;
+    line-height: 80 rpx;
+    font-size: 34 rpx;
     color: #FFFFFF;
-    border-radius: 10rpx;
+    border-radius: 10 rpx;
     text-align: center;
-    margin-top: 65rpx;
+    margin-top: 65 rpx;
   }
 
   .niming {
-    width: 710rpx;
-    height: 75rpx;
+    width: 710 rpx;
+    height: 75 rpx;
     margin: 0 auto;
-    padding-left: 26rpx;
-    padding-right: 14rpx;
+    padding-left: 26 rpx;
+    padding-right: 14 rpx;
     display: flex;
     align-items: center;
     justify-content: space-between;
     background-color: #FFFFFF;
-    border-radius: 10rpx;
-    margin-top: 20rpx;
-    margin-bottom: 20rpx;
-    font-size: 26rpx;
+    border-radius: 10 rpx;
+    margin-top: 20 rpx;
+    margin-bottom: 20 rpx;
+    font-size: 26 rpx;
   }
 
   .item {
     display: flex;
     height: 50px;
-    margin-left: 23rpx;
+    margin-left: 23 rpx;
     align-items: center;
     justify-content: space-between;
     font-size: 14px;
@@ -255,12 +251,12 @@ export default {
 
   .item-left {
     margin-right: 10px;
-    font-size: 28rpx;
+    font-size: 28 rpx;
   }
 
   .item-right {
     color: #888;
-    font-size: 24rpx;
+    font-size: 24 rpx;
   }
 
   .noborder {
@@ -268,17 +264,17 @@ export default {
   }
 
   .item-right img {
-    width: 15rpx;
-    height: 23rpx;
-    margin-left: 25rpx;
+    width: 15 rpx;
+    height: 23 rpx;
+    margin-left: 25 rpx;
   }
 
   /* 上传图像 */
   .imgs {
     display: flex;
-    padding-right: 0rpx;
+    padding-right: 0 rpx;
     flex-wrap: wrap;
-    padding-left: 20rpx;
+    padding-left: 20 rpx;
   }
 
   .bottom {
@@ -286,9 +282,9 @@ export default {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 86rpx;
-    line-height: 86rpx;
-    font-size: 32rpx;
+    height: 86 rpx;
+    line-height: 86 rpx;
+    font-size: 32 rpx;
     color: #fff;
     text-align: center;
     background: #F43131;
@@ -322,44 +318,44 @@ export default {
   }
 
   .bMbx {
-    padding: 0rpx 20rpx;
+    padding: 0 rpx 20 rpx;
 
     .fMbx {
-      font-size: 32rpx;
-      height: 30rpx;
-      line-height: 30rpx;
+      font-size: 32 rpx;
+      height: 30 rpx;
+      line-height: 30 rpx;
       text-align: center;
-      padding: 36rpx 0rpx;
+      padding: 36 rpx 0 rpx;
     }
 
     .iMbx {
       display: flex;
       justify-content: space-between;
-      height: 104rpx;
+      height: 104 rpx;
       border-bottom: 1px solid rgba(230, 230, 230, 1);
       align-items: center;
-      font-size: 28rpx;
+      font-size: 28 rpx;
     }
   }
 
   .sure {
-    height: 90rpx;
+    height: 90 rpx;
     width: 100%;
     background-color: #F43131;
     color: #fff;
-    font-size: 32rpx;
-    margin-top: 96rpx;
-    line-height: 90rpx;
+    font-size: 32 rpx;
+    margin-top: 96 rpx;
+    line-height: 90 rpx;
     text-align: center;
   }
 
   .shangchuans {
-    width: 146rpx;
-    height: 146rpx;
+    width: 146 rpx;
+    height: 146 rpx;
     border: 1px solid rgba(186, 186, 186, 1);
     position: relative;
-    margin-right: 20rpx;
-    margin-bottom: 28rpx;
+    margin-right: 20 rpx;
+    margin-bottom: 28 rpx;
 
     .image {
       width: 100%;
@@ -367,8 +363,8 @@ export default {
     }
 
     .del {
-      width: 38rpx;
-      height: 38rpx;
+      width: 38 rpx;
+      height: 38 rpx;
       position: absolute;
       top: -19rpx;
       right: -19rpx;
@@ -377,61 +373,61 @@ export default {
   }
 
   .shangchuan {
-    width: 146rpx;
-    height: 146rpx;
+    width: 146 rpx;
+    height: 146 rpx;
     border: 1px solid rgba(186, 186, 186, 1);
     position: relative;
-    margin-bottom: 28rpx;
+    margin-bottom: 28 rpx;
 
     .heng {
-      width: 76rpx;
-      height: 3rpx;
+      width: 76 rpx;
+      height: 3 rpx;
       background-color: #BABABA;
       position: absolute;
-      top: 72rpx;
-      left: 35rpx;
+      top: 72 rpx;
+      left: 35 rpx;
     }
 
     .shu {
-      width: 3rpx;
-      height: 76rpx;
+      width: 3 rpx;
+      height: 76 rpx;
       background-color: #BABABA;
       position: absolute;
-      top: 35rpx;
-      left: 72rpx;
+      top: 35 rpx;
+      left: 72 rpx;
 
     }
   }
 
   .shangH {
     background-color: #FFFFFF;
-    width: 710rpx;
+    width: 710 rpx;
     margin: 0 auto;
   }
 
   .rate {
     margin: 0 auto;
-    width: 710rpx;
-    height: 75rpx;
+    width: 710 rpx;
+    height: 75 rpx;
     background-color: #FFFFFF;
     display: flex;
     align-items: center;
-    border-radius: 10rpx;
-    padding: 25rpx 0rpx;
+    border-radius: 10 rpx;
+    padding: 25 rpx 0 rpx;
 
     .rates {
-      font-size: 26rpx;
+      font-size: 26 rpx;
       color: #333333;
-      margin-left: 25rpx;
-      margin-right: 22rpx;
+      margin-left: 25 rpx;
+      margin-right: 22 rpx;
     }
 
     .score {
-      padding-top: 5rpx;
-      font-size: 26rpx;
+      padding-top: 5 rpx;
+      font-size: 26 rpx;
       font-weight: 500;
       color: #F43131;
-      margin-left: 15rpx;
+      margin-left: 15 rpx;
     }
   }
 </style>

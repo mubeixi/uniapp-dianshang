@@ -148,32 +148,32 @@ export default {
   }
 
   .wuliu {
-    width: 710rpx;
-    height: 200rpx;
+    width: 710 rpx;
+    height: 200 rpx;
     background: rgba(255, 255, 255, 1);
-    border-radius: 20rpx;
+    border-radius: 20 rpx;
     margin: 0 auto;
-    margin-top: 20rpx;
-    padding-top: 27rpx;
-    padding-left: 32rpx;
+    margin-top: 20 rpx;
+    padding-top: 27 rpx;
+    padding-left: 32 rpx;
     display: flex;
-    padding-bottom: 10rpx;
+    padding-bottom: 10 rpx;
 
     .image {
-      width: 72rpx;
-      height: 72rpx;
-      margin-right: 30rpx;
+      width: 72 rpx;
+      height: 72 rpx;
+      margin-right: 30 rpx;
     }
 
     .fonts {
-      font-size: 24rpx;
+      font-size: 24 rpx;
       color: #999999;
       display: flex;
-      height: 40rpx;
-      line-height: 30rpx;
+      height: 40 rpx;
+      line-height: 30 rpx;
 
       .left {
-        margin-right: 10rpx;
+        margin-right: 10 rpx;
       }
 
       .right {
@@ -183,25 +183,25 @@ export default {
   }
 
   .xiangxi {
-    margin-top: 25rpx;
-    width: 710rpx;
+    margin-top: 25 rpx;
+    width: 710 rpx;
     background: #FFFFFF;
-    border-radius: 20rpx;
-    padding: 45rpx 0rpx 0rpx 42rpx;
+    border-radius: 20 rpx;
+    padding: 45 rpx 0 rpx 0 rpx 42 rpx;
     margin: 0 auto;
 
     .center {
       padding: 10px 0px;
-      width: 626rpx;
+      width: 626 rpx;
       display: flex;
 
       .lefts {
-        width: 32rpx;
+        width: 32 rpx;
         position: relative;
 
         .tops {
-          width: 32rpx;
-          height: 32rpx;
+          width: 32 rpx;
+          height: 32 rpx;
           background-color: #FFE4E4;
           border-radius: 50%;
           display: flex;
@@ -209,39 +209,39 @@ export default {
           justify-content: center;
 
           .views {
-            width: 16rpx;
-            height: 16rpx;
+            width: 16 rpx;
+            height: 16 rpx;
             background-color: #F43131;
             border-radius: 50%;
           }
         }
 
         .bottoms {
-          width: 4rpx;
+          width: 4 rpx;
           height: 100%;
           background-color: #ECECEC;
           position: absolute;
-          top: 32rpx;
-          left: 14rpx;
+          top: 32 rpx;
+          left: 14 rpx;
         }
       }
 
       .rights {
-        margin-left: 28rpx;
+        margin-left: 28 rpx;
 
         .tops {
-          font-size: 28rpx;
+          font-size: 28 rpx;
           color: #F43131;
           // height: 30rpx;
-          line-height: 30rpx;
+          line-height: 30 rpx;
         }
 
         .bottoms {
-          margin-top: 19rpx;
-          font-size: 24rpx;
+          margin-top: 19 rpx;
+          font-size: 24 rpx;
           color: #AAAAAA;
-          height: 30rpx;
-          line-height: 30rpx;
+          height: 30 rpx;
+          line-height: 30 rpx;
         }
       }
 

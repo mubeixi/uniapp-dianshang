@@ -106,8 +106,7 @@
             <view :key="idx" class="skulist" v-for="(item,idx) in prosku.skujosn_new">
               <view class="sku-name">{{item.sku}}</view>
               <view class="sku-item">
-                <view :class="[check_attr[item.sku]==index?'active':'','sku']" :key=""
-                      @click="selectAttr(index,item.sku)" v-for="(attr,index) of item.val">{{attr}}
+                <view :class="[check_attr[item.sku]==index?'active':'','sku']" :key="index" @click="selectAttr(index,item.sku)" v-for="(attr,index) of item.val">{{attr}}
                 </view>
               </view>
             </view>
@@ -231,26 +230,26 @@ export default {
     }
   },
   onShareAppMessage () {
-	  if (this.$store.getters.getCurrentStoreId()) {
-		  const path = 'pages/index/index?store_id=' + this.storeID
-		  const shareObj = {
-		    title: this.storeInfo.Stores_Name,
-		    desc: '万千好货疯抢中',
-		    imageUrl: this.storeInfo.Stores_ImgPath,
-		    path: buildSharePath(path)
-		  }
-		  return shareObj
-	  } else {
-		  const initData = this.$store.getters.initData
-		  const path = '/pages/index/index'
-		  const shareObj = {
-		    title: initData.ShopName,
-		    desc: initData.ShareIntro,
-		    imageUrl: domainFn(initData.ShareLogo),
-		    path: buildSharePath(path)
-		  }
-		  return shareObj
-	  }
+    if (this.$store.getters.getCurrentStoreId()) {
+      const path = 'pages/index/index?store_id=' + this.storeID
+      const shareObj = {
+        title: this.storeInfo.Stores_Name,
+        desc: '万千好货疯抢中',
+        imageUrl: this.storeInfo.Stores_ImgPath,
+        path: buildSharePath(path)
+      }
+      return shareObj
+    } else {
+      const initData = this.$store.getters.initData
+      const path = '/pages/index/index'
+      const shareObj = {
+        title: initData.ShopName,
+        desc: initData.ShareIntro,
+        imageUrl: domainFn(initData.ShareLogo),
+        path: buildSharePath(path)
+      }
+      return shareObj
+    }
   },
   methods: {
     domainFn,
@@ -274,11 +273,7 @@ export default {
             href: front_url + shareObj.path,
             title: shareObj.title,
             summary: shareObj.desc,
-            imageUrl: shareObj.imageUrl,
-            success: function (res) {
-            },
-            fail: function (err) {
-            }
+            imageUrl: shareObj.imageUrl
           })
           break
         case 'wxtimeline':
@@ -289,11 +284,7 @@ export default {
             href: front_url + shareObj.path,
             title: shareObj.title,
             summary: shareObj.desc,
-            imageUrl: shareObj.imageUrl,
-            success: function (res) {
-            },
-            fail: function (err) {
-            }
+            imageUrl: shareObj.imageUrl
           })
           break
         case 'wxmini':
@@ -392,7 +383,7 @@ export default {
       }
     },
     minus () {
-      if (this.postData.qty == 0) return
+      if (this.postData.qty === 0) return
       if (this.postData.qty > 1) {
         this.postData.qty -= 1
       } else {
@@ -416,7 +407,7 @@ export default {
       var check_attrname = []
       var check_attrnames = []
       var check_name = []
-      for (var i in check_attr) {
+      for (const i in check_attr) {
         var attr_id = check_attr[i]
         check_attrid.push(attr_id)
         check_attrname[attr_id] = i
@@ -425,8 +416,9 @@ export default {
       var check_attrid_arr = check_attrid
       check_attrid = numberSort(check_attrid)
       // 获取对应的属性名称
-      for (var i = 0; i < check_attrid.length; i++) {
-        var attr_id = check_attrid[i]
+      for (var j = 0; j < check_attrid.length; j++) {
+        // eslint-disable-next-line no-redeclare
+        var attr_id = check_attrid[j]
         var attr_name = check_attrname[attr_id]
         check_attrnames.push(attr_name + ':' + this.prosku.skujosn[attr_name][attr_id])
         check_name.push(this.prosku.skujosn[attr_name][attr_id])
@@ -446,7 +438,7 @@ export default {
         this.postData.count = attr_val.Property_count // 选择属性的库存
         // this.postData.showimg = typeof attr_val.Attr_Image != 'undefined' && attr_val.Attr_Image != '' ? attr_val.Attr_Image : this.product.Products_JSON['ImgPath'][0];// 选择属性的图片
         this.postData.productDetail_price = attr_val.Attr_Price ? attr_val.Attr_Price : this.prosku.Products_PriceX // 选择属性的价格
-        this.submit_flag = !((!this.check_attr || Object.getOwnPropertyNames(this.check_attr).length != Object.getOwnPropertyNames(this.prosku.skujosn).length))
+        this.submit_flag = !((!this.check_attr || Object.getOwnPropertyNames(this.check_attr).length !== Object.getOwnPropertyNames(this.prosku.skujosn).length))
       }
       // 判断属性库存
       if (attr_val && attr_val.Property_count <= 0) {
@@ -463,7 +455,7 @@ export default {
       this.check_attrnames = mySku
       this.check_attr = check_attr
       this.check_attrid_arr = check_attrid_arr
-      this.submit_flag = !((!this.check_attr || Object.getOwnPropertyNames(this.check_attr).length != Object.getOwnPropertyNames(this.prosku.skujosn).length) || Object.getOwnPropertyNames(this.prosku.skuvaljosn).indexOf(check_attrid) == -1)
+      this.submit_flag = !((!this.check_attr || Object.getOwnPropertyNames(this.check_attr).length !== Object.getOwnPropertyNames(this.prosku.skujosn).length) || Object.getOwnPropertyNames(this.prosku.skuvaljosn).indexOf(check_attrid) === -1)
     },
     updaCart (data) {
       if (data.skujosn) {
@@ -476,6 +468,7 @@ export default {
           })
         }
         data.skujosn_new = skujosn_new
+        // eslint-disable-next-line no-self-assign
         data.skuvaljosn = data.skuvaljosn
       }
       this.prosku = data
@@ -540,7 +533,7 @@ export default {
       this.goodsNavIndex = current
       const that = this
 
-      if (!this.prodList[this.goodsNavIndex] && this.goodsNavIndex != 0) {
+      if (!this.prodList[this.goodsNavIndex] && this.goodsNavIndex !== 0) {
         const data = {
           page: 1,
           pageSize: 999,
@@ -678,7 +671,6 @@ export default {
     async get_user_location () {
       let localInfo = null
 
-      const rt = false
       const that = this
       // 这里是返回了一个promise，而且不具备阻断后面的作用。不能用await promise.then()这样的古怪语法。要么就是await，要么就是promise.then()
       getLocation(that).then(res => {
@@ -701,7 +693,7 @@ export default {
       let localInfo = null
 
       const that = this
-      const rt = false
+
       // 这里是返回了一个promise，而且不具备阻断后面的作用。不能用await promise.then()这样的古怪语法。要么就是await，要么就是promise.then()
       getLocation(that).then(res => {
         if (res.code === 0) {
@@ -817,7 +809,7 @@ export default {
 
 <style lang="scss" scoped>
   .index-all {
-    width: 750rpx;
+    width: 750 rpx;
     overflow-x: hidden;
     box-sizing: border-box;
     background-color: #FFFFFF;
@@ -827,7 +819,7 @@ export default {
   }
 
   .store-all {
-    width: 750rpx;
+    width: 750 rpx;
     //height: 100vh;
     //overflow-x: hidden;
     background-repeat: no-repeat;
@@ -840,44 +832,44 @@ export default {
 
   .store-title {
     font-size: 22px;
-    height: 42rpx;
-    line-height: 42rpx;
-    width: 750rpx;
+    height: 42 rpx;
+    line-height: 42 rpx;
+    width: 750 rpx;
     text-align: center;
     font-weight: bold;
-    padding-top: 70rpx;
+    padding-top: 70 rpx;
     color: #FFFFFF;
   }
 
   .store-info {
-    width: 710rpx;
+    width: 710 rpx;
     //height: 240rpx;
-    margin: 40rpx auto 40rpx;
+    margin: 40 rpx auto 40 rpx;
     background: rgba(255, 255, 255, 1);
-    box-shadow: 0px 0px 46rpx 0px rgba(198, 26, 19, 0.17);
-    border-radius: 10rpx;
-    padding: 24rpx;
+    box-shadow: 0px 0px 46 rpx 0px rgba(198, 26, 19, 0.17);
+    border-radius: 10 rpx;
+    padding: 24 rpx;
     box-sizing: border-box;
   }
 
   .store-img {
-    width: 92rpx;
-    height: 92rpx;
+    width: 92 rpx;
+    height: 92 rpx;
     border-radius: 50%;
-    margin-right: 20rpx;
+    margin-right: 20 rpx;
   }
 
   .store-info-content {
-    width: 200rpx;
-    margin-right: 50rpx;
+    width: 200 rpx;
+    margin-right: 50 rpx;
   }
 
   .store-name {
     margin-top: 6px;
-    height: 30rpx;
-    font-size: 30rpx;
-    line-height: 30rpx;
-    width: 300rpx;
+    height: 30 rpx;
+    font-size: 30 rpx;
+    line-height: 30 rpx;
+    width: 300 rpx;
     overflow: hidden;
     white-space: nowrap;
   }
@@ -887,48 +879,48 @@ export default {
     text-align: right;
 
     &-name {
-      height: 40rpx;
-      line-height: 30rpx;
-      font-size: 30rpx;
+      height: 40 rpx;
+      line-height: 30 rpx;
+      font-size: 30 rpx;
       color: #777777;
       padding-top: 6px;
-      margin-bottom: 16rpx;
+      margin-bottom: 16 rpx;
     }
 
     &-image {
-      width: 16rpx;
-      height: 24rpx;
-      margin-left: 14rpx;
+      width: 16 rpx;
+      height: 24 rpx;
+      margin-left: 14 rpx;
     }
 
     &-distance {
-      height: 24rpx;
-      line-height: 24rpx;
+      height: 24 rpx;
+      line-height: 24 rpx;
       color: #FF4E00;
-      font-size: 24rpx;
+      font-size: 24 rpx;
     }
   }
 
   .store-promise {
-    padding: 0rpx 8rpx;
+    padding: 0 rpx 8 rpx;
     border: 1px solid #FF4E00;
     font-size: 10px;
     color: #FF4E00;
     text-align: center;
-    border-radius: 6rpx;
-    height: 36rpx;
-    line-height: 36rpx;
+    border-radius: 6 rpx;
+    height: 36 rpx;
+    line-height: 36 rpx;
     box-sizing: border-box;
     display: inline-block;
     margin-top: 7px;
   }
 
   .store-icon {
-    width: 234rpx;
+    width: 234 rpx;
     text-align: center;
     font-size: 12px;
     color: #666666;
-    padding-top: 30rpx;
+    padding-top: 30 rpx;
   }
 
   .icon-address, .icon-cell, .icon-share-t {
@@ -937,12 +929,12 @@ export default {
   }
 
   .store-search {
-    width: 710rpx;
-    height: 66rpx;
-    line-height: 66rpx;
+    width: 710 rpx;
+    height: 66 rpx;
+    line-height: 66 rpx;
     box-sizing: border-box;
-    padding: 20rpx 30rpx;
-    padding-right: 200rpx;
+    padding: 20 rpx 30 rpx;
+    padding-right: 200 rpx;
     position: relative;
     font-size: 13px;
     color: #FFFFFF;
@@ -951,45 +943,45 @@ export default {
 
   .store-search-div {
     position: relative;
-    width: 710rpx;
+    width: 710 rpx;
     margin: 0 auto;
-    height: 66rpx;
+    height: 66 rpx;
   }
 
   .icon-del1 {
-    font-size: 32rpx;
+    font-size: 32 rpx;
     color: #ffd2be;
     position: absolute;
-    top: 16rpx;
-    left: 590rpx;
+    top: 16 rpx;
+    left: 590 rpx;
   }
 
   .icon-search1 {
-    font-size: 38rpx;
+    font-size: 38 rpx;
     color: #ffd2be;
     position: absolute;
-    top: 10rpx;
-    left: 644rpx;
+    top: 10 rpx;
+    left: 644 rpx;
   }
 
   .store-ul {
-    width: 750rpx;
-    height: 50rpx;
-    padding-top: 20rpx;
+    width: 750 rpx;
+    height: 50 rpx;
+    padding-top: 20 rpx;
     overflow-x: scroll;
-    padding-left: 20rpx;
-    padding-right: 20rpx;
-    margin: 20rpx auto 30rpx;
+    padding-left: 20 rpx;
+    padding-right: 20 rpx;
+    margin: 20 rpx auto 30 rpx;
     color: #FFFFFF;
-    font-size: 30rpx;
-    line-height: 32rpx;
+    font-size: 30 rpx;
+    line-height: 32 rpx;
   }
 
   .store-li {
-    height: 50rpx;
-    padding-bottom: 16rpx;
+    height: 50 rpx;
+    padding-bottom: 16 rpx;
     box-sizing: border-box;
-    margin-right: 40rpx;
+    margin-right: 40 rpx;
     white-space: nowrap;
     position: relative;
     text-align: center;
@@ -1005,10 +997,10 @@ export default {
     &:after {
       content: "";
       display: block;
-      width: 30rpx;
-      height: 4rpx;
+      width: 30 rpx;
+      height: 4 rpx;
       background: rgba(255, 255, 255, 1);
-      border-radius: 2rpx;
+      border-radius: 2 rpx;
       position: absolute;
       bottom: 0px;
       left: 50%;
@@ -1017,7 +1009,7 @@ export default {
   }
 
   .store-swiper {
-    padding: 0rpx 20rpx;
+    padding: 0 rpx 20 rpx;
     box-sizing: border-box;
   }
 
@@ -1036,73 +1028,73 @@ export default {
     top: 50%;
     left: 50%;
     z-index: 10000;
-    width: 526rpx;
+    width: 526 rpx;
     transform: translate(-50%, -50%);
-    border-radius: 10rpx;
+    border-radius: 10 rpx;
 
     .sku-title {
-      height: 60rpx;
-      line-height: 60rpx;
+      height: 60 rpx;
+      line-height: 60 rpx;
       background-color: #f6f6f6;
       color: #333;
-      font-size: 24rpx;
+      font-size: 24 rpx;
       text-align: center;
-      border-top-left-radius: 10rpx;
-      border-top-right-radius: 10rpx;
+      border-top-left-radius: 10 rpx;
+      border-top-right-radius: 10 rpx;
     }
 
     .sku-content {
-      padding: 40rpx 46rpx 34rpx 40rpx;
+      padding: 40 rpx 46 rpx 34 rpx 40 rpx;
       background-color: #fff;
-      border-bottom-left-radius: 10rpx;
-      border-bottom-right-radius: 10rpx;
+      border-bottom-left-radius: 10 rpx;
+      border-bottom-right-radius: 10 rpx;
 
       .skulist {
-        margin-bottom: 30rpx;
+        margin-bottom: 30 rpx;
         display: flex;
         align-items: center;
 
         &.change-btn {
-          padding-top: 43rpx;
+          padding-top: 43 rpx;
           justify-content: center;
         }
 
         .selected,
         .nochecked {
           display: block;
-          width: 40rpx;
-          height: 40rpx;
-          margin-right: 23rpx;
+          width: 40 rpx;
+          height: 40 rpx;
+          margin-right: 23 rpx;
         }
 
         .nochecked {
           box-sizing: border-box;
-          border: 2rpx solid rgba(214, 214, 214, 1);
+          border: 2 rpx solid rgba(214, 214, 214, 1);
           border-radius: 3px;
         }
 
         .input {
-          width: 420rpx;
-          height: 60rpx;
+          width: 420 rpx;
+          height: 60 rpx;
           border: 1px solid rgba(214, 214, 214, 1);
-          font-size: 24rpx;
-          padding-left: 24rpx;
+          font-size: 24 rpx;
+          padding-left: 24 rpx;
           box-sizing: border-box;
-          line-height: 36rpx;
+          line-height: 36 rpx;
         }
 
         .btn {
-          width: 130rpx;
-          height: 50rpx;
+          width: 130 rpx;
+          height: 50 rpx;
           text-align: center;
-          line-height: 50rpx;
+          line-height: 50 rpx;
           background-color: #E9E9E9;
-          font-size: 24rpx;
+          font-size: 24 rpx;
         }
 
         .cancel {
           color: #666;
-          margin-right: 25rpx;
+          margin-right: 25 rpx;
         }
 
         .confirm {
@@ -1112,8 +1104,8 @@ export default {
 
         .sku-name {
           color: #333;
-          font-size: 24rpx;
-          margin-right: 26rpx;
+          font-size: 24 rpx;
+          margin-right: 26 rpx;
         }
 
         .sku-item {
@@ -1124,20 +1116,20 @@ export default {
           flex-wrap: wrap;
 
           .img {
-            width: 27rpx;
-            height: 32rpx;
+            width: 27 rpx;
+            height: 32 rpx;
           }
 
           .sku {
-            padding: 0 10rpx;
-            height: 46rpx;
-            line-height: 46rpx;
+            padding: 0 10 rpx;
+            height: 46 rpx;
+            line-height: 46 rpx;
             text-align: center;
             background-color: #f6f6f6;
             color: #666;
-            font-size: 24rpx;
-            margin-right: 13rpx;
-            border-radius: 5rpx;
+            font-size: 24 rpx;
+            margin-right: 13 rpx;
+            border-radius: 5 rpx;
           }
 
           .active {
@@ -1146,18 +1138,18 @@ export default {
           }
 
           .handle {
-            width: 50rpx;
-            height: 45rpx;
-            line-height: 45rpx;
+            width: 50 rpx;
+            height: 45 rpx;
+            line-height: 45 rpx;
             text-align: center;
-            font-size: 32rpx;
+            font-size: 32 rpx;
             color: #777;
             background: #f6f6f6;
           }
 
           .pro-num {
-            margin: 0 15rpx;
-            font-size: 24rpx;
+            margin: 0 15 rpx;
+            font-size: 24 rpx;
             color: #777;
           }
         }
@@ -1167,20 +1159,20 @@ export default {
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-top: 60rpx;
+        margin-top: 60 rpx;
 
         .btn {
-          width: 130rpx;
-          height: 50rpx;
+          width: 130 rpx;
+          height: 50 rpx;
           text-align: center;
-          line-height: 50rpx;
-          font-size: 24rpx;
+          line-height: 50 rpx;
+          font-size: 24 rpx;
         }
 
         .cancel {
           background: #e9e9e9;
           color: #666;
-          margin-right: 25rpx;
+          margin-right: 25 rpx;
         }
 
         .confirm {
@@ -1196,45 +1188,45 @@ export default {
 
     .priceSum {
       text-align: center;
-      padding: 68rpx 0 104rpx;
+      padding: 68 rpx 0 104 rpx;
       background-color: #fff;
 
       .title {
-        font-size: 28rpx;
-        margin-bottom: 28rpx;
+        font-size: 28 rpx;
+        margin-bottom: 28 rpx;
       }
 
       .icon {
         color: $wzw-primary-color;
-        font-size: 26rpx;
-        margin-right: 10rpx;
+        font-size: 26 rpx;
+        margin-right: 10 rpx;
       }
 
       .span {
         color: $wzw-primary-color;
-        font-size: 36rpx;
+        font-size: 36 rpx;
       }
     }
   }
 
   .back-btn {
-    height: 50rpx;
-    width: 130rpx;
+    height: 50 rpx;
+    width: 130 rpx;
     text-align: center;
     background-color: $wzw-primary-color;
     color: #fff;
-    border-radius: 25rpx;
-    line-height: 50rpx;
+    border-radius: 25 rpx;
+    line-height: 50 rpx;
   }
 
   .check {
     position: fixed;
     bottom: 0;
     width: 100%;
-    height: 90rpx;
+    height: 90 rpx;
     display: flex;
-    line-height: 90rpx;
-    font-size: 24rpx;
+    line-height: 90 rpx;
+    font-size: 24 rpx;
     color: #333;
     background-color: #fff;
     box-shadow: 0px 0px 22px 0px rgba(4, 0, 0, 0.12);
@@ -1244,18 +1236,18 @@ export default {
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 24rpx;
+      font-size: 24 rpx;
       color: #333;
 
       .num {
         color: $wzw-primary-color;
-        fong-size: 28rpx;
+        fong-size: 28 rpx;
       }
 
       .img {
-        width: 17rpx;
-        height: 14rpx;
-        margin-left: 12rpx;
+        width: 17 rpx;
+        height: 14 rpx;
+        margin-left: 12 rpx;
       }
 
       .turn {
@@ -1264,11 +1256,11 @@ export default {
     }
 
     .submit {
-      width: 210rpx;
+      width: 210 rpx;
       height: 100%;
-      line-height: 90rpx;
+      line-height: 90 rpx;
       background: $wzw-primary-color;
-      font-size: 28rpx;
+      font-size: 28 rpx;
       color: #fff;
       text-align: center;
     }
@@ -1278,54 +1270,54 @@ export default {
   .ticks, .shareinfo {
     background: #fff;
     width: 100%;
-    padding: 30rpx 0 60rpx;
+    padding: 30 rpx 0 60 rpx;
     color: #333;
     z-index: 100;
-    border-top-left-radius: 10rpx;
-    border-top-right-radius: 10rpx;
+    border-top-left-radius: 10 rpx;
+    border-top-right-radius: 10 rpx;
     /* #ifdef H5 */
     margin-bottom: 50px;
     /* #endif */
   }
 
   .ticks {
-    max-height: 1050rpx;
+    max-height: 1050 rpx;
     position: relative;
-    padding-top: 0rpx !important;
+    padding-top: 0 rpx !important;
     // overflow: scroll;
   }
 
   .t_title {
-    font-size: 30rpx;
+    font-size: 30 rpx;
     color: #333;
     text-align: center;
     //margin-bottom: 40rpx;
     // position: fixed;
     width: 100%;
     z-index: 999;
-    height: 90rpx;
-    line-height: 90rpx;
+    height: 90 rpx;
+    line-height: 90 rpx;
     background-color: #FFFFFF;
   }
 
   .t_title image {
-    height: 24rpx;
-    width: 24rpx;
+    height: 24 rpx;
+    width: 24 rpx;
     position: absolute;
-    top: 33rpx;
-    right: 20rpx;
+    top: 33 rpx;
+    right: 20 rpx;
   }
 
   .t_content {
     position: relative;
-    width: 720rpx;
-    height: 160rpx;
+    width: 720 rpx;
+    height: 160 rpx;
     background-color: #FDF1E5;
     background-size: cover;
-    margin: 0 auto 30rpx;
-    padding: 20rpx 0 28rpx 40rpx;
+    margin: 0 auto 30 rpx;
+    padding: 20 rpx 0 28 rpx 40 rpx;
     box-sizing: border-box;
-    font-size: 22rpx;
+    font-size: 22 rpx;
     color: #F43131;
   }
 
@@ -1334,35 +1326,35 @@ export default {
   }
 
   .t_left .t_left_t .money {
-    font-size: 42rpx;
-    margin-right: 10rpx;
+    font-size: 42 rpx;
+    margin-right: 10 rpx;
   }
 
   .t_left .t_left_t {
-    font-size: 24rpx;
-    margin-bottom: 10rpx;
+    font-size: 24 rpx;
+    margin-bottom: 10 rpx;
   }
 
   .t_left .t_left_b {
-    margin-top: 6rpx;
+    margin-top: 6 rpx;
   }
 
   .t_left .t_left_t i {
-    font-size: 22rpx;
+    font-size: 22 rpx;
     font-style: normal;
   }
 
   .t_left .t_left_c, .t_left .t_left_b {
-    font-size: 22rpx;
+    font-size: 22 rpx;
   }
 
   .t_right {
     float: right;
-    height: 116rpx;
-    line-height: 116rpx;
-    padding: 0 36rpx;
-    font-size: 30rpx;
-    border-left: 2rpx dotted #999;
+    height: 116 rpx;
+    line-height: 116 rpx;
+    padding: 0 36 rpx;
+    font-size: 30 rpx;
+    border-left: 2 rpx dotted #999;
     //width: 124rpx;
     text-align: center;
   }
@@ -1374,7 +1366,7 @@ export default {
   .shareinfo {
     padding-bottom: 0;
     color: #333;
-    font-size: 24rpx;
+    font-size: 24 rpx;
   }
 
   .shareinfo > div {
@@ -1388,10 +1380,10 @@ export default {
   }
 
   .s_top .img {
-    width: 76rpx;
-    height: 76rpx;
+    width: 76 rpx;
+    height: 76 rpx;
     display: block;
-    margin: 0 auto 10rpx;
+    margin: 0 auto 10 rpx;
   }
 
   .s_top > div:nth-child(1) {
@@ -1404,16 +1396,16 @@ export default {
     width: 100%;
     background: #e8e8e8;
     color: #666;
-    font-size: 26rpx;
+    font-size: 26 rpx;
     text-align: center;
-    line-height: 60rpx;
-    margin-top: 16rpx;
+    line-height: 60 rpx;
+    margin-top: 16 rpx;
   }
 
   //分享结束
   .store-line {
     width: 2px;
-    height: 40rpx;
+    height: 40 rpx;
     background-color: #FFCBCB;
   }
 
