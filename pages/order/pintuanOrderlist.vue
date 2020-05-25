@@ -21,51 +21,53 @@
     </div>
     <view style="height: 100rpx;width: 100%;">
     </view>
-    <div :key="index" class="order" v-for="(item,index) of data" v-if="item.prod_list.length>0">
-      <div style="background-color: #F3F3F3;height: 20rpx;width: 100%;position: absolute;left: 0rpx;"></div>
-      <div style="height: 20rpx;"></div>
-      <div class="bizinfo">
-        <img :src="item.ShopLogo|domain" alt="" class="imgs">
-        <span class="bizname">{{item.ShopName}}</span>
-        <span class="status">{{item.Order_Status_desc}}</span>
-      </div>
-      <block :key="k" v-for="(i,k) of item.prod_list">
-        <div @click="goDetail(item)" class="pro">
-          <div class="pro-div">
-            <img :src="i.prod_img" class="pro-img">
-          </div>
-          <div class="pro-msg">
-            <div class="pro-name">{{i.prod_name}}</div>
-            <div class="attr" v-if="i.attr_info"><span>{{i.attr_info.attr_name}}</span></div>
-            <div class="attr" style="background-color: #FFFFFF;" v-else><span></span></div>
-            <div class="pro-price"><span>￥</span>{{i.prod_price}} <span class="amount">x{{i.prod_count}}</span></div>
-          </div>
+    <block v-if="item.prod_list.length>0">
+      <div class="order" v-for="(item,index) of data"  :key="index">
+        <div style="background-color: #F3F3F3;height: 20rpx;width: 100%;position: absolute;left: 0rpx;"></div>
+        <div style="height: 20rpx;"></div>
+        <div class="bizinfo">
+          <img :src="item.ShopLogo|domain" alt="" class="imgs">
+          <span class="bizname">{{item.ShopName}}</span>
+          <span class="status">{{item.Order_Status_desc}}</span>
         </div>
-      </block>
-      <div class="total">
-        <view @click="goPintuan(item)" class="ptdesc" v-if="item.teamstatus_desc">{{item.teamstatus_desc}}</view>
-        <view> 共{{item.prod_list.length}}件商品 实付：<span class="price"><span>￥</span> {{item.Order_TotalPrice}}</span>
-        </view>
+        <block :key="k" v-for="(i,k) of item.prod_list">
+          <div @click="goDetail(item)" class="pro">
+            <div class="pro-div">
+              <img :src="i.prod_img" class="pro-img">
+            </div>
+            <div class="pro-msg">
+              <div class="pro-name">{{i.prod_name}}</div>
+              <div class="attr" v-if="i.attr_info"><span>{{i.attr_info.attr_name}}</span></div>
+              <div class="attr" style="background-color: #FFFFFF;" v-else><span></span></div>
+              <div class="pro-price"><span>￥</span>{{i.prod_price}} <span class="amount">x{{i.prod_count}}</span></div>
+            </div>
+          </div>
+        </block>
+        <div class="total">
+          <view @click="goPintuan(item)" class="ptdesc" v-if="item.teamstatus_desc">{{item.teamstatus_desc}}</view>
+          <view> 共{{item.prod_list.length}}件商品 实付：<span class="price"><span>￥</span> {{item.Order_TotalPrice}}</span>
+          </view>
+        </div>
+        <div class="btn-group" v-if="item.Order_Status==0">
+          <span @click="cancelOrder(item.prod_list,index)">取消订单</span>
+        </div>
+        <div class="btn-group" v-if="item.Order_Status==1">
+          <span @click="cancelOrder(item.prod_list,index)">取消订单</span>
+          <span @click="goPay(item)" class="active">立即付款</span>
+        </div>
+        <div class="btn-group" v-else-if="item.Order_Status==2&&item.teamstatus==1">
+          <span @click="goPay(item)" class="active">申请退款</span>
+        </div>
+        <div class="btn-group" v-else-if="item.Order_Status==3">
+          <span @click="goLogistics(item)">查看物流</span>
+          <span @click="goPay(item)" style="margin-left: 14rpx;">申请退款退货</span>
+          <span @click="confirmOrder(item)" class="active">确认收货</span>
+        </div>
+        <div class="btn-group" v-else-if="item.Order_Status==4 && item.Is_Commit == 0&&item.teamstatus!=4">
+          <span @click="goPay(item)" class="active">立即评价</span>
+        </div>
       </div>
-      <div class="btn-group" v-if="item.Order_Status==0">
-        <span @click="cancelOrder(item.prod_list,index)">取消订单</span>
-      </div>
-      <div class="btn-group" v-if="item.Order_Status==1">
-        <span @click="cancelOrder(item.prod_list,index)">取消订单</span>
-        <span @click="goPay(item)" class="active">立即付款</span>
-      </div>
-      <div class="btn-group" v-else-if="item.Order_Status==2&&item.teamstatus==1">
-        <span @click="goPay(item)" class="active">申请退款</span>
-      </div>
-      <div class="btn-group" v-else-if="item.Order_Status==3">
-        <span @click="goLogistics(item)">查看物流</span>
-        <span @click="goPay(item)" style="margin-left: 14rpx;">申请退款退货</span>
-        <span @click="confirmOrder(item)" class="active">确认收货</span>
-      </div>
-      <div class="btn-group" v-else-if="item.Order_Status==4 && item.Is_Commit == 0&&item.teamstatus!=4">
-        <span @click="goPay(item)" class="active">立即评价</span>
-      </div>
-    </div>
+    </block>
     <div class="defaults" v-if="data.length<=0">
       <image :src="'/static/client/defaultImg.png'|domain"></image>
     </div>
