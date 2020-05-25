@@ -37,7 +37,7 @@
         <view class="store-money">
           <view>
             可用余额:
-            <text class="number">￥ <span style="font-size: 32rpx">{{storeDetail.User_Money}}</span></text>
+            <span class="number">￥ <span style="font-size: 32rpx">{{storeDetail.User_Money}}</span></span>
           </view>
           <view @click="goCharge" class="charge">充值</view>
         </view>
