@@ -1,10 +1,5 @@
 <template>
   <div @click="commonClick" class="haihong">
-    <!-- #ifdef APP-PLUS -->
-    <!-- <view class="status_bar" style="background:white;position: fixed;top: 0;z-index: 22"> --></view>
-    <!-- #endif -->
-
-    <!--        <page-title title="我的订单" rightHidden="true" class="titless"></page-title>-->
     <div class="navs">
       <div :class="index==0?'active':''" @click="changIndex(0)" class="nav-item">全部</div>
       <div :class="index==1?'active':''" @click="changIndex(1)" class="nav-item">
@@ -119,7 +114,7 @@ export default {
   },
   methods: {
     goPintuan (item) {
-      if (item.teamstatus == 0) {
+      if (item.teamstatus === 0) {
         uni.navigateTo({
           url: '/pages/detail/groupJoin?Team_ID=' + item.teamid + '&Products_ID=' + item.prod_list[0].prod_id
         })
@@ -176,19 +171,6 @@ export default {
       })
     },
     goLogistics (item) {
-      // #ifndef MP-WEIXIN
-      // getOrderExpressCode({shipping_id:item.Order_ShippingID}).then(res=>{
-
-      // 	  KDNWidget.run({
-      // 		  serviceType: "A",
-      // 		  expCode: res.data.ShipperCode,
-      // 		  expNo: res.data.LogisticCode
-      // 	  })
-
-      // }).catch(e=>{})
-
-      // #endif
-
       uni.navigateTo({
         url: '/pages/order/logistics?order_id=' + item.Order_ID
       })
@@ -196,22 +178,22 @@ export default {
     },
     // 跳转订单详情
     goPay (item) {
-      if (item.Order_Status == 1) {
+      if (item.Order_Status === 1) {
         uni.navigateTo({
           url: '/pages/pay/pay?Order_ID=' + item.Order_ID
         })
-      } else if (item.Order_Status == 2 || item.Order_Status == 3) {
+      } else if (item.Order_Status === 2 || item.Order_Status === 3) {
         uni.navigateTo({
           url: '/pagesA/person/refund?Order_ID=' + item.Order_ID
         })
-      } else if (item.Order_Status == 4) {
+      } else if (item.Order_Status === 4) {
         uni.navigateTo({
           url: '/pages/order/publishComment?Order_ID=' + item.Order_ID
         })
       }
     },
     changIndex (i) {
-      if (i == this.index) return
+      if (i === this.index) return
       this.data = []
       this.index = i
       this._getOrder()
@@ -226,17 +208,17 @@ export default {
       }
       if (this.index > 0 && this.index < 4) {
         data.Order_Status = this.index
-      } else if (this.index == 4) {
+      } else if (this.index === 4) {
         data.Is_Commit = 0
         data.Order_Status = this.index
       }
       getOrder(data).then(res => {
         for (var i in res.data) {
           for (var m in res.data[i]) {
-            if (m == 'prod_list') {
+            if (m === 'prod_list') {
               for (var j in res.data[i][m]) {
                 for (var k in res.data[i][m][j]) {
-                  if (k == 'attr_info') {
+                  if (k === 'attr_info') {
                     if (res.data[i][m][j][k]) {
                       res.data[i][m][j][k] = JSON.parse(res.data[i][m][j][k])
                     }
@@ -267,8 +249,8 @@ export default {
 
   .titless {
     position: fixed;
-    top: 0rpx;
-    left: 0rpx;
+    top: 0 rpx;
+    left: 0 rpx;
     width: 100%;
     z-index: 999;
   }
@@ -276,20 +258,20 @@ export default {
   .navs {
     z-index: 999;
     position: fixed;
-    top: 0rpx;
+    top: 0 rpx;
     /* #ifdef APP-PLUS */
     // top: var(--status-bar-height);//86rpx;
     /* #endif */
 
-    left: 0rpx;
-    width: 750rpx;
+    left: 0 rpx;
+    width: 750 rpx;
     box-sizing: border-box;
     display: flex;
     align-items: center;
-    height: 100rpx;
-    line-height: 100rpx;
+    height: 100 rpx;
+    line-height: 100 rpx;
     background: #fff;
-    font-size: 28rpx;
+    font-size: 28 rpx;
     padding: 0 10px;
 
     .nav-item {
@@ -300,14 +282,14 @@ export default {
 
       .jiaobiao {
         position: absolute;
-        top: 24rpx;
-        right: 20rpx;
-        width: 20rpx;
-        height: 20rpx;
+        top: 24 rpx;
+        right: 20 rpx;
+        width: 20 rpx;
+        height: 20 rpx;
         border-radius: 50%;
         background-color: #FFFFFF;
         border: 1px solid #F43131;
-        font-size: 15rpx;
+        font-size: 15 rpx;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -322,49 +304,49 @@ export default {
   }
 
   .order {
-    padding: 0rpx 20rpx;
+    padding: 0 rpx 20 rpx;
     background: #fff;
     position: relative;
 
     .bizinfo {
-      margin-top: 20rpx;
+      margin-top: 20 rpx;
       display: flex;
       align-items: center;
       justify-content: space-between;
       width: 100%;
 
       .imgs {
-        width: 70rpx;
-        height: 70rpx;
+        width: 70 rpx;
+        height: 70 rpx;
         border-radius: 50%;
-        margin-right: 21rpx;
+        margin-right: 21 rpx;
       }
 
       .bizname {
         flex: 1;
-        font-size: 28rpx;
+        font-size: 28 rpx;
       }
 
       .status {
         color: red;
-        font-size: 26rpx;
+        font-size: 26 rpx;
       }
     }
 
     .pro {
       display: flex;
-      margin-bottom: 50rpx;
-      margin-top: 30rpx;
+      margin-bottom: 50 rpx;
+      margin-top: 30 rpx;
     }
 
     .pro-msg {
-      margin-left: 27rpx;
-      width: 476rpx;
+      margin-left: 27 rpx;
+      width: 476 rpx;
     }
 
     .pro-div {
-      width: 200rpx;
-      height: 200rpx;
+      width: 200 rpx;
+      height: 200 rpx;
     }
 
     .pro-img {
@@ -373,8 +355,8 @@ export default {
     }
 
     .pro-name {
-      font-size: 26rpx;
-      margin-bottom: 20rpx;
+      font-size: 26 rpx;
+      margin-bottom: 20 rpx;
       text-overflow: -o-ellipsis-lastline;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -385,77 +367,77 @@ export default {
 
     .attr {
       display: inline-block;
-      height: 50rpx;
-      line-height: 50rpx;
+      height: 50 rpx;
+      line-height: 50 rpx;
       background: #FFF5F5;
       color: #666;
-      font-size: 24rpx;
-      padding: 0 20rpx;
-      margin-bottom: 20rpx;
+      font-size: 24 rpx;
+      padding: 0 20 rpx;
+      margin-bottom: 20 rpx;
     }
 
     .pro-price {
       color: #F43131;
-      font-size: 36rpx;
+      font-size: 36 rpx;
     }
 
     .pro-price span {
-      font-size: 24rpx;
+      font-size: 24 rpx;
       font-style: normal;
     }
 
     .amount {
-      font-size: 30rpx;
+      font-size: 30 rpx;
       float: right;
       color: #333;
     }
 
     .total {
-      font-size: 24rpx;
-      padding: 40rpx 0rpx;
-      margin-right: 15rpx;
+      font-size: 24 rpx;
+      padding: 40 rpx 0 rpx;
+      margin-right: 15 rpx;
       display: flex;
       align-items: center;
       justify-content: space-between;
 
       .price {
         color: red;
-        font-size: 30rpx;
+        font-size: 30 rpx;
 
         span {
-          font-size: 24rpx;
+          font-size: 24 rpx;
         }
       }
 
       .ptdesc {
         background: #F43131;
-        padding: 10rpx;
+        padding: 10 rpx;
         color: #fff;
-        border-top-right-radius: 20rpx;
-        border-bottom-right-radius: 20rpx;
-        padding-left: 20rpx;
-        padding-right: 20rpx;
+        border-top-right-radius: 20 rpx;
+        border-bottom-right-radius: 20 rpx;
+        padding-left: 20 rpx;
+        padding-right: 20 rpx;
       }
     }
 
     .btn-group {
       text-align: right;
-      margin-bottom: 30rpx;
+      margin-bottom: 30 rpx;
 
       span {
         display: inline-block;
         //width: 150rpx;
-        padding: 0rpx 24rpx;
-        height: 60rpx;
-        line-height: 60rpx;
+        padding: 0 rpx 24 rpx;
+        height: 60 rpx;
+        line-height: 60 rpx;
         text-align: center;
         border: 1px solid #999;
-        border-radius: 10rpx;
+        border-radius: 10 rpx;
         color: #999;
-        font-size: 26rpx;
+        font-size: 26 rpx;
 
         &:last-child {
-          margin-left: 14rpx;
+          margin-left: 14 rpx;
         }
 
         &.active {
@@ -473,8 +455,8 @@ export default {
 
   .defaults {
     margin: 0 auto;
-    width: 640rpx;
-    height: 480rpx;
-    margin-top: 100rpx;
+    width: 640 rpx;
+    height: 480 rpx;
+    margin-top: 100 rpx;
   }
 </style>

@@ -4,8 +4,6 @@
     <view class="status_bar" style="background-color: rgb(248, 248, 248);"><!-- 这里是状态栏 --></view>
     <!-- #endif -->
 
-    <!-- <page-title title="评论" rightHidden="true" bgcolor="#F8F8F8"></page-title> -->
-
     <div class="navs">
       <div :class="index == 0 ? 'active' : ''" @click="getComment(0,1)" class="nav">全部</div>
       <div :class="index == 1 ? 'active' : ''" @click="getComment(1,1)" class="nav">有图</div>
@@ -153,7 +151,7 @@ export default {
     checkProdCollected () {
       if (!this.$fun.checkIsLogin()) return
       checkProdCollected({ prod_id: this.Products_ID }).then(res => {
-        this.isCollected = res.data.is_favourite == 1
+        this.isCollected = res.data.is_favourite === 1
       }).catch(e => {
 
       })
@@ -171,7 +169,7 @@ export default {
       var check_attrid = []
       var check_attrname = []
       var check_attrnames = []
-      for (var i in check_attr) {
+      for (const i in check_attr) {
         var attr_id = check_attr[i]
         check_attrid.push(attr_id)
         check_attrname[attr_id] = i
@@ -180,8 +178,8 @@ export default {
       var check_attrid_arr = check_attrid
       check_attrid = numberSort(check_attrid)
       // 获取对应的属性名称
-      for (var i = 0; i < check_attrid.length; i++) {
-        var attr_id = check_attrid[i]
+      for (var j = 0; j < check_attrid.length; j++) {
+        const attr_id = check_attrid[j]
         var attr_name = check_attrname[attr_id]
         check_attrnames.push(attr_name + ':' + this.product.skujosn[attr_name][attr_id])
       }
@@ -193,9 +191,9 @@ export default {
       if (attr_val) {
         this.postData.attr_id = attr_val.Product_Attr_ID // 选择属性的id
         this.postData.count = attr_val.Property_count // 选择属性的库存
-        this.postData.showimg = typeof attr_val.Attr_Image !== 'undefined' && attr_val.Attr_Image != '' ? attr_val.Attr_Image : this.product.Products_JSON.ImgPath[0]// 选择属性的图片
+        this.postData.showimg = typeof attr_val.Attr_Image !== 'undefined' && attr_val.Attr_Image !== '' ? attr_val.Attr_Image : this.product.Products_JSON.ImgPath[0]// 选择属性的图片
         this.postData.productDetail_price = attr_val.Attr_Price ? attr_val.Attr_Price : this.product.Products_PriceX // 选择属性的价格
-        this.submit_flag = !((!this.check_attr || Object.getOwnPropertyNames(this.check_attr).length != Object.getOwnPropertyNames(this.product.skujosn).length))
+        this.submit_flag = !((!this.check_attr || Object.getOwnPropertyNames(this.check_attr).length !== Object.getOwnPropertyNames(this.product.skujosn).length))
       }
       // 判断属性库存
       if (attr_val && attr_val.Property_count <= 0) {
@@ -208,7 +206,7 @@ export default {
       }
       this.check_attr = check_attr
       this.check_attrid_arr = check_attrid_arr
-      this.submit_flag = !((!this.check_attr || Object.getOwnPropertyNames(this.check_attr).length != Object.getOwnPropertyNames(this.product.skujosn).length))
+      this.submit_flag = !((!this.check_attr || Object.getOwnPropertyNames(this.check_attr).length !== Object.getOwnPropertyNames(this.product.skujosn).length))
       // 购买数量处理  大于最高时赋值最高值
       if (this.postData.qty > this.postData.count) {
         this.postData.qty = this.postData.count
@@ -219,7 +217,7 @@ export default {
         return
       }
       this.postData.prod_id = this.Products_ID
-      if (this.postData.attr_id == 0) {
+      if (this.postData.attr_id === 0) {
         if (this.product.skujosn) {
           wx.showToast({
             title: '您还没有选择规格',
@@ -230,7 +228,7 @@ export default {
       }
 
       updateCart(this.postData).then(res => {
-        if (this.postData.cart_key == 'CartList') {
+        if (this.postData.cart_key === 'CartList') {
           uni.showLoading({
             title: '加入购物车成功',
             icon: 'success'
@@ -241,7 +239,7 @@ export default {
           })
         }
       }).catch((e) => {
-      
+
       })
       // 确定加入购物车
       this.$refs.cartPopu.close()
@@ -328,15 +326,7 @@ export default {
       uni.previewImage({
         urls: imgPath,
         indicator: 'default',
-        current: i,
-        longPressActions: {
-          success: function (data) {
-
-          },
-          fail: function (err) {
-
-          }
-        }
+        current: i
       })
     },
     getComment (i, j) {
@@ -368,24 +358,24 @@ export default {
 
 <style lang="scss" scoped>
   .navs {
-    margin: 40rpx 0 36rpx;
-    padding-left: 20rpx;
+    margin: 40 rpx 0 36 rpx;
+    padding-left: 20 rpx;
     display: flex;
   }
 
   .nav {
-    width: 110rpx;
-    height: 50rpx;
-    line-height: 50rpx;
+    width: 110 rpx;
+    height: 50 rpx;
+    line-height: 50 rpx;
     text-align: center;
-    font-size: 28rpx;
-    border: 2rpx solid #999;
-    border-radius: 40rpx;
+    font-size: 28 rpx;
+    border: 2 rpx solid #999;
+    border-radius: 40 rpx;
     color: #999;
   }
 
   .navs .nav:nth-child(1) {
-    margin-right: 30rpx;
+    margin-right: 30 rpx;
   }
 
   .nav.active {
@@ -397,22 +387,22 @@ export default {
   /* 内容 */
   /* 评价 start */
   .c_content {
-    margin-top: 30rpx;
-    padding: 0 20rpx 0;
-    border-bottom: 2rpx solid #FFECE8E8;
+    margin-top: 30 rpx;
+    padding: 0 20 rpx 0;
+    border-bottom: 2 rpx solid #FFECE8E8;
   }
 
   .c_content_title {
     display: flex;
     align-items: center;
-    font-size: 30rpx;
+    font-size: 30 rpx;
     color: #333;
   }
 
   .c_content_title > img {
-    width: 70rpx;
-    height: 70rpx;
-    margin-right: 20rpx;
+    width: 70 rpx;
+    height: 70 rpx;
+    margin-right: 20 rpx;
   }
 
   .user_name {
@@ -420,66 +410,66 @@ export default {
   }
 
   .c_time {
-    font-size: 26rpx;
+    font-size: 26 rpx;
     color: #777;
   }
 
   .c_content_msg {
-    font-size: 24rpx;
+    font-size: 24 rpx;
     color: #333;
-    line-height: 36rpx;
-    padding-top: 18rpx;
-    padding-bottom: 29rpx;
+    line-height: 36 rpx;
+    padding-top: 18 rpx;
+    padding-bottom: 29 rpx;
   }
 
   .c_content_img img {
-    width: 142rpx;
-    height: 142rpx;
-    margin-right: 20rpx;
-    margin-bottom: 30rpx;
+    width: 142 rpx;
+    height: 142 rpx;
+    margin-right: 20 rpx;
+    margin-bottom: 30 rpx;
   }
 
   /* 内容 end */
   .cartSku {
-    padding: 0rpx 10rpx;
+    padding: 0 rpx 10 rpx;
 
     .cartTop {
       position: relative;
       display: flex;
-      padding-top: 20rpx;
+      padding-top: 20 rpx;
 
       .image {
-        width: 220rpx;
-        height: 220rpx;
+        width: 220 rpx;
+        height: 220 rpx;
       }
 
       .cartTitle {
-        margin-left: 20rpx;
-        font-size: 32rpx;
-        width: 420rpx;
+        margin-left: 20 rpx;
+        font-size: 32 rpx;
+        width: 420 rpx;
 
         .cartTitles {
-          height: 80rpx;
+          height: 80 rpx;
           overflow: hidden;
-          margin-top: 20rpx;
-          line-height: 40rpx;
+          margin-top: 20 rpx;
+          line-height: 40 rpx;
         }
 
         .addInfo {
-          width: 450rpx;
-          margin-top: 70rpx;
+          width: 450 rpx;
+          margin-top: 70 rpx;
           display: flex;
           flex-flow: row;
           justify-content: space-between;
           align-items: flex-end;
 
           .addPrice {
-            font-size: 42rpx;
+            font-size: 42 rpx;
             color: #ff4200;
           }
 
           .proSale {
-            font-size: 24rpx;
+            font-size: 24 rpx;
             color: #999;
             justify-content: flex-end;
           }
@@ -488,17 +478,17 @@ export default {
     }
 
     .cartCenter {
-      margin-top: 20rpx;
+      margin-top: 20 rpx;
 
       .cartAttr {
         display: flex;
-        padding: 15rpx 0rpx;
+        padding: 15 rpx 0 rpx;
 
         .sku {
-          font-size: 28rpx;
-          height: 70rpx;
-          line-height: 70rpx;
-          width: 140rpx;
+          font-size: 28 rpx;
+          height: 70 rpx;
+          line-height: 70 rpx;
+          width: 140 rpx;
         }
 
         .skuValue {
@@ -508,15 +498,15 @@ export default {
 
           .skuview {
             margin-bottom: 10px;
-            height: 70rpx;
-            line-height: 70rpx;
+            height: 70 rpx;
+            line-height: 70 rpx;
             font-size: 14px;
-            border-radius: 10rpx;
+            border-radius: 10 rpx;
             color: #000;
             background-color: #fff;
-            padding-left: 20rpx;
-            padding-right: 20rpx;
-            margin-right: 20rpx;
+            padding-left: 20 rpx;
+            padding-right: 20 rpx;
+            margin-right: 20 rpx;
             border: 1px solid #ccc;
           }
 
@@ -528,40 +518,40 @@ export default {
     }
 
     .numBer {
-      margin-top: 20rpx;
+      margin-top: 20 rpx;
       display: flex;
-      padding: 15rpx 0rpx;
+      padding: 15 rpx 0 rpx;
       justify-content: space-between;
 
       .numBers {
-        font-size: 28rpx;
-        height: 70rpx;
-        line-height: 70rpx;
-        width: 140rpx;
+        font-size: 28 rpx;
+        height: 70 rpx;
+        line-height: 70 rpx;
+        width: 140 rpx;
       }
 
       .inputNumber {
         border: 1px solid #ccc;
-        border-radius: 6rpx;
-        height: 50rpx;
-        margin-right: 50rpx;
+        border-radius: 6 rpx;
+        height: 50 rpx;
+        margin-right: 50 rpx;
         display: flex;
 
         .inputq {
           color: black;
           margin: 0 auto;
-          width: 80rpx;
-          height: 50rpx;
+          width: 80 rpx;
+          height: 50 rpx;
           text-align: center;
-          font-size: 24rpx;
-          border-left: 2rpx solid #ccc;
-          border-right: 2rpx solid #ccc;
+          font-size: 24 rpx;
+          border-left: 2 rpx solid #ccc;
+          border-right: 2 rpx solid #ccc;
         }
 
         .clicks {
-          height: 50rpx;
-          line-height: 50rpx;
-          width: 60rpx;
+          height: 50 rpx;
+          line-height: 50 rpx;
+          width: 60 rpx;
           text-align: center;
         }
       }
@@ -570,13 +560,13 @@ export default {
 
   .cartSub {
     width: 100%;
-    height: 90rpx;
+    height: 90 rpx;
     background-color: #F43131;
     font-size: 20px;
-    line-height: 90rpx;
+    line-height: 90 rpx;
     text-align: center;
     color: #FFFFFF;
-    margin-top: 30rpx;
+    margin-top: 30 rpx;
 
     &.disabled {
       background: #999;

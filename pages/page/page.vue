@@ -1,9 +1,5 @@
 <template>
   <view @click="commonClick" style="position: relative;" v-show="system.title">
-    <!-- #ifdef APP-PLUS -->
-    <!-- 这里是状态栏 -->
-    <!--		<view class="status_bar" style="position: fixed;background-color: white;top:0;left:0;z-index: 99;"></view>-->
-    <!-- #endif -->
     <view :style="{background:system.bgcolor}" class="home-wrap">
 
       <section :class="[item]" :data-name="item" :key="index" :ref="item" class="section"
@@ -109,16 +105,6 @@ export default {
   },
   created () {
 
-    // setTimeout(() => {
-    // 	toast('定时任务执行了')
-    // 	this.$refs.video.map(item=>{
-    // 		item.pauseFn()
-    // 	})
-    // 	// //停止播放
-    // 	// getApp().globalData.videoInstance.map(item=>{
-    // 	// 	item.stop()
-    // 	// })
-    // }, 5000);
   },
   methods: {},
   onShow () {
@@ -129,8 +115,6 @@ export default {
     }
   },
   onLoad (options) {
-    const _self = this
-
     let Home_ID = options.Home_ID
 
     // #ifdef H5
@@ -210,7 +194,7 @@ export default {
 
 <style lang="less" scope="scope">
   .home-wrap {
-    width: 750rpx;
+    width: 750 rpx;
     overflow-x: hidden;
     background: #f2f2f2;
     position: relative;
@@ -227,30 +211,4 @@ export default {
       }
     }
   }
-
-  /*.content {*/
-  /*	display: flex;*/
-  /*	flex-direction: column;*/
-  /*	align-items: center;*/
-  /*	justify-content: center;*/
-  /*}*/
-
-  /*.logo {*/
-  /*	height: 200rpx;*/
-  /*	width: 200rpx;*/
-  /*	margin-top: 200rpx;*/
-  /*	margin-left: auto;*/
-  /*	margin-right: auto;*/
-  /*	margin-bottom: 50rpx;*/
-  /*}*/
-
-  /*.text-area {*/
-  /*	display: flex;*/
-  /*	justify-content: center;*/
-  /*}*/
-
-  /*.title {*/
-  /*	font-size: 36rpx;*/
-  /*	color: #8f8f94;*/
-  /*}*/
 </style>
