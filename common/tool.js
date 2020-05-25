@@ -278,8 +278,12 @@ export const uploadImages = (formData, imgs) => {
     // #endif
     // #ifndef MP-TOUTIAO
 
+    var apiHost = apiBaseUrl
+    // #ifdef H5
+    apiHost = ''
+    // #endif
     const taskItem = uploadByPromise({
-      url: apiBaseUrl + '/api/little_program/shopconfig.php',
+      url: apiHost + '/api/little_program/shopconfig.php',
       filePath: imgs[i],
       name: 'image',
       formData: formData

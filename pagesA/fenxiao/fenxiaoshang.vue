@@ -123,9 +123,15 @@ export default {
               title: '上传图片',
               mask: true
             })
+
+            var apiHost = apiBaseUrl
+            // #ifdef H5
+            apiHost = ''
+            // #endif
+
             // 上传图片
             uni.uploadFile({
-              url: apiBaseUrl + '/api/little_program/shopconfig.php',
+              url: apiHost + '/api/little_program/shopconfig.php',
               filePath: that.imgs[0],
               name: 'image',
               formData: data,

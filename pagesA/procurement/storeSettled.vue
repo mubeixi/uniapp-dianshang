@@ -311,7 +311,7 @@ export default {
             }
           })
         }
-      })
+      }).catch(()=>{})
     },
     // 获取门店类型
     get_store_types () {
