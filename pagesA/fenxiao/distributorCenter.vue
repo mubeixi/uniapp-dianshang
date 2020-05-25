@@ -1050,6 +1050,7 @@ export default {
           this.disLevelInfo = dislist.Distribute_Form
         }
       }).catch(e => {
+		  error(e.msg)
       })
     },
     changes () {
