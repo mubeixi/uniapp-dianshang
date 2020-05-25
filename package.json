@@ -4,7 +4,10 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "clean": "rimraf unpackage",
+    "lint": "eslint --fix --ext .js --ext .vue",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md"
   },
   "repository": {
     "type": "git",
@@ -20,10 +23,22 @@
     "rrweb": "^0.7.27",
     "silly-datetime": "^0.1.2",
     "underscore": "^1.9.1",
+    "vuex": "^3.4.0",
     "weixin-js-sdk": "^1.4.0-test"
   },
   "devDependencies": {
+    "@types/html5plus": "^1.0.0",
+    "@types/uni-app": "^1.4.2",
+    "babel-eslint": "^7.2.1",
+    "eslint": "^6.8.0",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "eslint-plugin-vue": "^6.2.2",
     "ftp-deploy": "^2.3.6",
+    "rimraf": "^3.0.2",
     "shelljs": "^0.8.3"
   }
 }

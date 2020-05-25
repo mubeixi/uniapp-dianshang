@@ -1,8 +1,10 @@
-import {staticUrl} from "./env";
+import { staticUrl } from './env'
+import { getCountdownFunc } from '@/common/tool'
+
 export const domainFn = (url) => {
-  if (!url) return '';
-  if (url.indexOf('http') == -1) return staticUrl + url;
-  return url;
+  if (!url) return ''
+  if (url.indexOf('http') === -1) return staticUrl + url
+  return url
 }
 
 export const formatNumber = n => {
@@ -20,41 +22,37 @@ export const formatTime = function (date) {
   return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':')
 }
 
-export const formatRichTextByUparseFn = (html)=>{
-
-
-  if(!html) return;
-  let newContent= html.replace(/<embed[^>]*>/gi,function(match,capture){
-    match = match.replace(/type="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
+export const formatRichTextByUparseFn = (html) => {
+  if (!html) return
+  let newContent = html.replace(/<embed[^>]*>/gi, function (match, capture) {
+    match = match.replace(/type="[^"]+"/gi, '')// .replace(/width='[^']+'/gi, '');
     // x5-video-player-type="h5-page" 同层播放
     match = match.replace(/embed/gi, 'video x5-video-player-type="h5-page"')
-    match = match.replace(/width="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
-    match = match.replace(/height="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
+    match = match.replace(/width="[^"]+"/gi, '')// .replace(/width='[^']+'/gi, '');
+    match = match.replace(/height="[^"]+"/gi, '')// .replace(/width='[^']+'/gi, '');
 
     match = match.replace(/autostart="[^"]+"/gi, '')
     match = match.replace(/loop="[^"]+"/gi, '')
 
     match = match.replace(/\/>/gi, '></video>')
 
-    return match;
-  });
+    return match
+  })
 
-
-  newContent= newContent.replace(/<oembed[^>]*>/gi,function(match,capture){
-    match = match.replace(/type="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
+  newContent = newContent.replace(/<oembed[^>]*>/gi, function (match, capture) {
+    match = match.replace(/type="[^"]+"/gi, '')// .replace(/width='[^']+'/gi, '');
     match = match.replace(/oembed/gi, 'video x5-video-player-type="h5-page"')
-    match = match.replace(/width="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
-    match = match.replace(/height="[^"]+"/gi, '')//.replace(/width='[^']+'/gi, '');
+    match = match.replace(/width="[^"]+"/gi, '')// .replace(/width='[^']+'/gi, '');
+    match = match.replace(/height="[^"]+"/gi, '')// .replace(/width='[^']+'/gi, '');
     match = match.replace(/url/gi, 'src')
 
     match = match.replace(/\/>/gi, '></video>')
 
-    return match;
-  });
+    return match
+  })
 
-  //替换地址
-  newContent= newContent.replace(/="\/uploadfiles/gi, `="${staticUrl}/uploadfiles`)
-
+  // 替换地址
+  newContent = newContent.replace(/="\/uploadfiles/gi, `="${staticUrl}/uploadfiles`)
 
   // newContent= newContent.replace(/<img[^>]*>/gi,function(match,capture){
   //   match = match.replace(/style="[^"]+"/gi, '')//.replace(/style='[^']+'/gi, '');
@@ -69,42 +67,41 @@ export const formatRichTextByUparseFn = (html)=>{
   //   return match;
   // });
 
-  //newContent = newContent.replace(/\<img/gi, '<img style="width:100%;vertical-align:middle"');
+  // newContent = newContent.replace(/\<img/gi, '<img style="width:100%;vertical-align:middle"');
 
-  newContent = newContent.replace(/oembed/gi, 'video');
+  newContent = newContent.replace(/oembed/gi, 'video')
 
   return newContent
 }
-
 
 export const lazyImgUrl = 'https://new401.bafangka.com/uploadfiles/wkbq6nc2kc/image/20191112154310111.jpg'
 
 export default [
   {
-    name:'formatRichTextByUparse',
-    methods:formatRichTextByUparseFn,
-  },{
+    name: 'formatRichTextByUparse',
+    methods: formatRichTextByUparseFn
+  }, {
     name: 'zero',
     methods: (val) => {
-      return val ? val : 0
+      return val || 0
     }
   },
   {
     name: 'lazyimg',
     methods: (val) => {
-      return val ? val : 'lazyImgUrl'
+      return val || 'lazyImgUrl'
     }
   },
   {
     name: 'num2px',
     methods: (val) => {
-      if (val.indexOf('px') == -1) return `${val}px`;
-      return val;
-    },
+      if (val.indexOf('px') === -1) return `${val}px`
+      return val
+    }
   },
   {
     name: 'formStampTime',
-    //开始和结束的时间戳
+    // 开始和结束的时间戳
     /**
      *
      * @param startTimeStamp
@@ -112,38 +109,40 @@ export default [
      * @param type 需要返回的对象
      */
     methods: (start_timeStamp, end_timeStamp, type) => {
-
-      let data = getCountdownFunc({start_timeStamp, end_timeStamp}), rt = null;
+      const data = getCountdownFunc({
+        start_timeStamp,
+        end_timeStamp
+      }); let rt = null
       switch (type) {
         case 'd':
-          rt = data.d;
-          break;
+          rt = data.d
+          break
         case 'h':
-          rt = data.h;
-          break;
+          rt = data.h
+          break
         case 'm':
-          rt = data.m;
-          break;
+          rt = data.m
+          break
         case 's':
-          rt = data.s;
-          break;
+          rt = data.s
+          break
         case 'is_start':
-          rt = data.is_start ? '结束' : '开始';
-          break;
+          rt = data.is_start ? '结束' : '开始'
+          break
       }
-      return rt;
+      return rt
     }
   },
   {
     name: 'cutstr',
     methods: (str, len, tip) => {
-      if (!str) return '';
-      if (str.length < len) return str;
+      if (!str) return ''
+      if (str.length < len) return str
       return str.substring(0, len) + tip
-    },
+    }
   },
   {
     name: 'domain',
     methods: domainFn
   }
-];
+]

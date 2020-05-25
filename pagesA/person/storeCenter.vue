@@ -1,32 +1,32 @@
 <template>
   <view @click="commonClick" class="wrap">
-    <view class="top"  :style="{height:storeDetail.lower_prod_num > 0?'850rpx':'780rpx'}">
+    <view :style="{height:storeDetail.lower_prod_num > 0?'850rpx':'780rpx'}" class="top">
       <view class="bgimg">
-        <image class="image" :src="'/static/client/mendian/bg.jpg'|domain" mode=""></image>
+        <image :src="'/static/client/mendian/bg.jpg'|domain" class="image" mode=""></image>
       </view>
       <view class="user-info">
         <view class="user-avator">
-          <image class="image" :src="storeDetail.Stores_ImgPath" mode=""></image>
+          <image :src="storeDetail.Stores_ImgPath" class="image" mode=""></image>
         </view>
         <view class="store-name">{{storeDetail.Stores_Name}}(ID:{{storeDetail.Stores_ID}})</view>
         <view class="store-name-item" style="border-bottom: 1px solid  #EFEFEF">
-              <view>
-                级别 : {{storeDetail.type_name}}
-              </view>
-              <view class="store-fz-12"   @click="lookModelStore">
-                查看权益
-                <image :src="'/static/client/person/right.png'|domain" class="store-img-right"></image>
-              </view>
+          <view>
+            级别 : {{storeDetail.type_name}}
+          </view>
+          <view @click="lookModelStore" class="store-fz-12">
+            查看权益
+            <image :src="'/static/client/person/right.png'|domain" class="store-img-right"></image>
+          </view>
         </view>
-        <view class="store-name-item" >
+        <view class="store-name-item">
           <view>
             我的上级
           </view>
-          <view  class="store-fz-12" @click="lookModel"  v-if="storeDetail.parent_store">
+          <view @click="lookModel" class="store-fz-12" v-if="storeDetail.parent_store">
             立即查看
             <image :src="'/static/client/person/right.png'|domain" class="store-img-right"></image>
           </view>
-          <view  class="store-fz-12"  v-else>
+          <view class="store-fz-12" v-else>
             暂无上级
             <image :src="'/static/client/person/right.png'|domain" class="store-img-right"></image>
           </view>
@@ -39,7 +39,7 @@
             可用余额:
             <text class="number">￥ <span style="font-size: 32rpx">{{storeDetail.User_Money}}</span></text>
           </view>
-          <view class="charge" @click="goCharge">充值</view>
+          <view @click="goCharge" class="charge">充值</view>
         </view>
         <view class="order-msg">
           <view class="order">
@@ -57,133 +57,135 @@
 
           </view>
           <view class="store-line"></view>
-          <view class="order" @click="openShare">
+          <view @click="openShare" class="order">
             <view class="order-num"><i class="funicon  icon-share-t"></i></view>
             <view class="order-title">分享</view>
           </view>
         </view>
       </view>
       <view class="tips" v-if="storeDetail.lower_prod_num > 0">
-        <image class="tip" :src="'/static/client/mendian/i.png'|domain" mode=""></image>
+        <image :src="'/static/client/mendian/i.png'|domain" class="tip" mode=""></image>
         <view>您有商品即将售罄，
-          <text class="see" @click="goSolded">立即查看</text>
+          <text @click="goSolded" class="see">立即查看</text>
         </view>
       </view>
     </view>
     <view class="main">
-      <view class="item" @click="openUrl('/pagesA/procurement/productMy')" v-if="storeDetail.stores_type==1">
-        <image class="item-img" :src="'/static/client/mendian/1.png'|domain" mode=""></image>
+      <view @click="openUrl('/pagesA/procurement/productMy')" class="item" v-if="storeDetail.stores_type==1">
+        <image :src="'/static/client/mendian/1.png'|domain" class="item-img" mode=""></image>
         <view>我的商品</view>
       </view>
-      <view class="item" @click="openUrl('/pagesA/procurement/retailOrder')">
-        <image class="item-img" :src="'/static/client/mendian/2.png'|domain" mode=""></image>
+      <view @click="openUrl('/pagesA/procurement/retailOrder')" class="item">
+        <image :src="'/static/client/mendian/2.png'|domain" class="item-img" mode=""></image>
         <view class="num" v-if="storeDetail.shop_order_num">{{storeDetail.shop_order_num}}</view>
         <view>零售订单</view>
       </view>
-      <view class="item" @click="openUrl('/pagesA/procurement/storeWholesale')" v-if="storeDetail.stores_type==1">
-        <image class="item-img" :src="'/static/client/mendian/3.png'|domain" mode=""></image>
+      <view @click="openUrl('/pagesA/procurement/storeWholesale')" class="item" v-if="storeDetail.stores_type==1">
+        <image :src="'/static/client/mendian/3.png'|domain" class="item-img" mode=""></image>
         <view class="num" v-if="storeDetail.pifa_order_num">{{storeDetail.pifa_order_num}}</view>
         <view>批发订单</view>
       </view>
-      <view class="item" @click="goStock" v-if="storeDetail.stores_type==1">
-        <image class="item-img" :src="'/static/client/mendian/4.png'|domain" mode=""></image>
+      <view @click="goStock" class="item" v-if="storeDetail.stores_type==1">
+        <image :src="'/static/client/mendian/4.png'|domain" class="item-img" mode=""></image>
         <view>进货</view>
       </view>
-      <view class="item" @click="openUrl('/pagesA/order/checkChannel')">
-        <image class="item-img" :src="'/static/client/mendian/5.png'|domain" mode=""></image>
+      <view @click="openUrl('/pagesA/order/checkChannel')" class="item">
+        <image :src="'/static/client/mendian/5.png'|domain" class="item-img" mode=""></image>
         <view>核销</view>
       </view>
-      <view class="item" @click="openUrl('/pagesA/procurement/storePerson')">
-        <image class="item-img" :src="'/static/client/mendian/6.png'|domain" mode=""></image>
+      <view @click="openUrl('/pagesA/procurement/storePerson')" class="item">
+        <image :src="'/static/client/mendian/6.png'|domain" class="item-img" mode=""></image>
         <view>修改资料</view>
       </view>
-      <view class="item" @click="openUrl('/pagesA/procurement/storeSettlement')">
-        <image class="item-img" :src="'/static/client/mendian/7.png'|domain" mode=""></image>
+      <view @click="openUrl('/pagesA/procurement/storeSettlement')" class="item">
+        <image :src="'/static/client/mendian/7.png'|domain" class="item-img" mode=""></image>
         <view>结算</view>
       </view>
-      <view class="item" @click="openUrl('/pagesA/procurement/purchaseRecords')" v-if="storeDetail.stores_type==1">
-        <image class="item-img" :src="'/static/client/mendian/8.png'|domain" mode=""></image>
+      <view @click="openUrl('/pagesA/procurement/purchaseRecords')" class="item" v-if="storeDetail.stores_type==1">
+        <image :src="'/static/client/mendian/8.png'|domain" class="item-img" mode=""></image>
         <view>进货记录</view>
       </view>
-      <view class="item" @click="openUrl('/pagesA/procurement/refundRecords')" v-if="storeDetail.stores_type==1">
-        <image class="item-img" :src="'/static/client/mendian/9.png'|domain" mode=""></image>
+      <view @click="openUrl('/pagesA/procurement/refundRecords')" class="item" v-if="storeDetail.stores_type==1">
+        <image :src="'/static/client/mendian/9.png'|domain" class="item-img" mode=""></image>
         <view>我的退货单</view>
       </view>
-      <view class="item" @click="openUrl('/pagesA/procurement/refundList')">
-        <image class="item-img" :src="'/static/client/mendian/10.png'|domain" mode=""></image>
+      <view @click="openUrl('/pagesA/procurement/refundList')" class="item">
+        <image :src="'/static/client/mendian/10.png'|domain" class="item-img" mode=""></image>
         <view>零售订单退款</view>
       </view>
-      <view class="item" @click="openUrl('/pagesA/procurement/storeRefundList')" v-if="storeDetail.stores_type==1">
-        <image class="item-img" :src="'/static/client/mendian/11.png'|domain" mode=""></image>
+      <view @click="openUrl('/pagesA/procurement/storeRefundList')" class="item" v-if="storeDetail.stores_type==1">
+        <image :src="'/static/client/mendian/11.png'|domain" class="item-img" mode=""></image>
         <view>门店退货单</view>
       </view>
-      <view class="item" @click="openUrl('/pagesA/store/storeTeam')" v-if="storeDetail.stores_type==1">
-        <image class="item-img" src="/static/store/myTeam.png" mode=""></image>
+      <view @click="openUrl('/pagesA/store/storeTeam')" class="item" v-if="storeDetail.stores_type==1">
+        <image class="item-img" mode="" src="/static/store/myTeam.png"></image>
         <view>我的团队</view>
       </view>
-      <view class="item" @click="openUrl('/pagesA/store/storeApplyList')" v-if="storeDetail.stores_type==1">
-        <image class="item-img" src="/static/store/teamAgree.png" mode=""></image>
+      <view @click="openUrl('/pagesA/store/storeApplyList')" class="item" v-if="storeDetail.stores_type==1">
+        <image class="item-img" mode="" src="/static/store/teamAgree.png"></image>
         <view>团队入驻审核</view>
       </view>
-      <view class="item" @click="openUrl('/pagesA/store/StoreExtension')" v-if="storeDetail.stores_type==1">
-        <image class="item-img" src="/static/store/xiaji.png" mode=""></image>
+      <view @click="openUrl('/pagesA/store/StoreExtension')" class="item" v-if="storeDetail.stores_type==1">
+        <image class="item-img" mode="" src="/static/store/xiaji.png"></image>
         <view>推广下级</view>
       </view>
     </view>
 
-
-    <popupLayer ref="popupLayer" :direction="'top'">
+    <popupLayer :direction="'top'" ref="popupLayer">
       <div class="shareinfo">
         <div class="s_top">
           <!-- #ifdef APP-PLUS -->
-          <div class="flex1" @click="shareFunc('wx')">
-            <image class='img' :src="'/static/client/detail/share1.png'|domain" alt=""></image>
+          <div @click="shareFunc('wx')" class="flex1">
+            <image :src="'/static/client/detail/share1.png'|domain" alt="" class='img'></image>
             <div>发送好友</div>
           </div>
-          <div class="flex1" @click="shareFunc('wxtimeline')">
-            <image class='img' :src="'/static/client/detail/sahre3.png'|domain" alt=""></image>
+          <div @click="shareFunc('wxtimeline')" class="flex1">
+            <image :src="'/static/client/detail/sahre3.png'|domain" alt="" class='img'></image>
             <div>朋友圈</div>
           </div>
           <!--只有配置了这个参数的app，才有分享到小程序选项-->
-          <div class="flex1" @click="shareFunc('wxmini')" v-if="wxMiniOriginId">
-            <img class='img' :src="'/static/client/detail/share4.png'|domain" alt="">
+          <div @click="shareFunc('wxmini')" class="flex1" v-if="wxMiniOriginId">
+            <img :src="'/static/client/detail/share4.png'|domain" alt="" class='img'>
             <div>微信小程序</div>
           </div>
           <!-- #endif -->
           <!-- #ifndef MP-TOUTIAO -->
-          <div class="flex1" @click="shareFunc('pic')">
-            <image class='img' :src="'/static/client/detail/share2.png'|domain" alt=""></image>
+          <div @click="shareFunc('pic')" class="flex1">
+            <image :src="'/static/client/detail/share2.png'|domain" alt="" class='img'></image>
             <div>分享海报</div>
           </div>
           <!-- #endif -->
         </div>
-        <div class="s_bottom" @click="cancelShare">取消</div>
+        <div @click="cancelShare" class="s_bottom">取消</div>
       </div>
     </popupLayer>
 
-
-    <model ref="storeModel" >
+    <model ref="storeModel">
       <div class="store-model">
-          <div class="store-model-desc">
-            <div> 1、你当前的进货折扣为{{storeDetail.retailer_fee}}%</div>
-            <div> 2、当下级和你级别相同时，下级结算的金额会按照{{storeDetail.same_level_reward}}%的比例给你发放奖励</div>
-            <div> 3、当下级升级到该级别时，将一次性给你{{storeDetail.upgrade_reward}}元</div>
-          </div>
-          <div class="store-model-title">
-            级别升级
-          </div>
-          <div class="store-table">
-            <tr class="flex store-tr">
-              <td class="store-td"></td>
-              <td class="store-td">一次性进货</td>
-              <td class="store-td">累计进货</td>
-            </tr>
-            <tr class="flex store-tr store-tr-tr"  v-for="(item,index) of disList" :key="index">
-              <td class="store-td">{{item.title}}</td>
-              <td class="store-td"><block v-if="item.upgrade_type==1">{{item.upgrade_money}}元</block></td>
-              <td class="store-td"><block v-if="item.upgrade_type==2">{{item.upgrade_money}}元</block></td>
-            </tr>
-          </div>
+        <div class="store-model-desc">
+          <div> 1、你当前的进货折扣为{{storeDetail.retailer_fee}}%</div>
+          <div> 2、当下级和你级别相同时，下级结算的金额会按照{{storeDetail.same_level_reward}}%的比例给你发放奖励</div>
+          <div> 3、当下级升级到该级别时，将一次性给你{{storeDetail.upgrade_reward}}元</div>
+        </div>
+        <div class="store-model-title">
+          级别升级
+        </div>
+        <div class="store-table">
+          <tr class="flex store-tr">
+            <td class="store-td"></td>
+            <td class="store-td">一次性进货</td>
+            <td class="store-td">累计进货</td>
+          </tr>
+          <tr :key="index" class="flex store-tr store-tr-tr" v-for="(item,index) of disList">
+            <td class="store-td">{{item.title}}</td>
+            <td class="store-td">
+              <block v-if="item.upgrade_type==1">{{item.upgrade_money}}元</block>
+            </td>
+            <td class="store-td">
+              <block v-if="item.upgrade_type==2">{{item.upgrade_money}}元</block>
+            </td>
+          </tr>
+        </div>
       </div>
     </model>
 
@@ -192,7 +194,7 @@
         <div class="storeInfo-title">
           名称：{{storeDetail.parent_store.Stores_Name}}
         </div>
-        <div class="storeInfo-title" @click="cellPhone(storeDetail.parent_store.Stores_Telephone)">
+        <div @click="cellPhone(storeDetail.parent_store.Stores_Telephone)" class="storeInfo-title">
           联系方式：{{storeDetail.parent_store.Stores_Telephone}}
         </div>
       </div>
@@ -201,177 +203,178 @@
 </template>
 
 <script>
-import {storeInit,getStoreTypes} from '../../common/fetch.js';
-import {mapGetters} from 'vuex'
-import {pageMixin} from '../../common/mixin';
+import { getStoreTypes, storeInit } from '../../common/fetch.js'
+import { mapGetters } from 'vuex'
+import { pageMixin } from '../../common/mixin'
 import popupLayer from '../../components/popup-layer/popup-layer.vue'
-import {buildSharePath, getProductThumb, ls} from '../../common/tool.js'
-import  Model from  '../../components/ModelComponents'
+import { buildSharePath, getProductThumb, ls } from '../../common/tool.js'
+import Model from '../../components/ModelComponents'
+
 export default {
-    mixins: [pageMixin],
-    components: {popupLayer,Model},
-    data: function () {
-        return {
-            storeDetail: {},
-            disList:[],
+  mixins: [pageMixin],
+  components: {
+    popupLayer,
+    Model
+  },
+  data: function () {
+    return {
+      storeDetail: {},
+      disList: []
+    }
+  },
+  computed: {
+    ...mapGetters(['Stores_ID', 'initData'])
+  },
+  onLoad () {
+    if (!this.$fun.checkIsLogin(1)) return
+    this.getStoreDetail()
+  },
+  methods: {
+    cellPhone (phone) {
+      uni.makePhoneCall({
+        phoneNumber: phone
+      })
+    },
+    lookModelStore () {
+      this.$refs.storeModel.show()
+    },
+    lookModel () {
+      this.$refs.storeInfo.show()
+    },
+    goStock () {
+      const pid = ls.get('pid')
+      if (pid == 0) {
+        uni.navigateTo({
+          url: '/pagesA/procurement/stock'
+        })
+      } else {
+        if (this.initData.same_level_purchase == 0 && this.storeDetail.type_id <= this.storeDetail.parent_store.type_id) {
+          uni.navigateTo({
+            url: '/pagesA/procurement/stock'
+          })
+        } else {
+          uni.navigateTo({
+            url: '/pagesA/procurement/stock?purchase_store_id=' + pid
+          })
         }
+      }
     },
-    computed: {
-        ...mapGetters(['Stores_ID', 'initData']),
-    },
-    onLoad() {
-		if(!this.$fun.checkIsLogin(1))return;
-        this.getStoreDetail();
-    },
-    methods: {
-        cellPhone(phone){
-            uni.makePhoneCall({
-                phoneNumber: phone
-            });
-        },
-        lookModelStore(){
-            this.$refs.storeModel.show()
-        },
-        lookModel(){
-            this.$refs.storeInfo.show()
-        },
-        goStock() {
-            let pid = ls.get('pid')
-            if (pid == 0) {
-                uni.navigateTo({
-                    url: '/pagesA/procurement/stock',
-                })
-            } else {
-				if(this.initData.same_level_purchase==0&&this.storeDetail.type_id<=this.storeDetail.parent_store.type_id){
-					uni.navigateTo({
-					    url: '/pagesA/procurement/stock',
-					})
-				}else{
-					uni.navigateTo({
-					    url: '/pagesA/procurement/stock?purchase_store_id=' + pid,
-					})
-				}
-                
+    async shareFunc (channel) {
+      if (!this.$fun.checkIsLogin(1, 1)) return
+      const _self = this
+      const path = 'pages/index/index?store_id=' + this.storeID
+      const front_url = this.initData.front_url
+      const shareObj = {
+        title: this.storeDetail.Stores_Name,
+        desc: '万千好货疯抢中',
+        imageUrl: getProductThumb(this.storeDetail.Stores_ImgPath),
+        path: buildSharePath(path)
+      }
+      switch (channel) {
+        case 'wx':
+          uni.share({
+            provider: 'weixin',
+            scene: 'WXSceneSession',
+            type: 0,
+            href: front_url + shareObj.path,
+            title: shareObj.title,
+            summary: shareObj.desc,
+            imageUrl: shareObj.imageUrl,
+            success: function (res) {
+            },
+            fail: function (err) {
             }
-
-        },
-        async shareFunc(channel) {
-            if (!this.$fun.checkIsLogin(1, 1)) return;
-            let _self = this
-            let path = 'pages/index/index?store_id=' + this.storeID;
-            let front_url = this.initData.front_url;
-            let shareObj = {
-                title: this.storeDetail.Stores_Name,
-                desc: '万千好货疯抢中',
-                imageUrl: getProductThumb(this.storeDetail.Stores_ImgPath),
-                path: buildSharePath(path),
-            };
-            switch (channel) {
-                case 'wx':
-                    uni.share({
-                        provider: 'weixin',
-                        scene: 'WXSceneSession',
-                        type: 0,
-                        href: front_url + shareObj.path,
-                        title: shareObj.title,
-                        summary: shareObj.desc,
-                        imageUrl: shareObj.imageUrl,
-                        success: function (res) {
-                        },
-                        fail: function (err) {
-                        },
-                    });
-                    break;
-                case 'wxtimeline':
-                    uni.share({
-                        provider: 'weixin',
-                        scene: 'WXSenceTimeline',
-                        type: 0,
-                        href: front_url + shareObj.path,
-                        title: shareObj.title,
-                        summary: shareObj.desc,
-                        imageUrl: shareObj.imageUrl,
-                        success: function (res) {
-                        },
-                        fail: function (err) {
-                        },
-                    });
-                    break;
-                case 'wxmini':
-                    uni.share({
-                        provider: 'weixin',
-                        scene: 'WXSceneSession',
-                        type: 5,
-                        imageUrl: shareObj.imageUrl,
-                        title: shareObj.title,
-                        miniProgram: {
-                            id: _self.wxMiniOriginId,
-                            path: '/' + shareObj.path,
-                            type: 0,
-                            webUrl: 'http://uniapp.dcloud.io',
-                        },
-                        success: ret => {
-                        },
-                    });
-                    break;
-                case 'pic':
-
-                    uni.navigateTo({
-                        url: '/pagesA/store/storeShare?type=3',
-                    })
-
+          })
+          break
+        case 'wxtimeline':
+          uni.share({
+            provider: 'weixin',
+            scene: 'WXSenceTimeline',
+            type: 0,
+            href: front_url + shareObj.path,
+            title: shareObj.title,
+            summary: shareObj.desc,
+            imageUrl: shareObj.imageUrl,
+            success: function (res) {
+            },
+            fail: function (err) {
             }
-        },
-        openShare() {
-            this.$refs.popupLayer.show()
-        },
-        cancelShare() {
-            this.$refs.popupLayer.close()
-        },
-        // 跳转即将售罄的商品
-        goSolded() {
-            uni.navigateTo({
-                url: '/pagesA/procurement/productMy?stock_low=1',
-            })
-        },
-        // 跳转
-        openUrl(url) {
-            uni.navigateTo({
-                url: url,
-            })
-        },
-        // 门店信息初始化
-        getStoreDetail() {
-            storeInit({
-                store_id: this.Stores_ID,
-            }).then(res => {
-                this.storeDetail = res.data;
-                ls.set('pid', this.storeDetail.pid)
-            })
-            getStoreTypes().then(res=>{
-                this.disList=res.data
-            })
-        },
-        // 跳转充值页面
-        goCharge() {
-            uni.navigateTo({
-                url: '/pagesA/person/vipRecharge',
-            })
-        },
+          })
+          break
+        case 'wxmini':
+          uni.share({
+            provider: 'weixin',
+            scene: 'WXSceneSession',
+            type: 5,
+            imageUrl: shareObj.imageUrl,
+            title: shareObj.title,
+            miniProgram: {
+              id: _self.wxMiniOriginId,
+              path: '/' + shareObj.path,
+              type: 0,
+              webUrl: 'http://uniapp.dcloud.io'
+            },
+            success: ret => {
+            }
+          })
+          break
+        case 'pic':
+
+          uni.navigateTo({
+            url: '/pagesA/store/storeShare?type=2'
+          })
+      }
     },
+    openShare () {
+      this.$refs.popupLayer.show()
+    },
+    cancelShare () {
+      this.$refs.popupLayer.close()
+    },
+    // 跳转即将售罄的商品
+    goSolded () {
+      uni.navigateTo({
+        url: '/pagesA/procurement/productMy?stock_low=1'
+      })
+    },
+    // 跳转
+    openUrl (url) {
+      uni.navigateTo({
+        url: url
+      })
+    },
+    // 门店信息初始化
+    getStoreDetail () {
+      storeInit({
+        store_id: this.Stores_ID
+      }).then(res => {
+        this.storeDetail = res.data
+        ls.set('pid', this.storeDetail.pid)
+      })
+      getStoreTypes().then(res => {
+        this.disList = res.data
+      })
+    },
+    // 跳转充值页面
+    goCharge () {
+      uni.navigateTo({
+        url: '/pagesA/person/vipRecharge'
+      })
+    }
+  }
 }
 </script>
 
 <style lang="scss" scoped>
-  .storeInfo{
-    width:500rpx;
-    .storeInfo-title{
+  .storeInfo {
+    width: 500rpx;
+
+    .storeInfo-title {
       padding-left: 40rpx;
       height: 80rpx;
       line-height: 80rpx;
     }
   }
-
 
   .wrap {
 
@@ -398,7 +401,7 @@ export default {
         }
       }
 
-      .user-info-all{
+      .user-info-all {
         width: 710rpx;
         height: 260rpx;
         border-radius: 16rpx;
@@ -407,6 +410,7 @@ export default {
         top: 510rpx;
         left: 20rpx;
       }
+
       .user-info {
         position: absolute;
         top: 145rpx;
@@ -450,7 +454,6 @@ export default {
           font-weight: 700;
         }
 
-
       }
 
       .tips {
@@ -476,6 +479,7 @@ export default {
         }
       }
     }
+
     .store-money {
       display: flex;
       justify-content: space-between;
@@ -596,41 +600,48 @@ export default {
       }
     }
   }
-  .store-model{
+
+  .store-model {
     width: 650rpx;
     box-sizing: border-box;
   }
-  .store-model-desc{
+
+  .store-model-desc {
     font-size: 14px;
     line-height: 40rpx;
     margin-bottom: 20rpx;
     color: #999999;
   }
-  .store-td{
+
+  .store-td {
     flex: 1;
     text-align: center;
     border-right: 1px solid #CCCCCC;
-    &:last-child{
+
+    &:last-child {
       border-right: 0px;
     }
   }
-  .store-tr{
+
+  .store-tr {
     border-bottom: 1px solid #CCCCCC;
     height: 70rpx;
     line-height: 70rpx;
-    &:last-child{
+
+    &:last-child {
       border-bottom: 0px;
     }
   }
-  .store-tr-tr{
+
+  .store-tr-tr {
     color: #666666;
   }
-  .store-table{
+
+  .store-table {
     border: 1px solid #CCCCCC;
   }
 
-
-  .store-model-title{
+  .store-model-title {
     height: 60rpx;
     line-height: 60rpx;
     font-size: 16px;
@@ -640,7 +651,7 @@ export default {
     margin-bottom: 20rpx;
   }
 
-  .store-name-item{
+  .store-name-item {
     width: 670rpx;
     height: 90rpx;
     box-sizing: border-box;
@@ -652,12 +663,14 @@ export default {
     justify-content: space-between;
     align-items: center;
   }
-  .store-img-right{
+
+  .store-img-right {
     width: 14rpx;
     height: 22rpx;
     margin-left: 14rpx;
   }
-  .store-fz-12{
+
+  .store-fz-12 {
     font-size: 12px;
     color: #999999;
     display: flex;

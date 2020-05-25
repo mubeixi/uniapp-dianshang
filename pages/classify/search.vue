@@ -1,108 +1,108 @@
 <template>
-    <div @click="commonClick">
-        <form action="/">
-            <div class="search-wrap">
-                <icon type="search" size="34rpx" class="search_icon"/>
-                <input type="text" class="search-input" name="search" v-model="inputValue" @confirm="success"
-                       confirm-type='search' focus="focus" autofocus="autofocus">
-                <span @click="close" class="span">取消</span>
-            </div>
-        </form>
-        <div class="history" v-if="searchAll.length>0">
-            <div class="title">
-                <div>搜索历史</div>
-                <div @click="clear" class="dels">
-                    <image class="img" :src="'/static/client/del.png'|domain"/>
-                </div>
-            </div>
-            <div class="h_content">
-                <span class="span" v-for="(item,i) of searchAll" :key='i' @click="goSearch(item)">{{item}}</span>
-            </div>
+  <div @click="commonClick">
+    <form action="/">
+      <div class="search-wrap">
+        <icon class="search_icon" size="34rpx" type="search" />
+        <input @confirm="success" autofocus="autofocus" class="search-input" confirm-type='search' focus="focus"
+               name="search" type="text" v-model="inputValue">
+        <span @click="close" class="span">取消</span>
+      </div>
+    </form>
+    <div class="history" v-if="searchAll.length>0">
+      <div class="title">
+        <div>搜索历史</div>
+        <div @click="clear" class="dels">
+          <image :src="'/static/client/del.png'|domain" class="img" />
         </div>
+      </div>
+      <div class="h_content">
+        <span :key='i' @click="goSearch(item)" class="span" v-for="(item,i) of searchAll">{{item}}</span>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
-import {goBack} from '../../common/tool.js'
+import { goBack } from '../../common/tool.js'
 // import tabs from '@/components/tabs'
-import {pageMixin} from "../../common/mixin";
+import { pageMixin } from '../../common/mixin'
 
 export default {
-    mixins: [pageMixin],
-    name: 'App',
-    data() {
-        return {
-            inputValue: '',
-            searchAll: []
-        }
-    },
-    components: {},
-    onLoad(options) {
-        if (options.keyword) {
-            this.inputValue = options.keyword
-        }
-    },
-    onShow() {
-        const than = this;       // 注意this的指向
-        uni.getStorage({
-            key: 'searchAll',
-            success(res) {
-                than.searchAll = res.data
-            }
-        })
-    },
-    methods: {
-        goSearch(item) {
-            uni.navigateTo({
-                url: '/pages/classify/result?inputValue=' + item
-            })
-        },
-        success() {
-            const url = '/pages/classify/result?refer=searchPage&inputValue=' + this.inputValue
-            this.inputValue = ''
-            if (this.inputValue != '') {    // 输入框的值不为空时
-                const than = this;
-                for (var item of this.searchAll) {
-                    if (item == this.inputValue) {
-                        uni.navigateTo({
-                            url
-                        })
-                        return;
-                    }
-                }
-                this.searchAll.push(this.inputValue)    // 将输入框的值添加到搜索记录数组中存储
-                uni.setStorage({
-                    key: 'searchAll',
-                    data: than.searchAll
-                })
-            }
-            uni.navigateTo({
-                url
-            })
-        },
-        clear() {
-            this.searchAll = [];
-            uni.setStorage({
-                key: 'searchAll',
-                data: []
-            })
-        },
-        close() {
-            this.inputValue = '';
-            goBack();
-        },
-        onSearch: function () {
-
-        },
-        onCancel: function () {
-
-        }
+  mixins: [pageMixin],
+  name: 'App',
+  data () {
+    return {
+      inputValue: '',
+      searchAll: []
     }
+  },
+  components: {},
+  onLoad (options) {
+    if (options.keyword) {
+      this.inputValue = options.keyword
+    }
+  },
+  onShow () {
+    const than = this // 注意this的指向
+    uni.getStorage({
+      key: 'searchAll',
+      success (res) {
+        than.searchAll = res.data
+      }
+    })
+  },
+  methods: {
+    goSearch (item) {
+      uni.navigateTo({
+        url: '/pages/classify/result?inputValue=' + item
+      })
+    },
+    success () {
+      const url = '/pages/classify/result?refer=searchPage&inputValue=' + this.inputValue
+      this.inputValue = ''
+      if (this.inputValue != '') { // 输入框的值不为空时
+        const than = this
+        for (var item of this.searchAll) {
+          if (item == this.inputValue) {
+            uni.navigateTo({
+              url
+            })
+            return
+          }
+        }
+        this.searchAll.push(this.inputValue) // 将输入框的值添加到搜索记录数组中存储
+        uni.setStorage({
+          key: 'searchAll',
+          data: than.searchAll
+        })
+      }
+      uni.navigateTo({
+        url
+      })
+    },
+    clear () {
+      this.searchAll = []
+      uni.setStorage({
+        key: 'searchAll',
+        data: []
+      })
+    },
+    close () {
+      this.inputValue = ''
+      goBack()
+    },
+    onSearch: function () {
+
+    },
+    onCancel: function () {
+
+    }
+  }
 }
 </script>
 
-<style scoped lang="scss">
-.search-wrap {
+<style lang="scss" scoped>
+  .search-wrap {
     position: relative;
     display: flex;
     justify-content: space-between;
@@ -112,42 +112,42 @@ export default {
     box-sizing: border-box;
 
     .search-input {
-        float: left;
-        width: 600rpx;
-        height: 65rpx;
-        line-height: 65rpx;
-        border-radius: 10rpx;
-        background: #F4F4F4;
-        font-size: 26rpx;
-        color: #ADADAD;
-        padding-left: 91rpx;
-        box-sizing: border-box;
+      float: left;
+      width: 600rpx;
+      height: 65rpx;
+      line-height: 65rpx;
+      border-radius: 10rpx;
+      background: #F4F4F4;
+      font-size: 26rpx;
+      color: #ADADAD;
+      padding-left: 91rpx;
+      box-sizing: border-box;
     }
 
     .search_icon {
-        position: absolute;
-        top: 46rpx;
-        left: 61rpx;
+      position: absolute;
+      top: 46rpx;
+      left: 61rpx;
     }
 
     .span {
-        font-size: 30rpx;
-        color: #333333;
+      font-size: 30rpx;
+      color: #333333;
     }
-}
+  }
 
-.history {
+  .history {
     padding: 0 20rpx;
-}
+  }
 
-.title {
+  .title {
     display: flex;
     justify-content: space-between;
     height: 40rpx;
     align-items: center;
-}
+  }
 
-.title {
+  .title {
     font-size: 28rpx;
     color: #333;
     font-weight: 500;
@@ -156,18 +156,18 @@ export default {
     line-height: 40rpx;
 
     .img {
-        width: 40rpx;
-        height: 40rpx;
-        /*width: 100%;*/
-        /*height: 100%;*/
+      width: 40rpx;
+      height: 40rpx;
+      /*width: 100%;*/
+      /*height: 100%;*/
     }
-}
+  }
 
-.dels {
+  .dels {
     width: 40rpx;
-}
+  }
 
-.h_content .span {
+  .h_content .span {
     float: left;
     background: rgba(245, 245, 245, 1);
     border-radius: 10px;
@@ -176,5 +176,5 @@ export default {
     text-align: center;
     padding: 16rpx 24rpx;
     margin: 30rpx 20rpx 0 0;
-}
+  }
 </style>

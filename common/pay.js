@@ -1,17 +1,12 @@
-import {WX_JSSDK_INIT} from "./mixin";
-
-import {isWeiXin, ls, urlencode} from "./tool";
-import {add_template_code, confirmOrderPayStatus, traslateShorten} from "./fetch";
-
+import { WX_JSSDK_INIT } from './mixin'
+import { isWeiXin, ls, urlencode } from './tool'
+import { error } from '@/common/index'
+import { confirmOrderPayStatus, traslateShorten } from './fetch'
 
 /**
- *
  * @param vm 传this
  * @param pay_type 支付类型
  * @param payRequestData orderPay的res
- *
- *
- *
  */
 
 // 示例
@@ -32,252 +27,197 @@ import {add_template_code, confirmOrderPayStatus, traslateShorten} from "./fetch
 //
 
 export const unipayFunc = (vm, pay_type, payRequestData) => {
+  const _self = vm; const res = payRequestData
 
+  let provider = 'wxpay'
+  let orderInfo = {}
 
-    let _self = vm, res = payRequestData
+  // 头条的支付  会有微信和支付宝
+  // #ifdef MP-TOUTIAO
+  const service = 1
 
+  // if(pay_type === 'ali_app'){
+  //     provider = 'alipay';
+  //     service = 4;
+  // }
+  //
+  // if(pay_type === 'wx_h5'){
+  //     provider = 'wxpay';
+  //     service = 3;
+  // }
 
-    let provider = 'wxpay';
-    let orderInfo = {}
+  orderInfo = res.data
 
+  delete orderInfo.Order_ID
 
-    //头条的支付  会有微信和支付宝
-    // #ifdef MP-TOUTIAO
+  // const conf = {
+  //   provider,
+  //   service,
+  //   orderInfo
+  // }
 
-    let service = 1;
+  // 固定值：1（拉起小程序收银台）开发者如果不希望使用头条小程序收银台，service设置为3/4时，可以直接拉起微信/支付宝进行支付：service=3： 微信API支付，不拉起小程序收银台；service=4： 支付宝API支付，不拉起小程序收银台。其中service=3、4，仅在1.35.0.1+基础库(头条743+)支持
+  uni.requestPayment({
+    provider,
+    _debug: 1,
+    service,
+    orderInfo, // 微信、支付宝订单数据
+    getOrderStatus (res) {
+      const { out_order_no } = res
 
-    // if(pay_type === 'ali_app'){
-    //     provider = 'alipay';
-    //     service = 4;
-    // }
-    //
-    // if(pay_type === 'wx_h5'){
-    //     provider = 'wxpay';
-    //     service = 3;
-    // }
+      return new Promise(function (resolve, reject) {
+        // 商户前端根据 out_order_no 请求商户后端查询微信支付订单状态
 
-    orderInfo = res.data
+        confirmOrderPayStatus({ order_no: out_order_no }).then(res => {
+          if (res.data) {
+            resolve({ code: 0 })
+          } else {
+            resolve({ code: 2 })
+          }
+        }).catch(() => {
+          reject(Error('核实支付状态失败'))
+        })
+      })
+    },
+    success: function (res) {
+      _self.paySuccessCall(res)
+    },
+    complete: function (res) {
 
-    delete orderInfo.Order_ID
+    },
+    fail: function (err) {
+      _self.payFailCall(err)
+    }
+  })
+  return
+  // #endif
 
-    let conf = {
-        provider,
-        service,
-        orderInfo
-    };
+  // #ifdef H5
 
+  // 微信h5
+  // eslint-disable-next-line no-unreachable
+  if (pay_type === 'wx_h5') {
+    const redirect_url = res.data.mweb_url + '&redirect_url=' + urlencode(location.origin + '/fre/pages/order/order?index=2')
+    location.href = redirect_url
+    return
+  }
 
-    //固定值：1（拉起小程序收银台）开发者如果不希望使用头条小程序收银台，service设置为3/4时，可以直接拉起微信/支付宝进行支付：service=3： 微信API支付，不拉起小程序收银台；service=4： 支付宝API支付，不拉起小程序收银台。其中service=3、4，仅在1.35.0.1+基础库(头条743+)支持
-    uni.requestPayment({
-        provider,
-        _debug: 1,
-        service,
-        orderInfo, //微信、支付宝订单数据
-        getOrderStatus(res) {
-            let {out_order_no} = res;
+  // 阿里h5
+  if (pay_type === 'alipay') {
+    // 公众号麻烦一点
+    if (isWeiXin()) {
+      const users_id = ls.get('users_id')
+      const fromurl = res.data.arg// encodeURIComponent(res.data.arg);
 
-            return new Promise(function (resolve, reject) {
-                // 商户前端根据 out_order_no 请求商户后端查询微信支付订单状态
-
-
-                confirmOrderPayStatus({order_no: out_order_no}).then(res => {
-                    if (res.data) {
-                        resolve({code: 0});
-                    } else {
-                        resolve({code: 2});
-                    }
-
-                }, err => {
-                })
-                // setTimeout(function(){
-                //
-                // },500)
-
-            });
-        },
-        success: function (res) {
-
-            _self.paySuccessCall(res)
-
-        },
-        complete: function (res) {
-
-        },
-        fail: function (err) {
-            _self.payFailCall(res)
-            // uni.showModal({
-            //     title:'支付错误',
-            //     content:JSON.stringify(err)
-            // })
-        }
-    });
-    return;
-    // #endif
-
-
-    // #ifdef H5
-
-    // 微信h5
-    if (pay_type === 'wx_h5') {
-        let redirect_url = res.data.mweb_url + '&redirect_url=' + urlencode(location.origin + '/fre/pages/order/order?index=2');
-        location.href = redirect_url;
-        return;
+      // 字符串
+      let nocestr = ''
+      traslateShorten({ data: fromurl }).then(res => {
+        nocestr = res.data.key
+        const str = `/fre/pages/pay/wx/wx?users_id=${users_id}&nocestr=` + nocestr
+        const url = location.origin + str
+        // 强制页面刷新
+        location.href = url
+      }).catch(() => {
+        error('获取支付宝支付参数失败')
+      })
+      // eslint-disable-next-line no-unreachable
+    } else {
+      document.write(res.data.arg)
+      document.getElementById('alipaysubmit').submit()
     }
 
-    //阿里h5
-    if (pay_type === 'alipay') {
+    return
+  }
 
-        //公众号麻烦一点
-        if (isWeiXin()) {
+  // 下面只能是微信公众号的
+  // eslint-disable-next-line no-unreachable
+  if (!isWeiXin()) return
+  const { timestamp, nonceStr, signType, paySign } = res.data
 
-            let users_id = ls.get('users_id');
-
-            let fromurl = res.data.arg;//encodeURIComponent(res.data.arg);
-
-            //字符串
-            let nocestr = ''
-            traslateShorten({data: fromurl}).then(res => {
-
-                nocestr = res.data.key;
-                // uni.navigateTo({
-                //     url:`/pages/pay/wx/wx?users_id=${users_id}&nocestr=`+nocestr
-                // })
-
-                let str = `/fre/pages/pay/wx/wx?users_id=${users_id}&nocestr=` + nocestr
-
-                let url = location.origin + str;
-
-                //强制页面刷新
-                location.href = url;
-
-            }, err => {
-                // error('获取支付宝支付参数失败');
-            })
-            //let origin = location.origin;
-
-            // fromurl = fromurl.replace(/openapi.alipay.com/,'wangjing666')
-            //
-            //
-            // let str = `/fre/pages/pay/wx/wx?users_id=${users_id}&formurl=`+encodeURIComponent(fromurl);
-            // let url = location.origin + str;
-            //
-            // this.aliPayUrl = url;
-            //location.href = url;
-
-            // uni.navigateTo({
-            //     url:`/pages/pay/wx/wx?users_id=${users_id}&formurl=`+encodeURIComponent(fromurl)
-            // })
-        } else {
-            document.write(res.data.arg)
-            document.getElementById('alipaysubmit').submit()
-        }
-
-        return;
-
-    }
-
-
-    //下面只能是微信公众号的
-    if (!isWeiXin()) return;
-    let {timestamp, nonceStr, signType, paySign} = res.data;
-
-    //直接支付
-    WX_JSSDK_INIT(_self).then((wxEnv) => {
-
-        //关键字？？package
-        wxEnv.chooseWXPay({
-            timestamp,
-            nonceStr,
-            package: res.data.package,
-            signType,
-            paySign,
-            success: function (res) {
-                // 支付成功后的回调函数
-                _self.paySuccessCall(res)
-            }
-        });
-
-    }).catch((e) => {
+  // 直接支付
+  WX_JSSDK_INIT(_self).then((wxEnv) => {
+    // 关键字？？package
+    wxEnv.chooseWXPay({
+      timestamp,
+      nonceStr,
+      package: res.data.package,
+      signType,
+      paySign,
+      success: function (res) {
+        // 支付成功后的回调函数
+        _self.paySuccessCall(res)
+      }
     })
-    return;
+  }).catch((e) => {
+  })
+  // eslint-disable-next-line no-unreachable
+  return
 
-    // #endif
+  // #endif
 
+  // #ifdef MP-WEIXIN
+  provider = 'wxpay'
+  orderInfo = res.data
+  delete orderInfo.timestamp
+  // const prepay_id = orderInfo.package.split('=')[1]
+  uni.requestPayment({
+    ...orderInfo,
+    provider,
+    success: function (res) {
+      // add_template_code({
+      //     code: prepay_id,
+      //     times: 3
+      // })
+      _self.paySuccessCall(res)
+    },
+    fail: function (err) {
+      _self.payFailCall(err)
+    }
+  })
+  // eslint-disable-next-line no-unreachable
+  return
+  // #endif
 
-    // #ifdef MP-WEIXIN || MP-BAIDU || MP-TOUTIAO || MP-ALIPAY
+  // app支付，有微信有支付宝
 
-    // #endif
+  // #ifdef APP-PLUS
 
-    // #ifdef MP-WEIXIN
+  if (pay_type === 'ali_app') {
+    const provider = 'alipay'
+    const orderInfo = res.data.arg
 
-    provider = 'wxpay';
-    orderInfo = res.data
-    delete orderInfo.timestamp
-
-    let prepay_id = orderInfo.package.split('=')[1];
     uni.requestPayment({
-        ...orderInfo,
-        provider,
-        success: function (res) {
-            // add_template_code({
-            //     code: prepay_id,
-            //     times: 3
-            // })
-            _self.paySuccessCall(res)
-        },
-        fail: function (err) {
-            _self.payFailCall(err);
-        }
-    });
-    return;
-    // #endif
+      provider,
+      orderInfo, // 微信、支付宝订单数据
+      success: function (res) {
+        _self.paySuccessCall(res)
+      },
+      fail: function (err) {
+        _self.payFailCall(err)
+      }
+    })
 
-    //app支付，有微信有支付宝
+    // eslint-disable-next-line no-unreachable
+    return
+  }
 
-
-    // #ifdef APP-PLUS
-
-    if (pay_type === 'ali_app') {
-
-        let provider = 'alipay';
-        let orderInfo = res.data.arg;
-
-        uni.requestPayment({
-            provider,
-            orderInfo, //微信、支付宝订单数据
-            success: function (res) {
-                _self.paySuccessCall(res)
-            },
-            fail: function (err) {
-                // uni.showModal({
-                //     title:'支付错误',
-                //     content:JSON.stringify(err)
-                // })
-            }
-        });
-
-        return;
-
-    }
-
-    //app微信
-    if (pay_type === 'wx_app') {
-
-        provider = 'wxpay';
-        orderInfo = res.data
-        uni.requestPayment({
-            provider,
-            orderInfo, //微信、支付宝订单数据
-            success: function (res) {
-                _self.paySuccessCall(res)
-            },
-            fail: function (err) {
-                _self.payFailCall(err);
-            }
-        });
-        return;
-    }
-    // #endif
-
-
+  // app微信
+  // eslint-disable-next-line no-unreachable
+  if (pay_type === 'wx_app') {
+    provider = 'wxpay'
+    orderInfo = res.data
+    uni.requestPayment({
+      provider,
+      orderInfo, // 微信、支付宝订单数据
+      success: function (res) {
+        _self.paySuccessCall(res)
+      },
+      fail: function (err) {
+        _self.payFailCall(err)
+      }
+    })
+    // eslint-disable-next-line no-unreachable
+    return
+  }
+  // #endif
 }
