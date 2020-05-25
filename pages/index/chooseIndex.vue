@@ -127,7 +127,7 @@ import FlashComponent from '../../components/diy/FlashComponent'
 import KillComponent from '../../components/diy/KillComponent'
 
 import { getSkinConfig, getSystemConf } from '../../common/fetch'
-// import { getLiveInfo } from '../../common/fetch'
+import { getLiveInfo } from '../../common/fetch'
 import { pageMixin } from '../../common/mixin'
 import { mapActions, mapGetters } from 'vuex'
 
