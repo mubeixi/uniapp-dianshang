@@ -7,7 +7,7 @@
       <view @click="changeAvator" class="item">
         <view class="item-name">头像</view>
         <view class="info">
-          <image :src="User_HeadImg" class="image"></image>
+          <image :src="userInfo.User_HeadImg" class="image"></image>
         </view>
         <view class="go">
           <image :src="'/static/client/right.png'|domain" mode=""></image>
@@ -86,7 +86,7 @@ export default {
       temppath: '',
 
       tem_Shop_Logo: '',
-      User_HeadImg: '',
+
       User_Province_name: '',
       User_City_name: '',
       User_Area_name: '',
@@ -94,10 +94,11 @@ export default {
       User_Address: ''
     }
   },
+  computed: {
+    ...mapGetters(['userInfo'])
+  },
   async created () {
-    const userInfo = this.getUserInfo(true)
 
-    this.User_HeadImg = this.userInfo.User_HeadImg
   },
   onShow () {
     this.get_user_info()
@@ -129,7 +130,7 @@ export default {
     },
     // 更换头像
     changeAvator () {
-      const _self = this
+      var _self = this
 
       const param = { act: 'upload_image' }
       param.User_ID = get_User_ID()
@@ -164,8 +165,6 @@ export default {
                     title: '修改成功',
                     icon: 'success'
                   })
-                  _self.User_HeadImg = res.data.User_HeadImg
-                  _self.userInfo.User_HeadImg = res.data.User_HeadImg
                   _self.setUserInfo(_self.userInfo)
                 })
               }).catch(e => {
@@ -181,16 +180,20 @@ export default {
           // #ifndef MP-TOUTIAO
 
           const filePath = res.tempFilePaths[0]
-          _self.User_HeadImg = filePath
           _self.temppath = filePath
 
           uni.showLoading({
             title: '上传图片',
             mask: true
           })
+
+          var apiHost = apiBaseUrl
+          // #ifdef H5
+          apiHost = ''
+          // #endif
           // 上传图片
           uni.uploadFile({
-            url: apiBaseUrl + '/api/little_program/shopconfig.php',
+            url: apiHost + '/api/little_program/shopconfig.php',
             filePath: filePath,
             name: 'image',
             formData: data,
@@ -213,9 +216,7 @@ export default {
                   title: '修改成功',
                   icon: 'success'
                 })
-                _self.User_HeadImg = res.data.User_HeadImg
-                _self.userInfo.User_HeadImg = res.data.User_HeadImg
-                _self.setUserInfo(_self.userInfo)
+                _self.setUserInfo(ret.data)
 
                 uni.hideLoading()
               }).catch(e => {
@@ -259,9 +260,6 @@ export default {
         }
       })
     }
-  },
-  computed: {
-    ...mapGetters(['userInfo'])
   }
 }
 </script>

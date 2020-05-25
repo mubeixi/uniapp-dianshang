@@ -156,9 +156,15 @@ export default {
 
           // #ifndef MP-TOUTIAO
           const filePath = res.tempFilePaths[0]
+
+          var apiHost = apiBaseUrl
+          // #ifdef H5
+          apiHost = ''
+          // #endif
+
           // 上传图片
           uni.uploadFile({
-            url: apiBaseUrl + '/api/little_program/shopconfig.php',
+            url: apiHost + '/api/little_program/shopconfig.php',
             filePath: filePath,
             name: 'image',
             formData: data,
