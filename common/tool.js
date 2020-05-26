@@ -20,7 +20,7 @@ export const formatNumber = n => {
 }
 
 /**
- *
+ * 从指定的字符串中获取需要的参数，适用于网络地址
  * @param {*} str
  * @param {*} name
  */
@@ -82,6 +82,26 @@ export const ls = {
   clear () {
     return uni.clearStorageSync()
   }
+}
+
+export function toHome () {
+  uni.switchTab({
+    url: '/pages/index/index'
+  })
+}
+
+export function backFunc () {
+  const currentPages = getCurrentPages()
+  if (currentPages.length < 2) {
+    toHome()
+  }
+  uni.navigateBack({
+    fail (err) {
+      console.log(err.errMsg)
+      // 退无可退就回首页
+      toHome()
+    }
+  })
 }
 
 export const goBack = function () {
@@ -589,4 +609,3 @@ export const plainArray = (arr, key, newArr) => {
     }
   }
 }
-

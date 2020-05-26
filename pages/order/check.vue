@@ -176,7 +176,7 @@
             您还没有收货地址，请先添加一个新的收货地址
           </view>
           <view class="remind_btns text-align-center">
-            <view @click="goback" class="text-align-center fl1">返回</view>
+            <view @click="backFn" class="text-align-center fl1">返回</view>
             <view @click="goEditAdd" class="text-align-center fl1 confirm">
               新建
             </view>
@@ -279,7 +279,7 @@
 <script>
 import popupLayer from '../../components/popup-layer/popup-layer.vue'
 import { createOrder, createOrderCheck, get_user_info, getAddress } from '../../common/fetch.js'
-import { goBack } from '../../common/tool.js'
+import { backFunc } from '../../common/tool.js'
 import { pageMixin } from '../../common/mixin'
 import { mapActions, mapGetters } from 'vuex'
 import StoreListComponents from '../../components/StoreListComponents'
@@ -509,8 +509,8 @@ export default {
       }
     },
     ...mapActions(['getUserInfo', 'setUserInfo']),
-    goback () {
-      goBack()
+    backFn () {
+      backFunc()
     },
     // 查看明细
     seeDetail () {
