@@ -31,7 +31,7 @@
           <swiper autoplay="autoplay" circular="true" class="swiper" duration="500" indicator-active-color="#ff5000"
                   indicator-color="#fff" indicator-dots="indicatorDots" interval="4000">
             <swiper-item :key="i" v-for="(item,i) of product.Products_JSON.ImgPath">
-              <img :src="item|lazyimg" @click="yulan(i)">
+              <img :src="(item+'-r640')|lazyimg" @click="yulan(i)">
             </swiper-item>
           </swiper>
           <view class="change-btn" v-if="product.video_url">
@@ -939,7 +939,7 @@ export default {
           })
         }
       }).catch((e) => {
-		error(e.msg)
+        error(e.msg)
         this.isSubmit = false
       })
       this.isSubmit = false
@@ -1054,7 +1054,9 @@ export default {
       // 返回的就是一个pormise了
       await getProductDetail(data).then(res => {
         product = res.data
-        this.product = res.data
+
+        this.product = product
+
         this.postData.productDetail_price = this.product.Products_PriceX
         this.isVirtual = res.data.Products_IsVirtual == 1
         this.postData.count = res.data.Products_Count

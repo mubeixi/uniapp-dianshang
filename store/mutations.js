@@ -10,6 +10,7 @@ export const SET_STORES_ID = function (state, value) {
 }
 
 export const SET_FRE_STORE_ID = function (state, value) {
+
   state.current_store_id = value
   // #ifndef H5
   ls.set('current_store_id', value, 1)

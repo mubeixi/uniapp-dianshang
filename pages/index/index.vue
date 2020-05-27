@@ -60,15 +60,14 @@
           <i class="funicon  icon-search1"></i>
         </div>
 
-        <ul :style="{marginLeft:-30*goodsNavIndex+'px'}" class="store-ul flex">
-          <li :class="goodsNavIndex==0?'active':''" @click="changeTab(0)" class="store-li">全部</li>
+        <scroll-view scroll-x :scroll-left="30*goodsNavIndex" class="store-ul">
+          <div :class="goodsNavIndex==0?'active':''" @click="changeTab(0)" class="store-li">全部</div>
           <block :key="ind" v-for="(cate,ind) of productCate">
-            <li :class="goodsNavIndex==(ind+1)?'active':''" @click="changeTab(ind+1)" class="store-li">
+            <div :class="goodsNavIndex==(ind+1)?'active':''" @click="changeTab(ind+1)" class="store-li">
               {{cate.Category_Name}}
-            </li>
+            </div>
           </block>
-
-        </ul>
+        </scroll-view>
 
         <swiper
         :current="goodsNavIndex"
@@ -975,6 +974,7 @@ export default {
     color: #FFFFFF;
     font-size: 30rpx;
     line-height: 32rpx;
+    white-space: nowrap;
   }
 
   .store-li {

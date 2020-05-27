@@ -265,7 +265,7 @@ export const pageMixin = {
 
       // 新增门店store_id
 
-      const store_id = options.store_id
+      const store_id = options.store_id || GetQueryByString(location.href, 'store_id')
       if (store_id) {
         store.commit('SET_FRE_STORE_ID', store_id)
       }
