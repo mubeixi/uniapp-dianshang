@@ -225,15 +225,19 @@ export const uploadByPromise = ({ url, filePath, name = 'image', formData }) => 
       filePath,
       name,
       formData,
-      success: (res) => {
-        let { data = {} } = res
-        if (typeof data === 'string' && data) {
-          const body = JSON.parse(data)
-          data = body.data
+      success: (ret) => {
+        if (ret.statusCode !== 200) {
+          reject(Error('系统错误'))
         }
-        if (data.errorCode !== 0) {
+
+        let res = ret.data
+        if (typeof res === 'string' && res)res = JSON.parse(res)
+        if (res.errorCode !== 0) {
           reject(Error(res.msg || '上传api调用错误'))
         }
+        const data = res.data
+        console.log(data)
+
         if (data.path) {
           resolve(data.path)
         } else {

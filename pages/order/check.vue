@@ -867,9 +867,9 @@ export default {
       font-size: 14px;
 
       .tabs-item {
-        width: 170 rpx;
+        width: 170rpx;
         padding: 6px 0;
-        margin-right: 70 rpx;
+        margin-right: 70rpx;
         color: #333;
         text-align: center;
 
@@ -894,14 +894,14 @@ export default {
   }
 
   .mxdetail {
-    font-size: 28 rpx;
-    line-height: 80 rpx;
-    padding: 20 rpx 30 rpx;
+    font-size: 28rpx;
+    line-height: 80rpx;
+    padding: 20rpx 30rpx;
     /* #ifndef APP-PLUS */
-    padding-bottom: 100 rpx;
+    padding-bottom: 100rpx;
     /* #endif */
     .mxtitle {
-      font-size: 28 rpx;
+      font-size: 28rpx;
       text-align: center;
     }
 
@@ -919,18 +919,18 @@ export default {
     /* margin: 15px 0 10px; */
     display: flex;
     align-items: center;
-    padding: 44 rpx 38 rpx 45 rpx;
-    border-bottom: 20 rpx solid #f8f8f8;
+    padding: 44rpx 38rpx 45rpx;
+    border-bottom: 20rpx solid #f8f8f8;
 
     .add_msg {
       flex: 1;
-      font-size: 28 rpx;
+      font-size: 28rpx;
     }
 
     .right {
-      width: 18 rpx;
-      height: 27 rpx;
-      margin-left: 34 rpx;
+      width: 18rpx;
+      height: 27rpx;
+      margin-left: 34rpx;
     }
   }
 
@@ -939,53 +939,53 @@ export default {
   }
 
   .loc_icon {
-    width: 41 rpx;
-    height: 51 rpx;
-    margin-right: 31 rpx;
+    width: 41rpx;
+    height: 51rpx;
+    margin-right: 31rpx;
   }
 
   .name {
-    margin-bottom: 30 rpx;
-    font-size: 28 rpx;
+    margin-bottom: 30rpx;
+    font-size: 28rpx;
     color: #333;
-    line-height: 22 rpx;
+    line-height: 22rpx;
   }
 
   .name > span {
-    margin-left: 10 rpx;
+    margin-left: 10rpx;
   }
 
   .location {
-    font-size: 24 rpx;
+    font-size: 24rpx;
     color: #333;
-    line-height: 32 rpx;
+    line-height: 32rpx;
   }
 
   /* 收货地址 end */
   /* 订单信息 start */
   .order_msg {
-    padding: 0 40 rpx 0 30 rpx;
+    padding: 0 40rpx 0 30rpx;
   }
 
   .biz_msg {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 30 rpx;
-    padding: 20 rpx 30 rpx 0 rpx;
+    margin-bottom: 30rpx;
+    padding: 20rpx 30rpx 0rpx;
   }
 
   .biz_logo {
-    width: 70 rpx;
-    height: 70 rpx;
-    margin-right: 20 rpx;
-    border-radius: 35 rpx;
+    width: 70rpx;
+    height: 70rpx;
+    margin-right: 20rpx;
+    border-radius: 35rpx;
   }
 
   .biz_name {
-    font-size: 28 rpx;
+    font-size: 28rpx;
     color: #333;
-    line-height: 30 rpx;
+    line-height: 30rpx;
   }
 
   .pro {
@@ -994,7 +994,7 @@ export default {
   }
 
   .order_msg .pro:last-child {
-    margin-bottom: 17 rpx
+    margin-bottom: 17rpx
   }
 
   .order_msg {
@@ -1025,20 +1025,20 @@ export default {
   }
 
   .pro-img {
-    width: 200 rpx;
-    height: 200 rpx;
-    margin-right: 28 rpx;
+    width: 200rpx;
+    height: 200rpx;
+    margin-right: 28rpx;
   }
 
   .pro-name {
-    font-size: 26 rpx;
+    font-size: 26rpx;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     overflow: hidden;
     text-overflow: ellipsis;
     -webkit-box-orient: vertical;
-    line-height: 30 rpx;
-    height: 61 rpx
+    line-height: 30rpx;
+    height: 61rpx
   }
 
   .pro-msg {
@@ -1050,36 +1050,36 @@ export default {
 
   .attr {
     display: inline-block;
-    height: 50 rpx;
-    line-height: 50 rpx;
+    height: 50rpx;
+    line-height: 50rpx;
 
     color: #666;
-    font-size: 24 rpx;
+    font-size: 24rpx;
     // padding: 0 20rpx;
     // margin: 25rpx 0 24rpx;
     span {
-      padding: 14 rpx 20 rpx;
-      margin: 25 rpx 0 24 rpx;
+      padding: 14rpx 20rpx;
+      margin: 25rpx 0 24rpx;
       background: #FFF5F5;
     }
   }
 
   .pro-price {
     color: #F43131;
-    font-size: 36 rpx;
+    font-size: 36rpx;
 
     span {
-      font-size: 24 rpx;
+      font-size: 24rpx;
       font-style: normal;
     }
 
     .amount {
       float: right;
       color: #333;
-      font-size: 22 rpx;
+      font-size: 22rpx;
 
       .num {
-        font-size: 30 rpx;
+        font-size: 30rpx;
       }
     }
   }
@@ -1087,29 +1087,29 @@ export default {
   /* 订单信息 end */
   /* 订单其他信息 start */
   .other {
-    padding: 30 rpx 40 rpx 0 30 rpx;
-    font-size: 22 rpx;
+    padding: 30rpx 40rpx 0 30rpx;
+    font-size: 22rpx;
 
     .right {
-      margin-left: 18 rpx;
-      width: 15 rpx;
-      height: 23 rpx;
+      margin-left: 18rpx;
+      width: 15rpx;
+      height: 23rpx;
     }
   }
 
   .other .bd {
-    padding-bottom: 30 rpx;
-    border-bottom: 2 rpx solid #efefef;
+    padding-bottom: 30rpx;
+    border-bottom: 2rpx solid #efefef;
   }
 
   .o_title {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-size: 28 rpx;
+    font-size: 28rpx;
 
     .inputs {
-      font-size: 24 rpx;
+      font-size: 24rpx;
     }
   }
 
@@ -1119,8 +1119,8 @@ export default {
 
   .o_desc,
   .o_de {
-    font-size: 22 rpx;
-    margin-top: 10 rpx;
+    font-size: 22rpx;
+    margin-top: 10rpx;
 
     text {
       color: #F43131;
@@ -1137,7 +1137,7 @@ export default {
 
   .words .inputs {
     border: 0;
-    margin-left: 20 rpx;
+    margin-left: 20rpx;
     flex: 1;
   }
 
@@ -1145,13 +1145,13 @@ export default {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    margin: 40 rpx 0;
-    font-size: 24 rpx;
-    padding-right: 30 rpx;
+    margin: 40rpx 0;
+    font-size: 24rpx;
+    padding-right: 30rpx;
   }
 
   .total .money {
-    font-size: 30 rpx;
+    font-size: 30rpx;
     color: #F43131;
   }
 
@@ -1170,13 +1170,13 @@ export default {
     background: #fff;
 
     .mx {
-      font-size: 22 rpx;
-      margin-right: 10 rpx;
+      font-size: 22rpx;
+      margin-right: 10rpx;
 
       .image {
-        width: 20 rpx;
-        height: 20 rpx;
-        margin-left: 10 rpx;
+        width: 20rpx;
+        height: 20rpx;
+        margin-left: 10rpx;
       }
 
       .slidedown {
@@ -1186,12 +1186,12 @@ export default {
   }
 
   .submit {
-    width: 270 rpx;
+    width: 270rpx;
     background: #F43131;
     text-align: center;
     color: #fff;
     line-height: 50px;
-    font-size: 34 rpx;
+    font-size: 34rpx;
     border-radius: 0;
     border: none;
   }
@@ -1199,56 +1199,56 @@ export default {
   .totalinfo {
     flex: 1;
     text-align: center;
-    line-height: 30 rpx;
+    line-height: 30rpx;
   }
 
   .info {
-    font-size: 24 rpx;
+    font-size: 24rpx;
 
     .money {
       color: #F43131;
-      font-size: 30 rpx;
+      font-size: 30rpx;
 
       .m_icon {
-        font-size: 24 rpx;
+        font-size: 24rpx;
       }
     }
   }
 
   .tips {
-    font-size: 20 rpx;
+    font-size: 20rpx;
     color: #979797;
   }
 
   .bMbx {
-    padding: 0 rpx 20 rpx;
+    padding: 0rpx 20rpx;
 
     .fMbx {
-      font-size: 32 rpx;
-      height: 30 rpx;
-      line-height: 30 rpx;
+      font-size: 32rpx;
+      height: 30rpx;
+      line-height: 30rpx;
       text-align: center;
-      padding: 36 rpx 0 rpx;
+      padding: 36rpx 0rpx;
     }
 
     .iMbx {
       display: flex;
       justify-content: space-between;
-      height: 104 rpx;
+      height: 104rpx;
       border-bottom: 1px solid rgba(230, 230, 230, 1);
       align-items: center;
-      font-size: 28 rpx;
+      font-size: 28rpx;
     }
   }
 
   .sure {
-    height: 90 rpx;
+    height: 90rpx;
     width: 100%;
     background-color: #F43131;
     color: #fff;
-    font-size: 32 rpx;
-    margin-top: 96 rpx;
-    line-height: 90 rpx;
+    font-size: 32rpx;
+    margin-top: 96rpx;
+    line-height: 90rpx;
     text-align: center;
   }
 
@@ -1268,8 +1268,8 @@ export default {
     .remind-add {
       background: #fff;
       width: 90%;
-      padding: 50 rpx 0 0;
-      border-radius: 20 rpx;
+      padding: 50rpx 0 0;
+      border-radius: 20rpx;
       overflow: hidden;
 
       .text-align-center {
@@ -1277,20 +1277,20 @@ export default {
       }
 
       .mb20 {
-        margin-bottom: 20 rpx;
+        margin-bottom: 20rpx;
       }
 
       .remind_desc {
-        padding: 0 20 rpx;
-        font-size: 30 rpx;
-        margin: 40 rpx 0;
+        padding: 0 20rpx;
+        font-size: 30rpx;
+        margin: 40rpx 0;
         color: #666;
       }
 
       .remind_btns {
         display: flex;
-        border-top: 1 rpx solid #efefef;
-        line-height: 90 rpx;
+        border-top: 1rpx solid #efefef;
+        line-height: 90rpx;
 
         .fl1 {
           flex: 1;
@@ -1306,7 +1306,7 @@ export default {
 
   .over {
     position: fixed;
-    width: 750 rpx;
+    width: 750rpx;
     z-index: 90;
     height: 100%;
     overflow: hidden;

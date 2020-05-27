@@ -809,7 +809,7 @@ export default {
 
 <style lang="scss" scoped>
   .index-all {
-    width: 750 rpx;
+    width: 750rpx;
     overflow-x: hidden;
     box-sizing: border-box;
     background-color: #FFFFFF;
@@ -819,7 +819,7 @@ export default {
   }
 
   .store-all {
-    width: 750 rpx;
+    width: 750rpx;
     //height: 100vh;
     //overflow-x: hidden;
     background-repeat: no-repeat;
@@ -832,44 +832,44 @@ export default {
 
   .store-title {
     font-size: 22px;
-    height: 42 rpx;
-    line-height: 42 rpx;
-    width: 750 rpx;
+    height: 42rpx;
+    line-height: 42rpx;
+    width: 750rpx;
     text-align: center;
     font-weight: bold;
-    padding-top: 70 rpx;
+    padding-top: 70rpx;
     color: #FFFFFF;
   }
 
   .store-info {
-    width: 710 rpx;
+    width: 710rpx;
     //height: 240rpx;
-    margin: 40 rpx auto 40 rpx;
+    margin: 40rpx auto 40rpx;
     background: rgba(255, 255, 255, 1);
-    box-shadow: 0px 0px 46 rpx 0px rgba(198, 26, 19, 0.17);
-    border-radius: 10 rpx;
-    padding: 24 rpx;
+    box-shadow: 0px 0px 46rpx 0px rgba(198, 26, 19, 0.17);
+    border-radius: 10rpx;
+    padding: 24rpx;
     box-sizing: border-box;
   }
 
   .store-img {
-    width: 92 rpx;
-    height: 92 rpx;
+    width: 92rpx;
+    height: 92rpx;
     border-radius: 50%;
-    margin-right: 20 rpx;
+    margin-right: 20rpx;
   }
 
   .store-info-content {
-    width: 200 rpx;
-    margin-right: 50 rpx;
+    width: 200rpx;
+    margin-right: 50rpx;
   }
 
   .store-name {
     margin-top: 6px;
-    height: 30 rpx;
-    font-size: 30 rpx;
-    line-height: 30 rpx;
-    width: 300 rpx;
+    height: 30rpx;
+    font-size: 30rpx;
+    line-height: 30rpx;
+    width: 300rpx;
     overflow: hidden;
     white-space: nowrap;
   }
@@ -879,48 +879,48 @@ export default {
     text-align: right;
 
     &-name {
-      height: 40 rpx;
-      line-height: 30 rpx;
-      font-size: 30 rpx;
+      height: 40rpx;
+      line-height: 30rpx;
+      font-size: 30rpx;
       color: #777777;
       padding-top: 6px;
-      margin-bottom: 16 rpx;
+      margin-bottom: 16rpx;
     }
 
     &-image {
-      width: 16 rpx;
-      height: 24 rpx;
-      margin-left: 14 rpx;
+      width: 16rpx;
+      height: 24rpx;
+      margin-left: 14rpx;
     }
 
     &-distance {
-      height: 24 rpx;
-      line-height: 24 rpx;
+      height: 24rpx;
+      line-height: 24rpx;
       color: #FF4E00;
-      font-size: 24 rpx;
+      font-size: 24rpx;
     }
   }
 
   .store-promise {
-    padding: 0 rpx 8 rpx;
+    padding: 0rpx 8rpx;
     border: 1px solid #FF4E00;
     font-size: 10px;
     color: #FF4E00;
     text-align: center;
-    border-radius: 6 rpx;
-    height: 36 rpx;
-    line-height: 36 rpx;
+    border-radius: 6rpx;
+    height: 36rpx;
+    line-height: 36rpx;
     box-sizing: border-box;
     display: inline-block;
     margin-top: 7px;
   }
 
   .store-icon {
-    width: 234 rpx;
+    width: 234rpx;
     text-align: center;
     font-size: 12px;
     color: #666666;
-    padding-top: 30 rpx;
+    padding-top: 30rpx;
   }
 
   .icon-address, .icon-cell, .icon-share-t {
@@ -929,12 +929,12 @@ export default {
   }
 
   .store-search {
-    width: 710 rpx;
-    height: 66 rpx;
-    line-height: 66 rpx;
+    width: 710rpx;
+    height: 66rpx;
+    line-height: 66rpx;
     box-sizing: border-box;
-    padding: 20 rpx 30 rpx;
-    padding-right: 200 rpx;
+    padding: 20rpx 30rpx;
+    padding-right: 200rpx;
     position: relative;
     font-size: 13px;
     color: #FFFFFF;
@@ -943,45 +943,45 @@ export default {
 
   .store-search-div {
     position: relative;
-    width: 710 rpx;
+    width: 710rpx;
     margin: 0 auto;
-    height: 66 rpx;
+    height: 66rpx;
   }
 
   .icon-del1 {
-    font-size: 32 rpx;
+    font-size: 32rpx;
     color: #ffd2be;
     position: absolute;
-    top: 16 rpx;
-    left: 590 rpx;
+    top: 16rpx;
+    left: 590rpx;
   }
 
   .icon-search1 {
-    font-size: 38 rpx;
+    font-size: 38rpx;
     color: #ffd2be;
     position: absolute;
-    top: 10 rpx;
-    left: 644 rpx;
+    top: 10rpx;
+    left: 644rpx;
   }
 
   .store-ul {
-    width: 750 rpx;
-    height: 50 rpx;
-    padding-top: 20 rpx;
+    width: 750rpx;
+    height: 50rpx;
+    padding-top: 20rpx;
     overflow-x: scroll;
-    padding-left: 20 rpx;
-    padding-right: 20 rpx;
-    margin: 20 rpx auto 30 rpx;
+    padding-left: 20rpx;
+    padding-right: 20rpx;
+    margin: 20rpx auto 30rpx;
     color: #FFFFFF;
-    font-size: 30 rpx;
-    line-height: 32 rpx;
+    font-size: 30rpx;
+    line-height: 32rpx;
   }
 
   .store-li {
-    height: 50 rpx;
-    padding-bottom: 16 rpx;
+    height: 50rpx;
+    padding-bottom: 16rpx;
     box-sizing: border-box;
-    margin-right: 40 rpx;
+    margin-right: 40rpx;
     white-space: nowrap;
     position: relative;
     text-align: center;
@@ -997,10 +997,10 @@ export default {
     &:after {
       content: "";
       display: block;
-      width: 30 rpx;
-      height: 4 rpx;
+      width: 30rpx;
+      height: 4rpx;
       background: rgba(255, 255, 255, 1);
-      border-radius: 2 rpx;
+      border-radius: 2rpx;
       position: absolute;
       bottom: 0px;
       left: 50%;
@@ -1009,7 +1009,7 @@ export default {
   }
 
   .store-swiper {
-    padding: 0 rpx 20 rpx;
+    padding: 0rpx 20rpx;
     box-sizing: border-box;
   }
 
@@ -1028,73 +1028,73 @@ export default {
     top: 50%;
     left: 50%;
     z-index: 10000;
-    width: 526 rpx;
+    width: 526rpx;
     transform: translate(-50%, -50%);
-    border-radius: 10 rpx;
+    border-radius: 10rpx;
 
     .sku-title {
-      height: 60 rpx;
-      line-height: 60 rpx;
+      height: 60rpx;
+      line-height: 60rpx;
       background-color: #f6f6f6;
       color: #333;
-      font-size: 24 rpx;
+      font-size: 24rpx;
       text-align: center;
-      border-top-left-radius: 10 rpx;
-      border-top-right-radius: 10 rpx;
+      border-top-left-radius: 10rpx;
+      border-top-right-radius: 10rpx;
     }
 
     .sku-content {
-      padding: 40 rpx 46 rpx 34 rpx 40 rpx;
+      padding: 40rpx 46rpx 34rpx 40rpx;
       background-color: #fff;
-      border-bottom-left-radius: 10 rpx;
-      border-bottom-right-radius: 10 rpx;
+      border-bottom-left-radius: 10rpx;
+      border-bottom-right-radius: 10rpx;
 
       .skulist {
-        margin-bottom: 30 rpx;
+        margin-bottom: 30rpx;
         display: flex;
         align-items: center;
 
         &.change-btn {
-          padding-top: 43 rpx;
+          padding-top: 43rpx;
           justify-content: center;
         }
 
         .selected,
         .nochecked {
           display: block;
-          width: 40 rpx;
-          height: 40 rpx;
-          margin-right: 23 rpx;
+          width: 40rpx;
+          height: 40rpx;
+          margin-right: 23rpx;
         }
 
         .nochecked {
           box-sizing: border-box;
-          border: 2 rpx solid rgba(214, 214, 214, 1);
+          border: 2rpx solid rgba(214, 214, 214, 1);
           border-radius: 3px;
         }
 
         .input {
-          width: 420 rpx;
-          height: 60 rpx;
+          width: 420rpx;
+          height: 60rpx;
           border: 1px solid rgba(214, 214, 214, 1);
-          font-size: 24 rpx;
-          padding-left: 24 rpx;
+          font-size: 24rpx;
+          padding-left: 24rpx;
           box-sizing: border-box;
-          line-height: 36 rpx;
+          line-height: 36rpx;
         }
 
         .btn {
-          width: 130 rpx;
-          height: 50 rpx;
+          width: 130rpx;
+          height: 50rpx;
           text-align: center;
-          line-height: 50 rpx;
+          line-height: 50rpx;
           background-color: #E9E9E9;
-          font-size: 24 rpx;
+          font-size: 24rpx;
         }
 
         .cancel {
           color: #666;
-          margin-right: 25 rpx;
+          margin-right: 25rpx;
         }
 
         .confirm {
@@ -1104,8 +1104,8 @@ export default {
 
         .sku-name {
           color: #333;
-          font-size: 24 rpx;
-          margin-right: 26 rpx;
+          font-size: 24rpx;
+          margin-right: 26rpx;
         }
 
         .sku-item {
@@ -1116,20 +1116,20 @@ export default {
           flex-wrap: wrap;
 
           .img {
-            width: 27 rpx;
-            height: 32 rpx;
+            width: 27rpx;
+            height: 32rpx;
           }
 
           .sku {
-            padding: 0 10 rpx;
-            height: 46 rpx;
-            line-height: 46 rpx;
+            padding: 0 10rpx;
+            height: 46rpx;
+            line-height: 46rpx;
             text-align: center;
             background-color: #f6f6f6;
             color: #666;
-            font-size: 24 rpx;
-            margin-right: 13 rpx;
-            border-radius: 5 rpx;
+            font-size: 24rpx;
+            margin-right: 13rpx;
+            border-radius: 5rpx;
           }
 
           .active {
@@ -1138,18 +1138,18 @@ export default {
           }
 
           .handle {
-            width: 50 rpx;
-            height: 45 rpx;
-            line-height: 45 rpx;
+            width: 50rpx;
+            height: 45rpx;
+            line-height: 45rpx;
             text-align: center;
-            font-size: 32 rpx;
+            font-size: 32rpx;
             color: #777;
             background: #f6f6f6;
           }
 
           .pro-num {
-            margin: 0 15 rpx;
-            font-size: 24 rpx;
+            margin: 0 15rpx;
+            font-size: 24rpx;
             color: #777;
           }
         }
@@ -1159,20 +1159,20 @@ export default {
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-top: 60 rpx;
+        margin-top: 60rpx;
 
         .btn {
-          width: 130 rpx;
-          height: 50 rpx;
+          width: 130rpx;
+          height: 50rpx;
           text-align: center;
-          line-height: 50 rpx;
-          font-size: 24 rpx;
+          line-height: 50rpx;
+          font-size: 24rpx;
         }
 
         .cancel {
           background: #e9e9e9;
           color: #666;
-          margin-right: 25 rpx;
+          margin-right: 25rpx;
         }
 
         .confirm {
@@ -1188,45 +1188,45 @@ export default {
 
     .priceSum {
       text-align: center;
-      padding: 68 rpx 0 104 rpx;
+      padding: 68rpx 0 104rpx;
       background-color: #fff;
 
       .title {
-        font-size: 28 rpx;
-        margin-bottom: 28 rpx;
+        font-size: 28rpx;
+        margin-bottom: 28rpx;
       }
 
       .icon {
         color: $wzw-primary-color;
-        font-size: 26 rpx;
-        margin-right: 10 rpx;
+        font-size: 26rpx;
+        margin-right: 10rpx;
       }
 
       .span {
         color: $wzw-primary-color;
-        font-size: 36 rpx;
+        font-size: 36rpx;
       }
     }
   }
 
   .back-btn {
-    height: 50 rpx;
-    width: 130 rpx;
+    height: 50rpx;
+    width: 130rpx;
     text-align: center;
     background-color: $wzw-primary-color;
     color: #fff;
-    border-radius: 25 rpx;
-    line-height: 50 rpx;
+    border-radius: 25rpx;
+    line-height: 50rpx;
   }
 
   .check {
     position: fixed;
     bottom: 0;
     width: 100%;
-    height: 90 rpx;
+    height: 90rpx;
     display: flex;
-    line-height: 90 rpx;
-    font-size: 24 rpx;
+    line-height: 90rpx;
+    font-size: 24rpx;
     color: #333;
     background-color: #fff;
     box-shadow: 0px 0px 22px 0px rgba(4, 0, 0, 0.12);
@@ -1236,18 +1236,18 @@ export default {
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 24 rpx;
+      font-size: 24rpx;
       color: #333;
 
       .num {
         color: $wzw-primary-color;
-        fong-size: 28 rpx;
+        fong-size: 28rpx;
       }
 
       .img {
-        width: 17 rpx;
-        height: 14 rpx;
-        margin-left: 12 rpx;
+        width: 17rpx;
+        height: 14rpx;
+        margin-left: 12rpx;
       }
 
       .turn {
@@ -1256,11 +1256,11 @@ export default {
     }
 
     .submit {
-      width: 210 rpx;
+      width: 210rpx;
       height: 100%;
-      line-height: 90 rpx;
+      line-height: 90rpx;
       background: $wzw-primary-color;
-      font-size: 28 rpx;
+      font-size: 28rpx;
       color: #fff;
       text-align: center;
     }
@@ -1270,54 +1270,54 @@ export default {
   .ticks, .shareinfo {
     background: #fff;
     width: 100%;
-    padding: 30 rpx 0 60 rpx;
+    padding: 30rpx 0 60rpx;
     color: #333;
     z-index: 100;
-    border-top-left-radius: 10 rpx;
-    border-top-right-radius: 10 rpx;
+    border-top-left-radius: 10rpx;
+    border-top-right-radius: 10rpx;
     /* #ifdef H5 */
     margin-bottom: 50px;
     /* #endif */
   }
 
   .ticks {
-    max-height: 1050 rpx;
+    max-height: 1050rpx;
     position: relative;
-    padding-top: 0 rpx !important;
+    padding-top: 0rpx !important;
     // overflow: scroll;
   }
 
   .t_title {
-    font-size: 30 rpx;
+    font-size: 30rpx;
     color: #333;
     text-align: center;
     //margin-bottom: 40rpx;
     // position: fixed;
     width: 100%;
     z-index: 999;
-    height: 90 rpx;
-    line-height: 90 rpx;
+    height: 90rpx;
+    line-height: 90rpx;
     background-color: #FFFFFF;
   }
 
   .t_title image {
-    height: 24 rpx;
-    width: 24 rpx;
+    height: 24rpx;
+    width: 24rpx;
     position: absolute;
-    top: 33 rpx;
-    right: 20 rpx;
+    top: 33rpx;
+    right: 20rpx;
   }
 
   .t_content {
     position: relative;
-    width: 720 rpx;
-    height: 160 rpx;
+    width: 720rpx;
+    height: 160rpx;
     background-color: #FDF1E5;
     background-size: cover;
-    margin: 0 auto 30 rpx;
-    padding: 20 rpx 0 28 rpx 40 rpx;
+    margin: 0 auto 30rpx;
+    padding: 20rpx 0 28rpx 40rpx;
     box-sizing: border-box;
-    font-size: 22 rpx;
+    font-size: 22rpx;
     color: #F43131;
   }
 
@@ -1326,35 +1326,35 @@ export default {
   }
 
   .t_left .t_left_t .money {
-    font-size: 42 rpx;
-    margin-right: 10 rpx;
+    font-size: 42rpx;
+    margin-right: 10rpx;
   }
 
   .t_left .t_left_t {
-    font-size: 24 rpx;
-    margin-bottom: 10 rpx;
+    font-size: 24rpx;
+    margin-bottom: 10rpx;
   }
 
   .t_left .t_left_b {
-    margin-top: 6 rpx;
+    margin-top: 6rpx;
   }
 
   .t_left .t_left_t i {
-    font-size: 22 rpx;
+    font-size: 22rpx;
     font-style: normal;
   }
 
   .t_left .t_left_c, .t_left .t_left_b {
-    font-size: 22 rpx;
+    font-size: 22rpx;
   }
 
   .t_right {
     float: right;
-    height: 116 rpx;
-    line-height: 116 rpx;
-    padding: 0 36 rpx;
-    font-size: 30 rpx;
-    border-left: 2 rpx dotted #999;
+    height: 116rpx;
+    line-height: 116rpx;
+    padding: 0 36rpx;
+    font-size: 30rpx;
+    border-left: 2rpx dotted #999;
     //width: 124rpx;
     text-align: center;
   }
@@ -1366,7 +1366,7 @@ export default {
   .shareinfo {
     padding-bottom: 0;
     color: #333;
-    font-size: 24 rpx;
+    font-size: 24rpx;
   }
 
   .shareinfo > div {
@@ -1380,10 +1380,10 @@ export default {
   }
 
   .s_top .img {
-    width: 76 rpx;
-    height: 76 rpx;
+    width: 76rpx;
+    height: 76rpx;
     display: block;
-    margin: 0 auto 10 rpx;
+    margin: 0 auto 10rpx;
   }
 
   .s_top > div:nth-child(1) {
@@ -1396,16 +1396,16 @@ export default {
     width: 100%;
     background: #e8e8e8;
     color: #666;
-    font-size: 26 rpx;
+    font-size: 26rpx;
     text-align: center;
-    line-height: 60 rpx;
-    margin-top: 16 rpx;
+    line-height: 60rpx;
+    margin-top: 16rpx;
   }
 
   //分享结束
   .store-line {
     width: 2px;
-    height: 40 rpx;
+    height: 40rpx;
     background-color: #FFCBCB;
   }
 
