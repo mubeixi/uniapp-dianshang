@@ -843,13 +843,13 @@ export default {
   }
 
   .mxdetail {
-    font-size: 28 rpx;
-    line-height: 80 rpx;
-    padding: 20 rpx 30 rpx;
-    padding-bottom: 100 rpx;
+    font-size: 28rpx;
+    line-height: 80rpx;
+    padding: 20rpx 30rpx;
+    padding-bottom: 100rpx;
 
     .mxtitle {
-      font-size: 28 rpx;
+      font-size: 28rpx;
       text-align: center;
     }
 
@@ -863,25 +863,25 @@ export default {
   }
 
   .state {
-    padding: 20 rpx 28 rpx;
-    font-size: 28 rpx;
+    padding: 20rpx 28rpx;
+    font-size: 28rpx;
     display: flex;
     align-items: center;
-    border-top: 30 rpx solid #f8f8f8;
+    border-top: 30rpx solid #f8f8f8;
 
     .img {
-      width: 60 rpx;
-      height: 60 rpx;
+      width: 60rpx;
+      height: 60rpx;
     }
   }
 
   .state-desc {
-    margin-left: 24 rpx;
+    margin-left: 24rpx;
   }
 
   .c8 {
     color: #888;
-    font-size: 26 rpx;
+    font-size: 26rpx;
   }
 
   /* 收货地址 start */
@@ -889,109 +889,109 @@ export default {
     /* margin: 15px 0 10px; */
     display: flex;
     align-items: center;
-    padding: 40 rpx 38 rpx 40 rpx 28 rpx;
-    border-top: 30 rpx solid #F3F3F3;
-    border-bottom: 20 rpx solid #F3F3F3;
+    padding: 40rpx 38rpx 40rpx 28rpx;
+    border-top: 30rpx solid #F3F3F3;
+    border-bottom: 20rpx solid #F3F3F3;
   }
 
   .loc_icon {
-    width: 41 rpx;
-    height: 51 rpx;
-    margin-right: 30 rpx;
+    width: 41rpx;
+    height: 51rpx;
+    margin-right: 30rpx;
   }
 
   .right {
-    width: 18 rpx;
-    height: 27 rpx;
-    margin-left: 28 rpx;
+    width: 18rpx;
+    height: 27rpx;
+    margin-left: 28rpx;
   }
 
   .name {
-    margin-bottom: 30 rpx;
-    font-size: 26 rpx;
+    margin-bottom: 30rpx;
+    font-size: 26rpx;
   }
 
   .name > span {
-    margin-left: 10 rpx;
+    margin-left: 10rpx;
   }
 
   .location {
-    font-size: 24 rpx;
+    font-size: 24rpx;
     color: #444;
   }
 
   /* 收货地址 end */
   /* 订单信息 start */
   .order_msg {
-    padding: 20 rpx 30 rpx 0px;
+    padding: 20rpx 30rpx 0px;
   }
 
   .biz_msg {
     display: flex;
     align-items: center;
-    margin-bottom: 30 rpx;
+    margin-bottom: 30rpx;
   }
 
   .biz_logo {
-    width: 70 rpx;
-    height: 70 rpx;
-    border-radius: 35 rpx;
-    margin-right: 20 rpx;
+    width: 70rpx;
+    height: 70rpx;
+    border-radius: 35rpx;
+    margin-right: 20rpx;
   }
 
   .biz_name {
-    font-size: 28 rpx;
+    font-size: 28rpx;
   }
 
   .pro {
     display: flex;
-    margin-bottom: 50 rpx;
+    margin-bottom: 50rpx;
   }
 
   .pro-msg {
-    margin-left: 27 rpx;
-    width: 451 rpx;
+    margin-left: 27rpx;
+    width: 451rpx;
   }
 
   .pro-div {
-    width: 200 rpx;
-    height: 200 rpx;
+    width: 200rpx;
+    height: 200rpx;
   }
 
   .pro-img {
-    width: 200 rpx;
-    height: 200 rpx;
-    margin-right: 28 rpx;
+    width: 200rpx;
+    height: 200rpx;
+    margin-right: 28rpx;
   }
 
   .pro-name {
-    font-size: 26 rpx;
-    margin-bottom: 20 rpx;
+    font-size: 26rpx;
+    margin-bottom: 20rpx;
   }
 
   .attr {
     display: inline-block;
-    height: 50 rpx;
-    line-height: 50 rpx;
+    height: 50rpx;
+    line-height: 50rpx;
     background: #FFF5F5;
     color: #666;
-    font-size: 24 rpx;
-    padding: 0 20 rpx;
-    margin-bottom: 20 rpx;
+    font-size: 24rpx;
+    padding: 0 20rpx;
+    margin-bottom: 20rpx;
   }
 
   .pro-price {
     color: #F43131;
-    font-size: 36 rpx;
+    font-size: 36rpx;
   }
 
   .pro-price span {
-    font-size: 24 rpx;
+    font-size: 24rpx;
     font-style: normal;
   }
 
   .amount {
-    font-size: 30 rpx;
+    font-size: 30rpx;
     float: right;
     color: #333;
   }
@@ -999,20 +999,20 @@ export default {
   /* 订单信息 end */
   /* 订单其他信息 start */
   .other {
-    padding: 34 rpx 45 rpx 0 rpx 31 rpx;
-    font-size: 28 rpx;
+    padding: 34rpx 45rpx 0rpx 31rpx;
+    font-size: 28rpx;
   }
 
   .other .bd {
-    padding-bottom: 30 rpx;
-    border-bottom: 2 rpx solid #efefef;
+    padding-bottom: 30rpx;
+    border-bottom: 2rpx solid #efefef;
   }
 
   .o_title {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-size: 28 rpx;
+    font-size: 28rpx;
   }
 
   .o_title .van-switch {
@@ -1020,13 +1020,13 @@ export default {
   }
 
   .o_desc {
-    margin-top: 10 rpx;
-    font-size: 24 rpx;
+    margin-top: 10rpx;
+    font-size: 24rpx;
   }
 
   .msg {
-    margin-left: 20 rpx;
-    font-size: 24 rpx;
+    margin-left: 20rpx;
+    font-size: 24rpx;
   }
 
   .words {
@@ -1036,7 +1036,7 @@ export default {
   .words {
     input {
       border: 0;
-      margin-left: 20 rpx;
+      margin-left: 20rpx;
       flex: 1;
     }
   }
@@ -1045,9 +1045,9 @@ export default {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    padding: 40 rpx 0;
-    font-size: 24 rpx;
-    padding-right: 44 rpx;
+    padding: 40rpx 0;
+    font-size: 24rpx;
+    padding-right: 44rpx;
   }
 
   i {
@@ -1055,7 +1055,7 @@ export default {
   }
 
   .total .money {
-    font-size: 30 rpx;
+    font-size: 30rpx;
     color: #F43131;
   }
 
@@ -1075,13 +1075,13 @@ export default {
     background: #fff;
 
     .mx {
-      font-size: 22 rpx;
-      margin-right: 10 rpx;
+      font-size: 22rpx;
+      margin-right: 10rpx;
 
       .image {
-        width: 20 rpx;
-        height: 20 rpx;
-        margin-left: 10 rpx;
+        width: 20rpx;
+        height: 20rpx;
+        margin-left: 10rpx;
       }
 
       .slidedown {
@@ -1091,7 +1091,7 @@ export default {
   }
 
   .submit {
-    width: 230 rpx;
+    width: 230rpx;
     background: #F43131;
     text-align: center;
     color: #fff;
@@ -1104,23 +1104,23 @@ export default {
   }
 
   .info {
-    font-size: 24 rpx;
+    font-size: 24rpx;
   }
 
   .tips {
-    font-size: 20 rpx;
+    font-size: 20rpx;
     color: #979797;
   }
 
   .iMbx {
     text-align: center;
-    padding: 0 20 rpx;
-    font-size: 28 rpx;
+    padding: 0 20rpx;
+    font-size: 28rpx;
     color: #333;
 
     .c_method {
-      padding: 37 rpx 0;
-      border-bottom: 2 rpx solid #E6E6E6;
+      padding: 37rpx 0;
+      border-bottom: 2rpx solid #E6E6E6;
     }
 
     & .c_method:first-child {
@@ -1144,24 +1144,24 @@ export default {
       color: #000;
       text-align: center;
       width: 90%;
-      margin: 400 rpx auto;
-      padding: 40 rpx 50 rpx 30 rpx;
+      margin: 400rpx auto;
+      padding: 40rpx 50rpx 30rpx;
       box-sizing: border-box;
-      font-size: 28 rpx;
-      border-radius: 10 rpx;
+      font-size: 28rpx;
+      border-radius: 10rpx;
 
       .input {
-        margin: 40 rpx 0;
+        margin: 40rpx 0;
         border: 1px solid #efefef;
-        height: 80 rpx;
-        line-height: 80 rpx;
+        height: 80rpx;
+        line-height: 80rpx;
       }
 
       .btns {
         display: flex;
         justify-content: space-around;
-        height: 60 rpx;
-        line-height: 60 rpx;
+        height: 60rpx;
+        line-height: 60rpx;
 
         .btn {
           flex: 1;

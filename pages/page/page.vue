@@ -194,7 +194,7 @@ export default {
 
 <style lang="less" scope="scope">
   .home-wrap {
-    width: 750 rpx;
+    width: 750rpx;
     overflow-x: hidden;
     background: #f2f2f2;
     position: relative;

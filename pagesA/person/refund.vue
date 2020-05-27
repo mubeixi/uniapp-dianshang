@@ -142,7 +142,7 @@ import {
 } from '../../common/fetch.js'
 import { pageMixin } from '../../common/mixin'
 import { uploadImages } from '../../common/tool.js'
-import { error } from '../../common'
+import { error, modal } from '../../common'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -303,6 +303,10 @@ export default {
               that.arr.push(urls)
               // 是否可以提交
               that.isSubmit = true
+            }).catch(err => {
+              that.imgs = []
+              modal(err.message)
+              that.isSubmit = false
             })
 
             // that.arr.push(arr);

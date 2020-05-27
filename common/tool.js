@@ -20,7 +20,7 @@ export const formatNumber = n => {
 }
 
 /**
- *
+ * 从指定的字符串中获取需要的参数，适用于网络地址
  * @param {*} str
  * @param {*} name
  */
@@ -82,6 +82,26 @@ export const ls = {
   clear () {
     return uni.clearStorageSync()
   }
+}
+
+export function toHome () {
+  uni.switchTab({
+    url: '/pages/index/index'
+  })
+}
+
+export function backFunc () {
+  const currentPages = getCurrentPages()
+  if (currentPages.length < 2) {
+    toHome()
+  }
+  uni.navigateBack({
+    fail (err) {
+      console.log(err.errMsg)
+      // 退无可退就回首页
+      toHome()
+    }
+  })
 }
 
 export const goBack = function () {
@@ -205,26 +225,29 @@ export const uploadByPromise = ({ url, filePath, name = 'image', formData }) => 
       filePath,
       name,
       formData,
-      success: (res) => {
-        let { data = {} } = res
-        if (typeof data === 'string' && data) {
-          const body = JSON.parse(data)
-
-          data = body.data
+      success: (ret) => {
+        if (ret.statusCode !== 200) {
+          reject(Error('系统错误'))
         }
+
+        let res = ret.data
+        if (typeof res === 'string' && res)res = JSON.parse(res)
+        if (res.errorCode !== 0) {
+          reject(Error(res.msg || '上传api调用错误'))
+        }
+        const data = res.data
+        console.log(data)
+
         if (data.path) {
           resolve(data.path)
         } else {
-          resolve(false)
-
-          // let msg=JSON.parse(res.data);
-          toast('文件上传失败')
+          resolve(Error('文件上传路径获取失败'))
         }
       },
       fail: (err) => {
-        reject(err)
+        reject(Error('上传请求报错:' + err.errMsg))
       },
-      complete: (rt) => {
+      complete: () => {
 
       }
     })
@@ -276,8 +299,8 @@ export const uploadImages = (formData, imgs) => {
     //   }
     // })
     // #endif
-    // #ifndef MP-TOUTIAO
 
+    // #ifndef MP-TOUTIAO
     var apiHost = apiBaseUrl
     // #ifdef H5
     apiHost = ''
@@ -297,11 +320,11 @@ export const uploadImages = (formData, imgs) => {
     Promise.all(taskList).then((urls) => {
       resolve(urls)
     }).catch((error) => {
-      reject(Error('文件上传失败'))
-      uni.showModal({
-        title: '文件批量上传失败',
-        content: JSON.stringify(error)
-      })
+      reject(Error(error.message || '文件上传失败'))
+      // uni.showModal({
+      //   title: '文件批量上传失败',
+      //   content: JSON.stringify(error)
+      // })
     })
   })
 }
@@ -589,4 +612,3 @@ export const plainArray = (arr, key, newArr) => {
     }
   }
 }
-

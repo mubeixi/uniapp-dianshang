@@ -358,24 +358,24 @@ export default {
 
 <style lang="scss" scoped>
   .navs {
-    margin: 40 rpx 0 36 rpx;
-    padding-left: 20 rpx;
+    margin: 40rpx 0 36rpx;
+    padding-left: 20rpx;
     display: flex;
   }
 
   .nav {
-    width: 110 rpx;
-    height: 50 rpx;
-    line-height: 50 rpx;
+    width: 110rpx;
+    height: 50rpx;
+    line-height: 50rpx;
     text-align: center;
-    font-size: 28 rpx;
-    border: 2 rpx solid #999;
-    border-radius: 40 rpx;
+    font-size: 28rpx;
+    border: 2rpx solid #999;
+    border-radius: 40rpx;
     color: #999;
   }
 
   .navs .nav:nth-child(1) {
-    margin-right: 30 rpx;
+    margin-right: 30rpx;
   }
 
   .nav.active {
@@ -387,22 +387,22 @@ export default {
   /* 内容 */
   /* 评价 start */
   .c_content {
-    margin-top: 30 rpx;
-    padding: 0 20 rpx 0;
-    border-bottom: 2 rpx solid #FFECE8E8;
+    margin-top: 30rpx;
+    padding: 0 20rpx 0;
+    border-bottom: 2rpx solid #FFECE8E8;
   }
 
   .c_content_title {
     display: flex;
     align-items: center;
-    font-size: 30 rpx;
+    font-size: 30rpx;
     color: #333;
   }
 
   .c_content_title > img {
-    width: 70 rpx;
-    height: 70 rpx;
-    margin-right: 20 rpx;
+    width: 70rpx;
+    height: 70rpx;
+    margin-right: 20rpx;
   }
 
   .user_name {
@@ -410,66 +410,66 @@ export default {
   }
 
   .c_time {
-    font-size: 26 rpx;
+    font-size: 26rpx;
     color: #777;
   }
 
   .c_content_msg {
-    font-size: 24 rpx;
+    font-size: 24rpx;
     color: #333;
-    line-height: 36 rpx;
-    padding-top: 18 rpx;
-    padding-bottom: 29 rpx;
+    line-height: 36rpx;
+    padding-top: 18rpx;
+    padding-bottom: 29rpx;
   }
 
   .c_content_img img {
-    width: 142 rpx;
-    height: 142 rpx;
-    margin-right: 20 rpx;
-    margin-bottom: 30 rpx;
+    width: 142rpx;
+    height: 142rpx;
+    margin-right: 20rpx;
+    margin-bottom: 30rpx;
   }
 
   /* 内容 end */
   .cartSku {
-    padding: 0 rpx 10 rpx;
+    padding: 0rpx 10rpx;
 
     .cartTop {
       position: relative;
       display: flex;
-      padding-top: 20 rpx;
+      padding-top: 20rpx;
 
       .image {
-        width: 220 rpx;
-        height: 220 rpx;
+        width: 220rpx;
+        height: 220rpx;
       }
 
       .cartTitle {
-        margin-left: 20 rpx;
-        font-size: 32 rpx;
-        width: 420 rpx;
+        margin-left: 20rpx;
+        font-size: 32rpx;
+        width: 420rpx;
 
         .cartTitles {
-          height: 80 rpx;
+          height: 80rpx;
           overflow: hidden;
-          margin-top: 20 rpx;
-          line-height: 40 rpx;
+          margin-top: 20rpx;
+          line-height: 40rpx;
         }
 
         .addInfo {
-          width: 450 rpx;
-          margin-top: 70 rpx;
+          width: 450rpx;
+          margin-top: 70rpx;
           display: flex;
           flex-flow: row;
           justify-content: space-between;
           align-items: flex-end;
 
           .addPrice {
-            font-size: 42 rpx;
+            font-size: 42rpx;
             color: #ff4200;
           }
 
           .proSale {
-            font-size: 24 rpx;
+            font-size: 24rpx;
             color: #999;
             justify-content: flex-end;
           }
@@ -478,17 +478,17 @@ export default {
     }
 
     .cartCenter {
-      margin-top: 20 rpx;
+      margin-top: 20rpx;
 
       .cartAttr {
         display: flex;
-        padding: 15 rpx 0 rpx;
+        padding: 15rpx 0rpx;
 
         .sku {
-          font-size: 28 rpx;
-          height: 70 rpx;
-          line-height: 70 rpx;
-          width: 140 rpx;
+          font-size: 28rpx;
+          height: 70rpx;
+          line-height: 70rpx;
+          width: 140rpx;
         }
 
         .skuValue {
@@ -498,15 +498,15 @@ export default {
 
           .skuview {
             margin-bottom: 10px;
-            height: 70 rpx;
-            line-height: 70 rpx;
+            height: 70rpx;
+            line-height: 70rpx;
             font-size: 14px;
-            border-radius: 10 rpx;
+            border-radius: 10rpx;
             color: #000;
             background-color: #fff;
-            padding-left: 20 rpx;
-            padding-right: 20 rpx;
-            margin-right: 20 rpx;
+            padding-left: 20rpx;
+            padding-right: 20rpx;
+            margin-right: 20rpx;
             border: 1px solid #ccc;
           }
 
@@ -518,40 +518,40 @@ export default {
     }
 
     .numBer {
-      margin-top: 20 rpx;
+      margin-top: 20rpx;
       display: flex;
-      padding: 15 rpx 0 rpx;
+      padding: 15rpx 0rpx;
       justify-content: space-between;
 
       .numBers {
-        font-size: 28 rpx;
-        height: 70 rpx;
-        line-height: 70 rpx;
-        width: 140 rpx;
+        font-size: 28rpx;
+        height: 70rpx;
+        line-height: 70rpx;
+        width: 140rpx;
       }
 
       .inputNumber {
         border: 1px solid #ccc;
-        border-radius: 6 rpx;
-        height: 50 rpx;
-        margin-right: 50 rpx;
+        border-radius: 6rpx;
+        height: 50rpx;
+        margin-right: 50rpx;
         display: flex;
 
         .inputq {
           color: black;
           margin: 0 auto;
-          width: 80 rpx;
-          height: 50 rpx;
+          width: 80rpx;
+          height: 50rpx;
           text-align: center;
-          font-size: 24 rpx;
-          border-left: 2 rpx solid #ccc;
-          border-right: 2 rpx solid #ccc;
+          font-size: 24rpx;
+          border-left: 2rpx solid #ccc;
+          border-right: 2rpx solid #ccc;
         }
 
         .clicks {
-          height: 50 rpx;
-          line-height: 50 rpx;
-          width: 60 rpx;
+          height: 50rpx;
+          line-height: 50rpx;
+          width: 60rpx;
           text-align: center;
         }
       }
@@ -560,13 +560,13 @@ export default {
 
   .cartSub {
     width: 100%;
-    height: 90 rpx;
+    height: 90rpx;
     background-color: #F43131;
     font-size: 20px;
-    line-height: 90 rpx;
+    line-height: 90rpx;
     text-align: center;
     color: #FFFFFF;
-    margin-top: 30 rpx;
+    margin-top: 30rpx;
 
     &.disabled {
       background: #999;

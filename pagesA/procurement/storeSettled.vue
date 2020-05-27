@@ -134,7 +134,7 @@ import {
   userStoreApply
 } from '../../common/fetch.js'
 import { chooseImageByPromise, uploadImages } from '../../common/tool.js'
-import { error } from '../../common/index.js'
+import { error, modal } from '../../common/index.js'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -311,7 +311,7 @@ export default {
             }
           })
         }
-      }).catch(()=>{})
+      }).catch(() => {})
     },
     // 获取门店类型
     get_store_types () {
@@ -462,8 +462,12 @@ export default {
           // that.arr = that.arr.concat(urls);
           // 是否可以提交
           that.isSubmit = true
+        }).catch(err => {
+          that.imgs = []
+          modal(err.message)
+          that.isSubmit = false
         })
-      } else if (arg == 1) {
+      } else if (arg === 1) {
         await chooseImageByPromise({
           count: (9 - that.imgs.length),
           sizeType
@@ -480,6 +484,10 @@ export default {
           // that.arrlist = that.arrlist.concat(urls);
           // 是否可以提交
           that.isSubmit = true
+        }).catch(err => {
+          that.imglist = []
+          modal(err.message)
+          that.isSubmit = false
         })
       }
     }
