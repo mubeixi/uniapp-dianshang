@@ -229,22 +229,21 @@ export const uploadByPromise = ({ url, filePath, name = 'image', formData }) => 
         let { data = {} } = res
         if (typeof data === 'string' && data) {
           const body = JSON.parse(data)
-
           data = body.data
+        }
+        if (data.errorCode !== 0) {
+          reject(Error(res.msg || '上传api调用错误'))
         }
         if (data.path) {
           resolve(data.path)
         } else {
-          resolve(false)
-
-          // let msg=JSON.parse(res.data);
-          toast('文件上传失败')
+          resolve(Error('文件上传路径获取失败'))
         }
       },
       fail: (err) => {
-        reject(err)
+        reject(Error('上传请求报错:' + err.errMsg))
       },
-      complete: (rt) => {
+      complete: () => {
 
       }
     })
@@ -298,7 +297,6 @@ export const uploadImages = (formData, imgs) => {
     // #endif
 
     // #ifndef MP-TOUTIAO
-
     var apiHost = apiBaseUrl
     // #ifdef H5
     apiHost = ''
@@ -318,7 +316,7 @@ export const uploadImages = (formData, imgs) => {
     Promise.all(taskList).then((urls) => {
       resolve(urls)
     }).catch((error) => {
-      reject(Error('文件上传失败'))
+      reject(Error(error.message || '文件上传失败'))
       // uni.showModal({
       //   title: '文件批量上传失败',
       //   content: JSON.stringify(error)
