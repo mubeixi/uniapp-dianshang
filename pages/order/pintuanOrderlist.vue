@@ -21,51 +21,53 @@
     </div>
     <view style="height: 100rpx;width: 100%;">
     </view>
-    <div :key="index" class="order" v-for="(item,index) of data" v-if="item.prod_list.length>0">
-      <div style="background-color: #F3F3F3;height: 20rpx;width: 100%;position: absolute;left: 0rpx;"></div>
-      <div style="height: 20rpx;"></div>
-      <div class="bizinfo">
-        <img :src="item.ShopLogo|domain" alt="" class="imgs">
-        <span class="bizname">{{item.ShopName}}</span>
-        <span class="status">{{item.Order_Status_desc}}</span>
-      </div>
-      <block :key="k" v-for="(i,k) of item.prod_list">
-        <div @click="goDetail(item)" class="pro">
-          <div class="pro-div">
-            <img :src="i.prod_img" class="pro-img">
-          </div>
-          <div class="pro-msg">
-            <div class="pro-name">{{i.prod_name}}</div>
-            <div class="attr" v-if="i.attr_info"><span>{{i.attr_info.attr_name}}</span></div>
-            <div class="attr" style="background-color: #FFFFFF;" v-else><span></span></div>
-            <div class="pro-price"><span>￥</span>{{i.prod_price}} <span class="amount">x{{i.prod_count}}</span></div>
-          </div>
+    <block v-if="item.prod_list.length>0">
+      <div class="order" v-for="(item,index) of data"  :key="index">
+        <div style="background-color: #F3F3F3;height: 20rpx;width: 100%;position: absolute;left: 0rpx;"></div>
+        <div style="height: 20rpx;"></div>
+        <div class="bizinfo">
+          <img :src="item.ShopLogo|domain" alt="" class="imgs">
+          <span class="bizname">{{item.ShopName}}</span>
+          <span class="status">{{item.Order_Status_desc}}</span>
         </div>
-      </block>
-      <div class="total">
-        <view @click="goPintuan(item)" class="ptdesc" v-if="item.teamstatus_desc">{{item.teamstatus_desc}}</view>
-        <view> 共{{item.prod_list.length}}件商品 实付：<span class="price"><span>￥</span> {{item.Order_TotalPrice}}</span>
-        </view>
+        <block :key="k" v-for="(i,k) of item.prod_list">
+          <div @click="goDetail(item)" class="pro">
+            <div class="pro-div">
+              <img :src="i.prod_img" class="pro-img">
+            </div>
+            <div class="pro-msg">
+              <div class="pro-name">{{i.prod_name}}</div>
+              <div class="attr" v-if="i.attr_info"><span>{{i.attr_info.attr_name}}</span></div>
+              <div class="attr" style="background-color: #FFFFFF;" v-else><span></span></div>
+              <div class="pro-price"><span>￥</span>{{i.prod_price}} <span class="amount">x{{i.prod_count}}</span></div>
+            </div>
+          </div>
+        </block>
+        <div class="total">
+          <view @click="goPintuan(item)" class="ptdesc" v-if="item.teamstatus_desc">{{item.teamstatus_desc}}</view>
+          <view> 共{{item.prod_list.length}}件商品 实付：<span class="price"><span>￥</span> {{item.Order_TotalPrice}}</span>
+          </view>
+        </div>
+        <div class="btn-group" v-if="item.Order_Status==0">
+          <span @click="cancelOrder(item.prod_list,index)">取消订单</span>
+        </div>
+        <div class="btn-group" v-if="item.Order_Status==1">
+          <span @click="cancelOrder(item.prod_list,index)">取消订单</span>
+          <span @click="goPay(item)" class="active">立即付款</span>
+        </div>
+        <div class="btn-group" v-else-if="item.Order_Status==2&&item.teamstatus==1">
+          <span @click="goPay(item)" class="active">申请退款</span>
+        </div>
+        <div class="btn-group" v-else-if="item.Order_Status==3">
+          <span @click="goLogistics(item)">查看物流</span>
+          <span @click="goPay(item)" style="margin-left: 14rpx;">申请退款退货</span>
+          <span @click="confirmOrder(item)" class="active">确认收货</span>
+        </div>
+        <div class="btn-group" v-else-if="item.Order_Status==4 && item.Is_Commit == 0&&item.teamstatus!=4">
+          <span @click="goPay(item)" class="active">立即评价</span>
+        </div>
       </div>
-      <div class="btn-group" v-if="item.Order_Status==0">
-        <span @click="cancelOrder(item.prod_list,index)">取消订单</span>
-      </div>
-      <div class="btn-group" v-if="item.Order_Status==1">
-        <span @click="cancelOrder(item.prod_list,index)">取消订单</span>
-        <span @click="goPay(item)" class="active">立即付款</span>
-      </div>
-      <div class="btn-group" v-else-if="item.Order_Status==2&&item.teamstatus==1">
-        <span @click="goPay(item)" class="active">申请退款</span>
-      </div>
-      <div class="btn-group" v-else-if="item.Order_Status==3">
-        <span @click="goLogistics(item)">查看物流</span>
-        <span @click="goPay(item)" style="margin-left: 14rpx;">申请退款退货</span>
-        <span @click="confirmOrder(item)" class="active">确认收货</span>
-      </div>
-      <div class="btn-group" v-else-if="item.Order_Status==4 && item.Is_Commit == 0&&item.teamstatus!=4">
-        <span @click="goPay(item)" class="active">立即评价</span>
-      </div>
-    </div>
+    </block>
     <div class="defaults" v-if="data.length<=0">
       <image :src="'/static/client/defaultImg.png'|domain"></image>
     </div>
@@ -249,8 +251,8 @@ export default {
 
   .titless {
     position: fixed;
-    top: 0 rpx;
-    left: 0 rpx;
+    top: 0rpx;
+    left: 0rpx;
     width: 100%;
     z-index: 999;
   }
@@ -258,20 +260,20 @@ export default {
   .navs {
     z-index: 999;
     position: fixed;
-    top: 0 rpx;
+    top: 0rpx;
     /* #ifdef APP-PLUS */
     // top: var(--status-bar-height);//86rpx;
     /* #endif */
 
-    left: 0 rpx;
-    width: 750 rpx;
+    left: 0rpx;
+    width: 750rpx;
     box-sizing: border-box;
     display: flex;
     align-items: center;
-    height: 100 rpx;
-    line-height: 100 rpx;
+    height: 100rpx;
+    line-height: 100rpx;
     background: #fff;
-    font-size: 28 rpx;
+    font-size: 28rpx;
     padding: 0 10px;
 
     .nav-item {
@@ -282,14 +284,14 @@ export default {
 
       .jiaobiao {
         position: absolute;
-        top: 24 rpx;
-        right: 20 rpx;
-        width: 20 rpx;
-        height: 20 rpx;
+        top: 24rpx;
+        right: 20rpx;
+        width: 20rpx;
+        height: 20rpx;
         border-radius: 50%;
         background-color: #FFFFFF;
         border: 1px solid #F43131;
-        font-size: 15 rpx;
+        font-size: 15rpx;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -304,49 +306,49 @@ export default {
   }
 
   .order {
-    padding: 0 rpx 20 rpx;
+    padding: 0rpx 20rpx;
     background: #fff;
     position: relative;
 
     .bizinfo {
-      margin-top: 20 rpx;
+      margin-top: 20rpx;
       display: flex;
       align-items: center;
       justify-content: space-between;
       width: 100%;
 
       .imgs {
-        width: 70 rpx;
-        height: 70 rpx;
+        width: 70rpx;
+        height: 70rpx;
         border-radius: 50%;
-        margin-right: 21 rpx;
+        margin-right: 21rpx;
       }
 
       .bizname {
         flex: 1;
-        font-size: 28 rpx;
+        font-size: 28rpx;
       }
 
       .status {
         color: red;
-        font-size: 26 rpx;
+        font-size: 26rpx;
       }
     }
 
     .pro {
       display: flex;
-      margin-bottom: 50 rpx;
-      margin-top: 30 rpx;
+      margin-bottom: 50rpx;
+      margin-top: 30rpx;
     }
 
     .pro-msg {
-      margin-left: 27 rpx;
-      width: 476 rpx;
+      margin-left: 27rpx;
+      width: 476rpx;
     }
 
     .pro-div {
-      width: 200 rpx;
-      height: 200 rpx;
+      width: 200rpx;
+      height: 200rpx;
     }
 
     .pro-img {
@@ -355,8 +357,8 @@ export default {
     }
 
     .pro-name {
-      font-size: 26 rpx;
-      margin-bottom: 20 rpx;
+      font-size: 26rpx;
+      margin-bottom: 20rpx;
       text-overflow: -o-ellipsis-lastline;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -367,77 +369,77 @@ export default {
 
     .attr {
       display: inline-block;
-      height: 50 rpx;
-      line-height: 50 rpx;
+      height: 50rpx;
+      line-height: 50rpx;
       background: #FFF5F5;
       color: #666;
-      font-size: 24 rpx;
-      padding: 0 20 rpx;
-      margin-bottom: 20 rpx;
+      font-size: 24rpx;
+      padding: 0 20rpx;
+      margin-bottom: 20rpx;
     }
 
     .pro-price {
       color: #F43131;
-      font-size: 36 rpx;
+      font-size: 36rpx;
     }
 
     .pro-price span {
-      font-size: 24 rpx;
+      font-size: 24rpx;
       font-style: normal;
     }
 
     .amount {
-      font-size: 30 rpx;
+      font-size: 30rpx;
       float: right;
       color: #333;
     }
 
     .total {
-      font-size: 24 rpx;
-      padding: 40 rpx 0 rpx;
-      margin-right: 15 rpx;
+      font-size: 24rpx;
+      padding: 40rpx 0rpx;
+      margin-right: 15rpx;
       display: flex;
       align-items: center;
       justify-content: space-between;
 
       .price {
         color: red;
-        font-size: 30 rpx;
+        font-size: 30rpx;
 
         span {
-          font-size: 24 rpx;
+          font-size: 24rpx;
         }
       }
 
       .ptdesc {
         background: #F43131;
-        padding: 10 rpx;
+        padding: 10rpx;
         color: #fff;
-        border-top-right-radius: 20 rpx;
-        border-bottom-right-radius: 20 rpx;
-        padding-left: 20 rpx;
-        padding-right: 20 rpx;
+        border-top-right-radius: 20rpx;
+        border-bottom-right-radius: 20rpx;
+        padding-left: 20rpx;
+        padding-right: 20rpx;
       }
     }
 
     .btn-group {
       text-align: right;
-      margin-bottom: 30 rpx;
+      margin-bottom: 30rpx;
 
       span {
         display: inline-block;
         //width: 150rpx;
-        padding: 0 rpx 24 rpx;
-        height: 60 rpx;
-        line-height: 60 rpx;
+        padding: 0rpx 24rpx;
+        height: 60rpx;
+        line-height: 60rpx;
         text-align: center;
         border: 1px solid #999;
-        border-radius: 10 rpx;
+        border-radius: 10rpx;
         color: #999;
-        font-size: 26 rpx;
+        font-size: 26rpx;
 
         &:last-child {
-          margin-left: 14 rpx;
+          margin-left: 14rpx;
         }
 
         &.active {
@@ -455,8 +457,8 @@ export default {
 
   .defaults {
     margin: 0 auto;
-    width: 640 rpx;
-    height: 480 rpx;
-    margin-top: 100 rpx;
+    width: 640rpx;
+    height: 480rpx;
+    margin-top: 100rpx;
   }
 </style>
