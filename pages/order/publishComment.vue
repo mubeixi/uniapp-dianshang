@@ -45,6 +45,7 @@ import { pageMixin } from '../../common/mixin'
 import { chooseImageByPromise, uploadImages } from '../../common/tool.js'
 import { comment, createToken, GET_ACCESS_TOKEN, GET_ENV, get_User_ID, get_Users_ID } from '../../common/fetch.js'
 import uniRate from '../../components/uni-rate/uni-rate.vue'
+import { modal } from '@/common'
 
 export default {
   mixins: [pageMixin],
@@ -173,6 +174,10 @@ export default {
         that.arr = that.arr.concat(urls)
         // 是否可以提交
         that.isSubmit = true
+      }).catch(err => {
+        that.imgs = []
+        modal(err.message)
+        that.isSubmit = false
       })
     }
   }

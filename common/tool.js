@@ -296,6 +296,7 @@ export const uploadImages = (formData, imgs) => {
     //   }
     // })
     // #endif
+
     // #ifndef MP-TOUTIAO
 
     var apiHost = apiBaseUrl
@@ -318,10 +319,10 @@ export const uploadImages = (formData, imgs) => {
       resolve(urls)
     }).catch((error) => {
       reject(Error('文件上传失败'))
-      uni.showModal({
-        title: '文件批量上传失败',
-        content: JSON.stringify(error)
-      })
+      // uni.showModal({
+      //   title: '文件批量上传失败',
+      //   content: JSON.stringify(error)
+      // })
     })
   })
 }
