@@ -70,6 +70,7 @@ export default {
       imgSave: '',
       storeDetail: {},
       storeid: '',
+	  mySelf:0
     }
   },
 
@@ -109,7 +110,11 @@ export default {
       }
       if (this.type == 3) {
         data.act_type = 2
-        data.store_id = this.$store.getters.getCurrentStoreId()//this.storeid
+		if(this.mySelf===1){
+			 data.store_id = this.Stores_ID
+		}else{
+			data.store_id = this.$store.getters.getCurrentStoreId()//this.storeid
+		}
       } else {
         data.store_id = this.Stores_ID
       }
@@ -241,6 +246,10 @@ export default {
   },
   onLoad (options) {
     this.type = options.type
+	if(option.mySelf){
+		this.mySelf=Number(option.mySelf)
+	}
+	
     // console.log(options, 'sss')
     // if (options.store) {
     //   this.storeid = options.store
