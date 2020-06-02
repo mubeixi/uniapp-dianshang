@@ -33,7 +33,7 @@ import { mapGetters } from 'vuex'
 import { pageMixin } from '../../common/mixin'
 import { getStoreShare, storeInit } from '../../common/fetch.js'
 import { toast } from '../../common/index'
-
+import {saveImageToDisk} from '../../common/tool'
 let canvasInstance = null
 const cutstrFun = (str, len, tip = '..') => {
   if (!str) return ''
@@ -78,7 +78,7 @@ export default {
     ...mapGetters(['userInfo', 'Stores_ID']),
   },
   methods: {
-    saveAll () {
+    async saveAll () {
       // #ifdef H5
       toast('长按保存分享海报')
       uni.previewImage({
@@ -86,16 +86,18 @@ export default {
       })
       // #endif
       // #ifndef H5
-      uni.saveImageToPhotosAlbum({
-        filePath: this.imgSave,
-        success: function () {
-          toast('保存成功')
-        },
-        fail () {
-          error('保存失败')
-        },
+      const handleRT = await saveImageToDisk({
+        fileUrl: this.imgSave,
+        type: 'online'
       })
+      if (handleRT === false) {
+        error('保存失败')
+        return
+      }
+      toast('保存成功')
       // #endif
+
+
 
     },
     async init () {
@@ -109,12 +111,12 @@ export default {
         // #endif
       }
       if (this.type == 3) {
-        data.act_type = 2
-		if(this.mySelf===1){
-			 data.store_id = this.Stores_ID
-		}else{
-			data.store_id = this.$store.getters.getCurrentStoreId()//this.storeid
-		}
+          data.act_type = 2
+          if(this.mySelf==1){
+             data.store_id = this.Stores_ID
+          }else{
+            data.store_id = this.$store.getters.getCurrentStoreId()//this.storeid
+          }
       } else {
         data.store_id = this.Stores_ID
       }
@@ -126,7 +128,11 @@ export default {
 
       let storeData={}
       if (this.type == 3) {
-        storeData.store_id =this.$store.getters.getCurrentStoreId() //this.storeid
+        if(this.mySelf==1){
+          storeData.store_id = this.Stores_ID
+        }else{
+          storeData.store_id = this.$store.getters.getCurrentStoreId()//this.storeid
+        }
       } else {
         storeData.store_id = this.Stores_ID
       }
@@ -246,10 +252,10 @@ export default {
   },
   onLoad (options) {
     this.type = options.type
-	if(option.mySelf){
-		this.mySelf=Number(option.mySelf)
+	if(options.mySelf){
+		this.mySelf=Number(options.mySelf)
 	}
-	
+
     // console.log(options, 'sss')
     // if (options.store) {
     //   this.storeid = options.store

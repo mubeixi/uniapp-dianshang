@@ -22,6 +22,13 @@
       </view>
       <view @click="save" class="save">确认修改</view>
     </block>
+    <block v-if="type==10">
+      <view class="area-item">
+        <text class="area-label">店铺名称</text>
+        <input placeholder="请输入店铺名称" type="text" v-model="Stores_Name" />
+      </view>
+      <view @click="save" class="save">确认修改</view>
+    </block>
     <block v-if="type==2||type==3">
       <!-- 				<form report-submit @submit="confirm"> -->
       <view class="other">
@@ -75,7 +82,8 @@ export default {
       countdownStatus: false, // 是否开启倒计时了
       countdownNum: 60,
       storeData: [],
-      User_Address: ''
+      User_Address: '',
+      Stores_Name: ''
     }
   },
   computed: {
@@ -87,6 +95,7 @@ export default {
         var addressInfo = res.data
         this.storeData = res.data
         this.User_Address = this.storeData.Stores_Address
+        this.Stores_Name = this.storeData.Stores_Name
         // 初始化地址选择数据
         const objectMultiArray = [
           utils.array_change(area.area[0]['0']),
@@ -228,6 +237,7 @@ export default {
         }
       }
       updateStoreInfo({
+        store_name: this.Stores_Name,
         store_id: this.Stores_ID,
         store_province: this.address_info.Address_Province,
         store_city: this.address_info.Address_City,

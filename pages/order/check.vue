@@ -90,22 +90,7 @@
           </view>
         </view>
       </block>
-      <!-- <view class="other" v-if="orderInfo.is_virtual == 1">
-        <view class="bd">
-          <view class="o_title  words">
-            <span>购买人姓名</span>
-            <input class="inputs" type="text" v-model="user_name"  placeholder="请填写姓名">
-          </view>
-        </view>
-      </view>
-      <view class="other" v-if="orderInfo.is_virtual == 1">
-        <view class="bd">
-          <view class="o_title  words">
-            <span>购买人手机号</span>
-            <input class="inputs" type="text" v-model="user_mobile"  placeholder="请填写手机号码">
-          </view>
-        </view>
-      </view> -->
+
       <view class="other" v-if="couponlist.length > 0">
         <view class="bd">
           <view @click="changeCoupon" class="o_title">
@@ -143,7 +128,7 @@
             <span>是否使用余额</span>
             <switch :checked="userMoneyChecked" @change="userMoneyChange" color="#04B600" />
           </view>
-          <view class="o_de">您当前最多使用余额:{{ userInfo.User_Money<orderInfo.Order_TotalPrice ? userInfo.User_Money:orderInfo.Order_TotalPrice }}</view>
+          <view class="o_de">您当前最多使用余额:{{ (userInfo.User_Money < orderInfo.Order_TotalPrice) ? userInfo.User_Money:orderInfo.Order_TotalPrice }}</view>
           <input @blur="confirm_user_money" @focus="postData.use_money = 0" class="o_desc" placeholder="请输入金额" type="number" v-if="userMoneyChecked" v-model.number="postData.use_money" />
         </view>
       </view>
@@ -164,10 +149,7 @@
           </view>
         </view>
       </view>
-      <!-- <view class="total">
-                <span style="margin-right:20rpx;">共<span>{{orderInfo.total_count}}</span>件商品</span>
-                <span>小计：<span>￥</span><span class="money">{{orderInfo.Order_TotalPrice}}</span></span>
-            </view> -->
+
 
       <view class="remind-wrap" v-if="remindAddress">
         <view class="remind-add">

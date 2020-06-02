@@ -18,7 +18,7 @@
       <div class="flex flex-vertical-center" @click="goStoreBuy">
         <block v-for="(it,ind) of pro.buyer" :key="ind">
           <image :src="it.User_HeadImg"
-                 class="info-img"></image>
+                 class="info-img" v-if="it.User_HeadImg"></image>
         </block>
 
         <image v-if="pro.buyer.length>0" :src="'/static/client/right.png'|domain"
