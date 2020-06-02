@@ -6,11 +6,7 @@ import { ls } from './tool'
 import wx from 'weixin-js-sdk'
 // #endif
 
-// 全局组件
-import pagetitle from '@/components/title'
-import ModelComponents from '@/components/ModelComponents'
-Vue.component('page-title', pagetitle)
-Vue.component('wzw-dialog', ModelComponents)
+
 
 // 重写uni部分
 require('./uni')

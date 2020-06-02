@@ -105,6 +105,8 @@ export default {
     width: 78rpx;
     height: 78rpx;
     margin-right: 22rpx;
+    border-radius: 50%;
+    overflow: hidden;
   }
 
   .store-buy-item-title {

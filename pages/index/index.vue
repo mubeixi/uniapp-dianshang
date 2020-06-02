@@ -811,7 +811,7 @@ export default {
     width: 750rpx;
     overflow-x: hidden;
     box-sizing: border-box;
-    background-color: #FFFFFF;
+    background-color: #f5f5f5;
     height: 100vh;
     overflow-y: scroll;
     position: relative;

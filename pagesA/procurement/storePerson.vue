@@ -31,6 +31,15 @@
           <image :src="'/static/client/right.png'|domain" mode=""></image>
         </view>
       </view>
+      <view @click="updateMy(10)" class="item">
+        <view class="item-name">店铺名称</view>
+        <view class="info">
+          {{storeData.Stores_Name}}
+        </view>
+        <view class="go">
+          <image :src="'/static/client/right.png'|domain" mode=""></image>
+        </view>
+      </view>
 
       <view @click="updateMy(1)" class="item">
         <view class="item-name">门店地址</view>
