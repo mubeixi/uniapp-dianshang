@@ -9,7 +9,7 @@
           <image :src="storeDetail.Stores_ImgPath" class="image" mode=""></image>
         </view>
         <view class="store-name">{{storeDetail.Stores_Name}}(ID:{{storeDetail.Stores_ID}})</view>
-        <view class="store-name-item" style="border-bottom: 1px solid  #EFEFEF">
+        <view class="store-name-item" style="border-bottom: 1px solid  #EFEFEF"  v-if="storeDetail.type_name">
           <view>
             级别 : {{storeDetail.type_name}}
           </view>
@@ -160,7 +160,7 @@
       </div>
     </popupLayer>
 
-    <model ref="storeModel">
+    <ModelComponents ref="storeModel">
       <div class="store-model">
         <div class="store-model-desc">
           <div> 1、你当前的进货折扣为{{storeDetail.retailer_fee}}%</div>
@@ -187,9 +187,9 @@
           </tr>
         </div>
       </div>
-    </model>
+    </ModelComponents>
 
-    <model ref="storeInfo">
+    <ModelComponents ref="storeInfo">
       <div class="storeInfo" v-if="storeDetail.parent_store">
         <div class="storeInfo-title">
           名称：{{storeDetail.parent_store.Stores_Name}}
@@ -198,7 +198,7 @@
           联系方式：{{storeDetail.parent_store.Stores_Telephone}}
         </div>
       </div>
-    </model>
+    </ModelComponents>
   </view>
 </template>
 
@@ -208,13 +208,13 @@ import { mapGetters } from 'vuex'
 import { pageMixin } from '../../common/mixin'
 import popupLayer from '../../components/popup-layer/popup-layer.vue'
 import { buildSharePath, getProductThumb, ls } from '../../common/tool.js'
-import Model from '../../components/ModelComponents'
+import ModelComponents from '@/components/ModelComponents'
 
 export default {
   mixins: [pageMixin],
   components: {
-    popupLayer,
-    Model
+    ModelComponents,
+    popupLayer
   },
   data: function () {
     return {
@@ -236,6 +236,7 @@ export default {
       })
     },
     lookModelStore () {
+      console.log(this,"ss")
       this.$refs.storeModel.show()
     },
     lookModel () {
@@ -321,7 +322,7 @@ export default {
         case 'pic':
 
           uni.navigateTo({
-            url: '/pagesA/store/storeShare?type=2'
+            url: '/pagesA/store/storeShare?type=3&mySelf=1'
           })
       }
     },

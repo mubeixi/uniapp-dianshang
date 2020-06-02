@@ -61,7 +61,7 @@ export default {
     }
   },
   methods: {
-    show (events) {
+    show () {
       this.ifshow = true
     },
     close () {
