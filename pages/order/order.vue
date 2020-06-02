@@ -100,6 +100,7 @@
         <div @click="sureReason" class="action-btn" style="color: #F43131;">确定</div>
       </div>
     </wzw-dialog>
+
   </div>
 
 </template>
@@ -111,6 +112,7 @@ import { pageMixin } from '../../common/mixin'
 
 export default {
   mixins: [pageMixin],
+  components:{},
   data () {
     return {
       index: 0,
