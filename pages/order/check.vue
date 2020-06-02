@@ -128,7 +128,14 @@
             <span>是否使用余额</span>
             <switch :checked="userMoneyChecked" @change="userMoneyChange" color="#04B600" />
           </view>
-          <view class="o_de">您当前最多使用余额:{{ (userInfo.User_Money < orderInfo.Order_TotalPrice) ? userInfo.User_Money:orderInfo.Order_TotalPrice }}</view>
+          <view class="o_de">您当前最多使用余额:
+            <block v-if="userInfo.User_Money <= orderInfo.Order_TotalPrice">
+              {{userInfo.User_Money}}
+            </block>
+            <block v-else>
+              orderInfo.Order_TotalPrice
+            </block>
+          </view>
           <input @blur="confirm_user_money" @focus="postData.use_money = 0" class="o_desc" placeholder="请输入金额" type="number" v-if="userMoneyChecked" v-model.number="postData.use_money" />
         </view>
       </view>
@@ -185,6 +192,7 @@
         </form>
       </view>
     </view>
+
     <div class="safearea-box"></div>
     <popup-layer :bottomHeight="bottomHeight" :direction="'top'" @maskClicked="handClicked" ref="popupMX">
       <view class="mxdetail">
@@ -253,8 +261,7 @@
         确定
       </view>
     </popup-layer>
-    <store-list-components :pageEl="selfObj" @callFn="bindStores" @change="selectStore=false" catchtouchmove
-                           direction="top" ref="stroeComp" style="z-index: 10000;" />
+    <store-list-components :pageEl="selfObj" @callFn="bindStores" @change="selectStore=false" catchtouchmove direction="top" ref="stroeComp" style="z-index: 10000;" />
   </view>
 </template>
 
