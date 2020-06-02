@@ -2,6 +2,7 @@ import { error, toast } from './index'
 import { apiBaseUrl } from './env'
 import store from '../store'
 import _ from 'underscore'
+import Promisify from './Promisify'
 
 export const formatTime = date => {
   const year = date.getFullYear()
@@ -610,5 +611,40 @@ export const plainArray = (arr, key, newArr) => {
     if (item && item[key] && _.isArray(item[key])) {
       plainArray(item[key], key, newArr)
     }
+  }
+}
+
+
+
+
+/**
+ * 保存图片到本地
+ * @param fileUrl
+ * @param type
+ * @returns {Promise<boolean|*>}
+ */
+export const saveImageToDisk = async ({ fileUrl, type = 'local' }) => {
+  try {
+    const fileTempPath = type === 'local' ? fileUrl : await downLoadFile(fileUrl)
+    await Promisify('saveImageToPhotosAlbum', { filePath: fileTempPath }).catch(e => { throw Error(e.errMsg) })
+    return fileTempPath
+  } catch (e) {
+    return false
+  }
+}
+
+/**
+ * 下载文件
+ * @param url
+ * @returns {Promise<boolean>}
+ */
+const downLoadFile = async (url) => {
+  try {
+    const downRT = await Promisify('downloadFile', { url }).catch(e => { throw Error(e.errMsg) })
+    const { tempFilePath } = downRT
+    if (!tempFilePath) throw Error('图片下载失败')
+    return tempFilePath
+  } catch (e) {
+    return false
   }
 }

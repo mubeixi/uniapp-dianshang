@@ -625,11 +625,13 @@ export default {
   }
 
   .pro-item img {
-    width: 345rpx;
-    height: 345rpx;
+    width: 100%;
+    height: 346rpx;
   }
 
   .item-name {
+    width: 100%;
+    box-sizing: border-box;
     font-size: 24rpx;
     padding: 0 10rpx;
     color: #333;
@@ -650,6 +652,8 @@ export default {
   .price {
     margin-top: 20rpx;
     padding: 0 10rpx 20rpx;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .n_price {
