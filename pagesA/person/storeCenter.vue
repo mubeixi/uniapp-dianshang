@@ -4,7 +4,7 @@
       <view class="bgimg">
         <image :src="'/static/client/mendian/bg.jpg'|domain" class="image" mode=""></image>
       </view>
-      <view class="user-info">
+      <view class="user-info"  :style="{height:(storeDetail.type_name?330:260)+'rpx'}">
         <view class="user-avator">
           <image :src="storeDetail.Stores_ImgPath" class="image" mode=""></image>
         </view>
@@ -160,7 +160,7 @@
       </div>
     </popupLayer>
 
-    <ModelComponents ref="storeModel">
+    <wzw-dialog ref="storeModel">
       <div class="store-model">
         <div class="store-model-desc">
           <div> 1、你当前的进货折扣为{{storeDetail.retailer_fee}}%</div>
@@ -187,9 +187,9 @@
           </tr>
         </div>
       </div>
-    </ModelComponents>
+    </wzw-dialog>
 
-    <ModelComponents ref="storeInfo">
+    <wzw-dialog ref="storeInfo">
       <div class="storeInfo" v-if="storeDetail.parent_store">
         <div class="storeInfo-title">
           名称：{{storeDetail.parent_store.Stores_Name}}
@@ -198,7 +198,7 @@
           联系方式：{{storeDetail.parent_store.Stores_Telephone}}
         </div>
       </div>
-    </ModelComponents>
+    </wzw-dialog>
   </view>
 </template>
 
@@ -208,12 +208,10 @@ import { mapGetters } from 'vuex'
 import { pageMixin } from '../../common/mixin'
 import popupLayer from '../../components/popup-layer/popup-layer.vue'
 import { buildSharePath, getProductThumb, ls } from '../../common/tool.js'
-import ModelComponents from '@/components/ModelComponents'
 
 export default {
   mixins: [pageMixin],
   components: {
-    ModelComponents,
     popupLayer
   },
   data: function () {
@@ -236,7 +234,6 @@ export default {
       })
     },
     lookModelStore () {
-      console.log(this,"ss")
       this.$refs.storeModel.show()
     },
     lookModel () {
@@ -419,7 +416,7 @@ export default {
         transform: translateX(-50%);
         z-index: 10;
         width: 710rpx;
-        height: 330rpx;
+       // height: 330rpx;
         background: rgba(255, 255, 255, 1);
         box-shadow: 0px 13rpx 21rpx 0rpx rgba(244, 49, 49, 0.14);
         border-radius: 15rpx;

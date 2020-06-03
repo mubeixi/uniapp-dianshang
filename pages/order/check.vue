@@ -133,7 +133,7 @@
               {{userInfo.User_Money}}
             </block>
             <block v-else>
-              orderInfo.Order_TotalPrice
+              {{orderInfo.Order_TotalPrice}}
             </block>
           </view>
           <input @blur="confirm_user_money" @focus="postData.use_money = 0" class="o_desc" placeholder="请输入金额" type="number" v-if="userMoneyChecked" v-model.number="postData.use_money" />
