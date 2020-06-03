@@ -15,13 +15,30 @@
     <image :src="qrcode" class="store-qrcode"></image>
     <div class="store-qc-text">长按识别图中二维码</div>
 
-    <canvas canvas-id="myCanvas" class="myCanvas" id="myCanvas" />
+    <canvas canvas-id="myCanvas" class="myCanvas" id="myCanvas"/>
 
-    <div @click="saveAll" class="button-store">
+    <div class="button-store">
 
       <image src="/static/store/saveHai.png" style="width: 100%;height: 100%"></image>
-      <div class="button-text">保存海报</div>
+      <div @click="saveAll" class="button-text">保存海报</div>
     </div>
+
+
+    <wzw-dialog ref="commentModal" :autoClose="false">
+      <div class="refuseApplyDialog">
+        <div class="c3 fz-14 modal-title">
+          是否开启相册权限
+        </div>
+        <div class="fz-12 m-b-20 m-t-10 c9">
+          很抱歉，该功能您需开启相册授权才能保存
+        </div>
+        <div class="control">
+          <button @click="backSetting" class="action-btn btn-cancel">取消</button>
+          <button open-type='openSetting' bindopensetting="openSetting" class="btn-sub action-btn">确定</button>
+        </div>
+      </div>
+    </wzw-dialog>
+
   </view>
 </template>
 
@@ -33,7 +50,8 @@ import { mapGetters } from 'vuex'
 import { pageMixin } from '../../common/mixin'
 import { getStoreShare, storeInit } from '../../common/fetch.js'
 import { toast } from '../../common/index'
-import {saveImageToDisk} from '../../common/tool'
+import { saveImageToDisk } from '../../common/tool'
+
 let canvasInstance = null
 const cutstrFun = (str, len, tip = '..') => {
   if (!str) return ''
@@ -45,7 +63,7 @@ const Promisify = (functionName, params) => {
     uni[functionName]({
       ...params,
       success: res => resolve(res),
-      fail: res => reject(res),
+      fail: res => reject(res)
     })
   })
 }
@@ -56,7 +74,7 @@ const getImg = (params) => {
     uni.getImageInfo({
       src: params,
       success: res => resolve(res),
-      fail: res => reject(res),
+      fail: res => reject(res)
     })
   })
 }
@@ -70,35 +88,67 @@ export default {
       imgSave: '',
       storeDetail: {},
       storeid: '',
-	  mySelf:0
+      mySelf: 0
     }
   },
 
   computed: {
-    ...mapGetters(['userInfo', 'Stores_ID']),
+    ...mapGetters(['userInfo', 'Stores_ID'])
+  },
+  onShow(){
+    this.$refs.commentModal.close()
   },
   methods: {
+    backSetting(){
+      this.$refs.commentModal.close()
+    },
+    openSetting () {
+      let _self = this
+
+      uni.authorize({
+        scope: 'scope.writePhotosAlbum',
+        success () {
+          //这里是用户同意授权后的回调
+          _self.saveImg()
+        },
+        fail () {//这里是用户拒绝授权后的回调
+          _self.$refs.commentModal.show()
+          error('拒绝相册授权,保存失败')
+        }
+      })
+    },
     async saveAll () {
       // #ifdef H5
       toast('长按保存分享海报')
       uni.previewImage({
-        urls: [this.imgSave], // 需要预览的图片http链接列表
+        urls: [this.imgSave] // 需要预览的图片http链接列表
       })
       // #endif
       // #ifndef H5
+      let _self = this
+      uni.getSetting({
+        success: (res) => {
+          if (!res.authSetting['scope.writePhotosAlbum']) {
+            //this.$refs.commentModal.show()
+            this.openSetting()
+          } else {//用户已经授权过了
+            _self.saveImg()
+          }
+        }
+      })
+      // #endif
+
+    },
+    async saveImg () {
       const handleRT = await saveImageToDisk({
         fileUrl: this.imgSave,
-        type: 'online'
+        type: 'local'
       })
       if (handleRT === false) {
         error('保存失败')
         return
       }
       toast('保存成功')
-      // #endif
-
-
-
     },
     async init () {
       let data = {
@@ -107,16 +157,16 @@ export default {
         qrcode_type: 'wx_lp'
         // #endif
         // #ifndef MP-WEIXIN
-        qrcode_type: 'wx_mp',
+        qrcode_type: 'wx_mp'
         // #endif
       }
       if (this.type == 3) {
-          data.act_type = 2
-          if(this.mySelf==1){
-             data.store_id = this.Stores_ID
-          }else{
-            data.store_id = this.$store.getters.getCurrentStoreId()//this.storeid
-          }
+        data.act_type = 2
+        if (this.mySelf == 1) {
+          data.store_id = this.Stores_ID
+        } else {
+          data.store_id = this.$store.getters.getCurrentStoreId()//this.storeid
+        }
       } else {
         data.store_id = this.Stores_ID
       }
@@ -126,11 +176,11 @@ export default {
         error(e.msg || '获取二维码失败')
       })
 
-      let storeData={}
+      let storeData = {}
       if (this.type == 3) {
-        if(this.mySelf==1){
+        if (this.mySelf == 1) {
           storeData.store_id = this.Stores_ID
-        }else{
+        } else {
           storeData.store_id = this.$store.getters.getCurrentStoreId()//this.storeid
         }
       } else {
@@ -197,7 +247,7 @@ export default {
         ctx.setFillStyle('#FFFFFF')
         ctx.setFontSize(17)
         ctx.textAlign = 'center'
-        ctx.direction = "ltr";
+        ctx.direction = 'ltr'
         const showProductName = cutstrFun(this.storeDetail.Stores_Name, parseInt(640 / 24)) // 只显示一行
         ctx.fillText(showProductName, 246, 100)
 
@@ -233,7 +283,7 @@ export default {
       } finally {
         hideLoading()
       }
-    },
+    }
   },
   created () {
     // uni.getImageInfo({
@@ -252,16 +302,16 @@ export default {
   },
   onLoad (options) {
     this.type = options.type
-	if(options.mySelf){
-		this.mySelf=Number(options.mySelf)
-	}
+    if (options.mySelf) {
+      this.mySelf = Number(options.mySelf)
+    }
 
     // console.log(options, 'sss')
     // if (options.store) {
     //   this.storeid = options.store
     // }
 
-  },
+  }
 }
 </script>
 
@@ -379,4 +429,41 @@ export default {
       top: 0;
     }
   }
+
+  .control{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    .action-btn{
+      flex: 1;
+      text-align: center;
+      height: 80rpx;
+      line-height: 80rpx;
+      font-size: 16px;
+      background-color: #FFFFFF;
+      border: 0px;
+    }
+    button::after{
+      width: 0;
+      height: 0;
+    }
+  }
+
+  .refuseApplyDialog{
+    width: 560rpx;
+    box-sizing: border-box;
+    padding-left: 40rpx;
+    padding-right: 40rpx;
+    .modal-title{
+      height: 80rpx;
+      line-height: 80rpx;
+      text-align: center;
+      font-weight: bold;
+    }
+    .btn-sub{
+      color: #1aac19;
+    }
+
+  }
+
 </style>

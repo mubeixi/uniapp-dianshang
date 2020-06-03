@@ -5,9 +5,9 @@ import './common'
 
 // 全局组件
 import pagetitle from '@/components/title'
-import ModelComponents from '@/components/ModelComponents'
+import LayoutModal from '@/components/layout-modal/layout-modal'
 Vue.component('page-title', pagetitle)
-Vue.component('wzw-dialog', ModelComponents)
+Vue.component('wzw-dialog', LayoutModal)
 
 Vue.config.productionTip = false
 
