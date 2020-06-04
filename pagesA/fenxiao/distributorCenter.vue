@@ -458,7 +458,7 @@ export default {
           this.paySuccessCall(res)
         }, err => {
           uni.showToast({
-            title: res.msg,
+            title: err.msg,
             icon: 'none'
           })
           setTimeout(function () {
@@ -476,7 +476,7 @@ export default {
           unipayFunc(this, this.pay_type, res)
         }, err => {
           uni.showToast({
-            title: res.msg,
+            title: err.msg,
             icon: 'none'
           })
         }).catch(e => {
