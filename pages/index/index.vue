@@ -286,11 +286,17 @@ export default {
       }).catch(e => {
         error(e.msg || '获取产品列表失败')
       })
+
       this.$nextTick().then(() => {
+        let str = '#scrollView'
+        if (this.goodsNavIndex !== 0) {
+          str = '#scrollView' + (this.goodsNavIndex - 1)
+        }
         const query = uni.createSelectorQuery()
-        query.select('#scrollView').boundingClientRect(data => {
-          this.scrollHeightS[0] = data.height
-          this.goodsNavIndex === 0 && this.upSwiperHeight()
+
+        query.select(str).boundingClientRect(data => {
+          this.scrollHeightS[this.goodsNavIndex] = data.height
+          this.upSwiperHeight()
         }).exec()
       })
     },
