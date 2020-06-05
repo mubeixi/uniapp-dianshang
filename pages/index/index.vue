@@ -132,7 +132,7 @@
 
     <popupLayer :direction="'top'" ref="popupLayer">
       <div class="shareinfo">
-        <div class="s_top">
+        <div class="s_top flex">
           <!-- #ifdef APP-PLUS -->
           <div @click="shareFunc('wx')" class="flex1">
             <image :src="'/static/client/detail/share1.png'|domain" alt="" class='img'></image>
@@ -186,6 +186,7 @@ import StoreListComponents from '../../components/StoreListComponents'
 import { mapActions } from 'vuex'
 import popupLayer from '../../components/popup-layer/popup-layer.vue'
 import { getLocation } from '../../common/tool/location'
+import { ls } from '../../common/tool'
 
 export default {
   mixins: [pageMixin],
@@ -197,6 +198,7 @@ export default {
   },
   data () {
     return {
+      wxMiniOriginId: '',
       JSSDK_INIT: false,
       showIndex: false,
       initData: {},
@@ -792,6 +794,19 @@ export default {
       })
       const initData = systemConf ? systemConf.data : null
       this.initData = initData
+
+      let WX_MINI_ORIGIN_ID = ls.get('WX_MINI_ORIGIN_ID')
+      if (!WX_MINI_ORIGIN_ID) {
+        const login_methods = initData.login_methods
+        for (var i in login_methods) {
+          if (i !== 'component_appid' && login_methods[i].authorizer_user_name) {
+            WX_MINI_ORIGIN_ID = login_methods[i].authorizer_user_name
+            break
+          }
+        }
+      }
+
+      this.wxMiniOriginId = WX_MINI_ORIGIN_ID
 
       this.initStore()
     },

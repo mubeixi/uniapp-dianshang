@@ -93,7 +93,7 @@
     </view>
     <view class="list">
 
-      <block :key="index" v-for="(item,index) of personInit">
+      <div :key="index" v-for="(item,index) of personInit">
 
         <block v-if="item.field=='store_apply'||item.field=='store'">
           <block v-if="!!initData.is_store_apply">
@@ -109,14 +109,17 @@
             </view>
           </block>
         </block>
-        <view @click="goUrl(item.url)" class="group cell" v-else>
-          <image :src="item.img" class="left"></image>
-          <view class="pintuan">
-            {{item.name}}
+        <block v-else>
+          <view @click="goUrl(item.url)" class="group cell" >
+            <image :src="item.img" class="left"></image>
+            <view class="pintuan">
+              {{item.name}}
+            </view>
+            <image :src="'/static/client/person/right.png'|domain" class="right"></image>
           </view>
-          <image :src="'/static/client/person/right.png'|domain" class="right"></image>
-        </view>
-      </block>
+        </block>
+        
+      </div>
 
       <view @click="goSetting" class="setting cell">
         <image :src="'/static/client/person/she.png'|domain" class="left"></image>
