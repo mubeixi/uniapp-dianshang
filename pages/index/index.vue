@@ -233,10 +233,12 @@ export default {
     }
   },
   onReachBottom () {
-    if (this.prodList[this.goodsNavIndex].length < this.totalList[this.goodsNavIndex]) {
-      this.page[this.goodsNavIndex] = this.page[this.goodsNavIndex] + 1
-      this.reachBootom()
-    }
+	  if(this.prodList[this.goodsNavIndex]){
+		  if (this.prodList[this.goodsNavIndex].length < this.totalList[this.goodsNavIndex]) {
+		    this.page[this.goodsNavIndex] = this.page[this.goodsNavIndex] + 1
+		    this.reachBootom()
+		  }
+	  }
   },
   onShareAppMessage () {
     if (this.$store.getters.getCurrentStoreId()) {
