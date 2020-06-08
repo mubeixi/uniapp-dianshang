@@ -197,7 +197,7 @@ export default {
               this.data = item
             }
           }
-        } else {
+        } else if (res.data.list.length > 0) {
           this.data = res.data.list[0]
           this.User_Method_ID = res.data.list[0].User_Method_ID
         }
