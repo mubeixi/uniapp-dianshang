@@ -40,8 +40,8 @@
         <text style="color: #FF6600;">{{pro.Back_Status_desc}}</text>
       </view>
       <view class="address" v-if="pro.shop_address">
-        商家收货地址：{{pro.shop_address.RecieveProvince_name}}{{pro.shop_address.RecieveCity_name}}{{pro.shop_address.RecieveArea_name}}{{pro.shop_address.RecieveName}}
-        手机号码:{{pro.shop_address.RecieveMobile}}{{pro.shop_address.RecieveAddress}}收
+        商家收货地址：{{pro.shop_address.RecieveProvince_name}}{{pro.shop_address.RecieveCity_name}}{{pro.shop_address.RecieveArea_name}}{{pro.shop_address.RecieveAddress}}
+        手机号码:{{pro.shop_address.RecieveMobile}}{{pro.shop_address.RecieveName}}收
       </view>
       <block v-if="isFahuo">
         <view class="fahuo" v-if="pro.Back_Status==1">
