@@ -85,7 +85,7 @@
           <view class="bd">
             <view class="o_title  words">
               <span>购买人手机号</span>
-              <input class="inputs" placeholder="请填写手机号码" type="text" v-model="user_mobile">
+              <input class="inputs" placeholder="请填写手机号码" type="text" v-model="user_mobile"  maxlength="11" >
             </view>
           </view>
         </view>
