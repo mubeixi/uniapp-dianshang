@@ -626,9 +626,12 @@ export const plainArray = (arr, key, newArr) => {
 export const saveImageToDisk = async ({ fileUrl, type = 'local' }) => {
   try {
     const fileTempPath = type === 'local' ? fileUrl : await downLoadFile(fileUrl)
+	
+	console.log(fileTempPath,"sss")
     await Promisify('saveImageToPhotosAlbum', { filePath: fileTempPath }).catch(e => { throw Error(e.errMsg) })
     return fileTempPath
   } catch (e) {
+	  console.log(e,'error')
     return false
   }
 }
@@ -645,6 +648,7 @@ const downLoadFile = async (url) => {
     if (!tempFilePath) throw Error('图片下载失败')
     return tempFilePath
   } catch (e) {
+    console.log(e,"图片下载失败")
     return false
   }
 }

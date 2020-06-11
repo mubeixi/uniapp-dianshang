@@ -13,7 +13,7 @@
 
 <script>
 export default {
-  name: 'ModelComponents',
+  name: 'LayoutModal',
   model: {
     prop: 'showPop',
     event: 'change'

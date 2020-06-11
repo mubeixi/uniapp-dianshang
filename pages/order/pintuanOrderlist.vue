@@ -21,7 +21,7 @@
     </div>
     <view style="height: 100rpx;width: 100%;">
     </view>
-    <block v-if="item.prod_list.length>0">
+    <block v-if="data.length>0">
       <div class="order" v-for="(item,index) of data"  :key="index">
         <div style="background-color: #F3F3F3;height: 20rpx;width: 100%;position: absolute;left: 0rpx;"></div>
         <div style="height: 20rpx;"></div>
@@ -44,7 +44,9 @@
           </div>
         </block>
         <div class="total">
-          <view @click="goPintuan(item)" class="ptdesc" v-if="item.teamstatus_desc">{{item.teamstatus_desc}}</view>
+          <view @click="goPintuan(item)" class="ptdesc flex flex-vertical-c flex-justify-c" v-if="item.teamstatus_desc">{{item.teamstatus_desc}}
+            <image v-if="item.teamstatus_desc==='拼团中'" :src="'/static/client/person/rightCart.png'|domain" class="right"></image>
+          </view>
           <view> 共{{item.prod_list.length}}件商品 实付：<span class="price"><span>￥</span> {{item.Order_TotalPrice}}</span>
           </view>
         </div>
@@ -460,5 +462,10 @@ export default {
     width: 640rpx;
     height: 480rpx;
     margin-top: 100rpx;
+  }
+  .right{
+    width: 13rpx;
+    height: 20rpx;
+    margin-left: 2px;
   }
 </style>

@@ -132,7 +132,7 @@
 
     <popupLayer :direction="'top'" ref="popupLayer">
       <div class="shareinfo">
-        <div class="s_top">
+        <div class="s_top flex">
           <!-- #ifdef APP-PLUS -->
           <div @click="shareFunc('wx')" class="flex1">
             <image :src="'/static/client/detail/share1.png'|domain" alt="" class='img'></image>
@@ -180,7 +180,7 @@ import {
 } from '../../common/fetch'
 import WzwStore from '../../components/wzw-store'
 import { error, modal, toast } from '../../common'
-import { buildSharePath, emptyObject, isWeiXin, numberSort } from '../../common/tool.js'
+import { buildSharePath, emptyObject, isWeiXin, numberSort, ls } from '../../common/tool.js'
 import { domainFn } from '../../common/filter'
 import StoreListComponents from '../../components/StoreListComponents'
 import { mapActions } from 'vuex'
@@ -197,6 +197,10 @@ export default {
   },
   data () {
     return {
+      totalList: [],
+      page: [],
+      pageSize: 10,
+      wxMiniOriginId: '',
       JSSDK_INIT: false,
       showIndex: false,
       initData: {},
@@ -228,6 +232,14 @@ export default {
       }
     }
   },
+  onReachBottom () {
+	  if(this.prodList[this.goodsNavIndex]){
+		  if (this.prodList[this.goodsNavIndex].length < this.totalList[this.goodsNavIndex]) {
+		    this.page[this.goodsNavIndex] = this.page[this.goodsNavIndex] + 1
+		    this.reachBootom()
+		  }
+	  }
+  },
   onShareAppMessage () {
     if (this.$store.getters.getCurrentStoreId()) {
       const path = 'pages/index/index?store_id=' + this.storeID
@@ -252,6 +264,44 @@ export default {
   },
   methods: {
     domainFn,
+    async reachBootom () {
+      const data = {
+        page: this.page[this.goodsNavIndex],
+        pageSize: this.pageSize,
+        with_buyer: 1,
+        buyer_count: 6,
+        store_id: this.$store.getters.getCurrentStoreId()
+        // store_id:sessionStorage.getItem('store_id')
+      }
+      if (this.goodsNavIndex > 0) {
+        data.cate_id = this.productCate[this.goodsNavIndex - 1].Category_ID
+      }
+
+      await getSelfStoreProd(data, { tip: '加载中' }).then(res => {
+        this.totalList[this.goodsNavIndex] = res.totalCount
+        const arr = this.prodList[this.goodsNavIndex]
+        for (const item of res.data) {
+          arr.push(item)
+        }
+
+        this.$set(this.prodList, this.goodsNavIndex, arr)
+      }).catch(e => {
+        error(e.msg || '获取产品列表失败')
+      })
+
+      this.$nextTick().then(() => {
+        let str = '#scrollView'
+        if (this.goodsNavIndex !== 0) {
+          str = '#scrollView' + (this.goodsNavIndex - 1)
+        }
+        const query = uni.createSelectorQuery()
+
+        query.select(str).boundingClientRect(data => {
+          this.scrollHeightS[this.goodsNavIndex] = data.height
+          this.upSwiperHeight()
+        }).exec()
+      })
+    },
     async shareFunc (channel) {
       if (!this.$fun.checkIsLogin(1, 1)) return
       const _self = this
@@ -535,7 +585,7 @@ export default {
       if (!this.prodList[this.goodsNavIndex] && this.goodsNavIndex !== 0) {
         const data = {
           page: 1,
-          pageSize: 999,
+          pageSize: this.pageSize,
           with_buyer: 1,
           buyer_count: 6,
           store_id: this.$store.getters.getCurrentStoreId()
@@ -543,7 +593,9 @@ export default {
         }
         data.cate_id = this.productCate[this.goodsNavIndex - 1].Category_ID
         await getSelfStoreProd(data, { tip: '加载中' }).then(res => {
+          this.totalList[this.goodsNavIndex] = res.totalCount
           this.$set(that.prodList, this.goodsNavIndex, res.data)
+          this.page[this.goodsNavIndex] = 1
         }).catch(e => {
           error(e.msg || '获取产品列表失败')
         })
@@ -594,7 +646,7 @@ export default {
 
         const data = {
           page: 1,
-          pageSize: 999,
+          pageSize: this.pageSize,
           with_buyer: 1,
           is_selling: 1,
           buyer_count: 6,
@@ -606,6 +658,8 @@ export default {
           error(e.msg || '获取产品列表失败')
         })
         this.prodList.push(pro.data)
+        this.totalList[this.goodsNavIndex] = pro.totalCount
+        this.page[this.goodsNavIndex] = 1
 
         this.$nextTick().then(() => {
           const query = uni.createSelectorQuery()
@@ -793,6 +847,19 @@ export default {
       const initData = systemConf ? systemConf.data : null
       this.initData = initData
 
+      let WX_MINI_ORIGIN_ID = ls.get('WX_MINI_ORIGIN_ID')
+      if (!WX_MINI_ORIGIN_ID) {
+        const login_methods = initData.login_methods
+        for (var i in login_methods) {
+          if (i !== 'component_appid' && login_methods[i].authorizer_user_name) {
+            WX_MINI_ORIGIN_ID = login_methods[i].authorizer_user_name
+            break
+          }
+        }
+      }
+
+      this.wxMiniOriginId = WX_MINI_ORIGIN_ID
+
       this.initStore()
     },
     ...mapActions(['setFreStoreId', 'getInitData'])
@@ -812,7 +879,7 @@ export default {
     overflow-x: hidden;
     box-sizing: border-box;
     background-color: #f5f5f5;
-    height: 100vh;
+    //height: 100vh;
     overflow-y: scroll;
     position: relative;
   }
@@ -826,7 +893,7 @@ export default {
   }
 
   .store-item-swiper {
-    padding-bottom: 42px;
+    //padding-bottom: 42px;
   }
 
   .store-title {
