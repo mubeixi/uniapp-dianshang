@@ -13,7 +13,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="cartCenter">
+			<scroll-view class="cartCenter" scroll-y="true">
 				<div class="cartAttr" v-for="(item,i) of product.skujosn_new" :key="i">
 					<text class="sku">{{item.sku}}</text>
 					<div class="skuValue" v-if="gift == 0">
@@ -29,7 +29,7 @@
 						</div>
 					</div>
 				</div>
-			</div>
+			</scroll-view>
 			<div class="numBer" v-if="gift == 0">
 				<div class="numBers"><text class="numBers-txt">数量</text></div>
 				<div class="inputNumber">
