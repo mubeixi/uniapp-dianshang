@@ -616,47 +616,58 @@ export default {
       }
     },
     async loginCall (userData) {
-      this.setUserInfo(userData)
-      ls.set('access_token', userData.access_token, 1)
-      // #ifdef APP-PLUS
-      // 注册设备
-      const clientid = ls.get('user_client_id')
-      if (clientid) {
-        await bindUserClientId({
-          uuid: clientid,
-          action: 'save'
-        }, { errtip: false }).then(res => {
-        }).catch(() => {})
-      }
-      // #endif
-      // 手动绑定一下
-      await upUserLog({}, { errtip: false }).then(res => {
-        // #ifdef H5
-        sessionStorage.setItem('is_send_usrlog', 1)
-        // #endif
-      }).catch(e => {
-      })
-      // #ifdef H5
-      // 微信登录才这么走
-      const login_farward_url = ls.get('login_farward_url')
-      if (this.h5_wx_login) {
-        history.go(-2)
-        return
-      }
-      if (login_farward_url) {
-        ls.remove('login_farward_url')
-        ls.set('is_login_redirct', 1)
-        history.go(-1)
-        return
-      } else {
+      // 根据后台配置来判断是否无手机号跳去绑定手机号
+      const isBindPhone = Number(this.initData.bind_mobile_switch) === 1
+
+      if (isBindPhone && userData && !userData.User_Mobile) {
         uni.reLaunch({
-          url: '/pages/index/index'
+          url: '/pagesA/person/updateUserPsw?type=3'
         })
+        ls.set('accessToken', userData.access_token, 1)
+        ls.set('user_id', userData.User_ID)
+      } else {
+        this.setUserInfo(userData)
+        ls.set('access_token', userData.access_token, 1)
+        // #ifdef APP-PLUS
+        // 注册设备
+        const clientid = ls.get('user_client_id')
+        if (clientid) {
+          await bindUserClientId({
+            uuid: clientid,
+            action: 'save'
+          }, { errtip: false }).then(res => {
+          }).catch(() => {})
+        }
+        // #endif
+        // 手动绑定一下
+        await upUserLog({}, { errtip: false }).then(res => {
+          // #ifdef H5
+          sessionStorage.setItem('is_send_usrlog', 1)
+          // #endif
+        }).catch(e => {
+        })
+        // #ifdef H5
+        // 微信登录才这么走
+        const login_farward_url = ls.get('login_farward_url')
+        if (this.h5_wx_login) {
+          history.go(-2)
+          return
+        }
+        if (login_farward_url) {
+          ls.remove('login_farward_url')
+          ls.set('is_login_redirct', 1)
+          history.go(-1)
+          return
+        } else {
+          uni.reLaunch({
+            url: '/pages/index/index'
+          })
+        }
+        return
+        // #endif
+        // eslint-disable-next-line no-unreachable
+        uni.navigateBack()
       }
-      return
-      // #endif
-      // eslint-disable-next-line no-unreachable
-      uni.navigateBack()
     },
     ...mapActions(['getInitData', 'setUserInfo'])
   },

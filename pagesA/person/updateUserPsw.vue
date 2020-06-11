@@ -22,7 +22,7 @@
       <form @submit="confirm" report-submit>
         <view class="other">
           <view class="other-item">
-            您现在的手机号是： {{userInfo.User_Mobile}}
+            您现在的手机号是： {{userInfo.User_Mobile?userInfo.User_Mobile:''}}
           </view>
           <view class="other-item">
             手机号
@@ -51,6 +51,7 @@ import {
 import { mapActions, mapGetters } from 'vuex'
 import { pageMixin } from '../../common/mixin'
 import { error, modal } from '@/common'
+import { ls } from '@/common/tool.js'
 
 export default {
   mixins: [pageMixin],
@@ -71,7 +72,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['userInfo'])
+    ...mapGetters(['userInfo', 'initData'])
   },
   methods: {
     ...mapActions(['setUserInfo']),
@@ -115,7 +116,12 @@ export default {
           errtip: false
         }).then(res => {
           this.setUserInfo(res.data)
-          this.goBack()
+          const access_token = ls.get('accessToken')
+          ls.set('access_token', access_token, 1)
+          ls.remove('accessToken')
+          uni.navigateTo({
+            url: '/pages/person/person'
+          })
         }).catch(e => {
           error('获取用户信息失败')
         })
