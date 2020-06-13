@@ -82,7 +82,7 @@
 						"type": "popup",
 						"style": {
 							"width": "750upx",
-							"top":  "40%",
+							"height":  "800upx",
 							"bottom": "0upx",
 							"zindex": 3
 
@@ -145,7 +145,7 @@
 						"type": "popup",
 						"style": {
 							"width": "750upx",
-							"top":  "40%",
+							"height":  "800upx",
 							"bottom": "0upx",
 							"zindex": 3
 
@@ -307,7 +307,7 @@
 						"type": "popup",
 						"style": {
 							"width": "750upx",
-							"top":  "40%",
+							"height":  "800upx",
 							"bottom": "0upx",
 							"zindex": 3
 
@@ -339,7 +339,7 @@
 						"type": "popup",
 						"style": {
 							"width": "750upx",
-							"top":  "40%",
+							"height":  "800upx",
 							"bottom": "0upx",
 							"zindex": 3
 
