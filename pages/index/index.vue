@@ -270,6 +270,7 @@ export default {
         pageSize: this.pageSize,
         with_buyer: 1,
         buyer_count: 6,
+        is_selling:1,
         store_id: this.$store.getters.getCurrentStoreId()
         // store_id:sessionStorage.getItem('store_id')
       }
@@ -587,6 +588,7 @@ export default {
           page: 1,
           pageSize: this.pageSize,
           with_buyer: 1,
+          is_selling:1,
           buyer_count: 6,
           store_id: this.$store.getters.getCurrentStoreId()
           // store_id:sessionStorage.getItem('store_id')
