@@ -68,7 +68,7 @@ import utils from '../../common/util.js'
 import { get_user_info, getTown, upDateUserInfo } from '../../common/fetch.js'
 import { pageMixin } from '../../common/mixin'
 import { mapActions, mapGetters } from 'vuex'
-
+import {error} from '../../common/index.js'
 export default {
   mixins: [pageMixin],
   data () {
@@ -276,10 +276,10 @@ export default {
             if (res.confirm) {
               that.loading = true
               upDateUserInfo({
-                User_Gender: this.array[this.indexMy],
-                User_QQ: this.User_QQ,
-                User_IDNum: this.User_IDNum,
-                User_Fax: this.User_Fax,
+                User_Gender: that.array[that.indexMy],
+                User_QQ: that.User_QQ,
+                User_IDNum: that.User_IDNum,
+                User_Fax: that.User_Fax,
                 User_Name: that.User_Name,
                 User_NickName: that.User_NickName,
                 User_Email: that.User_Email,
@@ -305,6 +305,7 @@ export default {
                   })
                 }, 1500)
               }).catch(e => {
+				   error(e.msg)
                 that.loading = false
               })
             } else if (res.cancel) {
@@ -344,6 +345,7 @@ export default {
           })
         }, 1500)
       }).catch(e => {
+		  error(e.msg)
         this.loading = false
       })
     },
