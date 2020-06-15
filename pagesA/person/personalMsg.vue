@@ -49,6 +49,42 @@
           <image :src="'/static/client/right.png'|domain" mode=""></image>
         </view>
       </view>
+      <view @click="update(9)" class="item">
+        <view class="item-name">QQ</view>
+        <view class="info">
+          {{userInfo.User_QQ}}
+        </view>
+        <view class="go">
+          <image :src="'/static/client/right.png'|domain" mode=""></image>
+        </view>
+      </view>
+      <view @click="update(10)" class="item">
+        <view class="item-name">身份证号</view>
+        <view class="info">
+          {{userInfo.User_IDNum}}
+        </view>
+        <view class="go">
+          <image :src="'/static/client/right.png'|domain" mode=""></image>
+        </view>
+      </view>
+      <view @click="update(11)" class="item">
+        <view class="item-name">性别</view>
+        <view class="info">
+          {{userInfo.User_Gender}}
+        </view>
+        <view class="go">
+          <image :src="'/static/client/right.png'|domain" mode=""></image>
+        </view>
+      </view>
+      <view @click="update(12)" class="item">
+        <view class="item-name">传真</view>
+        <view class="info">
+          {{userInfo.User_Fax}}
+        </view>
+        <view class="go">
+          <image :src="'/static/client/right.png'|domain" mode=""></image>
+        </view>
+      </view>
       <view @click="update(4)" class="item">
         <view class="item-name">详细地址</view>
         <view class="info">
