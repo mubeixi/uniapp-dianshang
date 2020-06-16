@@ -25,7 +25,8 @@ export default {
     // #endif
 
     // #ifndef H5
-    if (checkIsLogin()) {
+    console.log('H5 onLaunch H5 onLaunch H5 onLaunch')
+    if (ls.get('user_id')) {
       upUserLog({}, { errtip: false }).then(res => {
       }).catch(() => {
       })
