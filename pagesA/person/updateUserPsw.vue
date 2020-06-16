@@ -57,6 +57,7 @@ export default {
   mixins: [pageMixin],
   data () {
     return {
+      JSSDK_INIT:false,
       type: 0,
       is_back: false,
       curr_psw: '',

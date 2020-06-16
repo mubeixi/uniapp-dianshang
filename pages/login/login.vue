@@ -256,7 +256,7 @@
 </template>
 <script>
 
-import { GetQueryByString, isWeiXin, ls, urlencode } from '../../common/tool'
+import { GetQueryByString, isWeiXin, ls, urlencode, objTranslate } from '../../common/tool'
 import { bindUserClientId, getSmsCode, login, upUserLog } from '@/common/fetch'
 import { error, modal, toast } from '../../common'
 import { mapActions, mapGetters } from 'vuex'
@@ -483,6 +483,7 @@ export default {
     },
     async weixinlogin (data) {
       const _self = this
+
       // #ifdef H5
       const channel = data
       const REDIRECT_URI = urlencode(location.href)
@@ -497,6 +498,7 @@ export default {
       }
       location.replace(wxAuthUrl)
       // #endif
+
       // #ifdef MP-WEIXIN
       uni.login({
         fail: (err) => {
@@ -619,12 +621,16 @@ export default {
       // 根据后台配置来判断是否无手机号跳去绑定手机号
       const isBindPhone = Number(this.initData.bind_mobile_switch) === 1
 
+      console.log(isBindPhone,userData)
       if (isBindPhone && userData && !userData.User_Mobile) {
-        uni.reLaunch({
+        console.log(objTranslate(userData))
+        ls.set('accessToken', userData.access_token, 1)
+        ls.set('user_id', userData.User_ID,1)
+        uni.redirectTo({
           url: '/pagesA/person/updateUserPsw?type=3'
         })
-        ls.set('accessToken', userData.access_token, 1)
-        ls.set('user_id', userData.User_ID)
+
+
       } else {
         this.setUserInfo(userData)
         ls.set('access_token', userData.access_token, 1)
@@ -678,21 +684,27 @@ export default {
     // #endif
   },
   onShow () {
+
+
+  },
+  created () {
+
+    console.log('created created created')
     /** 登录也不管了 **/
-    // 如果已经登录，就自动退回
+      // 如果已经登录，就自动退回
     const uid = ls.get('user_id')
     const access_token = ls.get('access_token')
     if (uid && access_token) {
       console.log('已经登录过')
       // uni.navigateBack()
-      // return;
+      return;
     }
 
     // #ifdef H5
     if (isWeiXin()) {
       const code = GetQueryByString(location.href, 'code')
       if (code && !access_token) {
-        this.setUserInfo({})
+        //this.setUserInfo({})
         login({
           login_method: 'wx_mp',
           code: code
@@ -705,12 +717,13 @@ export default {
       }
     }
     // #endif
+
     // #ifndef H5
-    this.setUserInfo({})
+    //this.setUserInfo({})
     // #endif
+
     this.initDataFn()
-  },
-  created () {
+
   }
 }
 </script>
