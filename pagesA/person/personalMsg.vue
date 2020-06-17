@@ -313,6 +313,9 @@ export default {
       align-items: center;
       padding: 39rpx 0;
       border-bottom: 1px solid #E3E3E3;
+	  &:last-child{
+		  border-bottom: none;
+	  }
 
       .item-name {
         font-size: 30rpx;
