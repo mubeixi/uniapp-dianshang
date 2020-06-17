@@ -55,9 +55,13 @@
             "ios" : {
                 "urlschemewhitelist" : [ "baidumap", "iosamap", "qqmap" ],
                 "privacyDescription" : {
-                    "NSLocationAlwaysAndWhenInUseUsageDescription" : "为了为您匹配更精准的信息，需要获取您的位置",
-                    "NSCameraUsageDescription" : "为了扫码核销您的券码，可能需要唤起摄像头",
-                    "NSPhotoLibraryUsageDescription" : ""
+                    "NSLocationAlwaysAndWhenInUseUsageDescription" : "为您推荐身边好的资讯要访问您的位置",
+                    "NSCameraUsageDescription" : "更换头像和上传图片要访问您的摄像机拍照",
+                    "NSPhotoLibraryUsageDescription" : "更换头像和上传图片要访问您的相册",
+                    "NSPhotoLibraryAddUsageDescription" : "更换头像和上传图片要访问您的相册",
+                    "NSMicrophoneUsageDescription" : "需要上传音频要访问您的麦克风",
+                    "NSLocationWhenInUseUsageDescription" : "为您推荐身边好的资讯要访问您的位置",
+                    "NSLocationAlwaysUsageDescription" : "为您推荐身边好的资讯要访问您的位置"
                 }
             },
             /* SDK配置 */
