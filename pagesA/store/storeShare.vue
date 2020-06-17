@@ -170,7 +170,7 @@ export default {
       } else {
         data.store_id = this.Stores_ID
       }
-      await getStoreShare(data).then(res => {
+      await getStoreShare(data,{noUid:true}).then(res => {
         this.qrcode = res.data.qrcode
       }).catch(e => {
         error(e.msg || '获取二维码失败')
