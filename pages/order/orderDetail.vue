@@ -164,7 +164,11 @@
         <div class="bd">
           <div class="o_title">
             <span>发票信息</span>
-            <span>{{orderInfo.Order_InvoiceInfo}}</span>
+            <span>
+				{{orderInfo.Order_InvoiceInfo}}
+				<span v-if='orderInfo.Invoice_url' class="fapiao" @click="yulan(orderInfo.Invoice_url)">查看电子发票</span>
+			</span>
+			
           </div>
         </div>
       </div>
@@ -366,6 +370,11 @@ export default {
     // #endif
   },
   methods: {
+    yulan(url){
+	  uni.previewImage({
+	    urls: [url]
+	  })
+    },
     showQrImg () {
       uni.previewImage({
         urls: [this.qrsrc]
@@ -1037,5 +1046,17 @@ export default {
         }
       }
     }
+  }
+  .fapiao{
+	      display: inline-block;
+	      padding: 0px 13px;
+	      height: 33px;
+	      line-height: 33px;
+	      text-align: center;
+	      border: 1px solid #eeeeee;
+	      border-radius: 5px;
+	      color: #333;
+	      font-size: 14px;
+		  margin-left: 10rpx;
   }
 </style>
