@@ -5,7 +5,7 @@ export const isDev = process.env.NODE_ENV !== 'production'
 
 export const APP_USERS_ID = 'wkbq6nc2kc' // mrw5iqvhs2 xjgjd88jee  wkbq6nc2kc  05eiz8cqtw o1rcshfk39';
 
-export const apiBaseUrl = 'https://new401t.bafangka.com'
+export const apiBaseUrl = 'https://new401.bafangka.com'
 
 let _staticUrl = ''
 // app 和小程序还是需要手动设置staticUrl
