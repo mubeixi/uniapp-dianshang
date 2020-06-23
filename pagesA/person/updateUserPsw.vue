@@ -30,7 +30,7 @@
           </view>
           <view class="other-item">
             验证码
-            <input class="input code" placeholder="请输入验证码" type="text" v-model="code" />
+            <input class="input code" placeholder="请输入验证码" type="text" v-model="code" maxlength="4"/>
             <view @click="getCode" class="get-msg">{{countdownStatus?(countdownNum + '秒'):'获取验证码'}}</view>
           </view>
           <button class="confirm" formType="submit">确认修改</button>
