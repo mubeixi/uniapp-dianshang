@@ -57,7 +57,7 @@ export default {
   mixins: [pageMixin],
   data () {
     return {
-      JSSDK_INIT:false,
+      JSSDK_INIT: false,
       type: 0,
       is_back: false,
       curr_psw: '',
@@ -252,6 +252,9 @@ export default {
     }
   },
   onLoad (options) {
+    if (options.user_id) {
+      ls.set('user_id', options.user_id, 1)
+    }
     if (options.type == 0) {
       this.title = '修改登录密码'
       this.type = 0
