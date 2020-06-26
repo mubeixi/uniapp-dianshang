@@ -57,7 +57,8 @@ export default {
   mixins: [pageMixin],
   data () {
     return {
-      JSSDK_INIT:false,
+	  user_id:'',
+      JSSDK_INIT: false,
       type: 0,
       is_back: false,
       curr_psw: '',
@@ -104,10 +105,15 @@ export default {
         })
         return
       }
-      updateUserMobile({
+	  let data={
         mobile: this.mobile,
         code: this.code
-      }).then(res => {
+      }
+	  if(this.user_id){
+	  	data.User_ID=this.user_id
+	  }
+	  
+      updateUserMobile(data).then(res => {
         uni.showToast({
           title: res.msg
         })
@@ -165,9 +171,15 @@ export default {
         })
         return
       }
-      updateMobileSms({
+	  let data={
         mobile: this.mobile
-      }).then(res => {
+      }
+	  if(this.user_id){
+		  data.User_ID=this.user_id
+	  }
+	  
+	  
+      updateMobileSms(data).then(res => {
         uni.showToast({
           title: '验证码已发送',
           icon: 'success'
@@ -252,6 +264,9 @@ export default {
     }
   },
   onLoad (options) {
+    if (options.user_id) {
+		this.user_id=options.user_id
+    }
     if (options.type == 0) {
       this.title = '修改登录密码'
       this.type = 0
