@@ -110,7 +110,8 @@ export default {
         code: this.code
       }
 	  if(this.user_id){
-	  	data.User_ID=this.user_id
+	  	data.User_ID=this.user_id,
+		data.access_token = ls.get('accessToken')
 	  }
 	  
       updateUserMobile(data).then(res => {
@@ -118,17 +119,28 @@ export default {
           title: res.msg
         })
 
-        get_user_info({}, {
+		const postData = {}
+        if (this.user_id) {
+          postData.User_ID = this.user_id
+          postData.access_token = ls.get('accessToken')
+        }
+        get_user_info(postData, {
           tip: '',
           errtip: false
         }).then(res => {
-          this.setUserInfo(res.data)
-          const access_token = ls.get('accessToken')
-          ls.set('access_token', access_token, 1)
-          ls.remove('accessToken')
-          uni.navigateTo({
-            url: '/pages/person/person'
-          })
+			this.setUserInfo(res.data)
+			const access_token = ls.get('accessToken')
+			if (access_token) {
+			  ls.set('access_token', access_token, 1)
+			}
+			if (this.user_id) {
+			  ls.set('user_id', this.user_id, 1)
+			}
+
+			ls.remove('accessToken')
+			uni.navigateTo({
+			  url: '/pages/person/person'
+			})
         }).catch(e => {
           error('获取用户信息失败')
         })
@@ -175,7 +187,8 @@ export default {
         mobile: this.mobile
       }
 	  if(this.user_id){
-		  data.User_ID=this.user_id
+		  data.User_ID=this.user_id,
+		  data.access_token = ls.get('accessToken')
 	  }
 	  
 	  
