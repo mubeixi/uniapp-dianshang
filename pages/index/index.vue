@@ -126,7 +126,7 @@
 
       </view>
     </block>
-    <block v-else>
+    <block v-else-if="storeID!=-1">
       <no-store></no-store>
     </block>
 
@@ -204,7 +204,7 @@ export default {
       JSSDK_INIT: false,
       showIndex: false,
       initData: {},
-      storeID: '',
+      storeID: -1,
       lat: '',
       lng: '',
       selfObj: null,
@@ -233,7 +233,7 @@ export default {
     }
   },
   onReachBottom () {
-	  if(this.prodList[this.goodsNavIndex]){
+	  if (this.prodList[this.goodsNavIndex]) {
 		  if (this.prodList[this.goodsNavIndex].length < this.totalList[this.goodsNavIndex]) {
 		    this.page[this.goodsNavIndex] = this.page[this.goodsNavIndex] + 1
 		    this.reachBootom()
@@ -270,7 +270,7 @@ export default {
         pageSize: this.pageSize,
         with_buyer: 1,
         buyer_count: 6,
-        is_selling:1,
+        is_selling: 1,
         store_id: this.$store.getters.getCurrentStoreId()
         // store_id:sessionStorage.getItem('store_id')
       }
@@ -588,7 +588,7 @@ export default {
           page: 1,
           pageSize: this.pageSize,
           with_buyer: 1,
-          is_selling:1,
+          is_selling: 1,
           buyer_count: 6,
           store_id: this.$store.getters.getCurrentStoreId()
           // store_id:sessionStorage.getItem('store_id')
@@ -737,7 +737,7 @@ export default {
 
           this.loadInfoStore()
         }
-      }).catch(() => {
+      }).catch((e) => {
         console.log('定位失败')
         this.storeID = ''
         this.setFreStoreId('')
@@ -827,13 +827,16 @@ export default {
       // #endif
     },
     initStore () {
-      this.storeID = this.$store.getters.getCurrentStoreId()
+      const storeId = this.$store.getters.getCurrentStoreId()
+      this.storeID = storeId || -1
 
       this.showIndex = true
 
-      if (this.storeID) {
+      if (this.storeID > 0) {
+
         this.systemInfo = uni.getSystemInfoSync()
         this.get_user_location_init()
+
       } else if (this.initData.store_positing === 1) {
         this.systemInfo = uni.getSystemInfoSync()
         this.get_user_location()
