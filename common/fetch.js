@@ -76,7 +76,10 @@ const fetch = function (act, param, options = false, url = '/api/little_program/
   if (!param) param = {}
 
   param.act = act
-  param.User_ID = get_User_ID()
+  if(!param.User_ID){
+	  param.User_ID = get_User_ID()
+  }
+  
 
   if (!param.hasOwnProperty('access_token')) {
     param.access_token = GET_ACCESS_TOKEN()

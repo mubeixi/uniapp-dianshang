@@ -5,6 +5,19 @@
 
     <input class="v_input" placeholder="修改用户名" type="text" v-if="type == 0" v-model="User_Name" />
     <input class="v_input" placeholder="修改昵称" type="text" v-if="type == 1" v-model="User_NickName" />
+    <input class="v_input" placeholder="修改QQ" type="number" v-if="type == 9" v-model="User_QQ" />
+    <input class="v_input" placeholder="修改身份证号" type="text" v-if="type == 10" v-model="User_IDNum" />
+    <input class="v_input" placeholder="修改传真" type="text" v-if="type == 12" v-model="User_Fax" />
+
+    <block v-if="type == 11">
+      <view class="area-item">
+        <text class="area-label">请选择性别</text>
+        <picker @change="bindDateChanges"  :value="indexMy" :range="array">
+          <view class="uni-input" >{{array[indexMy]}}</view>
+        </picker>
+      </view>
+    </block>
+
     <block v-if="type == 2">
       <view class="area-item">
         <text class="area-label">请选择生日</text>
@@ -55,7 +68,7 @@ import utils from '../../common/util.js'
 import { get_user_info, getTown, upDateUserInfo } from '../../common/fetch.js'
 import { pageMixin } from '../../common/mixin'
 import { mapActions, mapGetters } from 'vuex'
-
+import {error} from '../../common/index.js'
 export default {
   mixins: [pageMixin],
   data () {
@@ -63,6 +76,8 @@ export default {
       format: true
     })
     return {
+      array: ['男', '女'],
+      indexMy: 0,
       date: currentDate,
       dateValue: '',
       type: 0,
@@ -70,6 +85,8 @@ export default {
       User_Name: '',
       User_NickName: '',
       User_QQ: '',
+      User_IDNum: '',
+      User_Fax: '',
       User_Email: '',
       User_Province: '',
       User_City: '',
@@ -147,6 +164,9 @@ export default {
     bindDateChange (e) {
       this.dateValue = e.target.value
     },
+    bindDateChanges (e) {
+      this.indexMy = e.target.value
+    },
     getDate (type) {
       const date = new Date()
       let year = date.getFullYear()
@@ -176,6 +196,18 @@ export default {
           break
         case '4' :
           this.title = '修改地址'
+          break
+        case '9' :
+          this.title = 'QQ'
+          break
+        case '10' :
+          this.title = '身份证号'
+          break
+        case '11' :
+          this.title = '性别'
+          break
+        case '12' :
+          this.title = '传真'
           break
       }
 
@@ -244,6 +276,10 @@ export default {
             if (res.confirm) {
               that.loading = true
               upDateUserInfo({
+                User_Gender: that.array[that.indexMy],
+                User_QQ: that.User_QQ,
+                User_IDNum: that.User_IDNum,
+                User_Fax: that.User_Fax,
                 User_Name: that.User_Name,
                 User_NickName: that.User_NickName,
                 User_Email: that.User_Email,
@@ -269,6 +305,7 @@ export default {
                   })
                 }, 1500)
               }).catch(e => {
+				   error(e.msg)
                 that.loading = false
               })
             } else if (res.cancel) {
@@ -280,6 +317,10 @@ export default {
       }
       this.loading = true
       upDateUserInfo({
+        User_Gender: this.array[this.indexMy],
+        User_QQ: this.User_QQ,
+        User_IDNum: this.User_IDNum,
+        User_Fax: this.User_Fax,
         User_Name: this.User_Name,
         User_NickName: this.User_NickName,
         User_Email: this.User_Email,
@@ -304,6 +345,7 @@ export default {
           })
         }, 1500)
       }).catch(e => {
+		  error(e.msg)
         this.loading = false
       })
     },
@@ -383,6 +425,11 @@ export default {
     this.User_NickName = this.userInfo.User_NickName
     this.User_Email = this.userInfo.User_Email
     this.dateValue = this.userInfo.User_Birthday
+    this.indexMy = this.userInfo.User_Gender == '男' ? 0 : 1
+
+    this.User_QQ = this.userInfo.User_QQ
+    this.User_IDNum = this.userInfo.User_IDNum
+    this.User_Fax = this.userInfo.User_Fax
     this.objectMultiArray = [
       utils.array_change(area.area[0]['0']),
       utils.array_change(area.area[0]['0,1']),

@@ -30,7 +30,7 @@
           </view>
           <view class="other-item">
             验证码
-            <input class="input code" placeholder="请输入验证码" type="text" v-model="code" />
+            <input class="input code" placeholder="请输入验证码" type="text" v-model="code" maxlength="4"/>
             <view @click="getCode" class="get-msg">{{countdownStatus?(countdownNum + '秒'):'获取验证码'}}</view>
           </view>
           <button class="confirm" formType="submit">确认修改</button>
@@ -57,6 +57,8 @@ export default {
   mixins: [pageMixin],
   data () {
     return {
+	  user_id:'',
+      JSSDK_INIT: false,
       type: 0,
       is_back: false,
       curr_psw: '',
@@ -103,25 +105,42 @@ export default {
         })
         return
       }
-      updateUserMobile({
+	  let data={
         mobile: this.mobile,
         code: this.code
-      }).then(res => {
+      }
+	  if(this.user_id){
+	  	data.User_ID=this.user_id,
+		data.access_token = ls.get('accessToken')
+	  }
+	  
+      updateUserMobile(data).then(res => {
         uni.showToast({
           title: res.msg
         })
 
-        get_user_info({}, {
+		const postData = {}
+        if (this.user_id) {
+          postData.User_ID = this.user_id
+          postData.access_token = ls.get('accessToken')
+        }
+        get_user_info(postData, {
           tip: '',
           errtip: false
         }).then(res => {
-          this.setUserInfo(res.data)
-          const access_token = ls.get('accessToken')
-          ls.set('access_token', access_token, 1)
-          ls.remove('accessToken')
-          uni.navigateTo({
-            url: '/pages/person/person'
-          })
+			this.setUserInfo(res.data)
+			const access_token = ls.get('accessToken')
+			if (access_token) {
+			  ls.set('access_token', access_token, 1)
+			}
+			if (this.user_id) {
+			  ls.set('user_id', this.user_id, 1)
+			}
+
+			ls.remove('accessToken')
+			uni.navigateTo({
+			  url: '/pages/person/person'
+			})
         }).catch(e => {
           error('获取用户信息失败')
         })
@@ -164,9 +183,16 @@ export default {
         })
         return
       }
-      updateMobileSms({
+	  let data={
         mobile: this.mobile
-      }).then(res => {
+      }
+	  if(this.user_id){
+		  data.User_ID=this.user_id,
+		  data.access_token = ls.get('accessToken')
+	  }
+	  
+	  
+      updateMobileSms(data).then(res => {
         uni.showToast({
           title: '验证码已发送',
           icon: 'success'
@@ -251,6 +277,9 @@ export default {
     }
   },
   onLoad (options) {
+    if (options.user_id) {
+		this.user_id=options.user_id
+    }
     if (options.type == 0) {
       this.title = '修改登录密码'
       this.type = 0
