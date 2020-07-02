@@ -841,6 +841,7 @@ export default {
         this.systemInfo = uni.getSystemInfoSync()
         this.get_user_location()
       } else {
+		this.storeID=''
         this.shareH5()
         this.showIndex = true
       }
