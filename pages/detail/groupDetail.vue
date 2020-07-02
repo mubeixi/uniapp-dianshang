@@ -33,7 +33,7 @@
         class="spans">{{countdown.s}}</span>后结束
         </div>
         <div class="haha">
-          已团{{product.pintuan_flag}}件 {{product.pintuan_people}}人团
+          已团{{product.Products_Sales}}件 {{product.pintuan_people}}人团
         </div>
       </div>
     </div>
