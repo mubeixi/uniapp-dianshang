@@ -442,10 +442,10 @@ export default {
 
       .jiaobiao {
         position: absolute;
-        top: 24rpx;
-        right: 20rpx;
-        width: 20rpx;
-        height: 20rpx;
+        top: 18rpx;
+        right: 16rpx;
+        width: 30rpx;
+        height: 30rpx;
         border-radius: 50%;
         background-color: #FFFFFF;
         border: 1px solid #F43131;
