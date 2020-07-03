@@ -276,6 +276,11 @@ export default {
   },
   methods: {
     domainFn,
+	toLive () {
+	  uni.navigateTo({
+	    url: '/pagesA/live/live'
+	  })
+	},
     async reachBootom () {
       const data = {
         page: this.page[this.goodsNavIndex],
