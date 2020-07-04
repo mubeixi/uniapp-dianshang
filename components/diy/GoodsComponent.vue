@@ -1,37 +1,33 @@
 <template>
-  <div :style="{background:goods.style.bgColor,paddingLeft:goods.style.wrapmargin+'px',paddingRight:goods.style.wrapmargin+'px'}" class="goods wrap"
-       id="goods"
-       v-if="goodsList.length>0">
+  <div class="goods wrap" id="goods"
+       v-if="goodsList.length>0"
+       :style="{background:goods.style.bgColor,paddingLeft:goods.style.wrapmargin+'px',paddingRight:goods.style.wrapmargin+'px'}">
     <div :class="className">
       <ul class="list">
-        <li :class="[idx%2==0?'even':'odd',goods.config.radius=='round'?'round':'',goods.config.showmode]" :key="idx" :style="[itemMarginObj(idx)]" @click="goDetail(item)"
-            class="item"
-            v-for="(item,idx) in goodsList">
-          <div :style="{width:itemw,height:itemH,backgroundSize:goods.config.fill?goods.config.fill:'cover',backgroundImage:'url('+domainFunc(item.ImgPath)+')'}"
-               class="cover">
-            <div :class="goods.config.attr.tag.style"
-                 class="tag"
-                 v-if="['new','hot'].indexOf(goods.config.attr.tag.style)!=-1" v-show="goods.config.attr && goods.config.attr.tag.show">
+        <li @click="goDetail(item)" v-for="(item,idx) in goodsList" :key="idx" class="item"
+            :class="[idx%2==0?'even':'odd',goods.config.radius=='round'?'round':'',goods.config.showmode]"
+            :style="[itemMarginObj(idx)]">
+          <div class="cover" :style="{width:itemw,height:itemH,backgroundSize:goods.config.fill?goods.config.fill:'cover'}">
+            <image v-if="item.imgLoad" class="cover-image" :src="item.showImgPath"></image>
+            <image v-else class="cover-image" :src="lazyImgUrl"></image>
+            <div :class="goods.config.attr.tag.style" v-if="['new','hot'].indexOf(goods.config.attr.tag.style)!=-1 && goods.config.attr && goods.config.attr.tag.show" class="tag">
               {{goods.config.attr.tag.style=='hot'?'hot':'new'}}
             </div>
-            <div class="tag img" v-else v-show="goods.config.attr.tag.show"><img
-            :src="goods.config.attr.tag.img|domain" /></div>
+            <div v-if="goods.config.attr.tag.show" class="tag img"><img :src="goods.config.attr.tag.img|domain"/></div>
           </div>
-          <div :class="{empyInfo:isEmpeyInfo}" :style="{width:(goods.config.style==2 || goods.config.style==4 )?itemw:''}"
-               class="info">
+          <div class="info" :style="{width:(goods.config.style==2 || goods.config.style==4 )?itemw:''}" :class="{empyInfo:isEmpeyInfo}">
             <div class="left">
-              <div class="title" v-show="goods.config.attr.title.show">{{item.Products_Name}}</div>
-              <div class="font12 graytext desc" v-show="goods.config.attr.desc.show">
+              <div v-show="goods.config.attr.title.show" class="title" style="padding-left: 6px;padding-right: 6px;box-sizing: border-box;">{{item.Products_Name}}</div>
+              <div v-show="goods.config.attr.desc.show" class="font12 graytext desc">
                 {{item.Products_BriefDescription||'暂无介绍'}}
               </div>
               <!--              <div v-show="goods.config.attr.price.show" class="price"><span class="sign">￥</span>{{item.Products_PriceX}}-->
               <!--              </div>-->
             </div>
             <div class="bottom-box">
-              <div class="price" v-show="goods.config.attr.price.show"><span class="sign">￥</span>{{item.Products_PriceX}}
+              <div v-show="goods.config.attr.price.show" class="price"><span class="sign">￥</span>{{item.Products_PriceX}}
               </div>
-              <div :class="'theme'+goods.config.attr.buybtn.style" class="buybtn"
-                   v-show="goods.config.attr.buybtn.show">
+              <div v-show="goods.config.attr.buybtn.show" class="buybtn" :class="'theme'+goods.config.attr.buybtn.style">
                 {{goods.config.attr.buybtn.text||'购买'}}
               </div>
             </div>
@@ -46,8 +42,9 @@
 <script>
 import { getProductList } from '../../common/fetch'
 import { domainFn, lazyImgUrl } from '../../common/filter'
-import { goProductDetail } from '../../common'
-
+import { error, goProductDetail } from '../../common'
+import { downLoadFile } from '../../common/tool'
+var downTaskList = []
 export default {
   props: {
     index: {
@@ -60,6 +57,7 @@ export default {
   },
   data () {
     return {
+      lazyImgUrl,
       goodsList: [],
       infoTmpl: {
         Products_ID: 33,
@@ -101,7 +99,7 @@ export default {
     itemw () {
       let full = this.fullWidth
 
-      if (this.goods.config.showmode === 'border-bgwhite') {
+      if (this.goods.config.showmode == 'border-bgwhite') {
         full -= 4// 4个边框
       }
 
@@ -131,7 +129,7 @@ export default {
       const ratio = this.goods.config.ratio ? this.goods.config.ratio : 1
       let num = 0
 
-      if (this.goods.config.showmode === 'border-bgwhite') {
+      if (this.goods.config.showmode == 'border-bgwhite') {
         full -= 4// 4个边框
       }
       if (this.goods.config.style === 2) {
@@ -164,7 +162,6 @@ export default {
       return 'style' + this.goods.config.style + ' box'
     },
     style () {
-      return ''
       // return deepCopyStrict(this.coupon.styleDefault, this.coupon.style);
     }
   },
@@ -178,42 +175,95 @@ export default {
       immediate: true,
       deep: true,
       handler (val) {
-        if (!val) return
-        // limit
-        const { list = [], cate_id = [] } = val
-
-        // 如果值还没有设置的话
-        const param = { pageSize: this.limit }// cate_id.length===0 && limit ? limit : 900}
-        if (cate_id.length > 0) {
-          param.Cate_ID = cate_id.join(',')
-        }
-        if (list.length > 0) {
-          param.Products_ID = list.join(',')
-        }
-
-        // if(list.length===0 && cate_id.length===0){
-        //   return;
-        // }
-
-        if (list.length === 0 && cate_id.length === 0) {
-          param.pageSize = 6
-        }
-
-        getProductList(param).then(res => {
-          this.goodsList = res.data
-        })
+        this.getProductListFn(val)
       }
     }
 
   },
   components: {},
   methods: {
+    /**
+     * 清空
+     */
+    clearDownFileTask () {
+      for (var i in downTaskList) {
+        downTaskList[i].abort()
+      }
+      downTaskList = []
+    },
+    /**
+     * 继续下载
+     */
+    startDownloadImg () {
+      for (var i in this.goodsList) {
+        if (this.goodsList[i].imgLoad == false) {
+          this.downImgFn(this.goodsList[i].ImgPath, i)
+        }
+      }
+    },
+    async getProductListFn (val) {
+      if (!val) return
+      const { list = [], cate_id = [], limit } = val
+
+      // 如果值还没有设置的话
+      const param = { pageSize: this.limit }// cate_id.length===0 && limit ? limit : 900}
+      if (cate_id.length > 0) {
+        param.Cate_ID = cate_id.join(',')
+      }
+      if (list.length > 0) {
+        param.Products_ID = list.join(',')
+      }
+
+      // if(list.length===0 && cate_id.length===0){
+      //   return;
+      // }
+
+      if (list.length === 0 && cate_id.length === 0) {
+        param.pageSize = 6
+      }
+
+      const productData = await getProductList(param).then(res => res.data).catch(err => {
+        error(err.msg || '加载商品失败')
+      })
+      const goodsList = []
+      for (var i in productData) {
+        goodsList.push(Object.assign({}, productData[i], { showImgPath: '', imgLoad: false }))
+        this.downImgFn(productData[i].ImgPath, i)
+      }
+      this.goodsList = goodsList
+
+      console.log(this.goodsList)
+    },
+    downImgFn (path, idx) {
+      const _path = this.domainFunc(path)
+      var taskItem = uni.downloadFile({
+        url: _path, // 仅为示例，并非真实的资源
+        success: (res) => {
+          if (res.statusCode === 200) {
+            const { tempFilePath: path } = res
+            console.log(path)
+            if (path) {
+              this.$set(this.goodsList[idx], 'showImgPath', path)
+              this.$set(this.goodsList[idx], 'imgLoad', true)
+            }
+          }
+        }
+      })
+
+      downTaskList.push(taskItem)
+
+      // downLoadFile(path).then(path=>{
+      //     if(path){
+      //         this.$set(this.goodsList[idx],'showImgPath',path)
+      //         this.$set(this.goodsList[idx],'imgLoad',true)
+      //     }
+      // }).catch(()=>{
+      //
+      // })
+    },
     goProductDetail,
     goDetail (goods) {
-      const linkObj = {
-        link: '/pages/detail/detail?Products_ID=' + goods.Products_ID,
-        linkType: 'default'
-      }
+      const linkObj = { link: '/pages/detail/detail?Products_ID=' + goods.Products_ID, linkType: 'default' }
 
       this.$fun.linkTo(linkObj)
     },
@@ -239,14 +289,14 @@ export default {
           break
         case 2:
 
-          left = idx % 2 === 0 ? 0 : conf / 2
-          right = idx % 2 === 0 ? conf / 2 : 0
+          left = idx % 2 == 0 ? 0 : conf / 2
+          right = idx % 2 == 0 ? conf / 2 : 0
           break
       }
 
       if (idx === 0) top = 0
       // 这个需要是2
-      if (idx === 1 && this.goods.config.style === 2) top = 0
+      if (idx === 1 && this.goods.config.style == 2) top = 0
       return {
         marginTop: top + 'px',
         marginBottom: bottom + 'px',
@@ -265,8 +315,9 @@ export default {
       if (!url) {
         return lazyImgUrl// 展位图替换掉吧。。
       }
-
-      return domainFn(url)
+      var _url = domainFn(url)
+      if (_url)_url = _url + '-r200'
+      return _url
     }
 
   },
@@ -275,12 +326,15 @@ export default {
     this.fullWidth = res.screenWidth
 
     this.goods = this.confData
+  },
+  beforeDestroy () {
+
   }
 
 }
 </script>
 
-<style lang="less" scoped>
+<style scoped lang="less">
   @import "../../assets/css/app.less";
 
   .wrap {
@@ -311,6 +365,14 @@ export default {
   .cover {
     .cover-full-bg(cover, 0);
     height: 100%;
+    position: relative;
+    .cover-image{
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      left: 0;
+      top: 0;
+    }
   }
 
   ul, li {
