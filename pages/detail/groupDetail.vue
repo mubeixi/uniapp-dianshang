@@ -282,9 +282,8 @@
     <!-- #endif -->
     <div class="safearea-box"></div>
 
-
     <layoutModal ref="pintuanList">
-      <div style="width: 600rpx;max-height: 600rpx;overflow-y: scroll">
+      <scroll-view scroll-y style="width: 600rpx;max-height: 600rpx;overflow-y: scroll">
         <div class="pinCenter" v-for="(team,idx) in teamListAll" >
           <div class="image">
             <image :src="team.User_HeadImg" class="img" />
@@ -304,7 +303,7 @@
         <div class="fz-12 " style="text-align: center;line-height: 40rpx;color: #999999">
           仅展示正在拼单的10个人
         </div>
-      </div>
+      </scroll-view>
 
     </layoutModal>
   </div>
@@ -330,13 +329,11 @@ import { pageMixin } from '../../common/mixin'
 import { error } from '../../common'
 import { mapActions, mapGetters, mapState } from 'vuex'
 
-
-
 export default {
   mixins: [pageMixin],
   data () {
     return {
-      teamListAll:[],
+      teamListAll: [],
       groupStam: false,
       // #ifdef APP-PLUS
       wxMiniOriginId: '',
@@ -496,7 +493,6 @@ export default {
     // #endif
   },
   onShow () {
-
     this.getDetail(this.Products_ID)
     this.getCommit(this.Products_ID)
 
@@ -569,8 +565,8 @@ export default {
   },
   methods: {
     ...mapActions(['getUserInfo']),
-    chakangengduo(){
-      if(this.teamListAll.length>3){
+    chakangengduo () {
+      if (this.teamListAll.length > 3) {
         this.$refs.pintuanList.show()
       }
     },
@@ -716,14 +712,13 @@ export default {
     getPintuanTeamList (id) {
       getPintuanTeam({
         prod_id: id,
-        page:1,
-        pageSize:999
+        page: 1,
+        pageSize: 999
       }, {
         errtip: false
       }).then(res => {
         this.teamListAll = JSON.parse(JSON.stringify(res.data)).splice(0, 10)
         this.teamList = res.data.splice(0, 3)
-
       }).catch(e => {
       })
     },
@@ -1719,7 +1714,6 @@ export default {
       line-height: 20px;
       padding: 26rpx;
     }
-
 
   }
   .pinCenter {
