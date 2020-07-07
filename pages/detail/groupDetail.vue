@@ -284,31 +284,36 @@
 
 
     <layoutModal ref="pintuanList">
-      <div class="pinCenter" v-for="(team,idx) in teamListAll" style="width: 600rpx;max-height: 600rpx;overflow-y: scroll">
-        <div class="image">
-          <image :src="team.User_HeadImg" class="img" />
-        </div>
-        <div class="info">
-          <div class="nick">
-            {{team.User_NickName}}
+      <div style="width: 600rpx;max-height: 600rpx;overflow-y: scroll">
+        <div class="pinCenter" v-for="(team,idx) in teamListAll" >
+          <div class="image">
+            <image :src="team.User_HeadImg" class="img" />
           </div>
-          <div class="message">
-            还差{{product.pintuan_people-team.teamnum}}人，剩余{{team.addtime|endtime}}
+          <div class="info">
+            <div class="nick">
+              {{team.User_NickName}}
+            </div>
+            <div class="message">
+              还差{{product.pintuan_people-team.teamnum}}人，剩余{{team.addtime|endtime}}
+            </div>
+          </div>
+          <div @click="toJoinGroup(team.id,team)" class="cantuan">
+            去参团
           </div>
         </div>
-        <div @click="toJoinGroup(team.id,team)" class="cantuan">
-          去参团
-        </div>
-      </div>
-      <div class="fz-12 " style="text-align: center;line-height: 40rpx;color: #999999">
+        <div class="fz-12 " style="text-align: center;line-height: 40rpx;color: #999999">
           仅展示正在拼单的10个人
+        </div>
       </div>
+
     </layoutModal>
   </div>
 </template>
 
 <script>
 import popupLayer from '../../components/popup-layer/popup-layer.vue'
+import uParse from '../../components/gaoyia-parse/parse.vue'
+import layoutModal from '../../components/layout-modal/layout-modal'
 import {
   add_template_code,
   addCollection,
@@ -325,8 +330,7 @@ import { pageMixin } from '../../common/mixin'
 import { error } from '../../common'
 import { mapActions, mapGetters, mapState } from 'vuex'
 
-import uParse from '../../components/gaoyia-parse/parse.vue'
-import layoutModal from '../../components/layout-modal/layout-modal'
+
 
 export default {
   mixins: [pageMixin],
@@ -492,12 +496,13 @@ export default {
     // #endif
   },
   onShow () {
-    this.$refs.pintuanList.close()
+
     this.getDetail(this.Products_ID)
     this.getCommit(this.Products_ID)
 
     // 获取正在拼团的团队
     this.getPintuanTeamList(this.Products_ID)
+    this.$refs.pintuanList.close()
   },
   filters: {
     endtime (timeStamp) {
