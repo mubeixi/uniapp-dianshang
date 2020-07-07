@@ -215,7 +215,7 @@
 
       </view>
     </popup-layer>
-    <div class="order_total">
+    <div class="order_total" v-if='isShow'>
       <div class="totalinfo" v-if="orderInfo.prod_list">
         <div class="info">共{{orderInfo.prod_list.length}}件商品 总计：<span
         class="mbxa">￥<span>{{orderInfo.Order_TotalPrice}}</span></span></div>
@@ -247,7 +247,7 @@
       </div>
     </div>
 
-    <popup-layer :direction="'top'" ref="popupLayer">
+    <popup-layer  :direction="'top'" ref="popupLayer" >
       <div class="iMbx">
         <div :key="index" @click="chooseType(index)" class="c_method" v-for="(item,index) in pay_arr">
           {{item}}
@@ -256,6 +256,7 @@
       </div>
     </popup-layer>
     <payComponents
+	@maskClicked='clickPay'
     :Order_ID="Order_ID"
     :invoice_info="invoice_info"
     :isOpen="isOpen"
@@ -291,6 +292,7 @@ export default {
   },
   data () {
     return {
+	  isShow:true,
       lv: 3, // 二维码容错级别 ， 一般不用设置，默认就行
       loadMake: true, // 组件加载完成后自动生成二维码
       qrsrc: '',
@@ -370,6 +372,10 @@ export default {
     // #endif
   },
   methods: {
+	  clickPay(){
+		  console.log("111")
+		  this.isShow=true
+	  },
     yulan(url){
 	  uni.previewImage({
 	    urls: [url]
@@ -386,14 +392,17 @@ export default {
     // 查看明细
     seeDetail () {
       if (!this.isSlide) {
+		  //this.isShow=false
         this.$refs.popupMX.show()
       } else {
         this.$refs.popupMX.close()
+		//this.isShow=true
       }
       this.isSlide = !this.isSlide
     },
     handClicked () {
       this.isSlide = false
+	  this.isShow=true
     },
     // 物流追踪
     goLogistics (orderInfo) {
@@ -596,6 +605,7 @@ export default {
     },
     // 去支付
     submit () {
+		this.isShow=false
       this.$refs.payLayer.show()
     },
 

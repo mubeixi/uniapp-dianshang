@@ -58,6 +58,7 @@
         :index="index"
         v-if="item.indexOf('coupon') !== -1" />
         <goods-component
+          ref="goodsPlugin"
         :confData="templateData[tagIndex][index]"
         :index="index"
         v-if="item.indexOf('goods') !== -1" />
@@ -275,9 +276,20 @@ export default {
         item.restartAn()
       })
     }
+
+    if (this.$refs.goodsPlugin) {
+      this.$refs.goodsPlugin.map(item => {
+        item.startDownloadImg()
+      })
+    }
   },
   async onPullDownRefresh () {
     uni.stopPullDownRefresh()
+    if (this.$refs.goodsPlugin) {
+      this.$refs.goodsPlugin.map(item => {
+        item.clearDownFileTask()
+      })
+    }
   },
   onHide () {
     // 暂停notice组件的定时器任务

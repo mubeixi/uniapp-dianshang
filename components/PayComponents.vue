@@ -230,6 +230,7 @@ export default {
       if (this.autoClose) {
         this.close()
       }
+	  this.$emit('maskClicked', true)
     },
     // 获取用户支付方式
     chooseType (name) {
