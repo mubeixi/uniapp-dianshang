@@ -57,8 +57,14 @@
     </div>
     <!-- 小伙伴在拼团 -->
     <div class="pintuan">
-      <div class="pinTitle">
-        小伙伴在开团
+      <div class="pinTitle flex flex-vertical-c flex-justify-between"  @click="chakangengduo">
+        <span>
+          小伙伴在开团
+        </span>
+        <span class="fz-12 c9" v-if="teamListAll.length>3" >
+          查看更多
+        </span>
+        <span v-else></span>
       </div>
       <div class="pinCenter" v-for="(team,idx) in teamList">
         <div class="image">
@@ -275,6 +281,29 @@
     </div>
     <!-- #endif -->
     <div class="safearea-box"></div>
+
+
+    <layoutModal ref="pintuanList">
+      <div class="pinCenter" v-for="(team,idx) in teamListAll" style="width: 600rpx;max-height: 600rpx;overflow-y: scroll">
+        <div class="image">
+          <image :src="team.User_HeadImg" class="img" />
+        </div>
+        <div class="info">
+          <div class="nick">
+            {{team.User_NickName}}
+          </div>
+          <div class="message">
+            还差{{product.pintuan_people-team.teamnum}}人，剩余{{team.addtime|endtime}}
+          </div>
+        </div>
+        <div @click="toJoinGroup(team.id,team)" class="cantuan">
+          去参团
+        </div>
+      </div>
+      <div class="fz-12 " style="text-align: center;line-height: 40rpx;color: #999999">
+          仅展示正在拼单的10个人
+      </div>
+    </layoutModal>
   </div>
 </template>
 
@@ -297,11 +326,13 @@ import { error } from '../../common'
 import { mapActions, mapGetters, mapState } from 'vuex'
 
 import uParse from '../../components/gaoyia-parse/parse.vue'
+import layoutModal from '../../components/layout-modal/layout-modal'
 
 export default {
   mixins: [pageMixin],
   data () {
     return {
+      teamListAll:[],
       groupStam: false,
       // #ifdef APP-PLUS
       wxMiniOriginId: '',
@@ -367,7 +398,8 @@ export default {
   // #endif
   components: {
     popupLayer,
-    uParse
+    uParse,
+    layoutModal
   },
   computed: {
     ...mapGetters(['userInfo']),
@@ -460,6 +492,7 @@ export default {
     // #endif
   },
   onShow () {
+    this.$refs.pintuanList.close()
     this.getDetail(this.Products_ID)
     this.getCommit(this.Products_ID)
 
@@ -531,6 +564,11 @@ export default {
   },
   methods: {
     ...mapActions(['getUserInfo']),
+    chakangengduo(){
+      if(this.teamListAll.length>3){
+        this.$refs.pintuanList.show()
+      }
+    },
     /**
      * 客服
      */
@@ -578,7 +616,7 @@ export default {
           return
         }
       }
-
+      this.$refs.pintuanList.close()
       uni.navigateTo({
         url: '/pages/detail/groupJoin?Team_ID=' + tid + '&Products_ID=' + this.Products_ID
       })
@@ -648,7 +686,7 @@ export default {
           })
           break
         case 'pic':
- 
+
           const sharePic = await getProductSharePic({
             product_id: this.Products_ID,
             act_price: this.postData.Products_PriceX
@@ -672,11 +710,15 @@ export default {
     },
     getPintuanTeamList (id) {
       getPintuanTeam({
-        prod_id: id
+        prod_id: id,
+        page:1,
+        pageSize:999
       }, {
         errtip: false
       }).then(res => {
+        this.teamListAll = JSON.parse(JSON.stringify(res.data)).splice(0, 10)
         this.teamList = res.data.splice(0, 3)
+
       }).catch(e => {
       })
     },
@@ -1637,7 +1679,7 @@ export default {
     .share {
       position: absolute;
       right: 0;
-      z-index: 999;
+      z-index: 10;
       top: 50%;
       background: red;
       color: #fff;
@@ -1673,54 +1715,55 @@ export default {
       padding: 26rpx;
     }
 
-    .pinCenter {
-      padding: 15rpx 25rpx;
-      display: flex;
-      align-items: center;
 
-      .image {
-        width: 100rpx;
-        height: 100rpx;
-        border-radius: 50%;
-        overflow: hidden;
+  }
+  .pinCenter {
+    padding: 15rpx 25rpx;
+    display: flex;
+    align-items: center;
 
-        .img {
-          width: 100%;
-          height: 100%;
-        }
+    .image {
+      width: 100rpx;
+      height: 100rpx;
+      border-radius: 50%;
+      overflow: hidden;
+
+      .img {
+        width: 100%;
+        height: 100%;
       }
+    }
 
-      .info {
-        margin-left: 21rpx;
+    .info {
+      margin-left: 21rpx;
 
-        .nick {
-          font-size: 26rpx;
-          font-family: PingFang SC;
-          font-weight: 500;
-          color: rgba(51, 51, 51, 1);
-          line-height: 20px;
-        }
-
-        .message {
-          font-size: 24rpx;
-          font-family: PingFang SC;
-          font-weight: 500;
-          color: rgba(110, 110, 110, 1);
-          line-height: 20px;
-        }
-      }
-
-      .cantuan {
-        width: 119rpx;
-        height: 48rpx;
-        border: 1px solid rgba(244, 49, 49, 1);
-        border-radius: 3px;
-        color: rgba(244, 49, 49, 1);
-        text-align: center;
-        line-height: 48rpx;
+      .nick {
         font-size: 26rpx;
-        margin-left: auto;
+        font-family: PingFang SC;
+        font-weight: 500;
+        color: rgba(51, 51, 51, 1);
+        line-height: 20px;
       }
+
+      .message {
+        font-size: 24rpx;
+        font-family: PingFang SC;
+        font-weight: 500;
+        color: rgba(110, 110, 110, 1);
+        line-height: 20px;
+      }
+    }
+
+    .cantuan {
+      width: 119rpx;
+      height: 48rpx;
+      border: 1px solid rgba(244, 49, 49, 1);
+      border-radius: 3px;
+      color: rgba(244, 49, 49, 1);
+      text-align: center;
+      line-height: 48rpx;
+      font-size: 26rpx;
+      margin-left: auto;
     }
   }
 
