@@ -12,7 +12,7 @@
         </div>
         <div class="bottom">
           <div class="price">
-            ¥<span class="prices">{{product.pintuan_pricex}}</span><span>拼团省{{product.Products_PriceY-product.Products_PriceX}}</span>
+            ¥<span class="prices">{{product.pintuan_pricex}}</span><span>拼团省{{product.Products_PriceY-product.Products_PriceX|toFix2}}</span>
           </div>
           <div class="tuan">
             {{product.pintuan_people}}人团 • 已团{{product.teamnum}}件
@@ -56,11 +56,11 @@
       </ul>
     </div>
     <!-- 倒计时 -->
-    <div class="how">
+    <div class="how" v-if="product.teamstatus!=1">
       <image :src="'/static/client/tuan/time.png'|domain" class="img" />
       <span class="my">拼团中，还差<span class="spans">{{product.pintuan_people-product.teamnum}}</span>人</span>
     </div>
-    <div class="times">
+    <div class="times"   v-if="product.teamstatus!=1">
       <div class="line"></div>
       <div class="text">
         剩余
@@ -81,18 +81,22 @@
     <!--        </div>-->
 
     <!-- #ifdef MP-WEIXIN || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO -->
-    <div class="liji">
+    <div class="liji"   v-if="product.teamstatus!=1">
       <button class="vanButton invi" open-type="share" v-if="joined">邀请好友</button>
       <div @click="joinFunc" class="vanButton" v-else>立即参团</div>
     </div>
     <!-- #endif -->
 
     <!-- #ifdef H5 || APP-PLUS -->
-    <div class="liji">
+    <div class="liji"  v-if="product.teamstatus!=1">
       <view @click="inviteFunc" class="vanButton" v-if="joined">去分享</view>
       <div @click="joinFunc" class="vanButton" v-else>立即参团</div>
     </div>
     <!-- #endif -->
+
+    <div class="liji"  v-if="product.teamstatus==1">
+      <div class="vanButton" >拼团成功</div>
+    </div>
 
     <!--            <div class="liji">-->
     <!--                <view v-if="joined" @click="shareFunc" class="vanButton">去分享</view>-->
@@ -181,7 +185,7 @@
           <div class="cartTitle">
             <div class="cartTitles">{{product.Products_Name}}</div>
             <div class="addInfo">
-              <div class="addPrice">{{product.Products_PriceX}}元</div>
+              <div class="addPrice">{{pt_pricex}}元</div>
               <div class="proSale">库存{{postData.count}}</div>
             </div>
           </div>
@@ -239,6 +243,7 @@ export default {
   name: 'App',
   data () {
     return {
+      pt_pricex:'',
       isShowGuide: false,
       // #ifdef APP-PLUS
       wxMiniOriginId: '',
@@ -295,6 +300,15 @@ export default {
     ...mapState(['initData']),
     ...mapGetters(['userInfo'])
   },
+  filters: {
+    toFix2: function (val) {
+      if (val) {
+        return val.toFixed(2)
+      }
+
+      return val
+    }
+  },
   onLoad (options) {
     this.Prod_ID = options.Products_ID
     this.Team_ID = options.Team_ID
@@ -350,7 +364,8 @@ export default {
       check_attrnames = check_attrnames.join(';')
       this.postData.atr_str = check_attrnames
       this.postData.atrid_str = check_attrid
-      if (attr_val.Product_Attr_ID) {
+      console.log(attr_val,"sss")
+      if (attr_val&&attr_val.Product_Attr_ID) {
         this.postData.attr_id = attr_val.Product_Attr_ID
       }
       // 属性判断
@@ -358,6 +373,7 @@ export default {
         this.postData.count = attr_val.Property_count // 选择属性的库存
         this.postData.showimg = typeof attr_val.Attr_Image !== 'undefined' && attr_val.Attr_Image != '' ? attr_val.Attr_Image : this.product.Products_JSON.ImgPath[0]// 选择属性的图片
         this.productDetail_price = attr_val.Txt_PriceSon // 选择属性的价格
+        this.pt_pricex=attr_val.pt_pricex
         this.submit_flag = !((!this.check_attr || Object.getOwnPropertyNames(this.check_attr).length != Object.getOwnPropertyNames(this.product.skujosn).length))
       }
       // 判断属性库存
@@ -591,6 +607,7 @@ export default {
 
       getProductDetail(data).then(res => {
         this.product = res.data
+        this.pt_pricex=this.product.pintuan_pricex
 
         this.postData.count = res.data.Products_Count
 

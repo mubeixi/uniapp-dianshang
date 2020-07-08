@@ -621,16 +621,14 @@ export default {
       // 根据后台配置来判断是否无手机号跳去绑定手机号
       const isBindPhone = Number(this.initData.bind_mobile_switch) === 1
 
-      console.log(isBindPhone,userData)
+      console.log(isBindPhone, userData)
       if (isBindPhone && userData && !userData.User_Mobile) {
         console.log(objTranslate(userData))
         ls.set('accessToken', userData.access_token, 1)
-        ls.set('user_id', userData.User_ID,1)
+        ls.set('user_id', userData.User_ID, 1)
         uni.redirectTo({
-          url: '/pagesA/person/updateUserPsw?type=3'
+          url: '/pagesA/person/updateUserPsw?type=3&user_id=' + userData.User_ID
         })
-
-
       } else {
         this.setUserInfo(userData)
         ls.set('access_token', userData.access_token, 1)
@@ -685,26 +683,24 @@ export default {
   },
   onShow () {
 
-
   },
   created () {
-
     console.log('created created created')
     /** 登录也不管了 **/
-      // 如果已经登录，就自动退回
+    // 如果已经登录，就自动退回
     const uid = ls.get('user_id')
     const access_token = ls.get('access_token')
     if (uid && access_token) {
       console.log('已经登录过')
       // uni.navigateBack()
-      return;
+      return
     }
 
     // #ifdef H5
     if (isWeiXin()) {
       const code = GetQueryByString(location.href, 'code')
       if (code && !access_token) {
-        //this.setUserInfo({})
+        // this.setUserInfo({})
         login({
           login_method: 'wx_mp',
           code: code
@@ -719,11 +715,10 @@ export default {
     // #endif
 
     // #ifndef H5
-    //this.setUserInfo({})
+    // this.setUserInfo({})
     // #endif
 
     this.initDataFn()
-
   }
 }
 </script>

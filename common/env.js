@@ -17,7 +17,7 @@ _staticUrl = appProdStatic
 // h5就自动获取
 // #ifdef H5
 const { origin } = location
-_staticUrl = isDev ? 'https://new401t.bafangka.com' : origin
+_staticUrl = isDev ? 'https://new401.bafangka.com' : origin
 // #endif
 
 export const staticUrl = _staticUrl
