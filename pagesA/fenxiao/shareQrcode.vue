@@ -62,6 +62,11 @@ export default {
   onLoad (options) {
     const { type, again } = options
     this.type = type
+	 if (this.type == 1) {
+	      // #ifdef MP-WEIXIN
+	      this.type = 2
+	      // #endif
+	    }
     this.again = again
     this.initFunc(type, again)
   },
