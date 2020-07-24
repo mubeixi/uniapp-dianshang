@@ -115,9 +115,7 @@ export default {
               icon: ''
             })
             setTimeout(function () {
-              uni.redirectTo({
-                url: '/pages/order/order?index=4'
-              })
+              uni.navigateBack()
             }, 2000)
             this.isLoadong = false
           }).catch(e => {

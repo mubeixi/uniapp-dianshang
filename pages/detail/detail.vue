@@ -1728,6 +1728,8 @@ export default {
           display: flex;
           //flex:1;
           flex-wrap: wrap;
+		  max-height: 340rpx;
+		  overflow-y: scroll;
 
           .skuview {
             margin-bottom: 10px;
