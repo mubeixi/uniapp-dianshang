@@ -68,7 +68,7 @@ export default {
 	      // #endif
 	    }
     this.again = again
-    this.initFunc(type, again)
+    this.initFunc(this.type, again)
   },
   methods: {
     setSelect (poster) {
