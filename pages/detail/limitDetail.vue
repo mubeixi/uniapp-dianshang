@@ -330,7 +330,7 @@ export default {
   // #ifdef MP-WEIXIN || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO
   // 自定义小程序分享
   onShareAppMessage () {
-    const path = '/pages/detail/groupDetail?Products_ID=' + this.Products_ID
+    const path = '/pages/detail/limitDetail?Products_ID=' + this.Products_ID
 
     const shareObj = {
       title: this.product.Products_Name,
