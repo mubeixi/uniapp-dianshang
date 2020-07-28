@@ -286,6 +286,8 @@ export default {
           // #endif
         },
         fail (e) {
+			
+			if(e.errMsg=='chooseImage:fail cancel')return
           uni.showModal({
             title: '提示',
             content: '选择图片错误' + JSON.stringify(e),
