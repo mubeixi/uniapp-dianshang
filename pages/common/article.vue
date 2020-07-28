@@ -11,8 +11,12 @@
       {{articleData.Article_BriefDescription}}
     </view>
     <view>
-      <!--			<div v-html="articleData.Article_Content"></div>-->
+      <!-- #ifdef H5 -->
+      <div v-html="articleData.Article_Content"></div>
+      <!-- #endif -->
+      <!-- #ifndef H5 -->
       <u-parse :content="articleData.Article_Content|formatRichTextByUparse"></u-parse>
+      <!-- #endif -->
     </view>
   </view>
 </template>
