@@ -198,7 +198,7 @@
     <popupLayer :direction="'top'" ref="cartPopu">
       <div class="cartSku">
         <div class="cartTop">
-          <image :src="skuImg?skuImg+'-r200':product.Products_JSON.ImgPath[0]+'-r200'" @click="yulanDetail"
+          <image :src="skuImg?skuImg+'-r640':product.Products_JSON.ImgPath[0]+'-r640'" @click="yulanDetail"
                  class="image"
                  v-if="product.Products_JSON && product.Products_JSON.ImgPath"></image>
           <div class="cartTitle">
