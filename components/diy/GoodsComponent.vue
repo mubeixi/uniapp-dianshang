@@ -316,7 +316,7 @@ export default {
         return lazyImgUrl// 展位图替换掉吧。。
       }
       var _url = domainFn(url)
-      if (_url)_url = _url + '-r200'
+      if (_url)_url = _url + '-r640'
       return _url
     }
 

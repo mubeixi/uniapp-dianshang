@@ -8,14 +8,35 @@
     <!-- 轮播 -->
     <view class="uni-padding-wrap" style="background: #f2f2f2;">
       <view class="page-section swiper">
-        <view class="page-section-spacing">
+        <view class="page-section-spacing" v-if="(product.video_url && showVideo)">
+          <video :poster="product.cover_url?product.cover_url:''" :src="product.video_url|domain" @pause="pause"
+                 @play="play"
+                 bindfullscreenchange="changeHiddenBtns"
+                 class="video"
+                 controls id="myVideo1"
+                 ref="video1"
+                 show-center-play-btn>
+          </video>
+          <view class="change-btn" v-if="!hideNativeEleShow">
+            <cover-view :class="[showVideo?'active':'','shipin']" @click="change_view(1)" v-if="showVideo&&showCorver">
+              视频
+            </cover-view>
+            <cover-view :class="[showVideo?'':'active','tupian']" @click="change_view(2)" v-if="showVideo&&showCorver">
+              图片
+            </cover-view>
+          </view>
+        </view>
+        <view class="page-section-spacing" v-else>
           <swiper autoplay="autoplay" circular="true" class="swiper" duration="500" indicator-active-color="#ff5000"
-                  indicator-color="#fff"
-                  indicator-dots="indicatorDots" interval="4000">
+                  indicator-color="#fff" indicator-dots="indicatorDots" interval="4000">
             <swiper-item :key="i" v-for="(item,i) of product.Products_JSON.ImgPath">
-              <img :src="item|lazyimg" @click="yulan(i)" class="imgs">
+              <img :src="(item+'-r640')|lazyimg" @click="yulan(i)">
             </swiper-item>
           </swiper>
+          <view class="change-btn" v-if="product.video_url">
+            <view :class="[showVideo?'active':'','shipin']" @click="change_view(1)">视频</view>
+            <view :class="[showVideo?'':'active','tupian']" @click="change_view(2)">图片</view>
+          </view>
         </view>
       </view>
     </view>
@@ -187,7 +208,7 @@
     <popupLayer :direction="'top'" ref="cartPopu">
       <div class="cartSku">
         <div class="cartTop">
-          <image :src="skuImg?skuImg+'-r200':product.Products_JSON.ImgPath[0]+'-r200'" @click="yulanDetail"
+          <image :src="skuImg?skuImg+'-r640':product.Products_JSON.ImgPath[0]+'-r640'" @click="yulanDetail"
                  class="image"></image>
           <div class="cartTitle">
             <div class="cartTitles">{{product.Products_Name}}</div>
@@ -380,7 +401,9 @@ export default {
       isPin: false,
       isCollected: false, // 该产品是否已收藏
       isSubmit: false, // 是否提交过了
-      skuImg: ''
+      skuImg: '',
+	  showVideo:true,
+	  showCorver: true,
     }
   },
   // #ifdef MP-WEIXIN || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO
@@ -565,6 +588,71 @@ export default {
   },
   methods: {
     ...mapActions(['getUserInfo']),
+	
+	createtab: function () {
+	  // 设置水平居中位置
+	  // var bitmap = new plus.nativeObj.Bitmap('bmp1');
+	  var view = new plus.nativeObj.View('icon', {
+	    top: '30px',
+	    left: '10px',
+	    width: '30px',
+	    height: '30px'
+	  })
+	  view.drawBitmap('/static/back.png', {
+	    top: '0px',
+	    left: '0px',
+	    width: '100%',
+	    height: '100%'
+	  })
+	  view.addEventListener('click', function (e) {
+	    uni.navigateBack({
+	      delta: 1
+	    })
+	  }, false)
+	  view.show()
+	},
+	createtabs: function () {
+	  const res = uni.getSystemInfoSync()
+	  const fullWidth = res.screenWidth
+	  const leftOffset = fullWidth - 40
+	  // 设置水平居中位置
+	  // var bitmap = new plus.nativeObj.Bitmap('bmp2');
+	  var view = new plus.nativeObj.View('icons', {
+	    top: '30px',
+	    // left: 'auto',
+	    left: leftOffset + 'px',
+	    width: '30px',
+	    height: '30px'
+	  })
+	  view.drawBitmap('/static/cart.png', {
+	    top: '0px',
+	    left: '0px',
+	    width: '100%',
+	    height: '100%'
+	  })
+	  view.addEventListener('click', function (e) {
+	    uni.switchTab({
+	      url: '/pages/order/cart'
+	    })
+	  }, false)
+	  view.show()
+	},
+	// 开始播放事件
+	play () {
+	  this.isShowBtn = false
+	},
+	// 暂停播放事件
+	pause () {
+	  this.isShowBtn = true
+	},
+	// type 1为视频，2为图片
+	change_view (type) {
+	  if (type == 1) {
+	    this.showVideo = true
+	  } else {
+	    this.showVideo = false
+	  }
+	},
     chakangengduo () {
       if (this.teamListAll.length > 3) {
         this.$refs.pintuanList.show()
@@ -1186,6 +1274,7 @@ export default {
     addCart () {
       this.$refs.cartPopu.show()
       this.postData.cart_key = 'CartList'
+	  this.showCorver = true
     },
     gotoComments () {
       uni.navigateTo({
@@ -1257,26 +1346,53 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  // 轮播样式
-  .uni-padding-wrap {
-    width: 750rpx;
-    height: 750rpx;
-
-    .page-section,
-    .page-section-spacing,
-    .swiper,
-    .uni-swiper-wrapper,
-    .uni-swiper-slides {
-      width: 750rpx;
-      height: 750rpx;
-
-      .imgs {
-        width: 100%;
-        height: 100%;
-      }
-    }
-  }
-
+ /* 轮播图样式 */
+ .uni-padding-wrap {
+   width: 750rpx;
+   height: 750rpx;
+ 
+   .page-section, .page-section-spacing, .swiper, .uni-swiper-wrapper, .uni-swiper-slides {
+     position: relative;
+     width: 750rpx;
+     height: 750rpx;
+ 
+     img {
+       width: 100%;
+       height: 100%;
+     }
+ 
+     .video {
+       width: 100%;
+       height: 100%;
+     }
+ 
+     .change-btn {
+       position: absolute;
+       bottom: 50rpx;
+       left: 50%;
+       transform: translateX(-50%);
+       display: flex;
+       width: 240rpx;
+       justify-content: space-between;
+       z-index: 10;
+ 
+       .shipin,
+       .tupian {
+         text-align: center;
+         border-radius: 10px;
+         color: #fff;
+         box-sizing: border-box;
+         font-size: 28rpx;
+         padding: 5px 10px;
+         background: rgba(255, 0, 0, .5);
+       }
+ 
+       .active {
+         background: rgb(255, 102, 0);
+       }
+     }
+   }
+ }
   /* 返回按钮和购物车按钮 */
   .top {
     position: fixed;

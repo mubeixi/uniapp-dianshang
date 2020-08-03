@@ -62,8 +62,13 @@ export default {
   onLoad (options) {
     const { type, again } = options
     this.type = type
+	 if (this.type == 1) {
+	      // #ifdef MP-WEIXIN
+	      this.type = 2
+	      // #endif
+	    }
     this.again = again
-    this.initFunc(type, again)
+    this.initFunc(this.type, again)
   },
   methods: {
     setSelect (poster) {
@@ -106,7 +111,7 @@ export default {
         const getPosterListResult = await getPosterList({ pageSize: 999 })
         const lists = getPosterListResult.data
         this.poster_list = lists.map(item => {
-          item.img += '-r200'
+          item.img += '-r640'
           return item
         })
 
