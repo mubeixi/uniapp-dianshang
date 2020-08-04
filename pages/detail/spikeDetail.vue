@@ -1952,7 +1952,7 @@ export default {
           font-size: 28rpx;
           height: 70rpx;
           line-height: 70rpx;
-          width: 140rpx;
+          width: 400rpx;
           padding-left: 10px;
           margin-bottom: 5px;
         }
