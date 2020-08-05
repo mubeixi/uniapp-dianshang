@@ -12,7 +12,7 @@
     </view>
     <view>
       <!-- #ifdef H5 -->
-      <div v-html="articleData.Article_Content"></div>
+      <div class="fun-rich-text" v-html="articleData.Article_Content"></div>
       <!-- #endif -->
       <!-- #ifndef H5 -->
       <u-parse :content="articleData.Article_Content|formatRichTextByUparse"></u-parse>
