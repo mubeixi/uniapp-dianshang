@@ -170,7 +170,7 @@
       <div class="cartSku">
         <div class="cartTop">
           <image
-          :src="skuImg?skuImg+'-r200':(product.Products_JSON.ImgPath[0]?product.Products_JSON.ImgPath[0]+'-r200':'')"
+          :src="skuImg?skuImg+'-r640':(product.Products_JSON.ImgPath[0]?product.Products_JSON.ImgPath[0]+'-r640':'')"
           @click="yulanDetail"
           class="image"></image>
           <div class="cartTitle">
@@ -1719,7 +1719,7 @@ export default {
           font-size: 28rpx;
           height: 70rpx;
           line-height: 70rpx;
-          width: 140rpx;
+          width: 400rpx;
           padding-left: 10px;
           margin-bottom: 5px;
         }

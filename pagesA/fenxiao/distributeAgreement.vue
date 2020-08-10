@@ -2,7 +2,7 @@
   <view @click="commonClick">
     <div class="pro_detail">
       <!-- #ifdef H5||APP-PLUS -->
-      <div class="p_detail_des" v-html="formatRichTexts(pro.dis_config.Distribute_Agreement)"></div>
+      <div class="p_detail_des fun-rich-text" v-html="formatRichTexts(pro.dis_config.Distribute_Agreement)"></div>
       <!-- #endif -->
 
       <!-- #ifdef MP -->

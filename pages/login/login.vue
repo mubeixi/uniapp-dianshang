@@ -11,14 +11,14 @@
         <!-- #ifdef MP-WEIXIN -->
         <div :style="{height:menuButtonInfo.height+'px'}" @click="goBack" class="topTitle">
           <view class="funicon icon icon-fanhui inline-block"></view>
-          <div>登陆</div>
+          <div>登录</div>
         </div>
         <!-- #endif -->
 
         <!-- #ifndef MP-WEIXIN -->
         <div @click="goBack" class="topTitle">
           <view class="funicon icon icon-fanhui inline-block"></view>
-          <div>登陆</div>
+          <div>登录</div>
         </div>
         <!-- #endif -->
 
@@ -57,7 +57,7 @@
             发送验证码
           </button>
           <div @click="(status = 2), (loginStatus = 2)" class="passwordLogin">
-            使用密码登陆
+            使用密码登录
           </div>
         </div>
         <!-- #endif -->
@@ -125,7 +125,7 @@
             发送验证码
           </button>
           <div @click="(status = 2), (loginStatus = 2)" class="passwordLogin">
-            使用密码登陆
+            使用密码登录
           </div>
         </div>
         <!-- #endif -->
@@ -134,14 +134,14 @@
         <!-- #ifdef MP-WEIXIN -->
         <div :style="{height:menuButtonInfo.height+'px'}" @click="(status = 1), (loginStatus = 1)" class="topTitle">
           <view class="funicon icon icon-fanhui inline-block"></view>
-          <div>手机账号登陆</div>
+          <div>手机账号登录</div>
         </div>
         <!-- #endif -->
 
         <!-- #ifndef MP-WEIXIN -->
         <div @click="(status = 1), (loginStatus = 1)" class="topTitle">
           <view class="funicon icon icon-fanhui inline-block"></view>
-          <div>手机账号登陆</div>
+          <div>手机账号登录</div>
         </div>
         <!-- #endif -->
 
@@ -277,8 +277,8 @@ export default {
       refreshInit: false,
       channels: [],
       froms: '', // 跳转过来的路由
-      status: 1, // 页面状态 1: 登录注册； 2：密码登陆； 3： 找回密码； 4：输入验证码； 5：设置新密码； 6:修改密码
-      loginStatus: 1, // 1: 短信登陆； 2: 手机号登陆； 3: 找回密码； 4：修改密码
+      status: 1, // 页面状态 1: 登录注册； 2：密码登录； 3： 找回密码； 4：输入验证码； 5：设置新密码； 6:修改密码
+      loginStatus: 1, // 1: 短信登录； 2: 手机号登录； 3: 找回密码； 4：修改密码
       verificationCode: '', // 用户填写的验证码都会在这里
       mobile: '', // 手机号，不管在哪个状态
       newPassword: '',
