@@ -11,7 +11,7 @@
 //     myRandom.push(parseInt([i]) + 1)
 //   }
 //   for (var i = 0; i < rate.length; i++) {
-//     var temp = []
+//     var fun = []
 //     var start = 0
 //     var end = 0
 //     randomList.push(parseInt(rate[i].split('%')[0]))
@@ -19,8 +19,8 @@
 //       start += randomList[j - 1] || 0
 //       end += randomList[j]
 //     }
-//     temp = myRandom.slice(start, end)
-//     randomParent.push(temp)
+//     fun = myRandom.slice(start, end)
+//     randomParent.push(fun)
 //   }
 //   for (var i = 0; i < randomParent.length; i++) {
 //     if (randomParent[i].indexOf(random) > 0) {
