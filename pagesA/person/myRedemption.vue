@@ -36,9 +36,12 @@
                 取消兑换
               </view>
             </view>
-            <view @click.stop="confirmJifenProdOrder(item)" class="rty confirm" v-if="item.Orders_Status == 3">
-              <view class="rightM payed" style="float: right;">确认收货</view>
-            </view>
+			<view class="rty">
+				<view class="leftM"><text v-if="item.Order_Shipping_Price > 0">运费：<text style="color: #888; font-size: 24rpx;">￥</text>{{item.Order_Shipping_Price}}</text></view>
+				<view @click.stop="confirmJifenProdOrder(item)" class="confirm" v-if="item.Orders_Status == 3">
+				  <view class="rightM payed" style="float: right;">确认收货</view>
+				</view>
+			</view>
           </view>
         </view>
 
@@ -229,7 +232,7 @@ export default {
           }
         }
 
-        .rty.confirm {
+        .confirm {
           justify-content: flex-end;
         }
 
@@ -248,6 +251,8 @@ export default {
           line-height: 27rpx;
           color: #333333;
           font-weight: 300;
+		  flex: 1;
+		  text-align: left;
         }
 
         .rightM {
