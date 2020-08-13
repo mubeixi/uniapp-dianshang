@@ -240,24 +240,16 @@ export default {
     checkAll () {
       // let result = ls.get((prod_id+";"+attr_id));
       // this.CartList[prod_id][attr_id].checked = result;
-      if (!this.checkAllFlag) {
-        for (var i in this.CartList) {
-          for (var j in this.CartList[i]) {
-            ls.set((i + ';' + j), true)
-            this.CartList[i][j].checked = true
-            this.checkAllFlag = true
-          }
-        }
-      } else {
-        for (var q in this.CartList) {
-          for (var p in this.CartList[i]) {
-            ls.set((q + ';' + p), false)
-            this.CartList[q][p].checked = false
-            this.checkAllFlag = false
-          }
-        }
-      }
-      this.cal_total()
+	  
+	   var checkAllFlag = !this.checkAllFlag
+	        for (var i in this.CartList) {
+				for (var j in this.CartList[i]) {
+				  ls.set((i + ';' + j), checkAllFlag, 1)
+				  this.CartList[i][j].checked = checkAllFlag
+				}
+	        }
+	        this.checkAllFlag = checkAllFlag
+	        this.cal_total()
     },
     setActiveAttr (pro_id, attr_id) {
       this.active_pro_id = pro_id
