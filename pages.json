@@ -17,11 +17,17 @@
 				}
 			}
 		},
-		
+
 		{
 			"path": "pages/index/pre",
 			"style": {
 				"navigationBarTitleText": "预览首页"
+			}
+		},
+		{
+			"path": "pages/fun/play",
+			"style": {
+				"navigationBarTitleText": "游戏排排队"
 			}
 		},
 		{
