@@ -208,7 +208,7 @@ export default {
     // 修改的单个的状态
     change (prod_id, attr_id) {
       // this.CartList[prod_id][attr_id].checked = !this.CartList[prod_id][attr_id].checked;
-      ls.set((prod_id + ';' + attr_id), !ls.get((prod_id + ';' + attr_id)))
+      ls.set((prod_id + ';' + attr_id), !ls.get((prod_id + ';' + attr_id)),1)
       const result = ls.get((prod_id + ';' + attr_id))
       this.CartList[prod_id][attr_id].checked = result
       this.checkAllFlag = true
@@ -284,7 +284,8 @@ export default {
         this.getCartUpdate()
         this.cal_total()
       })
-        .catch(() => {
+        .catch((e) => {
+			error(e.msg||'添加购物车失败')
           this.CartList[pro_id][attr_id].Qty = this.active_attr_qty // 原来的值
         })
     },
