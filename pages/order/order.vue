@@ -322,7 +322,7 @@ export default {
       }
       if (this.index > 0 && this.index < 4) {
         data.Order_Status = this.index
-      } else if (this.index === 4) {
+      } else if (this.index == 4) {
         data.Is_Commit = 0
         data.Order_Status = this.index
       }
