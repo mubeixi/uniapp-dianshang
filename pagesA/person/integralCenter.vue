@@ -128,6 +128,7 @@ export default {
     get_user_info().then(res => {
       this.info = res.data
       this.user_intergatal = res.data.User_Integral
+	  this.setUserInfo(res.data)
     }).catch(() => {
       error('获取用户信息失败')
     })
