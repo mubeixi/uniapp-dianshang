@@ -55,8 +55,8 @@
       </div>
       <!-- 包邮等信息 -->
       <div class="section3" v-if="product.Products_Promise && product.Products_Promise.length > 0">
-					<span :key="index" v-for="(item,index) in product.Products_Promise" v-if="item.name">
-							<image :src="'/static/client/detail/dh.png'|domain" alt="" class="img" />
+					<span :key="index" v-for="(item,index) in product.Products_Promise" >
+							<image :src="'/static/client/detail/dh.png'|domain" alt="" class="img"  />
 							<span>{{item.name}}</span>
 					</span>
       </div>
