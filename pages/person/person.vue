@@ -93,21 +93,19 @@
     </view>
     <view class="list">
 
-      <div :key="index" v-for="(item,index) of personInit">
-
-        <block v-if="item.field=='store_apply'||item.field=='store'">
-          <block v-if="!!initData.is_store_apply">
-            <view @click="goUrl(item.url)" class="setting cell" v-if="!Stores_ID&&item.field=='store_apply'">
+      <div  v-for="(item,index) of personInit" :key="index">
+	
+        <block v-if="(item&&item.field&&item.field=='store_apply')||(item&&item.field&&item.field=='store')">
+            <view @click="goUrl(item.url)" class="setting cell" v-if="!Stores_ID&&item.field=='store_apply'&&!!initData.is_store_apply">
               <image :src="item.img" class="left"></image>
               <view class="pintuan">{{item.name}}</view>
-              <image :src="'/static/client/person/right.png'|domain" class="right"></image>
+              <image src="/static/right.png" class="right"></image>
             </view>
-            <view @click="goUrl(item.url)" class="setting cell" v-else-if="item.field=='store'&&Stores_ID">
+            <view @click="goUrl(item.url)" class="setting cell" v-else-if="item.field=='store'&&Stores_ID&&!!initData.is_store_apply">
               <image :src="item.img" class="left"></image>
               <view class="pintuan">{{item.name}}</view>
-              <image :src="'/static/client/person/right.png'|domain" class="right"></image>
+              <image src="/static/right.png" class="right"></image>
             </view>
-          </block>
         </block>
         <block v-else>
           <view @click="goUrl(item.url)" class="group cell" >
