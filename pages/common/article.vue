@@ -45,6 +45,9 @@ export default {
     loadInfo () {
       getArticle({ article_id: this.article_id }).then(res => {
         this.articleData = res.data
+        uni.setNavigationBarTitle({
+          title: this.articleData.Article_Title
+        })
       })
     }
   }
