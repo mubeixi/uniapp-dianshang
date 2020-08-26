@@ -310,10 +310,9 @@ export const contact = () => {
       linkType: 'third',
       link: initData.kf_url
     })
-  } 
-  // else {
-  //   error('暂未设置客服功能')
-  // }
+  } else {
+    error('暂未设置客服功能')
+  }
 }
 
 export const fun = {
