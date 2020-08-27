@@ -307,7 +307,7 @@ export default {
     get_user_location () {
       let localInfo = null
       const rt = false
-      getLocation(this.pageEl).then(res => {
+      getLocation(this).then(res => {
         if (res.code === 0) {
           localInfo = res.data
           // rt = true
