@@ -133,8 +133,10 @@ export default {
         }, 1500)
       }, err => {
         uni.showToast({
-          title: res.msg
+		  icon:'none',
+          title: err.msg
         })
+		this.cancelPsw()
       })
     },
     // 积分兑换

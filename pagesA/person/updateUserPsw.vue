@@ -10,10 +10,19 @@
           <input class="item" placeholder="请再次输入新密码" type="password" v-model="check_psw">
         </view>
         <view class="content" v-if="type == 1">
-          <input class="item" placeholder="请输入原始支付密码,如未设置请留空" type="password" v-model="curr_psw">
-          <input class="item" placeholder="请输入新的支付密码" type="password" v-model="new_psw">
-          <input class="item" placeholder="请再次输入新密码" type="password" v-model="check_psw">
-        </view>
+			<view class="other-item other-items">
+				手机号
+				<input class="input phone" disabled=""   maxlength="11" placeholder="请输入手机号" type="text" :value="userInfo.User_Mobile?userInfo.User_Mobile:'请先绑定手机号'" />
+			</view>
+			<view class="other-item other-items">
+				验证码
+				<input class="input code" placeholder="请输入验证码" type="text" v-model="code" maxlength="4"/>
+				<view @click="getCode" class="get-msg">{{countdownStatus?(countdownNum + '秒'):'获取验证码'}}</view>
+			</view>
+			<!-- <input class="item" placeholder="请输入原始支付密码,如未设置请留空" type="password" v-model="curr_psw"> -->
+			<input class="item" placeholder="请输入新的支付密码" type="password" v-model="new_psw">
+			<input class="item" placeholder="请再次输入新密码" type="password" v-model="check_psw">
+		</view>
         <button class="save" formType="submit">保存</button>
       </form>
 
@@ -46,7 +55,8 @@ import {
   updateMobileSms,
   updateUserLoginPsw,
   updateUserMobile,
-  updateUserPayPsw
+  updateUserPayPsw,
+  updatePwdSms
 } from '../../common/fetch.js'
 import { mapActions, mapGetters } from 'vuex'
 import { pageMixin } from '../../common/mixin'
@@ -192,15 +202,38 @@ export default {
 	  }
 	  
 	  
-      updateMobileSms(data).then(res => {
-        uni.showToast({
-          title: '验证码已发送',
-          icon: 'success'
-        })
-        this.startCountdown()
-      }).catch(() => {
-        modal('验证码发送失败')
-      })
+		if(this.type==1){
+			data.type='User_PayPassword'
+			updatePwdSms(data).then().then(res => {
+				uni.showToast({
+					title: '验证码已发送',
+					icon: 'success'
+				})
+				this.startCountdown()
+			}).catch((e) => {
+					error(e.msg)
+			})
+		}else{
+			updateMobileSms(data).then(res => {
+				uni.showToast({
+					title: '验证码已发送',
+					icon: 'success'
+				})
+				this.startCountdown()
+			}).catch((e) => {
+					error(e.msg)
+			})
+		}
+	  
+      // updateMobileSms(data).then(res => {
+      //   uni.showToast({
+      //     title: '验证码已发送',
+      //     icon: 'success'
+      //   })
+      //   this.startCountdown()
+      // }).catch(() => {
+      //   modal('验证码发送失败')
+      // })
     },
     save (e) {
       // add_template_code({
@@ -214,11 +247,26 @@ export default {
         check_psw: this.check_psw
       }
       if (this.type == 1) {
+		 const isMobileOK = /^1(3|5|6|7|8|9)[0-9]{9}$/.test(this.mobile)
+		if (!isMobileOK) {
+			uni.showToast({
+				title: '手机号格式不正确',
+				icon: 'none'
+			})
+			return
+		}
+		if(!this.code){
+			this.toast('请填写验证码')
+			return
+		}
         // 原始密码默认为空
         if ((arg.curr_psw && arg.curr_psw.length < 6) || arg.new_psw.length < 6 || arg.check_psw.length < 6) {
           this.toast('密码最少6位')
           return
         }
+		arg.type='User_PayPassword'
+		arg.mobile=this.mobile
+		arg.captcha=this.code
         // if(arg.curr_psw == '') {
         // 	this.toast('原始密码不能为空')
         // 	return;
@@ -286,6 +334,7 @@ export default {
     } else if (options.type == 1) {
       this.title = '修改支付密码'
       this.type = 1
+	  this.mobile=this.userInfo.User_Mobile
       if (options.hasOwnProperty('is_back') && options.is_back) {
         this.is_back = true
       }
@@ -338,7 +387,7 @@ export default {
 
   .other {
     padding: 14rpx 20rpx 0;
-
+}
     .other-item {
       display: flex;
       align-items: center;
@@ -373,5 +422,28 @@ export default {
       text-align: center;
       margin: 157rpx auto 0;
     }
-  }
+  
+  
+  .model-title{
+  		width: 600rpx;
+  		height: 40rpx;
+  		line-height: 40rpx;
+  		text-align: center;
+  		font-size: 14px;
+  	}
+  	.flex1{
+  		flex: 1;
+  	}
+  	.btns{
+  		height: 80rpx;
+  		line-height: 80rpx;
+  		text-align: center;
+  	}
+  .other-items{
+  		border-bottom: 0px;
+  		background-color: #FFFFFF;
+  		margin-bottom: 20rpx;
+  		box-sizing: border-box;
+  		padding:0rpx 20rpx;
+  	}
 </style>
