@@ -300,6 +300,9 @@ export default {
           this.goBack()
         }, err => {
           this.toast(err.msg)
+		  setTimeout(() => {
+		    uni.navigateBack()
+		  }, 100)
         })
       } else if (this.type == 1) {
         updateUserPayPsw(arg).then(res => {
