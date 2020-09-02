@@ -3,7 +3,7 @@ export const isCustom = false
 
 export const isDev = process.env.NODE_ENV !== 'production'
 
-export const APP_USERS_ID = 'yk99261krh' // mrw5iqvhs2 xjgjd88jee  wkbq6nc2kc  05eiz8cqtw o1rcshfk39';
+export const APP_USERS_ID = 'wkbq6nc2kc' // mrw5iqvhs2 xjgjd88jee  wkbq6nc2kc  05eiz8cqtw o1rcshfk39';
 
 export const apiBaseUrl = 'https://new401.bafangka.com'
 

@@ -80,6 +80,13 @@ export default {
 
     // 每次加载都清空全站配置
     ls.remove('initData')
+
+    // #ifdef H5
+    if (options.query && options.query.users_id) {
+      ls.set('users_id', options.query.users_id)
+    }
+    // #endif
+
     getSystemConf().then(res => {
       ls.set('initData', res.data)
     }).catch(error => {
