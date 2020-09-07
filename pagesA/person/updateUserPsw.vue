@@ -67,6 +67,7 @@ export default {
   mixins: [pageMixin],
   data () {
     return {
+	  accessToken:'',
 	  user_id:'',
       JSSDK_INIT: false,
       type: 0,
@@ -121,7 +122,7 @@ export default {
       }
 	  if(this.user_id){
 	  	data.User_ID=this.user_id,
-		data.access_token = ls.get('accessToken')
+		data.access_token = this.accessToken
 	  }
 	  
       updateUserMobile(data).then(res => {
@@ -132,14 +133,14 @@ export default {
 		const postData = {}
         if (this.user_id) {
           postData.User_ID = this.user_id
-          postData.access_token = ls.get('accessToken')
+          postData.access_token = this.accessToken
         }
         get_user_info(postData, {
           tip: '',
           errtip: false
         }).then(res => {
 			this.setUserInfo(res.data)
-			const access_token = ls.get('accessToken')
+			const access_token = this.accessToken
 			if (access_token) {
 			  ls.set('access_token', access_token, 1)
 			}
@@ -147,7 +148,7 @@ export default {
 			  ls.set('user_id', this.user_id, 1)
 			}
 
-			ls.remove('accessToken')
+			//ls.remove('accessToken')
 			uni.navigateTo({
 			  url: '/pages/person/person'
 			})
@@ -331,6 +332,7 @@ export default {
     if (options.user_id) {
 		this.user_id=options.user_id
     }
+	this.accessToken=options.accessToken
     if (options.type == 0) {
       this.title = '修改登录密码'
       this.type = 0

@@ -8,16 +8,16 @@
       <image :class="userInfo.User_ID&&show>0?'':'onlyMsg'" :src="'/static/client/fenxiao/msg.png'|domain" @click="goMsg" class="msg"></image>
       <view :class="signin?'isQian':''" @click="signinMethod" class="qiandao" v-if="userInfo.User_ID&&show>0">
         <image :src="'/static/client/person/qiandao.png'|domain" class="imgg"></image>
-        <view class="viewl">{{signin?'已签到':'签到'}}</view>
+        <view class="viewl">{{signin?$t('person','Checked in'):$t('person','Sign in')}}</view>
       </view>
       <view class="personInfo flex">
         <view @click="goPersonMsg" class="left">
           <image :src="(userInfo.User_HeadImg||'/static/client/default.png')|domain" class="image" style="border-radius: 50%;"></image>
         </view>
         <view :style="{position:!userInfo.User_ID?'relative':'static'}" class="right flex1">
-          <view @click="goLogin" class="font14 loginBtn" plain size="mini" v-if="!userInfo.User_ID">登录/注册</view>
+          <view @click="goLogin" class="font14 loginBtn" plain size="mini" v-if="!userInfo.User_ID">{{$t('person','Log in/Registered')}}</view>
           <view @click="goPersonMsg" class="nickName" v-if="userInfo.User_ID">
-            {{userInfo.User_NickName||(userInfo.User_No?('用户'+userInfo.User_No):'暂无昵称')}}
+            {{userInfo.User_NickName||(userInfo.User_No?($t('person','user')+userInfo.User_No):$t('person','No nickname'))}}
             <block v-if="userInfo.User_NickName">({{userInfo.User_No}})</block>
           </view>
           <view @click="goVip" class="cart" v-if="userInfo.User_ID && initData.user_switch">{{userLevelText()}}
@@ -29,25 +29,25 @@
         <view @click="goBalance" class="navList first" v-if="initData.charge_switch==1">
           <image :src="'/static/client/person/yue.png'|domain" class="imgr" mode=""></image>
           <view class="viewr">
-            余额
+            {{ $t('person','Balance') }}
           </view>
         </view>
         <view @click="goIntegral" class="navList second">
           <image :src="'/static/client/person/jifen.png'|domain" class="imgr" mode=""></image>
           <view class="viewr">
-            积分
+            {{ $t('person','Integral') }}
           </view>
         </view>
         <view @click="goCollection" class="navList three">
           <image :src="'/static/client/person/shoucang.png'|domain" class="imgr" mode=""></image>
           <view class="viewr">
-            收藏
+            {{ $t('person','Favorites') }}
           </view>
         </view>
         <view @click="goCoupon" class="navList four">
           <image :src="'/static/client/person/youhuijuan.png'|domain" class="imgr" mode=""></image>
           <view class="viewr" style="left: 50upx;">
-            优惠券
+            {{ $t('person','Coupon') }}
           </view>
         </view>
       </view>
@@ -94,7 +94,7 @@
     <view class="list">
 
       <div  v-for="(item,index) of personInit" :key="index">
-	
+
         <block v-if="(item&&item.field&&item.field=='store_apply')||(item&&item.field&&item.field=='store')">
             <view @click="goUrl(item.url)" class="setting cell" v-if="!Stores_ID&&item.field=='store_apply'&&!!initData.is_store_apply">
               <image :src="item.img" class="left"></image>
@@ -116,7 +116,7 @@
             <image :src="'/static/client/person/right.png'|domain" class="right"></image>
           </view>
         </block>
-        
+
       </div>
 
       <view @click="goSetting" class="setting cell">
