@@ -624,10 +624,10 @@ export default {
       console.log(isBindPhone, userData)
       if (isBindPhone && userData && !userData.User_Mobile) {
         console.log(objTranslate(userData))
-        ls.set('accessToken', userData.access_token, 1)
-        ls.set('user_id', userData.User_ID, 1)
+        // ls.set('accessToken', userData.access_token, 1)
+        // ls.set('user_id', userData.User_ID, 1)
         uni.redirectTo({
-          url: '/pagesA/person/updateUserPsw?type=3&user_id=' + userData.User_ID
+          url: '/pagesA/person/updateUserPsw?type=3&user_id=' + userData.User_ID+'&accessToken='+userData.access_token
         })
       } else {
         this.setUserInfo(userData)

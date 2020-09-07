@@ -6,6 +6,7 @@ import { buildSharePath, emptyObject, GetQueryByString, isWeiXin, ls } from './t
 import { domainFn } from './filter'
 import { checkIsLogin, error } from './index'
 import { mapActions } from 'vuex'
+import T from '../common/langue/i18n'
 import store from '../store'
 // #ifdef H5
 import wx from 'weixin-js-sdk'
@@ -372,6 +373,20 @@ export const pageMixin = {
       }
       // #endif
     },
+	// 批量注册变量名称
+	$restLangueAssign (arr) {
+	  for (var name of arr) {
+		this[name] = uni.T._(name)
+	  }
+	},
+	// 语言
+	$t (line, data) {
+	  return T._(line, data)
+	},
+	// 切换语种
+	$setLocale (code) {
+	  T.setLocale(code)
+	},
     // #ifdef H5
     WX_JSSDK_INIT,
     // #endif
