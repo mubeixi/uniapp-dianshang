@@ -130,6 +130,7 @@ import area from '../../common/area.js'
 import utils from '../../common/util.js'
 import { agentApply, getTown } from '../../common/fetch.js'
 import { error } from '../../common'
+import { checkMobile } from '../../common/tool.js'
 
 export default {
   mixins: [pageMixin],
@@ -205,7 +206,7 @@ export default {
   },
   methods: {
     isTell () {
-      if (!(/^1[3456789]\d{9}$/.test(this.arr.apply_mobile))) {
+      if (!(checkMobile(this.arr.apply_mobile))) {
         uni.showToast({
           title: '手机号输入错误，请重新输入',
           icon: 'none'
@@ -286,7 +287,7 @@ export default {
             icon: 'none'
           })
           return
-        } else if (!(/^1[3456789]\d{9}$/.test(this.arr.apply_mobile))) {
+        } else if (!(checkMobile(this.arr.apply_mobile))) {
           uni.showToast({
             title: '手机号输入错误，请重新输入',
             icon: 'none'

@@ -66,6 +66,7 @@ import area from '../../common/area.js'
 import utils from '../../common/util.js'
 import { addAddress, editAddress, getAddress, getTown } from '../../common/fetch.js'
 import { pageMixin } from '../../common/mixin'
+import { checkMobile } from '../../common/tool'
 
 export default {
   mixins: [pageMixin],
@@ -196,7 +197,7 @@ export default {
           icon: 'none'
         })
         return false
-      } else if (!utils.check_mobile(address_info.Address_Mobile)) {
+      } else if (!checkMobile(address_info.Address_Mobile)) {
         uni.showModal({
           title: '提示',
           content: '请输入正确的电话号码',
