@@ -61,7 +61,22 @@
         <image :src="'/static/client/fenxiao/chakan.png'|domain" class="image"></image>
       </view>
     </view>
-    <circleTitle title="股东条件说明"></circleTitle>
+     <!-- <circleTitle title="股东条件说明"></circleTitle> -->
+    	<div>
+    		<view class="fengTitle">
+    		  <view class="fengTitleLeft">
+    		    <view class="xiao"></view>
+    		    <view class="da"></view>
+    		  </view>
+    		  <view class="fengTitleCenter">
+    		   股东条件说明
+    		  </view>
+    		  <view class="fengTitleRight">
+    		    <view class="da"></view>
+    		    <view class="xiao"></view>
+    		  </view>
+    		</view>
+    	</div>
     <view :key="index" class="xiang" v-for="(item,index) of pro.sha_config.Sha_Rate" v-if="item.sha_name">
       <view class="xiangTop">
         {{item.sha_name}}
@@ -98,7 +113,22 @@
     </view>
 
     <view style="height: 20rpx;width: 100%;"></view>
-    <circleTitle title="收益介绍"></circleTitle>
+    <!-- <circleTitle title="收益介绍"></circleTitle> -->
+    	<div>
+    		<view class="fengTitle">
+    		  <view class="fengTitleLeft">
+    		    <view class="xiao"></view>
+    		    <view class="da"></view>
+    		  </view>
+    		  <view class="fengTitleCenter">
+    		   收益介绍
+    		  </view>
+    		  <view class="fengTitleRight">
+    		    <view class="da"></view>
+    		    <view class="xiao"></view>
+    		  </view>
+    		</view>
+    	</div>
     <view class="shouyi">
       <view class="tt">
         <view :class="{rightZ:index==pro.sha_config.Sha_Rate.length-1}" :key="index"
@@ -540,4 +570,55 @@ export default {
       color: #F43131;
     }
   }
+  
+  .fengTitle {
+      height: 80rpx;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    
+      .fengTitleLeft, .fengTitleRight {
+        display: flex;
+        height: 80rpx;
+        align-items: center;
+    
+        .da {
+          width: 16rpx;
+          height: 16rpx;
+          border-radius: 50%;
+          background-color: #F43131;
+        }
+    
+        .xiao {
+          width: 9rpx;
+          height: 9rpx;
+          border-radius: 50%;
+          background-color: #F43131;
+        }
+      }
+    
+      .fengTitleLeft {
+        .da {
+          margin-left: 10rpx;
+        }
+      }
+    
+      .fengTitleRight {
+        .da {
+          margin-right: 10rpx;
+        }
+      }
+    
+      .fengTitleCenter {
+        height: 80rpx;
+        line-height: 80rpx;
+        font-size: 30rpx;
+        color: #333333;
+        font-weight: 500;
+        margin-left: 20rpx;
+        margin-right: 20rpx;
+      }
+    
+    }
 </style>

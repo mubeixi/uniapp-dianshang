@@ -107,7 +107,9 @@ export default {
       },
       totalCount: 0, // 评论个数
       comment_list: [], // 评论列表
-      product: '', // 商品结果
+      product: {
+     		  Products_JSON: { ImgPath: [] } 
+     	  }, // 商品结果
       Products_ID: 0,
       count: 1, // 商品数量
       skuF: 1, // 规格详情
