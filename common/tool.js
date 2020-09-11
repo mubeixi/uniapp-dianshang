@@ -614,9 +614,6 @@ export const plainArray = (arr, key, newArr) => {
   }
 }
 
-
-
-
 /**
  * 保存图片到本地
  * @param fileUrl
@@ -626,12 +623,12 @@ export const plainArray = (arr, key, newArr) => {
 export const saveImageToDisk = async ({ fileUrl, type = 'local' }) => {
   try {
     const fileTempPath = type === 'local' ? fileUrl : await downLoadFile(fileUrl)
-	
-	console.log(fileTempPath,"sss")
+
+    console.log(fileTempPath, 'sss')
     await Promisify('saveImageToPhotosAlbum', { filePath: fileTempPath }).catch(e => { throw Error(e.errMsg) })
     return fileTempPath
   } catch (e) {
-	  console.log(e,'error')
+	  console.log(e, 'error')
     return false
   }
 }
@@ -648,7 +645,23 @@ const downLoadFile = async (url) => {
     if (!tempFilePath) throw Error('图片下载失败')
     return tempFilePath
   } catch (e) {
-    console.log(e,"图片下载失败")
+    console.log(e, '图片下载失败')
     return false
   }
+}
+
+/**
+ * 检查手机号
+ * @param { String } mobile 手机号
+ * @param { String } phone_code 国际区号
+ * @returns { Boolean }
+ */
+export const checkMobile = (mobile, phone_code = '') => {
+  let flag = true
+  if (phone_code === '' || phone_code === '+86') {
+    flag = /^1[3-9]\d{9}$/.test(mobile)
+  } else {
+    flag = /^\d{3,15}$/.test(mobile)
+  }
+  return flag
 }

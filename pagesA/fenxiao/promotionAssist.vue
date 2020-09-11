@@ -42,6 +42,7 @@
 </template>
 
 <script>
+import { checkMobile } from '../../common/tool'
 import { pageMixin } from '../../common/mixin'
 import { addPromotionArticle } from '../../common/fetch.js'
 
@@ -106,7 +107,7 @@ export default {
       // 	code: e.detail.formId,
       // 	times: 1
       // })
-      const isMobileOK = /^1(3|5|6|7|8|9)[0-9]{9}$/.test(this.postData.mobile)
+      const isMobileOK = checkMobile(this.postData.mobile)
       const isEmailOK = /^([a-zA-Z0-9_\.\-]+)@([a-zA-Z0-9_\.\-]+)\.([a-zA-Z]{2,4})$/.test(this.postData.email)
       const isQQ = /[1-9][0-9]{4,10}/.test(this.postData.qq)
       if (!isMobileOK) {

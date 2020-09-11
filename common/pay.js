@@ -26,7 +26,7 @@ import { confirmOrderPayStatus, traslateShorten } from './fetch'
 // })
 //
 
-export const unipayFunc = (vm, pay_type, payRequestData) => {
+export const unipayFunc = (vm, pay_type, payRequestData, url = '/fre/pages/order/order?index=2') => {
   const _self = vm; const res = payRequestData
 
   let provider = 'wxpay'
@@ -97,7 +97,7 @@ export const unipayFunc = (vm, pay_type, payRequestData) => {
   // 微信h5
   // eslint-disable-next-line no-unreachable
   if (pay_type === 'wx_h5') {
-    const redirect_url = res.data.mweb_url + '&redirect_url=' + urlencode(location.origin + '/fre/pages/order/order?index=2')
+    const redirect_url = res.data.mweb_url + '&redirect_url=' + urlencode(location.origin + url)
     location.href = redirect_url
     return
   }
