@@ -174,7 +174,11 @@ export default {
   data () {
     return {
       pro: [],
-      data: {}
+      data: {
+      		  disInfo:{
+      			 Shop_Logo:'' 
+      		  }
+      	  }
     }
   },
   components: {
