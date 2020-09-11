@@ -327,6 +327,7 @@ export default {
 		  this.phone_code = this.world_sms_code_list[this.world_sms_code_idx].phone_code
     },
     async initDataFn () {
+      if (this.type != 3) return
       const initData = await this.getInitData(1)
       // 国际短信
       this.world_sms_flag = initData.world_sms_flag || 0

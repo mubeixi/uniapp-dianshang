@@ -169,7 +169,8 @@ export default {
     formatphone: function (value) {
       if (value) {
         var len = value.length
-        var xx = value.substring(3, len - 4)
+        var start = 3 + (value.indexOf('+') > -1 ? 3 : 0)
+        var xx = value.substring(start, len - 4)
         var values = value.replace(xx, '****')
         return values
       }

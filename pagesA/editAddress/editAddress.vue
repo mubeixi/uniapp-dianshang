@@ -3,25 +3,47 @@
     <form @submit="formSubmit" report-submit="true">
       <view class='xinxi'>
         <text class="text">收货人</text>
-        <input class="input" maxlength='20' name="Address_Name" placeholder="请输入收货人姓名" type="text"
+        <input class="input" maxlength='50' name="Address_Name" placeholder="请输入收货人姓名" type="text"
                v-model="address_info.Address_Name" />
       </view>
       <view class='xinxi'>
         <text class="text">联系电话</text>
-        <input class="input" maxlength="11" name="Address_Mobile" placeholder="请输入联系电话" type="number"
-               v-model="address_info.Address_Mobile" />
+				<view class="input world_sms_choose">
+					<picker v-if="world_sms_flag" @change="worldSmsChoose" :value="world_sms_code_idx" :range="world_sms_code_list" range-key="choose_item">
+						<view class="world_sms_choose_show">
+							<view class="phone_code">{{world_sms_code_list[world_sms_code_idx].phone_code}}</view>
+							<i class="funicon icon-xia world_sms_choose_icon"></i>
+						</view>
+					</picker>
+					<text class="show_phone_code" v-else>{{address_info.phone_code?address_info.phone_code:'+86'}}</text>
+					<input class="input_phone" maxlength="15" name="Address_Mobile" placeholder="请输入联系电话" type="number"
+					       v-model="address_info.Address_Mobile" :disabled="!world_sms_flag && (address_info.phone_code !== '' && address_info.phone_code !== '+86')" />
+				</view>
       </view>
+			<view class="xinxi country_address_switch" v-if="world_address_flag || address_info.country_status">
+				<text class="text">是否使用国际地址</text>
+				<switch class="country_switch" :checked="!!address_info.country_status" :disabled="!world_address_flag" @change="countryAddressSwitch" color="#04B600" />
+			</view>
+			<block v-if="address_info.country_status">
+				<view class='xinxi'>
+				  <text class="text">国际地址</text>
+				  <input :value="address_info.Address_Detailed" class="input" maxlength='250' name="Address_Detailed"
+				         placeholder="请输入详细国际地址"
+				         type="text" />
+				</view>
+			</block>
+			<block v-else>
       <view class='dizhi'>
         <view class="section">
           <picker :range="change_objectMultiArray" :value="change_multiIndex" @change="bindMultiPickerChange"
                   @columnchange="bindMultiPickerColumnChange" mode="multiSelector" range-key="name">
             <view class="picker">
               <text class="text">收货地址</text>
-              <view class="view" v-if="!address_info.Address_Province">选择省份</view>
+              <view class="view" v-if="address_info.Address_Province <= 0">选择省份</view>
               <view class="view" v-else>{{objectMultiArray[0][multiIndex[0]]['name']}}</view>
-              <view class="view" v-if="!address_info.Address_City">选择城市</view>
+              <view class="view" v-if="address_info.Address_City <= 0">选择城市</view>
               <view class="view" v-else>{{objectMultiArray[1][multiIndex[1]]['name']}}</view>
-              <view class="view" v-if="!address_info.Address_Area">选择地区</view>
+              <view class="view" v-if="address_info.Address_Area <= 0">选择地区</view>
               <view class="view" v-else>{{objectMultiArray[2][multiIndex[2]]['name']}}</view>
             </view>
           </picker>
@@ -32,7 +54,7 @@
           <picker :range="t_arr" :value="t_index" @change="t_pickerChange" mode="selector" range-key="name">
             <view class="picker">
               <text class="text">街道地址</text>
-              <view class="view" v-if="!address_info.Address_Town">选择街道</view>
+              <view class="view" v-if="address_info.Address_Town <= 0">选择街道</view>
               <view class="view" v-else>{{t_arr[t_index]['name']}}</view>
             </view>
           </picker>
@@ -44,6 +66,7 @@
                placeholder="请输入详细地址"
                type="text" />
       </view>
+			</block>
 
       <view class='xinxi set_default'>
         <checkbox-group name="Address_Is_Default">
@@ -55,6 +78,13 @@
           </label>
         </checkbox-group>
       </view>
+
+			<view class="xinxi err" v-if="!world_sms_flag && (address_info.phone_code !== '' && address_info.phone_code !== '+86')">
+				注意：因系统关闭国际短信功能，则已添加的国外手机号不能更改，若想变动，请删除后重新添加
+			</view>
+			<view class="xinxi err" v-if="!world_address_flag && address_info.country_status">
+				注意：因系统关闭国外收货地址功能，则已添加的国外收货地址不能切换，若想变动，请删除后重新添加
+			</view>
 
       <button class="tianjia-btn" formType="submit">确定</button>
     </form>
@@ -85,20 +115,29 @@ export default {
         User_ID: 0,
         Address_ID: 0, // 地址id  编辑时有用
         Address_Name: '',
+        phone_code: '',
         Address_Mobile: '',
         Address_Province: 0, // 为id
         Address_City: 0, // 为id
         Address_Area: 0, // 为id
         Address_Town: 0,
         Address_Detailed: '',
-        Address_Is_Default: 0 // 是否为默认地址
+        Address_Is_Default: 0, // 是否为默认地址
+        country_status: 0	// 是否是国际地址
       },
       // 街道信息
       t_arr: [],
       t_index: 0,
       is_first_add: false, // 是否为该用户要添加的第一条收货地址
 
-      from_page: '' // 来源页面  checkout(需设置checkout页面的back_address_id)、addresslist(不需操作)
+      from_page: '', // 来源页面  checkout(需设置checkout页面的back_address_id)、addresslist(不需操作)
+
+      // 国际短信
+      world_sms_flag: 0,
+      world_sms_code_list: [],
+      world_sms_code_idx: 0,
+      // 国际收货地址
+      world_address_flag: 0
     }
   },
   methods: {
@@ -118,6 +157,11 @@ export default {
     },
     // 获取乡镇
     address_town: function () {
+      if (this.address_info.Address_Area <= 0) {
+        this.t_arr = []
+        this.t_index = 0
+        return
+      }
       getTown({ a_id: this.address_info.Address_Area }).then(res => {
         var t_arr = []
         var t_index = 0
@@ -176,15 +220,10 @@ export default {
 
     // 提交地址
     formSubmit: function (e) {
-      // add_template_code({
-      // 	code: e.detail.formId,
-      // 	times: 1
-      // })
-
       var address_info = e.detail.value
       if (!address_info.Address_Name) {
         uni.showToast({
-          title: '请输入收货人名称',
+          title: '请填写收货人名称',
           icon: 'none'
         })
         return false
@@ -193,34 +232,37 @@ export default {
       }
       if (!address_info.Address_Mobile) {
         uni.showToast({
-          title: '请输入收货人电话',
+          title: '请填写收货人电话',
           icon: 'none'
         })
         return false
-      } else if (!checkMobile(address_info.Address_Mobile)) {
+      } else if (!checkMobile(address_info.Address_Mobile, this.address_info.phone_code)) {
         uni.showModal({
           title: '提示',
-          content: '请输入正确的电话号码',
+          content: '请填写正确的电话号码',
           showCancel: false
         })
         return false
       } else {
         this.address_info.Address_Mobile = address_info.Address_Mobile
       }
-      if (!this.address_info.Address_Province || !this.address_info.Address_City || !this.address_info.Address_Area) {
-        uni.showToast({
-          title: '请选择收货地址',
-          icon: 'none'
-        })
-        return false
+      // 判断是否使用国际地址
+      if (this.address_info.country_status == 0) {
+        if (this.address_info.Address_Province <= 0 || this.address_info.Address_City <= 0 || this.address_info.Address_Area <= 0) {
+				  uni.showToast({
+				    title: '请选择收货地址',
+				    icon: 'none'
+				  })
+				  return false
+        }
+        // if (!this.address_info.Address_Town) {
+        //       uni.showToast({
+        //         title: '请选择街道',
+        //         icon: 'none'
+        //       });
+        //       return false;
+        // }
       }
-      // if (!this.address_info.Address_Town) {
-      //       uni.showToast({
-      //         title: '请选择街道',
-      //         icon: 'none'
-      //       });
-      //       return false;
-      // }
       if (!address_info.Address_Detailed) {
         uni.showToast({
           title: '请填写详细的地址',
@@ -256,8 +298,6 @@ export default {
           this.addeditAddress(res)
         }).catch(() => {
         })
-
-        // app.http_req(data, app.globalData.init.api_url, 'POST', this.addeditAddress);
       }
     },
 
@@ -330,7 +370,7 @@ export default {
         utils.array_change(area.area[0]['0,' + addressInfo.Address_Province + ',' + addressInfo.Address_City])
       ]
       // 设置初始显示列
-      const multiIndex = [
+      const multiIndex = addressInfo.country_status == 1 ? [0, 0, 0] : [
         utils.get_arr_index(objectMultiArray[0], addressInfo.Address_Province),
         utils.get_arr_index(objectMultiArray[1], addressInfo.Address_City),
         utils.get_arr_index(objectMultiArray[2], addressInfo.Address_Area)
@@ -340,15 +380,29 @@ export default {
       this.change_objectMultiArray = objectMultiArray
       this.multiIndex = multiIndex
       this.change_multiIndex = multiIndex
+      // 判断国际区号选择的下标
+      for (const idx in this.world_sms_code_list) {
+        const code_info = this.world_sms_code_list[idx]
+        if (code_info.phone_code == addressInfo.phone_code) {
+          this.world_sms_code_idx = idx
+        }
+      }
       // 处理街道信息
       this.address_town()
     },
 
     // 页面加载
-    load: function () {
+    async load () {
+      const initData = await this.getInitData(1)
+      // 国际短信
+      this.world_sms_flag = initData.world_sms_flag || 0
+      this.world_sms_code_list = initData.world_sms_code_list || []
+      // 国际收货地址
+      this.world_address_flag = initData.world_address_flag || 0
+
       // 如果有Address_ID， 则为编辑
       if (this.address_info.Address_ID) {
-        getAddress({ Address_ID: this.address_info.Address_ID }).then(res => {
+        await getAddress({ Address_ID: this.address_info.Address_ID, operate: 1 }).then(res => {
           this.setAddressInfo(res)
         }).catch(() => {
         })
@@ -363,14 +417,11 @@ export default {
           utils.array_change(area.area[0]['0']),
           utils.array_change(area.area[0]['0,1']),
           utils.array_change(area.area[0]['0,1,35'])
-        ],
+        ]
         this.t_arr = []
         this.c_t_arr = []
         // 查询是否是该用户要添加的第一条收货地址
-        var addressArgs = {
-          act: 'get_address'
-        }
-        getAddress({}).then(res => {
+        await getAddress({}).then(res => {
           // 设是否为第一条收获地址状态
           if ((res.data.length <= 0)) {
             this.is_first_add = true
@@ -381,6 +432,14 @@ export default {
           }
         })
       }
+    },
+    worldSmsChoose (e) {
+		  this.world_sms_code_idx = e.detail.value
+		  this.address_info.phone_code = this.world_sms_code_list[this.world_sms_code_idx].phone_code
+    },
+    countryAddressSwitch (e) {
+      const val = e.detail.value
+      this.address_info.country_status = val ? 1 : 0
     }
   },
 
@@ -551,4 +610,40 @@ export default {
     position: relative;
     top: -2px;
   }
+
+	.country_address_switch {
+		.text {
+			width: auto !important;
+		}
+		.country_switch {
+			transform:scale(0.7);
+			margin-top: 10rpx;
+			float: right;
+		}
+	}
+
+	.world_sms_choose {
+		display: flex;
+		align-items: center;
+		.world_sms_choose_show {
+			display: flex;
+			align-items: center;
+				.world_sms_choose_icon {
+					margin-left: 10rpx;
+					margin-right: 10rpx;
+				}
+		}
+		.show_phone_code {
+			margin-right: 10rpx;
+		}
+		.input_phone {
+			font-size: 28rpx;
+		}
+	}
+
+	.err {
+		color: #FA6B27;
+		font-size: 24rpx;
+		border-bottom: 0;
+	}
 </style>

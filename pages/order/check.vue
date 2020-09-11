@@ -157,7 +157,6 @@
         </view>
       </view>
 
-
       <view class="remind-wrap" v-if="remindAddress">
         <view class="remind-add">
           <view class="text-align-center mb20">新建收货地址</view>
@@ -355,7 +354,8 @@ export default {
     formatphone: function (value) {
       if (value) {
         var len = value.length
-        var xx = value.substring(3, len - 4)
+        var start = 3 + (value.indexOf('+') > -1 ? 3 : 0)
+        var xx = value.substring(start, len - 4)
         var values = value.replace(xx, '****')
         return values
       }
