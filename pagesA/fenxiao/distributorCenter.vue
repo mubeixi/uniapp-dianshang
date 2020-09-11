@@ -166,7 +166,7 @@ import utils from '../../common/util.js'
 import popupLayer from '../../components/popup-layer/popup-layer.vue'
 import { mapActions, mapGetters } from 'vuex'
 import { unipayFunc } from '../../common/pay.js'
-import { GetQueryByString, isWeiXin, ls, urlencode } from '../../common/tool'
+import { GetQueryByString, isWeiXin, ls, urlencode, checkMobile } from '../../common/tool'
 import { confirm, error, toast } from '../../common'
 
 export default {
@@ -531,7 +531,7 @@ export default {
             })
             arr = false
             return
-          } else if (this.pro.dis_config.Reserve_DisplayTelephone == 1 && !(/^1[3456789]\d{9}$/.test(this.shenArr.DisplayTelephone))) {
+          } else if (this.pro.dis_config.Reserve_DisplayTelephone == 1 && !(checkMobile(this.shenArr.DisplayTelephone))) {
             uni.showToast({
               title: '手机号输入错误，请重新输入',
               icon: 'none'
@@ -688,7 +688,7 @@ export default {
     // 是否是手机号
     isTell () {
       if (this.pro.dis_config.Reserve_DisplayTelephone == 1) {
-        if (!(/^1[3456789]\d{9}$/.test(this.shenArr.DisplayTelephone))) {
+        if (!(checkMobile(this.shenArr.DisplayTelephone))) {
           uni.showToast({
             title: '手机号输入错误，请重新输入',
             icon: 'none'

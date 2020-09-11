@@ -41,7 +41,22 @@
         <image :src="'/static/client/fenxiao/chakan.png'|domain" class="image"></image>
       </view>
     </view>
-    <circleTitle title="我的数据"></circleTitle>
+   <!-- <circleTitle title="我的数据"></circleTitle> -->
+	<div>
+			<view class="fengTitle">
+			  <view class="fengTitleLeft">
+			    <view class="xiao"></view>
+			    <view class="da"></view>
+			  </view>
+			  <view class="fengTitleCenter">
+			   我的数据
+			  </view>
+			  <view class="fengTitleRight">
+			    <view class="da"></view>
+			    <view class="xiao"></view>
+			  </view>
+			</view>
+		</div>
     <view class="myData">
       <view class="myDataTop">
         <view class="td">
@@ -73,7 +88,22 @@
         </view>
       </view>
     </view>
-    <circleTitle title="爵位晋升说明"></circleTitle>
+  <!--  <circleTitle title="爵位晋升说明"></circleTitle> -->
+	<div>
+		<view class="fengTitle">
+		  <view class="fengTitleLeft">
+		    <view class="xiao"></view>
+		    <view class="da"></view>
+		  </view>
+		  <view class="fengTitleCenter">
+		   爵位晋升说明
+		  </view>
+		  <view class="fengTitleRight">
+		    <view class="da"></view>
+		    <view class="xiao"></view>
+		  </view>
+		</view>
+	</div>
     <view class="description">
       <view class="t1">
         <view class="names">
@@ -110,7 +140,22 @@
         </view>
       </view>
     </view>
-    <circleTitle title="名词解释"></circleTitle>
+    <!-- <circleTitle title="名词解释"></circleTitle> -->
+    	<div>
+    		<view class="fengTitle">
+    		  <view class="fengTitleLeft">
+    		    <view class="xiao"></view>
+    		    <view class="da"></view>
+    		  </view>
+    		  <view class="fengTitleCenter">
+    		   名词解释
+    		  </view>
+    		  <view class="fengTitleRight">
+    		    <view class="da"></view>
+    		    <view class="xiao"></view>
+    		  </view>
+    		</view>
+    	</div>
     <view class="noun">
       <view :key="j" class="vivi" v-for="(i,j) of pro.noun_desc">
         {{j+1}}、{{i}}
@@ -129,7 +174,11 @@ export default {
   data () {
     return {
       pro: [],
-      data: []
+      data: {
+      		  disInfo:{
+      			 Shop_Logo:'' 
+      		  }
+      	  }
     }
   },
   components: {
@@ -382,4 +431,57 @@ export default {
       line-height: 50rpx;
     }
   }
+  
+   
+    
+    .fengTitle {
+      height: 80rpx;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    
+      .fengTitleLeft, .fengTitleRight {
+        display: flex;
+        height: 80rpx;
+        align-items: center;
+    
+        .da {
+          width: 16rpx;
+          height: 16rpx;
+          border-radius: 50%;
+          background-color: #F43131;
+        }
+    
+        .xiao {
+          width: 9rpx;
+          height: 9rpx;
+          border-radius: 50%;
+          background-color: #F43131;
+        }
+      }
+    
+      .fengTitleLeft {
+        .da {
+          margin-left: 10rpx;
+        }
+      }
+    
+      .fengTitleRight {
+        .da {
+          margin-right: 10rpx;
+        }
+      }
+    
+      .fengTitleCenter {
+        height: 80rpx;
+        line-height: 80rpx;
+        font-size: 30rpx;
+        color: #333333;
+        font-weight: 500;
+        margin-left: 20rpx;
+        margin-right: 20rpx;
+      }
+    
+    }
 </style>

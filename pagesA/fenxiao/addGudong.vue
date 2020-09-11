@@ -27,6 +27,7 @@
 <script>
 import { pageMixin } from '../../common/mixin'
 import { shaApply } from '../../common/fetch.js'
+import { checkMobile } from '../../common/tool.js'
 
 export default {
   mixins: [pageMixin],
@@ -51,7 +52,7 @@ export default {
           icon: 'none'
         })
         return
-      } else if (!(/^1[3456789]\d{9}$/.test(this.arr.apply_mobile))) {
+      } else if (!(checkMobile(this.arr.apply_mobile))) {
         uni.showToast({
           title: '手机号输入错误，请重新输入',
           icon: 'none'
@@ -76,7 +77,7 @@ export default {
       })
     },
     isTell () {
-      if (!(/^1[3456789]\d{9}$/.test(this.arr.apply_mobile))) {
+      if (!(checkMobile(this.arr.apply_mobile))) {
         uni.showToast({
           title: '手机号输入错误，请重新输入',
           icon: 'none'
