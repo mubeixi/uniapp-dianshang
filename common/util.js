@@ -179,15 +179,6 @@ function makeid () {
 //   return str
 // }
 
-// 验证手机号码
-function check_mobile (mobile) {
-  if (!(/^1[3-9]\d{9}$/.test(mobile))) {
-    return false
-  } else {
-    return true
-  }
-}
-
 // 验证金额格式
 function check_money (money) {
   if (!(/(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/.test(String(money)))) {
@@ -285,9 +276,8 @@ export const array_change = function (arr) {
 
 // 获取数组下标  用于收货地址选择的显示
 export const get_arr_index = function (arr, id) {
-	
   for (var i in arr) {
-    if (Number(arr[i].id) ===Number(id)) {
+    if (Number(arr[i].id) === Number(id)) {
       return parseInt(i)
     }
   }
@@ -633,7 +623,6 @@ module.exports = {
   makeid: makeid,
   // paysignjsapi: paysignjsapi,
   // paysignjs: paysignjs,
-  check_mobile: check_mobile,
   check_money: check_money,
   array_change: array_change,
   get_arr_index: get_arr_index,

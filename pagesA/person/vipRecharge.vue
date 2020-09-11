@@ -228,7 +228,7 @@ export default {
         tip: '正在加载中',
         mask: true
       }).then(res => {
-        unipayFunc(this, this.pay_type, res)
+        unipayFunc(this, this.pay_type, res, '/fre/pagesA/person/balanceCenter')
       }, err => {
         uni.showModal({
           title: '提示',

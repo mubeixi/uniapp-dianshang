@@ -50,7 +50,13 @@
         </div>
         <div class="codeLogin" v-if="!isShowWeiXin || showCodeLogin">
           <label class="inputLable flex line20">
-            <span>+{{ telNum }}</span>
+						<picker v-if="world_sms_flag" class="world_sms_choose" @change="worldSmsChoose" :value="world_sms_code_idx" :range="world_sms_code_list" range-key="choose_item">
+							<view class="world_sms_choose_show">
+								<view class="phone_code">{{world_sms_code_list[world_sms_code_idx].phone_code}}</view>
+								<i class="funicon icon-xia world_sms_choose_icon"></i>
+							</view>
+						</picker>
+            <span v-else>+{{ telNum }}</span>
             <input placeholder="请输入手机号" type="number" v-model="mobile" />
           </label>
           <button :disabled="isCodeDisabled" @click="codeSendVerification(4)" class="submitBtn sendCode" type="primary">
@@ -118,7 +124,13 @@
         <!-- #ifndef H5 -->
         <div class="codeLogin" v-if="showCodeLogin">
           <label class="inputLable flex line20">
-            <span>+{{ telNum }}</span>
+            <picker v-if="world_sms_flag" class="world_sms_choose" @change="worldSmsChoose" :value="world_sms_code_idx" :range="world_sms_code_list" range-key="choose_item">
+            	<view class="world_sms_choose_show">
+            		<view class="phone_code">{{world_sms_code_list[world_sms_code_idx].phone_code}}</view>
+            		<i class="funicon icon-xia world_sms_choose_icon"></i>
+            	</view>
+            </picker>
+            <span v-else>+{{ telNum }}</span>
             <input placeholder="请输入手机号" type="number" v-model="mobile" />
           </label>
           <button :disabled="isCodeDisabled" @click="codeSendVerification(4)" class="submitBtn sendCode" type="primary">
@@ -147,11 +159,17 @@
 
         <div class="content">
           <label class="inputLable flex line20">
-            <span>+{{ telNum }}</span>
+            <picker v-if="world_sms_flag" class="world_sms_choose" @change="worldSmsChoose" :value="world_sms_code_idx" :range="world_sms_code_list" range-key="choose_item">
+            	<view class="world_sms_choose_show">
+            		<view class="phone_code">{{world_sms_code_list[world_sms_code_idx].phone_code}}</view>
+            		<i class="funicon icon-xia world_sms_choose_icon"></i>
+            	</view>
+            </picker>
+            <span v-else>+{{ telNum }}</span>
             <input maxlength="11" placeholder="请输入手机号" v-model="mobile" />
           </label>
           <label class="inputLable  flex">
-            <span style="width: 50px;">密码</span>
+            <span style="width: 50px;" :class="{world_sms_choose: world_sms_flag}">密码</span>
             <input placeholder="请输入密码" type="password" v-model="phone.password" />
           </label>
           <div @click="(status = 3), (loginStatus = 3)" class="searchPass">
@@ -176,7 +194,13 @@
         <div class="content">
           <label class="inputLable flex ">
             <!-- <span @click="tel.show = true">+{{ telNum }}</span> -->
-            <span>+{{ telNum }}</span>
+            <picker v-if="world_sms_flag" class="world_sms_choose" @change="worldSmsChoose" :value="world_sms_code_idx" :range="world_sms_code_list" range-key="choose_item">
+            	<view class="world_sms_choose_show">
+            		<view class="phone_code">{{world_sms_code_list[world_sms_code_idx].phone_code}}</view>
+            		<i class="funicon icon-xia world_sms_choose_icon"></i>
+            	</view>
+            </picker>
+            <span v-else>+{{ telNum }}</span>
             <input maxlength="11" placeholder="请输入手机号" type="number" v-model="mobile" />
           </label>
           <button :disabled="isCodeDisabled" @click="codeSendVerification(4)" class="submitBtn" type="primary">发送验证码
@@ -197,7 +221,7 @@
         <!-- #endif -->
 
         <p class="description">
-          验证码已发送至手机 {{ mobile }}
+          验证码已发送至手机 {{world_sms_code_choose}} {{ mobile }}
           <span :class="{ disabled: countdownStatus }" @click="againSendCode">重新发送{{ countdownStr }}</span>
         </p>
         <input :value="verificationCode" @input="fillCode" class="code" type="number"
@@ -256,7 +280,7 @@
 </template>
 <script>
 
-import { GetQueryByString, isWeiXin, ls, urlencode, objTranslate } from '../../common/tool'
+import { GetQueryByString, isWeiXin, ls, urlencode, objTranslate, checkMobile } from '../../common/tool'
 import { bindUserClientId, getSmsCode, login, upUserLog } from '@/common/fetch'
 import { error, modal, toast } from '../../common'
 import { mapActions, mapGetters } from 'vuex'
@@ -302,7 +326,13 @@ export default {
         newPass: '',
         okNewPass: ''
       },
-      isShowWeiXin: 0
+      isShowWeiXin: 0,
+
+      // 国际短信
+      world_sms_flag: 0, // 是否开启国际区号选择
+      world_sms_code_list: [], // 可选择的国际区号
+      world_sms_code_idx: 0, // 选择显示的使用的国际区号下标
+      world_sms_code_choose: '' // 选择显示的使用的国际区号，例如：+86
     }
   },
   computed: {
@@ -322,7 +352,7 @@ export default {
       return ''
     },
     isCodeDisabled () {
-      return !/^1(3|5|6|7|8|9)[0-9]{9}$/.test(this.mobile)
+      return !checkMobile(this.mobile, this.world_sms_code_choose)
     },
     isEditNewPassDisabled () {
       const old = /^.{6,30}$/.test(this.editPass.oldPass)
@@ -338,7 +368,7 @@ export default {
     isPhoneDisabled () {
       const mobile = this.mobile
       const password = this.phone.password
-      const isOkPhone = /^1(3|5|6|7|8|9)[0-9]{9}$/.test(mobile)
+      const isOkPhone = checkMobile(mobile, this.world_sms_code_choose)
       return !(isOkPhone && password !== '')
     }
   },
@@ -383,10 +413,10 @@ export default {
       }
       if (this.countdownStatus) return
       // this.countdownStatus=true;
-      return getSmsCode({ mobile })
+      return getSmsCode({ mobile, phone_code: this.world_sms_code_choose })
         .then(() => toast('发送短信成功', 'success'))
-        .then(() => this.startCountdown()).catch(() => {
-          modal('发送短信失败')
+        .then(() => this.startCountdown()).catch((res) => {
+          modal(res.msg ? res.msg : '发送短信失败')
         })
     },
     async codeSendVerification (status) {
@@ -425,6 +455,7 @@ export default {
       if (this.loginStatus === 1) {
         // 短信登录
         await login({
+          phone_code: this.world_sms_code_choose,
           mobile: this.mobile,
           captcha: this.verificationCode,
           login_method: 'sms_login'
@@ -439,6 +470,7 @@ export default {
       } else if (this.loginStatus === 2) {
         // 账号密码登录
         await login({
+          phone_code: this.world_sms_code_choose,
           mobile: this.mobile,
           passwd: this.phone.password,
           login_method: 'mobile_login'
@@ -616,6 +648,14 @@ export default {
         this.isShowWeiXin = false
         // #endif
       }
+
+      // 国际短信
+      this.world_sms_flag = initData.world_sms_flag || 0
+      this.world_sms_code_list = initData.world_sms_code_list || []
+    },
+    worldSmsChoose (e) {
+      this.world_sms_code_idx = e.detail.value
+      this.world_sms_code_choose = this.world_sms_code_list[this.world_sms_code_idx].phone_code
     },
     async loginCall (userData) {
       // 根据后台配置来判断是否无手机号跳去绑定手机号
@@ -627,7 +667,7 @@ export default {
         // ls.set('accessToken', userData.access_token, 1)
         // ls.set('user_id', userData.User_ID, 1)
         uni.redirectTo({
-          url: '/pagesA/person/updateUserPsw?type=3&user_id=' + userData.User_ID+'&accessToken='+userData.access_token
+          url: '/pagesA/person/updateUserPsw?type=3&user_id=' + userData.User_ID + '&accessToken=' + userData.access_token
         })
       } else {
         this.setUserInfo(userData)
@@ -891,7 +931,7 @@ export default {
         }
 
         .inputLable {
-          span {
+          span, .world_sms_choose {
             color: $mainColor;
             width: 50px;
           }
@@ -911,7 +951,7 @@ export default {
         overflow: hidden;
 
         .inputLable:first-child {
-          span {
+          span, .world_sms_choose {
             color: $mainColor;
             width: 50px;
           }
@@ -943,7 +983,7 @@ export default {
       }
 
       .inputLable {
-        span {
+        span, .world_sms_choose {
           color: $mainColor;
           width: 50px;
         }
@@ -1065,4 +1105,15 @@ export default {
       /* #endif */
     }
   }
+
+	.world_sms_choose {
+		width: 60px !important;
+		.world_sms_choose_show {
+			display: flex;
+			align-items: center;
+				.world_sms_choose_icon {
+					margin-left: 10rpx;
+				}
+		}
+	}
 </style>
