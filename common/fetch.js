@@ -76,10 +76,9 @@ const fetch = function (act, param, options = false, url = '/api/little_program/
   if (!param) param = {}
 
   param.act = act
-  if(!param.User_ID){
+  if (!param.User_ID) {
 	  param.User_ID = get_User_ID()
   }
-  
 
   if (!param.hasOwnProperty('access_token')) {
     param.access_token = GET_ACCESS_TOKEN()
@@ -90,6 +89,9 @@ const fetch = function (act, param, options = false, url = '/api/little_program/
   param.Users_ID = get_Users_ID() // Users_ID  写死
   // param.appid = get_Appid();
   param.env = GET_ENV()
+
+  // lang
+  param.user_lang = get_user_lang()
 
   // 数据加密
   const data = createToken(param)
@@ -666,6 +668,8 @@ export const add_template_code = (data, option) => {
 export const get_Users_ID = () => ls.get('users_id')
 
 export const get_User_ID = () => ls.get('user_id') ? ls.get('user_id') : 'null'
+
+export const get_user_lang = () => ls.get('language') ? ls.get('language') : ''
 
 export const createToken = function (object) {
   object = ObjectToArr(object)
