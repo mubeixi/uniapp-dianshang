@@ -19,13 +19,13 @@ T._ = function (line, data) {
   const locales = T.locales
   if (locale && locales[locale] && locales[locale][line]) {
     if (data) {
-      line = locales[locale][line][data]
+      // 对应的值不存在则使用原值
+      line = locales[locale][line][data] ? locales[locale][line][data] : data
     } else {
       line = locales[locale][line]
     }
     return line
   }
-
   return data
 }
 
