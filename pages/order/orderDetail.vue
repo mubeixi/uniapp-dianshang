@@ -46,7 +46,7 @@
         <div class="name">收货人：{{orderInfo.Address_Name}} <span>{{orderInfo.Address_Mobile}}</span></div>
         <div class="location">
           收货地址：{{orderInfo.Address_Province_name}}{{orderInfo.Address_City_name}}{{orderInfo.Address_Area_name}}
-          <block v-if="orderInfo.Address_Town_name">{{orderInfo.Address_Town_name}}</block>
+          <block v-if="orderInfo.Address_Town_name">{{orderInfo.Address_Town_name}}</block>{{orderInfo.Address_Detailed}}
         </div>
       </div>
     </div>
@@ -168,7 +168,7 @@
 				{{orderInfo.Order_InvoiceInfo}}
 				<span v-if='orderInfo.Invoice_url' class="fapiao" @click="yulan(orderInfo.Invoice_url)">查看电子发票</span>
 			</span>
-			
+
           </div>
         </div>
       </div>
@@ -292,7 +292,7 @@ export default {
   },
   data () {
     return {
-	  isShow:true,
+      isShow: true,
       lv: 3, // 二维码容错级别 ， 一般不用设置，默认就行
       loadMake: true, // 组件加载完成后自动生成二维码
       qrsrc: '',
@@ -372,11 +372,11 @@ export default {
     // #endif
   },
   methods: {
-	  clickPay(){
-		  console.log("111")
-		  this.isShow=true
+	  clickPay () {
+		  console.log('111')
+		  this.isShow = true
 	  },
-    yulan(url){
+    yulan (url) {
 	  uni.previewImage({
 	    urls: [url]
 	  })
@@ -392,17 +392,17 @@ export default {
     // 查看明细
     seeDetail () {
       if (!this.isSlide) {
-		  //this.isShow=false
+		  // this.isShow=false
         this.$refs.popupMX.show()
       } else {
         this.$refs.popupMX.close()
-		//this.isShow=true
+        // this.isShow=true
       }
       this.isSlide = !this.isSlide
     },
     handClicked () {
       this.isSlide = false
-	  this.isShow=true
+	  this.isShow = true
     },
     // 物流追踪
     goLogistics (orderInfo) {
@@ -605,7 +605,7 @@ export default {
     },
     // 去支付
     submit () {
-		this.isShow=false
+      this.isShow = false
       this.$refs.payLayer.show()
     },
 

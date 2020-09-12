@@ -13,13 +13,30 @@ export const formatNumber = n => {
 }
 
 export const formatTime = function (date) {
-  const year = new Date(date * 1000).getFullYear()
-  const month = new Date(date * 1000).getMonth() + 1
-  const day = new Date(date * 1000).getDate()
-  const hour = new Date(date * 1000).getHours()
-  const minute = new Date(date * 1000).getMinutes()
-  const second = new Date(date * 1000).getSeconds()
+  if (typeof date === 'undefined') return ''
+  const dd = new Date(date * 1000)
+  const year = dd.getFullYear()
+  const month = dd.getMonth() + 1
+  const day = dd.getDate()
+  const hour = dd.getHours()
+  const minute = dd.getMinutes()
+  const second = dd.getSeconds()
   return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':')
+}
+
+/**
+ * 手机号脱敏处理
+ * @param { string } value
+ * @return { string }
+ */
+export const formatphone = function (value) {
+  if (value) {
+    var len = value.length
+    var start = 3 + (value.indexOf('+') > -1 ? 3 : 0)
+    var xx = value.substring(start, len - 4)
+    var values = value.replace(xx, '****')
+    return values
+  } else return value
 }
 
 export const formatRichTextByUparseFn = (html) => {

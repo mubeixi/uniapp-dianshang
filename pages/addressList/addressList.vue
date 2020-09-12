@@ -205,11 +205,12 @@ export default {
   }
 
   .flex-main .flex-top .name {
-    width: 65%;
+    /* width: 65%; */
   }
 
   .flex-main .flex-top .pho {
-    width: 35%;
+    /* width: 35%; */
+		flex: 1;
     text-align: right;
   }
 
