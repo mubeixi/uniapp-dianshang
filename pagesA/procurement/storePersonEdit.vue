@@ -61,6 +61,7 @@ import utils from '../../common/util.js'
 import { getStoreDetail, updateStoreInfo, updateStoreMobile, updateStoreMobileSms } from '../../common/fetch.js'
 import { mapGetters } from 'vuex'
 import { pageMixin } from '../../common/mixin'
+import { checkMobile } from '../../common/tool'
 import { error, modal } from '@/common'
 
 export default {
@@ -119,7 +120,7 @@ export default {
       if (this.countdownStatus) {
         return
       }
-      const isMobileOK = /^1(3|5|6|7|8|9)[0-9]{9}$/.test(this.mobile)
+      const isMobileOK = checkMobile(this.mobile)
       if (!isMobileOK) {
         uni.showToast({
           title: '手机号格式不正确',
@@ -149,7 +150,7 @@ export default {
     },
     confirm (e) {
       if (this.type == 2) {
-        if (!(/^1[3456789]\d{9}$/.test(this.mobile))) {
+        if (!(checkMobile(this.mobile))) {
           uni.showToast({
             title: '手机号输入错误，请重新输入',
             icon: 'none'

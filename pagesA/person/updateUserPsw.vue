@@ -9,33 +9,42 @@
           <input class="item" placeholder="请输入新的登录密码" type="password" v-model="new_psw">
           <input class="item" placeholder="请再次输入新密码" type="password" v-model="check_psw">
         </view>
-        <view class="content" v-if="type == 1">
-			<view class="other-item other-items">
-				手机号
-				<input class="input phone" disabled=""   maxlength="11" placeholder="请输入手机号" type="text" :value="userInfo.User_Mobile?userInfo.User_Mobile:'请先绑定手机号'" />
-			</view>
-			<view class="other-item other-items">
-				验证码
-				<input class="input code" placeholder="请输入验证码" type="text" v-model="code" maxlength="4"/>
-				<view @click="getCode" class="get-msg">{{countdownStatus?(countdownNum + '秒'):'获取验证码'}}</view>
-			</view>
-			<!-- <input class="item" placeholder="请输入原始支付密码,如未设置请留空" type="password" v-model="curr_psw"> -->
-			<input class="item" placeholder="请输入新的支付密码" type="password" v-model="new_psw">
-			<input class="item" placeholder="请再次输入新密码" type="password" v-model="check_psw">
-		</view>
+        <view class="content" v-else-if="type == 1">
+					<view class="other-item other-items">
+						手机号
+						<input class="input phone" disabled maxlength="11" placeholder="请输入手机号" type="text" :value="(userInfo.User_Mobile ? (userInfo.phone_code?userInfo.phone_code + ' ':'') : '') + (userInfo.User_Mobile?userInfo.User_Mobile:'请先绑定手机号')" />
+					</view>
+					<view class="other-item other-items">
+						验证码
+						<input class="input code" placeholder="请输入验证码" type="text" v-model="code" maxlength="4"/>
+						<view @click="getCode" class="get-msg">{{countdownStatus?(countdownNum + '秒'):'获取验证码'}}</view>
+					</view>
+					<!-- <input class="item" placeholder="请输入原始支付密码,如未设置请留空" type="password" v-model="curr_psw"> -->
+					<input class="item" placeholder="请输入新的支付密码" type="password" v-model="new_psw">
+					<input class="item" placeholder="请再次输入新密码" type="password" v-model="check_psw">
+				</view>
         <button class="save" formType="submit">保存</button>
       </form>
-
     </block>
+
     <block v-else>
       <form @submit="confirm" report-submit>
         <view class="other">
           <view class="other-item">
-            您现在的手机号是： {{userInfo.User_Mobile?userInfo.User_Mobile:''}}
+            您现在的手机号是：{{userInfo.phone_code?userInfo.phone_code:''}} {{userInfo.User_Mobile?userInfo.User_Mobile:''}}
           </view>
           <view class="other-item">
             手机号
-            <input class="input phone" maxlength="11" placeholder="请输入手机号" type="text" v-model="mobile" />
+						<view class="world_sms_choose">
+							<picker v-if="world_sms_flag" @change="worldSmsChoose" :value="world_sms_code_idx" :range="world_sms_code_list" range-key="choose_item">
+								<view class="world_sms_choose_show">
+									<view class="phone_code">{{world_sms_code_list[world_sms_code_idx].phone_code}}</view>
+									<i class="funicon icon-xia world_sms_choose_icon"></i>
+								</view>
+							</picker>
+							<text class="show_phone_code" v-else>+86</text>
+						</view>
+            <input class="input phone world_sms_phone" maxlength="11" placeholder="请输入手机号" type="text" v-model="mobile" />
           </view>
           <view class="other-item">
             验证码
@@ -61,13 +70,14 @@ import {
 import { mapActions, mapGetters } from 'vuex'
 import { pageMixin } from '../../common/mixin'
 import { error, modal } from '@/common'
-import { ls } from '@/common/tool.js'
+import { ls, checkMobile } from '@/common/tool.js'
 
 export default {
   mixins: [pageMixin],
   data () {
     return {
-	  user_id:'',
+      accessToken: '',
+      user_id: '',
       JSSDK_INIT: false,
       type: 0,
       is_back: false,
@@ -77,10 +87,16 @@ export default {
       height: 0,
       canSubmit: true, // 用户是否可以提交
       bgcolor: '#efefef',
+      phone_code: '',	// 国际区号
       mobile: '',
       code: '',
       countdownStatus: false, // 是否开启倒计时了
-      countdownNum: 60
+      countdownNum: 60,
+
+      // 国际短信
+      world_sms_flag: 0, // 是否开启国际区号选择
+      world_sms_code_list: [], // 可选择的国际区号
+      world_sms_code_idx: 0 // 选择显示的使用的国际区号下标
     }
   },
   computed: {
@@ -97,11 +113,7 @@ export default {
       }, 1000)
     },
     confirm (e) {
-      // add_template_code({
-      // 	code: e.detail.formId,
-      // 	times: 1
-      // })
-      if (!(/^1[3456789]\d{9}$/.test(this.mobile))) {
+      if (!(checkMobile(this.mobile, this.phone_code))) {
         uni.showToast({
           title: '手机号输入错误，请重新输入',
           icon: 'none'
@@ -115,42 +127,43 @@ export default {
         })
         return
       }
-	  let data={
+      const data = {
+        phone_code: this.phone_code,
         mobile: this.mobile,
         code: this.code
       }
-	  if(this.user_id){
-	  	data.User_ID=this.user_id,
-		data.access_token = ls.get('accessToken')
-	  }
-	  
+      if (this.user_id) {
+        data.User_ID = this.user_id
+        data.access_token = this.accessToken
+      }
+
       updateUserMobile(data).then(res => {
         uni.showToast({
           title: res.msg
         })
 
-		const postData = {}
+        const postData = {}
         if (this.user_id) {
           postData.User_ID = this.user_id
-          postData.access_token = ls.get('accessToken')
+          postData.access_token = this.accessToken
         }
         get_user_info(postData, {
           tip: '',
           errtip: false
         }).then(res => {
-			this.setUserInfo(res.data)
-			const access_token = ls.get('accessToken')
-			if (access_token) {
-			  ls.set('access_token', access_token, 1)
-			}
-			if (this.user_id) {
-			  ls.set('user_id', this.user_id, 1)
-			}
+          this.setUserInfo(res.data)
+          const access_token = this.accessToken
+          if (access_token) {
+            ls.set('access_token', access_token, 1)
+          }
+          if (this.user_id) {
+            ls.set('user_id', this.user_id, 1)
+          }
 
-			ls.remove('accessToken')
-			uni.navigateTo({
-			  url: '/pages/person/person'
-			})
+          // ls.remove('accessToken')
+          uni.navigateTo({
+            url: '/pages/person/person'
+          })
         }).catch(e => {
           error('获取用户信息失败')
         })
@@ -185,7 +198,7 @@ export default {
       if (this.countdownStatus) {
         return
       }
-      const isMobileOK = /^1(3|5|6|7|8|9)[0-9]{9}$/.test(this.mobile)
+      const isMobileOK = checkMobile(this.mobile, this.phone_code)
       if (!isMobileOK) {
         uni.showToast({
           title: '手机号格式不正确',
@@ -193,80 +206,66 @@ export default {
         })
         return
       }
-	  let data={
+      const data = {
+        phone_code: this.phone_code,
         mobile: this.mobile
       }
-	  if(this.user_id){
-		  data.User_ID=this.user_id,
-		  data.access_token = ls.get('accessToken')
-	  }
-	  
-	  
-		if(this.type==1){
-			data.type='User_PayPassword'
-			updatePwdSms(data).then().then(res => {
-				uni.showToast({
-					title: '验证码已发送',
-					icon: 'success'
-				})
-				this.startCountdown()
-			}).catch((e) => {
-					error(e.msg)
-			})
-		}else{
-			updateMobileSms(data).then(res => {
-				uni.showToast({
-					title: '验证码已发送',
-					icon: 'success'
-				})
-				this.startCountdown()
-			}).catch((e) => {
-					error(e.msg)
-			})
-		}
-	  
-      // updateMobileSms(data).then(res => {
-      //   uni.showToast({
-      //     title: '验证码已发送',
-      //     icon: 'success'
-      //   })
-      //   this.startCountdown()
-      // }).catch(() => {
-      //   modal('验证码发送失败')
-      // })
+      if (this.user_id) {
+        data.User_ID = this.user_id
+        data.access_token = ls.get('accessToken')
+      }
+
+      if (this.type == 1) {
+        data.type = 'User_PayPassword'
+        updatePwdSms(data).then().then(res => {
+          uni.showToast({
+            title: '验证码已发送',
+            icon: 'success'
+          })
+          this.startCountdown()
+        }).catch((e) => {
+          error(e.msg)
+        })
+      } else {
+        updateMobileSms(data).then(res => {
+          uni.showToast({
+            title: '验证码已发送',
+            icon: 'success'
+          })
+          this.startCountdown()
+        }).catch((e) => {
+          error(e.msg)
+        })
+      }
     },
     save (e) {
-      // add_template_code({
-      // 	code: e.detail.formId,
-      // 	times: 1
-      // })
-
       const arg = {
         curr_psw: this.curr_psw,
         new_psw: this.new_psw,
         check_psw: this.check_psw
       }
       if (this.type == 1) {
-		 const isMobileOK = /^1(3|5|6|7|8|9)[0-9]{9}$/.test(this.mobile)
-		if (!isMobileOK) {
-			uni.showToast({
-				title: '手机号格式不正确',
-				icon: 'none'
-			})
-			return
-		}
-		if(!this.code){
-			this.toast('请填写验证码')
-			return
-		}
+        const isMobileOK = checkMobile(this.mobile, this.phone_code)
+        if (!isMobileOK) {
+          uni.showToast({
+            title: '手机号格式不正确',
+            icon: 'none'
+          })
+          return
+        }
+        if (!this.code) {
+          this.toast('请填写验证码')
+          return
+        }
         // 原始密码默认为空
         if ((arg.curr_psw && arg.curr_psw.length < 6) || arg.new_psw.length < 6 || arg.check_psw.length < 6) {
           this.toast('密码最少6位')
           return
         }
-		arg.type='User_PayPassword'
-		arg.mobile=this.mobile
-		arg.captcha=this.code
+        arg.type = 'User_PayPassword'
+        arg.phone_code = this.phone_code
+        arg.mobile = this.mobile
+        arg.captcha = this.code
         // if(arg.curr_psw == '') {
         // 	this.toast('原始密码不能为空')
         // 	return;
@@ -300,9 +299,9 @@ export default {
           this.goBack()
         }, err => {
           this.toast(err.msg)
-		  setTimeout(() => {
-		    uni.navigateBack()
-		  }, 100)
+          setTimeout(() => {
+            uni.navigateBack()
+          }, 100)
         })
       } else if (this.type == 1) {
         updateUserPayPsw(arg).then(res => {
@@ -325,19 +324,32 @@ export default {
           this.toast(err.msg)
         })
       }
+    },
+    worldSmsChoose (e) {
+		  this.world_sms_code_idx = e.detail.value
+		  this.phone_code = this.world_sms_code_list[this.world_sms_code_idx].phone_code
+    },
+    async initDataFn () {
+      if (this.type != 3) return
+      const initData = await this.getInitData(1)
+      // 国际短信
+      this.world_sms_flag = initData.world_sms_flag || 0
+      this.world_sms_code_list = initData.world_sms_code_list || []
     }
   },
   onLoad (options) {
     if (options.user_id) {
-		this.user_id=options.user_id
+      this.user_id = options.user_id
     }
+    this.accessToken = options.accessToken
     if (options.type == 0) {
       this.title = '修改登录密码'
       this.type = 0
     } else if (options.type == 1) {
       this.title = '修改支付密码'
       this.type = 1
-	  this.mobile=this.userInfo.User_Mobile
+      this.phone_code = this.userInfo.phone_code
+      this.mobile = this.userInfo.User_Mobile
       if (options.hasOwnProperty('is_back') && options.is_back) {
         this.is_back = true
       }
@@ -354,6 +366,9 @@ export default {
         this.height = res.screenHeight
       }
     })
+  },
+  created () {
+    this.initDataFn()
   }
 }
 </script>
@@ -425,9 +440,8 @@ export default {
       text-align: center;
       margin: 157rpx auto 0;
     }
-  
-  
-  .model-title{
+
+		.model-title{
   		width: 600rpx;
   		height: 40rpx;
   		line-height: 40rpx;
@@ -449,4 +463,25 @@ export default {
   		box-sizing: border-box;
   		padding:0rpx 20rpx;
   	}
+
+	.world_sms_choose {
+		margin-left: 42rpx;
+		.world_sms_choose_show {
+			color: $mainColor;
+			display: flex;
+			align-items: center;
+				.world_sms_choose_icon {
+					margin-left: 10rpx;
+					margin-right: 10rpx;
+				}
+		}
+
+		.show_phone_code {
+			color: $mainColor;
+			margin-right: 10rpx;
+		}
+	}
+	.world_sms_phone {
+		margin-left: 0 !important;
+	}
 </style>

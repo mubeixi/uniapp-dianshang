@@ -73,7 +73,6 @@ export default {
       // checked: false,
       checked: [],
       Users_ID: 'wkbq6nc2kc',
-      User_ID: 3,
       collect_list: [], // 收藏列表,
       page: 1,
       pageSize: 4,

@@ -77,7 +77,7 @@
           <view class="bd">
             <view class="o_title  words">
               <span>购买人姓名</span>
-              <input class="inputs" placeholder="请填写姓名" type="text" v-model="user_name">
+              <input class="inputs" placeholder="请填写姓名" type="text" v-model="user_name" maxlength="50">
             </view>
           </view>
         </view>
@@ -85,7 +85,7 @@
           <view class="bd">
             <view class="o_title  words">
               <span>购买人手机号</span>
-              <input class="inputs" placeholder="请填写手机号码" type="text" v-model="user_mobile"  maxlength="11" >
+              <input class="inputs" placeholder="请填写手机号码" type="text" v-model="user_mobile" maxlength="20" >
             </view>
           </view>
         </view>
@@ -156,7 +156,6 @@
           </view>
         </view>
       </view>
-
 
       <view class="remind-wrap" v-if="remindAddress">
         <view class="remind-add">
@@ -270,6 +269,7 @@ import popupLayer from '../../components/popup-layer/popup-layer.vue'
 import { createOrder, createOrderCheck, get_user_info, getAddress } from '../../common/fetch.js'
 import { backFunc } from '../../common/tool.js'
 import { pageMixin } from '../../common/mixin'
+import { formatphone } from '../../common/filter.js'
 import { mapActions, mapGetters } from 'vuex'
 import StoreListComponents from '../../components/StoreListComponents'
 
@@ -352,14 +352,7 @@ export default {
     }
   },
   filters: {
-    formatphone: function (value) {
-      if (value) {
-        var len = value.length
-        var xx = value.substring(3, len - 4)
-        var values = value.replace(xx, '****')
-        return values
-      }
-    }
+    formatphone: formatphone
   },
   onShow () {
     if (JSON.stringify(this.userInfo) !== '{}') {

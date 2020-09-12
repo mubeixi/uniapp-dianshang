@@ -2,7 +2,7 @@
   <view @click="commonClick" class="myall">
 
     <!-- <page-title title="添加提现方式" rightHidden="true" ></page-title> -->
-    <view class="center">
+    <view class="center" v-if="array.length>0">
       <view class="left">
         提现方式
       </view>

@@ -162,6 +162,16 @@
     <store-list-components :isDistance="true" :isProduct="false" :pageEl="selfObj" @callFn="bindStores"
                            catchtouchmove direction="top" ref="stroeComp" style="z-index: 10000;" />
 
+		<!-- #ifdef MP-WEIXIN -->
+		<view class="liveBox" v-if="liveList.length===1">
+		  <navigator :url="'plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id='+liveList[0].roomid">
+			<image class="icon-live" src="/static/live/logo.png"></image>
+		  </navigator>
+		</view>
+		<view class="liveBox" v-if="liveList.length>1">
+		  <image @click="toLive" class="icon-live" src="/static/live/logo.png"></image>
+		</view>
+		<!-- #endif -->
   </view>
 </template>
 
@@ -176,7 +186,8 @@ import {
   getStoreDetail,
   getStoreList,
   getSystemConf,
-  updateCart
+  updateCart,
+  getLiveInfo
 } from '../../common/fetch'
 import WzwStore from '../../components/wzw-store'
 import { error, modal, toast } from '../../common'
@@ -197,6 +208,7 @@ export default {
   },
   data () {
     return {
+	  liveList:[],
       totalList: [],
       page: [],
       pageSize: 10,
@@ -264,6 +276,11 @@ export default {
   },
   methods: {
     domainFn,
+	toLive () {
+	  uni.navigateTo({
+	    url: '/pagesA/live/live'
+	  })
+	},
     async reachBootom () {
       const data = {
         page: this.page[this.goodsNavIndex],
@@ -875,6 +892,15 @@ export default {
     this.selfObj = this
     // #endif
     this._init_func()
+	
+	// #ifdef MP-WEIXIN
+	getLiveInfo().then(res => {
+	  this.liveList = res.data
+	  this.liveCount = res.data.totalCount
+	}).catch((e) => {
+	  console.log(e)
+	})
+	// #endif
   }
 }
 </script>
