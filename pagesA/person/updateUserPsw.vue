@@ -35,13 +35,16 @@
           </view>
           <view class="other-item">
             手机号
-						<picker v-if="world_sms_flag" class="world_sms_choose" @change="worldSmsChoose" :value="world_sms_code_idx" :range="world_sms_code_list" range-key="choose_item">
-							<view class="world_sms_choose_show">
-								<view class="phone_code">{{world_sms_code_list[world_sms_code_idx].phone_code}}</view>
-								<i class="funicon icon-xia world_sms_choose_icon"></i>
-							</view>
-						</picker>
-            <input class="input phone" :class="{world_sms_phone: world_sms_flag}" maxlength="11" placeholder="请输入手机号" type="text" v-model="mobile" />
+						<view class="world_sms_choose">
+							<picker v-if="world_sms_flag" @change="worldSmsChoose" :value="world_sms_code_idx" :range="world_sms_code_list" range-key="choose_item">
+								<view class="world_sms_choose_show">
+									<view class="phone_code">{{world_sms_code_list[world_sms_code_idx].phone_code}}</view>
+									<i class="funicon icon-xia world_sms_choose_icon"></i>
+								</view>
+							</picker>
+							<text class="show_phone_code" v-else>+86</text>
+						</view>
+            <input class="input phone world_sms_phone" maxlength="11" placeholder="请输入手机号" type="text" v-model="mobile" />
           </view>
           <view class="other-item">
             验证码
@@ -438,7 +441,7 @@ export default {
       margin: 157rpx auto 0;
     }
 
-  .model-title{
+		.model-title{
   		width: 600rpx;
   		height: 40rpx;
   		line-height: 40rpx;
@@ -462,14 +465,20 @@ export default {
   	}
 
 	.world_sms_choose {
-		margin-left: 21px;
+		margin-left: 42rpx;
 		.world_sms_choose_show {
+			color: $mainColor;
 			display: flex;
 			align-items: center;
 				.world_sms_choose_icon {
 					margin-left: 10rpx;
 					margin-right: 10rpx;
 				}
+		}
+
+		.show_phone_code {
+			color: $mainColor;
+			margin-right: 10rpx;
 		}
 	}
 	.world_sms_phone {

@@ -17,7 +17,7 @@
 					</picker>
 					<text class="show_phone_code" v-else>{{address_info.phone_code?address_info.phone_code:'+86'}}</text>
 					<input class="input_phone" maxlength="15" name="Address_Mobile" placeholder="请输入联系电话" type="number"
-					       v-model="address_info.Address_Mobile" :disabled="!world_sms_flag && (address_info.phone_code !== '' && address_info.phone_code !== '+86')" />
+					       v-model="address_info.Address_Mobile" :disabled="!world_sms_flag && address_info.phone_code && address_info.phone_code !== '' && address_info.phone_code !== '+86'" />
 				</view>
       </view>
 			<view class="xinxi country_address_switch" v-if="world_address_flag || address_info.country_status">
@@ -79,7 +79,7 @@
         </checkbox-group>
       </view>
 
-			<view class="xinxi err" v-if="!world_sms_flag && (address_info.phone_code !== '' && address_info.phone_code !== '+86')">
+			<view class="xinxi err" v-if="!world_sms_flag && address_info.phone_code && address_info.phone_code !== '' && address_info.phone_code !== '+86'">
 				注意：因系统关闭国际短信功能，则已添加的国外手机号不能更改，若想变动，请删除后重新添加
 			</view>
 			<view class="xinxi err" v-if="!world_address_flag && address_info.country_status">
@@ -626,6 +626,7 @@ export default {
 		display: flex;
 		align-items: center;
 		.world_sms_choose_show {
+			color: $mainColor;
 			display: flex;
 			align-items: center;
 				.world_sms_choose_icon {
@@ -634,7 +635,9 @@ export default {
 				}
 		}
 		.show_phone_code {
+			color: $mainColor;
 			margin-right: 10rpx;
+			margin-top: 2rpx;
 		}
 		.input_phone {
 			font-size: 28rpx;

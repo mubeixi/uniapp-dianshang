@@ -1109,6 +1109,7 @@ export default {
 	.world_sms_choose {
 		width: 60px !important;
 		.world_sms_choose_show {
+			color: $mainColor;
 			display: flex;
 			align-items: center;
 				.world_sms_choose_icon {
