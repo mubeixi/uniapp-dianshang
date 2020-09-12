@@ -129,10 +129,11 @@ import {
   jifenProdOrder
 } from '../../common/fetch.js'
 import { pageMixin } from '../../common/mixin'
+import { formatphone } from '../../common/filter.js'
 import { mapActions, mapGetters } from 'vuex'
 import { unipayFunc } from '../../common/pay.js'
 import { GetQueryByString, goBack, isWeiXin, ls, urlencode } from '../../common/tool'
-import { error, toast,confirm } from '../../common/index'
+import { error, toast, confirm } from '../../common/index'
 
 export default {
   mixins: [pageMixin],
@@ -166,14 +167,7 @@ export default {
     }
   },
   filters: {
-    formatphone: function (value) {
-      if (value) {
-        var len = value.length
-        var xx = value.substring(3, len - 4)
-        var values = value.replace(xx, '****')
-        return values
-      }
-    }
+    formatphone: formatphone
   },
   async onShow () {
     this.getAddress()
