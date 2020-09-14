@@ -17,12 +17,12 @@
 					</picker>
 					<text class="show_phone_code" v-else>{{address_info.phone_code?address_info.phone_code:'+86'}}</text>
 					<input class="input_phone" maxlength="15" name="Address_Mobile" placeholder="请输入联系电话" type="number"
-					       v-model="address_info.Address_Mobile" :disabled="!world_sms_flag && address_info.phone_code && address_info.phone_code !== '' && address_info.phone_code !== '+86'" />
+					       v-model="address_info.Address_Mobile" :disabled="(!world_sms_flag && address_info.Address_ID > 0 && address_info.phone_code && address_info.phone_code !== '' && address_info.phone_code !== '+86') ? true : false" />
 				</view>
       </view>
 			<view class="xinxi country_address_switch" v-if="world_address_flag || address_info.country_status">
 				<text class="text">是否使用国际地址</text>
-				<switch class="country_switch" :checked="!!address_info.country_status" :disabled="!world_address_flag" @change="countryAddressSwitch" color="#04B600" />
+				<switch class="country_switch" :checked="!!address_info.country_status" :disabled="(!world_address_flag && address_info.Address_ID > 0) ? true : false" @change="countryAddressSwitch" color="#04B600" />
 			</view>
 			<block v-if="address_info.country_status">
 				<view class='xinxi'>
@@ -79,10 +79,10 @@
         </checkbox-group>
       </view>
 
-			<view class="xinxi err" v-if="!world_sms_flag && address_info.phone_code && address_info.phone_code !== '' && address_info.phone_code !== '+86'">
+			<view class="xinxi err" v-if="!world_sms_flag && address_info.Address_ID > 0 && address_info.phone_code && address_info.phone_code !== '' && address_info.phone_code !== '+86'">
 				注意：因系统关闭国际短信功能，则已添加的国外手机号不能更改，若想变动，请删除后重新添加
 			</view>
-			<view class="xinxi err" v-if="!world_address_flag && address_info.country_status">
+			<view class="xinxi err" v-if="!world_address_flag && address_info.Address_ID > 0 && address_info.country_status">
 				注意：因系统关闭国外收货地址功能，则已添加的国外收货地址不能切换，若想变动，请删除后重新添加
 			</view>
 
