@@ -59,7 +59,7 @@ export default {
     update (type) {
       // type 0 表示修改登录，1，修改支付
       uni.navigateTo({
-        url: '/pagesA/person/updateUserPsw?type=' + type
+        url: '/pagesA/person/updateUserPsw?type=' + type + (type == 1 ? '&is_back=1' : '')
       })
     },
     logoutFunc () {
