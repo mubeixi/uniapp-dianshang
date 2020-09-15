@@ -61,11 +61,14 @@
 
     <popup-layer :direction="'top'" ref="popMethod">
       <view class="iMbx">
-        <view :key="index" @click="chooseType(index)" class="c_method" v-for="(item,index) in pay_arr">
-          {{item}}
-          <text>￥{{shipping_price}}</text>
-        </view>
-      </view>
+              <view :key="index" @click="chooseType(index)" class="c_method flex flex-vertical-c " style="padding-left: 200rpx" v-for="(item,index) in pay_arr">
+                <image v-if="index=='wx_h5'||index=='wx_mp'||index=='wx_lp'||index=='wx_app'"  :src="'/static/client/wechatpay.png'|domain" style="height: 50rpx;width: 50rpx;margin-right: 20rpx;"></image>
+      		  <image v-if="index=='remainder_pay'" :src="'/static/client/yuepay.png'|domain" style="height: 50rpx;width: 50rpx;margin-right: 20rpx;"></image>
+      		  <image v-if="index=='alipay'" :src="'/static/client/alipay.png'|domain" style="height: 50rpx;width: 50rpx;margin-right: 20rpx;"></image>
+      		  {{item}}
+                <text>￥{{shipping_price}}</text>
+              </view>
+            </view>
     </popup-layer>
 
     <view class="remind-wrap" v-if="remindAddress">
