@@ -249,11 +249,14 @@
 
     <popup-layer  :direction="'top'" ref="popupLayer" >
       <div class="iMbx">
-        <div :key="index" @click="chooseType(index)" class="c_method" v-for="(item,index) in pay_arr">
-          {{item}}
-          <text>￥{{orderInfo.Order_Fyepay}}</text>
-        </div>
-      </div>
+              <div :key="index" style="padding-left: 200rpx" @click="chooseType(index)" class="c_method flex flex-vertical-c" v-for="(item,index) in pay_arr">
+                <image v-if="index=='wx_h5'||index=='wx_mp'||index=='wx_lp'||index=='wx_app'"  :src="'/static/client/wechatpay.png'|domain" style="height: 50rpx;width: 50rpx;margin-right: 20rpx;"></image>
+                <image v-if="index=='remainder_pay'" :src="'/static/client/yuepay.png'|domain" style="height: 50rpx;width: 50rpx;margin-right: 20rpx;"></image>
+                <image v-if="index=='alipay'" :src="'/static/client/alipay.png'|domain" style="height: 50rpx;width: 50rpx;margin-right: 20rpx;"></image>
+      		  {{item}}
+                <text>￥{{orderInfo.Order_Fyepay}}</text>
+              </div>
+            </div>
     </popup-layer>
     <payComponents
 	@maskClicked='clickPay'

@@ -12,7 +12,7 @@
         <view class="content" v-else-if="type == 1">
 					<view class="other-item other-items">
 						手机号
-						<input class="input phone" disabled maxlength="11" placeholder="请输入手机号" type="text" :value="(userInfo.User_Mobile ? (userInfo.phone_code?userInfo.phone_code + ' ':'') : '') + (userInfo.User_Mobile?userInfo.User_Mobile:'请先绑定手机号')" />
+						<input class="input phone" :disabled='userInfo.User_Mobile?true:false' v-model="mobile" maxlength="11" placeholder="请输入手机号" type="text"  />
 					</view>
 					<view class="other-item other-items">
 						验证码

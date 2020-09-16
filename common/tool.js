@@ -354,7 +354,7 @@ export const buildSharePath = (path) => {
 
   if (path.indexOf('owner_id') === -1) {
     let owner_id = 0
-    if (userInfo.User_ID && userInfo.Is_Distribute === 1) {
+    if (userInfo.User_ID) {
       owner_id = userInfo.User_ID
     }
     search += ('&owner_id=' + owner_id)
