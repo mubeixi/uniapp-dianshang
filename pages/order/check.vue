@@ -879,9 +879,7 @@ export default {
     font-size: 28rpx;
     line-height: 80rpx;
     padding: 20rpx 30rpx;
-    /* #ifndef APP-PLUS */
     padding-bottom: 100rpx;
-    /* #endif */
     .mxtitle {
       font-size: 28rpx;
       text-align: center;
