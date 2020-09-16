@@ -12,7 +12,7 @@
         </div>
         <div class="bottom">
           <div class="price">
-            ¥<span class="prices">{{product.pintuan_pricex}}</span><span>拼团省{{product.Products_PriceY-product.Products_PriceX|toFix2}}</span>
+            ¥<span class="prices">{{product.pintuan_pricex}}</span><span v-if="product.Products_PriceX > product.pintuan_pricex">拼团省{{product.Products_PriceX-product.pintuan_pricex|toFix2}}</span>
           </div>
           <div class="tuan">
             {{product.pintuan_people}}人团 • 已团{{product.teamnum}}件
@@ -243,7 +243,7 @@ export default {
   name: 'App',
   data () {
     return {
-      pt_pricex:'',
+      pt_pricex: '',
       isShowGuide: false,
       // #ifdef APP-PLUS
       wxMiniOriginId: '',
@@ -364,8 +364,8 @@ export default {
       check_attrnames = check_attrnames.join(';')
       this.postData.atr_str = check_attrnames
       this.postData.atrid_str = check_attrid
-      console.log(attr_val,"sss")
-      if (attr_val&&attr_val.Product_Attr_ID) {
+      console.log(attr_val, 'sss')
+      if (attr_val && attr_val.Product_Attr_ID) {
         this.postData.attr_id = attr_val.Product_Attr_ID
       }
       // 属性判断
@@ -373,7 +373,7 @@ export default {
         this.postData.count = attr_val.Property_count // 选择属性的库存
         this.postData.showimg = typeof attr_val.Attr_Image !== 'undefined' && attr_val.Attr_Image != '' ? attr_val.Attr_Image : this.product.Products_JSON.ImgPath[0]// 选择属性的图片
         this.productDetail_price = attr_val.Txt_PriceSon // 选择属性的价格
-        this.pt_pricex=attr_val.pt_pricex
+        this.pt_pricex = attr_val.pt_pricex
         this.submit_flag = !((!this.check_attr || Object.getOwnPropertyNames(this.check_attr).length != Object.getOwnPropertyNames(this.product.skujosn).length))
       }
       // 判断属性库存
@@ -607,7 +607,7 @@ export default {
 
       getProductDetail(data).then(res => {
         this.product = res.data
-        this.pt_pricex=this.product.pintuan_pricex
+        this.pt_pricex = this.product.pintuan_pricex
 
         this.postData.count = res.data.Products_Count
 
