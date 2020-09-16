@@ -60,7 +60,7 @@ import { pageMixin } from '../../common/mixin'
 import { mapGetters } from 'vuex'
 import { ls } from '../../common/tool.js'
 import { getUserWithdrawMethod, getWithdrawConfig, withdrawApply } from '../../common/fetch.js'
-import { modal } from '@/common'
+import { modal,error } from '@/common'
 
 export default {
   mixins: [pageMixin],
@@ -167,6 +167,7 @@ export default {
           icon: 'none'
         })
       }).catch(e => {
+		  error(e.msg)
         that.isQing = false
       })
     },
