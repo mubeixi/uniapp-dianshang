@@ -310,7 +310,7 @@ export default {
           this.toast(err.msg)
           setTimeout(() => {
             uni.navigateBack()
-          }, 100)
+          }, 2000)
         })
       } else if (this.type == 1) {
         updateUserPayPsw(arg).then(res => {
