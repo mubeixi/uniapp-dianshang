@@ -649,6 +649,8 @@ export const getFuncModule = (data, options) => fetch('getFuncModule', data, opt
 export const getGitfpackRecordList = (data, options) => fetch('getGitfpackRecordList', data, options)
 
 export const updatePwdSms = (data, options) => fetch('update_pwd_sms', data, options)
+export const resetPwd = (data, options) => fetch('reset_pwd', data, options)
+
 
 // 普通环境noop就行了
 // let add_template_code = ()=>{}

@@ -281,8 +281,8 @@
 <script>
 
 import { GetQueryByString, isWeiXin, ls, urlencode, objTranslate, checkMobile } from '../../common/tool'
-import { bindUserClientId, getSmsCode, login, upUserLog } from '@/common/fetch'
-import { error, modal, toast } from '../../common'
+import { bindUserClientId, getSmsCode, login, upUserLog,resetPwd } from '@/common/fetch'
+import { error, modal, toast,confirm } from '../../common'
 import { mapActions, mapGetters } from 'vuex'
 import { pageMixin } from '../../common/mixin'
 
@@ -482,23 +482,34 @@ export default {
         })
       } else if (this.loginStatus === 3) {
         // 找回密码
-        // await login({mobile:this.mobile, captcha:this.verificationCode,login_method:'sms_login'})
+        await login({mobile:this.mobile, captcha:this.verificationCode,login_method:'sms_login'}).then(res => {
+          this.loginCall(res.data)
+        }).catch((e) => {
+          error(e.msg)
+        })
       }
     },
     setNewPassOk () {
-      // const data = {
-      //   mobile: this.mobile,
-      //   code: this.verificationCode,
-      //   newpwd: this.newPassword
-      // }
-      // resetPwd(data).then(res => {
-      //   toast(res.msg)
-      //   confirm({
-      //     content: '密码设置成功，是否直接登录？',
-      //     confirmText: '直接登录',
-      //     cancelText: '暂不登录'
-      //   }).then(() => this.login())
-      // })
+      const data = {
+      	phone_code:this.world_sms_code_choose,
+        mobile: this.mobile,
+        captcha: this.verificationCode,
+        new_pwd: this.newPassword
+      }
+      resetPwd(data).then(res => {
+        //toast(res.msg)
+        confirm({
+          content: '密码设置成功，是否直接登录？',
+          confirmText: '直接登录',
+          cancelText: '暂不登录'
+        }).then(() => this.login()).catch(e=>{
+      			uni.switchTab({
+      				url:'/pages/person/person'
+      			})
+      		})
+      }).catch(e=>{
+      		  error(e.msg)
+      })
     },
     startCountdown () {
       // 倒计时
