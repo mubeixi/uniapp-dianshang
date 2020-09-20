@@ -9,12 +9,12 @@
     <!-- #endif -->
     <page-title
     :hiddenBack="true"
-    :right="handleShow ? '管理' : '取消'"
+    :right="handleShow ? $t('cart','Management') : $t('cart','Cancel')"
     :rightHidden="manage"
     @rightHandle="handle"
     bgcolor="#ffffff"
     class="nav-title"
-    title="购物车">
+    :title="$t('cart','shopping cart')">
     </page-title>
     <div class="content">
       <div class="cartbox" v-if="total_count>0">
@@ -59,11 +59,11 @@
       </div>
       <div class="none" v-else>
         <image :src="'/static/client/box.png'|domain" class="img" />
-        <div><span>购物车空空如也</span><span @click="gotoBuy" class="tobuy">去逛逛</span></div>
+        <div><span>{{ $t('cart',"The shopping cart is empty") }}</span><span @click="gotoBuy" class="tobuy">{{$t('cart','Go shopping')}}</span></div>
       </div>
       <!-- 猜你喜欢 -->
       <div class=" container">
-        <div class="fenge"><span class="red"></span><span class="caini">猜你喜欢</span><span class="red"></span></div>
+        <div class="fenge"><span class="red"></span><span class="caini">{{ $t('cart','you may also like') }}</span><span class="red"></span></div>
         <div class="prolist">
           <div :key="index" @click="gotoDetail(item.Products_ID)" class="pro-item" v-for="(item,index) in prodList">
             <img :src="item.ImgPath" alt="">
@@ -82,10 +82,10 @@
       <div @click="checkAll" class="mbxa">
         <image :src="(checkAllFlag ? '/static/client/checked.png' : '/static/client/uncheck.png')|domain" alt=""
                class="img" style="margin-right: 17rpx;" />
-        全选
+        {{$t('cart','select all')}}
       </div>
-      <div class="total" v-if="handleShow">合计：<span>￥<span>{{totalPrice}}</span></span></div>
-      <div @click="submit" class="checkbtn">{{handleShow?'结算':'删除'}}</div>
+      <div class="total" v-if="handleShow">{{$t('cart','total')}}：<span>￥<span>{{totalPrice}}</span></span></div>
+      <div @click="submit" class="checkbtn">{{handleShow?$t('cart','Settlement'):$t('cart','Delete')}}</div>
     </div>
 
   </div>
@@ -240,7 +240,7 @@ export default {
     checkAll () {
       // let result = ls.get((prod_id+";"+attr_id));
       // this.CartList[prod_id][attr_id].checked = result;
-	  
+
 	   var checkAllFlag = !this.checkAllFlag
 	        for (var i in this.CartList) {
 				for (var j in this.CartList[i]) {
@@ -721,6 +721,7 @@ export default {
     line-height: 54rpx;
     font-size: 28rpx;
     border-radius: 8px;
+    font-size: 12px;
   }
 
   .total {

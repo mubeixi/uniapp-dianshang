@@ -19,14 +19,14 @@
       </div>
     </div>
     <div class="tabs">
-      <div :class="[active == 0 ? 'checked' : '','tab']" @click="getActive(0)">默认
+      <div :class="[active == 0 ? 'checked' : '','tab']" @click="getActive(0)">{{ $t('classify','default') }}
         <div class="line"></div>
       </div>
-      <div :class="[active == 1 ? 'checked' : '','tab']" @click="getActive(1)">销量
+      <div :class="[active == 1 ? 'checked' : '','tab']" @click="getActive(1)">{{ $t('classify','Sales') }}
         <div class="line"></div>
       </div>
       <div :class="[active == 2 ? 'checked' : '','tab']" @click="getActive(2)" class="pricebox"><span
-      class="padding4-c">价格</span>
+      class="padding4-c">{{ $t('classify','price') }}</span>
         <view class="xiangshang">
           <image :src="'/static/client/result/tops.png'|domain" class="image" v-if="isSheng==1"></image>
           <image :src="'/static/client/result/top.png'|domain" class="image" v-else></image>
@@ -40,7 +40,7 @@
       </div>
 
       <div :class="[active == 3 ? 'checked' : '','tab']" class="filterbox">
-        <div :style="{color:showShai?'#F43131':''}" @click.stop="change" class="filter">筛选</div>
+        <div :style="{color:showShai?'#F43131':''}" @click.stop="change" class="filter">{{ $t('classify','filter') }}</div>
         <template v-show="!showShai">
           <image :src="'/static/client/result/jx1.png'|domain" @click="changeCate" class="imgm sorttype"
                  v-if="cate==2"></image>
@@ -53,20 +53,20 @@
 
     </div>
     <div @click.stop catchtouchmove="false" class="shaixuan" v-if="showShai">
-      <view class="priceInterval">价格区间(元)</view>
+      <view class="priceInterval">{{ $t('classify','Price range (yuan)') }}</view>
       <view class="inputPrice">
-        <input placeholder="最低价" placeholder-style="color:#999999;font-size:26rpx;" type="number" v-model="minPrice">
+        <input :placeholder="$t('classify','Lowest price')" placeholder-style="color:#999999;font-size:26rpx;" type="number" v-model="minPrice">
         <view class="view">—</view>
-        <input placeholder="最高价" placeholder-style="color:#999999;font-size:26rpx;" type="number" v-model="maxPrice">
+        <input :placeholder="$t('classify','Highest price')" placeholder-style="color:#999999;font-size:26rpx;" type="number" v-model="maxPrice">
       </view>
-      <view class="priceInterval">是否包邮</view>
+      <view class="priceInterval">{{ $t('classify','Free shipping') }}</view>
       <view class="isShipping">
-        <span :class="isShipping==1?'checked':''" @click="shipping(0)" class="span">是</span>
-        <span :class="isShipping==2?'checked':''" @click="shipping(1)" class="span">否</span>
+        <span :class="isShipping==1?'checked':''" @click="shipping(0)" class="span">{{ $t('classify','Yes') }}</span>
+        <span :class="isShipping==2?'checked':''" @click="shipping(1)" class="span">{{ $t('classify','No') }}</span>
       </view>
       <view class="submit">
-        <view @click="reset" class="view reset">重置</view>
-        <view @click="sureSearch" class="view sure">确定</view>
+        <view @click="reset" class="view reset">{{ $t('classify','Reset') }}</view>
+        <view @click="sureSearch" class="view sure">{{ $t('classify','Determine') }}</view>
       </view>
       <view @click="closeShow" catchtouchmove="false" class="zhao">
 
@@ -86,7 +86,7 @@
               <span class="n_price"><text>￥</text>{{item.Products_PriceX}}</span>
               <span class="o_price" v-if="item.Products_PriceY!=item.Products_PriceX"><text>￥</text>{{item.Products_PriceY}}</span>
             </div>
-            <div class="sold">已售{{item.Products_Sales}}件</div>
+            <div class="sold">{{ $t('classify','Sold') }} {{item.Products_Sales}} {{ $t('classify','Pieces') }}</div>
           </div>
         </div>
         <div class="defaults" v-if="pro.length<=0">

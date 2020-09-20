@@ -46,7 +46,7 @@
         </view>
         <view @click="goCoupon" class="navList four">
           <image :src="'/static/client/person/youhuijuan.png'|domain" class="imgr" mode=""></image>
-          <view class="viewr" style="left: 50upx;">
+          <view class="viewr" >
             {{ $t('person','Coupon') }}
           </view>
         </view>
@@ -54,9 +54,9 @@
     </view>
     <view class="order">
       <view class="orderTop">
-        <view class="orderLeft">商城订单</view>
+        <view class="orderLeft">{{ $t('person','Mall order') }}</view>
         <view @click="goOrder(0)" class="orderRight">
-          全部订单
+          {{ $t('person','All orders') }}
           <image :src="'/static/client/person/right.png'|domain" class="image"></image>
         </view>
       </view>
@@ -64,28 +64,28 @@
         <view @click="goOrder(1)" class="orderLast">
           <image :src="'/static/client/person/pay.png'|domain" class="zxc"></image>
           <view class="views">
-            待付款
+            {{ $t('person','Pending payment') }}
           </view>
           <view class="jiaobiao" v-if="orderNum.waitpay>0">{{orderNum.waitpay}}</view>
         </view>
         <view @click="goOrder(2)" class="orderLast">
           <image :src="'/static/client/person/fa.png'|domain" class="zxc"></image>
           <view class="views">
-            待发货
+            {{ $t('person','To be delivered') }}
           </view>
           <div class="jiaobiao" v-if="orderNum.waitsend>0">{{orderNum.waitsend}}</div>
         </view>
         <view @click="goOrder(3)" class="orderLast">
           <image :src="'/static/client/person/shou.png'|domain" class="zxc"></image>
           <view class="views">
-            待收货
+            {{ $t('person','To be received') }}
           </view>
           <div class="jiaobiao" v-if="orderNum.waitconfirm>0">{{orderNum.waitconfirm}}</div>
         </view>
         <view @click="goOrder(4)" class="orderLast">
           <image :src="'/static/client/person/ping.png'|domain" class="zxc"></image>
           <view class="views">
-            待评价
+            {{ $t('person','Comment') }}
           </view>
           <div class="jiaobiao" v-if="orderNum.waitcomment>0">{{orderNum.waitcomment}}</div>
         </view>
@@ -122,7 +122,7 @@
       <view @click="goSetting" class="setting cell">
         <image :src="'/static/client/person/she.png'|domain" class="left"></image>
         <view class="pintuan">
-          设置
+          {{ $t('person','Setting') }}
         </view>
         <image :src="'/static/client/person/right.png'|domain" class="right"></image>
       </view>
@@ -130,7 +130,7 @@
 			<view class="setting cell" v-if="lang_flag">
 			  <image :src="'/static/client/person/she.png'|domain" class="left"></image>
 			  <view class="pintuan">
-			    多语言选择
+          {{ $t('person','Multi-language selection') }}
 			  </view>
 				<picker class="lang_choose_box" @change="chooseLang" :value="choose_lang_idx" :range="lang_code_list" range-key="choose_item">
 					<view class="lang_choose_show">
@@ -489,6 +489,7 @@ export default {
           color: #FFFFFF;
           font-size: 24rpx;
           font-weight: 500;
+          white-space: nowrap;
         }
       }
 
@@ -584,7 +585,7 @@ export default {
         justify-content: space-between;
 
         .navList {
-          width: 177rpx;
+          width: 176rpx;
           height: 100%;
           text-align: center;
           position: relative;
@@ -595,7 +596,8 @@ export default {
             font-weight: 500;
             position: absolute;
             bottom: 10rpx;
-            left: 60rpx;
+            left: 0rpx;
+            width: 176rpx;
           }
         }
 
