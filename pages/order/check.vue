@@ -2,22 +2,22 @@
   <view :class="selectStore?'over':''" @click="commonClick" v-if="loading">
     <div class="top" v-if="orderInfo.all_has_stores==1&&orderInfo.is_virtual == 0">
       <div class="tabs">
-        <div :class="{active:tabIdx==0}" @click="changgeTabIdx(0)" class="tabs-item">快递发货</div>
-        <div :class="{active:tabIdx==1}" @click="changgeTabIdx(1)" class="tabs-item">到店自提</div>
+        <div :class="{active:tabIdx==0}" @click="changgeTabIdx(0)" class="tabs-item">{{ $t('check','Express delivery') }}</div>
+        <div :class="{active:tabIdx==1}" @click="changgeTabIdx(1)" class="tabs-item">{{ $t('check','Pick it up at the store') }}</div>
       </div>
     </div>
     <block v-if="orderInfo.is_virtual == 0 && tabIdx==0 ">
       <view @click="goAddressList" class="address bgwhite">
         <image :src="'/static/client/location.png'|domain" alt="" class="loc_icon"></image>
         <view class="add_msg" v-if="addressinfo.Address_Name">
-          <view class="name">收货人：{{addressinfo.Address_Name}} <span>{{addressinfo.Address_Mobile | formatphone}}</span>
+          <view class="name">{{ $t('check','consignee') }}：{{addressinfo.Address_Name}} <span>{{addressinfo.Address_Mobile | formatphone}}</span>
           </view>
           <view class="location">
-            收货地址：{{addressinfo.Address_Province_name}}{{addressinfo.Address_City_name}}{{addressinfo.Address_Area_name}}{{addressinfo.Address_Town_name?addressinfo.Address_Town_name:''}}{{addressinfo.Address_Detailed}}
+            {{ $t('person','Shipping address') }}：{{addressinfo.Address_Province_name}}{{addressinfo.Address_City_name}}{{addressinfo.Address_Area_name}}{{addressinfo.Address_Town_name?addressinfo.Address_Town_name:''}}{{addressinfo.Address_Detailed}}
           </view>
         </view>
         <view class="add_msg" v-else>
-          <view>暂无收货地址，去添加</view>
+          <view>{{ $t('check','There is no receiving address, add it') }}</view>
         </view>
         <image :src="'/static/client/right.png'|domain" alt="" class="right"></image>
       </view>
@@ -31,12 +31,12 @@
         </div>
         <div @click="multipleSelectStore" class="graytext2 font14 disMbx"
              v-if="tabIdx==0 && orderInfo.shipping_has_stores == 1">
-          {{orderInfo.Stores_Name?orderInfo.Stores_Name+' 修改门店':'选择门店'}}
+          {{orderInfo.Stores_Name?orderInfo.Stores_Name+$t('check','Modify store'):$t('check','Select store')}}
           <div class="zhouri">
             <image :src="'/static/client/right.png'|domain" alt="" style="width: 100%;height: 100%;"></image>
           </div>
         </div>
-        <div @click="multipleSelectStore" class="graytext2 font14" v-if="tabIdx==1">批量选择门店</div>
+        <div @click="multipleSelectStore" class="graytext2 font14" v-if="tabIdx==1">{{ $t('check','Select stores in batch') }}</div>
       </view>
       <view class="order_msg">
         <block :key="pro_id" v-for="(pro,pro_id) in orderInfo.CartList">
@@ -51,7 +51,7 @@
               </view>
             </view>
             <div @click="openStores(pro_id,attr_id,attr.store)" class="store-box" v-if="tabIdx==1">
-              <div class="store-name">{{attr.store.Stores_Name||'选择门店'}}</div>
+              <div class="store-name">{{attr.store.Stores_Name||$t('check','Select store')}}</div>
               <div class="funicon icon-fanhui icon"></div>
             </div>
             <div class="goods-hr"></div>
@@ -63,9 +63,9 @@
         <view class="other" v-if="orderInfo.is_virtual == 0">
           <view class="bd">
             <view @click="changeShip" class="o_title">
-              <span>运费选择</span>
+              <span>{{ $t('check','Freight selection') }}</span>
               <span style="text-align:right; color: #888;">
-                <span>{{shipping_name?(shipping_name + ' ' + (orderInfo.Order_Shipping.Price > 0 ? orderInfo.Order_Shipping.Price : '免运费')):'请选择物流'}}</span>
+                <span>{{shipping_name?(shipping_name + ' ' + (orderInfo.Order_Shipping.Price > 0 ? orderInfo.Order_Shipping.Price : $t('check','Free freight'))):$t('check','Please select Logistics')}}</span>
                 <image :src="'/static/client/right.png'|domain" alt="" class="right"></image>
               </span>
             </view>
@@ -76,16 +76,16 @@
         <view class="other">
           <view class="bd">
             <view class="o_title  words">
-              <span>购买人姓名</span>
-              <input class="inputs" placeholder="请填写姓名" type="text" v-model="user_name" maxlength="50">
+              <span>{{ $t('check','Name of purchaser') }}</span>
+              <input class="inputs" :placeholder="$t('check','Please fill in your name')" type="text" v-model="user_name" maxlength="50">
             </view>
           </view>
         </view>
         <view class="other">
           <view class="bd">
             <view class="o_title  words">
-              <span>购买人手机号</span>
-              <input class="inputs" placeholder="请填写手机号码" type="text" v-model="user_mobile" maxlength="20" >
+              <span>{{ $t('check',"Buyer's mobile phone number") }}</span>
+              <input class="inputs" :placeholder="$t('check','Please fill in the mobile phone number')" type="text" v-model="user_mobile" maxlength="20" >
             </view>
           </view>
         </view>
@@ -94,9 +94,9 @@
       <view class="other" v-if="couponlist.length > 0">
         <view class="bd">
           <view @click="changeCoupon" class="o_title">
-            <span>优惠券选择</span>
+            <span>{{ $t('check','Coupon selection') }}</span>
             <span style="text-align: right; color: #888;display: flex;align-items: center;">
-              <span>{{couponlist.length>0?(coupon_desc?coupon_desc:'您有优惠券使用'): '暂无可用优惠券'}}</span>
+              <span>{{couponlist.length>0?(coupon_desc?coupon_desc:$t('check','You have coupons to use')): $t('check','No coupons available')}}</span>
               <image :src="'/static/client/right.png'|domain" alt="" class="right"></image>
             </span>
           </view>
@@ -105,30 +105,30 @@
       <view class="other" v-if="orderInfo.max_diyong_intergral > 0">
         <view class="bd">
           <view class="o_title">
-            <span>是否参与积分抵扣</span>
+            <span>{{ $t('check','Whether to participate in credit deduction') }}</span>
             <switch :checked="intergralChecked" @change="intergralSwitchChange" color="#04B600" />
           </view>
-          <view class="o_de" v-if="intergralChecked">您当前共有
+          <view class="o_de" v-if="intergralChecked">{{ $t('check','You currently have') }}
             <text>{{userInfo.User_Integral}}</text>
-            积分，每
+            {{ $t('check','Integral, per') }}
             <text>{{orderInfo.Integral_Buy}}</text>
-            积分可以抵扣
+            {{ $t('check','Points can be deducted') }}
             <text>1</text>
-            元，本次可使用
+            {{ $t('check','Yuan, which can be used this time') }}
             <text>{{orderInfo.max_diyong_intergral}}</text>
-            积分,总共可抵
+            {{ $t('check','Points, total can be offset') }}
             <text>{{orderInfo.max_Integral_Money}}</text>
-            元
+            {{$t('check','Yuan')}}
           </view>
         </view>
       </view>
       <view class="other" v-if="orderInfo.is_use_money == 1">
         <view class="bd">
           <view class="o_title">
-            <span>是否使用余额</span>
+            <span>{{ $t('check','Is the balance used') }}</span>
             <switch :checked="userMoneyChecked" @change="userMoneyChange" color="#04B600" />
           </view>
-          <view class="o_de">您当前最多使用余额:
+          <view class="o_de">{{ $t('check','Your current maximum use balance') }}:
             <block v-if="userInfo.User_Money <= orderInfo.Order_TotalPrice">
               {{userInfo.User_Money}}
             </block>
@@ -136,37 +136,37 @@
               {{orderInfo.Order_TotalPrice}}
             </block>
           </view>
-          <input @blur="confirm_user_money" @focus="postData.use_money = 0" class="o_desc" placeholder="请输入金额" type="number" v-if="userMoneyChecked" v-model.number="postData.use_money" />
+          <input @blur="confirm_user_money" @focus="postData.use_money = 0" class="o_desc" :placeholder="$t('check','Please enter the amount')" type="number" v-if="userMoneyChecked" v-model.number="postData.use_money" />
         </view>
       </view>
       <view class="other" v-if="initData.invoice_switch == 1">
         <view class="bd">
           <view class="o_title">
-            <span>是否开具发票</span>
+            <span>{{ $t('check','Is the invoice issued') }}</span>
             <switch :checked="faPiaoChecked" @change="faPiaoChange" color="#04B600" />
           </view>
-          <input @blur="faPiaoConfirm" class="o_desc" placeholder="请输入发票抬头和纳税人识别号" type="text" v-if="faPiaoChecked" />
+          <input @blur="faPiaoConfirm" class="o_desc" :placeholder="$t('check','Please enter invoice title and taxpayer identification number')" type="text" v-if="faPiaoChecked" />
         </view>
       </view>
       <view class="other">
         <view class="bd">
           <view class="o_title  words">
-            <span>买家留言</span>
-            <input @blur="remarkConfirm" class="inputs" placeholder="请填写留言内容" type="text">
+            <span>{{ $t('check','Buyer message') }}</span>
+            <input @blur="remarkConfirm" class="inputs" :placeholder="$t('check','Please fill in the message')" type="text">
           </view>
         </view>
       </view>
 
       <view class="remind-wrap" v-if="remindAddress">
         <view class="remind-add">
-          <view class="text-align-center mb20">新建收货地址</view>
+          <view class="text-align-center mb20">{{ $t('check','New shipping address') }}</view>
           <view class="remind_desc">
-            您还没有收货地址，请先添加一个新的收货地址
+            {{ $t('check','You do not have a shipping address, please add a new shipping address first') }}
           </view>
           <view class="remind_btns text-align-center">
-            <view @click="backFn" class="text-align-center fl1">返回</view>
+            <view @click="backFn" class="text-align-center fl1">{{ $t('check','return') }}</view>
             <view @click="goEditAdd" class="text-align-center fl1 confirm">
-              新建
+              {{ $t('check','newly build') }}
             </view>
           </view>
         </view>
@@ -175,7 +175,7 @@
     <view style="height: 50px;">
       <view :style="{'z-index':zIndex}" class="order_total">
         <view class="totalinfo">
-          <view class="info">共{{orderInfo.prod_count}}件商品 总计：
+          <view class="info">{{ $t('check','common') }} {{orderInfo.prod_count}}{{ $t('check','Products') }} {{ $t('check','total') }}：
             <text class="money">
               <text class="m_icon">￥</text>
               {{orderInfo.Order_Fyepay}}
