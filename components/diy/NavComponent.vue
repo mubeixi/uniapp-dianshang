@@ -7,7 +7,7 @@
           <view :style="{backgroundImage:'url('+domainFunc(item.img)+')'}" class="cover"
                 v-if="nav.config.type===1">
           </view>
-          <view class="title">{{item.title}}</view>
+          <view class="title" :style="{color:style.color}">{{item.title}}</view>
         </view>
       </view>
     </view>
