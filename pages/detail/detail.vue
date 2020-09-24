@@ -176,8 +176,8 @@
           <div class="cartTitle">
             <div class="cartTitles">{{product.Products_Name}}</div>
             <div class="addInfo">
-              <div class="addPrice">{{postData.productDetail_price}} {{ $t('cart','yuan') }}</div>
-              <div class="proSale">{{ $t('cart','in stock') }} {{postData.count}}</div>
+              <div class="addPrice">{{postData.productDetail_price}} {{ $t('detail','yuan') }}</div>
+              <div class="proSale">{{ $t('detail','in stock') }} {{postData.count}}</div>
             </div>
           </div>
         </div>
