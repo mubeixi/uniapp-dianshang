@@ -8,6 +8,9 @@
       <div :class="index == 0 ? 'active' : ''" @click="getComment(0,1)" class="nav">{{ $t('detail','All') }}</div>
       <div :class="index == 1 ? 'active' : ''" @click="getComment(1,1)" class="nav">{{ $t('detail','There are pictures') }}</div>
     </div>
+	<div class="defaults" v-if="comment_list.length<=0">
+	  <image :src="'/static/client/defaultImg.png'|domain"></image>
+	</div>
     <block :key="item" v-for="(item,index) of comment_list">
       <div class="c_content" v-if="!item.ImgPath">
         <div class="c_content_title">
@@ -580,5 +583,11 @@ export default {
   .skuCheck {
     color: #fff !important;
     background-color: #ff4200 !important;
+  }
+  .defaults {
+    margin: 0 auto;
+    width: 640rpx;
+    height: 480rpx;
+    margin-top: 100rpx;
   }
 </style>
