@@ -6,7 +6,7 @@
                     <div>
                         <image class='img' src="/static/detail/home.png"></image>
                     </div>
-                    <div class="txt">首页</div>
+                    <div class="txt">{{$t('detail','Home')}}</div>
                 </navigator>
             </div>
 
@@ -16,25 +16,25 @@
                     <image class='img' v-if="collected" src="/static/detail/favorite-a.png"></image>
                     <image class='img' v-else src="/static/detail/favorite.png"></image>
                 </div>
-                <div class="txt">收藏</div>
+                <div class="txt">{{$t('detail','Favorites')}}</div>
             </div>
             <div class="first" @click="kefu">
                 <div>
                     <image class='img' src="/static/detail/kefu.png"></image>
                 </div>
-                <div class="txt">客服</div>
+                <div class="txt">{{$t('detail','Customer service')}}</div>
             </div>
         </div>
         <div class="rightss">
             <block v-if="!(recieve || isVirtual || isGiftPackage)">
                 <div class="dan bTitle" @click="addCart">
-                    {{first}}
+                    {{first?first:$t('detail','add to Shopping Cart')}}
                 </div>
                 <div class="tuan bTitle" @click="directBuy">
-                    {{second}}
+                    {{second?second:$t('detail','Buy now')}}
                 </div>
             </block>
-            <div class="all" @click="lingqu" :class="canSubmit?'':'disable'" v-else>{{isVirtual ? '立即购买' : (isGiftPackage?'立即购买':'立即领取') }}
+            <div class="all" @click="lingqu" :class="canSubmit?'':'disable'" v-else>{{isVirtual ? $t('detail','Buy now') : (isGiftPackage?$t('detail','Buy now'):$t('detail','get it right now')) }}
             </div>
         </div>
     </div>
@@ -42,6 +42,7 @@
 
 
 <script>
+    import T from '../../common/langue/i18n'
     export default {
         data() {
             return {};
@@ -49,11 +50,11 @@
         props: {
             first: {
                 type: String,
-                default: '加入购物车'
+                default: ''
             },
             second: {
                 type: String,
-                default: '立即购买'
+                default: ''
             },
             collected: {
                 type: Boolean,
@@ -79,6 +80,9 @@
             }
         },
         methods: {
+            $t (line, data) {
+              return T._(line, data)
+            },
             collect() {
                 this.$emit('collect');
             },

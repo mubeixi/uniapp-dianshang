@@ -12,7 +12,16 @@
         <view class="content" v-else-if="type == 1">
 					<view class="other-item other-items">
 						手机号
-						<input class="input phone" disabled maxlength="11" placeholder="请输入手机号" type="text" :value="(userInfo.User_Mobile ? (userInfo.phone_code?userInfo.phone_code + ' ':'') : '') + (userInfo.User_Mobile?userInfo.User_Mobile:'请先绑定手机号')" />
+						<view class="world_sms_choose">
+							<picker v-if="world_sms_flag && !userInfo.User_Mobile" @change="worldSmsChoose" :value="world_sms_code_idx" :range="world_sms_code_list" range-key="choose_item">
+								<view class="world_sms_choose_show">
+									<view class="phone_code">{{world_sms_code_list[world_sms_code_idx].phone_code}}</view>
+									<i class="funicon icon-xia world_sms_choose_icon"></i>
+								</view>
+							</picker>
+							<text class="show_phone_code" v-else>{{userInfo.phone_code ? userInfo.phone_code : '+86'}}</text>
+						</view>
+						<input class="input phone world_sms_phone" :disabled='userInfo.User_Mobile?true:false' v-model="mobile" maxlength="30" placeholder="请输入手机号" type="text"  />
 					</view>
 					<view class="other-item other-items">
 						验证码
@@ -44,7 +53,7 @@
 							</picker>
 							<text class="show_phone_code" v-else>+86</text>
 						</view>
-            <input class="input phone world_sms_phone" maxlength="11" placeholder="请输入手机号" type="text" v-model="mobile" />
+            <input class="input phone world_sms_phone" maxlength="30" placeholder="请输入手机号" type="text" v-model="mobile" />
           </view>
           <view class="other-item">
             验证码
@@ -301,7 +310,7 @@ export default {
           this.toast(err.msg)
           setTimeout(() => {
             uni.navigateBack()
-          }, 100)
+          }, 2000)
         })
       } else if (this.type == 1) {
         updateUserPayPsw(arg).then(res => {
@@ -330,7 +339,7 @@ export default {
 		  this.phone_code = this.world_sms_code_list[this.world_sms_code_idx].phone_code
     },
     async initDataFn () {
-      if (this.type != 3) return
+      if (this.type == 0) return
       const initData = await this.getInitData(1)
       // 国际短信
       this.world_sms_flag = initData.world_sms_flag || 0
@@ -348,7 +357,7 @@ export default {
     } else if (options.type == 1) {
       this.title = '修改支付密码'
       this.type = 1
-      this.phone_code = this.userInfo.phone_code
+      this.phone_code = this.userInfo.User_Mobile ? this.userInfo.phone_code : ''
       this.mobile = this.userInfo.User_Mobile
       if (options.hasOwnProperty('is_back') && options.is_back) {
         this.is_back = true

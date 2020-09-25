@@ -5,12 +5,12 @@
         <icon class="search_icon" size="34rpx" type="search" />
         <input @confirm="success" autofocus="autofocus" class="search-input" confirm-type='search' focus="focus"
                name="search" type="text" v-model="inputValue">
-        <span @click="close" class="span">取消</span>
+        <span @click="close" class="span">{{ $t('classify','Cancel') }}</span>
       </div>
     </form>
     <div class="history" v-if="searchAll.length>0">
       <div class="title">
-        <div>搜索历史</div>
+        <div>{{ $t('classify','search history') }}</div>
         <div @click="clear" class="dels">
           <image :src="'/static/client/del.png'|domain" class="img" />
         </div>

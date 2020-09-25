@@ -14,16 +14,19 @@
     </div>
 
     <view ref="popRef" class="popup-content" @tap.stop="stopEvent" :style="_location">
-      <block v-for="(item,index) in initData.pay_arr" :key="index">
-        <div class="iMbx" v-if="index!='remainder_pay'||(is_use_money==1)" @click="chooseType(index)">
-          <div class="c_method">
-            {{item}}
-            <text>￥{{pay_money}}</text>
-          </div>
-        </div>
-      </block>
-      <div class="safearea-box2"></div>
-    </view>
+          <block v-for="(item,index) in initData.pay_arr" :key="index">
+            <div class="iMbx" v-if="index!='remainder_pay'||(is_use_money==1)" @click="chooseType(index)">
+              <div class="c_method flex flex-vertical-c " style="padding-left: 200rpx">
+                <image v-if="index=='wx_h5'||index=='wx_mp'||index=='wx_lp'||index=='wx_app'"  :src="'/static/client/wechatpay.png'|domain" style="height: 50rpx;width: 50rpx;margin-right: 20rpx;"></image>
+                <image v-else-if="index=='remainder_pay'" :src="'/static/client/yuepay.png'|domain" style="height: 50rpx;width: 50rpx;margin-right: 20rpx;"></image>
+                <image v-else-if="index=='alipay'" :src="'/static/client/alipay.png'|domain" style="height: 50rpx;width: 50rpx;margin-right: 20rpx;"></image>
+				{{item}}
+                <text>￥{{pay_money}}</text>
+              </div>
+            </div>
+          </block>
+          <div class="safearea-box2"></div>
+        </view>
 
     <view v-if="aliPayUrl" class="aliPayUrl">
       <navigator :url="aliPayUrl"></navigator>

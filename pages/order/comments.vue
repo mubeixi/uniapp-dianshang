@@ -5,9 +5,12 @@
     <!-- #endif -->
 
     <div class="navs">
-      <div :class="index == 0 ? 'active' : ''" @click="getComment(0,1)" class="nav">全部</div>
-      <div :class="index == 1 ? 'active' : ''" @click="getComment(1,1)" class="nav">有图</div>
+      <div :class="index == 0 ? 'active' : ''" @click="getComment(0,1)" class="nav">{{ $t('detail','All') }}</div>
+      <div :class="index == 1 ? 'active' : ''" @click="getComment(1,1)" class="nav">{{ $t('detail','There are pictures') }}</div>
     </div>
+	<div class="defaults" v-if="comment_list.length<=0">
+	  <image :src="'/static/client/defaultImg.png'|domain"></image>
+	</div>
     <block :key="item" v-for="(item,index) of comment_list">
       <div class="c_content" v-if="!item.ImgPath">
         <div class="c_content_title">
@@ -39,8 +42,8 @@
           <div class="cartTitle">
             <div class="cartTitles">{{product.Products_Name}}</div>
             <div class="addInfo">
-              <div class="addPrice">{{postData.productDetail_price}}元</div>
-              <div class="proSale">库存{{postData.count}}</div>
+              <div class="addPrice">{{postData.productDetail_price}} {{ $t('cart','yuan') }}</div>
+              <div class="proSale">{{ $t('cart','in stock') }} {{postData.count}}</div>
             </div>
           </div>
         </div>
@@ -58,7 +61,7 @@
         </div>
         <div class="numBer">
           <div class="numBers">
-            数量
+            {{ $t('detail','Quantity') }}
           </div>
           <div class="inputNumber">
             <div @click="delNum" class="clicks">-</div>
@@ -68,7 +71,7 @@
         </div>
       </div>
       <div :class="submit_flag?'':'disabled'" @click="skuSub" class="cartSub">
-        确定
+        {{ $t('detail','determine') }}
       </div>
     </popupLayer>
     <bottom :collected="isCollected" @cartHandle="addCart" @collect="collect" @directHandle="directBuy"></bottom>
@@ -108,7 +111,7 @@ export default {
       totalCount: 0, // 评论个数
       comment_list: [], // 评论列表
       product: {
-     		  Products_JSON: { ImgPath: [] } 
+     		  Products_JSON: { ImgPath: [] }
      	  }, // 商品结果
       Products_ID: 0,
       count: 1, // 商品数量
@@ -366,7 +369,9 @@ export default {
   }
 
   .nav {
-    width: 110rpx;
+    width: auto;
+    min-width: 100rpx;
+    padding: 0rpx 10rpx;
     height: 50rpx;
     line-height: 50rpx;
     text-align: center;
@@ -578,5 +583,11 @@ export default {
   .skuCheck {
     color: #fff !important;
     background-color: #ff4200 !important;
+  }
+  .defaults {
+    margin: 0 auto;
+    width: 640rpx;
+    height: 480rpx;
+    margin-top: 100rpx;
   }
 </style>

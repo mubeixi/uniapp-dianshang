@@ -46,7 +46,7 @@
         </view>
         <view @click="goCoupon" class="navList four">
           <image :src="'/static/client/person/youhuijuan.png'|domain" class="imgr" mode=""></image>
-          <view class="viewr" style="left: 50upx;">
+          <view class="viewr" >
             {{ $t('person','Coupon') }}
           </view>
         </view>
@@ -54,9 +54,9 @@
     </view>
     <view class="order">
       <view class="orderTop">
-        <view class="orderLeft">商城订单</view>
+        <view class="orderLeft">{{ $t('person','Mall order') }}</view>
         <view @click="goOrder(0)" class="orderRight">
-          全部订单
+          {{ $t('person','All orders') }}
           <image :src="'/static/client/person/right.png'|domain" class="image"></image>
         </view>
       </view>
@@ -64,28 +64,28 @@
         <view @click="goOrder(1)" class="orderLast">
           <image :src="'/static/client/person/pay.png'|domain" class="zxc"></image>
           <view class="views">
-            待付款
+            {{ $t('person','Pending payment') }}
           </view>
           <view class="jiaobiao" v-if="orderNum.waitpay>0">{{orderNum.waitpay}}</view>
         </view>
         <view @click="goOrder(2)" class="orderLast">
           <image :src="'/static/client/person/fa.png'|domain" class="zxc"></image>
           <view class="views">
-            待发货
+            {{ $t('person','To be delivered') }}
           </view>
           <div class="jiaobiao" v-if="orderNum.waitsend>0">{{orderNum.waitsend}}</div>
         </view>
         <view @click="goOrder(3)" class="orderLast">
           <image :src="'/static/client/person/shou.png'|domain" class="zxc"></image>
           <view class="views">
-            待收货
+            {{ $t('person','To be received') }}
           </view>
           <div class="jiaobiao" v-if="orderNum.waitconfirm>0">{{orderNum.waitconfirm}}</div>
         </view>
         <view @click="goOrder(4)" class="orderLast">
           <image :src="'/static/client/person/ping.png'|domain" class="zxc"></image>
           <view class="views">
-            待评价
+            {{ $t('person','Comment') }}
           </view>
           <div class="jiaobiao" v-if="orderNum.waitcomment>0">{{orderNum.waitcomment}}</div>
         </view>
@@ -122,10 +122,23 @@
       <view @click="goSetting" class="setting cell">
         <image :src="'/static/client/person/she.png'|domain" class="left"></image>
         <view class="pintuan">
-          设置
+          {{ $t('person','Setting') }}
         </view>
         <image :src="'/static/client/person/right.png'|domain" class="right"></image>
       </view>
+
+			<view class="setting cell" v-if="lang_flag">
+			  <image :src="'/static/client/person/she.png'|domain" class="left"></image>
+			  <view class="pintuan">
+          {{ $t('person','Multi-language selection') }}
+			  </view>
+				<picker class="lang_choose_box" @change="chooseLang" :value="choose_lang_idx" :range="lang_code_list" range-key="choose_item">
+					<view class="lang_choose_show">
+						<view class="lang_code">{{lang_code_list[choose_lang_idx].lang_name}}</view>
+						<i class="funicon icon-xia"></i>
+					</view>
+				</picker>
+			</view>
 
     </view>
     <view style="height: 118rpx;"></view>
@@ -138,6 +151,7 @@ import { mapActions, mapGetters, mapState } from 'vuex'
 import { get_user_info, getFuncModule, getOrderNum, judgeSignin, signin } from '../../common/fetch.js'
 // import TabbarComponents from "../../components/TabbarComponents";
 import { error } from '@/common'
+import { ls } from '../../common/tool'
 
 export default {
   mixins: [pageMixin],
@@ -150,7 +164,13 @@ export default {
       isLodnig: false,
       orderNum: '', // 订单状态角标数
       Order_Type: 'shop', // 请求的订单类型
-      personInit: []
+      personInit: [],
+
+      // 多语言
+      lang_flag: 0,
+      lang_code_list: [],
+      choose_lang_idx: 0,
+      choose_lang: 'zh-cn'
     }
   },
   computed: {
@@ -344,6 +364,48 @@ export default {
       uni.navigateTo({
         url: '/pagesA/person/personalMsg'
       })
+    },
+    async initDataFn () {
+		  const initData = await this.getInitData(1)
+		  // 多语言
+		  this.lang_flag = initData.lang_flag || 0
+      // 判断是否开启多语言
+      if (this.lang_flag == 0) {
+        this.langSet('zh-cn', 0)
+      } else {
+        this.lang_code_list = initData.lang_code_list || []
+        // 查询用户是否选择过语言
+        const user_choose_lang = ls.get('user_choose_lang') ? ls.get('user_choose_lang') : 0
+        const default_lang = initData.default_lang || 'zh-cn'
+        this.choose_lang = ls.get('language') ? ls.get('language') : ''
+        // 用户未选择语言，使用默认语言
+        if (user_choose_lang != 1) {
+				  this.choose_lang = default_lang
+          // 没有选择算不算已选择，这个得确认需求？？？？
+          // this.langSet(default_lang, 1)
+          this.langSet(default_lang, 0)
+        }
+        for (const idx in this.lang_code_list) {
+				  if (this.lang_code_list[idx].lang_code == this.choose_lang) {
+				    this.choose_lang_idx = idx
+				  }
+        }
+      }
+    },
+    chooseLang (e) {
+      const idx = e.detail.value
+      this.choose_lang_idx = idx
+      this.langSet(this.lang_code_list[idx].lang_code, 1)
+    },
+    langSet (lang_code, user_choose) {
+      const choose_lang = ls.get('language') ? ls.get('language') : ''
+      ls.set('language', lang_code)
+      // 记录用户已选择，下次进来直接使用选择的语言，不需再变为默认语言
+      ls.set('user_choose_lang', user_choose)
+      // 重启项目
+      lang_code != choose_lang && uni.reLaunch({
+			  url: '/pages/index/index'
+      })
     }
   },
   onShow () {
@@ -360,6 +422,7 @@ export default {
     if (this.$fun.checkIsLogin()) {
       this.judgeSignin()
     }
+    this.initDataFn()
   },
   async onPullDownRefresh () {
     if (JSON.stringify(this.userInfo) !== '{}') {
@@ -426,6 +489,7 @@ export default {
           color: #FFFFFF;
           font-size: 24rpx;
           font-weight: 500;
+          white-space: nowrap;
         }
       }
 
@@ -521,7 +585,7 @@ export default {
         justify-content: space-between;
 
         .navList {
-          width: 177rpx;
+          width: 176rpx;
           height: 100%;
           text-align: center;
           position: relative;
@@ -532,7 +596,8 @@ export default {
             font-weight: 500;
             position: absolute;
             bottom: 10rpx;
-            left: 60rpx;
+            left: 0rpx;
+            width: 176rpx;
           }
         }
 
@@ -763,4 +828,16 @@ export default {
     justify-content: center;
     color: #fff !important;
   }
+
+	.lang_choose_box {
+		flex: 1;
+		.lang_choose_show {
+			display: flex;
+			align-items: center;
+			justify-content: flex-end;
+			.lang_code {
+				margin-right: 10rpx;
+			}
+		}
+	}
 </style>

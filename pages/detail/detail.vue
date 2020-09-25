@@ -20,10 +20,10 @@
           </video>
           <view class="change-btn" v-if="!hideNativeEleShow">
             <cover-view :class="[showVideo?'active':'','shipin']" @click="change_view(1)" v-if="showVideo&&showCorver">
-              视频
+              {{ $t('detail','video') }}
             </cover-view>
             <cover-view :class="[showVideo?'':'active','tupian']" @click="change_view(2)" v-if="showVideo&&showCorver">
-              图片
+              {{ $t('detail','image') }}
             </cover-view>
           </view>
         </view>
@@ -35,8 +35,8 @@
             </swiper-item>
           </swiper>
           <view class="change-btn" v-if="product.video_url">
-            <view :class="[showVideo?'active':'','shipin']" @click="change_view(1)">视频</view>
-            <view :class="[showVideo?'':'active','tupian']" @click="change_view(2)">图片</view>
+            <view :class="[showVideo?'active':'','shipin']" @click="change_view(1)">{{ $t('detail','video') }}</view>
+            <view :class="[showVideo?'':'active','tupian']" @click="change_view(2)">{{ $t('detail','image') }}</view>
           </view>
         </view>
       </view>
@@ -46,12 +46,12 @@
       <div class="price">
         <span class="n_price"><span class="mm">￥</span>{{product.Products_PriceX}}</span>
         <span class="o_price" v-if="product.Products_PriceY!=product.Products_PriceX"><span class="mm">￥</span>{{product.Products_PriceY}}</span>
-        <span @click="showTick" class="share" data-type="share">分享此产品</span>
+        <span @click="showTick" class="share" data-type="share">{{ $t('detail','Share products') }}</span>
       </div>
       <div class="name">{{product.Products_Name}}</div>
       <div class="sold">
-        <span v-if="product.Products_Count">库存{{product.Products_Count}}</span>
-        <span v-if="product.Products_Sales">月销{{product.Products_Sales}}</span>
+        <span v-if="product.Products_Count">{{$t('detail','in stock')}} {{product.Products_Count}}</span>
+        <span v-if="product.Products_Sales">{{$t('detail','Monthly sales')}} {{product.Products_Sales}}</span>
       </div>
       <!-- 包邮等信息 -->
       <div class="section3" v-if="product.Products_Promise && product.Products_Promise.length > 0">
@@ -63,16 +63,16 @@
     </div>
     <!-- 领券 -->
     <div @click="showTick" class="section2" data-type="ticks" v-if="couponList.length>0">
-      <div class="btn">领券</div>
-      <div class="right">店铺优惠券
+      <div class="btn">{{ $t('detail','Get coupons') }}</div>
+      <div class="right">{{ $t('detail','Shop Coupons') }}
         <image :src="'/static/client/detail/right.png'|domain" alt="" class="img" />
       </div>
     </div>
     <!-- 评价 -->
     <div class="comment bgwhite">
       <div class="c_title">
-        <span>评价</span>
-        <div @click="gotoComments" class="right">查看全部
+        <span>{{ $t('detail','Evaluation') }}</span>
+        <div @click="gotoComments" class="right">{{ $t('detail','view all') }}
           <image :src="'/static/client/detail/right.png'|domain" alt=""
                  style="width: 19rpx;height: 30rpx;margin-left: 20rpx;" />
         </div>
@@ -127,41 +127,41 @@
           <!-- #ifdef APP-PLUS -->
           <div @click="shareFunc('wx')" class="flex1">
             <image :src="'/static/client/detail/share1.png'|domain" alt="" class='img'></image>
-            <div>发送好友</div>
+            <div>{{ $t('detail','Send friend') }}</div>
           </div>
           <div @click="shareFunc('wxtimeline')" class="flex1">
             <image :src="'/static/client/detail/sahre3.png'|domain" alt="" class='img'></image>
-            <div>朋友圈</div>
+            <div>{{ $t('detail','Circle of friends') }}</div>
           </div>
           <!--只有配置了这个参数的app，才有分享到小程序选项-->
           <div @click="shareFunc('wxmini')" class="flex1" v-if="wxMiniOriginId">
             <img :src="'/static/client/detail/share4.png'|domain" alt="" class='img'>
-            <div>微信小程序</div>
+            <div>{{ $t('detail','WeChat Mini Program') }}</div>
           </div>
           <!-- #endif -->
           <!-- #ifndef MP-TOUTIAO -->
           <div @click="shareFunc('pic')" class="flex1">
             <image :src="'/static/client/detail/share2.png'|domain" alt="" class='img'></image>
-            <div>分享海报</div>
+            <div>{{ $t('detail','Share poster') }}</div>
           </div>
           <!-- #endif -->
         </div>
-        <div @click="cancel" class="s_bottom">取消</div>
+        <div @click="cancel" class="s_bottom">{{ $t('detail','cancel') }}</div>
       </div>
       <view style="max-height: 1050rpx;" v-else>
         <div class="t_title">
-          领券
+          {{ $t('detail','Get coupons') }}
           <image :src="'/static/client/detail/x.png'|domain" @click="close"></image>
         </div>
         <scroll-view @scrolltolower="goNextPage" class="ticks" scroll-y=true v-if="type=='ticks'">
           <div :key="i" class="t_content" v-for="(item,i) of couponList">
             <div class="t_left">
-              <div class="t_left_t"><span>￥</span><span class="money">{{item.Coupon_Cash}}</span><span>店铺优惠券<text
-              v-if="item.Coupon_UseArea==0">(实体店)</text></span></div>
+              <div class="t_left_t"><span>￥</span><span class="money">{{item.Coupon_Cash}}</span><span>{{ $t('detail','Shop Coupons') }}<text
+              v-if="item.Coupon_UseArea==0">({{ $t('detail','Physical store') }})</text></span></div>
               <div class="t_left_c">{{item.Coupon_Subject}}</div>
-              <div class="t_left_b">有效期{{item.Coupon_StartTime}}-{{item.Coupon_EndTime}}</div>
+              <div class="t_left_b">{{ $t('cart','Valid period') }} {{item.Coupon_StartTime}}-{{item.Coupon_EndTime}}</div>
             </div>
-            <div @click="getMyCoupon(item.Coupon_ID,i)" class="t_right">立即领取</div>
+            <div @click="getMyCoupon(item.Coupon_ID,i)" class="t_right">{{ $t('detail','get it right now') }}</div>
           </div>
         </scroll-view>
       </view>
@@ -176,8 +176,8 @@
           <div class="cartTitle">
             <div class="cartTitles">{{product.Products_Name}}</div>
             <div class="addInfo">
-              <div class="addPrice">{{postData.productDetail_price}}元</div>
-              <div class="proSale">库存{{postData.count}}</div>
+              <div class="addPrice">{{postData.productDetail_price}} {{ $t('detail','yuan') }}</div>
+              <div class="proSale">{{ $t('detail','in stock') }} {{postData.count}}</div>
             </div>
           </div>
         </div>
@@ -203,7 +203,7 @@
         </div>
         <div class="numBer" v-if="gift == 0">
           <div class="numBers">
-            数量
+            {{ $t('detail','Quantity') }}
           </div>
           <div class="inputNumber">
             <div @click="delNum" class="clicks">-</div>
@@ -214,7 +214,7 @@
         </div>
         <div class="numBer" v-else>
           <div class="numBers">
-            数量
+            {{ $t('detail','Quantity') }}
           </div>
           <div class="inputNumber">
             <div class="clicks">-</div>
@@ -225,7 +225,7 @@
       </div>
       <form @submit="skuSub" report-submit>
         <button :class="submit_flag?'':'disabled'" class="cartSub" formType="submit">
-          确定
+          {{ $t('detail','determine') }}
         </button>
       </form>
     </popupLayer>
@@ -1458,6 +1458,9 @@ export default {
   }
 
   .price .share {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
     float: right;
     background: red;
     color: #fff;
@@ -1469,7 +1472,8 @@ export default {
     border-top-left-radius: 40rpx;
     border-bottom-left-radius: 40rpx;
     height: 56rpx;
-    width: 157rpx;
+    //width: 157rpx;
+    width:auto;
     box-sizing: border-box;
   }
 
