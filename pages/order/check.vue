@@ -13,7 +13,7 @@
           <view class="name">{{ $t('check','consignee') }}：{{addressinfo.Address_Name}} <span>{{addressinfo.Address_Mobile | formatphone}}</span>
           </view>
           <view class="location">
-            {{ $t('person','Shipping address') }}：{{addressinfo.Address_Province_name}}{{addressinfo.Address_City_name}}{{addressinfo.Address_Area_name}}{{addressinfo.Address_Town_name?addressinfo.Address_Town_name:''}}{{addressinfo.Address_Detailed}}
+            {{ $t('check','Shipping address') }}：{{addressinfo.Address_Province_name}}{{addressinfo.Address_City_name}}{{addressinfo.Address_Area_name}}{{addressinfo.Address_Town_name?addressinfo.Address_Town_name:''}}{{addressinfo.Address_Detailed}}
           </view>
         </view>
         <view class="add_msg" v-else>
