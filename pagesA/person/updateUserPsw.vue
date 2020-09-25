@@ -39,7 +39,7 @@
     <block v-else>
       <form @submit="confirm" report-submit>
         <view class="other">
-          <view class="other-item">
+          <view class="other-item" v-if='userInfo.User_Mobile'>
             您现在的手机号是：{{userInfo.phone_code?userInfo.phone_code:''}} {{userInfo.User_Mobile?userInfo.User_Mobile:''}}
           </view>
           <view class="other-item">
@@ -145,6 +145,7 @@ export default {
         data.User_ID = this.user_id
         data.access_token = this.accessToken
       }
+	  
 
       updateUserMobile(data).then(res => {
         uni.showToast({
@@ -221,7 +222,7 @@ export default {
       }
       if (this.user_id) {
         data.User_ID = this.user_id
-        data.access_token = ls.get('accessToken')
+        data.access_token = this.accessToken
       }
 
       if (this.type == 1) {

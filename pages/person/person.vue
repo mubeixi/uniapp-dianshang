@@ -183,6 +183,7 @@ export default {
   methods: {
     ...mapActions(['setUserInfo', 'getUserInfo']),
     goUrl (item) {
+		if (!this.$fun.checkIsLogin(1)) return
       uni.navigateTo({
         url: item
       })
