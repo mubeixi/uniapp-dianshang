@@ -5,7 +5,7 @@
     <div class="zhezhao" v-if="password_input">
       <div class="input-wrap">
         <div>请输入余额支付密码</div>
-        <input type="password" class="input" placeholder="请输入密码" @input="user_password">
+        <input type="password" maxlength="50" class="input" placeholder="请输入密码" @input="user_password">
         <div class="btns">
           <div @click="cancelInput" class="btn">取消</div>
           <div @click="confirmInput" class="btn">确定</div>
@@ -240,7 +240,7 @@ export default {
       this.pay_type = name
       this.close()
 
-      if (name === 'remainder_pay') {
+      if (this.use_money > 0 || name === 'remainder_pay') {
         if (this.userInfo.hasOwnProperty('User_PayPassword') && !this.userInfo.User_PayPassword) {
           confirm({
             title: '提示',
@@ -256,8 +256,6 @@ export default {
           })
           return
         }
-        this.password_input = true// 弹出密码输入框
-        return
       }
 
       // 判断是否使用了余额，
