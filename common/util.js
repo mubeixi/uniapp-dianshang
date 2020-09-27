@@ -277,7 +277,7 @@ export const array_change = function (arr) {
 // 获取数组下标  用于收货地址选择的显示
 export const get_arr_index = function (arr, id) {
   for (var i in arr) {
-    if (Number(arr[i].id) === Number(id)) {
+    if (Number(arr[i].id) == Number(id)) {
       return parseInt(i)
     }
   }
