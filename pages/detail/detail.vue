@@ -49,9 +49,12 @@
         <span @click="showTick" class="share" data-type="share">{{ $t('detail','Share products') }}</span>
       </div>
       <div class="name">{{product.Products_Name}}</div>
+
+	  <div class="Products_BriefDescription">{{product.Products_BriefDescription}}</div>
+
       <div class="sold">
-        <span v-if="product.Products_Count">{{$t('detail','in stock')}} {{product.Products_Count}}</span>
-        <span v-if="product.Products_Sales">{{$t('detail','Monthly sales')}} {{product.Products_Sales}}</span>
+        <span v-if="product.Products_Count"><span class="c3">{{$t('detail','in stock')}}</span>{{' '+product.Products_Count}}</span>
+        <span v-if="product.Products_Sales" style="margin-left: auto;"><span class="c3">{{$t('detail','Monthly sales')}}</span>{{' '+product.Products_Sales}}</span>
       </div>
       <!-- 包邮等信息 -->
       <div class="section3" v-if="product.Products_Promise && product.Products_Promise.length > 0">
@@ -1499,6 +1502,8 @@ export default {
     height: 50rpx;
     line-height: 50rpx;
     padding-bottom: 10px;
+	display: flex;
+	align-items: center;
   }
 
   .sold span {
@@ -1507,7 +1512,7 @@ export default {
   }
 
   .sold span:nth-child(2) {
-    float: right;
+   // float: right;
   }
 
   /* 产品描述部分 end */
@@ -1816,5 +1821,16 @@ export default {
   .skuCheck {
     color: #fff !important;
     background-color: #ff4200 !important;
+  }
+  .c3{
+	  color: #333333 !important;
+  }
+  .Products_BriefDescription{
+	  width: 710rpx;
+	  margin: 10rpx auto 10rpx;
+	  font-size: 12px;
+	  color: #999;
+	  line-height: 18px;
+	  
   }
 </style>
