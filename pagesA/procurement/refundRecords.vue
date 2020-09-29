@@ -2,20 +2,20 @@
   <view @click="commonClick" class="wrap">
     <view style="height: 90rpx;margin-bottom: 10px">
       <scroll-view class="order-status" scroll-x="true" style="width: 750rpx;white-space: nowrap;">
-        <view :class="[status == 0 ? 'active' : '']" @click="changeStatus (0)" class="status">全部</view>
-        <view :class="[status == 31 ? 'active' : '']" @click="changeStatus(31)" class="status">待处理</view>
-        <view :class="[status == 32 ? 'active' : '']" @click="changeStatus(32)" class="status">待发货</view>
-        <view :class="[status == 33 ? 'active' : '']" @click="changeStatus(33)" class="status">已驳回</view>
-        <view :class="[status == 34 ? 'active' : '']" @click="changeStatus(34)" class="status">已发货</view>
-        <view :class="[status == 35 ? 'active' : '']" @click="changeStatus(35)" class="status">已收货</view>
-        <view :class="[status == 36 ? 'active' : '']" @click="changeStatus(36)" class="status">已收款</view>
-        <view :class="[status == 37 ? 'active' : '']" @click="changeStatus(37)" class="status">已取消</view>
+        <view :class="[status == 0 ? 'active' : '']" @click="changeStatus (0)" class="status">{{$t(1443)}}</view>
+        <view :class="[status == 31 ? 'active' : '']" @click="changeStatus(31)" class="status">{{$t(1444)}}</view>
+        <view :class="[status == 32 ? 'active' : '']" @click="changeStatus(32)" class="status">{{$t(1445)}}</view>
+        <view :class="[status == 33 ? 'active' : '']" @click="changeStatus(33)" class="status">{{$t(1446)}}</view>
+        <view :class="[status == 34 ? 'active' : '']" @click="changeStatus(34)" class="status">{{$t(1447)}}</view>
+        <view :class="[status == 35 ? 'active' : '']" @click="changeStatus(35)" class="status">{{$t(1448)}}</view>
+        <view :class="[status == 36 ? 'active' : '']" @click="changeStatus(36)" class="status">{{$t(1449)}}</view>
+        <view :class="[status == 37 ? 'active' : '']" @click="changeStatus(37)" class="status">{{$t(1450)}}</view>
       </scroll-view>
     </view>
     <block v-if="back_list.length>0">
       <view :key="index" @click="hidden_tip" class="prolist" v-for="(item,index) of back_list">
         <view class="pro-title">
-          <view>退货单号：{{item.id}}</view>
+          <view>{{$t(1451)}}：{{item.id}}</view>
           <view class="status">{{item.status_desc}}
             <block v-if="item.status == 33">
               <image @click.stop="show_pro_tip(index)" class="qty-icon" mode="" src="/static/procurement/i.png"></image>
@@ -30,7 +30,7 @@
           <image :src="item.receive_img" class="avator" mode=""></image>
           <view class="biz-name">{{item.receive_name}}
             <view class="biz-links" v-if="item.receive_id > 0">(
-              <text @click="showStore(item.receive_id)" class="text-d">查看门店信息</text>
+              <text @click="showStore(item.receive_id)" class="text-d">{{$t(1452)}}</text>
               )
             </view>
           </view>
@@ -59,12 +59,12 @@
           <text class="price-num">{{item.price}}</text>
         </view>
         <view class="btns">
-          <view @click="cancelOrder(item.id)" class="btn" v-if="item.status == 31 || item.status == 32">取消</view>
-          <view @click="send(item.id)" class="btn back" v-if="item.status == 32">发货</view>
-          <view @click="reciveMoney(item.id)" class="btn back" v-if="item.status == 35">确认收款</view>
+          <view @click="cancelOrder(item.id)" class="btn" v-if="item.status == 31 || item.status == 32">{{$t(1453)}}</view>
+          <view @click="send(item.id)" class="btn back" v-if="item.status == 32">{{$t(1454)}}</view>
+          <view @click="reciveMoney(item.id)" class="btn back" v-if="item.status == 35">{{$t(1455)}}</view>
         </view>
       </view>
-      <view class="list-bottom">我是有底线的</view>
+      <view class="list-bottom">{{$t(1456)}}</view>
     </block>
     <div class="defaults" v-else>
       <image :src="'/static/client/defaultImg.png'|domain"></image>
@@ -74,22 +74,22 @@
       <view class="sku-title">门店信息</view>
       <view class="sku-content">
         <view class="skulist">
-          <view class="sku-name">门店名称：</view>
+          <view class="sku-name">{{$t(1457)}}：</view>
           <view class="sku-item">{{storeInfo.Stores_Name}}</view>
         </view>
         <view class="skulist">
-          <view class="sku-name">门店电话：</view>
+          <view class="sku-name">{{$t(1458)}}：</view>
           <view class="sku-item">{{storeInfo.mobile}}</view>
         </view>
         <view @click="showAdress" class="skulist">
-          <view class="sku-name">门店地址：</view>
+          <view class="sku-name">{{$t(1459)}}：</view>
           <view class="sku-item" style="flex:1;">
             {{storeInfo.Stores_Province_name}}{{storeInfo.Stores_City_name}}{{storeInfo.Stores_Area_name}}{{storeInfo.Stores_Address}}
             <image class="img" src="/static/local.png"></image>
           </view>
         </view>
         <view @click="showAdress" class="skulist" v-if="storeInfo.distance">
-          <view class="sku-name">门店距离：</view>
+          <view class="sku-name">{{$t(1460)}}</view>
           <view class="sku-item">{{storeInfo.distance}}KM</view>
         </view>
       </view>
@@ -100,19 +100,19 @@
       <view class="sku-content" style="padding-left:53rpx;">
         <view class="skulist">
           <view class="nochecked"></view>
-          <view>平台进货</view>
+          <view>{{$t(1461)}}</view>
         </view>
         <view class="skulist">
           <image class="selected" mode="" src="/static/selected.png"></image>
-          <view>门店进货</view>
+          <view>{{$t(1462)}}</view>
         </view>
         <view class="skulist">
-          <input class="input" placeholder="请输入门店编号" placeholder-style="color: #C9C9C9;font-size: 24rpx;" type="text"
+          <input class="input" :placeholder="$t(1463)" placeholder-style="color: #C9C9C9;font-size: 24rpx;" type="text"
                  value="" />
         </view>
         <view class="skulist change-btn">
-          <view class="btn cancel">取消</view>
-          <view class="btn confirm">确定</view>
+          <view class="btn cancel">{{$t(1464)}}</view>
+          <view class="btn confirm">{{$t(1465)}}</view>
         </view>
       </view>
     </view>
@@ -133,6 +133,7 @@ import { mapGetters } from 'vuex'
 import { getLocation } from '../../common/tool/location'
 import { error, modal } from '@/common'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {
@@ -170,7 +171,7 @@ export default {
           this.load()
         }, 1000)
       }).catch(() => {
-        modal('操作失败')
+        modal(T._(1443))
       })
     },
     // 发货
@@ -182,9 +183,9 @@ export default {
     // 取消退货单
     cancelOrder (order_id) {
       uni.showModal({
-        content: '确认退货？',
-        cancelText: '我再想想',
-        confirmText: '我意已决',
+        content: T._(1444),
+        cancelText: T._(1445),
+        confirmText: T._(1446),
         success: (res) => {
           if (res.confirm) {
             storeProdBackOrderCancel({
@@ -198,7 +199,7 @@ export default {
                 this.load()
               }, 1000)
             }).catch(() => {
-              modal('操作失败')
+              modal(T._(1447))
             })
           } else {
 
@@ -227,13 +228,13 @@ export default {
         status: this.status,
         page: this.page,
         pageSize: this.pageSize
-      }, { tip: '加载中...' }).then(res => {
+      }, { tip: T._(1448) }).then(res => {
         res.data.forEach(item => {
           item.pro_tip_show = false
         })
         this.back_list = res.data
       }).catch(() => {
-        modal('获取信息失败')
+        modal(T._(1449))
       })
     },
     show_pro_tip (index) {
@@ -271,7 +272,7 @@ export default {
             this.storeInfo = res.data
             this.storeInfo.distance = (res.data.distance / 1000).toFixed(2)
           }).catch(() => {
-            error('获取信息失败')
+            error(T._(1450))
           })
         }
       }).catch(err => {
@@ -281,7 +282,7 @@ export default {
         getStoreDetail(data).then(res => {
           this.storeInfo = res.data
         }).catch(() => {
-          error('获取信息失败')
+          error(T._(1451))
         })
       })
     },

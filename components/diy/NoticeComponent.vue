@@ -12,6 +12,7 @@
 import { deepCopyStrict } from '../../common/tool'
 
 const styleDefault = {}
+import T from '@/common/langue/i18n'
 export default {
   props: {
     index: {

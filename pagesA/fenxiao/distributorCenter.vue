@@ -3,21 +3,21 @@
 
     <!-- <view class="zhezhao" v-if="password_input">
       <view class="input-wrap">
-        <view>请输入余额支付密码</view>
-        <input class="inputpass" type="password" placeholder="请输入密码" v-model="user_pay_password" @blur="user_password">
+        <view>{{$t(840)}}</view>
+        <input class="inputpass" type="password" placeholder="$t(841)" v-model="user_pay_password" @blur="user_password">
         <view class="btns">
-          <view @click="cancelInput" class="btn">取消</view>
-          <view @click="confirmInput" class="btn">确定</view>
+          <view @click="cancelInput" class="btn">{{$t(842)}}</view>
+          <view @click="confirmInput" class="btn">{{$t(843)}}</view>
         </view>
       </view>
     </view> -->
     <div class="zhezhao" v-if="password_input">
       <div class="input-wrap">
-        <div>请输入余额支付密码</div>
-        <input @blur="user_password" class="input" placeholder="请输入密码" type="password" v-model="user_pay_password">
+        <div>{{$t(844)}}</div>
+        <input @blur="user_password" class="input" :placeholder="$t(845)" type="password" v-model="user_pay_password">
         <div class="btns">
-          <div @click="cancelInput" class="btn">取消</div>
-          <div @click="confirmInput" class="btn">确定</div>
+          <div @click="cancelInput" class="btn">{{$t(846)}}</div>
+          <div @click="confirmInput" class="btn">{{$t(847)}}</div>
         </div>
       </div>
     </div>
@@ -54,17 +54,17 @@
         </block>
         <view class="center" v-if="isShowAddress">
           <view class="mbx">
-            区域选择
+            {{$t(848)}}
           </view>
           <view class="haha">
             <picker :range="change_objectMultiArray" :value="change_multiIndex" @change="bindMultiPickerChange"
                     @columnchange="bindMultiPickerColumnChange" mode="multiSelector" range-key="name">
               <view class="picker" style="text-align: center;">
-                <view v-if="!address_info.Address_Province">选择省份</view>
+                <view v-if="!address_info.Address_Province">{{$t(849)}}</view>
                 <view v-else>{{objectMultiArray[0][multiIndex[0]]['name']}}</view>
-                <view v-if="!address_info.Address_City">选择城市</view>
+                <view v-if="!address_info.Address_City">{{$t(850)}}</view>
                 <view v-else>{{objectMultiArray[1][multiIndex[1]]['name']}}</view>
-                <view v-if="!address_info.Address_Area">选择地区</view>
+                <view v-if="!address_info.Address_Area">{{$t(851)}}</view>
                 <view v-else>{{objectMultiArray[2][multiIndex[2]]['name']}}</view>
               </view>
             </picker>
@@ -72,12 +72,12 @@
         </view>
         <view class="center" v-if="isShowAddress">
           <view class="mbx">
-            选择街道
+            {{$t(852)}}
           </view>
           <view class="haha">
             <picker :range="t_arr" :value="t_index" @change="t_pickerChange" mode="selector" range-key="name">
               <view class="picker">
-                <view style="margin-left: 20upx;width: 300upx;" v-if="!address_info.Address_Town">选择街道</view>
+                <view style="margin-left: 20upx;width: 300upx;" v-if="!address_info.Address_Town">{{$t(853)}}</view>
                 <view style="margin-left: 20upx;width: 300upx;" v-else>{{t_arr[t_index]['name']}}</view>
               </view>
             </picker>
@@ -87,7 +87,7 @@
 
       <view class="checks" v-if="pro.dis_config.Distribute_AgreementOpen">
         <radio :checked="isAgree" @click="changes" style="transform:scale(0.7)" />
-        <text @click="goDistributeAgreement">同意
+        <text @click="goDistributeAgreement">{{$t(854)}}
           <text class="checkq">{{pro.dis_config.Distribute_AgreementTitle}}</text>
         </text>
       </view>
@@ -102,16 +102,16 @@
       <block v-if="pro.dis_config.Level_Form">
         <view class="center" v-if="pro.dis_config.Reserve_DisplayName==1">
           <view class="mbx">
-            姓名
+            {{$t(855)}}
           </view>
-          <input class="inputa" placeholder="请输入您的姓名" placeholder-style="color: #CAC8C8;" type="text"
+          <input class="inputa" :placeholder="$t(856)" placeholder-style="color: #CAC8C8;" type="text"
                  v-model="shenArr.DisplayName">
         </view>
         <view class="center" v-if="pro.dis_config.Reserve_DisplayTelephone==1">
           <view class="mbx">
-            电话
+            {{$t(857)}}
           </view>
-          <input @blur="isTell" class="inputa" placeholder="请输入您的电话" placeholder-style="color: #CAC8C8;"
+          <input @blur="isTell" class="inputa" :placeholder="$t(858)" placeholder-style="color: #CAC8C8;"
                  type="text" v-model="shenArr.DisplayTelephone">
         </view>
         <view :key="idx" class="center" v-for="(itm,idx) of select_lists">
@@ -130,20 +130,20 @@
           <view class="mbx">
             {{m.Name}}
           </view>
-          <input :placeholder="'请输入'+m.Name" class="inputa" type="text" v-model="m.Value">
+          <input :placeholder="$t(859)+m.Name" class="inputa" type="text" v-model="m.Value">
         </view>
       </block>
       <view class="disHaihong" v-if="disData.Level_Name">
-        {{disData.Level_Name}}({{disData.level_rules_edit.direct_buy.value.money}}元)
+        {{disData.Level_Name}}({{disData.level_rules_edit.direct_buy.value.money}}{{$t(860)}})
       </view>
       <view class="checks" v-if="pro.dis_config.Distribute_AgreementOpen">
         <radio :checked="isAgree" @click="changes" style="transform:scale(0.7)" />
-        <text @click="goDistributeAgreement">同意
+        <text @click="goDistributeAgreement">{{$t(861)}}
           <text class="checkq">{{pro.dis_config.Distribute_AgreementTitle}}</text>
         </text>
       </view>
       <view @click="becomeFenxiao" class="submits">
-        立即购买成为{{commi_rename.commi}}
+        {{$t(862)}}{{commi_rename.commi}}
       </view>
     </block>
 
@@ -172,6 +172,7 @@ import { unipayFunc } from '../../common/pay.js'
 import { GetQueryByString, isWeiXin, ls, urlencode, checkMobile } from '../../common/tool'
 import { confirm, error, toast } from '../../common'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   components: {
@@ -252,7 +253,7 @@ export default {
     ...mapActions(['getInitData']),
     payFailCall (err) {
       uni.showToast({
-        title: err.msg ? err.msg : '支付失败',
+        title: err.msg ? err.msg : T._(840),
         icon: 'none',
         duration: 2000
       })
@@ -290,16 +291,16 @@ export default {
 
         if (this.userInfo.hasOwnProperty('User_PayPassword') && !this.userInfo.User_PayPassword) {
           confirm({
-            title: '提示',
-            content: '该操作需要设置支付密码,是否前往设置?',
-            confirmText: '去设置',
-            cancelText: '暂不设置'
+            title: T._(841),
+            content: T._(842),
+            confirmText: T._(843),
+            cancelText: T._(844)
           }).then(res => {
             uni.navigateTo({
               url: '/pagesA/person/updateUserPsw?type=1&is_back=1'
             })
           }).catch(err => {
-            error('请选择其他支付方式')
+            error(T._(845))
           })
           return
         }
@@ -316,19 +317,19 @@ export default {
       }
 
       if (res && res.code && res.code == 1) {
-        toast('用户取消支付', 'none')
+        toast(T._(846), 'none')
         return
       }
 
       if (res && res.code && res.code == 9) {
         uni.showModal({
-          title: '提示',
-          content: '是否完成支付',
-          cancelText: '未完成',
+          title: T._(847),
+          content: T._(848),
+          cancelText: T._(849),
           confirmText: '已支付',
           success: function (res) {
             if (res.confirm) {
-              toast('成为经销商')
+              toast(T._(850))
               uni.switchTab({
                 url: '/pages/fenxiao/fenxiao'
               })
@@ -343,7 +344,7 @@ export default {
       // 0：支付成功 1：支付超时 2：支付失败 3：支付关闭 4：支付取消 9：订单状态开发者自行获取
 
       if (res && res.code && res.code == 4) {
-        toast('用户取消支付', 'none')
+        toast(T._(851), 'none')
         return
       }
 
@@ -357,7 +358,7 @@ export default {
       // 	wx.requestSubscribeMessage({tmplIds})
       // }
       // #endif
-      toast('成为经销商')
+      toast(T._(852))
       uni.switchTab({
         url: '/pages/fenxiao/fenxiao'
       })
@@ -425,7 +426,7 @@ export default {
       // 公众号需要code
       if (this.pay_type === 'wx_mp') {
         if (!isWeiXin()) {
-          error('请在微信内打开')
+          error(T._(853))
           return
         }
 
@@ -473,7 +474,7 @@ export default {
         })
       } else {
         disBuy(data, {
-          tip: '正在加载中',
+          tip: T._(854),
           mask: true
         }).then(res => {
           unipayFunc(this, this.pay_type, res)
@@ -521,7 +522,7 @@ export default {
       if (this.pro.dis_config.Level_Form) {
         if (this.pro.dis_config.Reserve_DisplayName == 1 && this.shenArr.DisplayName == '') {
           uni.showToast({
-            title: '姓名不能为空',
+            title: T._(855),
             icon: 'none'
           })
           arr = false
@@ -529,14 +530,14 @@ export default {
         } else {
           if (this.pro.dis_configReserve_DisplayTelephone == 1 && this.shenArr.DisplayTelephone == '') {
             uni.showToast({
-              title: '电话不能为空',
+              title: T._(856),
               icon: 'none'
             })
             arr = false
             return
           } else if (this.pro.dis_config.Reserve_DisplayTelephone == 1 && !(checkMobile(this.shenArr.DisplayTelephone))) {
             uni.showToast({
-              title: '手机号输入错误，请重新输入',
+              title: T._(857),
               icon: 'none'
             })
             arr = false
@@ -547,7 +548,7 @@ export default {
               for (const item of this.text_lists) {
                 if (item.Value == '') {
                   uni.showToast({
-                    title: item.Name + '不能为空',
+                    title: item.Name + T._(858),
                     icon: 'none'
                   })
                   arr = false
@@ -561,7 +562,7 @@ export default {
       if (this.pro.dis_config.Distribute_AgreementOpen) {
         if (!this.isAgree) {
           uni.showToast({
-            title: '未同意须知',
+            title: T._(859),
             icon: 'none'
           })
           return
@@ -586,7 +587,7 @@ export default {
     application () {
       if (this.submitM) {
         uni.showToast({
-          title: '当前不可申请',
+          title: T._(860),
           icon: 'none'
         })
         return
@@ -599,7 +600,7 @@ export default {
         for (const item of this.text_lists) {
           if (item.Value == '') {
             uni.showToast({
-              title: item.Name + '不能为空',
+              title: item.Name + T._(861),
               icon: 'none'
             })
             arr = false
@@ -611,7 +612,7 @@ export default {
       if (this.isShowAddress && arr) {
         if (JSON.stringify(this.address_info) == '{}') {
           uni.showToast({
-            title: '地址不能为空',
+            title: T._(862),
             icon: 'none'
           })
           arr = false
@@ -622,7 +623,7 @@ export default {
       if (this.pro.dis_config.Distribute_AgreementOpen) {
         if (!this.isAgree) {
           uni.showToast({
-            title: '未同意须知',
+            title: T._(863),
             icon: 'none'
           })
           arr = false
@@ -674,13 +675,13 @@ export default {
 
           this.textShen = res.msg
         }).catch(err => {
-			error(err.msg||'申请失败')
+			error(err.msg||T._(864))
           this.textShen = err.msg
         })
       } else if (arr) {
         this.isXu = true
         uni.showToast({
-          title: '请勾选同意购买须知',
+          title: T._(865),
           icon: 'none'
         })
       }
@@ -693,7 +694,7 @@ export default {
       if (this.pro.dis_config.Reserve_DisplayTelephone == 1) {
         if (!(checkMobile(this.shenArr.DisplayTelephone))) {
           uni.showToast({
-            title: '手机号输入错误，请重新输入',
+            title: T._(866),
             icon: 'none'
           })
         }
@@ -791,7 +792,7 @@ export default {
       }
 
       if (!channel) {
-        this.$error('未开通公众号支付')
+        this.$error(T._(867))
         return false
       }
 
@@ -845,7 +846,7 @@ export default {
       }
 
       if (this.pay_type === 'unionpay') {
-        error('即将上线')
+        error(T._(868))
         return
       }
 
@@ -872,7 +873,7 @@ export default {
       // 公众号需要code
       if (this.pay_type === 'wx_mp') {
         if (!isWeiXin()) {
-          error('请在微信内打开')
+          error(T._(869))
           return
         }
 

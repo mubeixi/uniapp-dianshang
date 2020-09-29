@@ -7,11 +7,11 @@
 
     <div class="zhezhao" v-if="password_input">
       <div class="input-wrap">
-        <div>请输入余额支付密码</div>
-        <input @blur="user_password" class="input" placeholder="请输入密码" type="password" v-model="user_pay_password">
+        <div>{{$t(870)}}</div>
+        <input @blur="user_password" class="input" :placeholder="$t(871)" type="password" v-model="user_pay_password">
         <div class="btns">
-          <div @click="cancelInput" class="btn">取消</div>
-          <div @click="confirmInput" class="btn">确定</div>
+          <div @click="cancelInput" class="btn">{{$t(872)}}</div>
+          <div @click="confirmInput" class="btn">{{$t(873)}}</div>
         </div>
       </div>
     </div>
@@ -35,13 +35,13 @@
       </view>
       <view class="second">
         <view class="secondQ">
-          填写信息
+			{{$t(874)}}
         </view>
         <view class="secondW">
-          提交审核
+			{{$t(875)}}
         </view>
         <view class="secondE">
-          立即支付
+			{{$t(876)}}
         </view>
       </view>
     </view>
@@ -49,35 +49,35 @@
     <block v-if="proData.Applyfor_Name">
       <view class="three">
         <view class="haha">
-          申请人
+			{{$t(877)}}
         </view>
         {{proData.Applyfor_Name}}
       </view>
       <view class="three">
         <view class="haha">
-          联系电话
+         {{$t(878)}}
         </view>
         {{proData.Applyfor_Mobile}}
       </view>
       <view class="three">
         <view class="haha">
-          申请时间
+         {{$t(879)}}
         </view>
         {{proData.Order_CreateTime}}
       </view>
       <view class="three">
         <view class="haha">
-          支付费用
+         {{$t(880)}}
         </view>
-        {{proData.Order_TotalPrice}}元
+        {{proData.Order_TotalPrice}}{{$t(881)}}
       </view>
     </block>
 
     <view @click="showPay" class="four">
-      立即支付
+      {{$t(882)}}
     </view>
     <view @click="cancelAge" class="five">
-      取消申请
+     {{$t(883)}}
       <image :src="'/static/client/fenxiao/chakan.png'|domain" class="image"></image>
     </view>
 
@@ -103,6 +103,7 @@ import { mapGetters } from 'vuex'
 import { unipayFunc } from '../../common/pay.js'
 import { confirm, error, toast } from '../../common'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   components: {
@@ -153,7 +154,7 @@ export default {
         pay_type: this.pay_type
       }
       shaApplyPay(data, {
-        tip: '正在加载中',
+        tip: T._(870),
         mask: true
       }).then(res => {
         unipayFunc(this, this.pay_type, res)
@@ -171,16 +172,16 @@ export default {
       if (index == 'remainder_pay') {
         if (this.userInfo.hasOwnProperty('User_PayPassword') && !this.userInfo.User_PayPassword) {
           confirm({
-            title: '提示',
-            content: '该操作需要设置支付密码,是否前往设置?',
-            confirmText: '去设置',
-            cancelText: '暂不设置'
+            title: T._(871),
+            content: T._(872),
+            confirmText: T._(873),
+            cancelText: T._(874)
           }).then(res => {
             uni.navigateTo({
               url: '/pagesA/person/updateUserPsw?type=1&is_back=1'
             })
           }).catch(err => {
-            error('请选择其他支付方式')
+            error(T._(875))
           })
           return
         }
@@ -203,18 +204,18 @@ export default {
       }
 
       if (res && res.code && res.code == 1) {
-        toast('用户取消支付', 'none')
+        toast(T._(876), 'none')
         return
       }
       if (res && res.code && res.code == 9) {
         uni.showModal({
-          title: '提示',
-          content: '是否完成支付',
-          cancelText: '未完成',
-          confirmText: '已支付',
+          title: T._(877),
+          content: T._(878),
+          cancelText: T._(879),
+          confirmText: T._(880),
           success: function (res) {
             if (res.confirm) {
-              toast('支付成功')
+              toast(T._(881))
               uni.switchTab({
                 url: '/pages/fenxiao/fenxiao'
               })
@@ -227,11 +228,11 @@ export default {
       }
       // 0：支付成功 1：支付超时 2：支付失败 3：支付关闭 4：支付取消 9：订单状态开发者自行获取
       if (res && res.code && res.code == 4) {
-        toast('用户取消支付', 'none')
+        toast(T._(882), 'none')
         return
       }
 
-      toast('支付成功')
+      toast(T._(883))
       uni.switchTab({
         url: '/pagesA/fenxiao/fenxiao'
       })

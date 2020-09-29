@@ -19,41 +19,41 @@
             <div class="tag img" v-else v-show="goods.config.attr.tag.show"><img
             :src="goods.config.attr.tag.img|domain" /></div>
 
-            <div class="stamp" v-if="goods.config.style!=3">距{{item.countdown.is_start?'结束':'开始'}}<span
-            class="countdown_tag2">{{item.countdown.d|zero}}</span>天<span class="countdown_tag">{{item.countdown.h|zero}}</span>时<span
-            class="countdown_tag">{{item.countdown.m|zero}}</span>分<span
-            class="countdown_tag">{{item.countdown.s|zero}}</span>秒<span
-            class="count" v-if="goods.config.style==1">拼团库存{{item.Products_Count}}</span></div>
+            <div class="stamp" v-if="goods.config.style!=3">{{$t(76)}} {{item.countdown.is_start?$t(77):$t(78)}} <span
+            class="countdown_tag2">{{item.countdown.d|zero}}</span>{{$t(79)}}<span class="countdown_tag">{{item.countdown.h|zero}}</span>{{$t(80)}}<span
+            class="countdown_tag">{{item.countdown.m|zero}}</span>{{$t(81)}}<span
+            class="countdown_tag">{{item.countdown.s|zero}}</span>{{$t(82)}}<span
+            class="count" v-if="goods.config.style==1">{{$t(83)}}{{item.Products_Count}}</span></div>
 
-            <span class="count" v-if="goods.config.style==3">库存{{item.Products_Count}}</span>
+            <span class="count" v-if="goods.config.style==3">{{$t(84)}}{{item.Products_Count}}</span>
 
           </div>
           <div :class="{empyInfo:isEmpeyInfo}" :style="{width:goods.config.style==2?itemw:''}" class="info">
             <div class="left">
               <div class="title" v-show="goods.config.attr.title.show">{{item.Products_Name}}</div>
               <div class="font12 graytext desc" v-show="goods.config.attr.desc.show">
-                {{item.Products_BriefDescription||'暂无介绍'}}
+                {{item.Products_BriefDescription||$t(85)}}
               </div>
               <div class="price" v-if="goods.config.style!=1" v-show="goods.config.attr.price.show"><span
-              class="graytext2 font12">拼团价 </span><span class="sign">￥</span><span
+              class="graytext2 font12">{{$t(86)}} </span><span class="sign">￥</span><span
               style="font-weight: 600">{{item.pintuan_pricex}}</span><span
               class="graytext2 market-price font12"> ￥{{item.Products_PriceX}} </span>
               </div>
             </div>
-            <div class="stamp" v-if="goods.config.style==3">距{{item.countdown.is_start?'结束':'开始'}}<span
-            class="countdown_tag2">{{item.countdown.d|zero}}</span>天<span class="countdown_tag">{{item.countdown.h|zero}}</span>时<span
-            class="countdown_tag">{{item.countdown.m|zero}}</span>分<span
-            class="countdown_tag">{{item.countdown.s|zero}}</span>秒
+            <div class="stamp" v-if="goods.config.style==3">{{$t(87)}}{{item.countdown.is_start?$t(88):$t(89)}}<span
+            class="countdown_tag2">{{item.countdown.d|zero}}</span>{{$t(90)}}<span class="countdown_tag">{{item.countdown.h|zero}}</span>{{$t(91)}}<span
+            class="countdown_tag">{{item.countdown.m|zero}}</span>{{$t(92)}}<span
+            class="countdown_tag">{{item.countdown.s|zero}}</span>{{$t(93)}}
             </div>
             <div class="bottom-box">
               <div class="price" v-if="goods.config.style==1" v-show="goods.config.attr.price.show"><span
-              class="graytext2 font12">拼团价 </span><span class="sign">￥</span><span
+              class="graytext2 font12">{{$t(94)}} </span><span class="sign">￥</span><span
               style="font-weight: 600">{{item.pintuan_pricex}}</span><span
               class="graytext2 market-price font12"> ￥{{item.Products_PriceX}} </span></div>
-              <span class="count" v-if="goods.config.style==2">库存{{item.Products_Count}}</span>
+              <span class="count" v-if="goods.config.style==2">{{$t(95)}}{{item.Products_Count}}</span>
               <div :class="'theme'+goods.config.attr.buybtn.style" class="buybtn"
                    v-show="goods.config.attr.buybtn.show">
-                {{goods.config.attr.buybtn.text||'立即参团'}}
+                {{goods.config.attr.buybtn.text||$t(96)}}
               </div>
             </div>
           </div>
@@ -69,6 +69,7 @@ import { domainFn, lazyImgUrl } from '../../common/filter'
 import { goProductDetail } from '../../common'
 import { createEmptyArray, getCountdownFunc } from '../../common/tool'
 
+import T from '@/common/langue/i18n'
 export default {
   props: {
     index: {
@@ -84,9 +85,9 @@ export default {
       goodsList: [],
       infoTmpl: {
         Products_ID: 33,
-        Products_Name: '商品名称',
+        Products_Name: T._(76),
         Products_PriceX: 99.99,
-        Products_BriefDescription: '商品简介',
+        Products_BriefDescription: T._(77),
         ImgPath: ''
       },
       goods: {

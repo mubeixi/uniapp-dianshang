@@ -33,7 +33,7 @@
         <image src="/static/add.png" style="width: 40rpx;height: 40rpx" @click.stop="addQty"></image>
       </div>
       <div class="store-cart" v-else @click.stop="updaCart">
-        加入购物车
+        {{$t(158)}}
       </div>
     </div>
 
@@ -44,6 +44,7 @@
 
 import { error } from '../common'
 
+import T from '@/common/langue/i18n'
 export default {
 
   props: {
@@ -87,7 +88,7 @@ export default {
     },
     delQty () {
       if (this.cartData.Qty <= 1) {
-        error('数量最少为1')
+        error(T._(158))
         return
       }
       this.$emit('delQty', this.cartData)

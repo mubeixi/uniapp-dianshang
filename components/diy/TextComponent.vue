@@ -15,6 +15,7 @@ const styleDefault = {
   fontSize: '14',
   textAlign: 'left'
 }
+import T from '@/common/langue/i18n'
 export default {
   props: {
     index: {

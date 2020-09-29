@@ -19,7 +19,7 @@
             <div class="left">
               <div v-show="goods.config.attr.title.show" class="title" style="padding-left: 6px;padding-right: 6px;box-sizing: border-box;">{{item.Products_Name}}</div>
               <div v-show="goods.config.attr.desc.show" class="font12 graytext desc">
-                {{item.Products_BriefDescription||'暂无介绍'}}
+                {{item.Products_BriefDescription||$t(97)}}
               </div>
               <!--              <div v-show="goods.config.attr.price.show" class="price"><span class="sign">￥</span>{{item.Products_PriceX}}-->
               <!--              </div>-->
@@ -28,7 +28,7 @@
               <div v-show="goods.config.attr.price.show" class="price"><span class="sign">￥</span>{{item.Products_PriceX}}
               </div>
               <div v-show="goods.config.attr.buybtn.show" class="buybtn" :class="'theme'+goods.config.attr.buybtn.style">
-                {{goods.config.attr.buybtn.text||'购买'}}
+                {{goods.config.attr.buybtn.text||$t(98)}}
               </div>
             </div>
 
@@ -45,6 +45,7 @@ import { domainFn, lazyImgUrl } from '../../common/filter'
 import { error, goProductDetail } from '../../common'
 import { downLoadFile } from '../../common/tool'
 var downTaskList = []
+import T from '@/common/langue/i18n'
 export default {
   props: {
     index: {
@@ -61,9 +62,9 @@ export default {
       goodsList: [],
       infoTmpl: {
         Products_ID: 33,
-        Products_Name: '商品名称',
+        Products_Name: T._(97),
         Products_PriceX: 99.99,
-        Products_BriefDescription: '商品简介',
+        Products_BriefDescription: T._(98),
         ImgPath: ''
       },
       goods: {
@@ -223,7 +224,7 @@ export default {
       }
 
       const productData = await getProductList(param).then(res => res.data).catch(err => {
-        error(err.msg || '加载商品失败')
+        error(err.msg || $t(99))
       })
       const goodsList = []
       for (var i in productData) {

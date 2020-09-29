@@ -4,7 +4,7 @@
     <view :key="index" class="main" v-for="(item,index) of data">
       <view class="fir">
         <view class="left">
-          申请方式：
+          {{$t(967)}}
         </view>
         <view class="right">
           {{item.Method_Name}}
@@ -12,7 +12,7 @@
       </view>
       <view class="fir">
         <view class="left">
-          提现来源：
+          {{$t(968)}}
         </view>
         <view class="right">
           {{item.Record_From}}
@@ -20,7 +20,7 @@
       </view>
       <view class="fir">
         <view class="left">
-          提现金额：
+          {{$t(969)}}
         </view>
         <view class="right">
           {{item.Record_Total}}
@@ -28,7 +28,7 @@
       </view>
       <view class="fir">
         <view class="left">
-          状态：
+         {{$t(970)}}
         </view>
         <view class="rights">
           {{item.Record_Status_desc}}
@@ -39,7 +39,7 @@
       </view>
       <view class="fir">
         <view class="left">
-          时间：
+          {{$t(971)}}
         </view>
         <view class="right">
           {{item.Record_CreateTime}}
@@ -57,6 +57,7 @@
 import { pageMixin } from '../../common/mixin'
 import { getWithdrawRecordList } from '../../common/fetch.js'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {

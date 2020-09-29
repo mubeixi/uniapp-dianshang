@@ -9,12 +9,12 @@
     <!-- #endif -->
     <page-title
     :hiddenBack="true"
-    :right="handleShow ? $t('cart','Management') : $t('cart','Cancel')"
+    :right="handleShow ? $t(512) : $t(513)"
     :rightHidden="manage"
     @rightHandle="handle"
     bgcolor="#ffffff"
     class="nav-title"
-    :title="$t('cart','shopping cart')">
+    :title="$t(514)">
     </page-title>
     <div class="content">
       <div class="cartbox" v-if="total_count>0">
@@ -59,11 +59,11 @@
       </div>
       <div class="none" v-else>
         <image :src="'/static/client/box.png'|domain" class="img" />
-        <div><span>{{ $t('cart',"The shopping cart is empty") }}</span><span @click="gotoBuy" class="tobuy">{{$t('cart','Go shopping')}}</span></div>
+        <div><span>{{ $t(515) }}</span><span @click="gotoBuy" class="tobuy">{{$t(516)}}</span></div>
       </div>
       <!-- 猜你喜欢 -->
       <div class=" container">
-        <div class="fenge"><span class="red"></span><span class="caini">{{ $t('cart','you may also like') }}</span><span class="red"></span></div>
+        <div class="fenge"><span class="red"></span><span class="caini">{{ $t(517) }}</span><span class="red"></span></div>
         <div class="prolist">
           <div :key="index" @click="gotoDetail(item.Products_ID)" class="pro-item" v-for="(item,index) in prodList">
             <img :src="item.ImgPath" alt="">
@@ -82,10 +82,10 @@
       <div @click="checkAll" class="mbxa">
         <image :src="(checkAllFlag ? '/static/client/checked.png' : '/static/client/uncheck.png')|domain" alt=""
                class="img" style="margin-right: 17rpx;" />
-        {{$t('cart','select all')}}
+        {{$t(518)}}
       </div>
-      <div class="total" v-if="handleShow">{{$t('cart','total')}}：<span>￥<span>{{totalPrice}}</span></span></div>
-      <div @click="submit" class="checkbtn">{{handleShow?$t('cart','Settlement'):$t('cart','Delete')}}</div>
+      <div class="total" v-if="handleShow">{{$t(519)}}：<span>￥<span>{{totalPrice}}</span></span></div>
+      <div @click="submit" class="checkbtn">{{handleShow?$t(520):$t(521)}}</div>
     </div>
 
   </div>
@@ -99,6 +99,7 @@ import { ls } from '../../common/tool.js'
 import { mapActions } from 'vuex'
 import { error, goProductDetail } from '../../common'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   name: 'App',
@@ -176,7 +177,7 @@ export default {
         // 结算
         if (this.totalPrice <= 0) {
           uni.showToast({
-            title: '您还未选择商品',
+            title: T._(512),
             icon: 'none'
           })
           return
@@ -187,7 +188,7 @@ export default {
       } else {
         if (Object.getOwnPropertyNames(obj).length === 0) {
           uni.showToast({
-            title: '您选择您要删除的产品',
+            title: T._(513),
             icon: 'none'
           })
           return
@@ -261,7 +262,7 @@ export default {
       const num = e.detail.value
       if (num <= 0) {
         this.postData.qty = 1
-        error('至少购买一件')
+        error(T._(514))
         return
       }
       const pro_id = this.active_pro_id
@@ -273,7 +274,7 @@ export default {
 
       if (this.active_attr_qty === 1 && num === -1) {
         uni.showToast({
-          title: '购买数量不能小于1',
+          title: T._(515),
           icon: 'none'
         })
         return
@@ -285,7 +286,7 @@ export default {
         this.cal_total()
       })
         .catch((e) => {
-			error(e.msg||'添加购物车失败')
+			error(e.msg||T._(516))
           this.CartList[pro_id][attr_id].Qty = this.active_attr_qty // 原来的值
         })
     },
@@ -317,7 +318,7 @@ export default {
       this.postData.attr_id = attr_id
       if (this.CartList[pro_id][attr_id].Qty === 1 && num === -1) {
         uni.showToast({
-          title: '购买数量不能小于1',
+          title: T._(517),
           icon: 'none'
         })
         return

@@ -2,32 +2,32 @@
   <view @click="commonClick" class="wrap">
     <block v-if="index==1">
       <view class="area-item">
-        <text class="area-label">开始时间</text>
+        <text class="area-label">{{$t(1630)}}</text>
         <picker :end="endDate" :start="startDate" :value="date" @change="bindDateChangeStart" class="pickerView"
                 mode="date">
           <view class="uni-inputs" v-if="dateValue">{{dateValue}}</view>
-          <view class="uni-input" v-if="!dateValue">请选择开始时间</view>
+          <view class="uni-input" v-if="!dateValue">{{$t(1631)}}</view>
           <image :src="'/static/client/person/right.png' | domain" class="rightImg"></image>
         </picker>
 
       </view>
 
       <view class="area-item">
-        <text class="area-label">结束时间</text>
+        <text class="area-label">{{$t(1632)}}</text>
         <picker :end="endDate" :start="startDate" :value="date" @change="bindDateChangeEnd" class="pickerView"
                 mode="date">
           <view class="uni-inputs" v-if="dateValues">{{dateValues}}</view>
-          <view class="uni-input" v-if="!dateValues">请选择结束时间</view>
+          <view class="uni-input" v-if="!dateValues">{{$t(1633)}}</view>
           <image :src="'/static/client/person/right.png' | domain" class="rightImg"></image>
         </picker>
       </view>
 
       <view class="viewButoon">
         <view @click="search" class="button">
-          搜索
+          {{$t(1634)}}
         </view>
         <view @click="goStoreSettlement" class="msg">
-          历史结算
+          {{$t(1635)}}
         </view>
       </view>
     </block>
@@ -97,6 +97,7 @@ import { pageMixin } from '../../common/mixin'
 import { settlement } from '../../common/fetch.js'
 import { mapGetters } from 'vuex'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {
@@ -143,14 +144,14 @@ export default {
     search () {
       if (!this.dateValue) {
         uni.showToast({
-          title: '请选择开始时间',
+          title: T._(1630),
           icon: 'none'
         })
         return
       }
       if (!this.dateValues) {
         uni.showToast({
-          title: '请选择结束时间',
+          title: T._(1631),
           icon: 'none'
         })
         return
@@ -159,7 +160,7 @@ export default {
       const c = new Date(this.dateValue)
       if (d < c) {
         uni.showToast({
-          title: '结束时间不能小于开始时间',
+          title: T._(1632),
           icon: 'none'
         })
         return

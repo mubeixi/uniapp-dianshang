@@ -12,7 +12,7 @@
             {{item.level_name}}
           </view>
           <view class="dangqian" v-if="index==0">
-            当前等级
+            {{$t(1300)}}
           </view>
           <view class="mmp">
             <view class="da">
@@ -29,10 +29,15 @@
 
             </view>
             <view class="texts">
-              <view class="posiQ">我的成长值</view>
+              <view class="posiQ">{{$t(1301)}}</view>
               <view class="posiW">{{item.growth_value}}</view>
               <view class="posiE" v-if="item.curlevel.need_growth&&item.curlevel.need_growth>0">
-                还差{{item.curlevel.need_growth}}升级为{{pro.levels[index+1].level_name}}
+			  <block v-if="$p('zh-cn')">
+				  还差{{item.curlevel.need_growth}}升级为{{pro.levels[index+1].level_name}}
+			  </block>
+			  <block v-if="$p('en-us')">
+				  {{item.curlevel.need_growth}} upgrade to {{pro.levels[index+1].level_name}}
+			  </block>
               </view>
             </view>
           </view>
@@ -52,14 +57,14 @@
       </view>
     </scroll-view>
     <view style="height: 20rpx;background-color: #F8F8F8;width: 750rpx;"></view>
-    <circleTitle title="会员成长说明"></circleTitle>
+    <circleTitle :title="$t(1302)"></circleTitle>
     <view class="zhouri">
       <view class="titles">
         <view class="lefts">
-          等级
+          {{$t(1303)}}
         </view>
         <view class="rights">
-          所需成长值
+          {{$t(1304)}}
         </view>
       </view>
       <view :key="j" class="td" v-for="(i,j) of pro.growths">
@@ -76,11 +81,11 @@
       <view class="titles">
         <image :src="'/static/client/fenxiao/wen.png'|domain" class="image"></image>
         <view>
-          什么是成长值
+          {{$t(1305)}}
         </view>
       </view>
       <view class="msg">
-        成长值是消费者在当前店铺内根据消费类行为所计算出来的用户价值分。成长值决定会员等级，成长值越高等级越高，所享受的会员权益就越多。
+		  {{$t(1306)}}
       </view>
     </view>
     <view style="height: 20rpx;background-color: #F8F8F8;width: 750rpx;"></view>
@@ -88,11 +93,11 @@
       <view class="titles">
         <image :src="'/static/client/fenxiao/wen.png'|domain" class="image"></image>
         <view>
-          如何获得成长值
+          {{$t(1307)}}
         </view>
       </view>
       <view class="msg">
-        会员可通过完善资料、收藏商品、购物、评价、关注公众号、每日签到等多种渠道获得成长值。
+        {{$t(1308)}}
       </view>
     </view>
   </view>
@@ -104,6 +109,7 @@ import circleTitle from '../../components/circleTitle/circleTitle.vue'
 import { pageMixin } from '../../common/mixin'
 import { getLevelCenter } from '../../common/fetch.js'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {

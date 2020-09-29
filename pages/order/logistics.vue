@@ -9,7 +9,7 @@
       <view>
         <view class="fonts">
           <view class="left">
-            物流状态:
+            {{$t(508)}}
           </view>
           <view class="right">
             {{pro.shipping_status}}
@@ -17,7 +17,7 @@
         </view>
         <view class="fonts">
           <view class="left">
-            物流公司:
+            {{$t(509)}}
           </view>
           <view>
             {{pro.shipping_express}}
@@ -25,7 +25,7 @@
         </view>
         <view class="fonts" v-if="pro.shipping_no">
           <view class="left">
-            物流单号:
+            {{$t(510)}}
           </view>
           <view>
             {{pro.shipping_no}}
@@ -33,7 +33,7 @@
         </view>
         <view class="fonts" v-if="pro.delivery_man_phone">
           <view class="left">
-            派送员电话:
+            {{$t(511)}}
           </view>
           <view @click="call">
             {{pro.delivery_man_phone}}
@@ -89,6 +89,7 @@ import { pageMixin } from '../../common/mixin'
 import { getOrderExpress } from '../../common/fetch.js'
 import { error } from '../../common'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {

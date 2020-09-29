@@ -19,10 +19,10 @@
           </video>
           <view class="change-btn" v-if="!hideNativeEleShow">
             <cover-view :class="[showVideo?'active':'','shipin']" @click="change_view(1)" v-if="showVideo&&showCorver">
-              视频
+              {{$t(333)}}
             </cover-view>
             <cover-view :class="[showVideo?'':'active','tupian']" @click="change_view(2)" v-if="showVideo&&showCorver">
-              图片
+              {{$t(334)}}
             </cover-view>
           </view>
         </view>
@@ -34,8 +34,8 @@
             </swiper-item>
           </swiper>
           <view class="change-btn" v-if="product.video_url">
-            <view :class="[showVideo?'active':'','shipin']" @click="change_view(1)">视频</view>
-            <view :class="[showVideo?'':'active','tupian']" @click="change_view(2)">图片</view>
+            <view :class="[showVideo?'active':'','shipin']" @click="change_view(1)">{{$t(335)}}</view>
+            <view :class="[showVideo?'':'active','tupian']" @click="change_view(2)">{{$t(336)}}</view>
           </view>
         </view>
       </view>
@@ -47,14 +47,14 @@
       </div>
       <div class="rightss" v-if="isKai">
         <div class="countdown">
-          距结束还有 : <span class="spanss">{{countdown.d}}</span>天<span class="spans">{{countdown.h}}</span>时<span
-        class="spans">{{countdown.m}}</span>分<span class="spans">{{countdown.s}}</span>秒
+          {{$t(337)}} <span class="spanss">{{countdown.d}}</span>{{$t(338)}}<span class="spans">{{countdown.h}}</span>{{$t(339)}}<span
+        class="spans">{{countdown.m}}</span>{{$t(340)}}<span class="spans">{{countdown.s}}</span>{{$t(341)}}
         </div>
       </div>
       <div class="rightss" v-if="!isKai">
         <div class="countdown">
-          距开始还有 : <span class="spanss">{{countdown.d}}</span>天<span class="spans">{{countdown.h}}</span>时<span
-        class="spans">{{countdown.m}}</span>分<span class="spans">{{countdown.s}}</span>秒
+          {{$t(342)}} <span class="spanss">{{countdown.d}}</span>{{$t(343)}}<span class="spans">{{countdown.h}}</span>{{$t(344)}}<span
+        class="spans">{{countdown.m}}</span>{{$t(345)}}<span class="spans">{{countdown.s}}</span>{{$t(346)}}
         </div>
       </div>
     </div>
@@ -66,7 +66,7 @@
     <view class="prices">
       <view class="price">
         <text class="leftPrice">
-          秒杀价
+          {{$t(347)}}
           <text class="rmb">¥
             <text class="priceX" v-if="product.attr_json">{{product.attr_json.price}}</text>
           </text>
@@ -76,7 +76,7 @@
         </text>
       </view>
       <view class="btn" v-if="product.attr_json">
-        库存{{product.attr_json.count}}
+        {{$t(348)}}{{product.attr_json.count}}
       </view>
     </view>
     <!-- 包邮等信息 -->
@@ -90,7 +90,7 @@
     <!-- 小伙伴在拼团 -->
     <div class="pintuan">
       <div class="pinTitle">
-        活动介绍
+        {{$t(349)}}
       </div>
       <div class="mbxtext">
         {{product.description}}
@@ -100,8 +100,8 @@
     <!-- 评价 -->
     <div class="comment">
       <div class="c_title">
-        <span>评价</span>
-        <div @click="gotoComments" class="right">查看全部
+        <span>{{$t(350)}}</span>
+        <div @click="gotoComments" class="right">{{$t(351)}}
           <image :src="'/static/client/detail/right.png'|domain" alt="" class="img" />
         </div>
       </div>
@@ -132,7 +132,7 @@
     </div>
     <!-- 商品详情 -->
     <div class="pro_detail">
-      <div class="p_detail_title">商品详情</div>
+      <div class="p_detail_title">{{$t(352)}}</div>
       <!-- <div v-html="product.Products_Description" class="p_detail_des"></div> -->
       <!--    	<rich-text :nodes="product.Products_Description|formatRichText" class="p_detail_des"></rich-text>-->
       <!-- <u-parse :content="product.Products_Description"  /> -->
@@ -157,31 +157,31 @@
           <!-- #ifdef APP-PLUS -->
           <div @click="shareFunc('wx')" class="flex1">
             <image :src="'/static/client/detail/share1.png'|domain" alt="" class='img'></image>
-            <div>发送好友</div>
+            <div>{{$t(353)}}</div>
           </div>
           <div @click="shareFunc('wxtimeline')" class="flex1">
             <image :src="'/static/client/detail/sahre3.png'|domain" alt="" class='img'></image>
-            <div>朋友圈</div>
+            <div>{{$t(354)}}</div>
           </div>
           <!--只有配置了这个参数的app，才有分享到小程序选项-->
           <div @click="shareFunc('wxmini')" class="flex1" v-if="wxMiniOriginId">
             <img :src="'/static/client/detail/share4.png'|domain" alt="" class='img'>
-            <div>微信小程序</div>
+            <div>{{$t(355)}}</div>
           </div>
           <!-- #endif -->
 
           <!-- #ifndef MP-TOUTIAO -->
           <div @click="shareFunc('pic')" class="flex1">
             <image :src="'/static/client/detail/share2.png'|domain" alt="" class='img'></image>
-            <div>分享海报</div>
+            <div>{{$t(356)}}</div>
           </div>
           <!-- #endif -->
         </div>
-        <div @click="cancel" class="s_bottom">取消</div>
+        <div @click="cancel" class="s_bottom">{{$t(357)}}</div>
       </div>
       <scroll-view @scrolltolower="goNextPage" class="ticks" scroll-y=true v-if="type=='ticks'">
         <div class="t_title">
-          领券
+          {{$t(358)}}
           <image :src="'/static/client/detail/x.png'|domain" @click="close" class="imgg"></image>
         </div>
         <div :key="i" class="t_content" v-for="(item,i) of couponList">
@@ -189,9 +189,9 @@
             <div class="t_left_t"><span>￥</span><span class="money">{{item.Coupon_Cash}}</span><span>{{item.Coupon_Title}}</span>
             </div>
             <div class="t_left_c">{{item.Coupon_Description}}</div>
-            <div class="t_left_b">有效期{{item.Coupon_StartTime}}-{{item.Coupon_EndTime}}</div>
+            <div class="t_left_b">{{$t(359)}}{{item.Coupon_StartTime}}-{{item.Coupon_EndTime}}</div>
           </div>
-          <div @click="getMyCoupon(item.Coupon_ID,i)" class="t_right">立即领取</div>
+          <div @click="getMyCoupon(item.Coupon_ID,i)" class="t_right">{{$t(360)}}</div>
         </div>
       </scroll-view>
     </popupLayer>
@@ -204,8 +204,8 @@
           <div class="cartTitle">
             <div class="cartTitles">{{product.Products_Name}}</div>
             <div class="addInfo">
-              <div class="addPrice">{{postData.productDetail_price}}元</div>
-              <div class="proSale">库存{{postData.count}}</div>
+              <div class="addPrice">{{postData.productDetail_price}}{{$t(361)}}</div>
+              <div class="proSale">{{$t(362)}}{{postData.count}}</div>
             </div>
           </div>
         </div>
@@ -223,7 +223,7 @@
         </div>
         <div class="numBer">
           <div class="numBers">
-            数量
+            {{$t(363)}}
           </div>
           <div class="inputNumber">
             <div @click="delNum" class="clicks">-</div>
@@ -235,14 +235,14 @@
       </div>
       <form @submit="skuSub" report-submit>
         <button :class="submit_flag?'':'disabled'" class="cartSub" formType="submit">
-          确定
+          {{$t(364)}}
         </button>
       </form>
 
     </popupLayer>
     <div :class="classSelect?'errorMsg':'errorMsgs'" v-if="!isKai">
       <image class="errImg" src="/static/error.png"></image>
-      活动尚未开始
+      {{$t(365)}}
     </div>
     <!-- #ifndef APP-PLUS -->
     <div class="fixed">
@@ -251,20 +251,20 @@
           <div>
             <image class="img" src="/static/detail/home.png"></image>
           </div>
-          <div class="txt">首页</div>
+          <div class="txt">{{$t(366)}}</div>
         </div>
         <div @click="collect" class="first">
           <div>
             <image class="img" src="/static/detail/favorite-a.png" v-if="isCollected"></image>
             <image class="img" src="/static/detail/favorite.png" v-else></image>
           </div>
-          <div class="txt">收藏</div>
+          <div class="txt">{{$t(367)}}</div>
         </div>
         <div @click="contact" class="first">
           <div>
             <image class="img" src="/static/detail/kefu.png"></image>
           </div>
-          <div class="txt">客服</div>
+          <div class="txt">{{$t(368)}}</div>
         </div>
       </div>
       <div class="rightss">
@@ -272,14 +272,14 @@
           <form @submit="myPays" class="form" report-submit>
             <div class="dan bTitle">
               <button class="danRight" formType="submit">
-                零售价购买
+                {{$t(369)}}
               </button>
             </div>
           </form>
           <form @submit="flashsaleReserve" class="form" report-submit>
             <div class="tuan bTitle">
               <button class="danRight" formType="submit">
-                立即预约
+                {{$t(370)}}
               </button>
             </div>
           </form>
@@ -288,7 +288,7 @@
           <form @submit="myPay" class="form" report-submit>
             <div class="dan bTitle" style="background-color: #F43131;">
               <button class="danRight" formType="submit">
-                立即抢购
+                {{$t(371)}}
               </button>
             </div>
           </form>
@@ -321,6 +321,7 @@ import uParse from '../../components/gaoyia-parse/parse.vue'
 import { formatRichTextByUparseFn } from '../../common/filter'
 
 let groupStam = null
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {
@@ -709,7 +710,7 @@ export default {
           })
 
           if (!sharePic) {
-            error('获取分享参数失败')
+            error(T._(333))
             return
           }
 
@@ -797,7 +798,7 @@ export default {
       } else {
         addCollection({ prod_id: this.Products_ID }).then(res => {
           uni.showToast({
-            title: '收藏成功'
+            title: T._(334)
           })
           this.isCollected = true
           // #ifdef APP-PLUS
@@ -1003,7 +1004,7 @@ export default {
       if (this.postData.attr_id == 0) {
         if (this.product.skujosn) {
           wx.showToast({
-            title: '您还没有选择规格',
+            title: T._(335),
             icon: 'none'
           })
           return
@@ -1031,12 +1032,12 @@ export default {
       const amount = e.detail.value
       if (amount <= 0) {
         this.postData.qty = 1
-        error('至少购买一件')
+        error(T._(336))
         return
       }
       if (amount > this.postData.count) {
         this.postData.qty = this.postData.count
-        error('购买数量不能超过库存量')
+        error(T._(337))
       }
     },
     addNum () {
@@ -1045,7 +1046,7 @@ export default {
           this.postData.qty = parseInt(this.postData.qty) + 1
         } else {
           uni.showToast({
-            title: '购买数量不能大于库存量',
+            title: T._(338),
             icon: 'none'
           })
           this.postData.qty = this.product.attr_json.count
@@ -1055,7 +1056,7 @@ export default {
           this.postData.qty = parseInt(this.postData.qty) + 1
         } else {
           uni.showToast({
-            title: '购买数量不能大于库存量',
+            title: T._(339),
             icon: 'none'
           })
           this.postData.qty = this.product.attr_json.count
@@ -1067,7 +1068,7 @@ export default {
         this.postData.qty = parseInt(this.postData.qty) - 1
       } else {
         uni.showToast({
-          title: '购买数量不能小于1',
+          title: T._(340),
           icon: 'none'
         })
         this.postData.qty = 1
@@ -1215,7 +1216,7 @@ export default {
               title: product.Products_Name, // 分享标题
               link: front_url + buildSharePath(path), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
               imgUrl: product.ImgPath, // 分享图标
-              desc: product.Products_BriefDescription || '好物推荐',
+              desc: product.Products_BriefDescription || T._(341),
               type: 'link', // 分享类型,music、video或link，不填默认为link
               // dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
               success: function () {

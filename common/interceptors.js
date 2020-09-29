@@ -1,3 +1,4 @@
+import T from '@/common/langue/i18n' 
 import * as ENV from './env'
 import { error } from './index'
 /**
@@ -51,7 +52,7 @@ export const ajax = (url, method, data, options) => {
       data,
       success: (ret) => {
         if (ret.statusCode !== 200 || typeof ret.data !== 'object') {
-          error('服务器去旅行了')
+          error(T._(14))
         }
         const res = ret.data
 
@@ -89,7 +90,7 @@ export const ajax = (url, method, data, options) => {
           if (res.hasOwnProperty('errorCode') && res.msg) {
             if (errtip) error(res.msg)
           } else {
-            error('请求未成功')
+            error(T._(15))
           }
           console.log('ajax error', JSON.stringify(res))
 

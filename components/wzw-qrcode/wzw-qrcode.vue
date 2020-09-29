@@ -14,6 +14,7 @@
 import QRCode from './qrcode.js'
 
 let qrcode
+import T from '@/common/langue/i18n'
 export default {
   name: 'wzw-qrcode',
   props: {
@@ -79,7 +80,7 @@ export default {
     },
     loadingText: {
       type: String,
-      default: '二维码生成中'
+      default: T._(159)
     }
   },
   data () {
@@ -111,7 +112,7 @@ export default {
         })
       } else {
         uni.showToast({
-          title: '二维码内容不能为空',
+          title: T._(160),
           icon: 'none',
           duration: 2000
         })
@@ -128,7 +129,7 @@ export default {
           filePath: that.result,
           success: function () {
             uni.showToast({
-              title: '二维码保存成功',
+              title: T._(161),
               icon: 'success',
               duration: 2000
             })

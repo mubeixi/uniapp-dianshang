@@ -24,33 +24,33 @@
       </view>
       <view class="second">
         <view class="secondQ">
-          填写信息
+          {{$t(781)}}
         </view>
         <view :class="isNext?'secondQ':''" class="secondW">
-          选择区域
+          {{$t(782)}}
         </view>
         <view :class="isLast?'secondQ':''" class="secondE">
-          提交审核
+          {{$t(783)}}
         </view>
       </view>
     </view>
     <block v-if="!isNext">
       <view class="three">
         <view class="haha">
-          姓名
+          {{$t(784)}}
         </view>
-        <input class="inputs" placeholder="请输入您的姓名" placeholder-class="place" type="text" v-model="arr.apply_name">
+        <input class="inputs" :placeholder="$t(785)" placeholder-class="place" type="text" v-model="arr.apply_name">
       </view>
       <view class="three">
         <view class="haha">
-          电话
+          {{$t(786)}}
         </view>
-        <input @blur="isTell" class="inputs" placeholder="请输入您的电话" placeholder-class="place" type="number"
+        <input @blur="isTell" class="inputs" :placeholder="$t(787)" placeholder-class="place" type="number"
                v-model="arr.apply_mobile">
       </view>
       <view class="three">
         <view class="haha">
-          级别
+          {{$t(788)}}
         </view>
         <radio-group @change="radioChange" class="myRadio">
           <view :key="item.value" class="myRadioQ" v-for="(item, index) in items">
@@ -71,15 +71,15 @@
                   @columnchange="bindMultiPickerColumnChange" mode="multiSelector" range-key="name">
             <view style="display: flex;justify-content: space-between;">
               <view class="picker">
-                <view class="quyu">选择区域</view>
-                <view v-if="!address_info.Address_Province">选择省份</view>
+                <view class="quyu">{{$t(789)}}</view>
+                <view v-if="!address_info.Address_Province">{{$t(790)}}</view>
                 <view style="overflow: hidden;" v-else>{{objectMultiArray[0][multiIndex[0]]['name']}}</view>
                 <block v-if="current>0">
-                  <view v-if="!address_info.Address_City">选择城市</view>
+                  <view v-if="!address_info.Address_City">{{$t(791)}}</view>
                   <view style="overflow: hidden;" v-else>{{objectMultiArray[1][multiIndex[1]]['name']}}</view>
                 </block>
                 <block v-if="current>1">
-                  <view v-if="!address_info.Address_Area">选择地区</view>
+                  <view v-if="!address_info.Address_Area">{{$t(792)}}</view>
                   <view style="overflow: hidden;" v-else>{{objectMultiArray[2][multiIndex[2]]['name']}}</view>
                 </block>
               </view>
@@ -95,8 +95,8 @@
         <view class="haha">
           <picker :range="t_arr" :value="t_index" @change="t_pickerChange" mode="selector" range-key="name">
             <view class="picker">
-              <text style="font-size: 28rpx;">街道地址</text>
-              <view style="margin-left: 20rpx;width: 300rpx;" v-if="!address_info.Address_Town">选择街道</view>
+              <text style="font-size: 28rpx;">{{$t(793)}}</text>
+              <view style="margin-left: 20rpx;width: 300rpx;" v-if="!address_info.Address_Town">{{$t(794)}}</view>
               <view style="margin-left: 20rpx;width: 300rpx;" v-else>{{t_arr[t_index]['name']}}</view>
             </view>
           </picker>
@@ -109,15 +109,15 @@
 
     <block v-if="isLast">
       <view class="four">
-        信息审核中
+        {{$t(795)}}
       </view>
     </block>
     <block v-else>
       <view @click="nextStep" class="four">
-        {{isNext?'提交申请':'下一步'}}
+        {{isNext?$t(796):$t(797)}}
       </view>
       <view @click="lookJilu" class="five">
-        {{isNext?'返回修改':'查看申请记录'}}
+        {{isNext?$t(798):$t(799)}}
         <image :src="'/static/client/fenxiao/chakan.png'|domain" class="image"></image>
       </view>
     </block>
@@ -132,6 +132,7 @@ import { agentApply, getTown } from '../../common/fetch.js'
 import { error } from '../../common'
 import { checkMobile } from '../../common/tool.js'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {
@@ -208,7 +209,7 @@ export default {
     isTell () {
       if (!(checkMobile(this.arr.apply_mobile))) {
         uni.showToast({
-          title: '手机号输入错误，请重新输入',
+          title: T._(781),
           icon: 'none'
         })
       }
@@ -230,7 +231,7 @@ export default {
         this.isAgr = true
         if (JSON.stringify(this.address_info) == '{}') {
           uni.showToast({
-            title: '请选择地区信息',
+            title: T._(782),
             icon: 'none'
           })
         } else {
@@ -252,7 +253,7 @@ export default {
           } else if (this.current == 3) {
             if (this.address_info.Address_Town == 0) {
               uni.showToast({
-                title: '请选择街道信息',
+                title: T._(783),
                 icon: 'none'
               })
               return
@@ -276,20 +277,20 @@ export default {
               })
             }, 1000)
           }).catch(e => {
-            error(e.msg || '提交失败')
+            error(e.msg || T._(784))
             this.isAgr = false
           })
         }
       } else {
         if (!this.arr.apply_name) {
           uni.showToast({
-            title: '请输入姓名',
+            title: T._(785),
             icon: 'none'
           })
           return
         } else if (!(checkMobile(this.arr.apply_mobile))) {
           uni.showToast({
-            title: '手机号输入错误，请重新输入',
+            title: T._(786),
             icon: 'none'
           })
           return

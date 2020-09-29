@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import T from '@/common/langue/i18n'
 export default {
   name: 'wxParseImg',
   data () {

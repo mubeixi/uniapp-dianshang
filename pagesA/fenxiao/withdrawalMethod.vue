@@ -3,8 +3,8 @@
     <!-- #ifdef APP-PLUS -->
     <view class="status_bar" style="background: #fff"><!-- 这里是状态栏 --></view>
     <!-- #endif -->
-    <page-title :right="isShow ? '取消' : '管理'" :rightHidden="false" @rightHandle="handle" bgcolor="#ffffff"
-                title="我的提现方式"></page-title>
+    <page-title :right="isShow ? $t(1007) : $t(1008)" :rightHidden="false" @rightHandle="handle" bgcolor="#ffffff"
+                title="$t(1009)"></page-title>
     <view class="content">
       <block :key="index" v-for="(item,index) of data ">
         <view @click="change(item)" class="cardInfo" v-if="item.Method_Type=='bank_card'||item.Method_Type=='alipay'">
@@ -22,7 +22,7 @@
       </block>
     </view>
     <view @click="addMethod" class="addMethod">
-      + 添加提现方式
+      + {{$t(1010)}}
     </view>
   </view>
 </template>
@@ -32,6 +32,7 @@ import { pageMixin } from '../../common/mixin'
 import { ls } from '../../common/tool.js'
 import { delUserWithdrawMethod, getUserWithdrawMethod } from '../../common/fetch.js'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {
@@ -69,7 +70,7 @@ export default {
         User_Method_ID: item.User_Method_ID
       }
       uni.showModal({
-        title: '确定要删除吗？',
+        title: T._(1007),
         content: ' ',
         success: function (res) {
           if (res.confirm) {

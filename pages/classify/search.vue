@@ -5,12 +5,12 @@
         <icon class="search_icon" size="34rpx" type="search" />
         <input @confirm="success" autofocus="autofocus" class="search-input" confirm-type='search' focus="focus"
                name="search" type="text" v-model="inputValue">
-        <span @click="close" class="span">{{ $t('classify','Cancel') }}</span>
+        <span @click="close" class="span">{{ $t(183) }}</span>
       </div>
     </form>
     <div class="history" v-if="searchAll.length>0">
       <div class="title">
-        <div>{{ $t('classify','search history') }}</div>
+        <div>{{ $t(184) }}</div>
         <div @click="clear" class="dels">
           <image :src="'/static/client/del.png'|domain" class="img" />
         </div>
@@ -27,6 +27,7 @@ import { goBack } from '../../common/tool.js'
 // import tabs from '@/components/tabs'
 import { pageMixin } from '../../common/mixin'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   name: 'App',

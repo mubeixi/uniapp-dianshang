@@ -1,21 +1,21 @@
 <template>
   <div @click="commonClick" class="haihong">
     <div class="navs">
-      <div :class="index==0?'active':''" @click="changIndex(0)" class="nav-item">全部</div>
+      <div :class="index==0?'active':''" @click="changIndex(0)" class="nav-item">{{$t(607)}}</div>
       <div :class="index==1?'active':''" @click="changIndex(1)" class="nav-item">
-        待付款
+        {{$t(608)}}
         <div class="jiaobiao" v-if="orderNum.waitpay>0">{{orderNum.waitpay}}</div>
       </div>
       <div :class="index==2?'active':''" @click="changIndex(2)" class="nav-item">
-        待发货
+        {{$t(609)}}
         <div class="jiaobiao" v-if="orderNum.waitsend>0">{{orderNum.waitsend}}</div>
       </div>
       <div :class="index==3?'active':''" @click="changIndex(3)" class="nav-item">
-        待收货
+        {{$t(610)}}
         <div class="jiaobiao" v-if="orderNum.waitconfirm>0">{{orderNum.waitconfirm}}</div>
       </div>
       <div :class="index==4?'active':''" @click="changIndex(4)" class="nav-item">
-        待评价
+        {{$t(611)}}
         <div class="jiaobiao" v-if="orderNum.waitcomment>0">{{orderNum.waitcomment}}</div>
       </div>
     </div>
@@ -45,28 +45,28 @@
         </block>
         <div class="total">
           <view @click="goPintuan(item)" class="ptdesc flex flex-vertical-c flex-justify-c" v-if="item.teamstatus_desc">{{item.teamstatus_desc}}
-            <image v-if="item.teamstatus_desc==='拼团中'" :src="'/static/client/person/rightCart.png'|domain" class="right"></image>
+            <image v-if="item.teamstatus_desc===`${$t(612)}`" :src="'/static/client/person/rightCart.png'|domain" class="right"></image>
           </view>
-          <view> 共{{item.prod_list.length}}件商品 实付：<span class="price"><span>￥</span> {{item.Order_TotalPrice}}</span>
+          <view> {{$t(613)}}{{item.prod_list.length}}{{$t(614)}} {{$t(615)}}<span class="price"><span>￥</span> {{item.Order_TotalPrice}}</span>
           </view>
         </div>
         <div class="btn-group" v-if="item.Order_Status==0">
-          <span @click="cancelOrder(item.prod_list,index)">取消订单</span>
+          <span @click="cancelOrder(item.prod_list,index)">{{$t(616)}}</span>
         </div>
         <div class="btn-group" v-if="item.Order_Status==1">
-          <span @click="cancelOrder(item.prod_list,index)">取消订单</span>
-          <span @click="goPay(item)" class="active">立即付款</span>
+          <span @click="cancelOrder(item.prod_list,index)">{{$t(617)}}</span>
+          <span @click="goPay(item)" class="active">{{$t(618)}}</span>
         </div>
         <div class="btn-group" v-else-if="item.Order_Status==2&&item.teamstatus==1">
-          <span @click="goPay(item)" class="active">申请退款</span>
+          <span @click="goPay(item)" class="active">{{$t(619)}}</span>
         </div>
         <div class="btn-group" v-else-if="item.Order_Status==3">
-          <span @click="goLogistics(item)">查看物流</span>
-          <span @click="goPay(item)" style="margin-left: 14rpx;">申请退款退货</span>
-          <span @click="confirmOrder(item)" class="active">确认收货</span>
+          <span @click="goLogistics(item)">{{$t(620)}}</span>
+          <span @click="goPay(item)" style="margin-left: 14rpx;">{{$t(621)}}</span>
+          <span @click="confirmOrder(item)" class="active">{{$t(622)}}</span>
         </div>
         <div class="btn-group" v-else-if="item.Order_Status==4 && item.Is_Commit == 0&&item.teamstatus!=4">
-          <span @click="goPay(item)" class="active">立即评价</span>
+          <span @click="goPay(item)" class="active">{{$t(623)}}</span>
         </div>
       </div>
     </block>
@@ -82,6 +82,7 @@
 import { cancelOrder, confirmOrder, getOrder, getOrderNum } from '@/common/fetch.js'
 import { pageMixin } from '../../common/mixin'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {

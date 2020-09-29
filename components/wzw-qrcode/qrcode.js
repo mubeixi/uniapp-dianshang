@@ -1,3 +1,4 @@
+import T from '@/common/langue/i18n' 
 let QRCode = {};
 (function () {
     /**

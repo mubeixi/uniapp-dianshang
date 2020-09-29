@@ -2,21 +2,21 @@
   <view @click="commonClick">
 
     <view class="navs">
-      <view :class="index==0?'active':''" @click="changIndex(0)" class="nav-item">全部</view>
+      <view :class="index==0?'active':''" @click="changIndex(0)" class="nav-item">{{$t(1512)}}</view>
       <view :class="index==1?'active':''" @click="changIndex(1)" class="nav-item">
-        待付款
+        {{$t(1513)}}
         <!-- <view class="jiaobiao" v-if="orderNum.waitpay>0">{{orderNum.waitpay}}</view> -->
       </view>
       <view :class="index==2?'active':''" @click="changIndex(2)" class="nav-item">
-        待发货
+        {{$t(1514)}}
         <!-- <view class="jiaobiao" v-if="orderNum.waitsend>0">{{orderNum.waitsend}}</view> -->
       </view>
       <!-- <view class="nav-item" :class="index==3?'active':''" @click="changIndex(3)">
-       待收货
+       {{$t(1515)}}
        <view class="jiaobiao" v-if="orderNum.waitconfirm>0">{{orderNum.waitconfirm}}</view>
      </view> -->
       <view :class="index==4?'active':''" @click="changIndex(4)" class="nav-item">
-        已完成
+        {{$t(1516)}}
         <!-- <view class="jiaobiao" v-if="orderNum.waitcomment>0">{{orderNum.waitcomment}}</view> -->
       </view>
     </view>
@@ -26,7 +26,7 @@
       <view :key="index" class="marginAuto" v-for="(item,index) of pro">
         <view class="orderTop">
           <view style="color: #777777;">
-            订单号：{{item.Order_ID}}
+            {{$t(1517)}}{{item.Order_ID}}
           </view>
           <view style="color: #F43131;">
             {{item.Order_Status_desc}}
@@ -62,10 +62,10 @@
         </block>
         <view style="text-align: right;padding-right:20rpx;" v-if="item.Order_Status == 2">
 					<span @click="goFa(item.Order_ID)" class="spanJu"
-                v-if="item.Order_IsVirtual == 0&&item.send_store_id==Stores_ID">发货</span>
+                v-if="item.Order_IsVirtual == 0&&item.send_store_id==Stores_ID">{{$t(1518)}}</span>
           <span @click="goFa(item.Order_ID)" class="spanJu"
-                v-if="item.Order_IsVirtual == 0&&item.send_store_id==0&&item.Order_Store==Stores_ID">发货</span>
-          <span @click="refund(item.Order_ID)" class="spanJu">拒单</span>
+                v-if="item.Order_IsVirtual == 0&&item.send_store_id==0&&item.Order_Store==Stores_ID">{{$t(1519)}}</span>
+          <span @click="refund(item.Order_ID)" class="spanJu">{{$t(1520)}}</span>
         </view>
       </view>
     </block>
@@ -75,11 +75,11 @@
 
     <div class="zhezhao" v-if="password_input">
       <div class="input-wrap">
-        <div>请输入拒单原因</div>
-        <textarea auto-height class="input" placeholder="请输入原因" style="width: 100%;" v-model="reason"></textarea>
+        <div>{{$t(1521)}}</div>
+        <textarea auto-height class="input" :placeholder="$t(1522)" style="width: 100%;" v-model="reason"></textarea>
         <div class="btns">
-          <div @click="cancelInput" class="btn">取消</div>
-          <div @click="confirmInput" class="btn">确定</div>
+          <div @click="cancelInput" class="btn">{{$t(1523)}}</div>
+          <div @click="confirmInput" class="btn">{{$t(1524)}}</div>
         </div>
       </div>
     </div>
@@ -92,6 +92,7 @@ import { pageMixin } from '../../common/mixin'
 import { mapGetters } from 'vuex'
 import { getOrder, systemRejectOrder } from '@/common/fetch.js'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {
@@ -134,7 +135,7 @@ export default {
       const that = this
       if (!this.reason) {
         uni.showToast({
-          title: '拒单原因必填',
+          title: T._(1512),
           icon: 'none'
         })
         return

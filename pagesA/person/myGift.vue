@@ -6,13 +6,13 @@
     <!-- <page-title  title="我的赠品" bgcolor="#ffffff" class="titless"></page-title> -->
     <view class="nav">
       <view :class="checked==0?'checked':''" @click="change(0)" class="ins">
-        未领取
+        {{$t(1188)}}
       </view>
       <view :class="checked==1?'checked':''" @click="change(1)" class="ins">
-        已领取
+        {{$t(1189)}}
       </view>
       <view :class="checked==2?'checked':''" @click="change(2)" class="ins">
-        已过期
+        {{$t(1190)}}
       </view>
     </view>
     <view style="height: 102rpx;width: 100%;">
@@ -32,8 +32,8 @@
           </view>
           <view class="button">
             <view class="sku">{{item.attr_txt}}</view>
-            <view class="chakan" v-if="checked==0">立即申请</view>
-            <view class="chakan" v-else-if="checked==1">查看订单</view>
+            <view class="chakan" v-if="checked==0">{{$t(1191)}}</view>
+            <view class="chakan" v-else-if="checked==1">{{$t(1192)}}</view>
           </view>
           <view class="youxiao" v-if="checked!=1">{{item.valid_scope}}</view>
         </view>
@@ -49,6 +49,7 @@
 import { pageMixin } from '../../common/mixin'
 import { getGiftList } from '../../common/fetch.js'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {

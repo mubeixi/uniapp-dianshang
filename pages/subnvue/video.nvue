@@ -5,7 +5,8 @@
 </template>
 
 <script>
-	export default {
+	import T from '@/common/langue/i18n'
+export default {
 		data() {
 			return {
 				videoContext:null,
@@ -59,7 +60,7 @@
 			videoErrorCallback(e) {
 
 				if(!isDev)return;
-			    let msg = '视频播放错误:' + JSON.stringify(e)
+			    let msg = T._(761) + JSON.stringify(e)
 			    uni.showModal({
 			        content: msg,
 			        showCancel: false

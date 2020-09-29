@@ -16,9 +16,9 @@
         <div class="attr" style="background-color:#fff;" v-else><span></span></div>
         <div class=""><span class="span amount">x{{item.prod_count}}</span></div>
         <div class="font14 graytext2">
-          <div>退回余额:<span class="font16 danger-color"><span
+          <div>{{$t(1239)}}:<span class="font16 danger-color"><span
           class="span font12">￥</span>{{item.refund_money_fee}} </span></div>
-          <div>原路退回:<span class="font16 danger-color"><span class="span font12">￥</span>{{item.refund_pay_fee}} </span>
+          <div>{{$t(1240)}}:<span class="font16 danger-color"><span class="span font12">￥</span>{{item.refund_pay_fee}} </span>
           </div>
         </div>
       </div>
@@ -30,26 +30,26 @@
     <!-- <div class="item">
         <div class="item-left">退款方式</div>
         <div class="item-right" @click="showMethod">
-            <span>仅退款</span>
+            <span>{{$t(1241)}}</span>
             <image class="img" :src="'/static/client/right.png" alt="" />
         </div>
     </div> -->
     <div class="item">
-      <div class="item-left">退款原因</div>
+      <div class="item-left">{{$t(1242)}}</div>
       <div @click="showReason" class="item-right">
-        <span>{{reasonDes?reasonDes: '请选择'}}</span>
+        <span>{{reasonDes?reasonDes: $t(1243)}}</span>
         <image :src="'/static/client/right.png'|domain" alt="" class="img" />
       </div>
     </div>
     <!-- <div class="item spe">
-        <div class="item-left">退款金额</div>
-        <input type="text" placeholder="请输入退款金额" placeholder-style="font-size:24rpx;color:#B8B8B8">
+        <div class="item-left">{{$t(1244)}}</div>
+        <input type="text" :placeholder="$t(1245)" placeholder-style="font-size:24rpx;color:#B8B8B8">
     </div> -->
     <div class="item spe">
-      <div class="item-left">退款说明</div>
-      <input @blur="inputHandle" placeholder="请输入退款说明" placeholder-style="font-size:24rpx;color:#B8B8B8" type="text">
+      <div class="item-left">{{$t(1246)}}</div>
+      <input @blur="inputHandle" :placeholder="$t(1247)" placeholder-style="font-size:24rpx;color:#B8B8B8" type="text">
     </div>
-    <div class="item noborder">上传凭证</div>
+    <div class="item noborder">{{$t(1248)}}</div>
     <div class="imgs">
       <view :key="index" class="shangchuans" v-for="(item,index) of imgs">
         <image :src="item" @click="yulan(index)" class="image"></image>
@@ -61,7 +61,7 @@
       </view>
     </div>
     <div style="height: 50px;"></div>
-    <div @click="submit" class="bottom">提交</div>
+    <div @click="submit" class="bottom">{{$t(1249)}}</div>
     <!-- 弹出层 -->
     <!-- 退款方式 暂且不要-->
     <!-- <popup-layer ref="popupRef" :direction="'top'">
@@ -69,7 +69,7 @@
     <div class="fMbx">退款方式</div>
     <div class="iMbx">
       <div>
-        仅退货
+        {{$t(1250)}}
       </div>
       <div>
          <radio  :checked="onlyRefund"  color="#F43131"/>
@@ -77,7 +77,7 @@
     </div>
     <div class="iMbx">
       <div>
-        退款退货
+        {{$t(1251)}}
       </div>
       <div>
          <radio  :checked="onlyRefund"  color="#F43131"/>
@@ -85,13 +85,13 @@
     </div>
   </div>
   <div class="sure" @click="closeMethod">
-      确定
+      {{$t(1252)}}
   </div>
     </popup-layer> -->
     <!-- 退款原因 -->
     <popup-layer :direction="'top'" ref="popup" style="z-index: 999;">
       <div class="bMbx">
-        <div class="fMbx">退款原因</div>
+        <div class="fMbx">{{$t(1253)}}</div>
         <div :key="index" class="iMbx" v-for="(item,index) in refundInfo.shop_reason">
           <radio-group @change="ShipRadioChange" style="display: block;width: 100%;">
             <label class="flex flex-between flex-vertical-center" style="width: 100%">
@@ -106,7 +106,7 @@
         </div>
         <!-- <div class="iMbx">
           <div>
-            质量问题
+            {{$t(1254)}}
           </div>
           <div>
              <radio  :checked="onlyRefund"  color="#F43131"/>
@@ -114,7 +114,7 @@
         </div>
         <div class="iMbx">
           <div>
-            少件/漏发
+            {{$t(1255)}}
           </div>
           <div>
              <radio  :checked="onlyRefund"  color="#F43131"/>
@@ -122,7 +122,7 @@
         </div> -->
       </div>
       <div @click="closeReason" class="sure">
-        确定
+        {{$t(1256)}}
       </div>
     </popup-layer>
 
@@ -145,6 +145,7 @@ import { uploadImages } from '../../common/tool.js'
 import { error, modal } from '../../common'
 import { mapGetters } from 'vuex'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   components: {
@@ -226,7 +227,7 @@ export default {
     submit () {
       // 按照订单退款
       if (!this.reason_id) {
-        error('退款原因必选')
+        error(T._(1239))
         return
       }
       const arr = []
@@ -251,7 +252,7 @@ export default {
         // #endif
 
         uni.showToast({
-          title: '提交成功',
+          title: T._(1240),
           duration: 1500,
           complete: function () {
             setTimeout(() => {

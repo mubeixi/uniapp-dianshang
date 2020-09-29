@@ -6,7 +6,7 @@
                     <div>
                         <image class='img' src="/static/detail/home.png"></image>
                     </div>
-                    <div class="txt">{{$t('detail','Home')}}</div>
+                    <div class="txt">{{$t(28)}}</div>
                 </navigator>
             </div>
 
@@ -16,25 +16,25 @@
                     <image class='img' v-if="collected" src="/static/detail/favorite-a.png"></image>
                     <image class='img' v-else src="/static/detail/favorite.png"></image>
                 </div>
-                <div class="txt">{{$t('detail','Favorites')}}</div>
+                <div class="txt">{{$t(29)}}</div>
             </div>
             <div class="first" @click="kefu">
                 <div>
                     <image class='img' src="/static/detail/kefu.png"></image>
                 </div>
-                <div class="txt">{{$t('detail','Customer service')}}</div>
+                <div class="txt">{{$t(30)}}</div>
             </div>
         </div>
         <div class="rightss">
             <block v-if="!(recieve || isVirtual || isGiftPackage)">
                 <div class="dan bTitle" @click="addCart">
-                    {{first?first:$t('detail','add to Shopping Cart')}}
+                    {{first?first:$t(31)}}
                 </div>
                 <div class="tuan bTitle" @click="directBuy">
-                    {{second?second:$t('detail','Buy now')}}
+                    {{second?second:$t(32)}}
                 </div>
             </block>
-            <div class="all" @click="lingqu" :class="canSubmit?'':'disable'" v-else>{{isVirtual ? $t('detail','Buy now') : (isGiftPackage?$t('detail','Buy now'):$t('detail','get it right now')) }}
+            <div class="all" @click="lingqu" :class="canSubmit?'':'disable'" v-else>{{isVirtual ? $t(33) : (isGiftPackage?$t(34):$t(35)) }}
             </div>
         </div>
     </div>
@@ -42,8 +42,8 @@
 
 
 <script>
-    import T from '../../common/langue/i18n'
-    export default {
+    import T from '@/common/langue/i18n'
+export default {
         data() {
             return {};
         },
@@ -80,9 +80,6 @@
             }
         },
         methods: {
-            $t (line, data) {
-              return T._(line, data)
-            },
             collect() {
                 this.$emit('collect');
             },

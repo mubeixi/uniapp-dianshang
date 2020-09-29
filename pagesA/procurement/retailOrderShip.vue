@@ -15,7 +15,7 @@
               {{item.attr_name}}
             </view>
             <view class="skuCount" v-else>
-              无规格
+              {{$t(1466)}}
             </view>
             <view class="allPrice">
               ×{{item.prod_count}}
@@ -33,31 +33,31 @@
     <view class="orderDetail">
       <view class="orderDetailTop">
         <view class="leftDiv"></view>
-        <view>订单信息</view>
+        <view>{{$t(1467)}}</view>
       </view>
 
       <view class="orderDetailBottom">
         <view class="viewHeight">
-          订单号：<span class="fontColor">{{orderInfo.Order_ID}}</span>
+          {{$t(1468)}}<span class="fontColor">{{orderInfo.Order_ID}}</span>
         </view>
         <view class="viewHeight">
-          商品总价： ¥<span class="fontColor">{{orderInfo.Order_TotalAmount}}</span>
+          {{$t(1469)}} ¥<span class="fontColor">{{orderInfo.Order_TotalAmount}}</span>
         </view>
         <!-- <view class="viewHeight">
-          优惠： ¥<span class="fontColor"></span>
+          {{$t(1470)}} ¥<span class="fontColor"></span>
         </view> -->
         <view class="viewHeight">
-          运费： ¥<span class="fontColor">{{orderInfo.Order_Shipping && orderInfo.Order_Shipping.price || 0}}</span>
+          {{$t(1471)}}： ¥<span class="fontColor">{{orderInfo.Order_Shipping && orderInfo.Order_Shipping.price || 0}}</span>
         </view>
         <view class="viewHeight">
-          实付： <span class="fontColorRed">¥</span><span
+          {{$t(1472)}}： <span class="fontColorRed">¥</span><span
         class=" fontColor fontColorRed">{{orderInfo.Order_TotalPrice}}</span>
         </view>
         <view class="viewHeight">
-          付款时间：{{orderInfo.Order_CreateTime | timeFormat}}
+          {{$t(1473)}}：{{orderInfo.Order_CreateTime | timeFormat}}
         </view>
         <view class="viewHeight">
-          收货信息： {{orderInfo.Address_Name}} {{orderInfo.Address_Province_name}} {{orderInfo.Address_City_name}}
+          {{$t(1474)}}$t(1475) {{orderInfo.Address_Name}} {{orderInfo.Address_Province_name}} {{orderInfo.Address_City_name}}
           {{orderInfo.Address_Area_name}} {{orderInfo.Address_Town_name}} {{orderInfo.Address_Detailed}}
         </view>
       </view>
@@ -66,48 +66,48 @@
     <view class="orderDetail">
       <view class="orderDetailTop">
         <view class="leftDiv"></view>
-        <view>发货信息</view>
+        <view>{{$t(1476)}}</view>
       </view>
 
       <view class="orderDetailOther">
         <view class="inputView">
           <view style="width: 160rpx;">
-            联系人
+            {{$t(1477)}}
           </view>
           <view style="width: 100%;">
-            <input placeholder="请输入联系人" style="width: 100%;" type="text" v-model="name">
+            <input :placeholder="$t(1478)" style="width: 100%;" type="text" v-model="name">
           </view>
         </view>
 
         <view class="inputView">
           <view style="width: 160rpx;">
-            手机号
+            {{$t(1479)}}
           </view>
           <view style="width: 100%;">
-            <input placeholder="请输入手机号" style="width: 100%;" type="text" v-model="mobile">
+            <input :placeholder="$t(1480)" style="width: 100%;" type="text" v-model="mobile">
           </view>
         </view>
 
         <view class="inputView">
-          快递方式： {{orderInfo.Order_Shipping.Express}}
+          {{$t(1481)}}： {{orderInfo.Order_Shipping.Express}}
           <!-- <view style="width: 160rpx;">
-            配送方式
+            {{$t(1482)}}
           </view>
           <view style="width: 100%;">
-            <input type="text" v-model="ship_method" placeholder="请输入快递公司" style="width: 100%;">
+            <input type="text" v-model="ship_method" :placeholder="$t(1483)" style="width: 100%;">
           </view> -->
         </view>
-        <view class="inputView" v-if="orderInfo.Order_Shipping.Express!='同城配送'">
+        <view class="inputView" v-if="orderInfo.Order_Shipping.Express!=$t(1484)">
           <view style="width: 160rpx;">
-            快递单号:
+            {{$t(1485)}}:
           </view>
           <view style="width: 100%;">
-            <input placeholder="请输入快递单号" style="width: 100%;" type="text" v-model="ship_num">
+            <input :placeholder="$t(1486)" style="width: 100%;" type="text" v-model="ship_num">
           </view>
         </view>
         <view class="inputView" v-else>
           <view style="width: 140rpx;">
-            配送方式：
+            {{$t(1487)}}
           </view>
           <picker :range="arr" :value="index" @change="bindPickerChange" class="picker">
             <view class="uni-input">{{arr[index]}}</view>
@@ -118,17 +118,17 @@
 
         <view class="inputView">
           <view style="width: 160rpx;">
-            备注
+            {{$t(1488)}}
           </view>
           <view style="width: 100%;">
-            <input placeholder="请输入备注内容" style="width: 100%;" type="text" v-model="remark">
+            <input :placeholder="$t(1489)" style="width: 100%;" type="text" v-model="remark">
           </view>
         </view>
       </view>
     </view>
 
     <view @click="send" class="submit">
-      立即发货
+      {{$t(1490)}}
     </view>
 
   </view>
@@ -140,6 +140,7 @@ import { mapGetters } from 'vuex'
 import { getAvailableCityExpress, getOrderDetail, systemSendOrder } from '../../common/fetch'
 import { error } from '../../common'
 
+import T from '@/common/langue/i18n'
 export default {
   data () {
     return {
@@ -200,13 +201,13 @@ export default {
         Order_Remark: this.remark,
         store_id: this.Stores_ID
       }
-      if (this.orderInfo.Order_Shipping.Express == '同城配送') {
+      if (this.orderInfo.Order_Shipping.Express == T._(1466)) {
         for (const item in this.tong[this.index]) {
           data.city_express = item
         }
       } else {
         if (!this.ship_num) {
-          error('请填写物流单号')
+          error(T._(1467))
           return
         }
         data.ShippingID = this.ship_num
@@ -230,7 +231,7 @@ export default {
       this.Order_ID = options.id
       this.getOrderDetail()
     } else {
-      error('缺少参数')
+      error(T._(1468))
       uni.navigateBack({
         delta: 1
       })

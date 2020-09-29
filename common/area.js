@@ -1,3 +1,4 @@
+import T from '@/common/langue/i18n' 
 var area = [{
   0: {
     1: '北京市',

@@ -1,9 +1,9 @@
 <template>
   <div @click="commonClick" class="wrap">
     <div class="input-box">
-      <input class="input" confirm-type="done" placeholder="请输入消费券码" type="digit" v-model="Order_Code" />
+      <input class="input" confirm-type="done" :placeholder="$t(1045)" type="digit" v-model="Order_Code" />
     </div>
-    <button @click="subFn" class="sub" type="warn">核销</button>
+    <button @click="subFn" class="sub" type="warn">{{$t(1046)}}</button>
   </div>
 </template>
 
@@ -12,6 +12,7 @@ import { getOrderDetail } from '../../common/fetch'
 import { error } from '../../common'
 import { pageMixin } from '../../common/mixin'
 
+import T from '@/common/langue/i18n'
 export default {
   name: 'checkByCode',
   mixins: [pageMixin],
@@ -24,7 +25,7 @@ export default {
     subFn () {
       const Order_Code = this.Order_Code
       if (!Order_Code) {
-        error('核销码必填')
+        error(T._(1045))
         return
       }
 
@@ -36,7 +37,7 @@ export default {
             url: '/pagesA/order/checkOrderInfo?Order_Code=' + Order_Code
           })
         } else {
-          error('订单状态不符')
+          error(T._(1046))
         }
       }).catch(e => {
         error(e.msg)

@@ -6,17 +6,17 @@
         <view :style="{backgroundImage:'url('+$fun.domainFn('/static/client/fenxiao/xj.png')+')'}"
               class="xiangji"></view>
       </view>
-      <view @click="changeAvator" class="change">更换头像</view>
+      <view @click="changeAvator" class="change">{{$t(811)}}</view>
     </view>
     <view class="content">
       <view class="c_1">
-        <text>店名</text>
+        <text>{{$t(812)}}</text>
         <input class="inputs" type="text" v-model="Shop_Name" /></view>
       <view class="c_2">
-        <text>公告</text>
+        <text>{{$t(813)}}</text>
         <textarea class="text-content" v-model="Shop_Announce"></textarea></view>
     </view>
-    <view @click="save" class="submit">保存</view>
+    <view @click="save" class="submit">{{$t(814)}}</view>
   </view>
 </template>
 
@@ -37,6 +37,7 @@ import { pageMixin } from '../../common/mixin'
 import { error, toast } from '../../common'
 import { mapActions } from 'vuex'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {
@@ -120,7 +121,7 @@ export default {
 
             // #ifndef MP-TOUTIAO
             uni.showLoading({
-              title: '上传图片',
+              title: T._(811),
               mask: true
             })
 
@@ -137,19 +138,19 @@ export default {
               formData: data,
               success: (uploadFileRes) => {
                 if (typeof uploadFileRes !== 'object' || !uploadFileRes.hasOwnProperty('data') || !uploadFileRes.data) {
-                  error('上传文件失败')
+                  error(T._(812))
                   return
                 }
                 uploadFileRes = JSON.parse(uploadFileRes.data)
                 that.tem_Shop_Logo = uploadFileRes.data.path
                 // 是否可以提交
                 that.isSubmit = true
-                toast('图片上传成功')
+                toast(T._(813))
               },
               fail: (err) => {
                 uni.showModal({
-                  title: '提示',
-                  content: '上传图片错误' + JSON.stringify(err)
+                  title: T._(814),
+                  content: T._(815) + JSON.stringify(err)
                 })
               },
               complete: () => {
@@ -175,7 +176,7 @@ export default {
         Shop_Announce: this.Shop_Announce
       }).then(res => {
         uni.showToast({
-          title: '修改成功',
+          title: T._(816),
           icon: 'success'
         })
         setTimeout(function () {
@@ -193,7 +194,7 @@ export default {
   async created () {
     const initData = await this.getInitData()
     uni.setNavigationBarTitle({
-      title: initData.commi_rename.commi + '信息'
+      title: initData.commi_rename.commi + T._(817)
     })
   }
 }

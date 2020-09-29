@@ -13,14 +13,14 @@
       </div>
       <div class="store-btm">
         <div>
-          名称: {{item.Stores_Name}}
+          {{$t(1762)}}: {{item.Stores_Name}}
         </div>
         <div @click="cell(item.Stores_Telephone)">
-          联系电话: {{item.Stores_Telephone}}
+          {{$t(1763)}}: {{item.Stores_Telephone}}
           <image class="iconCell" src="/static/cellstore.png"></image>
         </div>
         <div @click="openLocation(item)" class="store-add">
-          地址: <span class="store-address">{{item.Stores_Province_name}} {{item.Stores_City_name}}{{item.Stores_Area_name}}{{item.Stores_Address}}</span><i
+          {{$t(1764)}}: <span class="store-address">{{item.Stores_Province_name}} {{item.Stores_City_name}}{{item.Stores_Area_name}}{{item.Stores_Address}}</span><i
         class="funicon  icon-address"></i></image>
         </div>
       </div>
@@ -38,6 +38,7 @@ import { getStoreList } from '../../common/fetch.js'
 import { pageMixin } from '../../common/mixin'
 import { mapGetters } from 'vuex'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {

@@ -1,3 +1,4 @@
+import T from '@/common/langue/i18n' 
 /**
  * 地理位置类
  *
@@ -8,8 +9,8 @@ import { WX_JSSDK_INIT } from '../mixin'
 import permision from '../permission'
 
 const failOpt = {
-  osNotAllow: { code: 2001, msg: '无获取位置权限' },
-  codeError: { code: 3001, msg: '代码执行错误' },
+  osNotAllow: { code: 2001, msg: T._(18) },
+  codeError: { code: 3001, msg: T._(19) },
   browerNotAllow: { code: 2002, msg: 'Geolocation is not supported by this browser' },
   notFound: { code: -1, msg: '获取位置失败' }
 }
@@ -20,7 +21,7 @@ const checkLocationPermission = async () => {
     status = 1
   } else {
     uni.showModal({
-      content: '需要定位权限',
+      content: T._(20),
       confirmText: '设置',
       success: function (res) {
         if (res.confirm) {

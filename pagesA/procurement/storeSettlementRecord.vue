@@ -5,39 +5,39 @@
     </div>
     <view :key="index" @click="noShow" class="list" v-for="(item,index) of list">
       <view class="listText">
-        结算时间:
+        {{$t(1652)}}
         <text class="msg">{{item.time_period}}</text>
       </view>
       <view class="listText">
-        订单金额:
+        {{$t(1653)}}
         <text class="msg">¥{{item.Order_TotalAmount}}</text>
       </view>
       <view class="listText">
-        结算比例:
+        {{$t(1654)}}
         <text class="msg">{{item.Distribute_Balance}}</text>
       </view>
       <view class="listText">
-        运费:
+        {{$t(1655)}}:
         <text class="msg">¥{{item.Shipping_fee}}</text>
       </view>
       <view class="listText">
-        服务费:
+        {{$t(1656)}}
         <text class="msg">¥{{item.service_fee}}</text>
       </view>
       <view class="listText">
-        退款:
+        {{$t(1657)}}
         <text class="msg">¥{{item.back_amount}}</text>
       </view>
       <view class="listText">
-        实际结算:
+        {{$t(1658)}}
         <text class="msg color">¥{{item.Stores_Balance}}</text>
       </view>
       <view class="listText">
-        状态:
+        {{$t(1659)}}
         <text class="msg color">{{item.status_txt}}</text>
         <image @click.stop='changge(index)' class="img" src="/static/procurement/i.png"
-               v-if="item.status_txt=='已驳回'"></image>
-        <view class="tips" v-if="item.status_txt=='已驳回'&&item.isShow">
+               v-if="item.status_txt==$t(1660)"></image>
+        <view class="tips" v-if="item.status_txt==$t(1661)&&item.isShow">
           <view class="sanjiaoxing"></view>
           {{item.reject_reason}}
         </view>
@@ -53,6 +53,7 @@ import { getSettlements } from '../../common/fetch.js'
 import { mapGetters } from 'vuex'
 import { pageMixin } from '../../common/mixin'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {

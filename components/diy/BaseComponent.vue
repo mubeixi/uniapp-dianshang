@@ -8,8 +8,8 @@
           <div class="title">
             <div style="line-height: 32px">{{info.ShopName}}</div>
             <div class="flex" style="line-height: initial">
-              <div class="total font12">全部商品{{info.prod_total}}</div>
-              <div class="new font12" style="margin-left: 4px;"> 上新{{info.prod_isnew_total}}</div>
+              <div class="total font12">{{$t(24)}}{{info.prod_total}}</div>
+              <div class="new font12" style="margin-left: 4px;"> {{$t(25)}}{{info.prod_isnew_total}}</div>
             </div>
           </div>
         </div>
@@ -26,8 +26,8 @@
           <div class="title">
             <div style="line-height: 32px">{{info.ShopName}}</div>
             <div class="flex" style="line-height: initial">
-              <div class="total font12">全部商品{{info.prod_total}}</div>
-              <div class="new font12" style="margin-left: 4px;"> 上新{{info.prod_isnew_total}}</div>
+              <div class="total font12">{{$t(26)}}{{info.prod_total}}</div>
+              <div class="new font12" style="margin-left: 4px;"> {{$t(27)}}{{info.prod_isnew_total}}</div>
             </div>
           </div>
         </div>
@@ -43,6 +43,7 @@
 import { domainFn } from '../../common/filter'
 import { getProductCountInfo } from '../../common/fetch'
 
+import T from '@/common/langue/i18n'
 export default {
   name: 'BaseComponent',
   props: {

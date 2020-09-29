@@ -4,30 +4,30 @@
       <view class="zhezhaoView">
         <image :src="'/static/client/check/close.png'|domain" @click="isShow=false" class="closeZ"></image>
         <view class="zhezhaoYue">
-          余额互转
+          {{$t(1060)}}
         </view>
         <form @submit="confirm" report-submit>
           <view class="zhezhaoCenter">
             <view class="views">
               <image :src="'/static/client/check/phone.png'|domain" class="imgs" mode="widthFix"></image>
-              <input class="inputs" placeholder="请输入对方会员号" type="text" v-model="user_no">
+              <input class="inputs" :placeholder="$t(1061)" type="text" v-model="user_no">
             </view>
           </view>
           <view class="zhezhaoCenter">
             <view class="views">
               <image :src="'/static/client/check/money.png'|domain" class="imgs" mode="widthFix"></image>
-              <input class="inputs" placeholder="请输入转出金额" type="text" v-model="money">
+              <input class="inputs" :placeholder="$t(1062)" type="text" v-model="money">
             </view>
           </view>
           <view class="zhezhaoCenter">
             <view class="views">
               <image class="imgs" mode="widthFix" src="/static/pay-paasword.png"></image>
-              <input @blur="user_password" class="inputs" placeholder="请输入支付密码" type="password"
+              <input @blur="user_password" class="inputs" :placeholder="$t(1063)" type="password"
                      v-model="user_pay_password">
             </view>
           </view>
           <button class="zheButton" formType="submit">
-            确认转出
+            {{$t(1064)}}
           </button>
         </form>
 
@@ -40,59 +40,59 @@
       <image :src="'/static/client/blance/bg.jpg'|domain" class="bgImg"></image>
       <!-- <image class="back" @click="goBack" :src="'/static/client/check/left.png'|domain"></image>
       <view class="titleq">
-        余额中心
+        {{$t(1065)}}
       </view> -->
 
       <view class="dangqian">
-        当前余额（元）
+        {{$t(1066)}}（{{$t(1067)}}）
       </view>
       <view class="prices">
         {{Money}}
       </view>
       <view @click="goWithdraw" class="zhuanchu" v-if="initData.remainder_withdraw==1">
-        提现
+        {{$t(1068)}}
       </view>
       <view class="bottoms">
         <view @click="goRecharge" class="lefts qwe">
           <image :src="'/static/client/check/t1.png'|domain" class="image"></image>
-          <text>余额充值</text>
+          <text>{{$t(1069)}}</text>
         </view>
         <view class="line">
         </view>
         <view @click="goFacePay" class="rights qwe">
           <image :src="'/static/client/check/t2.png'|domain" class="image"></image>
-          <text>余额转出</text>
+          <text>{{$t(1070)}}</text>
         </view>
       </view>
     </view>
 
     <view class="selects">
       <view :class="{checked:current=='charge'}" @click="changeCurrent('charge')" class="qwes">
-        收入
+        {{$t(1071)}}
         <image class="imgQ" src="/static/moneySort.png"></image>
       </view>
       <view :class="{checked:current=='money'}" @click="changeCurrent('money')" class="qwes">
-        支出
+        {{$t(1072)}}
         <image class="imgQ" src="/static/moneySort.png"></image>
       </view>
       <view class="showCeng" v-if="showSure">
-        <view class="priceInterval">时间区间</view>
+        <view class="priceInterval">{{$t(1073)}}</view>
         <view style="display: flex;align-content: center;padding-left: 10px;">
           <picker @change="bindDateChange" class="picker" mode="date">
             <view class="uni-input" v-if="beginTime">{{beginTime}}</view>
-            <view class="uni-input" v-if="!beginTime">开始时间</view>
+            <view class="uni-input" v-if="!beginTime">{{$t(1074)}}</view>
           </picker>
           <view class="centerPicker">
             —
           </view>
           <picker @change="bindDateChanges" class="picker" mode="date">
             <view class="uni-input" v-if="endTime">{{endTime}}</view>
-            <view class="uni-input" v-if="!endTime">结束时间</view>
+            <view class="uni-input" v-if="!endTime">{{$t(1075)}}</view>
           </picker>
         </view>
         <view class="submit">
-          <view @click="resets" class="view reset">重置</view>
-          <view @click="sureSearch" class="view sure">确定</view>
+          <view @click="resets" class="view reset">{{$t(1076)}}</view>
+          <view @click="sureSearch" class="view sure">{{$t(1077)}}</view>
         </view>
         <view @click="showSure=false" catchtouchmove class="zhao">
 
@@ -103,16 +103,16 @@
     <view class="contents" v-if="current=='charge'">
       <view class="mingxi  mingxiPlus">
         <view>
-          总收入:{{records.total_get}}元
+          {{$t(1078)}}:{{records.total_get}}{{$t(1079)}}
         </view>
         <view>
-          总支出:{{records.total_pay}}元
+          {{$t(1080)}}:{{records.total_pay}}{{$t(1081)}}
         </view>
       </view>
       <view :key="idx" class="mingxi" v-for="(item,idx) in records.list">
         <view class="note">
           <view class="leftNote">{{item.Note}}</view>
-          <view class="rightNote">{{'+'}}{{item.Amount}}元</view>
+          <view class="rightNote">{{'+'}}{{item.Amount}}{{$t(1082)}}</view>
         </view>
         <view class="times">
           {{item.CreateTime}}
@@ -123,16 +123,16 @@
 
       <view class="mingxi  mingxiPlus">
         <view>
-          总收入:{{records.total_get}}元
+          {{$t(1083)}}:{{records.total_get}}{{$t(1084)}}
         </view>
         <view>
-          总支出:{{records.total_pay}}元
+          {{$t(1085)}}:{{records.total_pay}}{{$t(1086)}}
         </view>
       </view>
       <view :key="idx" class="mingxi" v-for="(item,idx) in records.list">
         <view class="note">
           <view class="leftNote">{{item.Note}}</view>
-          <view class="rightNote">{{item.Amount}}元</view>
+          <view class="rightNote">{{item.Amount}}{{$t(1087)}}</view>
         </view>
         <view class="times">
           {{item.CreateTime}}
@@ -157,6 +157,7 @@ import {
 import { mapActions, mapGetters } from 'vuex'
 import { confirm, error } from '../../common'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {
@@ -223,7 +224,7 @@ export default {
         var ed = new Date(endTmp[0], endTmp[1], endTmp[2])
         if (sd.getTime() > ed.getTime()) {
           uni.showToast({
-            title: '开始时间不得大于结束时间',
+            title: T._(1060),
             icon: 'none'
           })
           return
@@ -277,16 +278,16 @@ export default {
       // 改成需要密码
       if (this.userInfo.hasOwnProperty('User_PayPassword') && !this.userInfo.User_PayPassword) {
         confirm({
-          title: '提示',
-          content: '该操作需要设置支付密码,是否前往设置?',
-          confirmText: '去设置',
-          cancelText: '暂不设置'
+          title: T._(1061),
+          content: T._(1062),
+          confirmText: T._(1063),
+          cancelText: T._(1064)
         }).then(res => {
           uni.navigateTo({
             url: '/pagesA/person/updateUserPsw?type=1&is_back=1'
           })
         }).catch(err => {
-          error('请选择其他支付方式')
+          error(T._(1065))
         })
         return
       }
@@ -313,21 +314,21 @@ export default {
 
       if (this.money == '' || isNaN(this.money) || (this.money < 0)) {
         uni.showToast({
-          title: '输入金额有误',
+          title: T._(1066),
           icon: 'none'
         })
         return
       }
       if (this.user_no == '') {
         uni.showToast({
-          title: '转出会员号不能为空',
+          title: T._(1067),
           icon: 'none'
         })
         return
       }
 
       if (!this.user_pay_password) {
-        error('请输入支付密码')
+        error(T._(1068))
         return
       }
 

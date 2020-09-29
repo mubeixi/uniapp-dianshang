@@ -1,3 +1,4 @@
+import T from '@/common/langue/i18n' 
 // 重写navigateTo
 import { GetQueryByString, isIos, isWeiXin, ls } from './tool'
 

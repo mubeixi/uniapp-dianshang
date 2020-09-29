@@ -1,3 +1,4 @@
+import T from '@/common/langue/i18n' 
 // HTML 支持的数学符号
 function strNumDiscode(str) {
   str = str.replace(/&forall;/g, '∀');

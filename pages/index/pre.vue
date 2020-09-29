@@ -59,6 +59,7 @@ import { GetQueryByString } from '../../common/tool'
 
 import { pageMixin } from '../../common/mixin'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {
@@ -115,7 +116,7 @@ export default {
     const Home_ID = GetQueryByString(location.href, 'Home_ID')
 
     if (!Skin_ID && !Home_ID) {
-      this.$error('预览参数错误')
+      this.$error(T._(466))
     }
 
     new Promise((resolve, reject) => {
@@ -124,7 +125,7 @@ export default {
         if (res.data.Home_Json) {
           resolve(JSON.parse(res.data.Home_Json))
         } else {
-          reject(Error('获取预览数据失败'))
+          reject(Error(T._(467)))
         }
       }).catch(e => {
 

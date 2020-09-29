@@ -14,14 +14,14 @@
           {{pro.disInfo.Shop_Name}}
         </view>
         <view class="tuijianren">
-          推荐人：{{pro.disInfo.Parent_NickName}}
+          {{$t(896)}}{{pro.disInfo.Parent_NickName}}
         </view>
       </view>
     </view>
     <view class="teamContent">
       <view class="teamNumber">
         <image class="image" src="/static/red-people.png"></image>
-        <view class="viewq">团队总人数</view>
+        <view class="viewq">{{$t(897)}}</view>
       </view>
       <view :key="index" @click="goMyNumber(index)" class="teamGrade" v-for="(item,index) of pro.team_level_count">
         <view class="views">
@@ -40,6 +40,7 @@
 import { pageMixin } from '../../common/mixin'
 import { getDisTeamCount } from '../../common/fetch.js'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {

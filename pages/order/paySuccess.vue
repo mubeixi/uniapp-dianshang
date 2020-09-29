@@ -4,16 +4,16 @@
       <image :src="'/static/client/paySuccess.png'|domain" style="width: 100%;height: 100%;"></image>
     </view>
     <view class="pay-succ">
-      支付成功
+      {{$t(673)}}
     </view>
     <view class="pay-button">
-      <view @click="goIndexs" class="button-all button-goon">继续购买</view>
-      <view @click="goOrder" class="button-all button-next">查看订单</view>
+      <view @click="goIndexs" class="button-all button-goon">{{$t(674)}}</view>
+      <view @click="goOrder" class="button-all button-next">{{$t(675)}}</view>
     </view>
     <block v-if="showMain">
       <block v-if="pro.length>0">
         <view class="pay-succ-last">
-          本次购物可享权益
+          {{$t(676)}}
         </view>
         <view :key="index" class="youhuijuan" v-for="(item,index) of pro">
           <image class="allImg" src="/static/mbxcoupon.png"></image>
@@ -24,7 +24,7 @@
             {{item.Coupon_Subject}}
           </view>
           <view class="times">
-            有效期：{{item.Coupon_StartTime}}至{{item.Coupon_EndTime}}
+            {{ $t(677) }}：{{item.Coupon_StartTime}}-{{item.Coupon_EndTime}}
           </view>
           <view class="limit">
             {{item.limit_txt}}
@@ -34,20 +34,30 @@
             <text>{{item.Coupon_Cash}}</text>
           </view>
           <view class="prices" v-else>
-            {{item.Coupon_Discount*10}}折优惠
+			  <block v-if="$p('zh-cn')">
+				   {{item.Coupon_Discount*10}}折优惠
+			  </block>
+			  <block v-if="$p('en-us')">
+				  {{item.Coupon_Discount*10}}% discount
+			  </block>
           </view>
           <view class="man" v-if="item.Coupon_Subject">
-            满{{item.Coupon_Condition}}可用
+			  <block v-if="$p('zh-cn')">
+				  满{{item.Coupon_Condition}}可用
+			  </block>
+			  <block v-if="$p('en-us')">
+				  {{item.Coupon_Condition}} available
+			  </block>
           </view>
           <view @click="goIndex(item.coupon_prod)" class="button">
-            去使用
+            {{$t(678)}}
           </view>
         </view>
       </block>
       <block v-else>
         <!-- 猜你喜欢 -->
         <div class=" container">
-          <div class="fenge"><span class="red"></span><span class="caini">猜你喜欢</span><span class="red"></span></div>
+          <div class="fenge"><span class="red"></span><span class="caini">{{$t(679)}}</span><span class="red"></span></div>
           <div class="prolist">
             <div :key="index" @click="gotoDetail(item.Products_ID)" class="pro-item" v-for="(item,index) in prodList">
               <img :src="item.ImgPath" alt="">
@@ -68,6 +78,7 @@
 import { pageMixin } from '../../common/mixin'
 import { getPayCoupons, getProd } from '../../common/fetch.js'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {

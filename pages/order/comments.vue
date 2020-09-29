@@ -5,8 +5,8 @@
     <!-- #endif -->
 
     <div class="navs">
-      <div :class="index == 0 ? 'active' : ''" @click="getComment(0,1)" class="nav">{{ $t('detail','All') }}</div>
-      <div :class="index == 1 ? 'active' : ''" @click="getComment(1,1)" class="nav">{{ $t('detail','There are pictures') }}</div>
+      <div :class="index == 0 ? 'active' : ''" @click="getComment(0,1)" class="nav">{{ $t(522) }}</div>
+      <div :class="index == 1 ? 'active' : ''" @click="getComment(1,1)" class="nav">{{ $t(523) }}</div>
     </div>
 	<div class="defaults" v-if="comment_list.length<=0">
 	  <image :src="'/static/client/defaultImg.png'|domain"></image>
@@ -42,8 +42,8 @@
           <div class="cartTitle">
             <div class="cartTitles">{{product.Products_Name}}</div>
             <div class="addInfo">
-              <div class="addPrice">{{postData.productDetail_price}} {{ $t('cart','yuan') }}</div>
-              <div class="proSale">{{ $t('cart','in stock') }} {{postData.count}}</div>
+              <div class="addPrice">{{postData.productDetail_price}} {{ $t(524) }}</div>
+              <div class="proSale">{{ $t(525) }} {{postData.count}}</div>
             </div>
           </div>
         </div>
@@ -61,7 +61,7 @@
         </div>
         <div class="numBer">
           <div class="numBers">
-            {{ $t('detail','Quantity') }}
+            {{ $t(526) }}
           </div>
           <div class="inputNumber">
             <div @click="delNum" class="clicks">-</div>
@@ -71,7 +71,7 @@
         </div>
       </div>
       <div :class="submit_flag?'':'disabled'" @click="skuSub" class="cartSub">
-        {{ $t('detail','determine') }}
+        {{ $t(527) }}
       </div>
     </popupLayer>
     <bottom :collected="isCollected" @cartHandle="addCart" @collect="collect" @directHandle="directBuy"></bottom>
@@ -93,6 +93,7 @@ import { numberSort } from '../../common/tool.js'
 import { pageMixin } from '../../common/mixin'
 import { error, modal } from '@/common'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   name: 'app',
@@ -225,7 +226,7 @@ export default {
       if (this.postData.attr_id === 0) {
         if (this.product.skujosn) {
           wx.showToast({
-            title: '您还没有选择规格',
+            title: T._(522),
             icon: 'none'
           })
           return
@@ -235,7 +236,7 @@ export default {
       updateCart(this.postData).then(res => {
         if (this.postData.cart_key === 'CartList') {
           uni.showLoading({
-            title: '加入购物车成功',
+            title: T._(523),
             icon: 'success'
           })
         } else {
@@ -254,7 +255,7 @@ export default {
         this.postData.qty += 1
       } else {
         uni.showToast({
-          title: '购买数量不能大于库存量',
+          title: T._(524),
           icon: 'none'
         })
         this.postData.qty = this.postData.count
@@ -265,7 +266,7 @@ export default {
         this.postData.qty -= 1
       } else {
         uni.showToast({
-          title: '购买数量不能小于1',
+          title: T._(525),
           icon: 'none'
         })
         this.postData.qty = 1
@@ -281,16 +282,16 @@ export default {
           })
           this.isCollected = false
         }).catch(() => {
-          modal('操作失败')
+          modal(T._(526))
         })
       } else {
         addCollection({ prod_id: this.Products_ID }).then(res => {
           uni.showToast({
-            title: '收藏成功'
+            title: T._(527)
           })
           this.isCollected = true
         }).catch(() => {
-          error('收藏失败')
+          error(T._(528))
         })
       }
     },

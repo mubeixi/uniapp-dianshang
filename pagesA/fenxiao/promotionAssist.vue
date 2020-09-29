@@ -4,14 +4,14 @@
       <image :src="'/static/clientpop_default.jpg'|domain" class="src"></image>
       <form @submit="submit" report-submit>
         <view class="content">
-          <view class="title">推广小助手</view>
+          <view class="title">{{$t(929)}}</view>
           <view class="item">
-            <view class="sub-title">内容链接</view>
-            <input class="website" placeholder="请在这里粘贴网址" type="text" v-model="postData.wx_url">
+            <view class="sub-title">{{$t(930)}}</view>
+            <input class="website" :placeholder="$t(931)" type="text" v-model="postData.wx_url">
           </view>
           <view class="item">
-            <view class="sub-title">选择链接</view>
-            <text>链接方式：</text>
+            <view class="sub-title">{{$t(932)}}</view>
+            <text>{{$t(933)}}</text>
             <radio-group @change="radioChange" style="display: inline-block;">
               <label :key="index" class="radio" v-for="(item,index) in radioArr">
                 <radio :checked="idx==index" :value="item.value" color="#F43131" style="transform:scale(0.7)" />
@@ -25,14 +25,14 @@
             </picker>
           </view>
           <view class="item msg">
-            <view class="sub-title">联系方式</view>
-            <input class="input" placeholder="请在此输入你的姓名" type="text" v-model="postData.name" />
-            <input class="input" placeholder="请在此输入你的电话" type="text" v-model="postData.mobile" />
-            <input class="input" placeholder="请在此输入你的QQ" type="text" v-model="postData.qq" />
-            <input class="input" placeholder="请在此输入你的邮箱" type="text" v-model="postData.email" />
+            <view class="sub-title">{{$t(934)}}</view>
+            <input class="input" :placeholder="$t(935)" type="text" v-model="postData.name" />
+            <input class="input" :placeholder="$t(936)" type="text" v-model="postData.mobile" />
+            <input class="input" :placeholder="$t(937)" type="text" v-model="postData.qq" />
+            <input class="input" :placeholder="$t(938)" type="text" v-model="postData.email" />
             <view class="btns">
-              <button class="submit" form-type="submit">提交</button>
-              <button class="share">转发详情</button>
+              <button class="submit" form-type="submit">{{$t(939)}}</button>
+              <button class="share">{{$t(940)}}</button>
             </view>
           </view>
         </view>
@@ -46,6 +46,7 @@ import { checkMobile } from '../../common/tool'
 import { pageMixin } from '../../common/mixin'
 import { addPromotionArticle } from '../../common/fetch.js'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {
@@ -55,19 +56,19 @@ export default {
       radioArr: [
         {
           value: '1',
-          name: '商城链接'
+          name: T._(929)
         },
         {
           value: '2',
-          name: '图文展示'
+          name: T._(930)
         }
       ],
       arr: [],
       arr1: [
-        '商城首页', '全部分类', '服装', '鞋子'
+        T._(931), T._(932), T._(933), T._(934)
       ],
       index: 0,
-      arr2: ['微砍价', '微助力', '微众筹'],
+      arr2: [T._(935), T._(936), T._(937)],
       postData: {
         wx_url: '', // 文章微信原地址
         link_type: '1', // 链接方式  1 商城链接  2 图文链接
@@ -112,31 +113,31 @@ export default {
       const isQQ = /[1-9][0-9]{4,10}/.test(this.postData.qq)
       if (!isMobileOK) {
         uni.showToast({
-          title: '手机格式不正确',
+          title: T._(938),
           icon: 'none'
         })
         return
       } else if (!isEmailOK) {
         uni.showToast({
-          title: '邮箱不正确',
+          title: T._(939),
           icon: 'none'
         })
         return
       } else if (!isQQ) {
         uni.showToast({
-          title: 'qq号不正确',
+          title: T._(940),
           icon: 'none'
         })
         return
       } else if (this.postData.name == '') {
         uni.showToast({
-          title: '姓名不能为空',
+          title: T._(941),
           icon: 'none'
         })
         return
       } else if (this.postData.wx_url == '') {
         uni.showToast({
-          title: '链接不能为空',
+          title: T._(942),
           icon: 'none'
         })
         return

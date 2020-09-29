@@ -8,16 +8,16 @@
       <image :class="userInfo.User_ID&&show>0?'':'onlyMsg'" :src="'/static/client/fenxiao/msg.png'|domain" @click="goMsg" class="msg"></image>
       <view :class="signin?'isQian':''" @click="signinMethod" class="qiandao" v-if="userInfo.User_ID&&show>0">
         <image :src="'/static/client/person/qiandao.png'|domain" class="imgg"></image>
-        <view class="viewl">{{signin?$t('person','Checked in'):$t('person','Sign in')}}</view>
+        <view class="viewl">{{signin?$t(688):$t(689)}}</view>
       </view>
       <view class="personInfo flex">
         <view @click="goPersonMsg" class="left">
           <image :src="(userInfo.User_HeadImg||'/static/client/default.png')|domain" class="image" style="border-radius: 50%;"></image>
         </view>
         <view :style="{position:!userInfo.User_ID?'relative':'static'}" class="right flex1">
-          <view @click="goLogin" class="font14 loginBtn" plain size="mini" v-if="!userInfo.User_ID">{{$t('person','Log in/Registered')}}</view>
+          <view @click="goLogin" class="font14 loginBtn" plain size="mini" v-if="!userInfo.User_ID">{{$t(690)}}</view>
           <view @click="goPersonMsg" class="nickName" v-if="userInfo.User_ID">
-            {{userInfo.User_NickName||(userInfo.User_No?($t('person','user')+userInfo.User_No):$t('person','No nickname'))}}
+            {{userInfo.User_NickName||(userInfo.User_No?($t(691)+userInfo.User_No):$t(692))}}
             <block v-if="userInfo.User_NickName">({{userInfo.User_No}})</block>
           </view>
           <view @click="goVip" class="cart" v-if="userInfo.User_ID && initData.user_switch">{{userLevelText()}}
@@ -29,34 +29,34 @@
         <view @click="goBalance" class="navList first" v-if="initData.charge_switch==1">
           <image :src="'/static/client/person/yue.png'|domain" class="imgr" mode=""></image>
           <view class="viewr">
-            {{ $t('person','Balance') }}
+            {{ $t(693) }}
           </view>
         </view>
         <view @click="goIntegral" class="navList second">
           <image :src="'/static/client/person/jifen.png'|domain" class="imgr" mode=""></image>
           <view class="viewr">
-            {{ $t('person','Integral') }}
+            {{ $t(694) }}
           </view>
         </view>
         <view @click="goCollection" class="navList three">
           <image :src="'/static/client/person/shoucang.png'|domain" class="imgr" mode=""></image>
           <view class="viewr">
-            {{ $t('person','Favorites') }}
+            {{ $t(695) }}
           </view>
         </view>
         <view @click="goCoupon" class="navList four">
           <image :src="'/static/client/person/youhuijuan.png'|domain" class="imgr" mode=""></image>
           <view class="viewr" >
-            {{ $t('person','Coupon') }}
+            {{ $t(696) }}
           </view>
         </view>
       </view>
     </view>
     <view class="order">
       <view class="orderTop">
-        <view class="orderLeft">{{ $t('person','Mall order') }}</view>
+        <view class="orderLeft">{{ $t(697) }}</view>
         <view @click="goOrder(0)" class="orderRight">
-          {{ $t('person','All orders') }}
+          {{ $t(698) }}
           <image :src="'/static/client/person/right.png'|domain" class="image"></image>
         </view>
       </view>
@@ -64,28 +64,28 @@
         <view @click="goOrder(1)" class="orderLast">
           <image :src="'/static/client/person/pay.png'|domain" class="zxc"></image>
           <view class="views">
-            {{ $t('person','Pending payment') }}
+            {{ $t(699) }}
           </view>
           <view class="jiaobiao" v-if="orderNum.waitpay>0">{{orderNum.waitpay}}</view>
         </view>
         <view @click="goOrder(2)" class="orderLast">
           <image :src="'/static/client/person/fa.png'|domain" class="zxc"></image>
           <view class="views">
-            {{ $t('person','To be delivered') }}
+            {{ $t(700) }}
           </view>
           <div class="jiaobiao" v-if="orderNum.waitsend>0">{{orderNum.waitsend}}</div>
         </view>
         <view @click="goOrder(3)" class="orderLast">
           <image :src="'/static/client/person/shou.png'|domain" class="zxc"></image>
           <view class="views">
-            {{ $t('person','To be received') }}
+            {{ $t(701) }}
           </view>
           <div class="jiaobiao" v-if="orderNum.waitconfirm>0">{{orderNum.waitconfirm}}</div>
         </view>
         <view @click="goOrder(4)" class="orderLast">
           <image :src="'/static/client/person/ping.png'|domain" class="zxc"></image>
           <view class="views">
-            {{ $t('person','Comment') }}
+            {{ $t(702) }}
           </view>
           <div class="jiaobiao" v-if="orderNum.waitcomment>0">{{orderNum.waitcomment}}</div>
         </view>
@@ -122,7 +122,7 @@
       <view @click="goSetting" class="setting cell">
         <image :src="'/static/client/person/she.png'|domain" class="left"></image>
         <view class="pintuan">
-          {{ $t('person','Setting') }}
+          {{ $t(703) }}
         </view>
         <image :src="'/static/client/person/right.png'|domain" class="right"></image>
       </view>
@@ -130,7 +130,7 @@
 			<view class="setting cell" v-if="lang_flag">
 			  <image :src="'/static/client/person/she.png'|domain" class="left"></image>
 			  <view class="pintuan">
-          {{ $t('person','Multi-language selection') }}
+          {{ $t(704) }}
 			  </view>
 				<picker class="lang_choose_box" @change="chooseLang" :value="choose_lang_idx" :range="lang_code_list" range-key="choose_item">
 					<view class="lang_choose_show">
@@ -153,6 +153,7 @@ import { get_user_info, getFuncModule, getOrderNum, judgeSignin, signin } from '
 import { error } from '@/common'
 import { ls } from '../../common/tool'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   components: {},
@@ -192,7 +193,7 @@ export default {
       getFuncModule({ type: '2' }).then(res => {
         this.personInit = res.data
       }).catch(e => {
-        error(e.msg || '初始化个人中心失败')
+        error(e.msg || T._(688))
       })
     },
     goDistributor () {
@@ -216,7 +217,7 @@ export default {
       if (this.userInfo && this.userInfo.User_Level) {
         return this.userInfo.User_Level.level_name
       }
-      return '普通用户'
+      return T._(689)
     },
     goIntegral () {
       if (!this.$fun.checkIsLogin(1)) return
@@ -466,7 +467,7 @@ export default {
       }
 
       .qiandao {
-        width: 120rpx;
+        width: 180rpx;
         height: 45rpx;
         background: rgb(249, 142, 142);
         box-shadow: 0px 1rpx 6rpx 0px rgba(167, 53, 50, 1);
@@ -480,7 +481,6 @@ export default {
         padding: 11rpx 20rpx;
         justify-content: space-between;
         box-sizing: border-box;
-
         .imgg {
           width: 22rpx;
           height: 22rpx;
@@ -801,7 +801,7 @@ export default {
     height: 45rpx;
     position: absolute;
     top: 22rpx;
-    right: 175rpx;
+    right: 225rpx;
   }
 
   .onlyMsg {

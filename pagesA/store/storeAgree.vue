@@ -1,35 +1,35 @@
 <template>
   <view style="background-color: #FFFFFF;height: 100vh;">
     <div class="store-line flex flex-vertical-center">
-      <span class="store-info">申请人</span>
+      <span class="store-info">{{$t(1712)}}</span>
       <image :src="storeData.store_image" class="store-img"></image>
       <span class="fz-14-c9">{{storeData.store_name}}</span>
     </div>
     <div class="store-line flex flex-vertical-center">
-      <span class="store-info">名称</span>
+      <span class="store-info">{{$t(1713)}}</span>
       <span class="fz-14-c9">{{storeData.store_name}}</span>
     </div>
     <div @click="cellPhone(storeData.store_mobile)" class="store-line flex flex-vertical-center">
-      <span class="store-info">电话</span>
+      <span class="store-info">{{$t(1714)}}</span>
       <span class="fz-14-c9">{{storeData.store_mobile}}</span>
       <image class="store-cell" src="/static/cellstore.png" v-if="storeData.store_mobile"></image>
     </div>
 
     <div @click="openLoca(storeData.store_lat,storeData.store_lng)" class="store-line flex flex-vertical-center">
-      <span class="store-info">地址</span>
+      <span class="store-info">{{$t(1715)}}</span>
       <span class="fz-14-c9 fz-address">{{storeData.store_province_name}}{{storeData.store_city_name}}{{storeData.store_area_name}}{{storeData.store_address}}<image
       class="store-address" src="/static/addressStore.png" v-if="storeData.store_province_name"></image></span>
 
     </div>
 
     <div class="store-line-btm">
-      主图
+      {{$t(1716)}}
     </div>
     <div class="store-img-list">
       <image :src="storeData.store_image" @click="yulan(storeData.store_image)" class="store-img-list-img"></image>
     </div>
     <div class="store-line-btm">
-      资质
+      {{$t(1717)}}
     </div>
     <div class="store-img-list">
       <block :key="index" v-for="(item,index) of storeData.img_info">
@@ -40,27 +40,27 @@
     <div style="width:690rpx;height:1px;background:rgba(235,235,235,1);margin-top: 20rpx"></div>
 
     <div class="store-btn flex flex-between">
-      <div @click="showReason=true" class="store-refund">驳回</div>
-      <div @click="showAgree" class="store-agree">通过</div>
+      <div @click="showReason=true" class="store-refund">{{$t(1718)}}</div>
+      <div @click="showAgree" class="store-agree">{{$t(1719)}}</div>
     </div>
 
     <div class="zhezhao" v-if="showReason">
       <div class="input-wrap">
-        <textarea class="input" placeholder="请输入原因" v-model="reason"></textarea>
+        <textarea class="input" :placeholder="$t(1720)" v-model="reason"></textarea>
         <div class="btns">
-          <div @click="showReason=false" class="btn">取消</div>
-          <div @click="confirmInput" class="btn btnLast">确定</div>
+          <div @click="showReason=false" class="btn">{{$t(1721)}}</div>
+          <div @click="confirmInput" class="btn btnLast">{{$t(1722)}}</div>
         </div>
       </div>
     </div>
 
     <popupLayer :direction="'top'" ref="store">
       <div class="popup-title">
-        请选择
+        {{$t(1723)}}
       </div>
       <div class="store-picker flex flex-vertical-center">
         <div>
-          类型
+          {{$t(1724)}}
         </div>
         <picker :range="array" :value="index" @change="bindPickerChange" class="picker-first">
           {{array[index]}}
@@ -70,7 +70,7 @@
 
       <div class="store-picker flex flex-vertical-center" v-if="index==0">
         <div>
-          代理等级
+          {{$t(1725)}}
         </div>
         <picker :range="typeList" :value="ind" @change="bindPickerChanges" class="picker-first" range-key="title">
           {{typeList[ind].title}}
@@ -79,14 +79,14 @@
       </div>
       <div class="store-picker flex flex-vertical-center">
         <div>
-          门店折扣
+          {{$t(1726)}}
         </div>
         <div class="input-div">
           <input class="flex-input" type="text" v-model="retailer_fee" /> %
         </div>
       </div>
       <div @click="sureBtn" class="btn-sure">
-        确定
+        {{$t(1727)}}
       </div>
 
     </popupLayer>
@@ -101,6 +101,7 @@ import { pageMixin } from '../../common/mixin'
 import { mapGetters } from 'vuex'
 import { error, toast } from '../../common'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   components: { popupLayer },
@@ -112,7 +113,7 @@ export default {
       typeList: [{ titile: '' }],
       index: 0,
       ind: 0,
-      array: ['经销商', '社区服务店'],
+      array: [T._(1712), T._(1713)],
       showReason: false,
       storeData: {
         store_province_name: '',
@@ -157,7 +158,7 @@ export default {
     },
     sureBtn () {
       if (!this.retailer_fee || this.retailer_fee < 0 || this.retailer_fee > 100) {
-        error('门店折扣在0-100之间')
+        error(T._(1714))
         return
       }
       const data = {
@@ -177,7 +178,7 @@ export default {
           uni.navigateBack()
         }, 1000)
       }).catch(e => {
-        error(e.msg || '审核失败')
+        error(e.msg || T._(1715))
       })
     },
     bindPickerChanges (e) {
@@ -193,7 +194,7 @@ export default {
     },
     confirmInput () {
       if (!this.reason) {
-        error('驳回原因必填')
+        error(T._(1716))
         return
       }
       storeApplyReject({
@@ -216,7 +217,7 @@ export default {
         apply_id: this.id
       }
 
-      getStoreApplyList(data, { tip: '加载中' }).then(res => {
+      getStoreApplyList(data, { tip: T._(1717) }).then(res => {
         this.storeData = res.data[0]
       })
 

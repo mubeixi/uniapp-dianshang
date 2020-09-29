@@ -2,12 +2,12 @@
   <view @click="commonClick" class="myall">
     <form @submit="formSubmit" report-submit="true">
       <view class='xinxi'>
-        <text class="text">收货人</text>
-        <input class="input" maxlength='50' name="Address_Name" placeholder="请输入收货人姓名" type="text"
+        <text class="text">{{$t(743)}}</text>
+        <input class="input" maxlength='50' name="Address_Name" :placeholder="$t(744)" type="text"
                v-model="address_info.Address_Name" />
       </view>
       <view class='xinxi'>
-        <text class="text">联系电话</text>
+        <text class="text">{{$t(745)}}</text>
 				<view class="input world_sms_choose">
 					<picker v-if="world_sms_flag" @change="worldSmsChoose" :value="world_sms_code_idx" :range="world_sms_code_list" range-key="choose_item">
 						<view class="world_sms_choose_show">
@@ -16,19 +16,19 @@
 						</view>
 					</picker>
 					<text class="show_phone_code" v-else>{{address_info.phone_code?address_info.phone_code:'+86'}}</text>
-					<input class="input_phone" maxlength="15" name="Address_Mobile" placeholder="请输入联系电话" type="number"
+					<input class="input_phone" maxlength="15" name="Address_Mobile" :placeholder="$t(746)" type="number"
 					       v-model="address_info.Address_Mobile" :disabled="(!world_sms_flag && address_info.Address_ID > 0 && address_info.phone_code && address_info.phone_code !== '' && address_info.phone_code !== '+86') ? true : false" />
 				</view>
       </view>
 			<view class="xinxi country_address_switch" v-if="world_address_flag || address_info.country_status">
-				<text class="text">是否使用国际地址</text>
+				<text class="text">{{$t(747)}}</text>
 				<switch class="country_switch" :checked="!!address_info.country_status" :disabled="(!world_address_flag && address_info.Address_ID > 0) ? true : false" @change="countryAddressSwitch" color="#04B600" />
 			</view>
 			<block v-if="address_info.country_status">
 				<view class='xinxi'>
-				  <text class="text">国际地址</text>
+				  <text class="text">{{$t(748)}}</text>
 				  <input :value="address_info.Address_Detailed" class="input" maxlength='250' name="Address_Detailed"
-				         placeholder="请输入详细国际地址"
+				         :placeholder="$t(749)"
 				         type="text" />
 				</view>
 			</block>
@@ -38,12 +38,12 @@
           <picker :range="change_objectMultiArray" :value="change_multiIndex" @change="bindMultiPickerChange"
                   @columnchange="bindMultiPickerColumnChange" mode="multiSelector" range-key="name">
             <view class="picker">
-              <text class="text">收货地址</text>
-              <view class="view" v-if="address_info.Address_Province <= 0">选择省份</view>
+              <text class="text">{{$t(750)}}</text>
+              <view class="view" v-if="address_info.Address_Province <= 0">{{$t(751)}}</view>
               <view class="view" v-else>{{objectMultiArray[0][multiIndex[0]]['name']}}</view>
-              <view class="view" v-if="address_info.Address_City <= 0">选择城市</view>
+              <view class="view" v-if="address_info.Address_City <= 0">{{$t(752)}}</view>
               <view class="view" v-else>{{objectMultiArray[1][multiIndex[1]]['name']}}</view>
-              <view class="view" v-if="address_info.Address_Area <= 0">选择地区</view>
+              <view class="view" v-if="address_info.Address_Area <= 0">{{$t(753)}}</view>
               <view class="view" v-else>{{objectMultiArray[2][multiIndex[2]]['name']}}</view>
             </view>
           </picker>
@@ -53,17 +53,17 @@
         <view class="section">
           <picker :range="t_arr" :value="t_index" @change="t_pickerChange" mode="selector" range-key="name">
             <view class="picker">
-              <text class="text">街道地址</text>
-              <view class="view" v-if="address_info.Address_Town <= 0">选择街道</view>
+              <text class="text">{{$t(754)}}</text>
+              <view class="view" v-if="address_info.Address_Town <= 0">{{$t(755)}}</view>
               <view class="view" v-else>{{t_arr[t_index]['name']}}</view>
             </view>
           </picker>
         </view>
       </view>
       <view class='xinxi'>
-        <text class="text">详细地址</text>
+        <text class="text">{{$t(756)}}</text>
         <input :value="address_info.Address_Detailed" class="input" maxlength='30' name="Address_Detailed"
-               placeholder="请输入详细地址"
+               :placeholder="$t(757)"
                type="text" />
       </view>
 			</block>
@@ -74,19 +74,19 @@
             <checkbox :checked="address_info.Address_Is_Default == 1 || is_first_add" :disabled="is_first_add"
                       class="checkbox"
                       value="1" />
-            设置默认地址
+            {{$t(758)}}
           </label>
         </checkbox-group>
       </view>
 
 			<view class="xinxi err" v-if="!world_sms_flag && address_info.Address_ID > 0 && address_info.phone_code && address_info.phone_code !== '' && address_info.phone_code !== '+86'">
-				注意：因系统关闭国际短信功能，则已添加的国外手机号不能更改，若想变动，请删除后重新添加
+			T._(743)
 			</view>
 			<view class="xinxi err" v-if="!world_address_flag && address_info.Address_ID > 0 && address_info.country_status">
-				注意：因系统关闭国外收货地址功能，则已添加的国外收货地址不能切换，若想变动，请删除后重新添加
+				{{$t(759)}}
 			</view>
 
-      <button class="tianjia-btn" formType="submit">确定</button>
+      <button class="tianjia-btn" formType="submit">{{$t(760)}}</button>
     </form>
   </view>
 </template>
@@ -98,6 +98,7 @@ import { addAddress, editAddress, getAddress, getTown } from '../../common/fetch
 import { pageMixin } from '../../common/mixin'
 import { checkMobile } from '../../common/tool'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {
@@ -223,7 +224,7 @@ export default {
       var address_info = e.detail.value
       if (!address_info.Address_Name) {
         uni.showToast({
-          title: '请填写收货人名称',
+          title: T._(744),
           icon: 'none'
         })
         return false
@@ -232,14 +233,14 @@ export default {
       }
       if (!address_info.Address_Mobile) {
         uni.showToast({
-          title: '请填写收货人电话',
+          title: T._(745),
           icon: 'none'
         })
         return false
       } else if (!checkMobile(address_info.Address_Mobile, this.address_info.phone_code)) {
         uni.showModal({
-          title: '提示',
-          content: '请填写正确的电话号码',
+          title: T._(746),
+          content: T._(747),
           showCancel: false
         })
         return false
@@ -250,7 +251,7 @@ export default {
       if (this.address_info.country_status == 0) {
         if (this.address_info.Address_Province <= 0 || this.address_info.Address_City <= 0 || this.address_info.Address_Area <= 0) {
 				  uni.showToast({
-				    title: '请选择收货地址',
+				    title: T._(748),
 				    icon: 'none'
 				  })
 				  return false
@@ -265,7 +266,7 @@ export default {
       }
       if (!address_info.Address_Detailed) {
         uni.showToast({
-          title: '请填写详细的地址',
+          title: T._(749),
           icon: 'none'
         })
         return false
@@ -306,7 +307,7 @@ export default {
       var that = this
       // 返回来时页面
       uni.showToast({
-        title: (that.address_info.Address_ID ? '编辑成功' : '添加成功'),
+        title: (that.address_info.Address_ID ? T._(750) : T._(751)),
         icon: 'success',
         duration: 2000,
         success: function () {
@@ -323,9 +324,9 @@ export default {
                   prevPage.back_address_id = res.data.Address_ID
                 } else {
                   uni.showModal({
-                    title: '提示',
-                    content: '添加的收货地址不在配送范围内',
-                    confirmText: '重新添加',
+                    title: T._(752),
+                    content: T._(753),
+                    confirmText: T._(754),
                     success: function (res) {
                       if (res.confirm) {
                         that.is_first_add = false

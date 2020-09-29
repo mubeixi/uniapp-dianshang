@@ -32,7 +32,7 @@
               <div class="left">
                 <div class="title" v-show="tab.config.attr.title.show">{{item.Products_Name}}</div>
                 <div class="font12 graytext desc" v-show="tab.config.attr.desc.show">
-                  {{item.Products_BriefDescription||'暂无介绍'}}
+                  {{item.Products_BriefDescription||$t(123)}}
                 </div>
                 <!--                <div v-show="tab.config.attr.price.show" class="price"><span class="sign">￥</span>{{item.Products_PriceX}}-->
                 <!--                </div>-->
@@ -42,7 +42,7 @@
                 </div>
                 <div :class="'theme'+tab.config.attr.buybtn.style" class="buybtn"
                      v-show="tab.config.attr.buybtn.show">
-                  {{tab.config.attr.buybtn.text||'购买'}}
+                  {{tab.config.attr.buybtn.text||$t(124)}}
                 </div>
               </div>
 
@@ -89,6 +89,7 @@ import { domainFn, lazyImgUrl } from '../../common/filter'
 import { getProductList } from '../../common/fetch'
 import { goProductDetail } from '../../common'
 
+import T from '@/common/langue/i18n'
 export default {
   props: {
     index: {
@@ -103,9 +104,9 @@ export default {
     return {
       infoTmpl: {
         Products_ID: 33,
-        Products_Name: '商品名称',
+        Products_Name: T._(123),
         Products_PriceX: 99.99,
-        Products_BriefDescription: '商品简介',
+        Products_BriefDescription: T._(124),
         ImgPath: ''
       },
       fullHeight: 0,

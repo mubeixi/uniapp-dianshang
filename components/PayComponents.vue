@@ -4,11 +4,11 @@
     </view>
     <div class="zhezhao" v-if="password_input">
       <div class="input-wrap">
-        <div>请输入余额支付密码</div>
-        <input type="password" class="input" placeholder="请输入密码" @input="user_password">
+        <div>{{$t(129)}}</div>
+        <input type="password" class="input" :placeholder="$t(130)" @input="user_password">
         <div class="btns">
-          <div @click="cancelInput" class="btn">取消</div>
-          <div @click="confirmInput" class="btn">确定</div>
+          <div @click="cancelInput" class="btn">{{$t(131)}}</div>
+          <div @click="confirmInput" class="btn">{{$t(132)}}</div>
         </div>
       </div>
     </div>
@@ -47,6 +47,7 @@ import { unipayFunc } from '../common/pay'
 function noop () {
 }
 
+import T from '@/common/langue/i18n'
 export default {
   props: {
     is_use_money: {
@@ -243,16 +244,16 @@ export default {
       if (name === 'remainder_pay') {
         if (this.userInfo.hasOwnProperty('User_PayPassword') && !this.userInfo.User_PayPassword) {
           confirm({
-            title: '提示',
-            content: '该操作需要设置支付密码,是否前往设置?',
-            confirmText: '去设置',
-            cancelText: '暂不设置'
+            title: T._(129),
+            content: T._(130),
+            confirmText: T._(131),
+            cancelText: T._(132)
           }).then(res => {
             uni.navigateTo({
               url: '/pagesA/person/updateUserPsw?type=1&is_back=1'
             })
           }).catch(() => {
-            error('请选择其他支付方式')
+            error(T._(133))
           })
           return
         }
@@ -293,7 +294,7 @@ export default {
       }
 
       if (!channel) {
-        this.$error('未开通公众号支付')
+        this.$error(T._(134))
         return false
       }
 
@@ -345,7 +346,7 @@ export default {
       // 不是跳转的
       if (!is_forward) {
         if (this.need_invoice === 1 && this.invoice_info === '') {
-          toast('发票信息不能为空', 'none')
+          toast(T._(135), 'none')
           return
         }
 
@@ -369,12 +370,12 @@ export default {
           orderPay(payConf, {
             errtip: false,
             mask: true,
-            tip: '正在加载中'
+            tip: T._(136)
           }).then(res => {
             _self.paySuccessCall()
           }, err => {
             uni.showModal({
-              title: '提示',
+              title: T._(137),
               content: err.msg,
               showCancel: false
             })
@@ -386,7 +387,7 @@ export default {
       }
 
       if (this.pay_type === 'unionpay') {
-        error('即将上线')
+        error(T._(138))
         return
       }
 
@@ -413,7 +414,7 @@ export default {
       // 公众号需要code
       if (this.pay_type === 'wx_mp') {
         if (!isWeiXin()) {
-          error('请在微信内打开')
+          error(T._(139))
           return
         }
 
@@ -457,13 +458,13 @@ export default {
 
       orderPay(payConf, {
         mask: true,
-        tip: '正在加载中'
+        tip: T._(140)
       }).then(res => {
         unipayFunc(this, this.pay_type, res)
       }).catch(err => {
         uni.showModal({
-          title: '提示',
-          content: '获取支付参数失败:' + err.msg
+          title: T._(141),
+          content: T._(142) + err.msg
         })
       })
     },

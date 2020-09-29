@@ -10,7 +10,7 @@
         </view>
         <view class="view">
           <block v-if="item.is_read==0">
-            未读
+            {{$t(1779)}}
           </block>
           <image class="image zhan" src="/static/person/msg-arrow-right.png" v-else-if="item.isShow"></image>
           <image class="image shou" mode="" src="/static/person/msg-arrow-top.png" v-else></image>
@@ -35,6 +35,7 @@ import { getUserMessage, readUserMessage } from '../../common/fetch.js'
 import { mapGetters } from 'vuex'
 import { pageMixin } from '../../common/mixin'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {

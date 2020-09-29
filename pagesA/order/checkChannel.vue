@@ -16,6 +16,7 @@ import { isWeiXin } from '../../common/tool'
 import { pageMixin, scanMixin } from '../../common/mixin'
 import { error } from '../../common'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin, scanMixin],
   name: 'checkChannel',
@@ -43,7 +44,7 @@ export default {
             url: '/pagesA/order/checkOrderInfo?Order_Code=' + params.Order_Code
           })
         } else {
-          error('参数有误')
+          error(T._(1047))
         }
       })
     }

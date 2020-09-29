@@ -6,10 +6,10 @@
 				<div class="cartTitle">
 					<text class="cartTitles">{{product.Products_Name}}</text>
 					<div class="addInfo padding10-c">
-						<text class="addPrice" v-if="detail=='detail'">{{postData.productDetail_price}}元</text>
-						<text class="addPrice" v-else-if="detail=='group'">{{postData.Products_PriceX}}元</text>
-						<text class="addPrice" v-else-if="detail=='spike'">{{postData.productDetail_price}}元</text>
-						<text class="proSale">库存{{postData.count}}</text>
+						<text class="addPrice" v-if="detail=='detail'">{{postData.productDetail_price}}{{$t(325)}}</text>
+						<text class="addPrice" v-else-if="detail=='group'">{{postData.Products_PriceX}}{{$t(326)}}</text>
+						<text class="addPrice" v-else-if="detail=='spike'">{{postData.productDetail_price}}{{$t(327)}}</text>
+						<text class="proSale">{{$t(328)}}{{postData.count}}</text>
 					</div>
 				</div>
 			</div>
@@ -31,7 +31,7 @@
 				</div>
 			</scroll-view>
 			<div class="numBer" v-if="gift == 0">
-				<div class="numBers"><text class="numBers-txt">数量</text></div>
+				<div class="numBers"><text class="numBers-txt">{{$t(329)}}</text></div>
 				<div class="inputNumber">
 					<div class="clicks" @click="delNum"><text class="clicks-txt">-</text></div>
 					<input class="inputq" type="number" v-model="postData.qty" @blur="setCount">
@@ -39,7 +39,7 @@
 				</div>
 			</div>
 			<div class="numBer" v-else>
-				<div class="numBers"><text class="numBers-txt">数量</text></div>
+				<div class="numBers"><text class="numBers-txt">{{$t(330)}}</text></div>
 				<div class="inputNumber">
 					<div class="clicks"><text class="clicks-txt">-</text></div>
 					<input class="inputq" type="number" v-model="postData.qty" disabled>
@@ -47,14 +47,15 @@
 				</div>
 			</div>
 		</div>
-		<div @click="skuSub" class="cartSub" :class="submit_flag?'':'disabled'"><text class="cartSubTxt">确定</text></div>
+		<div @click="skuSub" class="cartSub" :class="submit_flag?'':'disabled'"><text class="cartSubTxt">{{$t(331)}}</text></div>
 	</div>
 </template>
 
 <script>
 	import {numberSort} from "../../../common/tool";
 	import {error} from "../../../common";
-	export default {
+	import T from '@/common/langue/i18n'
+export default {
 		data() {
 			return {
 				gift:0,
@@ -113,12 +114,12 @@
 					let amount = e.detail.value;
 					if(amount <= 0) {
 						this.postData.qty = 1;
-						error('至少购买一件')
+						error(T._(325))
 						return;
 					}
 					if(amount > this.postData.count) {
 						this.postData.qty = this.postData.count;
-						error('购买数量不能超过库存量')
+						error(T._(326))
 						return;
 					}
 			},
@@ -127,7 +128,7 @@
 					this.postData.qty = Number(this.postData.qty) + 1;
 				}else {
 					uni.showToast({
-						title: '购买数量不能大于库存量',
+						title: T._(327),
 						icon: 'none',
 					});
 					this.postData.qty = this.postData.count;
@@ -138,7 +139,7 @@
 					this.postData.qty -= 1;
 				} else {
 					uni.showToast({
-						title: '购买数量不能小于1',
+						title: T._(328),
 						icon: 'none',
 					});
 					this.postData.qty = 1;

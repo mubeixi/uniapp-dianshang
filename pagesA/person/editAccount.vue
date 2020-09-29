@@ -6,20 +6,20 @@
     <!-- <page-title title="设置" rightHidden="true" bgcolor="#F8F8F8"></page-title> -->
     <view class="wrap">
       <view @click="update(3)" class="item">
-        <view>修改手机号码</view>
+        <view>{{$t(1120)}}</view>
         <image :src="'/static/client/right.png'|domain" mode=""></image>
       </view>
       <view @click="update(0)" class="item">
-        <view>修改登录密码</view>
+        <view>{{$t(1121)}}</view>
         <image :src="'/static/client/right.png'|domain" mode=""></image>
       </view>
       <view @click="update(1)" class="item">
-        <view>修改支付密码</view>
+        <view>{{$t(1122)}}</view>
         <image :src="'/static/client/right.png'|domain" mode=""></image>
       </view>
 
     </view>
-    <view @click="logoutFunc" class="btn">退出登录</view>
+    <view @click="logoutFunc" class="btn">{{$t(1123)}}</view>
   </view>
 </template>
 
@@ -31,6 +31,7 @@ import { pageMixin } from '../../common/mixin'
 
 import { bindUserClientId } from '../../common/fetch'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {
@@ -64,8 +65,8 @@ export default {
     },
     logoutFunc () {
       confirm({
-        title: '操作提示',
-        content: '是否退出登录'
+        title: T._(1120),
+        content: T._(1121)
       }).then(res => {
         bindUserClientId({ action: 'clear' }, { errtip: false }).then(() => {
         }).catch(() => {

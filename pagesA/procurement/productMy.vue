@@ -6,7 +6,7 @@
           <image class="imgHund" src="/static/procurement/zai.png"></image>
         </view>
         <view :class="index == 1? 'redColor':''" class="font-13">
-          在售产品
+          {{$t(1377)}}
         </view>
       </view>
 
@@ -15,7 +15,7 @@
           <image class="imgHund" src="/static/procurement/zai.png"></image>
         </view>
         <view :class="index == 2? 'redColor':''" class="font-13">
-          库存紧张
+          {{$t(1378)}}
         </view>
       </view>
 
@@ -24,7 +24,7 @@
           <image class="imgHund" src="/static/procurement/zai.png"></image>
         </view>
         <view :class="index == 3? 'redColor':''" class="font-13">
-          统计价值
+          {{$t(1379)}}
         </view>
       </view>
 
@@ -33,7 +33,7 @@
           <image class="imgHund" src="/static/procurement/zai.png"></image>
         </view>
         <view :class="index == 4? 'redColor':''" class="font-13">
-          {{is_refund && is_fourth?'取消':'退货'}}
+          {{is_refund && is_fourth?$t(1380):$t(1381)}}
         </view>
       </view>
 
@@ -51,20 +51,20 @@
                 {{item.Products_Name}}
               </view>
               <view class="skuMy">
-                <span>库存：{{item.prod_stock}}</span><span style="margin-left: 100rpx;">销量：{{item.Products_Sales}}</span>
+                <span>{{$t(1382)}}：{{item.prod_stock}}</span><span style="margin-left: 100rpx;">{{$t(1383)}}：{{item.Products_Sales}}</span>
               </view>
               <view class="bottomDiv">
                 <view @click="showSkuList(item.Products_ID)" class="skuCount" v-if="item.Products_Type">
-                  规格库存
+                 T._(1377)
                 </view>
                 <view v-else>
 
                 </view>
                 <view class="allPrice">
                   <view v-if="!(is_refund&&is_fourth)">
-                    总价值：<span class="span1">¥</span><span class="span2">{{item.prod_money}}</span>
+                    {{$t(1384)}}<span class="span1">¥</span><span class="span2">{{item.prod_money}}</span>
                   </view>
-                  <view @click="apply_back(item,index)" class="back-btn" v-else>申请退货</view>
+                  <view @click="apply_back(item,index)" class="back-btn" v-else>{{$t(1385)}}</view>
                 </view>
               </view>
             </view>
@@ -85,20 +85,20 @@
                 {{item.Products_Name}}
               </view>
               <view class="skuMy">
-                <span>库存：{{item.prod_stock}}</span><span style="margin-left: 100rpx;">销量：{{item.Products_Sales}}</span>
+                <span>{{$t(1386)}}：{{item.prod_stock}}</span><span style="margin-left: 100rpx;">{{$t(1387)}}：{{item.Products_Sales}}</span>
               </view>
               <view class="bottomDiv">
                 <view @click="showSkuList(item.Products_ID)" class="skuCount" v-if="item.Products_Type">
-                  规格库存
+                  {{$t(1388)}}
                 </view>
                 <view v-else>
 
                 </view>
                 <view class="allPrice">
                   <view v-if="!(is_refund&&is_fourth)">
-                    总价值：<span class="span1">¥</span><span class="span2">{{item.prod_money}}</span>
+                    {{$t(1389)}}<span class="span1">¥</span><span class="span2">{{item.prod_money}}</span>
                   </view>
-                  <view @click="apply_back(item,index)" class="back-btn" v-else>申请退货</view>
+                  <view @click="apply_back(item,index)" class="back-btn" v-else>{{$t(1390)}}</view>
                 </view>
               </view>
             </view>
@@ -124,20 +124,20 @@
                 {{item.Products_Name}}
               </view>
               <view class="skuMy">
-                <span>库存：{{item.prod_stock}}</span><span style="margin-left: 100rpx;">销量：{{item.Products_Sales}}</span>
+                <span>{{$t(1391)}}：{{item.prod_stock}}</span><span style="margin-left: 100rpx;">{{$t(1392)}}：{{item.Products_Sales}}</span>
               </view>
               <view class="bottomDiv">
                 <view @click="showSkuList(item.Products_ID)" class="skuCount" v-if="item.Products_Type">
-                  规格库存
+                  {{$t(1393)}}
                 </view>
                 <view v-else>
 
                 </view>
                 <view class="allPrice">
                   <view v-if="!(is_refund&&is_fourth)">
-                    总价值：<span class="span1">¥</span><span class="span2">{{item.prod_money}}</span>
+                    {{$t(1394)}}<span class="span1">¥</span><span class="span2">{{item.prod_money}}</span>
                   </view>
-                  <view @click="apply_back(item,index)" class="back-btn" v-else>申请退货</view>
+                  <view @click="apply_back(item,index)" class="back-btn" v-else>{{$t(1395)}}</view>
                 </view>
               </view>
             </view>
@@ -158,20 +158,20 @@
                 {{item.Products_Name}}
               </view>
               <view class="skuMy">
-                <span>库存：{{item.prod_stock}}</span><span style="margin-left: 100rpx;">销量：{{item.Products_Sales}}</span>
+                <span>{{$t(1396)}}：{{item.prod_stock}}</span><span style="margin-left: 100rpx;">{{$t(1397)}}：{{item.Products_Sales}}</span>
               </view>
               <view class="bottomDiv">
                 <view @click="showSkuList(item.Products_ID)" class="skuCount" v-if="item.Products_Type">
-                  规格库存
+                  {{$t(1398)}}
                 </view>
                 <view v-else>
 
                 </view>
                 <view class="allPrice">
                   <view v-if="!(is_refund&&is_fourth)">
-                    总价值：<span class="span1">¥</span><span class="span2">{{item.prod_money}}</span>
+                    {{$t(1399)}}：<span class="span1">¥</span><span class="span2">{{item.prod_money}}</span>
                   </view>
-                  <view @click="apply_back(item,index)" class="back-btn" v-else>申请退货</view>
+                  <view @click="apply_back(item,index)" class="back-btn" v-else>{{$t(1400)}}</view>
                 </view>
               </view>
             </view>
@@ -187,14 +187,14 @@
 
     </view>
     <view @click="allSum" class="buttonLast" v-if="index==3">
-      统计价值
+      {{$t(1401)}}
     </view>
 
     <!--  遮罩层	-->
     <view :hidden="isHiddenMask" @click="hiddenMask" class="mask"></view>
     <!--  产品属性弹窗	-->
     <view class="sku-pop" v-if="showSku">
-      <view class="sku-title">选择商品属性</view>
+      <view class="sku-title">{{$t(1402)}}</view>
       <view class="sku-content">
         <view :key="" class="skulist" v-for="item in prosku.skujosn_new">
           <view class="sku-name">{{item.sku}}</view>
@@ -205,7 +205,7 @@
           </view>
         </view>
         <view class="skulist">
-          <view class="sku-name">数量</view>
+          <view class="sku-name">{{$t(1403)}}</view>
           <view class="sku-item">
             <view @click="minus" class="handle">-</view>
             <view class="pro-num">{{postData.qty}}</view>
@@ -213,8 +213,8 @@
           </view>
         </view>
         <view class="sku-btns">
-          <view @click="cancel" class="cancel btn">取消</view>
-          <view :class="submit_flag?'':'disabled'" @click="confirm(prosku)" class="confirm btn">确定</view>
+          <view @click="cancel" class="cancel btn">{{$t(1404)}}</view>
+          <view :class="submit_flag?'':'disabled'" @click="confirm(prosku)" class="confirm btn">{{$t(1405)}}</view>
         </view>
       </view>
     </view>
@@ -222,27 +222,27 @@
     <view class="sku-pop" v-if="showSum">
       <!-- <view class="sku-title"></view> -->
       <view class="priceSum">
-        <view class="title">您查看的商品总价值为</view>
+        <view class="title">{{$t(1406)}}</view>
         <text class="icon">¥</text>
         <span class="span">{{prod_money}}</span>
       </view>
     </view>
     <view style="height:90rpx;" v-if="index == 4 && amount > 0 ">
       <view :style="{'z-index': zIndex}" class="check">
-        <view @click="showSelected" class="check-msg">已选取
+        <view @click="showSelected" class="check-msg">{{$t(1407)}}
           <text class="num">{{amount}}</text>
-          个普通商品
+          {{$t(1408)}}
           <image :class="isClicked?'turn':''" class="img" src="/static/top.png"></image>
         </view>
-        <view @click="submit" class="submit">发起退货</view>
+        <view @click="submit" class="submit">{{$t(1409)}}</view>
       </view>
     </view>
     <!-- 规格弹窗 -->
     <popup-layer :direction="'top'" @maskClicked="Clicked" ref="skuRef">
       <view class="mxdetail">
-        <view class="mxtitle">规格库存</view>
+        <view class="mxtitle">{{$t(1410)}}</view>
         <view class="mxitem">规格
-          <text class="num">库存</text>
+          <text class="num">{{$t(1411)}}</text>
         </view>
         <block :key="index" v-for="(item,index) of mySkuList">
           <view class="mxitem">{{item.attr_txt}}
@@ -316,26 +316,26 @@
     </popup-layer>
     <!-- 修改渠道 -->
     <view class="sku-pop" v-if="isChangeChannel">
-      <view class="sku-title">修改渠道</view>
+      <view class="sku-title">{{$t(1412)}}</view>
       <view class="sku-content" style="padding-left:53rpx;">
         <view @click="active_id = 0" class="skulist">
 
           <image class="selected" mode="" src="/static/procurement/selected.png" v-if="active_id == 0"></image>
           <view class="nochecked" v-else></view>
-          <view>平台退货</view>
+          <view>{{$t(1413)}}</view>
         </view>
         <view @click="active_id = 1" class="skulist">
           <image class="selected" mode="" src="/static/procurement/selected.png" v-if="active_id == 1"></image>
           <view class="nochecked" v-else></view>
-          <view>门店退货</view>
+          <view>{{$t(1414)}}</view>
         </view>
         <view class="skulist" v-if="active_id == 1">
-          <input class="input" placeholder="请输入门店编号" placeholder-style="color: #C9C9C9;font-size: 24rpx;" type="text"
+          <input class="input" placeholder="$t(1415)" placeholder-style="color: #C9C9C9;font-size: 24rpx;" type="text"
                  v-model="purchase_store_sn" />
         </view>
         <view class="skulist change-btn">
-          <view @click="sub_cancel" class="btn cancel">取消</view>
-          <view @click="sub_confirm" class="btn confirm">确定</view>
+          <view @click="sub_cancel" class="btn cancel">{{$t(1416)}}</view>
+          <view @click="sub_confirm" class="btn confirm">{{$t(1417)}}</view>
         </view>
       </view>
     </view>
@@ -350,6 +350,7 @@ import { mapGetters } from 'vuex'
 import { ls, numberSort } from '../../common/tool.js'
 import { getProductAtts, getSelfStoreProd, getStoreProdMoney, storeInit, storeProdBackSubmit } from '../../common/fetch'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {
@@ -462,7 +463,7 @@ export default {
         product_id: id
       }
       getProductAtts(data, {
-        tip: '加载中',
+        tip: T._(1378),
         mask: true
       }).then(res => {
         this.$refs.skuRef.show()
@@ -554,7 +555,7 @@ export default {
       }
       if (this.active_id == 1 && !this.purchase_store_sn) {
         uni.uni.showToast({
-          title: '门店编号必传',
+          title: T._(1379),
           icon: 'none'
         })
         return
@@ -588,7 +589,7 @@ export default {
     delNumberNoAttr (pro) {
       if (pro.myqty == 1) {
         uni.showToast({
-          title: '数量最少为1，您可以删除',
+          title: T._(1380),
           icon: 'none'
         })
         return
@@ -600,7 +601,7 @@ export default {
     addNumberNoAttr (pro) {
       if (pro.prod_stock == 0) {
         uni.showToast({
-          title: '购买数量已超库存',
+          title: T._(1381),
           icon: 'none'
         })
         return
@@ -612,7 +613,7 @@ export default {
     delNumber (num, pro) {
       if (num.myqty == 1) {
         uni.showToast({
-          title: '数量最少为1，您可以删除',
+          title: T._(1382),
           icon: 'none'
         })
         return
@@ -636,7 +637,7 @@ export default {
         return
       }
       uni.showToast({
-        title: '该规格已经没有库存',
+        title: T._(1383),
         icon: 'none'
       })
     },
@@ -681,7 +682,7 @@ export default {
 
       if (prosku.skuvaljosn && !this.postData.attr_id) {
         uni.showToast({
-          title: '请选择规格',
+          title: T._(1384),
           icon: 'none'
         })
         return
@@ -802,7 +803,7 @@ export default {
         this.postData.qty = Number(this.postData.qty) + 1
       } else {
         uni.showToast({
-          title: '退货数量不能大于库存量',
+          title: T._(1385),
           icon: 'none'
         })
         this.postData.qty = this.postData.count
@@ -814,7 +815,7 @@ export default {
         this.postData.qty -= 1
       } else {
         uni.showToast({
-          title: '退货数量不能小于1',
+          title: T._(1386),
           icon: 'none'
         })
         this.postData.qty = 1
@@ -838,7 +839,7 @@ export default {
       }
       if (arr.length <= 0) {
         uni.showToast({
-          title: '还未选择商品',
+          title: T._(1387),
           icon: 'none'
         })
         return

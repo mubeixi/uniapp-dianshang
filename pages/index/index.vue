@@ -15,21 +15,21 @@
               </div>
               <div class="store-promise" v-if="storeInfo.city_express_config">
                 <block v-if="storeInfo.city_express_config">
-                  {{storeInfo.city_express_config.limit_config.start_send_money}}元起送
+                  {{storeInfo.city_express_config.limit_config.start_send_money}}{{$('node','yuan to give')}}
                 </block>
               </div>
             </div>
             <div class="store-list">
               <div @click="changeStore" class="store-list-name">
-                切换门店
+                {{$t(445)}}
                 <image :src="'/static/client/person/right.png'|domain" class="store-list-image"></image>
               </div>
               <div class="store-list-distance" v-if="storeInfo.distance">
                 <block v-if="storeInfo.distance>=1000">
-                  距你{{parseFloat(storeInfo.distance/1000).toFixed(2)}}km
+                  {{$t(446)}}{{parseFloat(storeInfo.distance/1000).toFixed(2)}}km
                 </block>
                 <block v-else>
-                  距你{{parseInt(storeInfo.distance)}}m
+                  {{$t(447)}}{{parseInt(storeInfo.distance)}}m
                 </block>
 
               </div>
@@ -39,17 +39,17 @@
           <div class="flex flex-vertical-center">
             <div @click="openLocation" class="store-icon">
               <i class="funicon  icon-address"></i>
-              <div style="margin-top: 5px">定位</div>
+              <div style="margin-top: 5px">{{$t(448)}}</div>
             </div>
             <div class="store-line"></div>
             <div @click="cellStore(storeInfo.Stores_Telephone)" class="store-icon">
               <i class="funicon  icon-cell"></i>
-              <div style="margin-top: 5px">拨号</div>
+              <div style="margin-top: 5px">{{$t(449)}}</div>
             </div>
             <div class="store-line"></div>
             <div @click="openShare" class="store-icon">
               <i class="funicon  icon-share-t"></i>
-              <div style="margin-top: 5px">分享</div>
+              <div style="margin-top: 5px">{{$t(450)}}</div>
             </div>
           </div>
         </div>
@@ -61,7 +61,7 @@
         </div>
 
         <scroll-view scroll-x :scroll-left="30*goodsNavIndex" class="store-ul">
-          <div :class="goodsNavIndex==0?'active':''" @click="changeTab(0)" class="store-li">全部</div>
+          <div :class="goodsNavIndex==0?'active':''" @click="changeTab(0)" class="store-li">{{$t(451)}}</div>
           <block :key="ind" v-for="(cate,ind) of productCate">
             <div :class="goodsNavIndex==(ind+1)?'active':''" @click="changeTab(ind+1)" class="store-li">
               {{cate.Category_Name}}
@@ -100,7 +100,7 @@
         <view @click="showPro=false" class="mask" v-if="showPro"></view>
         <!--产品属性弹窗-->
         <view class="sku-pop" v-if="showPro">
-          <view class="sku-title">选择商品属性</view>
+          <view class="sku-title">{{$t(452)}}</view>
           <view class="sku-content">
             <view :key="idx" class="skulist" v-for="(item,idx) in prosku.skujosn_new">
               <view class="sku-name">{{item.sku}}</view>
@@ -110,7 +110,7 @@
               </view>
             </view>
             <view class="skulist">
-              <view class="sku-name">数量</view>
+              <view class="sku-name">{{$t(453)}}</view>
               <view class="sku-item">
                 <view @click="minus" class="handle">-</view>
                 <view class="pro-num">{{postData.qty}}</view>
@@ -118,8 +118,8 @@
               </view>
             </view>
             <view class="sku-btns">
-              <view @click="showPro=false" class="cancel btn">取消</view>
-              <view @click="confirm()" class="confirm btn">确定</view>
+              <view @click="showPro=false" class="cancel btn">{{$t(454)}}</view>
+              <view @click="confirm()" class="confirm btn">{{$t(455)}}</view>
             </view>
           </view>
         </view>
@@ -136,26 +136,26 @@
           <!-- #ifdef APP-PLUS -->
           <div @click="shareFunc('wx')" class="flex1">
             <image :src="'/static/client/detail/share1.png'|domain" alt="" class='img'></image>
-            <div>发送好友</div>
+            <div>{{$t(456)}}</div>
           </div>
           <div @click="shareFunc('wxtimeline')" class="flex1">
             <image :src="'/static/client/detail/sahre3.png'|domain" alt="" class='img'></image>
-            <div>朋友圈</div>
+            <div>{{$t(457)}}</div>
           </div>
           <!--只有配置了这个参数的app，才有分享到小程序选项-->
           <div @click="shareFunc('wxmini')" class="flex1" v-if="wxMiniOriginId">
             <img :src="'/static/client/detail/share4.png'|domain" alt="" class='img'>
-            <div>微信小程序</div>
+            <div>{{$t(458)}}</div>
           </div>
           <!-- #endif -->
           <!-- #ifndef MP-TOUTIAO -->
           <div @click="shareFunc('pic')" class="flex1">
             <image :src="'/static/client/detail/share2.png'|domain" alt="" class='img'></image>
-            <div>分享海报</div>
+            <div>{{$t(459)}}</div>
           </div>
           <!-- #endif -->
         </div>
-        <div @click="cancelShare" class="s_bottom">取消</div>
+        <div @click="cancelShare" class="s_bottom">{{$t(460)}}</div>
       </div>
     </popupLayer>
 
@@ -198,6 +198,7 @@ import { mapActions } from 'vuex'
 import popupLayer from '../../components/popup-layer/popup-layer.vue'
 import { getLocation } from '../../common/tool/location'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   components: {
@@ -257,7 +258,7 @@ export default {
       const path = 'pages/index/index?store_id=' + this.storeID
       const shareObj = {
         title: this.storeInfo.Stores_Name,
-        desc: '万千好货疯抢中',
+        desc: T._(445),
         imageUrl: this.storeInfo.Stores_ImgPath,
         path: buildSharePath(path)
       }
@@ -295,7 +296,7 @@ export default {
         data.cate_id = this.productCate[this.goodsNavIndex - 1].Category_ID
       }
 
-      await getSelfStoreProd(data, { tip: '加载中' }).then(res => {
+      await getSelfStoreProd(data, { tip: T._(446) }).then(res => {
         this.totalList[this.goodsNavIndex] = res.totalCount
         const arr = this.prodList[this.goodsNavIndex]
         for (const item of res.data) {
@@ -304,7 +305,7 @@ export default {
 
         this.$set(this.prodList, this.goodsNavIndex, arr)
       }).catch(e => {
-        error(e.msg || '获取产品列表失败')
+        error(e.msg || T._(447))
       })
 
       this.$nextTick().then(() => {
@@ -327,7 +328,7 @@ export default {
       const front_url = this.initData.front_url
       const shareObj = {
         title: this.storeInfo.Stores_Name,
-        desc: '万千好货疯抢中',
+        desc: T._(448),
         imageUrl: this.storeInfo.Stores_ImgPath,
         path: buildSharePath(path)
       }
@@ -409,7 +410,7 @@ export default {
         data.attr_id = item.Productsattrkeystrval.Product_Attr_ID
       }
 
-      updateCart(data, { tip: '加载中' }).then(res => {
+      updateCart(data, { tip: T._(449) }).then(res => {
         toast(res.msg)
         this.myCart = res.data.CartList
         this.showPro = false
@@ -429,7 +430,7 @@ export default {
         data.attr_id = item.Productsattrkeystrval.Product_Attr_ID
       }
 
-      updateCart(data, { tip: '加载中' }).then(res => {
+      updateCart(data, { tip: T._(450) }).then(res => {
         toast(res.msg)
         this.myCart = res.data.CartList
         this.showPro = false
@@ -443,7 +444,7 @@ export default {
         this.postData.qty = Number(this.postData.qty) + 1
       } else {
         uni.showToast({
-          title: '数量不能大于库存量',
+          title: T._(451),
           icon: 'none'
         })
         this.postData.qty = this.postData.count
@@ -455,7 +456,7 @@ export default {
         this.postData.qty -= 1
       } else {
         uni.showToast({
-          title: '数量不能小于1',
+          title: T._(452),
           icon: 'none'
         })
         this.postData.qty = 1
@@ -553,7 +554,7 @@ export default {
 
       if (this.prosku.skuvaljosn && !this.postData.attr_id) {
         uni.showToast({
-          title: '请选择规格',
+          title: T._(453),
           icon: 'none'
         })
         return
@@ -568,7 +569,7 @@ export default {
         data.attr_id = this.postData.attr_id
       }
 
-      updateCart(data, { tip: '加载中' }).then(res => {
+      updateCart(data, { tip: T._(454) }).then(res => {
         toast(res.msg)
         this.myCart = res.data.CartList
         this.showPro = false
@@ -611,12 +612,12 @@ export default {
           // store_id:sessionStorage.getItem('store_id')
         }
         data.cate_id = this.productCate[this.goodsNavIndex - 1].Category_ID
-        await getSelfStoreProd(data, { tip: '加载中' }).then(res => {
+        await getSelfStoreProd(data, { tip: T._(455) }).then(res => {
           this.totalList[this.goodsNavIndex] = res.totalCount
           this.$set(that.prodList, this.goodsNavIndex, res.data)
           this.page[this.goodsNavIndex] = 1
         }).catch(e => {
-          error(e.msg || '获取产品列表失败')
+          error(e.msg || T._(456))
         })
       }
       this.$nextTick().then(() => {
@@ -644,13 +645,13 @@ export default {
           storeData.lng = this.lng
         }
         const arr = await getStoreDetail(storeData, {
-          tip: '智能定位中',
+          tip: T._(457),
           noUid: 1
         }).catch(e => {
           this.storeID = ''
           this.setFreStoreId(this.storeID)
 
-          throw Error(e.msg || '获取门店错误')
+          throw Error(e.msg || T._(458))
         })
         this.storeInfo = arr.data
 
@@ -673,8 +674,8 @@ export default {
           // store_id:sessionStorage.getItem('store_id')
         }
         this.prodList = []
-        const pro = await getSelfStoreProd(data, { tip: '加载中' }).catch(e => {
-          error(e.msg || '获取产品列表失败')
+        const pro = await getSelfStoreProd(data, { tip: T._(459) }).catch(e => {
+          error(e.msg || T._(460))
         })
         this.prodList.push(pro.data)
         this.totalList[this.goodsNavIndex] = pro.totalCount
@@ -702,7 +703,7 @@ export default {
               title: this.storeInfo.Stores_Name, // 分享标题
               link: front_url + buildSharePath(path), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
               imgUrl: this.storeInfo.Stores_ImgPath, // 分享图标
-              desc: '万千好货疯抢中',
+              desc: T._(461),
               success: function () {
                 // 用户点击了分享后执行的回调函数
               }
@@ -712,7 +713,7 @@ export default {
               title: this.storeInfo.Stores_Name, // 分享标题
               link: front_url + buildSharePath(path), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
               imgUrl: this.storeInfo.Stores_ImgPath, // 分享图标
-              desc: '万千好货疯抢中',
+              desc: T._(462),
               type: 'link', // 分享类型,music、video或link，不填默认为link
               // dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
               success: function () {
@@ -734,7 +735,7 @@ export default {
     upSwiperHeight () {
       try {
         const num = this.scrollHeightS[this.goodsNavIndex]
-        if (num < 1 || num < this.systemInfo.windowHeight) throw Error('高度无效或者低于屏幕，直接设置为屏幕高度好了')
+        if (num < 1 || num < this.systemInfo.windowHeight) throw Error(T._(463))
         this.childSwiperHeight = num + 'px'
       } catch (e) {
         if (this.systemInfo.windowHeight) this.childSwiperHeight = this.systemInfo.windowHeight + 'px'
@@ -804,7 +805,7 @@ export default {
           this.setFreStoreId(this.storeID)
         }
       }).catch(e => {
-        error(e.msg || '获取门店错误')
+        error(e.msg || T._(464))
       })
     },
     async shareH5 () {
@@ -865,7 +866,7 @@ export default {
     },
     async _init_func () {
       const systemConf = await getSystemConf().catch(err => {
-        modal(err.msg || '初始化配置失败')
+        modal(err.msg || T._(465))
       })
       const initData = systemConf ? systemConf.data : null
       this.initData = initData

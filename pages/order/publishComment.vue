@@ -5,24 +5,24 @@
 
     </view>
     <view class="rate">
-      <view class="rates">整体评价</view>
+      <view class="rates">{{$t(683)}}</view>
       <uni-rate @change="show" active-color="#F43131" margin="2" size='20' value="5"></uni-rate>
       <view class="score">
         {{Score}}
       </view>
     </view>
-    <textarea class="edit" contenteditable="true" placeholder="宝贝是否满足了你的期待？说说你的使用心得，分享给其他想购买的朋友吧。" placeholder-style="place" style="border: 0rpx;" v-model="Note"></textarea>
+    <textarea class="edit" contenteditable="true" :placeholder="$t(684)" placeholder-style="place" style="border: 0rpx;" v-model="Note"></textarea>
 
     <view class="niming">
       <view>
-        匿名评价
+        {{$t(685)}}
       </view>
       <view>
         <switch @change="switchChange" checked />
       </view>
     </view>
     <view class="shangH">
-      <div class="item noborder">上传照片(最多9张)</div>
+      <div class="item noborder">{{$t(686)}}</div>
       <div class="imgs">
         <view :key="index" class="shangchuans" v-for="(item,index) of imgs">
           <image :src="item.path" @click="yulan(index)" class="image"></image>
@@ -35,7 +35,7 @@
       </div>
     </view>
     <view @click="submit" class="submit">
-      提交
+      {{$t(687)}}
     </view>
   </view>
 </template>
@@ -47,6 +47,7 @@ import { comment, createToken, GET_ACCESS_TOKEN, GET_ENV, get_User_ID, get_Users
 import uniRate from '../../components/uni-rate/uni-rate.vue'
 import { modal } from '@/common'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   components: { uniRate },
@@ -123,13 +124,13 @@ export default {
           })
         } else {
           uni.showToast({
-            title: '您还未填写评价哦',
+            title: T._(683),
             icon: 'none'
           })
         }
       } else {
         uni.showToast({
-          title: '图片还没上传完成',
+          title: T._(684),
           icon: 'none'
         })
       }

@@ -2,6 +2,7 @@
 	<rich-text :nodes="nodes" :class="node.classStr" :style="'user-select:' + parseSelect"></rich-text>
 </template>
 <script>
+import T from '@/common/langue/i18n'
 export default {
 	name: 'wxParseTable',
 	props: {

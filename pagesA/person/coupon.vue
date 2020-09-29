@@ -2,13 +2,13 @@
   <view @click="commonClick" class="myall">
     <!-- 		<view class="nav">
           <view class="views" :class="checked==0?'checked':''" @click="change(0)">
-            全部
+            {{$t(1107)}}
           </view>
           <view class="views" :class="checked==1?'checked':''" @click="change(1)">
-            已领取
+            {{$t(1108)}}
           </view>
           <view class="views" :class="checked==2?'checked':''" @click="change(2)">
-            已过期
+            {{$t(1109)}}
           </view>
         </view>
         <view style="height: 198rpx;width: 100%;">
@@ -30,7 +30,7 @@
           {{item.Coupon_Subject}}
         </view>
         <view class="times">
-          有效期：{{item.Coupon_StartTime}}至{{item.Coupon_EndTime}}
+          {{ $t(1110) }}{{item.Coupon_StartTime}}-{{item.Coupon_EndTime}}
         </view>
         <view class="subject">
           {{item.limit_txt}}
@@ -40,23 +40,34 @@
           <text>{{item.Coupon_Cash}}</text>
         </view>
         <view class="prices" v-else>
-          {{item.Coupon_Discount*10}}折优惠
+			<block v-if="$p('zh-cn')">
+							   {{item.Coupon_Discount*10}}折优惠
+			</block>
+			<block v-if="$p('en-us')">
+							  {{item.Coupon_Discount*10}}% discount
+			</block>
+      
         </view>
         <view class="man">
-          满{{item.Coupon_Condition}}可用
+          <block v-if="$p('zh-cn')">
+          				  满{{item.Coupon_Condition}}可用
+          </block>
+          <block v-if="$p('en-us')">
+          				  {{item.Coupon_Condition}} available
+          </block>
         </view>
         <view @click="goIndex(item.coupon_prod)" class="button">
-          去使用
+          {{$t(1111)}}
         </view>
       </view>
 
     </block>
     <view class="lasts">
       <view class="lefts">
-        没有更多可用券 |
+        {{$t(1112)}} |
       </view>
       <view @click="goExpired" class="rights">
-        查看已失效的券 >
+        {{$t(1113)}} >
       </view>
     </view>
     <view style="height: 30rpx;"></view>
@@ -67,6 +78,7 @@
 import { pageMixin } from '../../common/mixin'
 import { getUserReceivedCoupon } from '../../common/fetch.js'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {

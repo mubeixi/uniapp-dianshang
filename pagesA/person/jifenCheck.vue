@@ -5,23 +5,23 @@
       <image :src="'/static/client/location.png'|domain" alt="" class="loc_icon"></image>
       <block v-if="have_Order_ID">
         <view class="add_msg">
-          <view class="name">收货人：{{initDataValue.Address_Name}} <span>{{initDataValue.Address_Mobile | formatphone}}</span>
+          <view class="name">{{$t(1212)}}：{{initDataValue.Address_Name}} <span>{{initDataValue.Address_Mobile | formatphone}}</span>
           </view>
           <view class="location">
-            收货地址：{{initDataValue.Address_Province_name}}{{initDataValue.Address_City_name}}{{initDataValue.Address_Area_name}}{{initDataValue.Address_Town_name}}{{initDataValue.Address_Detailed}}
+            {{$t(1213)}}：{{initDataValue.Address_Province_name}}{{initDataValue.Address_City_name}}{{initDataValue.Address_Area_name}}{{initDataValue.Address_Town_name}}{{initDataValue.Address_Detailed}}
           </view>
         </view>
       </block>
       <block v-else>
         <view class="add_msg" v-if="addressinfo.Address_Name">
-          <view class="name">收货人：{{addressinfo.Address_Name}} <span>{{addressinfo.Address_Mobile | formatphone}}</span>
+          <view class="name">{{$t(1214)}}：{{addressinfo.Address_Name}} <span>{{addressinfo.Address_Mobile | formatphone}}</span>
           </view>
           <view class="location">
-            收货地址：{{addressinfo.Address_Province_name}}{{addressinfo.Address_City_name}}{{addressinfo.Address_Area_name}}{{addressinfo.Address_Town_name}}{{addressinfo.Address_Detailed}}
+            {{$t(1215)}}：{{addressinfo.Address_Province_name}}{{addressinfo.Address_City_name}}{{addressinfo.Address_Area_name}}{{addressinfo.Address_Town_name}}{{addressinfo.Address_Detailed}}
           </view>
         </view>
         <view class="add_msg" v-else>
-          <view>暂无收货地址，去添加</view>
+          <view>{{$t(1216)}}</view>
         </view>
       </block>
       <image :src="'/static/client/right.png'|domain" alt="" class="right"></image>
@@ -30,21 +30,21 @@
       <img :src="giftInfo.Gift_ImgPath" alt="" class="pro-img">
       <view class="pro-msg">
         <view class="pro-name">{{giftInfo.Gift_Name}}</view>
-        <view class="pro-price">{{giftInfo.Gift_Integral}} 积分</view>
+        <view class="pro-price">{{giftInfo.Gift_Integral}} {{$('person','Integral')}}</view>
       </view>
     </view>
     <view class="other" v-if="giftInfo.Gift_Shipping == 1">
       <view class="bd">
         <view @click="changeShip" class="o_title">
-          <span>运费选择</span>
+          <span>{{$t(1217)}}</span>
           <span style="text-align:right; color: #888;">
 						 <block v-if="have_Order_ID">
-              <span>{{initDataValue.Orders_Shipping}}{{( initDataValue.Order_Shipping_Price> 0 ? initDataValue.Order_Shipping_Price : '免运费')}}</span>
+              <span>{{initDataValue.Orders_Shipping}}{{( initDataValue.Order_Shipping_Price> 0 ? initDataValue.Order_Shipping_Price : $t(1218))}}</span>
                     <image :src="'/static/client/right.png'|domain" alt="" class="right"></image>
 
             </block>
             <block v-else>
-              <span>{{shipping_name?(shipping_name + ' ' + (shipping_price > 0 ? shipping_price : '免运费')):'请选择物流'}}</span>
+              <span>{{shipping_name?(shipping_name + ' ' + (shipping_price > 0 ? shipping_price : $t(1219))):$t(1220)}}</span>
               <image :src="'/static/client/right.png'|domain" alt="" class="right"></image>
 
             </block>
@@ -73,31 +73,31 @@
 
     <view class="remind-wrap" v-if="remindAddress">
       <view class="remind-add">
-        <view class="text-align-center mb20">新建收货地址</view>
+        <view class="text-align-center mb20">{{$t(1221)}}</view>
         <view class="remind_desc">
-          您还没有收货地址，请先添加一个新的收货地址
+          {{$t(1222)}}
         </view>
         <view class="remind_btns text-align-center">
-          <view @click="goback" class="text-align-center fl1">返回</view>
+          <view @click="goback" class="text-align-center fl1">{{$t(1223)}}</view>
           <view @click="goEditAdd" class="text-align-center fl1 confirm">
-            新建
+            {{$t(1224)}}
           </view>
         </view>
       </view>
     </view>
     <view class="pwd-wrap" v-if="psdInput">
       <view class="input-box">
-        <input class="input-psw" placeholder="请输入支付密码" type="password" v-model="password" />
+        <input class="input-psw" :placeholder="$t(1225)" type="password" v-model="password" />
         <view class="btns">
-          <view @click="cancelPsw" class="cancel btn">取消</view>
-          <view @click="pswConfirm" class="confirm btn">确定</view>
+          <view @click="cancelPsw" class="cancel btn">{{$t(1226)}}</view>
+          <view @click="pswConfirm" class="confirm btn">{{$t(1227)}}</view>
         </view>
       </view>
     </view>
 
     <popup-layer :direction="'top'" ref="popupRef">
       <view class="bMbx" v-if="type=='shipping'">
-        <view class="fMbx">请选择物流公司</view>
+        <view class="fMbx">{{$t(1228)}}</view>
         <view :key="shipid" class="iMbx" v-for="(ship,shipid) in shipping_company">
           <view>
             {{ship}}
@@ -108,12 +108,12 @@
         </view>
       </view>
       <view @click="closeMethod" class="sure">
-        确定
+        {{$t(1229)}}
       </view>
     </popup-layer>
 
     <view class="order_total">
-      <view @click="form_submit" class="submit">立即兑换</view>
+      <view @click="form_submit" class="submit">{{$t(1230)}}</view>
     </view>
 
   </view>
@@ -138,6 +138,7 @@ import { unipayFunc } from '../../common/pay.js'
 import { GetQueryByString, goBack, isWeiXin, ls, urlencode } from '../../common/tool'
 import { error, toast, confirm } from '../../common/index'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   components: {
@@ -313,10 +314,10 @@ export default {
     form_submit () {
 		if (this.userInfo.hasOwnProperty('User_PayPassword') && !this.userInfo.User_PayPassword) {
 		  confirm({
-		    title: '提示',
-		    content: '该操作需要设置支付密码,是否前往设置?',
-		    confirmText: '去设置',
-		    cancelText: '暂不设置'
+		    title: T._(1212),
+		    content: T._(1213),
+		    confirmText: T._(1214),
+		    cancelText: T._(1215)
 		  }).then(res => {
 		    uni.navigateTo({
 		      url: '/pagesA/person/updateUserPsw?type=1&is_back=1'
@@ -333,7 +334,7 @@ export default {
       if (this.giftInfo.Gift_Shipping == 1) {
         if (!this.shipping_id) {
           uni.showToast({
-            title: '请选择物流',
+            title: T._(1216),
             icon: 'none'
           })
 
@@ -342,7 +343,7 @@ export default {
       }
       if (!this.address_id) {
         uni.showToast({
-          title: '收货地址错误',
+          title: T._(1217),
           icon: 'none'
         })
         return
@@ -407,8 +408,8 @@ export default {
         // 获取用户收货地址，获取订单信息，后台判断运费信息
       }).catch(() => {
         uni.showModal({
-          title: '错误',
-          content: '收货地址获取失败',
+          title: T._(1218),
+          content: T._(1219),
           showCancel: false
         })
         return false
@@ -425,7 +426,7 @@ export default {
       if (!is_forward) {
         if (this.need_invoice == 1 && this.invoice_info == '') {
           uni.showToast({
-            title: '发票信息不能为空',
+            title: T._(1220),
             icon: 'none'
           })
           return
@@ -442,7 +443,7 @@ export default {
             this.paySuccessCall()
           }).catch(err => {
             uni.showModal({
-              title: '提示',
+              title: T._(1221),
               content: err.msg,
               showCancel: false
             })
@@ -452,7 +453,7 @@ export default {
       }
 
       if (this.pay_type === 'unionpay') {
-        error('即将上线')
+        error(T._(1222))
         return
       }
 
@@ -479,7 +480,7 @@ export default {
       // 公众号需要code
       if (this.pay_type === 'wx_mp') {
         if (!isWeiXin()) {
-          this.$error('请在微信内打开')
+          this.$error(T._(1223))
           return
         }
         const isHasCode = this.code || GetQueryByString('code')
@@ -522,7 +523,7 @@ export default {
       // #endif
 
       jifenProdPay(payConf, {
-        tip: '正在加载中',
+        tip: T._(1224),
         mask: true
       }).then(res => {
         unipayFunc(this, this.pay_type, res)
@@ -541,7 +542,7 @@ export default {
             },
             fail: function (err) {
               uni.showModal({
-                title: '支付错误',
+                title: T._(1225),
                 content: JSON.stringify(err)
               })
             }
@@ -657,7 +658,7 @@ export default {
           },
           fail: function (err) {
             uni.showModal({
-              title: '支付错误',
+              title: T._(1226),
               content: JSON.stringify(err)
             })
           }
@@ -704,8 +705,8 @@ export default {
         // #endif
       }, err => {
         uni.showModal({
-          title: '提示',
-          content: '获取支付参数失败:' + err.msg
+          title: T._(1227),
+          content: T._(1228) + err.msg
         })
       }).catch(e => {
 
@@ -735,7 +736,7 @@ export default {
       }
 
       if (!channel) {
-        this.$error('未开通公众号支付')
+        this.$error(T._(1229))
         return false
       }
 
@@ -780,7 +781,7 @@ export default {
     },
     payFailCall () {
       uni.showToast({
-        title: '支付失败',
+        title: T._(1230),
         icon: 'none',
         duration: 2000
       })
@@ -788,7 +789,7 @@ export default {
     paySuccessCall () {
       const _self = this
       uni.showToast({
-        title: '支付成功'
+        title: T._(1231)
       })
       uni.redirectTo({
         url: '/pagesA/person/myRedemption'

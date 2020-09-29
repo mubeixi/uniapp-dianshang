@@ -2,16 +2,16 @@
   <div class="bgwhite wrap" v-if="ifshow">
     <view v-if="ifshow" @tap="ableClose" @touchmove.stop.prevent class="popup-layer"></view>
     <view ref="popRef" @touchmove.stop.prevent v-if="ifshow" class="popup-content" @tap.stop="stopEvent" :style="_location">
-      <div class="text-center component-title">选择门店</div>
-      <div class="label-title"><div class="line"></div>筛选条件</div>
+      <div class="text-center component-title">{{$t(145)}}</div>
+      <div class="label-title"><div class="line"></div>{{$t(146)}}</div>
       <div class="row">
-        <div class="row-label graytext">地区:</div>
+        <div class="row-label graytext">{{$t(147)}}</div>
         <div class="row-content">
           <div class="filter filter-pick">
             <div class="filter-item">
               <picker @change="bindProvinceChange" range-key="name" :range="province_list">
                 <div class="uni-input-box">
-                  <view class="uni-input" :class="{has:province.name}">{{province.name||'选择省份'}}
+                  <view class="uni-input" :class="{has:province.name}">{{province.name||$t(148)}}
                   </view>
                   <view class="funicon icon-xia icon"></view>
                 </div>
@@ -20,7 +20,7 @@
             <div class="filter-item">
               <picker @change="bindCityChange" range-key="name" :range="city_list">
                 <div class="uni-input-box">
-                  <view class="uni-input" :class="{has:city.name}">{{city.name||'选择城市'}}</view>
+                  <view class="uni-input" :class="{has:city.name}">{{city.name||$t(149)}}</view>
                   <view class="funicon icon-xia icon"></view>
                 </div>
               </picker>
@@ -28,7 +28,7 @@
             <div class="filter-item">
               <picker @change="bindAreaChange" range-key="name" :range="area_list">
                 <div class="uni-input-box">
-                  <view class="uni-input" :class="{has:area.name}">{{area.name||'选择区/县'}}</view>
+                  <view class="uni-input" :class="{has:area.name}">{{area.name||$t(150)}}</view>
                   <view class="funicon icon-xia icon"></view>
                 </div>
 
@@ -39,22 +39,22 @@
       </div>
 
       <div class="row">
-        <div class="row-label graytext">门店:</div>
+        <div class="row-label graytext">{{$t(151)}}</div>
         <div class="row-content">
           <div style="border: 1px solid #D2D2D2;width:537rpx;height: 50rpx;">
-            <input placeholder="请输入门店名称" v-model="stores_name" class="inputs" />
+            <input :placeholder="$t(152)" v-model="stores_name" class="inputs" />
           </div>
         </div>
       </div>
       <div class="text-center">
-        <div class="search" @click="loadInfoCheck">搜索</div>
+        <div class="search" @click="loadInfoCheck">{{$t(153)}}</div>
       </div>
       <div class="space-box"></div>
       <div class="label-title" style="justify-content: space-between;">
         <div class="line"></div>
-        <div>门店列表</div>
+        <div>{{$t(154)}}</div>
         <div @click="get_user_location" class="graytext font14 flex1 text-right padding10-c"><span
-        class="funicon icon-dingwei font14"></span>离我最近
+        class="funicon icon-dingwei font14"></span>{{$t(155)}}
         </div>
       </div>
       <div class="lists" @touchmove.stop>
@@ -83,7 +83,7 @@
 
           <block v-if="stores.length==0">
             <div class="graytext padding15 text-center font14">
-              暂时没有合适的店铺
+              {{$t(156)}}
             </div>
           </block>
           <div style="height: 46px;"></div>
@@ -94,7 +94,7 @@
         </scroll-view>
 
       </div>
-      <button size="large" class="subbtn" @click="subFn">确定</button>
+      <button size="large" class="subbtn" @click="subFn">{{$t(157)}}</button>
       <div style="height: 46px;background: white;"></div>
       <div class="safearea-box2"></div>
     </view>
@@ -108,6 +108,7 @@ import { emptyObject } from '../common/tool'
 import { getLocation } from '../common/tool/location'
 import { error } from '../common'
 
+import T from '@/common/langue/i18n'
 export default {
   name: 'StoreListComponents',
   data () {
@@ -198,7 +199,7 @@ export default {
     },
     subFn () {
       if (!this.select_info) {
-        error('门店必选')
+        error(T._(145))
         return
       }
       this.$emit('callFn', this.select_info)
@@ -216,7 +217,7 @@ export default {
           this.loadInfo()
         }
       }).catch(err => {
-        error('获取位置信息失败:' + err.msg)
+        error(T._(146) + err.msg)
       })
     },
     loadInfoCheck (storeId) {
@@ -247,7 +248,7 @@ export default {
         postData.lng = this.lng
       }
       getStoreList(emptyObject(postData), {
-        tip: '搜索中',
+        tip: T._(147),
         mask: true
       }).then(res => {
         this.stores = res.data

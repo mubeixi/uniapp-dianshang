@@ -3,25 +3,25 @@
         <div class="leftss">
             <div class="first" @click="toHome">
                 <image class='img' src="/static/detail/home.png"></image>
-                <text class="txt">首页</text>
+                <text class="txt">{{$t(429)}}</text>
             </div>
             <div class="first" @click="collectFn">
                 <image class='img' v-if="isCollected" src="/static/detail/favorite-a.png"></image>
                 <image class='img' v-else src="/static/detail/favorite.png"></image>
-                <text class="txt">收藏</text>
+                <text class="txt">{{$t(430)}}</text>
             </div>
             <div class="first" @click="kefu">
                 <image class='img' src="/static/detail/kefu.png"></image>
-                <text class="txt">客服</text>
+                <text class="txt">{{$t(431)}}</text>
             </div>
         </div>
         <div class="rightss">
 
-			<text v-if="!isKai"  class="dan bTitle" @click="addCart">零售价购</text>
-			<text v-if="!isKai"  class="tuan bTitle" @click="directBuy">立即预约</text>
+			<text v-if="!isKai"  class="dan bTitle" @click="addCart">{{$t(432)}}</text>
+			<text v-if="!isKai"  class="tuan bTitle" @click="directBuy">{{$t(433)}}</text>
 
            <text class="all" @click="lingqu"  v-if="isKai">
-               立即抢购
+               {{$t(434)}}
             </text>
         </div>
     </div>
@@ -29,7 +29,8 @@
 
 
 <script>
-    export default {
+    import T from '@/common/langue/i18n'
+export default {
         data() {
             return {
                 isCollected:false,

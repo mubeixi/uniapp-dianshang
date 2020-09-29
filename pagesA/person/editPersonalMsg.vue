@@ -3,15 +3,15 @@
 
     <!-- 	<page-title :title="title" rightHidden="true" bgcolor="#F8F8F8"></page-title> -->
 
-    <input class="v_input" placeholder="修改用户名" type="text" v-if="type == 0" v-model="User_Name" />
-    <input class="v_input" placeholder="修改昵称" type="text" v-if="type == 1" v-model="User_NickName" />
-    <input class="v_input" placeholder="修改QQ" type="number" v-if="type == 9" v-model="User_QQ" />
-    <input class="v_input" placeholder="修改身份证号" type="text" v-if="type == 10" v-model="User_IDNum" />
-    <input class="v_input" placeholder="修改传真" type="text" v-if="type == 12" v-model="User_Fax" />
+    <input class="v_input" :placeholder="$t(1088)" type="text" v-if="type == 0" v-model="User_Name" />
+    <input class="v_input" :placeholder="$t(1089)" type="text" v-if="type == 1" v-model="User_NickName" />
+    <input class="v_input" :placeholder="$t(1090)" type="number" v-if="type == 9" v-model="User_QQ" />
+    <input class="v_input" :placeholder="$t(1091)" type="text" v-if="type == 10" v-model="User_IDNum" />
+    <input class="v_input" :placeholder="$t(1092)" type="text" v-if="type == 12" v-model="User_Fax" />
 
     <block v-if="type == 11">
       <view class="area-item">
-        <text class="area-label">请选择性别</text>
+        <text class="area-label">{{$t(1093)}}</text>
         <picker @change="bindDateChanges"  :value="indexMy" :range="array">
           <view class="uni-input" >{{array[indexMy]}}</view>
         </picker>
@@ -20,45 +20,45 @@
 
     <block v-if="type == 2">
       <view class="area-item">
-        <text class="area-label">请选择生日</text>
+        <text class="area-label">{{$t(1094)}}</text>
         <picker @change="bindDateChange" mode="date">
           <view class="uni-input" v-if="dateValue">{{dateValue}}</view>
-          <view class="uni-input" v-if="!dateValue">请选择出生时间</view>
+          <view class="uni-input" v-if="!dateValue">{{$t(1095)}}</view>
         </picker>
       </view>
     </block>
-    <input class="v_input" placeholder="修改邮箱" type="text" v-if="type == 3" v-model="User_Email" />
+    <input class="v_input" placeholder="$t(1096)" type="text" v-if="type == 3" v-model="User_Email" />
     <block v-if="type == 4">
       <view class="area-item">
-        <text class="area-label">请选择省市县</text>
+        <text class="area-label">{{$t(1097)}}</text>
         <picker :range="change_objectMultiArray" :value="change_multiIndex" @change="bindMultiPickerChange"
                 @columnchange="bindMultiPickerColumnChange" mode="multiSelector" range-key="name"
                 style="flex:1;">
           <view class="picker">
-            <view class="p_item" v-if="address_info.User_Province <= 0">选择省份</view>
+            <view class="p_item" v-if="address_info.User_Province <= 0">{{$t(1098)}}</view>
             <view class="p_item" v-else>{{objectMultiArray[0][multiIndex[0]]['name']}}</view>
-            <view class="p_item" v-if="address_info.User_City <= 0">选择城市</view>
+            <view class="p_item" v-if="address_info.User_City <= 0">{{$t(1099)}}</view>
             <view class="p_item" v-else>{{objectMultiArray[1][multiIndex[1]]['name']}}</view>
-            <view class="p_item" v-if="address_info.User_Area <= 0">选择地区</view>
+            <view class="p_item" v-if="address_info.User_Area <= 0">{{$t(1100)}}</view>
             <view class="p_item" v-else>{{objectMultiArray[2][multiIndex[2]]['name']}}</view>
           </view>
         </picker>
       </view>
       <view class="area-item">
-        <text class="area-label">请选择街道</text>
+        <text class="area-label">{{$t(1101)}}</text>
         <picker :range="t_arr" :value="t_index" @change="t_pickerChange" mode="selector" range-key="name">
           <view class="picker">
-            <view class="p_item" v-if="address_info.User_Tow <= 0 || !t_arr[t_index]">选择街道</view>
+            <view class="p_item" v-if="address_info.User_Tow <= 0 || !t_arr[t_index]">{{$t(1102)}}</view>
             <view class="p_item" v-else>{{t_arr[t_index]['name']}}</view>
           </view>
         </picker>
       </view>
       <view class="area-item">
-        <text class="area-label">详细地址</text>
-        <input placeholder="请输入详细地址" type="text" v-model="User_Address" />
+        <text class="area-label">{{$t(1103)}}</text>
+        <input :placeholder="$t(1104)" type="text" v-model="User_Address" />
       </view>
     </block>
-    <view @click="save" class="save">保存</view>
+    <view @click="save" class="save">{{$t(1105)}}</view>
   </view>
 </template>
 
@@ -69,6 +69,7 @@ import { get_user_info, getTown, upDateUserInfo } from '../../common/fetch.js'
 import { pageMixin } from '../../common/mixin'
 import { mapActions, mapGetters } from 'vuex'
 import {error} from '../../common/index.js'
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {
@@ -76,7 +77,7 @@ export default {
       format: true
     })
     return {
-      array: ['男', '女'],
+      array: [T._(1088), T._(1089)],
       indexMy: 0,
       date: currentDate,
       dateValue: '',
@@ -186,28 +187,28 @@ export default {
     getTitle () {
       switch (this.type) {
         case '0' :
-          this.title = '修改用户名'
+          this.title = T._(1090)
           break
         case '1' :
-          this.title = '修改昵称'
+          this.title = T._(1091)
           break
         case '3' :
-          this.title = '修改邮箱'
+          this.title = T._(1092)
           break
         case '4' :
-          this.title = '修改地址'
+          this.title = T._(1093)
           break
         case '9' :
           this.title = 'QQ'
           break
         case '10' :
-          this.title = '身份证号'
+          this.title = T._(1094)
           break
         case '11' :
-          this.title = '性别'
+          this.title = T._(1095)
           break
         case '12' :
-          this.title = '传真'
+          this.title = T._(1096)
           break
       }
 
@@ -220,7 +221,7 @@ export default {
       if (this.type == 0) {
         if (!this.User_Name) {
           uni.showToast({
-            title: '请输入用户名',
+            title: T._(1097),
             icon: 'none'
           })
           return
@@ -229,7 +230,7 @@ export default {
       if (this.type == 1) {
         if (!this.User_NickName) {
           uni.showToast({
-            title: '请输入昵称',
+            title: T._(1098),
             icon: 'none'
           })
           return
@@ -238,7 +239,7 @@ export default {
       if (this.type == 3) {
         if (!this.User_Email) {
           uni.showToast({
-            title: '请输入邮箱',
+            title: T._(1099),
             icon: 'none'
           })
           return
@@ -247,13 +248,13 @@ export default {
       if (this.type == 4) {
         if (!this.address_info.User_Province || !this.address_info.User_City || !this.address_info.User_Area || !this.address_info.User_Tow) {
           uni.showToast({
-            title: '请选择完整地址',
+            title: T._(1100),
             icon: 'none'
           })
           return
         } else if (this.User_Address == '') {
           uni.showToast({
-            title: '请填写详细信息',
+            title: T._(1101),
             icon: 'none'
           })
           return
@@ -262,7 +263,7 @@ export default {
       if (this.type == 2) {
         if (!this.dateValue) {
           uni.showToast({
-            title: '请填写生日',
+            title: T._(1102),
             icon: 'none'
           })
           return
@@ -270,8 +271,8 @@ export default {
 
         const that = this
         uni.showModal({
-          title: '提示',
-          content: '生日信息一旦修改，不可再次更改',
+          title: T._(1103),
+          content: T._(1104),
           success: function (res) {
             if (res.confirm) {
               that.loading = true
@@ -297,7 +298,7 @@ export default {
                 userInfo.User_Birthday = res.data.User_Birthday
                 that.setUserInfo(userInfo)
                 uni.showToast({
-                  title: '修改成功'
+                  title: T._(1105)
                 })
                 setTimeout(() => {
                   uni.navigateBack({
@@ -337,7 +338,7 @@ export default {
         userInfo.User_Birthday = res.data.User_Birthday
         this.setUserInfo(userInfo)
         uni.showToast({
-          title: '修改成功'
+          title: T._(1106)
         })
         setTimeout(() => {
           uni.navigateBack({
@@ -425,7 +426,7 @@ export default {
     this.User_NickName = this.userInfo.User_NickName
     this.User_Email = this.userInfo.User_Email
     this.dateValue = this.userInfo.User_Birthday
-    this.indexMy = this.userInfo.User_Gender == '男' ? 0 : 1
+    this.indexMy = this.userInfo.User_Gender == $t(1106) ? 0 : 1
 
     this.User_QQ = this.userInfo.User_QQ
     this.User_IDNum = this.userInfo.User_IDNum

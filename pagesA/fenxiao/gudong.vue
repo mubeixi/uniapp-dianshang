@@ -18,20 +18,20 @@
       </view>
 
       <view @click="goGudongPay(pro.waiting_pay_apply.Order_ID)" class="juewei" v-if="pro.waiting_pay_apply">
-        立即支付
+        {{$t(818)}}
       </view>
       <view @click="goGudong" class="juewei" v-else-if="pro.sha_config.Sha_Agent_Type==1&&pro.is_apply">
-        立即申请
+        {{$t(819)}}
       </view>
       <view class="juewei" v-else>
-        暂不可申请
+        {{$t(820)}}
       </view>
       <!-- <view  v-else-if="pro.disInfo.sha_level_id>0" class="juewei">
         {{pro.disInfo.sha_level_name}}
       </view> -->
 
       <!-- <view  v-else-if="" class="juewei" >
-        暂不可申请
+        {{$t(821)}}
       </view> -->
 
     </view>
@@ -39,7 +39,7 @@
       <view class="money">
         <view>
           <view class="moneyTop">
-            {{(pro.total_sales || pro.total_sales==0)?'累计业绩':'总佣金'}}
+            {{(pro.total_sales || pro.total_sales==0)?$t(822):$t(823)}}
           </view>
           <view class="moneyBottom">
             ￥
@@ -48,7 +48,7 @@
         </view>
         <view>
           <view class="moneyTop">
-            {{(pro.month_sales || pro.month_sales==0)?'本月业绩':'已发放佣金'}}
+            {{(pro.month_sales || pro.month_sales==0)?$t(824):$t(825)}}
           </view>
           <view class="moneyBottom">
             ￥
@@ -57,7 +57,7 @@
         </view>
       </view>
       <view @click="goFinance" class="chakan" v-if="!pro.total_sales && pro.total_sales!=0">
-        查看明细
+        {{$t(826)}}
         <image :src="'/static/client/fenxiao/chakan.png'|domain" class="image"></image>
       </view>
     </view>
@@ -69,7 +69,7 @@
     		    <view class="da"></view>
     		  </view>
     		  <view class="fengTitleCenter">
-    		   股东条件说明
+    		   {{$t(827)}}
     		  </view>
     		  <view class="fengTitleRight">
     		    <view class="da"></view>
@@ -83,31 +83,31 @@
       </view>
       <view class="xiangCenter">
         <view class="xiangLeft">
-          申请条件:
+          {{$t(828)}}
         </view>
         <view class="xiangRight">
           <view class="view" v-if="item.Level_name">
-            {{commi_rename.commi}}等级:{{item.Level_name}}
+            {{commi_rename.commi}}{{$t(829)}}:{{item.Level_name}}
           </view>
           <view class="view" v-if="item.nobi_level">
-            爵位等级:{{item.nobi_level}}
+            {{$t(830)}}:{{item.nobi_level}}
           </view>
           <view class="view">
-            个人消费额:{{item.self_pay}}
+            {{$t(831)}}:{{item.self_pay}}
           </view>
           <view class="view">
-            团队业绩:{{item.team_sales}}
+            {{$t(832)}}:{{item.team_sales}}
           </view>
         </view>
       </view>
       <view class="xiangBottom">
         <view class="xiangBottomT">
-          所需金额:
+          {{$t(833)}}
         </view>
         <view class="xiangBottomB">
           ¥
           <text class="text">{{item.price}}</text>
-          <block v-if="item.is_apply">(已达到申请条件)</block>
+          <block v-if="item.is_apply">{{$t(834)}}</block>
         </view>
       </view>
     </view>
@@ -121,7 +121,7 @@
     		    <view class="da"></view>
     		  </view>
     		  <view class="fengTitleCenter">
-    		   收益介绍
+    		   {{$t(835)}}
     		  </view>
     		  <view class="fengTitleRight">
     		    <view class="da"></view>
@@ -145,15 +145,15 @@
     </view>
     <view class="guize">
       <text class="text">*</text>
-      当平台设置股东发放的总佣金为100元时，
+      {{$t(836)}}
       <block :key="index" v-for="(item,index) of pro.sha_config.Sha_Rate">{{item.sha_name}}
         <block v-if="index!=pro.sha_config.Sha_Rate.length-1">、</block>
       </block>
-      分别获得
-      <block :key="index" v-for="(item,index) of pro.sha_config.Sha_Rate">{{item.sha_commi_scale}}元
+      {{$t(837)}}
+      <block :key="index" v-for="(item,index) of pro.sha_config.Sha_Rate">{{item.sha_commi_scale}}{{$t(838)}}
         <block v-if="index!=pro.sha_config.Sha_Rate.length-1">、</block>
       </block>
-      收益。
+      {{$t(839)}}
     </view>
 
   </view>
@@ -165,6 +165,7 @@ import { pageMixin } from '../../common/mixin'
 import { shaInit } from '../../common/fetch.js'
 import { mapGetters } from 'vuex'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {

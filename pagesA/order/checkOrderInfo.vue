@@ -12,7 +12,7 @@
                 <div class="c">
                   <div class="title line10">{{item.prod_name}}</div>
                   <div class="line10 flex flex-between graytext font14 flex-vertical-center">
-                    <div class="spec-key">{{item.attr_info.attr_name||'无规格'}}</div>
+                    <div class="spec-key">{{item.attr_info.attr_name||$t(1031)}}</div>
                     <div class="numbox font16">
                       x{{item.prod_count}}
                     </div>
@@ -43,55 +43,55 @@
     <!--        </div>-->
 
     <div class="infobox">
-      <div class="title"><span class="tip"></span><span class="text">订单信息</span></div>
+      <div class="title"><span class="tip"></span><span class="text">{{$t(1032)}}</span></div>
       <div class="row">
-        <div class="label">订单号</div>
+        <div class="label">{{$t(1033)}}</div>
         <div class="form-item">{{orderInfo.Order_ID}}</div>
       </div>
       <div class="row">
-        <div class="label">订单状态</div>
+        <div class="label">{{$t(1034)}}</div>
         <div :style="{color:orderInfo.Order_Status!=2?'red':''}" class="form-item">{{orderInfo.Order_Status_desc}}</div>
       </div>
       <div class="row">
-        <div class="label">总价</div>
+        <div class="label">{{$t(1035)}}</div>
         <div class="form-item">￥{{orderInfo.Order_TotalAmount}}</div>
       </div>
       <div class="row" v-if="orderInfo.Coupon_Money > 0">
-        <div class="label">优惠券</div>
+        <div class="label">{{$t(1036)}}</div>
         <div class="form-item">￥-{{orderInfo.Coupon_Money}}</div>
       </div>
       <div class="row" v-if="orderInfo.Integral_Money > 0">
-        <div class="label">积分抵扣</div>
+        <div class="label">{{$t(1037)}}</div>
         <div class="form-item">￥-{{orderInfo.Integral_Money}}</div>
       </div>
       <div class="row" v-if="orderInfo.Manjian_Cash > 0">
-        <div class="label">满减优惠</div>
+        <div class="label">{{$t(1038)}}</div>
         <div class="form-item">￥-{{orderInfo.Manjian_Cash}}</div>
       </div>
       <div class="row" v-if="orderInfo.user_curagio_money > 0">
-        <div class="label">会员折扣</div>
+        <div class="label">{{$t(1039)}}</div>
         <div class="form-item">￥-{{orderInfo.user_curagio_money}}</div>
       </div>
       <div class="row">
-        <div class="label">实付</div>
+        <div class="label">{{$t(1040)}}</div>
         <div class="form-item danger-color">￥{{orderInfo.Order_TotalPrice}}</div>
       </div>
       <div class="row">
-        <div class="label">获取积分</div>
+        <div class="label">{{$t(1041)}}</div>
         <div class="form-item">{{orderInfo.Integral_Get}}</div>
       </div>
       <div class="row">
-        <div class="label">下单时间</div>
+        <div class="label">{{$t(1042)}}</div>
         <div class="form-item">{{orderInfo.Order_CreateTime | formatTime}}</div>
       </div>
       <div class="row">
-        <div class="label">付款时间</div>
+        <div class="label">{{$t(1043)}}</div>
         <div class="form-item">{{orderInfo.Pay_time | formatTime}}</div>
       </div>
     </div>
 
     <div class="subbox" v-if="orderInfo.Order_Status==2">
-      <button @click="subFn" class="subbtn" type="warn">立即核销</button>
+      <button @click="subFn" class="subbtn" type="warn">{{$t(1044)}}</button>
     </div>
 
   </div>
@@ -106,6 +106,7 @@ import { confirm, error } from '../../common'
 import PayComponents from '../../components/PayComponents.vue'
 import { mapGetters } from 'vuex'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   components: {
@@ -160,20 +161,20 @@ export default {
   methods: {
     async subFn () {
       const confirmConf = {
-        title: '操作提示',
-        confirmText: '继续核销',
+        title: T._(1031),
+        confirmText: T._(1032),
         showCancel: true,
-        cancelText: '回到首页',
+        cancelText: T._(1033),
         content: ''
       }
       await checkOrderByCode({
         Order_Code: this.Order_Code,
         store_id: this.Stores_ID
       }).then(res => {
-        confirmConf.content = '核销成功'
+        confirmConf.content = T._(1034)
         // toast('核销成功')
       }).catch(err => {
-        error(err.msg || '核销失败')
+        error(err.msg || T._(1035))
       })
 
       if (!confirmConf.content) return
@@ -199,13 +200,13 @@ export default {
       getOrderDetail({
         Order_Code: this.Order_Code
       }, {
-        tip: '努力加载中',
+        tip: T._(1036),
         noUid: true
       }).then(res => {
         if (res.data.Order_Status != 2) {
           confirm({
-            title: '操作提示',
-            content: '该订单状态不符:' + res.data.Order_Status_desc
+            title: T._(1037),
+            content: T._(1038) + res.data.Order_Status_desc
           }).then(res => {
 
           }).catch(err => {

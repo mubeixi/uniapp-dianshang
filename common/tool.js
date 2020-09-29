@@ -1,3 +1,4 @@
+import T from '@/common/langue/i18n' 
 import { error, toast } from './index'
 import { apiBaseUrl } from './env'
 import store from '../store'
@@ -228,13 +229,13 @@ export const uploadByPromise = ({ url, filePath, name = 'image', formData }) => 
       formData,
       success: (ret) => {
         if (ret.statusCode !== 200) {
-          reject(Error('系统错误'))
+          reject(Error(T._(21)))
         }
 
         let res = ret.data
         if (typeof res === 'string' && res)res = JSON.parse(res)
         if (res.errorCode !== 0) {
-          reject(Error(res.msg || '上传api调用错误'))
+          reject(Error(res.msg || T._(22)))
         }
         const data = res.data
         console.log(data)
@@ -578,7 +579,7 @@ export const emptyObject = (obj, strice, tip, clearValues = [null, undefined, ''
   for (var prop in obj) {
     if (checkValue(obj[prop], clearValues)) {
       if (strice) {
-        tip && error('参数' + prop + '不能为空')
+        tip && error('参数' + prop + T._(23))
         return false
       }
       delete obj[prop]

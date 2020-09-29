@@ -2,24 +2,24 @@
   <div @click="commonClick" v-if="isGetOrder">
     <div class="zhezhao" v-if="password_input">
       <div class="input-wrap">
-        <div>请输入余额支付密码</div>
-        <input @input="user_password" class="input" placeholder="请输入密码" type="password">
+        <div>{{$t(705)}}</div>
+        <input @input="user_password" class="input" :placeholder="$t(706)" type="password">
         <div class="btns">
-          <div @click="cancelInput" class="btn">取消</div>
-          <div @click="confirmInput" class="btn">确定</div>
+          <div @click="cancelInput" class="btn">{{$t(707)}}</div>
+          <div @click="confirmInput" class="btn">{{$t(708)}}</div>
         </div>
       </div>
     </div>
     <div class="state bgwhite">
       <image :src="'/static/client/wait.png'|domain" class="img" />
-      <span class="state-desc">等待买家付款</span>
+      <span class="state-desc">{{$t(709)}}</span>
     </div>
     <div class="address bgwhite" v-if="orderInfo.Order_IsVirtual == 0">
       <image :src="'/static/client/location.png'|domain" alt="" class="loc_icon" />
       <div class="add_msg">
-        <div class="name">收货人：{{orderInfo.Address_Name}} <span>{{orderInfo.Address_Mobile}}</span></div>
+        <div class="name">{{$t(710)}}：{{orderInfo.Address_Name}} <span>{{orderInfo.Address_Mobile}}</span></div>
         <div class="location">
-          收货地址：{{orderInfo.Address_Province_name}}{{orderInfo.Address_City_name}}{{orderInfo.Address_Area_name}}{{orderInfo.Address_Town_name}}
+          {{$t(711)}}：{{orderInfo.Address_Province_name}}{{orderInfo.Address_City_name}}{{orderInfo.Address_Area_name}}{{orderInfo.Address_Town_name}}
         </div>
       </div>
     </div>
@@ -43,10 +43,10 @@
       <div class="other">
         <div class="bd">
           <div class="o_title">
-            <span>运费选择</span>
+            <span>{{$t(712)}}</span>
             <span class="c8" style="text-align:right;">
               <span>{{orderInfo.Order_Shipping.Express}}</span>
-              <span> {{orderInfo.Order_Shipping.Price > 0 ? (' 运费：' + orderInfo.Order_Shipping.Price) : ' 免运费'}}</span>
+              <span> {{orderInfo.Order_Shipping.Price > 0 ? (`${$t(713)}` + orderInfo.Order_Shipping.Price) : `${$t(714)}`}}</span>
             </span>
           </div>
         </div>
@@ -54,15 +54,15 @@
       <div class="other" v-if="pagefrom != 'gift'">
         <div class="bd">
           <div class="o_title">
-            <span>优惠券选择</span>
-            <span class="c8">{{orderInfo.Coupon_Money}}元优惠券</span>
+            <span>{{$t(715)}}</span>
+            <span class="c8">{{orderInfo.Coupon_Money}}{{$t(716)}}{{$t(717)}}</span>
           </div>
         </div>
       </div>
       <div class="other" v-if="pagefrom != 'gift'">
         <div class="bd">
           <div class="o_title">
-            <span>积分抵扣</span>
+            <span>{{$t(718)}}</span>
             <span class="c8">{{orderInfo.Integral_Money}}</span>
           </div>
         </div>
@@ -70,7 +70,7 @@
       <div class="other" v-if="orderInfo.is_use_money && orderInfo.is_use_money == 1">
         <div class="bd">
           <div class="o_title">
-            <span>是否使用余额</span>
+            <span>{{$t(719)}}</span>
             <switch :checked="moneyChecked" @change="moneyChange" color="#04B600" size='25px' />
           </div>
           <!-- <div class="o_desc c8">{{orderInfo.Order_Yebc}}</div> -->
@@ -82,7 +82,7 @@
       <div class="other" v-if="pagefrom != 'gift' && initData.invoice_switch == 1">
         <div class="bd">
           <div class="o_title">
-            <span>是否开具发票</span>
+            <span>{{$t(720)}}</span>
             <switch :checked="invoiceChecked" @change="invoiceChange" color="#04B600" size='25px' />
           </div>
           <!-- <div class="o_desc c8">{{orderInfo.Order_InvoiceInfo}}</div> -->
@@ -92,14 +92,14 @@
       <div class="other">
         <div class="bd">
           <div class="o_title  words">
-            <span>买家留言</span>
+            <span>{{$t(721)}}</span>
             <input class="msg c8" v-model="order_remark">
           </div>
         </div>
       </div>
       <div class="total">
-        <span>共<span>{{orderInfo.prod_list.length}}</span>件商品</span>
-        <span class="mbx">小计：<span class="money moneys">￥</span><span
+        <span>{{$t(722)}}<span>{{orderInfo.prod_list.length}}</span>{{$t(723)}}</span>
+        <span class="mbx">{{$t(724)}}<span class="money moneys">￥</span><span
         class="money">{{orderInfo.Order_Fyepay}}</span></span>
       </div>
     </div>
@@ -107,40 +107,44 @@
     <div style="height:100px;background:#f8f8f8;"></div>
     <popup-layer :bottomHeight="50" :direction="'top'" @maskClicked="handClicked" ref="popupMX">
       <view class="mxdetail">
-        <view class="mxtitle">明细</view>
-        <view class="mxitem">产品
+        <view class="mxtitle">{{$t(725)}}</view>
+        <view class="mxitem">{{$t(726)}}
           <text class="num">+{{orderInfo.Order_TotalAmount}}</text>
         </view>
-        <view class="mxitem" v-if="orderInfo.user_curagio_money > 0">会员折扣
+        <view class="mxitem" v-if="orderInfo.user_curagio_money > 0">{{$t(727)}}
           <text class="num">-{{orderInfo.user_curagio_money}}</text>
         </view>
-        <view class="mxitem" v-if="orderInfo.Manjian_Cash > 0">满减
+        <view class="mxitem" v-if="orderInfo.Manjian_Cash > 0">{{$t(728)}}
           <text class="num">-{{orderInfo.Manjian_Cash}}</text>
         </view>
-        <view class="mxitem" v-if="orderInfo.Coupon_Money > 0">优惠券
+        <view class="mxitem" v-if="orderInfo.Coupon_Money > 0">{{$t(729)}}
           <text class="num">-{{orderInfo.Coupon_Money}}</text>
         </view>
-        <view class="mxitem" v-if="orderInfo.Integral_Money > 0">积分抵用
+        <view class="mxitem" v-if="orderInfo.Integral_Money > 0">{{$t(730)}}
           <text class="num">-{{orderInfo.Integral_Money}}</text>
         </view>
-        <view class="mxitem" v-if="user_money > 0">余额
+        <view class="mxitem" v-if="user_money > 0">{{$t(731)}}
           <text class="num">-{{user_money}}</text>
         </view>
-        <view class="mxitem" v-if="orderInfo.Order_Shipping.Price > 0">运费
+        <view class="mxitem" v-if="orderInfo.Order_Shipping.Price > 0">{{$t(732)}}
           <text class="num">+{{orderInfo.Order_Shipping.Price}}</text>
         </view>
       </view>
     </popup-layer>
     <div :style="{'z-index': zIndex}" class="order_total">
       <div class="totalinfo">
-        <div class="info">共{{orderInfo.prod_list.length}}件商品 总计：<span
+        <div class="info">
+			<block v-if="$p('zh-cn')">{{$t(733)}}{{orderInfo.prod_list.length}}件商品 总计：</block>
+			<block v-if="$p('en-us')">A total of {{orderInfo.prod_list.length}} products Total:</block>
+		
+		<span
         class="mbxa">￥<span>{{orderInfo.Order_Fyepay}}</span></span></div>
         <view class="tips" v-if="orderInfo.obtain_desc">{{orderInfo.obtain_desc}}</view>
       </div>
-      <view @click="seeDetail" class="mx">明细
+      <view @click="seeDetail" class="mx">{{$t(734)}}
         <image :class="isSlide?'slidedown':''" class="image" src="/static/top.png"></image>
       </view>
-      <div @click="submit" class="submit">去支付</div>
+      <div @click="submit" class="submit">{{$t(735)}}</div>
     </div>
     <div class="safearea-box"></div>
     <pay-components
@@ -170,6 +174,7 @@ import { pageMixin } from '../../common/mixin'
 import { GetQueryByString, isWeiXin, ls, urlencode } from '../../common/tool'
 import { toast } from '../../common'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   components: {
@@ -335,7 +340,7 @@ export default {
       this.user_money = Number(money).toFixed(2)
       if (this.user_money < 0 || isNaN(this.user_money)) {
         uni.showToast({
-          title: '您输入的金额有误',
+          title: T._(705),
           icon: 'none'
         })
         this.user_money = 0
@@ -344,7 +349,7 @@ export default {
       }
       if (this.orderInfo.Order_TotalPrice - money < 0) {
         uni.showToast({
-          title: '最大金额不能超过订单金额',
+          title: T._(706),
           icon: 'none'
         })
         this.user_money = this.orderInfo.Order_TotalPrice
@@ -426,7 +431,7 @@ export default {
       // eslint-disable-next-line no-unreachable
       if (this.need_invoice && this.invoice_info === '') {
         uni.showToast({
-          title: '发票信息不能为空',
+          title: T._(707),
           icon: 'none'
         })
         return
@@ -477,7 +482,7 @@ export default {
       }
 
       if (!channel) {
-        this.$error('未开通公众号支付')
+        this.$error(T._(708))
         return false
       }
 
@@ -522,7 +527,7 @@ export default {
     },
     payFailCall (err) {
       uni.showToast({
-        title: err.msg ? err.msg : '支付失败',
+        title: err.msg ? err.msg : T._(709),
         icon: 'none',
         duration: 2000
       })
@@ -540,16 +545,16 @@ export default {
       }
 
       if (res && res.code && res.code === 1) {
-        toast('用户取消支付', 'none')
+        toast(T._(710), 'none')
         return
       }
 
       // 头条小程序
       if (res && res.code && res.code === 9) {
         uni.showModal({
-          title: '提示',
-          content: '是否完成支付',
-          cancelText: '未完成',
+          title: T._(711),
+          content: T._(712),
+          cancelText: T._(713),
           confirmText: '已支付',
           success: function (res) {
             if (res.confirm) {
@@ -589,7 +594,7 @@ export default {
       // 0：支付成功 1：支付超时 2：支付失败 3：支付关闭 4：支付取消 9：订单状态开发者自行获取
 
       if (res && res.code && res.code === 4) {
-        toast('用户取消支付', 'none')
+        toast(T._(714), 'none')
         return
       }
 
@@ -640,7 +645,7 @@ export default {
           // 需要格外有一个code
           // #ifdef H5
           if (!isWeiXin()) {
-            this.$error('请在微信内打开')
+            this.$error(T._(715))
             return
           }
           const isHasCode = this.code || GetQueryByString('code')
@@ -688,7 +693,7 @@ export default {
           // eslint-disable-next-line no-unreachable
           orderPay(payConf, {
             mask: true,
-            tip: '正在加载中'
+            tip: T._(716)
           }).then(res => {
             // #ifdef H5
             const {
@@ -742,7 +747,7 @@ export default {
               },
               fail: function (err) {
                 uni.showModal({
-                  title: '支付错误',
+                  title: T._(717),
                   content: JSON.stringify(err)
                 })
               }
@@ -762,7 +767,7 @@ export default {
               },
               fail: function (err) {
                 uni.showModal({
-                  title: '支付错误',
+                  title: T._(718),
                   content: JSON.stringify(err)
                 })
               }
@@ -790,7 +795,7 @@ export default {
             order_remark: this.order_remark
           }, {
             mask: true,
-            tip: '正在加载中'
+            tip: T._(719)
           }).then(res => {
 
           }).catch(() => {

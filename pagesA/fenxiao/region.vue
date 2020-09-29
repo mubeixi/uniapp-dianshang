@@ -19,7 +19,7 @@
       </view>
       <block v-if="pro.waiting_pay_apply">
         <view @click="goPay(pro.waiting_pay_apply.Order_ID)" class="juewei" v-if="pro.waiting_pay_apply.Order_ID">
-          立即支付
+          {{$t(943)}}
         </view>
       </block>
 
@@ -27,17 +27,17 @@
       @click="goAddInfo"
       class="juewei"
       v-else-if="pro.agent_rate.Agentenable==1&&(pro.agent_rate.tow.is_apply||pro.agent_rate.pro.is_apply||pro.agent_rate.cit.is_apply||pro.agent_rate.cou.is_apply)">
-        立即申请
+        {{$t(944)}}
       </view>
       <view class="juewei" v-else>
-        暂不可申请
+        {{$t(945)}}
       </view>
     </view>
     <view class="moneySum">
       <view class="money">
         <view class="m-view">
           <view class="moneyTop m-view">
-            总佣金
+            {{$t(946)}}
           </view>
           <view class="moneyBottom m-view">
             ￥
@@ -46,7 +46,7 @@
         </view>
         <view class="m-view">
           <view class="moneyTop m-view">
-            已发放佣金{{pro.total_agent}}
+            {{$t(947)}}{{pro.total_agent}}
           </view>
           <view class="moneyBottom m-view">
             ￥
@@ -55,7 +55,7 @@
         </view>
       </view>
       <view @click="goFinance" class="chakan">
-        查看明细
+        {{$t(948)}}
         <image :src="'/static/client/fenxiao/chakan.png'|domain" class="image"></image>
       </view>
     </view>
@@ -67,7 +67,7 @@
     		    <view class="da"></view>
     		  </view>
     		  <view class="fengTitleCenter">
-    		   区域代理条件说明
+    		   {{$t(949)}}
     		  </view>
     		  <view class="fengTitleRight">
     		    <view class="da"></view>
@@ -81,53 +81,53 @@
       </view>
       <view class="xiangCenter">
         <view class="xiangLeft">
-          申请条件:
+          {{$t(950)}}
         </view>
         <view class="xiangRight">
           <view class="view" v-if="item.Level>0">
-            {{commi_rename.commi}}等级:{{item.Level_name}}
+            {{commi_rename.commi}}{{$t(951)}}:{{item.Level_name}}
           </view>
           <view class="view" v-if="item.Protitle>0">
-            爵位等级:{{item.Level_name}}
+            {{$t(952)}}:{{item.Level_name}}
           </view>
           <view class="view">
-            个人消费额:{{item.Selfpro}}
+            {{$t(953)}}:{{item.Selfpro}}
           </view>
           <view class="view">
-            团队业绩:{{item.Teampro}}
+            {{$t(954)}}:{{item.Teampro}}
           </view>
         </view>
       </view>
       <view class="xiangBottom">
         <view class="xiangBottomT">
-          所需金额:
+          {{$t(955)}}
         </view>
         <view class="xiangBottomB">
           ¥
           <text class="text">{{item.Provincepro}}</text>
           (
-          <block v-if="!item.is_apply">暂未达到申请条件</block>
-          <block v-if="item.is_apply">已达到申请条件</block>
+          <block v-if="!item.is_apply">{{$t(956)}}</block>
+          <block v-if="item.is_apply">{{$t(957)}}</block>
           )
         </view>
       </view>
     </view>
 
     <view style="height: 20rpx;width: 100%;"></view>
-    <circleTitle title="收益介绍"></circleTitle>
+    <circleTitle title="$t(958)"></circleTitle>
     <view class="shouyi">
       <view class="tt">
         <view class="view">
-          省
+          {{$t(959)}}
         </view>
         <view class="view">
-          市
+          {{$t(960)}}
         </view>
         <view class="view">
-          县/区
+          {{$t(961)}}
         </view>
         <view class="rightZ view">
-          乡/镇
+          {{$t(962)}}
         </view>
       </view>
       <view class="tt ts">
@@ -147,15 +147,15 @@
     </view>
     <view class="guize">
       <text class="text">*</text>
-      当平台设置区域代理发放的总佣金为100元时，
+      {{$t(963)}}
       <block :key="index" v-for="(item,index) of agent_rate_arr" v-if="item.title">{{item.title}}
         <block v-if="index!=agent_rate_arr.length-1">、</block>
       </block>
-      分别获得
-      <block :key="index" v-for="(item,index) of agent_rate_arr" v-if="item.title">{{item.Province}}元
+      {{$t(964)}}
+      <block :key="index" v-for="(item,index) of agent_rate_arr" v-if="item.title">{{item.Province}}{{$t(965)}}
         <block v-if="index!=agent_rate_arr.length-1">、</block>
       </block>
-      收益。
+      {{$t(966)}}
     </view>
   </view>
 </template>
@@ -166,6 +166,7 @@ import { pageMixin } from '../../common/mixin'
 import { agentInfo } from '../../common/fetch.js'
 import { mapGetters } from 'vuex'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {

@@ -2,13 +2,13 @@
   <view class="msg">
     <div @click="goNext(1)" class="store-item">
       <image :src="'/static/client/store/dailishang.png'|domain" class="img-full"></image>
-      <div class="store-title">经销商</div>
+      <div class="store-title">{{$t(1760)}}</div>
       <image class="store-img" src="/static/store/dailishanggo.png"></image>
     </div>
 
     <div @click="goNext(2)" class="store-item">
       <image :src="'/static/client/store/shequ.png'|domain" class="img-full"></image>
-      <div class="store-title">社区服务店</div>
+      <div class="store-title">{{$t(1761)}}</div>
       <image class="store-img" src="/static/store/shequgo.png"></image>
     </div>
   </view>
@@ -17,6 +17,7 @@
 // import {} from '../../common/fetch'
 import { pageMixin } from '../../common/mixin'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
 

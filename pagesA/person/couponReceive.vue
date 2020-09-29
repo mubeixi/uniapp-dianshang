@@ -2,13 +2,13 @@
   <view @click="commonClick" class="myall">
     <!-- 		<view class="nav">
           <view class="views" :class="checked==0?'checked':''" @click="change(0)">
-            全部
+            {{$t(1048)}}
           </view>
           <view class="views" :class="checked==1?'checked':''" @click="change(1)">
-            已领取
+            {{$t(1049)}}
           </view>
           <view class="views" :class="checked==2?'checked':''" @click="change(2)">
-            已过期
+            {{$t(1050)}}
           </view>
         </view>
         <view style="height: 198rpx;width: 100%;">
@@ -24,23 +24,28 @@
           <image :src="item.Coupon_PhotoPath" class="images"></image>
         </view>
         <view class="storeTitle">
-          店铺优惠券
+          {{$t(1051)}}
         </view>
         <view class="times">
-          有效期：{{item.Coupon_StartTime}}至{{item.Coupon_EndTime}}
+          {{ $t(1052) }}{{item.Coupon_StartTime}}-{{item.Coupon_EndTime}}
         </view>
         <view class="prices" v-if="item.Coupon_Discount<=0">
           ¥
           <text>{{item.Coupon_Cash}}</text>
         </view>
         <view class="prices" v-else>
-          {{item.Coupon_Discount*10}}折优惠
+          <block v-if="$p('zh-cn')">
+          				   {{item.Coupon_Discount*10}}折优惠
+          </block>
+          <block v-if="$p('en-us')">
+          				  {{item.Coupon_Discount*10}}% discount
+          </block>
         </view>
         <view class="man">
           [{{item.Coupon_Subject}}]
         </view>
         <view @click="goIndex(item.Coupon_ID,index)" class="button">
-          领取
+          {{$t(1053)}}
         </view>
       </view>
     </block>
@@ -51,6 +56,7 @@
 import { pageMixin } from '../../common/mixin'
 import { getCoupon, getUserCoupon } from '../../common/fetch.js'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {

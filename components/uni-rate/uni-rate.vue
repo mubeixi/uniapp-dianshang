@@ -26,6 +26,7 @@
 
 <script>
 import UniIcons from '../uni-icons/uni-icons.vue'
+import T from '@/common/langue/i18n'
 export default {
   name: 'UniRate',
   components: {

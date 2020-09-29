@@ -2,20 +2,20 @@
   <view @click="commonClick" class="wrap">
     <view style="height: 90rpx;margin-bottom: 10px">
       <scroll-view class="order-status" scroll-x="true" style="width: 750rpx;white-space: nowrap;">
-        <view :class="[status == 0 ? 'active' : '']" @click="changeStatus (0)" class="status">全部</view>
-        <view :class="[status == 31 ? 'active' : '']" @click="changeStatus(31)" class="status">待处理</view>
-        <view :class="[status == 32 ? 'active' : '']" @click="changeStatus(32)" class="status">待发货</view>
-        <view :class="[status == 33 ? 'active' : '']" @click="changeStatus(33)" class="status">已驳回</view>
-        <view :class="[status == 34 ? 'active' : '']" @click="changeStatus(34)" class="status">已发货</view>
+        <view :class="[status == 0 ? 'active' : '']" @click="changeStatus (0)" class="status">{{$t(1582)}}</view>
+        <view :class="[status == 31 ? 'active' : '']" @click="changeStatus(31)" class="status">{{$t(1583)}}</view>
+        <view :class="[status == 32 ? 'active' : '']" @click="changeStatus(32)" class="status">{{$t(1584)}}</view>
+        <view :class="[status == 33 ? 'active' : '']" @click="changeStatus(33)" class="status">{{$t(1585)}}</view>
+        <view :class="[status == 34 ? 'active' : '']" @click="changeStatus(34)" class="status">{{$t(1586)}}</view>
         <!-- 			<view class="status" :class="[status == 35 ? 'active' : '']" @click="changeStatus(35)">已收货</view> -->
-        <view :class="[status == 36 ? 'active' : '']" @click="changeStatus(36)" class="status">已收款</view>
-        <view :class="[status == 37 ? 'active' : '']" @click="changeStatus(37)" class="status">已取消</view>
+        <view :class="[status == 36 ? 'active' : '']" @click="changeStatus(36)" class="status">{{$t(1587)}}</view>
+        <view :class="[status == 37 ? 'active' : '']" @click="changeStatus(37)" class="status">{{$t(1588)}}</view>
       </scroll-view>
     </view>
     <block v-if="back_list.length>0">
       <view :key="index" @click="hidden_tip" class="prolist" v-for="(item,index) of back_list">
         <view class="pro-title">
-          <view>退货单号：{{item.id}}</view>
+          <view>{{$t(1589)}}：{{item.id}}</view>
           <view class="status">{{item.status_desc}}
             <block v-if="item.status == 33">
               <image @click.stop="show_pro_tip(index)" class="qty-icon" mode="" src="/static/procurement/i.png"></image>
@@ -30,7 +30,7 @@
           <image :src="item.receive_img" class="avator" mode=""></image>
           <view class="biz-name">{{item.receive_name}}
             <view class="biz-links" v-if="item.receive_id > 0">(
-              <text @click="showStore(item.receive_id)" class="text-d">查看门店信息</text>
+              <text @click="showStore(item.receive_id)" class="text-d">{{$t(1590)}}</text>
               )
             </view>
           </view>
@@ -59,60 +59,60 @@
           <text class="price-num">{{item.price}}</text>
         </view>
         <view class="btns">
-          <view @click="bohui(item.id)" class="btn" v-if="item.status == 31">驳回</view>
-          <view @click="sureOrder(item.id)" class="btn back" v-if="item.status == 31">同意</view>
-          <view @click="queren(item.id)" class="btn back" v-if="item.status == 34">确认收货</view>
+          <view @click="bohui(item.id)" class="btn" v-if="item.status == 31">{{$t(1591)}}</view>
+          <view @click="sureOrder(item.id)" class="btn back" v-if="item.status == 31">{{$t(1592)}}</view>
+          <view @click="queren(item.id)" class="btn back" v-if="item.status == 34">{{$t(1593)}}</view>
         </view>
       </view>
-      <view class="list-bottom">我是有底线的</view>
+      <view class="list-bottom">{{$t(1594)}}</view>
     </block>
     <div class="defaults" v-else>
       <image :src="'/static/client/defaultImg.png'|domain"></image>
     </div>
     <!--  门店信息	-->
     <view class="sku-pop mendian" v-if="isShowStoreMsg">
-      <view class="sku-title">门店信息</view>
+      <view class="sku-title">{{$t(1595)}}</view>
       <view class="sku-content">
         <view class="skulist">
-          <view class="sku-name">门店名称：</view>
+          <view class="sku-name">{{$t(1596)}}：</view>
           <view class="sku-item">{{storeInfo.Stores_Name}}</view>
         </view>
         <view class="skulist">
-          <view class="sku-name">门店电话：</view>
+          <view class="sku-name">{{$t(1597)}}：</view>
           <view class="sku-item">{{storeInfo.mobile}}</view>
         </view>
         <view @click="showAdress" class="skulist">
-          <view class="sku-name">门店地址：</view>
+          <view class="sku-name">{{$t(1598)}}：</view>
           <view class="sku-item" style="flex:1;">
             {{storeInfo.Stores_Province_name}}{{storeInfo.Stores_City_name}}{{storeInfo.Stores_Area_name}}{{storeInfo.Stores_Address}}
             <image class="img" src="/static/local.png"></image>
           </view>
         </view>
         <view @click="showAdress" class="skulist" v-if="storeInfo.distance">
-          <view class="sku-name">门店距离：</view>
+          <view class="sku-name">{{$t(1599)}}</view>
           <view class="sku-item">{{storeInfo.distance}}KM</view>
         </view>
       </view>
     </view>
     <!-- 修改渠道 -->
     <view class="sku-pop" v-if="isChangeChannel">
-      <view class="sku-title">修改渠道</view>
+      <view class="sku-title">{{$t(1600)}}</view>
       <view class="sku-content" style="padding-left:53rpx;">
         <view class="skulist">
           <view class="nochecked"></view>
-          <view>平台进货</view>
+          <view>{{$t(1601)}}</view>
         </view>
         <view class="skulist">
           <image class="selected" mode="" src="/static/selected.png"></image>
-          <view>门店进货</view>
+          <view>{{$t(1602)}}</view>
         </view>
         <view class="skulist">
-          <input class="input" placeholder="请输入门店编号" placeholder-style="color: #C9C9C9;font-size: 24rpx;" type="text"
+          <input class="input" placeholder="$t(1603)" placeholder-style="color: #C9C9C9;font-size: 24rpx;" type="text"
                  value="" />
         </view>
         <view class="skulist change-btn">
-          <view class="btn cancel">取消</view>
-          <view class="btn confirm">确定</view>
+          <view class="btn cancel">{{$t(1604)}}</view>
+          <view class="btn confirm">{{$t(1605)}}</view>
         </view>
       </view>
     </view>
@@ -122,10 +122,10 @@
     <wzw-dialog ref="refuseApply">
       <div class="refuseApplyDialog">
 				<textarea :value="reason" @input="bingReasonInput" auto-height class="reason"
-                  placeholder="请输入驳回原因" placeholder-style="color:#999" />
+                  :placeholder="$t(1606)" placeholder-style="color:#999" />
         <div class="control">
-          <div @click="cancelRefuseApply" class="action-btn btn-cancel">取消</div>
-          <div @click="refuseApply" class="btn-sub action-btn">确定</div>
+          <div @click="cancelRefuseApply" class="action-btn btn-cancel">{{$t(1607)}}</div>
+          <div @click="refuseApply" class="btn-sub action-btn">{{$t(1608)}}</div>
         </div>
       </div>
     </wzw-dialog>
@@ -146,6 +146,7 @@ import { mapGetters } from 'vuex'
 import { error, toast } from '../../common'
 import { getLocation } from '../../common/tool/location'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {
@@ -179,8 +180,8 @@ export default {
       }
       const that = this
       uni.showModal({
-        title: '提示',
-        content: '确认收到货物了吗',
+        title: T._(1582),
+        content: T._(1583),
         success: function (res) {
           if (res.confirm) {
             storeProdBackOrderArrived(data).then(res => {
@@ -202,8 +203,8 @@ export default {
       }
       const that = this
       uni.showModal({
-        title: '提示',
-        content: '确认同意退货',
+        title: T._(1584),
+        content: T._(1585),
         success: function (res) {
           if (res.confirm) {
             storeProdBackOrderPass(data).then(res => {
@@ -224,7 +225,7 @@ export default {
     },
     refuseApply () {
       if (!this.reason) {
-        error('请填写理由')
+        error(T._(1586))
         return
       }
       const that = this
@@ -233,7 +234,7 @@ export default {
         store_id: this.Stores_ID,
         order_id: this.id
       }
-      storeProdBackOrderReject(data, { tip: '处理中' }).then(res => {
+      storeProdBackOrderReject(data, { tip: T._(1587) }).then(res => {
         this.$refs.refuseApply.close()
 
         this.reason = ''
@@ -271,7 +272,7 @@ export default {
         status: this.status,
         page: this.page,
         pageSize: this.pageSize
-      }, { tip: '加载中...' }).then(res => {
+      }, { tip: T._(1588) }).then(res => {
         res.data.forEach(item => {
           item.pro_tip_show = false
         })

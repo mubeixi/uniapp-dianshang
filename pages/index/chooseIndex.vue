@@ -132,6 +132,7 @@ import { getLiveInfo } from '../../common/fetch'
 import { pageMixin } from '../../common/mixin'
 import { mapActions, mapGetters } from 'vuex'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {
@@ -193,10 +194,10 @@ export default {
             rt = JSON.parse(res.data.Home_Json)
             resolve(rt)
           } else {
-            reject(new Error(res.msg || '获取系统模板失败'))
+            reject(new Error(res.msg || T._(443)))
           }
         }).catch(e => {
-          reject(new Error(e.msg || '获取系统模板失败'))
+          reject(new Error(e.msg || T._(444)))
         })
       })
     },

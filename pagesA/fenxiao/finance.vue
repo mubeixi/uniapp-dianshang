@@ -6,42 +6,42 @@
     <!-- <page-title title="财务明细" rightHidden="true" bgcolor="#ffffff"></page-title> -->
     <view class="nav">
       <view :class="index==0?'checked':''" @click="change(0)" class="views">
-        分销
+        {{$t(800)}}
       </view>
       <view :class="index==1?'checked':''" @click="change(1)" class="views">
-        爵位
+        {{$t(801)}}
       </view>
       <view :class="index==4?'checked':''" @click="change(4)" class="views">
-        管理
+        {{$t(802)}}
       </view>
       <view :class="index==2?'checked':''" @click="change(2)" class="views">
-        股东
+        {{$t(803)}}
       </view>
       <view :class="index==3?'checked':''" @click="change(3)" class="views">
-        区域代理
+        {{$t(804)}}
       </view>
     </view>
     <view style="width: 100%;height: 105rpx;background-color: #FFFFFF;"></view>
     <block v-if="pro.length > 0">
       <view :key="i" class="order" v-for="(item,i) of pro ">
         <view>
-          订单号：
+          {{$t(805)}}
           <text>{{index == 4 ? item.order_id : item.Order_ID}}</text>
         </view>
         <view>
-          佣金金额：
+          {{$t(806)}}
           <text class="price" v-if="index==2 || index == 4||index==3">￥{{(index == 2||index==3) ?item.Record_Money :
             item.record_money}}
           </text>
           <text class="price" v-else>￥{{item.money}}</text>
         </view>
         <view>
-          描述：
+          {{$t(807)}}
           <text v-if="index==2||index==3">{{item.Record_Type_desc}}</text>
           <text v-else>{{index == 4 ? item.descr :item.desc}}</text>
         </view>
         <view>
-          时间：
+          {{$t(808)}}
           <text>{{item.Record_CreateTime}}</text>
         </view>
       </view>
@@ -63,6 +63,7 @@ import {
 } from '../../common/fetch.js'
 import { error } from '@/common'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {
@@ -144,7 +145,7 @@ export default {
           }
           this.totalCount = res.totalCount
         }).catch(() => {
-          error('获取数据失败')
+          error(T._(800))
         })
       } else {
         getAgentRecordList(data).then(res => {

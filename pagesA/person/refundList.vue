@@ -9,7 +9,7 @@
           <!-- <img :src="item.ShopLogo" alt="">
           <span class="bizname">{{item.ShopName}}</span>
           <span class="status">{{item.Order_Status_desc}}</span> -->
-          <span class="bizname">订单编号:</span>
+          <span class="bizname">{{$t(1232)}}</span>
           <span class="status">{{item.Back_Sn}}</span>
         </div>
         <block :key="k" v-for="(i,k) of item.prod_list">
@@ -26,15 +26,15 @@
           </div>
         </block>
         <div class="text-right font14 line10 graytext2">
-          共<span class="color555">{{item.prod_list.length}}</span>件商品,
-          <span>退回余额:<span class="font16 danger-color"><span
+          {{$t(1233)}}<span class="color555">{{item.prod_list.length}}</span>{{$t(1234)}},
+          <span>{{$t(1235)}}:<span class="font16 danger-color"><span
           class="span font12">￥</span>{{item.refund_money_fee}} </span>,</span>
-          <span>原路退回:<span class="font16 danger-color"><span class="span font12">￥</span>{{item.refund_pay_fee}} </span></span>
+          <span>{{$t(1236)}}:<span class="font16 danger-color"><span class="span font12">￥</span>{{item.refund_pay_fee}} </span></span>
         </div>
         <div class="btn-group">
           <span class="span" style="border: 0rpx;color: red;">{{item.Back_Status_desc}}</span>
-          <span @click="cancelRefund(item,index)" class="span" v-if="item.Back_Status==0">取消退款</span>
-          <span @click="goDetail(item)" class="span" v-else-if="item.Back_Status==1">买家发货</span>
+          <span @click="cancelRefund(item,index)" class="span" v-if="item.Back_Status==0">{{$t(1237)}}</span>
+          <span @click="goDetail(item)" class="span" v-else-if="item.Back_Status==1">{{$t(1238)}}</span>
         </div>
       </template>
     </div>
@@ -50,6 +50,7 @@
 import { cancelRefund, getBackOrder } from '@/common/fetch.js'
 import { pageMixin } from '../../common/mixin'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {
