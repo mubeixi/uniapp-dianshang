@@ -9,7 +9,7 @@ T.registerLocale = function (locales) {
 }
 // 设置语言
 T.setLocale = function (code) {
-  const _code = code || ls.get('language') || 'zh-cn'
+  const _code = "zh-cn";
   T.locale = _code
   ls.set('language', _code)
 }
