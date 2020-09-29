@@ -80,6 +80,7 @@ export default {
 
   },
   check:{
+	  "Points, total can be offset":"积分，总共可抵扣",
     "Express delivery":'快递发货',
     "Pick it up at the store":'到底自提',
     "consignee":'收货人',
