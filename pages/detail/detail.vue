@@ -49,6 +49,9 @@
         <span @click="showTick" class="share" data-type="share">{{ $t(189) }}</span>
       </div>
       <div class="name">{{product.Products_Name}}</div>
+
+	  <div class="Products_BriefDescription">{{product.Products_BriefDescription}}</div>
+
       <div class="sold">
         <span v-if="product.Products_Count">{{$t(190)}} {{product.Products_Count}}</span>
         <span v-if="product.Products_Sales">{{$t(191)}} {{product.Products_Sales}}</span>
@@ -1501,6 +1504,8 @@ export default {
     height: 50rpx;
     line-height: 50rpx;
     padding-bottom: 10px;
+	display: flex;
+	align-items: center;
   }
 
   .sold span {
@@ -1509,7 +1514,7 @@ export default {
   }
 
   .sold span:nth-child(2) {
-    float: right;
+   // float: right;
   }
 
   /* 产品描述部分 end */
@@ -1818,5 +1823,16 @@ export default {
   .skuCheck {
     color: #fff !important;
     background-color: #ff4200 !important;
+  }
+  .c3{
+	  color: #333333 !important;
+  }
+  .Products_BriefDescription{
+	  width: 710rpx;
+	  margin: 10rpx auto 10rpx;
+	  font-size: 12px;
+	  color: #999;
+	  line-height: 18px;
+	  
   }
 </style>

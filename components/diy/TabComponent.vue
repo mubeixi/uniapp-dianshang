@@ -279,6 +279,9 @@ export default {
       } else {
         // param.Products_ID = list.join(',')
       }
+      if (this.currentTab.type == 'all') {
+        param.pageSize = 999
+      }
 
       getProductList(param).then(res => {
         this.goodsList = res.data

@@ -6,7 +6,7 @@
 
     <!-- <page-title title="申请退款" rightHidden="true"></page-title> -->
 
-    <div :key="item" class="pro" v-for="(item,index) of refundInfo.refund_prod_list">
+    <div :key="index" class="pro" v-for="(item,index) of refundInfo.refund_prod_list">
       <div class="pro-div">
         <image :src="item.prod_img" alt="" class="pro-img" />
       </div>
@@ -165,7 +165,7 @@ export default {
       onlyRefund: 0,
       imgs: [], // 上传图片预览
       Order_ID: 0, // 退款商品id
-      refundInfo: '', // 商品信息
+      refundInfo: {}, // 商品信息
       arr: [], // 上传成功的图片
       reasonDes: '', // 退款原因
       current: 0,
