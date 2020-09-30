@@ -40,7 +40,7 @@
         <view class="tishi-view">
           申请提现后，系统会自动扣除您提现的{{init.Poundage_Ratio}}%的手续费
           <block v-if="withdraw_from==1">
-            ，{{init.Balance_Ratio}}%转入您的会员余额，{{100-init.Poundage_Ratio-init.Balance_Ratio}}%店主会将钱打入您的账号；若全部转入余额则不扣除手续费。
+            ，{{init.Balance_Ratio}}%转入您的会员余额，{{100-init.Poundage_Ratio*init.Balance_Ratio/100}}%店主会将钱打入您的账号；若全部转入余额则不扣除手续费。
           </block>
         </view>
       </view>
