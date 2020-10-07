@@ -162,7 +162,7 @@
               <div class="t_left_t"><span>￥</span><span class="money">{{item.Coupon_Cash}}</span><span>{{ $t('detail','Shop Coupons') }}<text
               v-if="item.Coupon_UseArea==0">({{ $t('detail','Physical store') }})</text></span></div>
               <div class="t_left_c">{{item.Coupon_Subject}}</div>
-              <div class="t_left_b">{{ $t('cart','Valid period') }} {{item.Coupon_StartTime}}-{{item.Coupon_EndTime}}</div>
+              <div class="t_left_b">{{ $t('detail','Valid period') }} {{item.Coupon_StartTime}}-{{item.Coupon_EndTime}}</div>
             </div>
             <div @click="getMyCoupon(item.Coupon_ID,i)" class="t_right">{{ $t('detail','get it right now') }}</div>
           </div>
