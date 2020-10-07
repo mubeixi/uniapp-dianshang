@@ -86,7 +86,7 @@
     </div>
 
     <div class="num-count">
-      <image :src="'/static/marketing/num_count.png'|domain" class="num-count-img" />
+      <image :src="'/static/client/marketing/num_count.png'|domain" class="num-count-img" />
       <div class=" text font14">今日剩余抽奖次数<span class="font16 danger-color" style="">{{day_count}}</span>次,总剩余抽奖次数<span
       class="font16 danger-color" style="">{{total_count}}</span>次
       </div>
@@ -299,7 +299,14 @@ export default {
         if (this.activeIdx >= 0) {
           if ((idx != this.activeIdx) && !is_mask) return '#FFEBEB'
           if ((idx != this.activeIdx) && is_mask) return '#FFC2C8'
-        }
+        }else{
+			if(!is_mask){
+				return '#FFEBEB'
+			}else{
+				return '#FFC2C8'
+			}
+			
+		}
 
         // if((idx!=this.activeIdx || !rotateInstance.isStart()) && !is_mask)return '#FFEBEB'
         // if((idx!=this.activeIdx || !rotateInstance.isStart()) && is_mask)return '#FFC2C8'
