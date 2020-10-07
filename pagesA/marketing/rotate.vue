@@ -40,8 +40,9 @@
       </div>
       <div @click="startFn" class="item">
         <div class="goods start-btn">
-          {{getStartTip}}
-
+          <!-- {{getStartTip}} -->
+		  <div>立即</div>
+		  <div>抽奖</div>
         </div>
         <div class="mask start-btn-mask"></div>
       </div>
@@ -602,11 +603,13 @@ export default {
 
       .start-btn {
         height: 130rpx;
-        line-height: 130rpx;
-        padding: 0 !important;
-        font-size: 14px;
+        //line-height: 130rpx;
+        padding: 20rpx 0rpx !important;
+        font-size: 16px;
+		font-weight: bold;
         background: #FFD800 !important;
         color: #AB6102;
+		
       }
 
       .start-btn-mask {
