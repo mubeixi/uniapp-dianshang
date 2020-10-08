@@ -20,7 +20,7 @@
         <view class="pai1">
           排名
         </view>
-        <view class="pai2">
+        <view class="pai2" v-if="initData.version_type>1">
           爵位
         </view>
         <view class="pai3">
@@ -39,7 +39,7 @@
             {{item.Shop_Name}}
           </view>
         </view>
-        <view class="contentCenter">
+        <view class="contentCenter"   v-if="initData.version_type>1">
           {{item.pro_title_name}}
         </view>
         <view class="contentRight">
@@ -59,7 +59,7 @@
             {{item.Shop_Name}}
           </view>
         </view>
-        <view class="contentCenter">
+        <view class="contentCenter"   v-if="initData.version_type>1">
           {{item.pro_title_name}}
         </view>
         <view class="contentRight">
@@ -79,7 +79,7 @@
             {{item.Shop_Name}}
           </view>
         </view>
-        <view class="contentCenter">
+        <view class="contentCenter"  v-if="initData.version_type>1">
           {{item.pro_title_name}}
         </view>
         <view class="contentRight">
@@ -99,7 +99,7 @@
             {{item.Shop_Name}}
           </view>
         </view>
-        <view class="contentCenter">
+        <view class="contentCenter"   v-if="initData.version_type>1">
           {{item.pro_title_name}}
         </view>
         <view class="contentRight">
@@ -133,7 +133,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['commi_rename'])
+    ...mapGetters(['commi_rename','initData'])
   },
   onShow () {
     this.page = 1
