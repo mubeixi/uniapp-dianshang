@@ -40,8 +40,9 @@
       </div>
       <div @click="startFn" class="item">
         <div class="goods start-btn">
-          {{getStartTip}}
-
+          <!-- {{getStartTip}} -->
+		  <div>立即</div>
+		  <div>抽奖</div>
         </div>
         <div class="mask start-btn-mask"></div>
       </div>
@@ -86,9 +87,15 @@
     </div>
 
     <div class="num-count">
+<<<<<<< HEAD
       <image :src="'/static/marketing/num_count.png'|domain" class="num-count-img" />
       <div class=" text font14">{{$t('1305x0')}}<span class="font16 danger-color" style="">{{day_count}}</span>{{$t('1305x1')}}<span
       class="font16 danger-color" style="">{{total_count}}</span>{{$('manual','times')}}
+=======
+      <image :src="'/static/client/marketing/num_count.png'|domain" class="num-count-img" />
+      <div class=" text font14">今日剩余抽奖次数<span class="font16 danger-color" style="">{{day_count}}</span>次,总剩余抽奖次数<span
+      class="font16 danger-color" style="">{{total_count}}</span>次
+>>>>>>> remotes/origin/develop
       </div>
     </div>
 
@@ -300,7 +307,14 @@ export default {
         if (this.activeIdx >= 0) {
           if ((idx != this.activeIdx) && !is_mask) return '#FFEBEB'
           if ((idx != this.activeIdx) && is_mask) return '#FFC2C8'
-        }
+        }else{
+			if(!is_mask){
+				return '#FFEBEB'
+			}else{
+				return '#FFC2C8'
+			}
+			
+		}
 
         // if((idx!=this.activeIdx || !rotateInstance.isStart()) && !is_mask)return '#FFEBEB'
         // if((idx!=this.activeIdx || !rotateInstance.isStart()) && is_mask)return '#FFC2C8'
@@ -596,11 +610,13 @@ export default {
 
       .start-btn {
         height: 130rpx;
-        line-height: 130rpx;
-        padding: 0 !important;
-        font-size: 14px;
+        //line-height: 130rpx;
+        padding: 20rpx 0rpx !important;
+        font-size: 16px;
+		font-weight: bold;
         background: #FFD800 !important;
         color: #AB6102;
+		
       }
 
       .start-btn-mask {
