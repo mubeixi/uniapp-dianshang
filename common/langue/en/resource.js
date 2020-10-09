@@ -917,7 +917,7 @@ var resource = {
 "902x13": "dispatched",
 "902x14": "Comment",
 "902x15": "Setting",
-"902x16": "Multi-language selection",
+"902x16": "language",
 "902d0": "Failed to initialize personal center",
 "902d1": "general user",
 "921x0": "Home",
