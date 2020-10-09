@@ -87,15 +87,9 @@
     </div>
 
     <div class="num-count">
-<<<<<<< HEAD
       <image :src="'/static/marketing/num_count.png'|domain" class="num-count-img" />
       <div class=" text font14">{{$t('1305x0')}}<span class="font16 danger-color" style="">{{day_count}}</span>{{$t('1305x1')}}<span
       class="font16 danger-color" style="">{{total_count}}</span>{{$('manual','times')}}
-=======
-      <image :src="'/static/client/marketing/num_count.png'|domain" class="num-count-img" />
-      <div class=" text font14">今日剩余抽奖次数<span class="font16 danger-color" style="">{{day_count}}</span>次,总剩余抽奖次数<span
-      class="font16 danger-color" style="">{{total_count}}</span>次
->>>>>>> remotes/origin/develop
       </div>
     </div>
 
