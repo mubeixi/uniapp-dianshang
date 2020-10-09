@@ -6,15 +6,15 @@
                color="#F43131" v-if="check_flag" />
         <view class="flex-main">
           <view class='flex-top'>
-            <view class='name'>{{$t(162)}}：{{item.Address_Name}}</view>
+            <view class='name'>{{$t('187x0')}}：{{item.Address_Name}}</view>
             <view class='pho'>{{item.Address_Mobile}}</view>
           </view>
-          <view class='flex-add'>{{$t(163)}}：{{item.Address_Province_name}} {{item.Address_City_name}}
+          <view class='flex-add'>{{$t('187x1')}}：{{item.Address_Province_name}} {{item.Address_City_name}}
             {{item.Address_Area_name}}
             <block v-if="item.Address_Town_name">{{item.Address_Town_name}}</block>
             {{item.Address_Detailed}}
           </view>
-          <view class='flex-add default' v-if="item.Address_Is_Default == 1">{{$t(164)}}</view>
+          <view class='flex-add default' v-if="item.Address_Is_Default == 1">{{$t('187x2')}}</view>
         </view>
         <view class="flex-action">
           <image :src="'/static/client/address/del.png'|domain" @click="deladdress(item.Address_ID)"></image>
@@ -28,7 +28,7 @@
       <view class='jia_img'>
         <image :src="'/static/client/jia.png'|domain"></image>
       </view>
-      <text>{{$t(165)}}</text>
+      <text>{{$t('187x3')}}</text>
       <view class='go_img'>
         <image :src="'/static/client/address/go.png'|domain"></image>
       </view>
@@ -87,8 +87,8 @@ export default {
       var that = this
       var del_address_id = id
       uni.showModal({
-        title: T._(162),
-        content: T._(163),
+        title: T._('187d0'),
+        content: T._('187d1'),
         success: function (res) {
           if (res.confirm) {
             if (del_address_id) {
@@ -105,17 +105,17 @@ export default {
                 del_address_id = 0
 
                 uni.showToast({
-                  title: T._(164),
+                  title: T._('187d2'),
                   icon: 'success',
                   duration: 1000
                 })
               }).catch(() => {
-                modal(T._(165))
+                modal(T._('187d3'))
               })
             } else {
               uni.showModal({
-                title: T._(166),
-                content: T._(167),
+                title: T._('187d4'),
+                content: T._('187d5'),
                 showCancel: false
               })
             }
@@ -276,7 +276,6 @@ export default {
   }
 
   .tianjia text {
-    width: 200rpx;
     float: left;
     margin-left: 10rpx;
   }

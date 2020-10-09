@@ -68,7 +68,7 @@ export default {
     })
     // #endif
 	  
-	  console.log(this.node)
+	  // console.log(this.node)
   },
   methods: {
     wxParseImgTap (e) {

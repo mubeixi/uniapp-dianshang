@@ -5,15 +5,15 @@
         <image :src="live.cover_img" class="cover" mode="aspectFill"></image>
         <view class="info">
           <view class="row">
-            <view class="label">{{$t(1002)}}</view>
+            <view class="label">{{$t('1322x0')}}</view>
             <view class="content font12">{{live.start_time}} {{$('manual','-')}}<br />{{live.end_time}}</view>
           </view>
           <view class="row">
-            <view class="label">{{$t(1003)}}</view>
+            <view class="label">{{$t('1322x1')}}</view>
             <view class="content">{{live.anchor_name}}</view>
           </view>
           <view class="row">
-            <view class="label">{{$t(1004)}}</view>
+            <view class="label">{{$t('1322x2')}}</view>
             <view class="content flex status">
               <view :class="[getLiveStatusStyle(live.live_status)]" class="status-text">{{live.room_status_txt}}</view>
               <image :src="getLiveIconUrl(live.live_status)" class="status-icon padding10-c" mode="widthFix"></image>
@@ -23,7 +23,7 @@
             <!-- :url="'plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id='+live.roomid" -->
             <navigator :url="'plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id='+live.roomid"
                        class="btn"
-                       style="color: #07c160;">{{$t(1005)}}
+                       style="color: #07c160;">{{$t('1322x3')}}
             </navigator>
             <!-- <subscribe :class="{active:live.live_status===101}" class="btn"  :room-id="'['+live.roomid+']'">开播提醒</subscribe> -->
           </view>
@@ -31,7 +31,7 @@
             <!-- :url="'plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id='+live.roomid" -->
             <navigator :class="{active:live.live_status===101}"
                        :url="'plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id='+live.roomid"
-                       class="btn">{{$t(1006)}}
+                       class="btn">{{$t('1322x4')}}
             </navigator>
             <!-- <subscribe :class="{active:live.live_status===101}" class="btn"  :room-id="'['+live.roomid+']'">开播提醒</subscribe> -->
           </view>

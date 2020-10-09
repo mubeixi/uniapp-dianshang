@@ -2,35 +2,35 @@
   <view @click="commonClick" class="wrap">
     <view class="myTop">
       <view class="myView">
-        {{$t(1636)}}
+        {{$t('2154x0')}}
         <text class="colorFont">{{list.start_time}}</text>
       </view>
       <view class="myView">
-        {{$t(1637)}}
+        {{$t('2154x1')}}
         <text class="colorFont">{{list.end_time}}</text>
       </view>
       <view class="myView">
-        {{$t(1638)}}
+        {{$t('2154x2')}}
         <text class="colorRed">¥{{list.Order_TotalAmount||0}}</text>
       </view>
       <view class="myView">
-        {{$t(1639)}}
+        {{$t('2154x3')}}
         <text class="colorFont">{{list.Distribute_Balance||'0:0'}}</text>
       </view>
       <view class="myView">
-        {{$t(1640)}}
+        {{$t('2154x4')}}
         <text class="colorFont">¥{{list.Shipping_fee||0}}</text>
       </view>
       <view class="myView">
-        {{$t(1641)}}
+        {{$t('2154x5')}}
         <text class="colorFont">¥{{list.service_fee||0}}</text>
       </view>
       <view class="myView">
-        {{$t(1642)}}:
+        {{$t('2154x6')}}:
         <text class="colorFont">¥{{list.back_amount||0}}</text>
       </view>
       <view class="myView">
-        {{$t(1643)}}
+        {{$t('2154x7')}}
         <text class="colorRed">¥{{list.Stores_Balance||0}}</text>
       </view>
     </view>
@@ -38,15 +38,15 @@
     <view style="background-color: #F8F8F8;height: 10px;width: 750rpx;"></view>
 
     <view class="tableTitle">
-      {{$t(1644)}}
+      {{$t('2154x8')}}
     </view>
     <view class="table">
       <view class="th">
-        <view class="td">{{$t(1645)}}</view>
-        <view class="td">{{$t(1646)}}</view>
-        <view class="td">{{$t(1647)}}</view>
-        <view class="td">{{$t(1648)}}</view>
-        <view class="td">{{$t(1649)}}</view>
+        <view class="td">{{$t('2154x9')}}</view>
+        <view class="td">{{$t('2154x10')}}</view>
+        <view class="td">{{$t('2154x11')}}</view>
+        <view class="td">{{$t('2154x12')}}</view>
+        <view class="td">{{$t('2154x13')}}</view>
       </view>
       <view :key="index" class="tr" v-for="(item,index) of list.orders">
         <view class="td">{{item.order_id}}</view>
@@ -58,10 +58,10 @@
     </view>
 
     <view @click="goStore" class="buttons" v-if="list.orders">
-      {{$t(1650)}}
+      {{$t('2154x14')}}
     </view>
     <view class="buttons ccc" v-if="!list.orders">
-      {{$t(1651)}}
+      {{$t('2154x15')}}
     </view>
   </view>
 </template>
@@ -115,7 +115,7 @@ export default {
           })
         }, 1000)
       }).catch(() => {
-        modal(T._(1636))
+        modal(T._('2154d0'))
       })
     },
     search () {
@@ -128,7 +128,7 @@ export default {
         this.list = res.data
         this.index = 2
       }).catch(() => {
-        modal(T._(1637))
+        modal(T._('2154d1'))
       })
     },
     bindDateChangeEnd (e) {

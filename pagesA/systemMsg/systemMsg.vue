@@ -10,7 +10,7 @@
         </view>
         <view class="view">
           <block v-if="item.is_read==0">
-            {{$t(1779)}}
+            {{$t('2352x0')}}
           </block>
           <image class="image zhan" src="/static/person/msg-arrow-right.png" v-else-if="item.isShow"></image>
           <image class="image shou" mode="" src="/static/person/msg-arrow-top.png" v-else></image>

@@ -44,7 +44,7 @@ export default {
             url: '/pagesA/order/checkOrderInfo?Order_Code=' + params.Order_Code
           })
         } else {
-          error(T._(1047))
+          error(T._('1331d0'))
         }
       })
     }

@@ -3,16 +3,16 @@
         <div class="leftss">
             <div class="first" @click="toHome">
                 <image class='img' src="/static/detail/home.png"></image>
-                <text class="txt">{{$t(377)}}</text>
+                <text class="txt">{{$t('469x0')}}</text>
             </div>
             <div class="first" @click="collectFn">
                 <image class='img' v-if="isCollected" src="/static/detail/favorite-a.png"></image>
                 <image class='img' v-else src="/static/detail/favorite.png"></image>
-                <text class="txt">{{$t(378)}}</text>
+                <text class="txt">{{$t('469x1')}}</text>
             </div>
             <div class="first" @click="kefu">
                 <image class='img' src="/static/detail/kefu.png"></image>
-                <text class="txt">{{$t(379)}}</text>
+                <text class="txt">{{$t('469x2')}}</text>
             </div>
         </div>
         <div class="rightss">
@@ -21,7 +21,7 @@
             		<text class="bF">¥</text><text class="bS">{{postData.Products_PriceX}}</text>
             	</div>
 
-            	<text class="danRight">{{$t(380)}}</text>
+            	<text class="danRight">{{$t('469x3')}}</text>
 
             </div>
 
@@ -29,7 +29,7 @@
             	<div class="danLeft">
             		<text class="bF">¥</text><text class="bS">{{postData.pintuan_pricex}}</text>
             	</div>
-				<text class="danRight">{{$t(381)}}</text>
+				<text class="danRight">{{$t('469x4')}}</text>
 
             </div>
         </div>

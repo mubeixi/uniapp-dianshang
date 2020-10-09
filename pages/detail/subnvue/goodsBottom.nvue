@@ -3,23 +3,23 @@
         <div class="leftss">
             <div class="first" @click="toHome">
                 <image class='img' src="/static/detail/home.png"></image>
-                <text class="txt">{{$t(372)}}</text>
+                <text class="txt">{{$t('353x0')}}</text>
             </div>
             <div class="first" @click="collectFn">
                 <image class='img' v-if="isCollected" src="/static/detail/favorite-a.png"></image>
                 <image class='img' v-else src="/static/detail/favorite.png"></image>
-                <text class="txt">{{$t(373)}}</text>
+                <text class="txt">{{$t('353x1')}}</text>
             </div>
             <div class="first" @click="kefu">
                 <image class='img' src="/static/detail/kefu.png"></image>
-                <text class="txt">{{$t(374)}}</text>
+                <text class="txt">{{$t('353x2')}}</text>
             </div>
         </div>
         <div class="rightss">
             <text v-if="!(recieve || isVirtual)" class="dan bTitle" @click="addCart">{{first}}</text>
             <text v-if="!(recieve || isVirtual)" class="tuan bTitle" @click="directBuy">{{second}}</text>
             <text class="all" @click="lingqu" :class="canSubmit?'':'disable'" v-if="(recieve || isVirtual)">
-                {{isVirtual ? $t(375) : $t(376)}}
+                {{isVirtual ? $t('353x3') : $t('353x4')}}
             </text>
         </div>
     </div>
@@ -35,8 +35,8 @@ export default {
                 recieve:false,
                 isVirtual:false,
                 canSubmit:true,
-                first:T._(372),
-                second:T._(373)
+                first:T._('353d0'),
+                second:T._('353d1')
             };
         },
         props: {

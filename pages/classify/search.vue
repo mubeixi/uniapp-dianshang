@@ -5,12 +5,12 @@
         <icon class="search_icon" size="34rpx" type="search" />
         <input @confirm="success" autofocus="autofocus" class="search-input" confirm-type='search' focus="focus"
                name="search" type="text" v-model="inputValue">
-        <span @click="close" class="span">{{ $t(183) }}</span>
+        <span @click="close" class="span">{{ $t('197x0') }}</span>
       </div>
     </form>
     <div class="history" v-if="searchAll.length>0">
       <div class="title">
-        <div>{{ $t(184) }}</div>
+        <div>{{ $t('197x1') }}</div>
         <div @click="clear" class="dels">
           <image :src="'/static/client/del.png'|domain" class="img" />
         </div>

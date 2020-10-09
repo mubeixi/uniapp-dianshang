@@ -6,20 +6,20 @@
     <!-- <page-title title="设置" rightHidden="true" bgcolor="#F8F8F8"></page-title> -->
     <view class="wrap">
       <view @click="update(3)" class="item">
-        <view>{{$t(1120)}}</view>
+        <view>{{$t('1414x0')}}</view>
         <image :src="'/static/client/right.png'|domain" mode=""></image>
       </view>
       <view @click="update(0)" class="item">
-        <view>{{$t(1121)}}</view>
+        <view>{{$t('1414x1')}}</view>
         <image :src="'/static/client/right.png'|domain" mode=""></image>
       </view>
       <view @click="update(1)" class="item">
-        <view>{{$t(1122)}}</view>
+        <view>{{$t('1414x2')}}</view>
         <image :src="'/static/client/right.png'|domain" mode=""></image>
       </view>
 
     </view>
-    <view @click="logoutFunc" class="btn">{{$t(1123)}}</view>
+    <view @click="logoutFunc" class="btn">{{$t('1414x3')}}</view>
   </view>
 </template>
 
@@ -65,8 +65,8 @@ export default {
     },
     logoutFunc () {
       confirm({
-        title: T._(1120),
-        content: T._(1121)
+        title: T._('1414d0'),
+        content: T._('1414d1')
       }).then(res => {
         bindUserClientId({ action: 'clear' }, { errtip: false }).then(() => {
         }).catch(() => {

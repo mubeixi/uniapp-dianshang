@@ -14,14 +14,14 @@
           {{pro.disInfo.Shop_Name}}
         </view>
         <view class="tuijianren">
-          {{$t(896)}}{{pro.disInfo.Parent_NickName}}
+          {{$t('1147x0')}}{{pro.disInfo.Parent_NickName}}
         </view>
       </view>
     </view>
     <view class="teamContent">
       <view class="teamNumber">
         <image class="image" src="/static/red-people.png"></image>
-        <view class="viewq">{{$t(897)}}</view>
+        <view class="viewq">{{$t('1147x1')}}</view>
       </view>
       <view :key="index" @click="goMyNumber(index)" class="teamGrade" v-for="(item,index) of pro.team_level_count">
         <view class="views">

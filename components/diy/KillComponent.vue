@@ -23,41 +23,41 @@
             <div class="tag img" v-else v-show="goods.config.attr.tag.show"><img
             :src="goods.config.attr.tag.img|domain" /></div>
 
-            <div class="stamp" v-if="goods.config.style!=3">{{$t(100)}}{{item.countdown.is_start?$t(101):$t(102)}}<span
-            class="countdown_tag2">{{item.countdown.d|zero}}</span>{{$t(103)}}<span class="countdown_tag">{{item.countdown.h|zero}}</span>{{$t(104)}}<span
-            class="countdown_tag">{{item.countdown.m|zero}}</span>{{$t(105)}}<span
-            class="countdown_tag">{{item.countdown.s|zero}}</span>{{$t(106)}}<span
-            class="count" v-if="goods.config.style==1">{{$t(107)}}{{item.attr_json.count}}</span></div>
+            <div class="stamp" v-if="goods.config.style!=3">{{$t('78x0')}}{{item.countdown.is_start?$t('78x1'):$t('78x2')}}<span
+            class="countdown_tag2">{{item.countdown.d|zero}}</span>{{$t('78x3')}}<span class="countdown_tag">{{item.countdown.h|zero}}</span>{{$t('78x4')}}<span
+            class="countdown_tag">{{item.countdown.m|zero}}</span>{{$t('78x5')}}<span
+            class="countdown_tag">{{item.countdown.s|zero}}</span>{{$t('78x6')}}<span
+            class="count" v-if="goods.config.style==1">{{$t('78x7')}}{{item.attr_json.count}}</span></div>
 
-            <span class="count" v-if="goods.config.style==3">{{$t(108)}}{{item.attr_json.count}}</span>
+            <span class="count" v-if="goods.config.style==3">{{$t('78x8')}}{{item.attr_json.count}}</span>
 
           </div>
           <div :class="{empyInfo:isEmpeyInfo}" :style="{width:goods.config.style==2?itemw:''}" class="info">
             <div class="left">
               <div class="title" v-show="goods.config.attr.title.show">{{item.Products_Name}}</div>
               <div class="font12 graytext desc" v-show="goods.config.attr.desc.show">
-                {{item.Products_BriefDescription||$t(109)}}
+                {{item.Products_BriefDescription||$t('78x9')}}
               </div>
               <div class="price" v-if="goods.config.style!=1" v-show="goods.config.attr.price.show"><span
-              class="graytext2 font12">{{$t(110)}} </span><span class="sign">￥</span><span style="font-weight: 600">{{item.attr_json.price}}</span><span
+              class="graytext2 font12">{{$t('78x10')}} </span><span class="sign">￥</span><span style="font-weight: 600">{{item.attr_json.price}}</span><span
               class="graytext2 market-price font12"> ￥{{item.Products_PriceX}} </span>
               </div>
             </div>
-            <div class="stamp" v-if="goods.config.style==3">{{$t(111)}}{{item.countdown.is_start?$t(112):$t(113)}}<span
-            class="countdown_tag2">{{item.countdown.d|zero}}</span>{{$t(114)}}<span class="countdown_tag">{{item.countdown.h|zero}}</span>{{$t(115)}}<span
-            class="countdown_tag">{{item.countdown.m|zero}}</span>{{$t(116)}}<span
-            class="countdown_tag">{{item.countdown.s|zero}}</span>{{$t(117)}}
+            <div class="stamp" v-if="goods.config.style==3">{{$t('78x11')}}{{item.countdown.is_start?$t('78x12'):$t('78x13')}}<span
+            class="countdown_tag2">{{item.countdown.d|zero}}</span>{{$t('78x14')}}<span class="countdown_tag">{{item.countdown.h|zero}}</span>{{$t('78x15')}}<span
+            class="countdown_tag">{{item.countdown.m|zero}}</span>{{$t('78x16')}}<span
+            class="countdown_tag">{{item.countdown.s|zero}}</span>{{$t('78x17')}}
             </div>
             <div class="bottom-box">
               <div class="price" v-if="goods.config.style==1" v-show="goods.config.attr.price.show"><span
-              class="graytext2 font12">{{$t(118)}} </span><span class="sign">￥</span><span
+              class="graytext2 font12">{{$t('78x18')}} </span><span class="sign">￥</span><span
               style="font-weight: 600">{{item.attr_json.price}}</span><span
               class="graytext2 market-price font12"> ￥{{item.Products_PriceX}} </span></div>
 
-              <span class="count" v-if="goods.config.style==2">{{$t(119)}}{{item.attr_json.count}}</span>
+              <span class="count" v-if="goods.config.style==2">{{$t('78x19')}}{{item.attr_json.count}}</span>
               <div :class="'theme'+goods.config.attr.buybtn.style" class="buybtn"
                    v-show="goods.config.attr.buybtn.show">
-                {{item.countdown.is_start?$t(120):$t(121)}}
+                {{item.countdown.is_start?$t('78x20'):$t('78x21')}}
               </div>
             </div>
           </div>
@@ -90,9 +90,9 @@ export default {
       loadFinish: false,
       infoTmpl: {
         Products_ID: 33,
-        Products_Name: T._(100),
+        Products_Name: T._('78d0'),
         Products_PriceX: 99.99,
-        Products_BriefDescription: T._(101),
+        Products_BriefDescription: T._('78d1'),
         ImgPath: ''
       },
       goods: {

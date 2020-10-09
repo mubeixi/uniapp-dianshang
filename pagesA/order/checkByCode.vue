@@ -1,9 +1,9 @@
 <template>
   <div @click="commonClick" class="wrap">
     <div class="input-box">
-      <input class="input" confirm-type="done" :placeholder="$t(1045)" type="digit" v-model="Order_Code" />
+      <input class="input" confirm-type="done" :placeholder="$t('1327x0')" type="digit" v-model="Order_Code" />
     </div>
-    <button @click="subFn" class="sub" type="warn">{{$t(1046)}}</button>
+    <button @click="subFn" class="sub" type="warn">{{$t('1327x1')}}</button>
   </div>
 </template>
 
@@ -25,7 +25,7 @@ export default {
     subFn () {
       const Order_Code = this.Order_Code
       if (!Order_Code) {
-        error(T._(1045))
+        error(T._('1327d0'))
         return
       }
 
@@ -37,7 +37,7 @@ export default {
             url: '/pagesA/order/checkOrderInfo?Order_Code=' + Order_Code
           })
         } else {
-          error(T._(1046))
+          error(T._('1327d1'))
         }
       }).catch(e => {
         error(e.msg)

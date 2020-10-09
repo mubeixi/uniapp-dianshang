@@ -24,13 +24,13 @@
       </view>
       <view class="second">
         <view class="secondQ">
-          {{$t(1682)}}
+          {{$t('2242x0')}}
         </view>
         <view class="secondW">
-          {{$t(1683)}}
+          {{$t('2242x1')}}
         </view>
         <view class="secondE">
-          {{$t(1684)}}
+          {{$t('2242x2')}}
         </view>
       </view>
     </view>
@@ -40,12 +40,12 @@
         <picker :range="change_objectMultiArray" :value="change_multiIndex" @change="bindMultiPickerChange"
                 @columnchange="bindMultiPickerColumnChange" mode="multiSelector" range-key="name">
           <view class="picker">
-            <view class="view quyu">{{$t(1685)}}</view>
-            <view class="view" v-if="!address_info.Address_Province">{{$t(1686)}}</view>
+            <view class="view quyu">{{$t('2242x3')}}</view>
+            <view class="view" v-if="!address_info.Address_Province">{{$t('2242x4')}}</view>
             <view class="view" v-else>{{objectMultiArray[0][multiIndex[0]]['name']}}</view>
-            <view class="view" v-if="!address_info.Address_City">{{$t(1687)}}</view>
+            <view class="view" v-if="!address_info.Address_City">{{$t('2242x5')}}</view>
             <view class="view" v-else>{{objectMultiArray[1][multiIndex[1]]['name']}}</view>
-            <view class="view" v-if="!address_info.Address_Area">{{$t(1688)}}</view>
+            <view class="view" v-if="!address_info.Address_Area">{{$t('2242x6')}}</view>
             <view class="view" v-else>{{objectMultiArray[2][multiIndex[2]]['name']}}</view>
           </view>
         </picker>
@@ -55,10 +55,10 @@
       </view>
     </view>
     <view class="four">
-      {{$t(1689)}}
+      {{$t('2242x7')}}
     </view>
     <view class="five">
-      {{$t(1690)}}
+      {{$t('2242x8')}}
       <image :src="'/static/client/fenxiao/chakan.png'|domain" class="image"></image>
     </view>
   </view>

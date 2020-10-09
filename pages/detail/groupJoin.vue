@@ -31,19 +31,19 @@
     <ul class="second">
       <li class="lis">
         <image :src="'/static/client/tuan/check.png'|domain" class="img" />
-       {{$t(241)}}
+       {{$t('317x0')}}
       </li>
       <li class="lis">
         <image :src="'/static/client/tuan/check.png'|domain" class="img" />
-       {{$t(242)}}
+       {{$t('317x1')}}
       </li>
       <li class="lis">
         <image :src="'/static/client/tuan/check.png'|domain" class="img" />
-        {{$t(243)}}
+        {{$t('317x2')}}
       </li>
       <li class="lis">
         <image :src="'/static/client/tuan/check.png'|domain" class="img" />
-        {{$t(244)}}
+        {{$t('317x3')}}
       </li>
     </ul>
     <!-- 团长 -->
@@ -57,7 +57,7 @@
         <li class="liq" v-for="(user,idx) in join_team_list">
           <image :src="user.User_HeadImg" class="img" />
           <image :src="'/static/client/tuan/tuanzhang.png'|domain" class=" img tuanzhang" v-if="user.team_head" />
-          <span class="tuanzhang" v-if="user.team_head">{{$t(245)}}</span>
+          <span class="tuanzhang" v-if="user.team_head">{{$t('317x4')}}</span>
         </li>
 
       </ul>
@@ -71,7 +71,7 @@
     <div class="times"   v-if="product.teamstatus!=1">
       <div class="line"></div>
       <div class="text">
-        {{$t(246)}}
+        {{$t('317x5')}}
         <div class="myTime">
           <span class="num">{{countdown.h}}</span>
           <span class="lines">:</span>
@@ -79,7 +79,7 @@
           <span class="lines">:</span>
           <span class="num">{{countdown.s}}</span>
         </div>
-        {{$t(247)}}
+        {{$t('317x6')}}
       </div>
       <div class="line"></div>
     </div>
@@ -90,20 +90,20 @@
 
     <!-- #ifdef MP-WEIXIN || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO -->
     <div class="liji"   v-if="product.teamstatus!=1">
-      <button class="vanButton invi" open-type="share" v-if="joined">{{$t(248)}}</button>
-      <div @click="joinFunc" class="vanButton" v-else>{{$t(249)}}</div>
+      <button class="vanButton invi" open-type="share" v-if="joined">{{$t('317x7')}}</button>
+      <div @click="joinFunc" class="vanButton" v-else>{{$t('317x8')}}</div>
     </div>
     <!-- #endif -->
 
     <!-- #ifdef H5 || APP-PLUS -->
     <div class="liji"  v-if="product.teamstatus!=1">
-      <view @click="inviteFunc" class="vanButton" v-if="joined">{{$t(250)}}</view>
-      <div @click="joinFunc" class="vanButton" v-else>{{$t(251)}}</div>
+      <view @click="inviteFunc" class="vanButton" v-if="joined">{{$t('317x9')}}</view>
+      <div @click="joinFunc" class="vanButton" v-else>{{$t('317x10')}}</div>
     </div>
     <!-- #endif -->
 
     <div class="liji"  v-if="product.teamstatus==1">
-      <div class="vanButton" >{{$t(252)}}</div>
+      <div class="vanButton" >{{$t('317x11')}}</div>
     </div>
 
     <!--            <div class="liji">-->
@@ -115,28 +115,28 @@
     <div class="mbxline"></div>
     <!-- 拼团规则 -->
     <div class="guize">
-      <div class="top">{{$t(253)}}</div>
+      <div class="top">{{$t('317x12')}}</div>
       <div class="xiang">
         <div class="hang">
           <image :src="'/static/client/tuan/ju.png'|domain" class="img" />
-          <span>{{$t(254)}}</span>
+          <span>{{$t('317x13')}}</span>
         </div>
         <div class="hang">
           <image :src="'/static/client/tuan/ju.png'|domain" class="img" />
-          <span>{{$t(255)}}</span>
+          <span>{{$t('317x14')}}</span>
         </div>
         <div class="hang">
           <image :src="'/static/client/tuan/ju.png'|domain" class="img" />
-          <span>{{$t(256)}}</span>
+          <span>{{$t('317x15')}}</span>
         </div>
         <div class="hang">
           <image :src="'/static/client/tuan/ju.png'|domain" class="img" />
-          <span>{{$t(257)}}</span>
+          <span>{{$t('317x16')}}</span>
         </div>
       </div>
     </div>
     <!-- 更多 -->
-    <div class="dianzhang">{{$t(258)}}</div>
+    <div class="dianzhang">{{$t('317x17')}}</div>
     <div class="prolist">
       <div :key="index" @click="goProductDetail(item.Products_ID,item.is_pintuan)" class="pro-item"
            v-for="(item,index) in prodList">
@@ -158,21 +158,21 @@
           <!-- #ifdef APP-PLUS -->
           <div @click="shareFunc('wx')" class="flex1">
             <image :src="'/static/client/detail/share1.png'|domain" alt="" class='img'></image>
-            <div>{{$t(259)}}</div>
+            <div>{{$t('317x18')}}</div>
           </div>
           <div @click="shareFunc('wxtimeline')" class="flex1">
             <image :src="'/static/client/detail/sahre3.png'|domain" alt="" class='img'></image>
-            <div>{{$t(260)}}</div>
+            <div>{{$t('317x19')}}</div>
           </div>
           <!--只有配置了这个参数的app，才有分享到小程序选项-->
           <div @click="shareFunc('wxmini')" class="flex1" v-if="wxMiniOriginId">
             <img :src="'/static/client/detail/share4.png'|domain" alt="" class='img'>
-            <div>{{$t(261)}}</div>
+            <div>{{$t('317x20')}}</div>
           </div>
           <!-- #endif -->
 
         </div>
-        <div @click="cancel" class="s_bottom">{{$t(262)}}</div>
+        <div @click="cancel" class="s_bottom">{{$t('317x21')}}</div>
       </div>
     </popupLayer>
 
@@ -195,8 +195,16 @@
           <div class="cartTitle">
             <div class="cartTitles">{{product.Products_Name}}</div>
             <div class="addInfo">
-              <div class="addPrice">{{pt_pricex}}{{$t(263)}}</div>
-              <div class="proSale">{{$t(264)}}{{postData.count}}</div>
+              <div class="addPrice">
+				  <block v-if="$p('zh-cn')">
+					  {{pt_pricex}}{{$t('317x22')}}
+				  </block>
+				  <block v-if="$p('en-us')">
+					  {{$t('317x22')}}{{pt_pricex}}
+				  </block>
+			  
+			  </div>
+              <div class="proSale">{{$t('317x23')}}{{postData.count}}</div>
             </div>
           </div>
         </div>
@@ -214,7 +222,7 @@
         </div>
         <div class="numBer">
           <div class="numBers">
-            {{$t(265)}}
+            {{$t('317x24')}}
           </div>
           <div class="inputNumber">
             <div @click="delNum" class="clicks">-</div>
@@ -225,7 +233,7 @@
         </div>
       </div>
       <div :class="submit_flag?'':'disabled'" @click="skuSub" class="cartSub">
-        {{$t(266)}}
+        {{$t('317x25')}}
       </div>
     </popupLayer>
 
@@ -276,7 +284,7 @@ export default {
         m: 0,
         s: 0
       },
-      msg: T._(241), // 立即参团
+      msg: T._('317d0'), // 立即参团
       prod_arg: {
         page: 1,
         pageSize: 4
@@ -375,7 +383,7 @@ export default {
       check_attrnames = check_attrnames.join(';')
       this.postData.atr_str = check_attrnames
       this.postData.atrid_str = check_attrid
-      console.log(attr_val, 'sss')
+      // console.log(attr_val, 'sss')
       if (attr_val && attr_val.Product_Attr_ID) {
         this.postData.attr_id = attr_val.Product_Attr_ID
       }
@@ -412,7 +420,7 @@ export default {
       if (this.postData.atr_str == '' || this.postData.atrid_str == '') {
         if (this.product.skujosn) {
           wx.showToast({
-            title: T._(242),
+            title: T._('317d1'),
             icon: 'none'
           })
           return
@@ -437,12 +445,12 @@ export default {
       const amount = e.detail.value
       if (amount <= 0) {
         this.postData.qty = 1
-        error(T._(243))
+        error(T._('317d2'))
         return
       }
       if (amount > this.postData.count) {
         this.postData.qty = this.postData.count
-        error(T._(244))
+        error(T._('317d3'))
       }
     },
     addNum () {
@@ -450,7 +458,7 @@ export default {
         this.postData.qty = parseInt(this.postData.qty) + 1
       } else {
         uni.showToast({
-          title: T._(245),
+          title: T._('317d4'),
           icon: 'none'
         })
         this.postData.qty = this.postData.count
@@ -461,7 +469,7 @@ export default {
         this.postData.qty = parseInt(this.postData.qty) - 1
       } else {
         uni.showToast({
-          title: T._(246),
+          title: T._('317d5'),
           icon: 'none'
         })
         this.postData.qty = 1
@@ -544,7 +552,7 @@ export default {
           })
 
           if (!sharePic) {
-            error(T._(247))
+            error(T._('317d6'))
             return
           }
 
@@ -669,7 +677,7 @@ export default {
             title: product.Products_Name, // 分享标题
             link: front_url + buildSharePath(path), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
             imgUrl: product.ImgPath, // 分享图标
-            desc: product.Products_BriefDescription || T._(248),
+            desc: product.Products_BriefDescription || T._('317d7'),
             type: 'link', // 分享类型,music、video或link，不填默认为link
             // dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
             success: function () {

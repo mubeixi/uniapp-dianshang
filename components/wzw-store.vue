@@ -33,7 +33,7 @@
         <image src="/static/add.png" style="width: 40rpx;height: 40rpx" @click.stop="addQty"></image>
       </div>
       <div class="store-cart" v-else @click.stop="updaCart">
-        {{$t(158)}}
+        {{$t('181x0')}}
       </div>
     </div>
 
@@ -88,7 +88,7 @@ export default {
     },
     delQty () {
       if (this.cartData.Qty <= 1) {
-        error(T._(158))
+        error(T._('181d0'))
         return
       }
       this.$emit('delQty', this.cartData)

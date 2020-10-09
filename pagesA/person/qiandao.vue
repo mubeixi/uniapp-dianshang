@@ -7,11 +7,11 @@
         <image :src="'/static/client/task/yuan.png'|domain" class="image"></image>
         <image :src="'/static/client/task/qiandao.png'|domain" class="qiandao image"></image>
         <view class="qiandaoliji">
-          {{pro.signin?$t(1208):$t(1209)}}
+          {{pro.signin?$t('1634x0'):$t('1634x1')}}
         </view>
       </view>
       <view class="msg">
-        {{$t(1210)}}
+        {{$t('1634x2')}}
       </view>
     </view>
 
@@ -27,7 +27,7 @@
     </view>
     <view class="err">
       <image :src="'/static/client/task/err.png'|domain" class="image" mode=""></image>
-      {{$t(1211)}}
+      {{$t('1634x3')}}
     </view>
     <view class="last" v-if="pro">
       {{pro.desc}}
@@ -59,7 +59,7 @@ export default {
       if (!this.$fun.checkIsLogin(1)) return
       if (this.pro.signin == 1) {
         uni.showToast({
-          title: T._(1208),
+          title: T._('1634d0'),
           icon: 'none'
         })
       }

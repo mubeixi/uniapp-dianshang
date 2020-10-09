@@ -3,8 +3,8 @@
     <!-- #ifdef APP-PLUS -->
     <view class="status_bar" style="background: #fff"><!-- 这里是状态栏 --></view>
     <!-- #endif -->
-    <page-title :right="isShow ? $t(1007) : $t(1008)" :rightHidden="false" @rightHandle="handle" bgcolor="#ffffff"
-                title="$t(1009)"></page-title>
+    <page-title :right="isShow ? $t('1300x0') : $t('1300x1')" :rightHidden="false" @rightHandle="handle" bgcolor="#ffffff"
+                :title="$t('1300x2')"></page-title>
     <view class="content">
       <block :key="index" v-for="(item,index) of data ">
         <view @click="change(item)" class="cardInfo" v-if="item.Method_Type=='bank_card'||item.Method_Type=='alipay'">
@@ -22,7 +22,7 @@
       </block>
     </view>
     <view @click="addMethod" class="addMethod">
-      + {{$t(1010)}}
+      + {{$t('1300x3')}}
     </view>
   </view>
 </template>
@@ -70,7 +70,7 @@ export default {
         User_Method_ID: item.User_Method_ID
       }
       uni.showModal({
-        title: T._(1007),
+        title: T._('1300d0'),
         content: ' ',
         success: function (res) {
           if (res.confirm) {

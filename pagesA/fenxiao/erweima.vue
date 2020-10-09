@@ -42,11 +42,11 @@
         </block>
         <!-- <view class="left" @click="spreadQr(0,0)" v-show="initData.login_methods.mp_flag==1">
           <image class="image" :src="'/static/client/fenxiao/weixin.png'|domain" ></image>
-          <view class="haha">{{$t(809)}}</view>
+          <view class="haha">{{$t('1062x0')}}</view>
         </view>
         <view class="right" @click="spreadQr(1,0)">
           <image class="image" :src="'/static/client/fenxiao/tuiguang.png'|domain" ></image>
-          <view class="haha">{{$t(810)}}</view>
+          <view class="haha">{{$t('1062x1')}}</view>
         </view> -->
         <!--				<view class="right" @click="spreadQr(0,1)">-->
         <!--					<image class="image" :src="'/static/client/fenxiao/chongsheng.png'|domain" ></image>-->
@@ -117,7 +117,7 @@ export default {
         type,
         again,
         owner_id: this.userInfo.User_ID
-      }, { tip: T._(809) }).then(res => {
+      }, { tip: T._('1062d0') }).then(res => {
         uni.previewImage({
           urls: [res.data.img_url]
         })

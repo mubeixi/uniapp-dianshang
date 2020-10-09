@@ -15,7 +15,7 @@
               {{item.attr_name}}
             </view>
             <view class="skuCount" v-else>
-              {{$t(1466)}}
+              {{$t('1936x0')}}
             </view>
             <view class="allPrice">
               ×{{item.prod_count}}
@@ -33,31 +33,31 @@
     <view class="orderDetail">
       <view class="orderDetailTop">
         <view class="leftDiv"></view>
-        <view>{{$t(1467)}}</view>
+        <view>{{$t('1936x1')}}</view>
       </view>
 
       <view class="orderDetailBottom">
         <view class="viewHeight">
-          {{$t(1468)}}<span class="fontColor">{{orderInfo.Order_ID}}</span>
+          {{$t('1936x2')}}<span class="fontColor">{{orderInfo.Order_ID}}</span>
         </view>
         <view class="viewHeight">
-          {{$t(1469)}} ¥<span class="fontColor">{{orderInfo.Order_TotalAmount}}</span>
+          {{$t('1936x3')}} ¥<span class="fontColor">{{orderInfo.Order_TotalAmount}}</span>
         </view>
         <!-- <view class="viewHeight">
-          {{$t(1470)}} ¥<span class="fontColor"></span>
+          {{$t('1936x4')}} ¥<span class="fontColor"></span>
         </view> -->
         <view class="viewHeight">
-          {{$t(1471)}}： ¥<span class="fontColor">{{orderInfo.Order_Shipping && orderInfo.Order_Shipping.price || 0}}</span>
+          {{$t('1936x5')}}： ¥<span class="fontColor">{{orderInfo.Order_Shipping && orderInfo.Order_Shipping.price || 0}}</span>
         </view>
         <view class="viewHeight">
-          {{$t(1472)}}： <span class="fontColorRed">¥</span><span
+          {{$t('1936x6')}}： <span class="fontColorRed">¥</span><span
         class=" fontColor fontColorRed">{{orderInfo.Order_TotalPrice}}</span>
         </view>
         <view class="viewHeight">
-          {{$t(1473)}}：{{orderInfo.Order_CreateTime | timeFormat}}
+          {{$t('1936x7')}}：{{orderInfo.Order_CreateTime | timeFormat}}
         </view>
         <view class="viewHeight">
-          {{$t(1474)}}$t(1475) {{orderInfo.Address_Name}} {{orderInfo.Address_Province_name}} {{orderInfo.Address_City_name}}
+          {{$t('1936x8')}}$t('1936x9') {{orderInfo.Address_Name}} {{orderInfo.Address_Province_name}} {{orderInfo.Address_City_name}}
           {{orderInfo.Address_Area_name}} {{orderInfo.Address_Town_name}} {{orderInfo.Address_Detailed}}
         </view>
       </view>
@@ -66,48 +66,48 @@
     <view class="orderDetail">
       <view class="orderDetailTop">
         <view class="leftDiv"></view>
-        <view>{{$t(1476)}}</view>
+        <view>{{$t('1936x10')}}</view>
       </view>
 
       <view class="orderDetailOther">
         <view class="inputView">
           <view style="width: 160rpx;">
-            {{$t(1477)}}
+            {{$t('1936x11')}}
           </view>
           <view style="width: 100%;">
-            <input :placeholder="$t(1478)" style="width: 100%;" type="text" v-model="name">
+            <input :placeholder="$t('1936x12')" style="width: 100%;" type="text" v-model="name">
           </view>
         </view>
 
         <view class="inputView">
           <view style="width: 160rpx;">
-            {{$t(1479)}}
+            {{$t('1936x13')}}
           </view>
           <view style="width: 100%;">
-            <input :placeholder="$t(1480)" style="width: 100%;" type="text" v-model="mobile">
+            <input :placeholder="$t('1936x14')" style="width: 100%;" type="text" v-model="mobile">
           </view>
         </view>
 
         <view class="inputView">
-          {{$t(1481)}}： {{orderInfo.Order_Shipping.Express}}
+          {{$t('1936x15')}}： {{orderInfo.Order_Shipping.Express}}
           <!-- <view style="width: 160rpx;">
-            {{$t(1482)}}
+            {{$t('1936x16')}}
           </view>
           <view style="width: 100%;">
-            <input type="text" v-model="ship_method" :placeholder="$t(1483)" style="width: 100%;">
+            <input type="text" v-model="ship_method" :placeholder="$t('1936x17')" style="width: 100%;">
           </view> -->
         </view>
-        <view class="inputView" v-if="orderInfo.Order_Shipping.Express!=$t(1484)">
+        <view class="inputView" v-if="orderInfo.Order_Shipping.Express!=$t('1936x18')">
           <view style="width: 160rpx;">
-            {{$t(1485)}}:
+            {{$t('1936x19')}}:
           </view>
           <view style="width: 100%;">
-            <input :placeholder="$t(1486)" style="width: 100%;" type="text" v-model="ship_num">
+            <input :placeholder="$t('1936x20')" style="width: 100%;" type="text" v-model="ship_num">
           </view>
         </view>
         <view class="inputView" v-else>
           <view style="width: 140rpx;">
-            {{$t(1487)}}
+            {{$t('1936x21')}}
           </view>
           <picker :range="arr" :value="index" @change="bindPickerChange" class="picker">
             <view class="uni-input">{{arr[index]}}</view>
@@ -118,17 +118,17 @@
 
         <view class="inputView">
           <view style="width: 160rpx;">
-            {{$t(1488)}}
+            {{$t('1936x22')}}
           </view>
           <view style="width: 100%;">
-            <input :placeholder="$t(1489)" style="width: 100%;" type="text" v-model="remark">
+            <input :placeholder="$t('1936x23')" style="width: 100%;" type="text" v-model="remark">
           </view>
         </view>
       </view>
     </view>
 
     <view @click="send" class="submit">
-      {{$t(1490)}}
+      {{$t('1936x24')}}
     </view>
 
   </view>
@@ -201,13 +201,13 @@ export default {
         Order_Remark: this.remark,
         store_id: this.Stores_ID
       }
-      if (this.orderInfo.Order_Shipping.Express == T._(1466)) {
+      if (this.orderInfo.Order_Shipping.Express == T._('1936d0')) {
         for (const item in this.tong[this.index]) {
           data.city_express = item
         }
       } else {
         if (!this.ship_num) {
-          error(T._(1467))
+          error(T._('1936d1'))
           return
         }
         data.ShippingID = this.ship_num
@@ -231,7 +231,7 @@ export default {
       this.Order_ID = options.id
       this.getOrderDetail()
     } else {
-      error(T._(1468))
+      error(T._('1936d2'))
       uni.navigateBack({
         delta: 1
       })

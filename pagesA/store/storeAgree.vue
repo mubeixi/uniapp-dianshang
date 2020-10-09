@@ -1,35 +1,35 @@
 <template>
   <view style="background-color: #FFFFFF;height: 100vh;">
     <div class="store-line flex flex-vertical-center">
-      <span class="store-info">{{$t(1712)}}</span>
+      <span class="store-info">{{$t('2286x0')}}</span>
       <image :src="storeData.store_image" class="store-img"></image>
       <span class="fz-14-c9">{{storeData.store_name}}</span>
     </div>
     <div class="store-line flex flex-vertical-center">
-      <span class="store-info">{{$t(1713)}}</span>
+      <span class="store-info">{{$t('2286x1')}}</span>
       <span class="fz-14-c9">{{storeData.store_name}}</span>
     </div>
     <div @click="cellPhone(storeData.store_mobile)" class="store-line flex flex-vertical-center">
-      <span class="store-info">{{$t(1714)}}</span>
+      <span class="store-info">{{$t('2286x2')}}</span>
       <span class="fz-14-c9">{{storeData.store_mobile}}</span>
       <image class="store-cell" src="/static/cellstore.png" v-if="storeData.store_mobile"></image>
     </div>
 
     <div @click="openLoca(storeData.store_lat,storeData.store_lng)" class="store-line flex flex-vertical-center">
-      <span class="store-info">{{$t(1715)}}</span>
+      <span class="store-info">{{$t('2286x3')}}</span>
       <span class="fz-14-c9 fz-address">{{storeData.store_province_name}}{{storeData.store_city_name}}{{storeData.store_area_name}}{{storeData.store_address}}<image
       class="store-address" src="/static/addressStore.png" v-if="storeData.store_province_name"></image></span>
 
     </div>
 
     <div class="store-line-btm">
-      {{$t(1716)}}
+      {{$t('2286x4')}}
     </div>
     <div class="store-img-list">
       <image :src="storeData.store_image" @click="yulan(storeData.store_image)" class="store-img-list-img"></image>
     </div>
     <div class="store-line-btm">
-      {{$t(1717)}}
+      {{$t('2286x5')}}
     </div>
     <div class="store-img-list">
       <block :key="index" v-for="(item,index) of storeData.img_info">
@@ -40,27 +40,27 @@
     <div style="width:690rpx;height:1px;background:rgba(235,235,235,1);margin-top: 20rpx"></div>
 
     <div class="store-btn flex flex-between">
-      <div @click="showReason=true" class="store-refund">{{$t(1718)}}</div>
-      <div @click="showAgree" class="store-agree">{{$t(1719)}}</div>
+      <div @click="showReason=true" class="store-refund">{{$t('2286x6')}}</div>
+      <div @click="showAgree" class="store-agree">{{$t('2286x7')}}</div>
     </div>
 
     <div class="zhezhao" v-if="showReason">
       <div class="input-wrap">
-        <textarea class="input" :placeholder="$t(1720)" v-model="reason"></textarea>
+        <textarea class="input" :placeholder="$t('2286x8')" v-model="reason"></textarea>
         <div class="btns">
-          <div @click="showReason=false" class="btn">{{$t(1721)}}</div>
-          <div @click="confirmInput" class="btn btnLast">{{$t(1722)}}</div>
+          <div @click="showReason=false" class="btn">{{$t('2286x9')}}</div>
+          <div @click="confirmInput" class="btn btnLast">{{$t('2286x10')}}</div>
         </div>
       </div>
     </div>
 
     <popupLayer :direction="'top'" ref="store">
       <div class="popup-title">
-        {{$t(1723)}}
+        {{$t('2286x11')}}
       </div>
       <div class="store-picker flex flex-vertical-center">
         <div>
-          {{$t(1724)}}
+          {{$t('2286x12')}}
         </div>
         <picker :range="array" :value="index" @change="bindPickerChange" class="picker-first">
           {{array[index]}}
@@ -70,7 +70,7 @@
 
       <div class="store-picker flex flex-vertical-center" v-if="index==0">
         <div>
-          {{$t(1725)}}
+          {{$t('2286x13')}}
         </div>
         <picker :range="typeList" :value="ind" @change="bindPickerChanges" class="picker-first" range-key="title">
           {{typeList[ind].title}}
@@ -79,14 +79,14 @@
       </div>
       <div class="store-picker flex flex-vertical-center">
         <div>
-          {{$t(1726)}}
+          {{$t('2286x14')}}
         </div>
         <div class="input-div">
           <input class="flex-input" type="text" v-model="retailer_fee" /> %
         </div>
       </div>
       <div @click="sureBtn" class="btn-sure">
-        {{$t(1727)}}
+        {{$t('2286x15')}}
       </div>
 
     </popupLayer>
@@ -113,7 +113,7 @@ export default {
       typeList: [{ titile: '' }],
       index: 0,
       ind: 0,
-      array: [T._(1712), T._(1713)],
+      array: [T._('2286d0'), T._('2286d1')],
       showReason: false,
       storeData: {
         store_province_name: '',
@@ -158,7 +158,7 @@ export default {
     },
     sureBtn () {
       if (!this.retailer_fee || this.retailer_fee < 0 || this.retailer_fee > 100) {
-        error(T._(1714))
+        error(T._('2286d2'))
         return
       }
       const data = {
@@ -178,7 +178,7 @@ export default {
           uni.navigateBack()
         }, 1000)
       }).catch(e => {
-        error(e.msg || T._(1715))
+        error(e.msg || T._('2286d3'))
       })
     },
     bindPickerChanges (e) {
@@ -194,7 +194,7 @@ export default {
     },
     confirmInput () {
       if (!this.reason) {
-        error(T._(1716))
+        error(T._('2286d4'))
         return
       }
       storeApplyReject({
@@ -217,7 +217,7 @@ export default {
         apply_id: this.id
       }
 
-      getStoreApplyList(data, { tip: T._(1717) }).then(res => {
+      getStoreApplyList(data, { tip: T._('2286d5') }).then(res => {
         this.storeData = res.data[0]
       })
 
@@ -229,7 +229,7 @@ export default {
     }
   },
   onLoad (options) {
-    console.log('111')
+    // console.log('111')
     this.id = options.id
     this.init()
   }

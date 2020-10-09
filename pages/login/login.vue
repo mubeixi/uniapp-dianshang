@@ -11,14 +11,14 @@
 				<!-- #ifdef MP-WEIXIN -->
 				<div :style="{height:menuButtonInfo.height+'px'}" @click="goBack" class="topTitle">
 					<view class="funicon icon icon-fanhui inline-block"></view>
-					<div>{{$t(468)}}</div>
+					<div>{{$t('539x0')}}</div>
 				</div>
 				<!-- #endif -->
 
 				<!-- #ifndef MP-WEIXIN -->
 				<div @click="goBack" class="topTitle">
 					<view class="funicon icon icon-fanhui inline-block"></view>
-					<div>{{$t(469)}}</div>
+					<div>{{$t('539x1')}}</div>
 				</div>
 				<!-- #endif -->
 
@@ -27,7 +27,7 @@
 					<div class="box">
 						<block :key="idx" v-for="(channel,idx) in channels">
 							<div @click="weixinlogin(channel)" class="otherLogin-top-item" v-if="channel.type=='wx_mp'">
-								{{$t(470)}}
+								{{$t('539x2')}}
 							</div>
 						</block>
 					</div>
@@ -58,14 +58,13 @@
 							</view>
 						</picker>
 						<span v-else>+{{ telNum }}</span>
-						<input :placeholder="$t(471)" type="number" v-model="mobile" />
+						<input :placeholder="$t('539x3')" type="number" v-model="mobile" />
 					</label>
-					<button :disabled="isCodeDisabled" @click="codeSendVerification(4)" class="submitBtn sendCode" style="line-height: 1.2;padding: 15rpx;"
-					 type="primary">
-						{{$t(472)}}
+					<button :disabled="isCodeDisabled" @click="codeSendVerification(4)" class="submitBtn sendCode" type="primary">
+						{{$t('539x4')}}
 					</button>
 					<div @click="(status = 2), (loginStatus = 2)" class="passwordLogin">
-						{{$t(473)}}
+						{{$t('539x5')}}
 					</div>
 				</div>
 				<!-- #endif -->
@@ -75,7 +74,7 @@
 					<div class="box">
 						<block :key="idx" v-for="(channel,idx) in channels">
 							<div @click="openLoginDialog" class="otherLogin-top-item" v-if="channel.type=='wx_lp'">
-								{{$t(474)}}
+								{{$t('539x6')}}
 							</div>
 						</block>
 					</div>
@@ -101,7 +100,7 @@
 					<div class="box">
 						<block :key="idx" v-for="(channel,idx) in channels">
 							<div @click="weixinlogin" class="otherLogin-top-item" v-if="channel.type=='wx_app'">
-								{{$t(475)}}
+								{{$t('539x7')}}
 							</div>
 						</block>
 					</div>
@@ -133,13 +132,13 @@
 							</view>
 						</picker>
 						<span v-else>+{{ telNum }}</span>
-						<input :placeholder="$t(476)" type="number" v-model="mobile" />
+						<input :placeholder="$t('539x8')" type="number" v-model="mobile" />
 					</label>
 					<button :disabled="isCodeDisabled" @click="codeSendVerification(4)" class="submitBtn sendCode" type="primary">
-						{{$t(477)}}
+						{{$t('539x9')}}
 					</button>
 					<div @click="(status = 2), (loginStatus = 2)" class="passwordLogin">
-						{{$t(478)}}
+						{{$t('539x10')}}
 					</div>
 				</div>
 				<!-- #endif -->
@@ -148,14 +147,14 @@
 				<!-- #ifdef MP-WEIXIN -->
 				<div :style="{height:menuButtonInfo.height+'px'}" @click="(status = 1), (loginStatus = 1)" class="topTitle">
 					<view class="funicon icon icon-fanhui inline-block"></view>
-					<div>{{$t(479)}}</div>
+					<div>{{$t('539x11')}}</div>
 				</div>
 				<!-- #endif -->
 
 				<!-- #ifndef MP-WEIXIN -->
 				<div @click="(status = 1), (loginStatus = 1)" class="topTitle">
 					<view class="funicon icon icon-fanhui inline-block"></view>
-					<div>{{$t(480)}}</div>
+					<div>{{$t('539x12')}}</div>
 				</div>
 				<!-- #endif -->
 
@@ -169,29 +168,29 @@
 							</view>
 						</picker>
 						<span v-else>+{{ telNum }}</span>
-						<input maxlength="11" :placeholder="$t(481)" v-model="mobile" />
+						<input maxlength="11" :placeholder="$t('539x13')" v-model="mobile" />
 					</label>
 					<label class="inputLable  flex">
-						<span :class="{world_sms_choose: world_sms_flag}">{{$t(482)}}</span>
-						<input :placeholder="$t(483)" type="password" v-model="phone.password" />
+						<span :class="{world_sms_choose: world_sms_flag}">{{$t('539x14')}}</span>
+						<input :placeholder="$t('539x15')" type="password" v-model="phone.password" />
 					</label>
 					<div @click="(status = 3), (loginStatus = 3)" class="searchPass">
-						{{$t(484)}}
+						{{$t('539x16')}}
 					</div>
-					<button :disabled="isPhoneDisabled" @click="login" class="submitBtn sendCode" type="primary">{{$t(485)}}</button>
+					<button :disabled="isPhoneDisabled" @click="login" class="submitBtn sendCode" type="primary">{{$t('539x17')}}</button>
 				</div>
 			</li>
 			<li class="searchPassword" v-else-if="status == 3">
 				<!-- #ifdef MP-WEIXIN -->
 				<div :style="{height:menuButtonInfo.height+'px'}" @click="(status = 2), (loginStatus = 2)" class="topTitle">
 					<view class="funicon icon icon-fanhui inline-block"></view>
-					<div>{{$t(486)}}</div>
+					<div>{{$t('539x18')}}</div>
 				</div>
 				<!-- #endif -->
 				<!-- #ifndef MP-WEIXIN -->
 				<div @click="(status = 2), (loginStatus = 2)" class="topTitle">
 					<view class="funicon icon icon-fanhui inline-block"></view>
-					<div>{{$t(487)}}</div>
+					<div>{{$t('539x19')}}</div>
 				</div>
 				<!-- #endif -->
 				<div class="content">
@@ -205,60 +204,60 @@
 							</view>
 						</picker>
 						<span v-else>+{{ telNum }}</span>
-						<input maxlength="11" :placeholder="$t(488)" type="number" v-model="mobile" />
+						<input maxlength="11" :placeholder="$t('539x20')" type="number" v-model="mobile" />
 					</label>
-					<button :disabled="isCodeDisabled" @click="codeSendVerification(4)" class="submitBtn" type="primary">{{$t(489)}}
+					<button :disabled="isCodeDisabled" @click="codeSendVerification(4)" class="submitBtn" type="primary">{{$t('539x21')}}
 					</button>
 				</div>
 			</li>
 			<li class="fillCode" v-else-if="status == 4">
 				<!-- #ifdef MP-WEIXIN -->
 				<div :style="{height:menuButtonInfo.height+'px'}" class="topTitle">
-					<div>{{$t(490)}}</div>
+					<div>{{$t('539x22')}}</div>
 				</div>
 				<!-- #endif -->
 
 				<!-- #ifndef MP-WEIXIN -->
 				<div class="topTitle">
-					<div>{{$t(491)}}</div>
+					<div>{{$t('539x23')}}</div>
 				</div>
 				<!-- #endif -->
 
 				<p class="description">
-					{{$t(492)}} {{world_sms_code_choose}} {{ mobile }}
+					{{$t('539x24')}} {{world_sms_code_choose}} {{ mobile }}
 					<span :class="{ disabled: countdownStatus }" @click="againSendCode">{{$('manual','Resend')}}{{ countdownStr }}</span>
 				</p>
 				<input :value="verificationCode" @input="fillCode" class="code" type="number" v-if="loginStatus !== 3 && loginStatus !== 4" />
 				<div class="searchNewPass editSearchPassword" v-if="loginStatus === 3">
 					<label class="inputLable flex line20">
-						<span>{{$t(493)}}</span>
-						<input :value="verificationCode" @input="substr" class="ins" :placeholder="$t(494)" type="text" />
+						<span>{{$t('539x25')}}</span>
+						<input :value="verificationCode" @input="substr" class="ins" :placeholder="$t('539x26')" type="text" />
 					</label>
 					<label class="inputLable flex">
-						<span>{{$t(495)}}</span><input class="ins" :placeholder="$t(496)" type="password" v-model="newPassword" />
+						<span>{{$t('539x27')}}</span><input class="ins" :placeholder="$t('539x28')" type="password" v-model="newPassword" />
 					</label>
-					<button :disabled="isNewPassDisabled" @click="setNewPassOk" class="submitBtn" type="primary">{{$t(497)}}</button>
+					<button :disabled="isNewPassDisabled" @click="setNewPassOk" class="submitBtn" type="primary">{{$t('539x29')}}</button>
 				</div>
 			</li>
 			<li class="setNewPass" v-else-if="status == 5">
 				<!-- #ifdef MP-WEIXIN -->
 				<div :style="{height:menuButtonInfo.height+'px'}" class="topTitle">
 					<view @click="setStatusFunc" class="funicon icon icon-fanhui inline-block prebBtn"></view>
-					{{$t(498)}}
+					{{$t('539x30')}}
 				</div>
 				<!-- #endif -->
 				<!-- #ifndef MP-WEIXIN -->
 				<div class="topTitle">
 					<view @click="setStatusFunc" class="funicon icon icon-fanhui inline-block prebBtn"></view>
-					{{$t(499)}}
+					{{$t('539x31')}}
 				</div>
 				<!-- #endif -->
 				<div class="content">
 					<label class="inputLable flex lin20">
-						<span>{{$t(500)}}</span>
-						<input :placeholder="$t(501)" type="password" v-model="newPassword" />
+						<span>{{$t('539x32')}}</span>
+						<input :placeholder="$t('539x33')" type="password" v-model="newPassword" />
 					</label>
-					<button :disabled="isNewPassDisabled" @click="setNewPassOk" class="submitBtn sendCode" type="primary">{{$t(502)}}
+					<button :disabled="isNewPassDisabled" @click="setNewPassOk" class="submitBtn sendCode" type="primary">{{$t('539x34')}}
 					</button>
 				</div>
 			</li>
@@ -268,14 +267,14 @@
 			<view :style="{height:menuButtonInfo.top+'px'}"></view>
 			<div :style="{height:menuButtonInfo.height+'px'}" @click="cancelLoginDialog" class="topTitle">
 				<view class="funicon icon icon-fanhui inline-block"></view>
-				<div>{{$t(503)}}</div>
+				<div>{{$t('539x35')}}</div>
 			</div>
 			<image :src="initData.ShopLogo" :style="{marginTop:85+'px'}" class="logo" mode="widthFix"></image>
-			<div class="large line15 font20">「{{initData.ShopName}}」{{$t(504)}}</div>
-			<div class="mini graytext2 font14">{{$t(505)}}</div>
+			<div class="large line15 font20">「{{initData.ShopName}}」{{$t('539x36')}}</div>
+			<div class="mini graytext2 font14">{{$t('539x37')}}</div>
 			<div class="control">
-				<button @click="cancelLoginDialog" class="btn reject">{{$t(506)}}</button>
-				<button @getuserinfo="weixinlogin" class="btn allow" open-type="getUserInfo">{{$t(507)}}</button>
+				<button @click="cancelLoginDialog" class="btn reject">{{$t('539x38')}}</button>
+				<button @getuserinfo="weixinlogin" class="btn allow" open-type="getUserInfo">{{$t('539x39')}}</button>
 			</div>
 		</div>
 		<!-- #endif -->
@@ -435,7 +434,7 @@
 			sendCode() {
 				const mobile = this.mobile
 				if (mobile === '' || !mobile) {
-					return error(T._(468))
+					return error(T._('539d0'))
 				}
 				if (this.countdownStatus) return
 				// this.countdownStatus=true;
@@ -443,14 +442,14 @@
 						mobile,
 						phone_code: this.world_sms_code_choose
 					})
-					.then(() => toast(T._(469), 'success'))
+					.then(() => toast(T._('539d1'), 'success'))
 					.then(() => this.startCountdown()).catch((res) => {
-						modal(res.msg ? res.msg : T._(470))
+						modal(res.msg ? res.msg : T._('539d2'))
 					})
 			},
 			async codeSendVerification(status) {
 				// 发送验证码并设置 status（更新页面）
-				if (!status) throw T._(471)
+				if (!status) throw T._('539d3')
 				await this.sendCode()
 				// 只有发送验证码成功了，才是
 				if (this.countdownStatus) this.status = status
@@ -531,9 +530,9 @@
 				resetPwd(data).then(res => {
 					//toast(res.msg)
 					confirm({
-						content: T._(472),
-						confirmText: T._(473),
-						cancelText: T._(474)
+						content: T._('539d4'),
+						confirmText: T._('539d5'),
+						cancelText: T._('539d6')
 					}).then(() => this.login()).catch(e => {
 						uni.switchTab({
 							url: '/pages/person/person'
@@ -580,8 +579,8 @@
 				uni.login({
 					fail: (err) => {
 						uni.showModal({
-							title: T._(475),
-							content: T._(476) + JSON.stringify(err)
+							title: T._('539d7'),
+							content: T._('539d8') + JSON.stringify(err)
 						})
 					},
 					success: function(loginRes) {
@@ -590,7 +589,7 @@
 						wx.getSetting({
 							fail: (err) => {
 								uni.showModal({
-									title: T._(477),
+									title: T._('539d9'),
 									content: JSON.stringify(err)
 								})
 							},
@@ -601,7 +600,7 @@
 										scope: 'scope.userInfo',
 										fail: (err) => {
 											uni.showModal({
-												title: T._(478),
+												title: T._('539d10'),
 												content: JSON.stringify(err)
 											})
 										},
@@ -617,7 +616,7 @@
 														login_method: 'wx_lp',
 														lp_raw_data: JSON.stringify(userInfoData)
 													}, {
-														tip: T._(479)
+														tip: T._('539d11')
 													}).then(ret => {
 														if (ret.errorCode === 0) {
 															_self.loginCall(ret.data)
@@ -643,7 +642,7 @@
 												login_method: 'wx_lp',
 												lp_raw_data: JSON.stringify(userInfoData)
 											}, {
-												tip: T._(480)
+												tip: T._('539d12')
 											}).then(ret => {
 												if (ret.errorCode === 0) {
 													_self.loginCall(ret.data)
@@ -819,6 +818,12 @@
 	}
 </script>
 <style lang="scss" scoped>
+	.inputLable{
+		input{
+			flex: 1 0 auto;
+			margin-left: 10rpx;
+		}
+	}
 	.icon-icon_mobilephonelanding {
 		color: #E6A23C !important;
 		font-size: 80rpx !important;
@@ -989,11 +994,11 @@
 				}
 
 				.inputLable {
-
 					span,
 					.world_sms_choose {
 						color: $mainColor;
 					}
+					
 				}
 			}
 		}
@@ -1014,6 +1019,7 @@
 					span,
 					.world_sms_choose {
 						color: $mainColor;
+						width: 50px;
 					}
 				}
 
@@ -1047,6 +1053,7 @@
 				span,
 				.world_sms_choose {
 					color: $mainColor;
+					width: 50px;
 				}
 			}
 		}

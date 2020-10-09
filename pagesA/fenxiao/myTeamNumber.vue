@@ -18,7 +18,7 @@
           </view>
         </view>
         <view class="bots">
-          <view>{{$t(894)}}{{item.User_No}}</view>
+          <view>{{$t('1165x0')}}{{item.User_No}}</view>
         </view>
       </view>
     </view>
@@ -49,7 +49,7 @@ export default {
       this.page++
       this.getDisTeamList()
     } else {
-      toast(T._(894), 'none')
+      toast(T._('1165d0'), 'none')
     }
   },
   onShow () {
@@ -70,7 +70,7 @@ export default {
       }
       getDisTeamList(data, {
         errtip: false,
-        tip: T._(895)
+        tip: T._('1165d1')
       }).then(res => {
         this.pro = this.pro.concat(res.data)
         this.totalCount = res.totalCount

@@ -4,7 +4,7 @@
     <view class="yue">
       <image :src="'/static/client/blance/storePay.jpg'|domain" class="image"></image>
       <view class="yueq">
-        {{$t(1780)}}
+        {{$t('2345x0')}}
       </view>
       <view class="pricsw">
         {{info.User_Money}}
@@ -13,17 +13,17 @@
 
     <view class="inputs">
       <image :src="'/static/client/check/money.png'|domain" class="image"></image>
-      <input class="input" :placeholder="$t(1781)" type="text" v-model="money">
+      <input class="input" :placeholder="$t('2345x1')" type="text" v-model="money">
     </view>
     <view class="inputs">
       <image :src="'/static/client/check/password.png'|domain" class="image"></image>
-      <input class="input" :placeholder="$t(1782)" type="password" v-model="passwd">
+      <input class="input" :placeholder="$t('2345x2')" type="password" v-model="passwd">
     </view>
     <view class="zhu">
-      {{$t(1783)}}
+      {{$t('2345x3')}}
     </view>
     <view @click="confirm" class="queren">
-      {{$t(1784)}}
+      {{$t('2345x4')}}
     </view>
   </view>
 </template>
@@ -52,7 +52,7 @@ export default {
       this.isClicked = true
       if (this.passwd == '') {
         uni.showToast({
-          title: T._(1780),
+          title: T._('2345d0'),
           icon: 'none'
         })
         this.isClicked = false
@@ -60,7 +60,7 @@ export default {
       }
       if (this.money == '' || isNaN(this.money) || this.money < 0) {
         uni.showToast({
-          title: T._(1781),
+          title: T._('2345d1'),
           icon: 'none'
         })
         this.isClicked = false

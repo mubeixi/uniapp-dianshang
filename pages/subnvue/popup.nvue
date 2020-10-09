@@ -6,14 +6,14 @@
 				<text class="content">{{content}}</text>
 			</div>
 			<div>
-				<text style="color: red; font-size: 30upx;">{{$t(736)}}</text>
+				<text style="color: red; font-size: 30upx;">{{$t('928x0')}}</text>
 			</div>
 			<div class="cell" v-for="(item, index) in lists" @click="handle(item)" :key="index">
 				<text class="text">{{item}}</text>
 			</div>
 		</scroller>
 		<div class="message-wrapper">
-			<text class="send-message" @click="sendMessage">{{$t(737)}}</text>
+			<text class="send-message" @click="sendMessage">{{$t('928x1')}}</text>
 		</div>
 	</div>
 </template>
@@ -45,14 +45,14 @@ export default {
 			sendMessage() {
 				const subNVue = uni.getCurrentSubNVue()
 				uni.$emit('popup-page', {
-					title: T._(736),
+					title: T._('928d0'),
 				})
 			},
 			handle(item, index) {
 				const subNVue = uni.getCurrentSubNVue()
 				uni.$emit('popup-page', {
 					type: 'interactive',
-					info: item + 'T._(737),
+					info: item + 'T._('928d1'),
 				})
 			}
 		}

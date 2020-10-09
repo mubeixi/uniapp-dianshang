@@ -3,23 +3,23 @@
         <div class="leftss">
             <div class="first" @click="toHome">
                 <image class='img' src="/static/detail/home.png"></image>
-                <text class="txt">{{$t(738)}}</text>
+                <text class="txt">{{$t('921x0')}}</text>
             </div>
             <div class="first" @click="collect">
                 <image class='img' v-if="isCollected" src="/static/detail/favorite-a.png"></image>
                 <image class='img' v-else src="/static/detail/favorite.png"></image>
-                <text class="txt">{{$t(739)}}</text>
+                <text class="txt">{{$t('921x1')}}</text>
             </div>
             <div class="first">
                 <image class='img' src="/static/detail/kefu.png"></image>
-                <text class="txt">{{$t(740)}}</text>
+                <text class="txt">{{$t('921x2')}}</text>
             </div>
         </div>
         <div class="rightss">
             <text v-if="!(recieve || isVirtual)" class="dan bTitle" @click="addCart">{{first}}</text>
             <text v-if="!(recieve || isVirtual)" class="tuan bTitle" @click="directBuy">{{second}}</text>
             <div class="all" @click="lingqu" :class="canSubmit?'':'disable'" v-if="(recieve || isVirtual)">
-                <text>{{isVirtual ? $t(741) : $t(742)}}</text>
+                <text>{{isVirtual ? $t('921x3') : $t('921x4')}}</text>
             </div>
         </div>
     </div>
@@ -35,8 +35,8 @@ export default {
                 recieve:false,
                 isVirtual:false,
                 canSubmit:false,
-                first:T._(738),
-                second:T._(739)
+                first:T._('921d0'),
+                second:T._('921d1')
             };
         },
         props: {

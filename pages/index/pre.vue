@@ -116,7 +116,7 @@ export default {
     const Home_ID = GetQueryByString(location.href, 'Home_ID')
 
     if (!Skin_ID && !Home_ID) {
-      this.$error(T._(466))
+      this.$error(T._('645d0'))
     }
 
     new Promise((resolve, reject) => {
@@ -125,7 +125,7 @@ export default {
         if (res.data.Home_Json) {
           resolve(JSON.parse(res.data.Home_Json))
         } else {
-          reject(Error(T._(467)))
+          reject(Error(T._('645d1')))
         }
       }).catch(e => {
 

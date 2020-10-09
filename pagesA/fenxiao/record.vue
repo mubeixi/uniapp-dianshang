@@ -4,7 +4,7 @@
     <view :key="index" class="main" v-for="(item,index) of data">
       <view class="fir">
         <view class="left">
-          {{$t(967)}}
+          {{$t('1234x0')}}
         </view>
         <view class="right">
           {{item.Method_Name}}
@@ -12,7 +12,7 @@
       </view>
       <view class="fir">
         <view class="left">
-          {{$t(968)}}
+          {{$t('1234x1')}}
         </view>
         <view class="right">
           {{item.Record_From}}
@@ -20,7 +20,7 @@
       </view>
       <view class="fir">
         <view class="left">
-          {{$t(969)}}
+          {{$t('1234x2')}}
         </view>
         <view class="right">
           {{item.Record_Total}}
@@ -28,7 +28,7 @@
       </view>
       <view class="fir">
         <view class="left">
-         {{$t(970)}}
+         {{$t('1234x3')}}
         </view>
         <view class="rights">
           {{item.Record_Status_desc}}
@@ -39,7 +39,7 @@
       </view>
       <view class="fir">
         <view class="left">
-          {{$t(971)}}
+          {{$t('1234x4')}}
         </view>
         <view class="right">
           {{item.Record_CreateTime}}

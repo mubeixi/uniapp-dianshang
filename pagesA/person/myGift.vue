@@ -6,13 +6,13 @@
     <!-- <page-title  title="我的赠品" bgcolor="#ffffff" class="titless"></page-title> -->
     <view class="nav">
       <view :class="checked==0?'checked':''" @click="change(0)" class="ins">
-        {{$t(1188)}}
+        {{$t('1563x0')}}
       </view>
       <view :class="checked==1?'checked':''" @click="change(1)" class="ins">
-        {{$t(1189)}}
+        {{$t('1563x1')}}
       </view>
       <view :class="checked==2?'checked':''" @click="change(2)" class="ins">
-        {{$t(1190)}}
+        {{$t('1563x2')}}
       </view>
     </view>
     <view style="height: 102rpx;width: 100%;">
@@ -32,8 +32,8 @@
           </view>
           <view class="button">
             <view class="sku">{{item.attr_txt}}</view>
-            <view class="chakan" v-if="checked==0">{{$t(1191)}}</view>
-            <view class="chakan" v-else-if="checked==1">{{$t(1192)}}</view>
+            <view class="chakan" v-if="checked==0">{{$t('1563x3')}}</view>
+            <view class="chakan" v-else-if="checked==1">{{$t('1563x4')}}</view>
           </view>
           <view class="youxiao" v-if="checked!=1">{{item.valid_scope}}</view>
         </view>
@@ -160,6 +160,7 @@ export default {
     height: 102rpx;
     display: flex;
     align-items: center;
+	justify-content: center;
     font-size: 30rpx;
     color: #333333;
     background: #f8f8f8;

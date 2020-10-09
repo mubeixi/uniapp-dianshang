@@ -3,22 +3,22 @@
     <view style="height: 10px;width: 100%;"></view>
     <view class="three">
       <view class="haha">
-        {{$t(762)}}
+        {{$t('933x0')}}
       </view>
-      <input class="inputs" :placeholder="$t(763)" placeholder-class="place" type="text" v-model="arr.apply_name">
+      <input class="inputs" :placeholder="$t('933x1')" placeholder-class="place" type="text" v-model="arr.apply_name">
     </view>
     <view class="three">
       <view class="haha">
-        {{$t(764)}}
+        {{$t('933x2')}}
       </view>
-      <input @blur="isTell" class="inputs" :placeholder="$t(765)" placeholder-class="place" type="number"
+      <input @blur="isTell" class="inputs" :placeholder="$t('933x3')" placeholder-class="place" type="number"
              v-model="arr.apply_mobile">
     </view>
     <view @click="submit" class="four">
-      {{$t(766)}}
+      {{$t('933x4')}}
     </view>
     <view @click="goRecord" class="five">
-      {{$t(767)}}
+      {{$t('933x5')}}
       <image :src="'/static/client/fenxiao/chakan.png'|domain" class="image"></image>
     </view>
   </view>
@@ -49,13 +49,13 @@ export default {
     submit () {
       if (!this.arr.apply_name) {
         uni.showToast({
-          title: T._(762),
+          title: T._('933d0'),
           icon: 'none'
         })
         return
       } else if (!(checkMobile(this.arr.apply_mobile))) {
         uni.showToast({
-          title: T._(763),
+          title: T._('933d1'),
           icon: 'none'
         })
         return
@@ -80,7 +80,7 @@ export default {
     isTell () {
       if (!(checkMobile(this.arr.apply_mobile))) {
         uni.showToast({
-          title: T._(764),
+          title: T._('933d2'),
           icon: 'none'
         })
       }

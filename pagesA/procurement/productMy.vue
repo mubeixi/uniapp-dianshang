@@ -6,7 +6,7 @@
           <image class="imgHund" src="/static/procurement/zai.png"></image>
         </view>
         <view :class="index == 1? 'redColor':''" class="font-13">
-          {{$t(1377)}}
+          {{$t('1795x0')}}
         </view>
       </view>
 
@@ -15,7 +15,7 @@
           <image class="imgHund" src="/static/procurement/zai.png"></image>
         </view>
         <view :class="index == 2? 'redColor':''" class="font-13">
-          {{$t(1378)}}
+          {{$t('1795x1')}}
         </view>
       </view>
 
@@ -24,7 +24,7 @@
           <image class="imgHund" src="/static/procurement/zai.png"></image>
         </view>
         <view :class="index == 3? 'redColor':''" class="font-13">
-          {{$t(1379)}}
+          {{$t('1795x2')}}
         </view>
       </view>
 
@@ -33,7 +33,7 @@
           <image class="imgHund" src="/static/procurement/zai.png"></image>
         </view>
         <view :class="index == 4? 'redColor':''" class="font-13">
-          {{is_refund && is_fourth?$t(1380):$t(1381)}}
+          {{is_refund && is_fourth?$t('1795x3'):$t('1795x4')}}
         </view>
       </view>
 
@@ -51,20 +51,20 @@
                 {{item.Products_Name}}
               </view>
               <view class="skuMy">
-                <span>{{$t(1382)}}：{{item.prod_stock}}</span><span style="margin-left: 100rpx;">{{$t(1383)}}：{{item.Products_Sales}}</span>
+                <span>{{$t('1795x5')}}：{{item.prod_stock}}</span><span style="margin-left: 100rpx;">{{$t('1795x6')}}：{{item.Products_Sales}}</span>
               </view>
               <view class="bottomDiv">
                 <view @click="showSkuList(item.Products_ID)" class="skuCount" v-if="item.Products_Type">
-                 T._(1377)
+                {{$t('1795d0')}}
                 </view>
                 <view v-else>
 
                 </view>
                 <view class="allPrice">
                   <view v-if="!(is_refund&&is_fourth)">
-                    {{$t(1384)}}<span class="span1">¥</span><span class="span2">{{item.prod_money}}</span>
+                    {{$t('1795x7')}}<span class="span1">¥</span><span class="span2">{{item.prod_money}}</span>
                   </view>
-                  <view @click="apply_back(item,index)" class="back-btn" v-else>{{$t(1385)}}</view>
+                  <view @click="apply_back(item,index)" class="back-btn" v-else>{{$t('1795x8')}}</view>
                 </view>
               </view>
             </view>
@@ -85,20 +85,20 @@
                 {{item.Products_Name}}
               </view>
               <view class="skuMy">
-                <span>{{$t(1386)}}：{{item.prod_stock}}</span><span style="margin-left: 100rpx;">{{$t(1387)}}：{{item.Products_Sales}}</span>
+                <span>{{$t('1795x9')}}：{{item.prod_stock}}</span><span style="margin-left: 100rpx;">{{$t('1795x10')}}：{{item.Products_Sales}}</span>
               </view>
               <view class="bottomDiv">
                 <view @click="showSkuList(item.Products_ID)" class="skuCount" v-if="item.Products_Type">
-                  {{$t(1388)}}
+                  {{$t('1795x11')}}
                 </view>
                 <view v-else>
 
                 </view>
                 <view class="allPrice">
                   <view v-if="!(is_refund&&is_fourth)">
-                    {{$t(1389)}}<span class="span1">¥</span><span class="span2">{{item.prod_money}}</span>
+                    {{$t('1795x12')}}<span class="span1">¥</span><span class="span2">{{item.prod_money}}</span>
                   </view>
-                  <view @click="apply_back(item,index)" class="back-btn" v-else>{{$t(1390)}}</view>
+                  <view @click="apply_back(item,index)" class="back-btn" v-else>{{$t('1795x13')}}</view>
                 </view>
               </view>
             </view>
@@ -124,20 +124,20 @@
                 {{item.Products_Name}}
               </view>
               <view class="skuMy">
-                <span>{{$t(1391)}}：{{item.prod_stock}}</span><span style="margin-left: 100rpx;">{{$t(1392)}}：{{item.Products_Sales}}</span>
+                <span>{{$t('1795x14')}}：{{item.prod_stock}}</span><span style="margin-left: 100rpx;">{{$t('1795x15')}}：{{item.Products_Sales}}</span>
               </view>
               <view class="bottomDiv">
                 <view @click="showSkuList(item.Products_ID)" class="skuCount" v-if="item.Products_Type">
-                  {{$t(1393)}}
+                  {{$t('1795x16')}}
                 </view>
                 <view v-else>
 
                 </view>
                 <view class="allPrice">
                   <view v-if="!(is_refund&&is_fourth)">
-                    {{$t(1394)}}<span class="span1">¥</span><span class="span2">{{item.prod_money}}</span>
+                    {{$t('1795x17')}}<span class="span1">¥</span><span class="span2">{{item.prod_money}}</span>
                   </view>
-                  <view @click="apply_back(item,index)" class="back-btn" v-else>{{$t(1395)}}</view>
+                  <view @click="apply_back(item,index)" class="back-btn" v-else>{{$t('1795x18')}}</view>
                 </view>
               </view>
             </view>
@@ -158,20 +158,20 @@
                 {{item.Products_Name}}
               </view>
               <view class="skuMy">
-                <span>{{$t(1396)}}：{{item.prod_stock}}</span><span style="margin-left: 100rpx;">{{$t(1397)}}：{{item.Products_Sales}}</span>
+                <span>{{$t('1795x19')}}：{{item.prod_stock}}</span><span style="margin-left: 100rpx;">{{$t('1795x20')}}：{{item.Products_Sales}}</span>
               </view>
               <view class="bottomDiv">
                 <view @click="showSkuList(item.Products_ID)" class="skuCount" v-if="item.Products_Type">
-                  {{$t(1398)}}
+                  {{$t('1795x21')}}
                 </view>
                 <view v-else>
 
                 </view>
                 <view class="allPrice">
                   <view v-if="!(is_refund&&is_fourth)">
-                    {{$t(1399)}}：<span class="span1">¥</span><span class="span2">{{item.prod_money}}</span>
+                    {{$t('1795x22')}}：<span class="span1">¥</span><span class="span2">{{item.prod_money}}</span>
                   </view>
-                  <view @click="apply_back(item,index)" class="back-btn" v-else>{{$t(1400)}}</view>
+                  <view @click="apply_back(item,index)" class="back-btn" v-else>{{$t('1795x23')}}</view>
                 </view>
               </view>
             </view>
@@ -187,14 +187,14 @@
 
     </view>
     <view @click="allSum" class="buttonLast" v-if="index==3">
-      {{$t(1401)}}
+      {{$t('1795x24')}}
     </view>
 
     <!--  遮罩层	-->
     <view :hidden="isHiddenMask" @click="hiddenMask" class="mask"></view>
     <!--  产品属性弹窗	-->
     <view class="sku-pop" v-if="showSku">
-      <view class="sku-title">{{$t(1402)}}</view>
+      <view class="sku-title">{{$t('1795x25')}}</view>
       <view class="sku-content">
         <view :key="" class="skulist" v-for="item in prosku.skujosn_new">
           <view class="sku-name">{{item.sku}}</view>
@@ -205,7 +205,7 @@
           </view>
         </view>
         <view class="skulist">
-          <view class="sku-name">{{$t(1403)}}</view>
+          <view class="sku-name">{{$t('1795x26')}}</view>
           <view class="sku-item">
             <view @click="minus" class="handle">-</view>
             <view class="pro-num">{{postData.qty}}</view>
@@ -213,8 +213,8 @@
           </view>
         </view>
         <view class="sku-btns">
-          <view @click="cancel" class="cancel btn">{{$t(1404)}}</view>
-          <view :class="submit_flag?'':'disabled'" @click="confirm(prosku)" class="confirm btn">{{$t(1405)}}</view>
+          <view @click="cancel" class="cancel btn">{{$t('1795x27')}}</view>
+          <view :class="submit_flag?'':'disabled'" @click="confirm(prosku)" class="confirm btn">{{$t('1795x28')}}</view>
         </view>
       </view>
     </view>
@@ -222,27 +222,27 @@
     <view class="sku-pop" v-if="showSum">
       <!-- <view class="sku-title"></view> -->
       <view class="priceSum">
-        <view class="title">{{$t(1406)}}</view>
+        <view class="title">{{$t('1795x29')}}</view>
         <text class="icon">¥</text>
         <span class="span">{{prod_money}}</span>
       </view>
     </view>
     <view style="height:90rpx;" v-if="index == 4 && amount > 0 ">
       <view :style="{'z-index': zIndex}" class="check">
-        <view @click="showSelected" class="check-msg">{{$t(1407)}}
+        <view @click="showSelected" class="check-msg">{{$t('1795x30')}}
           <text class="num">{{amount}}</text>
-          {{$t(1408)}}
+          {{$t('1795x31')}}
           <image :class="isClicked?'turn':''" class="img" src="/static/top.png"></image>
         </view>
-        <view @click="submit" class="submit">{{$t(1409)}}</view>
+        <view @click="submit" class="submit">{{$t('1795x32')}}</view>
       </view>
     </view>
     <!-- 规格弹窗 -->
     <popup-layer :direction="'top'" @maskClicked="Clicked" ref="skuRef">
       <view class="mxdetail">
-        <view class="mxtitle">{{$t(1410)}}</view>
+        <view class="mxtitle">{{$t('1795x33')}}</view>
         <view class="mxitem">规格
-          <text class="num">{{$t(1411)}}</text>
+          <text class="num">{{$t('1795x34')}}</text>
         </view>
         <block :key="index" v-for="(item,index) of mySkuList">
           <view class="mxitem">{{item.attr_txt}}
@@ -316,26 +316,26 @@
     </popup-layer>
     <!-- 修改渠道 -->
     <view class="sku-pop" v-if="isChangeChannel">
-      <view class="sku-title">{{$t(1412)}}</view>
+      <view class="sku-title">{{$t('1795x35')}}</view>
       <view class="sku-content" style="padding-left:53rpx;">
         <view @click="active_id = 0" class="skulist">
 
           <image class="selected" mode="" src="/static/procurement/selected.png" v-if="active_id == 0"></image>
           <view class="nochecked" v-else></view>
-          <view>{{$t(1413)}}</view>
+          <view>{{$t('1795x36')}}</view>
         </view>
         <view @click="active_id = 1" class="skulist">
           <image class="selected" mode="" src="/static/procurement/selected.png" v-if="active_id == 1"></image>
           <view class="nochecked" v-else></view>
-          <view>{{$t(1414)}}</view>
+          <view>{{$t('1795x37')}}</view>
         </view>
         <view class="skulist" v-if="active_id == 1">
-          <input class="input" placeholder="$t(1415)" placeholder-style="color: #C9C9C9;font-size: 24rpx;" type="text"
+          <input class="input" :placeholder="$t('1795x38')" placeholder-style="color: #C9C9C9;font-size: 24rpx;" type="text"
                  v-model="purchase_store_sn" />
         </view>
         <view class="skulist change-btn">
-          <view @click="sub_cancel" class="btn cancel">{{$t(1416)}}</view>
-          <view @click="sub_confirm" class="btn confirm">{{$t(1417)}}</view>
+          <view @click="sub_cancel" class="btn cancel">{{$t('1795x39')}}</view>
+          <view @click="sub_confirm" class="btn confirm">{{$t('1795x40')}}</view>
         </view>
       </view>
     </view>
@@ -463,7 +463,7 @@ export default {
         product_id: id
       }
       getProductAtts(data, {
-        tip: T._(1378),
+        tip: T._('1795d1'),
         mask: true
       }).then(res => {
         this.$refs.skuRef.show()
@@ -555,7 +555,7 @@ export default {
       }
       if (this.active_id == 1 && !this.purchase_store_sn) {
         uni.uni.showToast({
-          title: T._(1379),
+          title: T._('1795d2'),
           icon: 'none'
         })
         return
@@ -589,7 +589,7 @@ export default {
     delNumberNoAttr (pro) {
       if (pro.myqty == 1) {
         uni.showToast({
-          title: T._(1380),
+          title: T._('1795d3'),
           icon: 'none'
         })
         return
@@ -601,7 +601,7 @@ export default {
     addNumberNoAttr (pro) {
       if (pro.prod_stock == 0) {
         uni.showToast({
-          title: T._(1381),
+          title: T._('1795d4'),
           icon: 'none'
         })
         return
@@ -613,7 +613,7 @@ export default {
     delNumber (num, pro) {
       if (num.myqty == 1) {
         uni.showToast({
-          title: T._(1382),
+          title: T._('1795d5'),
           icon: 'none'
         })
         return
@@ -637,7 +637,7 @@ export default {
         return
       }
       uni.showToast({
-        title: T._(1383),
+        title: T._('1795d6'),
         icon: 'none'
       })
     },
@@ -682,7 +682,7 @@ export default {
 
       if (prosku.skuvaljosn && !this.postData.attr_id) {
         uni.showToast({
-          title: T._(1384),
+          title: T._('1795d7'),
           icon: 'none'
         })
         return
@@ -803,7 +803,7 @@ export default {
         this.postData.qty = Number(this.postData.qty) + 1
       } else {
         uni.showToast({
-          title: T._(1385),
+          title: T._('1795d8'),
           icon: 'none'
         })
         this.postData.qty = this.postData.count
@@ -815,7 +815,7 @@ export default {
         this.postData.qty -= 1
       } else {
         uni.showToast({
-          title: T._(1386),
+          title: T._('1795d9'),
           icon: 'none'
         })
         this.postData.qty = 1
@@ -839,7 +839,7 @@ export default {
       }
       if (arr.length <= 0) {
         uni.showToast({
-          title: T._(1387),
+          title: T._('1795d10'),
           icon: 'none'
         })
         return
@@ -976,7 +976,9 @@ export default {
   .topAll {
     width: 120rpx;
     text-align: center;
-
+	.font-13{
+		min-height: 70rpx;
+	}
     .redColor {
       color: $wzw-primary-color;
     }

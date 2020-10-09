@@ -1,7 +1,7 @@
 <template>
   <div style="background-color: #FFFFFF;height: 100vh;">
     <div class="store-buy">
-      <span class="store-buy-title">{{total_person}}</span>{{$t(1710)}}，{{$t(1711)}} <span
+      <span class="store-buy-title">{{total_person}}</span>{{$t('2317x0')}}，{{$t('2317x1')}} <span
     class="store-buy-title">{{total_buy_times}}</span>
     </div>
 

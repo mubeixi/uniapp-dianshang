@@ -4,30 +4,30 @@
       <view class="zhezhaoView">
         <image :src="'/static/client/check/close.png'|domain" @click="isShow=false" class="closeZ"></image>
         <view class="zhezhaoYue">
-          {{$t(1060)}}
+          {{$t('1332x0')}}
         </view>
         <form @submit="confirm" report-submit>
           <view class="zhezhaoCenter">
             <view class="views">
               <image :src="'/static/client/check/phone.png'|domain" class="imgs" mode="widthFix"></image>
-              <input class="inputs" :placeholder="$t(1061)" type="text" v-model="user_no">
+              <input class="inputs" :placeholder="$t('1332x1')" type="text" v-model="user_no">
             </view>
           </view>
           <view class="zhezhaoCenter">
             <view class="views">
               <image :src="'/static/client/check/money.png'|domain" class="imgs" mode="widthFix"></image>
-              <input class="inputs" :placeholder="$t(1062)" type="text" v-model="money">
+              <input class="inputs" :placeholder="$t('1332x2')" type="text" v-model="money">
             </view>
           </view>
           <view class="zhezhaoCenter">
             <view class="views">
               <image class="imgs" mode="widthFix" src="/static/pay-paasword.png"></image>
-              <input @blur="user_password" class="inputs" :placeholder="$t(1063)" type="password"
+              <input @blur="user_password" class="inputs" :placeholder="$t('1332x3')" type="password"
                      v-model="user_pay_password">
             </view>
           </view>
           <button class="zheButton" formType="submit">
-            {{$t(1064)}}
+            {{$t('1332x4')}}
           </button>
         </form>
 
@@ -40,59 +40,59 @@
       <image :src="'/static/client/blance/bg.jpg'|domain" class="bgImg"></image>
       <!-- <image class="back" @click="goBack" :src="'/static/client/check/left.png'|domain"></image>
       <view class="titleq">
-        {{$t(1065)}}
+        {{$t('1332x5')}}
       </view> -->
 
       <view class="dangqian">
-        {{$t(1066)}}（{{$t(1067)}}）
+        {{$t('1332x6')}}（{{$t('1332x7')}}）
       </view>
       <view class="prices">
         {{Money}}
       </view>
       <view @click="goWithdraw" class="zhuanchu" v-if="initData.remainder_withdraw==1">
-        {{$t(1068)}}
+        {{$t('1332x8')}}
       </view>
       <view class="bottoms">
         <view @click="goRecharge" class="lefts qwe">
           <image :src="'/static/client/check/t1.png'|domain" class="image"></image>
-          <text>{{$t(1069)}}</text>
+          <text>{{$t('1332x9')}}</text>
         </view>
         <view class="line">
         </view>
         <view @click="goFacePay" class="rights qwe">
           <image :src="'/static/client/check/t2.png'|domain" class="image"></image>
-          <text>{{$t(1070)}}</text>
+          <text>{{$t('1332x10')}}</text>
         </view>
       </view>
     </view>
 
     <view class="selects">
       <view :class="{checked:current=='charge'}" @click="changeCurrent('charge')" class="qwes">
-        {{$t(1071)}}
+        {{$t('1332x11')}}
         <image class="imgQ" src="/static/moneySort.png"></image>
       </view>
       <view :class="{checked:current=='money'}" @click="changeCurrent('money')" class="qwes">
-        {{$t(1072)}}
+        {{$t('1332x12')}}
         <image class="imgQ" src="/static/moneySort.png"></image>
       </view>
       <view class="showCeng" v-if="showSure">
-        <view class="priceInterval">{{$t(1073)}}</view>
+        <view class="priceInterval">{{$t('1332x13')}}</view>
         <view style="display: flex;align-content: center;padding-left: 10px;">
           <picker @change="bindDateChange" class="picker" mode="date">
             <view class="uni-input" v-if="beginTime">{{beginTime}}</view>
-            <view class="uni-input" v-if="!beginTime">{{$t(1074)}}</view>
+            <view class="uni-input" v-if="!beginTime">{{$t('1332x14')}}</view>
           </picker>
           <view class="centerPicker">
             —
           </view>
           <picker @change="bindDateChanges" class="picker" mode="date">
             <view class="uni-input" v-if="endTime">{{endTime}}</view>
-            <view class="uni-input" v-if="!endTime">{{$t(1075)}}</view>
+            <view class="uni-input" v-if="!endTime">{{$t('1332x15')}}</view>
           </picker>
         </view>
         <view class="submit">
-          <view @click="resets" class="view reset">{{$t(1076)}}</view>
-          <view @click="sureSearch" class="view sure">{{$t(1077)}}</view>
+          <view @click="resets" class="view reset">{{$t('1332x16')}}</view>
+          <view @click="sureSearch" class="view sure">{{$t('1332x17')}}</view>
         </view>
         <view @click="showSure=false" catchtouchmove class="zhao">
 
@@ -103,16 +103,25 @@
     <view class="contents" v-if="current=='charge'">
       <view class="mingxi  mingxiPlus">
         <view>
-          {{$t(1078)}}:{{records.total_get}}{{$t(1079)}}
+          {{$t('1332x18')}}</br>
+		  <block v-if="$p('zh-cn')">{{records.total_get}}{{$t('1332x19')}}</block>
+		  <block v-if="$p('en-us')">{{$t('1332x19')}}{{records.total_get}}</block>
+		  
         </view>
         <view>
-          {{$t(1080)}}:{{records.total_pay}}{{$t(1081)}}
+          {{$t('1332x20')}}</br>
+		  <block v-if="$p('zh-cn')">{{records.total_pay}}{{$t('1332x21')}}</block>
+		  <block v-if="$p('en-us')">{{$t('1332x21')}}{{records.total_pay}}</block>
+		  
         </view>
       </view>
       <view :key="idx" class="mingxi" v-for="(item,idx) in records.list">
         <view class="note">
           <view class="leftNote">{{item.Note}}</view>
-          <view class="rightNote">{{'+'}}{{item.Amount}}{{$t(1082)}}</view>
+          <view class="rightNote">
+		  <block v-if="$p('zh-cn')">{{'+'}}{{item.Amount}}{{$t('1332x22')}}</block>
+		  <block v-if="$p('en-us')">{{$t('1332x22')}}{{'+'}}{{item.Amount}}</block>
+		  </view>
         </view>
         <view class="times">
           {{item.CreateTime}}
@@ -123,16 +132,26 @@
 
       <view class="mingxi  mingxiPlus">
         <view>
-          {{$t(1083)}}:{{records.total_get}}{{$t(1084)}}
+          {{$t('1332x23')}}</br>
+		  <block v-if="$p('zh-cn')">{{records.total_get}}{{$t('1332x24')}}</block>
+		  <block v-if="$p('en-us')">{{$t('1332x24')}}{{records.total_get}}</block>
+		  
         </view>
         <view>
-          {{$t(1085)}}:{{records.total_pay}}{{$t(1086)}}
+          {{$t('1332x25')}}</br>
+		  <block v-if="$p('zh-cn')">{{records.total_pay}}{{$t('1332x26')}}</block>
+		  <block v-if="$p('en-us')">{{$t('1332x26')}}{{records.total_pay}}</block>
+		  
         </view>
       </view>
       <view :key="idx" class="mingxi" v-for="(item,idx) in records.list">
         <view class="note">
           <view class="leftNote">{{item.Note}}</view>
-          <view class="rightNote">{{item.Amount}}{{$t(1087)}}</view>
+          <view class="rightNote">
+			  <block v-if="$p('zh-cn')">{{item.Amount}}{{$t('1332x27')}}</block>
+			  <block v-if="$p('en-us')">{{$t('1332x27')}}{{item.Amount}}</block>
+		  
+		  </view>
         </view>
         <view class="times">
           {{item.CreateTime}}
@@ -195,7 +214,6 @@ export default {
     }
   },
   onReachBottom () {
-    console.log('ssss')
     if (this.current == 'charge') {
       // 充值记录
       if (this.moneyMore) {
@@ -224,7 +242,7 @@ export default {
         var ed = new Date(endTmp[0], endTmp[1], endTmp[2])
         if (sd.getTime() > ed.getTime()) {
           uni.showToast({
-            title: T._(1060),
+            title: T._('1332d0'),
             icon: 'none'
           })
           return
@@ -278,16 +296,16 @@ export default {
       // 改成需要密码
       if (this.userInfo.hasOwnProperty('User_PayPassword') && !this.userInfo.User_PayPassword) {
         confirm({
-          title: T._(1061),
-          content: T._(1062),
-          confirmText: T._(1063),
-          cancelText: T._(1064)
+          title: T._('1332d1'),
+          content: T._('1332d2'),
+          confirmText: T._('1332d3'),
+          cancelText: T._('1332d4')
         }).then(res => {
           uni.navigateTo({
             url: '/pagesA/person/updateUserPsw?type=1&is_back=1'
           })
         }).catch(err => {
-          error(T._(1065))
+          error(T._('1332d5'))
         })
         return
       }
@@ -314,21 +332,21 @@ export default {
 
       if (this.money == '' || isNaN(this.money) || (this.money < 0)) {
         uni.showToast({
-          title: T._(1066),
+          title: T._('1332d6'),
           icon: 'none'
         })
         return
       }
       if (this.user_no == '') {
         uni.showToast({
-          title: T._(1067),
+          title: T._('1332d7'),
           icon: 'none'
         })
         return
       }
 
       if (!this.user_pay_password) {
-        error(T._(1068))
+        error(T._('1332d8'))
         return
       }
 
@@ -571,7 +589,7 @@ export default {
     }
 
     .zhuanchu {
-      width: 170rpx;
+      padding: 0 30rpx;
       height: 74rpx;
       line-height: 74rpx;
       text-align: center;
@@ -608,7 +626,6 @@ export default {
         height: 35px;
         position: absolute;
         top: 12px;
-        right: 35px;
         padding: 10px;
         box-sizing: border-box;
       }
@@ -722,7 +739,7 @@ export default {
     .zhezhaoCenter {
       width: 100%;
       margin-top: 13rpx;
-      padding: 0rpx 52rpx;
+      padding: 0rpx 30rpx;
 
       .views {
         height: 90rpx;
@@ -733,6 +750,7 @@ export default {
           border-bottom: 1rpx solid #F4F4F4;
           font-size: 24rpx;
           margin-left: 16rpx;
+		  width: 100%;
         }
       }
 
@@ -764,10 +782,10 @@ export default {
     align-items: center;
     justify-content: space-between;
     height: 40px;
-    line-height: 40px;
     margin: 0px !important;
-    padding-left: 26rpx !important;
-    padding-right: 40px !important;
+    padding-left: 40rpx !important;
+    padding-right: 40rpx !important;
+	text-align: center;
   }
 
   .showCeng {

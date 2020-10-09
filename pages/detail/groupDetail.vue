@@ -14,10 +14,10 @@
 					</video>
 					<view class="change-btn" v-if="!hideNativeEleShow">
 						<cover-view :class="[showVideo?'active':'','shipin']" @click="change_view(1)" v-if="showVideo&&showCorver">
-							{{$t(212)}}
+							{{$t('275x0')}}
 						</cover-view>
 						<cover-view :class="[showVideo?'':'active','tupian']" @click="change_view(2)" v-if="showVideo&&showCorver">
-							{{$t(213)}}
+							{{$t('275x1')}}
 						</cover-view>
 					</view>
 				</view>
@@ -29,8 +29,8 @@
 						</swiper-item>
 					</swiper>
 					<view class="change-btn" v-if="product.video_url">
-						<view :class="[showVideo?'active':'','shipin']" @click="change_view(1)">{{$t(214)}}</view>
-						<view :class="[showVideo?'':'active','tupian']" @click="change_view(2)">{{$t(215)}}</view>
+						<view :class="[showVideo?'active':'','shipin']" @click="change_view(1)">{{$t('275x2')}}</view>
+						<view :class="[showVideo?'':'active','tupian']" @click="change_view(2)">{{$t('275x3')}}</view>
 					</view>
 				</view>
 			</view>
@@ -51,8 +51,8 @@
 				</div>
 
 				<div class="countdown" v-if="$p('en-us')">
-					End in <span class="spans">{{countdown.d}}</span> d, <span class="spans">{{countdown.h}}</span> h,<span
-					 class="spans">{{countdown.m}}</span> m<span class="spans">{{countdown.s}}</span> s
+					Expires In:<span class="spans">{{countdown.d}}</span>days<span class="spans">{{countdown.h}}</span>:<span
+					 class="spans">{{countdown.m}}</span>:<span class="spans">{{countdown.s}}</span>
 				</div>
 				<div class="haha" v-if="$p('zh-cn')">
 					已团{{product.Products_Sales}}件 {{product.pintuan_people}}人团
@@ -67,7 +67,7 @@
 		<div class="section2">
 			<div class="titles">
 				<div class="title">{{product.Products_Name}}</div>
-				<span @click="showTick" class="share" data-type="share">{{$t(216)}}</span>
+				<span @click="showTick" class="share" data-type="share">{{$t('275x4')}}</span>
 			</div>
 			<div class="titlet">
 				{{product.Products_BriefDescription}}
@@ -84,10 +84,10 @@
 		<div class="pintuan">
 			<div class="pinTitle flex flex-vertical-c flex-justify-between" @click="chakangengduo">
 				<span>
-					{{$t(217)}}
+					{{$t('275x5')}}
 				</span>
 				<span class="fz-12 c9" v-if="teamListAll.length>3">
-					{{$t(218)}}
+					{{$t('275x6')}}
 				</span>
 				<span v-else></span>
 			</div>
@@ -100,11 +100,12 @@
 						{{team.User_NickName}}
 					</div>
 					<div class="message">
-						还差{{product.pintuan_people-team.teamnum}}人，{{$t(219)}}{{team.addtime|endtime}}
+						<block v-if="$p('zh-cn')">还差{{product.pintuan_people-team.teamnum}}人，{{$t('275x27')}}{{team.addtime|endtime}}</block>
+						<block v-if="$p('en-us')">{{product.pintuan_people-team.teamnum}} people short，{{$t('275x27')}}{{team.addtime|endtime}}</block>
 					</div>
 				</div>
 				<div @click="toJoinGroup(team.id,team)" class="cantuan">
-					{{$t(220)}}
+					{{$t('275x8')}}
 				</div>
 			</div>
 		</div>
@@ -112,8 +113,8 @@
 		<!-- 评价 -->
 		<div class="comment">
 			<div class="c_title">
-				<span>评价</span>
-				<div @click="gotoComments" class="right">{{$t(221)}}
+				<span>{{$t('215x9')}}</span>
+				<div @click="gotoComments" class="right">{{$t('275x9')}}
 					<image :src="'/static/client/detail/right.png'|domain" alt="" class="img" />
 				</div>
 			</div>
@@ -144,7 +145,7 @@
 		</div>
 		<!-- 商品详情 -->
 		<div class="pro_detail">
-			<div class="p_detail_title">{{$t(222)}}</div>
+			<div class="p_detail_title">{{$t('275x10')}}</div>
 			<!-- <div v-html="product.Products_Description" class="p_detail_des"></div> -->
 			<!--    	<rich-text :nodes="product.Products_Description|formatRichText" class="p_detail_des"></rich-text>-->
 			<!-- <u-parse :content="product.Products_Description"  /> -->
@@ -169,27 +170,27 @@
 					<!-- #ifdef APP-PLUS -->
 					<div @click="shareFunc('wx')" class="flex1">
 						<image :src="'/static/client/detail/share1.png'|domain" alt="" class='img'></image>
-						<div>{{$t(223)}}</div>
+						<div>{{$t('275x11')}}</div>
 					</div>
 					<div @click="shareFunc('wxtimeline')" class="flex1">
 						<image :src="'/static/client/detail/sahre3.png'|domain" alt="" class='img'></image>
-						<div>{{$t(224)}}</div>
+						<div>{{$t('275x12')}}</div>
 					</div>
 					<!--只有配置了这个参数的app，才有分享到小程序选项-->
 					<div @click="shareFunc('wxmini')" class="flex1" v-if="wxMiniOriginId">
 						<img :src="'/static/client/detail/share4.png'|domain" alt="" class='img'>
-						<div>{{$t(225)}}</div>
+						<div>{{$t('275x13')}}</div>
 					</div>
 					<!-- #endif -->
 
 					<!-- #ifndef MP-TOUTIAO -->
 					<div @click="shareFunc('pic')" class="flex1">
 						<image :src="'/static/client/detail/share2.png'|domain" alt="" class='img'></image>
-						<div>{{$t(226)}}</div>
+						<div>{{$t('275x14')}}</div>
 					</div>
 					<!-- #endif -->
 				</div>
-				<div @click="cancel" class="s_bottom">{{$t(227)}}</div>
+				<div @click="cancel" class="s_bottom">{{$t('275x15')}}</div>
 			</div>
 			<scroll-view @scrolltolower="goNextPage" class="ticks" scroll-y=true v-if="type=='ticks'">
 				<div class="t_title">
@@ -202,9 +203,9 @@
 						<div class="t_left_t"><span>￥</span><span class="money">{{item.Coupon_Cash}}</span><span>{{item.Coupon_Subject}}</span>
 						</div>
 						<div class="t_left_c">{{item.Coupon_Description}}</div>
-						<div class="t_left_b">{{ $t(228) }}{{item.Coupon_StartTime}}-{{item.Coupon_EndTime}}</div>
+						<div class="t_left_b">{{ $t('275x16') }}{{item.Coupon_StartTime}}-{{item.Coupon_EndTime}}</div>
 					</div>
-					<div @click="getMyCoupon(item.Coupon_ID,i)" class="t_right">{{$t(229)}}</div>
+					<div @click="getMyCoupon(item.Coupon_ID,i)" class="t_right">{{$t('275x17')}}</div>
 				</div>
 			</scroll-view>
 		</popupLayer>
@@ -215,8 +216,12 @@
 					<div class="cartTitle">
 						<div class="cartTitles">{{product.Products_Name}}</div>
 						<div class="addInfo">
-							<div class="addPrice">{{postData.Products_PriceX}}{{$t(230)}}</div>
-							<div class="proSale">{{$t(231)}}{{postData.count}}</div>
+							<div class="addPrice">
+								<block v-if="$p('zh-cn')">{{postData.Products_PriceX}}{{$t('275x18')}}</block>
+								<block v-if="$p('en-us')">{{$t('275x18')}}{{postData.Products_PriceX}}</block>
+							
+							</div>
+							<div class="proSale">{{$t('275x19')}}{{postData.count}}</div>
 						</div>
 					</div>
 				</div>
@@ -233,7 +238,7 @@
 				</div>
 				<div class="numBer">
 					<div class="numBers">
-						{{$t(232)}}
+						{{$t('275x20')}}
 					</div>
 					<div class="inputNumber">
 						<div @click="delNum" class="clicks">-</div>
@@ -245,7 +250,7 @@
 			</div>
 			<form @submit="skuSub" report-submit>
 				<button :class="submit_flag?'':'disabled'" class="cartSub" formType="submit">
-					{{$t(233)}}
+					{{$t('275x21')}}
 				</button>
 
 			</form>
@@ -258,20 +263,20 @@
 					<div>
 						<image class="img" src="/static/detail/home.png"></image>
 					</div>
-					<div class="txt">{{$t(234)}}</div>
+					<div class="txt">{{$t('275x22')}}</div>
 				</div>
 				<div @click="collect" class="first">
 					<div>
 						<image class="img" src="/static/detail/favorite-a.png" v-if="isCollected"></image>
 						<image class="img" src="/static/detail/favorite.png" v-else></image>
 					</div>
-					<div class="txt">{{$t(235)}}</div>
+					<div class="txt">{{$t('275x23')}}</div>
 				</div>
 				<div @click="contact" class="first">
 					<div>
 						<image class="img" src="/static/detail/kefu.png"></image>
 					</div>
-					<div class="txt">{{$t(236)}}</div>
+					<div class="txt">{{$t('275x24')}}</div>
 				</div>
 			</div>
 			<div class="rightss">
@@ -281,7 +286,7 @@
 							<span class="bF">¥</span><span class="bS">{{product.Products_PriceX}}</span>
 						</div>
 						<button class="danRight" formType="submit">
-							{{$t(237)}}
+							{{$t('275x25')}}
 						</button>
 
 					</div>
@@ -293,7 +298,7 @@
 						</div>
 
 						<button class="danRight" formType="submit">
-							{{$t(238)}}
+							{{$t('275x26')}}
 						</button>
 
 					</div>
@@ -314,15 +319,17 @@
 							{{team.User_NickName}}
 						</div>
 						<div class="message">
-							还差{{product.pintuan_people-team.teamnum}}人，{{$t(239)}}{{team.addtime|endtime}}
+							<block v-if="$p('zh-cn')">还差{{product.pintuan_people-team.teamnum}}人，{{$t('275x27')}}{{team.addtime|endtime}}</block>
+							<block v-if="$p('en-us')">{{product.pintuan_people-team.teamnum}} people short，{{$t('275x27')}}{{team.addtime|endtime}}</block>
+							
 						</div>
 					</div>
 					<div @click="toJoinGroup(team.id,team)" class="cantuan">
-						{{$t(240)}}
+						{{$t('275x28')}}
 					</div>
 				</div>
 				<div class="fz-12 " style="text-align: center;line-height: 40rpx;color: #999999">
-					T._(212)
+					{{$t('275d0')}}
 				</div>
 			</scroll-view>
 
@@ -371,6 +378,7 @@
 		data() {
 			return {
 				teamListAll: [],
+				hideNativeEleShow: false,
 				groupStam: false,
 				// #ifdef APP-PLUS
 				wxMiniOriginId: '',
@@ -537,7 +545,7 @@
 
 			// 获取正在拼团的团队
 			this.getPintuanTeamList(this.Products_ID)
-			this.$refs.pintuanList.close()
+			this.$refs.pintuanList && this.$refs.pintuanList.close()
 		},
 		filters: {
 			endtime(timeStamp) {
@@ -709,8 +717,8 @@
 				for (var usr of team.join_user) {
 					if (this.userInfo.User_ID == usr) {
 						this.$fun.confirm({
-							title: T._(213),
-							content: T._(214)
+							title: T._('275d1'),
+							content: T._('275d2')
 						}).then(res => {
 							uni.navigateTo({
 								url: '/pages/detail/groupJoin?Team_ID=' + tid + '&Products_ID=' + this.Products_ID
@@ -789,7 +797,6 @@
 						})
 						break
 					case 'pic':
-
 						const sharePic = await getProductSharePic({
 							product_id: this.Products_ID,
 							act_price: this.postData.Products_PriceX
@@ -799,7 +806,7 @@
 						})
 
 						if (!sharePic) {
-							error(T._(215))
+							error(T._('275d3'))
 							return
 						}
 
@@ -901,7 +908,7 @@
 						prod_id: this.Products_ID
 					}).then(res => {
 						uni.showToast({
-							title: T._(216)
+							title: T._('275d4')
 						})
 						this.isCollected = true
 						// #ifdef APP-PLUS
@@ -1084,7 +1091,7 @@
 				if (this.postData.attr_id == 0) {
 					if (this.product.skujosn) {
 						wx.showToast({
-							title: T._(217),
+							title: T._('275d5'),
 							icon: 'none'
 						})
 						return
@@ -1111,12 +1118,12 @@
 				const amount = e.detail.value
 				if (amount <= 0) {
 					this.postData.qty = 1
-					error(T._(218))
+					error(T._('275d6'))
 					return
 				}
 				if (amount > this.postData.count) {
 					this.postData.qty = this.postData.count
-					error(T._(219))
+					error(T._('275d7'))
 				}
 			},
 			addNum() {
@@ -1124,7 +1131,7 @@
 					this.postData.qty = parseInt(this.postData.qty) + 1
 				} else {
 					uni.showToast({
-						title: T._(220),
+						title: T._('275d8'),
 						icon: 'none'
 					})
 					this.postData.qty = this.postData.count
@@ -1135,7 +1142,7 @@
 					this.postData.qty = parseInt(this.postData.qty) - 1
 				} else {
 					uni.showToast({
-						title: T._(221),
+						title: T._('275d9'),
 						icon: 'none'
 					})
 					this.postData.qty = 1
@@ -1191,10 +1198,10 @@
 				let product = null
 
 				getProductDetail(data, {
-					tip: T._(222)
+					tip: T._('275d10')
 				}).then(res => {
 					if (!res.data.is_pintuan) {
-						error(T._(223))
+						error(T._('275d11'))
 						const linkObj = {
 							link: '/pages/index/index',
 							linkType: 'default'
@@ -1268,7 +1275,7 @@
 							title: product.Products_Name, // 分享标题
 							link: front_url + buildSharePath(path), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
 							imgUrl: product.ImgPath, // 分享图标
-							desc: product.Products_BriefDescription || T._(224),
+							desc: product.Products_BriefDescription || T._('275d12'),
 							type: 'link', // 分享类型,music、video或link，不填默认为link
 							// dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
 							success: function() {
@@ -1389,7 +1396,7 @@
 				left: 50%;
 				transform: translateX(-50%);
 				display: flex;
-				width: 280rpx;
+				width: 240rpx;
 				justify-content: space-between;
 				z-index: 10;
 
@@ -1402,6 +1409,7 @@
 					font-size: 28rpx;
 					padding: 5px 10px;
 					background: rgba(255, 0, 0, .5);
+					line-height: 36rpx;
 				}
 
 				.active {
@@ -1541,8 +1549,12 @@
 
 	/* 产品描述部分 start */
 	.section1 {
-		padding: 10rpx 0;
+		padding: 20rpx;
 		background-color: #fff;
+		.leftss{
+			flex: 1 0 auto;
+			margin-right: 20rpx;
+		}
 	}
 
 	.price {

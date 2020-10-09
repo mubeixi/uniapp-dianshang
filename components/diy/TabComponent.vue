@@ -32,7 +32,7 @@
               <div class="left">
                 <div class="title" v-show="tab.config.attr.title.show">{{item.Products_Name}}</div>
                 <div class="font12 graytext desc" v-show="tab.config.attr.desc.show">
-                  {{item.Products_BriefDescription||$t(123)}}
+                  {{item.Products_BriefDescription||$t('103x0')}}
                 </div>
                 <!--                <div v-show="tab.config.attr.price.show" class="price"><span class="sign">￥</span>{{item.Products_PriceX}}-->
                 <!--                </div>-->
@@ -42,7 +42,7 @@
                 </div>
                 <div :class="'theme'+tab.config.attr.buybtn.style" class="buybtn"
                      v-show="tab.config.attr.buybtn.show">
-                  {{tab.config.attr.buybtn.text||$t(124)}}
+                  {{tab.config.attr.buybtn.text||$t('103x1')}}
                 </div>
               </div>
 
@@ -104,9 +104,9 @@ export default {
     return {
       infoTmpl: {
         Products_ID: 33,
-        Products_Name: T._(123),
+        Products_Name: T._('103d0'),
         Products_PriceX: 99.99,
-        Products_BriefDescription: T._(124),
+        Products_BriefDescription: T._('103d1'),
         ImgPath: ''
       },
       fullHeight: 0,
@@ -278,9 +278,6 @@ export default {
         param.Cate_ID = cate_id.join(',')
       } else {
         // param.Products_ID = list.join(',')
-      }
-      if (this.currentTab.type == 'all') {
-        param.pageSize = 999
       }
 
       getProductList(param).then(res => {

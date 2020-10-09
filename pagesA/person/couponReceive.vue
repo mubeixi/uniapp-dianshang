@@ -2,13 +2,13 @@
   <view @click="commonClick" class="myall">
     <!-- 		<view class="nav">
           <view class="views" :class="checked==0?'checked':''" @click="change(0)">
-            {{$t(1048)}}
+            {{$t('1408x0')}}
           </view>
           <view class="views" :class="checked==1?'checked':''" @click="change(1)">
-            {{$t(1049)}}
+            {{$t('1408x1')}}
           </view>
           <view class="views" :class="checked==2?'checked':''" @click="change(2)">
-            {{$t(1050)}}
+            {{$t('1408x2')}}
           </view>
         </view>
         <view style="height: 198rpx;width: 100%;">
@@ -24,10 +24,10 @@
           <image :src="item.Coupon_PhotoPath" class="images"></image>
         </view>
         <view class="storeTitle">
-          {{$t(1051)}}
+          {{$t('1408x3')}}
         </view>
         <view class="times">
-          {{ $t(1052) }}{{item.Coupon_StartTime}}-{{item.Coupon_EndTime}}
+          {{ $t('1408x4') }}{{item.Coupon_StartTime}}-{{item.Coupon_EndTime}}
         </view>
         <view class="prices" v-if="item.Coupon_Discount<=0">
           ¥
@@ -45,7 +45,7 @@
           [{{item.Coupon_Subject}}]
         </view>
         <view @click="goIndex(item.Coupon_ID,index)" class="button">
-          {{$t(1053)}}
+          {{$t('1408x5')}}
         </view>
       </view>
     </block>

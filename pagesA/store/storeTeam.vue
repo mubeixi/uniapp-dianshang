@@ -2,13 +2,13 @@
   <view class="msg">
     <div @click="goNext(1)" class="store-item">
       <image :src="'/static/client/store/dailishang.png'|domain" class="img-full"></image>
-      <div class="store-title">{{$t(1760)}}</div>
+      <div class="store-title">{{$t('2319x0')}}</div>
       <image class="store-img" src="/static/store/dailishanggo.png"></image>
     </div>
 
     <div @click="goNext(2)" class="store-item">
       <image :src="'/static/client/store/shequ.png'|domain" class="img-full"></image>
-      <div class="store-title">{{$t(1761)}}</div>
+      <div class="store-title">{{$t('2319x1')}}</div>
       <image class="store-img" src="/static/store/shequgo.png"></image>
     </div>
   </view>

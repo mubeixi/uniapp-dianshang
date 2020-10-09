@@ -4,7 +4,7 @@
       <div class="checkinfo-box line10 padding15" v-if="orderInfo.Order_IsVirtual == 1 && (orderInfo.Order_Status==2)">
         <div class="check-orderno ">
           <div class="font36" style="color: #555;font-weight: 300">{{orderInfo.Order_Code}}</div>
-          <div class="graytext2 font12">{{$t(624)}}</div>
+          <div class="graytext2 font12">{{$t('764x0')}}</div>
         </div>
         <div @click="showQrImg" class="check-qrcode text-right" v-if="qrVal">
           <wzw-qrcode
@@ -18,34 +18,34 @@
           ref="qrcode2"
           unit="px"
           />
-          <div class="graytext2 font12">{{$t(625)}}</div>
+          <div class="graytext2 font12">{{$t('764x1')}}</div>
         </div>
       </div>
     </block>
     <div class="zhezhao" v-if="password_input">
       <div class="input-wrap">
-        <div>{{$t(626)}}</div>
-        <input @blur="user_password" class="input" :placeholder="$t(627)" type="password">
+        <div>{{$t('764x2')}}</div>
+        <input @blur="user_password" class="input" :placeholder="$t('764x3')" type="password">
         <div class="btns">
-          <div @click="cancelInput" class="btn">{{$t(628)}}</div>
-          <div @click="confirmInput" class="btn">{{$t(629)}}</div>
+          <div @click="cancelInput" class="btn">{{$t('764x4')}}</div>
+          <div @click="confirmInput" class="btn">{{$t('764x5')}}</div>
         </div>
       </div>
     </div>
     <div class="state bgwhite" v-if="orderInfo.Order_Status == 1">
       <image :src="'/static/client/wait.png'|domain" class="img" />
-      <span class="state-desc">{{$t(630)}}</span>
+      <span class="state-desc">{{$t('764x6')}}</span>
     </div>
     <view class="address bgwhite line10 order-id">
-      <view>{{$t(631)}}{{orderInfo.Order_ID}}</view>
-      <view>{{$t(632)}}: {{orderInfo.Order_CreateTime | formatTime}}</view>
+      <view>{{$t('764x7')}}{{orderInfo.Order_ID}}</view>
+      <view>{{$t('764x8')}}: {{orderInfo.Order_CreateTime | formatTime}}</view>
     </view>
     <div class="address bgwhite line10" v-if="orderInfo.Order_IsVirtual == 0 ">
       <image :src="'/static/client/location.png'|domain" alt="" class="loc_icon" />
       <div class="add_msg">
-        <div class="name">{{$t(633)}}：{{orderInfo.Address_Name}} <span>{{orderInfo.Address_Mobile}}</span></div>
+        <div class="name">{{$t('764x9')}}：{{orderInfo.Address_Name}} <span>{{orderInfo.Address_Mobile}}</span></div>
         <div class="location">
-          {{$t(634)}}：{{orderInfo.Address_Province_name}}{{orderInfo.Address_City_name}}{{orderInfo.Address_Area_name}}
+          {{$t('764x10')}}：{{orderInfo.Address_Province_name}}{{orderInfo.Address_City_name}}{{orderInfo.Address_Area_name}}
           <block v-if="orderInfo.Address_Town_name">{{orderInfo.Address_Town_name}}</block>{{orderInfo.Address_Detailed}}
         </div>
       </div>
@@ -68,10 +68,10 @@
     <div class="other  bgwhite" v-if="orderInfo.Order_IsVirtual == 0">
       <div class="bd">
         <div class="o_title">
-          <span>{{$t(635)}}</span>
+          <span>{{$t('764x11')}}</span>
           <span class="c8" style="text-align:right;" v-if="orderInfo.Order_Shipping">
             <span>{{orderInfo.Order_Shipping.Express}}</span>
-            <span> {{orderInfo.Order_Shipping.Price > 0 ? (`${$t(636)}` + orderInfo.Order_Shipping.Price) : `${$t(637)}`}}</span>
+            <span> {{orderInfo.Order_Shipping.Price > 0 ? (`${$t('764x12')}` + orderInfo.Order_Shipping.Price) : `${$t('764x13')}`}}</span>
           </span>
         </div>
       </div>
@@ -79,7 +79,7 @@
     <view class="other bgwhite" v-if="orderInfo.Order_IsRecieve == 1">
       <view class="bd">
         <view class="o_title">
-          <span>{{$t(638)}}</span>
+          <span>{{$t('764x14')}}</span>
           <span class="c8">{{orderInfo.Order_Virtual_Cards}}</span>
         </view>
       </view>
@@ -87,7 +87,7 @@
     <view class="other bgwhite" v-if="orderInfo.Order_IsVirtual == 1">
       <view class="bd">
         <view class="o_title">
-          <span>{{$t(639)}}</span>
+          <span>{{$t('764x15')}}</span>
           <span class="c8">{{user_name}}</span>
         </view>
       </view>
@@ -95,7 +95,7 @@
     <view class="other bgwhite" v-if="orderInfo.Order_IsVirtual == 1">
       <view class="bd">
         <view class="o_title">
-          <span>{{$t(640)}}</span>
+          <span>{{$t('764x16')}}</span>
           <span class="c8">{{user_mobile}}</span>
         </view>
       </view>
@@ -103,15 +103,19 @@
     <div class="other bgwhite" v-if="orderInfo.Order_Type=='pintuan'||orderInfo.Order_Type=='shop'">
       <div class="bd">
         <div class="o_title">
-          <span>{{$t(641)}}</span>
-          <span class="c8">{{orderInfo.Coupon_Money}}{{$t(642)}}{{$t(643)}}</span>
+          <span>{{$t('764x17')}}</span>
+          <span class="c8">
+			  <block v-if="$p('zh-cn')">{{orderInfo.Coupon_Money}}{{$t('764x18')}}</block>
+			  <block v-if="$p('en-us')">{{$t('764x18')}}{{orderInfo.Coupon_Money}}</block>
+		  
+		  {{$t('764x19')}}</span>
         </div>
       </div>
     </div>
     <div class="other bgwhite">
       <div class="bd">
         <div class="o_title">
-          <span>{{$t(644)}}</span>
+          <span>{{$t('764x20')}}</span>
           <span class="c8">{{orderInfo.Integral_Money}}</span>
         </div>
       </div>
@@ -120,7 +124,7 @@
       <div class="other bgwhite" v-if="orderInfo.is_use_money && orderInfo.is_use_money == 1">
         <div class="bd">
           <div class="o_title">
-            <span>{{$t(645)}}</span>
+            <span>{{$t('764x21')}}</span>
             <switch :checked="moneyChecked" @change="moneyChange" color="#04B600" size='25px' />
           </div>
           <!-- <div class="o_desc c8">{{orderInfo.Order_Yebc}}</div> -->
@@ -132,7 +136,7 @@
       <div class="other bgwhite" v-if="initData.invoice_switch == 1">
         <div class="bd">
           <div class="o_title">
-            <span>{{$t(646)}}</span>
+            <span>{{$t('764x22')}}</span>
             <switch :checked="invoiceChecked" @change="invoiceChange" color="#04B600" size='25px' />
           </div>
           <!-- <div class="o_desc c8">{{orderInfo.Order_InvoiceInfo}}</div> -->
@@ -145,7 +149,7 @@
       <div class="other bgwhite">
         <div class="bd" style="border-bottom: none">
           <div class="o_title  words">
-            <span>{{$t(647)}}</span>
+            <span>{{$t('764x23')}}</span>
             <input :placeholder="orderInfo.Order_Remark" @blur="remarkHandle" class="inpu msg c8">
           </div>
         </div>
@@ -155,18 +159,22 @@
       <div class="other bgwhite" v-if="orderInfo.Order_Yebc > 0">
         <div class="bd">
           <div class="o_title">
-            <span>{{$t(648)}}</span>
-            <span style="color: #888;">{{orderInfo.Order_Yebc}}{{$t(649)}}</span>
+            <span>{{$t('764x24')}}</span>
+            <span style="color: #888;">
+				<block v-if="$p('zh-cn')">{{orderInfo.Order_Yebc}}{{$t('764x25')}}</block>
+				<block v-if="$p('en-us')">{{$t('764x25')}}{{orderInfo.Order_Yebc}}</block>
+			
+			</span>
           </div>
         </div>
       </div>
       <div class="other bgwhite" v-if="orderInfo.Order_NeedInvoice == 1">
         <div class="bd">
           <div class="o_title">
-            <span>{{$t(650)}}</span>
+            <span>{{$t('764x26')}}</span>
             <span>
 				{{orderInfo.Order_InvoiceInfo}}
-				<span v-if='orderInfo.Invoice_url' class="fapiao" @click="yulan(orderInfo.Invoice_url)">{{$t(651)}}</span>
+				<span v-if='orderInfo.Invoice_url' class="fapiao" @click="yulan(orderInfo.Invoice_url)">{{$t('764x27')}}</span>
 			</span>
 
           </div>
@@ -175,40 +183,40 @@
       <div class="other bgwhite">
         <div class="bd" style="border-bottom: none">
           <div class="o_title  words">
-            <span>{{$t(652)}}</span>
+            <span>{{$t('764x28')}}</span>
             <span>{{orderInfo.Order_Remark}}</span>
           </div>
         </div>
       </div>
     </block>
     <!-- <div class="total">
-      <span>{{$t(653)}}<span>{{orderInfo.prod_list.length}}</span>件商品</span>
-      <span class="mbx">{{$t(654)}}<span class="money moneys">￥</span><span class="money">{{orderInfo.Order_Fyepay}}</span></span>
+      <span>{{$t('764x29')}}<span>{{orderInfo.prod_list.length}}</span>件商品</span>
+      <span class="mbx">{{$t('764x30')}}<span class="money moneys">￥</span><span class="money">{{orderInfo.Order_Fyepay}}</span></span>
     </div> -->
     <div style="height:50px;"></div>
     <popup-layer :bottomHeight="50" :direction="'top'" @maskClicked="handClicked" ref="popupMX">
       <view class="mxdetail">
-        <view class="mxtitle">{{$t(655)}}</view>
-        <view class="mxitem">{{$t(656)}}
+        <view class="mxtitle">{{$t('764x31')}}</view>
+        <view class="mxitem">{{$t('764x32')}}
           <text class="num">+{{orderInfo.Order_TotalAmount}}</text>
         </view>
-        <view class="mxitem" v-if="orderInfo.user_curagio_money > 0">{{$t(657)}}
+        <view class="mxitem" v-if="orderInfo.user_curagio_money > 0">{{$t('764x33')}}
           <text class="num">-{{orderInfo.user_curagio_money}}</text>
         </view>
-        <view class="mxitem" v-if="orderInfo.Manjian_Cash > 0">{{$t(658)}}
+        <view class="mxitem" v-if="orderInfo.Manjian_Cash > 0">{{$t('764x34')}}
           <text class="num">-{{orderInfo.Manjian_Cash}}</text>
         </view>
-        <view class="mxitem" v-if="orderInfo.Coupon_Money > 0">{{$t(659)}}
+        <view class="mxitem" v-if="orderInfo.Coupon_Money > 0">{{$t('764x35')}}
           <text class="num">-{{orderInfo.Coupon_Money}}</text>
         </view>
-        <view class="mxitem" v-if="orderInfo.Integral_Money > 0">{{$t(660)}}
+        <view class="mxitem" v-if="orderInfo.Integral_Money > 0">{{$t('764x36')}}
           <text class="num">-{{orderInfo.Integral_Money}}</text>
         </view>
-        <view class="mxitem" v-if="user_money > 0">{{$t(661)}}
+        <view class="mxitem" v-if="user_money > 0">{{$t('764x37')}}
           <text class="num">-{{user_money}}</text>
         </view>
         <block v-if="orderInfo.Order_Shipping">
-          <view class="mxitem" v-if="orderInfo.Order_Shipping.Price > 0">{{$t(662)}}
+          <view class="mxitem" v-if="orderInfo.Order_Shipping.Price > 0">{{$t('764x38')}}
             <text class="num">+{{orderInfo.Order_Shipping.Price}}</text>
           </view>
         </block>
@@ -217,36 +225,33 @@
     </popup-layer>
     <div class="order_total" v-if='isShow'>
       <div class="totalinfo" v-if="orderInfo.prod_list">
-        <div class="info">
-			<block v-if="$p('zh-cn')">{{$t(663)}}{{orderInfo.prod_list.length}}件商品 总计：</block>
-			<block v-if="$p('en-us')">A total of {{orderInfo.prod_list.length}} products Total:</block>
-		<span
+        <div class="info">{{$t('764x39')}}{{orderInfo.prod_list.length}}{{$t('1659x2')}} {{$t('647x39')}}：<span
         class="mbxa">￥<span>{{orderInfo.Order_TotalPrice}}</span></span></div>
         <view class="tips" v-if="orderInfo.obtain_desc">{{orderInfo.obtain_desc}}</view>
       </div>
-      <view @click="seeDetail" class="mx">{{$t(664)}}
+      <view @click="seeDetail" class="mx">{{$t('764x40')}}
         <image :class="isSlide?'slidedown':''" class="image" src="/static/top.png"></image>
       </view>
       <div class="btn-group" v-if="orderInfo.Order_Status==0">
-        <span @click="cancelOrder(orderInfo.Order_ID)">{{$t(665)}}</span>
+        <span @click="cancelOrder(orderInfo.Order_ID)">{{$t('764x41')}}</span>
       </div>
       <div class="btn-group" v-if="orderInfo.Order_Status==1">
-        <span @click="cancelOrder(orderInfo.Order_ID)">{{$t(666)}}</span>
-        <span @click="submit" class="active">{{$t(667)}}</span>
+        <span @click="cancelOrder(orderInfo.Order_ID)">{{$t('764x42')}}</span>
+        <span @click="submit" class="active">{{$t('764x43')}}</span>
       </div>
       <div class="btn-group" v-else-if="orderInfo.Order_Status==2">
-        <span class="active" v-if="orderInfo.teamstatus==0">{{$t(668)}}</span>
+        <span class="active" v-if="orderInfo.teamstatus==0">{{$t('764x44')}}</span>
         <block v-else>
-          <span @click="goPay(orderInfo.Order_ID)" class="active" v-if="orderInfo.Order_Type != 'gift'">{{$t(669)}}</span>
+          <span @click="goPay(orderInfo.Order_ID)" class="active" v-if="orderInfo.Order_Type != 'gift'">{{$t('764x45')}}</span>
         </block>
       </div>
       <div class="btn-group" v-else-if="orderInfo.Order_Status==3">
-        <span @click="goLogistics(orderInfo)" v-if="orderInfo.Order_Shipping.shipping_id!=2">{{$t(670)}}</span>
+        <span @click="goLogistics(orderInfo)" v-if="orderInfo.Order_Shipping.shipping_id!=2">{{$t('764x46')}}</span>
         <!-- <span @click="goPay(orderInfo.Order_ID)" style="margin-left: 14rpx;">申请退款退货</span> -->
-        <span @click="confirmOrder(orderInfo.Order_ID)" class="active">{{$t(671)}}</span>
+        <span @click="confirmOrder(orderInfo.Order_ID)" class="active">{{$t('764x47')}}</span>
       </div>
       <div class="btn-group" v-else-if="orderInfo.Order_Status==4 && orderInfo.Is_Commit == 0">
-        <span @click="goPay(orderInfo.Order_ID)" class="active">{{$t(672)}}</span>
+        <span @click="goPay(orderInfo.Order_ID)" class="active">{{$t('764x48')}}</span>
       </div>
     </div>
 
@@ -380,7 +385,7 @@ export default {
   },
   methods: {
 	  clickPay () {
-		  console.log('111')
+		  // console.log('111')
 		  this.isShow = true
 	  },
     yulan (url) {
@@ -541,7 +546,7 @@ export default {
       this.user_money = Number(money).toFixed(2)
       if (this.user_money < 0 || isNaN(this.user_money)) {
         uni.showToast({
-          title: T._(624),
+          title: T._('764d0'),
           icon: 'none'
         })
         this.user_money = 0
@@ -550,7 +555,7 @@ export default {
       }
       if (this.orderInfo.Order_TotalPrice - money < 0) {
         uni.showToast({
-          title: T._(625),
+          title: T._('764d1'),
           icon: 'none'
         })
         this.user_money = this.orderInfo.Order_TotalPrice
@@ -618,7 +623,7 @@ export default {
 
     payFailCall () {
       uni.showToast({
-        title: T._(626),
+        title: T._('764d2'),
         icon: 'none',
         duration: 2000
       })
@@ -631,16 +636,16 @@ export default {
       }
 
       if (res && res.code && res.code === 1) {
-        toast(T._(627), 'none')
+        toast(T._('764d3'), 'none')
         return
       }
 
       if (res && res.code && res.code === 9) {
         uni.showModal({
-          title: T._(628),
-          content: T._(629),
-          cancelText: T._(630),
-          confirmText: T._(631),
+          title: T._('764d4'),
+          content: T._('764d5'),
+          cancelText: T._('764d6'),
+          confirmText: T._('764d7'),
           success: function (res) {
             if (res.confirm) {
               uni.redirectTo({
@@ -657,7 +662,7 @@ export default {
       // 0：支付成功 1：支付超时 2：支付失败 3：支付关闭 4：支付取消 9：订单状态开发者自行获取
 
       if (res && res.code && res.code === 4) {
-        toast(T._(632), 'none')
+        toast(T._('764d8'), 'none')
         return
       }
 

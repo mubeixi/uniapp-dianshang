@@ -2,7 +2,7 @@
   <view @click="commonClick" class="wrap">
     <view :style="{backgroundImage:'url('+domainFunc('/uploadfiles/wkbq6nc2kc/image/5daa7f9be1.jpg')+')'}"
           class="bg"></view>
-    <view class="moneybox font14" v-if="initData.DisSwitch==1">{{$t(332)}}<span class="font14"
+    <view class="moneybox font14" v-if="initData.DisSwitch==1">{{$t('351x0')}}<span class="font14"
                                                                          style="color: #f43838">￥</span><span
     class="money">{{info.money}}</span></view>
     <view @click="preview" class="imgbox">
@@ -46,7 +46,7 @@ export default {
     uni.showToast({
       position: 'top',
       icon: 'none',
-      title: T._(332)
+      title: T._('351d0')
     })
   }
 }

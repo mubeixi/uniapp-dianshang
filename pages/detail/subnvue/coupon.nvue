@@ -1,17 +1,17 @@
 <template>
 		<view style="max-height: 1050rpx;">
 			<div class="t_title">
-			    {{$t(320)}}
+			    {{$t('405x0')}}
 			    <image class="image" src="/static/no/detailX-no.png"  @click="close" ></image>
 			</div>
 			<scroll-view class="ticks" scroll-y=true  @scrolltolower="goNextPage">
 			    <div class="t_content" v-for="(item,i) of couponList" :key="i">
 			        <div class="t_left">
-			            <div class="t_left_t"><text class="colorFont">￥</text><text class="money colorFont" style="font-size: 20px;">{{item.Coupon_Cash}}</text><text class="colorFont">{{$t(321)}}<text class="colorFont" v-if="item.Coupon_UseArea==0">{{$t(322)}}</text></text></div>
+			            <div class="t_left_t"><text class="colorFont">￥</text><text class="money colorFont" style="font-size: 20px;">{{item.Coupon_Cash}}</text><text class="colorFont">{{$t('405x1')}}<text class="colorFont" v-if="item.Coupon_UseArea==0">{{$t('405x2')}}</text></text></div>
 			            <div class="t_left_c"><text class="colorFont">{{item.Coupon_Subject}}</text></div>
-			            <div class="t_left_b"><text class="colorFont">{{$t(323)}}{{item.Coupon_StartTime}}-{{item.Coupon_EndTime}}</text></div>
+			            <div class="t_left_b"><text class="colorFont">{{$t('405x3')}}{{item.Coupon_StartTime}}-{{item.Coupon_EndTime}}</text></div>
 			        </div>
-			        <div class="t_right"><text class="colorFont" style="font-size: 16px;" @click="getMyCoupon(item.Coupon_ID,i)">{{$t(324)}}</text></div>
+			        <div class="t_right"><text class="colorFont" style="font-size: 16px;" @click="getMyCoupon(item.Coupon_ID,i)">{{$t('405x4')}}</text></div>
 			    </div>
 			</scroll-view>
 		</view>

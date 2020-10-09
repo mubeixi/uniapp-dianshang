@@ -60,7 +60,7 @@ export default {
 			videoErrorCallback(e) {
 
 				if(!isDev)return;
-			    let msg = T._(761) + JSON.stringify(e)
+			    let msg = T._('932d0') + JSON.stringify(e)
 			    uni.showModal({
 			        content: msg,
 			        showCancel: false

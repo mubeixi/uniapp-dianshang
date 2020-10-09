@@ -1,7 +1,7 @@
 <template>
 	<div @click="commonClick">
-		<view class="address order-id">{{$t(1124)}}{{orderInfo.Order_ID}}</view>
-		<view class="address">{{$t(1125)}}: {{orderInfo.Order_CreateTime | formatTime}}</view>
+		<view class="address order-id">{{$t('1502x0')}}{{orderInfo.Order_ID}}</view>
+		<view class="address">{{$t('1502x1')}}: {{orderInfo.Order_CreateTime | formatTime}}</view>
 		<div class="order_msg">
 			<div class="biz_msg">
 				<image :src="orderInfo.ShopLogo|domain" alt="" class="biz_logo" />
@@ -21,10 +21,10 @@
 		<div class="other">
 			<div class="bd">
 				<div class="o_title">
-					<span>{{$t(1126)}}</span>
+					<span>{{$t('1502x2')}}</span>
 					<span class="c8" style="text-align:right;">
 						<span>{{orderInfo.Order_Shipping.Express}}</span>
-						<span> {{orderInfo.Order_Shipping.Price > 0 ? (`${$t(1127)}` + orderInfo.Order_Shipping.Price) : `${$t(1128)}`}}</span>
+						<span> {{orderInfo.Order_Shipping.Price > 0 ? (`${$t('1502x3')}` + orderInfo.Order_Shipping.Price) : `${$t('1502x4')}`}}</span>
 					</span>
 				</div>
 			</div>
@@ -33,7 +33,7 @@
 			<!-- <div class="other" v-if="orderInfo.is_use_money && orderInfo.is_use_money == 1">
         <div class="bd">
           <div class="o_title">
-            <span>{{$t(1129)}}</span>
+            <span>{{$t('1502x5')}}</span>
             <switch :checked="moneyChecked" size='25px' color="#04B600" @change="moneyChange" />
           </div>
 
@@ -44,7 +44,7 @@
       <div class="other">
         <div class="bd">
           <div class="o_title">
-            <span>{{$t(1130)}}</span>
+            <span>{{$t('1502x6')}}</span>
             <switch :checked="invoiceChecked" size='25px' color="#04B600" @change="invoiceChange" />
           <input type="text" v-if="openInvoice" :value="invoice_info" :disabled="!openInvoice" :placeholder="orderInfo.Order_InvoiceInfo"
           @blur="invoiceHandle" />
@@ -53,7 +53,7 @@
 			<div class="other">
 				<div class="bd">
 					<div class="o_title  words">
-						<span>{{$t(1131)}}</span>
+						<span>{{$t('1502x7')}}</span>
 						<input :placeholder="orderInfo.Order_Remark" @blur="remarkHandle" class="inpu msg c8">
 					</div>
 				</div>
@@ -63,15 +63,15 @@
 			<!-- <div class="other" v-if="orderInfo.Order_Yebc > 0">
         <div class="bd">
           <div class="o_title">
-            <span>{{$t(1132)}}</span>
-            <span style="color: #888;">{{orderInfo.Order_Yebc}}{{$t(1133)}}</span>
+            <span>{{$t('1502x8')}}</span>
+            <span style="color: #888;">{{orderInfo.Order_Yebc}}{{$t('1502x9')}}</span>
           </div>
         </div>
       </div>
       <div class="other" v-if="Order_NeedInvoice == 1">
         <div class="bd">
           <div class="o_title">
-            <span>{{$t(1134)}}</span>
+            <span>{{$t('1502x10')}}</span>
             <span>{{orderInfo.Order_InvoiceInfo}}</span>
           </div>
         </div>
@@ -79,31 +79,31 @@
 			<div class="other">
 				<div class="bd">
 					<div class="o_title  words">
-						<span>{{$t(1135)}}</span>
+						<span>{{$t('1502x11')}}</span>
 						<span>{{orderInfo.Order_Remark}}</span>
 					</div>
 				</div>
 			</div>
 		</block>
 		<!-- <div class="total">
-      <span>{{$t(1136)}}<span>{{orderInfo.prod_list.length}}</span>件商品</span>
-      <span class="mbx">{{$t(1137)}}<span class="money moneys">￥</span><span class="money">{{orderInfo.Order_Fyepay}}</span></span>
+      <span>{{$t('1502x12')}}<span>{{orderInfo.prod_list.length}}</span>件商品</span>
+      <span class="mbx">{{$t('1502x13')}}<span class="money moneys">￥</span><span class="money">{{orderInfo.Order_Fyepay}}</span></span>
     </div> -->
 		<div style="height:100px;background:#efefef;"></div>
 		<div class="order_total">
 			<div class="totalinfo">
-				<div class="info">{{$t(1138)}}{{orderInfo.prod_list.length}}{{$t(1139)}} {{$t(1140)}}<span class="mbxa">￥<span>{{orderInfo.Order_Fyepay}}</span></span></div>
+				<div class="info">{{$t('1502x14')}}{{orderInfo.prod_list.length}}{{$t('1502x15')}} {{$t('1502x16')}}<span class="mbxa">￥<span>{{orderInfo.Order_Fyepay}}</span></span></div>
 				<view class="tips" v-if="orderInfo.obtain_desc">{{orderInfo.obtain_desc}}</view>
 			</div>
 			<div class="btn-group" v-if="orderInfo.Order_Status==2">
-				<span class="active">{{$t(1141)}}</span>
+				<span class="active">{{$t('1502x17')}}</span>
 			</div>
 			<div class="btn-group" v-if="orderInfo.Order_Status==3">
-				<span @click="goLogistics(orderInfo)">{{$t(1142)}}</span>
-				<span @click="confirmOrder(orderInfo.Order_ID)" class="active">{{$t(1143)}}</span>
+				<span @click="goLogistics(orderInfo)">{{$t('1502x18')}}</span>
+				<span @click="confirmOrder(orderInfo.Order_ID)" class="active">{{$t('1502x19')}}</span>
 			</div>
 			<div class="btn-group" v-if="orderInfo.Order_Status==4 && orderInfo.Is_Commit == 0">
-				<span @click="goPay(orderInfo.Order_ID)" class="active">{{$t(1144)}}</span>
+				<span @click="goPay(orderInfo.Order_ID)" class="active">{{$t('1502x20')}}</span>
 			</div>
 		</div>
 	</div>
@@ -330,7 +330,7 @@ export default {
 				this.user_money = Number(money).toFixed(2)
 				if (this.user_money < 0 || isNaN(this.user_money)) {
 					uni.showToast({
-						title: T._(1124),
+						title: T._('1502d0'),
 						icon: 'none'
 					})
 					this.user_money = 0
@@ -339,7 +339,7 @@ export default {
 				}
 				if (this.orderInfo.Order_TotalPrice - money < 0) {
 					uni.showToast({
-						title: T._(1125),
+						title: T._('1502d1'),
 						icon: 'none'
 					})
 					this.user_money = this.orderInfo.Order_TotalPrice
@@ -413,7 +413,7 @@ export default {
 
 			payFailCall() {
 				uni.showToast({
-					title: T._(1126),
+					title: T._('1502d2'),
 					icon: 'none',
 					duration: 2000
 				})
@@ -431,16 +431,16 @@ export default {
 				}
 
 				if (res && res.code && res.code == 1) {
-					toast(T._(1127), 'none')
+					toast(T._('1502d3'), 'none')
 					return
 				}
 
 				if (res && res.code && res.code == 9) {
 					uni.showModal({
-						title: T._(1128),
-						content: T._(1129),
-						cancelText: T._(1130),
-						confirmText: T._(1131),
+						title: T._('1502d4'),
+						content: T._('1502d5'),
+						cancelText: T._('1502d6'),
+						confirmText: T._('1502d7'),
 						success: function(res) {
 							if (res.confirm) {
 								uni.redirectTo({
@@ -457,7 +457,7 @@ export default {
 				// 0：支付成功 1：支付超时 2：支付失败 3：支付关闭 4：支付取消 9：订单状态开发者自行获取
 
 				if (res && res.code && res.code == 4) {
-					toast(T._(1132), 'none')
+					toast(T._('1502d8'), 'none')
 					return
 				}
 

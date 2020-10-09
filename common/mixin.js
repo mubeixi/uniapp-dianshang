@@ -288,7 +288,7 @@ export const pageMixin = {
 
       if (!users_id) {
         uni.showModal({
-          title: T._(16),
+          title: T._('16d0'),
           content: '缺少商户id'
         })
         return
@@ -482,7 +482,7 @@ export const scanMixin = {
             }
           })
         }).catch(() => {
-          reject(Error(T._(17)))
+          reject(Error(T._('16d1')))
         })
         // #endif
 

@@ -2,53 +2,53 @@
   <view @click="commonClick" class="bgColor-white">
     <block v-if="type==1">
       <view class="area-item">
-        <text class="area-label">{{$t(1538)}}</text>
+        <text class="area-label">{{$t('2056x0')}}</text>
         <picker :range="change_objectMultiArray" :value="change_multiIndex" @change="bindMultiPickerChange"
                 @columnchange="bindMultiPickerColumnChange" mode="multiSelector" range-key="name"
                 style="flex:1;">
           <view class="picker">
-            <view class="p_item" v-if="!address_info.Stores_Province">{{$t(1539)}}</view>
+            <view class="p_item" v-if="!address_info.Stores_Province">{{$t('2056x1')}}</view>
             <view class="p_item" v-else>{{objectMultiArray[0][multiIndex[0]]['name']}}</view>
-            <view class="p_item" v-if="!address_info.Stores_City">{{$t(1540)}}</view>
+            <view class="p_item" v-if="!address_info.Stores_City">{{$t('2056x2')}}</view>
             <view class="p_item" v-else>{{objectMultiArray[1][multiIndex[1]]['name']}}</view>
-            <view class="p_item" v-if="!address_info.Stores_Area">{{$t(1541)}}</view>
+            <view class="p_item" v-if="!address_info.Stores_Area">{{$t('2056x3')}}</view>
             <view class="p_item" v-else>{{objectMultiArray[2][multiIndex[2]]['name']}}</view>
           </view>
         </picker>
       </view>
       <view class="area-item">
-        <text class="area-label">{{$t(1542)}}</text>
-        <input :placeholder="$t(1543)" type="text" v-model="User_Address" />
+        <text class="area-label">{{$t('2056x4')}}</text>
+        <input :placeholder="$t('2056x5')" type="text" v-model="User_Address" />
       </view>
-      <view @click="save" class="save">{{$t(1544)}}</view>
+      <view @click="save" class="save">{{$t('2056x6')}}</view>
     </block>
     <block v-if="type==10">
       <view class="area-item">
-        <text class="area-label">{{$t(1545)}}</text>
-        <input :placeholder="$t(1546)" type="text" v-model="Stores_Name" />
+        <text class="area-label">{{$t('2056x7')}}</text>
+        <input :placeholder="$t('2056x8')" type="text" v-model="Stores_Name" />
       </view>
-      <view @click="save" class="save">{{$t(1547)}}</view>
+      <view @click="save" class="save">{{$t('2056x9')}}</view>
     </block>
     <block v-if="type==2||type==3">
       <!-- 				<form report-submit @submit="confirm"> -->
       <view class="other">
         <!-- <view class="other-item">
-          {{$t(1548)}}： {{userInfo.User_Mobile}}
+          {{$t('2056x10')}}： {{userInfo.User_Mobile}}
         </view> -->
         <view class="other-item" v-if="type==3">
-          {{$t(1549)}}
-          <input class="input phone" :placeholder="$t(1550)" type="text" v-model="mobile" />
+          {{$t('2056x11')}}
+          <input class="input phone" :placeholder="$t('2056x12')" type="text" v-model="mobile" />
         </view>
         <view class="other-item" v-if="type==2">
-          {{$t(1551)}}
-          <input class="input phone" :placeholder="$t(1552)" type="text" v-model="mobile" />
+          {{$t('2056x13')}}
+          <input class="input phone" :placeholder="$t('2056x14')" type="text" v-model="mobile" />
         </view>
         <view class="other-item">
-          {{$t(1553)}}
-          <input class="input code" :placeholder="$t(1554)" type="text" v-model="code" maxlength="4"/>
-          <view @click="getCode" class="get-msg">{{countdownStatus?(countdownNum + $t(1555)):$t(1556)}}</view>
+          {{$t('2056x15')}}
+          <input class="input code" :placeholder="$t('2056x16')" type="text" v-model="code" maxlength="4"/>
+          <view @click="getCode" class="get-msg">{{countdownStatus?(countdownNum + $t('2056x17')):$t('2056x18')}}</view>
         </view>
-        <view @click="confirm" class="save">{{$t(1557)}}</view>
+        <view @click="confirm" class="save">{{$t('2056x19')}}</view>
       </view>
       </form>
     </block>
@@ -124,7 +124,7 @@ export default {
       const isMobileOK = checkMobile(this.mobile)
       if (!isMobileOK) {
         uni.showToast({
-          title: T._(1538),
+          title: T._('2056d0'),
           icon: 'none'
         })
         return
@@ -141,26 +141,26 @@ export default {
       }
       updateStoreMobileSms(data).then(res => {
         uni.showToast({
-          title: T._(1539),
+          title: T._('2056d1'),
           icon: 'success'
         })
         this.startCountdown()
       }).catch(() => {
-        error(T._(1540))
+        error(T._('2056d2'))
       })
     },
     confirm (e) {
       if (this.type == 2) {
         if (!(checkMobile(this.mobile))) {
           uni.showToast({
-            title: T._(1541),
+            title: T._('2056d3'),
             icon: 'none'
           })
           return
         }
         if (!this.code) {
           uni.showToast({
-            title: T._(1542),
+            title: T._('2056d4'),
             icon: 'none'
           })
           return
@@ -181,7 +181,7 @@ export default {
 
       updateStoreMobile(data).then(res => {
         uni.showToast({
-          title: T._(1543)
+          title: T._('2056d5')
         })
         setTimeout(() => {
           uni.navigateBack({
@@ -189,7 +189,7 @@ export default {
           })
         }, 1500)
       }).catch(() => {
-        modal(T._(1544))
+        modal(T._('2056d6'))
       })
     },
     startCountdown () {
@@ -208,13 +208,13 @@ export default {
     getTitle () {
       switch (this.type) {
         case '1' :
-          this.title = T._(1545)
+          this.title = T._('2056d7')
           break
         case '2' :
-          this.title = T._(1546)
+          this.title = T._('2056d8')
           break
         case '3' :
-          this.title = T._(1547)
+          this.title = T._('2056d9')
           break
       }
 
@@ -226,13 +226,13 @@ export default {
       if (this.type == 1) {
         if (!this.address_info.Address_Province || !this.address_info.Address_City || !this.address_info.Address_Area) {
           uni.showToast({
-            title: T._(1548),
+            title: T._('2056d10'),
             icon: 'none'
           })
           return
         } else if (this.User_Address == '') {
           uni.showToast({
-            title: T._(1549),
+            title: T._('2056d11'),
             icon: 'none'
           })
           return
@@ -247,7 +247,7 @@ export default {
         store_address: this.User_Address
       }).then(res => {
         uni.showToast({
-          title: T._(1550)
+          title: T._('2056d12')
         })
         setTimeout(() => {
           uni.navigateBack({
@@ -255,7 +255,7 @@ export default {
           })
         }, 1500)
       }).catch(() => {
-        modal(T._(1551))
+        modal(T._('2056d13'))
       })
     },
     // 处理省市区联动信息

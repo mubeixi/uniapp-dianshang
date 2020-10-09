@@ -3,25 +3,25 @@
         <div class="leftss">
             <div class="first" @click="toHome">
                 <image class='img' src="/static/detail/home.png"></image>
-                <text class="txt">{{$t(429)}}</text>
+                <text class="txt">{{$t('474x0')}}</text>
             </div>
             <div class="first" @click="collectFn">
                 <image class='img' v-if="isCollected" src="/static/detail/favorite-a.png"></image>
                 <image class='img' v-else src="/static/detail/favorite.png"></image>
-                <text class="txt">{{$t(430)}}</text>
+                <text class="txt">{{$t('474x1')}}</text>
             </div>
             <div class="first" @click="kefu">
                 <image class='img' src="/static/detail/kefu.png"></image>
-                <text class="txt">{{$t(431)}}</text>
+                <text class="txt">{{$t('474x2')}}</text>
             </div>
         </div>
         <div class="rightss">
 
-			<text v-if="!isKai"  class="dan bTitle" @click="addCart">{{$t(432)}}</text>
-			<text v-if="!isKai"  class="tuan bTitle" @click="directBuy">{{$t(433)}}</text>
+			<text v-if="!isKai"  class="dan bTitle" @click="addCart">{{$t('474x3')}}</text>
+			<text v-if="!isKai"  class="tuan bTitle" @click="directBuy">{{$t('474x4')}}</text>
 
            <text class="all" @click="lingqu"  v-if="isKai">
-               {{$t(434)}}
+               {{$t('474x5')}}
             </text>
         </div>
     </div>

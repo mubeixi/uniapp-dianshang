@@ -19,14 +19,14 @@
       </div>
     </div>
     <div class="tabs">
-      <div :class="[active == 0 ? 'checked' : '','tab']" @click="getActive(0)">{{ $t(168) }}
+      <div :class="[active == 0 ? 'checked' : '','tab']" @click="getActive(0)">{{ $t('199x0') }}
         <div class="line"></div>
       </div>
-      <div :class="[active == 1 ? 'checked' : '','tab']" @click="getActive(1)">{{ $t(169) }}
+      <div :class="[active == 1 ? 'checked' : '','tab']" @click="getActive(1)">{{ $t('199x1') }}
         <div class="line"></div>
       </div>
       <div :class="[active == 2 ? 'checked' : '','tab']" @click="getActive(2)" class="pricebox"><span
-      class="padding4-c">{{ $t(170) }}</span>
+      class="padding4-c">{{ $t('199x2') }}</span>
         <view class="xiangshang">
           <image :src="'/static/client/result/tops.png'|domain" class="image" v-if="isSheng==1"></image>
           <image :src="'/static/client/result/top.png'|domain" class="image" v-else></image>
@@ -40,7 +40,7 @@
       </div>
 
       <div :class="[active == 3 ? 'checked' : '','tab']" class="filterbox">
-        <div :style="{color:showShai?'#F43131':''}" @click.stop="change" class="filter">{{ $t(171) }}</div>
+        <div :style="{color:showShai?'#F43131':''}" @click.stop="change" class="filter">{{ $t('199x3') }}</div>
         <template v-show="!showShai">
           <image :src="'/static/client/result/jx1.png'|domain" @click="changeCate" class="imgm sorttype"
                  v-if="cate==2"></image>
@@ -53,20 +53,20 @@
 
     </div>
     <div @click.stop catchtouchmove="false" class="shaixuan" v-if="showShai">
-      <view class="priceInterval">{{ $t(172) }}</view>
+      <view class="priceInterval">{{ $t('199x4') }}</view>
       <view class="inputPrice">
-        <input :placeholder="$t(173)" placeholder-style="color:#999999;font-size:26rpx;" type="number" v-model="minPrice">
+        <input :placeholder="$t('199x5')" placeholder-style="color:#999999;font-size:26rpx;" type="number" v-model="minPrice">
         <view class="view">—</view>
-        <input :placeholder="$t(174)" placeholder-style="color:#999999;font-size:26rpx;" type="number" v-model="maxPrice">
+        <input :placeholder="$t('199x6')" placeholder-style="color:#999999;font-size:26rpx;" type="number" v-model="maxPrice">
       </view>
-      <view class="priceInterval">{{ $t(175) }}</view>
+      <view class="priceInterval">{{ $t('199x7') }}</view>
       <view class="isShipping">
-        <span :class="isShipping==1?'checked':''" @click="shipping(0)" class="span">{{ $t(176) }}</span>
-        <span :class="isShipping==2?'checked':''" @click="shipping(1)" class="span">{{ $t(177) }}</span>
+        <span :class="isShipping==1?'checked':''" @click="shipping(0)" class="span">{{ $t('199x8') }}</span>
+        <span :class="isShipping==2?'checked':''" @click="shipping(1)" class="span">{{ $t('199x9') }}</span>
       </view>
       <view class="submit">
-        <view @click="reset" class="view reset">{{ $t(178) }}</view>
-        <view @click="sureSearch" class="view sure">{{ $t(179) }}</view>
+        <view @click="reset" class="view reset">{{ $t('199x10') }}</view>
+        <view @click="sureSearch" class="view sure">{{ $t('199x11') }}</view>
       </view>
       <view @click="closeShow" catchtouchmove="false" class="zhao">
 
@@ -86,7 +86,7 @@
               <span class="n_price"><text>￥</text>{{item.Products_PriceX}}</span>
               <span class="o_price" v-if="item.Products_PriceY!=item.Products_PriceX"><text>￥</text>{{item.Products_PriceY}}</span>
             </div>
-            <div class="sold">{{ $t(180) }} {{item.Products_Sales}} {{ $t(181) }}</div>
+            <div class="sold">{{ $t('199x12') }} {{item.Products_Sales}} {{ $t('199x13') }}</div>
           </div>
         </div>
         <div class="defaults" v-if="pro.length<=0">
@@ -212,7 +212,7 @@ export default {
     sureSearch () {
       if (isNaN(this.minPrice) || isNaN(this.maxPrice)) {
         uni.showToast({
-          title: T._(168),
+          title: T._('199d0'),
           icon: 'none',
           duration: 2000
         })
@@ -220,7 +220,7 @@ export default {
       }
       if (this.minPrice && this.maxPrice && this.minPrice > this.maxPrice) {
         uni.showToast({
-          title: T._(169),
+          title: T._('199d1'),
           icon: 'none',
           duration: 2000
         })

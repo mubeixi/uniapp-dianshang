@@ -1,12 +1,12 @@
 <template>
   <div @click="commonClick" class="wrap">
     <div class="navs">
-      <div :class="tabidx===0?'active':''" @click="changIndex(0)" class="nav-item">{{$t(1563)}}</div>
-      <div :class="tabidx===1?'active':''" @click="changIndex(1)" class="nav-item">{{$t(1564)}}</div>
-      <div :class="tabidx===2?'active':''" @click="changIndex(2)" class="nav-item">{{$t(1565)}}</div>
-      <div :class="tabidx===3?'active':''" @click="changIndex(3)" class="nav-item">{{$t(1566)}}</div>
-      <div :class="tabidx===4?'active':''" @click="changIndex(4)" class="nav-item">{{$t(1567)}}</div>
-      <div :class="tabidx===5?'active':''" @click="changIndex(5)" class="nav-item">{{$t(1568)}}</div>
+      <div :class="tabidx===0?'active':''" @click="changIndex(0)" class="nav-item">{{$t('2007x0')}}</div>
+      <div :class="tabidx===1?'active':''" @click="changIndex(1)" class="nav-item">{{$t('2007x1')}}</div>
+      <div :class="tabidx===2?'active':''" @click="changIndex(2)" class="nav-item">{{$t('2007x2')}}</div>
+      <div :class="tabidx===3?'active':''" @click="changIndex(3)" class="nav-item">{{$t('2007x3')}}</div>
+      <div :class="tabidx===4?'active':''" @click="changIndex(4)" class="nav-item">{{$t('2007x4')}}</div>
+      <div :class="tabidx===5?'active':''" @click="changIndex(5)" class="nav-item">{{$t('2007x5')}}</div>
     </div>
     <view class="space-box">
     </view>
@@ -15,7 +15,7 @@
         <div :key="idx1" class="item" v-for="(apply,idx1) in applys">
           <div class="head">
             <div class="status flex flex-between ">
-              <div class="order-no">{{$t(1569)}}: {{apply.Order_ID}}</div>
+              <div class="order-no">{{$t('2007x6')}}: {{apply.Order_ID}}</div>
               <image @click="delApply(apply,idx1)" class="icon-delete" src="/static/store/icon-del.png"
                      v-if="inArray(apply.Order_Status,[21,23,25])"></image>
             </div>
@@ -24,7 +24,7 @@
                 <div :style="{backgroundImage:'url('+apply.Stores_ImgPath+')'}" class="store-pic"></div>
                 <div class="store-title">{{apply.Stores_Name}}</div>
                 <div class="action">
-                  <span @click="showStore(apply.Order_Store)" class="action-item">{{$t(1570)}}</span>
+                  <span @click="showStore(apply.Order_Store)" class="action-item">{{$t('2007x7')}}</span>
                 </div>
               </div>
               <span class="status-text">{{apply.Order_Status_desc}}</span>
@@ -37,7 +37,7 @@
                 <div class="c">
                   <div class="title line10">{{item.prod_name}}</div>
                   <div class="line10 flex flex-between graytext font14 flex-vertical-center">
-                    <div class="spec-key">{{item.attr_info.attr_name||$t(1571)}}</div>
+                    <div class="spec-key">{{item.attr_info.attr_name||$t('2007x8')}}</div>
                     <div class="numbox font16"><span class="font14">x</span>{{item.prod_count}}</div>
                   </div>
                   <div class="font14"><span class="danger-color">￥<span
@@ -47,12 +47,12 @@
             </div>
           </block>
           <div class="price-box">
-            {{$t(1572)}}<span class="danger-color">￥<span class="total_num font16">{{apply.Order_TotalPrice}}</span></span>
+            {{$t('2007x9')}}<span class="danger-color">￥<span class="total_num font16">{{apply.Order_TotalPrice}}</span></span>
           </div>
           <div class="actions text-center">
             <block v-if="inArray(apply.Order_Status,[21])">
-              <button @click="openRefuseDialog(apply,idx1)" class="acion-btn" size="mini" type="warn">{{$t(1573)}}</button>
-              <button @click="handleApply(apply,idx1)" class="acion-btn" size="mini">{{$t(1574)}}</button>
+              <button @click="openRefuseDialog(apply,idx1)" class="acion-btn" size="mini" type="warn">{{$t('2007x10')}}</button>
+              <button @click="handleApply(apply,idx1)" class="acion-btn" size="mini">{{$t('2007x11')}}</button>
             </block>
           </div>
         </div>
@@ -62,17 +62,17 @@
 
     <wzw-dialog ref="storeInfo">
       <div class="storeInfoDialog">
-        <div class="title text-center line15 font16">{{$t(1575)}}</div>
+        <div class="title text-center line15 font16">{{$t('2007x12')}}</div>
         <div class="row">
-          <div class="label">{{$t(1576)}}</div>
+          <div class="label">{{$t('2007x13')}}</div>
           <div class="text">{{storeInfo.Stores_Name}}</div>
         </div>
         <div class="row">
-          <div class="label">{{$t(1577)}}</div>
+          <div class="label">{{$t('2007x14')}}</div>
           <div class="text">{{storeInfo.Stores_Telephone}}</div>
         </div>
         <div class="row">
-          <div class="label">{{$t(1578)}}</div>
+          <div class="label">{{$t('2007x15')}}</div>
           <div class="text">
             {{storeInfo.Stores_Province_name}}{{storeInfo.Stores_City_name}}{{storeInfo.Stores_Area_name}}{{storeInfo.Stores_Address}}
           </div>
@@ -82,11 +82,11 @@
 
     <wzw-dialog ref="refuseApply">
       <div class="refuseApplyDialog">
-				<textarea @input="bingReasonInput" auto-height class="reason" :placeholder="$t(1579)"
+				<textarea @input="bingReasonInput" auto-height class="reason" :placeholder="$t('2007x16')"
                   placeholder-style="color:#999" />
         <div class="control">
-          <div @click="cancelRefuseApply" class="action-btn btn-cancel">{{$t(1580)}}</div>
-          <div @click="refuseApply" class="btn-sub action-btn">{{$t(1581)}}</div>
+          <div @click="cancelRefuseApply" class="action-btn btn-cancel">{{$t('2007x17')}}</div>
+          <div @click="refuseApply" class="btn-sub action-btn">{{$t('2007x18')}}</div>
         </div>
 
       </div>
@@ -141,18 +141,18 @@ export default {
     },
     refuseApply () {
       if (!this.reason) {
-        error(T._(1563))
+        error(T._('2007d0'))
         return
       }
       refuseStorePurchaseApply({
         order_id: this.activeApply.Order_ID,
         reason: this.reason
-      }, { tip: T._(1564) }).then(res => {
+      }, { tip: T._('2007d1') }).then(res => {
         this.$refs.refuseApply.close()
         this.activeApply = null
         this.reason = ''
         apply.Order_Status = 23
-        apply.Order_Status_desc = T._(1565)
+        apply.Order_Status_desc = T._('2007d2')
       }, err => {
       })
     },
@@ -165,7 +165,7 @@ export default {
         this.storeInfo = this.stores[idx]
         this.$refs.storeInfo.show()
       } else {
-        error(T._(1566))
+        error(T._('2007d3'))
       }
     },
     changIndex (idx) {
@@ -185,7 +185,7 @@ export default {
         ...this.paginate,
         order_status: this.order_status,
         store_id: this.Stores_ID
-      }, { tip: T._(1567) }).then(res => {
+      }, { tip: T._('2007d4') }).then(res => {
         this.paginate.totalCount = res.totalCount
 
         const rt = res.data.map(item => {
@@ -238,6 +238,7 @@ export default {
     box-sizing: border-box;
     display: flex;
     align-items: center;
+	justify-content: space-around;
     height: 50px;
     line-height: 50px;
     background: #fff;
@@ -245,7 +246,7 @@ export default {
     padding: 0 10px;
 
     .nav-item {
-      flex: 1;
+      // flex: 1;
       /*box-sizing: border-box;*/
       text-align: center;
       /*position: relative;*/

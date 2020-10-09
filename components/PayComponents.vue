@@ -4,16 +4,11 @@
     </view>
     <div class="zhezhao" v-if="password_input">
       <div class="input-wrap">
-<<<<<<< HEAD
-        <div>{{$t(129)}}</div>
-        <input type="password" class="input" :placeholder="$t(130)" @input="user_password">
-=======
-        <div>请输入余额支付密码</div>
-        <input type="password" maxlength="50" class="input" placeholder="请输入密码" @input="user_password">
->>>>>>> remotes/origin/develop
+        <div>{{$t('143x0')}}</div>
+        <input type="password" class="input" :placeholder="$t('143x1')" @input="user_password">
         <div class="btns">
-          <div @click="cancelInput" class="btn">{{$t(131)}}</div>
-          <div @click="confirmInput" class="btn">{{$t(132)}}</div>
+          <div @click="cancelInput" class="btn">{{$t('143x2')}}</div>
+          <div @click="confirmInput" class="btn">{{$t('143x3')}}</div>
         </div>
       </div>
     </div>
@@ -246,22 +241,24 @@ export default {
       this.pay_type = name
       this.close()
 
-      if (this.use_money > 0 || name === 'remainder_pay') {
+      if (name === 'remainder_pay') {
         if (this.userInfo.hasOwnProperty('User_PayPassword') && !this.userInfo.User_PayPassword) {
           confirm({
-            title: T._(129),
-            content: T._(130),
-            confirmText: T._(131),
-            cancelText: T._(132)
+            title: T._('143d0'),
+            content: T._('143d1'),
+            confirmText: T._('143d2'),
+            cancelText: T._('143d3')
           }).then(res => {
             uni.navigateTo({
               url: '/pagesA/person/updateUserPsw?type=1&is_back=1'
             })
           }).catch(() => {
-            error(T._(133))
+            error(T._('143d4'))
           })
           return
         }
+        this.password_input = true// 弹出密码输入框
+        return
       }
 
       // 判断是否使用了余额，
@@ -297,7 +294,7 @@ export default {
       }
 
       if (!channel) {
-        this.$error(T._(134))
+        this.$error(T._('143d5'))
         return false
       }
 
@@ -349,7 +346,7 @@ export default {
       // 不是跳转的
       if (!is_forward) {
         if (this.need_invoice === 1 && this.invoice_info === '') {
-          toast(T._(135), 'none')
+          toast(T._('143d6'), 'none')
           return
         }
 
@@ -373,12 +370,12 @@ export default {
           orderPay(payConf, {
             errtip: false,
             mask: true,
-            tip: T._(136)
+            tip: T._('143d7')
           }).then(res => {
             _self.paySuccessCall()
           }, err => {
             uni.showModal({
-              title: T._(137),
+              title: T._('143d8'),
               content: err.msg,
               showCancel: false
             })
@@ -390,7 +387,7 @@ export default {
       }
 
       if (this.pay_type === 'unionpay') {
-        error(T._(138))
+        error(T._('143d9'))
         return
       }
 
@@ -417,7 +414,7 @@ export default {
       // 公众号需要code
       if (this.pay_type === 'wx_mp') {
         if (!isWeiXin()) {
-          error(T._(139))
+          error(T._('143d10'))
           return
         }
 
@@ -461,13 +458,13 @@ export default {
 
       orderPay(payConf, {
         mask: true,
-        tip: T._(140)
+        tip: T._('143d11')
       }).then(res => {
         unipayFunc(this, this.pay_type, res)
       }).catch(err => {
         uni.showModal({
-          title: T._(141),
-          content: T._(142) + err.msg
+          title: T._('143d12'),
+          content: T._('143d13') + err.msg
         })
       })
     },

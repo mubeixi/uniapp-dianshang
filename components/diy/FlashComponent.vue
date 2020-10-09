@@ -6,9 +6,9 @@
   v-if="goodsList.length>0"
   >
     <image :src="'/static/client/spike_bg.jpg'|domain" class="bgimg"></image>
-    <div class="stampbox">{{$t(37)}}{{countdown.is_start?$t(38):$t(39)}}{{$t(40)}} <span
-    class="countdown_tag">{{countdown.d}}</span>{{$t(41)}}<span class="countdown_tag">{{countdown.h}}</span>{{$t(42)}}<span
-    class="countdown_tag">{{countdown.m}}</span>{{$t(43)}}<span class="countdown_tag">{{countdown.s}}</span>{{$t(44)}}
+    <div class="stampbox">{{$t('109x0')}}{{countdown.is_start?$t('109x1'):$t('109x2')}}{{$t('109x3')}} <span
+    class="countdown_tag">{{countdown.d}}</span>{{$t('109x4')}}<span class="countdown_tag">{{countdown.h}}</span>{{$t('109x5')}}<span
+    class="countdown_tag">{{countdown.m}}</span>{{$t('109x6')}}<span class="countdown_tag">{{countdown.s}}</span>{{$t('109x7')}}
     </div>
 
     <div :class="className">
@@ -26,31 +26,31 @@
             <div class="tag img" v-else v-show="goods.config.attr.tag.show"><img
             :src="goods.config.attr.tag.img|domain" /></div>
 
-            <span class="count" v-if="goods.config.style==3">{{$t(45)}}{{item.Products_Count}}</span>
+            <span class="count" v-if="goods.config.style==3">{{$t('109x8')}}{{item.Products_Count}}</span>
 
           </div>
           <div :class="{empyInfo:isEmpeyInfo}" :style="{width:goods.config.style==2?itemw:''}" class="info">
             <div class="left">
               <div class="title" v-show="goods.config.attr.title.show">{{item.Products_Name}}</div>
               <div class="font12 graytext desc" v-show="goods.config.attr.desc.show">
-                {{item.Products_BriefDescription||$t(46)}}
+                {{item.Products_BriefDescription||$t('109x9')}}
               </div>
               <div class="price" v-if="goods.config.style!=1" v-show="goods.config.attr.price.show"><span
-              class="graytext2 font12">{{$t(47)}} </span><span class="sign">￥</span><span
+              class="graytext2 font12">{{$t('109x10')}} </span><span class="sign">￥</span><span
               style="font-weight: 600">{{item.price}}</span><span
               class="graytext2 market-price font12"> ￥{{item.Products_PriceX}} </span>
               </div>
             </div>
             <div class="bottom-box">
               <div class="price" v-if="goods.config.style==1" v-show="goods.config.attr.price.show"><span
-              class="graytext2 font12">{{$t(48)}} </span><span class="sign">￥</span><span
+              class="graytext2 font12">{{$t('109x11')}} </span><span class="sign">￥</span><span
               style="font-weight: 600">{{item.price}}</span><span
               class="graytext2 market-price font12"> ￥{{item.Products_PriceX}} </span></div>
 
-              <span class="count" v-if="goods.config.style==2">{{$t(49)}}{{item.Products_Count}}</span>
+              <span class="count" v-if="goods.config.style==2">{{$t('109x12')}}{{item.Products_Count}}</span>
               <div :class="'theme'+goods.config.attr.buybtn.style" class="buybtn"
                    v-show="goods.config.attr.buybtn.show">
-                {{goods.config.attr.buybtn.text||$t(50)}}
+                {{goods.config.attr.buybtn.text||$t('109x13')}}
               </div>
             </div>
           </div>
@@ -83,9 +83,9 @@ export default {
       goodsList: [],
       infoTmpl: {
         Products_ID: 33,
-        Products_Name: T._(37),
+        Products_Name: T._('109d0'),
         Products_PriceX: 99.99,
-        Products_BriefDescription: $t(51),
+        Products_BriefDescription: T._('109x14'),
         ImgPath: ''
       },
       goods: {
@@ -239,6 +239,7 @@ export default {
   components: {},
   methods: {
     stampFunc () {
+		if(!this.goodsList) return
       if (this.goodsList.length < 1 || !this.goodsList[0].Products_ID) return
       const { start_time, end_time } = this.goodsList[0]
 

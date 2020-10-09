@@ -14,10 +14,10 @@
         <image :src="'/static/client/fenxiao/right.png'|domain" class="right"></image>
       </view>
       <view @click="guanWithdrawal" class="bank guanli" v-else>
-        + {{$t(995)}}
+        + {{$t('1288x0')}}
       </view>
       <view class="tiMoney">
-        {{$t(996)}}
+        {{$t('1288x1')}}
       </view>
       <view class="inputMoney">
         <view class="input-money-inner">
@@ -26,10 +26,13 @@
       </view>
       <view class="canTi">
         <view class="canTiMoney">
-          {{$t(997)}}：{{balance}}{{$t(998)}}
+          {{$t('1288x2')}}：
+		  <block v-if="$p('zh-cn')">{{balance}}{{$t('1288x3')}}</block>
+		  <block v-if="$p('en-us')">{{$t('1288x3')}}{{balance}}</block>
+		  
         </view>
         <view @click="allTi" class="allTi">
-          {{$t(999)}}
+          {{$t('1288x4')}}
         </view>
       </view>
       <view class="kong">
@@ -51,10 +54,10 @@
         </view>
       </view>
       <view @click="withdrawApply" class="liji">
-        {{$t(1000)}}
+        {{$t('1288x5')}}
       </view>
       <view @click="goRecord" class="lishi">
-        {{$t(1001)}}
+        {{$t('1288x6')}}
         <image :src="'/static/client/fenxiao/right.png'|domain" class="lishi-image"></image>
       </view>
     </view>
@@ -103,7 +106,7 @@ export default {
     getWithdrawConfig().then(res => {
       this.init = res.data
     }).catch(() => {
-      modal(T._(995))
+      modal(T._('1288d0'))
     })
   },
   computed: {
@@ -129,7 +132,7 @@ export default {
       that.isQing = true
       if (isNaN(this.price)) {
         uni.showToast({
-          title: T._(996),
+          title: T._('1288d1'),
           icon: 'none'
         })
         this.price = ''
@@ -139,7 +142,7 @@ export default {
 
       if (this.price == '') {
         uni.showToast({
-          title: T._(997),
+          title: T._('1288d2'),
           icon: 'none'
         })
         this.price = ''
@@ -147,7 +150,7 @@ export default {
         return
       }
       if (this.User_Method_ID <= 0) {
-        this.$error(T._(998))
+        this.$error(T._('1288d3'))
         this.isQing = false
         setTimeout(function () {
           uni.navigateTo({
@@ -210,7 +213,7 @@ export default {
           this.User_Method_ID = res.data.list[0].User_Method_ID
         }
       }).catch(err => {
-        modal(err.msg || T._(999))
+        modal(err.msg || T._('1288d4'))
       })
     },
     // 我的提现方式
@@ -358,6 +361,7 @@ export default {
         width: 613rpx;
         font-size: 20rpx;
         color: #999999;
+		word-break:break-all;
       }
     }
 
@@ -379,12 +383,12 @@ export default {
       height: 21rpx;
       // width: 106rpx;
       margin-top: 25rpx;
-      margin-left: 565rpx;
       font-size: 22rpx;
       color: #999999;
       display: flex;
       align-items: center;
-
+		justify-content: flex-end;
+		padding-right: 20rpx;
       .lishi-image {
         width: 12rpx;
         height: 20rpx;

@@ -6,7 +6,7 @@
       <block :key="index" v-for="(item,index) of orderList">
         <view @click="hidden_tip(index)" class="prolist">
           <view class="pro-title">
-            <view>{{$t(1418)}}：{{item.Order_ID}}</view>
+            <view>{{$t('1847x0')}}：{{item.Order_ID}}</view>
             <image @click="del(item.Order_ID)" class="img" src="/static/procurement/del.png"
                    v-if="item.Order_Status==20||item.Order_Status==26"></image>
           </view>
@@ -15,11 +15,11 @@
               <image :src="item.supplier_img" class="avator" mode=""></image>
               <view class="biz-name">{{item.supplier_name}}
                 <view class="biz-links" v-if="item.active_id>0">(
-                  <text @click="showStore(item)" class="text-d" v-if="item.active_id>0">{{$t(1419)}}</text>
+                  <text @click="showStore(item)" class="text-d" v-if="item.active_id>0">{{$t('1847x1')}}</text>
                   <block v-if="(item.Order_Status==20||item.Order_Status==22||item.Order_Status==25)&&item.active_id>0">
                     /
                   </block>
-                  <!-- <block v-if="item.Order_Status==20||item.Order_Status==22||item.Order_Status==25"><text class="text-d" @click="changeChannel(item)">{{$t(1420)}}</text></block> (item.Order_Status==20||item.Order_Status==22||item.Order_Status==25)||-->
+                  <!-- <block v-if="item.Order_Status==20||item.Order_Status==22||item.Order_Status==25"><text class="text-d" @click="changeChannel(item)">{{$t('1847x2')}}</text></block> (item.Order_Status==20||item.Order_Status==22||item.Order_Status==25)||-->
                   )
                 </view>
               </view>
@@ -67,22 +67,22 @@
               </view>
             </view>
 
-            <view class="totalinfo">总计：
+            <view class="totalinfo">{{$t('647x39')}}：
               <text class="price-icon">￥</text>
               <text class="price-num">{{item.Order_TotalPrice}}</text>
-              <block v-if="item.Order_Shipping.Price>0">({{$t(1421)}}{{item.Order_Shipping.Price}}{{$t(1422)}})</block>
+              <block v-if="item.Order_Shipping.Price>0">({{$t('1847x3')}}{{item.Order_Shipping.Price}}{{$t('1847x4')}})</block>
             </view>
             <view class="btns">
               <view @click="cancelOrder(item.Order_ID)" class="btn back"
-                    v-if="item.Order_Status==20||item.Order_Status==21||item.Order_Status==25">{{$t(1423)}}
+                    v-if="item.Order_Status==20||item.Order_Status==21||item.Order_Status==25">{{$t('1847x5')}}
               </view>
-              <view @click="recallOrder(item.Order_ID)" class="btn back" v-if="item.Order_Status==21">{{$t(1424)}}</view>
+              <view @click="recallOrder(item.Order_ID)" class="btn back" v-if="item.Order_Status==21">{{$t('1847x6')}}</view>
               <view @click="wuliu(item)" class="btn back" v-if="item.Order_Status==23&&item.Order_Shipping.Express">
-                {{$t(1425)}}
+                {{$t('1847x7')}}
               </view>
-              <view @click="completedOrder(item.Order_ID)" class="btn back" v-if="item.Order_Status==23">{{$t(1426)}}</view>
+              <view @click="completedOrder(item.Order_ID)" class="btn back" v-if="item.Order_Status==23">{{$t('1847x8')}}</view>
               <view @click="submitOrder(item.Order_ID,index)" class="btn back"
-                    v-if="item.Order_Status==20||item.Order_Status==22||item.Order_Status==25">{{$t(1427)}}
+                    v-if="item.Order_Status==20||item.Order_Status==22||item.Order_Status==25">{{$t('1847x9')}}
               </view>
             </view>
           </view>
@@ -94,50 +94,50 @@
     </div>
     <!--  门店信息	-->
     <view class="sku-pop mendian" v-if="isShowStoreMsg">
-      <view class="sku-title">{{$t(1428)}}</view>
+      <view class="sku-title">{{$t('1847x10')}}</view>
       <view class="sku-content">
         <view class="skulist">
-          <view class="sku-name">{{$t(1429)}}：</view>
+          <view class="sku-name">{{$t('1847x11')}}：</view>
           <view class="sku-item" v-if="storeAdress.Stores_Name">{{storeAdress.Stores_Name}}</view>
         </view>
         <view class="skulist">
-          <view class="sku-name">{{$t(1430)}}：</view>
+          <view class="sku-name">{{$t('1847x12')}}：</view>
           <view class="sku-item" v-if="storeAdress.Stores_Telephone">{{storeAdress.Stores_Telephone}}</view>
         </view>
         <view @click="showAdress" class="skulist">
-          <view class="sku-name">{{$t(1431)}}：</view>
+          <view class="sku-name">{{$t('1847x13')}}：</view>
           <view class="sku-item" style="flex:1;" v-if="storeAdress.Stores_Province_name">
             {{storeAdress.Stores_Province_name}}{{storeAdress.Stores_City_name}}{{storeAdress.Stores_Area_name}}{{storeAdress.Stores_Address}}
             <image class="img" src="/static/local.png"></image>
           </view>
         </view>
         <view class="skulist" v-if="storeAdress.distance">
-          <view class="sku-name">{{$t(1432)}}</view>
+          <view class="sku-name">{{$t('1847x14')}}</view>
           <view class="sku-item">{{storeAdress.distance}}KM</view>
         </view>
       </view>
     </view>
     <!-- 修改渠道 -->
     <view class="sku-pop" v-if="isChangeChannel">
-      <view class="sku-title">{{$t(1433)}}</view>
+      <view class="sku-title">{{$t('1847x15')}}</view>
       <view class="sku-content" style="padding-left:53rpx;">
         <view @click="changeOrderIndex(0)" class="skulist">
           <view class="nochecked" v-if="orderIndex==1"></view>
           <image class="selected" src="/static/procurement/selected.png" v-if="orderIndex==0"></image>
-          <view>{{$t(1434)}}</view>
+          <view>{{$t('1847x16')}}</view>
         </view>
         <view @click="changeOrderIndex(1)" class="skulist">
           <view class="nochecked" v-if="orderIndex==0"></view>
           <image class="selected" src="/static/procurement/selected.png" v-if="orderIndex==1"></image>
-          <view>{{$t(1435)}}</view>
+          <view>{{$t('1847x17')}}</view>
         </view>
         <view class="skulist">
-          <input class="input" :placeholder="$t(1436)" placeholder-style="color: #C9C9C9;font-size: 24rpx;" type="text"
+          <input class="input" :placeholder="$t('1847x18')" placeholder-style="color: #C9C9C9;font-size: 24rpx;" type="text"
                  v-model="inputValue" />
         </view>
         <view class="skulist change-btn">
-          <view @click="cancelMy" class="btn cancel">{{$t(1437)}}</view>
-          <view @click="sureMy" class="btn confirm">{{$t(1438)}}</view>
+          <view @click="cancelMy" class="btn cancel">{{$t('1847x19')}}</view>
+          <view @click="sureMy" class="btn confirm">{{$t('1847x20')}}</view>
         </view>
       </view>
     </view>
@@ -145,11 +145,11 @@
     <view :hidden="isHidden" @click="hiddenMask" catchtouchmove="false" class="mask"></view>
 
     <div class="input-wrap" v-if="password_input">
-      <div>{{$t(1439)}}</div>
-      <input @blur="user_password" class="input" :placeholder="$t(1440)" type="password" v-model="user_pay_password">
+      <div>{{$t('1847x21')}}</div>
+      <input @blur="user_password" class="input" :placeholder="$t('1847x22')" type="password" v-model="user_pay_password">
       <div class="btns">
-        <div @click="cancelInput" class="btn">{{$t(1441)}}</div>
-        <div @click="confirmInput" class="btn">{{$t(1442)}}</div>
+        <div @click="cancelInput" class="btn">{{$t('1847x23')}}</div>
+        <div @click="confirmInput" class="btn">{{$t('1847x24')}}</div>
       </div>
     </div>
 
@@ -210,8 +210,8 @@ export default {
     del (id) {
       const that = this
       uni.showModal({
-        title: T._(1418),
-        content: T._(1419),
+        title: T._('1847d0'),
+        content: T._('1847d1'),
         success: function (res) {
           if (res.confirm) {
             const data = {
@@ -284,16 +284,16 @@ export default {
     submitOrder (id, index) {
       if (this.userInfo.hasOwnProperty('User_PayPassword') && !this.userInfo.User_PayPassword) {
         confirm({
-          title: T._(1420),
-          content: T._(1421),
-          confirmText: T._(1422),
-          cancelText: T._(1423)
+          title: T._('1847d2'),
+          content: T._('1847d3'),
+          confirmText: T._('1847d4'),
+          cancelText: T._('1847d5')
         }).then(res => {
           uni.navigateTo({
             url: '/pagesA/person/updateUserPsw?type=1&is_back=1'
           })
         }).catch(err => {
-          error(T._(1424))
+          error(T._('1847d6'))
         })
         return
       }
@@ -318,7 +318,7 @@ export default {
       }
 
       const prod_list = this.orderList[index].prod_list
-      console.log(prod_list, 'ss')
+      // console.log(prod_list, 'ss')
       prod_list.forEach(item => {
         if (!data[item.prod_id]) {
           data[item.prod_id] = {}
@@ -346,7 +346,7 @@ export default {
         }
 
         const prod_list = this.orderList[index].prod_list
-        console.log(prod_list, 'ss')
+        // console.log(prod_list, 'ss')
         prod_list.forEach(item => {
           if (!data[item.prod_id]) {
             data[item.prod_id] = {}
@@ -366,7 +366,7 @@ export default {
         })
       } else {
         uni.showToast({
-          title: T._(1425),
+          title: T._('1847d7'),
           icon: 'none'
         })
       }
@@ -379,8 +379,8 @@ export default {
       }
       const that = this
       uni.showModal({
-        title: T._(1426),
-        content: T._(1427),
+        title: T._('1847d8'),
+        content: T._('1847d9'),
         success: function (res) {
           if (res.confirm) {
             storePifaOrderCompleted(data).then(res => {
@@ -408,8 +408,8 @@ export default {
       }
       const that = this
       uni.showModal({
-        title: T._(1428),
-        content: T._(1429),
+        title: T._('1847d10'),
+        content: T._('1847d11'),
         success: function (res) {
           if (res.confirm) {
             storePifaOrderRecall(data).then(res => {
@@ -435,8 +435,8 @@ export default {
       }
       const that = this
       uni.showModal({
-        title: T._(1430),
-        content: T._(1431),
+        title: T._('1847d12'),
+        content: T._('1847d13'),
         success: function (res) {
           if (res.confirm) {
             storePifaOrderCancel(data).then(res => {

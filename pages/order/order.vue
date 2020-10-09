@@ -1,21 +1,21 @@
 <template>
 	<div @click="commonClick" class="haihong">
 		<div class="navs">
-			<div :class="index==0?'active':''" @click="changIndex(0)" class="nav-item">{{$t(585)}}</div>
+			<div :class="index==0?'active':''" @click="changIndex(0)" class="nav-item">{{$t('738x0')}}</div>
 			<div :class="index==1?'active':''" @click="changIndex(1)" class="nav-item">
-				{{$t(586)}}
+				{{$t('738x1')}}
 				<div class="jiaobiao" v-if="orderNum.waitpay>0">{{orderNum.waitpay}}</div>
 			</div>
 			<div :class="index==2?'active':''" @click="changIndex(2)" class="nav-item">
-				{{$t(587)}}
+				{{$t('738x2')}}
 				<div class="jiaobiao" v-if="orderNum.waitsend>0">{{orderNum.waitsend}}</div>
 			</div>
 			<div :class="index==3?'active':''" @click="changIndex(3)" class="nav-item">
-				{{$t(588)}}
+				{{$t('738x3')}}
 				<div class="jiaobiao" v-if="orderNum.waitconfirm>0">{{orderNum.waitconfirm}}</div>
 			</div>
 			<div :class="index==4?'active':''" @click="changIndex(4)" class="nav-item">
-				{{$t(589)}}
+				{{$t('738x4')}}
 				<div class="jiaobiao" v-if="orderNum.waitcomment>0">{{orderNum.waitcomment}}</div>
 			</div>
 		</div>
@@ -43,35 +43,40 @@
 						</div>
 					</div>
 				</block>
-				<div class="text-right total">{{$t(590)}}{{item.prod_list.length}}件商品 {{$t(591)}}<span
-					 class="price"><span>￥</span> {{item.Order_TotalPrice}}
-						<block v-if="item.Order_Shipping.Price>0">({{$t(592)}}{{item.Order_Shipping.Price}}{{$t(593)}})</block>
+				<div class="text-right total">
+					{{$t('738x5')}}<text style="padding: 0 6rpx;">{{item.prod_list.length}}</text>{{$t('1659x2')}} </br> {{$t('738x6')}}<span class="price"><span>￥</span>
+						{{item.Order_TotalPrice}}
+						<block v-if="item.Order_Shipping.Price>0">({{$t('738x7')}}
+						<block v-if="$p('zh-cn')">{{item.Order_Shipping.Price}}{{$t('738x8')}}</block>
+						<block v-if="$p('en-us')">{{$t('738x8')}}{{item.Order_Shipping.Price}}</block>
+						
+						)</block>
 					</span></div>
 				<div class="btn-group" v-if="item.Order_Status==-1">
-					<span @click.stop="delOrder(item.prod_list,index)">{{$t(594)}}</span>
+					<span @click.stop="delOrder(item.prod_list,index)">{{$t('738x9')}}</span>
 				</div>
 				<div class="btn-group" v-if="item.Order_Status==0">
-					<span @click.stop="cancelOrder(item.prod_list,index)">{{$t(595)}}</span>
+					<span @click.stop="cancelOrder(item.prod_list,index)">{{$t('738x10')}}</span>
 				</div>
 				<div class="btn-group" v-if="item.Order_Status==1">
-					<span @click.stop="cancelOrder(item.prod_list,index)">{{$t(596)}}</span>
+					<span @click.stop="cancelOrder(item.prod_list,index)">{{$t('738x11')}}</span>
 					<span @click.stop="goPay(item)" class="active"></span>
 				</div>
 				<div class="btn-group" v-else-if="item.Order_Status==2&&item.Order_Type != 'gift'">
-					<span @click.stop="goPay(item)" class="active">{{$t(597)}}</span>
+					<span @click.stop="goPay(item)" class="active">{{$t('738x12')}}</span>
 				</div>
 				<div class="btn-group" v-else-if="item.Order_Status==3">
 					<div @click.stop="openExtendReceiptFn(item)" class="extend_receipt" v-if="item.allow_extend_receipt">
 						<div class="funicon icon-more1 icon font22 " style="color: #777;"></div>
-						<div @click.stop="extendReceiptFn(item)" class="tooltip" v-if="item.extend">{{$t(598)}}</div>
+						<div @click.stop="extendReceiptFn(item)" class="tooltip" v-if="item.extend">{{$t('738x13')}}</div>
 					</div>
-					<span @click.stop="goLogistics(item)" v-if="item.Order_Shipping.shipping_id!=2">{{$t(599)}}</span>
-					<span @click.stop="goPay(item)" style="margin-left: 15rpx;" v-if="item.Order_Shipping.shipping_id!=2">{{$t(600)}}</span>
-					<span @click.stop="confirmOrder(item,index)" class="active">{{$t(601)}}</span>
+					<span @click.stop="goLogistics(item)" v-if="item.Order_Shipping.shipping_id!=2">{{$t('738x14')}}</span>
+					<span @click.stop="goPay(item)" style="margin-left: 15rpx;" v-if="item.Order_Shipping.shipping_id!=2">{{$t('738x15')}}</span>
+					<span @click.stop="confirmOrder(item,index)" class="active">{{$t('738x16')}}</span>
 					<!-- @click="goPay(item)"跳转退款 -->
 				</div>
 				<div class="btn-group" v-else-if="item.Order_Status==4 && item.Is_Commit == 0 && item.Is_Backup == 0">
-					<span @click.stop="goPay(item)" class="active">{{$t(602)}}</span>
+					<span @click.stop="goPay(item)" class="active">{{$t('738x17')}}</span>
 				</div>
 			</template>
 			<template v-if="item.prod_list.length>0">
@@ -88,17 +93,17 @@
 					<image :src="prod_img" style="width: 100%;height: 100%;"></image>
 				</div>
 				<div class="my-huo">
-					{{$t(603)}}
+					{{$t('738x18')}}
 				</div>
 				<div class="my-content">
-					{{$t(604)}}
+					{{$t('738x19')}}
 				</div>
 			</div>
 			<div class="control">
 				<div @click="cancelReason" class="action-btn" style="border-right: 1px solid #e4e4e4; box-sizing: border-box;">
-					{{$t(605)}}
+					{{$t('738x20')}}
 				</div>
-				<div @click="sureReason" class="action-btn" style="color: #F43131;">{{$t(606)}}</div>
+				<div @click="sureReason" class="action-btn" style="color: #F43131;">{{$t('738x21')}}</div>
 			</div>
 		</wzw-dialog>
 
@@ -152,17 +157,17 @@
 			} else {
 				this.index = 0
 				uni.setNavigationBarTitle({
-					title: T._(585)
+					title: T._('738d0')
 				})
 				this.Order_Type = option.index
 			}
 			if (option.Order_Type === 'spike') {
 				uni.setNavigationBarTitle({
-					title: T._(586)
+					title: T._('738d1')
 				})
 			} else if (option.Order_Type === 'flashsale') {
 				uni.setNavigationBarTitle({
-					title: T._(587)
+					title: T._('738d2')
 				})
 			}
 			// 判断订单类型，有可能是 限时抢购spike、秒杀 flashsale 和普通订单 shop
@@ -208,7 +213,7 @@
 				extendOrderConfirm({
 					Order_ID: order.Order_ID
 				}, {
-					tip: T._(588)
+					tip: T._('738d3')
 				}).then(res => {
 					this.page = 1
 					this.data = []
@@ -233,7 +238,7 @@
 				} else {
 					express = JSON.parse(item.Order_Shipping).Express
 				}
-				console.log(item)
+				// console.log(item)
 				// 跳转物流追踪
 				uni.navigateTo({
 					url: '/pages/order/logistics?shipping_id=' + item.Order_ShippingID + '&express=' + express + '&prod_img=' + item
@@ -450,19 +455,22 @@
 		box-sizing: border-box;
 		display: flex;
 		align-items: center;
+		justify-content: space-around;
 		height: 100rpx;
 		line-height: 100rpx;
 		background: #fff;
 		font-size: 28rpx;
+
 		.nav-item {
-			flex: 1;
+			// flex: 1;
 			box-sizing: border-box;
 			text-align: center;
 			position: relative;
+
 			.jiaobiao {
 				position: absolute;
 				top: 18rpx;
-				right: 16rpx;
+				right: -16rpx;
 				width: 30rpx;
 				height: 30rpx;
 				border-radius: 50%;

@@ -23,7 +23,7 @@ export default {
   props: {
     title: {
       type: String,
-      default: T._(36)
+      default: T._('24d0')
     }
   }
 }

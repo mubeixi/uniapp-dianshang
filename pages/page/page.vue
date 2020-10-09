@@ -125,7 +125,7 @@ export default {
     // #endif
 
     if (!Home_ID) {
-      this.$error(T._(680))
+      this.$error(T._('853d0'))
     }
 
     new Promise((resolve, reject) => {
@@ -137,7 +137,7 @@ export default {
         if (res.data.Home_Json) {
           resolve(JSON.parse(res.data.Home_Json))
         } else {
-          reject(Error(T._(681)))
+          reject(Error(T._('853d1')))
         }
       }).catch(e => {
 
@@ -187,7 +187,7 @@ export default {
         }
       })
       .catch(err => {
-        modal(err.msg || T._(682))
+        modal(err.msg || T._('853d2'))
       })
   }
 }

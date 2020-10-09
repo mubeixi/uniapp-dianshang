@@ -5,24 +5,24 @@
 
     </view>
     <view class="rate">
-      <view class="rates">{{$t(683)}}</view>
+      <view class="rates">{{$t('846x0')}}</view>
       <uni-rate @change="show" active-color="#F43131" margin="2" size='20' value="5"></uni-rate>
       <view class="score">
         {{Score}}
       </view>
     </view>
-    <textarea class="edit" contenteditable="true" :placeholder="$t(684)" placeholder-style="place" style="border: 0rpx;" v-model="Note"></textarea>
+    <textarea class="edit" contenteditable="true" :placeholder="$t('846x1')" placeholder-style="place" style="border: 0rpx;" v-model="Note"></textarea>
 
     <view class="niming">
       <view>
-        {{$t(685)}}
+        {{$t('846x2')}}
       </view>
       <view>
         <switch @change="switchChange" checked />
       </view>
     </view>
     <view class="shangH">
-      <div class="item noborder">{{$t(686)}}</div>
+      <div class="item noborder">{{$t('846x3')}}</div>
       <div class="imgs">
         <view :key="index" class="shangchuans" v-for="(item,index) of imgs">
           <image :src="item.path" @click="yulan(index)" class="image"></image>
@@ -35,7 +35,7 @@
       </div>
     </view>
     <view @click="submit" class="submit">
-      {{$t(687)}}
+      {{$t('846x4')}}
     </view>
   </view>
 </template>
@@ -124,13 +124,13 @@ export default {
           })
         } else {
           uni.showToast({
-            title: T._(683),
+            title: T._('846d0'),
             icon: 'none'
           })
         }
       } else {
         uni.showToast({
-          title: T._(684),
+          title: T._('846d1'),
           icon: 'none'
         })
       }

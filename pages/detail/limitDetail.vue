@@ -19,10 +19,10 @@
          </video>
          <view class="change-btn" v-if="!hideNativeEleShow">
            <cover-view :class="[showVideo?'active':'','shipin']" @click="change_view(1)" v-if="showVideo&&showCorver">
-             {{$t(267)}}
+             {{$t('360x0')}}
            </cover-view>
            <cover-view :class="[showVideo?'':'active','tupian']" @click="change_view(2)" v-if="showVideo&&showCorver">
-             {{$t(268)}}
+             {{$t('360x1')}}
            </cover-view>
          </view>
        </view>
@@ -34,8 +34,8 @@
            </swiper-item>
          </swiper>
          <view class="change-btn" v-if="product.video_url">
-           <view :class="[showVideo?'active':'','shipin']" @click="change_view(1)">{{$t(269)}}</view>
-           <view :class="[showVideo?'':'active','tupian']" @click="change_view(2)">{{$t(270)}}</view>
+           <view :class="[showVideo?'active':'','shipin']" @click="change_view(1)">{{$t('360x2')}}</view>
+           <view :class="[showVideo?'':'active','tupian']" @click="change_view(2)">{{$t('360x3')}}</view>
          </view>
        </view>
      </view>
@@ -47,19 +47,19 @@
       </div>
       <!--        <div class="rightss">-->
       <!--            <div class="countdown">-->
-      <!--               距开始还有 : <span class="spanss">{{countdown.d}}</span>天<span class="spans">{{countdown.h}}</span>时<span class="spans">{{countdown.m}}</span>分<span class="spans">{{countdown.s}}</spanT._(267)->
+      <!--               距开始还有 : <span class="spanss">{{countdown.d}}</span>天<span class="spans">{{countdown.h}}</span>时<span class="spans">{{countdown.m}}</span>分<span class="spans">{{countdown.s}}</spanT._('360d0')->
       <!--            </div>-->
       <!--        </div>-->
       <div class="rightss" v-if="isKai">
         <div class="countdown">
-         T._(268)<span class="spanss">{{countdown.d}}</span>{{$t(271)}}<span class="spans">{{countdown.h}}</span>{{$t(272)}}<span
-        class="spans">{{countdown.m}}</span>{{$t(273)}}<span class="spans">{{countdown.s}}</span>{{$t(274)}}
+         {{$t('360d1')}}<span class="spanss">{{countdown.d}}</span>{{$t('360x4')}}<span class="spans">{{countdown.h}}</span>{{$t('360x5')}}<span
+        class="spans">{{countdown.m}}</span>{{$t('360x6')}}<span class="spans">{{countdown.s}}</span>{{$t('360x7')}}
         </div>
       </div>
       <div class="rightss" v-if="!isKai">
         <div class="countdown">
-          {{$t(275)}}<span class="spanss">{{countdown.d}}</span>{{$t(276)}}<span class="spans">{{countdown.h}}</span>{{$t(277)}}<span
-        class="spans">{{countdown.m}}</span>{{$t(278)}}<span class="spans">{{countdown.s}}</span>{{$t(279)}}
+          {{$t('360x8')}}<span class="spanss">{{countdown.d}}</span>{{$t('360x9')}}<span class="spans">{{countdown.h}}</span>{{$t('360x10')}}<span
+        class="spans">{{countdown.m}}</span>{{$t('360x11')}}<span class="spans">{{countdown.s}}</span>{{$t('360x12')}}
         </div>
       </div>
     </div>
@@ -75,7 +75,7 @@
         </text>
       </view>
       <view class="btn">
-        {{$t(280)}}{{product.Products_Count}}
+        {{$t('360x13')}}{{product.Products_Count}}
       </view>
     </view>
     <div class="section2">
@@ -94,8 +94,8 @@
     <!-- 评价 -->
     <div class="comment">
       <div class="c_title">
-        <span>{{$t(281)}}</span>
-        <div @click="gotoComments" class="right">{{$t(282)}}
+        <span>{{$t('360x14')}}</span>
+        <div @click="gotoComments" class="right">{{$t('360x15')}}
           <image :src="'/static/client/detail/right.png'|domain" alt="" class="img" />
         </div>
       </div>
@@ -126,7 +126,7 @@
     </div>
     <!-- 商品详情 -->
     <div class="pro_detail" v-if="isLoad">
-      <div class="p_detail_title">{{$t(283)}}</div>
+      <div class="p_detail_title">{{$t('360x16')}}</div>
       <!-- <div v-html="product.Products_Description" class="p_detail_des"></div> -->
       <!--    	<rich-text :nodes="product.Products_Description|formatRichText" class="p_detail_des"></rich-text>-->
       <!--    	 <u-parse :content="product.Products_Description"  />-->
@@ -154,31 +154,31 @@
           <!-- #ifdef APP-PLUS -->
           <div @click="shareFunc('wx')" class="flex1">
             <image :src="'/static/client/detail/share1.png'|domain" alt="" class='img'></image>
-            <div>{{$t(284)}}</div>
+            <div>{{$t('360x17')}}</div>
           </div>
           <div @click="shareFunc('wxtimeline')" class="flex1">
             <image :src="'/static/client/detail/sahre3.png'|domain" alt="" class='img'></image>
-            <div>{{$t(285)}}</div>
+            <div>{{$t('360x18')}}</div>
           </div>
           <!--只有配置了这个参数的app，才有分享到小程序选项-->
           <div @click="shareFunc('wxmini')" class="flex1" v-if="wxMiniOriginId">
             <img :src="'/static/client/detail/share4.png'|domain" alt="" class='img'>
-            <div>{{$t(286)}}</div>
+            <div>{{$t('360x19')}}</div>
           </div>
           <!-- #endif -->
 
           <!-- #ifndef MP-TOUTIAO -->
           <div @click="shareFunc('pic')" class="flex1">
             <image :src="'/static/client/detail/share2.png'|domain" alt="" class='img'></image>
-            <div>{{$t(287)}}</div>
+            <div>{{$t('360x20')}}</div>
           </div>
           <!-- #endif -->
         </div>
-        <div @click="cancel" class="s_bottom">{{$t(288)}}</div>
+        <div @click="cancel" class="s_bottom">{{$t('360x21')}}</div>
       </div>
       <scroll-view @scrolltolower="goNextPage" class="ticks" scroll-y=true v-if="type=='ticks'">
         <div class="t_title">
-          {{$t(289)}}
+          {{$t('360x22')}}
           <image :src="'/static/client/detail/x.png'|domain" @click="close" class="imgg"></image>
         </div>
 
@@ -189,9 +189,9 @@
             <div class="t_left_t"><span>￥</span><span class="money">{{item.Coupon_Cash}}</span><span>{{item.Coupon_Title}}</span>
             </div>
             <div class="t_left_c">{{item.Coupon_Description}}</div>
-            <div class="t_left_b">{{$t(290)}}{{item.Coupon_StartTime}}-{{item.Coupon_EndTime}}</div>
+            <div class="t_left_b">{{$t('360x23')}}{{item.Coupon_StartTime}}-{{item.Coupon_EndTime}}</div>
           </div>
-          <div @click="getMyCoupon(item.Coupon_ID,i)" class="t_right">{{$t(291)}}</div>
+          <div @click="getMyCoupon(item.Coupon_ID,i)" class="t_right">{{$t('360x24')}}</div>
         </div>
       </scroll-view>
     </popupLayer>
@@ -203,8 +203,12 @@
           <div class="cartTitle">
             <div class="cartTitles">{{product.Products_Name}}</div>
             <div class="addInfo">
-              <div class="addPrice">{{postData.productDetail_price}}{{$t(292)}}</div>
-              <div class="proSale">{{$t(293)}}{{postData.count}}</div>
+              <div class="addPrice">
+				  <block v-if="$p('zh-cn')">{{postData.productDetail_price}}{{$t('360x25')}}</block>
+				  <block v-if="$p('en-us')">{{$t('360x25')}}{{postData.productDetail_price}}</block>
+			  
+			  </div>
+              <div class="proSale">{{$t('360x26')}}{{postData.count}}</div>
             </div>
           </div>
         </div>
@@ -222,7 +226,7 @@
         </div>
         <div class="numBer">
           <div class="numBers">
-            {{$t(294)}}
+            {{$t('360x27')}}
           </div>
           <div class="inputNumber">
             <div @click="delNum" class="clicks">-</div>
@@ -234,7 +238,7 @@
       </div>
       <form @submit="skuSub" report-submit>
         <button :class="submit_flag?'':'disabled'" class="cartSub" formType="submit">
-          {{$t(295)}}
+          {{$t('360x28')}}
         </button>
       </form>
 
@@ -248,27 +252,27 @@
           <div>
             <image class="img" src="/static/detail/home.png"></image>
           </div>
-          <div class="txt">{{$t(296)}}</div>
+          <div class="txt">{{$t('360x29')}}</div>
         </div>
         <div @click="collect" class="first">
           <div>
             <image class="img" src="/static/detail/favorite-a.png" v-if="isCollected"></image>
             <image class="img" src="/static/detail/favorite.png" v-else></image>
           </div>
-          <div class="txt">{{$t(297)}}</div>
+          <div class="txt">{{$t('360x30')}}</div>
         </div>
         <div @click="contact" class="first">
           <div>
             <image class="img" src="/static/detail/kefu.png"></image>
           </div>
-          <div class="txt">{{$t(298)}}</div>
+          <div class="txt">{{$t('360x31')}}</div>
         </div>
       </div>
       <div class="rightss">
         <form @submit="myPin" class="form" report-submit>
           <div class="tuan bTitle">
             <button class="danRight" formType="submit">
-              {{$t(299)}}
+              {{$t('360x32')}}
             </button>
           </div>
         </form>
@@ -307,6 +311,7 @@ export default {
       // #ifdef APP-PLUS
       wxMiniOriginId: '',
       // #endif
+	  hideNativeEleShow: false,
       Products_Description: '',
       isLoad: false,
       JSSDK_INIT: false, // 自己有分享的业务
@@ -604,8 +609,8 @@ export default {
       for (var usr of team.join_user) {
         if (this.userInfo.User_ID == usr) {
           this.$fun.confirm({
-            title: T._(269),
-            content: T._(270)
+            title: T._('360d2'),
+            content: T._('360d3')
           }).then(res => {
             uni.navigateTo({
               url: '/pages/detail/groupJoin?Team_ID=' + tid + '&Products_ID=' + this.Products_ID
@@ -693,7 +698,7 @@ export default {
           })
 
           if (!sharePic) {
-            error(T._(271))
+            error(T._('360d4'))
             return
           }
 
@@ -787,7 +792,7 @@ export default {
       } else {
         addCollection({ prod_id: this.Products_ID }).then(res => {
           uni.showToast({
-            title: T._(272)
+            title: T._('360d5')
           })
           this.isCollected = true
           // #ifdef APP-PLUS
@@ -942,7 +947,7 @@ export default {
       if (this.postData.attr_id == 0) {
         if (this.product.skujosn) {
           wx.showToast({
-            title: T._(273),
+            title: T._('360d6'),
             icon: 'none'
           })
           return
@@ -969,12 +974,12 @@ export default {
       const amount = e.detail.value
       if (amount <= 0) {
         this.postData.qty = 1
-        error(T._(274))
+        error(T._('360d7'))
         return
       }
       if (amount > this.postData.count) {
         this.postData.qty = this.postData.count
-        error(T._(275))
+        error(T._('360d8'))
       }
     },
     addNum () {
@@ -982,7 +987,7 @@ export default {
         this.postData.qty = parseInt(this.postData.qty) + 1
       } else {
         uni.showToast({
-          title: T._(276),
+          title: T._('360d9'),
           icon: 'none'
         })
         this.postData.qty = this.postData.count
@@ -993,7 +998,7 @@ export default {
         this.postData.qty = parseInt(this.postData.qty) - 1
       } else {
         uni.showToast({
-          title: T._(277),
+          title: T._('360d10'),
           icon: 'none'
         })
         this.postData.qty = 1
@@ -1126,7 +1131,7 @@ export default {
             title: product.Products_Name, // 分享标题
             link: front_url + buildSharePath(path), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
             imgUrl: product.ImgPath, // 分享图标
-            desc: product.Products_BriefDescription || T._(278),
+            desc: product.Products_BriefDescription || T._('360d11'),
             type: 'link', // 分享类型,music、video或link，不填默认为link
             // dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
             success: function () {
@@ -1222,6 +1227,7 @@ export default {
           font-size: 28rpx;
           padding: 5px 10px;
           background: rgba(255, 0, 0, .5);
+		  line-height: 36rpx;
         }
   
         .active {
@@ -1363,8 +1369,12 @@ export default {
 
   /* 产品描述部分 start */
   .section1 {
-    height: 83rpx;
+    padding: 20rpx;
     background-color: #fff;
+	.leftss{
+		flex: 1 0 auto;
+		margin-right: 20rpx;
+	}
   }
 
   .price {

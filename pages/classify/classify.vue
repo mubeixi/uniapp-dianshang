@@ -3,7 +3,7 @@
 
     <view @click="goSearch" class="search-wrap">
       <icon class="search_icon" size="34rpx" type="search" />
-      <input class="search-input" name="search" :placeholder="$t(182)"
+      <input class="search-input" name="search" :placeholder="$t('186x0')"
              placeholder-style="font-size:26rpx;color:#ADADAD;"
              type="text">
     </view>

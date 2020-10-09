@@ -80,7 +80,7 @@ export default {
     },
     loadingText: {
       type: String,
-      default: T._(159)
+      default: T._('183d0')
     }
   },
   data () {
@@ -112,7 +112,7 @@ export default {
         })
       } else {
         uni.showToast({
-          title: T._(160),
+          title: T._('183d1'),
           icon: 'none',
           duration: 2000
         })
@@ -129,7 +129,7 @@ export default {
           filePath: that.result,
           success: function () {
             uni.showToast({
-              title: T._(161),
+              title: T._('183d2'),
               icon: 'success',
               duration: 2000
             })

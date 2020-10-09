@@ -145,7 +145,7 @@ export default [
           rt = data.s
           break
         case 'is_start':
-          rt = data.is_start ? T._(0) : T._(1)
+          rt = data.is_start ? T._('1d0') : T._('1d1')
           break
       }
       return rt

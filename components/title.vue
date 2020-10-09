@@ -9,8 +9,8 @@
         <view class="circle"></view>
       </view>
       <view class="methods" v-if="isShowMethod">
-        <view class="method" @click="method(1)">{{$t(143)}}</view>
-        <view class="method" v-if="is_pingtai == 0" @click="method(2)">{{$t(144)}}</view>
+        <view class="method" @click="method(1)">{{$t('177x0')}}</view>
+        <view class="method" v-if="is_pingtai == 0" @click="method(2)">{{$t('177x1')}}</view>
       </view>
 
     </view>
@@ -26,11 +26,11 @@ export default {
   props: {
     title: {
       type: String,
-      default: T._(143)
+      default: T._('177d0')
     },
     right: {
       type: String,
-      default: T._(144)
+      default: T._('177d1')
     },
     hiddenBack: {
       type: Boolean,

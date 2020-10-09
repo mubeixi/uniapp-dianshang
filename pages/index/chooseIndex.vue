@@ -194,10 +194,10 @@ export default {
             rt = JSON.parse(res.data.Home_Json)
             resolve(rt)
           } else {
-            reject(new Error(res.msg || T._(443)))
+            reject(new Error(res.msg || T._('537d0')))
           }
         }).catch(e => {
-          reject(new Error(e.msg || T._(444)))
+          reject(new Error(e.msg || T._('537d1')))
         })
       })
     },

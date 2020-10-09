@@ -71,7 +71,7 @@ export default {
     placeholderStr (hot) {
       const str = hot.join(' ')
       if (str) return str
-      return T._(122)
+      return T._('102d0')
     }
   },
   watch: {},

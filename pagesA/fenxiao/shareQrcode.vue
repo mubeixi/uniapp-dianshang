@@ -79,14 +79,14 @@ export default {
         again: this.again,
         owner_id: this.userInfo.User_ID,
         poster_id: poster.id
-      }, { tip: T._(992) }).then(res => {
+      }, { tip: T._('1273d0') }).then(res => {
         this.current_url = res.data.img_url
       })
       // this.current_url = poster.img
     },
     preFn () {
       if (!this.current_url) {
-        error(T._(993))
+        error(T._('1273d1'))
         return
       }
       uni.previewImage({
@@ -128,7 +128,7 @@ export default {
           // = this.poster_list[0].img
         }
       } catch (e) {
-        error(e.msg || T._(994))
+        error(e.msg || T._('1273d2'))
       }
     },
     goBack () {

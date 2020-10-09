@@ -5,8 +5,8 @@
     <!-- #endif -->
 
     <div class="navs">
-      <div :class="index == 0 ? 'active' : ''" @click="getComment(0,1)" class="nav">{{ $t(522) }}</div>
-      <div :class="index == 1 ? 'active' : ''" @click="getComment(1,1)" class="nav">{{ $t(523) }}</div>
+      <div :class="index == 0 ? 'active' : ''" @click="getComment(0,1)" class="nav">{{ $t('725x0') }}</div>
+      <div :class="index == 1 ? 'active' : ''" @click="getComment(1,1)" class="nav">{{ $t('725x1') }}</div>
     </div>
 	<div class="defaults" v-if="comment_list.length<=0">
 	  <image :src="'/static/client/defaultImg.png'|domain"></image>
@@ -42,8 +42,12 @@
           <div class="cartTitle">
             <div class="cartTitles">{{product.Products_Name}}</div>
             <div class="addInfo">
-              <div class="addPrice">{{postData.productDetail_price}} {{ $t(524) }}</div>
-              <div class="proSale">{{ $t(525) }} {{postData.count}}</div>
+              <div class="addPrice">
+				  <block v-if="$p('zh-cn')">{{postData.productDetail_price}} {{ $t('725x2') }}</block>
+				  <block v-if="$p('en-us')">{{ $t('725x2') }}{{postData.productDetail_price}} </block>
+			  
+			  </div>
+              <div class="proSale">{{ $t('725x3') }} {{postData.count}}</div>
             </div>
           </div>
         </div>
@@ -61,7 +65,7 @@
         </div>
         <div class="numBer">
           <div class="numBers">
-            {{ $t(526) }}
+            {{ $t('725x4') }}
           </div>
           <div class="inputNumber">
             <div @click="delNum" class="clicks">-</div>
@@ -71,7 +75,7 @@
         </div>
       </div>
       <div :class="submit_flag?'':'disabled'" @click="skuSub" class="cartSub">
-        {{ $t(527) }}
+        {{ $t('725x5') }}
       </div>
     </popupLayer>
     <bottom :collected="isCollected" @cartHandle="addCart" @collect="collect" @directHandle="directBuy"></bottom>
@@ -226,7 +230,7 @@ export default {
       if (this.postData.attr_id === 0) {
         if (this.product.skujosn) {
           wx.showToast({
-            title: T._(522),
+            title: T._('725d0'),
             icon: 'none'
           })
           return
@@ -236,7 +240,7 @@ export default {
       updateCart(this.postData).then(res => {
         if (this.postData.cart_key === 'CartList') {
           uni.showLoading({
-            title: T._(523),
+            title: T._('725d1'),
             icon: 'success'
           })
         } else {
@@ -255,7 +259,7 @@ export default {
         this.postData.qty += 1
       } else {
         uni.showToast({
-          title: T._(524),
+          title: T._('725d2'),
           icon: 'none'
         })
         this.postData.qty = this.postData.count
@@ -266,7 +270,7 @@ export default {
         this.postData.qty -= 1
       } else {
         uni.showToast({
-          title: T._(525),
+          title: T._('725d3'),
           icon: 'none'
         })
         this.postData.qty = 1
@@ -282,16 +286,16 @@ export default {
           })
           this.isCollected = false
         }).catch(() => {
-          modal(T._(526))
+          modal(T._('725d4'))
         })
       } else {
         addCollection({ prod_id: this.Products_ID }).then(res => {
           uni.showToast({
-            title: T._(527)
+            title: T._('725d5')
           })
           this.isCollected = true
         }).catch(() => {
-          error(T._(528))
+          error(T._('725d6'))
         })
       }
     },

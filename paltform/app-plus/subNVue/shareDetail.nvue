@@ -5,16 +5,16 @@
 				<!-- #ifdef APP-PLUS -->
 				<div class="flex1" @click="shareFunc('wx')">
 					<image class='img' src="/static/no/share1-no.png" alt=""></image>
-					<div><text class="mbxFont">{{$t(1785)}}</text></div>
+					<div><text class="mbxFont">{{$t('2356x0')}}</text></div>
 				</div>
 				<div class="flex1" @click="shareFunc('wxtimeline')">
 					<image class='img' src="/static/no/sahre3-no.png" alt=""></image>
-					<div><text class="mbxFont">{{$t(1786)}}</text></div>
+					<div><text class="mbxFont">{{$t('2356x1')}}</text></div>
 				</div>
 				<!--只有配置了这个参数的app，才有分享到小程序选项-->
 				<div class="flex1" @click="shareFunc('wxmini')" v-if="wxMiniOriginId">
 					<image class='img' src="/static/no/share4-no.png" >
-					<div><text class="mbxFont">{{$t(1787)}}</text></div>
+					<div><text class="mbxFont">{{$t('2356x2')}}</text></div>
 				</div>
 				<!-- #endif -->
 		
@@ -22,11 +22,11 @@
 				<!-- #ifndef MP-TOUTIAO -->
 				<div class="flex1" @click="shareFunc('pic')">
 					<image class='img' src="/static/no/share2-no.png" alt=""></image>
-					<div><text class="mbxFont">{{$t(1788)}}</text></div>
+					<div><text class="mbxFont">{{$t('2356x3')}}</text></div>
 				</div>
 				<!-- #endif -->
 			</div>
-			<div class="s_bottom" @click="cancel"><text class="test">{{$t(1789)}}</text></div>
+			<div class="s_bottom" @click="cancel"><text class="test">{{$t('2356x4')}}</text></div>
 		</div>
 	</view>
 </template>

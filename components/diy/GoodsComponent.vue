@@ -19,7 +19,7 @@
             <div class="left">
               <div v-show="goods.config.attr.title.show" class="title" style="padding-left: 6px;padding-right: 6px;box-sizing: border-box;">{{item.Products_Name}}</div>
               <div v-show="goods.config.attr.desc.show" class="font12 graytext desc">
-                {{item.Products_BriefDescription||$t(97)}}
+                {{item.Products_BriefDescription||$t('125x0')}}
               </div>
               <!--              <div v-show="goods.config.attr.price.show" class="price"><span class="sign">￥</span>{{item.Products_PriceX}}-->
               <!--              </div>-->
@@ -28,7 +28,7 @@
               <div v-show="goods.config.attr.price.show" class="price"><span class="sign">￥</span>{{item.Products_PriceX}}
               </div>
               <div v-show="goods.config.attr.buybtn.show" class="buybtn" :class="'theme'+goods.config.attr.buybtn.style">
-                {{goods.config.attr.buybtn.text||$t(98)}}
+                {{goods.config.attr.buybtn.text||$t('125x1')}}
               </div>
             </div>
 
@@ -62,9 +62,9 @@ export default {
       goodsList: [],
       infoTmpl: {
         Products_ID: 33,
-        Products_Name: T._(97),
+        Products_Name: T._('125d0'),
         Products_PriceX: 99.99,
-        Products_BriefDescription: T._(98),
+        Products_BriefDescription: T._('125d1'),
         ImgPath: ''
       },
       goods: {
@@ -224,7 +224,7 @@ export default {
       }
 
       const productData = await getProductList(param).then(res => res.data).catch(err => {
-        error(err.msg || $t(99))
+        error(err.msg || T._('125x2'))
       })
       const goodsList = []
       for (var i in productData) {
@@ -232,8 +232,6 @@ export default {
         this.downImgFn(productData[i].ImgPath, i)
       }
       this.goodsList = goodsList
-
-      console.log(this.goodsList)
     },
     downImgFn (path, idx) {
       const _path = this.domainFunc(path)
@@ -242,7 +240,7 @@ export default {
         success: (res) => {
           if (res.statusCode === 200) {
             const { tempFilePath: path } = res
-            console.log(path)
+            // console.log(path)
             if (path) {
               this.$set(this.goodsList[idx], 'showImgPath', path)
               this.$set(this.goodsList[idx], 'imgLoad', true)

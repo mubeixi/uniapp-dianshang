@@ -11,23 +11,23 @@
         <view class="store-name">{{storeDetail.Stores_Name}}(ID:{{storeDetail.Stores_ID}})</view>
         <view class="store-name-item" style="border-bottom: 1px solid  #EFEFEF"  v-if="storeDetail.type_name">
           <view>
-            {{$t(1338)}} : {{storeDetail.type_name}}
+            {{$t('1691x0')}} : {{storeDetail.type_name}}
           </view>
           <view @click="lookModelStore" class="store-fz-12">
-            {{$t(1339)}}
+            {{$t('1691x1')}}
             <image :src="'/static/client/person/right.png'|domain" class="store-img-right"></image>
           </view>
         </view>
         <view class="store-name-item">
           <view>
-            {{$t(1340)}}
+            {{$t('1691x2')}}
           </view>
           <view @click="lookModel" class="store-fz-12" v-if="storeDetail.parent_store">
-            {{$t(1341)}}
+            {{$t('1691x3')}}
             <image :src="'/static/client/person/right.png'|domain" class="store-img-right"></image>
           </view>
           <view class="store-fz-12" v-else>
-            {{$t(1342)}}
+            {{$t('1691x4')}}
             <image :src="'/static/client/person/right.png'|domain" class="store-img-right"></image>
           </view>
         </view>
@@ -36,15 +36,15 @@
       <view class="user-info-all">
         <view class="store-money">
           <view>
-            {{$t(1343)}}
+            {{$t('1691x5')}}
             <span class="number">￥ <span style="font-size: 32rpx">{{storeDetail.User_Money}}</span></span>
           </view>
-          <view @click="goCharge" class="charge">{{$t(1344)}}</view>
+          <view @click="goCharge" class="charge">{{$t('1691x6')}}</view>
         </view>
         <view class="order-msg">
           <view class="order">
             <view class="order-num">{{storeDetail.today_order_num}}</view>
-            <view class="order-title">{{$t(1345)}}</view>
+            <view class="order-title">{{$t('1691x7')}}</view>
 
           </view>
           <view class="store-line"></view>
@@ -53,81 +53,81 @@
               <text class="icon">￥</text>
               {{storeDetail.today_order_sales}}
             </view>
-            <view class="order-title">{{$t(1346)}}</view>
+            <view class="order-title">{{$t('1691x8')}}</view>
 
           </view>
           <view class="store-line"></view>
           <view @click="openShare" class="order">
             <view class="order-num"><i class="funicon  icon-share-t"></i></view>
-            <view class="order-title">{{$t(1347)}}</view>
+            <view class="order-title">{{$t('1691x9')}}</view>
           </view>
         </view>
       </view>
       <view class="tips" v-if="storeDetail.lower_prod_num > 0">
         <image :src="'/static/client/mendian/i.png'|domain" class="tip" mode=""></image>
-        <view>{{$t(1348)}}
-          <text @click="goSolded" class="see">{{$t(1349)}}</text>
+        <view>{{$t('1691x10')}}
+          <text @click="goSolded" class="see">{{$t('1691x11')}}</text>
         </view>
       </view>
     </view>
     <view class="main">
       <view @click="openUrl('/pagesA/procurement/productMy')" class="item" v-if="storeDetail.stores_type==1">
         <image :src="'/static/client/mendian/1.png'|domain" class="item-img" mode=""></image>
-        <view>{{$t(1350)}}</view>
+        <view>{{$t('1691x12')}}</view>
       </view>
       <view @click="openUrl('/pagesA/procurement/retailOrder')" class="item">
         <image :src="'/static/client/mendian/2.png'|domain" class="item-img" mode=""></image>
         <view class="num" v-if="storeDetail.shop_order_num">{{storeDetail.shop_order_num}}</view>
-        <view>{{$t(1351)}}</view>
+        <view>{{$t('1691x13')}}</view>
       </view>
       <view @click="openUrl('/pagesA/procurement/storeWholesale')" class="item" v-if="storeDetail.stores_type==1">
         <image :src="'/static/client/mendian/3.png'|domain" class="item-img" mode=""></image>
         <view class="num" v-if="storeDetail.pifa_order_num">{{storeDetail.pifa_order_num}}</view>
-        <view>{{$t(1352)}}</view>
+        <view>{{$t('1691x14')}}</view>
       </view>
       <view @click="goStock" class="item" v-if="storeDetail.stores_type==1">
         <image :src="'/static/client/mendian/4.png'|domain" class="item-img" mode=""></image>
-        <view>{{$t(1353)}}</view>
+        <view>{{$t('1691x15')}}</view>
       </view>
       <view @click="openUrl('/pagesA/order/checkChannel')" class="item">
         <image :src="'/static/client/mendian/5.png'|domain" class="item-img" mode=""></image>
-        <view>{{$t(1354)}}</view>
+        <view>{{$t('1691x16')}}</view>
       </view>
       <view @click="openUrl('/pagesA/procurement/storePerson')" class="item">
         <image :src="'/static/client/mendian/6.png'|domain" class="item-img" mode=""></image>
-        <view>{{$t(1355)}}</view>
+        <view>{{$t('1691x17')}}</view>
       </view>
       <view @click="openUrl('/pagesA/procurement/storeSettlement')" class="item">
         <image :src="'/static/client/mendian/7.png'|domain" class="item-img" mode=""></image>
-        <view>{{$t(1356)}}</view>
+        <view>{{$t('1691x18')}}</view>
       </view>
       <view @click="openUrl('/pagesA/procurement/purchaseRecords')" class="item" v-if="storeDetail.stores_type==1">
         <image :src="'/static/client/mendian/8.png'|domain" class="item-img" mode=""></image>
-        <view>{{$t(1357)}}</view>
+        <view>{{$t('1691x19')}}</view>
       </view>
       <view @click="openUrl('/pagesA/procurement/refundRecords')" class="item" v-if="storeDetail.stores_type==1">
         <image :src="'/static/client/mendian/9.png'|domain" class="item-img" mode=""></image>
-        <view>{{$t(1358)}}</view>
+        <view>{{$t('1691x20')}}</view>
       </view>
       <view @click="openUrl('/pagesA/procurement/refundList')" class="item">
         <image :src="'/static/client/mendian/10.png'|domain" class="item-img" mode=""></image>
-        <view>{{$t(1359)}}</view>
+        <view>{{$t('1691x21')}}</view>
       </view>
       <view @click="openUrl('/pagesA/procurement/storeRefundList')" class="item" v-if="storeDetail.stores_type==1">
         <image :src="'/static/client/mendian/11.png'|domain" class="item-img" mode=""></image>
-        <view>{{$t(1360)}}</view>
+        <view>{{$t('1691x22')}}</view>
       </view>
       <view @click="openUrl('/pagesA/store/storeTeam')" class="item" v-if="storeDetail.stores_type==1">
         <image class="item-img" mode="" src="/static/store/myTeam.png"></image>
-        <view>{{$t(1361)}}</view>
+        <view>{{$t('1691x23')}}</view>
       </view>
       <view @click="openUrl('/pagesA/store/storeApplyList')" class="item" v-if="storeDetail.stores_type==1">
         <image class="item-img" mode="" src="/static/store/teamAgree.png"></image>
-        <view>{{$t(1362)}}</view>
+        <view>{{$t('1691x24')}}</view>
       </view>
       <view @click="openUrl('/pagesA/store/StoreExtension')" class="item" v-if="storeDetail.stores_type==1">
         <image class="item-img" mode="" src="/static/store/xiaji.png"></image>
-        <view>{{$t(1363)}}</view>
+        <view>{{$t('1691x25')}}</view>
       </view>
     </view>
 
@@ -137,33 +137,33 @@
           <!-- #ifdef APP-PLUS -->
           <div @click="shareFunc('wx')" class="flex1">
             <image :src="'/static/client/detail/share1.png'|domain" alt="" class='img'></image>
-            <div>{{$t(1364)}}</div>
+            <div>{{$t('1691x26')}}</div>
           </div>
           <div @click="shareFunc('wxtimeline')" class="flex1">
             <image :src="'/static/client/detail/sahre3.png'|domain" alt="" class='img'></image>
-            <div>{{$t(1365)}}</div>
+            <div>{{$t('1691x27')}}</div>
           </div>
           <!--只有配置了这个参数的app，才有分享到小程序选项-->
           <div @click="shareFunc('wxmini')" class="flex1" v-if="wxMiniOriginId">
             <img :src="'/static/client/detail/share4.png'|domain" alt="" class='img'>
-            <div>{{$t(1366)}}</div>
+            <div>{{$t('1691x28')}}</div>
           </div>
           <!-- #endif -->
           <!-- #ifndef MP-TOUTIAO -->
           <div @click="shareFunc('pic')" class="flex1">
             <image :src="'/static/client/detail/share2.png'|domain" alt="" class='img'></image>
-            <div>{{$t(1367)}}</div>
+            <div>{{$t('1691x29')}}</div>
           </div>
           <!-- #endif -->
         </div>
-        <div @click="cancelShare" class="s_bottom">{{$t(1368)}}</div>
+        <div @click="cancelShare" class="s_bottom">{{$t('1691x30')}}</div>
       </div>
     </popupLayer>
 
     <wzw-dialog ref="storeModel">
       <div class="store-model">
         <div class="store-model-desc">
-          <div> 1、{{$t(1369)}}{{storeDetail.retailer_fee}}%</div>
+          <div> 1、{{$t('1691x31')}}{{storeDetail.retailer_fee}}%</div>
 		  
           <div v-if="$p('zh-cn')"> 2、当下级和你级别相同时，下级结算的金额会按照{{storeDetail.same_level_reward}}%的比例给你发放奖励</div>
           <div v-if="$p('en-us')"> 2、When the subordinate and your level are the same, the amount settled by the subordinate will be rewarded to you in the proportion of {{storeDetail.same_level_reward}}%</div>
@@ -171,21 +171,29 @@
 			<div v-if="$p('en-us')">3、When the lower level is upgraded to this level, you will be given {{storeDetail.upgrade_reward}} yuan at a time</div>
 		</div>
         <div class="store-model-title">
-          {{$t(1370)}}
+          {{$t('1691x32')}}
         </div>
         <div class="store-table">
           <tr class="flex store-tr">
             <td class="store-td"></td>
-            <td class="store-td">{{$t(1371)}}</td>
-            <td class="store-td">{{$t(1372)}}</td>
+            <td class="store-td">{{$t('1691x33')}}</td>
+            <td class="store-td">{{$t('1691x34')}}</td>
           </tr>
           <tr :key="index" class="flex store-tr store-tr-tr" v-for="(item,index) of disList">
             <td class="store-td">{{item.title}}</td>
             <td class="store-td">
-              <block v-if="item.upgrade_type==1">{{item.upgrade_money}}{{$t(1373)}}</block>
+              <block v-if="item.upgrade_type==1">
+				  <block v-if="$p('zh-cn')">{{item.upgrade_money}}{{$t('1691x35')}}</block>
+				  <block v-if="$p('en-us')">{{$t('1691x35')}}{{item.upgrade_money}}</block>
+			  
+			  </block>
             </td>
             <td class="store-td">
-              <block v-if="item.upgrade_type==2">{{item.upgrade_money}}{{$t(1374)}}</block>
+              <block v-if="item.upgrade_type==2">
+				  <block v-if="$p('zh-cn')">{{item.upgrade_money}}{{$t('1691x36')}}</block>
+				  <block v-if="$p('en-us')">{{$t('1691x36')}}{{item.upgrade_money}}</block>
+			  
+			  </block>
             </td>
           </tr>
         </div>
@@ -195,10 +203,10 @@
     <wzw-dialog ref="storeInfo">
       <div class="storeInfo" v-if="storeDetail.parent_store">
         <div class="storeInfo-title">
-          {{$t(1375)}}：{{storeDetail.parent_store.Stores_Name}}
+          {{$t('1691x37')}}：{{storeDetail.parent_store.Stores_Name}}
         </div>
         <div @click="cellPhone(storeDetail.parent_store.Stores_Telephone)" class="storeInfo-title">
-          {{$t(1376)}}：{{storeDetail.parent_store.Stores_Telephone}}
+          {{$t('1691x38')}}：{{storeDetail.parent_store.Stores_Telephone}}
         </div>
       </div>
     </wzw-dialog>
@@ -268,7 +276,7 @@ export default {
       const front_url = this.initData.front_url
       const shareObj = {
         title: this.storeDetail.Stores_Name,
-        desc: T._(1338),
+        desc: T._('1691d0'),
         imageUrl: getProductThumb(this.storeDetail.Stores_ImgPath),
         path: buildSharePath(path)
       }
@@ -468,6 +476,7 @@ export default {
         transform: translateX(-50%);
         font-size: 20rpx;
         color: #999999;
+		width: 100%;
 
         .tip {
           width: 20rpx;
@@ -496,7 +505,7 @@ export default {
       }
 
       .charge {
-        width: 80rpx;
+		padding: 0 10rpx;
         height: 46rpx;
         line-height: 46rpx;
         background: $wzw-primary-color;
@@ -613,13 +622,16 @@ export default {
     line-height: 40rpx;
     margin-bottom: 20rpx;
     color: #999999;
+	text-align: justify;
   }
 
   .store-td {
     flex: 1;
     text-align: center;
     border-right: 1px solid #CCCCCC;
-
+	display: flex;
+	align-items: center;
+	justify-content: center;
     &:last-child {
       border-right: 0px;
     }
@@ -627,9 +639,7 @@ export default {
 
   .store-tr {
     border-bottom: 1px solid #CCCCCC;
-    height: 70rpx;
-    line-height: 70rpx;
-
+    min-height: 70rpx;
     &:last-child {
       border-bottom: 0px;
     }

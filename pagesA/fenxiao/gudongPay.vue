@@ -7,11 +7,11 @@
 
     <div class="zhezhao" v-if="password_input">
       <div class="input-wrap">
-        <div>{{$t(870)}}</div>
-        <input @blur="user_password" class="input" :placeholder="$t(871)" type="password" v-model="user_pay_password">
+        <div>{{$t('1108x0')}}</div>
+        <input @blur="user_password" class="input" :placeholder="$t('1108x1')" type="password" v-model="user_pay_password">
         <div class="btns">
-          <div @click="cancelInput" class="btn">{{$t(872)}}</div>
-          <div @click="confirmInput" class="btn">{{$t(873)}}</div>
+          <div @click="cancelInput" class="btn">{{$t('1108x2')}}</div>
+          <div @click="confirmInput" class="btn">{{$t('1108x3')}}</div>
         </div>
       </div>
     </div>
@@ -35,13 +35,13 @@
       </view>
       <view class="second">
         <view class="secondQ">
-			{{$t(874)}}
+			{{$t('1108x4')}}
         </view>
         <view class="secondW">
-			{{$t(875)}}
+			{{$t('1108x5')}}
         </view>
         <view class="secondE">
-			{{$t(876)}}
+			{{$t('1108x6')}}
         </view>
       </view>
     </view>
@@ -49,35 +49,37 @@
     <block v-if="proData.Applyfor_Name">
       <view class="three">
         <view class="haha">
-			{{$t(877)}}
+			{{$t('1108x7')}}
         </view>
         {{proData.Applyfor_Name}}
       </view>
       <view class="three">
         <view class="haha">
-         {{$t(878)}}
+         {{$t('1108x8')}}
         </view>
         {{proData.Applyfor_Mobile}}
       </view>
       <view class="three">
         <view class="haha">
-         {{$t(879)}}
+         {{$t('1108x9')}}
         </view>
         {{proData.Order_CreateTime}}
       </view>
       <view class="three">
         <view class="haha">
-         {{$t(880)}}
+         {{$t('1108x10')}}
         </view>
-        {{proData.Order_TotalPrice}}{{$t(881)}}
+		<block v-if="$p('zh-cn')">{{proData.Order_TotalPrice}}{{$t('1108x11')}}</block>
+		<block v-if="$p('en-us')">{{$t('1108x11')}}{{proData.Order_TotalPrice}}</block>
+        
       </view>
     </block>
 
     <view @click="showPay" class="four">
-      {{$t(882)}}
+      {{$t('1108x12')}}
     </view>
     <view @click="cancelAge" class="five">
-     {{$t(883)}}
+     {{$t('1108x13')}}
       <image :src="'/static/client/fenxiao/chakan.png'|domain" class="image"></image>
     </view>
 
@@ -154,7 +156,7 @@ export default {
         pay_type: this.pay_type
       }
       shaApplyPay(data, {
-        tip: T._(870),
+        tip: T._('1108d0'),
         mask: true
       }).then(res => {
         unipayFunc(this, this.pay_type, res)
@@ -172,16 +174,16 @@ export default {
       if (index == 'remainder_pay') {
         if (this.userInfo.hasOwnProperty('User_PayPassword') && !this.userInfo.User_PayPassword) {
           confirm({
-            title: T._(871),
-            content: T._(872),
-            confirmText: T._(873),
-            cancelText: T._(874)
+            title: T._('1108d1'),
+            content: T._('1108d2'),
+            confirmText: T._('1108d3'),
+            cancelText: T._('1108d4')
           }).then(res => {
             uni.navigateTo({
               url: '/pagesA/person/updateUserPsw?type=1&is_back=1'
             })
           }).catch(err => {
-            error(T._(875))
+            error(T._('1108d5'))
           })
           return
         }
@@ -204,18 +206,18 @@ export default {
       }
 
       if (res && res.code && res.code == 1) {
-        toast(T._(876), 'none')
+        toast(T._('1108d6'), 'none')
         return
       }
       if (res && res.code && res.code == 9) {
         uni.showModal({
-          title: T._(877),
-          content: T._(878),
-          cancelText: T._(879),
-          confirmText: T._(880),
+          title: T._('1108d7'),
+          content: T._('1108d8'),
+          cancelText: T._('1108d9'),
+          confirmText: T._('1108d10'),
           success: function (res) {
             if (res.confirm) {
-              toast(T._(881))
+              toast(T._('1108d11'))
               uni.switchTab({
                 url: '/pages/fenxiao/fenxiao'
               })
@@ -228,11 +230,11 @@ export default {
       }
       // 0：支付成功 1：支付超时 2：支付失败 3：支付关闭 4：支付取消 9：订单状态开发者自行获取
       if (res && res.code && res.code == 4) {
-        toast(T._(882), 'none')
+        toast(T._('1108d12'), 'none')
         return
       }
 
-      toast(T._(883))
+      toast(T._('1108d13'))
       uni.switchTab({
         url: '/pagesA/fenxiao/fenxiao'
       })

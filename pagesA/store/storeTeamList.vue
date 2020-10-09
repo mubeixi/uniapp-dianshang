@@ -13,14 +13,14 @@
       </div>
       <div class="store-btm">
         <div>
-          {{$t(1762)}}: {{item.Stores_Name}}
+          {{$t('2353x0')}}: {{item.Stores_Name}}
         </div>
         <div @click="cell(item.Stores_Telephone)">
-          {{$t(1763)}}: {{item.Stores_Telephone}}
+          {{$t('2353x1')}}: {{item.Stores_Telephone}}
           <image class="iconCell" src="/static/cellstore.png"></image>
         </div>
         <div @click="openLocation(item)" class="store-add">
-          {{$t(1764)}}: <span class="store-address">{{item.Stores_Province_name}} {{item.Stores_City_name}}{{item.Stores_Area_name}}{{item.Stores_Address}}</span><i
+          {{$t('2353x2')}}: <span class="store-address">{{item.Stores_Province_name}} {{item.Stores_City_name}}{{item.Stores_Area_name}}{{item.Stores_Address}}</span><i
         class="funicon  icon-address"></i></image>
         </div>
       </div>
@@ -121,6 +121,7 @@ export default {
     box-sizing: border-box;
     display: flex;
     align-items: center;
+	justify-content: space-around;
     height: 100rpx;
     line-height: 100rpx;
     background: #fff;
@@ -128,7 +129,7 @@ export default {
     padding: 0 10px;
 
     .nav-item {
-      flex: 1;
+      // flex: 1;
       box-sizing: border-box;
       text-align: center;
       position: relative;

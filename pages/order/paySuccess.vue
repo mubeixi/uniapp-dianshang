@@ -4,16 +4,16 @@
       <image :src="'/static/client/paySuccess.png'|domain" style="width: 100%;height: 100%;"></image>
     </view>
     <view class="pay-succ">
-      {{$t(673)}}
+      {{$t('839x0')}}
     </view>
     <view class="pay-button">
-      <view @click="goIndexs" class="button-all button-goon">{{$t(674)}}</view>
-      <view @click="goOrder" class="button-all button-next">{{$t(675)}}</view>
+      <view @click="goIndexs" class="button-all button-goon">{{$t('839x1')}}</view>
+      <view @click="goOrder" class="button-all button-next">{{$t('839x2')}}</view>
     </view>
     <block v-if="showMain">
       <block v-if="pro.length>0">
         <view class="pay-succ-last">
-          {{$t(676)}}
+          {{$t('839x3')}}
         </view>
         <view :key="index" class="youhuijuan" v-for="(item,index) of pro">
           <image class="allImg" src="/static/mbxcoupon.png"></image>
@@ -24,7 +24,7 @@
             {{item.Coupon_Subject}}
           </view>
           <view class="times">
-            {{ $t(677) }}：{{item.Coupon_StartTime}}-{{item.Coupon_EndTime}}
+            {{ $t('839x4') }}：{{item.Coupon_StartTime}}-{{item.Coupon_EndTime}}
           </view>
           <view class="limit">
             {{item.limit_txt}}
@@ -50,14 +50,14 @@
 			  </block>
           </view>
           <view @click="goIndex(item.coupon_prod)" class="button">
-            {{$t(678)}}
+            {{$t('839x5')}}
           </view>
         </view>
       </block>
       <block v-else>
         <!-- 猜你喜欢 -->
         <div class=" container">
-          <div class="fenge"><span class="red"></span><span class="caini">{{$t(679)}}</span><span class="red"></span></div>
+          <div class="fenge"><span class="red"></span><span class="caini">{{$t('839x6')}}</span><span class="red"></span></div>
           <div class="prolist">
             <div :key="index" @click="gotoDetail(item.Products_ID)" class="pro-item" v-for="(item,index) in prodList">
               <img :src="item.ImgPath" alt="">

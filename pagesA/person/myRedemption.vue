@@ -6,7 +6,7 @@
       <view :key="index" class="myHa" v-for="(item,index) in prod_list">
         <view class="tops">
           <view class="views">
-            {{$t(1193)}}{{item.Orders_ID}}
+            {{$t('1607x0')}}{{item.Orders_ID}}
           </view>
           <view class="views times">
             <image :src="'/static/client/check/time.png'|domain" class="imgs"></image>
@@ -33,13 +33,13 @@
                 <text class="texts">{{item.Gift_Info.Gift_Integral}}</text>
               </view>
               <view @click.stop="cancelJifenProdOrder(item)" class="rightM complated" v-if="item.Orders_Status == 1">
-                {{$t(1194)}}
+                {{$t('1607x1')}}
               </view>
             </view>
 			<view class="rty">
-				<view class="leftM"><text v-if="item.Order_Shipping_Price > 0">{{$t(1195)}}：<text style="color: #888; font-size: 24rpx;">￥</text>{{item.Order_Shipping_Price}}</text></view>
+				<view class="leftM"><text v-if="item.Order_Shipping_Price > 0">{{$t('1607x2')}}：<text style="color: #888; font-size: 24rpx;">￥</text>{{item.Order_Shipping_Price}}</text></view>
 				<view @click.stop="confirmJifenProdOrder(item)" class="confirm" v-if="item.Orders_Status == 3">
-				  <view class="rightM payed" style="float: right;">{{$t(1196)}}</view>
+				  <view class="rightM payed" style="float: right;">{{$t('1607x3')}}</view>
 				</view>
 			</view>
           </view>
@@ -78,16 +78,16 @@ export default {
     status_desc (status) {
       switch (status) {
         case 1 :
-          return T._(1193)
+          return T._('1607d0')
           break
         case 2 :
-          return T._(1194)
+          return T._('1607d1')
           break
         case 3 :
-          return T._(1195)
+          return T._('1607d2')
           break
         case 4 :
-          return T._(1196)
+          return T._('1607d3')
           break
       }
     },
@@ -132,7 +132,7 @@ export default {
         this.prod_list = []
         this.get_jifen_order()
       }).catch(() => {
-        modal(T._(1197))
+        modal(T._('1607d4'))
       })
     },
     //	确认订单
@@ -144,7 +144,7 @@ export default {
         this.prod_list = []
         this.get_jifen_order()
       }).catch(() => {
-        modal(T._(1198))
+        modal(T._('1607d5'))
       })
     }
   }

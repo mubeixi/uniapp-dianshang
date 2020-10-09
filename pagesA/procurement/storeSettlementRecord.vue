@@ -5,39 +5,39 @@
     </div>
     <view :key="index" @click="noShow" class="list" v-for="(item,index) of list">
       <view class="listText">
-        {{$t(1652)}}
+        {{$t('2181x0')}}
         <text class="msg">{{item.time_period}}</text>
       </view>
       <view class="listText">
-        {{$t(1653)}}
+        {{$t('2181x1')}}
         <text class="msg">¥{{item.Order_TotalAmount}}</text>
       </view>
       <view class="listText">
-        {{$t(1654)}}
+        {{$t('2181x2')}}
         <text class="msg">{{item.Distribute_Balance}}</text>
       </view>
       <view class="listText">
-        {{$t(1655)}}:
+        {{$t('2181x3')}}:
         <text class="msg">¥{{item.Shipping_fee}}</text>
       </view>
       <view class="listText">
-        {{$t(1656)}}
+        {{$t('2181x4')}}
         <text class="msg">¥{{item.service_fee}}</text>
       </view>
       <view class="listText">
-        {{$t(1657)}}
+        {{$t('2181x5')}}
         <text class="msg">¥{{item.back_amount}}</text>
       </view>
       <view class="listText">
-        {{$t(1658)}}
+        {{$t('2181x6')}}
         <text class="msg color">¥{{item.Stores_Balance}}</text>
       </view>
       <view class="listText">
-        {{$t(1659)}}
+        {{$t('2181x7')}}
         <text class="msg color">{{item.status_txt}}</text>
         <image @click.stop='changge(index)' class="img" src="/static/procurement/i.png"
-               v-if="item.status_txt==$t(1660)"></image>
-        <view class="tips" v-if="item.status_txt==$t(1661)&&item.isShow">
+               v-if="item.status_txt==$t('2181x8')"></image>
+        <view class="tips" v-if="item.status_txt==$t('2181x9')&&item.isShow">
           <view class="sanjiaoxing"></view>
           {{item.reject_reason}}
         </view>

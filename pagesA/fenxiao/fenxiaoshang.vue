@@ -6,17 +6,17 @@
         <view :style="{backgroundImage:'url('+$fun.domainFn('/static/client/fenxiao/xj.png')+')'}"
               class="xiangji"></view>
       </view>
-      <view @click="changeAvator" class="change">{{$t(811)}}</view>
+      <view @click="changeAvator" class="change">{{$t('1097x0')}}</view>
     </view>
     <view class="content">
       <view class="c_1">
-        <text>{{$t(812)}}</text>
+        <text>{{$t('1097x1')}}</text>
         <input class="inputs" type="text" v-model="Shop_Name" /></view>
       <view class="c_2">
-        <text>{{$t(813)}}</text>
+        <text>{{$t('1097x2')}}</text>
         <textarea class="text-content" v-model="Shop_Announce"></textarea></view>
     </view>
-    <view @click="save" class="submit">{{$t(814)}}</view>
+    <view @click="save" class="submit">{{$t('1097x3')}}</view>
   </view>
 </template>
 
@@ -121,7 +121,7 @@ export default {
 
             // #ifndef MP-TOUTIAO
             uni.showLoading({
-              title: T._(811),
+              title: T._('1097d0'),
               mask: true
             })
 
@@ -138,19 +138,19 @@ export default {
               formData: data,
               success: (uploadFileRes) => {
                 if (typeof uploadFileRes !== 'object' || !uploadFileRes.hasOwnProperty('data') || !uploadFileRes.data) {
-                  error(T._(812))
+                  error(T._('1097d1'))
                   return
                 }
                 uploadFileRes = JSON.parse(uploadFileRes.data)
                 that.tem_Shop_Logo = uploadFileRes.data.path
                 // 是否可以提交
                 that.isSubmit = true
-                toast(T._(813))
+                toast(T._('1097d2'))
               },
               fail: (err) => {
                 uni.showModal({
-                  title: T._(814),
-                  content: T._(815) + JSON.stringify(err)
+                  title: T._('1097d3'),
+                  content: T._('1097d4') + JSON.stringify(err)
                 })
               },
               complete: () => {
@@ -176,7 +176,7 @@ export default {
         Shop_Announce: this.Shop_Announce
       }).then(res => {
         uni.showToast({
-          title: T._(816),
+          title: T._('1097d5'),
           icon: 'success'
         })
         setTimeout(function () {
@@ -194,7 +194,7 @@ export default {
   async created () {
     const initData = await this.getInitData()
     uni.setNavigationBarTitle({
-      title: initData.commi_rename.commi + T._(817)
+      title: initData.commi_rename.commi + T._('1097d6')
     })
   }
 }

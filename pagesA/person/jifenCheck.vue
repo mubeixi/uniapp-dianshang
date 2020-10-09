@@ -5,23 +5,23 @@
       <image :src="'/static/client/location.png'|domain" alt="" class="loc_icon"></image>
       <block v-if="have_Order_ID">
         <view class="add_msg">
-          <view class="name">{{$t(1212)}}：{{initDataValue.Address_Name}} <span>{{initDataValue.Address_Mobile | formatphone}}</span>
+          <view class="name">{{$t('1568x0')}}：{{initDataValue.Address_Name}} <span>{{initDataValue.Address_Mobile | formatphone}}</span>
           </view>
           <view class="location">
-            {{$t(1213)}}：{{initDataValue.Address_Province_name}}{{initDataValue.Address_City_name}}{{initDataValue.Address_Area_name}}{{initDataValue.Address_Town_name}}{{initDataValue.Address_Detailed}}
+            {{$t('1568x1')}}：{{initDataValue.Address_Province_name}}{{initDataValue.Address_City_name}}{{initDataValue.Address_Area_name}}{{initDataValue.Address_Town_name}}{{initDataValue.Address_Detailed}}
           </view>
         </view>
       </block>
       <block v-else>
         <view class="add_msg" v-if="addressinfo.Address_Name">
-          <view class="name">{{$t(1214)}}：{{addressinfo.Address_Name}} <span>{{addressinfo.Address_Mobile | formatphone}}</span>
+          <view class="name">{{$t('1568x2')}}：{{addressinfo.Address_Name}} <span>{{addressinfo.Address_Mobile | formatphone}}</span>
           </view>
           <view class="location">
-            {{$t(1215)}}：{{addressinfo.Address_Province_name}}{{addressinfo.Address_City_name}}{{addressinfo.Address_Area_name}}{{addressinfo.Address_Town_name}}{{addressinfo.Address_Detailed}}
+            {{$t('1568x3')}}：{{addressinfo.Address_Province_name}}{{addressinfo.Address_City_name}}{{addressinfo.Address_Area_name}}{{addressinfo.Address_Town_name}}{{addressinfo.Address_Detailed}}
           </view>
         </view>
         <view class="add_msg" v-else>
-          <view>{{$t(1216)}}</view>
+          <view>{{$t('1568x4')}}</view>
         </view>
       </block>
       <image :src="'/static/client/right.png'|domain" alt="" class="right"></image>
@@ -30,21 +30,21 @@
       <img :src="giftInfo.Gift_ImgPath" alt="" class="pro-img">
       <view class="pro-msg">
         <view class="pro-name">{{giftInfo.Gift_Name}}</view>
-        <view class="pro-price">{{giftInfo.Gift_Integral}} {{$('person','Integral')}}</view>
+        <view class="pro-price">{{giftInfo.Gift_Integral}} {{$t('2362s0')}}</view>
       </view>
     </view>
     <view class="other" v-if="giftInfo.Gift_Shipping == 1">
       <view class="bd">
         <view @click="changeShip" class="o_title">
-          <span>{{$t(1217)}}</span>
+          <span>{{$t('1568x5')}}</span>
           <span style="text-align:right; color: #888;">
 						 <block v-if="have_Order_ID">
-              <span>{{initDataValue.Orders_Shipping}}{{( initDataValue.Order_Shipping_Price> 0 ? initDataValue.Order_Shipping_Price : $t(1218))}}</span>
+              <span>{{initDataValue.Orders_Shipping}}{{( initDataValue.Order_Shipping_Price> 0 ? initDataValue.Order_Shipping_Price : $t('1568x6'))}}</span>
                     <image :src="'/static/client/right.png'|domain" alt="" class="right"></image>
 
             </block>
             <block v-else>
-              <span>{{shipping_name?(shipping_name + ' ' + (shipping_price > 0 ? shipping_price : $t(1219))):$t(1220)}}</span>
+              <span>{{shipping_name?(shipping_name + ' ' + (shipping_price > 0 ? shipping_price : $t('1568x7'))):$t('1568x8')}}</span>
               <image :src="'/static/client/right.png'|domain" alt="" class="right"></image>
 
             </block>
@@ -73,31 +73,31 @@
 
     <view class="remind-wrap" v-if="remindAddress">
       <view class="remind-add">
-        <view class="text-align-center mb20">{{$t(1221)}}</view>
+        <view class="text-align-center mb20">{{$t('1568x9')}}</view>
         <view class="remind_desc">
-          {{$t(1222)}}
+          {{$t('1568x10')}}
         </view>
         <view class="remind_btns text-align-center">
-          <view @click="goback" class="text-align-center fl1">{{$t(1223)}}</view>
+          <view @click="goback" class="text-align-center fl1">{{$t('1568x11')}}</view>
           <view @click="goEditAdd" class="text-align-center fl1 confirm">
-            {{$t(1224)}}
+            {{$t('1568x12')}}
           </view>
         </view>
       </view>
     </view>
     <view class="pwd-wrap" v-if="psdInput">
       <view class="input-box">
-        <input class="input-psw" :placeholder="$t(1225)" type="password" v-model="password" />
+        <input class="input-psw" :placeholder="$t('1568x13')" type="password" v-model="password" />
         <view class="btns">
-          <view @click="cancelPsw" class="cancel btn">{{$t(1226)}}</view>
-          <view @click="pswConfirm" class="confirm btn">{{$t(1227)}}</view>
+          <view @click="cancelPsw" class="cancel btn">{{$t('1568x14')}}</view>
+          <view @click="pswConfirm" class="confirm btn">{{$t('1568x15')}}</view>
         </view>
       </view>
     </view>
 
     <popup-layer :direction="'top'" ref="popupRef">
       <view class="bMbx" v-if="type=='shipping'">
-        <view class="fMbx">{{$t(1228)}}</view>
+        <view class="fMbx">{{$t('1568x16')}}</view>
         <view :key="shipid" class="iMbx" v-for="(ship,shipid) in shipping_company">
           <view>
             {{ship}}
@@ -108,12 +108,12 @@
         </view>
       </view>
       <view @click="closeMethod" class="sure">
-        {{$t(1229)}}
+        {{$t('1568x17')}}
       </view>
     </popup-layer>
 
     <view class="order_total">
-      <view @click="form_submit" class="submit">{{$t(1230)}}</view>
+      <view @click="form_submit" class="submit">{{$t('1568x18')}}</view>
     </view>
 
   </view>
@@ -314,10 +314,10 @@ export default {
     form_submit () {
 		if (this.userInfo.hasOwnProperty('User_PayPassword') && !this.userInfo.User_PayPassword) {
 		  confirm({
-		    title: T._(1212),
-		    content: T._(1213),
-		    confirmText: T._(1214),
-		    cancelText: T._(1215)
+		    title: T._('1568d0'),
+		    content: T._('1568d1'),
+		    confirmText: T._('1568d2'),
+		    cancelText: T._('1568d3')
 		  }).then(res => {
 		    uni.navigateTo({
 		      url: '/pagesA/person/updateUserPsw?type=1&is_back=1'
@@ -334,7 +334,7 @@ export default {
       if (this.giftInfo.Gift_Shipping == 1) {
         if (!this.shipping_id) {
           uni.showToast({
-            title: T._(1216),
+            title: T._('1568d4'),
             icon: 'none'
           })
 
@@ -343,7 +343,7 @@ export default {
       }
       if (!this.address_id) {
         uni.showToast({
-          title: T._(1217),
+          title: T._('1568d5'),
           icon: 'none'
         })
         return
@@ -408,8 +408,8 @@ export default {
         // 获取用户收货地址，获取订单信息，后台判断运费信息
       }).catch(() => {
         uni.showModal({
-          title: T._(1218),
-          content: T._(1219),
+          title: T._('1568d6'),
+          content: T._('1568d7'),
           showCancel: false
         })
         return false
@@ -426,7 +426,7 @@ export default {
       if (!is_forward) {
         if (this.need_invoice == 1 && this.invoice_info == '') {
           uni.showToast({
-            title: T._(1220),
+            title: T._('1568d8'),
             icon: 'none'
           })
           return
@@ -443,7 +443,7 @@ export default {
             this.paySuccessCall()
           }).catch(err => {
             uni.showModal({
-              title: T._(1221),
+              title: T._('1568d9'),
               content: err.msg,
               showCancel: false
             })
@@ -453,7 +453,7 @@ export default {
       }
 
       if (this.pay_type === 'unionpay') {
-        error(T._(1222))
+        error(T._('1568d10'))
         return
       }
 
@@ -480,7 +480,7 @@ export default {
       // 公众号需要code
       if (this.pay_type === 'wx_mp') {
         if (!isWeiXin()) {
-          this.$error(T._(1223))
+          this.$error(T._('1568d11'))
           return
         }
         const isHasCode = this.code || GetQueryByString('code')
@@ -523,7 +523,7 @@ export default {
       // #endif
 
       jifenProdPay(payConf, {
-        tip: T._(1224),
+        tip: T._('1568d12'),
         mask: true
       }).then(res => {
         unipayFunc(this, this.pay_type, res)
@@ -542,7 +542,7 @@ export default {
             },
             fail: function (err) {
               uni.showModal({
-                title: T._(1225),
+                title: T._('1568d13'),
                 content: JSON.stringify(err)
               })
             }
@@ -658,7 +658,7 @@ export default {
           },
           fail: function (err) {
             uni.showModal({
-              title: T._(1226),
+              title: T._('1568d14'),
               content: JSON.stringify(err)
             })
           }
@@ -705,8 +705,8 @@ export default {
         // #endif
       }, err => {
         uni.showModal({
-          title: T._(1227),
-          content: T._(1228) + err.msg
+          title: T._('1568d15'),
+          content: T._('1568d16') + err.msg
         })
       }).catch(e => {
 
@@ -736,7 +736,7 @@ export default {
       }
 
       if (!channel) {
-        this.$error(T._(1229))
+        this.$error(T._('1568d17'))
         return false
       }
 
@@ -781,7 +781,7 @@ export default {
     },
     payFailCall () {
       uni.showToast({
-        title: T._(1230),
+        title: T._('1568d18'),
         icon: 'none',
         duration: 2000
       })
@@ -789,7 +789,7 @@ export default {
     paySuccessCall () {
       const _self = this
       uni.showToast({
-        title: T._(1231)
+        title: T._('1568d19')
       })
       uni.redirectTo({
         url: '/pagesA/person/myRedemption'

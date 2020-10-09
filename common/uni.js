@@ -146,7 +146,7 @@ uni.switchTab = (opt) => {
     url
   }
 
-  console.log(endOpt)
+  // console.log(endOpt)
   switchTabCopy({
     ...endOpt,
     fail: function () {

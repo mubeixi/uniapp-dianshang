@@ -3,21 +3,21 @@
 
     <!-- <view class="zhezhao" v-if="password_input">
       <view class="input-wrap">
-        <view>{{$t(840)}}</view>
-        <input class="inputpass" type="password" placeholder="$t(841)" v-model="user_pay_password" @blur="user_password">
+        <view>{{$t('1009x0')}}</view>
+        <input class="inputpass" type="password" :placeholder="$t('1009x1')" v-model="user_pay_password" @blur="user_password">
         <view class="btns">
-          <view @click="cancelInput" class="btn">{{$t(842)}}</view>
-          <view @click="confirmInput" class="btn">{{$t(843)}}</view>
+          <view @click="cancelInput" class="btn">{{$t('1009x2')}}</view>
+          <view @click="confirmInput" class="btn">{{$t('1009x3')}}</view>
         </view>
       </view>
     </view> -->
     <div class="zhezhao" v-if="password_input">
       <div class="input-wrap">
-        <div>{{$t(844)}}</div>
-        <input @blur="user_password" class="input" :placeholder="$t(845)" type="password" v-model="user_pay_password">
+        <div>{{$t('1009x4')}}</div>
+        <input @blur="user_password" class="input" :placeholder="$t('1009x5')" type="password" v-model="user_pay_password">
         <div class="btns">
-          <div @click="cancelInput" class="btn">{{$t(846)}}</div>
-          <div @click="confirmInput" class="btn">{{$t(847)}}</div>
+          <div @click="cancelInput" class="btn">{{$t('1009x6')}}</div>
+          <div @click="confirmInput" class="btn">{{$t('1009x7')}}</div>
         </div>
       </div>
     </div>
@@ -54,17 +54,17 @@
         </block>
         <view class="center" v-if="isShowAddress">
           <view class="mbx">
-            {{$t(848)}}
+            {{$t('1009x8')}}
           </view>
           <view class="haha">
             <picker :range="change_objectMultiArray" :value="change_multiIndex" @change="bindMultiPickerChange"
                     @columnchange="bindMultiPickerColumnChange" mode="multiSelector" range-key="name">
               <view class="picker" style="text-align: center;">
-                <view v-if="!address_info.Address_Province">{{$t(849)}}</view>
+                <view v-if="!address_info.Address_Province">{{$t('1009x9')}}</view>
                 <view v-else>{{objectMultiArray[0][multiIndex[0]]['name']}}</view>
-                <view v-if="!address_info.Address_City">{{$t(850)}}</view>
+                <view v-if="!address_info.Address_City">{{$t('1009x10')}}</view>
                 <view v-else>{{objectMultiArray[1][multiIndex[1]]['name']}}</view>
-                <view v-if="!address_info.Address_Area">{{$t(851)}}</view>
+                <view v-if="!address_info.Address_Area">{{$t('1009x11')}}</view>
                 <view v-else>{{objectMultiArray[2][multiIndex[2]]['name']}}</view>
               </view>
             </picker>
@@ -72,12 +72,12 @@
         </view>
         <view class="center" v-if="isShowAddress">
           <view class="mbx">
-            {{$t(852)}}
+            {{$t('1009x12')}}
           </view>
           <view class="haha">
             <picker :range="t_arr" :value="t_index" @change="t_pickerChange" mode="selector" range-key="name">
               <view class="picker">
-                <view style="margin-left: 20upx;width: 300upx;" v-if="!address_info.Address_Town">{{$t(853)}}</view>
+                <view style="margin-left: 20upx;width: 300upx;" v-if="!address_info.Address_Town">{{$t('1009x13')}}</view>
                 <view style="margin-left: 20upx;width: 300upx;" v-else>{{t_arr[t_index]['name']}}</view>
               </view>
             </picker>
@@ -87,7 +87,7 @@
 
       <view class="checks" v-if="pro.dis_config.Distribute_AgreementOpen">
         <radio :checked="isAgree" @click="changes" style="transform:scale(0.7)" />
-        <text @click="goDistributeAgreement">{{$t(854)}}
+        <text @click="goDistributeAgreement">{{$t('1009x14')}}
           <text class="checkq">{{pro.dis_config.Distribute_AgreementTitle}}</text>
         </text>
       </view>
@@ -102,16 +102,16 @@
       <block v-if="pro.dis_config.Level_Form">
         <view class="center" v-if="pro.dis_config.Reserve_DisplayName==1">
           <view class="mbx">
-            {{$t(855)}}
+            {{$t('1009x15')}}
           </view>
-          <input class="inputa" :placeholder="$t(856)" placeholder-style="color: #CAC8C8;" type="text"
+          <input class="inputa" :placeholder="$t('1009x16')" placeholder-style="color: #CAC8C8;" type="text"
                  v-model="shenArr.DisplayName">
         </view>
         <view class="center" v-if="pro.dis_config.Reserve_DisplayTelephone==1">
           <view class="mbx">
-            {{$t(857)}}
+            {{$t('1009x17')}}
           </view>
-          <input @blur="isTell" class="inputa" :placeholder="$t(858)" placeholder-style="color: #CAC8C8;"
+          <input @blur="isTell" class="inputa" :placeholder="$t('1009x18')" placeholder-style="color: #CAC8C8;"
                  type="text" v-model="shenArr.DisplayTelephone">
         </view>
         <view :key="idx" class="center" v-for="(itm,idx) of select_lists">
@@ -130,20 +130,23 @@
           <view class="mbx">
             {{m.Name}}
           </view>
-          <input :placeholder="$t(859)+m.Name" class="inputa" type="text" v-model="m.Value">
+          <input :placeholder="$t('1009x19')+m.Name" class="inputa" type="text" v-model="m.Value">
         </view>
       </block>
       <view class="disHaihong" v-if="disData.Level_Name">
-        {{disData.Level_Name}}({{disData.level_rules_edit.direct_buy.value.money}}{{$t(860)}})
+        {{disData.Level_Name}}
+		<block v-if="$p('zh-cn')">({{disData.level_rules_edit.direct_buy.value.money}}{{$t('1009x20')}})</block>
+		<block v-if="$p('en-us')">({{$t('1009x20')}}{{disData.level_rules_edit.direct_buy.value.money}})</block>
+		
       </view>
       <view class="checks" v-if="pro.dis_config.Distribute_AgreementOpen">
         <radio :checked="isAgree" @click="changes" style="transform:scale(0.7)" />
-        <text @click="goDistributeAgreement">{{$t(861)}}
+        <text @click="goDistributeAgreement">{{$t('1009x21')}}
           <text class="checkq">{{pro.dis_config.Distribute_AgreementTitle}}</text>
         </text>
       </view>
       <view @click="becomeFenxiao" class="submits">
-        {{$t(862)}}{{commi_rename.commi}}
+        {{$t('1009x22')}}{{commi_rename.commi}}
       </view>
     </block>
 
@@ -253,7 +256,7 @@ export default {
     ...mapActions(['getInitData']),
     payFailCall (err) {
       uni.showToast({
-        title: err.msg ? err.msg : T._(840),
+        title: err.msg ? err.msg : T._('1009d0'),
         icon: 'none',
         duration: 2000
       })
@@ -291,16 +294,16 @@ export default {
 
         if (this.userInfo.hasOwnProperty('User_PayPassword') && !this.userInfo.User_PayPassword) {
           confirm({
-            title: T._(841),
-            content: T._(842),
-            confirmText: T._(843),
-            cancelText: T._(844)
+            title: T._('1009d1'),
+            content: T._('1009d2'),
+            confirmText: T._('1009d3'),
+            cancelText: T._('1009d4')
           }).then(res => {
             uni.navigateTo({
               url: '/pagesA/person/updateUserPsw?type=1&is_back=1'
             })
           }).catch(err => {
-            error(T._(845))
+            error(T._('1009d5'))
           })
           return
         }
@@ -317,19 +320,19 @@ export default {
       }
 
       if (res && res.code && res.code == 1) {
-        toast(T._(846), 'none')
+        toast(T._('1009d6'), 'none')
         return
       }
 
       if (res && res.code && res.code == 9) {
         uni.showModal({
-          title: T._(847),
-          content: T._(848),
-          cancelText: T._(849),
+          title: T._('1009d7'),
+          content: T._('1009d8'),
+          cancelText: T._('1009d9'),
           confirmText: '已支付',
           success: function (res) {
             if (res.confirm) {
-              toast(T._(850))
+              toast(T._('1009d10'))
               uni.switchTab({
                 url: '/pages/fenxiao/fenxiao'
               })
@@ -344,7 +347,7 @@ export default {
       // 0：支付成功 1：支付超时 2：支付失败 3：支付关闭 4：支付取消 9：订单状态开发者自行获取
 
       if (res && res.code && res.code == 4) {
-        toast(T._(851), 'none')
+        toast(T._('1009d11'), 'none')
         return
       }
 
@@ -358,7 +361,7 @@ export default {
       // 	wx.requestSubscribeMessage({tmplIds})
       // }
       // #endif
-      toast(T._(852))
+      toast(T._('1009d12'))
       uni.switchTab({
         url: '/pages/fenxiao/fenxiao'
       })
@@ -426,7 +429,7 @@ export default {
       // 公众号需要code
       if (this.pay_type === 'wx_mp') {
         if (!isWeiXin()) {
-          error(T._(853))
+          error(T._('1009d13'))
           return
         }
 
@@ -474,7 +477,7 @@ export default {
         })
       } else {
         disBuy(data, {
-          tip: T._(854),
+          tip: T._('1009d14'),
           mask: true
         }).then(res => {
           unipayFunc(this, this.pay_type, res)
@@ -522,7 +525,7 @@ export default {
       if (this.pro.dis_config.Level_Form) {
         if (this.pro.dis_config.Reserve_DisplayName == 1 && this.shenArr.DisplayName == '') {
           uni.showToast({
-            title: T._(855),
+            title: T._('1009d15'),
             icon: 'none'
           })
           arr = false
@@ -530,14 +533,14 @@ export default {
         } else {
           if (this.pro.dis_configReserve_DisplayTelephone == 1 && this.shenArr.DisplayTelephone == '') {
             uni.showToast({
-              title: T._(856),
+              title: T._('1009d16'),
               icon: 'none'
             })
             arr = false
             return
           } else if (this.pro.dis_config.Reserve_DisplayTelephone == 1 && !(checkMobile(this.shenArr.DisplayTelephone))) {
             uni.showToast({
-              title: T._(857),
+              title: T._('1009d17'),
               icon: 'none'
             })
             arr = false
@@ -548,7 +551,7 @@ export default {
               for (const item of this.text_lists) {
                 if (item.Value == '') {
                   uni.showToast({
-                    title: item.Name + T._(858),
+                    title: item.Name + T._('1009d18'),
                     icon: 'none'
                   })
                   arr = false
@@ -562,7 +565,7 @@ export default {
       if (this.pro.dis_config.Distribute_AgreementOpen) {
         if (!this.isAgree) {
           uni.showToast({
-            title: T._(859),
+            title: T._('1009d19'),
             icon: 'none'
           })
           return
@@ -587,7 +590,7 @@ export default {
     application () {
       if (this.submitM) {
         uni.showToast({
-          title: T._(860),
+          title: T._('1009d20'),
           icon: 'none'
         })
         return
@@ -600,7 +603,7 @@ export default {
         for (const item of this.text_lists) {
           if (item.Value == '') {
             uni.showToast({
-              title: item.Name + T._(861),
+              title: item.Name + T._('1009d21'),
               icon: 'none'
             })
             arr = false
@@ -612,7 +615,7 @@ export default {
       if (this.isShowAddress && arr) {
         if (JSON.stringify(this.address_info) == '{}') {
           uni.showToast({
-            title: T._(862),
+            title: T._('1009d22'),
             icon: 'none'
           })
           arr = false
@@ -623,7 +626,7 @@ export default {
       if (this.pro.dis_config.Distribute_AgreementOpen) {
         if (!this.isAgree) {
           uni.showToast({
-            title: T._(863),
+            title: T._('1009d23'),
             icon: 'none'
           })
           arr = false
@@ -675,13 +678,13 @@ export default {
 
           this.textShen = res.msg
         }).catch(err => {
-			error(err.msg||T._(864))
+			error(err.msg||T._('1009d24'))
           this.textShen = err.msg
         })
       } else if (arr) {
         this.isXu = true
         uni.showToast({
-          title: T._(865),
+          title: T._('1009d25'),
           icon: 'none'
         })
       }
@@ -694,7 +697,7 @@ export default {
       if (this.pro.dis_config.Reserve_DisplayTelephone == 1) {
         if (!(checkMobile(this.shenArr.DisplayTelephone))) {
           uni.showToast({
-            title: T._(866),
+            title: T._('1009d26'),
             icon: 'none'
           })
         }
@@ -792,7 +795,7 @@ export default {
       }
 
       if (!channel) {
-        this.$error(T._(867))
+        this.$error(T._('1009d27'))
         return false
       }
 
@@ -846,7 +849,7 @@ export default {
       }
 
       if (this.pay_type === 'unionpay') {
-        error(T._(868))
+        error(T._('1009d28'))
         return
       }
 
@@ -873,7 +876,7 @@ export default {
       // 公众号需要code
       if (this.pay_type === 'wx_mp') {
         if (!isWeiXin()) {
-          error(T._(869))
+          error(T._('1009d29'))
           return
         }
 

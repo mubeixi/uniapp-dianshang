@@ -13,7 +13,7 @@
           </block>
 
           <view class="vipGrade" v-if="item.Level_ID==pro.user_info.Level_ID&&userInfo.Is_Distribute==1">
-            {{$t(382)}}
+            {{$t('480x0')}}
           </view>
           <view class="mmp" v-if="dis_level.length>0">
             <image :src="item.Level_Icon" class="myImgs"></image>
@@ -23,12 +23,12 @@
       </swiper>
     </view>
     <view style="height: 220rpx;"></view>
-    <circleTitle title="$t(383)"></circleTitle>
+    <circleTitle :title="$t('480x1')"></circleTitle>
     <view class="level-description">
       {{Level_Description}}
     </view>
     <view style="height: 20rpx;background-color: #F8F8F8;"></view>
-    <circleTitle title="$t(384)"></circleTitle>
+    <circleTitle :title="$t('480x2')"></circleTitle>
     <view class="titleMy" v-if="dis_level.length>0">
       <image src="/static/procurement/error.png" style="height: 25rpx;width: 25rpx;margin-right: 12rpx;"></image>
 	  <block v-if="$p('zh-cn')"> 注意：以下条件需{{dis_level[inds].arrive_limit_desc}}才能达到条件</block>
@@ -41,22 +41,31 @@
           <view class="mbx">
             <view class="tops">
               <block v-if="dis_level[inds].level_rules_edit.pay_money.value.type=='1'">
-                {{$t(385)}}{{dis_level[inds].level_rules_edit.pay_money.value.money}}{{$t(386)}}
+                {{$t('480x3')}}
+				<block v-if="$p('zh-cn')">{{dis_level[inds].level_rules_edit.pay_money.value.money}}{{$t('480x4')}}</block>
+				<block v-if="$p('en-us')">{{$t('480x4')}}{{dis_level[inds].level_rules_edit.pay_money.value.money}}</block>
+				
               </block>
               <block v-if="dis_level[inds].level_rules_edit.pay_money.value.type=='2'">
-                 {{$t(387)}}{{dis_level[inds].level_rules_edit.pay_money.value.money}}{{$t(388)}}
+                 {{$t('480x5')}}
+				 <block v-if="$p('zh-cn')">{{dis_level[inds].level_rules_edit.pay_money.value.money}}{{$t('480x6')}}</block>
+				 <block v-if="$p('en-us')">{{$t('480x6')}}{{dis_level[inds].level_rules_edit.pay_money.value.money}}</block>
+				 
               </block>
             </view>
             <view class="bottoms" v-if="dis_level[inds].level_rules_edit.pay_money.value.type=='1'">
-               {{$t(389)}}{{dis_level[inds].level_rules_edit.pay_money.user_data}}{{$t(390)}}
+               {{$t('480x7')}}
+			   <block v-if="$p('zh-cn')">{{dis_level[inds].level_rules_edit.pay_money.user_data}}{{$t('480x8')}}</block>
+			   <block v-if="$p('en-us')">{{$t('480x8')}}{{dis_level[inds].level_rules_edit.pay_money.user_data}}</block>
+			   
             </view>
           </view>
           <view class="submit submitMbx"
                 v-if="dis_level[inds].level_rules_edit.pay_money.user_data>=dis_level[inds].level_rules_edit.pay_money.value.money">
-            {{$t(391)}}
+            {{$t('480x9')}}
           </view>
           <view @click="goIndex" class="submit" v-else>
-            {{$t(392)}}
+            {{$t('480x10')}}
           </view>
 
         </view>
@@ -68,26 +77,26 @@
             <image class="image" src="/static/fenxiao/buyPro.png"></image>
             <view class="mbx">
               <view class="tops">
-                <block v-if="dis_level[inds].level_rules_edit.buy_prod.value.type=='1'">{{$t(393)}}</block>
-                <block v-if="dis_level[inds].level_rules_edit.buy_prod.value.type=='2'">{{$t(394)}}</block>
+                <block v-if="dis_level[inds].level_rules_edit.buy_prod.value.type=='1'">{{$t('480x11')}}</block>
+                <block v-if="dis_level[inds].level_rules_edit.buy_prod.value.type=='2'">{{$t('480x12')}}</block>
               </view>
               <view class="bottoms" v-if="dis_level[inds].level_rules_edit.buy_prod.user_data>0">
-                {{$t(395)}}
+                {{$t('480x13')}}
               </view>
               <view class="bottoms" v-else-if="dis_level[inds].level_rules_edit.buy_prod.value.arrive_status=='2'">
-                {{$t(396)}}
+                {{$t('480x14')}}
               </view>
               <view class="bottoms" v-else>
-                {{$t(397)}}
+                {{$t('480x15')}}
               </view>
 
             </view>
             <view class="submit submitMbx" v-if="dis_level[inds].level_rules_edit.buy_prod.user_data>0">
-              {{$t(398)}}
+              {{$t('480x16')}}
             </view>
             <view @click="goIndex" class="submit"
                   v-if="dis_level[inds].level_rules_edit.buy_prod.value.type=='1'&&dis_level[inds].level_rules_edit.buy_prod.user_data<=0">
-              {{$t(399)}}
+              {{$t('480x17')}}
             </view>
           </view>
 
@@ -104,7 +113,7 @@
                     {{item.Products_PriceX}}
                   </view>
                   <view class="proDetail">
-                    {{$t(400)}}
+                    {{$t('480x18')}}
                   </view>
                 </view>
               </view>
@@ -119,18 +128,18 @@
           <image class="image" src="/static/fenxiao/proCount.png"></image>
           <view class="mbx">
             <view class="tops">
-              {{$t(401)}}{{dis_level[inds].level_rules_edit.buy_times.value}}次
+              {{$t('480x19')}}{{dis_level[inds].level_rules_edit.buy_times.value}}次
             </view>
             <view class="bottoms">
-              {{$t(402)}}{{dis_level[inds].level_rules_edit.buy_times.user_data}}次
+              {{$t('480x20')}}{{dis_level[inds].level_rules_edit.buy_times.user_data}}次
             </view>
           </view>
           <view class="submit submitMbx"
                 v-if="dis_level[inds].level_rules_edit.buy_times.user_data>=dis_level[inds].level_rules_edit.buy_times.value">
-            {{$t(403)}}
+            {{$t('480x21')}}
           </view>
           <view @click="goIndex" class="submit" v-else>
-            {{$t(404)}}
+            {{$t('480x22')}}
           </view>
 
         </view>
@@ -142,18 +151,24 @@
           <image class="image" src="/static/fenxiao/teanSum.png"></image>
           <view class="mbx">
             <view class="tops">
-              {{$t(405)}}{{dis_level[inds].level_rules_edit.team_sales.value}}{{$t(406)}}
+              {{$t('480x23')}}
+			  <block v-if="$p('zh-cn')">{{dis_level[inds].level_rules_edit.team_sales.value}}{{$t('480x24')}}</block>
+			  <block v-if="$p('en-us')">{{$t('480x24')}}{{dis_level[inds].level_rules_edit.team_sales.value}}</block>
+			  
             </view>
             <view class="bottoms">
-              {{$t(407)}}{{dis_level[inds].level_rules_edit.team_sales.user_data}}{{$t(408)}}
+              {{$t('480x25')}}
+			  <block v-if="$p('zh-cn')">{{dis_level[inds].level_rules_edit.team_sales.user_data}}{{$t('480x26')}}</block>
+			  <block v-if="$p('en-us')">{{$t('480x26')}}{{dis_level[inds].level_rules_edit.team_sales.user_data}}</block>
+			  
             </view>
           </view>
           <view class="submit submitMbx"
                 v-if="dis_level[inds].level_rules_edit.team_sales.user_data>=dis_level[inds].level_rules_edit.team_sales.value">
-            {{$t(409)}}
+            {{$t('480x27')}}
           </view>
           <view @click="goFenxiao()" class="submit" v-else>
-            {{$t(410)}}
+            {{$t('480x28')}}
           </view>
 
         </view>
@@ -165,23 +180,29 @@
           <image class="image" src="/static/fenxiao/disBuy.png"></image>
           <view class="mbx">
             <view class="tops">
-              {{$t(411)}}{{dis_level[inds].level_rules_edit.direct_buy.value.money}}{{$t(412)}}
+              {{$t('480x29')}}
+			  <block v-if="$p('zh-cn')">{{dis_level[inds].level_rules_edit.direct_buy.value.money}}{{$t('480x30')}}</block>
+			  <block v-if="$p('en-us')">{{$t('480x30')}}{{dis_level[inds].level_rules_edit.direct_buy.value.money}}</block>
+			  
             </view>
             <view class="bottoms" v-if="dis_level[inds].level_rules_edit.direct_buy.value.type=='1'">
-				{{$t(413)}}
+				{{$t('480x31')}}
             </view>
             <view class="bottoms" v-if="dis_level[inds].level_rules_edit.direct_buy.value.type=='2'">
-              {{$t(414)}}({{dis_level[inds].level_rules_edit.direct_buy.data.gift_name}})
+              {{$t('480x32')}}({{dis_level[inds].level_rules_edit.direct_buy.data.gift_name}})
             </view>
             <view class="bottoms" v-if="dis_level[inds].level_rules_edit.direct_buy.value.type=='3'">
-              {{$t(415)}}({{dis_level[inds].level_rules_edit.direct_buy.value.present}}{{$t(416)}})
+              {{$t('480x33')}}
+			  <block v-if="$p('zh-cn')">({{dis_level[inds].level_rules_edit.direct_buy.value.present}}{{$t('480x34')}})</block>
+			  <block v-if="$p('en-us')">({{$t('480x34')}}{{dis_level[inds].level_rules_edit.direct_buy.value.present}})</block>
+			  
             </view>
           </view>
           <view class="submit submitMbx" v-if="dis_level[inds].buy_order.Order_Status==4">
-            {{$t(417)}}
+            {{$t('480x35')}}
           </view>
           <view @click="buyDis(dis_level[inds].Level_ID)" class="submit" v-else>
-            {{$t(418)}}
+            {{$t('480x36')}}
           </view>
         </view>
       </block>
@@ -191,28 +212,28 @@
           <image class="image" src="/static/fenxiao/editS.png"></image>
           <view class="mbx">
             <view class="tops">
-              {{$t(419)}}
+              {{$t('480x37')}}
             </view>
             <view class="bottoms">
-              {{$t(420)}}
+              {{$t('480x38')}}
             </view>
           </view>
           <block v-if="dis_level[inds].apply_order">
             <block v-if="dis_level[inds].apply_order.status">
               <view class="submit submitMbx" v-if="dis_level[inds].apply_order.status==2">
-                {{$t(421)}}
+                {{$t('480x39')}}
               </view>
               <view class="submit submitMbx" v-else-if="dis_level[inds].apply_order.status==1">
-                {{$t(422)}}
+                {{$t('480x40')}}
               </view>
               <view @click="edit(dis_level[inds].Level_ID)" class="submit" v-else>
-                {{$t(423)}}({{dis_level[inds].apply_order.reason}})
+                {{$t('480x41')}}({{dis_level[inds].apply_order.reason}})
               </view>
             </block>
           </block>
           <block v-else>
             <view @click="edit(dis_level[inds].Level_ID)" class="submit">
-              {{$t(424)}}
+              {{$t('480x42')}}
             </view>
           </block>
         </view>
@@ -248,10 +269,10 @@
             <block v-if="ind==0">
               <view class="submit submitMbx"
                     v-if="dis_level[inds].level_rules_edit.direct_sons.user_data.is_completed==1">
-                {{$t(425)}}
+                {{$t('480x43')}}
               </view>
               <view @click="goFenxiao" class="submit">
-                {{$t(426)}}
+                {{$t('480x44')}}
               </view>
             </block>
           </view>
@@ -287,10 +308,10 @@
             <block v-if="ind==0">
               <view class="submit submitMbx"
                     v-if="dis_level[inds].level_rules_edit.team_sons.user_data.is_completed==1">
-                {{$t(427)}}
+                {{$t('480x45')}}
               </view>
               <view @click="goFenxiao" class="submit">
-                {{$t(428)}}
+                {{$t('480x46')}}
               </view>
             </block>
           </view>
@@ -366,7 +387,7 @@ export default {
     },
     disApplyInit () {
       disApplyInit({}, {
-        tip: T._(382),
+        tip: T._('480d0'),
         mask: true
       }).then(res => {
         this.pro = res.data
@@ -388,7 +409,7 @@ export default {
   async created () {
     const initData = await this.getInitData()
     uni.setNavigationBarTitle({
-      title: initData.commi_rename.commi + T._(383)
+      title: initData.commi_rename.commi + T._('480d1')
     })
   }
 }
@@ -530,7 +551,7 @@ export default {
       }
 
       .submit {
-        width: 110rpx;
+        // width: 110rpx;
         height: 45rpx;
         line-height: 45rpx;
         background: rgba(244, 49, 49, 1);

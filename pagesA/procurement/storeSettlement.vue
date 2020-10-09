@@ -2,32 +2,32 @@
   <view @click="commonClick" class="wrap">
     <block v-if="index==1">
       <view class="area-item">
-        <text class="area-label">{{$t(1630)}}</text>
+        <text class="area-label">{{$t('2172x0')}}</text>
         <picker :end="endDate" :start="startDate" :value="date" @change="bindDateChangeStart" class="pickerView"
                 mode="date">
           <view class="uni-inputs" v-if="dateValue">{{dateValue}}</view>
-          <view class="uni-input" v-if="!dateValue">{{$t(1631)}}</view>
+          <view class="uni-input" v-if="!dateValue">{{$t('2172x1')}}</view>
           <image :src="'/static/client/person/right.png' | domain" class="rightImg"></image>
         </picker>
 
       </view>
 
       <view class="area-item">
-        <text class="area-label">{{$t(1632)}}</text>
+        <text class="area-label">{{$t('2172x2')}}</text>
         <picker :end="endDate" :start="startDate" :value="date" @change="bindDateChangeEnd" class="pickerView"
                 mode="date">
           <view class="uni-inputs" v-if="dateValues">{{dateValues}}</view>
-          <view class="uni-input" v-if="!dateValues">{{$t(1633)}}</view>
+          <view class="uni-input" v-if="!dateValues">{{$t('2172x3')}}</view>
           <image :src="'/static/client/person/right.png' | domain" class="rightImg"></image>
         </picker>
       </view>
 
       <view class="viewButoon">
         <view @click="search" class="button">
-          {{$t(1634)}}
+          {{$t('2172x4')}}
         </view>
         <view @click="goStoreSettlement" class="msg">
-          {{$t(1635)}}
+          {{$t('2172x5')}}
         </view>
       </view>
     </block>
@@ -144,14 +144,14 @@ export default {
     search () {
       if (!this.dateValue) {
         uni.showToast({
-          title: T._(1630),
+          title: T._('2172d0'),
           icon: 'none'
         })
         return
       }
       if (!this.dateValues) {
         uni.showToast({
-          title: T._(1631),
+          title: T._('2172d1'),
           icon: 'none'
         })
         return
@@ -160,7 +160,7 @@ export default {
       const c = new Date(this.dateValue)
       if (d < c) {
         uni.showToast({
-          title: T._(1632),
+          title: T._('2172d2'),
           icon: 'none'
         })
         return

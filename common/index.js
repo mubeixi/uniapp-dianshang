@@ -27,7 +27,7 @@ export const toast = (title, icon, image, duration) => {
 
 export const modal = function() {
 	const opt = {
-		title: T._(3),
+		title: T._('3d0'),
 		content: ''
 	}
 	if (typeof arguments[0] === 'string') {
@@ -109,10 +109,10 @@ export const checkIsLogin = (redirect, tip) => {
 				return
 			}
 			confirm({
-				title: T._(4),
-				content: T._(5),
-				confirmText: T._(6),
-				cancelText: T._(7)
+				title: T._('3d1'),
+				content: T._('3d2'),
+				confirmText: T._('3d3'),
+				cancelText: T._('3d4')
 			}).then(() => {
 				// #ifdef H5
 				ls.set('login_farward_url', location.href)
@@ -161,10 +161,10 @@ export const checkIsDistribute = (redirect, tip) => {
 			}
 
 			confirm({
-				title: T._(8),
+				title: T._('3d5'),
 				content: content,
-				confirmText: T._(9),
-				cancelText: T._(10)
+				confirmText: T._('3d6'),
+				cancelText: T._('3d7')
 			}).then(() => {
 				uni.navigateTo({
 					url: '/pages/fenxiao/distributorLevel'
@@ -246,7 +246,7 @@ export const linkTo = (linkObj) => {
 				id: origin_id,
 				path: link,
 				webUrl: ext.url
-			}) : toast(T._(11))
+			}) : toast(T._('3d8'))
 		}, function(e) {
 			if (ext.url) {
 
@@ -261,12 +261,12 @@ export const linkTo = (linkObj) => {
 				appId: appid,
 				path: link,
 				success(res) {
-					console.log(res)
+					// console.log(res)
 					// 打开成功
 				},
 				fail(err) {
 					const {
-						errMsg = T._(12)
+						errMsg = T._('3d9')
 					} = err
 					uni.showModal({
 						title: '跳转小程序错误',
@@ -336,7 +336,7 @@ export const contact = () => {
 			link: initData.kf_url
 		})
 	} else {
-		error(T._(13))
+		error(T._('3d10'))
 	}
 }
 

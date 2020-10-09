@@ -18,9 +18,9 @@
           </view>
         </view>
         <view @click="getNewTeam(item.User_ID)" class="bots">
-          <view>{{$t(884)}}{{item.User_No}}</view>
-          <view @click.stop="seeQrcode(item)" class="">{{$t(885)}}</view>
-          <view>{{$t(886)}}({{item.usercount}})</view>
+          <view>{{$t('1136x0')}}{{item.User_No}}</view>
+          <view @click.stop="seeQrcode(item)" class="">{{$t('1136x1')}}</view>
+          <view>{{$t('1136x2')}}({{item.usercount}})</view>
         </view>
       </view>
     </view>
@@ -59,7 +59,7 @@ export default {
       this.page++
       this.getDisTeamList()
     } else {
-      toast(T._(884), 'none')
+      toast(T._('1136d0'), 'none')
     }
   },
   onShow () {
@@ -92,7 +92,7 @@ export default {
       }
       getDisTeamList(data, {
         errtip: false,
-        tip: T._(885)
+        tip: T._('1136d1')
       }).then(res => {
         this.pro = this.pro.concat(res.data)
         this.totalCount = res.totalCount

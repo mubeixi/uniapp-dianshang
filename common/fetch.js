@@ -45,7 +45,7 @@ export const GET_ENV = () => {
 const fetch = function (act, param, options = false, url = '/api/little_program/shopconfig.php', method = 'post') {
   if (!act) {
     uni.showToast({
-      title: T._(2),
+      title: T._('0d0'),
       mask: true,
       duration: 2000
     })

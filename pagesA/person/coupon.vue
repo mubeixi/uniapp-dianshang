@@ -2,13 +2,13 @@
   <view @click="commonClick" class="myall">
     <!-- 		<view class="nav">
           <view class="views" :class="checked==0?'checked':''" @click="change(0)">
-            {{$t(1107)}}
+            {{$t('1401x0')}}
           </view>
           <view class="views" :class="checked==1?'checked':''" @click="change(1)">
-            {{$t(1108)}}
+            {{$t('1401x1')}}
           </view>
           <view class="views" :class="checked==2?'checked':''" @click="change(2)">
-            {{$t(1109)}}
+            {{$t('1401x2')}}
           </view>
         </view>
         <view style="height: 198rpx;width: 100%;">
@@ -30,7 +30,7 @@
           {{item.Coupon_Subject}}
         </view>
         <view class="times">
-          {{ $t(1110) }}{{item.Coupon_StartTime}}-{{item.Coupon_EndTime}}
+          {{ $t('1401x3') }}{{item.Coupon_StartTime}}-{{item.Coupon_EndTime}}
         </view>
         <view class="subject">
           {{item.limit_txt}}
@@ -57,17 +57,17 @@
           </block>
         </view>
         <view @click="goIndex(item.coupon_prod)" class="button">
-          {{$t(1111)}}
+          {{$t('1401x4')}}
         </view>
       </view>
 
     </block>
     <view class="lasts">
       <view class="lefts">
-        {{$t(1112)}} |
+        {{$t('1401x5')}} |
       </view>
       <view @click="goExpired" class="rights">
-        {{$t(1113)}} >
+        {{$t('1401x6')}} >
       </view>
     </view>
     <view style="height: 30rpx;"></view>

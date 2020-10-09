@@ -33,42 +33,42 @@
     <view class="orderDetail">
       <view class="orderDetailTop">
         <view class="leftDiv"></view>
-        <view>{{$t(1321)}}</view>
+        <view>{{$t('1886x0')}}</view>
       </view>
 
       <view class="orderDetailBottom">
         <view class="viewHeight">
-          {{$t(1322)}}<span class="fontColor">{{backInfo.id}}</span>
+          {{$t('1886x1')}}<span class="fontColor">{{backInfo.id}}</span>
         </view>
         <view class="viewHeight">
-          {{$t(1323)}} ¥<span class="fontColor">{{backInfo.price}}</span>
+          {{$t('1886x2')}} ¥<span class="fontColor">{{backInfo.price}}</span>
         </view>
         <view class="viewHeight">
-          {{$t(1324)}} <span class="fontColor">{{backInfo.reason}}</span>
+          {{$t('1886x3')}} <span class="fontColor">{{backInfo.reason}}</span>
         </view>
         <!-- <view class="viewHeight">
-          {{$t(1325)}}： <span class="fontColorRed">¥</span><span class=" fontColor fontColorRed">12315465</span>
+          {{$t('1886x4')}}： <span class="fontColorRed">¥</span><span class=" fontColor fontColorRed">12315465</span>
         </view> -->
         <view class="viewHeight">
-          {{$t(1326)}} <span class="fontColor">{{backInfo.create_at}}</span>
+          {{$t('1886x5')}} <span class="fontColor">{{backInfo.create_at}}</span>
         </view>
         <view class="viewHeight">
-          {{$t(1327)}} <span class="fontColor">{{backInfo.receive_name}}</span>
+          {{$t('1886x6')}} <span class="fontColor">{{backInfo.receive_name}}</span>
         </view>
         <view class="viewHeight">
-          {{$t(1328)}}： <span class="fontColor">{{backInfo.status_desc}}</span>
+          {{$t('1886x7')}}： <span class="fontColor">{{backInfo.status_desc}}</span>
         </view>
       </view>
     </view>
     <view class="orderDetail">
       <view class="orderDetailTop">
         <view class="leftDiv"></view>
-        <view>{{$t(1329)}}</view>
+        <view>{{$t('1886x8')}}</view>
       </view>
       <view class="orderDetailOther">
         <view class="inputView">
           <view style="width: 200rpx;">
-            {{$t(1330)}}
+            {{$t('1886x9')}}
           </view>
           <template>
             <block v-if="index == 1">
@@ -77,7 +77,7 @@
             <block v-else>
               <view @click="change(1)" class="noselected"></view>
             </block>
-            <view style="margin: 0 20rpx;">{{$t(1331)}}</view>
+            <view style="margin: 0 20rpx;">{{$t('1886x10')}}</view>
           </template>
           <template>
             <block v-if="index == 1">
@@ -86,12 +86,12 @@
             <block v-else>
               <image class="selected" mode="" src="/static/procurement/selected.png"></image>
             </block>
-            <view style="margin-left: 20rpx;">{{$t(1332)}}</view>
+            <view style="margin-left: 20rpx;">{{$t('1886x11')}}</view>
           </template>
         </view>
         <view class="inputView" v-if="index == 1">
           <view style="width: 200rpx;">
-            {{$t(1333)}}
+            {{$t('1886x12')}}
           </view>
           <view style="width: 100%;text-align: right;">
             <!-- {{ship_name?ship_name:'请选择快递公司'}}
@@ -101,20 +101,20 @@
         </view>
         <view class="inputView" v-if="index == 1">
           <view style="width: 200rpx;">
-            {{$t(1334)}}
+            {{$t('1886x13')}}
           </view>
           <view style="width: 100%;">
-            <input :placeholder="$t(1335)" style="width: 100%;" type="text" v-model="shipping_no">
+            <input :placeholder="$t('1886x14')" style="width: 100%;" type="text" v-model="shipping_no">
           </view>
         </view>
       </view>
     </view>
     <view @click="submit" class="submit">
-      {{$t(1336)}}
+      {{$t('1886x15')}}
     </view>
     <popupLayer :direction="'top'" ref="method">
       <view class="bMbx">
-        <view class="fMbx">{{$t(1337)}}</view>
+        <view class="fMbx">{{$t('1886x16')}}</view>
         <view :key="shipid" @click="changeCurrent(shipid)" class="iMbx" v-for="(ship,shipid) in shipping">
           <view>
             {{ship}}
@@ -167,7 +167,7 @@ export default {
       this.getStoreProdBackOrderDetail()
     } else {
       uni.showToast({
-        title: T._(1321),
+        title: T._('1886d0'),
         icon: 'none'
       })
       uni.navigateBack({

@@ -3,17 +3,17 @@
     <div v-if="coupon.config.type==1 && couponList.length>0">
       <div class="list style1 style1flex" v-if="couponList.length<4">
         <div :key="idx" @click="getCoupon(item)" class="item" v-for="(item,idx) in couponList">
-          <p class="title">{{$t(52)}}{{item.Coupon_Condition}}{{$t(53)}}</p>
+          <p class="title">{{$t('29x0')}}{{item.Coupon_Condition}}{{$t('29x1')}}</p>
           <p class="info"> {{item.Coupon_UseType ==
-            0?item.Coupon_Discount+$t(54):'￥'+item.Coupon_Cash+$t(55)}}</p>
+            0?item.Coupon_Discount+$t('29x2'):'￥'+item.Coupon_Cash+$t('29x3')}}</p>
           <!-- <p class="area">({{item.Coupon_UseArea==0?'实体店':'微商城'}})</p> -->
         </div>
       </div>
       <div class="list style1 style1block" v-else>
         <div :key="idx" class="item" v-for="(item,idx) in couponList">
-          <p class="title">{{$t(56)}}{{item.Coupon_Condition}}{{$t(57)}}</p>
+          <p class="title">{{$t('29x4')}}{{item.Coupon_Condition}}{{$t('29x5')}}</p>
           <p class="info"> {{item.Coupon_UseType ==
-            0?item.Coupon_Discount+$t(58):'￥'+item.Coupon_Cash+$t(59)}}</p>
+            0?item.Coupon_Discount+$t('29x6'):'￥'+item.Coupon_Cash+$t('29x7')}}</p>
           <!-- <p class="area">({{item.Coupon_UseArea==0?'实体店':'微商城'}})</p> -->
         </div>
       </div>
@@ -22,19 +22,19 @@
     <div class="list style2" v-if="coupon.config.type== 2 && couponList.length>0">
       <div :key="idx" @click="getCoupon(item)" class="item" v-for="(item,idx) in couponList">
         <div class="c">
-          <p v-if="item.Coupon_UseType == 0">{{$t(60)}}￥{{item.Coupon_Condition}} {{item.Coupon_Discount+$t(61)}}</p>
-          <p v-else><span>{{$t(62)}}￥{{item.Coupon_Condition}} {{$t(63)}} {{item.Coupon_Cash+$t(64)}}</span></p>
+          <p v-if="item.Coupon_UseType == 0">{{$t('29x8')}}￥{{item.Coupon_Condition}} {{item.Coupon_Discount+$t('29x9')}}</p>
+          <p v-else><span>{{$t('29x10')}}￥{{item.Coupon_Condition}} {{$t('29x11')}} <block v-if="$p('zh-cn')">{{item.Coupon_Cash+$t('29x12')}}</block><block v-if="$p('en-us')">{{$t('29x12') + item.Coupon_Cash}}</block></span></p>
         </div>
       </div>
     </div>
     <div class="list style3" v-if="coupon.config.type== 3 && couponList.length>0">
       <div :key="idx" @click="getCoupon(item)" class="item" v-for="(item,idx) in couponList">
         <div class="c">
-          <p v-if="item.Coupon_UseType == 0">{{$t(65)}}￥{{item.Coupon_Condition}} {{item.Coupon_Discount+$t(66)}}</p>
-          <p v-else><span>{{$t(67)}}￥{{item.Coupon_Condition}} {{$t(68)}} {{item.Coupon_Cash+$t(69)}}</span></p>
+          <p v-if="item.Coupon_UseType == 0">{{$t('29x13')}}￥{{item.Coupon_Condition}} {{item.Coupon_Discount+$t('29x14')}}</p>
+          <p v-else><span>{{$t('29x15')}}￥{{item.Coupon_Condition}} {{$t('29x16')}} <block v-if="$p('zh-cn')">{{item.Coupon_Cash+$t('29x17')}}</block><block v-if="$p('en-us')">{{$t('29x17')+item.Coupon_Cash}}</block></span></p>
         </div>
         <div class="r">
-          <div class="go">{{$t(70)}}</div>
+          <div class="go">{{$t('29x18')}}</div>
         </div>
       </div>
     </div>
@@ -42,8 +42,8 @@
       <div :key="idx" @click="getCoupon(item)" class="item" v-for="(item,idx) in couponList">
         <div class="c">
           <div class="cwrap">
-            <p v-if="item.Coupon_UseType == 0">{{$t(71)}}￥{{item.Coupon_Condition}} {{item.Coupon_Discount+$t(72)}}</p>
-            <p v-else><span>{{$t(73)}}￥{{item.Coupon_Condition}} {{$t(74)}} {{item.Coupon_Cash+$t(75)}}</span></p>
+            <p v-if="item.Coupon_UseType == 0">{{$t('29x19')}}￥{{item.Coupon_Condition}} {{item.Coupon_Discount+$t('29x20')}}</p>
+            <p v-else><span>{{$t('29x21')}}￥{{item.Coupon_Condition}} {{$t('29x22')}} <block v-if="$p('zh-cn')">{{item.Coupon_Cash+$t('29x23')}}</block><block v-if="$p('en-us')">{{$t('29x23')+item.Coupon_Cash}}</block></span></p>
           </div>
         </div>
       </div>
@@ -126,13 +126,13 @@ export default {
     getCoupon (couponInfo) {
       getUserCoupon({ coupon_id: couponInfo.Coupon_ID }).then(res => {
         uni.showToast({
-          title: T._(52)
+          title: T._('29d0')
         })
         getCoupon({ pageSize: 999 }, { errtip: false }).then(res => {
           this.isAllowCouponList = res.data
         })
       }).catch(() => {
-        modal(T._(53))
+        modal(T._('29d1'))
       })
     }
   },

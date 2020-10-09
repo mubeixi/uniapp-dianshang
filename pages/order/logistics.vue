@@ -9,7 +9,7 @@
       <view>
         <view class="fonts">
           <view class="left">
-            {{$t(508)}}
+            {{$t('721x0')}}
           </view>
           <view class="right">
             {{pro.shipping_status}}
@@ -17,7 +17,7 @@
         </view>
         <view class="fonts">
           <view class="left">
-            {{$t(509)}}
+            {{$t('721x1')}}
           </view>
           <view>
             {{pro.shipping_express}}
@@ -25,7 +25,7 @@
         </view>
         <view class="fonts" v-if="pro.shipping_no">
           <view class="left">
-            {{$t(510)}}
+            {{$t('721x2')}}
           </view>
           <view>
             {{pro.shipping_no}}
@@ -33,7 +33,7 @@
         </view>
         <view class="fonts" v-if="pro.delivery_man_phone">
           <view class="left">
-            {{$t(511)}}
+            {{$t('721x3')}}
           </view>
           <view @click="call">
             {{pro.delivery_man_phone}}

@@ -2,24 +2,24 @@
   <div @click="commonClick" v-if="isGetOrder">
     <div class="zhezhao" v-if="password_input">
       <div class="input-wrap">
-        <div>{{$t(705)}}</div>
-        <input @input="user_password" class="input" :placeholder="$t(706)" type="password">
+        <div>{{$t('856x0')}}</div>
+        <input @input="user_password" class="input" :placeholder="$t('856x1')" type="password">
         <div class="btns">
-          <div @click="cancelInput" class="btn">{{$t(707)}}</div>
-          <div @click="confirmInput" class="btn">{{$t(708)}}</div>
+          <div @click="cancelInput" class="btn">{{$t('856x2')}}</div>
+          <div @click="confirmInput" class="btn">{{$t('856x3')}}</div>
         </div>
       </div>
     </div>
     <div class="state bgwhite">
       <image :src="'/static/client/wait.png'|domain" class="img" />
-      <span class="state-desc">{{$t(709)}}</span>
+      <span class="state-desc">{{$t('856x4')}}</span>
     </div>
     <div class="address bgwhite" v-if="orderInfo.Order_IsVirtual == 0">
       <image :src="'/static/client/location.png'|domain" alt="" class="loc_icon" />
       <div class="add_msg">
-        <div class="name">{{$t(710)}}：{{orderInfo.Address_Name}} <span>{{orderInfo.Address_Mobile}}</span></div>
+        <div class="name">{{$t('856x5')}}：{{orderInfo.Address_Name}} <span>{{orderInfo.Address_Mobile}}</span></div>
         <div class="location">
-          {{$t(711)}}：{{orderInfo.Address_Province_name}}{{orderInfo.Address_City_name}}{{orderInfo.Address_Area_name}}{{orderInfo.Address_Town_name}}
+          {{$t('856x6')}}：{{orderInfo.Address_Province_name}}{{orderInfo.Address_City_name}}{{orderInfo.Address_Area_name}}{{orderInfo.Address_Town_name}}
         </div>
       </div>
     </div>
@@ -43,10 +43,10 @@
       <div class="other">
         <div class="bd">
           <div class="o_title">
-            <span>{{$t(712)}}</span>
+            <span>{{$t('856x7')}}</span>
             <span class="c8" style="text-align:right;">
               <span>{{orderInfo.Order_Shipping.Express}}</span>
-              <span> {{orderInfo.Order_Shipping.Price > 0 ? (`${$t(713)}` + orderInfo.Order_Shipping.Price) : `${$t(714)}`}}</span>
+              <span> {{orderInfo.Order_Shipping.Price > 0 ? (`${$t('856x8')}` + orderInfo.Order_Shipping.Price) : `${$t('856x9')}`}}</span>
             </span>
           </div>
         </div>
@@ -54,15 +54,19 @@
       <div class="other" v-if="pagefrom != 'gift'">
         <div class="bd">
           <div class="o_title">
-            <span>{{$t(715)}}</span>
-            <span class="c8">{{orderInfo.Coupon_Money}}{{$t(716)}}{{$t(717)}}</span>
+            <span>{{$t('856x10')}}</span>
+            <span class="c8">
+				<block v-if="$p('zh-cn')">{{orderInfo.Coupon_Money}}{{$t('856x11')}}</block>
+				<block v-if="$p('en-us')">{{$t('856x11')}}{{orderInfo.Coupon_Money}}</block>
+			
+			{{$t('856x12')}}</span>
           </div>
         </div>
       </div>
       <div class="other" v-if="pagefrom != 'gift'">
         <div class="bd">
           <div class="o_title">
-            <span>{{$t(718)}}</span>
+            <span>{{$t('856x13')}}</span>
             <span class="c8">{{orderInfo.Integral_Money}}</span>
           </div>
         </div>
@@ -70,7 +74,7 @@
       <div class="other" v-if="orderInfo.is_use_money && orderInfo.is_use_money == 1">
         <div class="bd">
           <div class="o_title">
-            <span>{{$t(719)}}</span>
+            <span>{{$t('856x14')}}</span>
             <switch :checked="moneyChecked" @change="moneyChange" color="#04B600" size='25px' />
           </div>
           <!-- <div class="o_desc c8">{{orderInfo.Order_Yebc}}</div> -->
@@ -82,7 +86,7 @@
       <div class="other" v-if="pagefrom != 'gift' && initData.invoice_switch == 1">
         <div class="bd">
           <div class="o_title">
-            <span>{{$t(720)}}</span>
+            <span>{{$t('856x15')}}</span>
             <switch :checked="invoiceChecked" @change="invoiceChange" color="#04B600" size='25px' />
           </div>
           <!-- <div class="o_desc c8">{{orderInfo.Order_InvoiceInfo}}</div> -->
@@ -92,14 +96,14 @@
       <div class="other">
         <div class="bd">
           <div class="o_title  words">
-            <span>{{$t(721)}}</span>
+            <span>{{$t('856x16')}}</span>
             <input class="msg c8" v-model="order_remark">
           </div>
         </div>
       </div>
       <div class="total">
-        <span>{{$t(722)}}<span>{{orderInfo.prod_list.length}}</span>{{$t(723)}}</span>
-        <span class="mbx">{{$t(724)}}<span class="money moneys">￥</span><span
+        <span>{{$t('856x17')}}<span>{{orderInfo.prod_list.length}}</span>{{$t('856x18')}}</span>
+        <span class="mbx">{{$t('856x19')}}<span class="money moneys">￥</span><span
         class="money">{{orderInfo.Order_Fyepay}}</span></span>
       </div>
     </div>
@@ -107,44 +111,40 @@
     <div style="height:100px;background:#f8f8f8;"></div>
     <popup-layer :bottomHeight="50" :direction="'top'" @maskClicked="handClicked" ref="popupMX">
       <view class="mxdetail">
-        <view class="mxtitle">{{$t(725)}}</view>
-        <view class="mxitem">{{$t(726)}}
+        <view class="mxtitle">{{$t('856x20')}}</view>
+        <view class="mxitem">{{$t('856x21')}}
           <text class="num">+{{orderInfo.Order_TotalAmount}}</text>
         </view>
-        <view class="mxitem" v-if="orderInfo.user_curagio_money > 0">{{$t(727)}}
+        <view class="mxitem" v-if="orderInfo.user_curagio_money > 0">{{$t('856x22')}}
           <text class="num">-{{orderInfo.user_curagio_money}}</text>
         </view>
-        <view class="mxitem" v-if="orderInfo.Manjian_Cash > 0">{{$t(728)}}
+        <view class="mxitem" v-if="orderInfo.Manjian_Cash > 0">{{$t('856x23')}}
           <text class="num">-{{orderInfo.Manjian_Cash}}</text>
         </view>
-        <view class="mxitem" v-if="orderInfo.Coupon_Money > 0">{{$t(729)}}
+        <view class="mxitem" v-if="orderInfo.Coupon_Money > 0">{{$t('856x24')}}
           <text class="num">-{{orderInfo.Coupon_Money}}</text>
         </view>
-        <view class="mxitem" v-if="orderInfo.Integral_Money > 0">{{$t(730)}}
+        <view class="mxitem" v-if="orderInfo.Integral_Money > 0">{{$t('856x25')}}
           <text class="num">-{{orderInfo.Integral_Money}}</text>
         </view>
-        <view class="mxitem" v-if="user_money > 0">{{$t(731)}}
+        <view class="mxitem" v-if="user_money > 0">{{$t('856x26')}}
           <text class="num">-{{user_money}}</text>
         </view>
-        <view class="mxitem" v-if="orderInfo.Order_Shipping.Price > 0">{{$t(732)}}
+        <view class="mxitem" v-if="orderInfo.Order_Shipping.Price > 0">{{$t('856x27')}}
           <text class="num">+{{orderInfo.Order_Shipping.Price}}</text>
         </view>
       </view>
     </popup-layer>
     <div :style="{'z-index': zIndex}" class="order_total">
       <div class="totalinfo">
-        <div class="info">
-			<block v-if="$p('zh-cn')">{{$t(733)}}{{orderInfo.prod_list.length}}件商品 总计：</block>
-			<block v-if="$p('en-us')">A total of {{orderInfo.prod_list.length}} products Total:</block>
-		
-		<span
+        <div class="info">{{$t('856x28')}}{{orderInfo.prod_list.length}}{{$t('1659x2')}} {{$t('647x39')}}：<span
         class="mbxa">￥<span>{{orderInfo.Order_Fyepay}}</span></span></div>
         <view class="tips" v-if="orderInfo.obtain_desc">{{orderInfo.obtain_desc}}</view>
       </div>
-      <view @click="seeDetail" class="mx">{{$t(734)}}
+      <view @click="seeDetail" class="mx">{{$t('856x29')}}
         <image :class="isSlide?'slidedown':''" class="image" src="/static/top.png"></image>
       </view>
-      <div @click="submit" class="submit">{{$t(735)}}</div>
+      <div @click="submit" class="submit">{{$t('856x30')}}</div>
     </div>
     <div class="safearea-box"></div>
     <pay-components
@@ -340,7 +340,7 @@ export default {
       this.user_money = Number(money).toFixed(2)
       if (this.user_money < 0 || isNaN(this.user_money)) {
         uni.showToast({
-          title: T._(705),
+          title: T._('856d0'),
           icon: 'none'
         })
         this.user_money = 0
@@ -349,7 +349,7 @@ export default {
       }
       if (this.orderInfo.Order_TotalPrice - money < 0) {
         uni.showToast({
-          title: T._(706),
+          title: T._('856d1'),
           icon: 'none'
         })
         this.user_money = this.orderInfo.Order_TotalPrice
@@ -431,7 +431,7 @@ export default {
       // eslint-disable-next-line no-unreachable
       if (this.need_invoice && this.invoice_info === '') {
         uni.showToast({
-          title: T._(707),
+          title: T._('856d2'),
           icon: 'none'
         })
         return
@@ -482,7 +482,7 @@ export default {
       }
 
       if (!channel) {
-        this.$error(T._(708))
+        this.$error(T._('856d3'))
         return false
       }
 
@@ -527,7 +527,7 @@ export default {
     },
     payFailCall (err) {
       uni.showToast({
-        title: err.msg ? err.msg : T._(709),
+        title: err.msg ? err.msg : T._('856d4'),
         icon: 'none',
         duration: 2000
       })
@@ -545,16 +545,16 @@ export default {
       }
 
       if (res && res.code && res.code === 1) {
-        toast(T._(710), 'none')
+        toast(T._('856d5'), 'none')
         return
       }
 
       // 头条小程序
       if (res && res.code && res.code === 9) {
         uni.showModal({
-          title: T._(711),
-          content: T._(712),
-          cancelText: T._(713),
+          title: T._('856d6'),
+          content: T._('856d7'),
+          cancelText: T._('856d8'),
           confirmText: '已支付',
           success: function (res) {
             if (res.confirm) {
@@ -594,7 +594,7 @@ export default {
       // 0：支付成功 1：支付超时 2：支付失败 3：支付关闭 4：支付取消 9：订单状态开发者自行获取
 
       if (res && res.code && res.code === 4) {
-        toast(T._(714), 'none')
+        toast(T._('856d9'), 'none')
         return
       }
 
@@ -645,7 +645,7 @@ export default {
           // 需要格外有一个code
           // #ifdef H5
           if (!isWeiXin()) {
-            this.$error(T._(715))
+            this.$error(T._('856d10'))
             return
           }
           const isHasCode = this.code || GetQueryByString('code')
@@ -693,7 +693,7 @@ export default {
           // eslint-disable-next-line no-unreachable
           orderPay(payConf, {
             mask: true,
-            tip: T._(716)
+            tip: T._('856d11')
           }).then(res => {
             // #ifdef H5
             const {
@@ -747,7 +747,7 @@ export default {
               },
               fail: function (err) {
                 uni.showModal({
-                  title: T._(717),
+                  title: T._('856d12'),
                   content: JSON.stringify(err)
                 })
               }
@@ -767,7 +767,7 @@ export default {
               },
               fail: function (err) {
                 uni.showModal({
-                  title: T._(718),
+                  title: T._('856d13'),
                   content: JSON.stringify(err)
                 })
               }
@@ -795,7 +795,7 @@ export default {
             order_remark: this.order_remark
           }, {
             mask: true,
-            tip: T._(719)
+            tip: T._('856d14')
           }).then(res => {
 
           }).catch(() => {

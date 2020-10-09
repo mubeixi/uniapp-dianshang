@@ -6,13 +6,13 @@
     <!-- <page-title  title="失效优惠券" bgcolor="#f8f8f8" class="titless"></page-title> -->
     <!-- 		<view class="nav">
           <view class="views" :class="checked==0?'checked':''" @click="change(0)">
-            {{$t(1114)}}
+            {{$t('1458x0')}}
           </view>
           <view class="views" :class="checked==1?'checked':''" @click="change(1)">
-            {{$t(1115)}}
+            {{$t('1458x1')}}
           </view>
           <view class="views" :class="checked==2?'checked':''" @click="change(2)">
-            {{$t(1116)}}
+            {{$t('1458x2')}}
           </view>
         </view>
         <view style="height: 198rpx;width: 100%;">
@@ -25,10 +25,10 @@
           <image :src="item.Coupon_PhotoPath" class="image"></image>
         </view>
         <view class="storeTitle">
-          {{$t(1117)}}
+          {{$t('1458x3')}}
         </view>
         <view class="times">
-          {{ $t(1118) }}{{item.Coupon_StartTime}}-{{item.Coupon_EndTime}}
+          {{ $t('1458x4') }}{{item.Coupon_StartTime}}-{{item.Coupon_EndTime}}
         </view>
         <view class="prices" v-if="item.Coupon_Discount<=0">
           ¥
@@ -46,7 +46,7 @@
           [{{item.Coupon_Subject}}]
         </view>
         <!-- <view class="button" style="color: #666666;">
-          {{$t(1119)}}
+          {{$t('1458x5')}}
         </view> -->
         <image class="yishiyong" src="/static/person/coupon-used.png"></image>
       </view>

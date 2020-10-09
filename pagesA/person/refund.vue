@@ -6,7 +6,7 @@
 
     <!-- <page-title title="申请退款" rightHidden="true"></page-title> -->
 
-    <div :key="index" class="pro" v-for="(item,index) of refundInfo.refund_prod_list">
+    <div :key="item" class="pro" v-for="(item,index) of refundInfo.refund_prod_list">
       <div class="pro-div">
         <image :src="item.prod_img" alt="" class="pro-img" />
       </div>
@@ -16,9 +16,9 @@
         <div class="attr" style="background-color:#fff;" v-else><span></span></div>
         <div class=""><span class="span amount">x{{item.prod_count}}</span></div>
         <div class="font14 graytext2">
-          <div>{{$t(1239)}}:<span class="font16 danger-color"><span
+          <div>{{$t('1639x0')}}:<span class="font16 danger-color"><span
           class="span font12">￥</span>{{item.refund_money_fee}} </span></div>
-          <div>{{$t(1240)}}:<span class="font16 danger-color"><span class="span font12">￥</span>{{item.refund_pay_fee}} </span>
+          <div>{{$t('1639x1')}}:<span class="font16 danger-color"><span class="span font12">￥</span>{{item.refund_pay_fee}} </span>
           </div>
         </div>
       </div>
@@ -30,26 +30,26 @@
     <!-- <div class="item">
         <div class="item-left">退款方式</div>
         <div class="item-right" @click="showMethod">
-            <span>{{$t(1241)}}</span>
+            <span>{{$t('1639x2')}}</span>
             <image class="img" :src="'/static/client/right.png" alt="" />
         </div>
     </div> -->
     <div class="item">
-      <div class="item-left">{{$t(1242)}}</div>
+      <div class="item-left">{{$t('1639x3')}}</div>
       <div @click="showReason" class="item-right">
-        <span>{{reasonDes?reasonDes: $t(1243)}}</span>
+        <span>{{reasonDes?reasonDes: $t('1639x4')}}</span>
         <image :src="'/static/client/right.png'|domain" alt="" class="img" />
       </div>
     </div>
     <!-- <div class="item spe">
-        <div class="item-left">{{$t(1244)}}</div>
-        <input type="text" :placeholder="$t(1245)" placeholder-style="font-size:24rpx;color:#B8B8B8">
+        <div class="item-left">{{$t('1639x5')}}</div>
+        <input type="text" :placeholder="$t('1639x6')" placeholder-style="font-size:24rpx;color:#B8B8B8">
     </div> -->
     <div class="item spe">
-      <div class="item-left">{{$t(1246)}}</div>
-      <input @blur="inputHandle" :placeholder="$t(1247)" placeholder-style="font-size:24rpx;color:#B8B8B8" type="text">
+      <div class="item-left">{{$t('1639x7')}}</div>
+      <input @blur="inputHandle" :placeholder="$t('1639x8')" placeholder-style="font-size:24rpx;color:#B8B8B8" type="text">
     </div>
-    <div class="item noborder">{{$t(1248)}}</div>
+    <div class="item noborder">{{$t('1639x9')}}</div>
     <div class="imgs">
       <view :key="index" class="shangchuans" v-for="(item,index) of imgs">
         <image :src="item" @click="yulan(index)" class="image"></image>
@@ -61,7 +61,7 @@
       </view>
     </div>
     <div style="height: 50px;"></div>
-    <div @click="submit" class="bottom">{{$t(1249)}}</div>
+    <div @click="submit" class="bottom">{{$t('1639x10')}}</div>
     <!-- 弹出层 -->
     <!-- 退款方式 暂且不要-->
     <!-- <popup-layer ref="popupRef" :direction="'top'">
@@ -69,7 +69,7 @@
     <div class="fMbx">退款方式</div>
     <div class="iMbx">
       <div>
-        {{$t(1250)}}
+        {{$t('1639x11')}}
       </div>
       <div>
          <radio  :checked="onlyRefund"  color="#F43131"/>
@@ -77,7 +77,7 @@
     </div>
     <div class="iMbx">
       <div>
-        {{$t(1251)}}
+        {{$t('1639x12')}}
       </div>
       <div>
          <radio  :checked="onlyRefund"  color="#F43131"/>
@@ -85,13 +85,13 @@
     </div>
   </div>
   <div class="sure" @click="closeMethod">
-      {{$t(1252)}}
+      {{$t('1639x13')}}
   </div>
     </popup-layer> -->
     <!-- 退款原因 -->
     <popup-layer :direction="'top'" ref="popup" style="z-index: 999;">
       <div class="bMbx">
-        <div class="fMbx">{{$t(1253)}}</div>
+        <div class="fMbx">{{$t('1639x14')}}</div>
         <div :key="index" class="iMbx" v-for="(item,index) in refundInfo.shop_reason">
           <radio-group @change="ShipRadioChange" style="display: block;width: 100%;">
             <label class="flex flex-between flex-vertical-center" style="width: 100%">
@@ -106,7 +106,7 @@
         </div>
         <!-- <div class="iMbx">
           <div>
-            {{$t(1254)}}
+            {{$t('1639x15')}}
           </div>
           <div>
              <radio  :checked="onlyRefund"  color="#F43131"/>
@@ -114,7 +114,7 @@
         </div>
         <div class="iMbx">
           <div>
-            {{$t(1255)}}
+            {{$t('1639x16')}}
           </div>
           <div>
              <radio  :checked="onlyRefund"  color="#F43131"/>
@@ -122,7 +122,7 @@
         </div> -->
       </div>
       <div @click="closeReason" class="sure">
-        {{$t(1256)}}
+        {{$t('1639x17')}}
       </div>
     </popup-layer>
 
@@ -165,7 +165,7 @@ export default {
       onlyRefund: 0,
       imgs: [], // 上传图片预览
       Order_ID: 0, // 退款商品id
-      refundInfo: {}, // 商品信息
+      refundInfo: '', // 商品信息
       arr: [], // 上传成功的图片
       reasonDes: '', // 退款原因
       current: 0,
@@ -227,7 +227,7 @@ export default {
     submit () {
       // 按照订单退款
       if (!this.reason_id) {
-        error(T._(1239))
+        error(T._('1639d0'))
         return
       }
       const arr = []
@@ -252,7 +252,7 @@ export default {
         // #endif
 
         uni.showToast({
-          title: T._(1240),
+          title: T._('1639d1'),
           duration: 1500,
           complete: function () {
             setTimeout(() => {

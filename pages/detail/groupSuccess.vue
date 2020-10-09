@@ -30,32 +30,32 @@
 		<ul class="second">
 			<li class="lis">
 				<image :src="'/static/client/tuan/check.png'|domain" class="img" />
-				{{$t(300)}}
+				{{$t('253x0')}}
 			</li>
 			<li class="lis">
 				<image :src="'/static/client/tuan/check.png'|domain" class="img" />
-				{{$t(301)}}
+				{{$t('253x1')}}
 			</li>
 			<li class="lis">
 				<image :src="'/static/client/tuan/check.png'|domain" class="img" />
-				{{$t(302)}}
+				{{$t('253x2')}}
 			</li>
 			<li class="lis">
 				<image :src="'/static/client/tuan/check.png'|domain" class="img" />
-				{{$t(303)}}
+				{{$t('253x3')}}
 			</li>
 		</ul>
 		<!-- 团长 -->
 		<div class="three">
 			<div class="paySuc">
 				<image :src="'/static/client/tuan/paySuc.png'|domain" class="img" />
-				{{$t(304)}}
+				{{$t('253x4')}}
 			</div>
 			<ul class="lyl">
 				<li class="liq" v-for="(user,idx) in join_team_list">
 					<image :src="user.User_HeadImg" class="img" />
 					<image :src="'/static/client/tuan/tuanzhang.png'|domain" class=" img tuanzhang" v-if="user.team_head" />
-					<span class="tuanzhang" v-if="user.team_head">{{$t(305)}}</span>
+					<span class="tuanzhang" v-if="user.team_head">{{$t('253x5')}}</span>
 				</li>
 
 			</ul>
@@ -69,7 +69,7 @@
 		<div class="times" v-if="product.teamstatus!=1">
 			<div class="line"></div>
 			<div class="text">
-				{{$t(306)}}
+				{{$t('253x6')}}
 				<div class="myTime">
 					<span class="num">{{countdown.h}}</span>
 					<span class="lines">:</span>
@@ -77,7 +77,7 @@
 					<span class="lines">:</span>
 					<span class="num">{{countdown.s}}</span>
 				</div>
-				{{$t(307)}}
+				{{$t('253x7')}}
 			</div>
 			<div class="line"></div>
 		</div>
@@ -87,12 +87,12 @@
 			<!-- #ifdef MP-WEIXIN || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO -->
 			<button @click="goOrderDetail" class="vanButton">查看订单</button>
 			<!--            open-type="share"-->
-			<button class="vanButton invi" open-type="share">{{$t(308)}}</button>
+			<button class="vanButton invi" open-type="share">{{$t('253x8')}}</button>
 			<!-- #endif -->
 
 			<!-- #ifdef H5 || APP-PLUS -->
 			<span @click="goOrderDetail" class="vanButton">查看订单</span>
-			<span @click="inviteFunc" class="vanButton invi">{{$t(309)}}</span>
+			<span @click="inviteFunc" class="vanButton invi">{{$t('253x9')}}</span>
 			<!-- #endif -->
 		</div>
 		<div class="dingdan" v-if="product.teamstatus==1">
@@ -117,24 +117,24 @@
 			<div class="xiang">
 				<div class="hang">
 					<image :src="'/static/client/tuan/ju.png'|domain" class="img" />
-					<span class="spana">{{$t(310)}}</span>
+					<span class="spana">{{$t('253x10')}}</span>
 				</div>
 				<div class="hang">
 					<image :src="'/static/client/tuan/ju.png'|domain" class="img" />
-					<span class="spana">{{$t(311)}}</span>
+					<span class="spana">{{$t('253x11')}}</span>
 				</div>
 				<div class="hang">
 					<image :src="'/static/client/tuan/ju.png'|domain" class="img" />
-					<span class="spana">{{$t(312)}}</span>
+					<span class="spana">{{$t('253x12')}}</span>
 				</div>
 				<div class="hang">
 					<image :src="'/static/client/tuan/ju.png'|domain" class="img" />
-					<span class="spana">{{$t(313)}}</span>
+					<span class="spana">{{$t('253x13')}}</span>
 				</div>
 			</div>
 		</div>
 		<!-- 更多 -->
-		<div class="dianzhang">{{$t(314)}}</div>
+		<div class="dianzhang">{{$t('253x14')}}</div>
 		<div class="prolist">
 			<div :key="index" @click="goProductDetail(item.Products_ID,item.is_pintuan)" class="pro-item" v-for="(item,index) in prodList">
 				<!--                <image :src="'/static/client/check/pro1.png" alt="" class="img"/>-->
@@ -154,21 +154,21 @@
 					<!-- #ifdef APP-PLUS -->
 					<div @click="shareFunc('wx')" class="flex1">
 						<img :src="'/static/client/detail/share1.png'|domain" alt="">
-						<div>{{$t(315)}}</div>
+						<div>{{$t('253x15')}}</div>
 					</div>
 					<div @click="shareFunc('wxtimeline')" class="flex1">
 						<img :src="'/static/client/detail/sahre3.png'|domain" alt="">
-						<div>{{$t(316)}}</div>
+						<div>{{$t('253x16')}}</div>
 					</div>
 					<!--只有配置了这个参数的app，才有分享到小程序选项-->
 					<div @click="shareFunc('wxmini')" class="flex1" v-if="wxMiniOriginId">
 						<img :src="'/static/client/detail/share4.png'|domain" alt="">
-						<div>{{$t(317)}}</div>
+						<div>{{$t('253x17')}}</div>
 					</div>
 					<!-- #endif -->
 
 				</div>
-				<div @click="cancel" class="s_bottom">{{$t(318)}}</div>
+				<div @click="cancel" class="s_bottom">{{$t('253x18')}}</div>
 			</div>
 		</popupLayer>
 
@@ -241,7 +241,7 @@
 					m: 0,
 					s: 0
 				},
-				msg: T._(300), // 立即参团
+				msg: T._('253d0'), // 立即参团
 				prod_arg: {
 					page: 1,
 					pageSize: 4
@@ -347,7 +347,7 @@
 						})
 
 						if (!sharePic) {
-							error(T._(301))
+							error(T._('253d1'))
 							return
 						}
 
@@ -466,7 +466,7 @@
 							title: product.Products_Name, // 分享标题
 							link: front_url + buildSharePath(path), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
 							imgUrl: product.ImgPath, // 分享图标
-							desc: product.Products_BriefDescription || T._(302),
+							desc: product.Products_BriefDescription || T._('253d2'),
 							type: 'link', // 分享类型,music、video或link，不填默认为link
 							// dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
 							success: function() {

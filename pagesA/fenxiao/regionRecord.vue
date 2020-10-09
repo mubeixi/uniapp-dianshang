@@ -8,7 +8,7 @@
       <block v-if="index==1">
         <view class="fir">
           <view class="left">
-            {{$t(987)}}：
+            {{$t('1239x0')}}：
           </view>
           <view class="right">
             {{item.Area_Concat}}
@@ -16,7 +16,7 @@
         </view>
         <view class="fir">
           <view class="left">
-            {{$t(988)}}
+            {{$t('1239x1')}}
           </view>
           <view class="rights">
             {{item.Order_Status_desc}}
@@ -37,7 +37,7 @@
         </view>
         <view class="fir">
           <view class="left">
-            {{$t(989)}}
+            {{$t('1239x2')}}
           </view>
           <view class="right">
             {{item.sha_level_name}}
@@ -45,7 +45,7 @@
         </view>
         <view class="fir">
           <view class="left">
-            {{$t(990)}}
+            {{$t('1239x3')}}
           </view>
           <view class="rights">
             {{item.Order_Status_desc}}
@@ -57,7 +57,7 @@
       </block>
       <view class="fir">
         <view class="left">
-          {{$t(991)}}
+          {{$t('1239x4')}}
         </view>
         <view class="right">
           {{item.Order_CreateTime}}

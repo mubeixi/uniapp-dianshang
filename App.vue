@@ -95,7 +95,7 @@ export default {
     })
   },
   onShow: function () {
-	  const tabbarArr = [1794,1795,1796,1797];
+	  const tabbarArr = ["home","class","shopping","mine"];
 	  tabbarArr.forEach(function(item,index){
 	  	  uni.setTabBarItem({
 	  	  	  index:index,

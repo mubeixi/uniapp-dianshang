@@ -21,32 +21,32 @@
 
     <view class="centers" v-if="pro">
       <view class="td">
-        {{$t(1285)}}：{{pro.Back_ID}}
+        {{$t('1666x0')}}：{{pro.Back_ID}}
       </view>
       <view class="td">
-        {{$t(1286)}}：{{pro.Back_CreateTime}}
+        {{$t('1666x1')}}：{{pro.Back_CreateTime}}
       </view>
       <view class="td">
-        {{$t(1287)}}
-        <text style="font-weight: bold;">{{pro.Back_Qty}}{{$t(1288)}}</text>
+        {{$t('1666x2')}}
+        <text style="font-weight: bold;">{{pro.Back_Qty}}{{$t('1666x3')}}</text>
       </view>
       <view class="td">
-        {{$t(1289)}}
-        <span>{{$t(1290)}}<span class="font16 danger-color"><span class="span font12">￥</span>{{pro.refund_money_fee}} </span>,</span>
-        <span>{{$t(1291)}} <span class="danger-color"><span class="span font12 ">￥</span>{{pro.refund_pay_fee}} </span></span>
+        {{$t('1666x4')}}
+        <span>{{$t('1666x5')}}<span class="font16 danger-color"><span class="span font12">￥</span>{{pro.refund_money_fee}} </span>,</span>
+        <span>{{$t('1666x6')}} <span class="danger-color"><span class="span font12 ">￥</span>{{pro.refund_pay_fee}} </span></span>
       </view>
       <view class="td">
-        {{$t(1292)}}
+        {{$t('1666x7')}}
         <text style="color: #FF6600;">{{pro.Back_Status_desc}}</text>
       </view>
       <view class="address" v-if="pro.shop_address">
-        {{$t(1293)}}：{{pro.shop_address.RecieveProvince_name}}{{pro.shop_address.RecieveCity_name}}{{pro.shop_address.RecieveArea_name}}{{pro.shop_address.RecieveAddress}}
-        {{$t(1294)}}:{{pro.shop_address.RecieveMobile}}{{pro.shop_address.RecieveName}}{{$t(1295)}}
+        {{$t('1666x8')}}：{{pro.shop_address.RecieveProvince_name}}{{pro.shop_address.RecieveCity_name}}{{pro.shop_address.RecieveArea_name}}{{pro.shop_address.RecieveAddress}}
+        {{$t('1666x9')}}:{{pro.shop_address.RecieveMobile}}{{pro.shop_address.RecieveName}}{{$t('1666x10')}}
       </view>
       <block v-if="isFahuo">
         <view class="fahuo" v-if="pro.Back_Status==1">
           <view @click="isFahuo=false" class="fahuoSubmit">
-            {{$t(1296)}}
+            {{$t('1666x11')}}
           </view>
         </view>
         <view class="lines">
@@ -63,13 +63,13 @@
     <block v-if="!isFahuo">
       <view class="orderFa" style="margin-top: 40rpx;">
         <view class="inputs">
-          <input class="input" placeholder="$t(1297)" type="text" v-model="shipping">
+          <input class="input" :placeholder="$t('1666x12')" type="text" v-model="shipping">
         </view>
         <view class="inputs" style="margin-top: 30rpx;">
-          <input class="input" placeholder="$t(1298)" type="number" v-model="shippingID">
+          <input class="input" :placeholder="$t('1666x13')" type="number" v-model="shippingID">
         </view>
         <view @click="refundSend" class="submits">
-          {{$t(1299)}}
+          {{$t('1666x14')}}
         </view>
       </view>
     </block>
@@ -106,13 +106,13 @@ export default {
     refundSend () {
       if (!this.shipping) {
         uni.showToast({
-          title: T._(1285)
+          title: T._('1666d0')
         })
         return
       }
       if (!this.shippingID) {
         uni.showToast({
-          title: T._(1286)
+          title: T._('1666d1')
         })
         return
       }

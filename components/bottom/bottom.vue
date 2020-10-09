@@ -6,7 +6,7 @@
                     <div>
                         <image class='img' src="/static/detail/home.png"></image>
                     </div>
-                    <div class="txt">{{$t(28)}}</div>
+                    <div class="txt">{{$t('130x0')}}</div>
                 </navigator>
             </div>
 
@@ -16,25 +16,25 @@
                     <image class='img' v-if="collected" src="/static/detail/favorite-a.png"></image>
                     <image class='img' v-else src="/static/detail/favorite.png"></image>
                 </div>
-                <div class="txt">{{$t(29)}}</div>
+                <div class="txt">{{$t('130x1')}}</div>
             </div>
             <div class="first" @click="kefu">
                 <div>
                     <image class='img' src="/static/detail/kefu.png"></image>
                 </div>
-                <div class="txt">{{$t(30)}}</div>
+                <div class="txt">{{$t('130x2')}}</div>
             </div>
         </div>
         <div class="rightss">
             <block v-if="!(recieve || isVirtual || isGiftPackage)">
                 <div class="dan bTitle" @click="addCart">
-                    {{first?first:$t(31)}}
+                    {{first?first:$t('130x3')}}
                 </div>
                 <div class="tuan bTitle" @click="directBuy">
-                    {{second?second:$t(32)}}
+                    {{second?second:$t('130x4')}}
                 </div>
             </block>
-            <div class="all" @click="lingqu" :class="canSubmit?'':'disable'" v-else>{{isVirtual ? $t(33) : (isGiftPackage?$t(34):$t(35)) }}
+            <div class="all" @click="lingqu" :class="canSubmit?'':'disable'" v-else>{{isVirtual ? $t('130x5') : (isGiftPackage?$t('130x6'):$t('130x7')) }}
             </div>
         </div>
     </div>

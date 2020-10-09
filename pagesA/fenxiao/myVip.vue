@@ -15,7 +15,7 @@
           </view>
         </view>
         <view class="bots">
-          {{$t(887)}}{{item.User_No}}
+          {{$t('1168x0')}}{{item.User_No}}
         </view>
       </view>
     </view>

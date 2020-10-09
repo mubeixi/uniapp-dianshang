@@ -48,7 +48,7 @@ export default {
       }
     },
     videoErrorCallback (e) {
-      const msg = T._(125) + JSON.stringify(e)
+      const msg = T._('108d0') + JSON.stringify(e)
       uni.showModal({
         content: msg,
         showCancel: false

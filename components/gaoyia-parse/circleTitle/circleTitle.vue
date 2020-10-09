@@ -31,7 +31,7 @@ export default {
         props: {
             title: {
                 type: String,
-                default: T._(126)
+                default: T._('107d0')
             }
         }
     }

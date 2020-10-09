@@ -18,20 +18,20 @@
       </view>
 
       <view @click="goGudongPay(pro.waiting_pay_apply.Order_ID)" class="juewei" v-if="pro.waiting_pay_apply">
-        {{$t(818)}}
+        {{$t('1075x0')}}
       </view>
       <view @click="goGudong" class="juewei" v-else-if="pro.sha_config.Sha_Agent_Type==1&&pro.is_apply">
-        {{$t(819)}}
+        {{$t('1075x1')}}
       </view>
       <view class="juewei" v-else>
-        {{$t(820)}}
+        {{$t('1075x2')}}
       </view>
       <!-- <view  v-else-if="pro.disInfo.sha_level_id>0" class="juewei">
         {{pro.disInfo.sha_level_name}}
       </view> -->
 
       <!-- <view  v-else-if="" class="juewei" >
-        {{$t(821)}}
+        {{$t('1075x3')}}
       </view> -->
 
     </view>
@@ -39,7 +39,7 @@
       <view class="money">
         <view>
           <view class="moneyTop">
-            {{(pro.total_sales || pro.total_sales==0)?$t(822):$t(823)}}
+            {{(pro.total_sales || pro.total_sales==0)?$t('1075x4'):$t('1075x5')}}
           </view>
           <view class="moneyBottom">
             ￥
@@ -48,7 +48,7 @@
         </view>
         <view>
           <view class="moneyTop">
-            {{(pro.month_sales || pro.month_sales==0)?$t(824):$t(825)}}
+            {{(pro.month_sales || pro.month_sales==0)?$t('1075x6'):$t('1075x7')}}
           </view>
           <view class="moneyBottom">
             ￥
@@ -57,7 +57,7 @@
         </view>
       </view>
       <view @click="goFinance" class="chakan" v-if="!pro.total_sales && pro.total_sales!=0">
-        {{$t(826)}}
+        {{$t('1075x8')}}
         <image :src="'/static/client/fenxiao/chakan.png'|domain" class="image"></image>
       </view>
     </view>
@@ -69,7 +69,7 @@
     		    <view class="da"></view>
     		  </view>
     		  <view class="fengTitleCenter">
-    		   {{$t(827)}}
+    		   {{$t('1075x9')}}
     		  </view>
     		  <view class="fengTitleRight">
     		    <view class="da"></view>
@@ -83,31 +83,31 @@
       </view>
       <view class="xiangCenter">
         <view class="xiangLeft">
-          {{$t(828)}}
+          {{$t('1075x10')}}
         </view>
         <view class="xiangRight">
           <view class="view" v-if="item.Level_name">
-            {{commi_rename.commi}}{{$t(829)}}:{{item.Level_name}}
+            {{commi_rename.commi}}{{$t('1075x11')}}:{{item.Level_name}}
           </view>
           <view class="view" v-if="item.nobi_level">
-            {{$t(830)}}:{{item.nobi_level}}
+            {{$t('1075x12')}}:{{item.nobi_level}}
           </view>
           <view class="view">
-            {{$t(831)}}:{{item.self_pay}}
+            {{$t('1075x13')}}:{{item.self_pay}}
           </view>
           <view class="view">
-            {{$t(832)}}:{{item.team_sales}}
+            {{$t('1075x14')}}:{{item.team_sales}}
           </view>
         </view>
       </view>
       <view class="xiangBottom">
         <view class="xiangBottomT">
-          {{$t(833)}}
+          {{$t('1075x15')}}
         </view>
         <view class="xiangBottomB">
           ¥
           <text class="text">{{item.price}}</text>
-          <block v-if="item.is_apply">{{$t(834)}}</block>
+          <block v-if="item.is_apply">{{$t('1075x16')}}</block>
         </view>
       </view>
     </view>
@@ -121,7 +121,7 @@
     		    <view class="da"></view>
     		  </view>
     		  <view class="fengTitleCenter">
-    		   {{$t(835)}}
+    		   {{$t('1075x17')}}
     		  </view>
     		  <view class="fengTitleRight">
     		    <view class="da"></view>
@@ -145,15 +145,18 @@
     </view>
     <view class="guize">
       <text class="text">*</text>
-      {{$t(836)}}
+      {{$t('1075x18')}}
       <block :key="index" v-for="(item,index) of pro.sha_config.Sha_Rate">{{item.sha_name}}
         <block v-if="index!=pro.sha_config.Sha_Rate.length-1">、</block>
       </block>
-      {{$t(837)}}
-      <block :key="index" v-for="(item,index) of pro.sha_config.Sha_Rate">{{item.sha_commi_scale}}{{$t(838)}}
+      {{$t('1075x19')}}
+      <block :key="index" v-for="(item,index) of pro.sha_config.Sha_Rate">
+	  <block v-if="$p('zh-cn')">{{item.sha_commi_scale}}{{$t('1075x20')}}</block>
+	  <block v-if="$p('en-us')">{{$t('1075x20')}}{{item.sha_commi_scale}}</block>
+	  
         <block v-if="index!=pro.sha_config.Sha_Rate.length-1">、</block>
       </block>
-      {{$t(839)}}
+      {{$t('1075x21')}}
     </view>
 
   </view>

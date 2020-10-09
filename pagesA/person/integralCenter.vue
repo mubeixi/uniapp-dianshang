@@ -4,22 +4,22 @@
       <view class="zhezhaoView">
         <image :src="'/static/client/check/close.png'|domain" @click="isShow=false" class="closeZ"></image>
         <view class="zhezhaoYue">
-          {{$t(1169)}}
+          {{$t('1532x0')}}
         </view>
         <view class="zhezhaoCenter">
           <view class="views">
             <image :src="'/static/client/check/phone.png'|domain" class="imgs"></image>
-            <input class="inputs" :placeholder="$t(1170)" type="text" v-model="user_no">
+            <input class="inputs" :placeholder="$t('1532x1')" type="text" v-model="user_no">
           </view>
         </view>
         <view class="zhezhaoCenter">
           <view class="views">
             <image :src="'/static/client/check/money.png'|domain" class="imgs"></image>
-            <input class="inputs" :placeholder="$t(1171)" type="text" v-model="integral">
+            <input class="inputs" :placeholder="$t('1532x2')" type="text" v-model="integral">
           </view>
         </view>
         <view @click="confirm" class="zheButton">
-          {{$t(1172)}}
+          {{$t('1532x3')}}
         </view>
       </view>
     </view>
@@ -32,21 +32,21 @@
         {{intergatal}}
       </view>
       <view class="duihuan">
-        {{$t(1173)}}
+        {{$t('1532x4')}}
       </view>
       <view @click="isShow=true" class="zhuanchu">
-        {{$t(1174)}}
+        {{$t('1532x5')}}
       </view>
       <view class="bottoms">
         <view @click="gotojifen" class="lefts qwe">
           <image :src="'/static/client/check/t3.png'|domain" class="image"></image>
-          <text>{{$t(1175)}}</text>
+          <text>{{$t('1532x6')}}</text>
         </view>
         <view class="line">
         </view>
         <view @click="gotoMyExchange" class="rights qwe" style="padding-left: 66rpx;">
           <image :src="'/static/client/check/t4.png'|domain" class="image"></image>
-          <text>{{$t(1176)}}</text>
+          <text>{{$t('1532x7')}}</text>
         </view>
       </view>
     </view>
@@ -54,7 +54,7 @@
     <view class="selects">
       <image :src="'/static/client/check/qw.png'|domain" class="image"></image>
       <view class="vies">
-        {{$t(1177)}}
+        {{$t('1532x8')}}
       </view>
       <image :src="'/static/client/check/er.png'|domain" class="image"></image>
     </view>
@@ -76,7 +76,7 @@
         </view>
       </template>
       <template v-else>
-        <view class="norecord">{{$t(1178)}}</view>
+        <view class="norecord">{{$t('1532x9')}}</view>
       </template>
     </view>
 
@@ -131,7 +131,7 @@ export default {
       this.user_intergatal = res.data.User_Integral
 	  this.setUserInfo(res.data)
     }).catch(() => {
-      error(T._(1169))
+      error(T._('1532d0'))
     })
   },
   // 下拉加载
@@ -149,7 +149,7 @@ export default {
       this.isClicked = true
       if (!this.integral || this.integral < 0 || isNaN(this.integral)) {
         uni.showToast({
-          title: T._(1170),
+          title: T._('1532d1'),
           icon: 'none'
         })
         this.isClicked = false
@@ -157,7 +157,7 @@ export default {
       }
       if (!this.user_no) {
         uni.showToast({
-          title: T._(1171),
+          title: T._('1532d2'),
           icon: 'none'
         })
         this.isClicked = false
@@ -180,7 +180,7 @@ export default {
             this.user_intergatal = res.data.User_Integral
             this.setUserInfo(this.info)
           }).catch(() => {
-            error(T._(1172))
+            error(T._('1532d3'))
           })
         }, 1500)
       }, err => {
@@ -372,7 +372,7 @@ export default {
     }
 
     .zhuanchu {
-      width: 170rpx;
+      padding: 0 30rpx;
       height: 74rpx;
       line-height: 74rpx;
       text-align: center;

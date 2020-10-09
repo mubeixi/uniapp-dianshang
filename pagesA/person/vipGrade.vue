@@ -12,7 +12,7 @@
             {{item.level_name}}
           </view>
           <view class="dangqian" v-if="index==0">
-            {{$t(1300)}}
+            {{$t('1769x0')}}
           </view>
           <view class="mmp">
             <view class="da">
@@ -29,7 +29,7 @@
 
             </view>
             <view class="texts">
-              <view class="posiQ">{{$t(1301)}}</view>
+              <view class="posiQ">{{$t('1769x1')}}</view>
               <view class="posiW">{{item.growth_value}}</view>
               <view class="posiE" v-if="item.curlevel.need_growth&&item.curlevel.need_growth>0">
 			  <block v-if="$p('zh-cn')">
@@ -57,14 +57,14 @@
       </view>
     </scroll-view>
     <view style="height: 20rpx;background-color: #F8F8F8;width: 750rpx;"></view>
-    <circleTitle :title="$t(1302)"></circleTitle>
+    <circleTitle :title="$t('1769x2')"></circleTitle>
     <view class="zhouri">
       <view class="titles">
         <view class="lefts">
-          {{$t(1303)}}
+          {{$t('1769x3')}}
         </view>
         <view class="rights">
-          {{$t(1304)}}
+          {{$t('1769x4')}}
         </view>
       </view>
       <view :key="j" class="td" v-for="(i,j) of pro.growths">
@@ -81,11 +81,11 @@
       <view class="titles">
         <image :src="'/static/client/fenxiao/wen.png'|domain" class="image"></image>
         <view>
-          {{$t(1305)}}
+          {{$t('1769x5')}}
         </view>
       </view>
       <view class="msg">
-		  {{$t(1306)}}
+		  {{$t('1769x6')}}
       </view>
     </view>
     <view style="height: 20rpx;background-color: #F8F8F8;width: 750rpx;"></view>
@@ -93,11 +93,11 @@
       <view class="titles">
         <image :src="'/static/client/fenxiao/wen.png'|domain" class="image"></image>
         <view>
-          {{$t(1307)}}
+          {{$t('1769x7')}}
         </view>
       </view>
       <view class="msg">
-        {{$t(1308)}}
+        {{$t('1769x8')}}
       </view>
     </view>
   </view>
@@ -337,7 +337,7 @@ export default {
 
   .lasts {
     padding: 35rpx 0rpx 35rpx 18rpx;
-
+	word-break:break-all;
     .image {
       width: 34rpx;
       height: 34rpx;

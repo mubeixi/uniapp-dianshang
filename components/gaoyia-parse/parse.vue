@@ -1,7 +1,7 @@
 <!--**
  * forked from：https://github.com/F-loat/mpvue-wxParse
  *
- * github{{$t(768)}}: https://github.com/dcloudio/uParse
+ * github{{$t('140x0')}}: https://github.com/dcloudio/uParse
  *
  * for: uni-app框架下 富文本解析
  *
@@ -54,7 +54,7 @@ export default {
     },
     noData: {
       type: String,
-      default: `<div style="color: red;">${T._(768)}</div>`
+      default: `<div style="color: red;">${T._('140d0')}</div>`
     },
     startHandler: {
       type: Function,

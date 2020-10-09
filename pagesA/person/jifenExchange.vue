@@ -10,32 +10,32 @@
 
       <view :style="{backgroundImage:'url('+$fun.domainFn('/static/client/jifenduihuan/star.png')+')'}"
             class="img-wrap">
-        <view class="t-title">{{$t(1179)}}</view>
+        <view class="t-title">{{$t('1546x0')}}</view>
         <view class="t-amount">{{userInfo.User_Integral}}</view>
-        <view @click="gotoMyExchange" class="my-change">{{$t(1180)}}</view>
+        <view @click="gotoMyExchange" class="my-change">{{$t('1546x1')}}</view>
       </view>
     </view>
     <view class="content">
       <view :key="index" @click="exchange(item)" class="product" v-for="(item,index) in prod_list">
         <image :src="item.Gift_ImgPath" class="p-img"></image>
         <view class="p-title">{{item.Gift_Name}}</view>
-        <view class="p-count">{{$t(1181)}} {{item.Gift_Qty}}</view>
+        <view class="p-count">{{$t('1546x2')}} {{item.Gift_Qty}}</view>
         <view class="p-price">
           <text>{{item.Gift_Integral}}</text>
           <view :class="item.Gift_Qty==0 || (item.Gift_Integral > userInfo.User_Integral) ? 'nobuy' : ''"
                 @click="exchange(item)"
                 class="p-buy">
-            {{item.Gift_Qty > 0 ? (item.Gift_Integral > userInfo.User_Integral ? $t(1182) : $t(1183)) : $t(1184)}}
+            {{item.Gift_Qty > 0 ? (item.Gift_Integral > userInfo.User_Integral ? $t('1546x3') : $t('1546x4')) : $t('1546x5')}}
           </view>
         </view>
       </view>
     </view>
     <view class="wrap" v-if="psdInput">
       <view class="input-box">
-        <input class="input-psw" :placeholder="$t(1185)" type="text" v-model="password" />
+        <input class="input-psw" :placeholder="$t('1546x6')" type="text" v-model="password" />
         <view class="btns">
-          <view @click="cancelPsw" class="cancel">{{$t(1186)}}</view>
-          <view @click="pswConfirm" class="confirm">{{$t(1187)}}</view>
+          <view @click="cancelPsw" class="cancel">{{$t('1546x7')}}</view>
+          <view @click="pswConfirm" class="confirm">{{$t('1546x8')}}</view>
         </view>
       </view>
     </view>
@@ -116,7 +116,7 @@ export default {
       // 判断需不需要物流,不需要物流，可以直接在本页面完成支付,需要物流跳转积分支付页面
       if (this.password == '') {
         uni.showToast({
-          title: T._(1179),
+          title: T._('1546d0'),
           icon: 'none'
         })
         return
@@ -126,7 +126,7 @@ export default {
         password: this.password
       }).then(res => {
         uni.showToast({
-          title: T._(1180)
+          title: T._('1546d1')
         })
         setTimeout(() => {
           uni.navigateTo({
@@ -150,7 +150,7 @@ export default {
       // 判断是否可以兑换
       if (item.Gift_Qty <= 0) {
         uni.showToast({
-          title: T._(1181),
+          title: T._('1546d2'),
           icon: 'none'
         })
         this.isChanged = false
@@ -158,7 +158,7 @@ export default {
       }
       if (this.userInfo.User_Integral < item.Gift_Integral) {
         uni.showToast({
-          title: T._(1182),
+          title: T._('1546d3'),
           icon: 'none'
         })
         this.isChanged = false
@@ -170,10 +170,10 @@ export default {
 		  
 		  if (this.userInfo.hasOwnProperty('User_PayPassword') && !this.userInfo.User_PayPassword) {
 		    confirm({
-		      title: T._(1183),
-		      content: T._(1184),
-		      confirmText: T._(1185),
-		      cancelText: T._(1186)
+		      title: T._('1546d4'),
+		      content: T._('1546d5'),
+		      confirmText: T._('1546d6'),
+		      cancelText: T._('1546d7')
 		    }).then(res => {
 		      uni.navigateTo({
 		        url: '/pagesA/person/updateUserPsw?type=1&is_back=1'

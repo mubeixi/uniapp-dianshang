@@ -3,14 +3,14 @@
     <view @click="goAddressList" class="address" v-if="orderInfo.is_virtual == 0 ">
       <image :src="'/static/client/location.png'|domain" alt="" class="loc_icon"></image>
       <view class="add_msg" v-if="addressinfo.Address_Name">
-        <view class="name">{{$t(1145)}}：{{addressinfo.Address_Name}} <span>{{addressinfo.Address_Mobile | formatphone}}</span>
+        <view class="name">{{$t('1464x0')}}：{{addressinfo.Address_Name}} <span>{{addressinfo.Address_Mobile | formatphone}}</span>
         </view>
         <view class="location">
-          {{$t(1146)}}：{{addressinfo.Address_Province_name}}{{addressinfo.Address_City_name}}{{addressinfo.Address_Area_name}}{{addressinfo.Address_Town_name}}
+          {{$t('1464x1')}}：{{addressinfo.Address_Province_name}}{{addressinfo.Address_City_name}}{{addressinfo.Address_Area_name}}{{addressinfo.Address_Town_name}}
         </view>
       </view>
       <view class="add_msg" v-else>
-        <view>{{$t(1147)}}</view>
+        <view>{{$t('1464x2')}}</view>
       </view>
       <image :src="'/static/client/right.png'|domain" alt="" class="right"></image>
     </view>
@@ -34,9 +34,9 @@
     <view class="other" v-if="orderInfo.is_virtual == 0">
       <view class="bd">
         <view @click="changeShip" class="o_title">
-          <span>{{$t(1148)}}</span>
+          <span>{{$t('1464x3')}}</span>
           <span style="text-align:right; color: #888;">
-						<span>{{shipping_name?(shipping_name + ' ' + (orderInfo.Order_Shipping.Price > 0 ? orderInfo.Order_Shipping.Price : $t(1149))):$t(1150)}}</span>
+						<span>{{shipping_name?(shipping_name + ' ' + (orderInfo.Order_Shipping.Price > 0 ? orderInfo.Order_Shipping.Price : $t('1464x4'))):$t('1464x5')}}</span>
                         <image :src="'/static/client/right.png'|domain" alt="" class="right"></image>
                     </span>
         </view>
@@ -45,46 +45,46 @@
     <view class="other" v-if="orderInfo.is_virtual == 1">
       <view class="bd">
         <view class="o_title  words">
-          <span>{{$t(1151)}}</span>
-          <input class="inputs" :placeholder="$t(1152)" type="text" v-model="user_name">
+          <span>{{$t('1464x6')}}</span>
+          <input class="inputs" :placeholder="$t('1464x7')" type="text" v-model="user_name">
         </view>
       </view>
     </view>
     <view class="other" v-if="orderInfo.is_virtual == 1">
       <view class="bd">
         <view class="o_title  words">
-          <span>{{$t(1153)}}</span>
-          <input class="inputs" :placeholder="$t(1154)" type="text" v-model="user_mobile">
+          <span>{{$t('1464x8')}}</span>
+          <input class="inputs" :placeholder="$t('1464x9')" type="text" v-model="user_mobile">
         </view>
       </view>
     </view>
     <view class="other" v-if="orderInfo.is_use_money == 1">
       <view class="bd">
         <view class="o_title">
-          <span>{{$t(1155)}}</span>
+          <span>{{$t('1464x10')}}</span>
           <switch :checked="userMoneyChecked" @change="userMoneyChange" color="#04B600" />
         </view>
-        <view class="o_de">{{$t(1156)}}
+        <view class="o_de">{{$t('1464x11')}}
           <text>{{userInfo.User_Money < orderInfo.Order_TotalPrice ? userInfo.User_Money :
             orderInfo.Order_TotalPrice}}
           </text>
         </view>
         <input @blur="confirm_user_money" @focus="postData.use_money = 0" class="o_desc"
-               :placeholder="$t(1157)" type="number" v-if="userMoneyChecked" v-model.number="postData.use_money">
+               :placeholder="$t('1464x12')" type="number" v-if="userMoneyChecked" v-model.number="postData.use_money">
       </view>
     </view>
     <view class="other">
       <view class="bd">
         <view class="o_title  words">
-          <span>{{$t(1158)}}</span>
-          <input @blur="remarkConfirm" class="inputs" placeholder="$t(1159)" type="text">
+          <span>{{$t('1464x13')}}</span>
+          <input @blur="remarkConfirm" class="inputs" :placeholder="$t('1464x14')" type="text">
         </view>
       </view>
     </view>
     <view style="height:100rpx;">
       <view class="order_total">
         <view class="totalinfo">
-          <view class="info">{{$t(1160)}}{{orderInfo.prod_count}}{{$('manual','Items')}} {{$t(1161)}}
+          <view class="info">{{$t('1464x15')}}{{orderInfo.prod_count}}{{$('manual','Items')}} {{$t('1464x16')}}
             <text class="money">
               <text class="m_icon">￥</text>
               {{orderInfo.Order_Fyepay}}
@@ -93,13 +93,13 @@
           <view class="tips" v-if="orderInfo.obtain_desc">{{orderInfo.obtain_desc}}</view>
         </view>
         <form @submit="form_submit" report-submit>
-          <button class="submit" formType="submit">{{$t(1162)}}</button>
+          <button class="submit" formType="submit">{{$t('1464x17')}}</button>
         </form>
       </view>
     </view>
     <popup-layer :direction="'top'" ref="popupRef">
       <view class="bMbx" v-if="type=='shipping'">
-        <view class="fMbx">{{$t(1163)}}</view>
+        <view class="fMbx">{{$t('1464x18')}}</view>
         <view :key="shipid" class="iMbx" v-for="(ship,shipid) in orderInfo.shipping_company">
           <view>
             {{ship}}
@@ -110,19 +110,19 @@
         </view>
       </view>
       <view @click="closeMethod" class="sure">
-        {{$t(1164)}}
+        {{$t('1464x19')}}
       </view>
     </popup-layer>
     <view class="remind-wrap" v-if="remindAddress">
       <view class="remind-add">
-        <view class="text-align-center mb20">{{$t(1165)}}</view>
+        <view class="text-align-center mb20">{{$t('1464x20')}}</view>
         <view class="remind_desc">
-          {{$t(1166)}}
+          {{$t('1464x21')}}
         </view>
         <view class="remind_btns text-align-center">
-          <view @click="goback" class="text-align-center fl1">{{$t(1167)}}</view>
+          <view @click="goback" class="text-align-center fl1">{{$t('1464x22')}}</view>
           <view @click="goEditAdd" class="text-align-center fl1 confirm">
-            {{$t(1168)}}
+            {{$t('1464x23')}}
           </view>
         </view>
       </view>
@@ -154,17 +154,17 @@ export default {
       checked3: true,
       wl_list: [
         {
-          name: T._(1145),
-          price: T._(1146),
+          name: T._('1464d0'),
+          price: T._('1464d1'),
           index: 0
         },
         {
-          name: T._(1147),
-          price: T._(1148),
+          name: T._('1464d2'),
+          price: T._('1464d3'),
           index: 1
         },
         {
-          name: T._(1149),
+          name: T._('1464d4'),
           price: '￥20',
           index: 2
         }
@@ -269,7 +269,7 @@ export default {
         if (this.orderInfo.is_virtual == 0) {
           if (!this.postData.shipping_id) {
             uni.showToast({
-              title: T._(1150),
+              title: T._('1464d5'),
               icon: 'none'
             })
             this.submited = false
@@ -279,7 +279,7 @@ export default {
         if (this.orderInfo.is_virtual == 1) {
           if (!this.user_name) {
             uni.showToast({
-              title: T._(1151),
+              title: T._('1464d6'),
               icon: 'none'
             })
             this.submited = false
@@ -288,7 +288,7 @@ export default {
 
           if (!this.user_mobile) {
             uni.showToast({
-              title: T._(1152),
+              title: T._('1464d7'),
               icon: 'none'
             })
             this.submited = false
@@ -374,7 +374,7 @@ export default {
       const user_money = (this.userInfo.User_Money < this.orderInfo.Order_TotalPrice) ? this.userInfo.User_Money : this.orderInfo.Order_TotalPrice
       if (input_money < 0 || isNaN(input_money)) {
         uni.showToast({
-          title: T._(1153),
+          title: T._('1464d8'),
           icon: 'none'
         })
         this.postData.use_money = 0
@@ -382,8 +382,8 @@ export default {
       }
       if (input_money - user_money > 0) {
         uni.showModal({
-          title: T._(1154),
-          content: T._(1155),
+          title: T._('1464d9'),
+          content: T._('1464d10'),
           icon: 'none',
           showCancel: false
         })
@@ -444,7 +444,7 @@ export default {
       if (this.type == 'coupon') {
         for (var i in this.couponlist) {
           if (this.couponlist[i].Coupon_ID == this.postData.coupon_id) {
-            this.coupon_desc = `${T._(1156)}${this.couponlist[i].Coupon_Condition} - ${this.couponlist[i].Coupon_Cash > 0 ? this.couponlist[i].Coupon_Cash : this.couponlist[i].Coupon_Discount}`
+            this.coupon_desc = `${T._('1464d11')}${this.couponlist[i].Coupon_Condition} - ${this.couponlist[i].Coupon_Cash > 0 ? this.couponlist[i].Coupon_Cash : this.couponlist[i].Coupon_Discount}`
           }
         }
       } else {
@@ -483,8 +483,8 @@ export default {
         this.back_address_id = 0
       }).catch(() => {
         uni.showModal({
-          title: T._(1157),
-          content: T._(1158),
+          title: T._('1464d12'),
+          content: T._('1464d13'),
           showCancel: false
         })
         return false

@@ -145,7 +145,7 @@ export const getUserInfo = async ({ commit, state }, through) => {
 
   if (through) {
     // 则本地没有用户信息，提示用户是否需要登录。
-    await confirm({ title: T._(1790), content: T._(1791), confirmText: T._(1792), cancelText: T._(1793) }).then(() => {
+    await confirm({ title: T._('2361d0'), content: T._('2361d1'), confirmText: T._('2361d2'), cancelText: T._('2361d3') }).then(() => {
       // 要替换掉navigateTo，不然登录页面回退就尴尬了
       // 用这个可以记录登陆前页面
       fun.checkIsLogin(1)

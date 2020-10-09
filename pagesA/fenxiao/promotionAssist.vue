@@ -4,14 +4,14 @@
       <image :src="'/static/clientpop_default.jpg'|domain" class="src"></image>
       <form @submit="submit" report-submit>
         <view class="content">
-          <view class="title">{{$t(929)}}</view>
+          <view class="title">{{$t('1169x0')}}</view>
           <view class="item">
-            <view class="sub-title">{{$t(930)}}</view>
-            <input class="website" :placeholder="$t(931)" type="text" v-model="postData.wx_url">
+            <view class="sub-title">{{$t('1169x1')}}</view>
+            <input class="website" :placeholder="$t('1169x2')" type="text" v-model="postData.wx_url">
           </view>
           <view class="item">
-            <view class="sub-title">{{$t(932)}}</view>
-            <text>{{$t(933)}}</text>
+            <view class="sub-title">{{$t('1169x3')}}</view>
+            <text>{{$t('1169x4')}}</text>
             <radio-group @change="radioChange" style="display: inline-block;">
               <label :key="index" class="radio" v-for="(item,index) in radioArr">
                 <radio :checked="idx==index" :value="item.value" color="#F43131" style="transform:scale(0.7)" />
@@ -25,14 +25,14 @@
             </picker>
           </view>
           <view class="item msg">
-            <view class="sub-title">{{$t(934)}}</view>
-            <input class="input" :placeholder="$t(935)" type="text" v-model="postData.name" />
-            <input class="input" :placeholder="$t(936)" type="text" v-model="postData.mobile" />
-            <input class="input" :placeholder="$t(937)" type="text" v-model="postData.qq" />
-            <input class="input" :placeholder="$t(938)" type="text" v-model="postData.email" />
+            <view class="sub-title">{{$t('1169x5')}}</view>
+            <input class="input" :placeholder="$t('1169x6')" type="text" v-model="postData.name" />
+            <input class="input" :placeholder="$t('1169x7')" type="text" v-model="postData.mobile" />
+            <input class="input" :placeholder="$t('1169x8')" type="text" v-model="postData.qq" />
+            <input class="input" :placeholder="$t('1169x9')" type="text" v-model="postData.email" />
             <view class="btns">
-              <button class="submit" form-type="submit">{{$t(939)}}</button>
-              <button class="share">{{$t(940)}}</button>
+              <button class="submit" form-type="submit">{{$t('1169x10')}}</button>
+              <button class="share">{{$t('1169x11')}}</button>
             </view>
           </view>
         </view>
@@ -56,19 +56,19 @@ export default {
       radioArr: [
         {
           value: '1',
-          name: T._(929)
+          name: T._('1169d0')
         },
         {
           value: '2',
-          name: T._(930)
+          name: T._('1169d1')
         }
       ],
       arr: [],
       arr1: [
-        T._(931), T._(932), T._(933), T._(934)
+        T._('1169d2'), T._('1169d3'), T._('1169d4'), T._('1169d5')
       ],
       index: 0,
-      arr2: [T._(935), T._(936), T._(937)],
+      arr2: [T._('1169d6'), T._('1169d7'), T._('1169d8')],
       postData: {
         wx_url: '', // 文章微信原地址
         link_type: '1', // 链接方式  1 商城链接  2 图文链接
@@ -113,31 +113,31 @@ export default {
       const isQQ = /[1-9][0-9]{4,10}/.test(this.postData.qq)
       if (!isMobileOK) {
         uni.showToast({
-          title: T._(938),
+          title: T._('1169d9'),
           icon: 'none'
         })
         return
       } else if (!isEmailOK) {
         uni.showToast({
-          title: T._(939),
+          title: T._('1169d10'),
           icon: 'none'
         })
         return
       } else if (!isQQ) {
         uni.showToast({
-          title: T._(940),
+          title: T._('1169d11'),
           icon: 'none'
         })
         return
       } else if (this.postData.name == '') {
         uni.showToast({
-          title: T._(941),
+          title: T._('1169d12'),
           icon: 'none'
         })
         return
       } else if (this.postData.wx_url == '') {
         uni.showToast({
-          title: T._(942),
+          title: T._('1169d13'),
           icon: 'none'
         })
         return

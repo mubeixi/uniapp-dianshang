@@ -9,8 +9,8 @@ import { WX_JSSDK_INIT } from '../mixin'
 import permision from '../permission'
 
 const failOpt = {
-  osNotAllow: { code: 2001, msg: T._(18) },
-  codeError: { code: 3001, msg: T._(19) },
+  osNotAllow: { code: 2001, msg: T._('18d0') },
+  codeError: { code: 3001, msg: T._('18d1') },
   browerNotAllow: { code: 2002, msg: 'Geolocation is not supported by this browser' },
   notFound: { code: -1, msg: '获取位置失败' }
 }
@@ -21,7 +21,7 @@ const checkLocationPermission = async () => {
     status = 1
   } else {
     uni.showModal({
-      content: T._(20),
+      content: T._('18d2'),
       confirmText: '设置',
       success: function (res) {
         if (res.confirm) {

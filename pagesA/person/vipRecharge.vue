@@ -4,17 +4,17 @@
     <view class="yue">
       <image :src="'/static/client/blance/recharge.jpg'|domain" class="yue-image"></image>
       <view class="yueq">
-       T._(1309)
+		  {{$t('1778d0')}}
       </view>
       <view class="pricsw">
         {{info.User_Money}}
       </view>
     </view>
 
-    <input class="inputs" :placeholder="$t(1309)" type="digit" v-model="money">
+    <input class="inputs" :placeholder="$t('1778x0')" type="digit" v-model="money">
     <view class="line"></view>
     <view class="payMethod">
-      {{$t(1310)}}
+      {{$t('1778x1')}}
     </view>
 
     <view @click="changeChannelIdx(idx)" class="selectq" v-for="(channel,idx) in payChannelList">
@@ -30,16 +30,16 @@
 		<block v-if="$p('zh-cn')">
 			{{index+1}}、充值满{{item.deposit_money}}赠送
 			<text class="youhui-text">{{item.present_money}}</text>
-			{{$t(1311)}}
+			{{$t('1778x2')}}
 		</block>
 		<block v-if="$p('en-us')">
 			{{index+1}}、Top up {{item.deposit_money}} and get <text class="youhui-text">{{item.present_money}}</text> free
-			{{$t(1312)}}
+			{{$t('1778x3')}}
 		</block>
       
     </view>
     <view @click="confirm" class="queren">
-      {{$t(1313)}}
+      {{$t('1778x4')}}
     </view>
   </view>
 </template>
@@ -77,8 +77,7 @@ export default {
 
     payChannelList () {
       const obj = {}
-
-      if (!this.initData || !this.initData.pay_arr) return arr
+      if (!this.initData || !this.initData.pay_arr) return []
       for (var i in this.initData.pay_arr) {
         if (i != 'remainder_pay') {
           // 默认第一个
@@ -136,18 +135,18 @@ export default {
       let payConf = {}
       if (!is_forword) {
         if (!this.money) {
-          error(T._(1310))
+          error(T._('1778d1'))
           return
         }
         const reg = /^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/
         if (!reg.test(this.money)) {
-          error(T._(1311))
+          error(T._('1778d2'))
           this.money = null
           return
         }
         ls.set('recharge_money', this.money)
         if (!this.payChannel) {
-          error(T._(1312))
+          error(T._('1778d3'))
           return
         }
 
@@ -162,7 +161,7 @@ export default {
         money: this.money || ls.get('recharge_money')
       }
       if (this.pay_type === 'unionpay') {
-        error(T._(1313))
+        error(T._('1778d4'))
         return
       }
 
@@ -189,7 +188,7 @@ export default {
       // 公众号需要code
       if (this.pay_type === 'wx_mp') {
         if (!isWeiXin()) {
-          this.$error(T._(1314))
+          this.$error(T._('1778d5'))
           return
         }
         const isHasCode = this.code || GetQueryByString('code')
@@ -233,14 +232,14 @@ export default {
 
       const that = this
       depositBalance(payConf, {
-        tip: T._(1315),
+        tip: T._('1778d6'),
         mask: true
       }).then(res => {
         unipayFunc(this, this.pay_type, res, '/fre/pagesA/person/balanceCenter')
       }, err => {
         uni.showModal({
-          title: T._(1316),
-          content: T._(1317) + err.msg
+          title: T._('1778d7'),
+          content: T._('1778d8') + err.msg
         })
       }).catch(e => {
 
@@ -273,7 +272,7 @@ export default {
       }
 
       if (!channel) {
-        this.$error(T._(1318))
+        this.$error(T._('1778d9'))
         return false
       }
 
@@ -324,7 +323,7 @@ export default {
       }
 
       uni.showToast({
-        title: T._(1319),
+        title: T._('1778d10'),
         icon: 'none',
         duration: 2000
       })
@@ -345,7 +344,7 @@ export default {
       // #endif
 
       uni.showToast({
-        title: T._(1320)
+        title: T._('1778d11')
       })
       uni.navigateTo({
         url: '/pagesA/person/balanceCenter'
@@ -480,6 +479,7 @@ export default {
 
     .youhui-text {
       color: red;
+	  padding: 0 6rpx;
     }
   }
 </style>
