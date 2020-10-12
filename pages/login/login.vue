@@ -225,7 +225,7 @@
 
 				<p class="description">
 					{{$t('539x24')}} {{world_sms_code_choose}} {{ mobile }}
-					<span :class="{ disabled: countdownStatus }" @click="againSendCode">{{$('manual','Resend')}}{{ countdownStr }}</span>
+					<span :class="{ disabled: countdownStatus }" @click="againSendCode">{{$t('539x40')}}{{ countdownStr }}</span>
 				</p>
 				<input :value="verificationCode" @input="fillCode" class="code" type="number" v-if="loginStatus !== 3 && loginStatus !== 4" />
 				<div class="searchNewPass editSearchPassword" v-if="loginStatus === 3">

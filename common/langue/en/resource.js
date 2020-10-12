@@ -578,6 +578,7 @@ var resource = {
 "539x37": "Get your public information nickname, avatar, region, etc.",
 "539x38": "Refuse",
 "539x39": "allow",
+"539x40": "Resend",
 "539d0": "Please fill in the phone number first",
 "539d1": "SMS sent successfully",
 "539d2": "message can not be sent",
