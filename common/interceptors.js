@@ -15,7 +15,7 @@ export const ajax = (url, method, data, options) => {
   if (!data) data = {}
 
   // eslint-disable-next-line no-unused-vars
-  const { tip = '', mask = false, timelen = 2000, timeout = 2000, errtip = false } = options
+  const { tip = '', mask = false, timelen = 2000, timeout = 2000, errtip = true } = options
 
   if (tip) {
     uni.showLoading({
