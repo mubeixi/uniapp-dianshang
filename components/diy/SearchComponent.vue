@@ -21,6 +21,7 @@
 </template>
 <script>
 
+import T from '@/common/langue/i18n'
 export default {
   props: {
     index: {
@@ -70,7 +71,7 @@ export default {
     placeholderStr (hot) {
       const str = hot.join(' ')
       if (str) return str
-      return '请输入内容'
+      return T._('102d0')
     }
   },
   watch: {},

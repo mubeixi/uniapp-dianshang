@@ -12,10 +12,17 @@
         </div>
         <div class="bottom">
           <div class="price">
-            ¥<span class="prices">{{product.pintuan_pricex}}</span><span v-if="product.Products_PriceX > product.pintuan_pricex">拼团省{{product.Products_PriceX-product.pintuan_pricex|toFix2}}</span>
+            ¥<span class="prices">{{product.pintuan_pricex}}</span>
+			<span v-if="product.Products_PriceX > product.pintuan_pricex">
+			<block v-if="$p('zh-cn')">拼团省{{product.Products_PriceX-product.pintuan_pricex|toFix2}}</block>
+			<block v-if="$p('en-us')">Save {{product.Products_PriceX-product.pintuan_pricex|toFix2}} yuan by joining the group</block>
+			</span>
           </div>
-          <div class="tuan">
-            {{product.pintuan_people}}人团 • 已团{{product.teamnum}}件
+          <div class="tuan" v-if="$p('zh-cn')">
+          	{{product.pintuan_people}}人团 • 已团{{product.teamnum}}件
+          </div>
+          <div class="tuan" v-if="$p('zh-cn')">
+          	Group of {{product.pintuan_people}} • {{product.teamnum}} pieces have been grouped
           </div>
         </div>
       </div>
@@ -24,19 +31,19 @@
     <ul class="second">
       <li class="lis">
         <image :src="'/static/client/tuan/check.png'|domain" class="img" />
-        全场包邮
+       {{$t('317x0')}}
       </li>
       <li class="lis">
         <image :src="'/static/client/tuan/check.png'|domain" class="img" />
-        7天退换
+       {{$t('317x1')}}
       </li>
       <li class="lis">
         <image :src="'/static/client/tuan/check.png'|domain" class="img" />
-        48小时发货
+        {{$t('317x2')}}
       </li>
       <li class="lis">
         <image :src="'/static/client/tuan/check.png'|domain" class="img" />
-        假一赔十
+        {{$t('317x3')}}
       </li>
     </ul>
     <!-- 团长 -->
@@ -50,7 +57,7 @@
         <li class="liq" v-for="(user,idx) in join_team_list">
           <image :src="user.User_HeadImg" class="img" />
           <image :src="'/static/client/tuan/tuanzhang.png'|domain" class=" img tuanzhang" v-if="user.team_head" />
-          <span class="tuanzhang" v-if="user.team_head">团长</span>
+          <span class="tuanzhang" v-if="user.team_head">{{$t('317x4')}}</span>
         </li>
 
       </ul>
@@ -58,12 +65,13 @@
     <!-- 倒计时 -->
     <div class="how" v-if="product.teamstatus!=1">
       <image :src="'/static/client/tuan/time.png'|domain" class="img" />
-      <span class="my">拼团中，还差<span class="spans">{{product.pintuan_people-product.teamnum}}</span>人</span>
+      <span class="my" v-if="$p('zh-cn')">拼团中，还差<span class="spans">{{product.pintuan_people-product.teamnum}}</span>人</span>
+      <span class="my" v-if="$p('en-us')">Joining a group,<span class="spans">{{product.pintuan_people-product.teamnum}}</span> people short</span>
     </div>
     <div class="times"   v-if="product.teamstatus!=1">
       <div class="line"></div>
       <div class="text">
-        剩余
+        {{$t('317x5')}}
         <div class="myTime">
           <span class="num">{{countdown.h}}</span>
           <span class="lines">:</span>
@@ -71,7 +79,7 @@
           <span class="lines">:</span>
           <span class="num">{{countdown.s}}</span>
         </div>
-        结束
+        {{$t('317x6')}}
       </div>
       <div class="line"></div>
     </div>
@@ -82,20 +90,20 @@
 
     <!-- #ifdef MP-WEIXIN || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO -->
     <div class="liji"   v-if="product.teamstatus!=1">
-      <button class="vanButton invi" open-type="share" v-if="joined">邀请好友</button>
-      <div @click="joinFunc" class="vanButton" v-else>立即参团</div>
+      <button class="vanButton invi" open-type="share" v-if="joined">{{$t('317x7')}}</button>
+      <div @click="joinFunc" class="vanButton" v-else>{{$t('317x8')}}</div>
     </div>
     <!-- #endif -->
 
     <!-- #ifdef H5 || APP-PLUS -->
     <div class="liji"  v-if="product.teamstatus!=1">
-      <view @click="inviteFunc" class="vanButton" v-if="joined">去分享</view>
-      <div @click="joinFunc" class="vanButton" v-else>立即参团</div>
+      <view @click="inviteFunc" class="vanButton" v-if="joined">{{$t('317x9')}}</view>
+      <div @click="joinFunc" class="vanButton" v-else>{{$t('317x10')}}</div>
     </div>
     <!-- #endif -->
 
     <div class="liji"  v-if="product.teamstatus==1">
-      <div class="vanButton" >拼团成功</div>
+      <div class="vanButton" >{{$t('317x11')}}</div>
     </div>
 
     <!--            <div class="liji">-->
@@ -107,28 +115,28 @@
     <div class="mbxline"></div>
     <!-- 拼团规则 -->
     <div class="guize">
-      <div class="top">拼团规则</div>
+      <div class="top">{{$t('317x12')}}</div>
       <div class="xiang">
         <div class="hang">
           <image :src="'/static/client/tuan/ju.png'|domain" class="img" />
-          <span>开团或者参加别人的团</span>
+          <span>{{$t('317x13')}}</span>
         </div>
         <div class="hang">
           <image :src="'/static/client/tuan/ju.png'|domain" class="img" />
-          <span>在规定的时间内，邀请好友参团</span>
+          <span>{{$t('317x14')}}</span>
         </div>
         <div class="hang">
           <image :src="'/static/client/tuan/ju.png'|domain" class="img" />
-          <span>达到拼团人数，分别给团长和团员发货</span>
+          <span>{{$t('317x15')}}</span>
         </div>
         <div class="hang">
           <image :src="'/static/client/tuan/ju.png'|domain" class="img" />
-          <span>未达到拼团人数，货款将自动原路返还</span>
+          <span>{{$t('317x16')}}</span>
         </div>
       </div>
     </div>
     <!-- 更多 -->
-    <div class="dianzhang">店长推荐</div>
+    <div class="dianzhang">{{$t('317x17')}}</div>
     <div class="prolist">
       <div :key="index" @click="goProductDetail(item.Products_ID,item.is_pintuan)" class="pro-item"
            v-for="(item,index) in prodList">
@@ -137,7 +145,9 @@
         <div class="item-name">{{item.Products_Name}}</div>
         <div class="price">
           <span class="n_price"><span class="pricem">￥</span>{{item.Products_PriceX}}</span>
-          <span class="o_price">已团{{item.Products_Sales}}件</span>
+		  
+          <span class="o_price" v-if="$p('zh-cn')">已团{{item.Products_Sales}}件</span>
+          <span class="o_price" v-if="$p('en-us')">{{item.Products_Sales}} pieces have been grouped</span>
         </div>
       </div>
     </div>
@@ -148,21 +158,21 @@
           <!-- #ifdef APP-PLUS -->
           <div @click="shareFunc('wx')" class="flex1">
             <image :src="'/static/client/detail/share1.png'|domain" alt="" class='img'></image>
-            <div>发送好友</div>
+            <div>{{$t('317x18')}}</div>
           </div>
           <div @click="shareFunc('wxtimeline')" class="flex1">
             <image :src="'/static/client/detail/sahre3.png'|domain" alt="" class='img'></image>
-            <div>朋友圈</div>
+            <div>{{$t('317x19')}}</div>
           </div>
           <!--只有配置了这个参数的app，才有分享到小程序选项-->
           <div @click="shareFunc('wxmini')" class="flex1" v-if="wxMiniOriginId">
             <img :src="'/static/client/detail/share4.png'|domain" alt="" class='img'>
-            <div>微信小程序</div>
+            <div>{{$t('317x20')}}</div>
           </div>
           <!-- #endif -->
 
         </div>
-        <div @click="cancel" class="s_bottom">取消</div>
+        <div @click="cancel" class="s_bottom">{{$t('317x21')}}</div>
       </div>
     </popupLayer>
 
@@ -185,8 +195,16 @@
           <div class="cartTitle">
             <div class="cartTitles">{{product.Products_Name}}</div>
             <div class="addInfo">
-              <div class="addPrice">{{pt_pricex}}元</div>
-              <div class="proSale">库存{{postData.count}}</div>
+              <div class="addPrice">
+				  <block v-if="$p('zh-cn')">
+					  {{pt_pricex}}{{$t('317x22')}}
+				  </block>
+				  <block v-if="$p('en-us')">
+					  {{$t('317x22')}}{{pt_pricex}}
+				  </block>
+			  
+			  </div>
+              <div class="proSale">{{$t('317x23')}}{{postData.count}}</div>
             </div>
           </div>
         </div>
@@ -204,7 +222,7 @@
         </div>
         <div class="numBer">
           <div class="numBers">
-            数量
+            {{$t('317x24')}}
           </div>
           <div class="inputNumber">
             <div @click="delNum" class="clicks">-</div>
@@ -215,7 +233,7 @@
         </div>
       </div>
       <div :class="submit_flag?'':'disabled'" @click="skuSub" class="cartSub">
-        确定
+        {{$t('317x25')}}
       </div>
     </popupLayer>
 
@@ -238,6 +256,7 @@ import { buildSharePath, getGroupCountdown, getProductThumb, ls, numberSort } fr
 import { error, goProductDetail } from '../../common'
 import { mapGetters, mapState } from 'vuex'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   name: 'App',
@@ -265,7 +284,7 @@ export default {
         m: 0,
         s: 0
       },
-      msg: '开团成功', // 立即参团
+      msg: T._('317d0'), // 立即参团
       prod_arg: {
         page: 1,
         pageSize: 4
@@ -364,7 +383,7 @@ export default {
       check_attrnames = check_attrnames.join(';')
       this.postData.atr_str = check_attrnames
       this.postData.atrid_str = check_attrid
-      console.log(attr_val, 'sss')
+      // console.log(attr_val, 'sss')
       if (attr_val && attr_val.Product_Attr_ID) {
         this.postData.attr_id = attr_val.Product_Attr_ID
       }
@@ -401,7 +420,7 @@ export default {
       if (this.postData.atr_str == '' || this.postData.atrid_str == '') {
         if (this.product.skujosn) {
           wx.showToast({
-            title: '您还没有选择规格',
+            title: T._('317d1'),
             icon: 'none'
           })
           return
@@ -426,12 +445,12 @@ export default {
       const amount = e.detail.value
       if (amount <= 0) {
         this.postData.qty = 1
-        error('至少购买一件')
+        error(T._('317d2'))
         return
       }
       if (amount > this.postData.count) {
         this.postData.qty = this.postData.count
-        error('购买数量不能超过库存量')
+        error(T._('317d3'))
       }
     },
     addNum () {
@@ -439,7 +458,7 @@ export default {
         this.postData.qty = parseInt(this.postData.qty) + 1
       } else {
         uni.showToast({
-          title: '购买数量不能大于库存量',
+          title: T._('317d4'),
           icon: 'none'
         })
         this.postData.qty = this.postData.count
@@ -450,7 +469,7 @@ export default {
         this.postData.qty = parseInt(this.postData.qty) - 1
       } else {
         uni.showToast({
-          title: '购买数量不能小于1',
+          title: T._('317d5'),
           icon: 'none'
         })
         this.postData.qty = 1
@@ -533,7 +552,7 @@ export default {
           })
 
           if (!sharePic) {
-            error('获取分享参数失败')
+            error(T._('317d6'))
             return
           }
 
@@ -658,7 +677,7 @@ export default {
             title: product.Products_Name, // 分享标题
             link: front_url + buildSharePath(path), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
             imgUrl: product.ImgPath, // 分享图标
-            desc: product.Products_BriefDescription || '好物推荐',
+            desc: product.Products_BriefDescription || T._('317d7'),
             type: 'link', // 分享类型,music、video或link，不填默认为link
             // dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
             success: function () {

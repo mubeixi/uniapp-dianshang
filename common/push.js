@@ -1,3 +1,4 @@
+import T from '@/common/langue/i18n' 
 // #ifdef APP-PLUS
 import { fun } from './index'
 import { isDev } from './env'

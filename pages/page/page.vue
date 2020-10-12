@@ -58,6 +58,7 @@ import { GetQueryByString } from '../../common/tool'
 import { pageMixin } from '../../common/mixin'
 import { modal } from '@/common'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {
@@ -124,7 +125,7 @@ export default {
     // #endif
 
     if (!Home_ID) {
-      this.$error('Home_ID参数错误')
+      this.$error(T._('853d0'))
     }
 
     new Promise((resolve, reject) => {
@@ -136,7 +137,7 @@ export default {
         if (res.data.Home_Json) {
           resolve(JSON.parse(res.data.Home_Json))
         } else {
-          reject(Error('获取模板数据失败'))
+          reject(Error(T._('853d1')))
         }
       }).catch(e => {
 
@@ -186,7 +187,7 @@ export default {
         }
       })
       .catch(err => {
-        modal(err.msg || '初始化模板信息错误')
+        modal(err.msg || T._('853d2'))
       })
   }
 }

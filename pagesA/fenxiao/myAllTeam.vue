@@ -18,9 +18,9 @@
           </view>
         </view>
         <view @click="getNewTeam(item.User_ID)" class="bots">
-          <view>会员号：{{item.User_No}}</view>
-          <view @click.stop="seeQrcode(item)" class="">查看二维码</view>
-          <view>查看下级({{item.usercount}})</view>
+          <view>{{$t('1136x0')}}{{item.User_No}}</view>
+          <view @click.stop="seeQrcode(item)" class="">{{$t('1136x1')}}</view>
+          <view>{{$t('1136x2')}}({{item.usercount}})</view>
         </view>
       </view>
     </view>
@@ -37,6 +37,7 @@ import { getDisTeamList } from '../../common/fetch.js'
 import { toast } from '../../common'
 import { domainFn } from '../../common/filter'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {
@@ -58,7 +59,7 @@ export default {
       this.page++
       this.getDisTeamList()
     } else {
-      toast('到底啦', 'none')
+      toast(T._('1136d0'), 'none')
     }
   },
   onShow () {
@@ -91,7 +92,7 @@ export default {
       }
       getDisTeamList(data, {
         errtip: false,
-        tip: '加载中'
+        tip: T._('1136d1')
       }).then(res => {
         this.pro = this.pro.concat(res.data)
         this.totalCount = res.totalCount

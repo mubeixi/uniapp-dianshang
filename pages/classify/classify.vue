@@ -3,7 +3,7 @@
 
     <view @click="goSearch" class="search-wrap">
       <icon class="search_icon" size="34rpx" type="search" />
-      <input class="search-input" name="search" :placeholder="$t('classify','Please enter product keywords')"
+      <input class="search-input" name="search" :placeholder="$t('186x0')"
              placeholder-style="font-size:26rpx;color:#ADADAD;"
              type="text">
     </view>
@@ -104,6 +104,7 @@ import { plainArray } from '../../common/tool'
 // import TabbarComponents from "../../components/TabbarComponents";
 import _ from 'underscore'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   components: {},

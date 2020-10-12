@@ -1,3 +1,4 @@
+import T from '@/common/langue/i18n' 
 /**
  * 各种抽奖专用文件
  */

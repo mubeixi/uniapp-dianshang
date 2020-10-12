@@ -1,14 +1,14 @@
 <template>
   <view @click="commonClick" class="wrap">
     <view class="item">
-      <view class="item-left">上级经销商ID</view>
+      <view class="item-left">{{$t('2090x0')}}</view>
       <view class="item-input">
-        <input :disabled="pidDisable" placeholder="请输入邀请码" placeholder-style="color:#CAC8C8" type="text"
+        <input :disabled="pidDisable" :placeholder="$t('2090x1')" placeholder-style="color:#CAC8C8" type="text"
                v-model="pid" />
       </view>
     </view>
     <view class="item flex-vertical-center">
-      <view class="item-left">入驻门店类型</view>
+      <view class="item-left">{{$t('2090x2')}}</view>
 
       <picker :disabled="typeDisable" :range="array" :value="type" @change="bindPickerChange"
               class="item-right flex justify-end flex-vertical-center">
@@ -18,60 +18,60 @@
 
     </view>
     <!-- <view class="item flex-vertical-center">
-        <view class="item-left">入驻类目</view>
+        <view class="item-left">{{$t('2090x3')}}</view>
         <view class="item-right flex justify-end flex-vertical-center" @click="getType">
             <view style="margin-right: 20rpx;">{{store_title_name}}</view>
             <image :src="'/static/client/person/right.png'|domain" class="right"></image>
         </view>
     </view> -->
     <view class="item">
-      <view class="item-left">门店名称</view>
+      <view class="item-left">{{$t('2090x4')}}</view>
       <view class="item-input">
-        <input :disabled="is_submitted" placeholder="将作为您的登录账号" placeholder-style="color:#CAC8C8" type="text"
+        <input :disabled="is_submitted" :placeholder="$t('2090x5')" placeholder-style="color:#CAC8C8" type="text"
                v-model="store_name" />
       </view>
     </view>
     <view class="item">
-      <view class="item-left">联系电话</view>
+      <view class="item-left">{{$t('2090x6')}}</view>
       <view class="item-input">
-        <input :disabled="is_submitted" maxlength="11" placeholder="请输入联系电话" placeholder-style="color:#CAC8C8"
+        <input :disabled="is_submitted" maxlength="11" :placeholder="$t('2090x7')" placeholder-style="color:#CAC8C8"
                type="text"
                v-model="store_mobile" />
       </view>
     </view>
     <view class="item">
-      <view class="item-left">门店地址</view>
+      <view class="item-left">{{$t('2090x8')}}</view>
       <picker :disabled="is_submitted" :range="change_objectMultiArray" :value="change_multiIndex"
               @change="bindMultiPickerChange"
               @columnchange="bindMultiPickerColumnChange" class="pick" mode="multiSelector"
               range-key="name">
         <view class="picker">
-          <view class="view" v-if="!userStoreMsg.store_province">选择省份</view>
+          <view class="view" v-if="!userStoreMsg.store_province">{{$t('2090x9')}}</view>
           <view class="view choosed" v-else>{{objectMultiArray[0][multiIndex[0]]['name']}}</view>
-          <view class="view" v-if="!userStoreMsg.store_city">选择城市</view>
+          <view class="view" v-if="!userStoreMsg.store_city">{{$t('2090x10')}}</view>
           <view class="view choosed" v-else>{{objectMultiArray[1][multiIndex[1]]['name']}}</view>
-          <view class="view" v-if="!userStoreMsg.store_area">选择地区</view>
+          <view class="view" v-if="!userStoreMsg.store_area">{{$t('2090x11')}}</view>
           <view class="view choosed" v-else>{{objectMultiArray[2][multiIndex[2]]['name']}}</view>
           <image :src="'/static/client/person/right.png'|domain" class="right"></image>
         </view>
       </picker>
       <!-- <view class="item-input">
-          <text class="placeholder">请选择地址</text>
+          <text class="placeholder">{{$t('2090x12')}}</text>
       </view>
       <view>
           <image :src="'/static/client/person/right.png'|domain" class="right"></image>
       </view> -->
     </view>
     <view class="item">
-      <view class="item-left">详细地址</view>
+      <view class="item-left">{{$t('2090x13')}}</view>
       <view class="item-input">
-        <input :disabled="is_submitted" placeholder="请输入详细地址" placeholder-style="color:#CAC8C8" type="text"
+        <input :disabled="is_submitted" :placeholder="$t('2090x14')" placeholder-style="color:#CAC8C8" type="text"
                v-model="store_address" />
       </view>
     </view>
 
     <view class="addImg">
-      门店图片
+      {{$t('2090x15')}}
       <view class="imgs">
         <view :key="index" class="shangchuans" v-for="(item,index) in imgs">
           <image :src="item.path || item" @click="yulan(index,0)" class="image"></image>
@@ -84,7 +84,7 @@
       </view>
     </view>
     <view class="addImg">
-      营业执照等相关资质
+      {{$t('2090x16')}}
       <view class="imgs">
         <view :key="index" class="shangchuans" v-for="(item,index) in imglist">
           <image :src="item.path || item" @click="yulan(index,1)" class="image"></image>
@@ -97,15 +97,15 @@
       </view>
     </view>
 
-    <view @click="settled" class="submit">{{is_submitted?userStoreMsg.status_desc:(status == 3 ? '被驳回，重新申请' :
-      '立即入驻')}}
+    <view @click="settled" class="submit">{{is_submitted?userStoreMsg.status_desc:(status == 3 ? $t('2090x17') :
+      $t('2090x18'))}}
     </view>
     <view class="item noborder" v-if="status == 3">
-      <view class="item-left">驳回原因</view>
+      <view class="item-left">{{$t('2090x19')}}</view>
       <view class="item-input">{{userStoreMsg.reason}}</view>
     </view>
     <!-- <popup-layer ref="storetypes"  :direction="'top'" >
-         <view class="search-title">请选择入驻类目</view>
+         <view class="search-title">{{$t('2090x20')}}</view>
          <view class="search-content">
              <view class="search-item" v-for="(store,index) of storeTypes" @click="changeType(index)" :key="index">
                  <view>{{store.title}}</view>
@@ -137,6 +137,7 @@ import { chooseImageByPromise, uploadImages } from '../../common/tool.js'
 import { error, modal } from '../../common/index.js'
 import { mapGetters } from 'vuex'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {
@@ -145,7 +146,7 @@ export default {
       type: 0,
       pidDisable: false,
       typeDisable: false,
-      array: ['经销商', '社区服务店'],
+      array: [T._('2090d0'), T._('2090d1')],
       arr: [],
       imgs: [],
       // 用于收货地址展示用
@@ -176,7 +177,7 @@ export default {
   computed: {
     ...mapGetters(['userInfo']),
     store_title_name: function () {
-      return this.storeTypes[this.index] && this.storeTypes[this.index].title || '请选择类型'
+      return this.storeTypes[this.index] && this.storeTypes[this.index].title || T._('2090d2')
     }
   },
   components: {
@@ -187,9 +188,9 @@ export default {
     // this.load();
     if (!this.userInfo.User_Mobile) {
       uni.showModal({
-        confirmText: '去绑定',
-        title: '提示',
-        content: '你还未绑定手机号，请先去绑定手机号再来申请。',
+        confirmText: T._('2090d3'),
+        title: T._('2090d4'),
+        content: T._('2090d5'),
         success: function (res) {
           if (res.confirm) {
             uni.navigateTo({
@@ -300,7 +301,7 @@ export default {
         if (res.data.status == 2) {
           // 已通过了
           uni.showModal({
-            content: '门店申请已经通过',
+            content: T._('2090d6'),
             showCancel: false,
             success: function (res) {
               if (res.confirm) {
@@ -328,11 +329,11 @@ export default {
       this.store_area = this.userStoreMsg.store_area
       // this.store_type = this.current;
       if ((this.store_name && this.store_mobile && this.store_address && this.store_province && this.store_city && this.store_area) == '') {
-        error('请完善资料')
+        error(T._('2090d7'))
         return
       }
       if (this.arr.length == 0) {
-        error('请上传图片')
+        error(T._('2090d8'))
         return
       }
       // if(!this.store_type) {

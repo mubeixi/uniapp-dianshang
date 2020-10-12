@@ -1,3 +1,4 @@
+import T from '@/common/langue/i18n' 
 /**
  *
  * htmlParser改造自: https://github.com/blowsie/Pure-JavaScript-HTML5-Parser
@@ -6,7 +7,7 @@
  * organization: WeAppDev(微信小程序开发论坛)(http://weappdev.com)
  *               垂直微信小程序开发交流社区
  *
- * github地址: https://github.com/icindy/wxParse
+ * github{{$t('142x0')}}: https://github.com/icindy/wxParse
  *
  * for: 微信小程序富文本解析
  * detail : http://weappdev.com/t/wxparse-alpha0-1-html-markdown/184

@@ -6,13 +6,13 @@
     <!-- <page-title  title="失效优惠券" bgcolor="#f8f8f8" class="titless"></page-title> -->
     <!-- 		<view class="nav">
           <view class="views" :class="checked==0?'checked':''" @click="change(0)">
-            全部
+            {{$t('1458x0')}}
           </view>
           <view class="views" :class="checked==1?'checked':''" @click="change(1)">
-            已领取
+            {{$t('1458x1')}}
           </view>
           <view class="views" :class="checked==2?'checked':''" @click="change(2)">
-            已过期
+            {{$t('1458x2')}}
           </view>
         </view>
         <view style="height: 198rpx;width: 100%;">
@@ -25,23 +25,28 @@
           <image :src="item.Coupon_PhotoPath" class="image"></image>
         </view>
         <view class="storeTitle">
-          店铺优惠券
+          {{$t('1458x3')}}
         </view>
         <view class="times">
-          有效期：{{item.Coupon_StartTime}}至{{item.Coupon_EndTime}}
+          {{ $t('1458x4') }}{{item.Coupon_StartTime}}-{{item.Coupon_EndTime}}
         </view>
         <view class="prices" v-if="item.Coupon_Discount<=0">
           ¥
           <text>{{item.Coupon_Cash}}</text>
         </view>
         <view class="prices" v-else>
-          {{item.Coupon_Discount*10}}折优惠
+			<block v-if="$p('zh-cn')">
+							   {{item.Coupon_Discount*10}}折优惠
+			</block>
+			<block v-if="$p('en-us')">
+							  {{item.Coupon_Discount*10}}% discount
+			</block>
         </view>
         <view class="man">
           [{{item.Coupon_Subject}}]
         </view>
         <!-- <view class="button" style="color: #666666;">
-          查看
+          {{$t('1458x5')}}
         </view> -->
         <image class="yishiyong" src="/static/person/coupon-used.png"></image>
       </view>
@@ -56,6 +61,7 @@
 import { pageMixin } from '../../common/mixin'
 import { getExpiredCoupon } from '../../common/fetch.js'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {

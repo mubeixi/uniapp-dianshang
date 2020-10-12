@@ -1,13 +1,13 @@
 <template>
   <div @click="commonClick" class="wrap">
     <div class="navs">
-      <div :class="tabidx===5?'active':''" @click="changIndex(5)" class="nav-item">全部</div>
-      <div :class="tabidx===0?'active':''" @click="changIndex(0)" class="nav-item">待确认</div>
+      <div :class="tabidx===5?'active':''" @click="changIndex(5)" class="nav-item">{{$t('1964x0')}}</div>
+      <div :class="tabidx===0?'active':''" @click="changIndex(0)" class="nav-item">{{$t('1964x1')}}</div>
 
-      <div :class="tabidx===1?'active':''" @click="changIndex(1)" class="nav-item">待发货</div>
-      <div :class="tabidx===2?'active':''" @click="changIndex(2)" class="nav-item">待收货</div>
-      <div :class="tabidx===3?'active':''" @click="changIndex(3)" class="nav-item">待退款</div>
-      <div :class="tabidx===4?'active':''" @click="changIndex(4)" class="nav-item">已完成</div>
+      <div :class="tabidx===1?'active':''" @click="changIndex(1)" class="nav-item">{{$t('1964x2')}}</div>
+      <div :class="tabidx===2?'active':''" @click="changIndex(2)" class="nav-item">{{$t('1964x3')}}</div>
+      <div :class="tabidx===3?'active':''" @click="changIndex(3)" class="nav-item">{{$t('1964x4')}}</div>
+      <div :class="tabidx===4?'active':''" @click="changIndex(4)" class="nav-item">{{$t('1964x5')}}</div>
     </div>
     <view class="space-box">
     </view>
@@ -20,7 +20,7 @@
             <!-- <img :src="item.ShopLogo" alt="">
             <span class="bizname">{{item.ShopName}}</span>
             <span class="status">{{item.Order_Status_desc}}</span> -->
-            <span class="bizname">订单编号:</span>
+            <span class="bizname">{{$t('1964x6')}}</span>
             <span class="status">{{item.Back_Sn}}</span>
           </div>
           <block :key="k" v-for="(i,k) of item.prod_list">
@@ -30,26 +30,26 @@
               </div>
               <div class="pro-msg">
                 <div class="pro-name">{{i.prod_name}}</div>
-                <div class="attr"><span>{{i.attr_name||'无规格'}}</span></div>
+                <div class="attr"><span>{{i.attr_name||$t('1964x7')}}</span></div>
                 <div class="pro-price"><span>￥</span>{{i.prod_price}} <span class="amount">x{{i.prod_count}}</span>
                 </div>
               </div>
             </div>
           </block>
           <div class="text-right font14 line10 graytext2">
-            共<span class="color555">{{item.prod_list.length}}</span>件商品,
-            <span>退回余额:<span class="font16 danger-color"><span
+            {{$t('1964x8')}}<span class="color555">{{item.prod_list.length}}</span>{{$t('1659x2')}},
+            <span>{{$t('1964x9')}}:<span class="font16 danger-color"><span
             class="span font12">￥</span>{{item.refund_money_fee}} </span>,</span>
-            <span>原路退回:<span class="font16 danger-color"><span
+            <span>{{$t('1964x10')}}:<span class="font16 danger-color"><span
             class="span font12">￥</span>{{item.refund_pay_fee}} </span></span>
           </div>
           <div class="btn-group">
             <span class="span" style="border: 0rpx;color: red;">{{item.Back_Status_desc}}</span>
             <block v-if="item.Order_Store==Stores_ID">
-              <span @click="openRefuseDialog(item.Back_ID)" class="span" v-if='item.Back_Status==0'>拒单</span>
+              <span @click="openRefuseDialog(item.Back_ID)" class="span" v-if='item.Back_Status==0'>{{$t('1964x11')}}</span>
               <span @click="sureOrder(item.Back_ID)" class="span"
-                    v-if='item.Back_Status==0||item.Back_Status==1'>确认</span>
-              <span @click="sureShou(item.Back_ID)" class="span" v-if='item.Back_Status==2'>收货</span>
+                    v-if='item.Back_Status==0||item.Back_Status==1'>{{$t('1964x12')}}</span>
+              <span @click="sureShou(item.Back_ID)" class="span" v-if='item.Back_Status==2'>{{$t('1964x13')}}</span>
             </block>
 
           </div>
@@ -61,22 +61,22 @@
     <wzw-dialog ref="refuseApply">
       <div class="refuseApplyDialog">
 				<textarea :value="reason" @input="bingReasonInput" auto-height class="reason"
-                  placeholder="请输入驳回原因" placeholder-style="color:#999" />
+                  :placeholder="$t('1964x14')" placeholder-style="color:#999" />
         <div class="control">
-          <div @click="cancelRefuseApply" class="action-btn btn-cancel">取消</div>
-          <div @click="refuseApply" class="btn-sub action-btn">确定</div>
+          <div @click="cancelRefuseApply" class="action-btn btn-cancel">{{$t('1964x15')}}</div>
+          <div @click="refuseApply" class="btn-sub action-btn">{{$t('1964x16')}}</div>
         </div>
       </div>
     </wzw-dialog>
 
     <wzw-dialog ref="sureReason">
       <div class="refuseApplyDialog">
-        <input class="inputs" placeholder="请输入退款总金额" type="number" v-model="priceValue">
-        <textarea :value="reasons" @input="bingReasonInputs" class="reason reasons" placeholder="请输入原因"
+        <input class="inputs" :placeholder="$t('1964x17')" type="number" v-model="priceValue">
+        <textarea :value="reasons" @input="bingReasonInputs" class="reason reasons" :placeholder="$t('1964x18')"
                   placeholder-style="color:#999" />
         <div class="control">
-          <div @click="cancelRefuseApplys" class="action-btn btn-cancel">取消</div>
-          <div @click="refuseApplys" class="btn-sub action-btn">确定</div>
+          <div @click="cancelRefuseApplys" class="action-btn btn-cancel">{{$t('1964x19')}}</div>
+          <div @click="refuseApplys" class="btn-sub action-btn">{{$t('1964x20')}}</div>
         </div>
       </div>
     </wzw-dialog>
@@ -90,6 +90,7 @@ import { mapGetters } from 'vuex'
 import { getBackOrder, systemConfirmApply, systemReceiptRefundProd, systemRefuseApply } from '../../common/fetch'
 import { error, modal, toast } from '../../common'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   name: 'refundList',
@@ -122,7 +123,7 @@ export default {
   methods: {
     refuseApplys () {
       if (!this.priceValue) {
-        error('请输入退款总金额')
+        error(T._('1964d0'))
         return
       }
       const data = {
@@ -135,7 +136,7 @@ export default {
         toast(res.msg)
         this.loadInfo()
       }).catch(() => {
-        modal('操作失败')
+        modal(T._('1964d1'))
       })
     },
     cancelRefuseApplys () {
@@ -159,7 +160,7 @@ export default {
         })
         this.loadInfo()
       }).catch(() => {
-        modal('操作失败')
+        modal(T._('1964d2'))
       })
     },
     goDetail (item) {
@@ -176,14 +177,14 @@ export default {
     },
     refuseApply () {
       if (!this.reason) {
-        error('请填写理由')
+        error(T._('1964d3'))
         return
       }
       systemRefuseApply({
         Back_ID: this.activeApply,
         reason: this.reason,
         store_id: this.Stores_ID
-      }, { tip: '处理中' }).then(res => {
+      }, { tip: T._('1964d4') }).then(res => {
         this.$refs.refuseApply.close()
         this.reason = ''
         uni.showToast({
@@ -191,7 +192,7 @@ export default {
         })
         this.loadInfo()
       }).catch(() => {
-        modal('操作失败')
+        modal(T._('1964d5'))
       })
     },
     bingReasonInput (e) {
@@ -219,7 +220,7 @@ export default {
         data.Back_Status = this.tabidx
       }
 
-      await getBackOrder(data, { tip: '加载中' }).then(res => {
+      await getBackOrder(data, { tip: T._('1964d6') }).then(res => {
         this.totalCount = res.totalCount
         this.applys = res.data
 
@@ -232,7 +233,7 @@ export default {
           }
         }
       }).catch(() => {
-        modal('获取信息失败')
+        modal(T._('1964d7'))
       })
     }
   },
@@ -253,6 +254,7 @@ export default {
     box-sizing: border-box;
     display: flex;
     align-items: center;
+	justify-content: space-around;
     height: 80rpx;
     line-height: 80rpx;
     //background: #fff;
@@ -261,7 +263,7 @@ export default {
     padding: 0 10px;
 
     .nav-item {
-      flex: 1;
+      // flex: 1;
       /*box-sizing: border-box;*/
       text-align: center;
       /*position: relative;*/

@@ -87,19 +87,19 @@
     </div>
 
     <div class="num-count">
-      <image :src="'/static/client/marketing/num_count.png'|domain" class="num-count-img" />
-      <div class=" text font14">今日剩余抽奖次数<span class="font16 danger-color" style="">{{day_count}}</span>次,总剩余抽奖次数<span
-      class="font16 danger-color" style="">{{total_count}}</span>次
+      <image :src="'/static/marketing/num_count.png'|domain" class="num-count-img" />
+      <div class=" text font14">{{$t('1305x0')}}<span class="font16 danger-color" style="">{{day_count}}</span>{{$t('1305x1')}}<span
+      class="font16 danger-color" style="">{{total_count}}</span>{{$('manual','times')}}
       </div>
     </div>
 
     <div class="reward-list">
-      <span @click="showRewardList">我的中奖记录</span>
-      <span @click="goPerson" style="margin-left: 10px;">个人中心</span>
+      <span @click="showRewardList">{{$t('1305x2')}}</span>
+      <span @click="goPerson" style="margin-left: 10px;">{{$t('1305x3')}}</span>
     </div>
 
     <div class="tip-box">
-      <div class="title">抽奖规则</div>
+      <div class="title">{{$t('1305x4')}}</div>
       <div style="color: white">
         <text style="font-size: 14px;line-height: 1.6;">
           {{tipText}}
@@ -112,11 +112,11 @@
         <div class="top">
           <image :src="'/static/client/marketing/records_bg.png'|domain" class="record-bg" />
           <div class="record-box">
-            <div class="title">我的中奖记录</div>
+            <div class="title">{{$t('1305x5')}}</div>
             <scroll-view class="table" scroll-y>
               <div class="tr">
-                <div class="th time">时间</div>
-                <div class="th prize">奖品</div>
+                <div class="th time">{{$t('1305x6')}}</div>
+                <div class="th prize">{{$t('1305x7')}}</div>
               </div>
               <div class="tr" v-for="(item,idx) in record_list">
                 <div class="td time">{{item.time}}</div>
@@ -137,7 +137,7 @@
         <div class="top">
           <image :src="'/static/client/marketing/result.png'|domain" class="result-bg" />
           <div class="text">
-            <div class="text-row line6">恭喜您</div>
+            <div class="text-row line6">{{$t('1305x8')}}</div>
             <div class="text-row reward">{{result_tip}}</div>
           </div>
         </div>
@@ -164,6 +164,7 @@ import { confirm, error, hideLoading, showLoading, toast } from '../../common'
 
 const rotateInstance = new Rotate()
 
+import T from '@/common/langue/i18n'
 export default {
   name: 'Rotate',
   mixins: [pageMixin],
@@ -198,7 +199,7 @@ export default {
       getRotateRecord({
         id: this.activity_id,
         pageSize: 999
-      }, { tip: '获取中' }).then(res => {
+      }, { tip: T._('1305d0') }).then(res => {
         this.record_list = res.data
       })
     },
@@ -208,7 +209,7 @@ export default {
         const res = await rotateInit({ id: this.activity_id }).then(res => {
           return res
         }).catch(e => {
-          throw Error(e.msg || '转盘信息加载失败')
+          throw Error(e.msg || T._('1305d1'))
         })
 
         if (res.data.prizes && _.isArray(res.data.prizes)) {
@@ -219,11 +220,11 @@ export default {
           this.itemList = rotateInstance.getItemList()
           this.ready = true
         } else {
-          throw Error('转盘信息初始化失败')
+          throw Error(T._('1305d2'))
         }
       } catch (error) {
         confirm({
-          title: '提示',
+          title: T._('1305d3'),
           content: error.message,
           showCancel: false
         }).then(() => {
@@ -248,12 +249,12 @@ export default {
       }
 
       if (this.day_count < 1) {
-        toast('今日次数已用完，明天再来吧')
+        toast(T._('1305d4'))
         return
       }
 
       if (this.total_count < 1) {
-        toast('您的抽奖总次数用完啦')
+        toast(T._('1305d5'))
         return
       }
       this.total_count--
@@ -292,7 +293,7 @@ export default {
         this.result_tip = rotateInstance.reward.desc// `${name}`
         this.$refs.result.show()
       } else {
-        error(rotateInstance.reward.desc || '没有中奖哦，再试一次吧')
+        error(rotateInstance.reward.desc || T._('1305d6'))
       }
     },
     getStyle (idx, is_mask) {
@@ -328,7 +329,7 @@ export default {
       // if(this.start_num>0 && this.total_count>0){
       //     return '再来一次'
       // }
-      return '立即抽奖'
+      return T._('1305d7')
     },
     activeIdx () {
       try {

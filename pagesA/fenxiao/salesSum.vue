@@ -2,12 +2,12 @@
   <view class="profitSum">
     <view class="titleClass">
       <view class="titleLeft">
-        时间：
+        {{$t('1276x0')}}
       </view>
       <view class="titleCenter">
         <picker @change="bindDateChange" class="picker" mode="date">
           <view class="uni-input" v-if="beginTime">{{beginTime}}</view>
-          <view class="uni-input" v-if="!beginTime">开始时间</view>
+          <view class="uni-input" v-if="!beginTime">{{$t('1276x1')}}</view>
           <image class="img" src="/static/salestime.png"></image>
         </picker>
         <view class="centerPicker">
@@ -15,35 +15,43 @@
         </view>
         <picker @change="bindDateChanges" class="picker" mode="date">
           <view class="uni-input" v-if="endTime">{{endTime}}</view>
-          <view class="uni-input" v-if="!endTime">结束时间</view>
+          <view class="uni-input" v-if="!endTime">{{$t('1276x2')}}</view>
           <image class="img" src="/static/salestime.png"></image>
         </picker>
       </view>
       <view @click="getDetail('search')" class="titleButton">
-        搜索
+        {{$t('1276x3')}}
       </view>
     </view>
 
     <view style="height: 90rpx;"></view>
     <view :key="i" class="order" v-for="(item,i) of resData ">
       <view class="view">
-        订单号：
+        {{$t('1276x4')}}
         <text>{{item.order_id}}</text>
       </view>
       <view class="view">
-        订单价格：
-        <text style="color: #F43131">{{item.Order_TotalPrice}}元</text>
+        {{$t('1276x5')}}
+        <text style="color: #F43131">
+			<block v-if="$p('zh-cn')">{{item.Order_TotalPrice}}{{$t('1276x6')}}</block>
+			<block v-if="$p('en-us')">{{$t('1276x6')}}{{item.Order_TotalPrice}}</block>
+		
+		</text>
       </view>
       <view class="view">
-        订单业绩：
-        <text style="color: #F43131">{{item.sales}}元</text>
+        {{$t('1276x7')}}
+        <text style="color: #F43131">
+			<block v-if="$p('zh-cn')">{{item.sales}}{{$t('1276x8')}}</block>
+			<block v-if="$p('en-us')">{{$t('1276x8')}}{{item.sales}}</block>
+		
+		</text>
       </view>
       <view class="view">
-        描述信息：
+        {{$t('1276x9')}}
         <text>{{item.descr}}</text>
       </view>
       <view class="view">
-        创建时间：
+        {{$t('1276x10')}}
         <text>{{item.create_time}}</text>
       </view>
     </view>
@@ -57,6 +65,7 @@
 import { pageMixin } from '../../common/mixin'
 import { getTeamSalesList } from '../../common/fetch.js'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {
@@ -102,7 +111,7 @@ export default {
         var ed = new Date(endTmp[0], endTmp[1], endTmp[2])
         if (sd.getTime() > ed.getTime()) {
           uni.showToast({
-            title: '开始时间不得大于结束时间',
+            title: T._('1276d0'),
             icon: 'none'
           })
           return
@@ -235,7 +244,8 @@ export default {
     padding-right: 20rpx;
 
     .titleButton {
-      width: 100rpx;
+      min-width: 100rpx;
+	  padding: 0 6rpx;
       height: 60rpx;
       line-height: 60rpx;
       color: #ffffff;

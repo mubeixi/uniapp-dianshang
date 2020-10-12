@@ -1,21 +1,21 @@
 <template>
   <div @click="commonClick" class="haihong">
     <div class="navs">
-      <div :class="index==0?'active':''" @click="changIndex(0)" class="nav-item">全部</div>
+      <div :class="index==0?'active':''" @click="changIndex(0)" class="nav-item">{{$t('822x0')}}</div>
       <div :class="index==1?'active':''" @click="changIndex(1)" class="nav-item">
-        待付款
+        {{$t('822x1')}}
         <div class="jiaobiao" v-if="orderNum.waitpay>0">{{orderNum.waitpay}}</div>
       </div>
       <div :class="index==2?'active':''" @click="changIndex(2)" class="nav-item">
-        待发货
+        {{$t('822x2')}}
         <div class="jiaobiao" v-if="orderNum.waitsend>0">{{orderNum.waitsend}}</div>
       </div>
       <div :class="index==3?'active':''" @click="changIndex(3)" class="nav-item">
-        待收货
+        {{$t('822x3')}}
         <div class="jiaobiao" v-if="orderNum.waitconfirm>0">{{orderNum.waitconfirm}}</div>
       </div>
       <div :class="index==4?'active':''" @click="changIndex(4)" class="nav-item">
-        待评价
+        {{$t('822x4')}}
         <div class="jiaobiao" v-if="orderNum.waitcomment>0">{{orderNum.waitcomment}}</div>
       </div>
     </div>
@@ -45,28 +45,28 @@
         </block>
         <div class="total">
           <view @click="goPintuan(item)" class="ptdesc flex flex-vertical-c flex-justify-c" v-if="item.teamstatus_desc">{{item.teamstatus_desc}}
-            <image v-if="item.teamstatus_desc==='拼团中'" :src="'/static/client/person/rightCart.png'|domain" class="right"></image>
+            <image v-if="item.teamstatus_desc===`${$t('822x5')}`" :src="'/static/client/person/rightCart.png'|domain" class="right"></image>
           </view>
-          <view> 共{{item.prod_list.length}}件商品 实付：<span class="price"><span>￥</span> {{item.Order_TotalPrice}}</span>
+          <view> {{$t('822x6')}}{{item.prod_list.length}}{{$t('822x7')}} {{$t('822x8')}}<span class="price"><span>￥</span> {{item.Order_TotalPrice}}</span>
           </view>
         </div>
         <div class="btn-group" v-if="item.Order_Status==0">
-          <span @click="cancelOrder(item.prod_list,index)">取消订单</span>
+          <span @click="cancelOrder(item.prod_list,index)">{{$t('822x9')}}</span>
         </div>
         <div class="btn-group" v-if="item.Order_Status==1">
-          <span @click="cancelOrder(item.prod_list,index)">取消订单</span>
-          <span @click="goPay(item)" class="active">立即付款</span>
+          <span @click="cancelOrder(item.prod_list,index)">{{$t('822x10')}}</span>
+          <span @click="goPay(item)" class="active">{{$t('822x11')}}</span>
         </div>
         <div class="btn-group" v-else-if="item.Order_Status==2&&item.teamstatus==1">
-          <span @click="goPay(item)" class="active">申请退款</span>
+          <span @click="goPay(item)" class="active">{{$t('822x12')}}</span>
         </div>
         <div class="btn-group" v-else-if="item.Order_Status==3">
-          <span @click="goLogistics(item)">查看物流</span>
-          <span @click="goPay(item)" style="margin-left: 14rpx;">申请退款退货</span>
-          <span @click="confirmOrder(item)" class="active">确认收货</span>
+          <span @click="goLogistics(item)">{{$t('822x13')}}</span>
+          <span @click="goPay(item)" style="margin-left: 14rpx;">{{$t('822x14')}}</span>
+          <span @click="confirmOrder(item)" class="active">{{$t('822x15')}}</span>
         </div>
         <div class="btn-group" v-else-if="item.Order_Status==4 && item.Is_Commit == 0&&item.teamstatus!=4">
-          <span @click="goPay(item)" class="active">立即评价</span>
+          <span @click="goPay(item)" class="active">{{$t('822x16')}}</span>
         </div>
       </div>
     </block>
@@ -82,6 +82,7 @@
 import { cancelOrder, confirmOrder, getOrder, getOrderNum } from '@/common/fetch.js'
 import { pageMixin } from '../../common/mixin'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {
@@ -272,6 +273,7 @@ export default {
     box-sizing: border-box;
     display: flex;
     align-items: center;
+	justify-content: space-around;
     height: 100rpx;
     line-height: 100rpx;
     background: #fff;
@@ -279,7 +281,7 @@ export default {
     padding: 0 10px;
 
     .nav-item {
-      flex: 1;
+      // flex: 1;
       box-sizing: border-box;
       text-align: center;
       position: relative;
@@ -287,7 +289,7 @@ export default {
       .jiaobiao {
         position: absolute;
         top: 24rpx;
-        right: 20rpx;
+        right: -20rpx;
         width: 20rpx;
         height: 20rpx;
         border-radius: 50%;

@@ -26,6 +26,7 @@ import { pageMixin } from '../../common/mixin'
 import { getArticle } from '../../common/fetch'
 import uParse from '../../components/gaoyia-parse/parse.vue'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   components: { uParse },

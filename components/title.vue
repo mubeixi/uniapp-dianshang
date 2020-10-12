@@ -9,8 +9,8 @@
         <view class="circle"></view>
       </view>
       <view class="methods" v-if="isShowMethod">
-        <view class="method" @click="method(1)">进货记录</view>
-        <view class="method" v-if="is_pingtai == 0" @click="method(2)">门店信息</view>
+        <view class="method" @click="method(1)">{{$t('177x0')}}</view>
+        <view class="method" v-if="is_pingtai == 0" @click="method(2)">{{$t('177x1')}}</view>
       </view>
 
     </view>
@@ -20,16 +20,17 @@
 
 <script>
 
+import T from '@/common/langue/i18n'
 export default {
   // props: ['title','right','hiddenBack','rightHidden'],
   props: {
     title: {
       type: String,
-      default: '标题'
+      default: T._('177d0')
     },
     right: {
       type: String,
-      default: '管理'
+      default: T._('177d1')
     },
     hiddenBack: {
       type: Boolean,

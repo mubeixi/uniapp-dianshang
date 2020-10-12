@@ -12,14 +12,14 @@
         {{data.disInfo.Shop_Name}}
       </view>
       <view class="juewei">
-        {{pro.pro_title_name}}爵位
+        {{pro.pro_title_name}}{{$t('1195x0')}}
       </view>
     </view>
     <view class="moneySum">
       <view class="money">
         <view>
           <view class="moneyTop">
-            总佣金
+            {{$t('1195x1')}}
           </view>
           <view class="moneyBottom">
             ￥
@@ -28,7 +28,7 @@
         </view>
         <view>
           <view class="moneyTop">
-            已发放佣金
+            {{$t('1195x2')}}
           </view>
           <view class="moneyBottom">
             ￥
@@ -37,7 +37,7 @@
         </view>
       </view>
       <view @click="goFinance" class="chakan">
-        查看明细
+        {{$t('1195x3')}}
         <image :src="'/static/client/fenxiao/chakan.png'|domain" class="image"></image>
       </view>
     </view>
@@ -49,7 +49,7 @@
 			    <view class="da"></view>
 			  </view>
 			  <view class="fengTitleCenter">
-			   我的数据
+			   {{$t('1195x4')}}
 			  </view>
 			  <view class="fengTitleRight">
 			    <view class="da"></view>
@@ -60,15 +60,15 @@
     <view class="myData">
       <view class="myDataTop">
         <view class="td">
-          自身消费额
+          {{$t('1195x5')}}
         </view>
         <view class="shu"></view>
         <view class="td">
-          自身业绩
+          {{$t('1195x6')}}
         </view>
         <view class="shu"></view>
         <view class="td">
-          团队业绩
+          {{$t('1195x7')}}
         </view>
       </view>
       <view class="myDataTop myDataBottom">
@@ -96,7 +96,7 @@
 		    <view class="da"></view>
 		  </view>
 		  <view class="fengTitleCenter">
-		   爵位晋升说明
+			{{$t('1195x8')}}
 		  </view>
 		  <view class="fengTitleRight">
 		    <view class="da"></view>
@@ -107,19 +107,19 @@
     <view class="description">
       <view class="t1">
         <view class="names">
-          名称
+          {{$t('1195x9')}}
         </view>
         <view class="zishen">
-          自身消费额
+          {{$t('1195x10')}}
         </view>
         <view class="zishen">
-          自身业绩
+          {{$t('1195x11')}}
         </view>
         <view class="zishen">
-          团队业绩
+          {{$t('1195x12')}}
         </view>
         <view class="zishen rightZ">
-          奖励百分比
+          {{$t('1195x13')}}
         </view>
       </view>
       <view :key="item" class="t1 t2" v-for="(item,index) of pro.Pro_Title_Level">
@@ -148,7 +148,7 @@
     		    <view class="da"></view>
     		  </view>
     		  <view class="fengTitleCenter">
-    		   名词解释
+    		   {{$t('1195x14')}}
     		  </view>
     		  <view class="fengTitleRight">
     		    <view class="da"></view>
@@ -169,6 +169,7 @@ import circleTitle from '../../components/circleTitle/circleTitle.vue'
 import { pageMixin } from '../../common/mixin'
 import { getDisInit, nobiInfo } from '../../common/fetch.js'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {

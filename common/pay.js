@@ -1,3 +1,4 @@
+import T from '@/common/langue/i18n' 
 import { WX_JSSDK_INIT } from './mixin'
 import { isWeiXin, ls, urlencode } from './tool'
 import { error } from '@/common/index'

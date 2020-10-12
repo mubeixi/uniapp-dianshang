@@ -15,6 +15,7 @@
 <script>
 import { domainFn } from '../../common/filter'
 
+import T from '@/common/langue/i18n'
 export default {
   props: {
     index: {

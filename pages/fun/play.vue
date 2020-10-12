@@ -23,6 +23,7 @@
 <script>
 import { pageMixin } from '@/common/mixin'
 
+import T from '@/common/langue/i18n'
 export default {
   name: 'play',
   mixins: [pageMixin],

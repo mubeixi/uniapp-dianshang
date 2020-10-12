@@ -96,14 +96,14 @@
     <!-- #endif -->
 
     <!-- #ifdef MP-WEIXIN -->
-    <!--<view class="liveBox" v-if="liveList.length===1">
+    <!-- <view class="liveBox" v-if="liveList.length===1">
       <navigator :url="'plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id='+liveList[0].roomid">
         <image class="icon-live" src="/static/live/logo.png"></image>
       </navigator>
     </view>
     <view class="liveBox" v-if="liveList.length>1">
       <image @click="toLive" class="icon-live" src="/static/live/logo.png"></image>
-    </view>-->
+    </view> -->
     <!-- #endif -->
   </view>
 </template>
@@ -128,10 +128,11 @@ import FlashComponent from '../../components/diy/FlashComponent'
 import KillComponent from '../../components/diy/KillComponent'
 
 import { getSkinConfig, getSystemConf } from '../../common/fetch'
-// import { getLiveInfo } from '../../common/fetch'
+import { getLiveInfo } from '../../common/fetch'
 import { pageMixin } from '../../common/mixin'
 import { mapActions, mapGetters } from 'vuex'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {
@@ -193,10 +194,10 @@ export default {
             rt = JSON.parse(res.data.Home_Json)
             resolve(rt)
           } else {
-            reject(new Error(res.msg || '获取系统模板失败'))
+            reject(new Error(res.msg || T._('537d0')))
           }
         }).catch(e => {
-          reject(new Error(e.msg || '获取系统模板失败'))
+          reject(new Error(e.msg || T._('537d1')))
         })
       })
     },
@@ -259,12 +260,12 @@ export default {
     }
 
     // #ifdef MP-WEIXIN
-    // getLiveInfo().then(res => {
-    //   this.liveList = res.data
-    //   this.liveCount = res.data.totalCount
-    // }).catch((e) => {
-    //   console.log(e)
-    // })
+    getLiveInfo().then(res => {
+      this.liveList = res.data
+      this.liveCount = res.data.totalCount
+    }).catch((e) => {
+      console.log(e)
+    })
     // #endif
   },
   mounted () {

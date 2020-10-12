@@ -1,3 +1,4 @@
+import T from '@/common/langue/i18n' 
 import { hexMD5 } from './tool/md5'
 import Base64 from './tool/base64.js'
 import { ls, isWeiXin } from './tool.js'
@@ -44,7 +45,7 @@ export const GET_ENV = () => {
 const fetch = function (act, param, options = false, url = '/api/little_program/shopconfig.php', method = 'post') {
   if (!act) {
     uni.showToast({
-      title: 'act参数不能为空',
+      title: T._('0d0'),
       mask: true,
       duration: 2000
     })

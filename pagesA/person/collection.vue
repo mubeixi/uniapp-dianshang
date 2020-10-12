@@ -5,7 +5,7 @@
           style="background-color: #F8F8F8; z-index: 999;position: fixed;top: 0rpx;left: 0rpx;"></view>
     <!-- #endif -->
     <page-title :right="rightText" :rightHidden="rightHidden" @rightHandle="rightHandle" class="titles"
-                title="收藏列表"></page-title>
+                :title="$t('1391x0')"></page-title>
     <!-- #ifdef APP-PLUS -->
     <view class="space-div" style=""></view>
     <!-- #endif -->
@@ -23,14 +23,14 @@
         </div>
         <div class="pro-msg">
           <div class="pro-name">{{item.Products_Name}}</div>
-          <div class="collection"><span>{{item.favourite_count}}</span>人收藏</div>
+          <div class="collection"><span>{{item.favourite_count}}</span>人{{$t('1391x1')}}</div>
           <div class="btn">
                       <span class="span">
                         <span class="spans">￥</span>{{item.Products_PriceX}}
                       </span>
 
             <form @submit="buy" report-submit>
-              <button class="button" formType="submit">立即购买</button>
+              <button class="button" formType="submit">{{$t('1391x2')}}</button>
             </form>
           </div>
         </div>
@@ -42,7 +42,7 @@
     <div class="bottom" v-if="rightClicked">
       <div @click="checkAll" class="b_left">
         <img :src="allChecked ? checked_img_url : uncheck_img_url">
-        全选
+        {{$t('1391x3')}}
       </div>
       <div @click="cancelCollection" class="b_right">删除({{totalNum}})</div>
     </div>
@@ -54,6 +54,7 @@ import { cancelCollection, getFavouritePro } from '../../common/fetch.js'
 import { pageMixin } from '../../common/mixin'
 import { domainFn } from '../../common/filter'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   components: {},
@@ -123,7 +124,7 @@ export default {
       })
       if (this.prod_id.length <= 0) {
         uni.showToast({
-          title: '您还没有选择商品哦！',
+          title: T._('1391d0'),
           icon: 'none',
           duration: 2000
         })
@@ -143,7 +144,7 @@ export default {
         this.getFavouritePro()
         this.rightClicked = false
         this.collect_list = []
-        this.rightText = this.rightClicked ? '取消' : '管理'
+        this.rightText = this.rightClicked ? T._('1391d1') : T._('1391d2')
       }).catch(e => {
       })
     },
@@ -172,7 +173,7 @@ export default {
     // 右侧管理按钮
     rightHandle () {
       this.rightClicked = !this.rightClicked
-      this.rightText = this.rightClicked ? '取消' : '管理'
+      this.rightText = this.rightClicked ? T._('1391d3') : T._('1391d4')
     },
     // 获取收藏列表
     getFavouritePro () {
@@ -187,7 +188,7 @@ export default {
         if (this.collect_list.length <= 0) {
           this.rightText = ''
         } else {
-          this.rightText = '管理'
+          this.rightText = T._('1391d5')
         }
         // this.collect_list = res.data;
         this.hasMore = (res.totalCount / this.pageSize) > this.page

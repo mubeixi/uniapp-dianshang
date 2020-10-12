@@ -23,6 +23,7 @@ import { mapActions, mapGetters } from 'vuex'
 import { getDistributeWxQrcode, getPosterDetail, getPosterList } from '../../common/fetch'
 import { error } from '../../common'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {
@@ -78,14 +79,14 @@ export default {
         again: this.again,
         owner_id: this.userInfo.User_ID,
         poster_id: poster.id
-      }, { tip: '生成中' }).then(res => {
+      }, { tip: T._('1273d0') }).then(res => {
         this.current_url = res.data.img_url
       })
       // this.current_url = poster.img
     },
     preFn () {
       if (!this.current_url) {
-        error('请选择模板')
+        error(T._('1273d1'))
         return
       }
       uni.previewImage({
@@ -127,7 +128,7 @@ export default {
           // = this.poster_list[0].img
         }
       } catch (e) {
-        error(e.msg || '获取海报模板失败')
+        error(e.msg || T._('1273d2'))
       }
     },
     goBack () {

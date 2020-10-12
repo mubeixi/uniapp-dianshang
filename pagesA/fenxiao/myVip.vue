@@ -15,7 +15,7 @@
           </view>
         </view>
         <view class="bots">
-          会员号：{{item.User_No}}
+          {{$t('1168x0')}}{{item.User_No}}
         </view>
       </view>
     </view>
@@ -28,6 +28,7 @@
 import { pageMixin } from '../../common/mixin'
 import { getDisUserList } from '../../common/fetch.js'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {

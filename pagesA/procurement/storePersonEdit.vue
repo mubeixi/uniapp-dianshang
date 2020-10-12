@@ -2,53 +2,53 @@
   <view @click="commonClick" class="bgColor-white">
     <block v-if="type==1">
       <view class="area-item">
-        <text class="area-label">请选择省市县</text>
+        <text class="area-label">{{$t('2056x0')}}</text>
         <picker :range="change_objectMultiArray" :value="change_multiIndex" @change="bindMultiPickerChange"
                 @columnchange="bindMultiPickerColumnChange" mode="multiSelector" range-key="name"
                 style="flex:1;">
           <view class="picker">
-            <view class="p_item" v-if="!address_info.Stores_Province">选择省份</view>
+            <view class="p_item" v-if="!address_info.Stores_Province">{{$t('2056x1')}}</view>
             <view class="p_item" v-else>{{objectMultiArray[0][multiIndex[0]]['name']}}</view>
-            <view class="p_item" v-if="!address_info.Stores_City">选择城市</view>
+            <view class="p_item" v-if="!address_info.Stores_City">{{$t('2056x2')}}</view>
             <view class="p_item" v-else>{{objectMultiArray[1][multiIndex[1]]['name']}}</view>
-            <view class="p_item" v-if="!address_info.Stores_Area">选择地区</view>
+            <view class="p_item" v-if="!address_info.Stores_Area">{{$t('2056x3')}}</view>
             <view class="p_item" v-else>{{objectMultiArray[2][multiIndex[2]]['name']}}</view>
           </view>
         </picker>
       </view>
       <view class="area-item">
-        <text class="area-label">详细地址</text>
-        <input placeholder="请输入详细地址" type="text" v-model="User_Address" />
+        <text class="area-label">{{$t('2056x4')}}</text>
+        <input :placeholder="$t('2056x5')" type="text" v-model="User_Address" />
       </view>
-      <view @click="save" class="save">确认修改</view>
+      <view @click="save" class="save">{{$t('2056x6')}}</view>
     </block>
     <block v-if="type==10">
       <view class="area-item">
-        <text class="area-label">店铺名称</text>
-        <input placeholder="请输入店铺名称" type="text" v-model="Stores_Name" />
+        <text class="area-label">{{$t('2056x7')}}</text>
+        <input :placeholder="$t('2056x8')" type="text" v-model="Stores_Name" />
       </view>
-      <view @click="save" class="save">确认修改</view>
+      <view @click="save" class="save">{{$t('2056x9')}}</view>
     </block>
     <block v-if="type==2||type==3">
       <!-- 				<form report-submit @submit="confirm"> -->
       <view class="other">
         <!-- <view class="other-item">
-          您现在的手机号是： {{userInfo.User_Mobile}}
+          {{$t('2056x10')}}： {{userInfo.User_Mobile}}
         </view> -->
         <view class="other-item" v-if="type==3">
-          手机号
-          <input class="input phone" placeholder="请输入手机号,固话验证码为空" type="text" v-model="mobile" />
+          {{$t('2056x11')}}
+          <input class="input phone" :placeholder="$t('2056x12')" type="text" v-model="mobile" />
         </view>
         <view class="other-item" v-if="type==2">
-          手机号
-          <input class="input phone" placeholder="请输入手机号" type="text" v-model="mobile" />
+          {{$t('2056x13')}}
+          <input class="input phone" :placeholder="$t('2056x14')" type="text" v-model="mobile" />
         </view>
         <view class="other-item">
-          验证码
-          <input class="input code" placeholder="请输入验证码" type="text" v-model="code" maxlength="4"/>
-          <view @click="getCode" class="get-msg">{{countdownStatus?(countdownNum + '秒'):'获取验证码'}}</view>
+          {{$t('2056x15')}}
+          <input class="input code" :placeholder="$t('2056x16')" type="text" v-model="code" maxlength="4"/>
+          <view @click="getCode" class="get-msg">{{countdownStatus?(countdownNum + $t('2056x17')):$t('2056x18')}}</view>
         </view>
-        <view @click="confirm" class="save">确认修改</view>
+        <view @click="confirm" class="save">{{$t('2056x19')}}</view>
       </view>
       </form>
     </block>
@@ -64,6 +64,7 @@ import { pageMixin } from '../../common/mixin'
 import { checkMobile } from '../../common/tool'
 import { error, modal } from '@/common'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {
@@ -123,7 +124,7 @@ export default {
       const isMobileOK = checkMobile(this.mobile)
       if (!isMobileOK) {
         uni.showToast({
-          title: '手机号格式不正确',
+          title: T._('2056d0'),
           icon: 'none'
         })
         return
@@ -140,26 +141,26 @@ export default {
       }
       updateStoreMobileSms(data).then(res => {
         uni.showToast({
-          title: '验证码已发送',
+          title: T._('2056d1'),
           icon: 'success'
         })
         this.startCountdown()
       }).catch(() => {
-        error('发送验证码失败')
+        error(T._('2056d2'))
       })
     },
     confirm (e) {
       if (this.type == 2) {
         if (!(checkMobile(this.mobile))) {
           uni.showToast({
-            title: '手机号输入错误，请重新输入',
+            title: T._('2056d3'),
             icon: 'none'
           })
           return
         }
         if (!this.code) {
           uni.showToast({
-            title: '验证码不能为空',
+            title: T._('2056d4'),
             icon: 'none'
           })
           return
@@ -180,7 +181,7 @@ export default {
 
       updateStoreMobile(data).then(res => {
         uni.showToast({
-          title: '修改成功'
+          title: T._('2056d5')
         })
         setTimeout(() => {
           uni.navigateBack({
@@ -188,7 +189,7 @@ export default {
           })
         }, 1500)
       }).catch(() => {
-        modal('修改失败')
+        modal(T._('2056d6'))
       })
     },
     startCountdown () {
@@ -207,13 +208,13 @@ export default {
     getTitle () {
       switch (this.type) {
         case '1' :
-          this.title = '修改门店地址'
+          this.title = T._('2056d7')
           break
         case '2' :
-          this.title = '修改订单短信通知号码'
+          this.title = T._('2056d8')
           break
         case '3' :
-          this.title = '修改联系电话'
+          this.title = T._('2056d9')
           break
       }
 
@@ -225,13 +226,13 @@ export default {
       if (this.type == 1) {
         if (!this.address_info.Address_Province || !this.address_info.Address_City || !this.address_info.Address_Area) {
           uni.showToast({
-            title: '请选择完整地址',
+            title: T._('2056d10'),
             icon: 'none'
           })
           return
         } else if (this.User_Address == '') {
           uni.showToast({
-            title: '请填写详细信息',
+            title: T._('2056d11'),
             icon: 'none'
           })
           return
@@ -246,7 +247,7 @@ export default {
         store_address: this.User_Address
       }).then(res => {
         uni.showToast({
-          title: '修改成功'
+          title: T._('2056d12')
         })
         setTimeout(() => {
           uni.navigateBack({
@@ -254,7 +255,7 @@ export default {
           })
         }, 1500)
       }).catch(() => {
-        modal('修改失败')
+        modal(T._('2056d13'))
       })
     },
     // 处理省市区联动信息

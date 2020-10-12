@@ -6,20 +6,21 @@
 				<text class="content">{{content}}</text>
 			</div>
 			<div>
-				<text style="color: red; font-size: 30upx;">以下为 Popup 内部滚动示例：</text>
+				<text style="color: red; font-size: 30upx;">{{$t('928x0')}}</text>
 			</div>
 			<div class="cell" v-for="(item, index) in lists" @click="handle(item)" :key="index">
 				<text class="text">{{item}}</text>
 			</div>
 		</scroller>
 		<div class="message-wrapper">
-			<text class="send-message" @click="sendMessage">向页面发送消息</text>
+			<text class="send-message" @click="sendMessage">{{$t('928x1')}}</text>
 		</div>
 	</div>
 </template>
 
 <script>
-	export default {
+	import T from '@/common/langue/i18n'
+export default {
 		data() {
 			return {
 				title: '',
@@ -44,14 +45,14 @@
 			sendMessage() {
 				const subNVue = uni.getCurrentSubNVue()
 				uni.$emit('popup-page', {
-					title: '已读完!',
+					title: T._('928d0'),
 				})
 			},
 			handle(item, index) {
 				const subNVue = uni.getCurrentSubNVue()
 				uni.$emit('popup-page', {
 					type: 'interactive',
-					info: item + ' 该元素被点击了!',
+					info: item + 'T._('928d1'),
 				})
 			}
 		}

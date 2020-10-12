@@ -16,6 +16,7 @@ import { GetQueryByString, isWeiXin, ls } from '../../../common/tool'
 import { getTempData } from '../../../common/fetch'
 import { pageMixin } from '../../../common/mixin'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {

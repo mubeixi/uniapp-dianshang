@@ -3,22 +3,22 @@
     <!-- <view class="title">选择渠道</view> -->
     <view class="content">
       <view class="c-item">
-        <view class="item-left">{{is_purchase?'退':'进'}}货渠道</view>
+        <view class="item-left">{{is_purchase?$t('2251x0'):$t('2251x1')}}{{$t('2251x2')}}</view>
         <view @click="changeChannel" class="item-right">
           <text v-if="is_purchase">
-            {{pid?'门店退货':'平台退货'}}
+            {{pid?$t('2251x3'):$t('2251x4')}}
           </text>
           <text v-else>{{channelName}}</text>
           <image :src="'/static/client/person/right.png'|domain" class="right" v-if="allow_from_plat == 1 "></image>
         </view>
       </view>
       <view class="c-item" v-if="selectitem == 1&&!is_purchase">
-        <view class="item-left">地址选择</view>
+        <view class="item-left">{{$t('2251x5')}}</view>
         <view class="item-area">
           <picker :range="provinceList" :value="p_index" @change="p_change_handle" class="a-item" mode="selector"
                   range-key="name">
             <block v-if="p_clicked">{{provinceList[p_index].name}}</block>
-            <block v-else>请选择省份
+            <block v-else>{{$t('2251x6')}}
               <image :src="'/static/client/person/right.png'|domain" class="bot" mode="">
             </block>
             </image>
@@ -26,33 +26,33 @@
           <picker :disabled="!openCity" :range="citylist" :value="c_index" @change="c_change_handle" class="a-item"
                   mode="selector" range-key="name">
             <block v-if="c_clicked">{{citylist[c_index].name}}</block>
-            <block v-else>请选择市
+            <block v-else>{{$t('2251x7')}}
               <image :src="'/static/client/person/right.png'|domain" class="bot" mode=""></image>
             </block>
           </picker>
           <picker :disabled="!openArea" :range="arealist" :value="a_index" @change="a_change_handle" class="a-item"
                   mode="selector" range-key="name">
             <block v-if="a_clicked">{{arealist[a_index].name}}</block>
-            <block v-else>请选择县区
+            <block v-else>{{$t('2251x8')}}
               <image :src="'/static/client/person/right.png'|domain" class="bot" mode=""></image>
             </block>
           </picker>
         </view>
       </view>
       <view class="c-item" v-if="selectitem == 1&&!is_purchase">
-        <view class="item-left">门店编号</view>
-        <view class="item-input"><input placeholder="请输入门店编号" placeholder-style="color: #c9c9c9;font-size:24rpx;"
+        <view class="item-left">{{$t('2251x9')}}</view>
+        <view class="item-input"><input :placeholder="$t('2251x10')" placeholder-style="color: #c9c9c9;font-size:24rpx;"
                                         type="text"
                                         v-model="purchase_store_sn" /></view>
       </view>
     </view>
-    <view @click="goPurchase" class="search" v-if="is_purchase">确定</view>
+    <view @click="goPurchase" class="search" v-if="is_purchase">{{$t('2251x11')}}</view>
     <!-- <view class="search" @click="goPurchase">{{is_purchase && selectitem == 2 ? '确定' : '搜索'}}</view> -->
     <div class="label-title" style="justify-content: space-between;" v-if="selectitem == 1 && stores.length > 0">
       <div class="line"></div>
-      <div>门店列表</div>
+      <div>{{$t('2251x12')}}</div>
       <div @click="get_user_location" class="graytext font14 flex1 text-right padding10-c"><span
-      class="funicon icon-dingwei font14"></span>离我最近
+      class="funicon icon-dingwei font14"></span>{{$t('2251x13')}}
       </div>
     </div>
     <div class="lists" v-if="selectitem == 1">
@@ -83,23 +83,23 @@
         </block>
         <block v-if="stores.length==0 && is_getted">
           <div class="graytext padding15 text-center font14">
-            暂时没有合适的店铺
+            {{$t('2251x14')}}
           </div>
         </block>
       </scroll-view>
     </div>
     <popupLayer :direction="'top'" @maskClicked="maskClicked" ref="searchLayer">
-      <view class="search-title">选择渠道</view>
+      <view class="search-title">{{$('node','Choose channel')}}</view>
       <view class="search-content">
         <view @click="changeItem(1)" class="search-item">
-          <view>门店{{is_purchase?'退':'进'}}货</view>
+          <view>{{$t('2251x23')}}{{is_purchase?$t('2251x15'):$t('2251x16')}}{{$t('2251x17')}}</view>
           <view class="box" v-if="selectitem == 2"></view>
           <view v-if="selectitem == 1">
             <image class="image" mode="" src="/static/procurement/selected.png"></image>
           </view>
         </view>
         <view @click="changeItem(2)" class="search-item">
-          <view>平台{{is_purchase?'退':'进'}}货</view>
+          <view>{{$t('2251x24')}}{{is_purchase?$t('2251x18'):$t('2251x19')}}{{$t('2251x20')}}</view>
           <view class="box" v-if="selectitem == 1"></view>
           <view v-if="selectitem == 2">
             <image class="image" mode="" src="/static/procurement/selected.png"></image>
@@ -120,6 +120,7 @@ import { ls } from '../../common/tool.js'
 import { mapGetters } from 'vuex'
 import { error, toast } from '../../common'
 
+import T from '@/common/langue/i18n'
 export default {
   components: {
     popupLayer
@@ -182,9 +183,9 @@ export default {
     ...mapGetters(['Stores_ID']),
     channelName () {
       if (!this.is_purchase) {
-        return this.selectitem == 1 ? '门店进货' : '平台进货'
+        return this.selectitem == 1 ? T._('2251d0') : T._('2251d12')
       } else {
-        return this.selectitem == 1 ? '门店退货' : '平台退货'
+        return this.selectitem == 1 ? T._('2251x21') : T._('2251x22')
       }
     },
     p_id () {
@@ -318,7 +319,7 @@ export default {
           this.getStoreList()
         }
       }).catch(err => {
-        error('获取位置信息失败:' + err.msg)
+        error(T._('2251d1') + err.msg)
       })
     },
     // 获取门店列表，
@@ -347,7 +348,7 @@ export default {
         postData.lng = this.lng
       }
       getStoreList(postData, {
-        tip: '搜索中',
+        tip: T._('2251d2'),
         mask: true
       }).then(res => {
         this.is_getted = true
@@ -358,9 +359,9 @@ export default {
       if (this.pid != 0) {
         // this.getStoreList();
         uni.showModal({
-          content: '确定退货？',
-          cancelText: '我再想想',
-          confirmText: '我意已决',
+          content: T._('2251d3'),
+          cancelText: T._('2251d4'),
+          confirmText: T._('2251d5'),
           success: (res) => {
             if (res.confirm) {
               // 退货，并且是门店退货
@@ -390,9 +391,9 @@ export default {
         if (this.is_purchase) {
           // 选择向平台退货
           uni.showModal({
-            content: '确定退货？',
-            cancelText: '我再想想',
-            confirmText: '我意已决',
+            content: T._('2251d6'),
+            cancelText: T._('2251d7'),
+            confirmText: T._('2251d8'),
             success: (res) => {
               if (res.confirm) {
                 // 退货，并且是门店退货
@@ -463,9 +464,9 @@ export default {
         }
       } else {
         uni.showModal({
-          content: '确定退货？',
-          cancelText: '我再想想',
-          confirmText: '我意已决',
+          content: T._('2251d9'),
+          cancelText: T._('2251d10'),
+          confirmText: T._('2251d11'),
           success: (res) => {
             if (res.confirm) {
               // 退货，并且是门店退货

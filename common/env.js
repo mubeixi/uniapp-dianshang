@@ -1,3 +1,4 @@
+import T from '@/common/langue/i18n' 
 // 是否为定制项目
 export const isCustom = false
 

@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import T from '@/common/langue/i18n'
 export default {
   name: 'wxParseImg',
   data () {
@@ -67,7 +68,7 @@ export default {
     })
     // #endif
 	  
-	  console.log(this.node)
+	  // console.log(this.node)
   },
   methods: {
     wxParseImgTap (e) {

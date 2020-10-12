@@ -18,7 +18,7 @@
           </view>
         </view>
         <view class="bots">
-          <view>会员号：{{item.User_No}}</view>
+          <view>{{$t('1165x0')}}{{item.User_No}}</view>
         </view>
       </view>
     </view>
@@ -29,6 +29,7 @@ import { pageMixin } from '../../common/mixin'
 import { getDisTeamList } from '../../common/fetch.js'
 import { toast } from '../../common'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {
@@ -48,7 +49,7 @@ export default {
       this.page++
       this.getDisTeamList()
     } else {
-      toast('到底啦', 'none')
+      toast(T._('1165d0'), 'none')
     }
   },
   onShow () {
@@ -69,7 +70,7 @@ export default {
       }
       getDisTeamList(data, {
         errtip: false,
-        tip: '加载中'
+        tip: T._('1165d1')
       }).then(res => {
         this.pro = this.pro.concat(res.data)
         this.totalCount = res.totalCount

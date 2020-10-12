@@ -1,3 +1,4 @@
+import T from '@/common/langue/i18n' 
 import { area } from './area'
 import { array_change } from './util'
 

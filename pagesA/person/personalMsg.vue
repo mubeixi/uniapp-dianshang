@@ -5,7 +5,7 @@
 
     <view class="msg">
       <view @click="changeAvator" class="item">
-        <view class="item-name">头像</view>
+        <view class="item-name">{{$t('1617x0')}}</view>
         <view class="info">
           <image :src="userInfo.User_HeadImg" class="image"></image>
         </view>
@@ -14,7 +14,7 @@
         </view>
       </view>
       <view @click="update(0)" class="item">
-        <view class="item-name">用户名</view>
+        <view class="item-name">{{$t('1617x1')}}</view>
         <view class="info">
           {{userInfo.User_Name}}
         </view>
@@ -23,7 +23,7 @@
         </view>
       </view>
       <view @click="update(1)" class="item">
-        <view class="item-name">昵称</view>
+        <view class="item-name">{{$t('1617x2')}}</view>
         <view class="info">
           {{userInfo.User_NickName}}
         </view>
@@ -32,7 +32,7 @@
         </view>
       </view>
       <view @click="update(2)" class="item">
-        <view class="item-name">生日</view>
+        <view class="item-name">{{$t('1617x3')}}</view>
         <view class="info">
           {{userInfo.User_Birthday==0?'':userInfo.User_Birthday}}
         </view>
@@ -41,7 +41,7 @@
         </view>
       </view>
       <view @click="update(3)" class="item">
-        <view class="item-name">邮箱</view>
+        <view class="item-name">{{$t('1617x4')}}</view>
         <view class="info">
           {{userInfo.User_Email}}
         </view>
@@ -59,7 +59,7 @@
         </view>
       </view>
       <view @click="update(10)" class="item">
-        <view class="item-name">身份证号</view>
+        <view class="item-name">{{$t('1617x5')}}</view>
         <view class="info">
           {{userInfo.User_IDNum}}
         </view>
@@ -68,7 +68,7 @@
         </view>
       </view>
       <view @click="update(11)" class="item">
-        <view class="item-name">性别</view>
+        <view class="item-name">{{$t('1617x6')}}</view>
         <view class="info">
           {{userInfo.User_Gender}}
         </view>
@@ -77,7 +77,7 @@
         </view>
       </view>
       <view @click="update(12)" class="item">
-        <view class="item-name">传真</view>
+        <view class="item-name">{{$t('1617x7')}}</view>
         <view class="info">
           {{userInfo.User_Fax}}
         </view>
@@ -86,7 +86,7 @@
         </view>
       </view>
       <view @click="update(4)" class="item">
-        <view class="item-name">详细地址</view>
+        <view class="item-name">{{$t('1617x8')}}</view>
         <view class="info">
           {{User_Province_name}}{{User_City_name}}{{User_Area_name}}{{User_Tow_name}}{{User_Address}}
         </view>
@@ -115,6 +115,7 @@ import { apiBaseUrl } from '../../common/env'
 import { pageMixin } from '../../common/mixin'
 import { error } from '../../common'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {
@@ -145,7 +146,7 @@ export default {
       if (num == 2) {
         if (this.userInfo.User_Birthday != 0) {
           uni.showToast({
-            title: '生日不允许再次修改',
+            title: T._('1617d0'),
             icon: 'none'
           })
           return
@@ -198,7 +199,7 @@ export default {
                   User_HeadImg: result.data.path
                 }).then(res => {
                   uni.showToast({
-                    title: '修改成功',
+                    title: T._('1617d1'),
                     icon: 'success'
                   })
                   _self.setUserInfo(_self.userInfo)
@@ -219,7 +220,7 @@ export default {
           _self.temppath = filePath
 
           uni.showLoading({
-            title: '上传图片',
+            title: T._('1617d2'),
             mask: true
           })
 
@@ -235,21 +236,21 @@ export default {
             formData: data,
             success: (uploadFileRes) => {
               if (typeof uploadFileRes !== 'object' || !uploadFileRes.hasOwnProperty('data') || !uploadFileRes.data) {
-                error('上传文件失败')
+                error(T._('1617d3'))
                 return
               }
               uploadFileRes = JSON.parse(uploadFileRes.data)
               _self.tem_Shop_Logo = uploadFileRes.data.path
 
               uni.showLoading({
-                title: '更改图像',
+                title: T._('1617d4'),
                 mask: true
               })
               upDateUserInfo({
                 User_HeadImg: _self.tem_Shop_Logo
               }).then(ret => {
                 uni.showToast({
-                  title: '修改成功',
+                  title: T._('1617d5'),
                   icon: 'success'
                 })
                 _self.setUserInfo(ret.data)
@@ -271,7 +272,7 @@ export default {
 
               uni.showModal({
                 title: '提示',
-                content: '上传图片错误' + JSON.stringify(err)
+                content: T._('1617d6') + JSON.stringify(err)
               })
             },
             complete: () => {
@@ -290,7 +291,7 @@ export default {
 			if(e.errMsg=='chooseImage:fail cancel')return
           uni.showModal({
             title: '提示',
-            content: '选择图片错误' + JSON.stringify(e),
+            content: T._('1617d7') + JSON.stringify(e),
             success: function (res) {
 
             }

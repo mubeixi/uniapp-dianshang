@@ -3,23 +3,23 @@
         <div class="leftss">
             <div class="first" @click="toHome">
                 <image class='img' src="/static/detail/home.png"></image>
-                <text class="txt">首页</text>
+                <text class="txt">{{$t('353x0')}}</text>
             </div>
             <div class="first" @click="collectFn">
                 <image class='img' v-if="isCollected" src="/static/detail/favorite-a.png"></image>
                 <image class='img' v-else src="/static/detail/favorite.png"></image>
-                <text class="txt">收藏</text>
+                <text class="txt">{{$t('353x1')}}</text>
             </div>
             <div class="first" @click="kefu">
                 <image class='img' src="/static/detail/kefu.png"></image>
-                <text class="txt">客服</text>
+                <text class="txt">{{$t('353x2')}}</text>
             </div>
         </div>
         <div class="rightss">
             <text v-if="!(recieve || isVirtual)" class="dan bTitle" @click="addCart">{{first}}</text>
             <text v-if="!(recieve || isVirtual)" class="tuan bTitle" @click="directBuy">{{second}}</text>
             <text class="all" @click="lingqu" :class="canSubmit?'':'disable'" v-if="(recieve || isVirtual)">
-                {{isVirtual ? '立即购买' : '立即领取'}}
+                {{isVirtual ? $t('353x3') : $t('353x4')}}
             </text>
         </div>
     </div>
@@ -27,15 +27,16 @@
 
 
 <script>
-    export default {
+    import T from '@/common/langue/i18n'
+export default {
         data() {
             return {
                 isCollected:false,
                 recieve:false,
                 isVirtual:false,
                 canSubmit:true,
-                first:'加入购物车',
-                second:'立即购买'
+                first:T._('353d0'),
+                second:T._('353d1')
             };
         },
         props: {

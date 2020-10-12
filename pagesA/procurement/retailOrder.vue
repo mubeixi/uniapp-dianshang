@@ -2,21 +2,21 @@
   <view @click="commonClick">
 
     <view class="navs">
-      <view :class="index==0?'active':''" @click="changIndex(0)" class="nav-item">全部</view>
+      <view :class="index==0?'active':''" @click="changIndex(0)" class="nav-item">{{$t('1993x0')}}</view>
       <view :class="index==1?'active':''" @click="changIndex(1)" class="nav-item">
-        待付款
+        {{$t('1993x1')}}
         <!-- <view class="jiaobiao" v-if="orderNum.waitpay>0">{{orderNum.waitpay}}</view> -->
       </view>
       <view :class="index==2?'active':''" @click="changIndex(2)" class="nav-item">
-        待发货
+        {{$t('1993x2')}}
         <!-- <view class="jiaobiao" v-if="orderNum.waitsend>0">{{orderNum.waitsend}}</view> -->
       </view>
       <!-- <view class="nav-item" :class="index==3?'active':''" @click="changIndex(3)">
-       待收货
+       {{$t('1993x3')}}
        <view class="jiaobiao" v-if="orderNum.waitconfirm>0">{{orderNum.waitconfirm}}</view>
      </view> -->
       <view :class="index==4?'active':''" @click="changIndex(4)" class="nav-item">
-        已完成
+        {{$t('1993x4')}}
         <!-- <view class="jiaobiao" v-if="orderNum.waitcomment>0">{{orderNum.waitcomment}}</view> -->
       </view>
     </view>
@@ -26,7 +26,7 @@
       <view :key="index" class="marginAuto" v-for="(item,index) of pro">
         <view class="orderTop">
           <view style="color: #777777;">
-            订单号：{{item.Order_ID}}
+            {{$t('1993x5')}}{{item.Order_ID}}
           </view>
           <view style="color: #F43131;">
             {{item.Order_Status_desc}}
@@ -62,10 +62,10 @@
         </block>
         <view style="text-align: right;padding-right:20rpx;" v-if="item.Order_Status == 2">
 					<span @click="goFa(item.Order_ID)" class="spanJu"
-                v-if="item.Order_IsVirtual == 0&&item.send_store_id==Stores_ID">发货</span>
+                v-if="item.Order_IsVirtual == 0&&item.send_store_id==Stores_ID">{{$t('1993x6')}}</span>
           <span @click="goFa(item.Order_ID)" class="spanJu"
-                v-if="item.Order_IsVirtual == 0&&item.send_store_id==0&&item.Order_Store==Stores_ID">发货</span>
-          <span @click="refund(item.Order_ID)" class="spanJu">拒单</span>
+                v-if="item.Order_IsVirtual == 0&&item.send_store_id==0&&item.Order_Store==Stores_ID">{{$t('1993x7')}}</span>
+          <span @click="refund(item.Order_ID)" class="spanJu">{{$t('1993x8')}}</span>
         </view>
       </view>
     </block>
@@ -75,11 +75,11 @@
 
     <div class="zhezhao" v-if="password_input">
       <div class="input-wrap">
-        <div>请输入拒单原因</div>
-        <textarea auto-height class="input" placeholder="请输入原因" style="width: 100%;" v-model="reason"></textarea>
+        <div>{{$t('1993x9')}}</div>
+        <textarea auto-height class="input" :placeholder="$t('1993x10')" style="width: 100%;" v-model="reason"></textarea>
         <div class="btns">
-          <div @click="cancelInput" class="btn">取消</div>
-          <div @click="confirmInput" class="btn">确定</div>
+          <div @click="cancelInput" class="btn">{{$t('1993x11')}}</div>
+          <div @click="confirmInput" class="btn">{{$t('1993x12')}}</div>
         </div>
       </div>
     </div>
@@ -92,6 +92,7 @@ import { pageMixin } from '../../common/mixin'
 import { mapGetters } from 'vuex'
 import { getOrder, systemRejectOrder } from '@/common/fetch.js'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {
@@ -134,7 +135,7 @@ export default {
       const that = this
       if (!this.reason) {
         uni.showToast({
-          title: '拒单原因必填',
+          title: T._('1993d0'),
           icon: 'none'
         })
         return
@@ -410,6 +411,7 @@ export default {
     box-sizing: border-box;
     display: flex;
     align-items: center;
+	justify-content: space-around;
     height: 80rpx;
     line-height: 80rpx;
     background: #F8F8F8;
@@ -417,7 +419,7 @@ export default {
     padding: 0 10px;
 
     .nav-item {
-      flex: 1;
+      // flex: 1;
       box-sizing: border-box;
       text-align: center;
       position: relative;

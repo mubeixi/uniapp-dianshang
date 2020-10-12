@@ -1,3 +1,4 @@
+import T from '@/common/langue/i18n' 
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();

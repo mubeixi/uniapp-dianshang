@@ -11,6 +11,7 @@ const styleDefault = {
   margin: '4',
   height: '1'
 }
+import T from '@/common/langue/i18n'
 export default {
   props: {
     index: {

@@ -1,3 +1,4 @@
+import T from '@/common/langue/i18n' 
 import { ls } from '../common/tool'
 
 export const SET_PAY_TEMP_OBJ = function (state, value) {

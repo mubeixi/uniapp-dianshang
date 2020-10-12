@@ -33,42 +33,42 @@
     <view class="orderDetail">
       <view class="orderDetailTop">
         <view class="leftDiv"></view>
-        <view>订单信息</view>
+        <view>{{$t('1886x0')}}</view>
       </view>
 
       <view class="orderDetailBottom">
         <view class="viewHeight">
-          订单号：<span class="fontColor">{{backInfo.id}}</span>
+          {{$t('1886x1')}}<span class="fontColor">{{backInfo.id}}</span>
         </view>
         <view class="viewHeight">
-          商品预估价： ¥<span class="fontColor">{{backInfo.price}}</span>
+          {{$t('1886x2')}} ¥<span class="fontColor">{{backInfo.price}}</span>
         </view>
         <view class="viewHeight">
-          退货原因： <span class="fontColor">{{backInfo.reason}}</span>
+          {{$t('1886x3')}} <span class="fontColor">{{backInfo.reason}}</span>
         </view>
         <!-- <view class="viewHeight">
-          实付： <span class="fontColorRed">¥</span><span class=" fontColor fontColorRed">12315465</span>
+          {{$t('1886x4')}}： <span class="fontColorRed">¥</span><span class=" fontColor fontColorRed">12315465</span>
         </view> -->
         <view class="viewHeight">
-          退货时间： <span class="fontColor">{{backInfo.create_at}}</span>
+          {{$t('1886x5')}} <span class="fontColor">{{backInfo.create_at}}</span>
         </view>
         <view class="viewHeight">
-          接收门店： <span class="fontColor">{{backInfo.receive_name}}</span>
+          {{$t('1886x6')}} <span class="fontColor">{{backInfo.receive_name}}</span>
         </view>
         <view class="viewHeight">
-          订单状态： <span class="fontColor">{{backInfo.status_desc}}</span>
+          {{$t('1886x7')}}： <span class="fontColor">{{backInfo.status_desc}}</span>
         </view>
       </view>
     </view>
     <view class="orderDetail">
       <view class="orderDetailTop">
         <view class="leftDiv"></view>
-        <view>发货信息</view>
+        <view>{{$t('1886x8')}}</view>
       </view>
       <view class="orderDetailOther">
         <view class="inputView">
           <view style="width: 200rpx;">
-            是否需要物流
+            {{$t('1886x9')}}
           </view>
           <template>
             <block v-if="index == 1">
@@ -77,7 +77,7 @@
             <block v-else>
               <view @click="change(1)" class="noselected"></view>
             </block>
-            <view style="margin: 0 20rpx;">是</view>
+            <view style="margin: 0 20rpx;">{{$t('1886x10')}}</view>
           </template>
           <template>
             <block v-if="index == 1">
@@ -86,12 +86,12 @@
             <block v-else>
               <image class="selected" mode="" src="/static/procurement/selected.png"></image>
             </block>
-            <view style="margin-left: 20rpx;">否</view>
+            <view style="margin-left: 20rpx;">{{$t('1886x11')}}</view>
           </template>
         </view>
         <view class="inputView" v-if="index == 1">
           <view style="width: 200rpx;">
-            配送方式
+            {{$t('1886x12')}}
           </view>
           <view style="width: 100%;text-align: right;">
             <!-- {{ship_name?ship_name:'请选择快递公司'}}
@@ -101,20 +101,20 @@
         </view>
         <view class="inputView" v-if="index == 1">
           <view style="width: 200rpx;">
-            快递单号
+            {{$t('1886x13')}}
           </view>
           <view style="width: 100%;">
-            <input placeholder="请输入快递单号" style="width: 100%;" type="text" v-model="shipping_no">
+            <input :placeholder="$t('1886x14')" style="width: 100%;" type="text" v-model="shipping_no">
           </view>
         </view>
       </view>
     </view>
     <view @click="submit" class="submit">
-      立即发货
+      {{$t('1886x15')}}
     </view>
     <popupLayer :direction="'top'" ref="method">
       <view class="bMbx">
-        <view class="fMbx">快递公司选择</view>
+        <view class="fMbx">{{$t('1886x16')}}</view>
         <view :key="shipid" @click="changeCurrent(shipid)" class="iMbx" v-for="(ship,shipid) in shipping">
           <view>
             {{ship}}
@@ -135,6 +135,7 @@ import { getShipping, getStoreProdBackOrderDetail, storeProdBackOrderSend } from
 import { mapGetters } from 'vuex'
 import { pageMixin } from '../../common/mixin'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {
@@ -166,7 +167,7 @@ export default {
       this.getStoreProdBackOrderDetail()
     } else {
       uni.showToast({
-        title: '缺少参数',
+        title: T._('1886d0'),
         icon: 'none'
       })
       uni.navigateBack({

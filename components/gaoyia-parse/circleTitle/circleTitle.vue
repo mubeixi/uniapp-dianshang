@@ -23,14 +23,15 @@
 </template>
 
 <script>
-    export default {
+    import T from '@/common/langue/i18n'
+export default {
         data() {
             return {};
         },
         props: {
             title: {
                 type: String,
-                default: '标题'
+                default: T._('107d0')
             }
         }
     }

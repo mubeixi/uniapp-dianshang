@@ -5,7 +5,7 @@
         <div class="item">
           <div class="head">
             <div class="status flex flex-between ">
-              <div class="order-no">订单号: {{apply.Order_ID}}</div>
+              <div class="order-no">{{$t('2217x0')}}: {{apply.Order_ID}}</div>
               <!--                            <image class="icon-delete"  @click="delApply(apply,idx1)" v-if="inArray(apply.Order_Status,[21,23,25])" src="/static/store/icon-del.png"></image>-->
             </div>
             <div class="info flex flex-between">
@@ -13,7 +13,7 @@
                 <div :style="{backgroundImage:'url('+apply.Stores_ImgPath+')'}" class="store-pic"></div>
                 <div class="store-title">{{apply.Stores_Name}}</div>
                 <div class="action">
-                  <span @click="showStore(apply.Order_Store)" class="action-item">查看信息</span>
+                  <span @click="showStore(apply.Order_Store)" class="action-item">{{$t('2217x1')}}</span>
                 </div>
               </div>
               <!--                            {{apply.Order_Status_desc}}-->
@@ -27,7 +27,7 @@
                 <div class="c">
                   <div class="title line10">{{item.prod_name}}</div>
                   <div class="line10 flex flex-between graytext font14 flex-vertical-center">
-                    <div class="spec-key">{{item.attr_info.attr_name||'无规格'}}</div>
+                    <div class="spec-key">{{item.attr_info.attr_name||$t('2217x2')}}</div>
                     <div class="numbox font16">
                     </div>
                   </div>
@@ -46,7 +46,7 @@
             </div>
           </block>
           <div class="price-box">
-            总计:<span class="danger-color">￥<span class="total_num font16">{{apply.Order_TotalPrice}}</span></span>
+            {{$t('2217x3')}}<span class="danger-color">￥<span class="total_num font16">{{apply.Order_TotalPrice}}</span></span>
           </div>
 
         </div>
@@ -54,15 +54,15 @@
 
     </div>
     <div class="sendbox">
-      <div class="title"><span class="tip"></span><span class="text">发货信息</span></div>
+      <div class="title"><span class="tip"></span><span class="text">{{$t('2217x4')}}</span></div>
       <div class="row">
-        <div class="label">需要物流</div>
+        <div class="label">{{$t('2217x5')}}</div>
         <div class="form-item" style="text-align: right">
           <switch @change="changeNeedShipping" checked color="#F43131" style="transform:scale(0.9)" />
         </div>
       </div>
       <div class="row" v-if="is_need_shipping">
-        <div class="label">配送方式</div>
+        <div class="label">{{$t('2217x6')}}</div>
         <div class="form-item express">
           {{exprss_list[0]}}
           <!-- <picker @change="bindPickerChange" :value="exprss_index" :range="exprss_list">
@@ -71,32 +71,32 @@
         </div>
       </div>
       <div class="row" v-if="is_need_shipping">
-        <div class="label">快递单号</div>
-        <input class="form-item" placeholder="请输入快递单号" v-model="ShippingID" />
+        <div class="label">{{$t('2217x7')}}</div>
+        <input class="form-item" :placeholder="$t('2217x8')" v-model="ShippingID" />
       </div>
       <!-- <div class="row" v-if="is_need_shipping">
-          <div class="label">运费</div>
-          <input type="number" step="0.01" v-model="Express_Price" class="form-item" placeholder="请输入运费" />
+          <div class="label">{{$t('2217x9')}}</div>
+          <input type="number" step="0.01" v-model="Express_Price" class="form-item" :placeholder="$t('2217x10')" />
       </div> -->
     </div>
     <div style="height:50px;">
       <div class="subbox">
-        <button @click="subFn" class="subbtn" type="warn">立即发货</button>
+        <button @click="subFn" class="subbtn" type="warn">{{$t('2217x11')}}</button>
       </div>
     </div>
     <wzw-dialog ref="storeInfo">
       <div class="storeInfoDialog">
-        <div class="title text-center line15 font16">门店信息</div>
+        <div class="title text-center line15 font16">{{$t('2217x12')}}</div>
         <div class="row">
-          <div class="label">门店名称:</div>
+          <div class="label">{{$t('2217x13')}}</div>
           <div class="text">{{storeInfo.Stores_Name}}</div>
         </div>
         <div class="row">
-          <div class="label">门店电话:</div>
+          <div class="label">{{$t('2217x14')}}</div>
           <div class="text">{{storeInfo.Stores_Telephone}}</div>
         </div>
         <div class="row">
-          <div class="label">门店地址:</div>
+          <div class="label">{{$t('2217x15')}}</div>
           <div @click="showAdress" class="text">
             {{storeInfo.Stores_Province_name}}{{storeInfo.Stores_City_name}}{{storeInfo.Stores_Area_name}}{{storeInfo.Stores_Address}}
             <image class="img" src="/static/local.png"
@@ -107,11 +107,11 @@
     </wzw-dialog>
     <wzw-dialog ref="refuseApply">
       <div class="refuseApplyDialog">
-				<textarea @input="bingReasonInput" auto-height class="reason" placeholder="请输入驳回原因"
+				<textarea @input="bingReasonInput" auto-height class="reason" :placeholder="$t('2217x16')"
                   placeholder-style="color:#999" />
         <div class="control">
-          <div @click="cancelRefuseApply" class="action-btn btn-cancel">取消</div>
-          <div @click="refuseApply" class="btn-sub action-btn">确定</div>
+          <div @click="cancelRefuseApply" class="action-btn btn-cancel">{{$t('2217x17')}}</div>
+          <div @click="refuseApply" class="btn-sub action-btn">{{$t('2217x18')}}</div>
         </div>
 
       </div>
@@ -132,6 +132,7 @@ import {
 import { error, toast } from '../../common'
 import { emptyObject, findArrayIdx } from '../../common/tool'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   name: 'storeWholesale',
@@ -178,7 +179,7 @@ export default {
     },
     setValFn (e) {
       if (!this.currentGoods) {
-        error('请选择需要修改的商品')
+        error(T._('2217d0'))
         return
       }
       // 这种骚操作需要看是不是兼容
@@ -193,7 +194,7 @@ export default {
 
       if (parseInt(newVal) >= parseInt(oldVal)) {
         // e.target.value = oldVal
-        error('只允许减少数量')
+        error(T._('2217d1'))
         return
       }
 
@@ -205,7 +206,7 @@ export default {
       })
     },
     plusFn (goods) {
-      error('不允许增加数量')
+      error(T._('2217d2'))
       return
       let Attr_ID = null
       if (goods.attr_info && goods.attr_info.attr_val) {
@@ -221,7 +222,7 @@ export default {
         Attr_ID = goods.attr_info.attr_val.Product_Attr_ID
       }
       if (goods.prod_count < 2) {
-        error('数量最少为1')
+        error(T._('2217d3'))
         return
       }
       // goods.prod_count--
@@ -273,7 +274,7 @@ export default {
       }
 
       sendStorePurchaseApply(postData).then(res => {
-        toast('操作成功')
+        toast(T._('2217d4'))
         setTimeout(function () {
           uni.navigateTo({
             url: '/pagesA/procurement/storeWholesale'
@@ -295,7 +296,7 @@ export default {
         this.storeInfo = this.stores[idx]
         this.$refs.storeInfo.show()
       } else {
-        error('店铺信息错误')
+        error(T._('2217d5'))
       }
     },
     cancelRefuseApply () {
@@ -379,6 +380,7 @@ export default {
     box-sizing: border-box;
     display: flex;
     align-items: center;
+	justify-content: space-around;
     height: 50px;
     line-height: 50px;
     background: #fff;
@@ -386,7 +388,7 @@ export default {
     padding: 0 10px;
 
     .nav-item {
-      flex: 1;
+      // flex: 1;
       /*box-sizing: border-box;*/
       text-align: center;
       /*position: relative;*/

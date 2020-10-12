@@ -1,3 +1,4 @@
+import T from '@/common/langue/i18n' 
 import * as ENV from './env'
 import { error } from './index'
 /**
@@ -51,7 +52,7 @@ export const ajax = (url, method, data, options) => {
       data,
       success: (ret) => {
         if (ret.statusCode !== 200 || typeof ret.data !== 'object') {
-          error('服务器去旅行了')
+          error(T._('14d0'))
         }
         const res = ret.data
 
@@ -60,7 +61,7 @@ export const ajax = (url, method, data, options) => {
 
         if (res.hasOwnProperty('errorCode') && hookErrorCode.indexOf(res.errorCode) !== -1) {
           if (res.errorCode === 66001) {
-            console.log(JSON.stringify(store.state.lockToLogin))
+            // console.log(JSON.stringify(store.state.lockToLogin))
             // 为了避免多个请求
             if (!store.state.lockToLogin) {
               store.state.lockToLogin = true
@@ -86,10 +87,11 @@ export const ajax = (url, method, data, options) => {
           }
           resolve(res)
         } else {
+			// console.log(66666,res.hasOwnProperty('errorCode'),res.msg);
           if (res.hasOwnProperty('errorCode') && res.msg) {
             if (errtip) error(res.msg)
           } else {
-            error('请求未成功')
+            error(T._('14d1'))
           }
           console.log('ajax error', JSON.stringify(res))
 

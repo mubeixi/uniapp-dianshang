@@ -24,13 +24,13 @@
       </view>
       <view class="second">
         <view class="secondQ">
-          填写信息
+          {{$t('2242x0')}}
         </view>
         <view class="secondW">
-          选择区域
+          {{$t('2242x1')}}
         </view>
         <view class="secondE">
-          提交审核
+          {{$t('2242x2')}}
         </view>
       </view>
     </view>
@@ -40,12 +40,12 @@
         <picker :range="change_objectMultiArray" :value="change_multiIndex" @change="bindMultiPickerChange"
                 @columnchange="bindMultiPickerColumnChange" mode="multiSelector" range-key="name">
           <view class="picker">
-            <view class="view quyu">选择区域</view>
-            <view class="view" v-if="!address_info.Address_Province">选择省份</view>
+            <view class="view quyu">{{$t('2242x3')}}</view>
+            <view class="view" v-if="!address_info.Address_Province">{{$t('2242x4')}}</view>
             <view class="view" v-else>{{objectMultiArray[0][multiIndex[0]]['name']}}</view>
-            <view class="view" v-if="!address_info.Address_City">选择城市</view>
+            <view class="view" v-if="!address_info.Address_City">{{$t('2242x5')}}</view>
             <view class="view" v-else>{{objectMultiArray[1][multiIndex[1]]['name']}}</view>
-            <view class="view" v-if="!address_info.Address_Area">选择地区</view>
+            <view class="view" v-if="!address_info.Address_Area">{{$t('2242x6')}}</view>
             <view class="view" v-else>{{objectMultiArray[2][multiIndex[2]]['name']}}</view>
           </view>
         </picker>
@@ -55,10 +55,10 @@
       </view>
     </view>
     <view class="four">
-      下一步
+      {{$t('2242x7')}}
     </view>
     <view class="five">
-      查看申请记录
+      {{$t('2242x8')}}
       <image :src="'/static/client/fenxiao/chakan.png'|domain" class="image"></image>
     </view>
   </view>
@@ -69,6 +69,7 @@ import area from '../../common/area.js'
 import utils from '../../common/util.js'
 import { pageMixin } from '../../common/mixin'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {

@@ -21,32 +21,32 @@
 
     <view class="centers" v-if="pro">
       <view class="td">
-        退款编号：{{pro.Back_ID}}
+        {{$t('1666x0')}}：{{pro.Back_ID}}
       </view>
       <view class="td">
-        退款时间：{{pro.Back_CreateTime}}
+        {{$t('1666x1')}}：{{pro.Back_CreateTime}}
       </view>
       <view class="td">
-        退款数量：
-        <text style="font-weight: bold;">{{pro.Back_Qty}}件</text>
+        {{$t('1666x2')}}
+        <text style="font-weight: bold;">{{pro.Back_Qty}}{{$t('1666x3')}}</text>
       </view>
       <view class="td">
-        退款总价：
-        <span>退回余额<span class="font16 danger-color"><span class="span font12">￥</span>{{pro.refund_money_fee}} </span>,</span>
-        <span>原路退回 <span class="danger-color"><span class="span font12 ">￥</span>{{pro.refund_pay_fee}} </span></span>
+        {{$t('1666x4')}}
+        <span>{{$t('1666x5')}}<span class="font16 danger-color"><span class="span font12">￥</span>{{pro.refund_money_fee}} </span>,</span>
+        <span>{{$t('1666x6')}} <span class="danger-color"><span class="span font12 ">￥</span>{{pro.refund_pay_fee}} </span></span>
       </view>
       <view class="td">
-        退款状态：
+        {{$t('1666x7')}}
         <text style="color: #FF6600;">{{pro.Back_Status_desc}}</text>
       </view>
       <view class="address" v-if="pro.shop_address">
-        商家收货地址：{{pro.shop_address.RecieveProvince_name}}{{pro.shop_address.RecieveCity_name}}{{pro.shop_address.RecieveArea_name}}{{pro.shop_address.RecieveAddress}}
-        手机号码:{{pro.shop_address.RecieveMobile}}{{pro.shop_address.RecieveName}}收
+        {{$t('1666x8')}}：{{pro.shop_address.RecieveProvince_name}}{{pro.shop_address.RecieveCity_name}}{{pro.shop_address.RecieveArea_name}}{{pro.shop_address.RecieveAddress}}
+        {{$t('1666x9')}}:{{pro.shop_address.RecieveMobile}}{{pro.shop_address.RecieveName}}{{$t('1666x10')}}
       </view>
       <block v-if="isFahuo">
         <view class="fahuo" v-if="pro.Back_Status==1">
           <view @click="isFahuo=false" class="fahuoSubmit">
-            我要发货
+            {{$t('1666x11')}}
           </view>
         </view>
         <view class="lines">
@@ -63,13 +63,13 @@
     <block v-if="!isFahuo">
       <view class="orderFa" style="margin-top: 40rpx;">
         <view class="inputs">
-          <input class="input" placeholder="请输入物流名称" type="text" v-model="shipping">
+          <input class="input" :placeholder="$t('1666x12')" type="text" v-model="shipping">
         </view>
         <view class="inputs" style="margin-top: 30rpx;">
-          <input class="input" placeholder="请输入物流单号" type="number" v-model="shippingID">
+          <input class="input" :placeholder="$t('1666x13')" type="number" v-model="shippingID">
         </view>
         <view @click="refundSend" class="submits">
-          确认发货
+          {{$t('1666x14')}}
         </view>
       </view>
     </block>
@@ -80,6 +80,7 @@
 import { getBackOrderDetail, refundSend } from '../../common/fetch.js'
 import { pageMixin } from '../../common/mixin'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {
@@ -105,13 +106,13 @@ export default {
     refundSend () {
       if (!this.shipping) {
         uni.showToast({
-          title: '物流名称不能为空'
+          title: T._('1666d0')
         })
         return
       }
       if (!this.shippingID) {
         uni.showToast({
-          title: '物流单号不能为空'
+          title: T._('1666d1')
         })
         return
       }

@@ -2,16 +2,16 @@
   <view style="background-color: #F8F8F8;height: 100vh;">
     <div class="navs">
       <div :class="index==0?'active':''" @click="changIndex(0)" class="nav-item">
-        全部
+        {{$t('2310x0')}}
       </div>
       <div :class="index==1?'active':''" @click="changIndex(1)" class="nav-item">
-        待审核
+        {{$t('2310x1')}}
       </div>
       <div :class="index==2?'active':''" @click="changIndex(2)" class="nav-item">
-        已通过
+        {{$t('2310x2')}}
       </div>
       <div :class="index==3?'active':''" @click="changIndex(3)" class="nav-item">
-        已驳回
+        {{$t('2310x3')}}
       </div>
 
     </div>
@@ -24,7 +24,7 @@
         <div class="store-name">{{item.store_name}}</div>
         <div @click="changeShow(item)" class='store-desc flex flex-vertical-center'>
           <block v-if="item.status==1">
-            <span @click="goNext(item.id)" class='status-store'>去处理</span>
+            <span @click="goNext(item.id)" class='status-store'>{{$t('2310x4')}}</span>
           </block>
           <block v-else-if="item.status==3">
             <span class='color-red'>{{item.status_desc}}</span>
@@ -42,10 +42,10 @@
       </div>
       <div class="store-btm">
         <div>
-          名称: {{item.store_name}}
+          {{$t('2310x5')}}: {{item.store_name}}
         </div>
         <div @click="cell(item.store_mobile)">
-          联系电话: {{item.store_mobile}}
+          {{$t('2310x6')}}: {{item.store_mobile}}
           <image class="iconCell" src="/static/cellstore.png"></image>
         </div>
       </div>
@@ -59,6 +59,7 @@ import { getStoreApplyList } from '../../common/fetch.js'
 import { pageMixin } from '../../common/mixin'
 import { mapGetters } from 'vuex'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {
@@ -143,6 +144,7 @@ export default {
     box-sizing: border-box;
     display: flex;
     align-items: center;
+	justify-content: space-around;
     height: 100rpx;
     line-height: 100rpx;
     background: #fff;
@@ -150,7 +152,7 @@ export default {
     padding: 0 10px;
 
     .nav-item {
-      flex: 1;
+      // flex: 1;
       box-sizing: border-box;
       text-align: center;
       position: relative;

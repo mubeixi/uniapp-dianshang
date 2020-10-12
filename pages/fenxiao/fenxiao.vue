@@ -6,7 +6,7 @@
     <view class="top">
       <image :src="'/static/client/fenxiao/top.png'|domain" class="image"></image>
       <!-- #ifdef APP-PLUS -->
-      <view class="title">分销中心</view>
+      <view class="title">{{$t('529x0')}}</view>
       <!-- #endif -->
       <div v-if="userInfo.User_ID&&userInfo.Is_Distribute==1">
         <image :src="'/static/client/fenxiao/msg.png'|domain" @click="goMsg" class="msg"
@@ -25,14 +25,13 @@
         </view>
       </div>
 
-      <view @click="goLogin" class="font14 loginBtn" plain size="mini" v-if="!userInfo.User_ID">登录/注册</view>
+      <view @click="goLogin" class="font14 loginBtn" plain size="mini" v-if="!userInfo.User_ID">{{$t('529x1')}}/注册</view>
       <view @click="goDistributor" class="font14 loginBtn" plain size="mini"
-            v-if="userInfo.User_ID && userInfo.Is_Distribute!=1">成为{{commi_rename.commi}}
+            v-if="userInfo.User_ID && userInfo.Is_Distribute!=1">{{$t('529x2')}}{{commi_rename.commi}}
       </view>
       <view class="sales">
         <view @click="goSales" class="left">
-          <view class="salesSum">
-            累计业绩（元）
+          <view class="salesSum">{{$t('529x3')}}（{{$t('529x4')}}）
             <image :src="'/static/client/person/right.png' | domain" class="rightMys"></image>
           </view>
           <view class="salesSumPrice" v-if="userInfo.User_ID&&userInfo.Is_Distribute">
@@ -44,7 +43,7 @@
         </view>
         <view @click="goProfit" class="right">
           <view class="salesSum">
-            累计利润（元）
+            {{$t('529x5')}}
             <image :src="'/static/client/person/right.png' | domain" class="rightMys"></image>
           </view>
           <view class="salesSumPrice" v-if="userInfo.User_ID&&userInfo.Is_Distribute">
@@ -58,12 +57,12 @@
 
     </view>
     <view class="center" v-if="userInfo.User_ID&&userInfo.Is_Distribute">
-      <view>可提现金额</view>
+      <view>{{$t('529x6')}}</view>
       <view>
         {{data.balance}}
       </view>
       <view @click="tixian">
-        提现
+        {{$t('529x7')}}
       </view>
     </view>
     <view style="height: 25px;" v-else></view>
@@ -88,6 +87,7 @@ import { pageMixin } from '../../common/mixin'
 import { get_user_info, getDisInit, getFuncModule } from '../../common/fetch.js'
 import { mapActions, mapGetters } from 'vuex'
 // import TabbarComponents from "../../components/TabbarComponents";
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   components: {
@@ -347,7 +347,8 @@ export default {
       font-weight: 500;
       color: #FFFFFF;
       background-color: #F43131;
-      width: 85rpx;
+      min-width: 85rpx;
+	  padding: 0 6rpx;
       height: 45rpx;
       line-height: 45rpx;
       border-radius: 10rpx;

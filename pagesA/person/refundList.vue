@@ -9,7 +9,7 @@
           <!-- <img :src="item.ShopLogo" alt="">
           <span class="bizname">{{item.ShopName}}</span>
           <span class="status">{{item.Order_Status_desc}}</span> -->
-          <span class="bizname">订单编号:</span>
+          <span class="bizname">{{$t('1659x0')}}</span>
           <span class="status">{{item.Back_Sn}}</span>
         </div>
         <block :key="k" v-for="(i,k) of item.prod_list">
@@ -26,15 +26,15 @@
           </div>
         </block>
         <div class="text-right font14 line10 graytext2">
-          共<span class="color555">{{item.prod_list.length}}</span>件商品,
-          <span>退回余额:<span class="font16 danger-color"><span
+          {{$t('1659x1')}}<span class="color555">{{item.prod_list.length}}</span>{{$t('1659x2')}},
+          <span>{{$t('1659x3')}}:<span class="font16 danger-color"><span
           class="span font12">￥</span>{{item.refund_money_fee}} </span>,</span>
-          <span>原路退回:<span class="font16 danger-color"><span class="span font12">￥</span>{{item.refund_pay_fee}} </span></span>
+          <span>{{$t('1659x4')}}:<span class="font16 danger-color"><span class="span font12">￥</span>{{item.refund_pay_fee}} </span></span>
         </div>
         <div class="btn-group">
           <span class="span" style="border: 0rpx;color: red;">{{item.Back_Status_desc}}</span>
-          <span @click="cancelRefund(item,index)" class="span" v-if="item.Back_Status==0">取消退款</span>
-          <span @click="goDetail(item)" class="span" v-else-if="item.Back_Status==1">买家发货</span>
+          <span @click="cancelRefund(item,index)" class="span" v-if="item.Back_Status==0">{{$t('1659x5')}}</span>
+          <span @click="goDetail(item)" class="span" v-else-if="item.Back_Status==1">{{$t('1659x6')}}</span>
         </div>
       </template>
     </div>
@@ -50,6 +50,7 @@
 import { cancelRefund, getBackOrder } from '@/common/fetch.js'
 import { pageMixin } from '../../common/mixin'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {
@@ -151,6 +152,7 @@ export default {
     box-sizing: border-box;
     display: flex;
     align-items: center;
+	justify-content: space-around;
     height: 100rpx;
     line-height: 100rpx;
     background: #fff;
@@ -158,7 +160,7 @@ export default {
     padding: 0 10px;
 
     .nav-item {
-      flex: 1;
+      // flex: 1;
       box-sizing: border-box;
       text-align: center;
       position: relative;
@@ -166,7 +168,7 @@ export default {
       .jiaobiao {
         position: absolute;
         top: 24rpx;
-        right: 20rpx;
+        right: -20rpx;
         width: 20rpx;
         height: 20rpx;
         border-radius: 50%;
