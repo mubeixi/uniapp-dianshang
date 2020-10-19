@@ -63,8 +63,8 @@ export default {
     openLocation (item) {
       uni.openLocation({
         name: item.Stores_Name,
-        latitude: Number(item.Stores_PrimaryLat),
-        longitude: Number(item.Stores_PrimaryLng),
+        latitude: Number(item.wx_lat),
+        longitude: Number(item.wx_lng),
         success: function () {
 
         }
