@@ -584,8 +584,8 @@ export default {
     openLocation () {
       uni.openLocation({
         name: this.storeInfo.Stores_Address,
-        latitude: Number(this.storeInfo.Stores_PrimaryLat),
-        longitude: Number(this.storeInfo.Stores_PrimaryLng),
+        latitude: Number(this.storeInfo.wx_lat),
+        longitude: Number(this.storeInfo.wx_lng),
         success: function () {
 
         }
