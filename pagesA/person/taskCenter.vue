@@ -6,7 +6,7 @@
     <view class="top">
       <image :src="'/static/client/task/top.png'|domain" class="widthTen"></image>
       <image :src="'/static/client/task/left.png'|domain" @click="goBack" class="goBack"></image>
-      <view class="titles">任务中心</view>
+      <view class="titles">{{$t('1683x0')}}</view>
       <view class="center">
         <!-- <image class="widthTen" :src="'/static/client/task/center.png" ></image> -->
         <image :src="pro.img_url" class="widthTen"></image>
@@ -29,19 +29,19 @@
           {{pro.growth_value}}/{{pro.upper_growth}}
         </view>
         <view class="shengji" v-if="pro.need_growth>0">
-          升级
+          {{$t('1683x1')}}
         </view>
         <view class="numberValue" v-if="pro.growth_value">
           {{pro.growth_value}}
         </view>
         <view class="valueM">
-          成长值
+          {{$t('1683x2')}}
           <image :src="'/static/client/task/sanjiao.png'|domain" class="image"></image>
         </view>
       </view>
     </view>
     <view style="height: 60rpx;"></view>
-    <circleTitle title="我的特权"></circleTitle>
+    <circleTitle :title="$t('1683x3')"></circleTitle>
     <view class="myPrivilege">
       <view :key="j" class="view" v-for="(i,j) of pro.basic">
         {{j+1}}、{{i.name}}
@@ -50,7 +50,7 @@
     <view style="height: 20rpx;width: 100%;background-color: #F8F8F8;">
 
     </view>
-    <circleTitle title="如何升级"></circleTitle>
+    <circleTitle :title="$t('1683x4')"></circleTitle>
 
     <view class="ruhe">
       <view :key="ind" class="td" v-for="(it,ind) of pro.obtain">
@@ -65,13 +65,13 @@
         </view>
 
         <view @click="yulan(it)" class="submit" v-if="it.done==0&&ind=='focus'">
-          去完成
+          {{$t('1683x5')}}
         </view>
         <view @click="goJump(it)" class="submit" v-else-if="it.done==0">
-          去完成
+          {{$t('1683x6')}}
         </view>
         <view class="submit submitMbx" v-if="it.done==1">
-          已完成
+          {{$t('1683x7')}}
         </view>
       </view>
     </view>
@@ -85,6 +85,7 @@ import circleTitle from '../../components/circleTitle/circleTitle.vue'
 import { pageMixin } from '../../common/mixin'
 import { getTaskCenter } from '../../common/fetch.js'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {
@@ -356,7 +357,8 @@ export default {
       }
 
       .submit {
-        width: 110rpx;
+        min-width: 110rpx;
+		padding: 0 10rpx;
         height: 45rpx;
         line-height: 45rpx;
         background: rgba(244, 49, 49, 1);

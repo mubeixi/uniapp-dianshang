@@ -2,7 +2,7 @@
   <view @click="commonClick" class="wrap">
     <view :style="{backgroundImage:'url('+domainFunc('/uploadfiles/wkbq6nc2kc/image/5daa7f9be1.jpg')+')'}"
           class="bg"></view>
-    <view class="moneybox font14" v-if="initData.DisSwitch==1">分销佣金<span class="font14"
+    <view class="moneybox font14" v-if="initData.DisSwitch==1">{{$t('351x0')}}<span class="font14"
                                                                          style="color: #f43838">￥</span><span
     class="money">{{info.money}}</span></view>
     <view @click="preview" class="imgbox">
@@ -17,6 +17,7 @@ import { pageMixin } from '../../../common/mixin'
 import { domainFn } from '../../../common/filter'
 import { mapGetters } from 'vuex'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {
@@ -45,7 +46,7 @@ export default {
     uni.showToast({
       position: 'top',
       icon: 'none',
-      title: '点击图片后,长按保存'
+      title: T._('351d0')
     })
   }
 }

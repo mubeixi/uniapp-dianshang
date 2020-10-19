@@ -64,7 +64,8 @@
 	import wxParseAudio from './wxParseAudio';
 	import wxParseTable from './wxParseTable';
 	
-	export default {
+	import T from '@/common/langue/i18n'
+export default {
 		// #ifdef APP-PLUS | H5
 		name: 'wxParseTemplate',
 		// #endif

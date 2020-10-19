@@ -5,7 +5,7 @@
 
     <view class="msg" v-if="storeData.Stores_ImgPath">
       <view class="item">
-        <view class="item-name">门店图片</view>
+        <view class="item-name">{{$t('2031x0')}}</view>
         <view class="info">
           <image :src="User_HeadImg" @click="changeAvator" mode=""></image>
         </view>
@@ -14,7 +14,7 @@
         </view>
       </view>
       <view @click="updateMy(3)" class="item">
-        <view class="item-name">联系电话</view>
+        <view class="item-name">{{$t('2031x1')}}</view>
         <view class="info">
           {{storeData.Stores_Telephone}}
         </view>
@@ -23,7 +23,7 @@
         </view>
       </view>
       <view @click="updateMy(2)" class="item">
-        <view class="item-name">订单短信通知号码</view>
+        <view class="item-name">{{$t('2031x2')}}</view>
         <view class="info">
           {{storeData.mobile}}
         </view>
@@ -32,7 +32,7 @@
         </view>
       </view>
       <view @click="updateMy(10)" class="item">
-        <view class="item-name">店铺名称</view>
+        <view class="item-name">{{$t('2031x3')}}</view>
         <view class="info">
           {{storeData.Stores_Name}}
         </view>
@@ -42,7 +42,7 @@
       </view>
 
       <view @click="updateMy(1)" class="item">
-        <view class="item-name">门店地址</view>
+        <view class="item-name">{{$t('2031x4')}}</view>
         <view class="info">
           {{storeData.Stores_Province_name}}
           {{storeData.Stores_City_name}}
@@ -73,6 +73,7 @@ import {
 import { apiBaseUrl } from '../../common/env'
 import { pageMixin } from '../../common/mixin'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {
@@ -141,7 +142,7 @@ export default {
                   store_id: that.Stores_ID
                 }).then(res => {
                   uni.showToast({
-                    title: '修改成功',
+                    title: T._('2031d0'),
                     icon: 'success'
                   })
                   getStoreDetail({ store_id: _this.Stores_ID }).then(res => {
@@ -185,7 +186,7 @@ export default {
                 store_id: that.Stores_ID
               }).then(res => {
                 uni.showToast({
-                  title: '修改成功',
+                  title: T._('2031d1'),
                   icon: 'success'
                 })
                 getStoreDetail({ store_id: _this.Stores_ID }).then(res => {

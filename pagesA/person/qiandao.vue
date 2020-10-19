@@ -7,11 +7,11 @@
         <image :src="'/static/client/task/yuan.png'|domain" class="image"></image>
         <image :src="'/static/client/task/qiandao.png'|domain" class="qiandao image"></image>
         <view class="qiandaoliji">
-          {{pro.signin?'已经签到':'立即签到'}}
+          {{pro.signin?$t('1634x0'):$t('1634x1')}}
         </view>
       </view>
       <view class="msg">
-        坚持每天连续签到可以获多重奖励哦
+        {{$t('1634x2')}}
       </view>
     </view>
 
@@ -20,13 +20,14 @@
         <image :src="'/static/client/task/checked.png'|domain" class="image" v-if="index<continues"></image>
         <image :src="'/static/client/task/unchecked.png'|domain" class="image" v-else></image>
         <view class="view">
-          第{{index+1}}天
+			<block v-if="$p('zh-cn')">第{{index+1}}天</block>
+			<block v-if="$p('en-us')">Day {{index+1}}</block>
         </view>
       </view>
     </view>
     <view class="err">
       <image :src="'/static/client/task/err.png'|domain" class="image" mode=""></image>
-      温馨提示
+      {{$t('1634x3')}}
     </view>
     <view class="last" v-if="pro">
       {{pro.desc}}
@@ -39,6 +40,7 @@ import { goBack } from '../../common/tool.js'
 import { pageMixin } from '../../common/mixin'
 import { getSignin, signin } from '../../common/fetch.js'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {
@@ -57,7 +59,7 @@ export default {
       if (!this.$fun.checkIsLogin(1)) return
       if (this.pro.signin == 1) {
         uni.showToast({
-          title: '今日已经签到',
+          title: T._('1634d0'),
           icon: 'none'
         })
       }
@@ -143,7 +145,8 @@ export default {
           color: #F43131;
           position: absolute;
           top: 157rpx;
-          left: 75rpx;
+		  text-align: center;
+		  width: 100%;
         }
 
         .qiandao {

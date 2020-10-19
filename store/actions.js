@@ -1,3 +1,4 @@
+import T from '@/common/langue/i18n' 
 import { getSystemConf } from '../common/fetch'
 import { ls } from '../common/tool'
 import { confirm, fun } from '../common'
@@ -144,8 +145,7 @@ export const getUserInfo = async ({ commit, state }, through) => {
 
   if (through) {
     // 则本地没有用户信息，提示用户是否需要登录。
-
-    await confirm({ title: '提示', content: '需要登录,请问是否登录?', confirmText: '去登录', cancelText: '暂不登录' }).then(() => {
+    await confirm({ title: T._('2361d0'), content: T._('2361d1'), confirmText: T._('2361d2'), cancelText: T._('2361d3') }).then(() => {
       // 要替换掉navigateTo，不然登录页面回退就尴尬了
       // 用这个可以记录登陆前页面
       fun.checkIsLogin(1)

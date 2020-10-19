@@ -1,7 +1,7 @@
 <template>
   <div style="background-color: #FFFFFF;height: 100vh;">
     <div class="store-buy">
-      <span class="store-buy-title">{{total_person}}</span>人正在购买，总销量 <span
+      <span class="store-buy-title">{{total_person}}</span>{{$t('2317x0')}}，{{$t('2317x1')}} <span
     class="store-buy-title">{{total_buy_times}}</span>
     </div>
 
@@ -27,6 +27,7 @@
 import { pageMixin } from '../../common/mixin'
 import { getBuyerByProd } from '../../common/fetch'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {

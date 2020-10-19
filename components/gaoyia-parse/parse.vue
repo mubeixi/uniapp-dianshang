@@ -1,7 +1,7 @@
 <!--**
  * forked from：https://github.com/F-loat/mpvue-wxParse
  *
- * github地址: https://github.com/dcloudio/uParse
+ * github{{$t('140x0')}}: https://github.com/dcloudio/uParse
  *
  * for: uni-app框架下 富文本解析
  *
@@ -22,6 +22,7 @@
 import HtmlToJson from './libs/html2json'
 import wxParseTemplate from './components/wxParseTemplate0'
 
+import T from '@/common/langue/i18n'
 export default {
   name: 'uParse',
   props: {
@@ -53,7 +54,7 @@ export default {
     },
     noData: {
       type: String,
-      default: '<div style="color: red;">数据不能为空</div>'
+      default: `<div style="color: red;">${T._('140d0')}</div>`
     },
     startHandler: {
       type: Function,

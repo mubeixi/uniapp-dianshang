@@ -1,4 +1,5 @@
 <script>
+import T from '@/common/langue/i18n'
 import { getSystemConf } from './common/fetch'
 import { ls } from './common/tool'
 import { isDev, APP_USERS_ID, isCustom } from './common/env'
@@ -94,6 +95,16 @@ export default {
     })
   },
   onShow: function () {
+	  const tabbarArr = ["home","class","shopping","mine"];
+	  tabbarArr.forEach(function(item,index){
+	  	  uni.setTabBarItem({
+	  	  	  index:index,
+	  	  	  text:T._(item),
+	  		  fail:function(err){
+	  			  console.log(err)
+	  		  }
+	  	  })
+	  })
   },
   onHide: function () {
   },

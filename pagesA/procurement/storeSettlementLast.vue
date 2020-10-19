@@ -2,35 +2,35 @@
   <view @click="commonClick" class="wrap">
     <view class="myTop">
       <view class="myView">
-        开放时间:
+        {{$t('2154x0')}}
         <text class="colorFont">{{list.start_time}}</text>
       </view>
       <view class="myView">
-        结算时间:
+        {{$t('2154x1')}}
         <text class="colorFont">{{list.end_time}}</text>
       </view>
       <view class="myView">
-        订单总金额:
+        {{$t('2154x2')}}
         <text class="colorRed">¥{{list.Order_TotalAmount||0}}</text>
       </view>
       <view class="myView">
-        结算比例:
+        {{$t('2154x3')}}
         <text class="colorFont">{{list.Distribute_Balance||'0:0'}}</text>
       </view>
       <view class="myView">
-        运费金额:
+        {{$t('2154x4')}}
         <text class="colorFont">¥{{list.Shipping_fee||0}}</text>
       </view>
       <view class="myView">
-        服务费:
+        {{$t('2154x5')}}
         <text class="colorFont">¥{{list.service_fee||0}}</text>
       </view>
       <view class="myView">
-        退款金额:
+        {{$t('2154x6')}}:
         <text class="colorFont">¥{{list.back_amount||0}}</text>
       </view>
       <view class="myView">
-        实际结算:
+        {{$t('2154x7')}}
         <text class="colorRed">¥{{list.Stores_Balance||0}}</text>
       </view>
     </view>
@@ -38,15 +38,15 @@
     <view style="background-color: #F8F8F8;height: 10px;width: 750rpx;"></view>
 
     <view class="tableTitle">
-      订单数据
+      {{$t('2154x8')}}
     </view>
     <view class="table">
       <view class="th">
-        <view class="td">订单号</view>
-        <view class="td">总价</view>
-        <view class="td">实付</view>
-        <view class="td">退款</view>
-        <view class="td">结算</view>
+        <view class="td">{{$t('2154x9')}}</view>
+        <view class="td">{{$t('2154x10')}}</view>
+        <view class="td">{{$t('2154x11')}}</view>
+        <view class="td">{{$t('2154x12')}}</view>
+        <view class="td">{{$t('2154x13')}}</view>
       </view>
       <view :key="index" class="tr" v-for="(item,index) of list.orders">
         <view class="td">{{item.order_id}}</view>
@@ -58,10 +58,10 @@
     </view>
 
     <view @click="goStore" class="buttons" v-if="list.orders">
-      发起结算
+      {{$t('2154x14')}}
     </view>
     <view class="buttons ccc" v-if="!list.orders">
-      发起结算
+      {{$t('2154x15')}}
     </view>
   </view>
 </template>
@@ -73,6 +73,7 @@ import { mapGetters } from 'vuex'
 import { pageMixin } from '../../common/mixin'
 import { modal } from '@/common'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {
@@ -114,7 +115,7 @@ export default {
           })
         }, 1000)
       }).catch(() => {
-        modal('操作失败')
+        modal(T._('2154d0'))
       })
     },
     search () {
@@ -127,7 +128,7 @@ export default {
         this.list = res.data
         this.index = 2
       }).catch(() => {
-        modal('操作失败')
+        modal(T._('2154d1'))
       })
     },
     bindDateChangeEnd (e) {

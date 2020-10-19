@@ -17,6 +17,7 @@
 import { disApplyInit } from '../../common/fetch.js'
 import { pageMixin } from '../../common/mixin'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {

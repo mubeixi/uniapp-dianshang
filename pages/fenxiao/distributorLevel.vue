@@ -13,7 +13,7 @@
           </block>
 
           <view class="vipGrade" v-if="item.Level_ID==pro.user_info.Level_ID&&userInfo.Is_Distribute==1">
-            当前等级
+            {{$t('480x0')}}
           </view>
           <view class="mmp" v-if="dis_level.length>0">
             <image :src="item.Level_Icon" class="myImgs"></image>
@@ -23,15 +23,16 @@
       </swiper>
     </view>
     <view style="height: 220rpx;"></view>
-    <circleTitle title="级别简介"></circleTitle>
+    <circleTitle :title="$t('480x1')"></circleTitle>
     <view class="level-description">
       {{Level_Description}}
     </view>
     <view style="height: 20rpx;background-color: #F8F8F8;"></view>
-    <circleTitle title="级别条件"></circleTitle>
+    <circleTitle :title="$t('480x2')"></circleTitle>
     <view class="titleMy" v-if="dis_level.length>0">
       <image src="/static/procurement/error.png" style="height: 25rpx;width: 25rpx;margin-right: 12rpx;"></image>
-      注意：以下条件需{{dis_level[inds].arrive_limit_desc}}才能达到条件
+	  <block v-if="$p('zh-cn')"> 注意：以下条件需{{dis_level[inds].arrive_limit_desc}}才能达到条件</block>
+	  <block v-if="$p('en-us')"> Note: The following conditions require {{dis_level[inds].arrive_limit_desc}} to meet the conditions</block>
     </view>
     <view class="ruhe">
       <block v-if="dis_level[inds].level_rules_edit.pay_money">
@@ -40,22 +41,31 @@
           <view class="mbx">
             <view class="tops">
               <block v-if="dis_level[inds].level_rules_edit.pay_money.value.type=='1'">
-                商城总消费{{dis_level[inds].level_rules_edit.pay_money.value.money}}元
+                {{$t('480x3')}}
+				<block v-if="$p('zh-cn')">{{dis_level[inds].level_rules_edit.pay_money.value.money}}{{$t('480x4')}}</block>
+				<block v-if="$p('en-us')">{{$t('480x4')}}{{dis_level[inds].level_rules_edit.pay_money.value.money}}</block>
+				
               </block>
               <block v-if="dis_level[inds].level_rules_edit.pay_money.value.type=='2'">
-                一次性消费{{dis_level[inds].level_rules_edit.pay_money.value.money}}元
+                 {{$t('480x5')}}
+				 <block v-if="$p('zh-cn')">{{dis_level[inds].level_rules_edit.pay_money.value.money}}{{$t('480x6')}}</block>
+				 <block v-if="$p('en-us')">{{$t('480x6')}}{{dis_level[inds].level_rules_edit.pay_money.value.money}}</block>
+				 
               </block>
             </view>
             <view class="bottoms" v-if="dis_level[inds].level_rules_edit.pay_money.value.type=='1'">
-              已消费{{dis_level[inds].level_rules_edit.pay_money.user_data}}元
+               {{$t('480x7')}}
+			   <block v-if="$p('zh-cn')">{{dis_level[inds].level_rules_edit.pay_money.user_data}}{{$t('480x8')}}</block>
+			   <block v-if="$p('en-us')">{{$t('480x8')}}{{dis_level[inds].level_rules_edit.pay_money.user_data}}</block>
+			   
             </view>
           </view>
           <view class="submit submitMbx"
                 v-if="dis_level[inds].level_rules_edit.pay_money.user_data>=dis_level[inds].level_rules_edit.pay_money.value.money">
-            已完成
+            {{$t('480x9')}}
           </view>
           <view @click="goIndex" class="submit" v-else>
-            去消费
+            {{$t('480x10')}}
           </view>
 
         </view>
@@ -67,26 +77,26 @@
             <image class="image" src="/static/fenxiao/buyPro.png"></image>
             <view class="mbx">
               <view class="tops">
-                <block v-if="dis_level[inds].level_rules_edit.buy_prod.value.type=='1'">购买任意商品</block>
-                <block v-if="dis_level[inds].level_rules_edit.buy_prod.value.type=='2'">购买特定商品</block>
+                <block v-if="dis_level[inds].level_rules_edit.buy_prod.value.type=='1'">{{$t('480x11')}}</block>
+                <block v-if="dis_level[inds].level_rules_edit.buy_prod.value.type=='2'">{{$t('480x12')}}</block>
               </view>
               <view class="bottoms" v-if="dis_level[inds].level_rules_edit.buy_prod.user_data>0">
-                已完成
+                {{$t('480x13')}}
               </view>
               <view class="bottoms" v-else-if="dis_level[inds].level_rules_edit.buy_prod.value.arrive_status=='2'">
-                订单付款后计入
+                {{$t('480x14')}}
               </view>
               <view class="bottoms" v-else>
-                订单确认收货后计入
+                {{$t('480x15')}}
               </view>
 
             </view>
             <view class="submit submitMbx" v-if="dis_level[inds].level_rules_edit.buy_prod.user_data>0">
-              已完成
+              {{$t('480x16')}}
             </view>
             <view @click="goIndex" class="submit"
                   v-if="dis_level[inds].level_rules_edit.buy_prod.value.type=='1'&&dis_level[inds].level_rules_edit.buy_prod.user_data<=0">
-              去购买
+              {{$t('480x17')}}
             </view>
           </view>
 
@@ -103,7 +113,7 @@
                     {{item.Products_PriceX}}
                   </view>
                   <view class="proDetail">
-                    去购买
+                    {{$t('480x18')}}
                   </view>
                 </view>
               </view>
@@ -118,18 +128,18 @@
           <image class="image" src="/static/fenxiao/proCount.png"></image>
           <view class="mbx">
             <view class="tops">
-              商品购买{{dis_level[inds].level_rules_edit.buy_times.value}}次
+              {{$t('480x19')}}{{dis_level[inds].level_rules_edit.buy_times.value}}次
             </view>
             <view class="bottoms">
-              已购买{{dis_level[inds].level_rules_edit.buy_times.user_data}}次
+              {{$t('480x20')}}{{dis_level[inds].level_rules_edit.buy_times.user_data}}次
             </view>
           </view>
           <view class="submit submitMbx"
                 v-if="dis_level[inds].level_rules_edit.buy_times.user_data>=dis_level[inds].level_rules_edit.buy_times.value">
-            已完成
+            {{$t('480x21')}}
           </view>
           <view @click="goIndex" class="submit" v-else>
-            去购买
+            {{$t('480x22')}}
           </view>
 
         </view>
@@ -141,18 +151,24 @@
           <image class="image" src="/static/fenxiao/teanSum.png"></image>
           <view class="mbx">
             <view class="tops">
-              团队业绩达{{dis_level[inds].level_rules_edit.team_sales.value}}元
+              {{$t('480x23')}}
+			  <block v-if="$p('zh-cn')">{{dis_level[inds].level_rules_edit.team_sales.value}}{{$t('480x24')}}</block>
+			  <block v-if="$p('en-us')">{{$t('480x24')}}{{dis_level[inds].level_rules_edit.team_sales.value}}</block>
+			  
             </view>
             <view class="bottoms">
-              已销售{{dis_level[inds].level_rules_edit.team_sales.user_data}}元
+              {{$t('480x25')}}
+			  <block v-if="$p('zh-cn')">{{dis_level[inds].level_rules_edit.team_sales.user_data}}{{$t('480x26')}}</block>
+			  <block v-if="$p('en-us')">{{$t('480x26')}}{{dis_level[inds].level_rules_edit.team_sales.user_data}}</block>
+			  
             </view>
           </view>
           <view class="submit submitMbx"
                 v-if="dis_level[inds].level_rules_edit.team_sales.user_data>=dis_level[inds].level_rules_edit.team_sales.value">
-            已完成
+            {{$t('480x27')}}
           </view>
           <view @click="goFenxiao()" class="submit" v-else>
-            去完成
+            {{$t('480x28')}}
           </view>
 
         </view>
@@ -164,23 +180,29 @@
           <image class="image" src="/static/fenxiao/disBuy.png"></image>
           <view class="mbx">
             <view class="tops">
-              直接购买{{dis_level[inds].level_rules_edit.direct_buy.value.money}}元
+              {{$t('480x29')}}
+			  <block v-if="$p('zh-cn')">{{dis_level[inds].level_rules_edit.direct_buy.value.money}}{{$t('480x30')}}</block>
+			  <block v-if="$p('en-us')">{{$t('480x30')}}{{dis_level[inds].level_rules_edit.direct_buy.value.money}}</block>
+			  
             </view>
             <view class="bottoms" v-if="dis_level[inds].level_rules_edit.direct_buy.value.type=='1'">
-              直接购买
+				{{$t('480x31')}}
             </view>
             <view class="bottoms" v-if="dis_level[inds].level_rules_edit.direct_buy.value.type=='2'">
-              送赠品({{dis_level[inds].level_rules_edit.direct_buy.data.gift_name}})
+              {{$t('480x32')}}({{dis_level[inds].level_rules_edit.direct_buy.data.gift_name}})
             </view>
             <view class="bottoms" v-if="dis_level[inds].level_rules_edit.direct_buy.value.type=='3'">
-              送余额({{dis_level[inds].level_rules_edit.direct_buy.value.present}}元)
+              {{$t('480x33')}}
+			  <block v-if="$p('zh-cn')">({{dis_level[inds].level_rules_edit.direct_buy.value.present}}{{$t('480x34')}})</block>
+			  <block v-if="$p('en-us')">({{$t('480x34')}}{{dis_level[inds].level_rules_edit.direct_buy.value.present}})</block>
+			  
             </view>
           </view>
           <view class="submit submitMbx" v-if="dis_level[inds].buy_order.Order_Status==4">
-            已完成
+            {{$t('480x35')}}
           </view>
           <view @click="buyDis(dis_level[inds].Level_ID)" class="submit" v-else>
-            去购买
+            {{$t('480x36')}}
           </view>
         </view>
       </block>
@@ -190,28 +212,28 @@
           <image class="image" src="/static/fenxiao/editS.png"></image>
           <view class="mbx">
             <view class="tops">
-              直接申请
+              {{$t('480x37')}}
             </view>
             <view class="bottoms">
-              去申请
+              {{$t('480x38')}}
             </view>
           </view>
           <block v-if="dis_level[inds].apply_order">
             <block v-if="dis_level[inds].apply_order.status">
               <view class="submit submitMbx" v-if="dis_level[inds].apply_order.status==2">
-                已完成
+                {{$t('480x39')}}
               </view>
               <view class="submit submitMbx" v-else-if="dis_level[inds].apply_order.status==1">
-                待审核
+                {{$t('480x40')}}
               </view>
               <view @click="edit(dis_level[inds].Level_ID)" class="submit" v-else>
-                已驳回({{dis_level[inds].apply_order.reason}})
+                {{$t('480x41')}}({{dis_level[inds].apply_order.reason}})
               </view>
             </block>
           </block>
           <block v-else>
             <view @click="edit(dis_level[inds].Level_ID)" class="submit">
-              去申请
+              {{$t('480x42')}}
             </view>
           </block>
         </view>
@@ -225,20 +247,32 @@
                 style="border-bottom: 0px;" v-for="(it,ind) of dis_level[inds].level_rules_edit.direct_sons.value">
             <image class="image" src="/static/fenxiao/zhiyao.png"></image>
             <view class="mbx">
+				
               <view class="tops">
-                直邀{{it.count}}人{{it.level_name}}
+				  <block v-if="$p('zh-cn')">
+					   直邀{{it.count}}人{{it.level_name}}
+				  </block>
+				  <block v-if="$p('en-us')">
+					  Directly invite {{it.count}} people {{it.level_name}}
+				  </block>
+               
               </view>
               <view class="bottoms">
-                已邀{{dis_level[inds].level_rules_edit.direct_sons.user_data[it.level_id]||0}}人
+				  <block v-if="$p('zh-cn')">
+					  已邀{{dis_level[inds].level_rules_edit.direct_sons.user_data[it.level_id]||0}}人
+				  </block>
+				  <block v-if="$p('zh-cn')">
+					  {{dis_level[inds].level_rules_edit.direct_sons.user_data[it.level_id]||0}} people invited
+				  </block>
               </view>
             </view>
             <block v-if="ind==0">
               <view class="submit submitMbx"
                     v-if="dis_level[inds].level_rules_edit.direct_sons.user_data.is_completed==1">
-                已完成
+                {{$t('480x43')}}
               </view>
               <view @click="goFenxiao" class="submit">
-                去邀请
+                {{$t('480x44')}}
               </view>
             </block>
           </view>
@@ -255,19 +289,29 @@
             <image class="image" src="/static/fenxiao/teamLast.png"></image>
             <view class="mbx">
               <view class="tops">
-                团队{{it.level_name}}达{{it.count}}人
+				<block v-if="$('zh-cn')">
+					团队{{it.level_name}}达{{it.count}}人
+				</block>
+				<block v-if="$('en-us')">
+					Team {{it.level_name}} up to {{it.count}} people
+				</block>
               </view>
               <view class="bottoms">
-                已邀{{dis_level[inds].level_rules_edit.team_sons.user_data[it.level_id]||0}}人
+				  <block v-if="$('zh-cn')">
+				  	已邀{{dis_level[inds].level_rules_edit.team_sons.user_data[it.level_id]||0}}人
+				  </block>
+				  <block v-if="$('en-us')">
+				  	{{dis_level[inds].level_rules_edit.team_sons.user_data[it.level_id]||0}} people invited
+				  </block>
               </view>
             </view>
             <block v-if="ind==0">
               <view class="submit submitMbx"
                     v-if="dis_level[inds].level_rules_edit.team_sons.user_data.is_completed==1">
-                已完成
+                {{$t('480x45')}}
               </view>
               <view @click="goFenxiao" class="submit">
-                去邀请
+                {{$t('480x46')}}
               </view>
             </block>
           </view>
@@ -285,6 +329,7 @@ import { pageMixin } from '../../common/mixin'
 import { disApplyInit } from '../../common/fetch.js'
 import { mapActions, mapGetters } from 'vuex'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {
@@ -342,7 +387,7 @@ export default {
     },
     disApplyInit () {
       disApplyInit({}, {
-        tip: '正在加载中',
+        tip: T._('480d0'),
         mask: true
       }).then(res => {
         this.pro = res.data
@@ -364,7 +409,7 @@ export default {
   async created () {
     const initData = await this.getInitData()
     uni.setNavigationBarTitle({
-      title: initData.commi_rename.commi + '等级'
+      title: initData.commi_rename.commi + T._('480d1')
     })
   }
 }
@@ -506,7 +551,7 @@ export default {
       }
 
       .submit {
-        width: 110rpx;
+        // width: 110rpx;
         height: 45rpx;
         line-height: 45rpx;
         background: rgba(244, 49, 49, 1);

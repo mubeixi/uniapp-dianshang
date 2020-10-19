@@ -8,7 +8,7 @@
       <block v-if="index==1">
         <view class="fir">
           <view class="left">
-            申请区域：
+            {{$t('1239x0')}}：
           </view>
           <view class="right">
             {{item.Area_Concat}}
@@ -16,7 +16,7 @@
         </view>
         <view class="fir">
           <view class="left">
-            状态：
+            {{$t('1239x1')}}
           </view>
           <view class="rights">
             {{item.Order_Status_desc}}
@@ -29,7 +29,7 @@
       <block v-else>
         <view class="fir">
           <view class="left">
-            申请{{commi_rename.commi}}等级名称：
+            {{$('node','Apply for')}}{{commi_rename.commi}}{{$('node','grade name')}}：
           </view>
           <view class="right">
             {{item.Level_Name}}
@@ -37,7 +37,7 @@
         </view>
         <view class="fir">
           <view class="left">
-            申请股东名称：
+            {{$t('1239x2')}}
           </view>
           <view class="right">
             {{item.sha_level_name}}
@@ -45,7 +45,7 @@
         </view>
         <view class="fir">
           <view class="left">
-            状态：
+            {{$t('1239x3')}}
           </view>
           <view class="rights">
             {{item.Order_Status_desc}}
@@ -57,7 +57,7 @@
       </block>
       <view class="fir">
         <view class="left">
-          时间：
+          {{$t('1239x4')}}
         </view>
         <view class="right">
           {{item.Order_CreateTime}}
@@ -72,6 +72,7 @@ import { pageMixin } from '../../common/mixin'
 import { getAgentApply, getShaApply } from '../../common/fetch.js'
 import { mapGetters } from 'vuex'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {

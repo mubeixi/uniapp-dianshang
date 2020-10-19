@@ -3,22 +3,22 @@
     <view style="height: 10px;width: 100%;"></view>
     <view class="three">
       <view class="haha">
-        姓名
+        {{$t('933x0')}}
       </view>
-      <input class="inputs" placeholder="请输入您的姓名" placeholder-class="place" type="text" v-model="arr.apply_name">
+      <input class="inputs" :placeholder="$t('933x1')" placeholder-class="place" type="text" v-model="arr.apply_name">
     </view>
     <view class="three">
       <view class="haha">
-        电话
+        {{$t('933x2')}}
       </view>
-      <input @blur="isTell" class="inputs" placeholder="请输入您的电话" placeholder-class="place" type="number"
+      <input @blur="isTell" class="inputs" :placeholder="$t('933x3')" placeholder-class="place" type="number"
              v-model="arr.apply_mobile">
     </view>
     <view @click="submit" class="four">
-      提交申请
+      {{$t('933x4')}}
     </view>
     <view @click="goRecord" class="five">
-      查看申请记录
+      {{$t('933x5')}}
       <image :src="'/static/client/fenxiao/chakan.png'|domain" class="image"></image>
     </view>
   </view>
@@ -29,6 +29,7 @@ import { pageMixin } from '../../common/mixin'
 import { shaApply } from '../../common/fetch.js'
 import { checkMobile } from '../../common/tool.js'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {
@@ -48,13 +49,13 @@ export default {
     submit () {
       if (!this.arr.apply_name) {
         uni.showToast({
-          title: '请输入姓名',
+          title: T._('933d0'),
           icon: 'none'
         })
         return
       } else if (!(checkMobile(this.arr.apply_mobile))) {
         uni.showToast({
-          title: '手机号输入错误，请重新输入',
+          title: T._('933d1'),
           icon: 'none'
         })
         return
@@ -79,7 +80,7 @@ export default {
     isTell () {
       if (!(checkMobile(this.arr.apply_mobile))) {
         uni.showToast({
-          title: '手机号输入错误，请重新输入',
+          title: T._('933d2'),
           icon: 'none'
         })
       }

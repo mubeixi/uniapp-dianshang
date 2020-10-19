@@ -23,6 +23,7 @@ import { disApplyInit } from '../../common/fetch.js'
 import { pageMixin } from '../../common/mixin'
 import { mapActions } from 'vuex'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {

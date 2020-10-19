@@ -14,6 +14,7 @@
 </template>
 <script>
 
+import T from '@/common/langue/i18n'
 export default {
   props: {
 
@@ -47,7 +48,7 @@ export default {
       }
     },
     videoErrorCallback (e) {
-      const msg = '视频播放错误:' + JSON.stringify(e)
+      const msg = T._('108d0') + JSON.stringify(e)
       uni.showModal({
         content: msg,
         showCancel: false

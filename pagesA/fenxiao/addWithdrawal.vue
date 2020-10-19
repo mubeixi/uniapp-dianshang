@@ -4,7 +4,7 @@
     <!-- <page-title title="添加提现方式" rightHidden="true" ></page-title> -->
     <view class="center" v-if="array.length>0">
       <view class="left">
-        提现方式
+        {{$t('997x0')}}
       </view>
       <view class="right">
         <!-- 中国银行 <image :src="'/static/client/right.png'|domain"></image> -->
@@ -20,43 +20,43 @@
       <block v-if="data.Method_Type=='bank_card'">
         <view class="centers">
           <view class="left">
-            户名
+            {{$t('997x1')}}
           </view>
-          <input class="inputs" placeholder="请输入您的户名" placeholder-style="places" type="text"
+          <input class="inputs" :placeholder="$t('997x2')" placeholder-style="places" type="text"
                  v-model="data.Account_Name">
         </view>
         <view class="centers">
           <view class="left">
-            账号
+            {{$t('997x3')}}
           </view>
-          <input class="inputs" placeholder="请输入您的银行卡卡号" placeholder-style="places" type="text"
+          <input class="inputs" :placeholder="$t('997x4')" placeholder-style="places" type="text"
                  v-model="data.Account_Val">
         </view>
         <!-- <view class="centers">
           <view class="left">
-            开户行
+            {{$t('997x5')}}
           </view>
-          <input type="text" placeholder="请输入您的开户行" placeholder-style="places" v-model="data.Bank_Position">
+          <input type="text" :placeholder="$t('997x6')" placeholder-style="places" v-model="data.Bank_Position">
         </view> -->
       </block>
       <block v-else-if="data.Method_Type=='alipay'">
         <view class="centers">
           <view class="left">
-            昵称
+            {{$t('997x7')}}
           </view>
-          <input class="inputs" placeholder="请输入您的昵称" placeholder-style="places" type="text"
+          <input class="inputs" :placeholder="$t('997x8')" placeholder-style="places" type="text"
                  v-model="data.Account_Name">
         </view>
         <view class="centers">
           <view class="left">
-            账号
+            {{$t('997x9')}}
           </view>
-          <input class="inputs" placeholder="请输入您的支付宝账号" placeholder-style="places" type="text"
+          <input class="inputs" :placeholder="$t('997x10')" placeholder-style="places" type="text"
                  v-model="data.Account_Val">
         </view>
       </block>
       <button class="addInfo" formType="submit">
-        添加
+        {{$t('997x11')}}
       </button>
     </form>
   </view>
@@ -67,6 +67,7 @@ import { pageMixin } from '../../common/mixin'
 import { addUserWithdrawMethod, getShopWithdrawMethod } from '../../common/fetch.js'
 import { mapActions, mapGetters } from 'vuex'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {

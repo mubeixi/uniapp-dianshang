@@ -3,14 +3,14 @@
     <view @click="goAddressList" class="address" v-if="orderInfo.is_virtual == 0 ">
       <image :src="'/static/client/location.png'|domain" alt="" class="loc_icon"></image>
       <view class="add_msg" v-if="addressinfo.Address_Name">
-        <view class="name">收货人：{{addressinfo.Address_Name}} <span>{{addressinfo.Address_Mobile | formatphone}}</span>
+        <view class="name">{{$t('1464x0')}}：{{addressinfo.Address_Name}} <span>{{addressinfo.Address_Mobile | formatphone}}</span>
         </view>
         <view class="location">
-          收货地址：{{addressinfo.Address_Province_name}}{{addressinfo.Address_City_name}}{{addressinfo.Address_Area_name}}{{addressinfo.Address_Town_name}}
+          {{$t('1464x1')}}：{{addressinfo.Address_Province_name}}{{addressinfo.Address_City_name}}{{addressinfo.Address_Area_name}}{{addressinfo.Address_Town_name}}
         </view>
       </view>
       <view class="add_msg" v-else>
-        <view>暂无收货地址，去添加</view>
+        <view>{{$t('1464x2')}}</view>
       </view>
       <image :src="'/static/client/right.png'|domain" alt="" class="right"></image>
     </view>
@@ -34,9 +34,9 @@
     <view class="other" v-if="orderInfo.is_virtual == 0">
       <view class="bd">
         <view @click="changeShip" class="o_title">
-          <span>运费选择</span>
+          <span>{{$t('1464x3')}}</span>
           <span style="text-align:right; color: #888;">
-						<span>{{shipping_name?(shipping_name + ' ' + (orderInfo.Order_Shipping.Price > 0 ? orderInfo.Order_Shipping.Price : '免运费')):'请选择物流'}}</span>
+						<span>{{shipping_name?(shipping_name + ' ' + (orderInfo.Order_Shipping.Price > 0 ? orderInfo.Order_Shipping.Price : $t('1464x4'))):$t('1464x5')}}</span>
                         <image :src="'/static/client/right.png'|domain" alt="" class="right"></image>
                     </span>
         </view>
@@ -45,46 +45,46 @@
     <view class="other" v-if="orderInfo.is_virtual == 1">
       <view class="bd">
         <view class="o_title  words">
-          <span>购买人姓名</span>
-          <input class="inputs" placeholder="请填写姓名" type="text" v-model="user_name">
+          <span>{{$t('1464x6')}}</span>
+          <input class="inputs" :placeholder="$t('1464x7')" type="text" v-model="user_name">
         </view>
       </view>
     </view>
     <view class="other" v-if="orderInfo.is_virtual == 1">
       <view class="bd">
         <view class="o_title  words">
-          <span>购买人手机号</span>
-          <input class="inputs" placeholder="请填写手机号码" type="text" v-model="user_mobile">
+          <span>{{$t('1464x8')}}</span>
+          <input class="inputs" :placeholder="$t('1464x9')" type="text" v-model="user_mobile">
         </view>
       </view>
     </view>
     <view class="other" v-if="orderInfo.is_use_money == 1">
       <view class="bd">
         <view class="o_title">
-          <span>是否使用余额</span>
+          <span>{{$t('1464x10')}}</span>
           <switch :checked="userMoneyChecked" @change="userMoneyChange" color="#04B600" />
         </view>
-        <view class="o_de">您当前最多使用余额:
+        <view class="o_de">{{$t('1464x11')}}
           <text>{{userInfo.User_Money < orderInfo.Order_TotalPrice ? userInfo.User_Money :
             orderInfo.Order_TotalPrice}}
           </text>
         </view>
         <input @blur="confirm_user_money" @focus="postData.use_money = 0" class="o_desc"
-               placeholder="请输入金额" type="number" v-if="userMoneyChecked" v-model.number="postData.use_money">
+               :placeholder="$t('1464x12')" type="number" v-if="userMoneyChecked" v-model.number="postData.use_money">
       </view>
     </view>
     <view class="other">
       <view class="bd">
         <view class="o_title  words">
-          <span>买家留言</span>
-          <input @blur="remarkConfirm" class="inputs" placeholder="请填写留言内容" type="text">
+          <span>{{$t('1464x13')}}</span>
+          <input @blur="remarkConfirm" class="inputs" :placeholder="$t('1464x14')" type="text">
         </view>
       </view>
     </view>
     <view style="height:100rpx;">
       <view class="order_total">
         <view class="totalinfo">
-          <view class="info">共{{orderInfo.prod_count}}件商品 总计：
+          <view class="info">{{$t('1464x15')}}{{orderInfo.prod_count}}{{$('manual','Items')}} {{$t('1464x16')}}
             <text class="money">
               <text class="m_icon">￥</text>
               {{orderInfo.Order_Fyepay}}
@@ -93,13 +93,13 @@
           <view class="tips" v-if="orderInfo.obtain_desc">{{orderInfo.obtain_desc}}</view>
         </view>
         <form @submit="form_submit" report-submit>
-          <button class="submit" formType="submit">确定领取</button>
+          <button class="submit" formType="submit">{{$t('1464x17')}}</button>
         </form>
       </view>
     </view>
     <popup-layer :direction="'top'" ref="popupRef">
       <view class="bMbx" v-if="type=='shipping'">
-        <view class="fMbx">运费选择</view>
+        <view class="fMbx">{{$t('1464x18')}}</view>
         <view :key="shipid" class="iMbx" v-for="(ship,shipid) in orderInfo.shipping_company">
           <view>
             {{ship}}
@@ -110,19 +110,19 @@
         </view>
       </view>
       <view @click="closeMethod" class="sure">
-        确定
+        {{$t('1464x19')}}
       </view>
     </popup-layer>
     <view class="remind-wrap" v-if="remindAddress">
       <view class="remind-add">
-        <view class="text-align-center mb20">新建收货地址</view>
+        <view class="text-align-center mb20">{{$t('1464x20')}}</view>
         <view class="remind_desc">
-          您还没有收货地址，请先添加一个新的收货地址
+          {{$t('1464x21')}}
         </view>
         <view class="remind_btns text-align-center">
-          <view @click="goback" class="text-align-center fl1">返回</view>
+          <view @click="goback" class="text-align-center fl1">{{$t('1464x22')}}</view>
           <view @click="goEditAdd" class="text-align-center fl1 confirm">
-            新建
+            {{$t('1464x23')}}
           </view>
         </view>
       </view>
@@ -138,6 +138,7 @@ import { pageMixin } from '../../common/mixin'
 import { formatphone } from '../../common/filter.js'
 import { mapActions, mapGetters } from 'vuex'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   components: {
@@ -153,17 +154,17 @@ export default {
       checked3: true,
       wl_list: [
         {
-          name: '顺丰',
-          price: '免邮',
+          name: T._('1464d0'),
+          price: T._('1464d1'),
           index: 0
         },
         {
-          name: '中通',
-          price: '免邮',
+          name: T._('1464d2'),
+          price: T._('1464d3'),
           index: 1
         },
         {
-          name: '圆通',
+          name: T._('1464d4'),
           price: '￥20',
           index: 2
         }
@@ -268,7 +269,7 @@ export default {
         if (this.orderInfo.is_virtual == 0) {
           if (!this.postData.shipping_id) {
             uni.showToast({
-              title: '请选择物流',
+              title: T._('1464d5'),
               icon: 'none'
             })
             this.submited = false
@@ -278,7 +279,7 @@ export default {
         if (this.orderInfo.is_virtual == 1) {
           if (!this.user_name) {
             uni.showToast({
-              title: '请填写购买人姓名',
+              title: T._('1464d6'),
               icon: 'none'
             })
             this.submited = false
@@ -287,7 +288,7 @@ export default {
 
           if (!this.user_mobile) {
             uni.showToast({
-              title: '请填写购买人手机号',
+              title: T._('1464d7'),
               icon: 'none'
             })
             this.submited = false
@@ -373,7 +374,7 @@ export default {
       const user_money = (this.userInfo.User_Money < this.orderInfo.Order_TotalPrice) ? this.userInfo.User_Money : this.orderInfo.Order_TotalPrice
       if (input_money < 0 || isNaN(input_money)) {
         uni.showToast({
-          title: '输入金额有误',
+          title: T._('1464d8'),
           icon: 'none'
         })
         this.postData.use_money = 0
@@ -381,8 +382,8 @@ export default {
       }
       if (input_money - user_money > 0) {
         uni.showModal({
-          title: '提示',
-          content: '金额大于最大使用余额',
+          title: T._('1464d9'),
+          content: T._('1464d10'),
           icon: 'none',
           showCancel: false
         })
@@ -443,7 +444,7 @@ export default {
       if (this.type == 'coupon') {
         for (var i in this.couponlist) {
           if (this.couponlist[i].Coupon_ID == this.postData.coupon_id) {
-            this.coupon_desc = `满${this.couponlist[i].Coupon_Condition} - ${this.couponlist[i].Coupon_Cash > 0 ? this.couponlist[i].Coupon_Cash : this.couponlist[i].Coupon_Discount}`
+            this.coupon_desc = `${T._('1464d11')}${this.couponlist[i].Coupon_Condition} - ${this.couponlist[i].Coupon_Cash > 0 ? this.couponlist[i].Coupon_Cash : this.couponlist[i].Coupon_Discount}`
           }
         }
       } else {
@@ -482,8 +483,8 @@ export default {
         this.back_address_id = 0
       }).catch(() => {
         uni.showModal({
-          title: '错误',
-          content: '收货地址获取失败',
+          title: T._('1464d12'),
+          content: T._('1464d13'),
           showCancel: false
         })
         return false

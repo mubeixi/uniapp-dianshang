@@ -5,36 +5,36 @@
     <div class="store-type">
       <image class="store-img" src="/static/store/storeType.png"></image>
       <div class='store-type-title' v-if="type!=3">
-        邀请你开通 <span class="store-color">{{type==1?'经销商':'社区服务店'}}</span>
+        {{$t('2321x0')}} <span class="store-color">{{type==1?$t('2321x1'):$t('2321x2')}}</span>
       </div>
       <div class='store-type-title' v-else-if="type==3">
-        邀请你进入我的店铺
+        {{$t('2321x3')}}
       </div>
     </div>
     <div class="user-name">{{storeDetail.Stores_Name}}</div>
     <image :src="qrcode" class="store-qrcode"></image>
-    <div class="store-qc-text">长按识别图中二维码</div>
+    <div class="store-qc-text">{{$t('2321x4')}}</div>
 
     <canvas canvas-id="myCanvas" class="myCanvas" id="myCanvas"/>
 
     <div class="button-store">
 
       <image src="/static/store/saveHai.png" style="width: 100%;height: 100%"></image>
-      <div @click="saveAll" class="button-text">保存海报</div>
+      <div @click="saveAll" class="button-text">{{$t('2321x5')}}</div>
     </div>
 
 
     <wzw-dialog ref="commentModal" :autoClose="false">
       <div class="refuseApplyDialog">
         <div class="c3 fz-14 modal-title">
-          是否开启相册权限
+          {{$t('2321x6')}}
         </div>
         <div class="fz-12 m-b-20 m-t-10 c9">
-          很抱歉，该功能您需开启相册授权才能保存
+          {{$t('2321x7')}}
         </div>
         <div class="control">
-          <button @click="backSetting" class="action-btn btn-cancel">取消</button>
-          <button open-type='openSetting' bindopensetting="openSetting" class="btn-sub action-btn">确定</button>
+          <button @click="backSetting" class="action-btn btn-cancel">{{$t('2321x8')}}</button>
+          <button open-type='openSetting' bindopensetting="openSetting" class="btn-sub action-btn">{{$t('2321x9')}}</button>
         </div>
       </div>
     </wzw-dialog>
@@ -69,7 +69,7 @@ const Promisify = (functionName, params) => {
 }
 
 const getImg = (params) => {
-  console.log(params)
+  // console.log(params)
   return new Promise((resolve, reject) => {
     uni.getImageInfo({
       src: params,
@@ -79,6 +79,7 @@ const getImg = (params) => {
   })
 }
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {
@@ -113,13 +114,13 @@ export default {
         },
         fail () {//这里是用户拒绝授权后的回调
           _self.$refs.commentModal.show()
-          error('拒绝相册授权,保存失败')
+          error(T._('2321d0'))
         }
       })
     },
     async saveAll () {
       // #ifdef H5
-      toast('长按保存分享海报')
+      toast(T._('2321d1'))
       uni.previewImage({
         urls: [this.imgSave] // 需要预览的图片http链接列表
       })
@@ -145,10 +146,10 @@ export default {
         type: 'local'
       })
       if (handleRT === false) {
-        error('保存失败')
+        error(T._('2321d2'))
         return
       }
-      toast('保存成功')
+      toast(T._('2321d3'))
     },
     async init () {
       let data = {
@@ -173,7 +174,7 @@ export default {
       await getStoreShare(data).then(res => {
         this.qrcode = res.data.qrcode
       }).catch(e => {
-        error(e.msg || '获取二维码失败')
+        error(e.msg || T._('2321d4'))
       })
 
       let storeData = {}
@@ -198,10 +199,10 @@ export default {
     async initAll () {
       try {
 
-        showLoading('加载中')
+        showLoading(T._('2321d5'))
 
         const thumbTempFile = await getImg(this.storeDetail.Stores_ImgPath).catch(e => {
-          throw Error(e.errMsg || '缓存商品缩略图失败')
+          throw Error(e.errMsg || T._('2321d6'))
         })
 
         const wrapHeight = 718
@@ -209,7 +210,7 @@ export default {
         ctx.fillRect(0, 0, 414, wrapHeight)
 
         const bgTempFile = await getImg(domainFn('/static/client/store/shareStore.png')).catch(e => {
-          throw Error(e.errMsg || '缓存背景图失败')
+          throw Error(e.errMsg || T._('2321d7'))
         })
         ctx.drawImage(bgTempFile.path, 0, 0, 414, wrapHeight)
 
@@ -219,16 +220,16 @@ export default {
           ctx.setFillStyle('#FEFEFE')
           ctx.setFontSize(16)
           ctx.textAlign = 'center'
-          const showProductNameAgree = cutstrFun('邀请你进入我的店铺', parseInt(640 / 24)) // 只显示一行
+          const showProductNameAgree = cutstrFun(T._('2321d8'), parseInt(640 / 24)) // 只显示一行
           ctx.fillText(showProductNameAgree, 198, 162)
         } else {
           ctx.setFillStyle('#FEFEFE')
           ctx.setFontSize(16)
           ctx.textAlign = 'center'
-          const showProductNameAgree = cutstrFun('邀请你开通', parseInt(640 / 24)) // 只显示一行
+          const showProductNameAgree = cutstrFun(T._('2321d9'), parseInt(640 / 24)) // 只显示一行
           ctx.fillText(showProductNameAgree, 160, 162)
 
-          let str = this.type == 1 ? '经销商' : '社区服务店'
+          let str = this.type == 1 ? T._('2321d10') : T._('2321d11')
           ctx.setFillStyle('#EBED24')
           ctx.setFontSize(16)
           ctx.textAlign = 'center'
@@ -240,7 +241,7 @@ export default {
         ctx.setFillStyle('#F64E25')
         ctx.setFontSize(11)
         ctx.textAlign = 'center'
-        const showProductNames = cutstrFun('长按识别图中二维码', parseInt(640 / 24)) // 只显示一行
+        const showProductNames = cutstrFun(T._('2321d12'), parseInt(640 / 24)) // 只显示一行
         ctx.fillText(showProductNames, 196, 594)
 
         // 商品名称
@@ -260,7 +261,7 @@ export default {
         ctx.restore()
 
         const qrcode = await getImg(this.qrcode).catch(e => {
-          throw Error(e.errMsg || '二维码失败')
+          throw Error(e.errMsg || T._('2321d13'))
         })
         ctx.fillRect(120, 410, 312 / 2, 312 / 2)
         ctx.drawImage(qrcode.path, 120, 410, 312 / 2, 312 / 2)
@@ -272,7 +273,7 @@ export default {
         })
 
         const { tempFilePath } = await Promisify('canvasToTempFilePath', { canvasId: 'myCanvas' })
-        console.log(tempFilePath)
+        // console.log(tempFilePath)
         this.imgSave = tempFilePath
         // uni.previewImage({
         //   urls: [tempFilePath] // 需要预览的图片http链接列表
@@ -370,14 +371,14 @@ export default {
   }
 
   .store-type-title {
-    width: 310rpx;
     height: 32rpx;
     font-size: 32rpx;
     line-height: 32rpx;
     color: #EFEFEF;
-    position: absolute;
-    top: 16rpx;
-    left: 68rpx;
+	text-align: center;
+	margin-top: -64rpx;
+	position: relative;
+	z-index: 1;
   }
 
   .store-color {

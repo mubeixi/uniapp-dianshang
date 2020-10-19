@@ -4,22 +4,22 @@
       <view class="zhezhaoView">
         <image :src="'/static/client/check/close.png'|domain" @click="isShow=false" class="closeZ"></image>
         <view class="zhezhaoYue">
-          积分互转
+          {{$t('1532x0')}}
         </view>
         <view class="zhezhaoCenter">
           <view class="views">
             <image :src="'/static/client/check/phone.png'|domain" class="imgs"></image>
-            <input class="inputs" placeholder="请输入对方会员号" type="text" v-model="user_no">
+            <input class="inputs" :placeholder="$t('1532x1')" type="text" v-model="user_no">
           </view>
         </view>
         <view class="zhezhaoCenter">
           <view class="views">
             <image :src="'/static/client/check/money.png'|domain" class="imgs"></image>
-            <input class="inputs" placeholder="请输入转出积分" type="text" v-model="integral">
+            <input class="inputs" :placeholder="$t('1532x2')" type="text" v-model="integral">
           </view>
         </view>
         <view @click="confirm" class="zheButton">
-          确认转出
+          {{$t('1532x3')}}
         </view>
       </view>
     </view>
@@ -32,21 +32,21 @@
         {{intergatal}}
       </view>
       <view class="duihuan">
-        积分可在积分商城里兑换产品
+        {{$t('1532x4')}}
       </view>
       <view @click="isShow=true" class="zhuanchu">
-        转出
+        {{$t('1532x5')}}
       </view>
       <view class="bottoms">
         <view @click="gotojifen" class="lefts qwe">
           <image :src="'/static/client/check/t3.png'|domain" class="image"></image>
-          <text>积分商城</text>
+          <text>{{$t('1532x6')}}</text>
         </view>
         <view class="line">
         </view>
         <view @click="gotoMyExchange" class="rights qwe" style="padding-left: 66rpx;">
           <image :src="'/static/client/check/t4.png'|domain" class="image"></image>
-          <text>我的兑换</text>
+          <text>{{$t('1532x7')}}</text>
         </view>
       </view>
     </view>
@@ -54,7 +54,7 @@
     <view class="selects">
       <image :src="'/static/client/check/qw.png'|domain" class="image"></image>
       <view class="vies">
-        积分明细
+        {{$t('1532x8')}}
       </view>
       <image :src="'/static/client/check/er.png'|domain" class="image"></image>
     </view>
@@ -76,7 +76,7 @@
         </view>
       </template>
       <template v-else>
-        <view class="norecord">暂无记录</view>
+        <view class="norecord">{{$t('1532x9')}}</view>
       </template>
     </view>
 
@@ -92,6 +92,7 @@ import { get_user_info, transferIntegral, userIntegralRecord } from '../../commo
 import { pageMixin } from '../../common/mixin'
 import { error } from '@/common'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {
@@ -130,7 +131,7 @@ export default {
       this.user_intergatal = res.data.User_Integral
 	  this.setUserInfo(res.data)
     }).catch(() => {
-      error('获取用户信息失败')
+      error(T._('1532d0'))
     })
   },
   // 下拉加载
@@ -148,7 +149,7 @@ export default {
       this.isClicked = true
       if (!this.integral || this.integral < 0 || isNaN(this.integral)) {
         uni.showToast({
-          title: '您输入的积分有误',
+          title: T._('1532d1'),
           icon: 'none'
         })
         this.isClicked = false
@@ -156,7 +157,7 @@ export default {
       }
       if (!this.user_no) {
         uni.showToast({
-          title: '请确认转出账号',
+          title: T._('1532d2'),
           icon: 'none'
         })
         this.isClicked = false
@@ -179,7 +180,7 @@ export default {
             this.user_intergatal = res.data.User_Integral
             this.setUserInfo(this.info)
           }).catch(() => {
-            error('获取用户信息失败')
+            error(T._('1532d3'))
           })
         }, 1500)
       }, err => {
@@ -371,7 +372,7 @@ export default {
     }
 
     .zhuanchu {
-      width: 170rpx;
+      padding: 0 30rpx;
       height: 74rpx;
       line-height: 74rpx;
       text-align: center;

@@ -2,7 +2,7 @@
   <view @click="commonClick" class="wrap">
     <view class="search-wrap">
       <icon @click="search" class="search_icon" size="34rpx" type="search" />
-      <input @confirm="search" class="input" placeholder="请输入商品关键词" placeholder-style="color:#bebdbd;" type="text"
+      <input @confirm="search" class="input" :placeholder="$t('2038x0')" placeholder-style="color:#bebdbd;" type="text"
              v-model="prod_name">
     </view>
 
@@ -31,7 +31,7 @@
 
     <view class="storeCate">
       <view class="storeCateLine">
-        <view class="storeCateLei">一级分类:</view>
+        <view class="storeCateLei">{{$t('2038x1')}}</view>
         <scroll-view class="storeScroll" scroll-x="true">
           <block :key="index" v-for="(item,index) of cateList">
             <!-- skuSelect -->
@@ -42,7 +42,7 @@
         </scroll-view>
       </view>
       <view class="storeCateLine">
-        <view class="storeCateLei">二级分类:</view>
+        <view class="storeCateLei">{{$t('2038x2')}}</view>
         <scroll-view class="storeScroll" scroll-x="true" v-if="indexFirst>-1">
           <block :key="ind" v-for="(it,ind) of cateList[indexFirst].child">
             <!-- skuSelect -->
@@ -53,7 +53,7 @@
         </scroll-view>
       </view>
       <view class="storeCateLast">
-        <view class="storeCateLei">当前选择:</view>
+        <view class="storeCateLei">{{$t('2038x3')}}</view>
         <view class="selectSku" style="margin-right: 30rpx;" v-if="indexFirst>=0">{{cateList[indexFirst].Category_Name}}
           <image @click="delFirst" class="delSku" src="/static/skuDel.png"></image>
         </view>
@@ -68,7 +68,7 @@
       <view @click="add(item)" class="pro" v-for="item in prolist">
         <view class="pro-img">
           <image :src="item.ImgPath" class="img"></image>
-          <view class="add">加入选品库</view>
+          <view class="add">{{$t('2038x4')}}</view>
         </view>
         <view class="pro-name">{{item.Products_Name}}</view>
         <view class="pro-price">
@@ -81,24 +81,24 @@
             {{item.Products_PriceY}}
           </view>
         </view>
-        <view class="pro-count">月销{{item.Products_Sales}}</view>
+        <view class="pro-count">{{$t('2038x5')}}{{item.Products_Sales}}</view>
       </view>
     </view>
     <view style="height:90rpx;" v-if="total_cart_count > 0">
       <view :style="{'z-index': zIndex}" class="check">
-        <view @click="showSelected" class="check-msg">已选取
+        <view @click="showSelected" class="check-msg">{{$t('2038x6')}}
           <text class="num">{{total_cart_count}}</text>
-          个普通商品
+          {{$t('2038x7')}}
           <image :class="isClicked?'turn':''" class="img" src="/static/top.png"></image>
         </view>
-        <view @click="submit" class="submit">提交进货单</view>
+        <view @click="submit" class="submit">{{$t('2038x8')}}</view>
       </view>
     </view>
     <!--  遮罩层	-->
     <view :hidden="isHidden" @click="hiddenMask" class="mask"></view>
     <!--  属性弹窗	-->
     <view class="sku-pop" v-if="showSku">
-      <view class="sku-title">选择商品属性</view>
+      <view class="sku-title">{{$t('2038x9')}}</view>
       <view class="sku-content">
         <view class="skulist" v-for="item in prosku.skujosn_new">
           <view class="sku-name">{{item.sku}}</view>
@@ -109,7 +109,7 @@
           </view>
         </view>
         <view class="skulist">
-          <view class="sku-name">数量</view>
+          <view class="sku-name">{{$t('2038x10')}}</view>
           <view class="sku-item">
             <view @click="minus" class="handle">
               <view class="handle-bg">-</view>
@@ -121,8 +121,8 @@
           </view>
         </view>
         <view class="sku-btns">
-          <view @click="cancel" class="cancel btn">取消</view>
-          <view :class="submit_flag?'':'disabled'" @click="confirm" class="confirm btn">确定</view>
+          <view @click="cancel" class="cancel btn">{{$t('2038x11')}}</view>
+          <view :class="submit_flag?'':'disabled'" @click="confirm" class="confirm btn">{{$t('2038x12')}}</view>
         </view>
       </view>
     </view>
@@ -181,6 +181,7 @@ import { getLocation } from '../../common/tool/location'
 import { pageMixin } from '../../common/mixin'
 import { error } from '../../common'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {
@@ -263,7 +264,7 @@ export default {
   methods: {
     openAddress () {
       if (!this.storeAdress.wx_lat || !this.storeAdress.wx_lng) {
-        error('门店地址信息错误')
+        error(T._('2038d0'))
         return
       }
       // 百度就用Stores_PrimaryLng	:	113.32922884302Stores_PrimaryLat	:	33.745785957533
@@ -594,7 +595,7 @@ export default {
       const count = e.detail.value
       if (count <= 0) {
         this.postData.qty = 1
-        error('数量输入有误')
+        error(T._('2038d1'))
       }
     },
     plus () {
@@ -615,7 +616,7 @@ export default {
         this.postData.qty -= 1
       } else {
         uni.showToast({
-          title: '购买数量不能小于1',
+          title: T._('2038d2'),
           icon: 'none'
         })
         this.postData.qty = 1
@@ -652,7 +653,7 @@ export default {
       if (!this.submit_flag) return
       if (this.prosku.skuvaljosn && !this.postData.attr_id) {
         uni.showToast({
-          title: '请选择规格',
+          title: T._('2038d3'),
           icon: 'none'
         })
         return
@@ -672,7 +673,7 @@ export default {
         this.showSku = false
         this.get_cart()
       }).catch(e => {
-        error(e.msg || '添加购物车错误')
+        error(e.msg || T._('2038d4'))
       })
     }
   }

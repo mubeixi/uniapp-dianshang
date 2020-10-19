@@ -1,3 +1,4 @@
+import T from '@/common/langue/i18n' 
 import Vue from 'vue'
 import Vuex from 'vuex'
 import state from './state'

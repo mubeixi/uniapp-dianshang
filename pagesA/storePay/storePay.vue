@@ -4,7 +4,7 @@
     <view class="yue">
       <image :src="'/static/client/blance/storePay.jpg'|domain" class="image"></image>
       <view class="yueq">
-        余额
+        {{$t('2345x0')}}
       </view>
       <view class="pricsw">
         {{info.User_Money}}
@@ -13,17 +13,17 @@
 
     <view class="inputs">
       <image :src="'/static/client/check/money.png'|domain" class="image"></image>
-      <input class="input" placeholder="请输入消费金额" type="text" v-model="money">
+      <input class="input" :placeholder="$t('2345x1')" type="text" v-model="money">
     </view>
     <view class="inputs">
       <image :src="'/static/client/check/password.png'|domain" class="image"></image>
-      <input class="input" placeholder="请输入支付密码" type="password" v-model="passwd">
+      <input class="input" :placeholder="$t('2345x2')" type="password" v-model="passwd">
     </view>
     <view class="zhu">
-      注：若通过注册页面成为会员的用户，原支付密码与登录密码一致；否则，支付密码为“123456”
+      {{$t('2345x3')}}
     </view>
     <view @click="confirm" class="queren">
-      确认
+      {{$t('2345x4')}}
     </view>
   </view>
 </template>
@@ -32,6 +32,7 @@
 import { get_user_info, storeConsume } from '../../common/fetch.js'
 import { pageMixin } from '../../common/mixin'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {
@@ -51,7 +52,7 @@ export default {
       this.isClicked = true
       if (this.passwd == '') {
         uni.showToast({
-          title: '密码不能为空',
+          title: T._('2345d0'),
           icon: 'none'
         })
         this.isClicked = false
@@ -59,7 +60,7 @@ export default {
       }
       if (this.money == '' || isNaN(this.money) || this.money < 0) {
         uni.showToast({
-          title: '输入金额有误',
+          title: T._('2345d1'),
           icon: 'none'
         })
         this.isClicked = false

@@ -1,13 +1,13 @@
 <template>
   <div @click="commonClick" class="wrap">
     <div class="navs">
-      <div :class="tabidx===0?'active':''" @click="changIndex(0)" class="nav-item">全部</div>
-      <div :class="tabidx===1?'active':''" @click="changIndex(1)" class="nav-item">待处理</div>
+      <div :class="tabidx===0?'active':''" @click="changIndex(0)" class="nav-item">{{$t('2191x0')}}</div>
+      <div :class="tabidx===1?'active':''" @click="changIndex(1)" class="nav-item">{{$t('2191x1')}}</div>
 
-      <div :class="tabidx===2?'active':''" @click="changIndex(2)" class="nav-item">已驳回</div>
-      <div :class="tabidx===3?'active':''" @click="changIndex(3)" class="nav-item">已出库</div>
-      <div :class="tabidx===4?'active':''" @click="changIndex(4)" class="nav-item">已完成</div>
-      <div :class="tabidx===5?'active':''" @click="changIndex(5)" class="nav-item">已撤回</div>
+      <div :class="tabidx===2?'active':''" @click="changIndex(2)" class="nav-item">{{$t('2191x2')}}</div>
+      <div :class="tabidx===3?'active':''" @click="changIndex(3)" class="nav-item">{{$t('2191x3')}}</div>
+      <div :class="tabidx===4?'active':''" @click="changIndex(4)" class="nav-item">{{$t('2191x4')}}</div>
+      <div :class="tabidx===5?'active':''" @click="changIndex(5)" class="nav-item">{{$t('2191x5')}}</div>
     </div>
     <view class="space-box">
     </view>
@@ -17,7 +17,7 @@
           <div :key="idx1" @click="hidden_tip(idx1)" class="item" v-for="(apply,idx1) in applys">
             <div class="head">
               <div class="status flex flex-between ">
-                <div class="order-no">订单号: {{apply.Order_ID}}</div>
+                <div class="order-no">{{$t('2191x6')}}: {{apply.Order_ID}}</div>
                 <!--                            <image class="icon-delete"  @click="delApply(apply,idx1)" v-if="inArray(apply.Order_Status,[21,23,25])" src="/static/store/icon-del.png"></image>-->
               </div>
               <div class="info flex flex-between">
@@ -25,7 +25,7 @@
                   <div :style="{backgroundImage:'url('+apply.Stores_ImgPath+')'}" class="store-pic"></div>
                   <div class="store-title">{{apply.Stores_Name}}</div>
                   <div class="action">
-                    <span @click="showStore(apply.Order_Store)" class="action-item">查看信息</span>
+                    <span @click="showStore(apply.Order_Store)" class="action-item">{{$t('2191x7')}}</span>
                   </div>
                 </div>
                 <span class="status-text">{{apply.Order_Status_desc}}</span>
@@ -38,7 +38,7 @@
                   <div class="c">
                     <div class="title line10">{{item.prod_name}}</div>
                     <div class="line10 flex flex-between graytext font14 flex-vertical-center">
-                      <div class="spec-key">{{item.attr_info.attr_name||'无规格'}}</div>
+                      <div class="spec-key">{{item.attr_info.attr_name||$t('2191x8')}}</div>
                       <div class="numbox font16"><span class="font14">x</span>{{item.prod_count}}
                         <image @click.stop="show_pro_tip(apply,idx2)" class="qty-icon" mode=""
                                src="/static/procurement/i.png" v-if="item.prod_count_change_desc"></image>
@@ -62,12 +62,12 @@
               </div>
             </block>
             <div class="price-box">
-              总计:<span class="danger-color">￥<span class="total_num font16">{{apply.Order_TotalPrice}}</span></span>
+              {{$t('2191x9')}}<span class="danger-color">￥<span class="total_num font16">{{apply.Order_TotalPrice}}</span></span>
             </div>
             <div class="actions text-center">
               <block v-if="inArray(apply.Order_Status,[21])">
-                <button @click="openRefuseDialog(apply,idx1)" class="acion-btn" size="mini" type="warn">驳回</button>
-                <button @click="handleApply(apply,idx1)" class="acion-btn" size="mini">出库</button>
+                <button @click="openRefuseDialog(apply,idx1)" class="acion-btn" size="mini" type="warn">{{$t('2191x10')}}</button>
+                <button @click="handleApply(apply,idx1)" class="acion-btn" size="mini">{{$t('2191x11')}}</button>
               </block>
             </div>
           </div>
@@ -81,17 +81,17 @@
 
     <wzw-dialog ref="storeInfo">
       <div class="storeInfoDialog">
-        <div class="title text-center line15 font16">门店信息</div>
+        <div class="title text-center line15 font16">{{$t('2191x12')}}</div>
         <div class="row">
-          <div class="label">门店名称:</div>
+          <div class="label">{{$t('2191x13')}}</div>
           <div class="text">{{storeInfo.Stores_Name}}</div>
         </div>
         <div class="row">
-          <div class="label">门店电话:</div>
+          <div class="label">{{$t('2191x14')}}</div>
           <div class="text">{{storeInfo.Stores_Telephone}}</div>
         </div>
         <div class="row">
-          <div class="label">门店地址:</div>
+          <div class="label">{{$t('2191x15')}}</div>
           <div @click="showAdress" class="text">
             {{storeInfo.Stores_Province_name}}{{storeInfo.Stores_City_name}}{{storeInfo.Stores_Area_name}}{{storeInfo.Stores_Address}}
             <image class="img" src="/static/local.png"
@@ -99,7 +99,7 @@
           </div>
         </div>
         <view @click="showAdress" class="row" v-if="storeInfo.distance">
-          <view class="label">门店距离：</view>
+          <view class="label">{{$t('2191x16')}}</view>
           <view class="text">{{storeInfo.distance}}KM</view>
         </view>
       </div>
@@ -108,10 +108,10 @@
     <wzw-dialog ref="refuseApply">
       <div class="refuseApplyDialog">
 				<textarea :value="reason" @input="bingReasonInput" auto-height class="reason"
-                  placeholder="请输入驳回原因" placeholder-style="color:#999" />
+                  :placeholder="$t('2191x17')" placeholder-style="color:#999" />
         <div class="control">
-          <div @click="cancelRefuseApply" class="action-btn btn-cancel">取消</div>
-          <div @click="refuseApply" class="btn-sub action-btn">确定</div>
+          <div @click="cancelRefuseApply" class="action-btn btn-cancel">{{$t('2191x18')}}</div>
+          <div @click="refuseApply" class="btn-sub action-btn">{{$t('2191x19')}}</div>
         </div>
 
       </div>
@@ -133,6 +133,7 @@ import { error } from '../../common'
 import { findArrayIdx } from '../../common/tool'
 import { getLocation } from '../../common/tool/location'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   name: 'storeWholesale',
@@ -178,7 +179,7 @@ export default {
     // 减少数量
     minus (idx1, idx2, it, order_id) {
       uni.showModal({
-        content: '修改后差价将直接返还给门店，不能再增加数量，确定修改吗？',
+        content: T._('2191d0'),
         success: (res) => {
           if (res.confirm) {
             it.prod_count--
@@ -257,19 +258,19 @@ export default {
     },
     refuseApply () {
       if (!this.reason) {
-        error('请填写理由')
+        error(T._('2191d1'))
         return
       }
       refuseStorePurchaseApply({
         order_id: this.activeApply.Order_ID,
         reason: this.reason,
         store_id: this.Stores_ID
-      }, { tip: '处理中' }).then(res => {
+      }, { tip: T._('2191d2') }).then(res => {
         this.$refs.refuseApply.close()
 
         this.reason = ''
         this.activeApply.Order_Status = 23
-        this.activeApply.Order_Status_desc = '已驳回'
+        this.activeApply.Order_Status_desc = T._('2191d3')
         this.activeApply = null
         uni.showToast({
           title: res.msg
@@ -294,7 +295,7 @@ export default {
             lng: lng,
             store_id: store_id
           }
-          getStoreDetail(data, { tip: '加载中' }).then(res => {
+          getStoreDetail(data, { tip: T._('2191d4') }).then(res => {
             this.storeInfo = res.data
             this.storeInfo.distance = (res.data.distance / 1000).toFixed(2)
           })
@@ -339,7 +340,7 @@ export default {
         data.order_status = this.order_status
       }
 
-      await getStorePurchaseSales(data, { tip: '加载中' }).then(res => {
+      await getStorePurchaseSales(data, { tip: T._('2191d5') }).then(res => {
         this.paginate.totalCount = res.totalCount
         const rt = res.data.map(item => {
           for (var goods of item.prod_list) {
@@ -391,6 +392,7 @@ export default {
     box-sizing: border-box;
     display: flex;
     align-items: center;
+	justify-content: space-around;
     height: 80rpx;
     line-height: 80rpx;
     //background: #fff;
@@ -399,7 +401,7 @@ export default {
     padding: 0 10px;
 
     .nav-item {
-      flex: 1;
+      // flex: 1;
       /*box-sizing: border-box;*/
       text-align: center;
       /*position: relative;*/

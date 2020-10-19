@@ -6,10 +6,10 @@
     <!-- <page-title title="财富排行榜" rightHidden="true" ></page-title> -->
     <view class="all">
       <view :class="index==0?'checked':''" @click="change(0)" class="hahas">
-        总部{{commi_rename.commi}}
+        {{commi_rename.commi}}
       </view>
       <view :class="index==1?'checked':''" @click="change(1)" class="hahas">
-        我的好友
+        {{$t('1141x1')}}
       </view>
     </view>
     <!--		<view style="height: 95rpx;">-->
@@ -18,13 +18,13 @@
     <view class="mains">
       <view class="paiming">
         <view class="pai1">
-          排名
+          {{$t('1141x2')}}
         </view>
         <view class="pai2" v-if="initData.version_type>1">
-          爵位
+         {{$t('1141x3')}}
         </view>
         <view class="pai3">
-          佣金
+          {{$t('1141x4')}}
         </view>
       </view>
       <view :key="index" class="content" v-for="(item,index) of pro " v-if="index==0">
@@ -108,7 +108,7 @@
         </view>
       </view>
 
-      <view class="contents" v-if="rank_config==0&&index==0">总部排行未公开</view>
+      <view class="contents" v-if="rank_config==0&&index==0">{{$t('1141x5')}}</view>
     </view>
   </view>
 </template>
@@ -118,6 +118,7 @@ import { pageMixin } from '../../common/mixin'
 import { getBalanceRank } from '../../common/fetch.js'
 import { mapGetters } from 'vuex'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {

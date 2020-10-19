@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import T from '@/common/langue/i18n'
 export default {
   data () {
     return {}
@@ -22,7 +23,7 @@ export default {
   props: {
     title: {
       type: String,
-      default: '标题'
+      default: T._('24d0')
     }
   }
 }

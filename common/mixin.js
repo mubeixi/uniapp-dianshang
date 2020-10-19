@@ -1,3 +1,4 @@
+import T from '@/common/langue/i18n' 
 /**
  * 统计的混合类
  */
@@ -6,7 +7,6 @@ import { buildSharePath, emptyObject, GetQueryByString, isWeiXin, ls } from './t
 import { domainFn } from './filter'
 import { checkIsLogin, error } from './index'
 import { mapActions } from 'vuex'
-import T from '../common/langue/i18n'
 import store from '../store'
 // #ifdef H5
 import wx from 'weixin-js-sdk'
@@ -288,7 +288,7 @@ export const pageMixin = {
 
       if (!users_id) {
         uni.showModal({
-          title: '提示',
+          title: T._('16d0'),
           content: '缺少商户id'
         })
         return
@@ -373,16 +373,6 @@ export const pageMixin = {
       }
       // #endif
     },
-	// 批量注册变量名称
-	$restLangueAssign (arr) {
-	  for (var name of arr) {
-		this[name] = uni.T._(name)
-	  }
-	},
-	// 语言
-	$t (line, data) {
-	  return T._(line, data)
-	},
 	// 切换语种
 	$setLocale (code) {
 	  T.setLocale(code)
@@ -492,7 +482,7 @@ export const scanMixin = {
             }
           })
         }).catch(() => {
-          reject(Error('jssdk签名错误'))
+          reject(Error(T._('16d1')))
         })
         // #endif
 

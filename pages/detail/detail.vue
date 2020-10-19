@@ -20,10 +20,10 @@
           </video>
           <view class="change-btn" v-if="!hideNativeEleShow">
             <cover-view :class="[showVideo?'active':'','shipin']" @click="change_view(1)" v-if="showVideo&&showCorver">
-              {{ $t('detail','video') }}
+              {{ $t('215x0') }}
             </cover-view>
             <cover-view :class="[showVideo?'':'active','tupian']" @click="change_view(2)" v-if="showVideo&&showCorver">
-              {{ $t('detail','image') }}
+              {{ $t('215x1') }}
             </cover-view>
           </view>
         </view>
@@ -35,8 +35,8 @@
             </swiper-item>
           </swiper>
           <view class="change-btn" v-if="product.video_url">
-            <view :class="[showVideo?'active':'','shipin']" @click="change_view(1)">{{ $t('detail','video') }}</view>
-            <view :class="[showVideo?'':'active','tupian']" @click="change_view(2)">{{ $t('detail','image') }}</view>
+            <view :class="[showVideo?'active':'','shipin']" @click="change_view(1)">{{ $t('215x2') }}</view>
+            <view :class="[showVideo?'':'active','tupian']" @click="change_view(2)">{{ $t('215x3') }}</view>
           </view>
         </view>
       </view>
@@ -46,15 +46,12 @@
       <div class="price">
         <span class="n_price"><span class="mm">￥</span>{{product.Products_PriceX}}</span>
         <span class="o_price" v-if="product.Products_PriceY!=product.Products_PriceX"><span class="mm">￥</span>{{product.Products_PriceY}}</span>
-        <span @click="showTick" class="share" data-type="share">{{ $t('detail','Share products') }}</span>
+        <span @click="showTick" class="share" data-type="share">{{ $t('215x4') }}</span>
       </div>
       <div class="name">{{product.Products_Name}}</div>
-
-	  <div class="Products_BriefDescription">{{product.Products_BriefDescription}}</div>
-
       <div class="sold">
-        <span v-if="product.Products_Count"><span class="c3">{{$t('detail','in stock')}}</span>{{' '+product.Products_Count}}</span>
-        <span v-if="product.Products_Sales" style="margin-left: auto;"><span class="c3">{{$t('detail','Monthly sales')}}</span>{{' '+product.Products_Sales}}</span>
+        <span v-if="product.Products_Count">{{$t('215x5')}} {{product.Products_Count}}</span>
+        <span v-if="product.Products_Sales">{{$t('215x6')}} {{product.Products_Sales}}</span>
       </div>
       <!-- 包邮等信息 -->
       <div class="section3" v-if="product.Products_Promise && product.Products_Promise.length > 0">
@@ -66,16 +63,16 @@
     </div>
     <!-- 领券 -->
     <div @click="showTick" class="section2" data-type="ticks" v-if="couponList.length>0">
-      <div class="btn">{{ $t('detail','Get coupons') }}</div>
-      <div class="right">{{ $t('detail','Shop Coupons') }}
+      <div class="btn">{{ $t('215x7') }}</div>
+      <div class="right">{{ $t('215x8') }}
         <image :src="'/static/client/detail/right.png'|domain" alt="" class="img" />
       </div>
     </div>
     <!-- 评价 -->
     <div class="comment bgwhite">
       <div class="c_title">
-        <span>{{ $t('detail','Evaluation') }}</span>
-        <div @click="gotoComments" class="right">{{ $t('detail','view all') }}
+        <span>{{ $t('215x9') }}</span>
+        <div @click="gotoComments" class="right">{{ $t('215x10') }}
           <image :src="'/static/client/detail/right.png'|domain" alt=""
                  style="width: 19rpx;height: 30rpx;margin-left: 20rpx;" />
         </div>
@@ -105,7 +102,7 @@
     </div>
     <!-- 商品详情 -->
     <div class="pro_detail">
-      <div class="p_detail_title bgwhite">商品详情</div>
+      <div class="p_detail_title bgwhite">{{$t('215x11')}}</div>
       <!--			<div style="height: 500px;"></div>-->
       <u-parse :content="product.Products_Description|formatRichTextByUparse"></u-parse>
       <!-- #ifdef H5||APP-PLUS -->
@@ -130,41 +127,41 @@
           <!-- #ifdef APP-PLUS -->
           <div @click="shareFunc('wx')" class="flex1">
             <image :src="'/static/client/detail/share1.png'|domain" alt="" class='img'></image>
-            <div>{{ $t('detail','Send friend') }}</div>
+            <div>{{ $t('215x12') }}</div>
           </div>
           <div @click="shareFunc('wxtimeline')" class="flex1">
             <image :src="'/static/client/detail/sahre3.png'|domain" alt="" class='img'></image>
-            <div>{{ $t('detail','Circle of friends') }}</div>
+            <div>{{ $t('215x13') }}</div>
           </div>
           <!--只有配置了这个参数的app，才有分享到小程序选项-->
           <div @click="shareFunc('wxmini')" class="flex1" v-if="wxMiniOriginId">
             <img :src="'/static/client/detail/share4.png'|domain" alt="" class='img'>
-            <div>{{ $t('detail','WeChat Mini Program') }}</div>
+            <div>{{ $t('215x14') }}</div>
           </div>
           <!-- #endif -->
           <!-- #ifndef MP-TOUTIAO -->
           <div @click="shareFunc('pic')" class="flex1">
             <image :src="'/static/client/detail/share2.png'|domain" alt="" class='img'></image>
-            <div>{{ $t('detail','Share poster') }}</div>
+            <div>{{ $t('215x15') }}</div>
           </div>
           <!-- #endif -->
         </div>
-        <div @click="cancel" class="s_bottom">{{ $t('detail','cancel') }}</div>
+        <div @click="cancel" class="s_bottom">{{ $t('215x16') }}</div>
       </div>
       <view style="max-height: 1050rpx;" v-else>
         <div class="t_title">
-          {{ $t('detail','Get coupons') }}
+          {{ $t('215x17') }}
           <image :src="'/static/client/detail/x.png'|domain" @click="close"></image>
         </div>
         <scroll-view @scrolltolower="goNextPage" class="ticks" scroll-y=true v-if="type=='ticks'">
           <div :key="i" class="t_content" v-for="(item,i) of couponList">
             <div class="t_left">
-              <div class="t_left_t"><span>￥</span><span class="money">{{item.Coupon_Cash}}</span><span>{{ $t('detail','Shop Coupons') }}<text
-              v-if="item.Coupon_UseArea==0">({{ $t('detail','Physical store') }})</text></span></div>
+              <div class="t_left_t"><span>￥</span><span class="money">{{item.Coupon_Cash}}</span><span>{{ $t('215x18') }}<text
+              v-if="item.Coupon_UseArea==0">({{ $t('215x19') }})</text></span></div>
               <div class="t_left_c">{{item.Coupon_Subject}}</div>
-              <div class="t_left_b">{{ $t('detail','Valid period') }} {{item.Coupon_StartTime}}-{{item.Coupon_EndTime}}</div>
+              <div class="t_left_b">{{ $t('215x20') }} {{item.Coupon_StartTime}}-{{item.Coupon_EndTime}}</div>
             </div>
-            <div @click="getMyCoupon(item.Coupon_ID,i)" class="t_right">{{ $t('detail','get it right now') }}</div>
+            <div @click="getMyCoupon(item.Coupon_ID,i)" class="t_right">{{ $t('215x21') }}</div>
           </div>
         </scroll-view>
       </view>
@@ -179,8 +176,11 @@
           <div class="cartTitle">
             <div class="cartTitles">{{product.Products_Name}}</div>
             <div class="addInfo">
-              <div class="addPrice">{{postData.productDetail_price}} {{ $t('detail','yuan') }}</div>
-              <div class="proSale">{{ $t('detail','in stock') }} {{postData.count}}</div>
+              <div class="addPrice">
+				  <block v-if="$p('zh-cn')">{{postData.productDetail_price}} {{ $t('215x22') }}</block>
+				  <block v-if="$p('en-us')">{{ $t('215x22') }}{{postData.productDetail_price}} </block>
+			  </div>
+              <div class="proSale">{{ $t('215x23') }} {{postData.count}}</div>
             </div>
           </div>
         </div>
@@ -206,7 +206,7 @@
         </div>
         <div class="numBer" v-if="gift == 0">
           <div class="numBers">
-            {{ $t('detail','Quantity') }}
+            {{ $t('215x24') }}
           </div>
           <div class="inputNumber">
             <div @click="delNum" class="clicks">-</div>
@@ -217,7 +217,7 @@
         </div>
         <div class="numBer" v-else>
           <div class="numBers">
-            {{ $t('detail','Quantity') }}
+            {{ $t('215x25') }}
           </div>
           <div class="inputNumber">
             <div class="clicks">-</div>
@@ -228,19 +228,19 @@
       </div>
       <form @submit="skuSub" report-submit>
         <button :class="submit_flag?'':'disabled'" class="cartSub" formType="submit">
-          {{ $t('detail','determine') }}
+          {{ $t('215x26') }}
         </button>
       </form>
     </popupLayer>
     <!-- #ifdef MP-WEIXIN -->
-    <!--	 <view class="liveBox" :style="{bottom: '70px'}" v-if="liveList.length===1">-->
-    <!--	  		  <navigator  :url="'plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id='+liveList[0].roomid">-->
-    <!--	  			  <image class="icon-live" src="/static/live/logo.png"></image>-->
-    <!--	  		  </navigator>-->
-    <!--	  </view>-->
-    <!--	  <view class="liveBox" :style="{bottom: '70px'}" v-if="liveList.length>1">-->
-    <!--	  		  <image @click="toLive" class="icon-live" src="/static/live/logo.png"></image>-->
-    <!--	  </view>-->
+    <view class="liveBox" :style="{bottom: '70px'}" v-if="liveList.length===1">
+      <navigator :url="'plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id='+liveList[0].roomid">
+        <image class="icon-live" src="/static/live/logo.png"></image>
+      </navigator>
+    </view>
+    <view class="liveBox" :style="{bottom: '70px'}" v-if="liveList.length>1">
+      <image @click="toLive" class="icon-live" src="/static/live/logo.png"></image>
+    </view>
     <!-- #endif -->
   </div>
 </template>
@@ -253,6 +253,7 @@ import {
   checkProdCollected,
   getCommit,
   getCoupon,
+  getLiveInfo,
   getProductDetail,
   getProductSharePic,
   getUserCoupon,
@@ -266,6 +267,7 @@ import uParse from '../../components/gaoyia-parse/parse.vue'
 import { pageMixin, safeAreaMixin } from '../../common/mixin'
 import { error, modal } from '../../common'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin, safeAreaMixin],
   data () {
@@ -432,12 +434,12 @@ export default {
     }
     // #endif
     // #ifdef MP-WEIXIN
-    // getLiveInfo().then(res=>{
-    // 	this.liveList = res.data
-    // 	this.liveCount = res.data.totalCount
-    // }).catch((e)=>{
-    // 		console.log(e)
-    // 	})
+    getLiveInfo().then(res => {
+      this.liveList = res.data
+      this.liveCount = res.data.totalCount
+    }).catch((e) => {
+      console.log(e)
+    })
     // #endif
   },
   onUnload () {
@@ -675,13 +677,13 @@ export default {
         case 'pic':
 
           const res = await getProductSharePic({ product_id: this.Products_ID }, {
-            tip: '努力加载中',
+            tip: T._('215d0'),
             mask: true
           })
           ls.set('temp_sharepic_info', res.data)
           const sharePic = res.data.img_url
           if (!sharePic) {
-            error('获取分享参数失败')
+            error(T._('215d1'))
             return
           }
           setTimeout(function () {
@@ -728,7 +730,7 @@ export default {
         })
         // #endif
       }).catch(res => {
-        console.log(res, 'sss')
+        // console.log(res, 'sss')
         setTimeout(function () {
           uni.navigateBack({
             delta: 1
@@ -914,7 +916,7 @@ export default {
       if (this.postData.attr_id == 0) {
         if (this.product.skujosn) {
           wx.showToast({
-            title: '您还没有选择规格',
+            title: T._('215d2'),
             icon: 'none'
           })
           return
@@ -933,7 +935,7 @@ export default {
         this.isSubmit = false
         if (this.postData.cart_key == 'CartList') {
           uni.showToast({
-            title: '加入购物车成功',
+            title: T._('215d3'),
             icon: 'success'
           })
         } else {
@@ -956,12 +958,12 @@ export default {
       const amount = e.detail.value
       if (amount <= 0) {
         this.postData.qty = 1
-        error('至少购买一件')
+        error(T._('215d4'))
         return
       }
       if (amount > this.postData.count) {
         this.postData.qty = this.postData.count
-        error('购买数量不能超过库存量')
+        error(T._('215d5'))
       }
     },
     addNum () {
@@ -969,7 +971,7 @@ export default {
         this.postData.qty = Number(this.postData.qty) + 1
       } else {
         uni.showToast({
-          title: '购买数量不能大于库存量',
+          title: T._('215d6'),
           icon: 'none'
         })
         this.postData.qty = this.postData.count
@@ -984,7 +986,7 @@ export default {
         this.postData.qty -= 1
       } else {
         uni.showToast({
-          title: '购买数量不能小于1',
+          title: T._('215d7'),
           icon: 'none'
         })
         this.postData.qty = 1
@@ -1011,14 +1013,14 @@ export default {
       } else {
         addCollection({ prod_id: this.Products_ID }).then(res => {
           uni.showToast({
-            title: '收藏成功'
+            title: T._('215d8')
           })
           this.isCollected = true
           // #ifdef APP-PLUS
           uni.$emit('goods_bottom_setval', { isCollected: this.isCollected })
           // #endif
         }).catch((e) => {
-          modal(e.msg || '收藏失败')
+          modal(e.msg || T._('215d9'))
         })
       }
     },
@@ -1110,7 +1112,7 @@ export default {
           title: product.Products_Name, // 分享标题
           link: front_url + buildSharePath(path), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
           imgUrl: product.ImgPath, // 分享图标
-          desc: product.Products_BriefDescription || '好物推荐',
+          desc: product.Products_BriefDescription || T._('215d10'),
           type: 'link', // 分享类型,music、video或link，不填默认为link
           // dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
           success: function () {
@@ -1265,6 +1267,7 @@ export default {
           font-size: 28rpx;
           padding: 5px 10px;
           background: rgba(255, 0, 0, .5);
+		  line-height: 36rpx;
         }
 
         .active {
@@ -1447,6 +1450,10 @@ export default {
     padding: 0 20rpx 20rpx;
     border-bottom: 20rpx solid #f8f8f8;
     padding-bottom: 0rpx;
+	.leftss{
+		flex: 1 0 auto;
+		margin-right: 20rpx;
+	}
   }
 
   .price {
@@ -1502,8 +1509,6 @@ export default {
     height: 50rpx;
     line-height: 50rpx;
     padding-bottom: 10px;
-	display: flex;
-	align-items: center;
   }
 
   .sold span {
@@ -1512,7 +1517,7 @@ export default {
   }
 
   .sold span:nth-child(2) {
-   // float: right;
+    float: right;
   }
 
   /* 产品描述部分 end */
@@ -1821,16 +1826,5 @@ export default {
   .skuCheck {
     color: #fff !important;
     background-color: #ff4200 !important;
-  }
-  .c3{
-	  color: #333333 !important;
-  }
-  .Products_BriefDescription{
-	  width: 710rpx;
-	  margin: 10rpx auto 10rpx;
-	  font-size: 12px;
-	  color: #999;
-	  line-height: 18px;
-	  
   }
 </style>

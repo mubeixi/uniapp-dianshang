@@ -1,7 +1,7 @@
 <template>
   <view class="profitSum">
     <view style="height: 90rpx;margin-bottom: 10px;font-size: 14px;">
-      <view :class="[status == 9 ? 'active' : '']" @click="changeStatus(9)" class="status fixed">全部</view>
+      <view :class="[status == 9 ? 'active' : '']" @click="changeStatus(9)" class="status fixed">{{$t('1149x0')}}</view>
       <scroll-view class="order-status" scroll-x="true" style="width: 612rpx;white-space: nowrap;margin-left: 138rpx;">
 
         <block v-if="Array.isArray(show_type)">
@@ -15,37 +15,44 @@
           </block>
         </block>
         <!-- <view class="status" :class="[status == 0 ? 'active' : '']" @click="changeStatus(0)">门店结算</view>
-        <view class="status" :class="[status == 1 ? 'active' : '']" @click="changeStatus(1)">分销佣金</view>
-        <view class="status" :class="[status == 2 ? 'active' : '']" @click="changeStatus(2)">股东佣金</view>
-        <view class="status" :class="[status == 3 ? 'active' : '']" @click="changeStatus(3)">爵位佣金</view>
-        <view class="status" style="width: 120px;" :class="[status == 4 ? 'active' : '']" @click="changeStatus(4)">区域代理佣金</view>
-        <view class="status" :class="[status == 5 ? 'active' : '']" @click="changeStatus(5)">返本</view>
-        <view class="status" :class="[status == 6 ? 'active' : '']" @click="changeStatus(6)">提现</view>
-        <view class="status" :class="[status == 7 ? 'active' : '']" @click="changeStatus(7)">管理奖</view>
-        <view class="status" :class="[status == 8 ? 'active' : '']" @click="changeStatus(8)">贡献奖</view> -->
+        <view class="status" :class="[status == 1 ? 'active' : '']" @click="changeStatus(1)">{{$t('1149x1')}}</view>
+        <view class="status" :class="[status == 2 ? 'active' : '']" @click="changeStatus(2)">{{$t('1149x2')}}</view>
+        <view class="status" :class="[status == 3 ? 'active' : '']" @click="changeStatus(3)">{{$t('1149x3')}}</view>
+        <view class="status" style="width: 120px;" :class="[status == 4 ? 'active' : '']" @click="changeStatus(4)">{{$t('1149x4')}}</view>
+        <view class="status" :class="[status == 5 ? 'active' : '']" @click="changeStatus(5)">{{$t('1149x5')}}</view>
+        <view class="status" :class="[status == 6 ? 'active' : '']" @click="changeStatus(6)">{{$t('1149x6')}}</view>
+        <view class="status" :class="[status == 7 ? 'active' : '']" @click="changeStatus(7)">{{$t('1149x7')}}</view>
+        <view class="status" :class="[status == 8 ? 'active' : '']" @click="changeStatus(8)">{{$t('1149x8')}}</view> -->
       </scroll-view>
     </view>
 
     <view :key="i" class="order" v-for="(item,i) of resData ">
       <view class="view">
-        获取时间：
+        {{$t('1149x9')}}
         <text>{{item.Record_CreateTime}}</text>
       </view>
       <view class="view">
-        变更金额：
-        <text>{{item.Record_Money}}元</text>
+        {{$t('1149x10')}}
+        <text>
+			<block v-if="$p('zh-cn')">{{item.Record_Money}}{{$t('1149x11')}}</block>
+			<block v-if="$p('en-us')">{{$t('1149x11')}}{{item.Record_Money}}</block>
+		</text>
 
       </view>
       <view class="view">
-        变更后剩余：
-        <text>{{item.Record_Balance}}元</text>
+        {{$t('1149x12')}}
+        <text>
+			<block v-if="$p('zh-cn')">{{item.Record_Balance}}{{$t('1149x13')}}</block>
+			<block v-if="$p('en-us')">{{$t('1149x13')}}{{item.Record_Balance}}</block>
+		
+		</text>
       </view>
       <view class="view">
-        变更来源：
+        {{$t('1149x14')}}
         <text>{{item.Record_Type}}</text>
       </view>
       <view class="view">
-        描述信息：
+        {{$t('1149x15')}}
         <text>{{item.Record_Desc}}</text>
       </view>
     </view>
@@ -59,6 +66,7 @@
 import { pageMixin } from '../../common/mixin'
 import { getBalanceDetail } from '../../common/fetch.js'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {

@@ -5,13 +5,13 @@
     <block v-if="type != 3">
       <form @submit="save" report-submit>
         <view class="content" v-if="type == 0">
-          <input class="item" placeholder="请输入原始登录密码,如未设置请留空" type="password" v-model="curr_psw">
-          <input class="item" placeholder="请输入新的登录密码" type="password" v-model="new_psw">
-          <input class="item" placeholder="请再次输入新密码" type="password" v-model="check_psw">
+          <input class="item" :placeholder="$t('1731x0')" type="password" v-model="curr_psw">
+          <input class="item" :placeholder="$t('1731x1')" type="password" v-model="new_psw">
+          <input class="item" :placeholder="$t('1731x2')" type="password" v-model="check_psw">
         </view>
         <view class="content" v-else-if="type == 1">
 					<view class="other-item other-items">
-						手机号
+						{{$t('1731x3')}}
 						<view class="world_sms_choose">
 							<picker v-if="world_sms_flag && !userInfo.User_Mobile" @change="worldSmsChoose" :value="world_sms_code_idx" :range="world_sms_code_list" range-key="choose_item">
 								<view class="world_sms_choose_show">
@@ -21,18 +21,18 @@
 							</picker>
 							<text class="show_phone_code" v-else>{{userInfo.phone_code ? userInfo.phone_code : '+86'}}</text>
 						</view>
-						<input class="input phone world_sms_phone" :disabled='userInfo.User_Mobile?true:false' v-model="mobile" maxlength="30" placeholder="请输入手机号" type="text"  />
+						<input class="input phone world_sms_phone" :disabled='userInfo.User_Mobile?true:false' v-model="mobile" maxlength="30" :placeholder="$t('1731x4')" type="text"  />
 					</view>
 					<view class="other-item other-items">
-						验证码
-						<input class="input code" placeholder="请输入验证码" type="text" v-model="code" maxlength="4"/>
-						<view @click="getCode" class="get-msg">{{countdownStatus?(countdownNum + '秒'):'获取验证码'}}</view>
+						{{$t('1731x5')}}
+						<input class="input code" :placeholder="$t('1731x6')" type="text" v-model="code" maxlength="4"/>
+						<view @click="getCode" class="get-msg">{{countdownStatus?(countdownNum + $t('1731x7')):$t('1731x8')}}</view>
 					</view>
 					<!-- <input class="item" placeholder="请输入原始支付密码,如未设置请留空" type="password" v-model="curr_psw"> -->
-					<input class="item" placeholder="请输入新的支付密码" type="password" v-model="new_psw">
-					<input class="item" placeholder="请再次输入新密码" type="password" v-model="check_psw">
+					<input class="item" :placeholder="$t('1731x9')" type="password" v-model="new_psw">
+					<input class="item" :placeholder="$t('1731x10')" type="password" v-model="check_psw">
 				</view>
-        <button class="save" formType="submit">保存</button>
+        <button class="save" formType="submit">{{$t('1731x11')}}</button>
       </form>
     </block>
 
@@ -40,10 +40,10 @@
       <form @submit="confirm" report-submit>
         <view class="other">
           <view class="other-item" v-if='userInfo.User_Mobile'>
-            您现在的手机号是：{{userInfo.phone_code?userInfo.phone_code:''}} {{userInfo.User_Mobile?userInfo.User_Mobile:''}}
+            {{$t('1731x12')}}：{{userInfo.phone_code?userInfo.phone_code:''}} {{userInfo.User_Mobile?userInfo.User_Mobile:''}}
           </view>
           <view class="other-item">
-            手机号
+            {{$t('1731x13')}}
 						<view class="world_sms_choose">
 							<picker v-if="world_sms_flag" @change="worldSmsChoose" :value="world_sms_code_idx" :range="world_sms_code_list" range-key="choose_item">
 								<view class="world_sms_choose_show">
@@ -53,14 +53,14 @@
 							</picker>
 							<text class="show_phone_code" v-else>+86</text>
 						</view>
-            <input class="input phone world_sms_phone" maxlength="30" placeholder="请输入手机号" type="text" v-model="mobile" />
+            <input class="input phone world_sms_phone" maxlength="30" :placeholder="$t('1731x14')" type="text" v-model="mobile" />
           </view>
           <view class="other-item">
-            验证码
-            <input class="input code" placeholder="请输入验证码" type="text" v-model="code" maxlength="4"/>
-            <view @click="getCode" class="get-msg">{{countdownStatus?(countdownNum + '秒'):'获取验证码'}}</view>
+            {{$t('1731x15')}}
+            <input class="input code" :placeholder="$t('1731x16')" type="text" v-model="code" maxlength="4"/>
+            <view @click="getCode" class="get-msg">{{countdownStatus?(countdownNum + $t('1731x17')):$t('1731x18')}}</view>
           </view>
-          <button class="confirm" formType="submit">确认修改</button>
+          <button class="confirm" formType="submit">{{$t('1731x19')}}</button>
         </view>
       </form>
     </block>
@@ -81,6 +81,7 @@ import { pageMixin } from '../../common/mixin'
 import { error, modal } from '@/common'
 import { ls, checkMobile } from '@/common/tool.js'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {
@@ -124,14 +125,14 @@ export default {
     confirm (e) {
       if (!(checkMobile(this.mobile, this.phone_code))) {
         uni.showToast({
-          title: '手机号输入错误，请重新输入',
+          title: T._('1731d0'),
           icon: 'none'
         })
         return
       }
       if (!this.code) {
         uni.showToast({
-          title: '验证码不能为空',
+          title: T._('1731d1'),
           icon: 'none'
         })
         return
@@ -175,7 +176,7 @@ export default {
             url: '/pages/person/person'
           })
         }).catch(e => {
-          error('获取用户信息失败')
+          error(T._('1731d2'))
         })
       }, err => {
         uni.showToast({
@@ -211,7 +212,7 @@ export default {
       const isMobileOK = checkMobile(this.mobile, this.phone_code)
       if (!isMobileOK) {
         uni.showToast({
-          title: '手机号格式不正确',
+          title: T._('1731d3'),
           icon: 'none'
         })
         return
@@ -229,7 +230,7 @@ export default {
         data.type = 'User_PayPassword'
         updatePwdSms(data).then().then(res => {
           uni.showToast({
-            title: '验证码已发送',
+            title: T._('1731d4'),
             icon: 'success'
           })
           this.startCountdown()
@@ -239,7 +240,7 @@ export default {
       } else {
         updateMobileSms(data).then(res => {
           uni.showToast({
-            title: '验证码已发送',
+            title: T._('1731d5'),
             icon: 'success'
           })
           this.startCountdown()
@@ -258,18 +259,18 @@ export default {
         const isMobileOK = checkMobile(this.mobile, this.phone_code)
         if (!isMobileOK) {
           uni.showToast({
-            title: '手机号格式不正确',
+            title: T._('1731d6'),
             icon: 'none'
           })
           return
         }
         if (!this.code) {
-          this.toast('请填写验证码')
+          this.toast(T._('1731d7'))
           return
         }
         // 原始密码默认为空
         if ((arg.curr_psw && arg.curr_psw.length < 6) || arg.new_psw.length < 6 || arg.check_psw.length < 6) {
-          this.toast('密码最少6位')
+          this.toast(T._('1731d8'))
           return
         }
         arg.type = 'User_PayPassword'
@@ -282,7 +283,7 @@ export default {
         // }
       } else {
         if ((arg.curr_psw && arg.curr_psw.length < 6) || arg.new_psw.length < 6 || arg.check_psw.length < 6) {
-          this.toast('密码最少6位')
+          this.toast(T._('1731d9'))
           return
         }
         // if(arg.curr_psw == '') {
@@ -292,20 +293,20 @@ export default {
       }
 
       if (arg.new_psw == '') {
-        this.toast('新密码不能为空')
+        this.toast(T._('1731d10'))
         return
       }
       if (arg.check_psw == '') {
-        this.toast('确认密码不能为空')
+        this.toast(T._('1731d11'))
         return
       }
       if (arg.new_psw !== arg.check_psw) {
-        this.toast('两次密码不同')
+        this.toast(T._('1731d12'))
         return
       }
       if (this.type == 0) {
         updateUserLoginPsw(arg).then(res => {
-          this.toast('修改成功', 'success')
+          this.toast(T._('1731d13'), 'success')
           this.goBack()
         }, err => {
           this.toast(err.msg)
@@ -315,7 +316,7 @@ export default {
         })
       } else if (this.type == 1) {
         updateUserPayPsw(arg).then(res => {
-          this.toast('修改成功', 'success')
+          this.toast(T._('1731d14'), 'success')
           // 如果成功就返回
           if (this.is_back) {
             // 更新信息
@@ -353,10 +354,10 @@ export default {
     }
     this.accessToken = options.accessToken
     if (options.type == 0) {
-      this.title = '修改登录密码'
+      this.title = T._('1731d15')
       this.type = 0
     } else if (options.type == 1) {
-      this.title = '修改支付密码'
+      this.title = T._('1731d16')
       this.type = 1
       this.phone_code = this.userInfo.User_Mobile ? this.userInfo.phone_code : ''
       this.mobile = this.userInfo.User_Mobile
@@ -364,7 +365,7 @@ export default {
         this.is_back = true
       }
     } else if (options.type == 3) {
-      this.title = '修改手机号码'
+      this.title = T._('1731d17')
       this.type = 3
       this.bgcolor = '#fff'
     }

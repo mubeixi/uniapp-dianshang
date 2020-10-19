@@ -14,10 +14,10 @@
         <image :src="'/static/client/fenxiao/right.png'|domain" class="right"></image>
       </view>
       <view @click="guanWithdrawal" class="bank guanli" v-else>
-        + 管理提现方式
+        + {{$t('1288x0')}}
       </view>
       <view class="tiMoney">
-        提现金额
+        {{$t('1288x1')}}
       </view>
       <view class="inputMoney">
         <view class="input-money-inner">
@@ -26,10 +26,13 @@
       </view>
       <view class="canTi">
         <view class="canTiMoney">
-          可提现金额：{{balance}}元
+          {{$t('1288x2')}}：
+		  <block v-if="$p('zh-cn')">{{balance}}{{$t('1288x3')}}</block>
+		  <block v-if="$p('en-us')">{{$t('1288x3')}}{{balance}}</block>
+		  
         </view>
         <view @click="allTi" class="allTi">
-          全部提现
+          {{$t('1288x4')}}
         </view>
       </view>
       <view class="kong">
@@ -37,7 +40,13 @@
       </view>
       <view class="tishi">
         <image :src="'/static/client/fenxiao/tishi.png'|domain" class="tishi-image"></image>
-        <view class="tishi-view">
+		<view class="tishi-view" v-if="$p('en-us')">
+			After applying for withdrawal, the system will automatically deduct the {{init.Poundage_Ratio}}% handling fee of your withdrawal
+			<block v-if="withdraw_from==1">
+				, {{init.Balance_Ratio}}% will be transferred to your member balance, {{100-init.Poundage_Ratio-init.Poundage_Ratio-init.Balance_Ratio}}% of the shopkeeper will transfer the money into your account; if all the balance is transferred, no handling fee will be deducted.
+			</block>
+		</view>
+        <view class="tishi-view" v-if="$p('zh-cn')">
           申请提现后，系统会自动扣除您提现的{{init.Poundage_Ratio}}%的手续费
           <block v-if="withdraw_from==1">
             ，{{init.Balance_Ratio}}%转入您的会员余额，{{100-init.Poundage_Ratio*init.Balance_Ratio/100}}%店主会将钱打入您的账号；若全部转入余额则不扣除手续费。
@@ -45,10 +54,10 @@
         </view>
       </view>
       <view @click="withdrawApply" class="liji">
-        立即提现
+        {{$t('1288x5')}}
       </view>
       <view @click="goRecord" class="lishi">
-        历史提现
+        {{$t('1288x6')}}
         <image :src="'/static/client/fenxiao/right.png'|domain" class="lishi-image"></image>
       </view>
     </view>
@@ -62,6 +71,7 @@ import { ls } from '../../common/tool.js'
 import { getUserWithdrawMethod, getWithdrawConfig, withdrawApply } from '../../common/fetch.js'
 import { modal,error } from '@/common'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {
@@ -96,7 +106,7 @@ export default {
     getWithdrawConfig().then(res => {
       this.init = res.data
     }).catch(() => {
-      modal('获取配置失败')
+      modal(T._('1288d0'))
     })
   },
   computed: {
@@ -122,7 +132,7 @@ export default {
       that.isQing = true
       if (isNaN(this.price)) {
         uni.showToast({
-          title: '输入金额有误,请重新输入',
+          title: T._('1288d1'),
           icon: 'none'
         })
         this.price = ''
@@ -132,7 +142,7 @@ export default {
 
       if (this.price == '') {
         uni.showToast({
-          title: '未输入金额',
+          title: T._('1288d2'),
           icon: 'none'
         })
         this.price = ''
@@ -140,7 +150,7 @@ export default {
         return
       }
       if (this.User_Method_ID <= 0) {
-        this.$error('请添加提现方式')
+        this.$error(T._('1288d3'))
         this.isQing = false
         setTimeout(function () {
           uni.navigateTo({
@@ -203,7 +213,7 @@ export default {
           this.User_Method_ID = res.data.list[0].User_Method_ID
         }
       }).catch(err => {
-        modal(err.msg || '获取信息失败')
+        modal(err.msg || T._('1288d4'))
       })
     },
     // 我的提现方式
@@ -351,6 +361,7 @@ export default {
         width: 613rpx;
         font-size: 20rpx;
         color: #999999;
+		word-break:break-all;
       }
     }
 
@@ -372,12 +383,12 @@ export default {
       height: 21rpx;
       // width: 106rpx;
       margin-top: 25rpx;
-      margin-left: 565rpx;
       font-size: 22rpx;
       color: #999999;
       display: flex;
       align-items: center;
-
+		justify-content: flex-end;
+		padding-right: 20rpx;
       .lishi-image {
         width: 12rpx;
         height: 20rpx;

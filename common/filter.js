@@ -1,3 +1,4 @@
+import T from '@/common/langue/i18n' 
 import { staticUrl } from './env'
 import { getCountdownFunc } from '@/common/tool'
 
@@ -144,7 +145,7 @@ export default [
           rt = data.s
           break
         case 'is_start':
-          rt = data.is_start ? '结束' : '开始'
+          rt = data.is_start ? T._('1d0') : T._('1d1')
           break
       }
       return rt

@@ -6,7 +6,7 @@
       <view :key="index" class="myHa" v-for="(item,index) in prod_list">
         <view class="tops">
           <view class="views">
-            兑换单号：{{item.Orders_ID}}
+            {{$t('1607x0')}}{{item.Orders_ID}}
           </view>
           <view class="views times">
             <image :src="'/static/client/check/time.png'|domain" class="imgs"></image>
@@ -33,13 +33,13 @@
                 <text class="texts">{{item.Gift_Info.Gift_Integral}}</text>
               </view>
               <view @click.stop="cancelJifenProdOrder(item)" class="rightM complated" v-if="item.Orders_Status == 1">
-                取消兑换
+                {{$t('1607x1')}}
               </view>
             </view>
 			<view class="rty">
-				<view class="leftM"><text v-if="item.Order_Shipping_Price > 0">运费：<text style="color: #888; font-size: 24rpx;">￥</text>{{item.Order_Shipping_Price}}</text></view>
+				<view class="leftM"><text v-if="item.Order_Shipping_Price > 0">{{$t('1607x2')}}：<text style="color: #888; font-size: 24rpx;">￥</text>{{item.Order_Shipping_Price}}</text></view>
 				<view @click.stop="confirmJifenProdOrder(item)" class="confirm" v-if="item.Orders_Status == 3">
-				  <view class="rightM payed" style="float: right;">确认收货</view>
+				  <view class="rightM payed" style="float: right;">{{$t('1607x3')}}</view>
 				</view>
 			</view>
           </view>
@@ -61,6 +61,7 @@ import { formatTime } from '../../common/filter'
 import { pageMixin } from '../../common/mixin'
 import { modal } from '@/common'
 
+import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
   data () {
@@ -77,16 +78,16 @@ export default {
     status_desc (status) {
       switch (status) {
         case 1 :
-          return '待支付'
+          return T._('1607d0')
           break
         case 2 :
-          return '已付款'
+          return T._('1607d1')
           break
         case 3 :
-          return '已发货'
+          return T._('1607d2')
           break
         case 4 :
-          return '已完成'
+          return T._('1607d3')
           break
       }
     },
@@ -131,7 +132,7 @@ export default {
         this.prod_list = []
         this.get_jifen_order()
       }).catch(() => {
-        modal('操作失败')
+        modal(T._('1607d4'))
       })
     },
     //	确认订单
@@ -143,7 +144,7 @@ export default {
         this.prod_list = []
         this.get_jifen_order()
       }).catch(() => {
-        modal('操作失败')
+        modal(T._('1607d5'))
       })
     }
   }
