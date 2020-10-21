@@ -3,6 +3,7 @@
     <!-- #ifdef APP-PLUS -->
     <view class="status_bar" style="background: #f81111;"><!-- 这里是状态栏 --></view>
     <!-- #endif -->
+	<image @click="goBack" class="go" mode="" src="/static/white-arrow-left.png"></image>
     <view class="top">
       <image :src="'/static/client/fenxiao/top.png'|domain" class="image"></image>
       <!-- #ifdef APP-PLUS -->
@@ -83,6 +84,7 @@
 </template>
 
 <script>
+	import { goBack } from '../../common/tool.js'
 import { pageMixin } from '../../common/mixin'
 import { get_user_info, getDisInit, getFuncModule } from '../../common/fetch.js'
 import { mapActions, mapGetters } from 'vuex'
@@ -111,6 +113,9 @@ export default {
   },
   methods: {
     ...mapActions(['getUserInfo', 'setUserInfo']),
+	goBack(){
+		goBack()
+	},
     goSales () {
       if (!this.$fun.checkIsLogin(1, 1)) return
       if (!this.$fun.checkIsDistribute(1, 1)) return
@@ -438,5 +443,13 @@ export default {
     height: 14px !important;
     margin-left: 2px;
     margin-bottom: -2px;
+  }
+  .go {
+    width: 20rpx;
+    height: 30rpx;
+    position: absolute;
+    top: 44rpx;
+    left: 30rpx;
+  	z-index: 999;
   }
 </style>
