@@ -23,6 +23,12 @@ ios 包名  com.zz.wzw.wzwdianshang
 ## 关于新零售打包
 	因为是第三方平台我们需要带直播的和不带直播的小程序   故分为develop  和 open-live俩个分支（先发带直播的  许总上传过代码之后   再切换分支发不带直播的小程序）
 	##注意open-live分支记得 合并develop的修改   并解决冲突  打包之后至少走一遍下单和登录等正常流程
+	
+## 关于新零售定制
+     改一行代码也属于定制 请先修改env中的usess_id和域名  本地运行需要修改manifest.json中的代理文件  develop为最新不带直播的代码   openlive为直播代码  
+     1.好多定制刚开始是没有直播组件的，所以要拉develop分支 之后 再增加直播的代码逻辑
+     2.全部页面使用mixins 因为要用来统计点击等时间  好多公共可用的方法页面引入直接调用   
+     3.打包app关于如何生成证书 https://ask.dcloud.net.cn/article/152
 
 
 
