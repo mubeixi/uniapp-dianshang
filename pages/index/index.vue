@@ -163,14 +163,14 @@
                            catchtouchmove direction="top" ref="stroeComp" style="z-index: 10000;" />
 
 		<!-- #ifdef MP-WEIXIN -->
-		<view class="liveBox" v-if="liveList.length===1">
+		<!-- <view class="liveBox" v-if="liveList.length===1">
 		  <navigator :url="'plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id='+liveList[0].roomid">
 			<image class="icon-live" src="/static/live/logo.png"></image>
 		  </navigator>
 		</view>
 		<view class="liveBox" v-if="liveList.length>1">
 		  <image @click="toLive" class="icon-live" src="/static/live/logo.png"></image>
-		</view>
+		</view> -->
 		<!-- #endif -->
   </view>
 </template>
