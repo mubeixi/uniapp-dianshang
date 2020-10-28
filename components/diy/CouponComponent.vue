@@ -124,6 +124,7 @@ export default {
   components: {},
   methods: {
     getCoupon (couponInfo) {
+	  if (!this.$fun.checkIsLogin(1)) return
       getUserCoupon({ coupon_id: couponInfo.Coupon_ID }).then(res => {
         uni.showToast({
           title: T._('29d0')
