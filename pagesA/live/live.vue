@@ -6,7 +6,7 @@
         <view class="info">
           <view class="row">
             <view class="label">{{$t('1322x0')}}</view>
-            <view class="content font12">{{live.start_time}} {{$('manual','-')}}<br />{{live.end_time}}</view>
+            <view class="content font12">{{live.start_time}} -<br />{{live.end_time}}</view>
           </view>
           <view class="row">
             <view class="label">{{$t('1322x1')}}</view>

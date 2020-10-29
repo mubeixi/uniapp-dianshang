@@ -15,7 +15,7 @@
               </div>
               <div class="store-promise" v-if="storeInfo.city_express_config">
                 <block v-if="storeInfo.city_express_config">
-                  {{storeInfo.city_express_config.limit_config.start_send_money}}{{$('node','yuan to give')}}
+                  {{storeInfo.city_express_config.limit_config.start_send_money}}{{$t('608x16')}}
                 </block>
               </div>
             </div>

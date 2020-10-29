@@ -89,7 +89,7 @@
     <div class="num-count">
       <image :src="'/static/marketing/num_count.png'|domain" class="num-count-img" />
       <div class=" text font14">{{$t('1305x0')}}<span class="font16 danger-color" style="">{{day_count}}</span>{{$t('1305x1')}}<span
-      class="font16 danger-color" style="">{{total_count}}</span>{{$('manual','times')}}
+      class="font16 danger-color" style="">{{total_count}}</span>{{$t('manual','times')}}
       </div>
     </div>
 
