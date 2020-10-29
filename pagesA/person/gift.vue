@@ -84,7 +84,7 @@
     <view style="height:100rpx;">
       <view class="order_total">
         <view class="totalinfo">
-          <view class="info">{{$t('1464x15')}}{{orderInfo.prod_count}}{{$('manual','Items')}} {{$t('1464x16')}}
+          <view class="info">{{$t('1464x15')}}{{orderInfo.prod_count}}{{$t('1464x24')}} {{$t('1464x16')}}
             <text class="money">
               <text class="m_icon">￥</text>
               {{orderInfo.Order_Fyepay}}

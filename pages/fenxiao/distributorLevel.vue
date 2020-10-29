@@ -289,18 +289,18 @@
             <image class="image" src="/static/fenxiao/teamLast.png"></image>
             <view class="mbx">
               <view class="tops">
-				<block v-if="$('zh-cn')">
+				<block v-if="$p('zh-cn')">
 					团队{{it.level_name}}达{{it.count}}人
 				</block>
-				<block v-if="$('en-us')">
+				<block v-if="$p('en-us')">
 					Team {{it.level_name}} up to {{it.count}} people
 				</block>
               </view>
               <view class="bottoms">
-				  <block v-if="$('zh-cn')">
+				  <block v-if="$p('zh-cn')">
 				  	已邀{{dis_level[inds].level_rules_edit.team_sons.user_data[it.level_id]||0}}人
 				  </block>
-				  <block v-if="$('en-us')">
+				  <block v-if="$p('en-us')">
 				  	{{dis_level[inds].level_rules_edit.team_sons.user_data[it.level_id]||0}} people invited
 				  </block>
               </view>
