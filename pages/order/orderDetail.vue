@@ -226,7 +226,7 @@
     <div class="order_total" v-if='isShow'>
       <div class="totalinfo" v-if="orderInfo.prod_list">
         <div class="info">{{$t('764x39')}}{{orderInfo.prod_list.length}}{{$t('1659x2')}} {{$t('647x39')}}：<span
-        class="mbxa">￥<span>{{orderInfo.Order_TotalPrice}}</span></span></div>
+        class="mbxa">￥<span>{{orderInfo.Order_ProdAmount}}</span></span></div>
         <view class="tips" v-if="orderInfo.obtain_desc">{{orderInfo.obtain_desc}}</view>
       </div>
       <view @click="seeDetail" class="mx">{{$t('764x40')}}
