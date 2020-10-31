@@ -368,7 +368,7 @@
 			// 乡镇地址 点击确定
 			t_pickerChange: function(e) {
 				this.t_index = e.detail.value
-				this.address_info.Address_Town = this.t_arr[e.detail.value].id
+				this.$set(this.address_info,'Address_Town',this.t_arr[e.detail.value].id);
 			},
 			address_town: function() {
 				getTown({
@@ -450,7 +450,7 @@
 					this.address_info.Address_Area = this.objectMultiArray[2][this.multiIndex[2]].id
 				}
 				if (this.current > 2) {
-					this.address_info.Address_Town = 0
+					this.$set(this.address_info,'Address_Town',0);
 				}
 				this.t_arr = []
 				this.t_index = 0
