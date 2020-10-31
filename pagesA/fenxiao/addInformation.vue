@@ -184,8 +184,7 @@
 				arr: {
 					apply_name: '',
 					apply_mobile: ''
-				},
-				isAgr: false
+				}
 			}
 		},
 		onShow() {
@@ -238,10 +237,6 @@
 			},
 			nextStep() {
 				if (this.isNext) {
-					if (this.isAgr) {
-						return
-					}
-					this.isAgr = true
 					if (JSON.stringify(this.address_info) == '{}') {
 						uni.showToast({
 							title: T._('972d1'),
@@ -280,7 +275,6 @@
 
 						agentApply(info).then(res => {
 							this.isLast = true
-							this.isAgr = false
 							uni.showToast({
 								title: res.msg
 							})
@@ -291,7 +285,6 @@
 							}, 1000)
 						}).catch(e => {
 							error(e.msg || T._('972d3'))
-							this.isAgr = false
 						})
 					}
 				} else {
