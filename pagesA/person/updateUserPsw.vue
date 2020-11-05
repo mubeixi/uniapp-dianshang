@@ -74,7 +74,8 @@ import {
   updateUserLoginPsw,
   updateUserMobile,
   updateUserPayPsw,
-  updatePwdSms
+  updatePwdSms,
+  upUserLog
 } from '../../common/fetch.js'
 import { mapActions, mapGetters } from 'vuex'
 import { pageMixin } from '../../common/mixin'
@@ -152,6 +153,15 @@ export default {
         uni.showToast({
           title: res.msg
         })
+		if(this.accessToken){
+			upUserLog({}, {
+				errtip: false
+			}).then(res => {
+				// #ifdef H5
+				sessionStorage.setItem('is_send_usrlog', 1)
+				// #endif
+			}).catch(e => {})
+		}
 
         const postData = {}
         if (this.user_id) {
