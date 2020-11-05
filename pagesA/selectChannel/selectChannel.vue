@@ -89,7 +89,7 @@
       </scroll-view>
     </div>
     <popupLayer :direction="'top'" @maskClicked="maskClicked" ref="searchLayer">
-      <view class="search-title">{{$('node','Choose channel')}}</view>
+      <view class="search-title">{{$t('2251x25')}}</view>
       <view class="search-content">
         <view @click="changeItem(1)" class="search-item">
           <view>{{$t('2251x23')}}{{is_purchase?$t('2251x15'):$t('2251x16')}}{{$t('2251x17')}}</view>

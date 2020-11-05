@@ -29,7 +29,7 @@
       <block v-else>
         <view class="fir">
           <view class="left">
-            {{$('node','Apply for')}}{{commi_rename.commi}}{{$('node','grade name')}}：
+            {{$t('1239x5')}}{{commi_rename.commi}}{{$t('1239x6')}}：
           </view>
           <view class="right">
             {{item.Level_Name}}

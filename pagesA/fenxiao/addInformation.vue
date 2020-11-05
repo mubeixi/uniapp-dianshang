@@ -184,8 +184,7 @@
 				arr: {
 					apply_name: '',
 					apply_mobile: ''
-				},
-				isAgr: false
+				}
 			}
 		},
 		onShow() {
@@ -238,10 +237,6 @@
 			},
 			nextStep() {
 				if (this.isNext) {
-					if (this.isAgr) {
-						return
-					}
-					this.isAgr = true
 					if (JSON.stringify(this.address_info) == '{}') {
 						uni.showToast({
 							title: T._('972d1'),
@@ -280,7 +275,6 @@
 
 						agentApply(info).then(res => {
 							this.isLast = true
-							this.isAgr = false
 							uni.showToast({
 								title: res.msg
 							})
@@ -291,7 +285,6 @@
 							}, 1000)
 						}).catch(e => {
 							error(e.msg || T._('972d3'))
-							this.isAgr = false
 						})
 					}
 				} else {
@@ -368,7 +361,7 @@
 			// 乡镇地址 点击确定
 			t_pickerChange: function(e) {
 				this.t_index = e.detail.value
-				this.address_info.Address_Town = this.t_arr[e.detail.value].id
+				this.$set(this.address_info,'Address_Town',this.t_arr[e.detail.value].id);
 			},
 			address_town: function() {
 				getTown({
@@ -450,7 +443,7 @@
 					this.address_info.Address_Area = this.objectMultiArray[2][this.multiIndex[2]].id
 				}
 				if (this.current > 2) {
-					this.address_info.Address_Town = 0
+					this.$set(this.address_info,'Address_Town',0);
 				}
 				this.t_arr = []
 				this.t_index = 0
