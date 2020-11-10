@@ -265,7 +265,10 @@ export default {
       const val = this.currentTab
       if (!val) return
       // list = [],
-      const { cate_id = [], limit } = val
+     let { cate_id = [], limit ,type} = val
+     if(type=='all'){
+     		  limit=999
+     }
 
       // 如果值还没有设置的话
       if (cate_id.length === 0) {
