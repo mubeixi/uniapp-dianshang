@@ -723,6 +723,7 @@ export default {
       judgeReceiveGift({ gift: this.gift }).then(res => {
         this.gift_attr_id = res.data.attr_id
         this.skuval = res.data.skuval// .split(';');
+		this.isVirtual=false
         // #ifdef APP-PLUS
         uni.$emit('goods_bottom_setval', {
           isCollected: this.isCollected,

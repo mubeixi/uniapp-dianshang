@@ -304,7 +304,9 @@ export default {
             uni.navigateTo({
               url: '/pagesA/person/myGift?checked=1'
             })
-          })
+          }).catch(e=>{
+			  this.submited = false
+		  })
         } else if (this.orderInfo.Order_Fyepay > 0) {
           createOrder(this.postData).then(res => {
             this.Order_ID = res.data.Order_ID
