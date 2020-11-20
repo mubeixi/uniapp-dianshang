@@ -100,6 +100,7 @@ export default {
     getDetail (item) {
 		if (item == 'search') {
 		  this.page=1
+		  this.resData=[]
 		}
       const data = {
         page: this.page,
