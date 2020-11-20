@@ -98,6 +98,9 @@ export default {
       this.endTime = e.target.value
     },
     getDetail (item) {
+		if (item == 'search') {
+		  this.page=1
+		}
       const data = {
         page: this.page,
         pageSzie: this.pageSize,
