@@ -133,6 +133,56 @@
           <input :placeholder="$t('1009x19')+m.Name" class="inputa" type="text" v-model="m.Value">
         </view>
       </block>
+	  
+	  
+	  
+	  <view class="addImg"  v-for="(item,index) of image_arrays" :key="index">
+	    {{item.Name}}
+	    <view class="imgs">
+	      <view  class="shangchuans" v-if="item.Value">
+	        <image :src="item.Value|domain" @click="yulan(index)" class="image"></image>
+	        <image :src="'/static/client/delimg.png'|domain" @click="delImg(index)" class="del image"></image>
+	      </view>
+	      <view @click="addImg(index)" class="shangchuan" v-else>
+	        <view class="heng"></view>
+	        <view class="shu"></view>
+	      </view>
+	    </view>
+	  </view>
+	  
+	  <view class="center" v-if="isShowAddress">
+	    <view class="mbx">
+	      {{$t('1009x8')}}
+	    </view>
+	    <view class="haha">
+	      <picker :range="change_objectMultiArray" :value="change_multiIndex" @change="bindMultiPickerChange"
+	              @columnchange="bindMultiPickerColumnChange" mode="multiSelector" range-key="name">
+	        <view class="picker" style="text-align: center;">
+	          <view v-if="!address_info.Address_Province">{{$t('1009x9')}}</view>
+	          <view v-else>{{objectMultiArray[0][multiIndex[0]]['name']}}</view>
+	          <view v-if="!address_info.Address_City">{{$t('1009x10')}}</view>
+	          <view v-else>{{objectMultiArray[1][multiIndex[1]]['name']}}</view>
+	          <view v-if="!address_info.Address_Area">{{$t('1009x11')}}</view>
+	          <view v-else>{{objectMultiArray[2][multiIndex[2]]['name']}}</view>
+	        </view>
+	      </picker>
+	    </view>
+	  </view>
+	  <view class="center" v-if="isShowAddress">
+	    <view class="mbx">
+	      {{$t('1009x12')}}
+	    </view>
+	    <view class="haha">
+	      <picker :range="t_arr" :value="t_index" @change="t_pickerChange" mode="selector" range-key="name">
+	        <view class="picker">
+	          <view style="margin-left: 20upx;width: 300upx;" v-if="!address_info.Address_Town">{{$t('1009x13')}}</view>
+	          <view style="margin-left: 20upx;width: 300upx;" v-else>{{t_arr[t_index]['name']}}</view>
+	        </view>
+	      </picker>
+	    </view>
+	  </view>
+	  
+	  
       <view class="disHaihong" v-if="disData.Level_Name">
         {{disData.Level_Name}}
 		<block v-if="$p('zh-cn')">({{disData.level_rules_edit.direct_buy.value.money}}{{$t('1009x20')}})</block>
@@ -166,14 +216,20 @@
 
 <script>
 import { pageMixin } from '../../common/mixin'
-import { disApply, disApplyInit, disBuy, getTown } from '../../common/fetch.js'
+import { disApply, disApplyInit, disBuy, getTown, createToken,
+  GET_ACCESS_TOKEN,
+  GET_ENV,
+  get_User_ID,
+  get_Users_ID } from '../../common/fetch.js'
 import area from '../../common/area.js'
 import utils from '../../common/util.js'
 import popupLayer from '../../components/popup-layer/popup-layer.vue'
 import { mapActions, mapGetters } from 'vuex'
 import { unipayFunc } from '../../common/pay.js'
-import { GetQueryByString, isWeiXin, ls, urlencode, checkMobile } from '../../common/tool'
+import { GetQueryByString, isWeiXin, ls, urlencode, checkMobile,chooseImageByPromise, uploadImages } from '../../common/tool'
 import { confirm, error, toast } from '../../common'
+import {domainFn} from '../../common/filter.js'
+
 
 import T from '@/common/langue/i18n'
 export default {
@@ -183,6 +239,7 @@ export default {
   },
   data () {
     return {
+		isSubmit:false,
       disData: {},
       addressArr: {},
       isShowAddress: false,
@@ -212,6 +269,7 @@ export default {
       select_lists: '', // 填写下拉选
       disLevelInfo: '',
       text_lists: '', // 填写文本框
+	  image_arrays:'',//图片
       submitM: false,
       pay_arr: [], // 支付方式
       password_input: false, // 弹出密码输入框
@@ -254,6 +312,58 @@ export default {
   },
   methods: {
     ...mapActions(['getInitData']),
+	// 图片预览
+	yulan (index) {
+	  let img=domainFn(this.image_arrays[index].Value)
+	  uni.previewImage({
+	    urls: [img],
+	    indicator: 'default',
+	    current: index
+	  })
+	},
+	async addImg (index) {
+	  const param = { act: 'upload_image' }
+	  param.User_ID = get_User_ID()
+	  param.Users_ID = get_Users_ID()
+	  param.env = GET_ENV()
+	
+	  if (!param.hasOwnProperty('access_token')) {
+	    param.access_token = GET_ACCESS_TOKEN()
+	  }
+	
+	  const data = createToken(param)
+	  let sizeType = null
+	  // #ifndef MP-TOUTIAO
+	  sizeType = ['original', 'compressed'] // 可以指定是原图还是压缩图，默认二者都有
+	  // #endif
+	  const that = this
+	  let temp_file_list = []
+	    await chooseImageByPromise({
+	      count: 1,
+	      sizeType
+	    }).then(tempFiles => {
+	      temp_file_list = tempFiles
+	    })
+	    that.imgs = [...temp_file_list]
+	
+	    const arrs = temp_file_list.map(item => item.path)
+	    uploadImages(data, arrs).then(urls => {
+			console.log(index,urls,"urlsurlsurls")
+	      this.image_arrays[index].Value=urls[0]
+	      // 是否可以提交
+	      that.isSubmit = true
+	    }).catch(err => {
+	       this.image_arrays[index].Value=''
+	      that.isSubmit = false
+	    })
+	 
+	},
+	// 删除某张预览图片
+	delImg (index, arg = 0) {
+	  if (arg == 0) {
+	    this.image_arrays[index].Value=''
+	  }
+	},
     payFailCall (err) {
       uni.showToast({
         title: err.msg ? err.msg : T._('1009d0'),
@@ -393,6 +503,23 @@ export default {
             data.buy_info[item.arrs] = arr
           }
         }
+		if (this.image_arrays.length > 0) {
+		  for (const item of this.image_arrays) {
+		    const arr = {}
+		    arr[item.Name] = item.Value
+		    data.buy_info[item.arrs] = arr
+		  }
+		}
+		
+		if(this.isShowAddress){
+			data.buy_info[this.address_info.arrs]={
+				pro_id:this.address_info.Address_Province,
+				city_id:this.address_info.Address_City,
+				area_id:this.address_info.Address_Area,
+				town_id:this.address_info.Address_Town
+			}
+		}
+		
       }
       if (this.pro.dis_config.Distribute_AgreementOpen) {
         if (this.isAgree) {
@@ -468,11 +595,6 @@ export default {
             title: err.msg,
             icon: 'none'
           })
-          setTimeout(function () {
-            uni.switchTab({
-              url: '/pages/fenxiao/fenxiao'
-            })
-          }, 2000)
         }).catch(e => {
         })
       } else {
@@ -571,6 +693,15 @@ export default {
           return
         }
       }
+	  if (this.isShowAddress) {
+	    if (!this.address_info.Address_Province||!this.address_info.Address_City||!this.address_info.Address_Area||!this.address_info.Address_Town) {
+	      uni.showToast({
+	        title: T._('1009d22'),
+	        icon: 'none'
+	      })
+	      return
+	    }
+	  }
       if (arr) {
         this.$refs.popupLayer.show()
       }
@@ -657,6 +788,15 @@ export default {
             apply_info[item.Name] = item.Value
           }
         }
+		
+		if(this.isShowAddress){
+			apply_info[this.address_info.arrs]={
+				pro_id:this.address_info.Address_Province,
+				city_id:this.address_info.Address_City,
+				area_id:this.address_info.Address_Area,
+				town_id:this.address_info.Address_Town
+			}
+		}
 
         disApply({
           apply_info: JSON.stringify(apply_info),
@@ -933,6 +1073,7 @@ export default {
           dislist.manual_rules = typeof dislist.manual_rules !== 'object' ? JSON.parse(dislist.manual_rules) : dislist.manual_rules
           var select_arrays = []
           var text_arrays = []
+		  var image_arrays=[]
           for (var fi in dislist.manual_rules) {
             if (dislist.manual_rules[fi].type == 'select') {
               dislist.manual_rules[fi].name + '|' + dislist.manual_rules[fi].place
@@ -951,10 +1092,18 @@ export default {
               temp.Value = dislist.manual_rules[fi].place
               temp.arrs = fi
               text_arrays.push(temp)
+            }else if (dislist.manual_rules[fi].type == 'image') {
+              var temp = new Object()
+              temp.Name = dislist.manual_rules[fi].name
+              temp.Type = dislist.manual_rules[fi].type
+              temp.Value = dislist.manual_rules[fi].place
+              temp.arrs = fi
+              image_arrays.push(temp)
             }
           }
           this.select_lists = select_arrays
           this.text_lists = text_arrays
+		  this.image_arrays=image_arrays
           this.disLevelInfo = dislist.manual_rules
           for (const item of this.disLevelInfo) {
             if (item.type == 'address') {
@@ -1032,6 +1181,7 @@ export default {
           dislist.Distribute_Form = typeof dislist.Distribute_Form !== 'object' ? JSON.parse(dislist.Distribute_Form) : dislist.Distribute_Form
           var select_arrays = []
           var text_arrays = []
+		  var image_arrays=[]
           for (var fi in dislist.Distribute_Form) {
             if (dislist.Distribute_Form[fi].Type == 'select') {
               dislist.Distribute_Form[fi].Name + '|' + dislist.Distribute_Form[fi].Value
@@ -1050,13 +1200,33 @@ export default {
               temp.Value = dislist.Distribute_Form[fi].Value
               temp.arrs = fi
               text_arrays.push(temp)
+            }else if (dislist.Distribute_Form[fi].Type == 'image') {
+              var temp = new Object()
+              temp.Name = dislist.Distribute_Form[fi].Name
+              temp.Type = dislist.Distribute_Form[fi].Type
+              temp.Value = dislist.Distribute_Form[fi].Value
+              temp.arrs = fi
+              image_arrays.push(temp)
             }
+			
           }
           this.select_lists = select_arrays
           this.text_lists = text_arrays
+		  this.image_arrays = image_arrays
+		  
           this.disLevelInfo = dislist.Distribute_Form
+		  for (const item in this.disLevelInfo) {
+		    if (this.disLevelInfo[item].Type == 'address') {
+		      this.isShowAddress = true
+			  this.address_info.arrs=item
+	
+		    }
+		  }
+		  
+		  
         }
       }).catch(e => {
+		  console.log(e,"eeeeeeeeeeeeeee")
 		  error(e.msg)
       })
     },
@@ -1455,5 +1625,71 @@ export default {
   .disMyImg {
     width: 9px;
     height: 14px;
+  }
+  
+  .addImg {
+    font-size: 30rpx;
+    //height: 100rpx;
+	width: 710rpx;
+	margin: 0 auto;
+    line-height: 100rpx;
+    color: #333;
+	border-bottom: 1rpx solid #E7E7E7;
+  }
+  
+  .imgs {
+    display: flex;
+    padding-right: 0rpx;
+    flex-wrap: wrap;
+  }
+  
+  .shangchuans {
+    width: 146rpx;
+    height: 146rpx;
+    border: 1px solid rgba(186, 186, 186, 1);
+    position: relative;
+    margin-right: 28rpx;
+    margin-bottom: 28rpx;
+  
+    .image {
+      width: 100%;
+      height: 100%;
+    }
+  
+    .del {
+      width: 38rpx;
+      height: 38rpx;
+      position: absolute;
+      top: -19rpx;
+      right: -19rpx;
+      z-index: 999;
+    }
+  }
+  
+  .shangchuan {
+    width: 146rpx;
+    height: 146rpx;
+    border: 1px dotted rgba(186, 186, 186, 1);
+    position: relative;
+    margin-bottom: 28rpx;
+  
+    .heng {
+      width: 76rpx;
+      height: 3rpx;
+      background-color: #BABABA;
+      position: absolute;
+      top: 72rpx;
+      left: 35rpx;
+    }
+  
+    .shu {
+      width: 3rpx;
+      height: 76rpx;
+      background-color: #BABABA;
+      position: absolute;
+      top: 35rpx;
+      left: 72rpx;
+  
+    }
   }
 </style>
