@@ -79,7 +79,7 @@
     <div v-if="cate==1">
       <div class="cate1">
         <div :key="i" @click="gotoDetail(item.Products_ID)" class="pro" v-for="(item,i) of pro">
-          <image :src="item.ImgPath" class="pro-img"></image>
+          <image :src="item.ImgPath" mode="aspectFit"  class="pro-img"></image>
           <div class="pro_desc">
             <div class="title">{{item.Products_Name}}</div>
             <div class="price">
@@ -97,7 +97,7 @@
     <div v-else>
       <div class="cate2">
         <div :key="i" @click="gotoDetail(item.Products_ID)" class="pro" v-for="(item,i) of pro">
-          <image :src="item.ImgPath" alt="" class="pro-img"></image>
+          <image :src="item.ImgPath" mode="aspectFit" class="pro-img"></image>
           <div class="pro_desc">
             <div class="title">{{item.Products_Name}}</div>
             <div class="price">

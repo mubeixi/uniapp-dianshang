@@ -51,6 +51,11 @@
     <div class="text-center graytext font12 padding10-r" v-if="couponList.length<1">
       <!--没有优惠券-->
     </div>
+	
+	
+<!-- 	<div class="couponMark"  @click.stop catchtouchmove="false" >
+			
+	</div> -->
 
   </div>
 </template>
@@ -461,6 +466,19 @@ export default {
         font-size: 12px;
       }
     }
+  }
+  
+  
+  .couponMark{
+	  position: fixed;
+	  top: 0;
+	  left: 0;
+	  right: 0;
+	  bottom: 0;
+	  background-color: #000000;
+	  opacity: 0.6;
+	  z-index: 90;
+	  
   }
 
 </style>
