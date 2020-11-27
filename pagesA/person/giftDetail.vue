@@ -2,6 +2,7 @@
 	<div @click="commonClick">
 		<view class="address order-id">{{$t('1502x0')}}{{orderInfo.Order_ID}}</view>
 		<div @click="showQrImg" class="check-qrcode text-right" v-if="qrVal">
+		  <div class="font14" style="margin-bottom: 15px;">{{$t('764x0')}}{{orderInfo.Order_Code}}</div>
 		  <wzw-qrcode
 		  :loadMake="true"
 		  :size="100"
@@ -544,7 +545,7 @@ export default {
 		/* margin: 15px 0 10px; */
 		display: flex;
 		align-items: center;
-		padding: 40rpx 38rpx 40rpx 28rpx;
+		padding: 40rpx 38rpx 10rpx 28rpx;
 		border-top: 30rpx solid #F3F3F3;
 		border-bottom: 20rpx solid #F3F3F3;
 		font-size: 28rpx;
