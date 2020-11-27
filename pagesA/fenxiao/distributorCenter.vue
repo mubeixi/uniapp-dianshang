@@ -52,6 +52,19 @@
             <input class="inputa" type="text" v-model="m.Value">
           </view>
         </block>
+		<view class="addImg"  v-for="(item,index) of image_arrays" :key="index">
+		  {{item.Name}}
+		  <view class="imgs">
+		    <view  class="shangchuans" v-if="item.Value">
+		      <image :src="item.Value|domain" @click="yulan(index)" class="image"></image>
+		      <image :src="'/static/client/delimg.png'|domain" @click="delImg(index)" class="del image"></image>
+		    </view>
+		    <view @click="addImg(index)" class="shangchuan" v-else>
+		      <view class="heng"></view>
+		      <view class="shu"></view>
+		    </view>
+		  </view>
+		</view>
         <view class="center" v-if="isShowAddress">
           <view class="mbx">
             {{$t('1009x8')}}
@@ -70,6 +83,7 @@
             </picker>
           </view>
         </view>
+		
         <view class="center" v-if="isShowAddress">
           <view class="mbx">
             {{$t('1009x12')}}
@@ -788,6 +802,11 @@ export default {
             apply_info[item.Name] = item.Value
           }
         }
+		if (this.image_arrays.length > 0) {
+		  for (const item of this.image_arrays) {
+		    apply_info[item.Name] = item.Value
+		  }
+		}
 		
 		if(this.isShowAddress){
 			apply_info[this.address_info.arrs]={
@@ -1167,6 +1186,25 @@ export default {
                 }
               }
             }
+			
+			
+			for (const ite in myInfo) {
+			  for (const text in this.image_arrays) {
+			    if (this.image_arrays[text].Name == ite) {
+			      this.image_arrays[text].Value = myInfo[ite]
+			    }
+			  }
+			  for (const select in this.image_arrays) {
+			    if (this.image_arrays[select].name == ite) {
+			      for (let i = 0; i < this.image_arrays[select].options.length; i++) {
+			        if (this.image_arrays[select].options[i] == myInfo[ite]) {
+			          this.image_arrays[select].index = i
+			        }
+			      }
+			    }
+			  }
+			}
+			
           }
         } else {
           // 获取第一个分销商的金额
