@@ -1,6 +1,20 @@
 <template>
 	<div @click="commonClick">
 		<view class="address order-id">{{$t('1502x0')}}{{orderInfo.Order_ID}}</view>
+		<div @click="showQrImg" class="check-qrcode text-right" v-if="qrVal">
+		  <wzw-qrcode
+		  :loadMake="true"
+		  :size="100"
+		  :usingComponents="true"
+		  :val="qrVal"
+		  @result="qrR"
+		  cid="qrcode2"
+		  class="line6"
+		  ref="qrcode2"
+		  unit="px"
+		  />
+		  <div class="graytext2 font12">{{$t('764x1')}}</div>
+		</div>
 		<view class="address">{{$t('1502x1')}}: {{orderInfo.Order_CreateTime | formatTime}}</view>
 		<div class="order_msg">
 			<div class="biz_msg">
@@ -95,7 +109,7 @@
 				<div class="info">{{$t('1502x14')}}{{orderInfo.prod_list.length}}{{$t('1502x15')}} {{$t('1502x16')}}<span class="mbxa">￥<span>{{orderInfo.Order_Fyepay}}</span></span></div>
 				<view class="tips" v-if="orderInfo.obtain_desc">{{orderInfo.obtain_desc}}</view>
 			</div>
-			<div class="btn-group" v-if="orderInfo.Order_Status==2">
+			<div class="btn-group" v-if="orderInfo.Order_Status==2&&orderInfo.Order_IsVirtual!=1">
 				<span class="active">{{$t('1502x17')}}</span>
 			</div>
 			<div class="btn-group" v-if="orderInfo.Order_Status==3">
@@ -127,17 +141,19 @@
 		isWeiXin
 	} from '../../common/tool'
 	import PayComponents from '../../components/PayComponents.vue'
-
+	import wzwQrcode from '../../components/wzw-qrcode/wzw-qrcode'
 	import T from '@/common/langue/i18n'
 export default {
 		mixins: [pageMixin],
 		components: {
 			popupLayer,
-			PayComponents
-
+			PayComponents,
+			wzwQrcode
 		},
 		data() {
 			return {
+				qrsrc:'',
+				qrVal:'',
 				code: '',
 				JSSDK_INIT: false,
 				show: false, // 遮罩层
@@ -199,6 +215,15 @@ export default {
 			// #endif
 		},
 		methods: {
+			showQrImg () {
+			  uni.previewImage({
+			    urls: [this.qrsrc]
+			  })
+			},
+			qrR (res) {
+				console.log(res,"ssss")
+			  this.qrsrc = res
+			},
 			goLogistics(orderInfo) {
 				const {
 					shipping_id,
@@ -301,6 +326,11 @@ export default {
 						}
 					}
 					this.orderInfo = res.data
+					
+					
+					if (this.orderInfo.Order_IsVirtual) {
+					  this.qrVal = `IsVirtualOrderCheck##Order_Code::${this.orderInfo.Order_Code}`
+					}
 					// pay_money 应该支付的钱
 					// user_money 使用的余额
 					this.pay_money = this.orderInfo.Order_Fyepay
@@ -807,5 +837,13 @@ export default {
 				}
 			}
 		}
+	}
+	.check-qrcode{
+		width: 750rpx;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		padding-bottom: 20px;
 	}
 </style>
