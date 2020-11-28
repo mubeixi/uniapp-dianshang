@@ -1,7 +1,7 @@
 <template>
 	<div @click="commonClick">
 		<view class="address order-id">{{$t('1502x0')}}{{orderInfo.Order_ID}}</view>
-		<div @click="showQrImg" class="check-qrcode text-right" v-if="qrVal">
+		<div @click="showQrImg" class="check-qrcode text-right" v-if="qrVal&&orderInfo.Order_Status!=4">
 		  <div class="font14" style="margin-bottom: 15px;">{{$t('764x0')}}{{orderInfo.Order_Code}}</div>
 		  <wzw-qrcode
 		  :loadMake="true"
