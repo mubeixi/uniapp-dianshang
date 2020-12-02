@@ -21,8 +21,10 @@
 				<view :style="{position:!userInfo.User_ID?'relative':'static'}" class="right flex1">
 					<view @click="goLogin" class="font14 loginBtn" plain size="mini" v-if="!userInfo.User_ID">{{$t('902x2')}}</view>
 					<view @click="goPersonMsg" class="nickName" v-if="userInfo.User_ID">
-						{{userInfo.User_NickName||(userInfo.User_No?($t('902x3')+userInfo.User_No):$t('902x4'))}}
-						<block v-if="userInfo.User_NickName">({{userInfo.User_No}})</block>
+						<text class="overflowHidden">
+							{{userInfo.User_NickName||(userInfo.User_No?($t('902x3')+userInfo.User_No):$t('902x4'))}}
+						</text>
+						<text v-if="userInfo.User_NickName">({{userInfo.User_No}})</text>
 					</view>
 					<view @click="goVip" class="cart" v-if="userInfo.User_ID && initData.user_switch">{{userLevelText()}}
 						<image :src="'/static/client/person/rightCart.png'|domain" class="image"></image>
@@ -504,6 +506,8 @@
 						overflow-x: scroll;
 						visibility: middle;
 						overflow-y: hidden;
+						display: flex;
+						align-items: center;
 					}
 
 					.nickName::-webkit-scrollbar {
@@ -803,5 +807,13 @@
 				margin-right: 10rpx;
 			}
 		}
+	}
+	
+	.overflowHidden{
+		max-width: 200rpx;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		display: inline-block;
 	}
 </style>
