@@ -127,7 +127,7 @@
       </view>
     </block>
     <block v-else-if="storeID!=-1">
-      <no-store></no-store>
+      <no-store  ref="noStore"></no-store>
     </block>
 
     <popupLayer :direction="'top'" ref="popupLayer">
@@ -244,6 +244,11 @@ export default {
         productDetail_price: 0
       }
     }
+  },
+  onHide() {
+  	if (this.$refs.noStore) {
+  	  this.$refs.noStore.hideFn()
+  	}
   },
   onReachBottom () {
 	  if (this.prodList[this.goodsNavIndex]) {

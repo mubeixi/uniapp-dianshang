@@ -187,6 +187,7 @@ export default {
      * 清空
      */
     clearDownFileTask () {
+		console.log('closeclosecloseclosecloseclose')
       for (var i in downTaskList) {
         downTaskList[i].abort()
       }

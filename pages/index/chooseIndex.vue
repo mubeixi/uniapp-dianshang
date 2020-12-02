@@ -169,6 +169,25 @@ export default {
     ...mapGetters(['initData'])
   },
   methods: {
+	hideFn(){
+		if (this.$refs.goodsPlugin) {
+		  this.$refs.goodsPlugin.map(item => {
+		    item.clearDownFileTask()
+		  })
+		}
+		// 暂停notice组件的定时器任务
+		if (this.$refs.notice) {
+		  this.$refs.notice.map(item => {
+		    item.pauseAn()
+		  })
+		}
+		// 暂停播放
+		if (this.$refs.video) {
+		  this.$refs.video.map(item => {
+		    item.pauseFn()
+		  })
+		}
+	},  
     toLive () {
       uni.navigateTo({
         url: '/pagesA/live/live'
