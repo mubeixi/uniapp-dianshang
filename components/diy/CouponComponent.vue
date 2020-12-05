@@ -53,9 +53,31 @@
     </div>
 	
 	
-<!-- 	<div class="couponMark"  @click.stop catchtouchmove="false" >
-			
-	</div> -->
+
+	<layout-modal ref="couponMask" :autoClose="false" :showPop="showPop" bgColor="none" mainBgColor="none">
+		<div class="couponContent">
+			<image class="couponContentImg" :src="'/static/client/coupon/couponPopup.png'|domain"></image>
+			<image @click="showPop=false" class="couponContentDel" :src="'/static/client/coupon/couponDel.png'|domain"></image>
+			<view class="couponContentDiv">
+				<view class="couponCon"> 
+						<view @click="getCoupon(item)" class="couponCon-item"  v-for="(item,idx) in couponList" :key="idx"  :style="{backgroundImage:'url('+bgImg+')'}" >
+							<text class="couponCon-item__title">{{item.Coupon_Cash}}</text>
+							
+							<text class="couponCon-item__sub">优惠券</text>
+							<!-- {{item.Coupon_Subject}} -->
+							<text class="couponCon-item__man">满{{item.Coupon_Condition}}可用</text>
+							
+							
+						</view>
+						
+						<!-- <view class="text-coupon">
+							优惠券可在“我的”—“我的优惠”中查看
+						</view> -->
+				</view>
+			</view>
+		</div>
+	</layout-modal>
+	
 
   </div>
 </template>
@@ -63,6 +85,9 @@
 import { getCoupon, getUserCoupon } from '../../common/fetch'
 import { mapGetters } from 'vuex'
 import { modal } from '@/common'
+import  layoutModal from '@/components/layout-modal/layout-modal.vue'
+import { domainFn } from '../../common/filter'
+import {ls } from '../../common/tool.js'
 
 /**
  * 某个值是否在指定数组内存在（指定键值)
@@ -82,6 +107,9 @@ function is_index_has (val, arr, index) {
 
 import T from '@/common/langue/i18n'
 export default {
+  components:{
+	  layoutModal
+  },	
   props: {
     index: {
       required: true
@@ -93,6 +121,8 @@ export default {
   },
   data () {
     return {
+		showPop:false,
+		bgImg:'',
       coupon: {
         value: {
           list: []
@@ -102,7 +132,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['userInfo']),
+    ...mapGetters(['userInfo','initData']),
     couponList () {
       if (this.coupon.value.list.length < 1) {
         return []
@@ -136,6 +166,8 @@ export default {
         })
         getCoupon({ pageSize: 999 }, { errtip: false }).then(res => {
           this.isAllowCouponList = res.data
+		  
+		  
         })
       }).catch(() => {
         modal(T._('29d1'))
@@ -143,10 +175,19 @@ export default {
     }
   },
   async created () {
+	this.bgImg=domainFn("/static/client/coupon/couponPopupBg.png")
+	
     this.coupon = this.confData
 
     getCoupon({ pageSize: 999 }, { errtip: false }).then(res => {
       this.isAllowCouponList = res.data
+		const showPop=ls.get('showPop')
+		console.log(showPop,"showPopshowPopshowPop")
+	   if(showPop!=1&&this.isAllowCouponList.length>0&&this.initData.Is_Apply_Coupon==1){
+		   	 this.showPop=true
+		     ls.set('showPop',1)
+	   }
+	  
     })
   }
 }
@@ -468,17 +509,86 @@ export default {
     }
   }
   
-  
-  .couponMark{
-	  position: fixed;
-	  top: 0;
-	  left: 0;
-	  right: 0;
-	  bottom: 0;
-	  background-color: #000000;
-	  opacity: 0.6;
-	  z-index: 90;
-	  
+  .couponContent{
+	  width: 488rpx;
+	  position: relative;
   }
-
+  .couponContentImg{
+	  width: 488rpx;
+	  height: 176rpx;
+  }
+  .couponContentDel{
+	  width: 56rpx;
+	  height: 56rpx;
+	  position: absolute;
+	  top: 14rpx;
+	  right: -14rpx;
+  }
+  .couponContentDiv{
+	  width: 462rpx;
+	  margin: -20rpx auto 0rpx;
+	  padding-top: 20rpx;
+	  padding: 38rpx 28rpx 28rpx 28rpx;
+	  box-sizing: border-box;
+	  min-height: 100rpx;
+	  background: #DD5744;
+	  border-radius:0px 0px 36rpx 36rpx;
+  }
+ 
+ .couponCon{
+	 background-color: #bb0000;
+	 border-radius: 20rpx;
+	 width: 100%;
+	 padding: 32rpx 0rpx;
+	 &-item{
+		 width: 380rpx;
+		 height: 104rpx;
+		 background-size: 100% 100%;
+		 background-repeat: no-repeat;
+		 margin: 0rpx auto 20rpx;
+		 position: relative;
+		 &:last-child{
+			 margin: 0rpx auto 0rpx;
+		 }
+		 &__title{
+			 font-size: 60rpx;
+			 color: rgba(247, 208, 145, 1);
+			 position: absolute;
+			 top: 20rpx;
+			 left: 34rpx;
+			 width: 80rpx;
+			 height: 60rpx;
+			 line-height: 60rpx;
+			 text-align: center;
+		 }
+		 &__sub{
+			 color: rgba(228, 43, 45, 1);
+			 font-size: 36rpx;
+			 position: absolute;
+			 width: 120rpx;
+			 top: 10rpx;
+			 font-weight: 600;
+			 left: 150rpx;
+		 }
+		 &__man{
+			  color: rgba(228, 43, 45, 1);
+			  font-size: 20rpx;
+			  position: absolute;
+			  width: 120rpx;
+			  top: 58rpx;
+			  left: 150rpx;
+			  font-weight: 600;
+		 }
+		 
+	 }
+	 
+	 
+ }
+// .text-coupon{
+// 	color: rgba(247, 208, 145, 1);
+// 	font-size: 20rpx;
+// 	text-align: center;
+// 	width: 100%;
+// line-height: 40rpx;
+// }
 </style>
