@@ -189,7 +189,7 @@ export default {
         uni.navigateBack()
       }).catch(err => {
         uni.switchTab({
-          url: '/pagesA/person/storeCenter'
+          url: '/pages/person/person'
         })
       })
     },
