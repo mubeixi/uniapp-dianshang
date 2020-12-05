@@ -2373,6 +2373,7 @@ var resource = {
 "2361d1": "Need to log in, do you want to log in?",
 "2361d2": "Go to login",
 "2361d3": "Not login",
+'2361d4': 'Direct push',
 "home":"home",
 "class":"class",
 "shopping":"shopping",
