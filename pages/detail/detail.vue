@@ -292,6 +292,7 @@ import uParse from '../../components/gaoyia-parse/parse.vue'
 import { pageMixin, safeAreaMixin } from '../../common/mixin'
 import { error, modal } from '../../common'
 import T from '@/common/langue/i18n'
+import  layoutModal from '@/components/layout-modal/layout-modal.vue'
 export default {
   mixins: [pageMixin, safeAreaMixin],
   data () {
@@ -299,7 +300,7 @@ export default {
 		showWxChatSwitch:ls.get('showWxChatSwitch'),
 		showWeChat:false,
 		userInfo:{
-			is_subscribe:1
+			is_subscribe:0
 		},
       store_id: '',
       hideNativeEleShow: false,
@@ -358,7 +359,8 @@ export default {
   components: {
     bottom,
     popupLayer,
-    uParse
+    uParse,
+	layoutModal
   },
   // #ifdef MP-WEIXIN || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO
   // 自定义小程序分享

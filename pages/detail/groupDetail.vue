@@ -373,7 +373,7 @@
 				showWxChatSwitch:ls.get('showWxChatSwitch'),
 				showWeChat:false,
 				userInfo:{
-					is_subscribe:1
+					is_subscribe:0
 				},
 				teamListAll: [],
 				hideNativeEleShow: false,
