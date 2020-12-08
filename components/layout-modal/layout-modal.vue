@@ -3,7 +3,7 @@
     <view v-show="ifshow" @tap="ableClose" @touchmove.stop.prevent class="popup-layer"
           :style="{backgroundColor:bgColor}"></view>
     <view @touchmove.stop.prevent v-show="ifshow"
-          :class="[positions==='top'?'top':'center']"
+          :class="[positions==='top'?'top':'center',{'over':overBoo}]"
           :style="{backgroundColor:mainBgColor}"
           ref="popRef" class="popup-content" @tap.stop="stopEvent">
       <slot></slot>
@@ -32,6 +32,10 @@ export default {
       type: String,
       default: 'center'
     },
+	overBoo:{
+		type: Boolean,
+		default: false
+	},
     showPop: {
       type: Boolean,
       default: false
@@ -115,5 +119,8 @@ export default {
       top: 10%;
       transform: translate(-50%);;
     }
+  }
+  .over{
+	  overflow: visible !important;
   }
 </style>

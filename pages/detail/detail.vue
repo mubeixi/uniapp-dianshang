@@ -1,7 +1,17 @@
 <template>
   <div @click="commonClick" class="wrap" style="position:relative;">
+	  <div class="flex-message flex" v-if="initData.Substribe&&userInfo.is_subscribe==0&&showWxChatSwitch==1">
+	  	    <div>关注公众号，开启通知，重要信息不错过</div>
+	  	    <view class="flex flex-vertical-center">
+	  				<div class="lookCode" @click="showWeChat=true">关注</div>
+	  				<image class="codeDel"  @click="setWxChat" src="/static/no/detailX-no.png"></image>
+	  			</view>
+	  			
+	  </div>  
+	  <div class="flex-message-occupy"  v-if="initData.Substribe&&userInfo.is_subscribe==0&&showWxChatSwitch==1"></div>
+	  
     <!-- #ifndef APP-PLUS -->
-    <view class="top">
+    <view class="top" :class="{topIndex:initData.Substribe&&userInfo.is_subscribe==0&&showWxChatSwitch==1}">
       <image @click="goBack" class="imgm" src="/static/back.png"></image>
       <image @click="goCart" class="imgm cart" src="/static/cart.png"></image>
     </view>
@@ -242,6 +252,21 @@
       <image @click="toLive" class="icon-live" src="/static/live/logo.png"></image>
     </view> -->
     <!-- #endif -->
+	<layout-modal :autoClose="false" :overBoo="true" :showPop="showWeChat" bgColor="none" mainBgColor="none">
+		<view class="showWeChat">
+			<image class="del-img" @click="showWeChat=false" src="/static/del.png"></image>
+			<view class=" c-title">长按保存此照片</view>
+			<view class="c-subtitle">扫码识别即可关注</view>
+			<view class="c-div">
+				<image class="c-img" :show-menu-by-longpress="true" :src="initData.SubscribeQrcode"></image>
+			</view>
+			<view class="c-bottom">
+				或者搜索“{{initData.WeChatAccountName}}”公众号
+			</view>
+		</view>
+		
+	</layout-modal>
+	
   </div>
 </template>
 <script>
@@ -258,20 +283,24 @@ import {
   getProductSharePic,
   getUserCoupon,
   judgeReceiveGift,
-  updateCart
+  updateCart,
+  get_user_info
 } from '../../common/fetch.js'
 import { buildSharePath, getProductThumb, isWeiXin, ls, numberSort } from '../../common/tool.js'
-
 import { mapActions, mapState } from 'vuex'
 import uParse from '../../components/gaoyia-parse/parse.vue'
 import { pageMixin, safeAreaMixin } from '../../common/mixin'
 import { error, modal } from '../../common'
-
 import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin, safeAreaMixin],
   data () {
     return {
+		showWxChatSwitch:ls.get('showWxChatSwitch'),
+		showWeChat:false,
+		userInfo:{
+			is_subscribe:1
+		},
       store_id: '',
       hideNativeEleShow: false,
       isLoad: false,
@@ -420,6 +449,16 @@ export default {
     }).catch(() => {})
   },
   onShow () {
+	  
+	  if (this.$fun.checkIsLogin()) {
+	    get_user_info({}, {
+	      tip: '',
+	      errtip: false
+	    }).then(res => {
+	      this.userInfo = res.data
+	    }).catch(e => {
+	    })
+	  } 
     const _self = this
     const USERINFO = ls.get('userInfo')
     // #ifdef APP-PLUS
@@ -475,6 +514,16 @@ export default {
     ...mapState(['initData'])
   },
   methods: {
+	  setWxChat(){
+		  ls.set('showWxChatSwitch',2)
+	  	this.showWxChatSwitch=2
+	  	
+	  },
+	  lookCode(){
+	  	uni.previewImage({
+	  	  urls: [this.initData.SubscribeQrcode]
+	  	})
+	  },
     toLive () {
       uni.navigateTo({
         url: '/pagesA/live/live'
@@ -675,7 +724,6 @@ export default {
           })
           break
         case 'pic':
-
           const res = await getProductSharePic({ product_id: this.Products_ID }, {
             tip: T._('215d0'),
             mask: true
@@ -927,7 +975,6 @@ export default {
       // 	code: e.detail.formId,
       // 	times: 1
       // })
-
       if (this.store_id) {
         this.postData.store_id = this.store_id
       }
@@ -1060,9 +1107,7 @@ export default {
       // 返回的就是一个pormise了
       await getProductDetail(data).then(res => {
         product = res.data
-
         this.product = product
-
         this.postData.productDetail_price = this.product.Products_PriceX
         this.isVirtual = res.data.Products_IsVirtual == 1
         this.postData.count = res.data.Products_Count
@@ -1096,7 +1141,6 @@ export default {
       // let _self = this;
       // #ifdef H5
       if (!isWeiXin()) return
-
       const path = 'pages/detail/detail?Products_ID=' + this.Products_ID
       const front_url = this.initData.front_url
       this.WX_JSSDK_INIT(this).then((wxEnv) => {
@@ -1228,27 +1272,22 @@ export default {
     /*overflow-y: scroll;*/
     /*overflow-x: hidden;*/
   }
-
   /* 轮播图样式 */
   .uni-padding-wrap {
     width: 750rpx;
     height: 750rpx;
-
     .page-section, .page-section-spacing, .swiper, .uni-swiper-wrapper, .uni-swiper-slides {
       position: relative;
       width: 750rpx;
       height: 750rpx;
-
       img {
         width: 100%;
         height: 100%;
       }
-
       .video {
         width: 100%;
         height: 100%;
       }
-
       .change-btn {
         position: absolute;
         bottom: 50rpx;
@@ -1258,7 +1297,6 @@ export default {
         width: 240rpx;
         justify-content: space-between;
         z-index: 10;
-
         .shipin,
         .tupian {
           text-align: center;
@@ -1270,14 +1308,12 @@ export default {
           background: rgba(255, 0, 0, .5);
 		  line-height: 36rpx;
         }
-
         .active {
           background: rgb(255, 102, 0);
         }
       }
     }
   }
-
   /* 返回按钮和购物车按钮 */
   .top {
     position: fixed;
@@ -1291,12 +1327,13 @@ export default {
     z-index: 10;
     width: 95%;
   }
-
+  .topIndex{
+	  top: 90rpx !important;
+  }
   .imgm {
     width: 30px;
     height: 30px;
   }
-
   .imgms {
     width: 30px;
     height: 30px;
@@ -1304,7 +1341,6 @@ export default {
     top: 30px;
     left: 10px;
   }
-
   .carts {
     width: 30px;
     height: 30px;
@@ -1312,7 +1348,6 @@ export default {
     top: 30px;
     right: 10px !important;
   }
-
   .ticks, .shareinfo {
     background: #fff;
     width: 100%;
@@ -1322,14 +1357,12 @@ export default {
     border-top-left-radius: 10rpx;
     border-top-right-radius: 10rpx;
   }
-
   .ticks {
     max-height: 1050rpx;
     position: relative;
     padding-top: 0rpx !important;
     // overflow: scroll;
   }
-
   .t_title {
     font-size: 30rpx;
     color: #333;
@@ -1342,7 +1375,6 @@ export default {
     line-height: 90rpx;
     background-color: #FFFFFF;
   }
-
   .t_title image {
     height: 24rpx;
     width: 24rpx;
@@ -1350,7 +1382,6 @@ export default {
     top: 33rpx;
     right: 20rpx;
   }
-
   .t_content {
     position: relative;
     width: 720rpx;
@@ -1363,34 +1394,27 @@ export default {
     font-size: 22rpx;
     color: #F43131;
   }
-
   .t_left {
     float: left;
   }
-
   .t_left .t_left_t .money {
     font-size: 42rpx;
     margin-right: 10rpx;
   }
-
   .t_left .t_left_t {
     font-size: 24rpx;
     margin-bottom: 10rpx;
   }
-
   .t_left .t_left_b {
     margin-top: 6rpx;
   }
-
   .t_left .t_left_t i {
     font-size: 22rpx;
     font-style: normal;
   }
-
   .t_left .t_left_c, .t_left .t_left_b {
     font-size: 22rpx;
   }
-
   .t_right {
     float: right;
     height: 116rpx;
@@ -1401,38 +1425,31 @@ export default {
     //width: 124rpx;
     text-align: center;
   }
-
   .aleady {
     color: #999;
   }
-
   .shareinfo {
     padding-bottom: 0;
     color: #333;
     font-size: 24rpx;
   }
-
   .shareinfo > div {
     text-align: center;
   }
-
   .s_top {
     display: flex;
     justify-content: center;
     align-items: center;
   }
-
   .s_top .img {
     width: 76rpx;
     height: 76rpx;
     display: block;
     margin: 0 auto 10rpx;
   }
-
   .s_top > div:nth-child(1) {
     /*margin-right: 120rpx;*/
   }
-
   .s_bottom {
     position: relative;
     bottom: 0;
@@ -1444,7 +1461,6 @@ export default {
     line-height: 60rpx;
     margin-top: 16rpx;
   }
-
   /* 产品描述部分 start */
   .section1 {
     background: white;
@@ -1456,17 +1472,14 @@ export default {
 		margin-right: 20rpx;
 	}
   }
-
   .price {
     padding-top: 38rpx;
     padding-bottom: 29rpx;
   }
-
   .price .mm {
     font-size: 20rpx;
     font-style: normal;
   }
-
   .price .share {
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -1486,41 +1499,34 @@ export default {
     width:auto;
     box-sizing: border-box;
   }
-
   .n_price {
     color: #ff0000;
     font-size: 36rpx;
   }
-
   .o_price {
     margin-left: 10rpx;
     color: #ababab;
     font-size: 28rpx;
     text-decoration: line-through;
   }
-
   .name {
     color: #333;
     font-size: 28rpx;
     font-weight: 700;
     margin: 10rpx 0;
   }
-
   .sold {
     height: 50rpx;
     line-height: 50rpx;
     padding-bottom: 10px;
   }
-
   .sold span {
     color: #999;
     font-size: 26rpx;
   }
-
   .sold span:nth-child(2) {
     float: right;
   }
-
   /* 产品描述部分 end */
   /* 领券start */
   .section2 {
@@ -1532,13 +1538,11 @@ export default {
     background: white;
     border-bottom: 20rpx solid #f8f8f8;
   }
-
   .section2 .btn {
     padding: 0 10rpx;
     color: #f43131;
     border: 2rpx solid #f43131;
   }
-
   .right {
     display: flex;
     align-items: center;
@@ -1546,13 +1550,11 @@ export default {
     color: #666666;
     font-weight: 500;
   }
-
   .right .img {
     width: 20rpx;
     height: 26rpx;
     margin-left: 20rpx;
   }
-
   /* 领券 end */
   /* 包邮信息等 start */
   .section3 {
@@ -1560,37 +1562,31 @@ export default {
     flex-wrap: wrap;
     font-size: 0rpx;
   }
-
   .section3 > span {
     display: flex;
     align-items: center;
     // margin-right: 20rpx;
     margin: 20rpx 20rpx 20rpx 0;
-
     span {
       font-size: 24rpx;
       color: #333333;
     }
   }
-
   .section3 .img {
     width: 28rpx;
     height: 28rpx;
     margin-right: 10rpx;
   }
-
   /* 包邮信息等 end */
   /* 评价 start */
   .comment {
     padding: 30rpx 20rpx;
     border-bottom: 20rpx solid #f8f8f8;
   }
-
   .c_title {
     display: flex;
     justify-content: space-between;
   }
-
   .c_title {
     .right {
       color: #666666;
@@ -1598,38 +1594,31 @@ export default {
       font-weight: 500;
     }
   }
-
   .c_title > span {
     font-size: 30rpx;
     color: #333;
   }
-
   .c_content {
     margin-top: 30rpx;
   }
-
   .c_content_title {
     display: flex;
     align-items: center;
     font-size: 30rpx;
     color: #333;
   }
-
   .c_content_title > img {
     width: 70rpx;
     height: 70rpx;
     margin-right: 20rpx;
   }
-
   .user_name {
     flex: 1;
   }
-
   .c_time {
     font-size: 26rpx;
     color: #777;
   }
-
   .c_content_msg {
     font-size: 24rpx;
     color: #333;
@@ -1637,13 +1626,11 @@ export default {
     padding: 18rpx 0;
     border-bottom: 2rpx solid #f8f8f8;
   }
-
   .c_content_img .img {
     width: 140rpx;
     height: 140rpx;
     margin-right: 20rpx;
   }
-
   /* 评价 end */
   /* 商品详情 start */
   .pro_detail {
@@ -1651,19 +1638,16 @@ export default {
       width: 100%;
       font-size: 28rpx;
       color: #999;
-
       img {
         width: 100% !important;
       }
     }
   }
-
   .p_detail_title {
     padding: 30rpx 20rpx;
     color: #333;
     font-size: 30rpx;
   }
-
   /* 商品详情 end */
   /* 遮罩层 */
   .modal {
@@ -1673,33 +1657,27 @@ export default {
     background: rgba(0, 0, 0, .7);
     z-index: 1000;
   }
-
   .cartSku {
     padding: 0rpx 20rpx;
-
     .cartTop {
       position: relative;
       display: flex;
       padding-top: 20rpx;
-
       .image {
         width: 220rpx;
         height: 220rpx;
       }
-
       .cartTitle {
         margin-left: 20rpx;
         font-size: 32rpx;
         //width: 420rpx;
         flex: 1;
-
         .cartTitles {
           height: 80rpx;
           overflow: hidden;
           margin-top: 20rpx;
           line-height: 40rpx;
         }
-
         .addInfo {
           width: 450rpx;
           margin-top: 70rpx;
@@ -1707,12 +1685,10 @@ export default {
           flex-flow: row;
           justify-content: space-between;
           align-items: flex-end;
-
           .addPrice {
             font-size: 42rpx;
             color: #ff4200;
           }
-
           .proSale {
             font-size: 24rpx;
             color: #999;
@@ -1721,14 +1697,11 @@ export default {
         }
       }
     }
-
     .cartCenter {
       margin-top: 20rpx;
-
       .cartAttr {
         //display: flex;
         padding: 15rpx 0rpx;
-
         .sku {
           font-size: 28rpx;
           height: 70rpx;
@@ -1737,14 +1710,12 @@ export default {
           padding-left: 10px;
           margin-bottom: 5px;
         }
-
         .skuValue {
           display: flex;
           //flex:1;
           flex-wrap: wrap;
 		  max-height: 340rpx;
 		  overflow-y: scroll;
-
           .skuview {
             margin-bottom: 10px;
             height: 70rpx;
@@ -1758,34 +1729,29 @@ export default {
             margin-right: 20rpx;
             //border: 1px solid #ccc;
           }
-
           .unablechoose {
             background: #ddd;
           }
         }
       }
     }
-
     .numBer {
       margin-top: 20rpx;
       display: flex;
       padding: 15rpx 0rpx;
       justify-content: space-between;
-
       .numBers {
         font-size: 28rpx;
         height: 70rpx;
         line-height: 70rpx;
         width: 140rpx;
       }
-
       .inputNumber {
         border: 1px solid #ccc;
         border-radius: 6rpx;
         height: 50rpx;
         //margin-right: 50rpx;
         display: flex;
-
         .inputq {
           color: black;
           margin: 0 auto;
@@ -1796,7 +1762,6 @@ export default {
           border-left: 2rpx solid #ccc;
           border-right: 2rpx solid #ccc;
         }
-
         .clicks {
           height: 50rpx;
           line-height: 50rpx;
@@ -1806,7 +1771,6 @@ export default {
       }
     }
   }
-
   .cartSub {
     width: 100%;
     height: 90rpx;
@@ -1818,14 +1782,109 @@ export default {
     margin-top: 30rpx;
     border-radius: 0;
     border: none;
-
     &.disabled {
       background: #999;
     }
   }
-
   .skuCheck {
     color: #fff !important;
     background-color: #ff4200 !important;
   }
+  .c-red{
+      color: #FFFFff;
+      background-color: #ff4400;
+      display: inline-block;
+      padding: 0px 14rpx;
+      border-radius: 10rpx;
+      margin: 0rpx 14rpx;
+    }
+  .flex-message{
+      text-align: center;
+  	 justify-content: space-between;
+      width: 750rpx;
+      height: 70rpx;
+  	 line-height: 70rpx;
+  	 align-items: center;
+      box-sizing: border-box;
+      border-radius: 10rpx;
+  	 color: #eb6827;
+      background-color: #fffdee;
+      line-height: 50rpx;
+      font-size: 12px;
+      padding:0rpx 30rpx;
+      position: fixed;
+      top: 0px;
+      left: 0px;
+      z-index: 9;
+    }
+    .lookCode{
+  	   width: 94rpx;
+  	   height: 40rpx;
+  	   line-height: 40rpx;
+  	   text-align: center;
+  	   border-radius: 40rpx;
+  	   font-size: 12px;
+  	   background-color: #FFFFFF;
+  	   color: #333333;
+  	   border: 1px solid #f7d1bb;
+    }
+    .codeDel{
+  	   width: 30rpx;
+  	   height: 30rpx;
+  	   margin-left: 40rpx;
+    }
+    .flex-message-occupy{
+      height: 70rpx;
+      width: 750rpx;
+    }
+    .showWeChat{
+  	   position: relative;
+  	   width: 560rpx;
+  	   height: 640rpx;
+  	   background-color: #FFFFFF;
+  	   border-radius: 20rpx;
+  	   padding-top: 100rpx;
+  	   display: flex;
+  	   box-sizing: border-box;
+  	   flex-direction: column;
+  	   align-items: center;
+  	   .del-img{
+  		   width: 50rpx;
+  		   height: 50rpx;
+  		   position: absolute;
+  		   top: -40rpx;
+  		   right: -60rpx;
+  	   }
+  	   .c-title{
+  		   color: #8f97ea;
+  		   font-size: 17px;
+  		   font-weight: bold;
+  		   margin-bottom: 30rpx;
+  	   }
+  	   .c-subtitle{
+  			color: #333;
+  			font-size: 15px;
+  			margin-bottom: 50rpx;
+  	   }
+  	   .c-div{
+  		   width: 200rpx;
+  		   height: 200rpx;
+  		   display: flex;
+  		   border-radius: 10rpx;
+  		   align-items: center;
+  		   justify-content: center;
+  		   background-color: #FFFFFF;
+  		   box-shadow:0rpx 0rpx 10rpx 2px #CCCCCC;
+  		   margin-bottom: 60rpx;
+  	   }
+  	   .c-bottom{
+  		   font-size: 26rpx;
+  		   color: #333333;
+  	   }
+  		.c-img{
+  			width: 170rpx;
+  			height: 170rpx;
+  		}
+  	   
+    }
 </style>

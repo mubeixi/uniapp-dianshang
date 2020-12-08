@@ -34,6 +34,8 @@ export default {
       })
     }
     // #endif
+	
+	ls.set('showWxChatSwitch','1')
 
     // 小程序需要拿这个，都拿一下覆盖吧
     // #ifdef MP-WEIXIN

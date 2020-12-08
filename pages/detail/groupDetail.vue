@@ -1,10 +1,20 @@
 <template>
 	<div @click="commonClick" class="wrap" style="position:relative;background-color:#f8f8f8">
-		<div class="top">
+		
+		<div class="flex-message flex" v-if="initData.Substribe&&userInfo.is_subscribe==0&&showWxChatSwitch==1">
+			    <div>关注公众号，开启通知，重要信息不错过</div>
+			    <view class="flex flex-vertical-center">
+						<div class="lookCode" @click="showWeChat=true">关注</div>
+						<image class="codeDel" src="/static/no/detailX-no.png"></image>
+					</view>
+					
+		</div>  
+		<div class="flex-message-occupy"  v-if="initData.Substribe&&userInfo.is_subscribe==0&&showWxChatSwitch==1"></div>
+		
+		<div class="top"  :class="{topIndex:initData.Substribe&&userInfo.is_subscribe==0&&showWxChatSwitch==1}">
 			<image @click="goBack" class="imgm" src="/static/back.png"></image>
 			<image @click="goCart" class="imgm cart" src="/static/cart.png"></image>
 		</div>
-
 		<!-- 轮播 -->
 		<view class="uni-padding-wrap" style="background: #f2f2f2;">
 			<view class="page-section swiper">
@@ -35,7 +45,6 @@
 				</view>
 			</view>
 		</view>
-
 		<!-- 产品信息描述 -->
 		<div class="section1">
 			<div class="leftss">
@@ -44,12 +53,10 @@
 				<span class="pricet">¥ {{product.Products_PriceX}}</span>
 			</div>
 			<div class="rightss">
-
 				<div class="countdown" v-if="$p('zh-cn')">
 					<span class="spans">{{countdown.d}}</span>天<span class="spans">{{countdown.h}}</span>小时<span class="spans">{{countdown.m}}</span>分<span
 					 class="spans">{{countdown.s}}</span>后结束
 				</div>
-
 				<div class="countdown" v-if="$p('en-us')">
 					Expires In:<span class="spans">{{countdown.d}}</span>days<span class="spans">{{countdown.h}}</span>:<span
 					 class="spans">{{countdown.m}}</span>:<span class="spans">{{countdown.s}}</span>
@@ -62,7 +69,6 @@
 				</div>
 			</div>
 		</div>
-
 		<!-- 领券 -->
 		<div class="section2">
 			<div class="titles">
@@ -149,19 +155,15 @@
 			<!-- <div v-html="product.Products_Description" class="p_detail_des"></div> -->
 			<!--    	<rich-text :nodes="product.Products_Description|formatRichText" class="p_detail_des"></rich-text>-->
 			<!-- <u-parse :content="product.Products_Description"  /> -->
-
 			<u-parse :content="product.Products_Description|formatRichTextByUparse"></u-parse>
-
 			<!-- #ifdef H5||APP-PLUS -->
 			<!-- <div v-html="formatRichTexts(product.Products_Description)" class="p_detail_des"></div> -->
 			<!-- #endif -->
-
 			<!-- #ifdef MP -->
 			<!-- <rich-text :nodes="product.Products_Description|formatRichText" class="p_detail_des"></rich-text> -->
 			<!-- #endif -->
 		</div>
 		<div style="clear: both;">
-
 		</div>
 		<div style="height:60px;background: white;"></div>
 		<popupLayer :direction="'top'" ref="popupLayer">
@@ -182,7 +184,6 @@
 						<div>{{$t('275x13')}}</div>
 					</div>
 					<!-- #endif -->
-
 					<!-- #ifndef MP-TOUTIAO -->
 					<div @click="shareFunc('pic')" class="flex1">
 						<image :src="'/static/client/detail/share2.png'|domain" alt="" class='img'></image>
@@ -252,9 +253,7 @@
 				<button :class="submit_flag?'':'disabled'" class="cartSub" formType="submit">
 					{{$t('275x21')}}
 				</button>
-
 			</form>
-
 		</popupLayer>
 		<!-- #ifndef APP-PLUS -->
 		<div class="fixed">
@@ -288,7 +287,6 @@
 						<button class="danRight" formType="submit">
 							{{$t('275x25')}}
 						</button>
-
 					</div>
 				</form>
 				<form @click="myPin" class="form" report-submit>
@@ -296,18 +294,15 @@
 						<div class="danLeft">
 							<span class="bF">¥</span><span class="bS">{{product.pintuan_pricex}}</span>
 						</div>
-
 						<button class="danRight" formType="submit">
 							{{$t('275x26')}}
 						</button>
-
 					</div>
 				</form>
 			</div>
 		</div>
 		<!-- #endif -->
 		<div class="safearea-box"></div>
-
 		<layoutModal ref="pintuanList">
 			<scroll-view scroll-y style="width: 600rpx;max-height: 600rpx;overflow-y: scroll">
 				<div class="pinCenter" v-for="(team,idx) in teamListAll">
@@ -332,11 +327,9 @@
 					{{$t('275d0')}}
 				</div>
 			</scroll-view>
-
 		</layoutModal>
 	</div>
 </template>
-
 <script>
 	import popupLayer from '../../components/popup-layer/popup-layer.vue'
 	import uParse from '../../components/gaoyia-parse/parse.vue'
@@ -350,7 +343,8 @@
 		getPintuanTeam,
 		getProductDetail,
 		getProductSharePic,
-		updateCart
+		updateCart,
+		get_user_info
 	} from '../../common/fetch.js'
 	import {
 		buildSharePath,
@@ -371,19 +365,22 @@
 		mapGetters,
 		mapState
 	} from 'vuex'
-
 	import T from '@/common/langue/i18n'
 	export default {
 		mixins: [pageMixin],
 		data() {
 			return {
+				showWxChatSwitch:ls.get('showWxChatSwitch'),
+				showWeChat:false,
+				userInfo:{
+					is_subscribe:1
+				},
 				teamListAll: [],
 				hideNativeEleShow: false,
 				groupStam: false,
 				// #ifdef APP-PLUS
 				wxMiniOriginId: '',
 				// #endif
-
 				JSSDK_INIT: false, // 自己有分享的业务
 				type: '', // 优惠券内容， 分享内容
 				shareShow: false,
@@ -434,7 +431,6 @@
 		// 自定义小程序分享
 		onShareAppMessage() {
 			const path = '/pages/detail/groupDetail?Products_ID=' + this.Products_ID
-
 			const shareObj = {
 				title: this.product.Products_Name,
 				desc: this.product.Products_BriefDescription,
@@ -467,48 +463,36 @@
 		onLoad: function(option) {
 			this.Products_ID = option.Products_ID
 			this.checkProdCollected()
-
 			// #ifdef APP-PLUS
 			const vm = this
 			// const subNVue1 = uni.getSubNVueById('video')
 			// subNVue1.hide()
 			// uni.$emit('page-video-stop', {});
-
 			// const share = uni.getSubNVueById('share')
 			// share.hide()
-
 			// const groupBottom = uni.getSubNVueById('groupBottom')
 			// groupBottom.show()
-
 			// const goodsSpecNvue = uni.getSubNVueById('goodsSpec')
 			// goodsSpecNvue.hide()
-
 			// const vm=this
 			uni.$on('shareDetail', (data) => {
 				if (data.detail != 'group') return
-
 				vm.shareFunc(data.item)
 			})
-
 			uni.$on('kefu', (data) => {
 				vm.contact()
 			})
-
 			uni.$on('collectHandles', (data) => {
 				vm.collect()
 			})
-
 			uni.$on('danBuy', (data) => {
 				vm.myPay()
 			})
-
 			uni.$on('pinBuy', (data) => {
 				vm.myPin()
 			})
-
 			uni.$on('goodsSkuSub', (data) => {
 				if (data.detail != 'group') return
-
 				const {
 					check_attr,
 					check_attrid_arr,
@@ -524,25 +508,31 @@
 				const goodsSpecNvue = uni.getSubNVueById('goodsSpec')
 				goodsSpecNvue.hide()
 			})
-
 			// #endif
 		},
 		onHide() {
 			// #ifdef APP-PLUS
 			const share = uni.getSubNVueById('share')
 			share.hide()
-
 			// const groupBottom = uni.getSubNVueById('groupBottom')
 			// groupBottom.hide()
-
 			const goodsSpecNvue = uni.getSubNVueById('goodsSpec')
 			goodsSpecNvue.hide()
 			// #endif
 		},
 		onShow() {
+			
+			if (this.$fun.checkIsLogin()) {
+			  get_user_info({}, {
+			    tip: '',
+			    errtip: false
+			  }).then(res => {
+			    this.userInfo = res.data
+			  }).catch(e => {
+			  })
+			} 
 			this.getDetail(this.Products_ID)
 			this.getCommit(this.Products_ID)
-
 			// 获取正在拼团的团队
 			this.getPintuanTeamList(this.Products_ID)
 			this.$refs.pintuanList && this.$refs.pintuanList.close()
@@ -552,26 +542,21 @@
 				// 一天过期
 				const end_timeStamp = timeStamp + 60 * 60 * 24
 				let current = (new Date()).getTime()
-
 				let {
 					d = 0, h = 0, m = 0, s = 0
 				} = {}
 				// 时间戳格式转换
 				current = parseInt(current / 1000)
-
 				const countTime = end_timeStamp - current
 				if (countTime < 0) {
 					return false
 				}
-
 				h = parseInt(countTime / (60 * 60))
 				m = parseInt((countTime - h * 60 * 60) / 60)
 				s = countTime - h * 60 * 60 - m * 60
-
 				if (h < 10) h = '0' + h
 				if (m < 10) m = '0' + m
 				if (s < 10) s = '0' + s
-
 				return `${h}:${m}:${s}`
 			},
 			/**
@@ -603,7 +588,6 @@
 					match = match.replace(/width:[^;]+;/gi, 'width:100%;').replace(/width:[^;]+;/gi, 'width:100%;')
 					return match
 				})
-
 				newContent = newContent.replace(/<br[^>]*\/>/gi, '')
 				newContent = newContent.replace(/\<img/gi, '<img style="width:100%;float:left;"')
 				// newContent = newContent.replace(/>[\s]*</gi, "><");
@@ -612,7 +596,16 @@
 		},
 		methods: {
 			...mapActions(['getUserInfo']),
-
+			setWxChat(){
+				ls.set('showWxChatSwitch',2)
+				this.showWxChatSwitch=2
+				
+			},
+		 lookCode(){
+				uni.previewImage({
+				  urls: [this.initData.SubscribeQrcode]
+				})
+			  },
 			createtab: function() {
 				// 设置水平居中位置
 				// var bitmap = new plus.nativeObj.Bitmap('bmp1');
@@ -713,7 +706,6 @@
 			},
 			toJoinGroup(tid, team) {
 				if (!this.$fun.checkIsLogin()) return
-
 				for (var usr of team.join_user) {
 					if (this.userInfo.User_ID == usr) {
 						this.$fun.confirm({
@@ -724,7 +716,6 @@
 								url: '/pages/detail/groupJoin?Team_ID=' + tid + '&Products_ID=' + this.Products_ID
 							})
 						}, err => {
-
 						})
 						return
 					}
@@ -738,14 +729,12 @@
 				const _self = this
 				const path = 'pages/detail/groupDetail?Products_ID=' + this.Products_ID
 				const front_url = this.initData.front_url
-
 				const shareObj = {
 					title: this.product.Products_Name,
 					desc: this.product.Products_BriefDescription,
 					imageUrl: getProductThumb(this.product.ImgPath),
 					path: buildSharePath(path)
 				}
-
 				switch (channel) {
 					case 'wx':
 						uni.share({
@@ -757,10 +746,8 @@
 							summary: shareObj.desc,
 							imageUrl: shareObj.imageUrl,
 							success: function(res) {
-
 							},
 							fail: function(err) {
-
 							}
 						})
 						break
@@ -774,13 +761,11 @@
 							summary: shareObj.desc,
 							imageUrl: shareObj.imageUrl,
 							success: function(res) {
-
 							},
 							fail: function(err) {}
 						})
 						break
 					case 'wxmini':
-
 						uni.share({
 							provider: 'weixin',
 							scene: 'WXSceneSession',
@@ -804,12 +789,10 @@
 							ls.set('temp_sharepic_info', res.data)
 							return res.data.img_url
 						})
-
 						if (!sharePic) {
 							error(T._('275d3'))
 							return
 						}
-
 						setTimeout(function() {
 							uni.navigateTo({
 								url: '/pages/detail/sharepic/sharepic'
@@ -836,12 +819,10 @@
 					match = match.replace(/style="[^"]+"/gi, '') // .replace(/style='[^']+'/gi, '');
 					match = match.replace(/width="[^"]+"/gi, '') // .replace(/width='[^']+'/gi, '');
 					match = match.replace(/height="[^"]+"/gi, '') // .replace(/height='[^']+'/gi, '');
-
 					// 图片app不支持
 					// #ifdef APP-PLUS
 					match = match.replace(/!*.webp/gi, '')
 					// #endif
-
 					return match
 				})
 				newContent = newContent.replace(/<div[^>]*>/gi, function(match, capture) {
@@ -856,7 +837,6 @@
 					match = match.replace(/width:[^;]+;/gi, 'width:100%;').replace(/width:[^;]+;/gi, 'width:100%;')
 					return match
 				})
-
 				newContent = newContent.replace(/<br[^>]*\/>/gi, '')
 				newContent = newContent.replace(/\<img/gi, '<img style="width:100%;float:left;"')
 				newContent = newContent.replace(/src="\/\//gi, 'src="http://')
@@ -868,17 +848,14 @@
 				const tempArr = this.commit[i].ImgPath.map((img, idx) => {
 					return img.replace(/\/n3\//, '/')
 				})
-
 				uni.previewImage({
 					urls: tempArr,
 					indicator: 'number',
 					current: j,
 					longPressActions: {
 						success: function(data) {
-
 						},
 						fail: function(err) {
-
 						}
 					}
 				})
@@ -928,14 +905,12 @@
 					prod_id: this.Products_ID
 				}).then(res => {
 					this.isCollected = res.data.is_favourite == 1
-
 					// #ifdef APP-PLUS
 					uni.$emit('goods_bottom_setvals', {
 						isCollected: this.isCollected
 					})
 					// #endif
 				}).catch(e => {
-
 				})
 			},
 			// 拼团
@@ -953,7 +928,6 @@
 				}
 				if (!this.$fun.checkIsLogin(1)) return
 				this.postData.active = 'pintuan'
-
 				// #ifdef APP-PLUS
 				const goodsSpecNvue = uni.getSubNVueById('goodsSpec')
 				goodsSpecNvue.show('slide-in-bottom', 200)
@@ -979,10 +953,8 @@
 						times: 1
 					})
 				}
-
 				if (!this.$fun.checkIsLogin(1)) return
 				delete this.postData.active
-
 				// #ifdef APP-PLUS
 				const goodsSpecNvue = uni.getSubNVueById('goodsSpec')
 				goodsSpecNvue.show('slide-in-bottom', 200)
@@ -1032,7 +1004,6 @@
 				var attr_val = this.product.skuvaljosn[check_attrid] // 选择属性对应的属性值
 				// 数组转化为字符串
 				check_attrnames = check_attrnames.join(';')
-
 				// 更改第一个规格显示图片
 				for (const mbx in this.product.skuvaljosn) {
 					const arr = mbx.split(';')
@@ -1045,7 +1016,6 @@
 				if (attr_val) {
 					this.postData.attr_id = attr_val.Product_Attr_ID // 选择属性的id
 					this.postData.count = attr_val.Property_count // 选择属性的库存
-
 					// this.skuImg=attr_val.Attr_Image//选择属性的图片
 					this.postData.showimg = typeof attr_val.Attr_Image !== 'undefined' && attr_val.Attr_Image != '' ? attr_val.Attr_Image :
 						this.product.Products_JSON.ImgPath[0] // 选择属性的图片
@@ -1097,7 +1067,6 @@
 						return
 					}
 				}
-
 				this.isSubmit = true
 				updateCart(this.postData).then(res => {
 					this.isSubmit = false
@@ -1167,7 +1136,6 @@
 					page: 1,
 					pageSize: 2
 				}
-
 				getCommit(data, {
 					errtip: false
 				}).then(res => {
@@ -1187,7 +1155,6 @@
 						clearInterval(this.groupStam)
 					}
 				}
-
 				this.countdown = rt
 			},
 			getDetail(item) {
@@ -1196,7 +1163,6 @@
 				}
 				const _self = this
 				let product = null
-
 				getProductDetail(data, {
 					tip: T._('275d10')
 				}).then(res => {
@@ -1211,7 +1177,6 @@
 						}, 100)
 						return
 					}
-
 					this.product = res.data
 					this.postData.Products_PriceX = this.product.Products_PriceX
 					this.postData.count = res.data.Products_Count
@@ -1219,13 +1184,10 @@
 						this.product.skujosn = typeof res.data.skujosn === 'string' ? JSON.parse(res.data.skujosn) : res.data.skujosn
 						this.product.skuvaljosn = typeof res.data.skuvaljosn === 'string' ? JSON.parse(res.data.skuvaljosn) : res.data.skuvaljosn
 					}
-
 					// this.stampCount()
 					// 开发时候一直倒计时太乱了
 					this.groupStam = setInterval(this.stampCount, 1000)
-
 					product = res.data
-
 					if (res.data.skujosn) {
 						const skujosn = res.data.skujosn
 						const skujosn_new = []
@@ -1235,7 +1197,6 @@
 								val: skujosn[i]
 							})
 						}
-
 						this.product.skujosn_new = skujosn_new
 						this.product.skuvaljosn = res.data.skuvaljosn
 					}
@@ -1248,18 +1209,14 @@
 						postData: this.postData,
 						detail: 'group'
 					})
-
 					uni.$emit('goods_bottom_setvals', {
 						postData: this.product
 					})
 					// #endif
-
 					// #ifdef H5
-
 					if (!isWeiXin()) return
 					const path = 'pages/detail/groupDetail?Products_ID=' + this.Products_ID
 					const front_url = this.initData.front_url
-
 					this.WX_JSSDK_INIT(this).then((wxEnv) => {
 						this.$wx.onMenuShareTimeline({
 							title: product.Products_Name, // 分享标题
@@ -1269,7 +1226,6 @@
 								// 用户点击了分享后执行的回调函数
 							}
 						})
-
 						// 两种方式都可以
 						wxEnv.onMenuShareAppMessage({
 							title: product.Products_Name, // 分享标题
@@ -1283,12 +1239,9 @@
 							}
 						})
 					}).catch(() => {
-
 					})
-
 					// #endif
 				}).catch(e => {
-
 				})
 			},
 			addCart() {
@@ -1329,21 +1282,14 @@
 			cancel() {
 				this.$refs.popupLayer.close()
 			}
-
 		},
 		onUnload() {
 			// #ifdef APP-PLUS
-
 			uni.$off('shareDetail')
-
 			uni.$off('collectHandles')
-
 			uni.$off('danBuy')
-
 			uni.$off('pinBuy')
-
 			uni.$off('goodsSkuSub')
-
 			uni.$off('kefu')
 			// #endif
 		},
@@ -1359,18 +1305,15 @@
 					}
 				}
 			}
-
 			this.wxMiniOriginId = WX_MINI_ORIGIN_ID
 		}
 	}
 </script>
-
 <style lang="scss" scoped>
 	/* 轮播图样式 */
 	.uni-padding-wrap {
 		width: 750rpx;
 		height: 750rpx;
-
 		.page-section,
 		.page-section-spacing,
 		.swiper,
@@ -1379,17 +1322,14 @@
 			position: relative;
 			width: 750rpx;
 			height: 750rpx;
-
 			img {
 				width: 100%;
 				height: 100%;
 			}
-
 			.video {
 				width: 100%;
 				height: 100%;
 			}
-
 			.change-btn {
 				position: absolute;
 				bottom: 50rpx;
@@ -1399,7 +1339,6 @@
 				width: 240rpx;
 				justify-content: space-between;
 				z-index: 10;
-
 				.shipin,
 				.tupian {
 					text-align: center;
@@ -1411,14 +1350,12 @@
 					background: rgba(255, 0, 0, .5);
 					line-height: 36rpx;
 				}
-
 				.active {
 					background: rgb(255, 102, 0);
 				}
 			}
 		}
 	}
-
 	/* 返回按钮和购物车按钮 */
 	.top {
 		position: fixed;
@@ -1432,12 +1369,13 @@
 		z-index: 10;
 		width: 95%;
 	}
-
+	.topIndex{
+		  top: 90rpx !important;
+	}
 	.top .myImg {
 		width: 30px;
 		height: 30px;
 	}
-
 	.ticks,
 	.shareinfo {
 		background: #fff;
@@ -1448,17 +1386,14 @@
 		border-top-left-radius: 10rpx;
 		border-top-right-radius: 10rpx;
 	}
-
 	.t_title {
 		text-align: center;
 		margin-bottom: 20px;
 	}
-
 	.t_title img {
 		float: right;
 		margin-right: 10px;
 	}
-
 	.t_content {
 		position: relative;
 		width: 355px;
@@ -1471,26 +1406,21 @@
 		font-size: 11px;
 		color: #F43131;
 	}
-
 	.t_left {
 		float: left;
 	}
-
 	.t_left .t_left_t .money {
 		font-size: 18px;
 		margin-right: 5px;
 	}
-
 	.t_left .t_left_t {
 		font-size: 13px;
 		margin-bottom: 5px;
 	}
-
 	.t_left .t_left_t i {
 		font-size: 11px;
 		font-style: normal;
 	}
-
 	.t_right {
 		float: right;
 		height: 58px;
@@ -1501,34 +1431,28 @@
 		width: 62px;
 		text-align: center;
 	}
-
 	.aleady {
 		color: #999;
 	}
-
 	.shareinfo {
 		padding-bottom: 0;
 		color: #333;
 		font-size: 12px;
 	}
-
 	.shareinfo>div {
 		text-align: center;
 	}
-
 	.s_top {
 		display: flex;
 		justify-content: center;
 		align-items: center;
 	}
-
 	.s_top .img {
 		width: 38px;
 		height: 38px;
 		display: block;
 		margin: 0 auto 5px;
 	}
-
 	.s_bottom {
 		position: relative;
 		bottom: 0;
@@ -1540,13 +1464,11 @@
 		line-height: 30px;
 		margin-top: 25px;
 	}
-
 	/* 轮播图 */
 	.van-swipe-item img {
 		width: 100%;
 		height: 100%;
 	}
-
 	/* 产品描述部分 start */
 	.section1 {
 		padding: 20rpx;
@@ -1556,43 +1478,35 @@
 			margin-right: 20rpx;
 		}
 	}
-
 	.price {
 		margin-top: 22px;
 	}
-
 	.price i {
 		font-size: 10px;
 		font-style: normal;
 	}
-
 	.price .n_price {
 		color: #ff0000;
 		font-size: 18px;
 	}
-
 	.o_price {
 		color: #afafaf;
 		font-size: 14px;
 		text-decoration: line-through;
 	}
-
 	.name {
 		color: #333;
 		font-size: 14px;
 		font-weight: 700;
 		margin: 5px 0;
 	}
-
 	.sold span {
 		color: #999;
 		font-size: 13px;
 	}
-
 	.sold span:nth-child(2) {
 		float: right;
 	}
-
 	/* 产品描述部分 end */
 	/* 领券start */
 	.section2 {
@@ -1608,26 +1522,22 @@
 		border-bottom: 1px solid #ece8e8;
 		background-color: #fff;
 	}
-
 	.section2 .btn {
 		padding: 0 5px;
 		color: #f43131;
 		border: 1px solid #f43131;
 	}
-
 	.right {
 		display: flex;
 		align-items: center;
 		font-size: 24rpx;
 		color: #666666;
 	}
-
 	.right .img {
 		width: 19rpx !important;
 		height: 30rpx !important;
 		margin-left: 20rpx;
 	}
-
 	/* 领券 end */
 	/* 包邮信息等 start */
 	.section3 {
@@ -1639,19 +1549,16 @@
 		// justify-content: space-around;
 		background-color: #fff;
 	}
-
 	.section3 .span {
 		display: flex;
 		align-items: center;
 		margin-right: 10px;
 	}
-
 	.section3 .img {
 		width: 30rpx;
 		height: 30rpx;
 		margin-right: 5px;
 	}
-
 	/* 包邮信息等 end */
 	/* 评价 start */
 	.comment {
@@ -1659,44 +1566,36 @@
 		border-bottom: 10px solid #f8f8f8;
 		background-color: #fff;
 	}
-
 	.c_title {
 		display: flex;
 		justify-content: space-between;
 	}
-
 	.c_title>span {
 		font-size: 30rpx;
 		color: #333;
 	}
-
 	.c_content {
 		margin-top: 15px;
 	}
-
 	.c_content_title {
 		display: flex;
 		align-items: center;
 		font-size: 15px;
 		color: #333;
 	}
-
 	.c_content_title>.imggs {
 		width: 70rpx;
 		height: 70rpx;
 		margin-right: 20rpx;
 	}
-
 	.user_name {
 		flex: 1;
 		font-size: 30rpx;
 	}
-
 	.c_time {
 		font-size: 26rpx;
 		color: #777;
 	}
-
 	.c_content_msg {
 		font-size: 24rpx;
 		color: #333;
@@ -1704,13 +1603,11 @@
 		padding: 9px 0;
 		border-bottom: 1px solid #f8f8f8;
 	}
-
 	.c_content_img img {
 		width: 142rpx;
 		height: 142rpx;
 		margin-right: 20rpx;
 	}
-
 	/* 评价 end */
 	/* 商品详情 start */
 	// .pro_detail {
@@ -1721,26 +1618,20 @@
 	//     color: #333;
 	//     font-size: 30rpx;
 	// }
-
 	.pro_detail {
 		background: white;
-
 		.p_detail_des {
 			width: 100%;
-
 			img {
 				width: 100% !important;
 			}
 		}
 	}
-
 	.p_detail_title {
 		padding: 30rpx 20rpx;
 		color: #333;
 		font-size: 30rpx;
-
 	}
-
 	/* 商品详情 end */
 	/* 遮罩层 */
 	.modal {
@@ -1750,7 +1641,6 @@
 		background: rgba(0, 0, 0, .7);
 		z-index: 1000;
 	}
-
 	.section1 {
 		display: flex;
 		padding-left: 15rpx;
@@ -1759,20 +1649,16 @@
 		justify-content: space-between;
 		background-color: #F43131;
 		color: #fff;
-
 		.leftss {
 			font-size: 0;
-
 			.pricef {
 				font-size: 36rpx;
 			}
-
 			.prices {
 				font-size: 50rpx;
 				margin-left: 4px;
 				font-weight: 500;
 			}
-
 			.pricet {
 				font-size: 28rpx;
 				margin-left: 6px;
@@ -1780,7 +1666,6 @@
 				text-decoration: line-through;
 			}
 		}
-
 		.rightss {
 			.countdown {
 				color: #ddd;
@@ -1788,7 +1673,6 @@
 				line-height: 32rpx;
 				overflow: hidden;
 				margin-bottom: 4px;
-
 				.spans {
 					margin: 0 2px;
 					padding: 0 2px;
@@ -1799,21 +1683,17 @@
 					background: linear-gradient(0deg, rgba(12, 12, 12, 1) 0%, rgba(197, 195, 195, 1) 100%);
 					box-shadow: 0px 1px 1px 0px rgba(4, 0, 0, 0.5), 0px 1px 1px 0px rgba(255, 255, 255, 0.65);
 					display: inline-block;
-
 				}
 			}
-
 			.haha {
 				font-size: 24rpx;
 				line-height: 32rpx;
 			}
 		}
 	}
-
 	.titles {
 		position: relative;
 		padding-right: 150rpx;
-
 		.title {
 			font-size: 28rpx;
 			font-family: PingFang SC;
@@ -1821,7 +1701,6 @@
 			color: rgba(51, 51, 51, 1);
 			line-height: 22px;
 		}
-
 		.share {
 			position: absolute;
 			right: 0;
@@ -1837,7 +1716,6 @@
 			border-bottom-left-radius: 20px;
 		}
 	}
-
 	.titlet {
 		margin-top: 12px;
 		padding-right: 36rpx;
@@ -1847,11 +1725,9 @@
 		color: rgba(110, 110, 110, 1);
 		line-height: 20px;
 	}
-
 	.pintuan {
 		margin-bottom: 17px;
 		background-color: #fff;
-
 		.pinTitle {
 			font-size: 30rpx;
 			font-family: PingFang SC;
@@ -1860,29 +1736,23 @@
 			line-height: 20px;
 			padding: 26rpx;
 		}
-
 	}
-
 	.pinCenter {
 		padding: 15rpx 25rpx;
 		display: flex;
 		align-items: center;
-
 		.image {
 			width: 100rpx;
 			height: 100rpx;
 			border-radius: 50%;
 			overflow: hidden;
-
 			.img {
 				width: 100%;
 				height: 100%;
 			}
 		}
-
 		.info {
 			margin-left: 21rpx;
-
 			.nick {
 				font-size: 26rpx;
 				font-family: PingFang SC;
@@ -1890,7 +1760,6 @@
 				color: rgba(51, 51, 51, 1);
 				line-height: 20px;
 			}
-
 			.message {
 				font-size: 24rpx;
 				font-family: PingFang SC;
@@ -1899,7 +1768,6 @@
 				line-height: 20px;
 			}
 		}
-
 		.cantuan {
 			width: 119rpx;
 			height: 48rpx;
@@ -1912,7 +1780,6 @@
 			margin-left: auto;
 		}
 	}
-
 	.fixed {
 		height: 98rpx;
 		display: flex;
@@ -1925,52 +1792,43 @@
 		width: 100%;
 		background-color: #F8F8F8;
 		z-index: 99;
-
 		.leftss,
 		.rightss {
 			width: 50%;
 			height: 98rpx;
 			display: flex;
 		}
-
 		.leftss {
 			.first {
 				width: 33.3%;
 				height: 98rpx;
 				text-align: center;
 				padding-top: 15rpx;
-
 				.img {
 					width: 38rpx;
 					height: 38rpx;
 					display: block;
 					margin: 0 auto;
 				}
-
 				.txt {
 					font-size: 22rpx;
 					margin-top: 10rpx;
 				}
 			}
 		}
-
 		.rightss {
 			display: flex;
-
 			.form {
 				flex: 1;
 			}
-
 			.dan {
 				/*width: 50%;*/
 				background-color: #FA6B27;
 			}
-
 			.tuan {
 				/*width: 50%;*/
 				background-color: #F43131;
 			}
-
 			.bTitle {
 				height: 98rpx;
 				overflow: hidden;
@@ -1978,23 +1836,18 @@
 				text-align: center;
 				padding: 10rpx 0;
 				box-sizing: border-box;
-
 				.danLeft {
 					height: 32rpx;
 					//overflow: hidden;
 				}
-
 				.bF {
 					font-size: 24rpx;
 					line-height: 32rpx;
 				}
-
 				.bS {
 					font-size: 32rpx;
 					line-height: 32rpx;
-
 				}
-
 				.danRight {
 					font-size: 26rpx;
 					/*margin-top: 8rpx;*/
@@ -2004,7 +1857,6 @@
 					color: white;
 					background: none;
 					display: block;
-
 					&::after {
 						display: none;
 					}
@@ -2012,34 +1864,28 @@
 			}
 		}
 	}
-
 	//规格
 	.cartSku {
 		padding: 0rpx 20rpx;
-
 		.cartTop {
 			position: relative;
 			display: flex;
 			padding-top: 20rpx;
-
 			.image {
 				width: 220rpx;
 				height: 220rpx;
 			}
-
 			.cartTitle {
 				margin-left: 20rpx;
 				font-size: 32rpx;
 				//width: 420rpx;
 				flex: 1;
-
 				.cartTitles {
 					height: 80rpx;
 					line-height: 40rpx;
 					overflow: hidden;
 					margin-top: 20rpx;
 				}
-
 				.addInfo {
 					width: 450rpx;
 					margin-top: 70rpx;
@@ -2047,12 +1893,10 @@
 					flex-flow: row;
 					justify-content: space-between;
 					align-items: flex-end;
-
 					.addPrice {
 						font-size: 42rpx;
 						color: #ff4200;
 					}
-
 					.proSale {
 						font-size: 24rpx;
 						color: #999;
@@ -2061,14 +1905,11 @@
 				}
 			}
 		}
-
 		.cartCenter {
 			margin-top: 20rpx;
-
 			.cartAttr {
 				//display: flex;
 				padding: 15rpx 0rpx;
-
 				.sku {
 					font-size: 28rpx;
 					height: 70rpx;
@@ -2077,12 +1918,10 @@
 					padding-left: 10px;
 					margin-bottom: 5px;
 				}
-
 				.skuValue {
 					display: flex;
 					//flex: 1;
 					flex-wrap: wrap;
-
 					.skuview {
 						margin-bottom: 10px;
 						height: 70rpx;
@@ -2099,27 +1938,23 @@
 				}
 			}
 		}
-
 		.numBer {
 			margin-top: 20rpx;
 			display: flex;
 			padding: 15rpx 0rpx;
 			justify-content: space-between;
-
 			.numBers {
 				font-size: 28rpx;
 				height: 70rpx;
 				line-height: 70rpx;
 				width: 140rpx;
 			}
-
 			.inputNumber {
 				border: 1px solid #ccc;
 				border-radius: 6rpx;
 				height: 50rpx;
 				//margin-right: 50rpx;
 				display: flex;
-
 				.inputs {
 					color: black;
 					margin: 0 auto;
@@ -2130,7 +1965,6 @@
 					border-left: 2rpx solid #ccc;
 					border-right: 2rpx solid #ccc;
 				}
-
 				.clicks {
 					height: 50rpx;
 					line-height: 50rpx;
@@ -2140,7 +1974,6 @@
 			}
 		}
 	}
-
 	.cartSub {
 		width: 100%;
 		height: 90rpx;
@@ -2152,17 +1985,14 @@
 		margin-top: 30rpx;
 		border-radius: 0;
 		border: none;
-
 		&.disabled {
 			background: #999;
 		}
 	}
-
 	.skuCheck {
 		color: #fff !important;
 		background-color: #ff4200 !important;
 	}
-
 	.top {
 		position: fixed;
 		top: 10px;
@@ -2175,12 +2005,10 @@
 		z-index: 10;
 		width: 95%;
 	}
-
 	.imgm {
 		width: 30px;
 		height: 30px;
 	}
-
 	.imgms {
 		width: 30px;
 		height: 30px;
@@ -2188,7 +2016,6 @@
 		top: 30px;
 		left: 10px;
 	}
-
 	.carts {
 		width: 30px;
 		height: 30px;
@@ -2196,4 +2023,101 @@
 		top: 30px;
 		right: 10px !important;
 	}
+  .c-red{
+      color: #FFFFff;
+      background-color: #ff4400;
+      display: inline-block;
+      padding: 0px 14rpx;
+      border-radius: 10rpx;
+      margin: 0rpx 14rpx;
+    }
+  .flex-message{
+      text-align: center;
+  	 justify-content: space-between;
+      width: 750rpx;
+      height: 70rpx;
+  	 line-height: 70rpx;
+  	 align-items: center;
+      box-sizing: border-box;
+      border-radius: 10rpx;
+  	 color: #eb6827;
+      background-color: #fffdee;
+      line-height: 50rpx;
+      font-size: 12px;
+      padding:0rpx 30rpx;
+      position: fixed;
+      top: 0px;
+      left: 0px;
+      z-index: 9;
+    }
+    .lookCode{
+  	   width: 94rpx;
+  	   height: 40rpx;
+  	   line-height: 40rpx;
+  	   text-align: center;
+  	   border-radius: 40rpx;
+  	   font-size: 12px;
+  	   background-color: #FFFFFF;
+  	   color: #333333;
+  	   border: 1px solid #f7d1bb;
+    }
+    .codeDel{
+  	   width: 30rpx;
+  	   height: 30rpx;
+  	   margin-left: 40rpx;
+    }
+    .flex-message-occupy{
+      height: 70rpx;
+      width: 750rpx;
+    }
+    .showWeChat{
+  	   position: relative;
+  	   width: 560rpx;
+  	   height: 640rpx;
+  	   background-color: #FFFFFF;
+  	   border-radius: 20rpx;
+  	   padding-top: 100rpx;
+  	   display: flex;
+  	   box-sizing: border-box;
+  	   flex-direction: column;
+  	   align-items: center;
+  	   .del-img{
+  		   width: 50rpx;
+  		   height: 50rpx;
+  		   position: absolute;
+  		   top: -40rpx;
+  		   right: -60rpx;
+  	   }
+  	   .c-title{
+  		   color: #8f97ea;
+  		   font-size: 17px;
+  		   font-weight: bold;
+  		   margin-bottom: 30rpx;
+  	   }
+  	   .c-subtitle{
+  			color: #333;
+  			font-size: 15px;
+  			margin-bottom: 50rpx;
+  	   }
+  	   .c-div{
+  		   width: 200rpx;
+  		   height: 200rpx;
+  		   display: flex;
+  		   border-radius: 10rpx;
+  		   align-items: center;
+  		   justify-content: center;
+  		   background-color: #FFFFFF;
+  		   box-shadow:0rpx 0rpx 10rpx 2px #CCCCCC;
+  		   margin-bottom: 60rpx;
+  	   }
+  	   .c-bottom{
+  		   font-size: 26rpx;
+  		   color: #333333;
+  	   }
+  		.c-img{
+  			width: 170rpx;
+  			height: 170rpx;
+  		}
+  	   
+    }
 </style>

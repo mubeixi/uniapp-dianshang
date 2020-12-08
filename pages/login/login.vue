@@ -712,6 +712,7 @@
 				this.world_sms_code_choose = this.world_sms_code_list[this.world_sms_code_idx].phone_code
 			},
 			async loginCall(userData) {
+				ls.set('showPop',"2")
 				// 根据后台配置来判断是否无手机号跳去绑定手机号
 				const isBindPhone = Number(this.initData.bind_mobile_switch) === 1
 
