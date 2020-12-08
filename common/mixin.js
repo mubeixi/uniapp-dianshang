@@ -1,4 +1,4 @@
-import T from '@/common/langue/i18n' 
+import T from '@/common/langue/i18n'
 /**
  * 统计的混合类
  */
@@ -17,7 +17,7 @@ import wx from 'weixin-js-sdk'
 // #ifdef APP-PLUS
 import permision from './permission'
 // #endif
-
+import eventHub from '@/common/eventHub'
 /**
  * 很多接口都需要user_id,先全局mixin下
  */
@@ -156,6 +156,22 @@ export const Analysis = {
   //   ls.set('temp_tab_url', pagePath)
   // },
   methods: {
+    async refreshTabTag () {
+      // console.log(this.$mp)
+      if (!eventHub.imInstance) {
+        // this.$mp.page.getTabBar().setData({
+        //   tags: [0, 0, 0, 0, 0]
+        // })
+        return
+      }
+      const count = await eventHub.imInstance.getNoReadMsgCount()
+      if (typeof this.$mp.page.getTabBar === 'function' && this.$mp.page.getTabBar()) {
+        // console.log('更新IM下标数量' + count)
+        // this.$mp.page.getTabBar().setData({
+        //   tags: [0, count, 0, 0, 0]
+        // })
+      }
+    },
     commonClick (evt) {
       // 坐标
       const { x, y, view_type = 'tap' } = evt.target

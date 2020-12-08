@@ -1,4 +1,4 @@
-import T from '@/common/langue/i18n' 
+import T from '@/common/langue/i18n'
 import { hexMD5 } from './tool/md5'
 import Base64 from './tool/base64.js'
 import { ls, isWeiXin } from './tool.js'
@@ -51,7 +51,9 @@ const fetch = function (act, param, options = false, url = '/api/little_program/
     })
     return
   }
-
+  
+  
+  
   url = `/api/v1/${act}.html`// 替换url
 
   const d = new Date()
@@ -651,6 +653,9 @@ export const getGitfpackRecordList = (data, options) => fetch('getGitfpackRecord
 
 export const updatePwdSms = (data, options) => fetch('update_pwd_sms', data, options)
 export const resetPwd = (data, options) => fetch('reset_pwd', data, options)
+
+
+export const getUserInfo = (data, options) => fetch('get_user_info', data, options)
 
 
 // 普通环境noop就行了

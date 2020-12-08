@@ -17,6 +17,12 @@
 				}
 			}
 		},
+		{
+			"path": "pages/support/ImList",
+			"style": {
+				"navigationBarTitleText": "消息列表"
+			}
+		},
 
 		{
 			"path": "pages/index/pre",
@@ -369,7 +375,7 @@
             }
         }
 
-        
+
     ],
 	"subPackages": [{
 		"root": "pagesA",

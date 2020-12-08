@@ -1,5 +1,12 @@
 <template>
 	<div @click="commonClick" class="wrap" style="position:relative;background-color:#f8f8f8">
+		
+		<div class="flex-message" v-if="initData.Substribe&&userInfo.is_subscribe==0">
+		  <div>小提示：关注{{'"'}}{{initData.WeChatAccountName}}{{'"'}}公众号可及时获取重要消息，</div>
+		  <div >可<span class="c-red" @click="lookCode">点击这里</span>查看公众号二维码</div>
+		</div>  
+		<div class="flex-message-occupy"  v-if="initData.Substribe&&userInfo.is_subscribe==0"></div>
+		
 		<div class="top">
 			<image @click="goBack" class="imgm" src="/static/back.png"></image>
 			<image @click="goCart" class="imgm cart" src="/static/cart.png"></image>
@@ -350,7 +357,8 @@
 		getPintuanTeam,
 		getProductDetail,
 		getProductSharePic,
-		updateCart
+		updateCart,
+		get_user_info
 	} from '../../common/fetch.js'
 	import {
 		buildSharePath,
@@ -377,6 +385,9 @@
 		mixins: [pageMixin],
 		data() {
 			return {
+				userInfo:{
+					is_subscribe:1
+				},
 				teamListAll: [],
 				hideNativeEleShow: false,
 				groupStam: false,
@@ -540,6 +551,16 @@
 			// #endif
 		},
 		onShow() {
+			
+			if (this.$fun.checkIsLogin()) {
+			  get_user_info({}, {
+			    tip: '',
+			    errtip: false
+			  }).then(res => {
+			    this.userInfo = res.data
+			  }).catch(e => {
+			  })
+			} 
 			this.getDetail(this.Products_ID)
 			this.getCommit(this.Products_ID)
 
@@ -612,7 +633,11 @@
 		},
 		methods: {
 			...mapActions(['getUserInfo']),
-
+		 lookCode(){
+				uni.previewImage({
+				  urls: [this.initData.SubscribeQrcode]
+				})
+			  },
 			createtab: function() {
 				// 设置水平居中位置
 				// var bitmap = new plus.nativeObj.Bitmap('bmp1');
@@ -2196,4 +2221,32 @@
 		top: 30px;
 		right: 10px !important;
 	}
+	.c-red{
+	    color: #FFFFff;
+	    background-color: #ff4400;
+	    display: inline-block;
+	    padding: 0px 14rpx;
+	    border-radius: 10rpx;
+	    margin: 0rpx 14rpx;
+	  }
+	.flex-message{
+	    text-align: center;
+	    width: 750rpx;
+	    height: 120rpx;
+	    box-sizing: border-box;
+	    border-radius: 10rpx;
+	    background-color: #fefff1;
+		color: #FF4200;
+	    line-height: 50rpx;
+	    font-size: 12px;
+	    padding:10rpx 30rpx;
+	    position: fixed;
+	    top: 0px;
+	    left: 0px;
+	    z-index: 9;
+	  }
+	  .flex-message-occupy{
+	    height: 120rpx;
+	    width: 750rpx;
+	  }
 </style>

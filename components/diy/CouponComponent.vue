@@ -551,7 +551,7 @@ export default {
 			 margin: 0rpx auto 0rpx;
 		 }
 		 &__title{
-			 font-size: 60rpx;
+			 font-size: 50rpx;
 			 color: rgba(247, 208, 145, 1);
 			 position: absolute;
 			 top: 20rpx;

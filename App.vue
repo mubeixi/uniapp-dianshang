@@ -7,7 +7,9 @@ import { checkIsLogin, modal } from './common'
 // #ifndef H5
 import { upUserLog } from './common/fetch'
 // #endif
-
+import eventHub from '@/common/eventHub'
+import IM from '@/common/Im/Im'
+import store from '@/store'
 // #ifdef APP-PLUS
 import Push from './common/push'
 // #endif
@@ -94,19 +96,38 @@ export default {
       modal(error.msg || '应用初始化失败')
     })
   },
-  onShow: function () {
-	  const tabbarArr = ["home","class","shopping","mine"];
-	  tabbarArr.forEach(function(item,index){
+  async onShow () {
+    // 初始化信息
+    const userInfo = store.getters.userInfo
+
+    // IM
+    if (userInfo && userInfo.User_ID && !eventHub.imInstance) {
+      // IM全局
+      const imInstance = new IM()
+      // 设置本地用户信息
+      imInstance.setSendInfo({ type: 'user', id: userInfo.User_ID, name: userInfo.User_NickName, avatar: userInfo.User_HeadImg })
+      imInstance.start().then(() => {
+        imInstance.openListen()
+        eventHub.imInstance = imInstance // 全局用一个句柄
+      }).catch((e) => { console.log(e) })
+    }
+
+	  const tabbarArr = ['home', 'class', 'shopping', 'mine']
+	  tabbarArr.forEach(function (item, index) {
 	  	  uni.setTabBarItem({
-	  	  	  index:index,
-	  	  	  text:T._(item),
-	  		  fail:function(err){
+	  	  	  index: index,
+	  	  	  text: T._(item),
+	  		  fail: function (err) {
 	  			  console.log(err)
 	  		  }
 	  	  })
 	  })
   },
   onHide: function () {
+    if (eventHub.imInstance) {
+      // IM全局
+      eventHub.imInstance.close()
+    }
   },
   // 后期可以接自定义的错误上报
   onError: function (err) {

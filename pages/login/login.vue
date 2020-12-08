@@ -281,541 +281,558 @@
 	</div>
 </template>
 <script>
-	import {
-		GetQueryByString,
-		isWeiXin,
-		ls,
-		urlencode,
-		objTranslate,
-		checkMobile
-	} from '../../common/tool'
-	import {
-		bindUserClientId,
-		getSmsCode,
-		login,
-		upUserLog,
-		resetPwd
-	} from '@/common/fetch'
-	import {
-		error,
-		modal,
-		toast,
-		confirm
-	} from '../../common'
-	import {
-		mapActions,
-		mapGetters
-	} from 'vuex'
-	import {
-		pageMixin
-	} from '../../common/mixin'
+import {
+  GetQueryByString,
+  isWeiXin,
+  ls,
+  urlencode,
+  objTranslate,
+  checkMobile
+} from '../../common/tool'
+import {
+  bindUserClientId,
+  getSmsCode,
+  login,
+  upUserLog,
+  resetPwd
+} from '@/common/fetch'
+import {
+  error,
+  modal,
+  toast,
+  confirm
+} from '../../common'
+import {
+  mapActions,
+  mapGetters
+} from 'vuex'
+import {
+  pageMixin
+} from '../../common/mixin'
+import IM from '@/common/Im/Im'
+import eventHub from '@/common/eventHub'
+import T from '@/common/langue/i18n'
+export default {
+  mixins: [pageMixin],
+  data () {
+    return {
+      animationData: {},
+      menuButtonInfo: {
+        height: 0,
+        top: 0
+      },
+      systemInfo: {},
+      showCodeLogin: false,
+      h5_wx_login: false,
+      refreshInit: false,
+      channels: [],
+      froms: '', // 跳转过来的路由
+      status: 1, // 页面状态 1: 登录注册； 2：密码登录； 3： 找回密码； 4：输入验证码； 5：设置新密码； 6:修改密码
+      loginStatus: 1, // 1: 短信登录； 2: 手机号登录； 3: 找回密码； 4：修改密码
+      verificationCode: '', // 用户填写的验证码都会在这里
+      mobile: '', // 手机号，不管在哪个状态
+      newPassword: '',
+      fromId: 0, // 推荐人的ID 没有推荐人为0，有推荐人传推荐人ID
+      phone: {
+        password: '',
+        inputType: false
+      },
+      countdownNum: 60, // 倒计时数字
+      countdownStatus: false,
+      tel: {
+        show: false,
+        // data: telData,
+        model: '中国 86'
+      },
+      editPass: {
+        oldPassShow: false,
+        newPassShow: false,
+        okNewPassShow: false,
+        oldPass: '',
+        newPass: '',
+        okNewPass: ''
+      },
+      isShowWeiXin: 0,
 
-	import T from '@/common/langue/i18n'
-	export default {
-		mixins: [pageMixin],
-		data() {
-			return {
-				animationData: {},
-				menuButtonInfo: {
-					height: 0,
-					top: 0
-				},
-				systemInfo: {},
-				showCodeLogin: false,
-				h5_wx_login: false,
-				refreshInit: false,
-				channels: [],
-				froms: '', // 跳转过来的路由
-				status: 1, // 页面状态 1: 登录注册； 2：密码登录； 3： 找回密码； 4：输入验证码； 5：设置新密码； 6:修改密码
-				loginStatus: 1, // 1: 短信登录； 2: 手机号登录； 3: 找回密码； 4：修改密码
-				verificationCode: '', // 用户填写的验证码都会在这里
-				mobile: '', // 手机号，不管在哪个状态
-				newPassword: '',
-				fromId: 0, // 推荐人的ID 没有推荐人为0，有推荐人传推荐人ID
-				phone: {
-					password: '',
-					inputType: false
-				},
-				countdownNum: 60, // 倒计时数字
-				countdownStatus: false,
-				tel: {
-					show: false,
-					// data: telData,
-					model: '中国 86'
-				},
-				editPass: {
-					oldPassShow: false,
-					newPassShow: false,
-					okNewPassShow: false,
-					oldPass: '',
-					newPass: '',
-					okNewPass: ''
-				},
-				isShowWeiXin: 0,
-
-				// 国际短信
-				world_sms_flag: 0, // 是否开启国际区号选择
-				world_sms_code_list: [], // 可选择的国际区号
-				world_sms_code_idx: 0, // 选择显示的使用的国际区号下标
-				world_sms_code_choose: '' // 选择显示的使用的国际区号，例如：+86
-			}
-		},
-		computed: {
-			...mapGetters([
-				'userInfo', 'initData'
-			]),
-			hasVisibleIcon() {
-				return this.phone.inputType ? 'iconyanjing' : 'iconyanjing1'
-			},
-			telNum() {
-				return this.tel.model.split(' ')[1]
-			},
-			countdownStr() {
-				if (this.countdownStatus) {
-					return `(${this.countdownNum})`
-				}
-				return ''
-			},
-			isCodeDisabled() {
-				return !checkMobile(this.mobile, this.world_sms_code_choose)
-			},
-			isEditNewPassDisabled() {
-				const old = /^.{6,30}$/.test(this.editPass.oldPass)
-				const newPass = /^.{6,30}$/.test(this.editPass.newPass)
-				const okNewPass = /^.{6,30}$/.test(this.editPass.okNewPass)
-				return old && newPass && okNewPass
-			},
-			isNewPassDisabled() {
-				const verifi = this.verificationCode.length !== 6
-				const password = !/^.{6,30}$/.test(this.newPassword)
-				return verifi && password
-			},
-			isPhoneDisabled() {
-				const mobile = this.mobile
-				const password = this.phone.password
-				const isOkPhone = checkMobile(mobile, this.world_sms_code_choose)
-				return !(isOkPhone && password !== '')
-			}
-		},
-		methods: {
-			showCodeLoginFn() {
-				this.showCodeLogin = !this.showCodeLogin
-			},
-			openLoginDialog() {
-				// this.$refs.refLogin.show()
-				var animation = uni.createAnimation({
-					duration: 400,
-					timingFunction: 'ease'
-				})
-				animation.translateX(0).step()
-				this.animationData = animation.export()
-			},
-			cancelLoginDialog() {
-				// this.$refs.refLogin.close()
-				var animation = uni.createAnimation({
-					duration: 400,
-					timingFunction: 'ease'
-				})
-				animation.translateX(this.systemInfo.windowWidth).step()
-				this.animationData = animation.export()
-			},
-			goBack() {
-				uni.navigateBack({
-					delta: 1
-				})
-			},
-			setStatusFunc() {
-				this.status = 3
-				this.loginStatus = 3
-			},
-			setData(from) {
-				this.froms = from
-			},
-			sendCode() {
-				const mobile = this.mobile
-				if (mobile === '' || !mobile) {
-					return error(T._('539d0'))
-				}
-				if (this.countdownStatus) return
-				// this.countdownStatus=true;
-				return getSmsCode({
-						mobile,
-						phone_code: this.world_sms_code_choose
-					})
-					.then(() => toast(T._('539d1'), 'success'))
-					.then(() => this.startCountdown()).catch((res) => {
-						modal(res.msg ? res.msg : T._('539d2'))
-					})
-			},
-			async codeSendVerification(status) {
-				// 发送验证码并设置 status（更新页面）
-				if (!status) throw T._('539d3')
-				await this.sendCode()
-				// 只有发送验证码成功了，才是
-				if (this.countdownStatus) this.status = status
-			},
-			againSendCode() {
-				if (!this.countdownStatus) this.sendCode()
-			},
-			substr(event) {
-				this.verificationCode = event.target.value
-			},
-			fillCode(event) {
-				const _self = this
-				// 填写验证码
-				// this.substr();
-				this.verificationCode = event.target.value
-				if (this.verificationCode.length === 4) {
-					this.login(null, function() {
-						_self.verificationCode = ''
-					})
-				}
-			},
-			/**
+      // 国际短信
+      world_sms_flag: 0, // 是否开启国际区号选择
+      world_sms_code_list: [], // 可选择的国际区号
+      world_sms_code_idx: 0, // 选择显示的使用的国际区号下标
+      world_sms_code_choose: '' // 选择显示的使用的国际区号，例如：+86
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'userInfo', 'initData'
+    ]),
+    hasVisibleIcon () {
+      return this.phone.inputType ? 'iconyanjing' : 'iconyanjing1'
+    },
+    telNum () {
+      return this.tel.model.split(' ')[1]
+    },
+    countdownStr () {
+      if (this.countdownStatus) {
+        return `(${this.countdownNum})`
+      }
+      return ''
+    },
+    isCodeDisabled () {
+      return !checkMobile(this.mobile, this.world_sms_code_choose)
+    },
+    isEditNewPassDisabled () {
+      const old = /^.{6,30}$/.test(this.editPass.oldPass)
+      const newPass = /^.{6,30}$/.test(this.editPass.newPass)
+      const okNewPass = /^.{6,30}$/.test(this.editPass.okNewPass)
+      return old && newPass && okNewPass
+    },
+    isNewPassDisabled () {
+      const verifi = this.verificationCode.length !== 6
+      const password = !/^.{6,30}$/.test(this.newPassword)
+      return verifi && password
+    },
+    isPhoneDisabled () {
+      const mobile = this.mobile
+      const password = this.phone.password
+      const isOkPhone = checkMobile(mobile, this.world_sms_code_choose)
+      return !(isOkPhone && password !== '')
+    }
+  },
+  methods: {
+    showCodeLoginFn () {
+      this.showCodeLogin = !this.showCodeLogin
+    },
+    openLoginDialog () {
+      // this.$refs.refLogin.show()
+      var animation = uni.createAnimation({
+        duration: 400,
+        timingFunction: 'ease'
+      })
+      animation.translateX(0).step()
+      this.animationData = animation.export()
+    },
+    cancelLoginDialog () {
+      // this.$refs.refLogin.close()
+      var animation = uni.createAnimation({
+        duration: 400,
+        timingFunction: 'ease'
+      })
+      animation.translateX(this.systemInfo.windowWidth).step()
+      this.animationData = animation.export()
+    },
+    goBack () {
+      uni.navigateBack({
+        delta: 1
+      })
+    },
+    setStatusFunc () {
+      this.status = 3
+      this.loginStatus = 3
+    },
+    setData (from) {
+      this.froms = from
+    },
+    sendCode () {
+      const mobile = this.mobile
+      if (mobile === '' || !mobile) {
+        return error(T._('539d0'))
+      }
+      if (this.countdownStatus) return
+      // this.countdownStatus=true;
+      return getSmsCode({
+        mobile,
+        phone_code: this.world_sms_code_choose
+      })
+        .then(() => toast(T._('539d1'), 'success'))
+        .then(() => this.startCountdown()).catch((res) => {
+          modal(res.msg ? res.msg : T._('539d2'))
+        })
+    },
+    async codeSendVerification (status) {
+      // 发送验证码并设置 status（更新页面）
+      if (!status) throw T._('539d3')
+      await this.sendCode()
+      // 只有发送验证码成功了，才是
+      if (this.countdownStatus) this.status = status
+    },
+    againSendCode () {
+      if (!this.countdownStatus) this.sendCode()
+    },
+    substr (event) {
+      this.verificationCode = event.target.value
+    },
+    fillCode (event) {
+      const _self = this
+      // 填写验证码
+      // this.substr();
+      this.verificationCode = event.target.value
+      if (this.verificationCode.length === 4) {
+        this.login(null, function () {
+          _self.verificationCode = ''
+        })
+      }
+    },
+    /**
 			 * 可以加两个回调
 			 * @param scall
 			 * @param ecall
 			 * @return {Promise<void>}
 			 */
-			async login(scall, ecall) {
-				// 登录 - 多个地方用了
+    async login (scall, ecall) {
+      // 登录 - 多个地方用了
 
-				if (this.loginStatus === 1) {
-					// 短信登录
-					await login({
-						phone_code: this.world_sms_code_choose,
-						mobile: this.mobile,
-						captcha: this.verificationCode,
-						login_method: 'sms_login'
-					}).then(res => {
-						// 么有自定义回调，就默认的额
-						!scall && this.loginCall(res.data)
-						scall && scall()
-					}).catch((e) => {
-						error(e.msg)
-						ecall && ecall()
-					})
-				} else if (this.loginStatus === 2) {
-					// 账号密码登录
-					await login({
-						phone_code: this.world_sms_code_choose,
-						mobile: this.mobile,
-						passwd: this.phone.password,
-						login_method: 'mobile_login'
-					}).then(res => {
-						this.loginCall(res.data)
-					}).catch((e) => {
-						error(e.msg)
-					})
-				} else if (this.loginStatus === 3) {
-					// 找回密码
-					await login({
-						mobile: this.mobile,
-						captcha: this.verificationCode,
-						login_method: 'sms_login'
-					}).then(res => {
-						this.loginCall(res.data)
-					}).catch((e) => {
-						error(e.msg)
-					})
-				}
-			},
-			setNewPassOk() {
-				const data = {
-					phone_code: this.world_sms_code_choose,
-					mobile: this.mobile,
-					captcha: this.verificationCode,
-					new_pwd: this.newPassword
-				}
-				resetPwd(data).then(res => {
-					//toast(res.msg)
-					confirm({
-						content: T._('539d4'),
-						confirmText: T._('539d5'),
-						cancelText: T._('539d6')
-					}).then(() => this.login()).catch(e => {
-						uni.switchTab({
-							url: '/pages/person/person'
-						})
-					})
-				}).catch(e => {
-					error(e.msg)
-				})
-			},
-			startCountdown() {
-				// 倒计时
-				this.countdownStatus = true
-				const countdownInterval = setInterval(() => {
-					if (this.countdownNum > 0) {
-						this.countdownNum--
-					} else {
-						clearInterval(countdownInterval)
-						this.countdownNum = 60
-						this.countdownStatus = false
-					}
-				}, 1000)
-			},
-			async weixinlogin(data) {
-				const _self = this
+      if (this.loginStatus === 1) {
+        // 短信登录
+        await login({
+          phone_code: this.world_sms_code_choose,
+          mobile: this.mobile,
+          captcha: this.verificationCode,
+          login_method: 'sms_login'
+        }).then(res => {
+          // 么有自定义回调，就默认的额
+          !scall && this.loginCall(res.data)
+          scall && scall()
+        }).catch((e) => {
+          error(e.msg)
+          ecall && ecall()
+        })
+      } else if (this.loginStatus === 2) {
+        // 账号密码登录
+        await login({
+          phone_code: this.world_sms_code_choose,
+          mobile: this.mobile,
+          passwd: this.phone.password,
+          login_method: 'mobile_login'
+        }).then(res => {
+          this.loginCall(res.data)
+        }).catch((e) => {
+          error(e.msg)
+        })
+      } else if (this.loginStatus === 3) {
+        // 找回密码
+        await login({
+          mobile: this.mobile,
+          captcha: this.verificationCode,
+          login_method: 'sms_login'
+        }).then(res => {
+          this.loginCall(res.data)
+        }).catch((e) => {
+          error(e.msg)
+        })
+      }
+    },
+    setNewPassOk () {
+      const data = {
+        phone_code: this.world_sms_code_choose,
+        mobile: this.mobile,
+        captcha: this.verificationCode,
+        new_pwd: this.newPassword
+      }
+      resetPwd(data).then(res => {
+        // toast(res.msg)
+        confirm({
+          content: T._('539d4'),
+          confirmText: T._('539d5'),
+          cancelText: T._('539d6')
+        }).then(() => this.login()).catch(e => {
+          uni.switchTab({
+            url: '/pages/person/person'
+          })
+        })
+      }).catch(e => {
+        error(e.msg)
+      })
+    },
+    startCountdown () {
+      // 倒计时
+      this.countdownStatus = true
+      const countdownInterval = setInterval(() => {
+        if (this.countdownNum > 0) {
+          this.countdownNum--
+        } else {
+          clearInterval(countdownInterval)
+          this.countdownNum = 60
+          this.countdownStatus = false
+        }
+      }, 1000)
+    },
+    async weixinlogin (data) {
+      const _self = this
 
-				// #ifdef H5
-				const channel = data
-				const REDIRECT_URI = urlencode(location.href)
-				let wxAuthUrl = null
-				const scope = 'snsapi_userinfo' // snsapi_userinfo //snsapi_base
-				if (channel.type === 'wx_mp' && channel.component_appid) {
-					// 服务商模式登录
-					wxAuthUrl =
+      // #ifdef H5
+      const channel = data
+      const REDIRECT_URI = urlencode(location.href)
+      let wxAuthUrl = null
+      const scope = 'snsapi_userinfo' // snsapi_userinfo //snsapi_base
+      if (channel.type === 'wx_mp' && channel.component_appid) {
+        // 服务商模式登录
+        wxAuthUrl =
 						`https://open.weixin.qq.com/connect/oauth2/authorize?appid=${channel.appid}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=${scope}&connect_redirect=1&state=STATE&component_appid=${channel.component_appid}#wechat_redirect`
-				} else {
-					// 公众号自己的appid用于登录
-					wxAuthUrl =
+      } else {
+        // 公众号自己的appid用于登录
+        wxAuthUrl =
 						`https://open.weixin.qq.com/connect/oauth2/authorize?appid=${channel.appid}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=${scope}&connect_redirect=1&state=STATE#wechat_redirect`
-				}
-				location.replace(wxAuthUrl)
-				// #endif
+      }
+      location.replace(wxAuthUrl)
+      // #endif
 
-				// #ifdef MP-WEIXIN
-				uni.login({
-					fail: (err) => {
-						uni.showModal({
-							title: T._('539d7'),
-							content: T._('539d8') + JSON.stringify(err)
-						})
-					},
-					success: function(loginRes) {
-						const CODE = loginRes.code
-						// 可以通过 wx.getSetting 先查询一下用户是否授权了 "scope.record" 这个 scope
-						wx.getSetting({
-							fail: (err) => {
-								uni.showModal({
-									title: T._('539d9'),
-									content: JSON.stringify(err)
-								})
-							},
-							success: (res) => {
-								// 未获得用户信息权限,需要让用户授权
-								if (!res.authSetting['scope.userInfo']) {
-									wx.authorize({
-										scope: 'scope.userInfo',
-										fail: (err) => {
-											uni.showModal({
-												title: T._('539d10'),
-												content: JSON.stringify(err)
-											})
-										},
-										success(res) {
-											let userInfoData = null
-											wx.getUserInfo({
-												lang: 'zh_CN',
-												success: function(val) {
-													userInfoData = val
-													userInfoData.rawData = JSON.parse(userInfoData.rawData)
-													login({
-														code: CODE,
-														login_method: 'wx_lp',
-														lp_raw_data: JSON.stringify(userInfoData)
-													}, {
-														tip: T._('539d11')
-													}).then(ret => {
-														if (ret.errorCode === 0) {
-															_self.loginCall(ret.data)
-														}
-													}).catch(err => {
-														modal(err.msg)
-													})
-												}
-											})
-										}
-									})
-								} else {
-									let userInfoData = null
-									wx.getUserInfo({
-										lang: 'zh_CN',
-										success: function(val) {
-											userInfoData = { ...val
-											}
+      // #ifdef MP-WEIXIN
+      uni.login({
+        fail: (err) => {
+          uni.showModal({
+            title: T._('539d7'),
+            content: T._('539d8') + JSON.stringify(err)
+          })
+        },
+        success: function (loginRes) {
+          const CODE = loginRes.code
+          // 可以通过 wx.getSetting 先查询一下用户是否授权了 "scope.record" 这个 scope
+          wx.getSetting({
+            fail: (err) => {
+              uni.showModal({
+                title: T._('539d9'),
+                content: JSON.stringify(err)
+              })
+            },
+            success: (res) => {
+              // 未获得用户信息权限,需要让用户授权
+              if (!res.authSetting['scope.userInfo']) {
+                wx.authorize({
+                  scope: 'scope.userInfo',
+                  fail: (err) => {
+                    uni.showModal({
+                      title: T._('539d10'),
+                      content: JSON.stringify(err)
+                    })
+                  },
+                  success (res) {
+                    let userInfoData = null
+                    wx.getUserInfo({
+                      lang: 'zh_CN',
+                      success: function (val) {
+                        userInfoData = val
+                        userInfoData.rawData = JSON.parse(userInfoData.rawData)
+                        login({
+                          code: CODE,
+                          login_method: 'wx_lp',
+                          lp_raw_data: JSON.stringify(userInfoData)
+                        }, {
+                          tip: T._('539d11')
+                        }).then(ret => {
+                          if (ret.errorCode === 0) {
+                            _self.loginCall(ret.data)
+                          }
+                        }).catch(err => {
+                          modal(err.msg)
+                        })
+                      }
+                    })
+                  }
+                })
+              } else {
+                let userInfoData = null
+                wx.getUserInfo({
+                  lang: 'zh_CN',
+                  success: function (val) {
+                    userInfoData = { ...val }
 
-											userInfoData.rawData = JSON.parse(userInfoData.rawData)
-											login({
-												code: CODE,
-												login_method: 'wx_lp',
-												lp_raw_data: JSON.stringify(userInfoData)
-											}, {
-												tip: T._('539d12')
-											}).then(ret => {
-												if (ret.errorCode === 0) {
-													_self.loginCall(ret.data)
-												}
-											}).catch(err => {
-												modal(err.msg)
-											})
-										}
-									})
+                    userInfoData.rawData = JSON.parse(userInfoData.rawData)
+                    login({
+                      code: CODE,
+                      login_method: 'wx_lp',
+                      lp_raw_data: JSON.stringify(userInfoData)
+                    }, {
+                      tip: T._('539d12')
+                    }).then(ret => {
+                      if (ret.errorCode === 0) {
+                        _self.loginCall(ret.data)
+                      }
+                    }).catch(err => {
+                      modal(err.msg)
+                    })
+                  }
+                })
 
-									// error('请点击授权登录2')
-								}
-							}
-						})
-					}
-				})
-				// #endif
-				// #ifdef APP-PLUS
-				uni.login({
-					provider: 'weixin',
-					success: function(loginRes) {
-						login({
-							login_method: 'wx_app',
-							...loginRes.authResult
-						}).then(res => {
-							_self.loginCall(res.data)
-						}).catch(e => {})
-					}
-				})
-				// #endif
-			},
-			async initDataFn() {
-				// #ifdef H5
-				this.isShowWeiXin = isWeiXin()
-				// #endif
-				const initData = await this.getInitData(1)
-				const login_methods = initData.login_methods
-				const component_appid = login_methods.component_appid
-				this.channels = []
-				// 根据服务器返回配置设置channels,只有微信公众号和小程序会用到component_appid
-				// 而且状态可以灵活控制 state为1
-				for (var i in login_methods) {
-					// && login_methods[i].state ??状态呢？
-					if (i !== 'component_appid' && login_methods[i].state) {
-						this.channels.push(['wx_mp', 'wx_lp'].indexOf(login_methods[i].type) === -1 ? { ...login_methods[i]
-						} : { ...login_methods[i],
-							component_appid
-						})
-					}
-				}
+                // error('请点击授权登录2')
+              }
+            }
+          })
+        }
+      })
+      // #endif
+      // #ifdef APP-PLUS
+      uni.login({
+        provider: 'weixin',
+        success: function (loginRes) {
+          login({
+            login_method: 'wx_app',
+            ...loginRes.authResult
+          }).then(res => {
+            _self.loginCall(res.data)
+          }).catch(e => {})
+        }
+      })
+      // #endif
+    },
+    async initDataFn () {
+      // #ifdef H5
+      this.isShowWeiXin = isWeiXin()
+      // #endif
+      const initData = await this.getInitData(1)
+      const login_methods = initData.login_methods
+      const component_appid = login_methods.component_appid
+      this.channels = []
+      // 根据服务器返回配置设置channels,只有微信公众号和小程序会用到component_appid
+      // 而且状态可以灵活控制 state为1
+      for (var i in login_methods) {
+        // && login_methods[i].state ??状态呢？
+        if (i !== 'component_appid' && login_methods[i].state) {
+          this.channels.push(['wx_mp', 'wx_lp'].indexOf(login_methods[i].type) === -1 ? { ...login_methods[i] } : {
+            ...login_methods[i],
+            component_appid
+          })
+        }
+      }
 
-				// 如果channels长度为0，则
-				if (this.channels.length < 1) {
-					this.showCodeLogin = true
+      // 如果channels长度为0，则
+      if (this.channels.length < 1) {
+        this.showCodeLogin = true
 
-					// #ifdef H5
-					this.isShowWeiXin = false
-					// #endif
-				}
+        // #ifdef H5
+        this.isShowWeiXin = false
+        // #endif
+      }
 
-				// 国际短信
-				this.world_sms_flag = initData.world_sms_flag || 0
-				this.world_sms_code_list = initData.world_sms_code_list || []
-			},
-			worldSmsChoose(e) {
-				this.world_sms_code_idx = e.detail.value
-				this.world_sms_code_choose = this.world_sms_code_list[this.world_sms_code_idx].phone_code
-			},
-			async loginCall(userData) {
-				// 根据后台配置来判断是否无手机号跳去绑定手机号
-				const isBindPhone = Number(this.initData.bind_mobile_switch) === 1
+      // 国际短信
+      this.world_sms_flag = initData.world_sms_flag || 0
+      this.world_sms_code_list = initData.world_sms_code_list || []
+    },
+    worldSmsChoose (e) {
+      this.world_sms_code_idx = e.detail.value
+      this.world_sms_code_choose = this.world_sms_code_list[this.world_sms_code_idx].phone_code
+    },
+    async loginCall (userData) {
+      // 根据后台配置来判断是否无手机号跳去绑定手机号
+      const isBindPhone = Number(this.initData.bind_mobile_switch) === 1
 
-				console.log(isBindPhone, userData)
-				if (isBindPhone && userData && !userData.User_Mobile) {
-					console.log(objTranslate(userData))
-					// ls.set('accessToken', userData.access_token, 1)
-					// ls.set('user_id', userData.User_ID, 1)
-					uni.redirectTo({
-						url: '/pagesA/person/updateUserPsw?type=3&user_id=' + userData.User_ID + '&accessToken=' + userData.access_token
-					})
-				} else {
-					this.setUserInfo(userData)
-					ls.set('access_token', userData.access_token, 1)
-					// #ifdef APP-PLUS
-					// 注册设备
-					const clientid = ls.get('user_client_id')
-					if (clientid) {
-						await bindUserClientId({
-							uuid: clientid,
-							action: 'save'
-						}, {
-							errtip: false
-						}).then(res => {}).catch(() => {})
-					}
-					// #endif
-					// 手动绑定一下
-					await upUserLog({}, {
-						errtip: false
-					}).then(res => {
-						// #ifdef H5
-						sessionStorage.setItem('is_send_usrlog', 1)
-						// #endif
-					}).catch(e => {})
-					// #ifdef H5
-					// 微信登录才这么走
-					const login_farward_url = ls.get('login_farward_url')
-					if (this.h5_wx_login) {
-						history.go(-2)
-						return
-					}
-					if (login_farward_url) {
-						ls.remove('login_farward_url')
-						ls.set('is_login_redirct', 1)
-						history.go(-1)
-						return
-					} else {
-						uni.reLaunch({
-							url: '/pages/index/index'
-						})
-					}
-					return
-					// #endif
-					// eslint-disable-next-line no-unreachable
-					uni.navigateBack()
-				}
-			},
-			...mapActions(['getInitData', 'setUserInfo'])
-		},
-		onLoad() {
-			// #ifdef MP
-			this.menuButtonInfo = uni.getMenuButtonBoundingClientRect()
-			this.systemInfo = uni.getSystemInfoSync()
-			// #endif
-		},
-		onShow() {
+      console.log(isBindPhone, userData)
+      if (isBindPhone && userData && !userData.User_Mobile) {
+        console.log(objTranslate(userData))
+        // ls.set('accessToken', userData.access_token, 1)
+        // ls.set('user_id', userData.User_ID, 1)
+        uni.redirectTo({
+          url: '/pagesA/person/updateUserPsw?type=3&user_id=' + userData.User_ID + '&accessToken=' + userData.access_token
+        })
+      } else {
+        // 新增全局监听
+        if (!ls.get('listenStatus')) {
+          // IM全局
+          const imInstance = new IM()
+          // 设置本地用户信息
+          imInstance.setSendInfo({
+            type: 'user',
+            id: userData.user_id,
+            name: userData.User_NickName,
+            avatar: userData.User_HeadImg
+          })
+          await imInstance.start() // 等拿token
 
-		},
-		created() {
-			console.log('created created created')
-			/** 登录也不管了 **/
-			// 如果已经登录，就自动退回
-			const uid = ls.get('user_id')
-			const access_token = ls.get('access_token')
-			if (uid && access_token) {
-				console.log('已经登录过')
-				// uni.navigateBack()
-				return
-			}
+          imInstance.openListen()
+          eventHub.imInstance = imInstance // 全局用一个句柄
+        }
 
-			// #ifdef H5
-			if (isWeiXin()) {
-				const code = GetQueryByString(location.href, 'code')
-				if (code && !access_token) {
-					// this.setUserInfo({})
-					login({
-						login_method: 'wx_mp',
-						code: code
-					}).then(res => {
-						this.h5_wx_login = true // 标记是h5微信登录
-						this.loginCall(res.data)
-					}).catch(() => {})
-					return
-				}
-			}
-			// #endif
+        this.setUserInfo(userData)
+        ls.set('access_token', userData.access_token, 1)
+        // #ifdef APP-PLUS
+        // 注册设备
+        const clientid = ls.get('user_client_id')
+        if (clientid) {
+          await bindUserClientId({
+            uuid: clientid,
+            action: 'save'
+          }, {
+            errtip: false
+          }).then(res => {}).catch(() => {})
+        }
+        // #endif
+        // 手动绑定一下
+        await upUserLog({}, {
+          errtip: false
+        }).then(res => {
+          // #ifdef H5
+          sessionStorage.setItem('is_send_usrlog', 1)
+          // #endif
+        }).catch(e => {})
+        // #ifdef H5
+        // 微信登录才这么走
+        const login_farward_url = ls.get('login_farward_url')
+        if (this.h5_wx_login) {
+          history.go(-2)
+          return
+        }
+        if (login_farward_url) {
+          ls.remove('login_farward_url')
+          ls.set('is_login_redirct', 1)
+          history.go(-1)
+          return
+        } else {
+          uni.reLaunch({
+            url: '/pages/index/index'
+          })
+        }
+        return
+        // #endif
+        // eslint-disable-next-line no-unreachable
+        uni.navigateBack()
+      }
+    },
+    ...mapActions(['getInitData', 'setUserInfo'])
+  },
+  onLoad () {
+    // #ifdef MP
+    this.menuButtonInfo = uni.getMenuButtonBoundingClientRect()
+    this.systemInfo = uni.getSystemInfoSync()
+    // #endif
+  },
+  onShow () {
 
-			// #ifndef H5
-			// this.setUserInfo({})
-			// #endif
+  },
+  created () {
+    console.log('created created created')
+    /** 登录也不管了 **/
+    // 如果已经登录，就自动退回
+    const uid = ls.get('user_id')
+    const access_token = ls.get('access_token')
+    if (uid && access_token) {
+      console.log('已经登录过')
+      // uni.navigateBack()
+      return
+    }
 
-			this.initDataFn()
-		}
-	}
+    // #ifdef H5
+    if (isWeiXin()) {
+      const code = GetQueryByString(location.href, 'code')
+      if (code && !access_token) {
+        // this.setUserInfo({})
+        login({
+          login_method: 'wx_mp',
+          code: code
+        }).then(res => {
+          this.h5_wx_login = true // 标记是h5微信登录
+          this.loginCall(res.data)
+        }).catch(() => {})
+        return
+      }
+    }
+    // #endif
+
+    // #ifndef H5
+    // this.setUserInfo({})
+    // #endif
+
+    this.initDataFn()
+  }
+}
 </script>
 <style lang="scss" scoped>
 	.inputLable{
@@ -998,7 +1015,7 @@
 					.world_sms_choose {
 						color: $mainColor;
 					}
-					
+
 				}
 			}
 		}

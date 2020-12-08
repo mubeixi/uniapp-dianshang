@@ -1,5 +1,12 @@
 <template>
   <view class="index-all" v-if="showIndex">
+	  
+	  <div class="flex-message" v-if="initData.Substribe&&userInfo.is_subscribe==0">
+	    <div>小提示：关注{{'"'}}{{initData.WeChatAccountName}}{{'"'}}公众号可及时获取重要消息，</div>
+	    <div >可<span class="c-red" @click="lookCode">点击这里</span>查看公众号二维码</div>
+	  </div>  
+	  <div class="flex-message-occupy"  v-if="initData.Substribe&&userInfo.is_subscribe==0"></div>
+	  
     <block v-if="storeID">
       <view :style="{backgroundImage:'url('+domainFn('/static/client/store/storeBg.png')+')'}" class="store-all">
         <div class='store-title'>
@@ -187,7 +194,8 @@ import {
   getStoreList,
   getSystemConf,
   updateCart,
-  getLiveInfo
+  getLiveInfo,
+  get_user_info
 } from '../../common/fetch'
 import WzwStore from '../../components/wzw-store'
 import { error, modal, toast } from '../../common'
@@ -209,6 +217,9 @@ export default {
   },
   data () {
     return {
+		userInfo:{
+			is_subscribe:1
+		},
 	  liveList:[],
       totalList: [],
       page: [],
@@ -282,6 +293,11 @@ export default {
   },
   methods: {
     domainFn,
+	lookCode(){
+		uni.previewImage({
+		  urls: [this.initData.SubscribeQrcode]
+		})
+	},
 	toLive () {
 	  uni.navigateTo({
 	    url: '/pagesA/live/live'
@@ -898,6 +914,16 @@ export default {
     // #endif
     this._init_func()
 	
+	if (this.$fun.checkIsLogin()) {
+	  get_user_info({}, {
+	    tip: '',
+	    errtip: false
+	  }).then(res => {
+	    this.userInfo = res.data
+	  }).catch(e => {
+	  })
+	} 
+	
 	// #ifdef MP-WEIXIN
 	getLiveInfo().then(res => {
 	  this.liveList = res.data
@@ -1513,4 +1539,32 @@ export default {
     background-color: #FFCBCB;
   }
 
+.c-red{
+    color: #FFFFff;
+    background-color: #ff4400;
+    display: inline-block;
+    padding: 0px 14rpx;
+    border-radius: 10rpx;
+    margin: 0rpx 14rpx;
+  }
+.flex-message{
+    text-align: center;
+    width: 750rpx;
+    height: 120rpx;
+    box-sizing: border-box;
+    border-radius: 10rpx;
+    background-color: #fefff1;
+	color: #FF4200;
+    line-height: 50rpx;
+    font-size: 12px;
+    padding:10rpx 30rpx;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 9;
+  }
+  .flex-message-occupy{
+    height: 120rpx;
+    width: 750rpx;
+  }
 </style>
