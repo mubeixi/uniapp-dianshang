@@ -54,29 +54,25 @@
 	
 	
 
-	<layout-modal ref="couponMask" :autoClose="false" :showPop="showPop" bgColor="none" mainBgColor="none">
+	<!-- <layout-modal ref="couponMask" :autoClose="false" :showPop="showPop" bgColor="none" mainBgColor="none">
 		<div class="couponContent">
 			<image class="couponContentImg" :src="'/static/client/coupon/couponPopup.png'|domain"></image>
 			<image @click="showPop=false" class="couponContentDel" :src="'/static/client/coupon/couponDel.png'|domain"></image>
 			<view class="couponContentDiv">
-				<view class="couponCon"> 
+				<scroll-view  :scroll-y="true" class="couponCon"> 
 						<view @click="getCoupon(item)" class="couponCon-item"  v-for="(item,idx) in couponList" :key="idx"  :style="{backgroundImage:'url('+bgImg+')'}" >
 							<text class="couponCon-item__title">{{item.Coupon_Cash}}</text>
 							
 							<text class="couponCon-item__sub">优惠券</text>
-							<!-- {{item.Coupon_Subject}} -->
+		
 							<text class="couponCon-item__man">满{{item.Coupon_Condition}}可用</text>
 							
 							
 						</view>
-						
-						<!-- <view class="text-coupon">
-							优惠券可在“我的”—“我的优惠”中查看
-						</view> -->
-				</view>
+				</scroll-view>
 			</view>
 		</div>
-	</layout-modal>
+	</layout-modal> -->
 	
 
   </div>
@@ -511,6 +507,7 @@ export default {
   
   .couponContent{
 	  width: 488rpx;
+	 
 	  position: relative;
   }
   .couponContentImg{
@@ -525,9 +522,9 @@ export default {
 	  right: -14rpx;
   }
   .couponContentDiv{
+	  
 	  width: 462rpx;
 	  margin: -20rpx auto 0rpx;
-	  padding-top: 20rpx;
 	  padding: 38rpx 28rpx 28rpx 28rpx;
 	  box-sizing: border-box;
 	  min-height: 100rpx;
@@ -536,6 +533,7 @@ export default {
   }
  
  .couponCon{
+	 max-height: 600rpx;
 	 background-color: #bb0000;
 	 border-radius: 20rpx;
 	 width: 100%;

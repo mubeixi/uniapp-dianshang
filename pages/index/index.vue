@@ -1,11 +1,15 @@
 <template>
   <view class="index-all" v-if="showIndex">
 	  
-	  <div class="flex-message" v-if="initData.Substribe&&userInfo.is_subscribe==0">
-	    <div>小提示：关注{{'"'}}{{initData.WeChatAccountName}}{{'"'}}公众号可及时获取重要消息，</div>
-	    <div >可<span class="c-red" @click="lookCode">点击这里</span>查看公众号二维码</div>
+	  <div class="flex-message flex" v-if="initData.Substribe&&userInfo.is_subscribe==0&&showWxChatSwitch==1">
+	  	    <div>关注公众号，开启通知，重要信息不错过</div>
+	  	    <view class="flex flex-vertical-center">
+				<div class="lookCode" @click="showWeChat=true">关注</div>
+				<image class="codeDel" @click="setWxChat" src="/static/no/detailX-no.png"></image>
+			</view>
+			
 	  </div>  
-	  <div class="flex-message-occupy"  v-if="initData.Substribe&&userInfo.is_subscribe==0"></div>
+	  <div class="flex-message-occupy"  v-if="initData.Substribe&&userInfo.is_subscribe==0&&showWxChatSwitch==1"></div>
 	  
     <block v-if="storeID">
       <view :style="{backgroundImage:'url('+domainFn('/static/client/store/storeBg.png')+')'}" class="store-all">
@@ -179,6 +183,47 @@
 		  <image @click="toLive" class="icon-live" src="/static/live/logo.png"></image>
 		</view> -->
 		<!-- #endif -->
+		
+		
+		<layout-modal ref="couponMask" :autoClose="false" :showPop="showPop" bgColor="none" mainBgColor="none">
+			<div class="couponContent">
+				<image class="couponContentImg" :src="'/static/client/coupon/couponPopup.png'|domain"></image>
+				<image @click="showPop=false" class="couponContentDel" :src="'/static/client/coupon/couponDel.png'|domain"></image>
+				<view class="couponContentDiv">
+					<scroll-view  :scroll-y="true" class="couponCon"> 
+							<view @click="getCoupon(item)" class="couponCon-item"  v-for="(item,idx) in isAllowCouponList" :key="idx"  :style="{backgroundImage:'url('+bgImg+')'}" >
+								<text class="couponCon-item__title">{{item.Coupon_Cash}}</text>
+								
+								<text class="couponCon-item__sub">优惠券</text>
+								<!-- {{item.Coupon_Subject}} -->
+								<text class="couponCon-item__man">满{{item.Coupon_Condition}}可用</text>
+								
+								
+							</view>
+							
+							<!-- <view class="text-coupon">
+								优惠券可在“我的”—“我的优惠”中查看
+							</view> -->
+					</scroll-view>
+				</view>
+			</div>
+		</layout-modal>
+		
+		
+		<layout-modal :autoClose="false" :overBoo="true" :showPop="showWeChat" bgColor="none" mainBgColor="none">
+			<view class="showWeChat">
+				<image class="del-img" @click="showWeChat=false" src="/static/del.png"></image>
+				<view class=" c-title">长按保存此照片</view>
+				<view class="c-subtitle">扫码识别即可关注</view>
+				<view class="c-div">
+					<image class="c-img" :show-menu-by-longpress="true" :src="initData.SubscribeQrcode"></image>
+				</view>
+				<view class="c-bottom">
+					或者搜索“{{initData.WeChatAccountName}}”公众号
+				</view>
+			</view>
+			
+		</layout-modal>
   </view>
 </template>
 
@@ -195,7 +240,9 @@ import {
   getSystemConf,
   updateCart,
   getLiveInfo,
-  get_user_info
+  getCoupon,
+  getUserCoupon,
+   get_user_info
 } from '../../common/fetch'
 import WzwStore from '../../components/wzw-store'
 import { error, modal, toast } from '../../common'
@@ -205,7 +252,7 @@ import StoreListComponents from '../../components/StoreListComponents'
 import { mapActions } from 'vuex'
 import popupLayer from '../../components/popup-layer/popup-layer.vue'
 import { getLocation } from '../../common/tool/location'
-
+import  layoutModal from '@/components/layout-modal/layout-modal.vue'
 import T from '@/common/langue/i18n'
 export default {
   mixins: [pageMixin],
@@ -213,13 +260,19 @@ export default {
     NoStore,
     WzwStore,
     StoreListComponents,
-    popupLayer
+    popupLayer,
+	layoutModal
   },
   data () {
     return {
+		showWxChatSwitch:ls.get('showWxChatSwitch'),
+		showWeChat:false,
 		userInfo:{
-			is_subscribe:1
+			is_subscribe:0
 		},
+		bgImg:'',
+		isAllowCouponList:[],
+		showPop:false,
 	  liveList:[],
       totalList: [],
       page: [],
@@ -293,10 +346,32 @@ export default {
   },
   methods: {
     domainFn,
+	setWxChat(){
+		ls.set('showWxChatSwitch',2)
+		this.showWxChatSwitch=2
+		
+	},
 	lookCode(){
-		uni.previewImage({
-		  urls: [this.initData.SubscribeQrcode]
-		})
+			uni.previewImage({
+			  urls: [this.initData.SubscribeQrcode]
+			})
+		},
+	getCoupon (couponInfo) {
+	  if (!this.$fun.checkIsLogin(1,1)) return
+	  getUserCoupon({ coupon_id: couponInfo.Coupon_ID }).then(res => {
+	    uni.showToast({
+	      title: T._('29d0')
+	    })
+	    getCoupon({ pageSize: 999,index_tips:1 }, { errtip: false }).then(res => {
+	      this.isAllowCouponList = res.data
+		  if(this.isAllowCouponList.length<=0){
+			  this.showPop=false
+		  }
+		  
+	    })
+	  }).catch(() => {
+	    modal(T._('29d1'))
+	  })
 	},
 	toLive () {
 	  uni.navigateTo({
@@ -906,13 +981,38 @@ export default {
 
       this.initStore()
     },
+	initFn(){
+		getCoupon({ pageSize: 999,index_tips:1 }, { errtip: false }).then(res => {
+		   this.isAllowCouponList = res.data
+			const showPop=ls.get('showPop')
+		   if(showPop!=1&&this.isAllowCouponList.length>0&&this.initData.Is_Apply_Coupon==1){
+			 this.showPop=true
+			 ls.set('showPop',1)
+		   }
+		  
+		})
+		
+	},
     ...mapActions(['setFreStoreId', 'getInitData'])
   },
   onLoad () {
+	  this.bgImg=domainFn("/static/client/coupon/couponPopupBg.png")
     // #ifdef H5
     this.selfObj = this
     // #endif
     this._init_func()
+	if (this.$fun.checkIsLogin()) {
+	  get_user_info({}, {
+		tip: '',
+		errtip: false
+	  }).then(res => {
+		this.userInfo = res.data
+	  }).catch(e => {
+	  })
+	} 
+	
+	
+	this.initFn()
 	
 	if (this.$fun.checkIsLogin()) {
 	  get_user_info({}, {
@@ -1539,32 +1639,180 @@ export default {
     background-color: #FFCBCB;
   }
 
-.c-red{
-    color: #FFFFff;
-    background-color: #ff4400;
-    display: inline-block;
-    padding: 0px 14rpx;
-    border-radius: 10rpx;
-    margin: 0rpx 14rpx;
+
+ .couponContent{
+	  width: 488rpx;
+	 
+	  position: relative;
   }
-.flex-message{
-    text-align: center;
-    width: 750rpx;
-    height: 120rpx;
-    box-sizing: border-box;
-    border-radius: 10rpx;
-    background-color: #fefff1;
-	color: #FF4200;
-    line-height: 50rpx;
-    font-size: 12px;
-    padding:10rpx 30rpx;
-    position: fixed;
-    top: 0px;
-    left: 0px;
-    z-index: 9;
+  .couponContentImg{
+	  width: 488rpx;
+	  height: 176rpx;
   }
-  .flex-message-occupy{
-    height: 120rpx;
-    width: 750rpx;
+  .couponContentDel{
+	  width: 56rpx;
+	  height: 56rpx;
+	  position: absolute;
+	  top: 14rpx;
+	  right: -14rpx;
   }
+  .couponContentDiv{
+	  
+	  width: 462rpx;
+	  margin: -20rpx auto 0rpx;
+	  padding: 38rpx 28rpx 28rpx 28rpx;
+	  box-sizing: border-box;
+	  min-height: 100rpx;
+	  background: #DD5744;
+	  border-radius:0px 0px 36rpx 36rpx;
+  }
+ 
+ .couponCon{
+	 max-height: 600rpx;
+	 background-color: #bb0000;
+	 border-radius: 20rpx;
+	 width: 100%;
+	 padding: 32rpx 0rpx;
+	 &-item{
+		 width: 380rpx;
+		 height: 104rpx;
+		 background-size: 100% 100%;
+		 background-repeat: no-repeat;
+		 margin: 0rpx auto 20rpx;
+		 position: relative;
+		 &:last-child{
+			 margin: 0rpx auto 0rpx;
+		 }
+		 &__title{
+			 font-size: 50rpx;
+			 color: rgba(247, 208, 145, 1);
+			 position: absolute;
+			 top: 20rpx;
+			 left: 34rpx;
+			 width: 80rpx;
+			 height: 60rpx;
+			 line-height: 60rpx;
+			 text-align: center;
+		 }
+		 &__sub{
+			 color: rgba(228, 43, 45, 1);
+			 font-size: 36rpx;
+			 position: absolute;
+			 width: 120rpx;
+			 top: 10rpx;
+			 font-weight: 600;
+			 left: 150rpx;
+		 }
+		 &__man{
+			  color: rgba(228, 43, 45, 1);
+			  font-size: 20rpx;
+			  position: absolute;
+			  width: 120rpx;
+			  top: 58rpx;
+			  left: 150rpx;
+			  font-weight: 600;
+		 }
+		 
+	 }
+	 
+	 
+ }
+ 
+ .c-red{
+     color: #FFFFff;
+     background-color: #ff4400;
+     display: inline-block;
+     padding: 0px 14rpx;
+     border-radius: 10rpx;
+     margin: 0rpx 14rpx;
+   }
+ .flex-message{
+     text-align: center;
+	 justify-content: space-between;
+     width: 750rpx;
+     height: 70rpx;
+	 line-height: 70rpx;
+	 align-items: center;
+     box-sizing: border-box;
+     border-radius: 10rpx;
+	 color: #eb6827;
+     background-color: #fffdee;
+     line-height: 50rpx;
+     font-size: 12px;
+     padding:0rpx 30rpx;
+     position: fixed;
+     top: 0px;
+     left: 0px;
+     z-index: 9;
+   }
+   .lookCode{
+	   width: 94rpx;
+	   height: 40rpx;
+	   line-height: 40rpx;
+	   text-align: center;
+	   border-radius: 40rpx;
+	   font-size: 12px;
+	   background-color: #FFFFFF;
+	   color: #333333;
+	   border: 1px solid #f7d1bb;
+   }
+   .codeDel{
+	   width: 30rpx;
+	   height: 30rpx;
+	   margin-left: 40rpx;
+   }
+   .flex-message-occupy{
+     height: 70rpx;
+     width: 750rpx;
+   }
+   .showWeChat{
+	   position: relative;
+	   width: 560rpx;
+	   height: 640rpx;
+	   background-color: #FFFFFF;
+	   border-radius: 20rpx;
+	   padding-top: 100rpx;
+	   display: flex;
+	   box-sizing: border-box;
+	   flex-direction: column;
+	   align-items: center;
+	   .del-img{
+		   width: 50rpx;
+		   height: 50rpx;
+		   position: absolute;
+		   top: -40rpx;
+		   right: -60rpx;
+	   }
+	   .c-title{
+		   color: #8f97ea;
+		   font-size: 17px;
+		   font-weight: bold;
+		   margin-bottom: 30rpx;
+	   }
+	   .c-subtitle{
+			color: #333;
+			font-size: 15px;
+			margin-bottom: 50rpx;
+	   }
+	   .c-div{
+		   width: 200rpx;
+		   height: 200rpx;
+		   display: flex;
+		   border-radius: 10rpx;
+		   align-items: center;
+		   justify-content: center;
+		   background-color: #FFFFFF;
+		   box-shadow:0rpx 0rpx 10rpx 2px #CCCCCC;
+		   margin-bottom: 60rpx;
+	   }
+	   .c-bottom{
+		   font-size: 26rpx;
+		   color: #333333;
+	   }
+		.c-img{
+			width: 170rpx;
+			height: 170rpx;
+		}
+	   
+   }
 </style>
