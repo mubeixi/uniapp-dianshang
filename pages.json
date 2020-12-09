@@ -18,6 +18,12 @@
 			}
 		},
 		{
+		    "path" : "pages/support/Im",
+		    "style": {
+		    	"navigationBarTitleText": "客服"
+		    }
+		},
+		{
 			"path": "pages/support/ImList",
 			"style": {
 				"navigationBarTitleText": "消息列表"

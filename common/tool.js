@@ -1,5 +1,6 @@
-import T from '@/common/langue/i18n' 
+import T from '@/common/langue/i18n'
 import { error, toast } from './index'
+import { upload } from '@/common/request'
 import { apiBaseUrl } from './env'
 import store from '../store'
 import _ from 'underscore'
@@ -277,6 +278,7 @@ export const chooseImageByPromise = ({ count = 1, sizeType = ['original', 'compr
 }
 // 上传图片
 export const uploadImages = (formData, imgs) => {
+  console.log(imgs, 'imgsimgsimgsimgs')
   const taskList = []
   for (let i = 0; i < imgs.length; i++) {
     // #ifdef MP-TOUTIAO
@@ -665,4 +667,92 @@ export const checkMobile = (mobile, phone_code = '') => {
     flag = /^\d{3,15}$/.test(mobile)
   }
   return flag
+}
+
+/**
+ * 从元素是对象的一维数组中，获取指定的键名对应的值组成的简单值一维数组.
+ * 支持两级（也就是可以获取数组对象中的指定属性的子属性
+ * @param arr
+ * @param column
+ * @returns {[]}
+ */
+export const getArrColumn = (arr, column) => {
+  if (typeof arr !== 'object') {
+    throw new Error('第二个参数为一个数组或者对象')
+  }
+  // if (!Array.isArray(arr)) {
+  //   throw new Error('第二个参数为一个数组')
+  // }
+  if (typeof column !== 'string') {
+    throw new Error('键名为字符串')
+  }
+  if (!column) {
+    throw new Error('键名必传')
+  }
+  const rt = []
+  // 这就约束column中没有...号，如果有代表着子属性
+  if (column.indexOf('...') !== -1) {
+    // 两级
+    const key1 = column.split('...')[0]
+    const key2 = column.split('...')[1]
+
+    for (var k in arr) {
+      if (typeof arr[k] !== 'object') {
+        throw new Error('获取的数值为简单值')
+      }
+      rt.push(arr[k][key1][key2])
+    }
+  } else {
+    for (var k in arr) {
+      if (typeof arr[k] !== 'object') {
+        throw new Error('获取的数值为简单值')
+      }
+      rt.push(arr[k][column])
+    }
+  }
+  return rt
+}
+
+/**
+ * 创建配套的task数组
+ * @param len
+ * @returns {*[]}
+ */
+export const createUpTaskArr = (len = 1) => {
+  const arr = []
+  for (var i = 0; i < len; i++) {
+    arr[i] = { }
+  }
+  return arr.concat([])
+}
+
+/**
+ * 批量上传照片
+ * @param imgs string:[]
+ * @param name 标识
+ * @param data 业务参数:{}
+ * @returns {Promise<unknown>}
+ */
+export const uploadImagesFn = ({ imgs, name = 'image', data, progressList = [] }) => {
+  const taskList = []
+  // console.log(imgs, 'ssss')
+  for (let i = 0; i < imgs.length; i++) {
+    const taskItem = upload({
+      filePath: imgs[i],
+      idx: i,
+      name,
+      progressList,
+      formData: data
+    })
+    taskList.push(taskItem)
+  }
+
+  return new Promise((resolve, reject) => {
+    Promise.all(taskList).then((urls) => {
+      resolve(urls)
+    }).catch((err) => {
+      const errMsg = Object.hasOwnProperty.call(err, 'errMsg') ? err.errMsg : err
+      reject(errMsg)
+    })
+  })
 }

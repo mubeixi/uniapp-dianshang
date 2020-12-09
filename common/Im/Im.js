@@ -3,7 +3,8 @@ import { bindUid, getAccessToken, getMsgList, sendMsg, checkOnline, getNoReadMsg
 import Promisify from '@/common/Promisify'
 import { Exception } from '@/common/Exception'
 
-import { ls, createUpTaskArr, getDomain, uploadImages } from '@/common/tool'
+import { ls, createUpTaskArr, uploadImagesFn } from '@/common/tool'
+import { domainFn } from '@/common/filter'
 
 import { modal } from '@/common/index'
 
@@ -104,10 +105,10 @@ class Image extends Message {
   }
 
   async getContent (chatIdx, chatList) {
-    const ossUrls = await uploadImages({ imgs: [this.tempPath], progressList: this.taskList }).catch(msg => { throw Error(msg) })
+    const ossUrls = await uploadImagesFn({ imgs: [this.tempPath], progressList: this.taskList }).catch(msg => { throw Error(msg) })
 
     for (var i = 0; i < ossUrls.length; i++) {
-      ossUrls[i] = getDomain(ossUrls[i])
+      ossUrls[i] = domainFn(ossUrls[i])
     }
     const imgurl = ossUrls[0]
 
