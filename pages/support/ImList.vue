@@ -1,10 +1,10 @@
 <template>
   <div @click="commonClick" class="page-wrap">
-    <div class="flex-message" v-if="userInfo.attention_mp!=1&&initData.mp_nickname">
+    <!-- <div class="flex-message" v-if="userInfo.attention_mp!=1&&initData.mp_nickname">
       <div>小提示：关注{{'"'}}{{initData.mp_nickname}}{{'"'}}公众号可及时获取商家回复消息，</div>
       <div >可<span class="c-red" @click="lookCode">点击这里</span>查看公众号二维码</div>
     </div>
-    <div class="flex-message-occupy" v-if="userInfo.attention_mp!=1"></div>
+    <div class="flex-message-occupy" v-if="userInfo.attention_mp!=1"></div> -->
     <div class="chat-list" v-if="chatList.length>0">
       <div :key="idx"
            @click="toRoom(idx)"
@@ -16,7 +16,8 @@
       >
         <div :style="chat.txtStyle" class="chat-item flex">
           <div class="left">
-            <div :style="{backgroundImage:'url('+chat.avatar+')'}" class="cover"></div>
+<!--            <div :style="{backgroundImage:'url('+chat.avatar+')'}" class="cover"></div>-->
+            <image  class="cover" :src="chat.avatar"></image>
             <div :class="{circle:chat.no_read<10}" class="item-tag" v-if="chat.no_read>0">{{chat.no_read}}</div>
           </div>
           <div class="right">
@@ -172,7 +173,10 @@ export default {
       }
       const type = str.substr(0, breakStrIdx)
       const id = str.substr(breakStrIdx + 1)
-      this.$linkTo(`/pagesA/support/Im?type=${type}&tid=${id}&room_title=${chatItem.name}`)
+      uni.navigateTo({
+        url:`/pages/support/Im?type=${type}&tid=${id}&room_title=${chatItem.name}`
+      })
+ 
     },
     async _init_func () {
       await imInstance._getAccessToken() // 等拿token
