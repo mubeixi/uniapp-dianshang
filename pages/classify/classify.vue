@@ -24,11 +24,11 @@
 
               <!--<block v-if="is_has_child(classifyData)">-->
               <block v-if="j==0">
-                <view class="imgTop" v-if="first.Category_Img">
+                <view class="imgTop" v-if="first.Category_Img"  @click="cart(first)">
                   <img :src="first.Category_Img" class="imgs">
                 </view>
               </block>
-              <view class="titles">
+              <view class="titles"   @click="cart(second)">
                 <view class="titleSum">{{second.Category_Name}}</view>
                 <!-- 	<view class="gengduo">查看更多></view> -->
               </view>
@@ -71,11 +71,11 @@
                    scroll-with-animation
                    scroll-y v-if="!is_has_child">
         <view :key="index" class="box" v-for="(foods,index) in classifyData">
-          <view class="titles">
+          <view class="titles"    @click="cart(classifyData[index])">
             <view class="titleSum">{{classifyData[index].Category_Name}}</view>
             <!-- 	<view class="gengduo">查看更多></view> -->
           </view>
-          <view class="imgTop" v-if="foods.Category_Img">
+          <view class="imgTop" v-if="foods.Category_Img"     @click="cart(classifyData[index])">
             <img :src="foods.Category_Img" class="imgs">
           </view>
           <view :id="i==0?'first':''" :key="i" @click="cart(item)" class="nav-right-item"
