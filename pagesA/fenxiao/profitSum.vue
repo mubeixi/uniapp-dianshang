@@ -1,7 +1,7 @@
 <template>
   <view class="profitSum">
     <view style="height: 90rpx;margin-bottom: 10px;font-size: 14px;">
-      <view :class="[status == 9 ? 'active' : '']" @click="changeStatus(9)" class="status fixed">{{$t('1149x0')}}</view>
+      <view :class="[status == 999 ? 'active' : '']" @click="changeStatus(999)" class="status fixed">{{$t('1149x0')}}</view>
       <scroll-view class="order-status" scroll-x="true" style="width: 612rpx;white-space: nowrap;margin-left: 138rpx;">
 
         <block v-if="Array.isArray(show_type)">
@@ -71,7 +71,7 @@ export default {
   mixins: [pageMixin],
   data () {
     return {
-      status: 9,
+      status: 999,
       totalCount: 0,
       page: 1,
       pageSize: 10,
@@ -97,7 +97,7 @@ export default {
         page: this.page,
         pageSzie: this.pageSize
       }
-      if (this.status != 9) {
+      if (this.status != 999) {
         data.record_type = this.status
       }
       getBalanceDetail(data).then(res => {

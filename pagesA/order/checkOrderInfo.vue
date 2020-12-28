@@ -167,10 +167,13 @@ export default {
         cancelText: T._('1369d2'),
         content: ''
       }
-      await checkOrderByCode({
-        Order_Code: this.Order_Code,
-        store_id: this.Stores_ID
-      }).then(res => {
+	  let postData={
+	    Order_Code: this.Order_Code
+	  }
+	  if(this.Stores_ID){
+	  		  postData.store_id=this.Stores_ID
+	  }
+      await checkOrderByCode(postData).then(res => {
         confirmConf.content = T._('1369d3')
         // toast('核销成功')
       }).catch(err => {
