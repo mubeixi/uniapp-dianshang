@@ -2374,6 +2374,7 @@ var resource = {
 "2361d2": "Go to login",
 "2361d3": "Not login",
 '2361d4': 'Direct push',
+  "2361d5": "To pay",
 "home":"home",
 "class":"class",
 "shopping":"shopping",

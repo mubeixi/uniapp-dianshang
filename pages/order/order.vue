@@ -60,7 +60,7 @@
 				</div>
 				<div class="btn-group" v-if="item.Order_Status==1">
 					<span @click.stop="cancelOrder(item.prod_list,index)">{{$t('738x11')}}</span>
-					<span @click.stop="goPay(item)" class="active"></span>
+					<span @click.stop="goPay(item)" class="active">{{$t('2361d5')}}</span>
 				</div>
 				<div class="btn-group" v-else-if="item.Order_Status==2&&item.Order_Type != 'gift'">
 					<span @click.stop="goPay(item)" class="active">{{$t('738x12')}}</span>
