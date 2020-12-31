@@ -50,7 +50,8 @@ export default {
       pro: null
     }
   },
-  onLoad () {
+  onShow() {
+	 if (!this.$fun.checkIsLogin(1)) return
     this.getSignin()
   },
   methods: {
