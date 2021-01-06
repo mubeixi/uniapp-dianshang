@@ -36,6 +36,7 @@ export default {
       })
     }
     // #endif
+	ls.set('showPop',2)
 	
 	ls.set('showWxChatSwitch','1')
 
