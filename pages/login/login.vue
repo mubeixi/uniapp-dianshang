@@ -712,6 +712,14 @@ export default {
       this.world_sms_code_choose = this.world_sms_code_list[this.world_sms_code_idx].phone_code
     },
     async loginCall (userData) {
+		// 手动绑定一下
+		await upUserLog({}, {
+		  errtip: false
+		}).then(res => {
+		  // #ifdef H5
+		  sessionStorage.setItem('is_send_usrlog', 1)
+		  // #endif
+		}).catch(e => {})
       // 根据后台配置来判断是否无手机号跳去绑定手机号
       const isBindPhone = Number(this.initData.bind_mobile_switch) === 1
 
@@ -731,8 +739,8 @@ export default {
           // 设置本地用户信息
           imInstance.setSendInfo({
             type: 'user',
-            id: userData.user_id,
-            name: userData.User_NickName,
+            id: userData.User_ID,
+            name: userData.User_Name,
             avatar: userData.User_HeadImg
           })
           await imInstance.start() // 等拿token
@@ -755,14 +763,7 @@ export default {
           }).then(res => {}).catch(() => {})
         }
         // #endif
-        // 手动绑定一下
-        await upUserLog({}, {
-          errtip: false
-        }).then(res => {
-          // #ifdef H5
-          sessionStorage.setItem('is_send_usrlog', 1)
-          // #endif
-        }).catch(e => {})
+        
         // #ifdef H5
         // 微信登录才这么走
         const login_farward_url = ls.get('login_farward_url')

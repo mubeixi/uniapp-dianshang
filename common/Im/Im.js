@@ -346,7 +346,7 @@ class IM {
       return 0
     })
     console.log(total)
-    store.commit('system/SET_TABBAR_TAG', { idx: 1, num: total })
+    // store.commit('system/SET_TABBAR_TAG', { idx: 1, num: total })
     return total
   }
 

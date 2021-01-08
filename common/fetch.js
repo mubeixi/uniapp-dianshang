@@ -656,6 +656,7 @@ export const resetPwd = (data, options) => fetch('reset_pwd', data, options)
 
 
 export const getUserInfo = (data, options) => fetch('get_user_info', data, options)
+export const getUserKflist = (data, options) => fetch('get_user_kflist', data, options)
 
 
 // 普通环境noop就行了

@@ -284,7 +284,8 @@ import {
   getUserCoupon,
   judgeReceiveGift,
   updateCart,
-  get_user_info
+  get_user_info,
+  getUserKflist
 } from '../../common/fetch.js'
 import { buildSharePath, getProductThumb, isWeiXin, ls, numberSort } from '../../common/tool.js'
 import { mapActions, mapState } from 'vuex'
@@ -382,6 +383,9 @@ export default {
     // 参与统计的
     this.analysisExt.prod_id = option.Products_ID
     this._init_func(option)
+	getUserKflist().then(res=>{
+		
+	})
     // #ifdef APP-PLUS
     const vm = this
     // 隐藏规格框
@@ -1193,7 +1197,22 @@ export default {
      * 客服
      */
     contact () {
-      this.$fun.contact()
+		if (!this.$fun.checkIsLogin(1, 1)) return
+		// uni.showActionSheet({
+		//     itemList: ['A', 'B', 'C'],
+		//     success: function (res) {
+		//         console.log('选中了第' + (res.tapIndex + 1) + '个按钮');
+		//     },
+		//     fail: function (res) {
+		//         console.log(res.errMsg);
+		//     }
+		// })
+
+		
+		uni.navigateTo({
+		  url:`/pages/support/Im?type=biz&tid=1&productId=${this.Products_ID}&room_title=${this.product.Products_Name}`
+		})
+      //this.$fun.contact()
     },
     directBuy () {
       if (!this.$fun.checkIsLogin(1, 1)) {

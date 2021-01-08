@@ -3,7 +3,8 @@
     <div class="time"></div>
 
     <div class="goods-tip-box flex" v-if="message.type==='prod' && message.isTip">
-      <div class="cover" :style="{backgroundImage: 'url('+message.content.ImgPath+')'}"></div>
+     <!-- <div class="cover" :style="{backgroundImage: 'url('+message.content.ImgPath+')'}"></div> -->
+	  <image class="cover" :src="message.content.ImgPath"></image>
       <div class="info flex1 flex flex-column flex-justify-between">
         <div class="goods-title fz-14 c4">{{message.content.Products_Name}}</div>
         <div class="flex flex-justify-between flex-vertical-c">
@@ -60,7 +61,8 @@
         </div>
 
         <div v-if="message.type==='prod' && !message.isTip" class="goods-info-box" @click.stop="toGoods(message.content)">
-          <div class="cover" :style="{backgroundImage: 'url('+message.content.img+')'}"></div>
+          <!-- <div class="cover" :style="{backgroundImage: 'url('+message.content.img+')'}"></div> -->
+		    <image class="cover" :src="message.content.img"></image>
           <div class="info">
             <div class="fz-16 price-selling"><span class="fz-14">￥</span>{{message.content.price}}</div>
             <div class="goods-title fz-14 c4 m-t-10">{{message.content.prod_name}}</div>
