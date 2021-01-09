@@ -229,8 +229,8 @@ export const safeAreaMixin = {
   },
   onLoad () {
     // #ifdef MP-WEIXIN
-    this.menuButtonInfo = wx.getMenuButtonBoundingClientRect()
-    const systemInfo = wx.getSystemInfoSync()
+    this.menuButtonInfo = uni.getMenuButtonBoundingClientRect()
+    const systemInfo = uni.getSystemInfoSync()
     this.systemInfo = systemInfo
     this.safeArea = systemInfo.safeArea
     // #endif

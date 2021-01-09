@@ -292,7 +292,8 @@ import {
   getCommit,
   getProductSharePic,
   spikeProdDetail,
-  updateCart
+  updateCart,
+    getUserKflist
 } from '../../common/fetch.js'
 import { buildSharePath, getGroupCountdown, getProductThumb, ls, numberSort } from '../../common/tool.js'
 import { pageMixin } from '../../common/mixin'
@@ -308,6 +309,7 @@ export default {
   mixins: [pageMixin],
   data () {
     return {
+		kefuList:[],
       // #ifdef APP-PLUS
       wxMiniOriginId: '',
       // #endif
@@ -393,6 +395,9 @@ export default {
   onLoad: function (option) {
     this.spike_good_id = option.spikeGoodId
     this._init_func()
+	getUserKflist().then(res=>{
+		this.kefuList=res.data
+	})
 
     // #ifdef APP-PLUS
     const vm = this
@@ -566,7 +571,29 @@ export default {
      * 客服
      */
     contact () {
-      this.$fun.contact()
+      if (!this.$fun.checkIsLogin(1, 1)) return
+      if(this.kefuList.length<=0){
+      	error('平台暂无客服')
+      }else{
+      	let kefuList=[]
+      	for(let item of this.kefuList){
+      		kefuList.push(item.Kf_Name)
+      	}
+      	uni.showActionSheet({
+      	    itemList: kefuList,
+      	    success:(res)=>{
+      			let tapIndex=res.tapIndex
+      			
+      			uni.navigateTo({
+      			  url:`/pages/support/Im?type=user&leixing=limit&activeId=${this.spike_good_id}&price=${this.product.price}&tid=${this.kefuList[tapIndex].User_ID}&productId=${this.Products_ID}&room_title=${this.product.Products_Name}`
+      			})
+      	
+      	    },
+      	    fail:(res)=>{
+      	        console.log(res.errMsg);
+      	    }
+      	})
+      }
     },
     yulanDetail () {
       const arr = []

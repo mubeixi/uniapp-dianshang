@@ -298,6 +298,7 @@ export default {
   mixins: [pageMixin, safeAreaMixin],
   data () {
     return {
+		kefuList:[],
 		showWxChatSwitch:ls.get('showWxChatSwitch'),
 		showWeChat:false,
 		userInfo:{
@@ -384,7 +385,7 @@ export default {
     this.analysisExt.prod_id = option.Products_ID
     this._init_func(option)
 	getUserKflist().then(res=>{
-		
+		this.kefuList=res.data
 	})
     // #ifdef APP-PLUS
     const vm = this
@@ -1198,20 +1199,29 @@ export default {
      */
     contact () {
 		if (!this.$fun.checkIsLogin(1, 1)) return
-		// uni.showActionSheet({
-		//     itemList: ['A', 'B', 'C'],
-		//     success: function (res) {
-		//         console.log('选中了第' + (res.tapIndex + 1) + '个按钮');
-		//     },
-		//     fail: function (res) {
-		//         console.log(res.errMsg);
-		//     }
-		// })
-
+		if(this.kefuList.length<=0){
+			error('平台暂无客服')
+		}else{
+			let kefuList=[]
+			for(let item of this.kefuList){
+				kefuList.push(item.Kf_Name)
+			}
+			uni.showActionSheet({
+			    itemList: kefuList,
+			    success:(res)=>{
+					let tapIndex=res.tapIndex
+					
+					uni.navigateTo({
+					  url:`/pages/support/Im?type=user&tid=${this.kefuList[tapIndex].User_ID}&productId=${this.Products_ID}&room_title=${this.product.Products_Name}`
+					})
+	
+			    },
+			    fail:(res)=>{
+			        console.log(res.errMsg);
+			    }
+			})
+		}
 		
-		uni.navigateTo({
-		  url:`/pages/support/Im?type=biz&tid=1&productId=${this.Products_ID}&room_title=${this.product.Products_Name}`
-		})
       //this.$fun.contact()
     },
     directBuy () {

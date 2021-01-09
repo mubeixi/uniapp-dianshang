@@ -344,7 +344,8 @@
 		getProductDetail,
 		getProductSharePic,
 		updateCart,
-		get_user_info
+		get_user_info,
+		  getUserKflist
 	} from '../../common/fetch.js'
 	import {
 		buildSharePath,
@@ -370,6 +371,7 @@
 		mixins: [pageMixin],
 		data() {
 			return {
+				kefuList:[],
 				showWxChatSwitch:ls.get('showWxChatSwitch'),
 				showWeChat:false,
 				userInfo:{
@@ -463,6 +465,9 @@
 		onLoad: function(option) {
 			this.Products_ID = option.Products_ID
 			this.checkProdCollected()
+			getUserKflist().then(res=>{
+				this.kefuList=res.data
+			})
 			// #ifdef APP-PLUS
 			const vm = this
 			// const subNVue1 = uni.getSubNVueById('video')
@@ -679,7 +684,29 @@
 			 * 客服
 			 */
 			contact() {
-				this.$fun.contact()
+				if (!this.$fun.checkIsLogin(1, 1)) return
+				if(this.kefuList.length<=0){
+					error('平台暂无客服')
+				}else{
+					let kefuList=[]
+					for(let item of this.kefuList){
+						kefuList.push(item.Kf_Name)
+					}
+					uni.showActionSheet({
+					    itemList: kefuList,
+					    success:(res)=>{
+							let tapIndex=res.tapIndex
+							
+							uni.navigateTo({
+							  url:`/pages/support/Im?type=user&leixing=pintuan&tid=${this.kefuList[tapIndex].User_ID}&productId=${this.Products_ID}&room_title=${this.product.Products_Name}`
+							})
+					
+					    },
+					    fail:(res)=>{
+					        console.log(res.errMsg);
+					    }
+					})
+				}
 			},
 			yulanDetail() {
 				const arr = []

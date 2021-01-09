@@ -82,6 +82,23 @@ export const confirm = (options) => {
   })
 }
 
+export const linkToEasy = (url, type = 'default') => {
+  if (type === 'default') {
+    uni.navigateTo({
+      url,
+      fail (err) {
+        console.log(err)
+        uni.switchTab({
+          url,
+          fail (e) {
+            error(e.errMsg)
+            console.log(e.errMsg)
+          }
+        })
+      }
+    })
+  }
+}
 /**
  * 检测是否登录
  * @param redirect

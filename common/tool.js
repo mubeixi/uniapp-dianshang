@@ -268,6 +268,7 @@ export const chooseImageByPromise = ({ count = 1, sizeType = ['original', 'compr
         resolve(res.tempFiles)
       },
       fail (e) {
+		  console.log(e,"errrrrrrrrrrrrrr")
         reject(Error(e.errMsg))
       },
       complete () {

@@ -17,6 +17,8 @@
           <wzw-im-card
             @itemClick="bindItemClick"
             :message="chat"
+			:leixing="leixing"
+			:proPrice="proPrice"
             :msg-id="'msg-'+idx"
             @bindProductSend="handleProductSend"
           />
@@ -83,6 +85,9 @@ export default {
   },
   data () {
     return {
+	  activeId:'',	
+	  proPrice:'',//价格
+	  leixing:'',//分享的产品类型
       isToLower: true,
       showNewMsg: false,
       toid: '',
@@ -144,7 +149,8 @@ export default {
       // 向上滑，就不可能为true
       // console.log(scrollHeight - scrollTop - this.systemInfo.windowHeight)
       // 给60的区间
-      if (scrollHeight - scrollTop > this.systemInfo.windowHeight + 60) {
+	  const systemInfo=uni.getSystemInfoSync()
+      if (scrollHeight - scrollTop > systemInfo.windowHeight + 60) {
         this.isToLower = false
       } else {
         this.isToLower = true
@@ -165,13 +171,16 @@ export default {
     },
     // 更新记录用，用于添加的时候
     setViewIdx (val) {
-      this.toViewIdx = val || ('msg-' + (this.imInstance.chatList.length - 1))
+		  this.toViewIdx = val || ('msg-' + (this.imInstance.chatList.length - 1))
     },
     async handleProductSend (productInfo) {
       // 发送产品消息
       await imInstance.sendImMessage({
         content: productInfo,
         type: 'prod',
+		activeId:this.activeId,
+		leixing:this.leixing,
+		proPrice:this.proPrice,
         isTip: 0
       })
       this.setViewIdx()
@@ -201,9 +210,9 @@ export default {
     async sendImg () {
       try {
         const files = await chooseImageByPromise({
-          sizeType: 1,
           sourceType: ['album']
         }).catch(err => {
+			console.log(err,"errrrrrrrr")
           throw Error(err.errMsg || '选择照片失败')
         })
         const imgs = getArrColumn(files, 'path')
@@ -224,7 +233,6 @@ export default {
     async sendCamera () {
       try {
         const files = await chooseImageByPromise({
-          sizeType: 1,
           sourceType: ['camera']
         }).catch(err => {
           throw Error(err.errMsg || '选择照片失败')
@@ -312,14 +320,14 @@ export default {
           throw Error(err.msg || '获取商品信息错误')
         })
         // isTip为1代表，是显示产品信息，提醒用户发送而已
-        imInstance.sendImMessage({
+        await imInstance.sendImMessage({
           content: productInfo,
           type: 'prod',
           isTip: 1
         })
       }
 
-      this.setViewIdx()
+      await this.setViewIdx()
       this.imReady = true
     },
     sendMsg () {
@@ -338,18 +346,21 @@ export default {
   onLoad (options) {
     if (!checkIsLogin(1, 0)) return
 
-    const { tid, type, room_title = 'IM' } = options
+    const { tid, type,price, room_title = 'IM',leixing,activeId } = options
     if (!tid || !type) {
       modal('参数错误')
       return
     }
     // setNavigationBarTitle(room_title)
     this.toid = tid
+	this.leixing=leixing
     this.totype = type
+	this.proPrice=price
+	this.activeId=activeId
     this._init_func(options)
 
     uni.$on('getMsg', (res) => {
-      console.log(res)
+      console.log(res,"sssssss")
       if (this.isToLower) {
         this.setViewIdx()
         this.refreshScrollBottomPostion()

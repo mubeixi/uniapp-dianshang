@@ -1,22 +1,25 @@
 <template>
   <div class="card-item" :id="msgId" @click="emitClick">
-    <div class="time"></div>
+	  
+   <div class="time"></div>
 
     <div class="goods-tip-box flex" v-if="message.type==='prod' && message.isTip">
-     <!-- <div class="cover" :style="{backgroundImage: 'url('+message.content.ImgPath+')'}"></div> -->
 	  <image class="cover" :src="message.content.ImgPath"></image>
       <div class="info flex1 flex flex-column flex-justify-between">
         <div class="goods-title fz-14 c4">{{message.content.Products_Name}}</div>
         <div class="flex flex-justify-between flex-vertical-c">
-          <div class="fz-14 price-selling"><span class="fz-12">￥</span>{{message.content.Products_PriceX}}</div>
+          <div class="fz-14 price-selling"  v-if="leixing=='pintuan'" ><span class="fz-12">￥</span>{{message.content.pintuan_pricex}}</div>
+          <div class="fz-14 price-selling"  v-else-if="leixing=='limit'"><span class="fz-12">￥</span>{{proPrice}}</div>
+		  <div class="fz-14 price-selling"  v-else-if="leixing=='spike'"><span class="fz-12">￥</span>{{proPrice}}</div>
+          <div class="fz-14 price-selling" v-else><span class="fz-12">￥</span>{{message.content.Products_PriceX}}</div>
           <div @click.stop="bindProductSend" class="action-btn fz-14">发给商家</div>
         </div>
 
       </div>
     </div>
     <div v-else class="content-wrap" :class="{reverse:message.direction==='to'}">
+		
       <div class="content-label">
-        <!-- flex-vertical-c-->
         <div class="flex">
 
           <div v-if="message.direction==='to'" class="content-arrow">
@@ -28,7 +31,6 @@
             </block>
           </div>
           <image   @click.stop="bindClickLeft(message)"  class="headimg" :src="message.avatar||message.from_avatar"></image>
-<!--          <div  @click.stop="bindClickLeft(message)" class="headimg" :style="{backgroundImage:'url('+(message.avatar||message.from_avatar)+')'}"></div>-->
           <div v-if="message.direction!=='to'" class="content-arrow">
             <block v-if="message.type==='text'">
               <image mode="widthFix" class="arrow-icon" src="/static/im/chat-arrow-left.png"></image>
@@ -44,6 +46,7 @@
         <div class="content-text" v-if="message.type==='text'">{{message.content}}</div>
 
         <div v-if="message.type==='image'" class="content-img-wrap">
+	
           <block v-if="message.tempPath">
             <image  mode="widthFix" @click.stop="previewImg" :style="{width:message.styleObj.width+'px',height:message.styleObj.height+'px'}"  class="content-img" :src="message.tempPath||message.content" ></image>
           </block>
@@ -51,26 +54,27 @@
             <image mode="widthFix" @click.stop="previewImg" class="content-img" :src="message.content" ></image>
           </block>
 
-          <div class="progress-box" v-if="message.taskList[0].progress<100">
+          <div class="progress-box" v-if="message.taskList&&message.taskList[0].progress<100">
             <div class="loading-box text-center">
               <image src="/static/loading.gif" class="loading-img"></image>
             </div>
-            <!--<progress :percent="message.taskList[0].progress" stroke-width="2" />-->
             <div class="fz-12 color-white text-center">{{message.taskList[0].progress||0}}%</div>
           </div>
         </div>
 
         <div v-if="message.type==='prod' && !message.isTip" class="goods-info-box" @click.stop="toGoods(message.content)">
-          <!-- <div class="cover" :style="{backgroundImage: 'url('+message.content.img+')'}"></div> -->
+
 		    <image class="cover" :src="message.content.img"></image>
           <div class="info">
-            <div class="fz-16 price-selling"><span class="fz-14">￥</span>{{message.content.price}}</div>
+            <div class="fz-16 price-selling" ><span class="fz-14">￥</span>{{message.content.price}}</div>
             <div class="goods-title fz-14 c4 m-t-10">{{message.content.prod_name}}</div>
           </div>
         </div>
 
       </div>
     </div>
+  
+  
   </div>
 </template>
 
@@ -84,8 +88,14 @@ export default {
   name: 'wzw-im-card',
   components: { },
   props: {
+	  proPrice: {
+		type: String
+	  }, 
+	leixing: {
+	  type: String
+	},  
     msgId: {
-      type: Number
+      type: String
     },
     headimg: {
       type: String,

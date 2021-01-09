@@ -121,7 +121,7 @@ class Image extends Message {
 }
 
 class Product extends Message {
-  constructor (type = 'prod', content = {}, ext) {
+  constructor (type = 'prod', content = {},leixing,proPrice,activeId, ext) {
     console.log(content, ext)
     super(type, content)
 
@@ -130,12 +130,22 @@ class Product extends Message {
 
     // 如果不是消息提示，那么就要格式化了
     if (!isTip) {
-      const _content = {
+      let _content = {
         prod_name: content.Products_Name,
         price: content.Products_PriceX,
         img: content.ImgPath,
-        url: `/pages/product/detail?prod_id=${this.content.Products_ID}`
+        url: `/pages/detail/detail?Products_ID=${this.content.Products_ID}`
       }
+	  if(leixing=='pintuan'){
+		  _content.price=content.pintuan_pricex
+		  _content.url=`/pages/detail/groupDetail?Products_ID=${this.content.Products_ID}`
+	  }else if(leixing=='limit'){
+		  _content.price=proPrice
+		  _content.url=`/pages/detail/limitDetail?spikeGoodId=${activeId}`
+	  }else if(leixing=='spike'){
+		  _content.price=proPrice
+		   _content.url=`/pages/detail/spikeDetail?flashsale_id=${activeId}`
+	  }
       // 走到这里就代表已经发送了
       this.content = _content
     }
@@ -370,14 +380,14 @@ class IM {
    * @param content
    * @param type
    */
-  async sendImMessage ({ content, type = 'text', ...ext }) {
+  async sendImMessage ({ content, type = 'text',leixing,proPrice,activeId, ...ext }) {
     var message = null
     switch (type) {
       case 'image':
         message = new Image(type, content, ext)
         break
       case 'prod':
-        message = new Product(type, content, ext)
+        message = new Product(type, content,leixing,proPrice,activeId, ext)
         break
       default:
         message = new Message(type, content, ext)
