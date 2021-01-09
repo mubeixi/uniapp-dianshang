@@ -736,12 +736,21 @@ export default {
         if (!ls.get('listenStatus')) {
           // IM全局
           const imInstance = new IM()
+		  let User_Name=userData.User_Name
+		  let User_HeadImg=userData.User_HeadImg
+		  if(userData.Is_Kf==1){
+			  User_Name=userData.Kf_Name
+			  User_HeadImg=userData.Kf_HeadImg
+		  }
+		  
+		  
+		  
           // 设置本地用户信息
           imInstance.setSendInfo({
             type: 'user',
             id: userData.User_ID,
-            name: userData.User_Name,
-            avatar: userData.User_HeadImg
+            name: User_Name,
+            avatar: User_HeadImg
           })
           await imInstance.start() // 等拿token
 
